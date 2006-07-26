@@ -1,52 +1,65 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Moving a directory into another fails
-Date: Wed, 26 Jul 2006 11:00:48 -0400
-Message-ID: <9e4733910607260800v618edf0em7b0f5c3332bf8fc5@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Eliminate Scalar::Util usage from private-Error.pm
+Date: Wed, 26 Jul 2006 17:17:37 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607261702500.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0607251809340.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060726010358.20964.80443.stgit@machine>
+ <Pine.LNX.4.63.0607260356480.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060726021058.GV13776@pasky.or.cz> <Pine.LNX.4.63.0607260416070.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <ea7r3s$ta2$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Jul 26 17:03:10 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 26 17:18:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G5ku5-0004P2-1m
-	for gcvg-git@gmane.org; Wed, 26 Jul 2006 17:02:29 +0200
+	id 1G5l91-0000Ej-Fr
+	for gcvg-git@gmane.org; Wed, 26 Jul 2006 17:17:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751687AbWGZPAu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Jul 2006 11:00:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751688AbWGZPAu
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 11:00:50 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:17768 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1750906AbWGZPAt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jul 2006 11:00:49 -0400
-Received: by ug-out-1314.google.com with SMTP id m3so3203645ugc
-        for <git@vger.kernel.org>; Wed, 26 Jul 2006 08:00:48 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=hMhSQB5/GegVZkIx6T1mZQ2i2O8GFHRS4V79w+rQoI8mtigKyLbppVleqRezRf6Qz2IvfBqd+IQ+zKF9rT25U1yoC/2Wuo8VNTC+8LHPiDdJBfh/oXQvGrHuXaFBpEvEhqykjX7sv97JdDl4oiLbNcb43FZW43+xkdu+aAEI17c=
-Received: by 10.78.164.13 with SMTP id m13mr3153382hue;
-        Wed, 26 Jul 2006 08:00:48 -0700 (PDT)
-Received: by 10.78.149.8 with HTTP; Wed, 26 Jul 2006 08:00:48 -0700 (PDT)
-To: git <git@vger.kernel.org>
-Content-Disposition: inline
+	id S1750836AbWGZPRk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Jul 2006 11:17:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750856AbWGZPRj
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 11:17:39 -0400
+Received: from mail.gmx.net ([213.165.64.21]:21644 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750836AbWGZPRj (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Jul 2006 11:17:39 -0400
+Received: (qmail invoked by alias); 26 Jul 2006 15:17:37 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp042) with SMTP; 26 Jul 2006 17:17:37 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <ea7r3s$ta2$1@sea.gmane.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24221>
 
-I cloned a git project. Then in the original I did mkdir for a new
-directory and use git mv to move an existing directory into it. I then
-used cg diff to generate a patch for the move.
+Hi,
 
-When I use cg patch to apply this patch to the cloned tree it fails.
-This seems to be a problem in the git code, not cg.  It is not picking
-up the creation of the new intervening subdirectory correctly.
+[please do not remove me from the Cc: when replying to my mail]
 
-I just synced and this does not work in the current code.
+On Wed, 26 Jul 2006, Jakub Narebski wrote:
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+> Johannes Schindelin wrote:
+> 
+> > Seriously, I still believe that proof-of-concepts in Bash or Perl or even 
+> > Python are fine. But they are not for real work, so one of my long-term 
+> > goals for git is to get rid of them.
+> 
+> I don't think that we would want to rewrite gitweb in C, for example.
+> And Perl for porcelanish commands is all right, IMVVHO.
+
+This is true as long as you do not have problems with Perl. As soon as you 
+start having too many problems with Perl, you want to get rid of it as 
+soon as possible.
+
+Think missing modules. Think ActiveState. Think corporate environment. 
+Think other platforms. Think having to mix compilers. Or to support 
+another one, because you cannot mix. Etc. etc.
+
+Ciao,
+Dscho
