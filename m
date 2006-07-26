@@ -1,61 +1,88 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Challenge: Importing Mozilla CVS into git
-Date: Wed, 26 Jul 2006 17:08:18 -0400
-Message-ID: <9e4733910607261408m6f3980fbxc1793ca432ef3b0a@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] instaweb: Be more clear if httpd or the browser fail
+Date: Wed, 26 Jul 2006 23:11:46 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607262310350.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0607261633560.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vr708qih4.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0607262153380.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Jul 26 23:08:52 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Jul 26 23:12:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G5qcB-00045o-RA
-	for gcvg-git@gmane.org; Wed, 26 Jul 2006 23:08:24 +0200
+	id 1G5qfX-0004ph-JH
+	for gcvg-git@gmane.org; Wed, 26 Jul 2006 23:11:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751154AbWGZVIU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Jul 2006 17:08:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbWGZVIU
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 17:08:20 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:63475 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1751154AbWGZVIU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jul 2006 17:08:20 -0400
-Received: by ug-out-1314.google.com with SMTP id m3so3364243ugc
-        for <git@vger.kernel.org>; Wed, 26 Jul 2006 14:08:18 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=nRgbRdhLqJV/fFyv84O6D9irFc1kELt4TVnSJy+Np4x6bJhbrfH02MOI6ZWScef2DKpRaJRuiO2EnMBSabp047BTAu35PW6GFNIyzbAlG8v2N1zwm+DJnIStxSkzJbL5UayCDq0L/Gj8QFJsJzs4od3+VcXfxlsTgnVfLwWXkTM=
-Received: by 10.78.122.11 with SMTP id u11mr3469084huc;
-        Wed, 26 Jul 2006 14:08:18 -0700 (PDT)
-Received: by 10.78.149.8 with HTTP; Wed, 26 Jul 2006 14:08:18 -0700 (PDT)
-To: git <git@vger.kernel.org>
-Content-Disposition: inline
+	id S1751167AbWGZVLs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Jul 2006 17:11:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751204AbWGZVLs
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 17:11:48 -0400
+Received: from mail.gmx.de ([213.165.64.21]:9678 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751167AbWGZVLs (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Jul 2006 17:11:48 -0400
+Received: (qmail invoked by alias); 26 Jul 2006 21:11:46 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp036) with SMTP; 26 Jul 2006 23:11:46 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <Pine.LNX.4.63.0607262153380.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24249>
 
-If anyone is looking for a project, it is still not possible to import
-Mozilla CVS into git and then do increment updates. As I recall from
-the last time I played with it, cvsps throws away some of the branches
-because it thinks they are in a loop. parsecvs is unable to complete
-the entire import without getting errors and aborting.
 
-cvs2svn can import the entire Mozilla repository correctly. But it
-imports it to svn and does not have incremental support.
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-Best solution would be to use the parser from parsecvs, apply the
-change set detection algorithm from cvs2svn, and then add cvsps'
-incremental update.
+---
 
-It's also not reasonable to fork git processes, there are about a
-million change sets in Mozilla and it takes days of CPU time to do 1M
-forks. The import app needs to use a library version of git. Another
-tactic to reduce CPU time is to directly write pack files with the
-delta in a first pass, and add the change set index in a later pass.
+On Wed, 26 Jul 2006, Johannes Schindelin wrote:
 
+> Well, the fallback mechanism might not be that useful anyway: if you have 
+> apache, you have to specify the modules path. I'll do a patch instead 
+> which exits cleanly if either $httpd or $browser could not be executed, 
+> okay?
+
+Here you are
+
+ git-instaweb.sh |    9 +++++++--
+ 1 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/git-instaweb.sh b/git-instaweb.sh
+index 1d3ea73..585ad7c 100755
+--- a/git-instaweb.sh
++++ b/git-instaweb.sh
+@@ -54,6 +54,10 @@ start_httpd () {
+ 			fi
+ 		done
+ 	fi
++	if test $? != 0; then
++		echo "Could not execute http daemon $httpd."
++		exit 1
++	fi
+ }
+ 
+ stop_httpd () {
+@@ -189,7 +193,7 @@ EOF
+ 	else
+ 		# plain-old CGI
+ 		list_mods=`echo "$httpd" | sed "s/-f$/-l/"`
+-		$list_mods | grep 'mod_cgi\.c' >/dev/null || \
++		$list_mods | grep 'mod_cgi\.c' >/dev/null 2>&1 || \
+ 		echo "LoadModule cgi_module $module_path/mod_cgi.so" >> "$conf"
+ 		cat >> "$conf" <<EOF
+ AddHandler cgi-script .cgi
+@@ -239,4 +243,5 @@ esac
+ 
+ start_httpd
+ test -z "$browser" && browser=echo
+-$browser http://127.0.0.1:$port
++url=http://127.0.0.1:$port
++$browser $url || echo $url
 -- 
-Jon Smirl
-jonsmirl@gmail.com
+1.4.2.rc2.g84db
