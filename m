@@ -1,78 +1,58 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] gitweb: fix two warnings
-Date: Wed, 26 Jul 2006 10:48:41 -0700 (PDT)
-Message-ID: <20060726174841.90834.qmail@web31809.mail.mud.yahoo.com>
-References: <Pine.LNX.4.63.0607261658130.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-Reply-To: ltuikov@yahoo.com
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: [PATCH 1/2] t7001: add test for git-mv dir1 dir2/
+Date: Wed, 26 Jul 2006 13:50:54 -0400
+Message-ID: <9e4733910607261050k5f8d8d5dke5ded3a806b46f21@mail.gmail.com>
+References: <Pine.LNX.4.63.0607261940090.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Wed Jul 26 19:48:56 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Wed Jul 26 19:51:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G5nV0-0007hb-KN
-	for gcvg-git@gmane.org; Wed, 26 Jul 2006 19:48:47 +0200
+	id 1G5nXA-00082h-Fn
+	for gcvg-git@gmane.org; Wed, 26 Jul 2006 19:51:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030350AbWGZRsn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Jul 2006 13:48:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030372AbWGZRsn
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 13:48:43 -0400
-Received: from web31809.mail.mud.yahoo.com ([68.142.207.72]:36281 "HELO
-	web31809.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1030350AbWGZRsm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jul 2006 13:48:42 -0400
-Received: (qmail 90836 invoked by uid 60001); 26 Jul 2006 17:48:41 -0000
+	id S1751732AbWGZRu5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Jul 2006 13:50:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030372AbWGZRu5
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 13:50:57 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:43059 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1751730AbWGZRu4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jul 2006 13:50:56 -0400
+Received: by ug-out-1314.google.com with SMTP id m3so3283717ugc
+        for <git@vger.kernel.org>; Wed, 26 Jul 2006 10:50:55 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=DXIZYFuAYJWKQUqrguufltvUrSJoCSxPvUeM3sXtJ73ihz90bRovC5L3lkpL/rPx5h80sz32KdQ1UEiwsS4S/pw6Hni1O6C9FaV5373SKk6RBryMsCey5oUZwvc/e8AKDFaB0zqzEbMQTSI3fYliH0KWiuWk9SgZgBpvdOjv4Vk=  ;
-Received: from [71.80.231.253] by web31809.mail.mud.yahoo.com via HTTP; Wed, 26 Jul 2006 10:48:41 PDT
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, junkio@cox.net
-In-Reply-To: <Pine.LNX.4.63.0607261658130.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=nriIsxOcMon3ov6feb65vClmkvVTTJJd2izHhznc9tuNw+uQPwRPrgWSYEprigkPT1cduocISPQxswqgzK3PBeuVVp25b6NVwMy5XUn4wHRS09A3eka7MiQpCwNtINJZFBI9mLMk2g/gkGo6p5PvLeO4N8tmcR9sxIjgzes5FB4=
+Received: by 10.78.122.11 with SMTP id u11mr3315811huc;
+        Wed, 26 Jul 2006 10:50:54 -0700 (PDT)
+Received: by 10.78.149.8 with HTTP; Wed, 26 Jul 2006 10:50:54 -0700 (PDT)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0607261940090.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24229>
 
---- Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> 
-> These warnings cluttered up my log.
-> 
-> Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> ---
->  gitweb/gitweb.cgi |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.cgi b/gitweb/gitweb.cgi
-> index e226ac2..e5fca63 100755
-> --- a/gitweb/gitweb.cgi
-> +++ b/gitweb/gitweb.cgi
-> @@ -795,7 +795,7 @@ sub git_read_projects {
->  	if (-d $projects_list) {
->  		# search in directory
->  		my $dir = $projects_list;
-> -		opendir my $dh, $dir or return undef;
-> +		opendir my ($dh), $dir or return undef;
->  		while (my $dir = readdir($dh)) {
->  			if (-e "$projectroot/$dir/HEAD") {
->  				my $pr = {
-> @@ -810,7 +810,7 @@ sub git_read_projects {
->  		# 'git%2Fgit.git Linus+Torvalds'
->  		# 'libs%2Fklibc%2Fklibc.git H.+Peter+Anvin'
->  		# 'linux%2Fhotplug%2Fudev.git Greg+Kroah-Hartman'
-> -		open my $fd , $projects_list or return undef;
-> +		open my ($fd), $projects_list or return undef;
->  		while (my $line = <$fd>) {
->  			chomp $line;
->  			my ($path, $owner) = split ' ', $line;
-> -- 
-> 1.4.2.rc2.g6a4e
+An exact test case:
 
-Can you please give more details of the warnings, cut-and-paste
-would be nice, the problem as you perceive it, and your solution to it?
+git clone git foo
+git clone git foo1
+cd foo
+mkdir zzz
+git mv gitweb zzz
+cg diff >patch
+cd ../foo1
+cg patch <../foo/patch
 
-Thanks,
-   Luben
+This patch won't apply because zzz does not exist in foo1
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
