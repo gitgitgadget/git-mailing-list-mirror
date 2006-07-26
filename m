@@ -1,74 +1,91 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Handling very large numbers of symbolic references?
-Date: Tue, 25 Jul 2006 16:20:58 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607251612480.29649@g5.osdl.org>
-References: <87psfteb4l.fsf@hades.wkstn.nix> <Pine.LNX.4.64.0607251508540.29649@g5.osdl.org>
- <87psftb7v8.fsf@hades.wkstn.nix>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 26 01:21:09 2006
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] Eliminate Scalar::Util usage from private-Error.pm
+Date: Wed, 26 Jul 2006 03:03:58 +0200
+Message-ID: <20060726010358.20964.80443.stgit@machine>
+References: <Pine.LNX.4.63.0607251809340.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 26 03:04:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G5WD7-0002qg-0z
-	for gcvg-git@gmane.org; Wed, 26 Jul 2006 01:21:09 +0200
+	id 1G5Xoh-00015l-Lr
+	for gcvg-git@gmane.org; Wed, 26 Jul 2006 03:04:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030248AbWGYXVE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Jul 2006 19:21:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030249AbWGYXVE
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Jul 2006 19:21:04 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:16356 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1030248AbWGYXVD (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Jul 2006 19:21:03 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6PNKxnW024933
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 25 Jul 2006 16:21:00 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6PNKwkW014611;
-	Tue, 25 Jul 2006 16:20:59 -0700
-To: Nix <nix@esperi.org.uk>
-In-Reply-To: <87psftb7v8.fsf@hades.wkstn.nix>
-X-Spam-Status: No, hits=-0.518 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.141 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030305AbWGZBEA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 25 Jul 2006 21:04:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030306AbWGZBEA
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Jul 2006 21:04:00 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:11184 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1030305AbWGZBD7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Jul 2006 21:03:59 -0400
+Received: (qmail 20974 invoked from network); 26 Jul 2006 03:03:58 +0200
+Received: from localhost (HELO ?62.24.88.241?) (xpasky@127.0.0.1)
+  by localhost with SMTP; 26 Jul 2006 03:03:58 +0200
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <Pine.LNX.4.63.0607251809340.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: StGIT/0.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24194>
 
+We used just the blessed() routine so steal it from Scalar/Util.pm. ;-)
+(Unfortunately, Scalar::Util is not bundled with older Perl versions.)
 
+This is a newer much saner blessed() version by Randal L. Schwarz.
 
-On Wed, 26 Jul 2006, Nix wrote:
-> 
-> Well, actually I was considering trying a combination of two things:
-> 
->  - a new type of multi-entry ref (as you suggested), perhaps in a file
->    refs/inactive-heads, which is merged with the heads list by lookup
->    operations only (so merge would see them, but ls-remote would not:
->    `invisible heads' if you will)
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
-Yes, that should work. Make sure that you tell git-fsck-objects and 
-git-prune that those heads are reachable, though.
+ perl/private-Error.pm |   14 ++++++++++----
+ 1 files changed, 10 insertions(+), 4 deletions(-)
 
-Of course, if you end up having one "master" head (that is the "merge" of 
-all branches), that would take care of the reachability issue too: you 
-don't actually need to create a _real_ merge, you can just make sure that 
-there is a commit that points to all new heads you create. It could even 
-have a totally dummy tree node, ie you could do
-
-	oldhead=$(git-rev-parse HEAD^0) || exit
-	newhead=$(git commit-tree $oldhead -p $oldhead -p new-bug-head < changelog) || exit
-	git update-ref HEAD $newhead $oldhead
-
-which would just update the commit list with a fake "merge" commit merging 
-"new-bug-head" into the stream of top commits (using the same tree as the 
-previous "HEAD" commit had) so that it's always reachable.
-
-Something like that, anyway. That way you can do a "git clone" and you get 
-all the bug commits through a single HEAD.
-
-		Linus
+diff --git a/perl/private-Error.pm b/perl/private-Error.pm
+index ebd0749..8fff866 100644
+--- a/perl/private-Error.pm
++++ b/perl/private-Error.pm
+@@ -43,8 +43,6 @@ sub throw_Error_Simple
+ 
+ # Exported subs are defined in Error::subs
+ 
+-use Scalar::Util ();
+-
+ sub import {
+     shift;
+     local $Exporter::ExportLevel = $Exporter::ExportLevel + 1;
+@@ -290,6 +288,14 @@ use vars qw(@EXPORT_OK @ISA %EXPORT_TAGS
+ 
+ @ISA = qw(Exporter);
+ 
++
++sub blessed {
++	my $item = shift;
++	local $@; # don't kill an outer $@
++	ref $item and eval { $item->can('can') };
++}
++
++
+ sub run_clauses ($$$\@) {
+     my($clauses,$err,$wantarray,$result) = @_;
+     my $code = undef;
+@@ -312,7 +318,7 @@ sub run_clauses ($$$\@) {
+ 		    $i -= 2;
+ 		    next CATCHLOOP;
+ 		}
+-		elsif(Scalar::Util::blessed($err) && $err->isa($pkg)) {
++		elsif(blessed($err) && $err->isa($pkg)) {
+ 		    $code = $catch->[$i+1];
+ 		    while(1) {
+ 			my $more = 0;
+@@ -421,7 +427,7 @@ sub try (&;$) {
+ 
+     if (defined($err))
+     {
+-        if (Scalar::Util::blessed($err) && $err->can('throw'))
++        if (blessed($err) && $err->can('throw'))
+         {
+             throw $err;
+         }
