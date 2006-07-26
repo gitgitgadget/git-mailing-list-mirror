@@ -1,53 +1,75 @@
-From: Jeff Garzik <jeff@garzik.org>
-Subject: git-clone failures abound
-Date: Wed, 26 Jul 2006 00:38:46 -0400
-Message-ID: <44C6F1D6.5020208@garzik.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-clone failures abound
+Date: Tue, 25 Jul 2006 22:02:54 -0700
+Message-ID: <7vwta1argh.fsf@assigned-by-dhcp.cox.net>
+References: <44C6F1D6.5020208@garzik.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "David S. Miller" <davem@davemloft.net>
-X-From: git-owner@vger.kernel.org Wed Jul 26 06:39:04 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "David S. Miller" <davem@davemloft.net>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Wed Jul 26 07:03:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G5bAl-0001zK-N5
-	for gcvg-git@gmane.org; Wed, 26 Jul 2006 06:39:04 +0200
+	id 1G5bXw-0005Kh-Aa
+	for gcvg-git@gmane.org; Wed, 26 Jul 2006 07:03:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030379AbWGZEiu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Jul 2006 00:38:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030380AbWGZEiu
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 00:38:50 -0400
-Received: from srv5.dvmed.net ([207.36.208.214]:61581 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S1030379AbWGZEiu (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Jul 2006 00:38:50 -0400
-Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75] helo=[10.10.10.99])
-	by mail.dvmed.net with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
-	id 1G5bAV-0003Jz-SB; Wed, 26 Jul 2006 04:38:48 +0000
-User-Agent: Thunderbird 1.5.0.4 (X11/20060614)
-To: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@osdl.org>
-X-Spam-Score: -4.3 (----)
-X-Spam-Report: SpamAssassin version 3.1.3 on srv5.dvmed.net summary:
-	Content analysis details:   (-4.3 points, 5.0 required)
+	id S1030385AbWGZFC5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Jul 2006 01:02:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030386AbWGZFC5
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 01:02:57 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:39812 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1030385AbWGZFC5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jul 2006 01:02:57 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060726050255.SEJY27857.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 26 Jul 2006 01:02:55 -0400
+To: Jeff Garzik <jeff@garzik.org>
+In-Reply-To: <44C6F1D6.5020208@garzik.org> (Jeff Garzik's message of "Wed, 26
+	Jul 2006 00:38:46 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24206>
 
-I've been seeing several reports lately, from different users on various 
-Linux platforms, with the same basic bug report
+Jeff Garzik <jeff@garzik.org> writes:
 
-* "git:// clone of linus's repo times out after 10 minutes"
+> I've been seeing several reports lately, from different users on
+> various Linux platforms, with the same basic bug report
+>
+> * "git:// clone of linus's repo times out after 10 minutes"
+>
+> * someone says, "use rsync:// for the initial clone"
+>
+> * "it works, thanks!"
+>
+> People seems to note that this behavior only started recently.  I
+> wonder if linux-2.6.git crossed some sort of size threshold that's too
+> much for kernel.org CPU load to bear?  I wonder if git-clone is
+> attempting to delta-ify, when it really should just be sending the
+> objects in bulk?
 
-* someone says, "use rsync:// for the initial clone"
+No, this was all my fault, and sorry about the confusion.
 
-* "it works, thanks!"
+GIT 1.4.1 contains commit 583b7ea3 which implemented a side-band
+communication for the upload-pack protocol to give progress bar
+output to the client downloaders, and in order to do so it
+changed the pipe structure of the process.  It used to just fork
+two processes piped together that exec rev-list and
+pack-objects, and exec cleared alarm().  I mistakenly rewrote
+that part to have an extra process that oversees these two
+processes but the overseer does not exec and got killed by
+alarm().  This bug affects the server side.
 
-People seems to note that this behavior only started recently.  I wonder 
-if linux-2.6.git crossed some sort of size threshold that's too much for 
-kernel.org CPU load to bear?  I wonder if git-clone is attempting to 
-delta-ify, when it really should just be sending the objects in bulk?
+GIT 1.4.1 was installed on public kernel.org machines and the
+problem started happening after that.
 
-	Jeff
+A fix was relatively simple, and I've issued GIT 1.4.1.1 with it
+last night -- the master branch also has the same fix.  So when
+the kernel.org public machines are updated to 1.4.1.1 it should
+solve the problem.
