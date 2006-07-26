@@ -1,72 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make git-mv a builtin
-Date: Wed, 26 Jul 2006 12:19:17 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607261204020.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0607260348130.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vk660udcn.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Eliminate Scalar::Util usage from private-Error.pm
+Date: Wed, 26 Jul 2006 15:35:57 +0200
+Organization: At home
+Message-ID: <ea7r3s$ta2$1@sea.gmane.org>
+References: <Pine.LNX.4.63.0607251809340.29667@wbgn013.biozentrum.uni-wuerzburg.de> <20060726010358.20964.80443.stgit@machine> <Pine.LNX.4.63.0607260356480.29667@wbgn013.biozentrum.uni-wuerzburg.de> <20060726021058.GV13776@pasky.or.cz> <Pine.LNX.4.63.0607260416070.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 26 12:19:33 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed Jul 26 15:36:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G5gU7-0001W9-MS
-	for gcvg-git@gmane.org; Wed, 26 Jul 2006 12:19:24 +0200
+	id 1G5jYy-00020d-71
+	for gcvg-git@gmane.org; Wed, 26 Jul 2006 15:36:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932151AbWGZKTU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Jul 2006 06:19:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932161AbWGZKTU
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 06:19:20 -0400
-Received: from mail.gmx.de ([213.165.64.21]:1985 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932151AbWGZKTT (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Jul 2006 06:19:19 -0400
-Received: (qmail invoked by alias); 26 Jul 2006 10:19:18 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp031) with SMTP; 26 Jul 2006 12:19:18 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vk660udcn.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1750713AbWGZNgd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Jul 2006 09:36:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750718AbWGZNgd
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 09:36:33 -0400
+Received: from main.gmane.org ([80.91.229.2]:31368 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750713AbWGZNgc (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Jul 2006 09:36:32 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1G5jYh-0001wm-O9
+	for git@vger.kernel.org; Wed, 26 Jul 2006 15:36:20 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 26 Jul 2006 15:36:19 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 26 Jul 2006 15:36:19 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24211>
 
-Hi,
+Johannes Schindelin wrote:
 
-On Tue, 25 Jul 2006, Junio C Hamano wrote:
+> Seriously, I still believe that proof-of-concepts in Bash or Perl or even 
+> Python are fine. But they are not for real work, so one of my long-term 
+> goals for git is to get rid of them.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > This also moves add_file_to_index() to read-cache.c. Oh, and while
-> > touching builtin-add.c, it also removes a duplicate git_config() call.
-> 
-> I'd have preferred to see this not depend on uncooked
-> merge-recur infrastructure, since it is very likely that this
-> would be ready to graduate to "master" before merge-recur.
+I don't think that we would want to rewrite gitweb in C, for example.
+And Perl for porcelanish commands is all right, IMVVHO.
 
-I use "next" to base all my work (git or otherwise) on, and forgot that 
-path-list did not yet make it into "master". Sorry.
-
-> I've branched from "master" and placed the path-list stuff which
-> was split out of the merge-recur WIP, and applied this patch
-> with some trivial adjustment, and will place it on "pu", so I'd
-> appreciate if you can double check the result.
-
-Looks good from what I see. BTW do you have any indent command line you 
-prefer? I see that all changes but in the usage string (which was my 
-fault: thank you), and in Makefile (putting path-list into libgit.a rather 
-than linking it specifically), are white space changes.
-
-> > diff --git a/builtin.h b/builtin.h
-> > index 5339d86..6f3a439 100755
-> 
-> Huh -- 100755?
-
-A mistake introduced on cygwin. Again, sorry.
-
-Ciao,
-Dscho
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
