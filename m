@@ -1,65 +1,68 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: [PATCH 1/2] t7001: add test for git-mv dir1 dir2/
-Date: Wed, 26 Jul 2006 20:39:24 +0200
-Message-ID: <200607262039.25155.Josef.Weidendorfer@gmx.de>
-References: <Pine.LNX.4.63.0607261940090.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] gitweb: fix two warnings
+Date: Wed, 26 Jul 2006 20:43:56 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607262040270.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060726174841.90834.qmail@web31809.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Jon Smirl <jonsmirl@gmail.com>, git@vger.kernel.org,
-	junkio@cox.net, Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Jul 26 20:39:40 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Wed Jul 26 20:44:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G5oI9-0000K5-4R
-	for gcvg-git@gmane.org; Wed, 26 Jul 2006 20:39:33 +0200
+	id 1G5oMT-000175-Nn
+	for gcvg-git@gmane.org; Wed, 26 Jul 2006 20:44:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161026AbWGZSja (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Jul 2006 14:39:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161030AbWGZSja
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 14:39:30 -0400
-Received: from tuminfo2.informatik.tu-muenchen.de ([131.159.0.81]:33235 "EHLO
-	tuminfo2.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
-	id S1161026AbWGZSja (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jul 2006 14:39:30 -0400
-Received: from dhcp-3s-48.lrr.in.tum.de (dhcp-3s-48.lrr.in.tum.de [131.159.35.48])
-	by mail.in.tum.de (Postfix) with ESMTP id 8EA262742;
-	Wed, 26 Jul 2006 20:39:28 +0200 (MEST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: KMail/1.9.3
-In-Reply-To: <Pine.LNX.4.63.0607261940090.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
+	id S1751002AbWGZSn7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Jul 2006 14:43:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751101AbWGZSn7
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 14:43:59 -0400
+Received: from mail.gmx.net ([213.165.64.21]:23457 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751002AbWGZSn6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Jul 2006 14:43:58 -0400
+Received: (qmail invoked by alias); 26 Jul 2006 18:43:57 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp019) with SMTP; 26 Jul 2006 20:43:57 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Luben Tuikov <ltuikov@yahoo.com>
+In-Reply-To: <20060726174841.90834.qmail@web31809.mail.mud.yahoo.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24235>
 
-On Wednesday 26 July 2006 19:41, Johannes Schindelin wrote:
+Hi,
+
+On Wed, 26 Jul 2006, Luben Tuikov wrote:
+
+> --- Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > 
+> > These warnings cluttered up my log.
 > 
-> If dir2 already exists, git-mv should move dir1 _into_dir2/.
-> Noticed by Jon Smirl.
+> Can you please give more details of the warnings, cut-and-paste
+> would be nice, the problem as you perceive it, and your solution to it?
 
-Thanks for adding this test.
-BTW, the original PERL script passes it quite fine.
+Sure: The log contains these lines over and over again (I wrapped them 
+manually):
 
-I just looked at Jon's problem. Doesn't seem to be related to
-git-mv or git at all, but more a cogito problem.
-I have some cogito-0.18pre installed, and cg-patch is patching
-the stuff all itself, not using git for this. Pasky?
+Wed Jul 26 15:54:52 2006] [error] [client 192.168.0.67] \
+[Wed Jul 26 15:54:52 2006] \
+gitweb.cgi: Parentheses missing around "my" list at \
+/[my-private-repo]/.git/gitweb/gitweb.cgi line 798., \
+referer: http://dumbo:1234/?p=.git;a=summary
 
-Doing the same with git, i.e. in a rep with existing dir/
+and
 
- mkdir new
- git mv dir new
- git diff --cached -M -C >patch
- git reset --hard
- git apply <patch
+[Wed Jul 26 15:54:52 2006] [error] [client 192.168.0.67] \
+[Wed Jul 26 15:54:52 2006] \
+gitweb.cgi: Parentheses missing around "my" list at \
+/[my-private-repo]/.git/gitweb/gitweb.cgi line 813., \
+referer: http://dumbo:1234/?p=.git;a=summary
 
-However, "git status" shows the "new/" directory totally
-untracked afterwards. Is this expected?
+And my solution was to add the parentheses around the parameter of "my".
 
-Josef
+Ciao,
+Dscho
