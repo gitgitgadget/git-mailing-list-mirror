@@ -1,58 +1,90 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Eliminate Scalar::Util usage from private-Error.pm
-Date: Wed, 26 Jul 2006 15:35:57 +0200
-Organization: At home
-Message-ID: <ea7r3s$ta2$1@sea.gmane.org>
-References: <Pine.LNX.4.63.0607251809340.29667@wbgn013.biozentrum.uni-wuerzburg.de> <20060726010358.20964.80443.stgit@machine> <Pine.LNX.4.63.0607260356480.29667@wbgn013.biozentrum.uni-wuerzburg.de> <20060726021058.GV13776@pasky.or.cz> <Pine.LNX.4.63.0607260416070.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: [PATCH] Extend testing git-mv for renaming of subdirectories
+Date: Wed, 26 Jul 2006 15:44:08 +0200
+Message-ID: <200607261544.08435.Josef.Weidendorfer@gmx.de>
+References: <Pine.LNX.4.63.0607260348130.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Wed Jul 26 15:36:54 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Wed Jul 26 15:46:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G5jYy-00020d-71
-	for gcvg-git@gmane.org; Wed, 26 Jul 2006 15:36:37 +0200
+	id 1G5jhR-0003tA-K5
+	for gcvg-git@gmane.org; Wed, 26 Jul 2006 15:45:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750713AbWGZNgd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Jul 2006 09:36:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750718AbWGZNgd
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 09:36:33 -0400
-Received: from main.gmane.org ([80.91.229.2]:31368 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750713AbWGZNgc (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Jul 2006 09:36:32 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1G5jYh-0001wm-O9
-	for git@vger.kernel.org; Wed, 26 Jul 2006 15:36:20 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 26 Jul 2006 15:36:19 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 26 Jul 2006 15:36:19 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1750726AbWGZNon (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Jul 2006 09:44:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750730AbWGZNon
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 09:44:43 -0400
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:9131 "EHLO
+	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S1750726AbWGZNom (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jul 2006 09:44:42 -0400
+Received: from dhcp-3s-48.lrr.in.tum.de (dhcp-3s-48.lrr.in.tum.de [131.159.35.48])
+	by mail.in.tum.de (Postfix) with ESMTP id 3EE932742;
+	Wed, 26 Jul 2006 15:44:41 +0200 (MEST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+User-Agent: KMail/1.9.3
+In-Reply-To: <Pine.LNX.4.63.0607260348130.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24212>
 
-Johannes Schindelin wrote:
+Signed-off-by: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+---
 
-> Seriously, I still believe that proof-of-concepts in Bash or Perl or even 
-> Python are fine. But they are not for real work, so one of my long-term 
-> goals for git is to get rid of them.
+On Wednesday 26 July 2006 03:52, Johannes Schindelin wrote:
+> 	There is no test for it, and I am quite certain the old script
+> 	doesn't do it either: git-mv some_tracked_dir/ there/ will
+> 	not work. t7001-mv passes, though.
 
-I don't think that we would want to rewrite gitweb in C, for example.
-And Perl for porcelanish commands is all right, IMVVHO.
+Hmm... Renaming full subtrees worked since the old git-rename days.
+I just checked it, and it works fine.
 
+My bad, that there was no test for this, so what about this?
+
+Josef
+
+ t/t7001-mv.sh |   24 ++++++++++++++++++++++++
+ 1 files changed, 24 insertions(+), 0 deletions(-)
+
+diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
+index 811a479..9270a41 100755
+--- a/t/t7001-mv.sh
++++ b/t/t7001-mv.sh
+@@ -38,4 +38,28 @@ test_expect_success \
+     'git-diff-tree -r -M --name-status  HEAD^ HEAD | \
+     grep -E "^R100.+path1/COPYING.+path0/COPYING"'
+ 
++test_expect_success \
++    'adding another file' \
++    'cp ../../README path0/README &&
++     git-add path0/README &&
++     git-commit -m add2 -a'
++
++test_expect_success \
++    'moving whole subdirectory' \
++    'git-mv path0 path2'
++
++test_expect_success \
++    'commiting the change' \
++    'git-commit -m dir-move -a'
++
++test_expect_success \
++    'checking the commit' \
++    'git-diff-tree -r -M --name-status  HEAD^ HEAD | \
++     grep -E "^R100.+path0/COPYING.+path2/COPYING" &&
++     git-diff-tree -r -M --name-status  HEAD^ HEAD | \
++     grep -E "^R100.+path0/README.+path2/README"'
++
+ test_done
++
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+1.4.2.rc1.g791e
