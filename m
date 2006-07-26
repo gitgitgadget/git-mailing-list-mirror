@@ -1,75 +1,53 @@
-From: "Sheena Kimball" <SheenaKimball@0451.com>
-Subject: Your money, ox warble
-Date: Wed, 26 Jul 2006 03:31:46 -0540
-Message-ID: <07905695.20060726033146@0451.com>
-Reply-To: "Sheena Kimball" <SheenaKimball@0451.com>
+From: Jeff Garzik <jeff@garzik.org>
+Subject: git-clone failures abound
+Date: Wed, 26 Jul 2006 00:38:46 -0400
+Message-ID: <44C6F1D6.5020208@garzik.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Jul 26 05:31:55 2006
+Cc: "David S. Miller" <davem@davemloft.net>
+X-From: git-owner@vger.kernel.org Wed Jul 26 06:39:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G5a7h-0007N0-CU
-	for gcvg-git@gmane.org; Wed, 26 Jul 2006 05:31:49 +0200
+	id 1G5bAl-0001zK-N5
+	for gcvg-git@gmane.org; Wed, 26 Jul 2006 06:39:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932517AbWGZDbp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 25 Jul 2006 23:31:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932516AbWGZDbp
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Jul 2006 23:31:45 -0400
-Received: from zeus2.kernel.org ([204.152.191.36]:38296 "EHLO zeus2.kernel.org")
-	by vger.kernel.org with ESMTP id S932512AbWGZDbo (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Jul 2006 23:31:44 -0400
-Received: from i-friend ([58.74.154.148])
-	by zeus2.kernel.org (8.13.1/8.13.1) with ESMTP id k6Q3VVuU024722;
-	Wed, 26 Jul 2006 03:31:44 GMT
-X-Mailer: The Bat! (v3.0.2.2 Rush) UNREG / CD5BF9353B3B7091
-X-Priority: 3 (Normal)
-To: git-commits-head-owner@vger.kernel.org
-X-Virus-Scanned: ClamAV 0.88.3/1618/Tue Jul 25 01:12:40 2006 on zeus2.kernel.org
-X-Virus-Status: Clean
+	id S1030379AbWGZEiu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Jul 2006 00:38:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030380AbWGZEiu
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 00:38:50 -0400
+Received: from srv5.dvmed.net ([207.36.208.214]:61581 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S1030379AbWGZEiu (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Jul 2006 00:38:50 -0400
+Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75] helo=[10.10.10.99])
+	by mail.dvmed.net with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
+	id 1G5bAV-0003Jz-SB; Wed, 26 Jul 2006 04:38:48 +0000
+User-Agent: Thunderbird 1.5.0.4 (X11/20060614)
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@osdl.org>
+X-Spam-Score: -4.3 (----)
+X-Spam-Report: SpamAssassin version 3.1.3 on srv5.dvmed.net summary:
+	Content analysis details:   (-4.3 points, 5.0 required)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 16.7 points;
- *  0.8 DATE_IN_FUTURE_03_06 Date: is 3 to 6 hours after Received: date
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5000]
- *  0.3 DNS_FROM_AHBL_RHSBL RBL: From: sender listed in dnsbl.ahbl.org
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: viscidlyln.com]
- *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: viscidlyln.com]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: viscidlyln.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: viscidlyln.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: viscidlyln.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: viscidlyln.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24205>
 
-Genuine Swiss made Role8x repilcas are as close to the real thing 
-as a repilca watch can be. Sometimes even the professional jewelers 
-are unable to tell the difference from the real Role5x watch.
+I've been seeing several reports lately, from different users on various 
+Linux platforms, with the same basic bug report
 
-Why spend thousands of dollars on the real deal when 
-a repilca watch looks so much alike that only an expert could tell the difference...
-And you only pay a fractoin of the price.
+* "git:// clone of linus's repo times out after 10 minutes"
 
-VISIT US, AND GET OUR SPECIL 370% DIS1COUNT OFER!
+* someone says, "use rsync:// for the initial clone"
 
-http://KVOTA2jp7eorpv727uk11h6jjz6jj1.viscidlyln.com/
+* "it works, thanks!"
 
-==========
-of the Flock?"
-good long tug, and replaced the flask. I can't do it without that. I've been
-profoundly serious  work, since every bent line illuminates a  straight one,
-     I started undressing slowly. I  took off my watch, and  saw that we had
-were strong and calm. "We've come to take you higher, to take you home."
-     "Sam Douglas," he said dryly. "He died last year."
+People seems to note that this behavior only started recently.  I wonder 
+if linux-2.6.git crossed some sort of size threshold that's too much for 
+kernel.org CPU load to bear?  I wonder if git-clone is attempting to 
+delta-ify, when it really should just be sending the objects in bulk?
 
-on the surface of the ocean. His wings were ragged bars of lead,  but  the
-in the Plague Quarter  and only on the  antennas. And most important, it was
+	Jeff
