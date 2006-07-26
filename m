@@ -1,79 +1,77 @@
-From: "Carito" <acvilon@74.ru>
-Subject: Re[2]: from Carolina
-Date: Thu, 27 Jul 2006 00:49:58 +0300
-Message-ID: <00c701c6b0fd$6dae6d00$c320000a@201-1-109-131.dsl.telesp.net.br>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="windows-1251"
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH] Add description on how to use an HTTP proxy with git.
+Date: Thu, 27 Jul 2006 00:23:19 +0200
+Message-ID: <20060726222319.22350.57222.stgit@lathund.dewire.com>
+Content-Type: text/plain; charset=utf-8; format=fixed
 Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Wed Jul 26 23:49:45 2006
+X-From: git-owner@vger.kernel.org Thu Jul 27 00:22:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G5rFz-0003Rw-EQ
-	for gcvg-git@gmane.org; Wed, 26 Jul 2006 23:49:31 +0200
+	id 1G5rmL-0000AD-B6
+	for gcvg-git@gmane.org; Thu, 27 Jul 2006 00:22:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751792AbWGZVt0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Jul 2006 17:49:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751780AbWGZVtW
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 17:49:22 -0400
-Received: from 201-1-109-131.dsl.telesp.net.br ([201.1.109.131]:59149 "EHLO
-	201-1-109-131.dsl.telesp.net.br") by vger.kernel.org with ESMTP
-	id S1751705AbWGZVtU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jul 2006 17:49:20 -0400
-Received: from [10.0.32.195] by 201-1-109-131.dsl.telesp.net.br
-	id bhG9QlfFCUQn; Thu, 27 Jul 2006 00:49:58 +0300
-To: "Felix" <bk-commits-head-owner@vger.kernel.org>
-X-Antivirus: avast! (VPS 0630-2, 26/07/2006), Outbound message
-X-Antivirus-Status: Clean
+	id S1751221AbWGZWWy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Jul 2006 18:22:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751798AbWGZWWy
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 18:22:54 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:57457 "EHLO
+	torino.dewire.com") by vger.kernel.org with ESMTP id S1751221AbWGZWWx
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jul 2006 18:22:53 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by torino.dewire.com (Postfix) with ESMTP id 31D52802E19
+	for <git@vger.kernel.org>; Thu, 27 Jul 2006 00:20:59 +0200 (CEST)
+Received: from torino.dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 24395-05 for <git@vger.kernel.org>; Thu, 27 Jul 2006 00:20:58 +0200 (CEST)
+Received: from lathund.dewire.com (unknown [10.9.0.3])
+	by torino.dewire.com (Postfix) with ESMTP id DF1DB802E04
+	for <git@vger.kernel.org>; Thu, 27 Jul 2006 00:20:58 +0200 (CEST)
+Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1])
+	by lathund.dewire.com (Postfix) with ESMTP id ADAB22833C
+	for <git@vger.kernel.org>; Thu, 27 Jul 2006 00:23:19 +0200 (CEST)
+To: git@vger.kernel.org
+User-Agent: StGIT/0.10
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 14.7 points;
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4656]
- *  0.4 RCVD_IN_NJABL_PROXY RBL: NJABL: sender is an open proxy
- *      [201.1.109.131 listed in combined.njabl.org]
- *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: dating-foryou.com]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: dating-foryou.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: dating-foryou.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: dating-foryou.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: dating-foryou.com]
- *  2.7 MSGID_DOLLARS Message-Id has pattern used in spam
- *  0.0 RCVD_DOUBLE_IP_LOOSE Received: by and from look like IP addresses
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24255>
 
-Hello, Felix
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
 
-I want to start my first letter from a question: "Is it possible to be happy without LOVE?"
-I think that you will agree with me if the answer will be "NO WAY". Love is the most beautiful and exciting thing
-that may happen between man and woman! It inspires us only for doing positive things towards each other.
-One very famous writer said: "The beauty will rescue the world" i agree with his words but still i would add :
-" LOVE and Beauty will rescure the world". 
 
-I hope you agree with me that Love is a big notion.
-There's love to  God, to Mother, to a child to the country where you were born, and there's love that joins a man
-and woman for all their life. That is the LOVE i'm looking for! And i'm seeking for the man who is also eager to have
-this life long adventure full of surprises and new experience we can share together! Will you join me for this trip?
+---
 
-I do realise that it should be very difficult to say "Yes" from the first letter having no idea about me.
-That's why i just offer to get to know each other better though correspondence that will help us to reveal many things
-about each other whether we mach perfectly or not. In addition you can look at my pictures and read some info about me here
-http://dating-foryou.com/passion/
-I hope you'll like what you see and read there.
+ Documentation/urls.txt |    9 ++++++++-
+ 1 files changed, 8 insertions(+), 1 deletions(-)
 
-Well closing my first letter to you i just want to thank you for reading it and i really hope that you'll share
-my point of view on what i said above. I do really hope that you'll answer me soon.
-
-Best regards.....
-Carito
-
-If you think that you were subscribed by mistake for this mail
-delivery or if your email has been added without your permission,
-please, visit http://dating-foryou.com/passion/ and unsubscribe from our mails.
+diff --git a/Documentation/urls.txt b/Documentation/urls.txt
+index 7477413..fb94162 100644
+--- a/Documentation/urls.txt
++++ b/Documentation/urls.txt
+@@ -8,6 +8,13 @@ to name the remote repository:
+ - rsync://host.xz/path/to/repo.git/
+ - http://host.xz/path/to/repo.git/
+ - https://host.xz/path/to/repo.git/
++===============================================================
++
++If you need to use an HTTP proxy you can set the `http_proxy`
++environment variable to a suitable value, e.g.
++`proxy.mydomain.com:8080`. This is a libcurl feature.
++
++===============================================================
+ - git://host.xz/path/to/repo.git/
+ - git://host.xz/~user/path/to/repo.git/
+ - ssh://host.xz/path/to/repo.git/
+@@ -15,7 +22,7 @@ to name the remote repository:
+ - ssh://host.xz/~/path/to/repo.git
+ ===============================================================
+ 
+-SSH Is the default transport protocol and also supports an
++SSH is the default transport protocol and also supports an
+ scp-like syntax.  Both syntaxes support username expansion,
+ as does the native git protocol. The following three are
+ identical to the last three above, respectively:
