@@ -1,56 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/2] t7001: add test for git-mv dir1 dir2/
-Date: Wed, 26 Jul 2006 12:31:49 -0700
-Message-ID: <7vmzawqi1m.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0607261940090.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	<9e4733910607261050k5f8d8d5dke5ded3a806b46f21@mail.gmail.com>
-	<7virlkrzr4.fsf@assigned-by-dhcp.cox.net>
-	<9e4733910607261131q195defa7vbedd72cb0b938ba3@mail.gmail.com>
-	<7vejw8ry5f.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/5] git-instaweb: store parameters in config
+Date: Wed, 26 Jul 2006 21:53:30 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607262147280.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0607261633320.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v3bcorxbd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 26 21:32:08 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Jul 26 21:53:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G5p6t-0001vr-EQ
-	for gcvg-git@gmane.org; Wed, 26 Jul 2006 21:31:59 +0200
+	id 1G5pRo-00069s-6K
+	for gcvg-git@gmane.org; Wed, 26 Jul 2006 21:53:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932236AbWGZTbx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Jul 2006 15:31:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932293AbWGZTbx
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 15:31:53 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:16275 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932236AbWGZTbw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jul 2006 15:31:52 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060726193151.UPTG2704.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 26 Jul 2006 15:31:51 -0400
-To: "Jon Smirl" <jonsmirl@gmail.com>
-In-Reply-To: <7vejw8ry5f.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 26 Jul 2006 11:58:36 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751339AbWGZTxc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Jul 2006 15:53:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751765AbWGZTxc
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 15:53:32 -0400
+Received: from mail.gmx.de ([213.165.64.21]:62380 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751339AbWGZTxb (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Jul 2006 15:53:31 -0400
+Received: (qmail invoked by alias); 26 Jul 2006 19:53:30 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp039) with SMTP; 26 Jul 2006 21:53:30 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v3bcorxbd.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24242>
 
-Junio C Hamano <junkio@cox.net> writes:
+Hi,
 
-> "Jon Smirl" <jonsmirl@gmail.com> writes:
->
->> git diff HEAD makes a much longer patch that deltas out the existing
->> files and delta in the new file.
->>
->> It's applying patches in the extended git format that fails.
->
-> Thanks.
+On Wed, 26 Jul 2006, Junio C Hamano wrote:
 
-... and it turns out that "git apply" (with or without --index)
-groks it just fine.  I suspect the fix is quite recent (not in
-v1.4.2-rc1 but in v1.4.2-rc2).
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > It already reads the config for defaults, and now it also stores
+> > the last passed parameters in the config.
+> 
+> This might need to be conditional -- usually people override the
+> default from the command line as a one-shot thing, and storing
+> them in the configuration file would upset them.
+
+I agree that this should be conditional, but the other way round, no? 
+git-instaweb is meant as a one-shot install thing, so I would like to do 
+this in some arbitrary repo:
+
+	git-instaweb
+
+and see a browser. Okay, so it does not work: I do not have LigHTTP, and 
+my apache is not in the path (and you need to specify the modules-path 
+anyway, if it is different than /usr/lib/apache2/modules), so I do
+
+	git-instaweb --httpd=/usr/local/apache2/bin/httpd\ -f \
+		--module-path=/usr/local/apache2/modules
+
+Works! After I played a little with it (or rebooted the computer), I would 
+like to start it again:
+
+	git-instaweb
+
+My point being: you do not really need a different configuration with 
+git-instaweb, once you got it right.
+
+Ciao,
+Dscho
