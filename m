@@ -1,102 +1,88 @@
-From: Junio C Hamano <junkio@cox.net>
+From: "Jon Smirl" <jonsmirl@gmail.com>
 Subject: Re: [PATCH 1/2] t7001: add test for git-mv dir1 dir2/
-Date: Wed, 26 Jul 2006 11:23:59 -0700
-Message-ID: <7virlkrzr4.fsf@assigned-by-dhcp.cox.net>
+Date: Wed, 26 Jul 2006 14:31:46 -0400
+Message-ID: <9e4733910607261131q195defa7vbedd72cb0b938ba3@mail.gmail.com>
 References: <Pine.LNX.4.63.0607261940090.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-	<9e4733910607261050k5f8d8d5dke5ded3a806b46f21@mail.gmail.com>
+	 <9e4733910607261050k5f8d8d5dke5ded3a806b46f21@mail.gmail.com>
+	 <7virlkrzr4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Wed Jul 26 20:24:10 2006
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 26 20:32:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G5o3D-0005hQ-CX
-	for gcvg-git@gmane.org; Wed, 26 Jul 2006 20:24:09 +0200
+	id 1G5oAq-0007I1-Bi
+	for gcvg-git@gmane.org; Wed, 26 Jul 2006 20:32:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161005AbWGZSYD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Jul 2006 14:24:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751749AbWGZSYD
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 14:24:03 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:42955 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751748AbWGZSYB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jul 2006 14:24:01 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060726182400.QULW27857.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 26 Jul 2006 14:24:00 -0400
-To: "Jon Smirl" <jonsmirl@gmail.com>
-In-Reply-To: <9e4733910607261050k5f8d8d5dke5ded3a806b46f21@mail.gmail.com>
-	(Jon Smirl's message of "Wed, 26 Jul 2006 13:50:54 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161025AbWGZSbt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Jul 2006 14:31:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161026AbWGZSbt
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 14:31:49 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:20369 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1161025AbWGZSbs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jul 2006 14:31:48 -0400
+Received: by ug-out-1314.google.com with SMTP id m3so3300617ugc
+        for <git@vger.kernel.org>; Wed, 26 Jul 2006 11:31:46 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ndfo88tm421kXq745a82VQrA5fa9IWqUv3FcSTkIdr+B8O3Mf/eeDRk7VimNuYejnx28ZaXwrh/ya9BA8l38BNqIqyf4RvdfUxyCki+hDUU4wQU+KmW9oT7ifeJKW2U5BGkbpA0HiVBK47n6GmG1CA3zs2zLu8FRbf7JHGgG5xY=
+Received: by 10.78.156.6 with SMTP id d6mr3369454hue;
+        Wed, 26 Jul 2006 11:31:46 -0700 (PDT)
+Received: by 10.78.149.8 with HTTP; Wed, 26 Jul 2006 11:31:46 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7virlkrzr4.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24232>
 
-"Jon Smirl" <jonsmirl@gmail.com> writes:
+On 7/26/06, Junio C Hamano <junkio@cox.net> wrote:
+> We should correctly handle cases that fit your general
+> description (the test t/t4112-apply-renames.sh has a file in
+> "klibc/arch/x86_64" which is renamed and copied to two different
+> locations under "include/arch").  The above does not reproduce
+> for me if I used "git diff HEAD >patch" in place of "cg diff" (I
+> cannot make cg behave on my machine).
 
-> An exact test case:
->
-> git clone git foo
-> git clone git foo1
-> cd foo
-> mkdir zzz
-> git mv gitweb zzz
-> cg diff >patch
-> cd ../foo1
-> cg patch <../foo/patch
->
-> This patch won't apply because zzz does not exist in foo1
+cg diff makes a patch this looks like this
 
-A short and sweet reproduction recipe is essential for a problem
-report like this, and I appreciate it very much.  "git mv" in
-"master" should do the right thing and I see Johannes fixing (or
-fixed) the problem of "git mv" failing in his version.
+diff --git a/gitweb/README b/zzz/gitweb/README
+similarity index 100%
+rename from gitweb/README
+rename to zzz/gitweb/README
+diff --git a/gitweb/gitweb.cgi b/zzz/gitweb/gitweb.cgi
+similarity index 100%
+rename from gitweb/gitweb.cgi
+rename to zzz/gitweb/gitweb.cgi
+diff --git a/gitweb/gitweb.css b/zzz/gitweb/gitweb.css
+similarity index 100%
+rename from gitweb/gitweb.css
+rename to zzz/gitweb/gitweb.css
+diff --git "a/gitweb/test/M\303\244rchen" "b/zzz/gitweb/test/M\303\244rchen"
+similarity index 100%
+rename from "gitweb/test/M\303\244rchen"
+rename to "zzz/gitweb/test/M\303\244rchen"
+diff --git a/gitweb/test/file with spaces b/zzz/gitweb/test/file with spaces
+similarity index 100%
+rename from gitweb/test/file with spaces
+rename to zzz/gitweb/test/file with spaces
+diff --git a/gitweb/test/file+plus+sign b/zzz/gitweb/test/file+plus+sign
+similarity index 100%
+rename from gitweb/test/file+plus+sign
+rename to zzz/gitweb/test/file+plus+sign
 
-We should correctly handle cases that fit your general
-description (the test t/t4112-apply-renames.sh has a file in
-"klibc/arch/x86_64" which is renamed and copied to two different
-locations under "include/arch").  The above does not reproduce
-for me if I used "git diff HEAD >patch" in place of "cg diff" (I
-cannot make cg behave on my machine).
+git diff HEAD makes a much longer patch that deltas out the existing
+files and delta in the new file.
 
-$ mkdir zzz
-$ ~/git-master/bin/git-mv gitweb zzz/
-$ LANG=C LC_ALL=C find gitweb zzz -type f -print
-find: gitweb: No such file or directory
-zzz/gitweb/README
-zzz/gitweb/gitweb.cgi
-zzz/gitweb/gitweb.css
-zzz/gitweb/test/M??rchen
-zzz/gitweb/test/file with spaces
-zzz/gitweb/test/file+plus+sign
-$ git diff HEAD >patch
-$ git checkout -f HEAD
-$ LANG=C LC_ALL=C find gitweb zzz -type f -print
-gitweb/README
-gitweb/gitweb.cgi
-gitweb/gitweb.css
-gitweb/test/M??rchen
-gitweb/test/file with spaces
-gitweb/test/file+plus+sign
-find: zzz: No such file or directory
-$ git apply --index <patch
-$ LANG=C LC_ALL=C find gitweb zzz -type f -print
-zzz/gitweb/README
-zzz/gitweb/gitweb.cgi
-zzz/gitweb/gitweb.css
-zzz/gitweb/test/M??rchen
-zzz/gitweb/test/file with spaces
-zzz/gitweb/test/file+plus+sign
+It's applying patches in the extended git format that fails.
 
-A couple of weeks ago test t/t4114-apply-typechange.sh was added
-by Eric Wong, and it caught cases where git-apply was assuming
-that leading directories of a new file already exists or was
-complaining when you create file "foo" and remove a file
-"foo/bar" (that is, you used to have directory at "foo").  The
-problems that test found were all fixed as far as I recall.
+-- 
+Jon Smirl
+jonsmirl@gmail.com
