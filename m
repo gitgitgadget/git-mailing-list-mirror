@@ -1,65 +1,40 @@
-From: Wolfgang Denk <wd@denx.de>
-Subject: Re: Licensing and the library version of git
-Date: Thu, 27 Jul 2006 21:56:14 +0200
-Message-ID: <20060727195614.7EDAE353B04@atlas.denx.de>
-References: <9e4733910607270554p5622ee20ida8c264cf3122500@mail.gmail.com>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: [PATCH] Per branch properties for pull and fetch
+Date: Thu, 27 Jul 2006 22:26:43 +0200
+Message-ID: <E1G6CRP-0007y4-Jd@moooo.ath.cx>
+References: <87lkqfcvm2.fsf@gmail.com> <20060727085516.GC27593@admingilde.org> <8aa486160607270240h412b0dcek1d57eeb2b254fb2e@mail.gmail.com> <8aa486160607270306s3f49a01cq91ef61e2c9f005e@mail.gmail.com> <20060727120220.GD27593@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 27 21:56:21 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 27 22:27:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6Bxz-0008Ax-SD
-	for gcvg-git@gmane.org; Thu, 27 Jul 2006 21:56:21 +0200
+	id 1G6CRY-0007SL-GE
+	for gcvg-git@gmane.org; Thu, 27 Jul 2006 22:26:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751007AbWG0T4R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Jul 2006 15:56:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751011AbWG0T4Q
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 15:56:16 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:55759 "EHLO
-	mail-out.m-online.net") by vger.kernel.org with ESMTP
-	id S1751007AbWG0T4Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jul 2006 15:56:16 -0400
-Received: from mail01.m-online.net (svr21.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3C7569849C;
-	Thu, 27 Jul 2006 21:56:15 +0200 (CEST)
-X-Auth-Info: eM0vemD6YirE0O59zo9KVkAq6j8Blb7Tuz20l+z8NrE=
-X-Auth-Info: eM0vemD6YirE0O59zo9KVkAq6j8Blb7Tuz20l+z8NrE=
-Received: from mail.denx.de (p54965D9D.dip.t-dialin.net [84.150.93.157])
-	by smtp-auth.mnet-online.de (Postfix) with ESMTP id 27C15918B9;
-	Thu, 27 Jul 2006 21:56:15 +0200 (CEST)
-Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
-	by mail.denx.de (Postfix) with ESMTP id 8B7216D00A8;
-	Thu, 27 Jul 2006 21:56:15 +0200 (MEST)
-Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
-	by atlas.denx.de (Postfix) with ESMTP id 7EDAE353B04;
-	Thu, 27 Jul 2006 21:56:14 +0200 (MEST)
-To: "Jon Smirl" <jonsmirl@gmail.com>
-In-reply-to: Your message of "Thu, 27 Jul 2006 08:54:54 EDT."
-             <9e4733910607270554p5622ee20ida8c264cf3122500@mail.gmail.com> 
+	id S1750717AbWG0U0r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Jul 2006 16:26:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750723AbWG0U0r
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 16:26:47 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:40350 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S1750717AbWG0U0r (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 16:26:47 -0400
+To: Martin Waitz <tali@admingilde.org>
+Mail-Followup-To: Martin Waitz <tali@admingilde.org>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20060727120220.GD27593@admingilde.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24338>
 
-In message <9e4733910607270554p5622ee20ida8c264cf3122500@mail.gmail.com> you wrote:
->
-> I see that someone is already writing a pure Java version which will
-> work around the GPL problem assuming the Java version is released
-> under a compatible license.
-
-... and assuming it is a clean-room  implementation  which  does  not
-borrow from the GPL code.
-
-Best regards,
-
-Wolfgang Denk
-
--- 
-Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
-Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
-Be careful what you wish for. You never know who will be listening.
-                                      - Terry Pratchett, _Soul Music_
+Martin Waitz <tali@admingilde.org> wrote:
+> The current default is to always use the remote's master branch, right?
+> What do others think: does it make sense to default to the same
+> branchname on the remote side?
+I like the separate-remote option too and having one simple command
+that pulls the changes from the correct remote branch would be nice.
+It should do something like
+$ git pull ${1:-origin} $(git-symbolic-ref HEAD | cut -d / -f 3-)
