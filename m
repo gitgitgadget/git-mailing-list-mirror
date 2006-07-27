@@ -1,80 +1,73 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH] Per branch properties for pull and fetch
-Date: Thu, 27 Jul 2006 14:02:20 +0200
-Message-ID: <20060727120220.GD27593@admingilde.org>
-References: <87lkqfcvm2.fsf@gmail.com> <20060727085516.GC27593@admingilde.org> <8aa486160607270240h412b0dcek1d57eeb2b254fb2e@mail.gmail.com> <8aa486160607270306s3f49a01cq91ef61e2c9f005e@mail.gmail.com>
+From: "=?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?=" <andre.goddard@gmail.com>
+Subject: Git clone stalls at a read(3, ...) saw using strace
+Date: Thu, 27 Jul 2006 08:16:58 -0400
+Message-ID: <b8bf37780607270516i7fbd8844he03e107b15fd2ed7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="jy6Sn24JjFx/iggw"
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 27 14:02:36 2006
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: junkio@cox.net
+X-From: git-owner@vger.kernel.org Thu Jul 27 14:17:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G64ZN-0004wn-FF
-	for gcvg-git@gmane.org; Thu, 27 Jul 2006 14:02:25 +0200
+	id 1G64nY-0007Lr-0m
+	for gcvg-git@gmane.org; Thu, 27 Jul 2006 14:17:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750720AbWG0MCW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Jul 2006 08:02:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751062AbWG0MCW
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 08:02:22 -0400
-Received: from admingilde.org ([213.95.32.146]:41882 "EHLO mail.admingilde.org")
-	by vger.kernel.org with ESMTP id S1750720AbWG0MCV (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 08:02:21 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1G64ZJ-0005XF-0r; Thu, 27 Jul 2006 14:02:21 +0200
-To: Santi <sbejar@gmail.com>
+	id S1751169AbWG0MRA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 27 Jul 2006 08:17:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751242AbWG0MRA
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 08:17:00 -0400
+Received: from py-out-1112.google.com ([64.233.166.176]:20717 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1751169AbWG0MQ7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 08:16:59 -0400
+Received: by py-out-1112.google.com with SMTP id s49so234209pyc
+        for <git@vger.kernel.org>; Thu, 27 Jul 2006 05:16:58 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=ClI0/5mvYF5G2qdn+Npx7JGumF46vHKlii7NGXRRkC4akVb/FnSgU4+gdh032lwTnqiG/fHHyA/otUsxUdNLXJdLKO+7BjxVbin0HbWCLj94EztxOwClIRYEcLx/UI3IbJLYeEYRdPchBCAuvLFwtcSd8n3DJK1cHNHsRHaXM08=
+Received: by 10.35.107.20 with SMTP id j20mr13049191pym;
+        Thu, 27 Jul 2006 05:16:58 -0700 (PDT)
+Received: by 10.35.128.2 with HTTP; Thu, 27 Jul 2006 05:16:58 -0700 (PDT)
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <8aa486160607270306s3f49a01cq91ef61e2c9f005e@mail.gmail.com>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24282>
 
+Hi, all!
 
---jy6Sn24JjFx/iggw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+    Please CC me as I'm not subscribed.
 
-hoi :)
+    Using  GIT 1.4.1, I tried to get this repository:
 
-On Thu, Jul 27, 2006 at 12:06:34PM +0200, Santi wrote:
-> >> could we default the to-be-merged branch to "remotes/$remote/$branch" =
-if
-> >> that exists?. That could make life a lot easier when using
-> >> clone --use-separate-remote.
+# git clone git://source.mvista.com/git/linux-davinci-2.6.git
 
-> On the other hand, my patch changes the behaviour only when explicitly
-> configured, and your proposed default would change the behaviour even
-> without changes to the config.
+    After some time the download stalled completely. I used ps and
+saw two git processes.
 
-that is correct.
+    Using strace, I saw that the first one, "git clone", was waiting
+with waitpid()
+for its child termination.
+    Its child, "git pack --all -k", was stalled at a "read(3, ...)"
 
-The current default is to always use the remote's master branch, right?
-What do others think: does it make sense to default to the same
-branchname on the remote side?
+    I went to /proc and saw that fd 3 was a pipe. Anyone know why this
+is happening?
 
-It could make life a bit easier if you want to synchronize several topic
-branches between different sites.
+    I found an issue somewhat related in google (not sure that is the
+same problem):
 
+http://groups.google.com/group/fa.linux.kernel/browse_thread/thread/e64=
+a92f28def32a7/93bd8bf5df1fcc66?lnk=3Dst&q=3D&rnum=3D1#93bd8bf5df1fcc66
+
+    It stalled at the first 60 Mb transfered. After CTRL+C it deletes
+and I have to start again from scratch.
+
+Thank you for the great alternative to bitkeeper and CVS,
 --=20
-Martin Waitz
-
---jy6Sn24JjFx/iggw
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFEyKtMj/Eaxd/oD7IRAh57AJ4poOC23TuDSgjKedNtD+dQIDjvdQCfelLE
-l4dh7OQtDNf4W7SKJfavbRA=
-=HBtF
------END PGP SIGNATURE-----
-
---jy6Sn24JjFx/iggw--
+[]s,
+Andr=E9 Goddard
