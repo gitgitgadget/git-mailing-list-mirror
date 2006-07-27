@@ -1,79 +1,122 @@
-From: "=?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?=" <andre.goddard@gmail.com>
-Subject: Re: Git clone stalls at a read(3, ...) saw using strace
-Date: Thu, 27 Jul 2006 13:57:37 -0400
-Message-ID: <b8bf37780607271057i22c700e0hde1c0893cd638f25@mail.gmail.com>
-References: <b8bf37780607270516i7fbd8844he03e107b15fd2ed7@mail.gmail.com>
-	 <1154018302.13273.0.camel@dv>
-	 <b8bf37780607270943w562ec21fuab0eb882b3ccffeb@mail.gmail.com>
-	 <Pine.LNX.4.64.0607270947540.4168@g5.osdl.org>
-	 <b8bf37780607271017p22fa908bt82a564a4a1a15a79@mail.gmail.com>
-	 <b8bf37780607271025m1a611006x65a900e9e487ce1b@mail.gmail.com>
-	 <Pine.LNX.4.64.0607271049460.4168@g5.osdl.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: local clone performance
+Date: Thu, 27 Jul 2006 20:15:54 +0200
+Message-ID: <20060727181554.GD13776@pasky.or.cz>
+References: <9e4733910607261637w75c99a2ehcb25b6c81449d298@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Pavel Roskin" <proski@gnu.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 27 19:58:05 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 27 20:16:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6A7C-0002KI-7g
-	for gcvg-git@gmane.org; Thu, 27 Jul 2006 19:57:42 +0200
+	id 1G6AOv-0006jB-E8
+	for gcvg-git@gmane.org; Thu, 27 Jul 2006 20:16:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751902AbWG0R5j convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 27 Jul 2006 13:57:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751903AbWG0R5j
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 13:57:39 -0400
-Received: from py-out-1112.google.com ([64.233.166.179]:4925 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1751902AbWG0R5i convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 13:57:38 -0400
-Received: by py-out-1112.google.com with SMTP id s49so380618pyc
-        for <git@vger.kernel.org>; Thu, 27 Jul 2006 10:57:38 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BOWIWFtarxspSmJkcFx68O7JM+RqDJll54ID7BTbWwZ8qESpaxkjGnho2TL5U/NNPz9zjQG9Ws6khC87RZYjpcfyVTQHMQZlDchc+o3ZFKgtfgpFkcG3UTSuvn19Yq9GfV0El52Q/EAnqbIRW0aqc2WLQQVkVWWZuq7sPk/4zh8=
-Received: by 10.35.126.7 with SMTP id d7mr13511695pyn;
-        Thu, 27 Jul 2006 10:57:38 -0700 (PDT)
-Received: by 10.35.128.2 with HTTP; Thu, 27 Jul 2006 10:57:37 -0700 (PDT)
-To: "Linus Torvalds" <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0607271049460.4168@g5.osdl.org>
+	id S1751654AbWG0SP5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Jul 2006 14:15:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751916AbWG0SP5
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 14:15:57 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:20414 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751654AbWG0SP4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 14:15:56 -0400
+Received: (qmail 27543 invoked by uid 2001); 27 Jul 2006 20:15:54 +0200
+To: Jon Smirl <jonsmirl@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <9e4733910607261637w75c99a2ehcb25b6c81449d298@mail.gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24327>
 
-On 7/27/06, Linus Torvalds <torvalds@osdl.org> wrote:
->
->
-> On Thu, 27 Jul 2006, Andr=E9 Goddard Rosa wrote:
-> >
-> > The problem happened again, and it stalls AFAICS.
-> > Can you reproduce there?
-> >
-> > # git clone git://source.mvista.com/git/linux-davinci-2.6.git
->
-> Nope. I have a fairly constant 120kbps, and:
->
-> [torvalds@g5 ~]$  git clone git://source.mvista.com/git/linux-davinci=
--2.6.git
-> Checking files out...)
->  100% (19754/19754) done
-> here
+Dear diary, on Thu, Jul 27, 2006 at 01:38:00AM CEST, I got a letter
+where Jon Smirl <jonsmirl@gmail.com> said that...
+> Comparing git-clone to cg-clone
+> 
+> [jonsmirl@jonsmirl apps]$ time git-clone git foo
+> ......
+> real    0m5.755s
+> user    0m4.548s
+> sys     0m0.512s
+> 
+> [jonsmirl@jonsmirl apps]$ time cg-clone git foo
+> ....
+> real    0m18.970s
+> user    0m10.737s
+> sys     0m1.392s
+> 
+> Why does it take cg clone so long to set up the missing tags?
+> git-clone is over 3x faster.
 
-Do you think you can reproduce the server timeout by CTRL + Z and
-stopping the process for a while?
+  How many tags do you have?
 
-I sent an email to the last one who commited in that tree asking for
-updating the git version there. I also sent and email to the maillist
-owner asking this.
+  It's true that cg-clone does not scale very well with big amounts of
+tags, because it won't fetch tagged objects you wouldn't get otherwise
+(so if you tagged some random huge blob or a history line which is not
+part of any branch you have, cg-clone won't grab it all). This
+unfortunately costs us one special fetch invocation per tag; I will look
+into hacking git-local-fetch to accept multiple commit ids at once, that
+should speed it up considerably.
 
-Thanks again,
---=20
-[]s,
-Andr=E9 Goddard
+  That said, with cg-clone -a I will be able to cut that difference
+entirely and blindly take everything from the other repository.
+
+  Could you please try the patch below and check if it has at least
+any measurable impact on the performance at all? Thanks.
+
+diff --git a/cg-fetch b/cg-fetch
+index a6e6959..23e0e77 100755
+--- a/cg-fetch
++++ b/cg-fetch
+@@ -54,7 +54,6 @@ _git_wc_unneeded=1
+ 
+ fetch_progress()
+ {
+-	[ $verbose -ge 2 ] && exec cat
+ 	if [ -t 1 ]; then
+ 		exec "${COGITO_LIB}"cg-Xfetchprogress "$_git_objects"
+ 	else
+@@ -166,7 +165,11 @@ fetch_http()
+ {
+ 	whead=
+ 	[ "$3" ] && whead="-w $3"
+-	(git-http-fetch -a -v $whead $recovery "$1" "$2/" 2>&1 /dev/null) | fetch_progress
++	if [ $verbose -ge 2 ]; then
++		git-http-fetch -a -v $whead $recovery "$1" "$2/"
++	else
++		(git-http-fetch -a -v $whead $recovery "$1" "$2/" 2>&1 /dev/null) | fetch_progress
++	fi
+ 	return ${PIPESTATUS[0]}
+ }
+ 
+@@ -197,7 +200,11 @@ fetch_local()
+ {
+ 	whead=
+ 	[ "$3" ] && whead="-w $3"
+-	(git-local-fetch -a -l -v $whead $recovery "$1" "$2" 2>&1 /dev/null) | fetch_progress
++	if [ $verbose -ge 2 ]; then
++		git-local-fetch -a -l -v $whead $recovery "$1" "$2"
++	else
++		(git-local-fetch -a -l -v $whead $recovery "$1" "$2" 2>&1 /dev/null) | fetch_progress
++	fi
+ 	return ${PIPESTATUS[0]}
+ }
+ 
+@@ -230,6 +237,7 @@ fetch_tags()
+ 			# if so, fetch the tag -- which should be
+ 			# a cheap operation -- to complete the chain.
+ 			echo -n "Missing tag ${tagname#tags/}... "
++			local verbose=2
+ 			if $fetch "$tagname" "$uri" "$tagname" 2>/dev/null >&2; then
+ 				echo "retrieved"
+ 			else
+
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Snow falling on Perl. White noise covering line noise.
+Hides all the bugs too. -- J. Putnam
