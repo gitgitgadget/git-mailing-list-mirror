@@ -1,36 +1,35 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: print errors from git-update-ref
-Date: Wed, 26 Jul 2006 21:28:56 -0400
-Message-ID: <20060727012856.GB32492@spearce.org>
-References: <81b0412b0607180613t603551b8t865b407c40ab8aef@mail.gmail.com> <7vk663h6zi.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Licensing and the library version of git
+Date: Wed, 26 Jul 2006 21:40:41 -0400
+Message-ID: <20060727014040.GA32742@spearce.org>
+References: <9e4733910607261436v4c0802e5v7301e904593f9bab@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 27 03:29:21 2006
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 27 03:40:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G5uge-0007Hp-0n
-	for gcvg-git@gmane.org; Thu, 27 Jul 2006 03:29:16 +0200
+	id 1G5uro-0000dt-T5
+	for gcvg-git@gmane.org; Thu, 27 Jul 2006 03:40:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751846AbWG0B3D (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 26 Jul 2006 21:29:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751847AbWG0B3D
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 21:29:03 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:14287 "EHLO
+	id S1750773AbWG0Bkq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 26 Jul 2006 21:40:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751854AbWG0Bkq
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Jul 2006 21:40:46 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:51152 "EHLO
 	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751846AbWG0B3B (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jul 2006 21:29:01 -0400
+	id S1750773AbWG0Bkp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jul 2006 21:40:45 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1G5ugC-0006ZJ-9M; Wed, 26 Jul 2006 21:28:48 -0400
+	id 1G5urY-0007l4-SD; Wed, 26 Jul 2006 21:40:33 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 360F620FB77; Wed, 26 Jul 2006 21:28:57 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
+	id EA17820FB77; Wed, 26 Jul 2006 21:40:41 -0400 (EDT)
+To: Jon Smirl <jonsmirl@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vk663h6zi.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <9e4733910607261436v4c0802e5v7301e904593f9bab@mail.gmail.com>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -43,138 +42,37 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24266>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> "Alex Riesen" <raa.lkml@gmail.com> writes:
-> 
-> > ...otherwise it not clear what happened when update-ref fails.
-> >
-> > E.g., git checkout -b a/b/c HEAD would print nothing if refs/heads/a
-> > exists and is a directory (it does return 1, so scripts checking for
-> > return code should be ok).
-> 
-> My gut feeling is that complaining from update-ref is fine, but
-> I am still tired after a long week and not thinking straight, so
-> I will not be applying this tonight.
+Jon Smirl <jonsmirl@gmail.com> wrote:
+> Can the library version of git be licensed LGPL instead of GPL? If it
+> is GPL then it can't be linked into non-GPL projects like Eclipse.
 
-So I looked into this issue tonight.  For starters I can't seem to
-reproduce the situtation reported by Alex, and since he didn't
-supply new test cases its difficult to actually fix it.
+True.  But I have a pure-Java implementation of portions of GIT:
 
-I did however find problems with git-update-ref a/b/c when a is
-actually an existing ref.  This didn't report any error, so here's
-a fix.  It may resolve Alex's problem - or maybe not.
+	- pack file reader, including delta decompression;
+	- loose object reader (sans new pack header format);
+	- loose object writer (blobs, trees, commits, no tags);
+	- ref reader/basic resolver;
+	- ref writer;
+	- new repository creation;
+	- tree and commit parsing;
+	- n-way tree structure diff (no blob content diff);
 
--->8--
-Display an error from update-ref if target ref name is invalid.
+and Eclipse UI for:
 
-Alex Riesen (raa.lkml@gmail.com) recently observed that git branch
-would fail with no error message due to unexpected situations with
-regards to refs.  For example, if .git/refs/heads/gu is a file but
-`git branch -b refs/heads/gu/fixa HEAD` was invoked by the user
-it would fail silently due to refs/heads/gu being a file and not
-a directory.
+	- resource decorator showing object state;
+	- rename tracking (well, automatic delete then add);
+	- add file/folder to repository;
+	- delete file/folder from repository;
+	- save workspace state to a tree;
+	- periodically flush modified files into blobs;
 
-This change adds a test for trying to create a ref within a directory
-that is actually currently a file, and adds error printing within
-the ref locking routine should the resolve operation fail.
+but I need UI still for creating a commit.  I'd like to get that
+code finished this week and get the repository posted on the web
+for others to start messing around with if they are interested.
+This project has just been slow going for me as I'm working looooong
+hours at my day job.  :-)
 
-The error printing code probably belongs at this level of the library
-as other failures within the ref locking, writing and logging code
-are also currently at this level of the code.
-
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- refs.c                |   33 +++++++++++++++++++++++++++++++++
- t/t1400-update-ref.sh |   12 ++++++++++++
- 2 files changed, 45 insertions(+), 0 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 56db394..e99e9e4 100644
---- a/refs.c
-+++ b/refs.c
-@@ -290,10 +290,33 @@ static struct ref_lock *verify_lock(stru
- 	return lock;
- }
- 
-+static char* not_a_directory (const char *orig_path)
-+{
-+	char *p = strdup(orig_path);
-+	struct stat st;
-+
-+	do {
-+		char * s = strrchr(p, '/');
-+		if (s) {
-+			*s = 0;
-+			if (lstat(p, &st) == 0 && S_ISDIR(st.st_mode)) {
-+				*s = '/';
-+				break;
-+			}
-+		} else {
-+			strcpy(p, orig_path);
-+			break;
-+		}
-+	} while (errno == ENOTDIR);
-+
-+	return p;
-+}
-+
- static struct ref_lock *lock_ref_sha1_basic(const char *path,
- 	int plen,
- 	const unsigned char *old_sha1, int mustexist)
- {
-+	const char *orig_path = path;
- 	struct ref_lock *lock;
- 	struct stat st;
- 
-@@ -303,7 +326,17 @@ static struct ref_lock *lock_ref_sha1_ba
- 	plen = strlen(path) - plen;
- 	path = resolve_ref(path, lock->old_sha1, mustexist);
- 	if (!path) {
-+		int last_errno = errno;
-+		if (errno == ENOTDIR) {
-+			char* p = not_a_directory(orig_path);
-+			error("unable to resolve reference %s: %s",
-+				p, strerror(errno));
-+			free(p);
-+		} else
-+			error("unable to resolve reference %s: %s",
-+				orig_path, strerror(errno));
- 		unlock_ref(lock);
-+		errno = last_errno;
- 		return NULL;
- 	}
- 	lock->lk = xcalloc(1, sizeof(struct lock_file));
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index 04fab26..e73827c 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -14,6 +14,8 @@ D=44444444444444444444444444444444444444
- E=5555555555555555555555555555555555555555
- F=6666666666666666666666666666666666666666
- m=refs/heads/master
-+n_dir=refs/heads/gu
-+n=$n_dir/fixes
- 
- test_expect_success \
- 	"create $m" \
-@@ -26,6 +28,16 @@ test_expect_success \
- rm -f .git/$m
- 
- test_expect_success \
-+	"fail to create $n" \
-+	'touch .git/$n_dir
-+	 git-update-ref $n $A >out 2>err
-+	 test $? = 1 &&
-+	 test "" = "$(cat out)" &&
-+	 grep "error: unable to resolve reference" err &&
-+	 grep $n_dir err'
-+rm -f .git/$n_dir out err
-+
-+test_expect_success \
- 	"create $m (by HEAD)" \
- 	'git-update-ref HEAD $A &&
- 	 test $A = $(cat .git/$m)'
 -- 
-1.4.2.rc1.g802da
+Shawn.
