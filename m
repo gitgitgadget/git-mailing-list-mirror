@@ -1,73 +1,59 @@
-From: "=?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?=" <andre.goddard@gmail.com>
-Subject: Git clone stalls at a read(3, ...) saw using strace
-Date: Thu, 27 Jul 2006 08:16:58 -0400
-Message-ID: <b8bf37780607270516i7fbd8844he03e107b15fd2ed7@mail.gmail.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: [PATCH] Eliminate Scalar::Util usage from private-Error.pm
+Date: 27 Jul 2006 05:47:45 -0700
+Message-ID: <86ejw7b4em.fsf@blue.stonehenge.com>
+References: <Pine.LNX.4.63.0607251809340.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20060726010358.20964.80443.stgit@machine>
+	<Pine.LNX.4.63.0607260356480.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20060726021058.GV13776@pasky.or.cz>
+	<Pine.LNX.4.63.0607260416070.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<ea7r3s$ta2$1@sea.gmane.org>
+	<Pine.LNX.4.63.0607261702500.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: junkio@cox.net
-X-From: git-owner@vger.kernel.org Thu Jul 27 14:17:04 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 27 14:48:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G64nY-0007Lr-0m
-	for gcvg-git@gmane.org; Thu, 27 Jul 2006 14:17:04 +0200
+	id 1G65HO-0004p2-08
+	for gcvg-git@gmane.org; Thu, 27 Jul 2006 14:47:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751169AbWG0MRA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 27 Jul 2006 08:17:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751242AbWG0MRA
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 08:17:00 -0400
-Received: from py-out-1112.google.com ([64.233.166.176]:20717 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1751169AbWG0MQ7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 08:16:59 -0400
-Received: by py-out-1112.google.com with SMTP id s49so234209pyc
-        for <git@vger.kernel.org>; Thu, 27 Jul 2006 05:16:58 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=ClI0/5mvYF5G2qdn+Npx7JGumF46vHKlii7NGXRRkC4akVb/FnSgU4+gdh032lwTnqiG/fHHyA/otUsxUdNLXJdLKO+7BjxVbin0HbWCLj94EztxOwClIRYEcLx/UI3IbJLYeEYRdPchBCAuvLFwtcSd8n3DJK1cHNHsRHaXM08=
-Received: by 10.35.107.20 with SMTP id j20mr13049191pym;
-        Thu, 27 Jul 2006 05:16:58 -0700 (PDT)
-Received: by 10.35.128.2 with HTTP; Thu, 27 Jul 2006 05:16:58 -0700 (PDT)
-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S1751223AbWG0Mrr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Jul 2006 08:47:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751196AbWG0Mrr
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 08:47:47 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:39244 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1751223AbWG0Mrr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jul 2006 08:47:47 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 8E8EB8F5FC;
+	Thu, 27 Jul 2006 05:47:46 -0700 (PDT)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 03910-01-26; Thu, 27 Jul 2006 05:47:46 -0700 (PDT)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id F288D8F619; Thu, 27 Jul 2006 05:47:45 -0700 (PDT)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+x-mayan-date: Long count = 12.19.13.9.1; tzolkin = 5 Imix; haab = 14 Xul
+In-Reply-To: <Pine.LNX.4.63.0607261702500.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24283>
 
-Hi, all!
+>>>>> "Johannes" == Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-    Please CC me as I'm not subscribed.
+Johannes>  Think ActiveState. 
 
-    Using  GIT 1.4.1, I tried to get this repository:
+Think ActiveState for the last time and see Strawberry Perl instead.
+<http://vanillaperl.com/>.
 
-# git clone git://source.mvista.com/git/linux-davinci-2.6.git
-
-    After some time the download stalled completely. I used ps and
-saw two git processes.
-
-    Using strace, I saw that the first one, "git clone", was waiting
-with waitpid()
-for its child termination.
-    Its child, "git pack --all -k", was stalled at a "read(3, ...)"
-
-    I went to /proc and saw that fd 3 was a pipe. Anyone know why this
-is happening?
-
-    I found an issue somewhat related in google (not sure that is the
-same problem):
-
-http://groups.google.com/group/fa.linux.kernel/browse_thread/thread/e64=
-a92f28def32a7/93bd8bf5df1fcc66?lnk=3Dst&q=3D&rnum=3D1#93bd8bf5df1fcc66
-
-    It stalled at the first 60 Mb transfered. After CTRL+C it deletes
-and I have to start again from scratch.
-
-Thank you for the great alternative to bitkeeper and CVS,
---=20
-[]s,
-Andr=E9 Goddard
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
