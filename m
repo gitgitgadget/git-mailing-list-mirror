@@ -1,80 +1,65 @@
-From: "=?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?=" <andre.goddard@gmail.com>
-Subject: Re: Git clone stalls at a read(3, ...) saw using strace
-Date: Thu, 27 Jul 2006 15:16:33 -0400
-Message-ID: <b8bf37780607271216i5b1d8d34n900ffeacbe81f380@mail.gmail.com>
-References: <b8bf37780607270516i7fbd8844he03e107b15fd2ed7@mail.gmail.com>
-	 <1154018302.13273.0.camel@dv>
-	 <b8bf37780607270943w562ec21fuab0eb882b3ccffeb@mail.gmail.com>
-	 <Pine.LNX.4.64.0607270947540.4168@g5.osdl.org>
-	 <b8bf37780607271017p22fa908bt82a564a4a1a15a79@mail.gmail.com>
-	 <b8bf37780607271025m1a611006x65a900e9e487ce1b@mail.gmail.com>
-	 <Pine.LNX.4.64.0607271049460.4168@g5.osdl.org>
-	 <1154025679.13273.5.camel@dv>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Licensing and the library version of git
+Date: Thu, 27 Jul 2006 15:31:02 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0607271457250.9789@iabervon.org>
+References: <9e4733910607261436v4c0802e5v7301e904593f9bab@mail.gmail.com> 
+ <20060727114105.GZ13776@pasky.or.cz>  <Pine.LNX.4.63.0607271400160.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+  <9e4733910607270554p5622ee20ida8c264cf3122500@mail.gmail.com> 
+ <20060727131127.GA13776@pasky.or.cz> <9e4733910607270911p50d25d97w1a898fc7a9119e7d@mail.gmail.com>
+ <Pine.LNX.4.64.0607270936200.4168@g5.osdl.org> <Pine.LNX.4.63.0607271846390.8976@alpha.polcom.net>
+ <Pine.LNX.4.64.0607271003270.4168@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Linus Torvalds" <torvalds@osdl.org>,
-	"Ribeiro, Humberto Plinio" <humberto.ribeiro@siemens.com>
-X-From: git-owner@vger.kernel.org Thu Jul 27 21:17:00 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Grzegorz Kulewski <kangur@polcom.net>,
+	Jon Smirl <jonsmirl@gmail.com>, Petr Baudis <pasky@suse.cz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 27 21:30:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6BLZ-0005tp-SD
-	for gcvg-git@gmane.org; Thu, 27 Jul 2006 21:16:38 +0200
+	id 1G6BYX-0001Eu-BA
+	for gcvg-git@gmane.org; Thu, 27 Jul 2006 21:30:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751033AbWG0TQe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 27 Jul 2006 15:16:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751958AbWG0TQe
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 15:16:34 -0400
-Received: from py-out-1112.google.com ([64.233.166.178]:56866 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1751033AbWG0TQe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 15:16:34 -0400
-Received: by py-out-1112.google.com with SMTP id s49so405565pyc
-        for <git@vger.kernel.org>; Thu, 27 Jul 2006 12:16:33 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=TYcc79wP3/DPdN5KwQ2ypKVCVXj6yNBJE4h3TkLvhBXIkghZZbYCAJaHdAio3yT42OENQogR2LwmJEvZoxSIEpQqVsEXpoVuDuBxeSsosy0KFdYYym1/v1Gb1brRZqz8IRSK9+Jd/m9RrA70ugx3IUlDefFmrnUot/14wjujsB0=
-Received: by 10.35.78.9 with SMTP id f9mr13609072pyl;
-        Thu, 27 Jul 2006 12:16:33 -0700 (PDT)
-Received: by 10.35.128.2 with HTTP; Thu, 27 Jul 2006 12:16:33 -0700 (PDT)
-To: "Pavel Roskin" <proski@gnu.org>
-In-Reply-To: <1154025679.13273.5.camel@dv>
-Content-Disposition: inline
+	id S1750992AbWG0T36 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Jul 2006 15:29:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751861AbWG0T36
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 15:29:58 -0400
+Received: from iabervon.org ([66.92.72.58]:24838 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1750992AbWG0T35 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 15:29:57 -0400
+Received: (qmail 28830 invoked by uid 1000); 27 Jul 2006 15:31:02 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 27 Jul 2006 15:31:02 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0607271003270.4168@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24333>
 
-On 7/27/06, Pavel Roskin <proski@gnu.org> wrote:
-> On Thu, 2006-07-27 at 10:50 -0700, Linus Torvalds wrote:
-> > Nope. I have a fairly constant 120kbps, and:
-> >
-> > [torvalds@g5 ~]$  git clone git://source.mvista.com/git/linux-davin=
-ci-2.6.git
-> > Checking files out...)
-> >  100% (19754/19754) done
->
-> Same thing here.  Current git from the master branch.
+On Thu, 27 Jul 2006, Linus Torvalds wrote:
 
-=46orgot to say that we are using this script in GIT_PROXY_COMMAND
-environment variable:
+> On Thu, 27 Jul 2006, Grzegorz Kulewski wrote:
+> > 
+> > I think that part of the anwser for question "Why do people use GIT?" is that
+> > they trust you and other maintainers that you do a good and stable job. Won't
+> > creating several ports/forks/whatever destroy at least part of this?
+> 
+> Sure. But the point is, the GPLv2 isn't exactly up for discussion. People 
+> can complain all they want, but if they want to trust me, they'll take the 
+> GPLv2. It's that easy.
 
-(echo "CONNECT $1:$2 HTTP/1.0"; echo; cat ) | nc <proxy_add> <portnum>
-| (read a; read a; cat )
+I think there'd be a justification for licensing part of git like sparse 
+is licensed, for the same reasons. It wouldn't include any of the 
+interesting operations, probably, but it would be worth having a canonical 
+implementation of reading and writing the data structures, so other 
+implementations don't screw that up. I wouldn't like to have someone write 
+a version that generated subtly corrupt git objects that it accepts along 
+with proper objects, such that we have to work around the breakage. It's a 
+bit less likely to happen if there's no licensing reason not to use the 
+same code.
 
-The first 'read a' removes the 'CONNECT SUCCESS HTTP RESPONSE 200' and
-the second removes an empty line as described here:
-
-http://www.gelato.unsw.edu.au/archives/git/0605/20664.html
-
-I will try from home later again.
-
-Thanks,
---=20
-[]s,
-Andr=E9 Goddard
+	-Daniel
+*This .sig left intentionally blank*
