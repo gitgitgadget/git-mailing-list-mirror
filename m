@@ -1,67 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Eliminate Scalar::Util usage from private-Error.pm
-Date: Thu, 27 Jul 2006 16:32:19 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607271628590.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0607251809340.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <20060726010358.20964.80443.stgit@machine>
- <Pine.LNX.4.63.0607260356480.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <20060726021058.GV13776@pasky.or.cz> <Pine.LNX.4.63.0607260416070.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <ea7r3s$ta2$1@sea.gmane.org> <Pine.LNX.4.63.0607261702500.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <86ejw7b4em.fsf@blue.stonehenge.com> <Pine.LNX.4.63.0607271559161.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <867j1zb00h.fsf@blue.stonehenge.com>
+From: "Melissa Head" <MelissaHead@0451.com>
+Subject: Your health, olive plant
+Date: Thu, 27 Jul 2006 02:55:34 -0420
+Message-ID: <042692912.20060727025534@0451.com>
+Reply-To: "Melissa Head" <MelissaHead@0451.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 27 16:33:30 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Jul 27 17:00:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G66ut-00030j-0G
-	for gcvg-git@gmane.org; Thu, 27 Jul 2006 16:32:47 +0200
+	id 1G67Km-0000tZ-95
+	for gcvg-git@gmane.org; Thu, 27 Jul 2006 16:59:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932373AbWG0OcX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Jul 2006 10:32:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932437AbWG0OcX
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 10:32:23 -0400
-Received: from mail.gmx.net ([213.165.64.21]:32220 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932373AbWG0OcV (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 10:32:21 -0400
-Received: (qmail invoked by alias); 27 Jul 2006 14:32:20 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp034) with SMTP; 27 Jul 2006 16:32:20 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-In-Reply-To: <867j1zb00h.fsf@blue.stonehenge.com>
-X-Y-GMX-Trusted: 0
+	id S1751560AbWG0O72 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Jul 2006 10:59:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751642AbWG0O72
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 10:59:28 -0400
+Received: from adsl.hnpt.com.vn ([203.210.193.168]:60017 "EHLO SpeedTouch.lan")
+	by vger.kernel.org with ESMTP id S1751559AbWG0O71 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 10:59:27 -0400
+X-Mailer: The Bat! (v3.5.30) Professional
+X-Priority: 3 (Normal)
+To: git-commits-head-owner@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24293>
+X-Spam-Report: 18.4 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5050]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?203.210.193.168>]
+ *  0.3 DNS_FROM_AHBL_RHSBL RBL: From: sender listed in dnsbl.ahbl.org
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: slicebelt.net]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: slicebelt.net]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: slicebelt.net]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: slicebelt.net]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: slicebelt.net]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24294>
 
-Hi,
+Even if you have no erectin problems SOFT CIAQLIS 
+would help you to make BETTER SEKX MORE OFTEN!
+and to bring  unimagnable plesure to her.
 
-On Thu, 27 Jul 2006, Randal L. Schwartz wrote:
+Just disolve half a pil under your tongue 
+and get ready for action in 15 minutes. 
 
-> >>>>> "Johannes" == Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> Johannes> Wishful thinking. If it wasn't for political reasons, certain people would 
-> Johannes> use cygwin's perl already, instead of ActiveState.
-> 
-> I don't think this is a "cygwin" perl though.  This is released under
-> Perl's terms, so it's not just gnu.  It's a complete build system with
-> a bundled C compiler, running on Windows natively.
+The tests showed that the majority of men 
+after taking this medic ation were able to have 
+PERFECT ERIECTION during 36 hours!
 
-What free people rarely think about: Windows has a severe path problem. It 
-is not the only problem of Windows, but a very real, and very annoying 
-one. Nobody in her right mind would try to make ":" part of a path, let 
-alone ";" part of the $PATH!
+VISIT US, AND GET OUR SPECIAL 70% DISCFOUNT OFER!
 
-So I think it is still better to use cygwin's perl, not ActiveState, or 
-even Strawberry (which ice cream addict came up with _that_ one?).
+http://qanuug.slicebelt.net/?67721414
 
-At least, it is better, _if_ you have a choice.
+==========
+     The voice came to him as it had in the first  day  that  he  had  met
+     He  stuffed  the empty into the  safe,  slammed the door, and locked it
+whipping over them all.
+web. I shut  my eyes. I went numb and the  only  thing I  heard was  the web
+There would be no ties now to the force that  had  driven  him  to  learn,
+garage. I guarantee a bonus." And he beamed like the June sun.
 
-Ciao,
-Dscho
+     He spared no time that day for talk with other  gulls,  but  flew  on
+little  suit like that you could go through fire, and gas couldn't penetrate
