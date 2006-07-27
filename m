@@ -1,71 +1,68 @@
-From: Robert Shearman <rob@codeweavers.com>
-Subject: [PATCH 2/2] rebase: Make the fast-fowarding message more user-friendly
- by using branch names instead of SHA1 IDs.
-Date: Thu, 27 Jul 2006 10:32:46 +0100
-Organization: CodeWeavers
-Message-ID: <44C8883E.5060602@codeweavers.com>
+From: Santi <sbejar@gmail.com>
+Subject: Re: [PATCH] Per branch properties for pull and fetch
+Date: Thu, 27 Jul 2006 11:40:37 +0200
+Message-ID: <8aa486160607270240h412b0dcek1d57eeb2b254fb2e@mail.gmail.com>
+References: <87lkqfcvm2.fsf@gmail.com> <20060727085516.GC27593@admingilde.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------050402020604080609090704"
-X-From: git-owner@vger.kernel.org Thu Jul 27 11:33:41 2006
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 27 11:40:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G62F8-0002PL-Bo
-	for gcvg-git@gmane.org; Thu, 27 Jul 2006 11:33:22 +0200
+	id 1G62ME-0003m9-96
+	for gcvg-git@gmane.org; Thu, 27 Jul 2006 11:40:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932542AbWG0JdT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Jul 2006 05:33:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932543AbWG0JdT
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 05:33:19 -0400
-Received: from mail.codeweavers.com ([216.251.189.131]:33173 "EHLO
-	mail.codeweavers.com") by vger.kernel.org with ESMTP
-	id S932542AbWG0JdS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jul 2006 05:33:18 -0400
-Received: from host86-139-253-196.range86-139.btcentralplus.com ([86.139.253.196] helo=[172.16.0.10])
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1G62F4-0005l3-1w
-	for git@vger.kernel.org; Thu, 27 Jul 2006 04:33:18 -0500
-User-Agent: Mozilla Thunderbird 1.0.8 (X11/20060725)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
+	id S932554AbWG0Jkj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 27 Jul 2006 05:40:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932553AbWG0Jkj
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 05:40:39 -0400
+Received: from wx-out-0102.google.com ([66.249.82.203]:57667 "EHLO
+	wx-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S932554AbWG0Jki convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 05:40:38 -0400
+Received: by wx-out-0102.google.com with SMTP id i27so1257172wxd
+        for <git@vger.kernel.org>; Thu, 27 Jul 2006 02:40:37 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=UawWjbGxXHkhY5fbz3ogEpK/KCWyM7BumtXodO4iD9Prl0Etsmzvbsr+kbcSAhRfXW/RocrOMMMgBrDsH7uDG0DhNzruwSyFWugVOgmg8WJLplrkSFT/x/cJPZwwbAv02QVbcGZqF+jDHAYeu2nSv7/xXH4dsGGzJnqRfzpFGwM=
+Received: by 10.70.38.12 with SMTP id l12mr360114wxl;
+        Thu, 27 Jul 2006 02:40:37 -0700 (PDT)
+Received: by 10.70.19.6 with HTTP; Thu, 27 Jul 2006 02:40:37 -0700 (PDT)
+To: "Martin Waitz" <tali@admingilde.org>
+In-Reply-To: <20060727085516.GC27593@admingilde.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24274>
 
-This is a multi-part message in MIME format.
---------------050402020604080609090704
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+2006/7/27, Martin Waitz <tali@admingilde.org>:
+> hoi :)
+>
+> On Thu, Jul 27, 2006 at 10:14:45AM +0200, Santi B=E9jar wrote:
+> > It allows to specify on a per branch basis the following:
+> > .- default repository to fetch
+> > .- default branches to merge on a per repository basis
+> > .- default pull.{octopus,twohead}
+> >
+> > So if you have this in the config:
+> > [branch "my"]
+> >       remote=3Dyours
+> >       merge=3Dmaster
+> >       merge=3Dour from theirs
+> >       merge=3Dmine from .
+>
+> could we default the to-be-merged branch to "remotes/$remote/$branch"=
+ if
+> that exists?. That could make life a lot easier when using
+> clone --use-separate-remote.
 
-Signed-off-by: Robert Shearman <rob@codeweavers.com>
----
-  git-rebase.sh |    2 +-
-  1 files changed, 1 insertions(+), 1 deletions(-)
+I would prefer to change git-clone and git-branch to write the full
+config. And I'll do this if this or someting like this is accepted.
 
---------------050402020604080609090704
-Content-Type: text/x-patch;
- name="3bd88862ba13448b574662ffda717b96ddab8e98.diff"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="3bd88862ba13448b574662ffda717b96ddab8e98.diff"
-
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 5554541..1c23798 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -283,7 +283,7 @@ # If the $onto is a proper descendant of
- # we just fast forwarded.
- if test "$mb" = "$branch"
- then
--	echo >&2 "Fast-forwarded $branch to $newbase."
-+	echo >&2 "Fast-forwarded $branch_name to $onto_name."
- 	exit 0
- fi
- 
-
-
---------------050402020604080609090704--
+  Santi
