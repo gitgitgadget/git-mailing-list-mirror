@@ -1,49 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Licensing and the library version of git
-Date: Thu, 27 Jul 2006 14:02:09 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607271400160.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <9e4733910607261436v4c0802e5v7301e904593f9bab@mail.gmail.com>
- <20060727114105.GZ13776@pasky.or.cz>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [PATCH] Per branch properties for pull and fetch
+Date: Thu, 27 Jul 2006 14:02:20 +0200
+Message-ID: <20060727120220.GD27593@admingilde.org>
+References: <87lkqfcvm2.fsf@gmail.com> <20060727085516.GC27593@admingilde.org> <8aa486160607270240h412b0dcek1d57eeb2b254fb2e@mail.gmail.com> <8aa486160607270306s3f49a01cq91ef61e2c9f005e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jon Smirl <jonsmirl@gmail.com>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 27 14:02:21 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="jy6Sn24JjFx/iggw"
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 27 14:02:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G64ZD-0004tL-I7
-	for gcvg-git@gmane.org; Thu, 27 Jul 2006 14:02:15 +0200
+	id 1G64ZN-0004wn-FF
+	for gcvg-git@gmane.org; Thu, 27 Jul 2006 14:02:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750793AbWG0MCL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Jul 2006 08:02:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751062AbWG0MCL
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 08:02:11 -0400
-Received: from mail.gmx.net ([213.165.64.21]:47332 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1750793AbWG0MCL (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 08:02:11 -0400
-Received: (qmail invoked by alias); 27 Jul 2006 12:02:09 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp035) with SMTP; 27 Jul 2006 14:02:09 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060727114105.GZ13776@pasky.or.cz>
-X-Y-GMX-Trusted: 0
+	id S1750720AbWG0MCW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Jul 2006 08:02:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751062AbWG0MCW
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 08:02:22 -0400
+Received: from admingilde.org ([213.95.32.146]:41882 "EHLO mail.admingilde.org")
+	by vger.kernel.org with ESMTP id S1750720AbWG0MCV (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 08:02:21 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1G64ZJ-0005XF-0r; Thu, 27 Jul 2006 14:02:21 +0200
+To: Santi <sbejar@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <8aa486160607270306s3f49a01cq91ef61e2c9f005e@mail.gmail.com>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24281>
 
-Hi,
 
-On Thu, 27 Jul 2006, Petr Baudis wrote:
+--jy6Sn24JjFx/iggw
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> And I didn't even get to discussing whether LGPL is actually desirable
-> for Git.
+hoi :)
 
-... or whether it is neccessary for an Eclipse-plugin to something else 
-than GPL.
+On Thu, Jul 27, 2006 at 12:06:34PM +0200, Santi wrote:
+> >> could we default the to-be-merged branch to "remotes/$remote/$branch" =
+if
+> >> that exists?. That could make life a lot easier when using
+> >> clone --use-separate-remote.
 
-Ciao,
-Dscho
+> On the other hand, my patch changes the behaviour only when explicitly
+> configured, and your proposed default would change the behaviour even
+> without changes to the config.
+
+that is correct.
+
+The current default is to always use the remote's master branch, right?
+What do others think: does it make sense to default to the same
+branchname on the remote side?
+
+It could make life a bit easier if you want to synchronize several topic
+branches between different sites.
+
+--=20
+Martin Waitz
+
+--jy6Sn24JjFx/iggw
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFEyKtMj/Eaxd/oD7IRAh57AJ4poOC23TuDSgjKedNtD+dQIDjvdQCfelLE
+l4dh7OQtDNf4W7SKJfavbRA=
+=HBtF
+-----END PGP SIGNATURE-----
+
+--jy6Sn24JjFx/iggw--
