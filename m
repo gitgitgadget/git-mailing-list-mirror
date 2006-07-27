@@ -1,82 +1,80 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] Remove -d from *-fetch usage strings
-Date: Thu, 27 Jul 2006 20:58:53 +0200
-Message-ID: <20060727185853.32107.32772.stgit@machine>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 27 20:59:06 2006
+From: "=?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?=" <andre.goddard@gmail.com>
+Subject: Re: Git clone stalls at a read(3, ...) saw using strace
+Date: Thu, 27 Jul 2006 15:16:33 -0400
+Message-ID: <b8bf37780607271216i5b1d8d34n900ffeacbe81f380@mail.gmail.com>
+References: <b8bf37780607270516i7fbd8844he03e107b15fd2ed7@mail.gmail.com>
+	 <1154018302.13273.0.camel@dv>
+	 <b8bf37780607270943w562ec21fuab0eb882b3ccffeb@mail.gmail.com>
+	 <Pine.LNX.4.64.0607270947540.4168@g5.osdl.org>
+	 <b8bf37780607271017p22fa908bt82a564a4a1a15a79@mail.gmail.com>
+	 <b8bf37780607271025m1a611006x65a900e9e487ce1b@mail.gmail.com>
+	 <Pine.LNX.4.64.0607271049460.4168@g5.osdl.org>
+	 <1154025679.13273.5.camel@dv>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Linus Torvalds" <torvalds@osdl.org>,
+	"Ribeiro, Humberto Plinio" <humberto.ribeiro@siemens.com>
+X-From: git-owner@vger.kernel.org Thu Jul 27 21:17:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6B4Y-0001TX-I3
-	for gcvg-git@gmane.org; Thu, 27 Jul 2006 20:59:02 +0200
+	id 1G6BLZ-0005tp-SD
+	for gcvg-git@gmane.org; Thu, 27 Jul 2006 21:16:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751950AbWG0S67 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Jul 2006 14:58:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751956AbWG0S67
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 14:58:59 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:49552 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751950AbWG0S65 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 14:58:57 -0400
-Received: (qmail 32118 invoked from network); 27 Jul 2006 20:58:54 +0200
-Received: from localhost (HELO ?62.24.88.241?) (xpasky@127.0.0.1)
-  by localhost with SMTP; 27 Jul 2006 20:58:54 +0200
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: StGIT/0.9
+	id S1751033AbWG0TQe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 27 Jul 2006 15:16:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751958AbWG0TQe
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 15:16:34 -0400
+Received: from py-out-1112.google.com ([64.233.166.178]:56866 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1751033AbWG0TQe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 15:16:34 -0400
+Received: by py-out-1112.google.com with SMTP id s49so405565pyc
+        for <git@vger.kernel.org>; Thu, 27 Jul 2006 12:16:33 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=TYcc79wP3/DPdN5KwQ2ypKVCVXj6yNBJE4h3TkLvhBXIkghZZbYCAJaHdAio3yT42OENQogR2LwmJEvZoxSIEpQqVsEXpoVuDuBxeSsosy0KFdYYym1/v1Gb1brRZqz8IRSK9+Jd/m9RrA70ugx3IUlDefFmrnUot/14wjujsB0=
+Received: by 10.35.78.9 with SMTP id f9mr13609072pyl;
+        Thu, 27 Jul 2006 12:16:33 -0700 (PDT)
+Received: by 10.35.128.2 with HTTP; Thu, 27 Jul 2006 12:16:33 -0700 (PDT)
+To: "Pavel Roskin" <proski@gnu.org>
+In-Reply-To: <1154025679.13273.5.camel@dv>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24332>
 
-This is a really ancient remnant of the short era of delta objects stored
-directly in the object database.
+On 7/27/06, Pavel Roskin <proski@gnu.org> wrote:
+> On Thu, 2006-07-27 at 10:50 -0700, Linus Torvalds wrote:
+> > Nope. I have a fairly constant 120kbps, and:
+> >
+> > [torvalds@g5 ~]$  git clone git://source.mvista.com/git/linux-davin=
+ci-2.6.git
+> > Checking files out...)
+> >  100% (19754/19754) done
+>
+> Same thing here.  Current git from the master branch.
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+=46orgot to say that we are using this script in GIT_PROXY_COMMAND
+environment variable:
 
- http-fetch.c  |    2 +-
- local-fetch.c |    2 +-
- ssh-fetch.c   |    2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+(echo "CONNECT $1:$2 HTTP/1.0"; echo; cat ) | nc <proxy_add> <portnum>
+| (read a; read a; cat )
 
-diff --git a/http-fetch.c b/http-fetch.c
-index 12493fb..dc286b7 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -1245,7 +1245,7 @@ int main(int argc, char **argv)
- 		arg++;
- 	}
- 	if (argc < arg + 2) {
--		usage("git-http-fetch [-c] [-t] [-a] [-d] [-v] [--recover] [-w ref] commit-id url");
-+		usage("git-http-fetch [-c] [-t] [-a] [-v] [--recover] [-w ref] commit-id url");
- 		return 1;
- 	}
- 	commit_id = argv[arg];
-diff --git a/local-fetch.c b/local-fetch.c
-index ffa4887..65a803a 100644
---- a/local-fetch.c
-+++ b/local-fetch.c
-@@ -194,7 +194,7 @@ int fetch_ref(char *ref, unsigned char *
- }
- 
- static const char local_pull_usage[] =
--"git-local-fetch [-c] [-t] [-a] [-d] [-v] [-w filename] [--recover] [-l] [-s] [-n] commit-id path";
-+"git-local-fetch [-c] [-t] [-a] [-v] [-w filename] [--recover] [-l] [-s] [-n] commit-id path";
- 
- /* 
-  * By default we only use file copy.
-diff --git a/ssh-fetch.c b/ssh-fetch.c
-index 28f7fd9..a8a6cfb 100644
---- a/ssh-fetch.c
-+++ b/ssh-fetch.c
-@@ -120,7 +120,7 @@ int fetch_ref(char *ref, unsigned char *
- 
- static const char ssh_fetch_usage[] =
-   MY_PROGRAM_NAME
--  " [-c] [-t] [-a] [-v] [-d] [--recover] [-w ref] commit-id url";
-+  " [-c] [-t] [-a] [-v] [--recover] [-w ref] commit-id url";
- int main(int argc, char **argv)
- {
- 	char *commit_id;
+The first 'read a' removes the 'CONNECT SUCCESS HTTP RESPONSE 200' and
+the second removes an empty line as described here:
+
+http://www.gelato.unsw.edu.au/archives/git/0605/20664.html
+
+I will try from home later again.
+
+Thanks,
+--=20
+[]s,
+Andr=E9 Goddard
