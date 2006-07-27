@@ -1,49 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
+From: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Subject: Re: [PATCH] mailinfo: accept >From in message header
-Date: Thu, 27 Jul 2006 14:22:07 -0700
-Message-ID: <7vbqraoi9s.fsf@assigned-by-dhcp.cox.net>
-References: <20060727140343.GS9411@mellanox.co.il>
+Date: Fri, 28 Jul 2006 00:32:52 +0300
+Message-ID: <20060727213251.GA17234@mellanox.co.il>
+References: <7vbqraoi9s.fsf@assigned-by-dhcp.cox.net>
+Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 27 23:22:31 2006
+X-From: git-owner@vger.kernel.org Thu Jul 27 23:31:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6DJ8-0005Pu-KX
-	for gcvg-git@gmane.org; Thu, 27 Jul 2006 23:22:15 +0200
+	id 1G6DSC-00087D-Sa
+	for gcvg-git@gmane.org; Thu, 27 Jul 2006 23:31:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751314AbWG0VWK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Jul 2006 17:22:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751312AbWG0VWJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 17:22:09 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:40190 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751298AbWG0VWI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jul 2006 17:22:08 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060727212208.MOVQ27857.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 27 Jul 2006 17:22:08 -0400
-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
-In-Reply-To: <20060727140343.GS9411@mellanox.co.il> (Michael S. Tsirkin's
-	message of "Thu, 27 Jul 2006 17:03:43 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750968AbWG0Vbe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Jul 2006 17:31:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751161AbWG0Vbe
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 17:31:34 -0400
+Received: from mxl145v69.mxlogic.net ([208.65.145.69]:53467 "EHLO
+	p02c11o146.mxlogic.net") by vger.kernel.org with ESMTP
+	id S1750968AbWG0Vbd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jul 2006 17:31:33 -0400
+Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
+	by p02c11o146.mxlogic.net (mxl_mta-3.0.0-12)
+	with ESMTP id 4b039c44.2384595888.114748.00-002.p02c11o146.mxlogic.net (envelope-from <mst@mellanox.co.il>);
+	Thu, 27 Jul 2006 15:31:32 -0600 (MDT)
+Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 28 Jul 2006 00:37:12 +0300
+Received: by mellanox.co.il (sSMTP sendmail emulation); Fri, 28 Jul 2006 00:32:52 +0300
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vbqraoi9s.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4.2.1i
+X-OriginalArrivalTime: 27 Jul 2006 21:37:12.0406 (UTC) FILETIME=[D2262760:01C6B1C4]
+X-Spam: [F=0.0100000000; S=0.010(2006062901)]
+X-MAIL-FROM: <mst@mellanox.co.il>
+X-SOURCE-IP: [194.90.237.34]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24349>
 
-"Michael S. Tsirkin" <mst@mellanox.co.il> writes:
+Quoting r. Junio C Hamano <junkio@cox.net>:
+> Subject: Re: [PATCH] mailinfo: accept >From in message header
+> 
+> "Michael S. Tsirkin" <mst@mellanox.co.il> writes:
+> 
+> > From Majordomo@vger.kernel.org  Thu Jul 27 16:39:36 2006
+> >>From mtsirkin  Thu Jul 27 16:39:36 2006
+> > Received: from yok.mtl.com [10.0.8.11]
+> > ....
+> >
+> > which confuses git-mailinfo since that does not recognize >From
+> > as a valid header line. The following patch makes git-applymbox
+> > work for me:
+> 
+> Wouldn't that kind of breakage confuse git-mailsplit as well?
+> 
 
-> From Majordomo@vger.kernel.org  Thu Jul 27 16:39:36 2006
->>From mtsirkin  Thu Jul 27 16:39:36 2006
-> Received: from yok.mtl.com [10.0.8.11]
-> ....
->
-> which confuses git-mailinfo since that does not recognize >From
-> as a valid header line. The following patch makes git-applymbox
-> work for me:
+Hmm - I normally don't use it - just pipe stiff from mutt into git-applymbox.
+A quick test seems to indicate git-mailsplit works fine.
 
-Wouldn't that kind of breakage confuse git-mailsplit as well?
+But why should it - mailsplit just needs ^From to match new mail,
+correct? So the escaped >From is good for it.
+
+-- 
+MST
