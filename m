@@ -1,69 +1,90 @@
-From: Wolfgang Denk <wd@denx.de>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Licensing and the library version of git
-Date: Thu, 27 Jul 2006 23:10:46 +0200
-Message-ID: <20060727211046.C9FD5352625@atlas.denx.de>
-References: <Pine.LNX.4.63.0607272239050.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Thu, 27 Jul 2006 14:15:18 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607271402230.4168@g5.osdl.org>
+References: <20060727195614.7EDAE353B04@atlas.denx.de>
+ <Pine.LNX.4.63.0607272239050.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 27 23:11:23 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Wolfgang Denk <wd@denx.de>, Jon Smirl <jonsmirl@gmail.com>,
+	git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 27 23:15:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6D88-0002Qs-FY
-	for gcvg-git@gmane.org; Thu, 27 Jul 2006 23:10:52 +0200
+	id 1G6DCm-0003kY-Nx
+	for gcvg-git@gmane.org; Thu, 27 Jul 2006 23:15:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751285AbWG0VKt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Jul 2006 17:10:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751292AbWG0VKt
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 17:10:49 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:10208 "EHLO
-	mail-out.m-online.net") by vger.kernel.org with ESMTP
-	id S1751285AbWG0VKs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jul 2006 17:10:48 -0400
-Received: from mail01.m-online.net (svr21.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id 5D49E980B8;
-	Thu, 27 Jul 2006 23:10:47 +0200 (CEST)
-X-Auth-Info: Cp98ki5LsntUT6AwbRr+kfMLlYeBqtEd9H0Jrr3rs1U=
-X-Auth-Info: Cp98ki5LsntUT6AwbRr+kfMLlYeBqtEd9H0Jrr3rs1U=
-Received: from mail.denx.de (p54965D9D.dip.t-dialin.net [84.150.93.157])
-	by smtp-auth.mnet-online.de (Postfix) with ESMTP id 494A69235D;
-	Thu, 27 Jul 2006 23:10:47 +0200 (CEST)
-Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
-	by mail.denx.de (Postfix) with ESMTP id C6CD06D00A8;
-	Thu, 27 Jul 2006 23:10:47 +0200 (MEST)
-Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
-	by atlas.denx.de (Postfix) with ESMTP id C9FD5352625;
-	Thu, 27 Jul 2006 23:10:46 +0200 (MEST)
+	id S1751286AbWG0VPh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Jul 2006 17:15:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751292AbWG0VPh
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 17:15:37 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:47573 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751286AbWG0VPg (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 17:15:36 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6RLFMnW024883
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 27 Jul 2006 14:15:22 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6RLFInT016877;
+	Thu, 27 Jul 2006 14:15:20 -0700
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-reply-to: Your message of "Thu, 27 Jul 2006 22:39:55 +0200."
-             <Pine.LNX.4.63.0607272239050.29667@wbgn013.biozentrum.uni-wuerzburg.de> 
+In-Reply-To: <Pine.LNX.4.63.0607272239050.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=-0.551 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.141 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24345>
 
-In message <Pine.LNX.4.63.0607272239050.29667@wbgn013.biozentrum.uni-wuerzburg.de> you wrote:
+
+
+On Thu, 27 Jul 2006, Johannes Schindelin wrote:
 > 
-> > ... and assuming it is a clean-room  implementation  which  does  not
-> > borrow from the GPL code.
-> 
-> >From a standpoint of copyright (which the GPL relies on), this is not 
+> From a standpoint of copyright (which the GPL relies on), this is not 
 > possible: you cannot include C code into Java. And if it is _translated_ 
 > from C into Java, it is not copyrighted any more.
 
-Gulp. What have  you  been  smoking  lately?  Your  understanding  of
-copyright (and of the GPL) is fundamentally broken.
+That is definitely not true. Translation does not take away anything from 
+the copyright. If I write a book in English, and you translate it to 
+German, _I_ remain the copyright holder, and you need my permission to 
+distribute the result. The fact that you translated it means nothing, and 
+you don't own it as a result.
 
-Best regards,
+Similarly, the fact that I and others hold the copyright on the source 
+code very much means that we also hold the copyright on any binaries you 
+"translate" that source code into, and the only thing that gives you a 
+right to distribute those binaries is not the translation phase, but the 
+fact that the GPLv2 allows you to distribute binaries (with certain 
+requirements, of course).
 
-Wolfgang Denk
+Now, on the other hand it's certainly true that certain elements are 
+potentially uncopyrightable. If there is effectively only one sane or 
+common way to actually write a git object to disk, the fact that your code 
+ends up looking very similar in Java to the way it is done in the original 
+C does not imply any copyright problems at all.
 
--- 
-Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
-Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
-Mr. Cole's Axiom:
-        The sum of the intelligence on the planet is a constant;
-        the population is growing.
+But that doesn't mean that you can take the C code and just rewrite it as 
+Java - it was still copyright protected. It just means that if your Java 
+code ends up looking like the C code, you can explain why it happened.
+
+Now, some things have _no_ copyright protection at all, at least in 
+certain areas. Facts and things that did not involve any artistic 
+expression at all are simply not copyrightable. So if you list the first 
+million digits of PI, you can't complain if somebody copies them, for 
+example.
+
+(But in some places, you can apparently claim that you "spent effort" on 
+gathering those digits of PI, and that others would have to spend that 
+same effort rather than copy your end result. I suspect that's a very weak 
+argument, but I suspect that there have been worse arguments made in front 
+of a judge in, say, places like Utah, to pick a random one).
+
+And as usual, tech people talking legal issues is not very sane. So talk 
+to a lawyer if you really care.
+
+			Linus
