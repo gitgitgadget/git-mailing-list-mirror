@@ -1,55 +1,68 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Licensing and the library version of git
-Date: Thu, 27 Jul 2006 18:58:26 +0200
-Organization: At home
-Message-ID: <eaarba$6hg$1@sea.gmane.org>
-References: <9e4733910607261436v4c0802e5v7301e904593f9bab@mail.gmail.com> <20060727114105.GZ13776@pasky.or.cz> <Pine.LNX.4.63.0607271400160.29667@wbgn013.biozentrum.uni-wuerzburg.de> <9e4733910607270554p5622ee20ida8c264cf3122500@mail.gmail.com> <20060727131127.GA13776@pasky.or.cz> <9e4733910607270911p50d25d97w1a898fc7a9119e7d@mail.gmail.com> <Pine.LNX.4.64.0607270936200.4168@g5.osdl.org> <Pine.LNX.4.64.0607270941400.4168@g5.osdl.org>
+From: "=?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?=" <andre.goddard@gmail.com>
+Subject: Re: Projects using git now
+Date: Thu, 27 Jul 2006 13:04:33 -0400
+Message-ID: <b8bf37780607271004x45092f60rfd35e29fc1fc922c@mail.gmail.com>
+References: <b8bf37780607270951h24d899b8yfa22a1fcb2bde5db@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Thu Jul 27 18:59:33 2006
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Thu Jul 27 19:05:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G69CY-00082D-30
-	for gcvg-git@gmane.org; Thu, 27 Jul 2006 18:59:10 +0200
+	id 1G69Hs-0000a6-4m
+	for gcvg-git@gmane.org; Thu, 27 Jul 2006 19:04:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751760AbWG0Q7G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Jul 2006 12:59:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751765AbWG0Q7G
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 12:59:06 -0400
-Received: from main.gmane.org ([80.91.229.2]:238 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751760AbWG0Q7F (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 12:59:05 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1G69C7-0007vr-7B
-	for git@vger.kernel.org; Thu, 27 Jul 2006 18:58:43 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 27 Jul 2006 18:58:43 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 27 Jul 2006 18:58:43 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1750870AbWG0REe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 27 Jul 2006 13:04:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751769AbWG0REe
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 13:04:34 -0400
+Received: from py-out-1112.google.com ([64.233.166.182]:37531 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1750870AbWG0REe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 13:04:34 -0400
+Received: by py-out-1112.google.com with SMTP id s49so362316pyc
+        for <git@vger.kernel.org>; Thu, 27 Jul 2006 10:04:33 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=CRvniBPaceZgUi46ewVmpAnHACnJ3BPrktz/EPMlCVnZ0p8Hh1ADY+0hB01uhOUXCnYP4VWSmwJ1g7JWYeVF+qlFrYzA9V2sDa8mngm+4l3e4lKgTP071/L26rsc9DS91qjjyRzhs5h9EKtdQAQnVJalnVDRVYxLdjmU/hxX0Ws=
+Received: by 10.35.127.15 with SMTP id e15mr13443789pyn;
+        Thu, 27 Jul 2006 10:04:33 -0700 (PDT)
+Received: by 10.35.128.2 with HTTP; Thu, 27 Jul 2006 10:04:33 -0700 (PDT)
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <b8bf37780607270951h24d899b8yfa22a1fcb2bde5db@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24305>
 
-Linus Torvalds wrote:
+On 7/27/06, Andr=E9 Goddard Rosa <andre.goddard@gmail.com> wrote:
+> Hi, all!
+>
+>    Please CC me as I'm not subscribed to the list.
+>
+>    Do you have a link to a homepage where I can see what projects
+> are using git right now or planning migrating?
+>
+>    I'm trying to convince people here at Siemens to use git. I use
+> git and I like it a lot. I know that the linux kernel is so successfu=
+ll
+> using it because I listen to lkml.
+>
+>    Do you have more examples, besides wine?
+>
 
-> I seriously doubt that Eclipse or Visual Stupido could ever actually 
-                                    ^^^^^^^^^^^^^^
-Visual Stupido... nice typo :-D
+Sorry to bother, I already found these two pages:
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+http://git.or.cz/gitwiki/GitProjects
+http://en.wikipedia.org/wiki/Git_(software)
+
+    Do you think they are updated?
+
+--=20
+[]s,
+Andr=E9 Goddard
