@@ -1,64 +1,53 @@
-From: "Richie" <carcinogenaflame@africamail.com>
-Subject: Brand new Enhanced male power and unlimited prowess with your girl The best products for the winning guys
-Date: Thu, 27 Jul 2006 14:27:21 -0200
-Message-ID: <77704346497391.81BC3B6FAA@13MM>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: Projects using git now
+Date: Thu, 27 Jul 2006 13:28:37 -0400
+Message-ID: <1154021317.13273.3.camel@dv>
+References: <b8bf37780607270951h24d899b8yfa22a1fcb2bde5db@mail.gmail.com>
+	 <b8bf37780607271004x45092f60rfd35e29fc1fc922c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1252"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Jul 27 19:28:40 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 27 19:29:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G69ez-0004y9-SI
-	for gcvg-git@gmane.org; Thu, 27 Jul 2006 19:28:34 +0200
+	id 1G69fo-00057N-QS
+	for gcvg-git@gmane.org; Thu, 27 Jul 2006 19:29:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751886AbWG0R2a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Jul 2006 13:28:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751885AbWG0R22
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 13:28:28 -0400
-Received: from zeus1.kernel.org ([204.152.191.4]:1222 "EHLO zeus1.kernel.org")
-	by vger.kernel.org with ESMTP id S1751886AbWG0R2X (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 13:28:23 -0400
-Received: from FERNANDA (20132132067.user.veloxzone.com.br [201.32.132.67])
-	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id k6RHS2jZ010465;
-	Thu, 27 Jul 2006 17:28:22 GMT
-To: <glenda@vger.kernel.org>
-X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
-Thread-Index: n2cLfJafD199SZMEjfXwPGeCSCDfXrxq4M4d
-X-Virus-Scanned: ClamAV 0.88.3/1623/Wed Jul 26 22:35:11 2006 on zeus1.kernel.org
-X-Virus-Status: Clean
+	id S1751830AbWG0R2n convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 27 Jul 2006 13:28:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751873AbWG0R2n
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 13:28:43 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:35226 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751830AbWG0R2m convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jul 2006 13:28:42 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1G69f7-0004n5-FP
+	for git@vger.kernel.org; Thu, 27 Jul 2006 13:28:41 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.62)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1G69f4-0002XZ-Ax; Thu, 27 Jul 2006 13:28:38 -0400
+To: =?ISO-8859-1?Q?Andr=E9?= Goddard Rosa <andre.goddard@gmail.com>
+In-Reply-To: <b8bf37780607271004x45092f60rfd35e29fc1fc922c@mail.gmail.com>
+X-Mailer: Evolution 2.7.4 (2.7.4-3) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 12.5 points;
- *  0.3 J_CHICKENPOX_55 BODY: {5}Letter - dot - {5}Letter
- *  0.3 J_CHICKENPOX_44 BODY: {4}Letter - dot - {4}Letter
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4073]
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: isohyetab.com]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: isohyetab.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: isohyetab.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: isohyetab.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24321>
 
-Dear client.
- Boost your manhood to astonishing levels Everything a real man would ever need.Make your girlfriend or wife speechless with increased hardness, richer orgsms and more power in bed
+On Thu, 2006-07-27 at 13:04 -0400, Andr=E9 Goddard Rosa wrote:
+> Sorry to bother, I already found these two pages:
+>=20
+> http://git.or.cz/gitwiki/GitProjects
+> http://en.wikipedia.org/wiki/Git_(software)
+>=20
+>     Do you think they are updated?
 
+See history or "recent changes" on both pages.
 
-Masculine performance has never been so easy to increase with these products
-
- See our shop: http://www.isohyetab.com
-
-Richie Rossi
-
-
-Elementary sartorial techniques initially applied obviate the need for repetitive similar actions to the square of three.Youth is wasted on the young A faithful friend is a medicine for life.
-
-Every path has its puddle. Love is the strangest thing
+--=20
+Regards,
+Pavel Roskin
