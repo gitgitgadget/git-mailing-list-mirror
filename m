@@ -1,36 +1,33 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: print errors from git-update-ref
-Date: Fri, 28 Jul 2006 02:27:20 -0400
-Message-ID: <20060728062720.GC30783@spearce.org>
-References: <81b0412b0607180613t603551b8t865b407c40ab8aef@mail.gmail.com> <7vk663h6zi.fsf@assigned-by-dhcp.cox.net> <20060727012856.GB32492@spearce.org> <Pine.LNX.4.63.0607271302150.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: Java GIT/Eclipse GIT version 0.1.1
+Date: Fri, 28 Jul 2006 02:36:20 -0400
+Message-ID: <20060728063620.GD30783@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, Alex Riesen <raa.lkml@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 28 08:27:36 2006
+X-From: git-owner@vger.kernel.org Fri Jul 28 08:36:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6Lop-0006RL-8H
-	for gcvg-git@gmane.org; Fri, 28 Jul 2006 08:27:31 +0200
+	id 1G6Lxp-00088g-9Z
+	for gcvg-git@gmane.org; Fri, 28 Jul 2006 08:36:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751969AbWG1G12 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Jul 2006 02:27:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751975AbWG1G12
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 02:27:28 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:53647 "EHLO
+	id S1751975AbWG1GgZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 28 Jul 2006 02:36:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751978AbWG1GgZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 02:36:25 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:37008 "EHLO
 	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751969AbWG1G11 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jul 2006 02:27:27 -0400
+	id S1751975AbWG1GgY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Jul 2006 02:36:24 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1G6Lof-0001ya-Qn; Fri, 28 Jul 2006 02:27:22 -0400
+	id 1G6LxN-0002PB-Rf
+	for git@vger.kernel.org; Fri, 28 Jul 2006 02:36:21 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 7883920E433; Fri, 28 Jul 2006 02:27:20 -0400 (EDT)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	id C9DC120E433; Fri, 28 Jul 2006 02:36:20 -0400 (EDT)
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0607271302150.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -43,29 +40,40 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24369>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
-> 
-> On Wed, 26 Jul 2006, Shawn Pearce wrote:
-> 
-> > This change adds a test for trying to create a ref within a directory
-> > that is actually currently a file, and adds error printing within
-> > the ref locking routine should the resolve operation fail.
-> 
-> Why not just print an error message when the resolve operation fails, 
-> instead of special casing this obscure corner case? It is way shorter, 
-> too. The test should stay, though.
+My Java GIT library and Eclipse GIT team provider is now at a point
+where it may be partially useful to someone else who is also trying
+to write something which interacts with GIT.  Or who might also
+be interested in seeing a pure-Java Eclipse team provider for GIT.
 
-Did you read the patch?  If resolve_ref returns NULL then this
-change prints an error (from errno) no matter what.  If errno is
-ENOTDIR then it tries to figure out what part of the ref path wasn't
-a directory (but was attempted to be used as such) and prints an
-ENOTDIR error about that path instead of the one actually given
-to the ref lock function
+So I've posted my repository (currently ~200 KB) on my website:
 
-So I think I'm doing what you are suggesting...
+  http://www.spearce.org/projects/scm/egit.git
+
+
+The underlying Java library is fairly functional and can read and
+write a repository.  Creating a series of Ant tasks for use in an
+automated build environment would probably be pretty trivial with
+this library.
+
+The Eclipse plugin can't commit.  Or do a lot of other really
+useful things.  So its not end-user ready.  :-)
+
+
+The code is licensed under the Apache License, version 2.0.
+
+
+I would appreciate any and all input, feedback, etc. that anyone
+might have on this library or plugin.  Patches are of course
+certainly welcome.  :-)
+
+For what its worth I'm trying to keep this library and Eclipse
+plugin 100% pure Java and avoid calling out to the canonical C
+implementation of GIT.  However I have no plans to implement the
+delta packing algorithm used by git-pack-objects.  Consequently if
+this code ever produces packs it will be strictly zlib deflated
+objects without delta compression.
 
 -- 
 Shawn.
