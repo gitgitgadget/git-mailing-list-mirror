@@ -1,69 +1,62 @@
-From: Dennis Stosberg <dennis@stosberg.net>
-Subject: [PATCH] cg-commit --review may permanently delete changes
-Date: Fri, 28 Jul 2006 19:11:52 +0200
-Message-ID: <20060728171152.G3a9ef049@leonov.stosberg.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Makefile: ssh-pull.o depends on ssh-fetch.c
+Date: Fri, 28 Jul 2006 11:14:07 -0700
+Message-ID: <7vslkllhqo.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0607281117240.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 28 19:12:14 2006
+X-From: git-owner@vger.kernel.org Fri Jul 28 20:14:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6Vsc-00010U-TM
-	for gcvg-git@gmane.org; Fri, 28 Jul 2006 19:12:07 +0200
+	id 1G6Wr2-0006Od-VY
+	for gcvg-git@gmane.org; Fri, 28 Jul 2006 20:14:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752051AbWG1RL5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Jul 2006 13:11:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752052AbWG1RL5
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 13:11:57 -0400
-Received: from ncs.stosberg.net ([89.110.145.104]:13235 "EHLO ncs.stosberg.net")
-	by vger.kernel.org with ESMTP id S1752051AbWG1RL4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Jul 2006 13:11:56 -0400
-Received: from leonov.stosberg.net (p213.54.90.253.tisdip.tiscali.de [213.54.90.253])
-	by ncs.stosberg.net (Postfix) with ESMTP id F38C4589C004;
-	Fri, 28 Jul 2006 19:11:45 +0200 (CEST)
-Received: by leonov.stosberg.net (Postfix, from userid 500)
-	id C130311B659; Fri, 28 Jul 2006 19:11:52 +0200 (CEST)
-To: Petr Baudis <pasky@suse.cz>
-Content-Disposition: inline
-Received: from leonov ([unix socket]) by leonov (Cyrus v2.1.18-IPv6-Debian-2.1.18-1+sarge2) with LMTP; Fri, 28 Jul 2006 18:40:12 +0200
-X-Sieve: CMU Sieve 2.2
-User-Agent: mutt-ng/devel-r802 (Debian)
+	id S1030250AbWG1SOL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 28 Jul 2006 14:14:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030301AbWG1SOL
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 14:14:11 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:915 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1030250AbWG1SOJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Jul 2006 14:14:09 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060728181407.HECR22733.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 28 Jul 2006 14:14:07 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0607281117240.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Fri, 28 Jul 2006 11:17:46 +0200
+	(CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24398>
 
-If the patch is changed in the editor in such a way that cg-patch
-can not apply it, all changes made since the last commit are
-irrecoverably lost, which is _really_ bad.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-This patch lets cg-commit reapply the old patch and keep the edited
-patch for manual fix-up.
+> Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> ---
+>  Makefile |    1 +
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>
+> diff --git a/Makefile b/Makefile
+> index 636679f..e8037ad 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -661,6 +661,7 @@ git-%$X: %.o $(GITLIBS)
+>  	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+>  		$(LIB_FILE) $(SIMPLE_LIB)
+>  
+> +ssh-pull.o: ssh-fetch.c
+>  git-local-fetch$X: fetch.o
+>  git-ssh-fetch$X: rsh.o fetch.o
+>  git-ssh-upload$X: rsh.o
 
-Signed-off-by: Dennis Stosberg <dennis@stosberg.net>
----
- cg-commit |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/cg-commit b/cg-commit
-index 0cec58f..9604ad7 100755
---- a/cg-commit
-+++ b/cg-commit
-@@ -524,8 +524,11 @@ if [ "$review" ]; then
- 		fi
- 		echo "Applying the edited patch..."
- 		if ! cg-patch < "$PATCH2"; then
--			rm "$PATCH" "$PATCH2" "$LOGMSG"
--			die "unable to apply the edited patch"
-+			echo "The edited patch does not apply. Reapplying old patch."
-+			cg-patch <"$PATCH" >/dev/null
-+			edited_patch="$(mktemp -t edited-patch.XXXXXX)"
-+			mv "$PATCH2" "$edited_patch"
-+			die "You can find the edited patch in \"$edited_patch\" for manual review."
- 		fi
- 	fi
- fi
--- 
-1.4.1
+My personal preference would be to deprecate these commit
+walkers ;-) but in any case we would also need to make
+ssh-push.o depend on ssh-upload.c for the same logic.
