@@ -1,65 +1,83 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Allow fetching from multiple repositories at once
-Date: Fri, 28 Jul 2006 16:51:30 +0200
-Message-ID: <20060728145130.GO13776@pasky.or.cz>
-References: <20060728054341.15864.35862.stgit@machine> <Pine.LNX.4.63.0607281045430.29667@wbgn013.biozentrum.uni-wuerzburg.de> <20060728140058.GM13776@pasky.or.cz> <Pine.LNX.4.63.0607281608520.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Teach git-apply about '-R'
+Date: Fri, 28 Jul 2006 08:14:35 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607280809550.4168@g5.osdl.org>
+References: <Pine.LNX.4.63.0607261940090.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200607262039.25155.Josef.Weidendorfer@gmx.de> <20060728013038.GH13776@pasky.or.cz>
+ <Pine.LNX.4.63.0607281213250.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	alp@atoker.com
-X-From: git-owner@vger.kernel.org Fri Jul 28 16:51:49 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Fri Jul 28 17:15:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6Tge-0003nE-8t
-	for gcvg-git@gmane.org; Fri, 28 Jul 2006 16:51:36 +0200
+	id 1G6U3H-0000oB-Dd
+	for gcvg-git@gmane.org; Fri, 28 Jul 2006 17:15:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751992AbWG1Ovd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Jul 2006 10:51:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751991AbWG1Ovd
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 10:51:33 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:27297 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751992AbWG1Ovc (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Jul 2006 10:51:32 -0400
-Received: (qmail 28666 invoked by uid 2001); 28 Jul 2006 16:51:30 +0200
+	id S1752009AbWG1POs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 28 Jul 2006 11:14:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752010AbWG1POs
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 11:14:48 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:10430 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1752009AbWG1POs (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Jul 2006 11:14:48 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6SFEanW013653
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 28 Jul 2006 08:14:36 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6SFEZH5007903;
+	Fri, 28 Jul 2006 08:14:35 -0700
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0607281608520.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+In-Reply-To: <Pine.LNX.4.63.0607281213250.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=-2.541 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.141 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24390>
 
-Hi!
 
-Dear diary, on Fri, Jul 28, 2006 at 04:13:28PM CEST, I got a letter
-where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
-> You misunderstood me: I was talking about a (hidden) local multiplexer.
 
-Yes; I just wanted to cover another obvious alternative.  :-)
+On Fri, 28 Jul 2006, Johannes Schindelin wrote:
+>
+> +/* a and b may not overlap! */
+> +static void memswap(void *a, void *b, unsigned int len)
 
-> But in the scenario you painted, wouldn't it be practical to have one 
-> consolidated repo _in addition_ to the small ones? Of course, the refs in 
-> the consolidated one would have to be prefixed with the name of the repo 
-> they come from.
+This is disgusting.
 
-You still have problems with tags, for example, and pushing may get
-tricky. It's also non-intuitive for users (I'm seeing some repositories
-in gitweb but fetching from something completely different, and look at
-those weird things I have to do with the branches, or git will clone
-_all_ the xorg projects at once for me, eeek).
+Especially since it's also slow as hell.
 
-Of course you could hide all that elaborately in the porcelain but I
-think this turns to be eventually much less-impact solution which is
-significantly easier to maintain for the repository admins, intuitive
-for users and also simpler for porcelains supporting at least
-light-weight subprojects.
+> +		memswap(p->new_name, p->old_name, sizeof(char *));
+> +		memswap(&p->new_mode, &p->old_mode, sizeof(unsigned int));
+> +		memswap(&p->is_new, &p->is_delete, sizeof(int));
+> +		memswap(&p->lines_added, &p->lines_deleted, sizeof(int));
+> +		memswap(p->old_sha1_prefix, p->new_sha1_prefix, 41);
+> +
+> +		for (; frag; frag = frag->next) {
+> +			memswap(&frag->newpos, &frag->oldpos, sizeof(int));
+> +			memswap(&frag->newlines, &frag->oldlines, sizeof(int));
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Snow falling on Perl. White noise covering line noise.
-Hides all the bugs too. -- J. Putnam
+All but one of those are register sizes, so doing a horribly ugly 
+"memswap()"to do them is truly nasty, when you could have done
+
+	#define swap(a,b) myswap((a),(b),sizeof(a))
+
+	#define myswap(a,b,size) do {		\
+		unsigned char mytmp[size];	\
+		memcpy(tmp, &a, size);		\
+		memcpy(&a, &b, size);		\
+		memcpy(&b, mytmp, size);	\
+	} while (0)
+
+and it would have worked MUCH more efficiently, since any sane compiler 
+would immediately have noticed that you're doing word-sized copies, and 
+optimized the hell out of it.
+
+(Untested, of course).
+
+		Linus
