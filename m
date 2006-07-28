@@ -1,53 +1,60 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Licensing and the library version of git
-Date: Fri, 28 Jul 2006 10:44:23 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607281041420.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <9e4733910607270554p5622ee20ida8c264cf3122500@mail.gmail.com>
- <20060727195614.7EDAE353B04@atlas.denx.de> <20060728050444.GA30783@spearce.org>
+Subject: Re: [PATCH] Allow fetching from multiple repositories at once
+Date: Fri, 28 Jul 2006 10:51:56 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607281045430.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060728054341.15864.35862.stgit@machine>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Wolfgang Denk <wd@denx.de>, Jon Smirl <jonsmirl@gmail.com>,
-	git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 28 10:44:56 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	alp@atoker.com
+X-From: git-owner@vger.kernel.org Fri Jul 28 10:52:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6Nxj-0004s1-Cz
-	for gcvg-git@gmane.org; Fri, 28 Jul 2006 10:44:51 +0200
+	id 1G6O4f-0006L7-V7
+	for gcvg-git@gmane.org; Fri, 28 Jul 2006 10:52:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751130AbWG1Ioh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Jul 2006 04:44:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751796AbWG1Ioh
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 04:44:37 -0400
-Received: from mail.gmx.de ([213.165.64.21]:59305 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751130AbWG1Iog (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Jul 2006 04:44:36 -0400
-Received: (qmail invoked by alias); 28 Jul 2006 08:44:23 -0000
+	id S932598AbWG1Iv6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 28 Jul 2006 04:51:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932592AbWG1Iv6
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 04:51:58 -0400
+Received: from mail.gmx.de ([213.165.64.21]:64168 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932598AbWG1Iv6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Jul 2006 04:51:58 -0400
+Received: (qmail invoked by alias); 28 Jul 2006 08:51:56 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp001) with SMTP; 28 Jul 2006 10:44:23 +0200
+  by mail.gmx.net (mp026) with SMTP; 28 Jul 2006 10:51:56 +0200
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20060728050444.GA30783@spearce.org>
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060728054341.15864.35862.stgit@machine>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24376>
 
 Hi,
 
-On Fri, 28 Jul 2006, Shawn Pearce wrote:
+On Fri, 28 Jul 2006, Petr Baudis wrote:
 
-> [...] as the GPL is incompatible with the Sun JRE runtime lirbary.
+> This patch enables fetching multiple repositories at once over the Git
+> protocol (and SSH, and locally if git-fetch-pack is your cup of coffee
+> there). This is done especially for the xorg people who have tons of
+> repositories and dislike pulls much slower than they were used to with CVS.
+> I'm eager to hear how this affects the situation.
 
-This is not true. You can legally write and run GPLed software on the JRE 
-runtime library.
+So the scenario is: one remote repository (probably shared), and multiple 
+local repositories, all tracking different branches?
 
-BTW I found an Eclipse plugin which is GPLed:
+So, why not setup a single local (master) repository, setup all the other 
+repos with the local master as alternate, and write a simple script which 
+first fetches all branches into the master, and then pulls into the other 
+local repos from that master?
 
-http://www.eclipseplugincentral.com/Web_Links-index-req-viewlink-cid-651.html
+The beauty of it is: you can still pull/push directly from the remote 
+repo, if you want.
 
 Ciao,
 Dscho
