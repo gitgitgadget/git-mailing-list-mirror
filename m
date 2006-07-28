@@ -1,81 +1,48 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Moving a directory into another fails
-Date: Fri, 28 Jul 2006 03:43:50 +0200
-Message-ID: <20060728014350.GI13776@pasky.or.cz>
-References: <9e4733910607260800v618edf0em7b0f5c3332bf8fc5@mail.gmail.com> <20060726223459.GA30601@vsectoor.geht-ab-wie-schnitzel.de> <9e4733910607261603m6772602cr333d8c58f555edaa@mail.gmail.com>
+Subject: Re: [PATCH 3/4] Teach git-local-fetch the --stdin switch
+Date: Fri, 28 Jul 2006 03:57:27 +0200
+Message-ID: <20060728015727.GJ13776@pasky.or.cz>
+References: <20060727215326.24240.20118.stgit@machine> <20060727215622.24240.56894.stgit@machine> <20060727215326.24240.20118.stgit@machine> <20060727215619.24240.39537.stgit@machine>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Vilz <niv@iaglans.de>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 28 03:44:09 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 28 03:57:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6HOP-0004CB-LN
-	for gcvg-git@gmane.org; Fri, 28 Jul 2006 03:43:58 +0200
+	id 1G6Hbd-0008VI-0H
+	for gcvg-git@gmane.org; Fri, 28 Jul 2006 03:57:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751654AbWG1Bny (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Jul 2006 21:43:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751790AbWG1Bnx
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 21:43:53 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:61354 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751654AbWG1Bnw (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 21:43:52 -0400
-Received: (qmail 25401 invoked by uid 2001); 28 Jul 2006 03:43:50 +0200
-To: Jon Smirl <jonsmirl@gmail.com>
+	id S932115AbWG1B5a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Jul 2006 21:57:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932117AbWG1B5a
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 21:57:30 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:55187 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932115AbWG1B53 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 21:57:29 -0400
+Received: (qmail 26873 invoked by uid 2001); 28 Jul 2006 03:57:27 +0200
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <9e4733910607261603m6772602cr333d8c58f555edaa@mail.gmail.com>
+In-Reply-To: <20060727215622.24240.56894.stgit@machine> <20060727215619.24240.39537.stgit@machine>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24361>
 
-Dear diary, on Thu, Jul 27, 2006 at 01:03:30AM CEST, I got a letter
-where Jon Smirl <jonsmirl@gmail.com> said that...
-> This is a simpler sequence
-> 
-> cg clone git foo
-> cg clone git foo1
-> cd foo
-> mkdir zzz
-> git mv gitweb zzz
-> cg diff >patch
-> cg ../foo1
-> cg patch <../foo/patch
+Dear diary, on Thu, Jul 27, 2006 at 11:56:19PM CEST, I got a letter
+where Petr Baudis <pasky@suse.cz> said that...
+> +--stdin::
+> +	Instead of a commit id on the commandline (which is not expected in this
+> +	case), 'git-local-fetch' excepts lines on stdin in the format
+                                 ^^^^^^^
 
-Even simpler one:
+Oops, should read "expects" in both patches - thanks, alp!
 
-	mkdir zzz
-	cg-mv gitweb zzz
-	cg-diff | cg-patch -R
-
-(which would even undo the mess supposing that it worked properly)
-
-> [jonsmirl@jonsmirl foo1]$ cg patch <../foo/patch
-> mv: cannot move `gitweb/README' to `zzz/gitweb/README': No such file
-> or directory
-
-Oops. Thanks, fixed with this:
-
-diff --git a/cg-patch b/cg-patch
-index cc82f1f..923df0e 100755
---- a/cg-patch
-+++ b/cg-patch
-@@ -145,6 +145,8 @@ redzone_border()
- 			echo "$file1: rename destination $file2 already exists, NOT RENAMING" >&2
- 			return
- 		fi
-+		# FIXME: Remove stale empty directories related to $mvfrom
-+		case $mvto in */*) mkdir -p "${mvto%/*}";; esac
- 		mv "$mvfrom" "$mvto"
- 	fi
- 	if [ "$op" = "delete" -o "$op" = "rename" ]; then
-
-> mv: cannot stat `"gitweb/test/M\\303\\244rchen"': No such file or directory
-
-Junio, how am I supposed to unmangle this *censored* stuff?
+I blame all those tiny bugs lured into the room by light and then, well,
+bugging you. (Real-world bugs, but they can transform.)
 
 -- 
 				Petr "Pasky" Baudis
