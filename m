@@ -1,78 +1,69 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Teach the git wrapper about --name-rev and --name-rev-by-tags
-Date: Fri, 28 Jul 2006 09:59:11 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607280952200.4168@g5.osdl.org>
-References: <20060524131022.GA11449@linux-mips.org> <Pine.LNX.4.64.0605240931480.5623@g5.osdl.org>
- <Pine.LNX.4.64.0605240947580.5623@g5.osdl.org> <7v64jv8fdx.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0605241200110.5623@g5.osdl.org> <Pine.LNX.4.64.0605241641250.5623@g5.osdl.org>
- <20060525131241.GA8443@linux-mips.org> <7v4px4osjv.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0607281308280.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Dennis Stosberg <dennis@stosberg.net>
+Subject: [PATCH] cg-commit --review may permanently delete changes
+Date: Fri, 28 Jul 2006 19:11:52 +0200
+Message-ID: <20060728171152.G3a9ef049@leonov.stosberg.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 28 18:59:47 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 28 19:12:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6VgN-0006fX-Gq
-	for gcvg-git@gmane.org; Fri, 28 Jul 2006 18:59:28 +0200
+	id 1G6Vsc-00010U-TM
+	for gcvg-git@gmane.org; Fri, 28 Jul 2006 19:12:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161184AbWG1Q7W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Jul 2006 12:59:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161181AbWG1Q7W
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 12:59:22 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:64995 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1161098AbWG1Q7W (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Jul 2006 12:59:22 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6SGxCnW019533
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 28 Jul 2006 09:59:14 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6SGxBKb011204;
-	Fri, 28 Jul 2006 09:59:11 -0700
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0607281308280.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Spam-Status: No, hits=-2.551 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.141 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1752051AbWG1RL5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 28 Jul 2006 13:11:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752052AbWG1RL5
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 13:11:57 -0400
+Received: from ncs.stosberg.net ([89.110.145.104]:13235 "EHLO ncs.stosberg.net")
+	by vger.kernel.org with ESMTP id S1752051AbWG1RL4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Jul 2006 13:11:56 -0400
+Received: from leonov.stosberg.net (p213.54.90.253.tisdip.tiscali.de [213.54.90.253])
+	by ncs.stosberg.net (Postfix) with ESMTP id F38C4589C004;
+	Fri, 28 Jul 2006 19:11:45 +0200 (CEST)
+Received: by leonov.stosberg.net (Postfix, from userid 500)
+	id C130311B659; Fri, 28 Jul 2006 19:11:52 +0200 (CEST)
+To: Petr Baudis <pasky@suse.cz>
+Content-Disposition: inline
+Received: from leonov ([unix socket]) by leonov (Cyrus v2.1.18-IPv6-Debian-2.1.18-1+sarge2) with LMTP; Fri, 28 Jul 2006 18:40:12 +0200
+X-Sieve: CMU Sieve 2.2
+User-Agent: mutt-ng/devel-r802 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24397>
 
+If the patch is changed in the editor in such a way that cg-patch
+can not apply it, all changes made since the last commit are
+irrecoverably lost, which is _really_ bad.
 
+This patch lets cg-commit reapply the old patch and keep the edited
+patch for manual fix-up.
 
-On Fri, 28 Jul 2006, Johannes Schindelin wrote:
-> 
-> Now you can say
-> 
-> 	git --name-rev log
+Signed-off-by: Dennis Stosberg <dennis@stosberg.net>
+---
+ cg-commit |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
 
-I think this is wrong.
-
-It may be a straightforward translation of
-
-> 	git log | git name-rev --stdin | less
-
-but that doesn't make it any more "correct".
-
->From a logical standpoint, it should be an argument to the _logging_, not 
-to the main git binary, so it should be
-
-	git log --name-rev
-
-and you should do the parsing (and the output) inside revision.c.
-
-Also, I doubt most people want every release named. I think the common 
-case would be that you want those releases named that match heads (and 
-tags in particular) _exactly_. If you want everything named, maybe you 
-want to do "--name-rev-all" or something.
-
-Hmm?
-
-(That would also likely perform a lot better)
-
-		Linus
+diff --git a/cg-commit b/cg-commit
+index 0cec58f..9604ad7 100755
+--- a/cg-commit
++++ b/cg-commit
+@@ -524,8 +524,11 @@ if [ "$review" ]; then
+ 		fi
+ 		echo "Applying the edited patch..."
+ 		if ! cg-patch < "$PATCH2"; then
+-			rm "$PATCH" "$PATCH2" "$LOGMSG"
+-			die "unable to apply the edited patch"
++			echo "The edited patch does not apply. Reapplying old patch."
++			cg-patch <"$PATCH" >/dev/null
++			edited_patch="$(mktemp -t edited-patch.XXXXXX)"
++			mv "$PATCH2" "$edited_patch"
++			die "You can find the edited patch in \"$edited_patch\" for manual review."
+ 		fi
+ 	fi
+ fi
+-- 
+1.4.1
