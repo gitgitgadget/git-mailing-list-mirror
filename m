@@ -1,68 +1,105 @@
 From: Petr Baudis <pasky@suse.cz>
 Subject: Re: [PATCH] Allow fetching from multiple repositories at once
-Date: Fri, 28 Jul 2006 16:00:58 +0200
-Message-ID: <20060728140058.GM13776@pasky.or.cz>
-References: <20060728054341.15864.35862.stgit@machine> <Pine.LNX.4.63.0607281045430.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Fri, 28 Jul 2006 16:04:10 +0200
+Message-ID: <20060728140410.GN13776@pasky.or.cz>
+References: <20060728054341.15864.35862.stgit@machine>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	alp@atoker.com
-X-From: git-owner@vger.kernel.org Fri Jul 28 16:01:23 2006
+Cc: git@vger.kernel.org, alp@atoker.com
+X-From: git-owner@vger.kernel.org Fri Jul 28 16:04:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6Stm-00010H-Rm
-	for gcvg-git@gmane.org; Fri, 28 Jul 2006 16:01:07 +0200
+	id 1G6Swr-0001fH-9H
+	for gcvg-git@gmane.org; Fri, 28 Jul 2006 16:04:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161157AbWG1OBD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Jul 2006 10:01:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161158AbWG1OBD
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 10:01:03 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:37851 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1161157AbWG1OBB (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Jul 2006 10:01:01 -0400
-Received: (qmail 24055 invoked by uid 2001); 28 Jul 2006 16:00:58 +0200
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	id S1161156AbWG1OEO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 28 Jul 2006 10:04:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161167AbWG1OEO
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 10:04:14 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:2790 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1161156AbWG1OEN (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Jul 2006 10:04:13 -0400
+Received: (qmail 24274 invoked by uid 2001); 28 Jul 2006 16:04:10 +0200
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0607281045430.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+In-Reply-To: <20060728054341.15864.35862.stgit@machine>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24387>
 
-  Hi,
+Dear diary, on Fri, Jul 28, 2006 at 07:44:21AM CEST, I got a letter
+where Petr Baudis <pasky@suse.cz> said that...
+> @@ -461,11 +465,52 @@ static int send_ref(const char *refname,
+>  
+>  static int upload_pack(void)
+>  {
+> -	reset_timeout();
+> -	head_ref(send_ref);
+> -	for_each_ref(send_ref);
+> -	packet_flush(1);
+> -	receive_needs();
+> +	int multirepo = 0;
+> +
+> +	while (1) {
+> +		char *repo;
+> +		char cwd[PATH_MAX];
+> +
+> +		reset_timeout();
+> +		head_ref(send_ref);
+> +		for_each_ref(send_ref);
+> +		packet_flush(1);
+> +		repo = receive_needs();
+> +		if (!repo)
+> +			break;
+> +		multirepo++;
+> +
+> +		fprintf(stderr, "git-upload-pack: switching to repo %s", repo);
+> +
+> +		/* So that we still find objects of the original repository... */
+> +		getcwd(cwd, PATH_MAX);
+> +		if (strlen(cwd) < PATH_MAX - 8)
+> +			strcat(cwd, "/objects");
+> +		link_alt_odb_entry(cwd, strlen(cwd), NULL, 0, 1);
+> +
+> +		if (!enter_repo(repo, strict) || !security_repo_check(!check_export))
+> +			die("git-upload-pack: security violation");
+> +	}
+> +
+> +	if (multirepo) {
+> +#define ALTENV_SIZE 65536
+> +		/* Propagate all the repositories to the children */
+> +		char altenv[ALTENV_SIZE], *p = altenv;
+> +		struct alternate_object_database *alt;
+> +		strcpy(p, ALTERNATE_DB_ENVIRONMENT "=");
+> +		p += sizeof(ALTERNATE_DB_ENVIRONMENT);
+> +		for (alt = alt_odb_list; alt; alt = alt->next) {
+> +			strncpy(p, alt->base, alt->name - alt->base);
+> +			p += alt->name - alt->base;
+> +			if (p - altenv < ALTENV_SIZE)
+> +				*p++ = ':';
+> +			if (p - altenv >= ALTENV_SIZE)
+> +				die("fetching too many repositories");
+> +		}
+> +		p[-1] = '\0';
+> +		putenv(altenv);
+> +	}
+> +
+>  	if (!want_obj.nr)
+>  		return 0;
+>  	get_common_commits();
 
-Dear diary, on Fri, Jul 28, 2006 at 10:51:56AM CEST, I got a letter
-where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
-> So the scenario is: one remote repository (probably shared), and multiple 
-> local repositories, all tracking different branches?
-> 
-> So, why not setup a single local (master) repository, setup all the other 
-> repos with the local master as alternate, and write a simple script which 
-> first fetches all branches into the master, and then pulls into the other 
-> local repos from that master?
+  Note that you need to be more careful about ALTENV_SIZE checking here,
+and I'm not sure if we even need to abuse the alternates database here;
+only later I added setting up the alternates variable since I realized
+we are executing external tools here, and things would be simpler if we
+could get away by just doing that.
 
-  Nope, the scenario is many remote repositories and any number of local
-repositories. Look at http://gitweb.freedesktop.org/ - as far as I know,
-many people have many (most?) of those repositories cloned and fetching
-updates is just a huge pain. This makes no assumptions about the number
-of local repositories, you can even fetch into various branch of a
-single local repository - only if you fetch into multiple repositories,
-all of them must see the objects you fetched.
-
-  The alternative of squashing all the remote repositories into a single
-one is probably not very attractive since you get a huge branches tree
-instead, varying hooks will get impractical, it won't look good in
-gitweb, git clone will by default clone all the stuff, you will need to
-impose tag namespaces, permissions might get tricky and so on and so on.
-
-> The beauty of it is: you can still pull/push directly from the remote 
-> repo, if you want.
-
-  This should let you do that too.
+  I'm sorry, I don't have time to send the updated patch anymore. :-(
 
 -- 
 				Petr "Pasky" Baudis
