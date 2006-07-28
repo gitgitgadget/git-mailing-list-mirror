@@ -1,77 +1,81 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH 1/2] t7001: add test for git-mv dir1 dir2/
-Date: Fri, 28 Jul 2006 03:30:38 +0200
-Message-ID: <20060728013038.GH13776@pasky.or.cz>
-References: <Pine.LNX.4.63.0607261940090.29667@wbgn013.biozentrum.uni-wuerzburg.de> <200607262039.25155.Josef.Weidendorfer@gmx.de>
+Subject: Re: Moving a directory into another fails
+Date: Fri, 28 Jul 2006 03:43:50 +0200
+Message-ID: <20060728014350.GI13776@pasky.or.cz>
+References: <9e4733910607260800v618edf0em7b0f5c3332bf8fc5@mail.gmail.com> <20060726223459.GA30601@vsectoor.geht-ab-wie-schnitzel.de> <9e4733910607261603m6772602cr333d8c58f555edaa@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jon Smirl <jonsmirl@gmail.com>, git@vger.kernel.org,
-	junkio@cox.net
-X-From: git-owner@vger.kernel.org Fri Jul 28 03:30:55 2006
+Cc: Nicolas Vilz <niv@iaglans.de>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 28 03:44:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6HBd-0002w4-SF
-	for gcvg-git@gmane.org; Fri, 28 Jul 2006 03:30:46 +0200
+	id 1G6HOP-0004CB-LN
+	for gcvg-git@gmane.org; Fri, 28 Jul 2006 03:43:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751773AbWG1Bam (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Jul 2006 21:30:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751654AbWG1Bam
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 21:30:42 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:31928 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751276AbWG1Bam (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 21:30:42 -0400
-Received: (qmail 21316 invoked by uid 2001); 28 Jul 2006 03:30:38 +0200
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+	id S1751654AbWG1Bny (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Jul 2006 21:43:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751790AbWG1Bnx
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 21:43:53 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:61354 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751654AbWG1Bnw (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 21:43:52 -0400
+Received: (qmail 25401 invoked by uid 2001); 28 Jul 2006 03:43:50 +0200
+To: Jon Smirl <jonsmirl@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <200607262039.25155.Josef.Weidendorfer@gmx.de>
+In-Reply-To: <9e4733910607261603m6772602cr333d8c58f555edaa@mail.gmail.com>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24360>
 
-Dear diary, on Wed, Jul 26, 2006 at 08:39:24PM CEST, I got a letter
-where Josef Weidendorfer <Josef.Weidendorfer@gmx.de> said that...
-> On Wednesday 26 July 2006 19:41, Johannes Schindelin wrote:
-> > 
-> > If dir2 already exists, git-mv should move dir1 _into_dir2/.
-> > Noticed by Jon Smirl.
+Dear diary, on Thu, Jul 27, 2006 at 01:03:30AM CEST, I got a letter
+where Jon Smirl <jonsmirl@gmail.com> said that...
+> This is a simpler sequence
 > 
-> Thanks for adding this test.
-> BTW, the original PERL script passes it quite fine.
-> 
-> I just looked at Jon's problem. Doesn't seem to be related to
-> git-mv or git at all, but more a cogito problem.
-> I have some cogito-0.18pre installed, and cg-patch is patching
-> the stuff all itself, not using git for this. Pasky?
+> cg clone git foo
+> cg clone git foo1
+> cd foo
+> mkdir zzz
+> git mv gitweb zzz
+> cg diff >patch
+> cg ../foo1
+> cg patch <../foo/patch
 
-Unfortunately, git-apply is still quite unusable for Cogito. It can do
-fuzzy merging now, but here's some random list of more issues I still
-have with it (I'm leaving for some two weeks or so of holiday soon so I
-won't have to fix them soon personally; it'd be nice if someone did,
-though ;) :
+Even simpler one:
 
-  (i) No git-apply -R - well, it seems to me that I revert patches all
-the time, don't you?
+	mkdir zzz
+	cg-mv gitweb zzz
+	cg-diff | cg-patch -R
 
-  (ii) I'd like git-apply to be as verbose as patch is, that is list
-the files it touches as it goes
+(which would even undo the mess supposing that it worked properly)
 
-  (iii) There's no reject handling besides "panic" right now - it should
-be able to create .rej files so that the user can fix things up
+> [jonsmirl@jonsmirl foo1]$ cg patch <../foo/patch
+> mv: cannot move `gitweb/README' to `zzz/gitweb/README': No such file
+> or directory
 
-  (iv) I need git-apply to add/remove to/from index new/gone files,
-while at the same time...
+Oops. Thanks, fixed with this:
 
-  (v) I want to allow applying of patches to working copy that is not
-completely clean, even on top of modified files
+diff --git a/cg-patch b/cg-patch
+index cc82f1f..923df0e 100755
+--- a/cg-patch
++++ b/cg-patch
+@@ -145,6 +145,8 @@ redzone_border()
+ 			echo "$file1: rename destination $file2 already exists, NOT RENAMING" >&2
+ 			return
+ 		fi
++		# FIXME: Remove stale empty directories related to $mvfrom
++		case $mvto in */*) mkdir -p "${mvto%/*}";; esac
+ 		mv "$mvfrom" "$mvto"
+ 	fi
+ 	if [ "$op" = "delete" -o "$op" = "rename" ]; then
 
-But yes, I'd like cg-patch to move to use git-apply. It's currently
-_way_ too scary.
+> mv: cannot stat `"gitweb/test/M\\303\\244rchen"': No such file or directory
+
+Junio, how am I supposed to unmangle this *censored* stuff?
 
 -- 
 				Petr "Pasky" Baudis
