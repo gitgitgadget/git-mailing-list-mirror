@@ -1,122 +1,71 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Allow fetching from multiple repositories at once
-Date: Fri, 28 Jul 2006 07:46:36 +0200
-Message-ID: <20060728054636.GL13776@pasky.or.cz>
-References: <20060728054341.15864.35862.stgit@machine>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: print errors from git-update-ref
+Date: Fri, 28 Jul 2006 02:27:20 -0400
+Message-ID: <20060728062720.GC30783@spearce.org>
+References: <81b0412b0607180613t603551b8t865b407c40ab8aef@mail.gmail.com> <7vk663h6zi.fsf@assigned-by-dhcp.cox.net> <20060727012856.GB32492@spearce.org> <Pine.LNX.4.63.0607271302150.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, alp@atoker.com
-X-From: git-owner@vger.kernel.org Fri Jul 28 07:46:48 2006
+Cc: Junio C Hamano <junkio@cox.net>, Alex Riesen <raa.lkml@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 28 08:27:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6LBK-00083U-Os
-	for gcvg-git@gmane.org; Fri, 28 Jul 2006 07:46:43 +0200
+	id 1G6Lop-0006RL-8H
+	for gcvg-git@gmane.org; Fri, 28 Jul 2006 08:27:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932585AbWG1Fqk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Jul 2006 01:46:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751978AbWG1Fqk
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 01:46:40 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:6362 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751975AbWG1Fqj (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Jul 2006 01:46:39 -0400
-Received: (qmail 16067 invoked by uid 2001); 28 Jul 2006 07:46:36 +0200
-To: Junio C Hamano <junkio@cox.net>
+	id S1751969AbWG1G12 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 28 Jul 2006 02:27:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751975AbWG1G12
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 02:27:28 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:53647 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751969AbWG1G11 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Jul 2006 02:27:27 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1G6Lof-0001ya-Qn; Fri, 28 Jul 2006 02:27:22 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 7883920E433; Fri, 28 Jul 2006 02:27:20 -0400 (EDT)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Disposition: inline
-In-Reply-To: <20060728054341.15864.35862.stgit@machine>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+In-Reply-To: <Pine.LNX.4.63.0607271302150.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24368>
 
-Dear diary, on Fri, Jul 28, 2006 at 07:44:21AM CEST, I got a letter
-where Petr Baudis <pasky@suse.cz> said that...
-> So, you need some kind of porcelain for this. The idea is that instead of
-> telling git-fetch-pack a single repository, you pass multiple --repo=
-> parameters and refs always "belong" to the latest mentioned repository;
-> when outputting the new ref values, the appropriate repo is mentioned near
-> each ref. In order for this to be useful, on your local side you should
-> share the objects database in some way - either using alternates (then
-> you must fetch to an object database reachable from everywhere) or symlinked
-> object databases.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
 > 
-> You still need to pass git-fetch-pack some URL in addition to the
-> repositories - it is used only for git_connect(), the purpose is that
-> repositories must be local directories so if you want to talk remote, you
-> need to do something like
+> On Wed, 26 Jul 2006, Shawn Pearce wrote:
 > 
-> 	git-fetch-pack git://kernel.org/pub/scm/git/git.git --repo=/pub/scm/git/git.git master next --repo=/pub/scm/cogito/cogito.git master
+> > This change adds a test for trying to create a ref within a directory
+> > that is actually currently a file, and adds error printing within
+> > the ref locking routine should the resolve operation fail.
+> 
+> Why not just print an error message when the resolve operation fails, 
+> instead of special casing this obscure corner case? It is way shorter, 
+> too. The test should stay, though.
 
-This is a simple "porcelain" for it:
+Did you read the patch?  If resolve_ref returns NULL then this
+change prints an error (from errno) no matter what.  If errno is
+ENOTDIR then it tries to figure out what part of the ref path wasn't
+a directory (but was attempted to be used as such) and prints an
+ENOTDIR error about that path instead of the one actually given
+to the ref lock function
 
--->8--
-
-#!/usr/bin/perl
-use warnings;
-use strict;
-
-# Remember that you must ensure the obj database is shared - either symlink it
-# or setup alternates!
-#my $remoteurl = 'git://git.kernel.org/pub/scm/git/git.git';
-#my %config = (
-#	'/pub/scm/git/git.git' => {
-#		'next' => {
-#			'/home/xpasky/q/gg' => 'origin'
-#		},
-#		'master' => {
-#			'/home/xpasky/q/gg' => 'origin2',
-#			'/home/xpasky/q/gg2' => 'origin'
-#		}
-#	},
-#	'/pub/scm/cogito/cogito-doc.git' => {
-#		master => {
-#			'/home/xpasky/q/gg2' => 'origin2'
-#		}
-#	}
-#);
-my $remoteurl = 'puturlofremotehosthere';
-my %config = (
-	'remoterepo1' => {
-		branch1 => {
-			'localrepo1' => 'origin'
-		},
-		branch2 => {
-			'localrepo1' => 'origin2',
-			'localrepo2' => 'origin'
-		}
-	},
-	'remoterepo2' => {
-		master => {
-			'localrepo2' => 'origin2'
-		}
-	}
-);
-
-my @args = ($remoteurl);
-foreach my $repo (keys %config) {
-	push (@args, '--repo='.$repo);
-	foreach my $branch (keys %{$config{$repo}}) {
-		push (@args, $branch);
-	}
-}
-
-open (F, '-|', 'git-fetch-pack', @args) or die "$!";
-while (<F>) {
-	chomp;
-	split / /, $_;
-	my ($sha, $ref, $repo) = @_;
-	$ref =~ s#^refs/heads/##;
-	foreach my $lrepo (keys %{$config{$repo}->{$ref}}) {
-		system("GIT_DIR=$lrepo git-update-ref $config{$repo}->{$ref}->{$lrepo} $sha");
-	}
-}
-close (F);
+So I think I'm doing what you are suggesting...
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Snow falling on Perl. White noise covering line noise.
-Hides all the bugs too. -- J. Putnam
+Shawn.
