@@ -1,167 +1,76 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH 0/4] Fetching mass of objects at once
-Date: Thu, 27 Jul 2006 23:57:05 +0200
-Message-ID: <20060727215705.GF13776@pasky.or.cz>
-References: <20060727215326.24240.20118.stgit@machine>
+From: "Anand Kumria" <wildfire@progsoc.org>
+Subject: Re: Licensing and the library version of git
+Date: Fri, 28 Jul 2006 00:24:56 +0000 (UTC)
+Message-ID: <eablgn$c6a$1@sea.gmane.org>
+References: <9e4733910607261436v4c0802e5v7301e904593f9bab@mail.gmail.com>
+	<20060727114105.GZ13776@pasky.or.cz>
+	<Pine.LNX.4.63.0607271400160.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<9e4733910607270554p5622ee20ida8c264cf3122500@mail.gmail.com>
+	<20060727131127.GA13776@pasky.or.cz>
+	<9e4733910607270911p50d25d97w1a898fc7a9119e7d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: jonsmirl@gmail.com
-X-From: git-owner@vger.kernel.org Thu Jul 27 23:57:48 2006
+Content-Type: text/plain; charset=UTF-8
+X-From: git-owner@vger.kernel.org Fri Jul 28 02:25:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6Dqy-0006wx-TQ
-	for gcvg-git@gmane.org; Thu, 27 Jul 2006 23:57:13 +0200
+	id 1G6GAH-0007GJ-Es
+	for gcvg-git@gmane.org; Fri, 28 Jul 2006 02:25:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751337AbWG0V5J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Jul 2006 17:57:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751348AbWG0V5J
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 17:57:09 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:31694 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751337AbWG0V5I (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 17:57:08 -0400
-Received: (qmail 25042 invoked by uid 2001); 27 Jul 2006 23:57:05 +0200
+	id S1750870AbWG1AZN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 27 Jul 2006 20:25:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750909AbWG1AZN
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 20:25:13 -0400
+Received: from main.gmane.org ([80.91.229.2]:26821 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750870AbWG1AZL (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 20:25:11 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1G6GA6-0007FV-Rm
+	for git@vger.kernel.org; Fri, 28 Jul 2006 02:25:06 +0200
+Received: from 88-109-231-203.dynamic.dsl.as9105.com ([88.109.231.203])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 28 Jul 2006 02:25:06 +0200
+Received: from wildfire by 88-109-231-203.dynamic.dsl.as9105.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 28 Jul 2006 02:25:06 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060727215326.24240.20118.stgit@machine>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 88-109-231-203.dynamic.dsl.as9105.com
+User-Agent: pan 0.102 ("From the Years of Neon Through Iodine")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24356>
 
-Dear diary, on Thu, Jul 27, 2006 at 11:53:26PM CEST, I got a letter
-where Petr Baudis <pasky@suse.cz> said that...
->   I will followup with a patch for Cogito to take advantage of this. It's
-> now roughly on par with Git in cloning speed.
+On Thu, 27 Jul 2006 12:11:00 -0400, Jon Smirl wrote:
 
-diff --git a/cg-Xfetchprogress b/cg-Xfetchprogress
-index 53bcbd3..4a272db 100755
---- a/cg-Xfetchprogress
-+++ b/cg-Xfetchprogress
-@@ -67,7 +67,7 @@ sub getline {
- 	if (m#^(link|symlink|copy|got) ([a-f0-9]{2})([a-f0-9]{38})#) {
- 		$object = "$2/$3";
- 
--	} elsif (m#^(walk) ([a-f0-9]{2})([a-f0-9]{38})#) {
-+	} elsif (m#^(ref|walk) ([a-f0-9]{2})([a-f0-9]{38})#) {
- 		return 1; # redundant information
- 
- 	# rsync
-diff --git a/cg-fetch b/cg-fetch
-index a6e6959..9277f99 100755
---- a/cg-fetch
-+++ b/cg-fetch
-@@ -124,16 +124,10 @@ get_rsync()
- 	return ${PIPESTATUS[0]}
- }
- 
--fetch_rsync()
-+fetch_rsync_save()
- {
--	if [ $verbose -ge 2 ]; then
--		# We must not pipe to prevent buffered I/O
--		get_rsync -s -d "$2/objects" "$_git_objects"
--	else
--		get_rsync -s -d "$2/objects" "$_git_objects" | fetch_progress
--	fi
- 	ret=${PIPESTATUS[0]}
--	if [ "$3" ] && [ "$ret" -eq "0" ]; then
-+	if [ "$1" ] && [ "$ret" -eq "0" ]; then
- 		if [ "$orig_head" ]; then
- 			git-rev-list --objects $new_head ^$orig_head |
- 				while read obj type; do
-@@ -141,12 +135,29 @@ fetch_rsync()
- 				done ||
- 			die "rsync fetch incomplete, some objects missing"
- 		fi
--		cat "$_git/refs/${3%/*}/.${3##*/}-fetching" > "$_git/refs/$3"
-+		cat "$_git/refs/${3%/*}/.${3##*/}-fetching" > "$_git/refs/$1"
- 	fi
- 	return $ret
- }
- 
- 
-+fetch_rsync()
-+{
-+	if [ $verbose -ge 2 ]; then
-+		# We must not pipe to prevent buffered I/O
-+		get_rsync -s -d "$2/objects" "$_git_objects"
-+	else
-+		get_rsync -s -d "$2/objects" "$_git_objects" | fetch_progress
-+	fi
-+	if [ x"$1" = x"--stdin" ]; then
-+		while read c w; do
-+			echo "$c" >"$_git/refs/$w"
-+		done
-+	else
-+		fetch_rsync_save "$3"
-+	fi
-+}
-+
- get_http()
- {
- 	[ "$1" = "-b" ] && shift
-@@ -229,21 +240,13 @@ fetch_tags()
- 
- 			# if so, fetch the tag -- which should be
- 			# a cheap operation -- to complete the chain.
--			echo -n "Missing tag ${tagname#tags/}... "
--			if $fetch "$tagname" "$uri" "$tagname" 2>/dev/null >&2; then
--				echo "retrieved"
--			else
--				# 17 is code from packed transport, which
--				# will grab all of them en masse later
--				if [ "$?" -ne "17" ]; then
--					echo "unable to retrieve"
--				else
--					echo ""
--				fi
--			fi
--		done
--	[ "${PIPESTATUS[0]}" -eq "0" ] ||
--		echo "unable to get tags list (non-fatal)" >&2
-+			echo "Missing tag ${tagname#tags/}..." >&2
-+			echo -e "$tagname"\\t"$tagname"
-+		done |
-+		sort | uniq | $fetch --stdin "$uri"
-+	if [ "${PIPESTATUS[0]}" -ne 0 -o "$?" -ne 0 ]; then
-+		echo "unable to fetch tags (non-fatal)" >&2
-+	fi
- 	return 0
- }
- 
-@@ -364,21 +367,15 @@ if [ "$packed_transport" ]; then
- 		fetch_pack_recorder "refs/heads/$name" "fetching pack failed" ||
- 		exit
- 
--	export _cg_taglist="$(mktemp -t gitfetch.XXXXXX)"
- 	record_tags_to_fetch () {
--		echo "refs/$1" >>"$_cg_taglist"
--		return 17
--	}
--	fetch=record_tags_to_fetch
--	fetch_tags
--	if [ -s "$_cg_taglist" ]; then
--		( cat "$_cg_taglist" | tr '\n' '\0' |
-+		( cut -f 1 | tr '\n' '\0' |
- 			xargs -0 git-fetch-pack $cloneorfetch "$uri" ||
- 		  echo "failed" "$rembranch" ) |
- 
- 		fetch_pack_recorder "" "unable to retrieve tags (non-fatal)"
--	fi
--	rm "$_cg_taglist"
-+	}
-+	fetch=record_tags_to_fetch
-+	fetch_tags
- 
- 	rm "$dirtyfile"
- 	show_changes_summary "$orig_head" "$(cg-object-id "$name")"
+> On 7/27/06, Petr Baudis <pasky@suse.cz> wrote:
+>> > You may like trying to force GPL onto the app but many apps are
+>> > stuck with the license they have and can't be changed since there is
+>> > no way to contact the original developers.
+>>
+>> At this point, git-shortlog lists exactly 200 people (at least entries
+>> like Unknown or No name are all linux@horizon.com ;-).
+> 
+> Inability to integrate with Microsoft Visual Studio is going to have a
+> lot of impact on the cross platform use of git.  
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Snow falling on Perl. White noise covering line noise.
-Hides all the bugs too. -- J. Putnam
+Could you stop with the histrionics please?
+
+> Is a conscious
+> decision being made to stop this integration or is this just unplanned
+> side effect of the original license? If this is an unplanned side
+> effect, the quicker we move, the easier it is to fix.
+
+So, using CVSNT (a GPL'd SCCI provider) and git-cvsserver would be a way
+to continue.  I'm assuming that the primary functionality they want via
+their IDE is checkout/diff/commit/log.
+
+Quite a lot of Windows developers have no problems using multiple tools
+for things, I'd assume they would also be able to use any existent port
+of git (to Windows) to do the esoteric things like branching/bisect/etc.
+
+Anand
