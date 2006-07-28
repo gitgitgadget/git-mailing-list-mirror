@@ -1,130 +1,260 @@
-From: "=?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?=" <andre.goddard@gmail.com>
-Subject: Re: Git clone stalls at a read(3, ...) saw using strace
-Date: Fri, 28 Jul 2006 05:58:19 -0400
-Message-ID: <b8bf37780607280258s421faf65o11c5dd241e7a27c6@mail.gmail.com>
-References: <b8bf37780607270516i7fbd8844he03e107b15fd2ed7@mail.gmail.com>
-	 <1154018302.13273.0.camel@dv>
-	 <b8bf37780607270943w562ec21fuab0eb882b3ccffeb@mail.gmail.com>
-	 <Pine.LNX.4.64.0607270947540.4168@g5.osdl.org>
-	 <b8bf37780607271017p22fa908bt82a564a4a1a15a79@mail.gmail.com>
-	 <b8bf37780607271025m1a611006x65a900e9e487ce1b@mail.gmail.com>
-	 <Pine.LNX.4.64.0607271049460.4168@g5.osdl.org>
-	 <1154025679.13273.5.camel@dv>
-	 <b8bf37780607271216i5b1d8d34n900ffeacbe81f380@mail.gmail.com>
-	 <b8bf37780607280256q485b7ae9p9cdedf9b621a0e9b@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Teach git-apply about '-R'
+Date: Fri, 28 Jul 2006 12:14:46 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607281213250.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0607261940090.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200607262039.25155.Josef.Weidendorfer@gmx.de> <20060728013038.GH13776@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Linus Torvalds" <torvalds@osdl.org>,
-	"Ribeiro, Humberto Plinio" <humberto.ribeiro@siemens.com>
-X-From: git-owner@vger.kernel.org Fri Jul 28 11:58:30 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Fri Jul 28 12:15:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6P6z-00031W-Lu
-	for gcvg-git@gmane.org; Fri, 28 Jul 2006 11:58:30 +0200
+	id 1G6PNJ-0006am-OD
+	for gcvg-git@gmane.org; Fri, 28 Jul 2006 12:15:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932601AbWG1J60 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 28 Jul 2006 05:58:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932603AbWG1J60
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 05:58:26 -0400
-Received: from py-out-1112.google.com ([64.233.166.177]:61782 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S932601AbWG1J6Z convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Jul 2006 05:58:25 -0400
-Received: by py-out-1112.google.com with SMTP id s49so577900pyc
-        for <git@vger.kernel.org>; Fri, 28 Jul 2006 02:58:20 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=TYHNIyt1j/gySQ3PJwfpsokGoX1esNye5o9PGPRBkzvsbmcinh4ztoeXU7kzEPzQF2NccOeAjeOVPqPrX85Gc0uwjc4SrKD6eOUncWlr8FN9xdcHqQrfi/2H2yjcCNMtDTh52LdrV0+deqy73qeQcTcaVxG5opEvYmonfqfaqco=
-Received: by 10.35.100.6 with SMTP id c6mr14231795pym;
-        Fri, 28 Jul 2006 02:58:19 -0700 (PDT)
-Received: by 10.35.128.2 with HTTP; Fri, 28 Jul 2006 02:58:19 -0700 (PDT)
-To: "Pavel Roskin" <proski@gnu.org>
-In-Reply-To: <b8bf37780607280256q485b7ae9p9cdedf9b621a0e9b@mail.gmail.com>
-Content-Disposition: inline
+	id S932612AbWG1KOt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 28 Jul 2006 06:14:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932615AbWG1KOt
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 06:14:49 -0400
+Received: from mail.gmx.de ([213.165.64.21]:63932 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932612AbWG1KOs (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Jul 2006 06:14:48 -0400
+Received: (qmail invoked by alias); 28 Jul 2006 10:14:46 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp035) with SMTP; 28 Jul 2006 12:14:46 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060728013038.GH13776@pasky.or.cz>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24381>
 
-On 7/28/06, Andr=E9 Goddard Rosa <andre.goddard@gmail.com> wrote:
-> On 7/27/06, Andr=E9 Goddard Rosa <andre.goddard@gmail.com> wrote:
-> > On 7/27/06, Pavel Roskin <proski@gnu.org> wrote:
-> > > On Thu, 2006-07-27 at 10:50 -0700, Linus Torvalds wrote:
-> > > > Nope. I have a fairly constant 120kbps, and:
-> > > >
-> > > > [torvalds@g5 ~]$  git clone git://source.mvista.com/git/linux-d=
-avinci-2.6.git
-> > > > Checking files out...)
-> > > >  100% (19754/19754) done
-> > >
-> > > Same thing here.  Current git from the master branch.
-> >
-> > Forgot to say that we are using this script in GIT_PROXY_COMMAND
-> > environment variable:
-> >
-> > (echo "CONNECT $1:$2 HTTP/1.0"; echo; cat ) | nc <proxy_add> <portn=
-um>
-> > | (read a; read a; cat )
-> >
-> > The first 'read a' removes the 'CONNECT SUCCESS HTTP RESPONSE 200' =
-and
-> > the second removes an empty line as described here:
-> >
-> > http://www.gelato.unsw.edu.au/archives/git/0605/20664.html
-> >
-> > I will try from home later again.
->
-> Okey, I tried from home (without the proxy trick) and it behaved a lo=
-t
-> better but my disc went full in the process and I got these messages:
-> ...
-> ...
-> ...
-> error: git-checkout-index: unable to write file drivers/scsi/mac53c94=
-=2Ec
-> error: git-checkout-index: unable to write file drivers/scsi/mac53c94=
-=2Eh
-> error: git-checkout-index: unable to write file drivers/scsi/mac_esp.=
-c
-> error: git-checkout-index: unable to create file
-> drivers/scsi/mac_scsi.c (No space left on device)
-> error: git-checkout-index: unable to create file
-> drivers/scsi/mac_scsi.h (No space left on device)
-> error: git-checkout-index: unable to create file
-> drivers/scsi/mca_53c9x.c (No space left on device)
-> error: git-checkout-index: unable to create file
-> drivers/scsi/megaraid.c (No space left on device)
-> error: git-checkout-index: unable to create file
-> drivers/scsi/megaraid.h (No space left on device)
-> fatal: cannot create directory at drivers/scsi/megaraid
->
-> And it finished keeping the downloaded files, but I still cannot see
-> these files listed above.
-> I tried to pull but it says that I'm up-to-date:
->
-> doctorture:/opt/downloads/mvista/linux-mvista # git-pull
-> Already up-to-date.
->
-> I remember that using CVS I just used 'cvs update' after checkout and
-> it would bring the missing files to me.
->
-> What I'm doing wrong here?
 
-I'm also receiving these messages when trying to change branches:
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-doctorture:/opt/downloads/mvista/linux-mvista # git-checkout origin
-fatal: Untracked working tree file '.gitignore' would be overwritten by=
- merge.
+---
 
-Perhaps I will need to download using git-clone again?
+On Fri, 28 Jul 2006, Petr Baudis wrote:
 
-Thanks,
---=20
-[]s,
-Andr=E9 Goddard
+>   (i) No git-apply -R - well, it seems to me that I revert patches all
+> the time, don't you?
+
+ builtin-apply.c         |   68 ++++++++++++++++++++++++++++++++++++++++-------
+ t/t4102-apply-rename.sh |   24 +++++++++++++++--
+ 2 files changed, 80 insertions(+), 12 deletions(-)
+
+diff --git a/builtin-apply.c b/builtin-apply.c
+index d924ac3..eb3eda1 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -120,7 +120,7 @@ struct fragment {
+ struct patch {
+ 	char *new_name, *old_name, *def_name;
+ 	unsigned int old_mode, new_mode;
+-	int is_rename, is_copy, is_new, is_delete, is_binary;
++	int is_rename, is_copy, is_new, is_delete, is_binary, is_reverse;
+ #define BINARY_DELTA_DEFLATED 1
+ #define BINARY_LITERAL_DEFLATED 2
+ 	unsigned long deflate_origlen;
+@@ -1119,6 +1119,37 @@ static int parse_chunk(char *buffer, uns
+ 	return offset + hdrsize + patchsize;
+ }
+ 
++/* a and b may not overlap! */
++static void memswap(void *a, void *b, unsigned int len)
++{
++	char *ap = a, *bp = b;
++	int i;
++	char c;
++
++	for (i = 0; i < len; i++) {
++		c = ap[i]; ap[i] = bp[i]; bp[i] = c;
++	}
++}
++
++static void reverse_patches(struct patch *p)
++{
++	for (; p; p = p->next) {
++		struct fragment *frag = p->fragments;
++
++		memswap(p->new_name, p->old_name, sizeof(char *));
++		memswap(&p->new_mode, &p->old_mode, sizeof(unsigned int));
++		memswap(&p->is_new, &p->is_delete, sizeof(int));
++		memswap(&p->lines_added, &p->lines_deleted, sizeof(int));
++		memswap(p->old_sha1_prefix, p->new_sha1_prefix, 41);
++
++		for (; frag; frag = frag->next) {
++			memswap(&frag->newpos, &frag->oldpos, sizeof(int));
++			memswap(&frag->newlines, &frag->oldlines, sizeof(int));
++		}
++		p->is_reverse = !p->is_reverse;
++	}
++}
++
+ static const char pluses[] = "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++";
+ static const char minuses[]= "----------------------------------------------------------------------";
+ 
+@@ -1336,7 +1367,7 @@ static int apply_line(char *output, cons
+ }
+ 
+ static int apply_one_fragment(struct buffer_desc *desc, struct fragment *frag,
+-	int inaccurate_eof)
++	int reverse, int inaccurate_eof)
+ {
+ 	int match_beginning, match_end;
+ 	char *buf = desc->buffer;
+@@ -1350,6 +1381,7 @@ static int apply_one_fragment(struct buf
+ 	int pos, lines;
+ 
+ 	while (size > 0) {
++		char first;
+ 		int len = linelen(patch, size);
+ 		int plen;
+ 
+@@ -1366,16 +1398,23 @@ static int apply_one_fragment(struct buf
+ 		plen = len-1;
+ 		if (len < size && patch[len] == '\\')
+ 			plen--;
+-		switch (*patch) {
++		first = *patch;
++		if (reverse) {
++			if (first == '-')
++				first = '+';
++			else if (first == '+')
++				first = '-';
++		}
++		switch (first) {
+ 		case ' ':
+ 		case '-':
+ 			memcpy(old + oldsize, patch + 1, plen);
+ 			oldsize += plen;
+-			if (*patch == '-')
++			if (first == '-')
+ 				break;
+ 		/* Fall-through for ' ' */
+ 		case '+':
+-			if (*patch != '+' || !no_add)
++			if (first != '+' || !no_add)
+ 				newsize += apply_line(new + newsize, patch,
+ 						      plen);
+ 			break;
+@@ -1615,7 +1654,8 @@ static int apply_fragments(struct buffer
+ 		return apply_binary(desc, patch);
+ 
+ 	while (frag) {
+-		if (apply_one_fragment(desc, frag, patch->inaccurate_eof) < 0)
++		if (apply_one_fragment(desc, frag, patch->is_reverse,
++					patch->inaccurate_eof) < 0)
+ 			return error("patch failed: %s:%ld",
+ 				     name, frag->oldpos);
+ 		frag = frag->next;
+@@ -2142,7 +2182,8 @@ static int use_patch(struct patch *p)
+ 	return 1;
+ }
+ 
+-static int apply_patch(int fd, const char *filename, int inaccurate_eof)
++static int apply_patch(int fd, const char *filename,
++		int reverse, int inaccurate_eof)
+ {
+ 	unsigned long offset, size;
+ 	char *buffer = read_patch_file(fd, &size);
+@@ -2162,6 +2203,8 @@ static int apply_patch(int fd, const cha
+ 		nr = parse_chunk(buffer + offset, size, patch);
+ 		if (nr < 0)
+ 			break;
++		if (reverse)
++			reverse_patches(patch);
+ 		if (use_patch(patch)) {
+ 			patch_stats(patch);
+ 			*listp = patch;
+@@ -2226,6 +2269,7 @@ int cmd_apply(int argc, const char **arg
+ {
+ 	int i;
+ 	int read_stdin = 1;
++	int reverse = 0;
+ 	int inaccurate_eof = 0;
+ 
+ 	const char *whitespace_option = NULL;
+@@ -2236,7 +2280,7 @@ int cmd_apply(int argc, const char **arg
+ 		int fd;
+ 
+ 		if (!strcmp(arg, "-")) {
+-			apply_patch(0, "<stdin>", inaccurate_eof);
++			apply_patch(0, "<stdin>", reverse, inaccurate_eof);
+ 			read_stdin = 0;
+ 			continue;
+ 		}
+@@ -2313,6 +2357,10 @@ int cmd_apply(int argc, const char **arg
+ 			parse_whitespace_option(arg + 13);
+ 			continue;
+ 		}
++		if (!strcmp(arg, "-R") || !strcmp(arg, "--reverse")) {
++			reverse = 1;
++			continue;
++		}
+ 		if (!strcmp(arg, "--inaccurate-eof")) {
+ 			inaccurate_eof = 1;
+ 			continue;
+@@ -2333,12 +2381,12 @@ int cmd_apply(int argc, const char **arg
+ 			usage(apply_usage);
+ 		read_stdin = 0;
+ 		set_default_whitespace_mode(whitespace_option);
+-		apply_patch(fd, arg, inaccurate_eof);
++		apply_patch(fd, arg, reverse, inaccurate_eof);
+ 		close(fd);
+ 	}
+ 	set_default_whitespace_mode(whitespace_option);
+ 	if (read_stdin)
+-		apply_patch(0, "<stdin>", inaccurate_eof);
++		apply_patch(0, "<stdin>", reverse, inaccurate_eof);
+ 	if (whitespace_error) {
+ 		if (squelch_whitespace_errors &&
+ 		    squelch_whitespace_errors < whitespace_error) {
+diff --git a/t/t4102-apply-rename.sh b/t/t4102-apply-rename.sh
+index fbb508d..22da6a0 100755
+--- a/t/t4102-apply-rename.sh
++++ b/t/t4102-apply-rename.sh
+@@ -13,8 +13,8 @@ # setup
+ cat >test-patch <<\EOF
+ diff --git a/foo b/bar
+ similarity index 47%
+-copy from foo
+-copy to bar
++rename from foo
++rename to bar
+ --- a/foo
+ +++ b/bar
+ @@ -1 +1 @@
+@@ -39,4 +39,24 @@ else
+ 	    'test -f bar && ls -l bar | grep "^-..x......"'
+ fi
+ 
++test_expect_success 'apply reverse' \
++    'git-apply -R --index --stat --summary --apply test-patch &&
++     test "$(cat foo)" = "This is foo"'
++
++cat >test-patch <<\EOF
++diff --git a/foo b/bar
++similarity index 47%
++copy from foo
++copy to bar
++--- a/foo
+++++ b/bar
++@@ -1 +1 @@
++-This is foo
+++This is bar
++EOF
++
++test_expect_success 'apply copy' \
++    'git-apply --index --stat --summary --apply test-patch &&
++     test "$(cat bar)" = "This is bar" -a "$(cat foo)" = "This is foo"'
++
+ test_done
+-- 
+1.4.2.rc2.g813d5-dirty
