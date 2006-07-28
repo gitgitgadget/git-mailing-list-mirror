@@ -1,79 +1,69 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Java GIT/Eclipse GIT version 0.1.1
-Date: Fri, 28 Jul 2006 02:36:20 -0400
-Message-ID: <20060728063620.GD30783@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Jul 28 08:36:56 2006
+From: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
+Subject: Re: Java GIT/Eclipse GIT version 0.1.1
+Date: Fri, 28 Jul 2006 08:49:59 +0200
+Message-ID: <slrnecjcsn.8td.Peter.B.Baumann@xp.machine.xx>
+References: <20060728063620.GD30783@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jul 28 08:50:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6Lxp-00088g-9Z
-	for gcvg-git@gmane.org; Fri, 28 Jul 2006 08:36:49 +0200
+	id 1G6MBE-0001rL-UT
+	for gcvg-git@gmane.org; Fri, 28 Jul 2006 08:50:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751975AbWG1GgZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Jul 2006 02:36:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751978AbWG1GgZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 02:36:25 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:37008 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751975AbWG1GgY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jul 2006 02:36:24 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1G6LxN-0002PB-Rf
-	for git@vger.kernel.org; Fri, 28 Jul 2006 02:36:21 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id C9DC120E433; Fri, 28 Jul 2006 02:36:20 -0400 (EDT)
+	id S1751130AbWG1Gu3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 28 Jul 2006 02:50:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751979AbWG1Gu3
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 02:50:29 -0400
+Received: from main.gmane.org ([80.91.229.2]:35037 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751130AbWG1Gu2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Jul 2006 02:50:28 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1G6MAp-0001mO-9m
+	for git@vger.kernel.org; Fri, 28 Jul 2006 08:50:15 +0200
+Received: from mason.hofmann.stw.uni-erlangen.de ([131.188.24.36])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 28 Jul 2006 08:50:15 +0200
+Received: from Peter.B.Baumann by mason.hofmann.stw.uni-erlangen.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 28 Jul 2006 08:50:15 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: mason.hofmann.stw.uni-erlangen.de
+User-Agent: slrn/0.9.8.0 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24370>
 
-My Java GIT library and Eclipse GIT team provider is now at a point
-where it may be partially useful to someone else who is also trying
-to write something which interacts with GIT.  Or who might also
-be interested in seeing a pure-Java Eclipse team provider for GIT.
+On 2006-07-28, Shawn Pearce <spearce@spearce.org> wrote:
+> My Java GIT library and Eclipse GIT team provider is now at a point
+> where it may be partially useful to someone else who is also trying
+> to write something which interacts with GIT.  Or who might also
+> be interested in seeing a pure-Java Eclipse team provider for GIT.
+>
+> So I've posted my repository (currently ~200 KB) on my website:
+>
+>   http://www.spearce.org/projects/scm/egit.git
+>
 
-So I've posted my repository (currently ~200 KB) on my website:
+Doesn't work for me.
 
-  http://www.spearce.org/projects/scm/egit.git
+devil:~/src git clone http://www.spearce.org/projects/scm/egit.git
+error: File ac32c7cc2f7cf87a1ed80d0cdfca2af2a0385bb2 (http://www.spearce.org/projects/scm/egit.git/objects/ac/32c7cc2f7cf87a1ed80d0cdfca2af2a0385bb2) corrupt
+Getting pack list for http://www.spearce.org/projects/scm/egit.git/
+Getting alternates list for http://www.spearce.org/projects/scm/egit.git/
+Also look at <html xmlns="http://www.w3.org/1999/
+Also look at    <title>Insufficiently Random: The lonely musings of a loosely connected software developer.<
+Also look at            @import url( http://www.spearce.org/wordpress/wp-content/themes/ir-classic/style
+Also look at    <link rel="pingback" href="http://www.spearce.org/wordpress/xmlrpc.
+Also look at            <link rel='archives' title='April 2006' href='http://www.spearce.org/2006/
+Also look at    <link rel='archives' title='February 2006' href='http://www.spearce.org/2006/
+[...]
+Also look at <li><a href="feed:http://www.spearce.org/comments/feed/" title="The latest comments to all posts in RSS">Comments <abbr title="Really Simple Syndication">RSS</abbr></
+*** glibc detected *** double free or corruption (!prev): 0x080933b0 ***
+/usr/bin/git-clone: line 29: 10712 Aborted                 git-http-fetch -v -a -w "$tname" "$name" "$1/"
 
-
-The underlying Java library is fairly functional and can read and
-write a repository.  Creating a series of Ant tasks for use in an
-automated build environment would probably be pretty trivial with
-this library.
-
-The Eclipse plugin can't commit.  Or do a lot of other really
-useful things.  So its not end-user ready.  :-)
-
-
-The code is licensed under the Apache License, version 2.0.
-
-
-I would appreciate any and all input, feedback, etc. that anyone
-might have on this library or plugin.  Patches are of course
-certainly welcome.  :-)
-
-For what its worth I'm trying to keep this library and Eclipse
-plugin 100% pure Java and avoid calling out to the canonical C
-implementation of GIT.  However I have no plans to implement the
-delta packing algorithm used by git-pack-objects.  Consequently if
-this code ever produces packs it will be strictly zlib deflated
-objects without delta compression.
-
--- 
-Shawn.
+-Peter
