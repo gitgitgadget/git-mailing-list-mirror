@@ -1,36 +1,36 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Licensing and the library version of git
-Date: Fri, 28 Jul 2006 23:56:32 -0400
-Message-ID: <20060729035632.GC28128@spearce.org>
-References: <9e4733910607270554p5622ee20ida8c264cf3122500@mail.gmail.com> <20060727195614.7EDAE353B04@atlas.denx.de> <20060728050444.GA30783@spearce.org> <Pine.LNX.4.63.0607281041420.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: Re: Java GIT/Eclipse GIT version 0.1.1
+Date: Sat, 29 Jul 2006 00:08:19 -0400
+Message-ID: <20060729040819.GD28128@spearce.org>
+References: <20060728063620.GD30783@spearce.org> <slrnecjcsn.8td.Peter.B.Baumann@xp.machine.xx> <20060728030859.n8ks44ck8884ss44@webmail.spamcop.net> <20060729033214.GA28128@spearce.org> <1154145355.26378.35.camel@dv>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Wolfgang Denk <wd@denx.de>, Jon Smirl <jonsmirl@gmail.com>,
-	git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jul 29 05:57:04 2006
+Cc: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 29 06:08:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6fwh-0002EO-Vk
-	for gcvg-git@gmane.org; Sat, 29 Jul 2006 05:57:00 +0200
+	id 1G6g7p-0003ja-Gr
+	for gcvg-git@gmane.org; Sat, 29 Jul 2006 06:08:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161428AbWG2D45 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Jul 2006 23:56:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161433AbWG2D45
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 23:56:57 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:43482 "EHLO
+	id S1161436AbWG2EIZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 29 Jul 2006 00:08:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161438AbWG2EIZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Jul 2006 00:08:25 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:55259 "EHLO
 	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1161428AbWG2D44 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jul 2006 23:56:56 -0400
+	id S1161436AbWG2EIY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Jul 2006 00:08:24 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1G6fwA-0003e3-5D; Fri, 28 Jul 2006 23:56:26 -0400
+	id 1G6g7i-0004Sz-Sy; Sat, 29 Jul 2006 00:08:23 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5CAA720E433; Fri, 28 Jul 2006 23:56:33 -0400 (EDT)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	id 25BF320E433; Sat, 29 Jul 2006 00:08:20 -0400 (EDT)
+To: Pavel Roskin <proski@gnu.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0607281041420.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+In-Reply-To: <1154145355.26378.35.camel@dv>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -43,40 +43,39 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24413>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
+Pavel Roskin <proski@gnu.org> wrote:
+> On Fri, 2006-07-28 at 23:32 -0400, Shawn Pearce wrote:
 > 
-> On Fri, 28 Jul 2006, Shawn Pearce wrote:
+> > Hmm.  My website is known to return 200 OK status codes on missing
+> > files with HTML pages rather than proper 404 Not Found.  I guess
+> > I need to get that fixed.
 > 
-> > [...] as the GPL is incompatible with the Sun JRE runtime lirbary.
+> Maybe git-http-fetch could treat MIME type text/html like error 404?
+> It's not like any valid file git requests can be in HTML format.
+
+This has been discussed to death on the list, mostly due to my pg
+repository causing the same error (its on the same server).
+
+The solution turned out to be rather good in my opinion: if an
+object is corrupt we log it, and skip to pack downloading.  At the
+end the bad object is logged and the user is encouraged to run
+git-fsck-objects to verify there's no corrupt objects or objects
+which are missing things they point at (e.g. ancestor commits
+or trees).
+
+Of course the real solution here is for me to fix my server.  :-)
+
+> > I just compiled and installed `next` (1.4.2.rc1.g802da) and it can
+> > clone this repository just fine over HTTP, despite my broken server.
+> > So I'm not really sure what is going on.
 > 
-> This is not true. You can legally write and run GPLed software on the JRE 
-> runtime library.
-> 
-> BTW I found an Eclipse plugin which is GPLed:
-> 
-> http://www.eclipseplugincentral.com/Web_Links-index-req-viewlink-cid-651.html
+> Sorry, I was unclear.  I can clone the repository, I was just concerned
+> that something was missing from it.
 
-Thanks.  I did a little research on it myself after reading your
-email. I turned up the following two pages from the FSF:
-
-  http://www.gnu.org/licenses/gpl-faq.html#InterpreterIncompat
-  http://www.gnu.org/licenses/lgpl-java.html
-
-Both suggest that I can license everything under the GPL but provide
-exclusions to allow users to run the code against its dependencies
-which aren't GPL'd:
-
-  - the end-user may 'link' the code against any Java runtime library
-    of their choice;
-
-  - the end-user may 'link' the code against any Eclipse platform
-    or derivative of their choice;
-
-So given that I'm seriously considering changing the license to
-GPLv2 for the next version.
+git-http-fetch recommends running git-fsck-objects to be sure,
+but yea, usually its complete even though you get the error.
 
 -- 
 Shawn.
