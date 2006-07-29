@@ -1,69 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Teach the git wrapper about --name-rev and --name-rev-by-tags
-Date: Sat, 29 Jul 2006 14:47:03 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607291446400.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060524131022.GA11449@linux-mips.org> 
- <Pine.LNX.4.64.0605240947580.5623@g5.osdl.org>  <7v64jv8fdx.fsf@assigned-by-dhcp.cox.net>
-  <Pine.LNX.4.64.0605241200110.5623@g5.osdl.org>  <Pine.LNX.4.64.0605241641250.5623@g5.osdl.org>
-  <20060525131241.GA8443@linux-mips.org>  <7v4px4osjv.fsf@assigned-by-dhcp.cox.net>
-  <Pine.LNX.4.63.0607281308280.29667@wbgn013.biozentrum.uni-wuerzburg.de> 
- <Pine.LNX.4.64.0607280952200.4168@g5.osdl.org> 
- <Pine.LNX.4.63.0607282042470.29667@wbgn013.biozentrum.uni-wuerzburg.de>
- <fcaeb9bf0607290543h12b70c74q54a1fbfc3c8e3b7e@mail.gmail.com>
+From: "Eloise Roland" <EloiseRoland@mail.ru>
+Subject: Better Future, wind-outspeeding
+Date: Sat, 29 Jul 2006 15:04:37 +0000 (UTC)
+Message-ID: <662161c80604nogwjaj7m0elpd25knel0el5h95110b0gw9@mxs.mail.ru>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-2068666142-1154177223=:29667"
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 29 14:47:13 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Sat Jul 29 17:04:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6oDm-0005RV-4X
-	for gcvg-git@gmane.org; Sat, 29 Jul 2006 14:47:10 +0200
+	id 1G6qMb-0003wL-TY
+	for gcvg-git@gmane.org; Sat, 29 Jul 2006 17:04:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932127AbWG2MrH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 29 Jul 2006 08:47:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932129AbWG2MrH
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Jul 2006 08:47:07 -0400
-Received: from mail.gmx.net ([213.165.64.21]:30664 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932127AbWG2MrF (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 29 Jul 2006 08:47:05 -0400
-Received: (qmail invoked by alias); 29 Jul 2006 12:47:04 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp002) with SMTP; 29 Jul 2006 14:47:04 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-	<pclouds@gmail.com>
-In-Reply-To: <fcaeb9bf0607290543h12b70c74q54a1fbfc3c8e3b7e@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1751434AbWG2PEM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 29 Jul 2006 11:04:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751649AbWG2PEM
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Jul 2006 11:04:12 -0400
+Received: from zeus2.kernel.org ([204.152.191.36]:26267 "EHLO zeus2.kernel.org")
+	by vger.kernel.org with ESMTP id S1751434AbWG2PEL convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Jul 2006 11:04:11 -0400
+Received: from NNHPOS26688P.agency.hu.intranet (adsl-59840e9d.monradsl.monornet.hu [89.132.14.157])
+	by zeus2.kernel.org (8.13.1/8.13.1) with ESMTP id k6TF3vYH017680;
+	Sat, 29 Jul 2006 15:04:10 GMT
+Date: Sat, 29 Jul 2006 15:04:10 -0060
+To: git-commits-head-owner@vger.kernel.org
+Content-Disposition: inline
+X-Spam: Not detected
+X-Virus-Scanned: ClamAV 0.88.3/1625/Sat Jul 29 12:53:06 2006 on zeus2.kernel.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24425>
+X-Spam-Report: 11.6 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5971]
+ *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: corkpencills.com]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: corkpencills.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: corkpencills.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: corkpencills.com]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: corkpencills.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24426>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Your cre dit doesn't matter to us! If you OWN real est ate
+and want IMMEDIATES cash to spend ANY way you like, or simply wish 
+to LOWER your monthly paym ents by a third or more, here are the dea ls
+we have TODAY (hurry, these ofers will expre TONIGHT):
 
----1148973799-2068666142-1154177223=:29667
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+$488,000.00 at a 3.67,% fixed-rateM
+$372,000.00 at a 3.90,% variable-rateA
+$492,000.00 at a 3.21,% interest-only3
+$248,000.00 at a 3.36,% fixed-rateB
+$198,000.00 at a 3.55,% variable-rateJ
 
-Hi,
+Hurry, when these deals are gone, they are gone Simply fill out this one-min ute form... 
 
-On Sat, 29 Jul 2006, Nguyn Thái Ngc Duy wrote:
+Don't worry about approval, your cre dit will not disqualify you! 
 
-> On 7/29/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > You are probably right. But _I_ want to know that e.g. commit
-> > a025463bc0ec2c894a88f2dfb44cf88ba71bb712 is really tags/v1.4.0^0~27^2.
-> > Both are immutable, but the latter is nicer to people than to computers.
-> I think so too. I had requested a similar feature on the git survey
-> and was surprised to see this patch. I'd appreciate it.
+http://VK38M1BX.corkpencills.com
 
-Now, guess three times where the idea comes from. ;-)
 
-Ciao,
-Dscho
 
----1148973799-2068666142-1154177223=:29667--
+them back?"
+even redder. His eyes filled with tears. Redrick grinned.
+
+tearing  inside,  like a dried  bandage  pulling  from  a wound. Arthur also
+seated himself  at the table, where  a pint bottle,  a bowl with thick soup,
+drop dead. So I get back, and there's a surprise for me--emigration has been
+
+has to pay for  this, and somebody will! Just wait, just let  me get  to the
+designs made by rust on the cabin's red roof.
+chatting but thought, as he looked at those two horrors born of the Zone: My
+tearing  inside,  like a dried  bandage  pulling  from  a wound. Arthur also
+
+was flaming before his half-closed eyes, and they  were all bitter, and they
+trying  not to move, still hoping that it  would  blow over, even though  he
