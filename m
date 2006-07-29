@@ -1,83 +1,120 @@
-From: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
-Subject: Re: Java GIT/Eclipse GIT version 0.1.1
-Date: Sat, 29 Jul 2006 18:46:29 +0200
-Message-ID: <slrnecn475.i60.Peter.B.Baumann@xp.machine.xx>
-References: <20060728063620.GD30783@spearce.org> <slrnecjcsn.8td.Peter.B.Baumann@xp.machine.xx> <20060728030859.n8ks44ck8884ss44@webmail.spamcop.net> <slrnecjeru.bou.Peter.B.Baumann@xp.machine.xx> <1154139012.3154.38.camel@dv>
-X-From: git-owner@vger.kernel.org Sat Jul 29 18:47:08 2006
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Call setup_git_directory() early
+Date: Sat, 29 Jul 2006 09:52:20 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607290943550.4168@g5.osdl.org>
+References: <Pine.LNX.4.64.0607281811580.4168@g5.osdl.org>
+ <7v3bclkwfj.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0607282118230.4168@g5.osdl.org>
+ <7vodv9j8yg.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0607282223320.4168@g5.osdl.org>
+ <7vzmesg4g3.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 29 18:53:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6rxu-00052p-81
-	for gcvg-git@gmane.org; Sat, 29 Jul 2006 18:47:02 +0200
+	id 1G6s3l-0005ty-UW
+	for gcvg-git@gmane.org; Sat, 29 Jul 2006 18:53:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751213AbWG2Qq7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 29 Jul 2006 12:46:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751302AbWG2Qq7
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Jul 2006 12:46:59 -0400
-Received: from main.gmane.org ([80.91.229.2]:63713 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751213AbWG2Qq7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 29 Jul 2006 12:46:59 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1G6rxg-00050y-SV
-	for git@vger.kernel.org; Sat, 29 Jul 2006 18:46:48 +0200
-Received: from p54aaae9f.dip0.t-ipconnect.de ([84.170.174.159])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 29 Jul 2006 18:46:48 +0200
-Received: from Peter.B.Baumann by p54aaae9f.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 29 Jul 2006 18:46:48 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: p54aaae9f.dip0.t-ipconnect.de
-User-Agent: slrn/0.9.8.0 (Linux)
+	id S1751374AbWG2QwZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 29 Jul 2006 12:52:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752017AbWG2QwZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Jul 2006 12:52:25 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:49896 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751374AbWG2QwY (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 29 Jul 2006 12:52:24 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6TGqLnW021538
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 29 Jul 2006 09:52:21 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6TGqKfo014163;
+	Sat, 29 Jul 2006 09:52:20 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmesg4g3.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.535 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.141 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24429>
 
-On 2006-07-29, Pavel Roskin <proski@gnu.org> wrote:
-> On Fri, 2006-07-28 at 09:23 +0200, Peter Baumann wrote:
->> >> *** glibc detected *** double free or corruption (!prev): 0x080933b0 ***
->> >> /usr/bin/git-clone: line 29: 10712 Aborted                 git-http-fetch -v
->> >> -a -w "$tname" "$name" "$1/"
->> >
->> > I'm not getting that.  I hope you are just using an obsolete version of git.
->> 
->> Not _that_ old, me thinks. I'm using the debian unstable version.
->
-> I tried to reproduce it but couldn't.  I tried valgrind (3.2.0 and
-> current) on two architectures, I tried _FORTIFY_SOURCE=2 to no avail -
-> it just won't crash or report anything suspicious.  It's the current
-> master branch of git.
->
-> So, it's up to you to debug it.
->
 
-Strange. Running git-clone now works.
 
-devil:~ cd src; git clone http://www.spearce.org/projects/scm/egit.git
-error: File ac32c7cc2f7cf87a1ed80d0cdfca2af2a0385bb2
-(http://www.spearce.org/projects/scm/egit.git/objects/ac/32c7cc2f7cf87a1ed80d0cdfca2af2a0385bb2)
-corrupt
-Getting pack list for http://www.spearce.org/projects/scm/egit.git/
-error: XML error: not well-formed (invalid token)
-Getting index for pack 052a98c5ca30068b8ecda3302198174e4588bab1
-Getting pack 052a98c5ca30068b8ecda3302198174e4588bab1
- which contains ac32c7cc2f7cf87a1ed80d0cdfca2af2a0385bb2
-walk ac32c7cc2f7cf87a1ed80d0cdfca2af2a0385bb2
+On Sat, 29 Jul 2006, Junio C Hamano wrote:
+> 
+> > +#define NEEDS_PREFIX 1
+> >...
+> >  		{ "init-db", cmd_init_db },
+> 
+> This is an oddball that wants to always use $GIT_DIR environment
+> or "./.git" if $GIT_DIR is not exported, and should never go
+> looking for GIT_DIR, so we should not give NEEDS_PREFIX, ever.
 
-[... lots of correct looking walk's ...]
+Well, the way I did things, each command _can_ still decide to call 
+"setup_git_directory()" on their own, and we don't actually say up front 
+whether they will or not.
 
-walk c1f287cb19b9910af19756cf29c08b1fda75da8c
-Some loose object were found to be corrupt, but they might be just
-a false '404 Not Found' error message sent with incorrect HTTP
-status code.  Suggest running git fsck-objects.
-got eab86de8ac23e2e77878835007724146fdd83796
+So some commands will just choose to let the git.c wrapper do it for them, 
+and others can do it their own way, which leaves the maximum of 
+flexibility, and doesn't mean that odd-balls like "init-db" really have to 
+even be an issue.
 
-And git-fsck-objects --full doesn't barf, so it should be ok. Could it
-be related that I am not using a proxy today (as last time)?
+> >  		{ "stripspace", cmd_stripspace },
+> >  		{ "mailsplit", cmd_mailsplit },
+> >  		{ "get-tar-commit-id", cmd_get_tar_commit_id },
+> 
+> These are the other extreme -- they really do not care about
+> operating in a git context.
 
--Peter
+Right.
+
+>   		{ "push", cmd_push },
+>   		{ "count-objects", cmd_count_objects },
+> 		{ "check-ref-format", cmd_check_ref_format },
+> 
+> One rule seems to be that the commands that work at the while
+> repository level do not have NEEDS_PREFIX -- they will never
+> work from a subdirectory.
+
+Well, maybe we will make them do so, and maybe we won't. 
+
+The way I chose the NEED_PREFIX ones was actually really simple and 
+totally automated: I changed every builtin function to first _not_ have 
+NEEDS_PREFIX, but changed the prototype to take "const char *prefix" 
+instead of the "char **envp" that nobody actually used.
+
+I then compiled them, and for each function that _already_ had a "prefix" 
+in their existing implementation (which the compiler warned about), I 
+just removed the old "prefix = setup_git_directory()", and added the 
+NEEDS_PREFIX flag for that command.
+
+> There is no technical reason not to let count-objects find
+> $GIT_DIR on its own, but the current implementation does not do
+> that and you are keeping the behaviour bug-to-bug compatible.
+
+Exactly. My conversions (both the first smaller one, and the second thing) 
+were really totally mindless translations, nothing fancy. I fixed a few 
+bugs as I hit them (ie the first one moved the "setup_git_directory()" 
+call earlier over some "git_config()" calls), but other than those kinds 
+of local changes, I tried to keep not just the patch, but very much the 
+process of me creating it, very straightforward.
+
+> >  		{ "rev-list", cmd_rev_list },
+> 
+> I think we should mark this with NEEDS_PREFIX, and lose the call
+> to setup_git_directory() it has here:
+
+I think you're right, and the above explanation of how the patch was 
+mindlessly created explains why my patch didn't do it that way ;)
+
+When I do re-organizations, I like doing them in two stages: the 
+"mindless" stage that does the bulk of the syntactic stuff and the 
+movement of code, but that pretty much by definition should not introduce 
+any new bugs, and then the second stage is the "ok, now we have the new 
+organization, we can clean up and fix problems".
+
+			Linus
