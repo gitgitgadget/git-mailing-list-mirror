@@ -1,63 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: log and diff family: honor config even from subdirectories
-Date: Fri, 28 Jul 2006 18:54:24 -0700
-Message-ID: <7v3bclkwfj.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0607281811580.4168@g5.osdl.org>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: Java GIT/Eclipse GIT version 0.1.1
+Date: Fri, 28 Jul 2006 22:10:12 -0400
+Message-ID: <1154139012.3154.38.camel@dv>
+References: <20060728063620.GD30783@spearce.org>
+	 <slrnecjcsn.8td.Peter.B.Baumann@xp.machine.xx>
+	 <20060728030859.n8ks44ck8884ss44@webmail.spamcop.net>
+	 <slrnecjeru.bou.Peter.B.Baumann@xp.machine.xx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 29 03:54:39 2006
+X-From: git-owner@vger.kernel.org Sat Jul 29 04:10:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G6e2C-0004sI-0j
-	for gcvg-git@gmane.org; Sat, 29 Jul 2006 03:54:33 +0200
+	id 1G6eHY-0001Be-IJ
+	for gcvg-git@gmane.org; Sat, 29 Jul 2006 04:10:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752062AbWG2By0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 28 Jul 2006 21:54:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752067AbWG2By0
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 21:54:26 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:16792 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1752062AbWG2By0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jul 2006 21:54:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060729015425.ERBZ12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 28 Jul 2006 21:54:25 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0607281811580.4168@g5.osdl.org> (Linus Torvalds's
-	message of "Fri, 28 Jul 2006 18:17:25 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161184AbWG2CKV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 28 Jul 2006 22:10:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161235AbWG2CKV
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Jul 2006 22:10:21 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:58838 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1161184AbWG2CKV
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Jul 2006 22:10:21 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1G6eHU-0004dU-4n
+	for git@vger.kernel.org; Fri, 28 Jul 2006 22:10:20 -0400
+Received: from proski by dv.roinet.com with local (Exim 4.62)
+	(envelope-from <proski@dv.roinet.com>)
+	id 1G6eHM-0006Bp-Ag; Fri, 28 Jul 2006 22:10:12 -0400
+To: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
+In-Reply-To: <slrnecjeru.bou.Peter.B.Baumann@xp.machine.xx>
+X-Mailer: Evolution 2.7.4 (2.7.4-3) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24408>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+On Fri, 2006-07-28 at 09:23 +0200, Peter Baumann wrote:
+> >> *** glibc detected *** double free or corruption (!prev): 0x080933b0 ***
+> >> /usr/bin/git-clone: line 29: 10712 Aborted                 git-http-fetch -v
+> >> -a -w "$tname" "$name" "$1/"
+> >
+> > I'm not getting that.  I hope you are just using an obsolete version of git.
+> 
+> Not _that_ old, me thinks. I'm using the debian unstable version.
 
-> I'd actually _like_ to do the setup unconditionally inside the git wrapper 
-> (early - to make sure that we don't have this bug), but some things (at 
-> least "init-db", "clone" and "ls-remote") are obviously not supposed to do 
-> it, since they work outside of a git directory. So either we need to do it 
-> in each builtin command separately, or we'd need to add a flag in the 
-> command descriptor array.
->
-> Any clever ideas?
->
-> 		Linus
+I tried to reproduce it but couldn't.  I tried valgrind (3.2.0 and
+current) on two architectures, I tried _FORTIFY_SOURCE=2 to no avail -
+it just won't crash or report anything suspicious.  It's the current
+master branch of git.
 
-No clever ideas, but I agree it would be _very_ nice if we could
-do the setup unconditionally and early.  Some commands that call
-setup want to know prefix, so we would need to introduce a
-global to hold the prefix for them.
+So, it's up to you to debug it.
 
-I do not do this myself, but it is conceivable that you might
-want to be able to set GIT_DIR to point at somewhere outside
-your working tree hierarchy, _and_ still work in a subdirectory.
-The current setup does not allow you to do that; we could
-introduce GIT_PROJECT_ROOT environment variable, and when
-GIT_PROJECT_ROOT exists difference between getcwd() and the
-project root could become the value of prefix.
+-- 
+Regards,
+Pavel Roskin
