@@ -1,65 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 19] gitweb: No need to quote path for list version of open "-|"
-Date: Mon, 31 Jul 2006 18:33:37 +0200
-Message-ID: <200607311833.39524.jnareb@gmail.com>
-References: <200607292239.11034.jnareb@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Fix double "close()" in ce_compare_data
+Date: Mon, 31 Jul 2006 09:55:15 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607310945490.4168@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Jul 31 18:33:51 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Mon Jul 31 18:56:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7ahv-0003uZ-Rv
-	for gcvg-git@gmane.org; Mon, 31 Jul 2006 18:33:32 +0200
+	id 1G7b3K-0008Bv-AK
+	for gcvg-git@gmane.org; Mon, 31 Jul 2006 18:55:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030227AbWGaQd2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Jul 2006 12:33:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030230AbWGaQd2
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 12:33:28 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:57726 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1030227AbWGaQd1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jul 2006 12:33:27 -0400
-Received: by ug-out-1314.google.com with SMTP id m3so862049ugc
-        for <git@vger.kernel.org>; Mon, 31 Jul 2006 09:33:26 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=UAGmI5TYueav+ysnmKg4qmC1Xa/vXFd8kFNoB5V0luUMwj4aXJQ8uESF7FgbMm6t1VO/Y1KqOLqs8A/07WC/c49aaFGPEADo6ECNy38mnRah7ix2j1nDZPkv4U+/A2RXZNkPByV+/6+IxsFMUpjGwAp9ewfQc+w8/hUgmawGvJI=
-Received: by 10.67.101.8 with SMTP id d8mr2745230ugm;
-        Mon, 31 Jul 2006 09:33:26 -0700 (PDT)
-Received: from roke.d-201 ( [193.0.122.19])
-        by mx.gmail.com with ESMTP id q1sm5283240uge.2006.07.31.09.33.25;
-        Mon, 31 Jul 2006 09:33:26 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-In-Reply-To: <200607292239.11034.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1030238AbWGaQzZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Jul 2006 12:55:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030246AbWGaQzZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 12:55:25 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:64151 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030238AbWGaQzX (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Jul 2006 12:55:23 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6VGtGnW027006
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 31 Jul 2006 09:55:17 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6VGtFGB012123;
+	Mon, 31 Jul 2006 09:55:16 -0700
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=-0.5 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.141 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24525>
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+
+Doing an "strace" on "git diff" shows that we close() a file descriptor 
+twice (getting EBADFD on the second one) when we end up in ce_compare_data 
+if the index does not match the checked-out stat information.
+
+The "index_fd()" function will already have closed the fd for us, so we 
+should not close it again.
+
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
 ---
- gitweb/gitweb.cgi |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/gitweb/gitweb.cgi b/gitweb/gitweb.cgi
-index d209af0..f7fe28a 100755
---- a/gitweb/gitweb.cgi
-+++ b/gitweb/gitweb.cgi
-@@ -2347,7 +2347,7 @@ sub git_history {
- 	git_print_page_path($file_name, $ftype);
- 
- 	open my $fd, "-|",
--		$GIT, "rev-list", "--full-history", $hash_base, "--", "\'$file_name\'";
-+		$GIT, "rev-list", "--full-history", $hash_base, "--", $file_name;
- 	print "<table cellspacing=\"0\">\n";
- 	my $alternate = 0;
- 	while (my $line = <$fd>) {
--- 
-1.4.1.1
+The way I found this also showed a potential performance problem: if you 
+do a "git reset --hard" (or similar) after you have changes in your tree, 
+it will write the index file with the same timestamp as the checked out 
+files that it re-wrote.
+
+That will also then forever afterwards (well, until the next "git 
+update-index --refresh") cause the "uncommon" timestamp case in 
+ce_match_stat(), where we check the index-file timestamp against the 
+timestamp of the stat data, to trigger.
+
+Not very good. The "ce_modified_check_fs()" tests can be quite expensive 
+if you have lots of those files because we end up then calling the 
+"ce_compare_data()" function a lot. And suddenly "git diff" doesn't take a 
+tenth of a second any more.
+
+We should really try to have some way to re-generate the index 
+automatically when this case triggers, so that we only need to do it 
+_once_ rather than keep doing it forever while the index is "potentially 
+stale".
+
+Any ideas?
+
+diff --git a/read-cache.c b/read-cache.c
+index c0b0313..f92cdaa 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -61,7 +61,7 @@ static int ce_compare_data(struct cache_
+ 		unsigned char sha1[20];
+ 		if (!index_fd(sha1, fd, st, 0, NULL))
+ 			match = memcmp(sha1, ce->sha1, 20);
+-		close(fd);
++		/* index_fd() closed the file descriptor already */
+ 	}
+ 	return match;
+ }
