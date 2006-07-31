@@ -1,56 +1,53 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: git-checkout doesn't understand -- separator
-Date: Mon, 31 Jul 2006 11:35:26 +0200
-Organization: At home
-Message-ID: <eakisg$e6j$1@sea.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] gitweb: fill in gitweb configuration by Makefile
+Date: Mon, 31 Jul 2006 11:38:15 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607311137360.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060730223754.GA16364@admingilde.org>
+ <20060731035737.24181.qmail@web31803.mail.mud.yahoo.com>
+ <20060731072200.GE16364@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Mon Jul 31 11:37:30 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Luben Tuikov <ltuikov@yahoo.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 31 11:38:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7UCy-00043F-QK
-	for gcvg-git@gmane.org; Mon, 31 Jul 2006 11:37:09 +0200
+	id 1G7UEA-0004HZ-Ol
+	for gcvg-git@gmane.org; Mon, 31 Jul 2006 11:38:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964829AbWGaJhE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Jul 2006 05:37:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964833AbWGaJhE
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 05:37:04 -0400
-Received: from main.gmane.org ([80.91.229.2]:45011 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S964829AbWGaJhD (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 Jul 2006 05:37:03 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1G7UC5-0003tb-RO
-	for git@vger.kernel.org; Mon, 31 Jul 2006 11:36:14 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 31 Jul 2006 11:36:13 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 31 Jul 2006 11:36:13 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S964814AbWGaJiU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Jul 2006 05:38:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964833AbWGaJiU
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 05:38:20 -0400
+Received: from mail.gmx.de ([213.165.64.21]:36565 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S964814AbWGaJiT (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Jul 2006 05:38:19 -0400
+Received: (qmail invoked by alias); 31 Jul 2006 09:38:18 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp031) with SMTP; 31 Jul 2006 11:38:18 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Martin Waitz <tali@admingilde.org>
+In-Reply-To: <20060731072200.GE16364@admingilde.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24506>
 
-git-checkout doesn't understand '--' as a separator between <branch> (which
-is optional, but you can always write HEAD), and <path>...
+Hi,
 
-  1144:jnareb@roke:~/git> git checkout HEAD^ -- gitweb/gitweb.cgi
-  git-checkout-index: -- is not in the cache
+On Mon, 31 Jul 2006, Martin Waitz wrote:
 
-Strange...
+> > I don't like it.  While this method works, it is too much effort
+> > to have to run make to do this, plus it pollutes your tree.
+> 
+> Do you really think it is that much effort?
+> What do others think? alternatives?
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+I think it is worth it, and it is cleaner. The only drawback: we have to 
+stuff it somehow into git-instaweb...
+
+Ciao,
+Dscho
