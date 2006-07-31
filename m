@@ -1,197 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 17] gitweb: Ref refactoring - use git_get_referencing for marking tagged/head commits
-Date: Mon, 31 Jul 2006 02:21:52 +0200
-Message-ID: <200607310221.55445.jnareb@gmail.com>
-References: <200607292239.11034.jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/1]   Make git-tar-tree more flexible
+Date: Mon, 31 Jul 2006 02:26:27 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607310225190.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060730174847.GA32574@eve.kumria.com> <7vbqr6dd4t.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Jul 31 02:21:56 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Anand Kumria <wildfire@progsoc.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 31 02:26:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7LXd-0005Hu-Pg
-	for gcvg-git@gmane.org; Mon, 31 Jul 2006 02:21:54 +0200
+	id 1G7Lc8-0005kx-R2
+	for gcvg-git@gmane.org; Mon, 31 Jul 2006 02:26:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751037AbWGaAVu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 30 Jul 2006 20:21:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750935AbWGaAVu
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Jul 2006 20:21:50 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:21875 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1750762AbWGaAVu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Jul 2006 20:21:50 -0400
-Received: by ug-out-1314.google.com with SMTP id m3so499145ugc
-        for <git@vger.kernel.org>; Sun, 30 Jul 2006 17:21:48 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=AAUdo2FNubIktt7fXI7cNpCKXjmGTLY4J7WTpM/D0RFjfJj9oiFPdLXsaojGSEzfmk2KxMQjNfohbNeRzBtbwPBNZEBKTUZ+CdJJ6sWNCEBj64z//p+qo2M/Tk5uH5j9+0wlLCiOW7Fb3tHJbxevq0AjEzSQ8WbYvpRp2hPaf+4=
-Received: by 10.66.222.9 with SMTP id u9mr1882703ugg;
-        Sun, 30 Jul 2006 17:21:48 -0700 (PDT)
-Received: from roke.d-201 ( [193.0.122.19])
-        by mx.gmail.com with ESMTP id m1sm4576346uge.2006.07.30.17.21.48;
-        Sun, 30 Jul 2006 17:21:48 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-In-Reply-To: <200607292239.11034.jnareb@gmail.com>
-Content-Disposition: inline
+	id S932151AbWGaA03 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 30 Jul 2006 20:26:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932491AbWGaA03
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Jul 2006 20:26:29 -0400
+Received: from mail.gmx.de ([213.165.64.21]:53663 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932151AbWGaA03 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 30 Jul 2006 20:26:29 -0400
+Received: (qmail invoked by alias); 31 Jul 2006 00:26:27 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp012) with SMTP; 31 Jul 2006 02:26:27 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vbqr6dd4t.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24480>
 
-Use git_get_referencing to get HTML code for markers showing which
-refs (tags and heads) point to current commit.  It would be much
-easier to change format of markers in one or two places than thorough
-the gitweb.cgi file.
+Hi,
 
-Added comment about read_info_ref subroutine: for $type == "" (empty
-argument) it saves only last path part of ref name e.g. from
-'refs/heads/jn/gitweb' it would leave only 'gitweb'.
+On Sun, 30 Jul 2006, Junio C Hamano wrote:
 
-Some reordering.  Added $ref in one place.
+> Anand Kumria <wildfire@progsoc.org> writes:
+> 
+> >   If you have a project which is setup like:
+> >      project
+> >      website
+> >   and you decide you wish to generate a tar archive of _just_ the 'project'
+> >   portion, git-tar-tree is not able to help. This patch adds two parameters
+> >   which can assist.
+> 
+> No need I see.
+> 
+> 	git tar-tree tag-1.0:project project-1.0/project
+> 	git tar-tree tag-1.0:project project-1.0
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+So how about this:
+
+-- 8< --
+[PATCH] tar-tree: illustrate an obscure feature better
+
+Since you can tar just a subdirectory of a certain revision, tell
+the users so, by showing an example how to do it.
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+
 ---
- gitweb/gitweb.cgi |   53 ++++++++++++++++++++++-------------------------------
- 1 files changed, 22 insertions(+), 31 deletions(-)
 
-diff --git a/gitweb/gitweb.cgi b/gitweb/gitweb.cgi
-index 83ea97a..dab6068 100755
---- a/gitweb/gitweb.cgi
-+++ b/gitweb/gitweb.cgi
-@@ -1024,6 +1024,8 @@ sub read_info_ref {
- 	open my $fd, "$projectroot/$project/info/refs" or return;
- 	while (my $line = <$fd>) {
- 		chomp $line;
-+		# attention: for $type == "" it saves only last path part of ref name
-+		# e.g. from 'refs/heads/jn/gitweb' it would leave only 'gitweb'
- 		if ($line =~ m/^([0-9a-fA-F]{40})\t.*$type\/([^\^]+)/) {
- 			if (defined $refs{$1}) {
- 				$refs{$1} .= " / $2";
-@@ -1036,6 +1038,16 @@ sub read_info_ref {
- 	return \%refs;
- }
+ Documentation/git-tar-tree.txt |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-tar-tree.txt b/Documentation/git-tar-tree.txt
+index 7a99acf..1e1c7fa 100644
+--- a/Documentation/git-tar-tree.txt
++++ b/Documentation/git-tar-tree.txt
+@@ -71,6 +71,11 @@ git tar-tree --remote=example.com:git.gi
  
-+sub git_get_referencing {
-+	my ($refs, $id) = @_;
-+
-+	if (defined $refs->{$id}) {
-+		return ' <span class="tag">' . esc_html($refs->{$id}) . '</span>';
-+	} else {
-+		return "";
-+	}
-+}
-+
- sub git_read_refs {
- 	my $ref_dir = shift;
- 	my @reflist;
-@@ -1151,10 +1163,7 @@ sub git_summary {
- 		}
- 		$alternate ^= 1;
- 		if ($i-- > 0) {
--			my $ref = "";
--			if (defined $refs->{$commit}) {
--				$ref = " <span class=\"tag\">" . esc_html($refs->{$commit}) . "</span>";
--			}
-+			my $ref = git_get_referencing($refs, $commit);
- 			print "<td><i>$co{'age_string'}</i></td>\n" .
- 			      "<td><i>" . esc_html(chop_str($co{'author_name'}, 10)) . "</i></td>\n" .
- 			      "<td>";
-@@ -1728,10 +1737,7 @@ sub git_tree {
- 	$/ = "\n";
+ 	Get a tarball v1.4.0 from example.com.
  
- 	my $refs = read_info_ref();
--	my $ref = "";
--	if (defined $refs->{$hash_base}) {
--		$ref = " <span class=\"tag\">" . esc_html($refs->{$hash_base}) . "</span>";
--	}
-+	my $ref = git_get_referencing($refs, $hash_base);
- 	git_header_html();
- 	my $base_key = "";
- 	my $base = "";
-@@ -1912,10 +1918,7 @@ sub git_log {
- 	}
- 	for (my $i = ($page * 100); $i <= $#revlist; $i++) {
- 		my $commit = $revlist[$i];
--		my $ref = "";
--		if (defined $refs->{$commit}) {
--			$ref = " <span class=\"tag\">" . esc_html($refs->{$commit}) . "</span>";
--		}
-+		my $ref = git_get_referencing($refs, $commit);
- 		my %co = git_read_commit($commit);
- 		next if !%co;
- 		my %ad = date_str($co{'author_epoch'});
-@@ -1979,16 +1982,13 @@ sub git_commit {
- 		$expires = "+1d";
- 	}
- 	my $refs = read_info_ref();
--	my $ref = "";
--	if (defined $refs->{$co{'id'}}) {
--		$ref = " <span class=\"tag\">" . esc_html($refs->{$co{'id'}}) . "</span>";
--	}
--	git_header_html(undef, $expires);
-+	my $ref = git_get_referencing($refs, $co{'id'});
- 	my $formats_nav = '';
- 	if (defined $file_name && defined $co{'parent'}) {
- 		my $parent = $co{'parent'};
- 		$formats_nav .= $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=blame;hb=$parent;f=$file_name")}, "blame");
- 	}
-+	git_header_html(undef, $expires);
- 	git_page_nav('commit', defined $co{'parent'} ? '' : 'commitdiff', 
- 							 $hash, $co{'tree'}, $hash,
- 							 $formats_nav);
-@@ -1996,7 +1996,7 @@ sub git_commit {
- 	if (defined $co{'parent'}) {
- 		git_header_div('commitdiff', esc_html($co{'title'}) . $ref, $hash);
- 	} else {
--		git_header_div('tree', esc_html($co{'title'}), $co{'tree'}, $hash);
-+		git_header_div('tree', esc_html($co{'title'}) . $ref, $co{'tree'}, $hash);
- 	}
- 	print "<div class=\"title_text\">\n" .
- 	      "<table cellspacing=\"0\">\n";
-@@ -2206,13 +2206,10 @@ sub git_commitdiff {
- 		$expires = "+1d";
- 	}
- 	my $refs = read_info_ref();
--	my $ref = "";
--	if (defined $refs->{$co{'id'}}) {
--		$ref = " <span class=\"tag\">" . esc_html($refs->{$co{'id'}}) . "</span>";
--	}
--	git_header_html(undef, $expires);
-+	my $ref = git_get_referencing($refs, $co{'id'});
- 	my $formats_nav =
- 		$cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=commitdiff_plain;h=$hash;hp=$hash_parent")}, "plain");
-+	git_header_html(undef, $expires);
- 	git_page_nav('commitdiff','', $hash,$co{'tree'},$hash, $formats_nav);
- 	git_header_div('commit', esc_html($co{'title'}) . $ref, $hash);
- 	print "<div class=\"page_body\">\n";
-@@ -2364,10 +2361,7 @@ sub git_history {
- 			if (!%co) {
- 				next;
- 			}
--			my $ref = "";
--			if (defined $refs->{$commit}) {
--				$ref = " <span class=\"tag\">" . esc_html($refs->{$commit}) . "</span>";
--			}
-+			my $ref = git_get_referencing($refs, $commit);
- 			if ($alternate) {
- 				print "<tr class=\"dark\">\n";
- 			} else {
-@@ -2559,10 +2553,7 @@ sub git_shortlog {
- 	my $alternate = 0;
- 	for (my $i = ($page * 100); $i <= $#revlist; $i++) {
- 		my $commit = $revlist[$i];
--		my $ref = "";
--		if (defined $refs->{$commit}) {
--			$ref = " <span class=\"tag\">" . esc_html($refs->{$commit}) . "</span>";
--		}
-+		my $ref = git_get_referencing($refs, $commit);
- 		my %co = git_read_commit($commit);
- 		my %ad = date_str($co{'author_epoch'});
- 		if ($alternate) {
--- 
-1.4.0
++git tar-tree HEAD:Documentation/ git-docs > git-1.4.0-docs.tar::
++
++	Put everything in the current head's Documentation/ directory
++	into 'git-1.4.0-docs.tar', with the prefix 'git-docs/'.
++
+ Author
+ ------
+ Written by Rene Scharfe.
