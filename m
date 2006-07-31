@@ -1,85 +1,132 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/1]   Make git-tar-tree more flexible
-Date: Mon, 31 Jul 2006 02:26:27 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607310225190.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060730174847.GA32574@eve.kumria.com> <7vbqr6dd4t.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] pager: config variable pager.color
+Date: Sun, 30 Jul 2006 17:43:21 -0700
+Message-ID: <7vd5bmbo46.fsf@assigned-by-dhcp.cox.net>
+References: <E1G6xHb-0008Rw-G2@moooo.ath.cx>
+	<Pine.LNX.4.63.0607300112340.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	<E1G6zPH-00062L-Je@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Anand Kumria <wildfire@progsoc.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 31 02:26:40 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 31 02:44:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7Lc8-0005kx-R2
-	for gcvg-git@gmane.org; Mon, 31 Jul 2006 02:26:33 +0200
+	id 1G7LtH-00027j-1G
+	for gcvg-git@gmane.org; Mon, 31 Jul 2006 02:44:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932151AbWGaA03 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 30 Jul 2006 20:26:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932491AbWGaA03
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Jul 2006 20:26:29 -0400
-Received: from mail.gmx.de ([213.165.64.21]:53663 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932151AbWGaA03 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 30 Jul 2006 20:26:29 -0400
-Received: (qmail invoked by alias); 31 Jul 2006 00:26:27 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp012) with SMTP; 31 Jul 2006 02:26:27 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbqr6dd4t.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S932503AbWGaAnl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 30 Jul 2006 20:43:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932407AbWGaAnl
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Jul 2006 20:43:41 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:16894 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S932499AbWGaAnW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Jul 2006 20:43:22 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060731004322.LOCV12909.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 30 Jul 2006 20:43:22 -0400
+To: Matthias Lederhofer <matled@gmx.net>
+In-Reply-To: <E1G6zPH-00062L-Je@moooo.ath.cx> (Matthias Lederhofer's message
+	of "Sun, 30 Jul 2006 02:43:47 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24481>
 
-Hi,
+Matthias Lederhofer <matled@gmx.net> writes:
 
-On Sun, 30 Jul 2006, Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>> Why? The three users of cmd_log_walk() need to call setup_pager() 
+>> explicitely, when cmd_log_walk() can do it for them?
+>
+> The explanation is below the commit message:
+> "setup_pager has to be called before git_diff_ui_config because the
+> latter uses pager_use_color initialized by setup_pager."
 
-> Anand Kumria <wildfire@progsoc.org> writes:
-> 
-> >   If you have a project which is setup like:
-> >      project
-> >      website
-> >   and you decide you wish to generate a tar archive of _just_ the 'project'
-> >   portion, git-tar-tree is not able to help. This patch adds two parameters
-> >   which can assist.
-> 
-> No need I see.
-> 
-> 	git tar-tree tag-1.0:project project-1.0/project
-> 	git tar-tree tag-1.0:project project-1.0
+If that is the reason, perhaps we could restructure the setting
+and use of of diff_use_color_default like the attached, which
+would be cleaner.
 
-So how about this:
+-- >8 --
 
--- 8< --
-[PATCH] tar-tree: illustrate an obscure feature better
-
-Since you can tar just a subdirectory of a certain revision, tell
-the users so, by showing an example how to do it.
-
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-
----
-
- Documentation/git-tar-tree.txt |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/git-tar-tree.txt b/Documentation/git-tar-tree.txt
-index 7a99acf..1e1c7fa 100644
---- a/Documentation/git-tar-tree.txt
-+++ b/Documentation/git-tar-tree.txt
-@@ -71,6 +71,11 @@ git tar-tree --remote=example.com:git.gi
+diff --git a/cache.h b/cache.h
+index 8891073..913be6a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -392,6 +392,7 @@ extern int receive_keep_pack(int fd[2], 
+ /* pager.c */
+ extern void setup_pager(void);
+ extern int pager_in_use;
++extern int pager_use_color;
  
- 	Get a tarball v1.4.0 from example.com.
+ /* base85 */
+ int decode_85(char *dst, char *line, int linelen);
+diff --git a/diff.c b/diff.c
+index 6198a61..043ecb1 100644
+--- a/diff.c
++++ b/diff.c
+@@ -173,14 +173,8 @@ int git_diff_ui_config(const char *var, 
+ 	if (!strcmp(var, "diff.color")) {
+ 		if (!value)
+ 			diff_use_color_default = 1; /* bool */
+-		else if (!strcasecmp(value, "auto")) {
+-			diff_use_color_default = 0;
+-			if (isatty(1) || pager_in_use) {
+-				char *term = getenv("TERM");
+-				if (term && strcmp(term, "dumb"))
+-					diff_use_color_default = 1;
+-			}
+-		}
++		else if (!strcasecmp(value, "auto"))
++			diff_use_color_default = -1; /* decide in setup */
+ 		else if (!strcasecmp(value, "never"))
+ 			diff_use_color_default = 0;
+ 		else if (!strcasecmp(value, "always"))
+@@ -1509,6 +1503,14 @@ void diff_setup(struct diff_options *opt
  
-+git tar-tree HEAD:Documentation/ git-docs > git-1.4.0-docs.tar::
-+
-+	Put everything in the current head's Documentation/ directory
-+	into 'git-1.4.0-docs.tar', with the prefix 'git-docs/'.
-+
- Author
- ------
- Written by Rene Scharfe.
+ 	options->change = diff_change;
+ 	options->add_remove = diff_addremove;
++	if (diff_use_color_default < 0) {
++		diff_use_color_default = 0;
++		if (isatty(1) || (pager_in_use && pager_use_color)) {
++			char *term = getenv("TERM");
++			if (term && strcmp(term, "dumb"))
++				diff_use_color_default = 1;
++		}
++	}
+ 	options->color_diff = diff_use_color_default;
+ 	options->detect_rename = diff_detect_rename_default;
+ }
+diff --git a/environment.c b/environment.c
+index 558801a..1ce3411 100644
+--- a/environment.c
++++ b/environment.c
+@@ -23,6 +23,7 @@ int shared_repository = PERM_UMASK;
+ const char *apply_default_whitespace = NULL;
+ int zlib_compression_level = Z_DEFAULT_COMPRESSION;
+ int pager_in_use;
++int pager_use_color = 1;
+ 
+ static int dyn_git_object_dir, dyn_git_index_file, dyn_git_graft_file;
+ static char *git_dir, *git_object_dir, *git_index_file, *git_refs_dir,
+diff --git a/pager.c b/pager.c
+index 3f753f6..e86ea9e 100644
+--- a/pager.c
++++ b/pager.c
+@@ -14,6 +14,10 @@ static int git_pager_config(const char *
+ 			pager = strdup(value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "pager.color")) {
++		pager_use_color = git_config_bool(var, value);
++		return 0;
++	}
+ 	return 0;
+ }
+ 
