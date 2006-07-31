@@ -1,50 +1,75 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: gitweb: how to name main "action" subroutines?
-Date: Mon, 31 Jul 2006 10:26:25 -0700 (PDT)
-Message-ID: <20060731172625.48437.qmail@web31811.mail.mud.yahoo.com>
-References: <eal2ic$14o$1@sea.gmane.org>
-Reply-To: ltuikov@yahoo.com
+Date: Mon, 31 Jul 2006 19:50:19 +0200
+Organization: At home
+Message-ID: <ealfsa$hho$1@sea.gmane.org>
+References: <eal2ic$14o$1@sea.gmane.org> <20060731172625.48437.qmail@web31811.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Mon Jul 31 19:27:42 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Mon Jul 31 19:50:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7bXD-0005m3-9Z
-	for gcvg-git@gmane.org; Mon, 31 Jul 2006 19:26:31 +0200
+	id 1G7buU-00028u-9y
+	for gcvg-git@gmane.org; Mon, 31 Jul 2006 19:50:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030282AbWGaR01 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Jul 2006 13:26:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030283AbWGaR01
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 13:26:27 -0400
-Received: from web31811.mail.mud.yahoo.com ([68.142.207.74]:6008 "HELO
-	web31811.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1030277AbWGaR00 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jul 2006 13:26:26 -0400
-Received: (qmail 48439 invoked by uid 60001); 31 Jul 2006 17:26:25 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=4ZUfR9dZiy4Smo0cz5MYz4hFBsYw6k8PLqdNiyTuE0qztjo30MGc7UGaOuHk7ZSpT48uy34bYucF8z1F/WvyEfzO1YP9sCAvh3aPjmNGx1tUpGKzGdL8teZUMEFeAH76f9v8U053blrdLBmkQHrMUtRwdr8Re5V/3ZdpRxPr9G4=  ;
-Received: from [71.80.231.253] by web31811.mail.mud.yahoo.com via HTTP; Mon, 31 Jul 2006 10:26:25 PDT
-To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-In-Reply-To: <eal2ic$14o$1@sea.gmane.org>
+	id S1030292AbWGaRub convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 31 Jul 2006 13:50:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030293AbWGaRub
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 13:50:31 -0400
+Received: from main.gmane.org ([80.91.229.2]:11909 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1030292AbWGaRua (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Jul 2006 13:50:30 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1G7bu7-00024M-1z
+	for git@vger.kernel.org; Mon, 31 Jul 2006 19:50:11 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 31 Jul 2006 19:50:11 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 31 Jul 2006 19:50:11 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24531>
 
---- Jakub Narebski <jnareb@gmail.com> wrote:
-> I'm going to rename some gitweb subroutines to better correspond to what
-> given subroutine does. I have problem: how to name main "action"
-> subroutines? Currently they use git_ prefix, e.g. git_logo.
-> git_project_list, git_rss, git_summary, git_heads,...
-> 
-> I have thought about do_logo, or gitweb_logo, or out_logo etc., but somehow
-> none is best.
+<opublikowany i wys=B3any>
 
-"git_<noun>_<verb>" ?  So then you'd have, for example "git_logo_show".
+Luben Tuikov wrote:
 
-   Luben
+> --- Jakub Narebski <jnareb@gmail.com> wrote:
+>> I'm going to rename some gitweb subroutines to better correspond to =
+what
+>> given subroutine does. I have problem: how to name main "action"
+>> subroutines? Currently they use git_ prefix, e.g. git_logo.
+>> git_project_list, git_rss, git_summary, git_heads,...
+>>=20
+>> I have thought about do_logo, or gitweb_logo, or out_logo etc., but =
+somehow
+>> none is best.
+>=20
+> "git_<noun>_<verb>" ?  So then you'd have, for example "git_logo_show=
+".
+
+I'd rather reserve git_ prefix for subroutines which deal with git repo=
+sitory,=20
+either by calling git commands (e.g. git_get_type), or accessing git re=
+pository
+directly (e.g. git_read_hash, git_read_description).
+
+I'm partial to either out_foo or gitweb_foo...
+
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
