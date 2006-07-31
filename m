@@ -1,59 +1,68 @@
-From: "Troy Wood" <Dudley.Lopez@dasferienland.de>
-Subject: RE:Your home funds have been released
-Date: Sun, 30 Jul 2006 21:05:26 -0300 (EDT)
-Message-ID: <7083680.8135693582690.JavaMail.root@mailxxu08.eqpm5>
-Reply-To: poshuc@dasferienland.de
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/3] read-trees: refactor the unpack_trees() part
+Date: Mon, 31 Jul 2006 02:48:34 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0607310238170.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0607302024090.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v4pwydbbr.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0607310205260.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-X-From: git-owner@vger.kernel.org Mon Jul 31 02:48:42 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 31 02:48:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7LxW-00053O-27
-	for gcvg-git@gmane.org; Mon, 31 Jul 2006 02:48:38 +0200
+	id 1G7LxW-00053O-P1
+	for gcvg-git@gmane.org; Mon, 31 Jul 2006 02:48:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932407AbWGaAsf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 30 Jul 2006 20:48:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932500AbWGaAsf
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Jul 2006 20:48:35 -0400
-Received: from adsl_basico_24570-178.etb.net.co ([201.245.70.178]:6111 "EHLO
-	wiener-lab.com.co") by vger.kernel.org with ESMTP id S932407AbWGaAse
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Jul 2006 20:48:34 -0400
-Received: from 12DE4B8 ([210.22.15.94] RDNS failed) by wiener-lab.com.co with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sun, 30 Jul 2006 19:05:29 -0500
-Received: by mail7151.rm00.net id mx7tjwgdzw2m for <aafde@abcimaging.com>; Sun, 30 Jul 2006 21:05:26 -0300 (envelope-from <venoir@bounce1.rm07.net>) 
-To: aafde@abcimaging.com, git@vger.kernel.org,
-	ddissettqldf@vger.kernel.org, atiles@vger.net, susich@vger.net,
-	reynoza@vger.net
-x-mid: 496631
-X-OriginalArrivalTime: 31 Jul 2006 00:05:30.0015 (UTC) FILETIME=[08C6CAF0:01C6B435]
+	id S932501AbWGaAsh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 30 Jul 2006 20:48:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932500AbWGaAsg
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Jul 2006 20:48:36 -0400
+Received: from mail.gmx.net ([213.165.64.21]:10677 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932489AbWGaAsf (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 30 Jul 2006 20:48:35 -0400
+Received: (qmail invoked by alias); 31 Jul 2006 00:48:34 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp003) with SMTP; 31 Jul 2006 02:48:34 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <Pine.LNX.4.63.0607310205260.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 6.8 points;
- * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
- *      [score: 0.0000]
- *  2.0 RCVD_IN_SORBS_DUL RBL: SORBS: sent directly from dynamic IP address
- *      [201.245.70.178 listed in dnsbl.sorbs.net]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?210.22.15.94>]
- *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: snip.cc]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: snip.cc]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24484>
 
-I would like to offer you the opportunity to minimize your monthly rent/mort payments by more than 33%.
-We guarantee to beat your current rate, below are some of todays.
+Hi,
 
-$155,000 at 3,95%
-$235,000 at 4,15%
-$295,000 at 3,55%
-$232,000 at 4,55%
+On Mon, 31 Jul 2006, Johannes Schindelin wrote:
 
+> How about this (on top of that patch):
+> 
+> -- 8< --
+> [PATCH 1.5/3] unpack-trees: please C99 standard
 
-Please follow the link below to the best investment you'll ever make.
+Of course, I got bitten by "git-commit" not regarding any 
+git-update-index'ed files after starting the editor... This is needed as 
+well:
 
-http://snip.cc/353 
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 3cb92cb..e595d23 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -381,6 +381,7 @@ int unpack_trees(struct object_list *tre
+ 	state.refresh_cache = 1;
+ 
+ 	o->merge_size = len;
++	memset(&df_conflict_entry, 0, sizeof(df_conflict_entry));
+ 	o->df_conflict_entry = &df_conflict_entry;
+ 
+ 	if (len) {
+
+Sorry for the noise.
+
+Ciao,
+Dscho
