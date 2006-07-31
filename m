@@ -1,65 +1,53 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 16] gitweb: Remove characters entities entirely when shortening string
-Date: Mon, 31 Jul 2006 18:59:08 +0200
-Organization: At home
-Message-ID: <ealcsb$88c$1@sea.gmane.org>
-References: <200607292239.11034.jnareb@gmail.com> <200607302236.06686.jnareb@gmail.com>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: git merge (resolve) _is_ stupid
+Date: Mon, 31 Jul 2006 10:12:29 -0700 (PDT)
+Message-ID: <20060731171229.24870.qmail@web31802.mail.mud.yahoo.com>
+References: <7v7j1u88ol.fsf@assigned-by-dhcp.cox.net>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Mon Jul 31 19:00:30 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 31 19:12:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7b7h-0000hV-CK
-	for gcvg-git@gmane.org; Mon, 31 Jul 2006 19:00:09 +0200
+	id 1G7bJk-00034X-VU
+	for gcvg-git@gmane.org; Mon, 31 Jul 2006 19:12:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030246AbWGaRAF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Jul 2006 13:00:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030251AbWGaRAF
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 13:00:05 -0400
-Received: from main.gmane.org ([80.91.229.2]:22183 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1030246AbWGaRAD (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 Jul 2006 13:00:03 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1G7b7E-0000Zi-K8
-	for git@vger.kernel.org; Mon, 31 Jul 2006 18:59:40 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 31 Jul 2006 18:59:40 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 31 Jul 2006 18:59:40 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1030257AbWGaRMc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Jul 2006 13:12:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030258AbWGaRMb
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 13:12:31 -0400
+Received: from web31802.mail.mud.yahoo.com ([68.142.207.65]:8062 "HELO
+	web31802.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1030257AbWGaRMb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Jul 2006 13:12:31 -0400
+Received: (qmail 24872 invoked by uid 60001); 31 Jul 2006 17:12:29 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=vJLL7TfFig1Tkw8nYJr3faRYI7A3Zn9fEWG0eRtv8k6/lZMRsQZSXH+vM4grEtrNtc1Q7hArdnQGc/B0iuRx5v3h0IfNukNohfYUjSS/fIpWzixFQYnuDSHMBunKLloHnrXPrYB8PimgG1vEqoI8NaG4cod8r9NcEHETLWnwwAM=  ;
+Received: from [71.80.231.253] by web31802.mail.mud.yahoo.com via HTTP; Mon, 31 Jul 2006 10:12:29 PDT
+To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+In-Reply-To: <7v7j1u88ol.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24528>
 
-Jakub Narebski wrote:
+I had seen something similar:
 
-> --- a/gitweb/gitweb.cgi
-> +++ b/gitweb/gitweb.cgi
-> @@ -776,6 +776,7 @@ sub chop_str {
->       my $tail = $2;
->       if (length($tail) > 4) {
->               $tail = " ...";
-> +             $body =~ s/&[^;]$//; # remove chopped character entities
->       }
->       return "$body$tail";
->  }
+Merging linux-scsi into my own branches whereby both had a
+particular patch (03aba2f79594ca94d159c8bab454de9bcc385b76),
+git-merge complained that a resolve is needed.
 
-Of course it should be
+After manually "resolving" the result was identical to
+either branch (linux-scsi and my own), so in fact the
+diff was 0.
 
-+               $body =~ s/&[^;]*$//; # remove chopped character entities
+I found this strange, but due to lack of time couldn't
+pursue it further.
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+    Luben
