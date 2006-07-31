@@ -1,75 +1,133 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: [PATCH] gitweb: fill in gitweb configuration by Makefile
-Date: Mon, 31 Jul 2006 16:33:14 -0500
-Message-ID: <1154381594.5107.55.camel@cashmere.sps.mot.com>
-References: <20060731035737.24181.qmail@web31803.mail.mud.yahoo.com>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH] gitweb: use a hash to lookup the sub for an action
+Date: Mon, 31 Jul 2006 23:46:25 +0200
+Message-ID: <E1G7faj-0006W8-17@moooo.ath.cx>
+References: <200607292239.11034.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Martin Waitz <tali@admingilde.org>, Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 31 23:39:34 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Jul 31 23:46:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7fSK-00074y-Lk
-	for gcvg-git@gmane.org; Mon, 31 Jul 2006 23:37:45 +0200
+	id 1G7fap-0000NM-2b
+	for gcvg-git@gmane.org; Mon, 31 Jul 2006 23:46:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030471AbWGaVhl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Jul 2006 17:37:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030472AbWGaVhl
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 17:37:41 -0400
-Received: from az33egw02.freescale.net ([192.88.158.103]:44173 "EHLO
-	az33egw02.freescale.net") by vger.kernel.org with ESMTP
-	id S1030471AbWGaVhl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jul 2006 17:37:41 -0400
-Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
-	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id k6VLbQwo029342;
-	Mon, 31 Jul 2006 14:37:26 -0700 (MST)
-Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
-	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id k6VLbPuX015896;
-	Mon, 31 Jul 2006 16:37:25 -0500 (CDT)
-To: ltuikov@yahoo.com
-In-Reply-To: <20060731035737.24181.qmail@web31803.mail.mud.yahoo.com>
-X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
+	id S1030476AbWGaVq2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Jul 2006 17:46:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030478AbWGaVq2
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 17:46:28 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:8678 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S1030476AbWGaVq1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Jul 2006 17:46:27 -0400
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <200607292239.11034.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24548>
 
-On Sun, 2006-07-30 at 22:57, Luben Tuikov wrote:
-> --- Martin Waitz <tali@admingilde.org> wrote:
-> > Generate gitweb/gitweb.cgi to reduce the need to patch gitweb.cgi by
-> > the end user.
-> > The GIT installation directory and version are already known by the
-> > Makefile, they can be inserted directly into gitweb.
-> > All other gitweb configuration parameters can now be specified
-> > by providing GITWEB_* variables while building GIT.
-> > These are described in gitweb/README.
-> 
-> NACK.
-> 
-> I don't like it.  While this method works, it is too much effort
-> to have to run make to do this, plus it pollutes your tree.
-> 
-> Instead, what you can do is make gitweb.cgi read a text file
-> from . which has those variables defined.
-> 
-> This way, I can just copy gitweb.cgi into my web-server directory
-> and voila it works, since the variable definition file would
-> always be there.  This way:
->   - no need to run make to build "gitweb.cgi" or "gitweb.pl" whatever
->     you call it,
->   - no need to pollute your tree with site defined variables,
->   - simple copy (cp) would install a working version, instead of
->     the current cp + patch with local settings method.
-> 
->    Luben
+Signed-off-by: Matthias Lederhofer <matled@gmx.net>
+---
+ gitweb/gitweb.cgi |   81 ++++++++++++++++-------------------------------------
+ 1 files changed, 25 insertions(+), 56 deletions(-)
 
-Which sounds frighteningly similar to a patch I submitted
-quite a while ago, and brought up again twice, and have
-had stomped on once.
-
-So what now? :-)
-
-jdl
+diff --git a/gitweb/gitweb.cgi b/gitweb/gitweb.cgi
+index c1ee79e..75390c8 100755
+--- a/gitweb/gitweb.cgi
++++ b/gitweb/gitweb.cgi
+@@ -161,65 +161,34 @@ if (defined $searchtext) {
+ }
+ 
+ # dispatch
+-if (!defined $action || $action eq "summary") {
+-	git_summary();
+-	exit;
+-} elsif ($action eq "heads") {
+-	git_heads();
+-	exit;
+-} elsif ($action eq "tags") {
+-	git_tags();
+-	exit;
+-} elsif ($action eq "blob") {
+-	git_blob();
+-	exit;
+-} elsif ($action eq "blob_plain") {
+-	git_blob_plain();
+-	exit;
+-} elsif ($action eq "tree") {
+-	git_tree();
+-	exit;
+-} elsif ($action eq "rss") {
+-	git_rss();
+-	exit;
+-} elsif ($action eq "commit") {
+-	git_commit();
+-	exit;
+-} elsif ($action eq "log") {
+-	git_log();
+-	exit;
+-} elsif ($action eq "blobdiff") {
+-	git_blobdiff();
+-	exit;
+-} elsif ($action eq "blobdiff_plain") {
+-	git_blobdiff_plain();
+-	exit;
+-} elsif ($action eq "commitdiff") {
+-	git_commitdiff();
+-	exit;
+-} elsif ($action eq "commitdiff_plain") {
+-	git_commitdiff_plain();
+-	exit;
+-} elsif ($action eq "history") {
+-	git_history();
+-	exit;
+-} elsif ($action eq "search") {
+-	git_search();
+-	exit;
+-} elsif ($action eq "shortlog") {
+-	git_shortlog();
+-	exit;
+-} elsif ($action eq "tag") {
+-	git_tag();
+-	exit;
+-} elsif ($action eq "blame") {
+-	git_blame2();
+-	exit;
+-} else {
++my %actions = (
++	"blame" => \&git_blame2,
++	"blobdiff" => \&git_blobdiff,
++	"blobdiff_plain" => \&git_blobdiff_plain,
++	"blob" => \&git_blob,
++	"blob_plain" => \&git_blob_plain,
++	"commitdiff" => \&git_commitdiff,
++	"commitdiff_plain" => \&git_commitdiff_plain,
++	"commit" => \&git_commit,
++	"heads" => \&git_heads,
++	"history" => \&git_history,
++	"log" => \&git_log,
++	"rss" => \&git_rss,
++	"search" => \&git_search,
++	"shortlog" => \&git_shortlog,
++	"summary" => \&git_summary,
++	"tag" => \&git_tag,
++	"tags" => \&git_tags,
++	"tree" => \&git_tree,
++);
++
++$action = 'summary' if (!defined($action));
++if (!defined($actions{$action})) {
+ 	undef $action;
+ 	die_error(undef, "Unknown action.");
+-	exit;
+ }
++$actions{$action}->();
++exit;
+ 
+ ## ======================================================================
+ ## validation, quoting/unquoting and escaping
+-- 
+1.4.2.rc2.ge0bed
