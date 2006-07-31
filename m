@@ -1,77 +1,59 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git merge (resolve) _is_ stupid
-Date: Mon, 31 Jul 2006 12:42:35 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607311236070.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v7j1u88ol.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2] gitweb: Use list for of open for running git commands, thorougly.
+Date: Mon, 31 Jul 2006 03:53:28 -0700
+Message-ID: <7virle6o5z.fsf@assigned-by-dhcp.cox.net>
+References: <200607292239.11034.jnareb@gmail.com>
+	<200607292251.21072.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 31 12:43:05 2006
+X-From: git-owner@vger.kernel.org Mon Jul 31 12:53:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7VEQ-00073G-JO
-	for gcvg-git@gmane.org; Mon, 31 Jul 2006 12:42:43 +0200
+	id 1G7VOu-0000cL-Ua
+	for gcvg-git@gmane.org; Mon, 31 Jul 2006 12:53:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751512AbWGaKmi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Jul 2006 06:42:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751513AbWGaKmi
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 06:42:38 -0400
-Received: from mail.gmx.net ([213.165.64.21]:59820 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751512AbWGaKmh (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 Jul 2006 06:42:37 -0400
-Received: (qmail invoked by alias); 31 Jul 2006 10:42:36 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp041) with SMTP; 31 Jul 2006 12:42:36 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v7j1u88ol.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1750793AbWGaKxa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Jul 2006 06:53:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751030AbWGaKxa
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 06:53:30 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:28869 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1750793AbWGaKx3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Jul 2006 06:53:29 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060731105328.UNUB12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 31 Jul 2006 06:53:28 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200607292251.21072.jnareb@gmail.com> (Jakub Narebski's message
+	of "Sat, 29 Jul 2006 22:51:17 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24510>
 
-Hi,
+This, together with PATCH 6, seems to break "history" link.
+Visit a repository (summary page), click on "tree" on the second
+line, and click on "history" (on any blob or tree).
 
-On Mon, 31 Jul 2006, Junio C Hamano wrote:
+I might have made a merge mistake while squashing PATCH 2 and
+PATCH 6 into a single commit.
 
-> By the way, the "recur" strategy in "next" produces the correct
-> result, but it produces a funny error in the middle (that is why
-> Johannes is CC'ed).
-> 
-> 	error: Could not read 0100000000000000000000000000000000000000
+BTW, please be careful on trailing whitespaces.
 
-I get "0000000100..." ;-) (surprixse her wi1h a big-endian ;-)
+I've wasted quite a lot of time yesterday just fixing up
+trailing whitespaces from your patches (although the first in
+your series was "whitespace cleanup" X-<).
 
-The culprit is the call to parse_commit() in merge_bases(). How about 
-this?
-
--- 8< --
-[PATCH] merge-recur: virtual commits shall never be parsed
-
-It would not make sense to parse a virtual commit, therefore set the
-"parsed" flag to 1.
-
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
- merge-recursive.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 10bce70..74a329f 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -43,6 +43,8 @@ static struct commit *make_virtual_commi
- 	commit->tree = tree;
- 	commit->util = (void*)comment;
- 	*(int*)commit->object.sha1 = virtual_id++;
-+	/* avoid warnings */
-+	commit->object.parsed = 1;
- 	return commit;
- }
- 
--- 
-1.4.2.rc2.gfd00-dirty
+I usually apply patches with whitespace=strip, unless there is a
+compelling reason not to (e.g. when the patch is to add a
+testcase of diff output which would inevitably have trailing
+whitespaces when a context contains an empty line), which means
+if you have a series of patches whose later patch updates lines
+with trailing whitespaces an earlier patch introduced the patch
+would not apply.
