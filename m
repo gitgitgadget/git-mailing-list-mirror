@@ -1,175 +1,74 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] gitweb: use out-of-line GIT logo.
-Date: Sun, 30 Jul 2006 20:59:04 -0700 (PDT)
-Message-ID: <20060731035904.53458.qmail@web31813.mail.mud.yahoo.com>
-References: <20060730223839.GB16364@admingilde.org>
-Reply-To: ltuikov@yahoo.com
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Java GIT/Eclipse GIT version 0.1.1
+Date: Mon, 31 Jul 2006 00:22:00 -0400
+Message-ID: <20060731042200.GA27648@spearce.org>
+References: <20060728063620.GD30783@spearce.org> <Pine.LNX.4.64.0607301047150.9789@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Mon Jul 31 05:59:10 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 31 06:22:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7Ovt-0003XS-Dg
-	for gcvg-git@gmane.org; Mon, 31 Jul 2006 05:59:09 +0200
+	id 1G7PID-0006O5-OC
+	for gcvg-git@gmane.org; Mon, 31 Jul 2006 06:22:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751316AbWGaD7G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 30 Jul 2006 23:59:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751431AbWGaD7F
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Jul 2006 23:59:05 -0400
-Received: from web31813.mail.mud.yahoo.com ([68.142.207.76]:26223 "HELO
-	web31813.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1751316AbWGaD7E (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Jul 2006 23:59:04 -0400
-Received: (qmail 53460 invoked by uid 60001); 31 Jul 2006 03:59:04 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=uhSybngOtDVTM1b+nDjTyg/IVzBQp8I5ZvdowUb7dht08m3rJfegf7w9zolWrS6/9Q+Ibs+QsfYrh8fzhfHMATNjPwmW3pWa9iZ5a/BkzmOR9/jj8dKQ7RZIqGGSwoOq3aPB/dAxEUmyG+MIyLJmieBaPv7Tr1VSbB5ZsqKenSc=  ;
-Received: from [71.80.231.253] by web31813.mail.mud.yahoo.com via HTTP; Sun, 30 Jul 2006 20:59:04 PDT
-To: Martin Waitz <tali@admingilde.org>, git@vger.kernel.org
-In-Reply-To: <20060730223839.GB16364@admingilde.org>
+	id S1751460AbWGaEWK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Jul 2006 00:22:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751462AbWGaEWK
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 00:22:10 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:48595 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751460AbWGaEWJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Jul 2006 00:22:09 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1G7PI3-00027A-78; Mon, 31 Jul 2006 00:22:03 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id E44B420E433; Mon, 31 Jul 2006 00:22:00 -0400 (EDT)
+To: Daniel Barkalow <barkalow@iabervon.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0607301047150.9789@iabervon.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24490>
 
---- Martin Waitz <tali@admingilde.org> wrote:
-
-> Use the normal web server instead of the CGI to provide the git logo,
-> just like the gitweb.css.
-
-NACK.  I'd really rather keep the logo (which is essential) in the
-file itself.  This would mean one less file to worry about.
-
-   Luben
-
- 
-> Signed-off-by: Martin Waitz <tali@admingilde.org>
-> ---
->  Makefile            |    2 ++
->  gitweb/README       |    2 ++
->  gitweb/git-logo.png |  Bin
->  gitweb/gitweb.pl    |   29 ++++-------------------------
->  4 files changed, 8 insertions(+), 25 deletions(-)
+Daniel Barkalow <barkalow@iabervon.org> wrote:
+> On Fri, 28 Jul 2006, Shawn Pearce wrote:
 > 
-> diff --git a/Makefile b/Makefile
-> index bd59d6b58d1cfcaecd033f186d7c2cc537416b75..40e129490b337a70f0ee5c60ce25980359e658c9 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -122,6 +122,7 @@ GITWEB_PROJECTROOT = /pub/git
->  GITWEB_LIST = 
->  GITWEB_HOMETEXT = indextext.html
->  GITWEB_CSS = gitweb.css
-> +GITWEB_LOGO = git-logo.png
->  
->  export prefix bindir gitexecdir template_dir GIT_PYTHON_DIR
->  
-> @@ -584,6 +585,7 @@ gitweb/gitweb.cgi: gitweb/gitweb.pl
->  	    -e 's|@@GITWEB_LIST@@|$(GITWEB_LIST)|g' \
->  	    -e 's|@@GITWEB_HOMETEXT@@|$(GITWEB_HOMETEXT)|g' \
->  	    -e 's|@@GITWEB_CSS@@|$(GITWEB_CSS)|g' \
-> +	    -e 's|@@GITWEB_LOGO@@|$(GITWEB_LOGO)|g' \
->  	    $< >$@+
->  	chmod +x $@+
->  	mv $@+ $@
-> diff --git a/gitweb/README b/gitweb/README
-> index ed939e2fb5264cce24e770272583b12372c3ab68..1b2180c7314ea3d10db78c88b48092a70491f8b8 100644
-> --- a/gitweb/README
-> +++ b/gitweb/README
-> @@ -21,6 +21,8 @@ You can specify the following configurat
->     overview page.
->   * GITWEB_CSS
->     Points to the location where you put gitweb.css on your web server.
-> + * GITWEB_LOGO
-> +   Points to the location where you put git-logo.png on your web server.
->  
->  Any comment/question/concern to:
->    Kay Sievers <kay.sievers@vrfy.org>
-> diff --git a/gitweb/git-logo.png b/gitweb/git-logo.png
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..16ae8d5382de5ffe63b54139245143513a87446e
-> GIT binary patch
-> literal 208
-> zc%17D@N?(olHy`uVBq!ia0vp^9zZP3!VDyJZ(h*_QW60^A+G=b|4&GW-LQTYLj%LP
-> zv&RoGFuZv2?ECj`Q+bxV1Jx9Jx;TbtoKN;hS77mqk>KLcN(xR?VB+A-bX~J>A)^7$
-> z<ODOdpotq91+P5}P07hQlas@<h^Ig+iB0QZlI&(irr;$UFBq65)WQU>JXDx2{a_29
-> zsY;<{(@cXMleq+Ux^^7wU9iYSkxkvP$)WY2Yo|g1Bf}C~#iK$pv;G0CXYh3Ob6Mw<
-> G&;$VMfkjjR
+> > I would appreciate any and all input, feedback, etc. that anyone
+> > might have on this library or plugin.  Patches are of course
+> > certainly welcome.  :-)
 > 
-> diff --git a/gitweb/gitweb.pl b/gitweb/gitweb.pl
-> index 8e05c335f801d4c52a9b348fa56fccfae36ce621..e6e9f83076630958d0134bfbb29989882f6f1d0d 100755
-> --- a/gitweb/gitweb.pl
-> +++ b/gitweb/gitweb.pl
-> @@ -51,6 +51,8 @@ our $home_text = "@@GITWEB_HOMETEXT@@";
->  
->  # URI of default stylesheet
->  our $stylesheet = "@@GITWEB_CSS@@";
-> +# URI of GIT logo
-> +our $logo = "@@GITWEB_LOGO@@";
->  
->  # source of projects list
->  our $projects_list = "@@GITWEB_LIST@@" || "$projectroot";
-> @@ -70,10 +72,7 @@ if (defined $action) {
->  		undef $action;
->  		die_error(undef, "Invalid action parameter.");
->  	}
-> -	if ($action eq "git-logo.png") {
-> -		git_logo();
-> -		exit;
-> -	} elsif ($action eq "opml") {
-> +	if ($action eq "opml") {
->  		git_opml();
->  		exit;
->  	}
-> @@ -320,7 +319,7 @@ sub git_header_html {
->  EOF
->  	print "<div class=\"page_header\">\n" .
->  	      "<a href=\"http://www.kernel.org/pub/software/scm/git/docs/\" title=\"git
-> documentation\">" .
-> -	      "<img src=\"$my_uri?" . esc_param("a=git-logo.png") . "\" width=\"72\" height=\"27\"
-> alt=\"git\" style=\"float:right; border-width:0px;\"/>" .
-> +	      "<img src=\"$logo\" width=\"72\" height=\"27\" alt=\"git\" style=\"float:right;
-> border-width:0px;\"/>" .
->  	      "</a>\n";
->  	print $cgi->a({-href => esc_param($home_link)}, "projects") . " / ";
->  	if (defined $project) {
-> @@ -755,26 +754,6 @@ sub date_str {
->  	return %date;
->  }
->  
-> -# git-logo (cached in browser for one day)
-> -sub git_logo {
-> -	binmode STDOUT, ':raw';
-> -	print $cgi->header(-type => 'image/png', -expires => '+1d');
-> -	# cat git-logo.png | hexdump -e '16/1 " %02x"  "\n"' | sed 's/ /\\x/g'
-> -	print	"\x89\x50\x4e\x47\x0d\x0a\x1a\x0a\x00\x00\x00\x0d\x49\x48\x44\x52" .
-> -		"\x00\x00\x00\x48\x00\x00\x00\x1b\x04\x03\x00\x00\x00\x2d\xd9\xd4" .
-> -		"\x2d\x00\x00\x00\x18\x50\x4c\x54\x45\xff\xff\xff\x60\x60\x5d\xb0" .
-> -		"\xaf\xaa\x00\x80\x00\xce\xcd\xc7\xc0\x00\x00\xe8\xe8\xe6\xf7\xf7" .
-> -		"\xf6\x95\x0c\xa7\x47\x00\x00\x00\x73\x49\x44\x41\x54\x28\xcf\x63" .
-> -		"\x48\x67\x20\x04\x4a\x5c\x18\x0a\x08\x2a\x62\x53\x61\x20\x02\x08" .
-> -		"\x0d\x69\x45\xac\xa1\xa1\x01\x30\x0c\x93\x60\x36\x26\x52\x91\xb1" .
-> -		"\x01\x11\xd6\xe1\x55\x64\x6c\x6c\xcc\x6c\x6c\x0c\xa2\x0c\x70\x2a" .
-> -		"\x62\x06\x2a\xc1\x62\x1d\xb3\x01\x02\x53\xa4\x08\xe8\x00\x03\x18" .
-> -		"\x26\x56\x11\xd4\xe1\x20\x97\x1b\xe0\xb4\x0e\x35\x24\x71\x29\x82" .
-> -		"\x99\x30\xb8\x93\x0a\x11\xb9\x45\x88\xc1\x8d\xa0\xa2\x44\x21\x06" .
-> -		"\x27\x41\x82\x40\x85\xc1\x45\x89\x20\x70\x01\x00\xa4\x3d\x21\xc5" .
-> -		"\x12\x1c\x9a\xfe\x00\x00\x00\x00\x49\x45\x4e\x44\xae\x42\x60\x82";
-> -}
-> -
->  sub get_file_owner {
->  	my $path = shift;
->  
-> -- 
-> 1.4.2.rc2.gf055
+> I'm going to try to do a Servlet (+ my stuff) implementation of essentiall 
+> gitweb, with the idea that it could integrate with project management 
+> software (i.e., link completed tasks to the commit which completed them, 
+> regressions to the commit that broke things, fixes to the commit that 
+> fixed them, etc, with the UI for choosing values letting you browse the 
+> actual content and validating that the hash you give exists).
 > 
-> -- 
-> Martin Waitz
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+> I don't think I need anything you don't already have, but I'll write 
+> documentation as I figure out what's going on, if you want that.
+
+Sure.  Any improvements would be welcome.  :-)
+
+Please keep in mind that when I post the next update to the
+repository I'm going to switch the license to the LGPL.
+
+Apparently the Apache License has issues with GPL (I didn't know
+this until just recently) and the GPL is definately incompatible
+with the Eclipse license (also just found this out).
+
+-- 
+Shawn.
