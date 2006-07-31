@@ -1,95 +1,55 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: [PATCH] pager: environment variable GIT_PAGER to override PAGER
-Date: Mon, 31 Jul 2006 15:27:00 +0200
-Message-ID: <E1G7XnQ-0002bA-Fm@moooo.ath.cx>
-References: <E1G6wM1-00040z-Bu@moooo.ath.cx> <7v8xmabo37.fsf@assigned-by-dhcp.cox.net> <E1G7WfC-000728-9j@moooo.ath.cx> <Pine.LNX.4.63.0607311454040.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: gitweb: how to name main "action" subroutines?
+Date: Mon, 31 Jul 2006 16:03:08 +0200
+Organization: At home
+Message-ID: <eal2ic$14o$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 31 15:27:57 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Mon Jul 31 16:07:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7Xnc-0002Nf-6o
-	for gcvg-git@gmane.org; Mon, 31 Jul 2006 15:27:12 +0200
+	id 1G7YPH-0001L4-BC
+	for gcvg-git@gmane.org; Mon, 31 Jul 2006 16:06:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750783AbWGaN1E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Jul 2006 09:27:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751164AbWGaN1E
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 09:27:04 -0400
-Received: from moooo.ath.cx ([85.116.203.178]:16356 "EHLO moooo.ath.cx")
-	by vger.kernel.org with ESMTP id S1750783AbWGaN1D (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 Jul 2006 09:27:03 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0607311454040.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S932292AbWGaOFz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Jul 2006 10:05:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932334AbWGaOFz
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 10:05:55 -0400
+Received: from main.gmane.org ([80.91.229.2]:41904 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932292AbWGaOFy (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Jul 2006 10:05:54 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1G7YNY-0000t9-G4
+	for git@vger.kernel.org; Mon, 31 Jul 2006 16:04:20 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 31 Jul 2006 16:04:20 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 31 Jul 2006 16:04:20 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24523>
 
-Signed-off-by: Matthias Lederhofer <matled@gmx.net>
----
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
-> 
-> On Mon, 31 Jul 2006, Matthias Lederhofer wrote:
-> 
-> > Signed-off-by: Matthias Lederhofer <matled@gmx.net>
-> 
-> The commit message no longer reflects what the patch does ;-)
-> 
-> > -	const char *pager = getenv("PAGER");
-> > +	char *pager;
-> 
-> You do not need to lose the "const" (it means that you cannot access the 
-> memory it points to, but you can change the pointer). Also, you could make 
-> a more minimal patch by replacing PAGER by GIT_PAGER here, instead of 
-> having this extra line:
-> 
-> > +	pager = getenv("GIT_PAGER");
-Thanks, I should be more careful when correcting a patch with
---amend.
----
- Documentation/git.txt |    3 +++
- pager.c               |    4 +++-
- 2 files changed, 6 insertions(+), 1 deletions(-)
+I'm going to rename some gitweb subroutines to better correspond to what
+given subroutine does. I have problem: how to name main "action"
+subroutines? Currently they use git_ prefix, e.g. git_logo.
+git_project_list, git_rss, git_summary, git_heads,...
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 7310a2b..d243883 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -627,6 +627,9 @@ git Diffs
- 
- other
- ~~~~~
-+'GIT_PAGER'::
-+	This environment variable overrides `$PAGER`.
-+
- 'GIT_TRACE'::
- 	If this variable is set git will print `trace:` messages on
- 	stderr telling about alias expansion, built-in command
-diff --git a/pager.c b/pager.c
-index 280f57f..dcb398d 100644
---- a/pager.c
-+++ b/pager.c
-@@ -15,11 +15,13 @@ void setup_pager(void)
- {
- 	pid_t pid;
- 	int fd[2];
--	const char *pager = getenv("PAGER");
-+	const char *pager = getenv("GIT_PAGER");
- 
- 	if (!isatty(1))
- 		return;
- 	if (!pager)
-+		pager = getenv("PAGER");
-+	if (!pager)
- 		pager = "less";
- 	else if (!*pager || !strcmp(pager, "cat"))
- 		return;
+I have thought about do_logo, or gitweb_logo, or out_logo etc., but somehow
+none is best.
 -- 
-1.4.2.rc2.g91b7
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
