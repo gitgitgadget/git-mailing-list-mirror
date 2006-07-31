@@ -1,74 +1,74 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Java GIT/Eclipse GIT version 0.1.1
-Date: Mon, 31 Jul 2006 00:22:00 -0400
-Message-ID: <20060731042200.GA27648@spearce.org>
-References: <20060728063620.GD30783@spearce.org> <Pine.LNX.4.64.0607301047150.9789@iabervon.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: use out-of-line GIT logo.
+Date: Mon, 31 Jul 2006 07:21:39 +0200
+Organization: At home
+Message-ID: <eak40m$68u$1@sea.gmane.org>
+References: <20060730223839.GB16364@admingilde.org> <20060731035904.53458.qmail@web31813.mail.mud.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 31 06:22:20 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Mon Jul 31 07:21:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7PID-0006O5-OC
-	for gcvg-git@gmane.org; Mon, 31 Jul 2006 06:22:14 +0200
+	id 1G7QDm-0007Nu-Dw
+	for gcvg-git@gmane.org; Mon, 31 Jul 2006 07:21:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751460AbWGaEWK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Jul 2006 00:22:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751462AbWGaEWK
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 00:22:10 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:48595 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751460AbWGaEWJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jul 2006 00:22:09 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1G7PI3-00027A-78; Mon, 31 Jul 2006 00:22:03 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id E44B420E433; Mon, 31 Jul 2006 00:22:00 -0400 (EDT)
-To: Daniel Barkalow <barkalow@iabervon.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0607301047150.9789@iabervon.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751486AbWGaFVj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Jul 2006 01:21:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751491AbWGaFVj
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 01:21:39 -0400
+Received: from main.gmane.org ([80.91.229.2]:64956 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751486AbWGaFVi (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Jul 2006 01:21:38 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1G7QDb-0007MF-Qi
+	for git@vger.kernel.org; Mon, 31 Jul 2006 07:21:31 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 31 Jul 2006 07:21:31 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 31 Jul 2006 07:21:31 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24492>
 
-Daniel Barkalow <barkalow@iabervon.org> wrote:
-> On Fri, 28 Jul 2006, Shawn Pearce wrote:
+Luben Tuikov wrote:
+
+> --- Martin Waitz <tali@admingilde.org> wrote:
 > 
-> > I would appreciate any and all input, feedback, etc. that anyone
-> > might have on this library or plugin.  Patches are of course
-> > certainly welcome.  :-)
+>> Use the normal web server instead of the CGI to provide the git logo,
+>> just like the gitweb.css.
 > 
-> I'm going to try to do a Servlet (+ my stuff) implementation of essentiall 
-> gitweb, with the idea that it could integrate with project management 
-> software (i.e., link completed tasks to the commit which completed them, 
-> regressions to the commit that broke things, fixes to the commit that 
-> fixed them, etc, with the UI for choosing values letting you browse the 
-> actual content and validating that the hash you give exists).
-> 
-> I don't think I need anything you don't already have, but I'll write 
-> documentation as I figure out what's going on, if you want that.
+> NACK.  I'd really rather keep the logo (which is essential) in the
+> file itself.  This would mean one less file to worry about.
 
-Sure.  Any improvements would be welcome.  :-)
+I'm not sure. On the one hand this introduces yet another file which we have
+to worry about, on the other it probably help performance. Any hard
+numbers?
 
-Please keep in mind that when I post the next update to the
-repository I'm going to switch the license to the LGPL.
+The difference with gitweb.css is that you edit gitweb.css, and that
+inclused CSS can be cached; we could probably do the same trick like with
+logo (i.e. embed it in gitweb.css, but still use 
+  <link rel="stylesheet" type="text/css" href="$my_uri?a=gitweb.css"/>
+and not
+  <style type="text/css">
+  ...
+  </style>
 
-Apparently the Apache License has issues with GPL (I didn't know
-this until just recently) and the GPL is definately incompatible
-with the Eclipse license (also just found this out).
+Besides, mixed language files are hard to syntax highlight correctly...
 
 -- 
-Shawn.
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
