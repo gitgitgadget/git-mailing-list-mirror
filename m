@@ -1,95 +1,76 @@
-From: Martin Waitz <tali@admingilde.org>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [PATCH] gitweb: fill in gitweb configuration by Makefile
-Date: Mon, 31 Jul 2006 09:22:00 +0200
-Message-ID: <20060731072200.GE16364@admingilde.org>
-References: <20060730223754.GA16364@admingilde.org> <20060731035737.24181.qmail@web31803.mail.mud.yahoo.com>
+Date: Mon, 31 Jul 2006 09:38:26 +0200
+Organization: At home
+Message-ID: <eakc16$p77$1@sea.gmane.org>
+References: <20060730223754.GA16364@admingilde.org> <7vzmeqa7tx.fsf@assigned-by-dhcp.cox.net> <20060731070819.GD16364@admingilde.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="2/5bycvrmDh4d1IB"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 31 09:22:08 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Mon Jul 31 09:38:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7S6K-0001VN-1J
-	for gcvg-git@gmane.org; Mon, 31 Jul 2006 09:22:08 +0200
+	id 1G7SMI-0004Zi-3p
+	for gcvg-git@gmane.org; Mon, 31 Jul 2006 09:38:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750788AbWGaHWE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Jul 2006 03:22:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750841AbWGaHWE
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 03:22:04 -0400
-Received: from admingilde.org ([213.95.32.146]:4064 "EHLO mail.admingilde.org")
-	by vger.kernel.org with ESMTP id S1750788AbWGaHWC (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 Jul 2006 03:22:02 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1G7S6C-0001QP-VH; Mon, 31 Jul 2006 09:22:00 +0200
-To: Luben Tuikov <ltuikov@yahoo.com>
-Content-Disposition: inline
-In-Reply-To: <20060731035737.24181.qmail@web31803.mail.mud.yahoo.com>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S964810AbWGaHie (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Jul 2006 03:38:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964814AbWGaHie
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 03:38:34 -0400
+Received: from main.gmane.org ([80.91.229.2]:35285 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964810AbWGaHid (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Jul 2006 03:38:33 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1G7SM3-0004Ws-9g
+	for git@vger.kernel.org; Mon, 31 Jul 2006 09:38:23 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 31 Jul 2006 09:38:23 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 31 Jul 2006 09:38:23 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24500>
 
+Martin Waitz wrote:
 
---2/5bycvrmDh4d1IB
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Sun, Jul 30, 2006 at 06:20:26PM -0700, Junio C Hamano wrote:
+>>
+>> I think the other parts are sensible but I am not sure if we
+>> want to report the version of git distribution (your patch), or
+>> the version of git binary the cgi script happens to use (the
+>> current implementation).
+> 
+> hmm, right.
+> Well, now that gitweb is included with GIT I think that they will
+> be in sync on many sites, but of course that's not guaranteed.
+> 
+> Shall I send a new patch without that change?
 
-hoi :)
+There are currently two version variables in gitweb: the version of the
+script, and the version of git binaries used. They might be different.
+But now that gitweb is bundled with git, perhaps we could use compile-time
+git version as gitweb version, i.e. 
 
-thanks for the feedback!
+  our $version = "@@GIT_VERSION@@";
 
-> I don't like it.  While this method works, it is too much effort
-> to have to run make to do this, plus it pollutes your tree.
+while leaving $git_version as is, i.e.
 
-Do you really think it is that much effort?
-What do others think? alternatives?
+  our $git_version = 
+    qx($GIT --version) =~ m/git version (.*)$/ ? $1 : "unknown"
 
-> Instead, what you can do is make gitweb.cgi read a text file
-> from . which has those variables defined.
-
-I don't really care if it is a configuration file or a build-time
-configuration, but I need something now.
-If you submit your proposal, we can compare both and choose the best
-one ;-).
-
-> This way, I can just copy gitweb.cgi into my web-server directory
-> and voila it works, since the variable definition file would
-> always be there.  This way:
->   - no need to run make to build "gitweb.cgi" or "gitweb.pl" whatever
->     you call it,
-
-ok, but you have to call make anyway to build the rest of GIT,
-so this shouldn't be a big problem.
-
->   - no need to pollute your tree with site defined variables,
-
-this is achieved by my patch, too.
-
->   - simple copy (cp) would install a working version, instead of
->     the current cp + patch with local settings method.
-
-this is achieved by my patch, too.
-
---=20
-Martin Waitz
-
---2/5bycvrmDh4d1IB
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFEza+Yj/Eaxd/oD7IRAna1AJ4i7EieQp400AA94taeV9YSaRUE/QCfavpB
-mabXjH5txz2jT4ltRyZvTQY=
-=QQOE
------END PGP SIGNATURE-----
-
---2/5bycvrmDh4d1IB--
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
