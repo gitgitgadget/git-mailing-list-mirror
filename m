@@ -1,61 +1,54 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: gitweb: how to name main "action" subroutines?
-Date: Mon, 31 Jul 2006 22:41:02 +0200
-Message-ID: <200607312241.02711.Josef.Weidendorfer@gmx.de>
-References: <eal2ic$14o$1@sea.gmane.org> <200607312038.44337.Josef.Weidendorfer@gmx.de> <ealj3h$to2$1@sea.gmane.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Diff format in packs
+Date: Mon, 31 Jul 2006 17:08:25 -0400
+Message-ID: <9e4733910607311408i10e17dse776920de7c5076a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 31 22:41:26 2006
+X-From: git-owner@vger.kernel.org Mon Jul 31 23:09:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7eZh-0004AV-QS
-	for gcvg-git@gmane.org; Mon, 31 Jul 2006 22:41:18 +0200
+	id 1G7f0F-0001RT-3F
+	for gcvg-git@gmane.org; Mon, 31 Jul 2006 23:08:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030276AbWGaUlH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Jul 2006 16:41:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030283AbWGaUlH
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 16:41:07 -0400
-Received: from tuminfo2.informatik.tu-muenchen.de ([131.159.0.81]:34220 "EHLO
-	tuminfo2.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
-	id S1030276AbWGaUlF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jul 2006 16:41:05 -0400
-Received: from dhcp-3s-48.lrr.in.tum.de (dhcp-3s-48.lrr.in.tum.de [131.159.35.48])
-	by mail.in.tum.de (Postfix) with ESMTP id 805F62680;
-	Mon, 31 Jul 2006 22:41:04 +0200 (MEST)
-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KMail/1.9.3
-In-Reply-To: <ealj3h$to2$1@sea.gmane.org>
+	id S1030458AbWGaVI2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Jul 2006 17:08:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030334AbWGaVI1
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 17:08:27 -0400
+Received: from nf-out-0910.google.com ([64.233.182.185]:64623 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1030458AbWGaVI1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Jul 2006 17:08:27 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so31031nfa
+        for <git@vger.kernel.org>; Mon, 31 Jul 2006 14:08:25 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=HWqa8kJ0f5EUpc66SnuxtIK8Yb6qNCYHPcrGUqXSwRXaSLFgpDYZnjIxHt65QXZAbhoJOGi/FL1cdMiHakelEwB9l/+S1unfa6s4Be7UkLkbdqORMaEoCsMz1v7IRcW65hPcrw+VnIpZ8Rd3L1EaEK22D/ec3cchhCK9M8hRsYs=
+Received: by 10.78.116.19 with SMTP id o19mr38273huc;
+        Mon, 31 Jul 2006 14:08:25 -0700 (PDT)
+Received: by 10.78.149.8 with HTTP; Mon, 31 Jul 2006 14:08:25 -0700 (PDT)
+To: git <git@vger.kernel.org>
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24544>
 
-On Monday 31 July 2006 20:45, Jakub Narebski wrote:
-> Josef Weidendorfer wrote:
-> 
-> > On Monday 31 July 2006 16:03, you wrote:
-> >> I'm going to rename some gitweb subroutines to better correspond to what
-> >> given subroutine does. I have problem: how to name main "action"
-> >> subroutines? Currently they use git_ prefix, e.g. git_logo.
-> >> git_project_list, git_rss, git_summary, git_heads,...
-> > 
-> > print_* or write_* ?
-> > At least, the functions print/write the HTML code to stdout of the script.
-> 
-> The problem is that there are subroutines which print _fragments_ of HTML
-> code (like git_header_html or git_print_page_path) which would use probably
-> print_ prefix. Action subroutines output always whole page.
+I see how the diffs are encoded into the pack, but what did they look
+like before compressing? It would be great if they looked like CVS
+diffs. I poked around in the doc and I don't see anything. Is this
+specified somewhere and I missed it? I see that the diff code is from
+libxdiff  but I haven't figured out how it is being used yet.
 
-Why not "print_*_page", if they print out a whole page?
-I would "git_header_html" rename to "print_header"; it's clear that
-it prints out HTML ;-)
-And "git_print_page_path" only needs stripping of "git_" prefix.
+I'm trying to build a small app that takes a CVS ,v and writes out a
+pack corresponding to the versions. Suggestions on the most efficient
+strategy for doing this by calling straight into the git C code?
+Forking off git commands is not very efficient when done a million
+times.
 
-Josef
+-- 
+Jon Smirl
+jonsmirl@gmail.com
