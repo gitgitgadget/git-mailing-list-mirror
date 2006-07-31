@@ -1,74 +1,83 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: use out-of-line GIT logo.
-Date: Mon, 31 Jul 2006 07:21:39 +0200
-Organization: At home
-Message-ID: <eak40m$68u$1@sea.gmane.org>
-References: <20060730223839.GB16364@admingilde.org> <20060731035904.53458.qmail@web31813.mail.mud.yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: fill in gitweb configuration by Makefile
+Date: Sun, 30 Jul 2006 23:41:50 -0700
+Message-ID: <7vslki9sy9.fsf@assigned-by-dhcp.cox.net>
+References: <20060730223754.GA16364@admingilde.org>
+	<20060731035737.24181.qmail@web31803.mail.mud.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Mon Jul 31 07:21:48 2006
+Cc: git@vger.kernel.org, Martin Waitz <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Mon Jul 31 08:41:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7QDm-0007Nu-Dw
-	for gcvg-git@gmane.org; Mon, 31 Jul 2006 07:21:42 +0200
+	id 1G7RTQ-00036X-Lr
+	for gcvg-git@gmane.org; Mon, 31 Jul 2006 08:41:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751486AbWGaFVj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Jul 2006 01:21:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751491AbWGaFVj
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 01:21:39 -0400
-Received: from main.gmane.org ([80.91.229.2]:64956 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751486AbWGaFVi (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 Jul 2006 01:21:38 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1G7QDb-0007MF-Qi
-	for git@vger.kernel.org; Mon, 31 Jul 2006 07:21:31 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 31 Jul 2006 07:21:31 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 31 Jul 2006 07:21:31 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S932152AbWGaGlw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Jul 2006 02:41:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932346AbWGaGlw
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 02:41:52 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:57840 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S932152AbWGaGlw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Jul 2006 02:41:52 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060731064151.ZUDK1537.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 31 Jul 2006 02:41:51 -0400
+To: ltuikov@yahoo.com
+In-Reply-To: <20060731035737.24181.qmail@web31803.mail.mud.yahoo.com> (Luben
+	Tuikov's message of "Sun, 30 Jul 2006 20:57:37 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24493>
 
-Luben Tuikov wrote:
+-
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
-> --- Martin Waitz <tali@admingilde.org> wrote:
-> 
->> Use the normal web server instead of the CGI to provide the git logo,
->> just like the gitweb.css.
-> 
-> NACK.  I'd really rather keep the logo (which is essential) in the
-> file itself.  This would mean one less file to worry about.
+> -- Martin Waitz <tali@admingilde.org> wrote:
+>> Generate gitweb/gitweb.cgi to reduce the need to patch gitweb.cgi by
+>> the end user.
+>> The GIT installation directory and version are already known by the
+>> Makefile, they can be inserted directly into gitweb.
+>> All other gitweb configuration parameters can now be specified
+>> by providing GITWEB_* variables while building GIT.
+>> These are described in gitweb/README.
+>
+> NACK.
+>
+> I don't like it.  While this method works, it is too much effort
+> to have to run make to do this, plus it pollutes your tree.
 
-I'm not sure. On the one hand this introduces yet another file which we have
-to worry about, on the other it probably help performance. Any hard
-numbers?
+I do not quite agree with this reasoning.  With that definition
+of "polluting your tree", all build of git-*.{sh,perl,py} are
+polluting your tree.  If compile/install time customization is
+handier I do not have problem doing it that way.
 
-The difference with gitweb.css is that you edit gitweb.css, and that
-inclused CSS can be cached; we could probably do the same trick like with
-logo (i.e. embed it in gitweb.css, but still use 
-  <link rel="stylesheet" type="text/css" href="$my_uri?a=gitweb.css"/>
-and not
-  <style type="text/css">
-  ...
-  </style>
+> Instead, what you can do is make gitweb.cgi read a text file
+> from . which has those variables defined.
 
-Besides, mixed language files are hard to syntax highlight correctly...
+I think there was a discussion on having a configuration file
+for gitweb (not per-repository .git/config but installation wide
+configuration file).  If I recall correctly, the killer argument
+against it was that you would need to bootstrap the process by
+somehow telling gitweb.cgi where to read from that configuration
+file, and if you are going to customize gitweb.cgi before
+installation for the site that way, then giving a bit more
+configuration in gitweb.cgi (like Martin did in the patch we are
+discussion) is simpler.
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+>   - no need to run make to build "gitweb.cgi" or "gitweb.pl" whatever
+>     you call it,
+>   - no need to pollute your tree with site defined variables,
+>   - simple copy (cp) would install a working version, instead of
+>     the current cp + patch with local settings method.
+
+While I agree all of these "no need to" makes things slightly
+simpler, I do not think it is such a big deal -- we are building
+git-*.{sh,perl,py,c} anyway.
