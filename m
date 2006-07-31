@@ -1,91 +1,91 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: File version at a specific date?
-Date: Mon, 31 Jul 2006 18:20:35 -0400
-Message-ID: <20060731222035.GA24888@spearce.org>
-References: <200607311956.00679.Alexander.Zvyagin@cern.ch> <ealhrj$pdo$1@sea.gmane.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Fix up some fallout from "setup_git_directory()" cleanups
+Date: Mon, 31 Jul 2006 15:21:04 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0607311508060.4168@g5.osdl.org>
+References: <Pine.LNX.4.64.0607311311060.4168@g5.osdl.org>
+ <7v7j1t5tgj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 01 00:20:55 2006
+X-From: git-owner@vger.kernel.org Tue Aug 01 00:21:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7g7v-0006vD-P0
-	for gcvg-git@gmane.org; Tue, 01 Aug 2006 00:20:44 +0200
+	id 1G7g8P-0006zw-Th
+	for gcvg-git@gmane.org; Tue, 01 Aug 2006 00:21:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030486AbWGaWUk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Jul 2006 18:20:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751424AbWGaWUk
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 18:20:40 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:8085 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751383AbWGaWUj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jul 2006 18:20:39 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1G7g7f-0000hV-T6; Mon, 31 Jul 2006 18:20:28 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5A87820E456; Mon, 31 Jul 2006 18:20:35 -0400 (EDT)
-To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <ealhrj$pdo$1@sea.gmane.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1030487AbWGaWVK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Jul 2006 18:21:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751424AbWGaWVK
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 18:21:10 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:2719 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751383AbWGaWVJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Jul 2006 18:21:09 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k6VML4nW011780
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 31 Jul 2006 15:21:05 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k6VML4gr024005;
+	Mon, 31 Jul 2006 15:21:04 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v7j1t5tgj.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.49 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.141 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24551>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Alexander ZVYAGIN wrote:
+
+
+On Mon, 31 Jul 2006, Junio C Hamano wrote:
 > 
-> > I failed to find in the documentation how to look to a file content
-> > at some moment in a past.
-> > 
-> > Something like this:
-> > $ git checkout master~2 Makefile
-> > when I specify not the revisions numbers ago the file was (~2),
-> > but the time, for example "2005-12-12 00:00:00" or something like this.
-> > 
-> > Where should I look at?
-> 
-> Either use git rev-list with --since=datestring, --after=datestring,
-> --until=datestring, --before=datestring to find a commit, or if you have
-> reflog enabled (you have .git/logs/refs/) you can use @{date} syntax,
-> see 'man git-rev-parse'
-> 
-> "A suffix @ followed by a date specification enclosed in a brace pair  (e.g.
->  {yesterday},  {1  month  2 weeks 3 days 1 hour 1 second ago} or {1979-02-26
->  18:30:00}) to specify the value of the ref at a prior point in  time.  This
->  suffix  may  only be used immediately following a ref name and the ref must
->  have an existing log ($GIT_DIR/logs/<ref>)."
+> This would have been prevented if the rest of the sources were -Wshadow
+> clean.
 
-I'd like to add something to the discussion, at least for the
-benefit of the archives:
+Well, the _real_ problem is that "-Wshadow" is such a crappy switch.
 
-There's a semantic difference between the two date specification/query
-styles suggested above:
+For example, there is absolutely no reason to warn about every local 
+variable called "link", just because it shadows the unistd.h "link()" 
+function.
 
-	git rev-list with --since, --after, --until, --before will
-	look at the date of the commit;
+So I tend to think that -Wshadow is actively wrong, because it makes 
+people write crappier code by forcing them to avoid not just the (few) C 
+keywords as variable names, but also the _millions_ of names exported by 
+various standard header files.
 
-	@{date} after a ref name will look at the commit that was
-	stored under that ref name at that point in time.
+Which is sad. "-Wshadow" _would_ be useful, if it had been designed right. 
+But that definitely implies _not_ warning about name clashes that are also 
+obvious type clashes.
 
-These are two entirely different timelines.  For example someone
-could make a commit on Tuesday which you pull into your repository
-on Thursday.  The commit will say (and thus git rev-list with
---since will say) that the file version existed on Tuesday, but the
-reflog would say that the file version existed only as of Thursday,
-as that was when it became available to your repository.
+For example, there's basically absolutely zero reason to warn about 
+something clashing with a function. If you are crazy and use nested 
+functions in gcc, it's still obvious _which_ function you'd ever mean. So 
+"-Wshadow" simply should _never_ warn about clashing with the external 
+"link()" declaration, and certainly not for a regular "int link" kind of 
+automatic variable definition.
 
--- 
-Shawn.
+There's also seldom (if ever) any reason to warn about a pointer variable 
+being shadowed by an integer one. If you use the wrong one, you'll get a 
+type warning, so why would you really care? 
+
+> I once tried to clean things up, but there are tons of
+> warnings in the current code [*1*].
+
+And, looking at your patch, they all (or a huge majority of them) seem to 
+be totally bogus (ie the code is fine, the -Wshadow warning is crap).
+
+> Another thing that would help us is to have more tests that run
+> things from subdirectories.  Any takers?
+
+This, btw, didn't just hit "git ls-files" when run in a subdirectory, it 
+hit pretty much any use of "git ls-files" with a path specifier that 
+included a directory. I don't think we have many uses of that, and at 
+least one of the few tests for path specifiers (t3002) only tests in the 
+current directory, no paths.
+
+			Linus
