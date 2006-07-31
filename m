@@ -1,57 +1,86 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] pager: config variable pager.program
-Date: Mon, 31 Jul 2006 14:56:25 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0607311454040.29667@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <E1G6wM1-00040z-Bu@moooo.ath.cx> <7v8xmabo37.fsf@assigned-by-dhcp.cox.net>
- <E1G7WfC-000728-9j@moooo.ath.cx>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2] gitweb: Use list for of open for running git commands, thorougly.
+Date: Mon, 31 Jul 2006 14:59:24 +0200
+Organization: At home
+Message-ID: <eakuqs$hpc$1@sea.gmane.org>
+References: <200607292239.11034.jnareb@gmail.com> <200607292251.21072.jnareb@gmail.com> <7virle6o5z.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 31 14:56:48 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Mon Jul 31 15:00:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7XJx-0005dp-Lb
-	for gcvg-git@gmane.org; Mon, 31 Jul 2006 14:56:34 +0200
+	id 1G7XNV-0006IF-7a
+	for gcvg-git@gmane.org; Mon, 31 Jul 2006 15:00:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751092AbWGaM43 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Jul 2006 08:56:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751024AbWGaM42
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 08:56:28 -0400
-Received: from mail.gmx.de ([213.165.64.21]:3783 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1750719AbWGaM42 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 Jul 2006 08:56:28 -0400
-Received: (qmail invoked by alias); 31 Jul 2006 12:56:27 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp034) with SMTP; 31 Jul 2006 14:56:27 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Matthias Lederhofer <matled@gmx.net>
-In-Reply-To: <E1G7WfC-000728-9j@moooo.ath.cx>
-X-Y-GMX-Trusted: 0
+	id S1751024AbWGaM77 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 31 Jul 2006 08:59:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751153AbWGaM76
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 08:59:58 -0400
+Received: from main.gmane.org ([80.91.229.2]:45528 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751024AbWGaM76 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Jul 2006 08:59:58 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1G7XMp-00068B-Pe
+	for git@vger.kernel.org; Mon, 31 Jul 2006 14:59:31 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 31 Jul 2006 14:59:31 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 31 Jul 2006 14:59:31 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24521>
 
-Hi,
+Junio C Hamano wrote:
 
-On Mon, 31 Jul 2006, Matthias Lederhofer wrote:
+> This, together with PATCH 6, seems to break "history" link.
+> Visit a repository (summary page), click on "tree" on the second
+> line, and click on "history" (on any blob or tree).
 
-> Signed-off-by: Matthias Lederhofer <matled@gmx.net>
+It works for me (both --full-history and gitweb) for git 1.4.1.1, although
+--full-history doesn't seem to add anything for this version of git:
 
-The commit message no longer reflects what the patch does ;-)
+  ~/git> time git rev-list HEAD -- gitweb/test/file+plus+sign
+  0a8f4f0020cb35095005852c0797f0b90e9ebb74
 
-> -	const char *pager = getenv("PAGER");
-> +	char *pager;
+  real    0m2.562s
+  user    0m2.412s
+  sys     0m0.024s
 
-You do not need to lose the "const" (it means that you cannot access the 
-memory it points to, but you can change the pointer). Also, you could make 
-a more minimal patch by replacing PAGER by GIT_PAGER here, instead of 
-having this extra line:
 
-> +	pager = getenv("GIT_PAGER");
+  ~/git> time git rev-list --full-history HEAD -- gitweb/test/file+plus+sign
+  0a8f4f0020cb35095005852c0797f0b90e9ebb74
 
-Ciao,
-Dscho
+  real    0m8.564s
+  user    0m7.212s
+  sys     0m0.068s
+
+while correct result should be
+
+  ~/git> time git rev-list HEAD -- gitweb/test/file+plus+sign \
+                                   test/file+plus+sign
+  0a8f4f0020cb35095005852c0797f0b90e9ebb74
+  85852d44e48c1d1c6d815cc5fccf1b580f2f2cad
+  cc3245b6512a01d74c0fd460d762ba8a1e8b968a
+
+  real    0m2.565s
+  user    0m2.452s
+  sys     0m0.008s
+
+git version 1.4.1.1
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
