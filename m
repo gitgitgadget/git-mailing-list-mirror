@@ -1,53 +1,37 @@
-From: "=?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?=" <andre.goddard@gmail.com>
-Subject: Would you mind adding the OLS paper to the webpage?
-Date: Tue, 1 Aug 2006 13:25:15 -0400
-Message-ID: <b8bf37780608011025k9518b6coe02b841b6a739ea1@mail.gmail.com>
+From: Olivier Galibert <galibert@pobox.com>
+Subject: path-restricted gitk with tags showing up?
+Date: Tue, 1 Aug 2006 19:42:10 +0200
+Message-ID: <20060801174210.GA81699@dspnet.fr.eu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Tue Aug 01 19:25:30 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue Aug 01 19:42:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7xzd-00039V-Re
-	for gcvg-git@gmane.org; Tue, 01 Aug 2006 19:25:22 +0200
+	id 1G7yGB-00070e-NS
+	for gcvg-git@gmane.org; Tue, 01 Aug 2006 19:42:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751685AbWHARZS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 1 Aug 2006 13:25:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751692AbWHARZS
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 13:25:18 -0400
-Received: from py-out-1112.google.com ([64.233.166.178]:7904 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1751685AbWHARZQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Aug 2006 13:25:16 -0400
-Received: by py-out-1112.google.com with SMTP id t32so1271769pyc
-        for <git@vger.kernel.org>; Tue, 01 Aug 2006 10:25:16 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=QuYdr+0EMVcbKnub08ymDG0WMwuEjjRoxv5fOlNHOOk1Br4AThaDln2hiP1AYIxA6mb+NDIvkf3QU+KXyuxgFsUqFHoAsIB2J05N/ruBP6wVwhGj6OSTmSRPHEMJJpNUO8juXoBZVVSf90K11/lWrd4q1DbnuoKEEzT/tQeX4+0=
-Received: by 10.35.123.10 with SMTP id a10mr6045209pyn;
-        Tue, 01 Aug 2006 10:25:15 -0700 (PDT)
-Received: by 10.35.128.2 with HTTP; Tue, 1 Aug 2006 10:25:15 -0700 (PDT)
-To: "Git Mailing List" <git@vger.kernel.org>
+	id S1751732AbWHARmR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Aug 2006 13:42:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751736AbWHARmQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 13:42:16 -0400
+Received: from dspnet.fr.eu.org ([213.186.44.138]:3592 "EHLO dspnet.fr.eu.org")
+	by vger.kernel.org with ESMTP id S1751732AbWHARmN (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Aug 2006 13:42:13 -0400
+Received: by dspnet.fr.eu.org (Postfix, from userid 1007)
+	id 6F887A37D6; Tue,  1 Aug 2006 19:42:10 +0200 (CEST)
+To: git@vger.kernel.org
 Content-Disposition: inline
+User-Agent: Mutt/1.4.2.2i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24606>
 
-Hi, all!
+I'd like to do a (f.i) gitk include/sound/asound.h but still see the
+commits which are in the DAG delimited by the alsa commits and have
+tags attached.  The aim is to know what changes where in what released
+kernel version.  Is there a way to do that?
 
-    Could you please add the Ottawa Linux Symposium git paper to the
-homepage, please?
-
-    http://members.cox.net/junkio/200607-ols.pdf
-
-    Very nice description and presentation, Junio! :)
-
-Thank you so much,
---=20
-[]s,
-Andr=E9 Goddard
+  OG.
