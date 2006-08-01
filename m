@@ -1,65 +1,53 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: David Miller <davem@davemloft.net>
 Subject: Re: git-ls-files prefix superset problem
-Date: Mon, 31 Jul 2006 22:18:47 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0607312217420.4168@g5.osdl.org>
+Date: Mon, 31 Jul 2006 22:25:57 -0700 (PDT)
+Message-ID: <20060731.222557.52166634.davem@davemloft.net>
 References: <20060731.221327.26966465.davem@davemloft.net>
+	<Pine.LNX.4.64.0607312217420.4168@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 01 07:19:20 2006
+X-From: git-owner@vger.kernel.org Tue Aug 01 07:27:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7mex-0004ff-9u
-	for gcvg-git@gmane.org; Tue, 01 Aug 2006 07:19:15 +0200
+	id 1G7mmR-0005xZ-TV
+	for gcvg-git@gmane.org; Tue, 01 Aug 2006 07:27:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161054AbWHAFTM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Aug 2006 01:19:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161057AbWHAFTM
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 01:19:12 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:1424 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1161054AbWHAFTK (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Aug 2006 01:19:10 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k715IlnW031912
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 31 Jul 2006 22:18:48 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k715Il0K002034;
-	Mon, 31 Jul 2006 22:18:47 -0700
-To: David Miller <davem@davemloft.net>
-In-Reply-To: <20060731.221327.26966465.davem@davemloft.net>
-X-Spam-Status: No, hits=-0.486 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.141 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1161069AbWHAF0l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Aug 2006 01:26:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161066AbWHAF0l
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 01:26:41 -0400
+Received: from dsl027-180-168.sfo1.dsl.speakeasy.net ([216.27.180.168]:43397
+	"EHLO sunset.davemloft.net") by vger.kernel.org with ESMTP
+	id S1161060AbWHAF0k (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Aug 2006 01:26:40 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by sunset.davemloft.net (Postfix) with ESMTP id F0DCBAE43B0;
+	Mon, 31 Jul 2006 22:25:57 -0700 (PDT)
+To: torvalds@osdl.org
+In-Reply-To: <Pine.LNX.4.64.0607312217420.4168@g5.osdl.org>
+X-Mailer: Mew version 4.2 on Emacs 21.4 / Mule 5.0 (SAKAKI)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24576>
 
+From: Linus Torvalds <torvalds@osdl.org>
+Date: Mon, 31 Jul 2006 22:18:47 -0700 (PDT)
 
-
-On Mon, 31 Jul 2006, David Miller wrote:
+> It should be fixed by the recent commit
 > 
-> I had been previously using git-1.1.3 on my local repositories
-> and I upgraded to the current git head:
+> 	Fix up some fallout from "setup_git_directory()" cleanup
 > 
-> b63fafdfd844c2037fba53b9944431c1378b4135
+> that Junio already merged.
 > 
-> git commit stopped working, specifically it dies on
-> git-ls-files:
-> 
-> davem@sunset:~/src/GIT/net-2.6$ ../git/git-ls-files -- net/ipv4/tcp.c
-> fatal: git-ls-files: internal error - cache entry not superset of prefix
+> So just update your git again, and everything should be happy.
 
-It should be fixed by the recent commit
+Yeah, just as you responded I noticed the there was local
+variable shadowing of "prefix" which causes it to be NULL
+and thus prune_cache() doesn't get called.
 
-	Fix up some fallout from "setup_git_directory()" cleanup
-
-that Junio already merged.
-
-So just update your git again, and everything should be happy.
-
-		Linus
+Thanks!
