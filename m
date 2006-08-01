@@ -1,117 +1,64 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Diff format in packs
-Date: Tue, 1 Aug 2006 14:16:46 +1200
-Message-ID: <46a038f90607311916k5d130f70gc0ac26eb8f15fec0@mail.gmail.com>
-References: <9e4733910607311408i10e17dse776920de7c5076a@mail.gmail.com>
-	 <ealruh$sq9$1@sea.gmane.org>
-	 <9e4733910607311420n8537b76lbde4d60062195403@mail.gmail.com>
-	 <46a038f90607311747j947c786s6af2fe637dbde89d@mail.gmail.com>
-	 <9e4733910607311813l78791e40l1234cf0e458db66f@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 19] gitweb: No need to quote path for list version of open "-|"
+Date: Mon, 31 Jul 2006 19:17:08 -0700
+Message-ID: <7vhd0x42u3.fsf@assigned-by-dhcp.cox.net>
+References: <200607292239.11034.jnareb@gmail.com>
+	<200607311833.39524.jnareb@gmail.com>
+	<7v3bch7gf8.fsf@assigned-by-dhcp.cox.net> <ealk0e$to2$2@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 01 04:16:56 2006
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 01 04:17:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7joT-00059f-Sh
-	for gcvg-git@gmane.org; Tue, 01 Aug 2006 04:16:54 +0200
+	id 1G7jop-0005EI-9q
+	for gcvg-git@gmane.org; Tue, 01 Aug 2006 04:17:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030391AbWHACQs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 31 Jul 2006 22:16:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030392AbWHACQs
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 22:16:48 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:14038 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1030391AbWHACQr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jul 2006 22:16:47 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so104233nfa
-        for <git@vger.kernel.org>; Mon, 31 Jul 2006 19:16:46 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gnjzaXSHyZk4i7jE6k3oKOrZkb3o9tn7Fg3COIQiHZK1A1PDAViM+6riohtVTo5x5JYD5JAdM2j8O0ioUlgKic3EFeacnyjoekWUpHOiYl6j3dLH5+vg0/EWowUnYpxZrn/P6powhGh/UsqgHF/56nwjeI4/lzjCa7w8AnMP1M8=
-Received: by 10.78.166.7 with SMTP id o7mr103138hue;
-        Mon, 31 Jul 2006 19:16:46 -0700 (PDT)
-Received: by 10.78.120.17 with HTTP; Mon, 31 Jul 2006 19:16:45 -0700 (PDT)
-To: "Jon Smirl" <jonsmirl@gmail.com>
-In-Reply-To: <9e4733910607311813l78791e40l1234cf0e458db66f@mail.gmail.com>
-Content-Disposition: inline
+	id S1030387AbWHACRL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 31 Jul 2006 22:17:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030392AbWHACRL
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 22:17:11 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:61107 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1030387AbWHACRK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Jul 2006 22:17:10 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060801021709.KCKD25430.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 31 Jul 2006 22:17:09 -0400
+To: jnareb@gmail.com
+In-Reply-To: <ealk0e$to2$2@sea.gmane.org> (Jakub Narebski's message of "Mon,
+	31 Jul 2006 21:00:47 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24565>
 
-On 8/1/06, Jon Smirl <jonsmirl@gmail.com> wrote:
-> On 7/31/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> > Jon,
-> >
-> > just get all the file versions out of the ,v file and into the GIT
-> > repo, then do find .git/objects/ -type f | git-pack-objects. You don't
-> > have to even think of generating the packfile yourself.
+Jakub Narebski <jnareb@gmail.com> writes:
+
+> <opublikowany i wys=C5=82any>
 >
-> Moz CVS expands into over 1M files and 12GB in size. I keep getting
-> concerned about algorithms that take days to complete and need 4GB to
-> run.
-
-If you run that every 1000 rcs files converted, it will be really
-cheap in processing and memory footprint. That's not a concern.
-
-
-> > On 8/1/06, Jon Smirl <jonsmirl@gmail.com> wrote:
-> > > I am working on combining cvs2svn, parsecvs and cvsps into something
-> > > that can handle Mozilla CVS.
-> >
-> > If you publish your WIP somewhere, I might be able to jump in and help
-> > a bit. I've seen your "challenge" email earlier, but haven't been able
-> > to get started yet -- lots of work on other foss fronts.
+> Junio C Hamano wrote:
 >
-> I haven't got anything useful yet, I keep switching in and out of
-> working on this. I am still trying to work out a viable transition
-> strategy that I can attempt to sell the Mozilla developers on. So far
-> I don't have one.
+>> I suspect the patch title is wrong -- it is not "no need to" but
+>> "quoting path breaks so do not do it" ;-).
+>>=20
+>> I guess this fixes the problem I saw last night?
+>
+> If I remember correctly it worked without this patch, for git 1.4.1.1=
+=20
+> (i.e. with --full-history option, although not working as advertised:=
+ see my
+> comment earlier in thread).
 
-I understand that, and it's a shame.
+Couldn't have worked, or you have found a bug in whatever
+command you invoked.  If it is told to look for a path that
+starts with a single quote it should have done so and produced
+no history since there is no such file.
 
-> The requirements I have so far:
-
-Yep to 1..4. I suspect that you can get "there" with a converted
-cvs2svn transformed to deal with git as your are pursuing, and in
-dealing with the follow-on imports using git-cvsimport. The only real
-limitation there is that new branches opened in that transition period
-may be imported with the root in the wrong place.
-
-But for "ongoing" branches, the setup works great. I've done in many
-times with parsecvs for the initial import and git-cvsimport for the
-subsequent incrementals.
-
-> 5) a bonus feature would be a partial repository to avoid the initial
-> 700MB git download.
-
-Agreed. However, I thought I had gotten it to be much slimmer than
-that, but I may be wrong. Also, a current Moz checkout via cvs is
-massively chatty, so between bandwidth and latency, I think the git
-protocol beats cvs for the initial checkout even for Moz.
-
-> I've spent more time looking at parsecvs than cvsps, is it reasonable
-> to convert cvsps to the algorithm described above? Another strategy
-
-I don't think cvsps is easily fixable.
-
-> would be to use cvs2svn to build the changeset database and then use
-> cvsps to simply read the changesets out of it and build the git
-> repository.
-
-Once cvs2svn has the db built, it should be easy to write a
-perl/python script that mimics the output of cvsps.
-
-> Parsecvs never finishes the conversion it always hits an error or GPF
-> after 4-5 hours, probably a wild pointer somewhere.
-
-Hmmmm. Nag Keith?
-
-
-
-martin
+In any case, the patch #19 seems to fix the problem.  Thanks.
