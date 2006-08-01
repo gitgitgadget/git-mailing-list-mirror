@@ -1,75 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Why I love GIT but use Subversion
-Date: Mon, 31 Jul 2006 21:42:14 -0700
-Message-ID: <7virld2hjt.fsf@assigned-by-dhcp.cox.net>
-References: <4d8e3fd30607230123m459aa1cle2ab8c1c1dd0fcd2@mail.gmail.com>
-	<4d8e3fd30607300248m36b4038dv1fcd1f3716503905@mail.gmail.com>
-	<1prv3rw6ldo9s$.dlg@jwmittag.my-fqdn.de>
+From: David Miller <davem@davemloft.net>
+Subject: git-ls-files prefix superset problem
+Date: Mon, 31 Jul 2006 22:13:27 -0700 (PDT)
+Message-ID: <20060731.221327.26966465.davem@davemloft.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 01 06:42:21 2006
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Aug 01 07:14:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7m5E-0006wS-48
-	for gcvg-git@gmane.org; Tue, 01 Aug 2006 06:42:20 +0200
+	id 1G7ma7-0003pn-Bd
+	for gcvg-git@gmane.org; Tue, 01 Aug 2006 07:14:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751576AbWHAEmR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 1 Aug 2006 00:42:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751573AbWHAEmQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 00:42:16 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:32140 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1751255AbWHAEmQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Aug 2006 00:42:16 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060801044215.KIJS554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 1 Aug 2006 00:42:15 -0400
-To: =?iso-8859-1?Q?J=F6rg?= W Mittag <Joerg.Mittag@Web.De>
-In-Reply-To: <1prv3rw6ldo9s$.dlg@jwmittag.my-fqdn.de> (=?iso-8859-1?Q?J=F6?=
- =?iso-8859-1?Q?rg?= W. Mittag's
-	message of "Tue, 1 Aug 2006 03:45:52 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161040AbWHAFOL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Aug 2006 01:14:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161050AbWHAFOL
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 01:14:11 -0400
+Received: from dsl027-180-168.sfo1.dsl.speakeasy.net ([216.27.180.168]:1953
+	"EHLO sunset.davemloft.net") by vger.kernel.org with ESMTP
+	id S1161040AbWHAFOK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Aug 2006 01:14:10 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by sunset.davemloft.net (Postfix) with ESMTP id 89988AE43B1
+	for <git@vger.kernel.org>; Mon, 31 Jul 2006 22:13:27 -0700 (PDT)
+To: git@vger.kernel.org
+X-Mailer: Mew version 4.2 on Emacs 21.4 / Mule 5.0 (SAKAKI)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24573>
 
-J=F6rg W Mittag <Joerg.Mittag@Web.De> writes:
 
-> Please, make those reasons go away.
+I had been previously using git-1.1.3 on my local repositories
+and I upgraded to the current git head:
 
-These are all reasonable wishes.
+b63fafdfd844c2037fba53b9944431c1378b4135
 
-The core level of git (which is written in C) is designed to be
-usable as a building block for platform native IDE.  The primary
-audience of git so far has been POSIX envirnoment, and the
-command line interface we have in core git was one acceptable
-form of "platform native IDE".  I know that is not a usual form
-of IDE in some other world (most notably in MS circles).
+git commit stopped working, specifically it dies on
+git-ls-files:
 
-I do not speak for others on this mailing list, but given the
-background of how git came about into existence, which pretty
-much defines the majority of the habitants of this mailing list,
-I doubt there are many people who know git well enough and have
-enough experience and motivation to implement "platform native
-IDE" for MS platform.  Certainly I cannot imagine Linus and/or
-myself doing Windows GUI programming to make git integrate into
-MS environment seamlessly.  You probably are a lot more familiar
-and qualified to implement such than myself.
+davem@sunset:~/src/GIT/net-2.6$ ../git/git-ls-files -- net/ipv4/tcp.c
+fatal: git-ls-files: internal error - cache entry not superset of prefix
+davem@sunset:~/src/GIT/net-2.6$ 
 
-So please step forward, enlist MS comrades, and start hacking,
-if you want MS native git.  If you need help in understanding
-the core git data structures, algorithms, and functions, I may
-well be able to help you.  If you have difficulties interfacing
-with Visual Studio on the other hand that is not something I can
-help you with, although some others on the list might.
+I added some debugging:
 
-> Thank you for bearing with me through this long rant.
+Trying get_pathspec([(null)],[net/ipv4/tcp.c])
+prefixlen(0)
+prefix_path() gives [net/ipv4/tcp.c]
+ERROR: pathspec(net/ipv4/tcp.c)
+verify_pathspec: len(9)
+ERROR: len(9) ce_namelen(ce)(7) ce->name(COPYING)
 
-Thank *you* for sharing these thoughts.
+Is something wrong with my index file?
+
+I tried to rebuild it using:
+
+git read-tree master
+git checkout-index -f -a
+git update-index --refresh
+
+but I keep getting the same problem.
+
+It happens on all of my local 2.6.x kernel GIT trees.
+
+Any ideas?
+
+Thanks a lot.
