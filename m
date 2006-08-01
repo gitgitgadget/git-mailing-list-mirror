@@ -1,65 +1,57 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: Why I love GIT but use Subversion (was: GIT user survey)
-Date: Mon, 31 Jul 2006 23:50:17 -0400
-Message-ID: <1154404217.32333.7.camel@dv>
-References: <4d8e3fd30607230123m459aa1cle2ab8c1c1dd0fcd2@mail.gmail.com>
-	 <4d8e3fd30607300248m36b4038dv1fcd1f3716503905@mail.gmail.com>
-	 <1prv3rw6ldo9s$.dlg@jwmittag.my-fqdn.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: A few more fixups to gitweb
+Date: Mon, 31 Jul 2006 21:24:52 -0700
+Message-ID: <7vzmep2icr.fsf_-_@assigned-by-dhcp.cox.net>
+References: <200607292239.11034.jnareb@gmail.com>
+	<200608010259.13721.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 01 05:50:35 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Martin Langhoff" <martin.langhoff@gmail.com>,
+	Luben Tuikov <ltuikov@yahoo.com>,
+	Matthias Lederhofer <matled@gmx.net>
+X-From: git-owner@vger.kernel.org Tue Aug 01 06:25:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7lH1-00071r-Q8
-	for gcvg-git@gmane.org; Tue, 01 Aug 2006 05:50:31 +0200
+	id 1G7loQ-0004EK-Ho
+	for gcvg-git@gmane.org; Tue, 01 Aug 2006 06:24:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751567AbWHADuY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 31 Jul 2006 23:50:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751565AbWHADuY
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Jul 2006 23:50:24 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:20930 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1751117AbWHADuY convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jul 2006 23:50:24 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1G7lGw-0004Nu-If
-	for git@vger.kernel.org; Mon, 31 Jul 2006 23:50:22 -0400
-Received: from proski by dv.roinet.com with local (Exim 4.62)
-	(envelope-from <proski@dv.roinet.com>)
-	id 1G7lGs-0008Sj-1b; Mon, 31 Jul 2006 23:50:18 -0400
-To: =?ISO-8859-1?Q?J=F6rg?= W Mittag <Joerg.Mittag@Web.De>
-In-Reply-To: <1prv3rw6ldo9s$.dlg@jwmittag.my-fqdn.de>
-X-Mailer: Evolution 2.7.4 (2.7.4-3) 
+	id S1161006AbWHAEYz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Aug 2006 00:24:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161002AbWHAEYz
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 00:24:55 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:32695 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1161004AbWHAEYy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Aug 2006 00:24:54 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060801042453.YIHQ6711.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 1 Aug 2006 00:24:53 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200608010259.13721.jnareb@gmail.com> (Jakub Narebski's message
+	of "Tue, 1 Aug 2006 02:59:12 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24571>
 
-Hello, J=F6rg!
+I've applied most of the recent gitweb changes from the list
+(except the one that processes gitweb.perl into gitweb.cgi, not
+because I am opposed to it, but because merging it early would
+make things a bit more inconvenient while many patches are in
+flight on the list) and fixed up a few things I noticed.  I'll
+be pushing out the results on "next" branch shortly, so if
+people want to hack on gitweb further please base your changes
+on this version (I am CC'ing this message to people who recently
+worked on, or expressed interest in working on gitweb).
 
-On Tue, 2006-08-01 at 03:45 +0200, J=F6rg W Mittag wrote:
-
-> In my case the operating environment is the Windows Explorer or
-> Eclipse and my workflow is basically dragging and dropping files with
-> the mouse.  I can do just that with TortoiseSVN and Subclipse without
-> having to change the way I normally work.
-
-I understand you don't really care about changesets (i.e. committing
-several files at once and recording it as a single operation).  In that
-case, would git-cvsserver satisfy your needs?  Would it make any
-difference if there were a similar Subversion emulator?  Would DAV
-support make any difference?
-
-> With Git I would constantly
-> need to switch back and forth between Explorer or Eclipse and Cygwin.
-
-With git-cvsserver, you can run it and forget about it.  The rest would
-be handled through the CVS interface.
-
---=20
-Regards,
-Pavel Roskin
+One thing to note.  Please make sure that you do not see
+anything in Apache error log after you make your changes.  I do
+not remember the details but kernel.org folks were very unhappy
+earlier when gitweb spewed stuff into the error log, and if I
+recall correctly things that output to the error stream were not
+friendly to the http-server cache for some reason.
