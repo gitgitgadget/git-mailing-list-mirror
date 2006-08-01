@@ -1,64 +1,108 @@
-From: "Carola" <marvin@002.ru>
-Subject: Greeting!
-Date: Tue, 01 Aug 2006 18:23:14 +0300
-Message-ID: <008201c6b57e$63b5bf80$2325000a__14793.0914922201$1154445782$gmane$org@201.64.24.230>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Strange cogito behaviour
+Date: Tue, 1 Aug 2006 16:41:16 +0100
+Message-ID: <200608011641.20077.andyparkins@gmail.com>
+References: <200608011053.25112.andyparkins@gmail.com> <20060801151258.GB3923@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="windows-1251"
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Tue Aug 01 17:23:01 2006
+Content-Type: multipart/signed;
+  boundary="nextPart1301681.62zSTv9fCe";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Aug 01 17:41:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7w4s-0000xE-Na
-	for gcvg-git@gmane.org; Tue, 01 Aug 2006 17:22:39 +0200
+	id 1G7wNB-0005Gd-PW
+	for gcvg-git@gmane.org; Tue, 01 Aug 2006 17:41:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751659AbWHAPWd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Aug 2006 11:22:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751651AbWHAPWc
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 11:22:32 -0400
-Received: from [201.64.24.230] ([201.64.24.230]:38918 "EHLO 201.64.24.230")
-	by vger.kernel.org with ESMTP id S1750724AbWHAPWa (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Aug 2006 11:22:30 -0400
-Received: from [10.0.37.35] by 201.64.24.230
-	id XQJbLeBM3i0A; Tue, 01 Aug 2006 18:23:14 +0300
-To: "Andreas" <git@vger.kernel.org>
+	id S1030362AbWHAPla (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Aug 2006 11:41:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030366AbWHAPla
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 11:41:30 -0400
+Received: from nf-out-0910.google.com ([64.233.182.185]:12518 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1030362AbWHAPla (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Aug 2006 11:41:30 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so310499nfa
+        for <git@vger.kernel.org>; Tue, 01 Aug 2006 08:41:28 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:message-id;
+        b=bxoDg6joVlrfePu8ZW8etZ4R86tRRqoqsZ9MRc9+FQdR8Q8v7ul4RYsmkisoS1E9kH8wVsfqinkeiWe/7ksGAkJdtsPHVBKHuAxYBSwiLMvwwKVxZhdWJhliI7UVD38+BY8oz6Y3vbBjOyw/4XK4OFtfiYZ/uvI5hl2iGAjS7ew=
+Received: by 10.49.29.2 with SMTP id g2mr945791nfj;
+        Tue, 01 Aug 2006 08:41:28 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.gmail.com with ESMTP id b1sm56705nfe.2006.08.01.08.41.22;
+        Tue, 01 Aug 2006 08:41:23 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.1
+In-Reply-To: <20060801151258.GB3923@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 14.3 points;
- *  0.1 RCVD_BY_IP Received by mail server with no name
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4532]
- *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: dating-foryou.com]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: dating-foryou.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: dating-foryou.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: dating-foryou.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: dating-foryou.com]
- *  2.7 MSGID_DOLLARS Message-Id has pattern used in spam
- *  0.0 RCVD_DOUBLE_IP_LOOSE Received: by and from look like IP addresses
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24602>
 
-Hallo !	
+--nextPart1301681.62zSTv9fCe
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-I'm a very young and energetic lady! I have very positive attitude to life and people. I do enjoy new experience life can offer me: to see new interesting places, to meet new people.
-I do try to enjoy every moment of life and accept everything the way it comes without complaining.
-Though my life seems to be quite enjoyable there's one important thing missing. It's LOVE!
-Without my beloved one, my soul mate, my King my life is not completed.
-I wish i coud find him very soon so that we could share together every momement of the life-time romance! 
-What about you? Could you be my King? If answer is "yes" - you can find more about me 
-http://dating-foryou.com/passion/
+On Tuesday 2006 August 01 16:12, Jeff King wrote:
 
-a rivederci,
+> A cogito fetch without a branch specifier defaults to the remote HEAD,
+> not master.  This is the documented behavior (see cg-branch-add(1)). I
+> agree it is confusing (I also thought it was a bug until I looked it up
 
-Carola
+=46air enough.  If it is working as intended, then I have no complaint.
 
-If you think that you were subscribed by mistake for this mail
-delivery or if your email has been added without your permission,
-please, visit http://dating-foryou.com/passion/ and unsubscribe from our mails.
+
+> > The script then continues with
+> >  * Switch repo1 back to master branch
+> >  * Update repo2
+> > This time repo2 doesn't change.  So I'm more confused :-)
+>
+> This is because repo2's master is already at the branch, and repo1 is a
+> subset of that history. There is no need to merge since repo2 already
+> contains all of the commits in repo1 (plus another one which is only on
+> the branch in repo1).
+
+I think I see now.  repo2 is neither repo1#master nor repo1#branch because =
+it=20
+actually went like this:
+ * repo1 cloned to repo2, repo2#master is repo1#master
+ * repo2 fetches repo1#branch and /merges/ those changes
+ * repo1#HEAD switched to HEAD=3Dmaster
+ * repo2 fetch does nothing because repo2 is actually
+   repo1#master + repo1#branch, hence is newer than both
+   repo1#master and repo1#branch
+That explanation seems to fit exactly with the observed results, so would s=
+eem=20
+to be plausible.
+
+Thank you for your help; I of course withdraw my bug report and apologise f=
+or=20
+bothering you all :-)
+
+
+Andy
+
+
+=2D-=20
+Dr Andy Parkins, M Eng (hons), MIEE
+andyparkins@gmail.com
+
+--nextPart1301681.62zSTv9fCe
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (GNU/Linux)
+
+iD8DBQBEz3YgwQJ9gE9xL20RAoaHAJ95i/WxvSFpEuq8UVzs21QnxkEz7QCdG2Ok
+xRkQaE4CGzMmBKYtAauybMk=
+=mvEj
+-----END PGP SIGNATURE-----
+
+--nextPart1301681.62zSTv9fCe--
