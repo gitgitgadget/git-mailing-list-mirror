@@ -1,62 +1,53 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: setting up git-cvsserver
-Date: Tue, 1 Aug 2006 18:23:38 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0608011822080.17230@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060801154906.GA18772@informatik.uni-freiburg.de>
+From: "=?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?=" <andre.goddard@gmail.com>
+Subject: Would you mind adding the OLS paper to the webpage?
+Date: Tue, 1 Aug 2006 13:25:15 -0400
+Message-ID: <b8bf37780608011025k9518b6coe02b841b6a739ea1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 01 18:24:06 2006
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Tue Aug 01 19:25:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7x20-0006Mk-Hj
-	for gcvg-git@gmane.org; Tue, 01 Aug 2006 18:23:44 +0200
+	id 1G7xzd-00039V-Re
+	for gcvg-git@gmane.org; Tue, 01 Aug 2006 19:25:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750803AbWHAQXl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Aug 2006 12:23:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750814AbWHAQXl
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 12:23:41 -0400
-Received: from mail.gmx.net ([213.165.64.21]:60887 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1750803AbWHAQXk (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Aug 2006 12:23:40 -0400
-Received: (qmail invoked by alias); 01 Aug 2006 16:23:39 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp028) with SMTP; 01 Aug 2006 18:23:39 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
-In-Reply-To: <20060801154906.GA18772@informatik.uni-freiburg.de>
-X-Y-GMX-Trusted: 0
+	id S1751685AbWHARZS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 1 Aug 2006 13:25:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751692AbWHARZS
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 13:25:18 -0400
+Received: from py-out-1112.google.com ([64.233.166.178]:7904 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1751685AbWHARZQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Aug 2006 13:25:16 -0400
+Received: by py-out-1112.google.com with SMTP id t32so1271769pyc
+        for <git@vger.kernel.org>; Tue, 01 Aug 2006 10:25:16 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=QuYdr+0EMVcbKnub08ymDG0WMwuEjjRoxv5fOlNHOOk1Br4AThaDln2hiP1AYIxA6mb+NDIvkf3QU+KXyuxgFsUqFHoAsIB2J05N/ruBP6wVwhGj6OSTmSRPHEMJJpNUO8juXoBZVVSf90K11/lWrd4q1DbnuoKEEzT/tQeX4+0=
+Received: by 10.35.123.10 with SMTP id a10mr6045209pyn;
+        Tue, 01 Aug 2006 10:25:15 -0700 (PDT)
+Received: by 10.35.128.2 with HTTP; Tue, 1 Aug 2006 10:25:15 -0700 (PDT)
+To: "Git Mailing List" <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24605>
 
-Hi,
+Hi, all!
 
-On Tue, 1 Aug 2006, Uwe Zeisberger wrote:
+    Could you please add the Ottawa Linux Symposium git paper to the
+homepage, please?
 
-> I cannot checkout a git repo via cvs, I think the only problem is, that
-> I don't know how to specify the CVSROOT:
-> 
-> fs-n1:~# grep git- /etc/inetd.conf 
-> 2402    stream  tcp     nowait  root    /usr/local/sbin/git-cvsserver pserver
+    http://members.cox.net/junkio/200607-ols.pdf
 
->From Documentation/git-cvsserver.txt:
+    Very nice description and presentation, Junio! :)
 
--- snip --
-Note: In some cases, you need to pass the 'pserver' argument twice for
-git-cvsserver to see it. So the line would look like
-
-------
-   cvspserver stream tcp nowait nobody git-cvsserver pserver pserver
--- snap --
-
-So, maybe this solves your problem?
-
-OTOH it might be cleverer to use SSH transport to begin with.
-
-Hth,
-Dscho
+Thank you so much,
+--=20
+[]s,
+Andr=E9 Goddard
