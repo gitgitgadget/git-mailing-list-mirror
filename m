@@ -1,128 +1,106 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: kompare won't parse git diffs
-Date: Wed, 2 Aug 2006 19:18:58 +0100
-Message-ID: <200608021919.02511.andyparkins@gmail.com>
-References: <200608021107.43485.andyparkins@gmail.com> <Pine.LNX.4.64.0608021006150.4168@g5.osdl.org>
+From: "Ramsay Jones" <ramsay@ramsay1.demon.co.uk>
+Subject: RE: [PATCH 8/10] Fix some minor warnings to allow -Werror.
+Date: Wed, 2 Aug 2006 19:47:49 +0100
+Message-ID: <001c01c6b664$27536740$c47eedc1@ramsay1.demon.co.uk>
+References: <7vvepbvauo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2327781.0XGk3nTCoT";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain;
+	charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Aug 02 20:21:30 2006
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Aug 02 20:48:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8LLL-0003hC-GK
-	for gcvg-git@gmane.org; Wed, 02 Aug 2006 20:21:19 +0200
+	id 1G8Lkx-0001PJ-1S
+	for gcvg-git@gmane.org; Wed, 02 Aug 2006 20:47:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932127AbWHBSVR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Aug 2006 14:21:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932128AbWHBSVR
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 14:21:17 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:5010 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S932127AbWHBSVQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Aug 2006 14:21:16 -0400
-Received: by ug-out-1314.google.com with SMTP id m3so393441ugc
-        for <git@vger.kernel.org>; Wed, 02 Aug 2006 11:21:15 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:message-id;
-        b=uJIDUg5osuoyN5hwy/QwHFDxn2dbT+rAI9G0JufJqj97SLMmQQe50DGFJoHCJh2HJ6SxoUs8QWAHKbUk63gbmds/Ge/Vxe8dfJq2DvfU9eGFe+MJlrqH5+VoCJ7R/2g3N/KabSAJNuBjAlHcMuIOpCWa0KaGPsSB7uZAj8twR2Y=
-Received: by 10.66.216.6 with SMTP id o6mr1484474ugg;
-        Wed, 02 Aug 2006 11:21:15 -0700 (PDT)
-Received: from ?192.168.182.2? ( [84.201.153.164])
-        by mx.gmail.com with ESMTP id q40sm8101054ugc.2006.08.02.11.21.13;
-        Wed, 02 Aug 2006 11:21:14 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-In-Reply-To: <Pine.LNX.4.64.0608021006150.4168@g5.osdl.org>
+	id S932147AbWHBSrn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Aug 2006 14:47:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932146AbWHBSrn
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 14:47:43 -0400
+Received: from anchor-post-36.mail.demon.net ([194.217.242.86]:19972 "EHLO
+	anchor-post-36.mail.demon.net") by vger.kernel.org with ESMTP
+	id S932142AbWHBSrl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Aug 2006 14:47:41 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-36.mail.demon.net with smtp (Exim 4.42)
+	id 1G8Lkm-000MLO-LX; Wed, 02 Aug 2006 18:47:37 +0000
+To: "Junio C Hamano" <junkio@cox.net>
+X-Priority: 3 (Normal)
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook 8.5, Build 4.71.2173.0
+X-MimeOLE: Produced By Microsoft MimeOLE V4.72.2106.4
+Importance: Normal
+In-Reply-To: <7vvepbvauo.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24664>
-
---nextPart2327781.0XGk3nTCoT
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-
-On Wednesday 2006, August 02 18:19, Linus Torvalds wrote:
-
-> I'd definitely call this a pure kompare bug.
-
-Me too, but it seemed such a small thing change to git that I thought I'd=20
-mention it.
-
-> Not only is the git patch format perfectly standard and accepted by other
-> tools, it's much better designed than the brain-damaged syntax that GNU
-> patch uses (which adds a tab and a timestamp after the filenames). In
-> particular, with git patches it is easy to get filenames that have spaces
-> and tabs in them right.
-
-The only three things I checked were diff, git and subversion.  git is the=
-=20
-only one of the three that didn't include anything after the filenames. =20
-Subversion uses the space to write (working copy) and (revision XXX), so it=
-'s=20
-clear that these fields are simply being treated as commentary.  That only=
-=20
-adds weight to the argument that it is a kompare bug, as surely <nil> is a=
-=20
-perfectly acceptable comment?
-
-> Now, if the kompare people can show that every single other patch
-> generator adds the stupid tab + date format, I guess we could do it too,
-> but
-
-As it seems to be acceptable to put something other than a date, perhaps th=
-e=20
-hash of the object being compared would be more useful than the unavailable=
-=20
-date?
-
->  (b) I'm pretty sure that the kompare people only ever actually tested
->      with GNU patch or other very modern patches, because when I did the
-
-I'm sure that that is true.  I certainly don't think that there is a fight=
-=20
-here, I've not seen any feedback on the kompare bug yet, but I'd be very=20
-surprised if the response is "git is stupid - WONTFIX".
-
-> I'm hoping that people will some day just wake up and notice that the git
-> extended patches are really worth doing even for other projects. I was
-
-I think in the cases I've been testing, the extended format hasn't shown it=
-s=20
-face.  I used git-svnimport to duplicate an svn repository then copied the=
-=20
-same changes into both an svn working directory and a git working directory=
-=2E =20
-I then ran "git diff" and "svn diff", and diffed the two outputs.  Apart fr=
-om=20
-some differences in how many lines where added and deleted (and the=20
-difference that started this thread of course) the two diffs were equivalen=
-t.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24665>
 
 
-Andy
+On Wed, 2006-08-02 at 8:46, Junio C Hamano wrote:
+> 
+> "Ramsay Jones" <ramsay@ramsay1.demon.co.uk> writes:
+> 
+> > diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+> > index 3e40747..bb5e7b7 100644
+> > --- a/builtin-mailinfo.c
+> > +++ b/builtin-mailinfo.c
+> > @@ -531,7 +531,8 @@ static int decode_b_segment(char *in, ch
+> >  static void convert_to_utf8(char *line, char *charset)
+> >  {
+> >  #ifndef NO_ICONV
+> > -	char *in, *out;
+> > +	const char *in;
+> > +	char *out;
+> >  	size_t insize, outsize, nrc;
+> >  	char outbuf[4096]; /* cheat */
+> >  	static char latin_one[] = "latin1";
+> 
+> This kills the compilation with:
+> 
+> gcc -o builtin-mailinfo.o -c -O2 -Werror -ansi -pedantic -std=c99 
+> -D_XOPEN_SOURCE=500 -D_BSD_SOURCE -Wall 
+> -Wdeclaration-after-statement -g -DSHA1_HEADER='<openssl/sha.h>' 
+> -DNO_STRLCPY builtin-mailinfo.c
+> cc1: warnings being treated as errors
+> builtin-mailinfo.c: In function 'convert_to_utf8':
+> builtin-mailinfo.c:561: warning: passing argument 2 of 'iconv' 
+> from incompatible pointer type
+> 
+> where the line 561 reads:
+> 
+> 	nrc = iconv(conv, &in, &insize, &out, &outsize);
+> 
 
-=2D-=20
-Dr Andrew Parkins, M Eng (Hons), AMIEE
-andyparkins@gmail.com
+OK, so I get exactly the same if I don't make the indicated change!
+The second param of iconv() must have changed from const char* to char*
+at some point in the last six years.
+Just ignore this.
 
---nextPart2327781.0XGk3nTCoT
-Content-Type: application/pgp-signature
+> > diff --git a/diff.c b/diff.c
+> > index 5a71489..81630c0 100644
+> > --- a/diff.c
+> > +++ b/diff.c
+> > @@ -614,6 +614,7 @@ static void emit_binary_diff(mmfile_t *o
+> >  	 * whichever is smaller.
+> >  	 */
+> >  	delta = NULL;
+> > +	orig_size = 0;
+> >  	deflated = deflate_it(two->ptr, two->size, &deflate_size);
+> >  	if (one->size && two->size) {
+> >  		delta = diff_delta(one->ptr, one->size,
+> 
+> This is not wrong per se, but is working around a stupid compiler that
+> do not understand the dataflow.  orig_size is only used when
+> delta is non NULL, and when delta is non NULL, the variable is
+> always set.  Not very happy but is acceptable.
+> 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (GNU/Linux)
+Yes, you are absolutely correct. I agree it would be nice if gcc was
+"fixed" so that it could detect this situation, but I'm not going to
+hold my breath. It just seemed to be the lesser evil.
 
-iD8DBQBE0OyWwQJ9gE9xL20RAhLlAKCvdrUOi/NC96cTh7z5Ae2MA0N3kQCfbat1
-B7/CYU4qhinqhIcC8PDgfPE=
-=zfaJ
------END PGP SIGNATURE-----
-
---nextPart2327781.0XGk3nTCoT--
+Ramsay
