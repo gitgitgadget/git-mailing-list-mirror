@@ -1,79 +1,137 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: [PATCH] gitweb.cgi: Customization
-Date: Wed, 02 Aug 2006 11:23:22 -0500
-Message-ID: <1154535801.19994.15.camel@cashmere.sps.mot.com>
-References: <20060801225352.26998.qmail@web31801.mail.mud.yahoo.com>
-	 <7v8xm8xbaa.fsf@assigned-by-dhcp.cox.net>
+From: Matthias Kestenholz <matthias@spinlock.ch>
+Subject: [PATCH/corrected] Make git-prune-packed a builtin
+Date: Wed, 2 Aug 2006 18:32:32 +0200
+Message-ID: <20060802163232.GF20971@spinlock.ch>
+References: <20060802161729.GE20971@spinlock.ch>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Luben Tuikov <ltuikov@yahoo.com>, Git List <git@vger.kernel.org>,
-	Martin Waitz <tali@admingilde.org>,
-	Matthias Lederhofer <matled@gmx.net>
-X-From: git-owner@vger.kernel.org Wed Aug 02 18:28:35 2006
+Content-Type: text/plain; charset=iso-8859-1
+Cc: junkio@cox.net
+X-From: git-owner@vger.kernel.org Wed Aug 02 18:33:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8JZl-0003l5-VV
-	for gcvg-git@gmane.org; Wed, 02 Aug 2006 18:28:06 +0200
+	id 1G8JeE-0004i3-Ht
+	for gcvg-git@gmane.org; Wed, 02 Aug 2006 18:32:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932086AbWHBQ2A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Aug 2006 12:28:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932093AbWHBQ2A
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 12:28:00 -0400
-Received: from az33egw01.freescale.net ([192.88.158.102]:8931 "EHLO
-	az33egw01.freescale.net") by vger.kernel.org with ESMTP
-	id S932086AbWHBQ2A (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Aug 2006 12:28:00 -0400
-Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
-	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id k72GRi7T004898;
-	Wed, 2 Aug 2006 09:27:44 -0700 (MST)
-Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
-	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id k72GRhet014950;
-	Wed, 2 Aug 2006 11:27:43 -0500 (CDT)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v8xm8xbaa.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
+	id S932093AbWHBQcj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Aug 2006 12:32:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932100AbWHBQcj
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 12:32:39 -0400
+Received: from mail15.bluewin.ch ([195.186.18.63]:45993 "EHLO
+	mail15.bluewin.ch") by vger.kernel.org with ESMTP id S932093AbWHBQci
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 2 Aug 2006 12:32:38 -0400
+Received: from spinlock.ch (81.62.57.222) by mail15.bluewin.ch (Bluewin 7.3.110.2)
+        id 4492529600B04748; Wed, 2 Aug 2006 16:32:37 +0000
+Received: (nullmailer pid 28372 invoked by uid 1000);
+	Wed, 02 Aug 2006 16:32:32 -0000
+To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20060802161729.GE20971@spinlock.ch>
+X-Editor: Vim http://www.vim.org/
+X-Operating-System: GNU/Linux 2.6.17-5-386 (i686)
+X-GPG-Fingerprint: 249B 3CE7 E6AE 4A1F F24A  DC44 B546 3304 690B 13F9
+User-Agent: Mutt/1.5.12-2006-07-14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24654>
 
-On Tue, 2006-08-01 at 18:54, Junio C Hamano wrote:
+Signed-off-by: Matthias Kestenholz <matthias@spinlock.ch>
+---
 
-> In any case, I think tweaking gitweb.cgi from Makefile like
-> Martin Waitz did is as easy and clean for people who want to
-> customize; it should just be the matter of defining the
-> necessary params in config.mak.
 
-I disagree.  I run multiple virtual web servers on one
-physical machine.  Several of them run different gitweb
-instances, each with different configurations.
 
-With this "params in config.mk" approach, I have to
-run it multiple times, once for each web server I run.
+Please discard the other patch. This one also removes the second call to
+setup_git_directory()
 
-I _really_ would prefer an "include from ." feature
-where I can place the specific gitweb_config.pm parts
-in the same directory where gitweb.{pl,cgi} is installed.
+Btw. the NEEDS_PREFIX name in git.c confuses me. It should probably
+be something like AUTO_SETUP_DIRECTORY ? It would be clearer what it
+means.
 
-We really need to separate out these config values
-from the gitweb.{pl,cgi} script itself.  We _need_ to
-be able to update the gitweb script independently,
-and easily.
 
-> I do not think there is much difference between any of the
-> customization proposed so far (yours, Martin's and the one from
-> Matthias Lederhofer) from functionality and ease-of-use point of
-> view.  They all try to make customization can be done in one
-> place, and the difference is mostly of taste, so I'd just pick
-> one from Martin.
 
-Let's just make sure it is a separate config file, please.
+ Makefile                                 |    6 +++---
+ prune-packed.c => builtin-prune-packed.c |    4 +---
+ builtin.h                                |    1 +
+ git.c                                    |    1 +
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
-I posted a patch to this end back on March 22 or 23 or so
-as well.
-
-Thanks,
-jdl
+diff --git a/Makefile b/Makefile
+index 2562a2c..e39c9da 100644
+--- a/Makefile
++++ b/Makefile
+@@ -196,7 +196,7 @@ PROGRAMS = \
+ 	git-hash-object$X git-index-pack$X git-local-fetch$X \
+ 	git-merge-base$X \
+ 	git-merge-index$X git-mktag$X git-mktree$X git-pack-objects$X git-patch-id$X \
+-	git-peek-remote$X git-prune-packed$X git-receive-pack$X \
++	git-peek-remote$X git-receive-pack$X \
+ 	git-send-pack$X git-shell$X \
+ 	git-show-index$X git-ssh-fetch$X \
+ 	git-ssh-upload$X git-unpack-file$X \
+@@ -216,7 +216,7 @@ BUILT_INS = git-log$X git-whatchanged$X 
+ 	git-read-tree$X git-commit-tree$X git-write-tree$X \
+ 	git-apply$X git-show-branch$X git-diff-files$X git-update-index$X \
+ 	git-diff-index$X git-diff-stages$X git-diff-tree$X git-cat-file$X \
+-	git-fmt-merge-msg$X git-prune$X git-mv$X
++	git-fmt-merge-msg$X git-prune$X git-mv$X git-prune-packed$X
+ 
+ # what 'all' will build and 'install' will install, in gitexecdir
+ ALL_PROGRAMS = $(PROGRAMS) $(SIMPLE_PROGRAMS) $(SCRIPTS)
+@@ -273,7 +273,7 @@ BUILTIN_OBJS = \
+ 	builtin-diff-index.o builtin-diff-stages.o builtin-diff-tree.o \
+ 	builtin-cat-file.o builtin-mailsplit.o builtin-stripspace.o \
+ 	builtin-update-ref.o builtin-fmt-merge-msg.o builtin-prune.o \
+-	builtin-mv.o
++	builtin-mv.o builtin-prune-packed.o
+ 
+ GITLIBS = $(LIB_FILE) $(XDIFF_LIB)
+ EXTLIBS = -lz
+diff --git a/prune-packed.c b/builtin-prune-packed.c
+similarity index 96%
+rename from prune-packed.c
+rename to builtin-prune-packed.c
+index d24b097..d0ff336 100644
+--- a/prune-packed.c
++++ b/builtin-prune-packed.c
+@@ -54,12 +54,10 @@ static void prune_packed_objects(void)
+ 	}
+ }
+ 
+-int main(int argc, char **argv)
++int cmd_prune_packed(int argc, char **argv, const char *prefix)
+ {
+ 	int i;
+ 
+-	setup_git_directory();
+-
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+ 
+diff --git a/builtin.h b/builtin.h
+index f10d3b7..7ddfe28 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -20,6 +20,7 @@ extern int cmd_format_patch(int argc, co
+ extern int cmd_count_objects(int argc, const char **argv, const char *prefix);
+ 
+ extern int cmd_prune(int argc, const char **argv, const char *prefix);
++extern int cmd_prune_packed(int argc, const char **argv, const char *prefix);
+ 
+ extern int cmd_push(int argc, const char **argv, const char *prefix);
+ extern int cmd_grep(int argc, const char **argv, const char *prefix);
+diff --git a/git.c b/git.c
+index 110e82e..5b50762 100644
+--- a/git.c
++++ b/git.c
+@@ -263,6 +263,7 @@ static void handle_internal_command(int 
+ 		{ "fmt-merge-msg", cmd_fmt_merge_msg, NEEDS_PREFIX },
+ 		{ "prune", cmd_prune, NEEDS_PREFIX },
+ 		{ "mv", cmd_mv, NEEDS_PREFIX },
++		{ "prune-packed", cmd_prune_packed, NEEDS_PREFIX },
+ 	};
+ 	int i;
+ 
+-- 
+1.4.2.rc2.ge3c5-dirty
