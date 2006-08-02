@@ -1,81 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's in git.git
-Date: Wed, 2 Aug 2006 02:34:30 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0608020215470.17230@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v1ws0xb9y.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 02 02:34:38 2006
+From: "Kenneth" <Iris_LucasWrightWall@yahoo.com>
+Subject: We are professionals in getting people laid
+Date: Tue, 01 Aug 2006 21:00:09 -0500
+Message-ID: <33791781.4884458713290.JavaMail.nfsnobody@yahoo.com>
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Aug 02 03:00:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G84h2-0006rA-Jk
-	for gcvg-git@gmane.org; Wed, 02 Aug 2006 02:34:37 +0200
+	id 1G8560-0006an-VW
+	for gcvg-git@gmane.org; Wed, 02 Aug 2006 03:00:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750870AbWHBAed (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Aug 2006 20:34:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750871AbWHBAed
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 20:34:33 -0400
-Received: from mail.gmx.net ([213.165.64.21]:17862 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1750869AbWHBAec (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Aug 2006 20:34:32 -0400
-Received: (qmail invoked by alias); 02 Aug 2006 00:34:31 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp042) with SMTP; 02 Aug 2006 02:34:31 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v1ws0xb9y.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1750890AbWHBBAV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Aug 2006 21:00:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750892AbWHBBAU
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 21:00:20 -0400
+Received: from adsl-67-123-250-25.dsl.pltn13.pacbell.net ([67.123.250.25]:62477
+	"HELO 42DAF880") by vger.kernel.org with SMTP id S1750890AbWHBBAU
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 1 Aug 2006 21:00:20 -0400
+Received: from crm0.yahoo.com (localhost.localdomain [127.0.0.1])
+	by crm7.yahoo.com (Postfix) with ESMTP id 910789EBA;
+	Tue, 01 Aug 2006 21:00:09 -0500
+X-Mailer: Mediacomm Communicator 1.1
+X-Virus-Scanned: amavisd-new at yahoo.com
+X-Antispam-ID: EDA229342564
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24617>
+X-Spam-Report: 12.6 points;
+ *  3.9 RATWARE_RCVD_PF Bulk email fingerprint (Received PF) found
+ *  0.0 COMPLETELY_FREE BODY: No such thing as a free lunch (2)
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.4600]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?67.123.250.25>]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: datingisrealfun.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: datingisrealfun.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24618>
 
-Hi,
+100% FREE Adult Personals
 
-On Tue, 1 Aug 2006, Junio C Hamano wrote:
+YOU NEED TO GET LAID!!!!!!!!!!!
 
->   - Git.pm by Pasky with help from Pavel Roskin and others.
-> 
->     I'd like to merge this immediately after 1.4.2, unless there
->     still are concerns about its portability (in which case
->     please help fixing them up before this hits the "master"
->     branch).
+We can help.
 
-Although I am admittedly not a big fan of this dependency (it is one thing 
-to depend on perl, but another to depend on compiling C modules for perl), 
-I have to say that on all machines I tested, it works fine now. The only 
-platform I did not test is IRIX, and I'll do that on Friday.
+http://datingisrealfun.com/cutiepie/dating/
 
->   - "merge-recur" by Johannes and Alex with help from others.
-> 
->     I still see a few TODO here and there in the code, but it
->     appears that this operates correctly (I've been using this
->     for real work for some time).  Do we have benchmarks?
+Real profiles of people in your area that 
+just want sex!  
 
-As for the TODOs: they are strictly non-functional. But I think we can 
-squash the remaining three until Monday.
+100% FREE!!!!!
 
-As for benchmarks, Alex has a very nasty test-case, where the Python 
-script takes ages: 10 minutes as compared to just over 2 minutes with our 
-recursive merge.
 
-Unfortunately, resolve beats that easily with less than 3 seconds ;-)
 
->    Johannes Schindelin:
->       Add the --color-words option to the diff options family
+--------------------------------------------
 
-BTW I realized it is not really colouring words, since I erroneously 
-selected word boundaries at whitespace. But if the only reaction to this 
-is your "soooooooo strange", I guess you'll drop it...
 
->       read-tree --rename and merge-rename
-
-Do you have any numbers on that? I could imagine that merge-recursive 
-could be rewritten as a shell script using this and git-merge-base...
-
-Ciao,
-Dscho
+no plz
+http://datingisrealfun.com/rr2.html
