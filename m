@@ -1,54 +1,44 @@
-From: "Reynaldo" <abbreviatecostume@presidency.com>
-Subject: Stop searching for the online casino of your dreams! It is just one click away, boasting fantastic games, trusted playing system and lots of bonuses for players.
-Date: Wed, 2 Aug 2006 05:53:03 -0700
-Message-ID: <30497558193347.D73433C897@B9PTZI47>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: [PATCH] gitweb.cgi: Customization
+Date: Wed, 2 Aug 2006 14:55:05 +0200
+Message-ID: <E1G8GFd-00036i-6y@moooo.ath.cx>
+References: <20060801225352.26998.qmail@web31801.mail.mud.yahoo.com> <7v8xm8xbaa.fsf@assigned-by-dhcp.cox.net> <E1G8ArX-0006r2-6D@moooo.ath.cx> <E1G8CUz-0002KI-VW@moooo.ath.cx> <46a038f90608020231l37de81f0i5f14c7c264fc40bd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1252"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Aug 02 14:54:56 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 02 14:55:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8GF8-0004Zx-P9
-	for gcvg-git@gmane.org; Wed, 02 Aug 2006 14:54:35 +0200
+	id 1G8GFt-0004lX-JK
+	for gcvg-git@gmane.org; Wed, 02 Aug 2006 14:55:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751091AbWHBMyQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Aug 2006 08:54:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751117AbWHBMyP
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 08:54:15 -0400
-Received: from adsl-69-239-79-193.dsl.pltn13.pacbell.net ([69.239.79.193]:9796
-	"EHLO REGISTER1") by vger.kernel.org with ESMTP id S1751048AbWHBMyO
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 2 Aug 2006 08:54:14 -0400
-To: <git@vger.kernel.org>
-X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
-Thread-Index: ev897nCO62UvjSXeBnZEunKKh3ZSiGI663lV
+	id S1751127AbWHBMzL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Aug 2006 08:55:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751133AbWHBMzL
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 08:55:11 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:31945 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S1751127AbWHBMzJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Aug 2006 08:55:09 -0400
+To: Martin Langhoff <martin.langhoff@gmail.com>
+Mail-Followup-To: Martin Langhoff <martin.langhoff@gmail.com>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <46a038f90608020231l37de81f0i5f14c7c264fc40bd@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24646>
 
-How are you Sir,
-
-Sign up for playing at our popular online casino now, and you will win huge tomorrow - or even today!
- Betcity is the best in the industryb ecause we offer: 
-
-What people value about our casino is reliability and trusted payout system.
-
-{CAS_1}
-{CAS_1}
-{CAS_1}
-
- Give us a try!  Remember, Free $300.00 is ON THE HUOSE!  
-
-Let friends envy you - win big and buy the luxury car you always wanted.
-
- Start Winning Now! 
-
-http://freamert.com/d3/check/
-
-
-
-Hear me now therefore, O ye children, and depart not from the words of my mouth. A man in love is a fool, and an old man in love is the greatest fool of all. No man is wise at all times  Enough is as good as a feast 
+Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> On 8/2/06, Matthias Lederhofer <matled@gmx.net> wrote:
+> >Just another idea: add something like @@FOO@@ on a line of its own and
+> 
+> We kind-of had that in a few Perl scripts before, and it's a mighty
+> pain to develop and debug from your git repo because it makes your
+> checked-in code invalid.
+> 
+> You might want to see this patch:
+> http://kernel.org/git/?p=git/git.git;a=commitdiff;h=e923effb43fa952f9cb72ffe4c3625fce7655bff;hp=ced9456a27197fc038fbc5b5ebad87e55f1920d2
+Perhaps # @@INSERT_YOUR_CODE_HERE@@?
