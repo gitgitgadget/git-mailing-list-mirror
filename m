@@ -1,57 +1,113 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: kompare won't parse git diffs
-Date: Wed, 02 Aug 2006 12:17:18 -0700
-Message-ID: <7vy7u7t0ap.fsf@assigned-by-dhcp.cox.net>
+Date: Wed, 2 Aug 2006 12:19:31 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0608021207360.4168@g5.osdl.org>
 References: <200608021107.43485.andyparkins@gmail.com>
-	<Pine.LNX.4.64.0608021006150.4168@g5.osdl.org>
-	<eaqpt2$ots$1@sea.gmane.org>
+ <Pine.LNX.4.64.0608021006150.4168@g5.osdl.org> <eaqpt2$ots$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Paul Eggert <eggert@cs.ucla.edu>
-X-From: git-owner@vger.kernel.org Wed Aug 02 21:17:49 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 02 21:20:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8MDb-0008Hf-R9
-	for gcvg-git@gmane.org; Wed, 02 Aug 2006 21:17:25 +0200
+	id 1G8MFp-0000Kh-4n
+	for gcvg-git@gmane.org; Wed, 02 Aug 2006 21:19:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932174AbWHBTRU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Aug 2006 15:17:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932180AbWHBTRU
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 15:17:20 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:14809 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S932174AbWHBTRU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Aug 2006 15:17:20 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060802191719.SVCV6711.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 2 Aug 2006 15:17:19 -0400
+	id S932180AbWHBTTi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Aug 2006 15:19:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932182AbWHBTTi
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 15:19:38 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:12945 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932180AbWHBTTh (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Aug 2006 15:19:37 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k72JJWnW023273
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 2 Aug 2006 12:19:33 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k72JJVFB031099;
+	Wed, 2 Aug 2006 12:19:32 -0700
 To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <eaqpt2$ots$1@sea.gmane.org> (Jakub Narebski's message of "Wed,
-	02 Aug 2006 20:12:07 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <eaqpt2$ots$1@sea.gmane.org>
+X-Spam-Status: No, hits=-0.475 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.141 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24669>
 
-Jakub Narebski <jnareb@gmail.com> writes:
 
->> Not only is the git patch format perfectly standard and accepted by other 
->> tools, it's much better designed than the brain-damaged syntax that GNU 
->> patch uses (which adds a tab and a timestamp after the filenames). In 
->> particular, with git patches it is easy to get filenames that have spaces 
->> and tabs in them right. 
->
+
+On Wed, 2 Aug 2006, Jakub Narebski wrote:
+> 
 > What about filenames with end-of-line character in them? Is it quoted?
 
-You could have done a bit of homework yourself to find that out
-easily ;-).  Anyway, the answer is yes.
+I would _not_ guarantee that git handles filenames with newlines in them 
+correctly in all cases (I won't guarantee tabs either, but the likelihood 
+is much higher ;). But yes, "git diff" does handle it right.
 
-	http://marc.theaimsgroup.com/?l=git&m=112927316408690
+That said, yes, it should be quoted. A quoted filename in "git diff" not 
+only changes a newline into the normal quoted sequence (ie "\n"), but will 
+also put the whole filename in quotes.
 
-I wonder what happened to the plan to update GNU diff/patch to
-also emit/understand the c-style quoted paths.  Paul?
+So if you have a file called "hello", the diff headers will say
+
+	--- a/hello
+	+++ b/hello
+
+but if you have a file with an embedded newline, it would look something 
+like
+
+	--- "a/hello\nthere"
+	+++ "b/hello\nthere"
+
+(where a '"' in a filename causes the same quoting to take effect, so if 
+you haev embedded double-quotes in a filename, it would be shown as 
+something like
+
+	--- "a/embedded\"quote"
+	+++ "b/embedded\"quote"
+
+instead).
+
+> BTW. It should be not that hard to get filename with spaces and tabs even
+> in GNU diff format: everything up to last <tab> is filename.
+
+That's true _if_ you know that the patch was generated by GNU diff, but 
+since you can't know that (since GNU diff doesn't add any markers of its 
+own), you cannot know if it's a patch generated by an old version of diff 
+(for a filename with a tab inside of it) or if it's a filename with the 
+GNU date extensions.
+
+> > Now, if the kompare people can show that every single other patch 
+> > generator adds the stupid tab + date format, I guess we could do it too, 
+> > but
+> >  (a) there is no valid date in general to use, so it's a fundamentally 
+> >      broken notion and
+> 
+> Meaning we don't save timestamp in git ;-) Well, we could use date of the 
+> commit which created given file contents (first commit from root, or last
+> from head which contains given version)... but the same contents might be
+> introduced independently in different commits. And different clones of the
+> same repository might have different commit dates...
+
+Exactly, a "date" in _any_ distributed SCM makes no sense what-so-ever. 
+What happens across a merge? Which date do you take? Do you follow the 
+thing down and basically do a full "annotate" on the file?
+
+The fact is, dates in SCM diffs are insane and stupid. They do not make 
+sense in the presense of an SCM, and they only make sense on individual 
+_files_ (and quite limited there too, but at least it has _some_ meaning).
+
+In the SCM, the _changes_ may have timestamps, but the files sure as hell 
+should not. Of course, a file-based SCM easily gets confused about these 
+things (eg in CVS, there is very much a 1:1 relationship between files and 
+changes, so in the CVS mindset it can make sense - but that's because CVS 
+is stupid to begin with, and the problem really goes much deeper than 
+timestamps on the diffs).
+
+			Linus
