@@ -1,62 +1,73 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: Re: [PATCH] gitweb.cgi: Customization
-Date: Wed, 2 Aug 2006 09:09:51 +0200
-Message-ID: <E1G8ArX-0006r2-6D@moooo.ath.cx>
-References: <20060801225352.26998.qmail@web31801.mail.mud.yahoo.com> <7v8xm8xbaa.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: What's in git.git
+Date: Wed, 02 Aug 2006 00:41:52 -0700
+Message-ID: <7v7j1rwpmn.fsf@assigned-by-dhcp.cox.net>
+References: <7v1ws0xb9y.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0608020215470.17230@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Martin Waitz <tali@admingilde.org>,
-	Luben Tuikov <ltuikov@yahoo.com>
-X-From: git-owner@vger.kernel.org Wed Aug 02 09:10:05 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 02 09:42:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8Ari-0004HU-Jj
-	for gcvg-git@gmane.org; Wed, 02 Aug 2006 09:10:02 +0200
+	id 1G8BMm-0000Fn-Ox
+	for gcvg-git@gmane.org; Wed, 02 Aug 2006 09:42:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751290AbWHBHJ6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Aug 2006 03:09:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751292AbWHBHJ6
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 03:09:58 -0400
-Received: from moooo.ath.cx ([85.116.203.178]:53409 "EHLO moooo.ath.cx")
-	by vger.kernel.org with ESMTP id S1751290AbWHBHJ5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Aug 2006 03:09:57 -0400
-To: Junio C Hamano <junkio@cox.net>
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Martin Waitz <tali@admingilde.org>,
-	Luben Tuikov <ltuikov@yahoo.com>
-Content-Disposition: inline
-In-Reply-To: <7v8xm8xbaa.fsf@assigned-by-dhcp.cox.net>
+	id S1751307AbWHBHly (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Aug 2006 03:41:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751331AbWHBHly
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 03:41:54 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:19088 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751307AbWHBHly (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Aug 2006 03:41:54 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060802074153.TBJF12909.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 2 Aug 2006 03:41:53 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0608020215470.17230@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Wed, 2 Aug 2006 02:34:30 +0200
+	(CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24634>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> In any case, I think tweaking gitweb.cgi from Makefile like
-> Martin Waitz did is as easy and clean for people who want to
-> customize; it should just be the matter of defining the
-> necessary params in config.mak.
-Ack.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> I do not think there is much difference between any of the
-> customization proposed so far (yours, Martin's and the one from
-> Matthias Lederhofer) from functionality and ease-of-use point of
-> view.  They all try to make customization can be done in one
-> place, and the difference is mostly of taste, so I'd just pick
-> one from Martin.
-Functionality is a bit different.  If you have a configuration where
-perl is used this cannot be done using the make variables.  I would like
-to have the option to include a perl file (this does not conflict with
-using the Makefile to fill in some values), I've explained this in my
-other patch.  The ways I see to specify the file to include are an
-environment variable (I don't know if all webservers make it easy to set
-one), files after __DATA__ or just $include_file =
-@@GITWEB_INCLUDE_FILE@@ which is replaced by the filename or undef if
-the user did not set this variable.  For the .pm thing I don't know if
-it is not too complicated to change the path I can put the file and just
-allowing the user to specify the full path is probably the best.  (I
-think the $include_file way is probably the one to use, using __DATA__
-is a bit obscur, and not everyone can set environment variables for the
-webserver.)
+> Although I am admittedly not a big fan of this dependency (it is one thing 
+> to depend on perl, but another to depend on compiling C modules for perl), 
+> I have to say that on all machines I tested, it works fine now. The only 
+> platform I did not test is IRIX, and I'll do that on Friday.
+
+Thanks.
+
+>>    Johannes Schindelin:
+>>       Add the --color-words option to the diff options family
+>
+> BTW I realized it is not really colouring words, since I erroneously 
+> selected word boundaries at whitespace. But if the only reaction to this 
+> is your "soooooooo strange", I guess you'll drop it...
+
+Perhaps, I dunno.
+
+>>       read-tree --rename and merge-rename
+>
+> Do you have any numbers on that? I could imagine that merge-recursive 
+> could be rewritten as a shell script using this and git-merge-base...
+
+I think "read-tree --rename" is now becoming into a debuggable
+shape.
+
+One bad thing about it is that merge-rename uses the usual
+merge-one-file, and it loses a rename merge conflict because of
+that.  When our branch renames A to B while their branch renames
+A to C, "read-tree --rename" notices it and leaves A, B, and C
+in stage #1, #2, and #3, but merge-one-file resolves these paths
+following the usual 3-way merge rules, resulting A to be removed
+and both B and C created.
