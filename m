@@ -1,50 +1,56 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] gitweb: optionally read config from GITWEB_CONFIG
-Date: Wed, 2 Aug 2006 16:56:06 -0400
-Message-ID: <20060802205606.GC15678@sigio.intra.peff.net>
-References: <20060802192333.GA30861@coredump.intra.peff.net> <20060802205120.84032.qmail@web31808.mail.mud.yahoo.com>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: [PATCH] gitweb: use single quotes for values replaced by the Makefile
+Date: Wed, 2 Aug 2006 22:57:07 +0200
+Message-ID: <E1G8Nm7-0007bC-7d@moooo.ath.cx>
+References: <20060802192333.GA30861@coredump.intra.peff.net> <E1G8N9c-0004GK-Gz@moooo.ath.cx> <7vmzamuaj6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 02 22:57:01 2006
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 02 22:57:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8NlM-0003V2-GX
-	for gcvg-git@gmane.org; Wed, 02 Aug 2006 22:56:21 +0200
+	id 1G8NmJ-0003fi-2B
+	for gcvg-git@gmane.org; Wed, 02 Aug 2006 22:57:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751202AbWHBU4K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Aug 2006 16:56:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751199AbWHBU4J
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 16:56:09 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:30678 "HELO
-	peff.net") by vger.kernel.org with SMTP id S1751202AbWHBU4I (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Aug 2006 16:56:08 -0400
-Received: (qmail 528 invoked from network); 2 Aug 2006 16:55:31 -0400
-Received: from unknown (HELO sigio.intra.peff.net) (10.0.0.10)
-  by segfault.intra.peff.net with SMTP; 2 Aug 2006 16:55:31 -0400
-Received: by sigio.intra.peff.net (sSMTP sendmail emulation); Wed,  2 Aug 2006 16:56:06 -0400
-To: Luben Tuikov <ltuikov@yahoo.com>
+	id S1751199AbWHBU5N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Aug 2006 16:57:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751227AbWHBU5N
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 16:57:13 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:46772 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S1751199AbWHBU5L (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Aug 2006 16:57:11 -0400
+To: Junio C Hamano <junkio@cox.net>
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20060802205120.84032.qmail@web31808.mail.mud.yahoo.com>
+In-Reply-To: <7vmzamuaj6.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24687>
 
-On Wed, Aug 02, 2006 at 01:51:20PM -0700, Luben Tuikov wrote:
+Junio C Hamano <junkio@cox.net> wrote:
+> I understand that (1) "@@FOO@@" is problematic, (2) being able
+> to run gitweb/gitweb.perl while coming up with improvements is
+> nice, but (3) not being able to say "/etc/foo/$ENV{SITE_NAME}"
+> is quite a drawback on the deployment side.
+> 
+> So why don't we use something other than @@, perhaps "++FOO++"?
+That's the other way to solve this.  If there is no typical character
+for filenames which is handled different in double quotes this is fine
+for me too.
 
-> I don't think users should even edit the Makefile.  Makefiles are normally
-> edited when the _build_ environment differs, not when the deployment
-> environment differs.
+> I'm inclined to take these two patches:
+> 
+>     gitweb: optionally read config from GITWEB_CONFIG (Jeff King)
+>     gitweb: require $ENV{'GITWEB_CONFIG'} (Matthias Lederhofer)
+The suggestion by Jeff King to use
+our $GITWEB_CONFIG = $ENV{GITWEB_CONFIG} || '@@GITWEB_CONFIG@@';
+sounds reasonable too.
 
-I don't either; I should have stated more clearly: users can edit
-config.mak or use command line parameters to make (the same way they do
-for prefix or other variables).
+> so on top of them something like this?
+[patch replacing @@ with ++]
 
-You don't even have to do that if the default config-file path is fine
-for you. And even if you don't, you should be able to set GITWEB_CONF
-with Matthias' patch.
-
--Peff
+Ack.
