@@ -1,111 +1,59 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: kompare won't parse git diffs
-Date: Wed, 2 Aug 2006 11:07:39 +0100
-Message-ID: <200608021107.43485.andyparkins@gmail.com>
+From: "Hazel" <christcruise@deliveryman.com>
+Subject: Get everything you need delivered to your door low-cost and fast. Take pleasure from
+Date: Wed, 2 Aug 2006 05:34:39 -0500
+Message-ID: <00592738786709.DCA0F8D27A@PL0K9BC>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1170946.IzDxStYeZk";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain;
+        charset="Windows-1252"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Aug 02 12:08:06 2006
+X-From: git-owner@vger.kernel.org Wed Aug 02 12:32:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8Ddo-0006sF-Rn
-	for gcvg-git@gmane.org; Wed, 02 Aug 2006 12:07:53 +0200
+	id 1G8E1l-0002RG-Cz
+	for gcvg-git@gmane.org; Wed, 02 Aug 2006 12:32:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750732AbWHBKHt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Aug 2006 06:07:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750735AbWHBKHt
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 06:07:49 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:26609 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1750732AbWHBKHt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Aug 2006 06:07:49 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so586534nfa
-        for <git@vger.kernel.org>; Wed, 02 Aug 2006 03:07:47 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:message-id;
-        b=Im1ql2eCHSEUlM9xOscUB2d/+D2kYQWKuN6NNJ8bq3nLfaLNPIh+2b2GWKr0Bx8Go/3bg8eBhELxjRDGYB15qC9YjBAAmnXM9qqDD2xFe/gkW3ag7jpjhrVFGyMvybMF52JCx7hYD2HPj6+Xmf5H++bkQ41vBbiMmhhcs54yCL0=
-Received: by 10.49.8.10 with SMTP id l10mr1991840nfi;
-        Wed, 02 Aug 2006 03:07:47 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.gmail.com with ESMTP id n23sm1321954nfc.2006.08.02.03.07.46;
-        Wed, 02 Aug 2006 03:07:47 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.1
+	id S1750833AbWHBKcd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Aug 2006 06:32:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750772AbWHBKcc
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 06:32:32 -0400
+Received: from DHCP-74-136-106-241.insightbb.com ([74.136.106.241]:23047 "EHLO
+	oq3fk.wlmp.adelphia.net") by vger.kernel.org with ESMTP
+	id S1750833AbWHBKcc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Aug 2006 06:32:32 -0400
+To: <git@vger.kernel.org>
+X-Mailer: Microsoft Office Outlook, Build 11.0.5510
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+Thread-Index: 7X2w7n7nRZdMd1NEM0zj0fltYixxBJp7djeM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24643>
+X-Spam-Report: 8.5 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5000]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?74.136.106.241>]
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: wangheeni.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: wangheeni.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24644>
 
---nextPart1170946.IzDxStYeZk
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Woo-hooo! 
 
-Hello,
+ Do you wish to increase your volume by up to 500%? But without any results… 
 
-Kompare just shows blank for diffs redirected from git.  This makes it=20
+ Fill up your supplies with our secure ordering, cost saving and fast delivery. Rock hard manhood, multiple explosions and several times more semen volume 
 
-I've tracked down the cause and it seems to be on the file declaration line=
-s. =20
-Here is a sample diff that kompare will not show.
-
-diff --git a/file b/file
-index a8b2ec6..a1e65fd 100644
-=2D-- a/file
-+++ b/file
-@@ -1,2 +1,3 @@
- initial contents goes in master branch
- additional content added in repo1#master
-+blah
-
-As you can see, it's a simple addition of the line "blah".  Kompare shows t=
-his=20
-diff as blank.  Now if I modify the file so that the "---" and "+++" lines=
-=20
-both have "<tab>(something)" added:
-
-diff --git a/file b/file
-index a8b2ec6..a1e65fd 100644
-=2D-- a/file      (anything can go here)
-+++ b/file      (anything can go here)
-@@ -1,2 +1,3 @@
- initial contents goes in master branch
- additional content added in repo1#master
-+blah
-
-http://bugs.kde.org/show_bug.cgi?id=3D131717
-
-I've posted a bug for kompare, but thought that maybe it would be handy if =
-git=20
-outputted those bracketed comments anyway - I notice that "diff -u" from th=
-e=20
-command line does (although it uses the timestamp of the file).  Maybe the=
-=20
-object hash of the files being compared could go here?
+ See our shop: http://www.wangheeni.com
 
 
-Andy
+ Unique offers on most recognized and famous brands on Earth. 
 
-=2D-=20
-Dr Andy Parkins, M Eng (hons), MIEE
-andyparkins@gmail.com
+Hazel Godfrey
 
---nextPart1170946.IzDxStYeZk
-Content-Type: application/pgp-signature
+A stumble may prevent a fall. Every step of life is a risk  God could not be everywhere and therefore he made mothers 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (GNU/Linux)
-
-iD8DBQBE0HlvwQJ9gE9xL20RAkjKAKCLtoggjFYuc0kkQ6bKSQXdfWTtUgCgrUSq
-ZyCG5/tGR7FCM3YxlsAW04A=
-=5Pgi
------END PGP SIGNATURE-----
-
---nextPart1170946.IzDxStYeZk--
+A nod is as good as a wink to a blind man. Men do not despise a thief, if he steal to satisfy his soul when he is hungry. Faith will move mountains. Everyday is a fresh slate
+The pen is mightier than the sword.
