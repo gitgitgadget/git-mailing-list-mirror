@@ -1,77 +1,68 @@
-From: Matthias Kestenholz <matthias@spinlock.ch>
-Subject: [PATCH] use declarations from builtin.h for builtin commands
-Date: Wed,  2 Aug 2006 23:52:00 +0200
-Message-ID: <1154555520792-git-send-email-matthias@spinlock.ch>
-References: <11545555203975-git-send-email-matthias@spinlock.ch>
-Cc: git@vger.kernel.org, Matthias Kestenholz <matthias@spinlock.ch>
-X-From: git-owner@vger.kernel.org Wed Aug 02 23:52:38 2006
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH] git-grep: document --and, --or, --not, ( and )
+Date: Thu, 3 Aug 2006 00:04:56 +0200
+Message-ID: <E1G8Opk-0003lj-Q7@moooo.ath.cx>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Aug 03 00:05:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8Odi-0006oh-6l
-	for gcvg-git@gmane.org; Wed, 02 Aug 2006 23:52:30 +0200
+	id 1G8Opt-0000dR-UI
+	for gcvg-git@gmane.org; Thu, 03 Aug 2006 00:05:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932245AbWHBVwZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Aug 2006 17:52:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932247AbWHBVwZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 17:52:25 -0400
-Received: from mail15.bluewin.ch ([195.186.18.63]:42670 "EHLO
-	mail15.bluewin.ch") by vger.kernel.org with ESMTP id S932245AbWHBVwZ
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 2 Aug 2006 17:52:25 -0400
-Received: from spinlock.ch (81.62.57.222) by mail15.bluewin.ch (Bluewin 7.3.110.2)
-        id 4492529600B13342; Wed, 2 Aug 2006 21:52:21 +0000
-Received: (nullmailer pid 19136 invoked by uid 1000);
-	Wed, 02 Aug 2006 21:52:00 -0000
-To: junkio@cox.net
-X-Mailer: git-send-email 1.4.2.rc2.g93b2c
-In-Reply-To: <11545555203975-git-send-email-matthias@spinlock.ch>
+	id S932159AbWHBWE7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Aug 2006 18:04:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932251AbWHBWE7
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 18:04:59 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:50893 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S932159AbWHBWE6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Aug 2006 18:04:58 -0400
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24693>
 
-Signed-off-by: Matthias Kestenholz <matthias@spinlock.ch>
+Signed-off-by: Matthias Lederhofer <matled@gmx.net>
 ---
- builtin-fmt-merge-msg.c |    3 ++-
- builtin-prune-packed.c  |    3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+The synopsis looks a bit strange, perhaps someone else has an idea for
+this.
+---
+ Documentation/git-grep.txt |   11 +++++++++--
+ 1 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/builtin-fmt-merge-msg.c b/builtin-fmt-merge-msg.c
-index c84224e..485ede7 100644
---- a/builtin-fmt-merge-msg.c
-+++ b/builtin-fmt-merge-msg.c
-@@ -1,3 +1,4 @@
-+#include "builtin.h"
- #include "cache.h"
- #include "commit.h"
- #include "diff.h"
-@@ -242,7 +243,7 @@ static void shortlog(const char *name, u
- 	free_list(&subjects);
- }
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 62a8e7f..544ad24 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -16,7 +16,7 @@ SYNOPSIS
+ 	   [-n] [-l | --files-with-matches] [-L | --files-without-match]
+ 	   [-c | --count]
+ 	   [-A <post-context>] [-B <pre-context>] [-C <context>]
+-	   [-f <file>] [-e] <pattern>
++	   [-f <file>] [-e] <pattern> [--and|--or|--not|(|)|-e <pattern>...]
+ 	   [<tree>...]
+ 	   [--] [<path>...]
  
--int cmd_fmt_merge_msg(int argc, char **argv, const char *prefix)
-+int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
- {
- 	int limit = 20, i = 0;
- 	char line[1024];
-diff --git a/builtin-prune-packed.c b/builtin-prune-packed.c
-index d0ff336..d3dd94d 100644
---- a/builtin-prune-packed.c
-+++ b/builtin-prune-packed.c
-@@ -1,3 +1,4 @@
-+#include "builtin.h"
- #include "cache.h"
+@@ -74,7 +74,14 @@ OPTIONS
+ -e::
+ 	The next parameter is the pattern. This option has to be
+ 	used for patterns starting with - and should be used in
+-	scripts passing user input to grep.
++	scripts passing user input to grep.  Multiple patterns are
++	combined by 'or'.
++
++--and | --or | --not | ( | )::
++	Specify how multiple patterns are combined using boolean
++	expressions.  `--or` is the default operator.  `--and` has
++	higher precedence than `--or`.  `-e` has to be used for all
++	patterns.
  
- static const char prune_packed_usage[] =
-@@ -54,7 +55,7 @@ static void prune_packed_objects(void)
- 	}
- }
- 
--int cmd_prune_packed(int argc, char **argv, const char *prefix)
-+int cmd_prune_packed(int argc, const char **argv, const char *prefix)
- {
- 	int i;
- 
+ `<tree>...`::
+ 	Search blobs in the trees for specified patterns.
 -- 
-1.4.2.rc2.g93b2c
+1.4.2.rc2.g4713
