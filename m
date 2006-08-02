@@ -1,60 +1,97 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitweb: optionally read config from GITWEB_CONFIG
-Date: Wed, 02 Aug 2006 13:28:04 -0700
-Message-ID: <7vu04uubl7.fsf@assigned-by-dhcp.cox.net>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH] gitweb: require $ENV{'GITWEB_CONFIG'}
+Date: Wed, 2 Aug 2006 22:29:36 +0200
+Message-ID: <E1G8NLU-0006TL-J7@moooo.ath.cx>
 References: <20060802192333.GA30861@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 02 22:28:45 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 02 22:29:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8NKA-0005o7-1z
-	for gcvg-git@gmane.org; Wed, 02 Aug 2006 22:28:14 +0200
+	id 1G8NLb-00066J-TO
+	for gcvg-git@gmane.org; Wed, 02 Aug 2006 22:29:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932224AbWHBU2H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Aug 2006 16:28:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932226AbWHBU2H
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 16:28:07 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:27112 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S932224AbWHBU2F (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Aug 2006 16:28:05 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060802202805.BKNB12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 2 Aug 2006 16:28:05 -0400
+	id S932229AbWHBU3l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Aug 2006 16:29:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932226AbWHBU3k
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 16:29:40 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:8087 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S932229AbWHBU3k (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Aug 2006 16:29:40 -0400
 To: Jeff King <peff@peff.net>
-In-Reply-To: <20060802192333.GA30861@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 2 Aug 2006 15:23:34 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Mail-Followup-To: Jeff King <peff@peff.net>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20060802192333.GA30861@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24677>
 
-Jeff King <peff@peff.net> writes:
+Signed-off-by: Matthias Lederhofer <matled@gmx.net>
+---
+With this patch it is possible to use gitweb.perl for developing by
+loading the configuration from $GITWEB_CONFIG.  This might also be
+useful for normal usage of gitweb.  Example:
+% cat cfg 
+$GIT = '/usr/bin/git';
+$projectroot = '/home/matled/src/git';
+$projects_list = '/home/matled/src/git/git/gitweb/list';
+% cat run
+#!/bin/sh
+export GATEWAY_INTERFACE="CGI/1.1"
+export HTTP_ACCEPT="*/*"
+export REQUEST_METHOD="GET"
+export GITWEB_CONFIG='./cfg'
+export QUERY_STRING=""$1""
+exec ./gitweb.perl
+% time ./run p=git/.git > /dev/null 
+./run p=git/.git > /dev/null  0.47s user 0.58s system 102% cpu 1.025
+total
 
-> Configuration will first be taken from variables inside the gitweb.cgi
-> script, which in turn come from the Makefile. Afterwards, the contents of
-> GITWEB_CONFIG are read, overriding the builtin defaults.
->
-> This should eliminate the need for editing the gitweb script at all. Users
-> should edit the Makefile and/or add a config file.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> This is on top of next.
->
-> This patch seemed to get a favorable response, so I cleaned it up and
-> actually tested it. The main changes are reordering a few of the setup
-> statements so that changes introduced in the config file are respected
-> as suggested by Matthias (and a few by me). It would be good if other
-> gitweb people could check it over and/or try it with their config to
-> make sure I didn't miss anything.
+This makes it easy to check for warnings and do performance tests
+after changes, you can also pipe this to lynx -dump -force-html
+/dev/stdin to get more than just html :)
 
-Looks good -- thanks.  Further comments from the list are very
-much appreciated.
+This also documents the original patch adding require $GITWEB_CONFIG.
+---
+ gitweb/README      |    5 +++++
+ gitweb/gitweb.perl |    4 ++++
+ 2 files changed, 9 insertions(+), 0 deletions(-)
+
+diff --git a/gitweb/README b/gitweb/README
+index b91d42a..dc4b850 100644
+--- a/gitweb/README
++++ b/gitweb/README
+@@ -23,6 +23,11 @@ You can specify the following configurat
+    Points to the location where you put gitweb.css on your web server.
+  * GITWEB_LOGO
+    Points to the location where you put git-logo.png on your web server.
++ * GITWEB_CONFIG
++   This file will be loaded using 'require'.  If the environment
++   $GITWEB_CONFIG is set when gitweb.cgi is executed the file in the
++   environment variable will be loaded additionally (after) the file
++   specified when gitweb.cgi was created.
+ 
+ Originally written by:
+   Kay Sievers <kay.sievers@vrfy.org>
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index f4c0d87..efcc926 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -63,6 +63,10 @@ our $mimetypes_file = undef;
+ our $GITWEB_CONFIG = '@@GITWEB_CONFIG@@';
+ require $GITWEB_CONFIG if -e $GITWEB_CONFIG;
+ 
++if (defined($ENV{'GITWEB_CONFIG'}) && -e $ENV{'GITWEB_CONFIG'}) {
++	require $ENV{'GITWEB_CONFIG'};
++}
++
+ # version of the core git binary
+ our $git_version = qx($GIT --version) =~ m/git version (.*)$/ ? $1 : "unknown";
+ 
+-- 
+1.4.2.rc2.g4713
