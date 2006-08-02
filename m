@@ -1,106 +1,74 @@
 From: "Ramsay Jones" <ramsay@ramsay1.demon.co.uk>
-Subject: RE: [PATCH 8/10] Fix some minor warnings to allow -Werror.
-Date: Wed, 2 Aug 2006 19:47:49 +0100
-Message-ID: <001c01c6b664$27536740$c47eedc1@ramsay1.demon.co.uk>
-References: <7vvepbvauo.fsf@assigned-by-dhcp.cox.net>
+Subject: RE: [PATCH 6/10] Fix header breakage with _XOPEN_SOURCE.
+Date: Wed, 2 Aug 2006 19:47:51 +0100
+Message-ID: <001d01c6b664$285ff540$c47eedc1@ramsay1.demon.co.uk>
+References: <7vpsfjvaul.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain;
 	charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 02 20:48:03 2006
+X-From: git-owner@vger.kernel.org Wed Aug 02 20:48:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8Lkx-0001PJ-1S
+	id 1G8Lkx-0001PJ-Hq
 	for gcvg-git@gmane.org; Wed, 02 Aug 2006 20:47:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932147AbWHBSrn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Aug 2006 14:47:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932146AbWHBSrn
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 14:47:43 -0400
-Received: from anchor-post-36.mail.demon.net ([194.217.242.86]:19972 "EHLO
+	id S932143AbWHBSrm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Aug 2006 14:47:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932146AbWHBSrm
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 14:47:42 -0400
+Received: from anchor-post-36.mail.demon.net ([194.217.242.86]:21764 "EHLO
 	anchor-post-36.mail.demon.net") by vger.kernel.org with ESMTP
-	id S932142AbWHBSrl (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932143AbWHBSrl (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 2 Aug 2006 14:47:41 -0400
 Received: from ramsay1.demon.co.uk ([193.237.126.196])
 	by anchor-post-36.mail.demon.net with smtp (Exim 4.42)
-	id 1G8Lkm-000MLO-LX; Wed, 02 Aug 2006 18:47:37 +0000
+	id 1G8Lko-000MLO-L7; Wed, 02 Aug 2006 18:47:39 +0000
 To: "Junio C Hamano" <junkio@cox.net>
 X-Priority: 3 (Normal)
 X-MSMail-Priority: Normal
 X-Mailer: Microsoft Outlook 8.5, Build 4.71.2173.0
 X-MimeOLE: Produced By Microsoft MimeOLE V4.72.2106.4
 Importance: Normal
-In-Reply-To: <7vvepbvauo.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7vpsfjvaul.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24666>
 
 
 On Wed, 2006-08-02 at 8:46, Junio C Hamano wrote:
 > 
 > "Ramsay Jones" <ramsay@ramsay1.demon.co.uk> writes:
 > 
-> > diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-> > index 3e40747..bb5e7b7 100644
-> > --- a/builtin-mailinfo.c
-> > +++ b/builtin-mailinfo.c
-> > @@ -531,7 +531,8 @@ static int decode_b_segment(char *in, ch
-> >  static void convert_to_utf8(char *line, char *charset)
-> >  {
-> >  #ifndef NO_ICONV
-> > -	char *in, *out;
-> > +	const char *in;
-> > +	char *out;
-> >  	size_t insize, outsize, nrc;
-> >  	char outbuf[4096]; /* cheat */
-> >  	static char latin_one[] = "latin1";
+> > convert-objects.c sets _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED before
+> > including <time.h>, in order to get the declaration of strptime().
+> > This leads to breakage in cache.h, due to S_ISLNK and S_IFLNK no longer
+> > being defined by <sys/stat.h>.  These definitions are protected by the
+> > __USE_BSD symbol, which is not set when _XOPEN_SOURCE is set.  Moving
+> > the #defines and #include <time.h> below all other #includes does not
+> > fix the problem, however, since now _USE_XOPEN, which protects the
+> > declaration of strptime(), is now not defined (don't ask!).
 > 
-> This kills the compilation with:
-> 
-> gcc -o builtin-mailinfo.o -c -O2 -Werror -ansi -pedantic -std=c99 
-> -D_XOPEN_SOURCE=500 -D_BSD_SOURCE -Wall 
-> -Wdeclaration-after-statement -g -DSHA1_HEADER='<openssl/sha.h>' 
-> -DNO_STRLCPY builtin-mailinfo.c
-> cc1: warnings being treated as errors
-> builtin-mailinfo.c: In function 'convert_to_utf8':
-> builtin-mailinfo.c:561: warning: passing argument 2 of 'iconv' 
-> from incompatible pointer type
-> 
-> where the line 561 reads:
-> 
-> 	nrc = iconv(conv, &in, &insize, &out, &outsize);
+> Wouldn't including "cache.h" and friends first and including
+> <time.h> last solve the problem, then?
 > 
 
-OK, so I get exactly the same if I don't make the indicated change!
-The second param of iconv() must have changed from const char* to char*
-at some point in the last six years.
-Just ignore this.
+Not for me. It may be a glibc 2.1 specific problem, of course, but 
+strptime() remains undeclared.
 
-> > diff --git a/diff.c b/diff.c
-> > index 5a71489..81630c0 100644
-> > --- a/diff.c
-> > +++ b/diff.c
-> > @@ -614,6 +614,7 @@ static void emit_binary_diff(mmfile_t *o
-> >  	 * whichever is smaller.
-> >  	 */
-> >  	delta = NULL;
-> > +	orig_size = 0;
-> >  	deflated = deflate_it(two->ptr, two->size, &deflate_size);
-> >  	if (one->size && two->size) {
-> >  		delta = diff_delta(one->ptr, one->size,
-> 
-> This is not wrong per se, but is working around a stupid compiler that
-> do not understand the dataflow.  orig_size is only used when
-> delta is non NULL, and when delta is non NULL, the variable is
-> always set.  Not very happy but is acceptable.
+> This kind of change tends to fix one system while potentially
+> breaking another, and we would need to be careful.  Will queue
+> for post 1.4.2 and have people scream if it breaks somebody, I
+> guess.
 > 
 
-Yes, you are absolutely correct. I agree it would be nice if gcc was
-"fixed" so that it could detect this situation, but I'm not going to
-hold my breath. It just seemed to be the lesser evil.
+Yes, I had some concern about that myself. Unfortunately, you can't
+make it conditional on the glibc version macros; in order to get the
+macros, you have to include (one way or another) <features.h>, at which
+point it is already too late ...
 
 Ramsay
