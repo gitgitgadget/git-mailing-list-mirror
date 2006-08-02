@@ -1,30 +1,30 @@
 From: "Ramsay Jones" <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH 1/10] Ensure git-clone exits with error if perl script fails.
-Date: Wed, 2 Aug 2006 02:03:16 +0100
-Message-ID: <00a201c6b5cf$6fe0d0a0$c47eedc1@ramsay1.demon.co.uk>
+Subject: [PATCH 3/10] Fix installation of templates on ancient systems.
+Date: Wed, 2 Aug 2006 02:03:20 +0100
+Message-ID: <00aa01c6b5cf$72231f80$c47eedc1@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: multipart/mixed;
-	boundary="----=_NextPart_000_00A3_01C6B5D7.D1A538A0"
-X-From: git-owner@vger.kernel.org Wed Aug 02 03:03:06 2006
+	boundary="----=_NextPart_000_00AB_01C6B5D7.D3E78780"
+X-From: git-owner@vger.kernel.org Wed Aug 02 03:03:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G858W-0006w4-HS
-	for gcvg-git@gmane.org; Wed, 02 Aug 2006 03:03:00 +0200
+	id 1G858f-0006xh-Aj
+	for gcvg-git@gmane.org; Wed, 02 Aug 2006 03:03:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750894AbWHBBC6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Aug 2006 21:02:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750896AbWHBBC6
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 21:02:58 -0400
-Received: from anchor-post-35.mail.demon.net ([194.217.242.85]:33033 "EHLO
+	id S1750898AbWHBBDD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Aug 2006 21:03:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750901AbWHBBDD
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 21:03:03 -0400
+Received: from anchor-post-35.mail.demon.net ([194.217.242.85]:37385 "EHLO
 	anchor-post-35.mail.demon.net") by vger.kernel.org with ESMTP
-	id S1750894AbWHBBC5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Aug 2006 21:02:57 -0400
+	id S1750898AbWHBBDB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Aug 2006 21:03:01 -0400
 Received: from ramsay1.demon.co.uk ([193.237.126.196])
 	by anchor-post-35.mail.demon.net with smtp (Exim 4.42)
-	id 1G858R-000C1I-H2
-	for git@vger.kernel.org; Wed, 02 Aug 2006 01:02:56 +0000
+	id 1G858U-000C1I-Io
+	for git@vger.kernel.org; Wed, 02 Aug 2006 01:03:00 +0000
 To: <git@vger.kernel.org>
 X-Priority: 3 (Normal)
 X-MSMail-Priority: Normal
@@ -34,79 +34,110 @@ Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24621>
 
 This is a multi-part message in MIME format.
 
-------=_NextPart_000_00A3_01C6B5D7.D1A538A0
+------=_NextPart_000_00AB_01C6B5D7.D3E78780
 Content-Type: text/plain;
 	charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 
-This helps tests 5400,5600,5700,5710 "fail correctly" rather than
-give some false positives.  Also ensure cleanup actions in exit trap
-work correctly even if user has alias rm='rm -i'.
+Do not use $(call) for 'shell quoting' paths, and pass DESTDIR down
+to the templates makefile.
 
 Signed-off-by: Ramsay Allan Jones <ramsay@ramsay1.demon.co.uk>
 ---
- git-clone.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ Makefile           |    2 +-
+ templates/Makefile |   12 +++++-------
+ 2 files changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/git-clone.sh b/git-clone.sh
-index 6a14b25..47bd8e7 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -205,7 +205,7 @@ # Try using "humanish" part of source re
- [ -e "$dir" ] && echo "$dir already exists." && usage
- mkdir -p "$dir" &&
- D=$(cd "$dir" && pwd) &&
--trap 'err=$?; cd ..; rm -r "$D"; exit $err' 0
-+trap 'err=$?; cd ..; rm -rf "$D"; exit $err' 0
- case "$bare" in
- yes)
- 	GIT_DIR="$D" ;;
-@@ -324,7 +324,7 @@ test -d "$GIT_DIR/refs/reference-tmp" &&
- if test -f "$GIT_DIR/CLONE_HEAD"
- then
- 	# Read git-fetch-pack -k output and store the remote branches.
--	perl -e "$copy_refs" "$GIT_DIR" "$use_separate_remote" "$origin"
-+	perl -e "$copy_refs" "$GIT_DIR" "$use_separate_remote" "$origin" || exit 1
- fi
-
- cd "$D" || exit
---
+diff --git a/Makefile b/Makefile
+index cde619c..180dbd0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -662,7 +662,7 @@ install: all
+ 	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(gitexecdir_SQ)'
+ 	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexecdir_SQ)'
+ 	$(INSTALL) git$X gitk '$(DESTDIR_SQ)$(bindir_SQ)'
+-	$(MAKE) -C templates install
++	$(MAKE) -C templates install DESTDIR=$(DESTDIR)
+ 	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(GIT_PYTHON_DIR_SQ)'
+ 	$(INSTALL) $(PYMODULES) '$(DESTDIR_SQ)$(GIT_PYTHON_DIR_SQ)'
+ 	if test 'z$(bindir_SQ)' != 'z$(gitexecdir_SQ)'; \
+diff --git a/templates/Makefile b/templates/Makefile
+index 8f7f4fe..9e1ae1a 100644
+--- a/templates/Makefile
++++ b/templates/Makefile
+@@ -6,11 +6,9 @@ prefix ?= $(HOME)
+ template_dir ?= $(prefix)/share/git-core/templates/
+ # DESTDIR=
+ 
+-# Shell quote;
+-# Result of this needs to be placed inside ''
+-shq = $(subst ','\'',$(1))
+-# This has surrounding ''
+-shellquote = '$(call shq,$(1))'
++# Shell quote (do not use $(call) to accomodate ancient setups);
++DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
++template_dir_SQ = $(subst ','\'',$(template_dir))
+ 
+ all: boilerplates.made custom
+ 
+@@ -43,6 +41,6 @@ clean:
+ 	rm -rf blt boilerplates.made
+ 
+ install: all
+-	$(INSTALL) -d -m755 $(call shellquote,$(DESTDIR)$(template_dir))
++	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(template_dir_SQ)'
+ 	(cd blt && $(TAR) cf - .) | \
+-	(cd $(call shellquote,$(DESTDIR)$(template_dir)) && $(TAR) xf -)
++	(cd '$(DESTDIR_SQ)$(template_dir_SQ)' && $(TAR) xf -)
+-- 
 1.4.1
 
-------=_NextPart_000_00A3_01C6B5D7.D1A538A0
+------=_NextPart_000_00AB_01C6B5D7.D3E78780
 Content-Type: text/plain;
-	name="P0001.TXT"
+	name="P0003.TXT"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment;
-	filename="P0001.TXT"
+	filename="P0003.TXT"
 
-RnJvbSAwOGI2NTAyMzUzZDZkNjE5MWMxY2ViMWE3MDk1ODgzZmZjMmI0YjRlIE1vbiBTZXAgMTcg
+RnJvbSA0OTAzZTU0MmY0MzYxZDA2MzYxMDI3YzEwZTM4NzUwZWVlN2ExMjA4IE1vbiBTZXAgMTcg
 MDA6MDA6MDAgMjAwMQpGcm9tOiBSYW1zYXkgQWxsYW4gSm9uZXMgPHJhbXNheUByYW1zYXkxLmRl
-bW9uLmNvLnVrPgpEYXRlOiBTYXQsIDI5IEp1bCAyMDA2IDE3OjEyOjM0ICswMTAwClN1YmplY3Q6
-IFtQQVRDSCAxLzEwXSBFbnN1cmUgZ2l0LWNsb25lIGV4aXRzIHdpdGggZXJyb3IgaWYgcGVybCBz
-Y3JpcHQgZmFpbHMuCgpUaGlzIGhlbHBzIHRlc3RzIDU0MDAsNTYwMCw1NzAwLDU3MTAgImZhaWwg
-Y29ycmVjdGx5IiByYXRoZXIgdGhhbgpnaXZlIHNvbWUgZmFsc2UgcG9zaXRpdmVzLiAgQWxzbyBl
-bnN1cmUgY2xlYW51cCBhY3Rpb25zIGluIGV4aXQgdHJhcAp3b3JrIGNvcnJlY3RseSBldmVuIGlm
-IHVzZXIgaGFzIGFsaWFzIHJtPSdybSAtaScuCgpTaWduZWQtb2ZmLWJ5OiBSYW1zYXkgQWxsYW4g
-Sm9uZXMgPHJhbXNheUByYW1zYXkxLmRlbW9uLmNvLnVrPgotLS0KIGdpdC1jbG9uZS5zaCB8ICAg
-IDQgKystLQogMSBmaWxlcyBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0p
-CgpkaWZmIC0tZ2l0IGEvZ2l0LWNsb25lLnNoIGIvZ2l0LWNsb25lLnNoCmluZGV4IDZhMTRiMjUu
-LjQ3YmQ4ZTcgMTAwNzU1Ci0tLSBhL2dpdC1jbG9uZS5zaAorKysgYi9naXQtY2xvbmUuc2gKQEAg
-LTIwNSw3ICsyMDUsNyBAQCAjIFRyeSB1c2luZyAiaHVtYW5pc2giIHBhcnQgb2Ygc291cmNlIHJl
-CiBbIC1lICIkZGlyIiBdICYmIGVjaG8gIiRkaXIgYWxyZWFkeSBleGlzdHMuIiAmJiB1c2FnZQog
-bWtkaXIgLXAgIiRkaXIiICYmCiBEPSQoY2QgIiRkaXIiICYmIHB3ZCkgJiYKLXRyYXAgJ2Vycj0k
-PzsgY2QgLi47IHJtIC1yICIkRCI7IGV4aXQgJGVycicgMAordHJhcCAnZXJyPSQ/OyBjZCAuLjsg
-cm0gLXJmICIkRCI7IGV4aXQgJGVycicgMAogY2FzZSAiJGJhcmUiIGluCiB5ZXMpCiAJR0lUX0RJ
-Uj0iJEQiIDs7CkBAIC0zMjQsNyArMzI0LDcgQEAgdGVzdCAtZCAiJEdJVF9ESVIvcmVmcy9yZWZl
-cmVuY2UtdG1wIiAmJgogaWYgdGVzdCAtZiAiJEdJVF9ESVIvQ0xPTkVfSEVBRCIKIHRoZW4KIAkj
-IFJlYWQgZ2l0LWZldGNoLXBhY2sgLWsgb3V0cHV0IGFuZCBzdG9yZSB0aGUgcmVtb3RlIGJyYW5j
-aGVzLgotCXBlcmwgLWUgIiRjb3B5X3JlZnMiICIkR0lUX0RJUiIgIiR1c2Vfc2VwYXJhdGVfcmVt
-b3RlIiAiJG9yaWdpbiIKKwlwZXJsIC1lICIkY29weV9yZWZzIiAiJEdJVF9ESVIiICIkdXNlX3Nl
-cGFyYXRlX3JlbW90ZSIgIiRvcmlnaW4iIHx8IGV4aXQgMQogZmkKIAogY2QgIiREIiB8fCBleGl0
-Ci0tIAoxLjQuMQoK
+bW9uLmNvLnVrPgpEYXRlOiBTYXQsIDI5IEp1bCAyMDA2IDE3OjI1OjAzICswMTAwClN1YmplY3Q6
+IFtQQVRDSCAzLzEwXSBGaXggaW5zdGFsbGF0aW9uIG9mIHRlbXBsYXRlcyBvbiBhbmNpZW50IHN5
+c3RlbXMuCgpEbyBub3QgdXNlICQoY2FsbCkgZm9yICdzaGVsbCBxdW90aW5nJyBwYXRocywgYW5k
+IHBhc3MgREVTVERJUiBkb3duCnRvIHRoZSB0ZW1wbGF0ZXMgbWFrZWZpbGUuCgpTaWduZWQtb2Zm
+LWJ5OiBSYW1zYXkgQWxsYW4gSm9uZXMgPHJhbXNheUByYW1zYXkxLmRlbW9uLmNvLnVrPgotLS0K
+IE1ha2VmaWxlICAgICAgICAgICB8ICAgIDIgKy0KIHRlbXBsYXRlcy9NYWtlZmlsZSB8ICAgMTIg
+KysrKystLS0tLS0tCiAyIGZpbGVzIGNoYW5nZWQsIDYgaW5zZXJ0aW9ucygrKSwgOCBkZWxldGlv
+bnMoLSkKCmRpZmYgLS1naXQgYS9NYWtlZmlsZSBiL01ha2VmaWxlCmluZGV4IGNkZTYxOWMuLjE4
+MGRiZDAgMTAwNjQ0Ci0tLSBhL01ha2VmaWxlCisrKyBiL01ha2VmaWxlCkBAIC02NjIsNyArNjYy
+LDcgQEAgaW5zdGFsbDogYWxsCiAJJChJTlNUQUxMKSAtZCAtbTc1NSAnJChERVNURElSX1NRKSQo
+Z2l0ZXhlY2Rpcl9TUSknCiAJJChJTlNUQUxMKSAkKEFMTF9QUk9HUkFNUykgJyQoREVTVERJUl9T
+USkkKGdpdGV4ZWNkaXJfU1EpJwogCSQoSU5TVEFMTCkgZ2l0JFggZ2l0ayAnJChERVNURElSX1NR
+KSQoYmluZGlyX1NRKScKLQkkKE1BS0UpIC1DIHRlbXBsYXRlcyBpbnN0YWxsCisJJChNQUtFKSAt
+QyB0ZW1wbGF0ZXMgaW5zdGFsbCBERVNURElSPSQoREVTVERJUikKIAkkKElOU1RBTEwpIC1kIC1t
+NzU1ICckKERFU1RESVJfU1EpJChHSVRfUFlUSE9OX0RJUl9TUSknCiAJJChJTlNUQUxMKSAkKFBZ
+TU9EVUxFUykgJyQoREVTVERJUl9TUSkkKEdJVF9QWVRIT05fRElSX1NRKScKIAlpZiB0ZXN0ICd6
+JChiaW5kaXJfU1EpJyAhPSAneiQoZ2l0ZXhlY2Rpcl9TUSknOyBcCmRpZmYgLS1naXQgYS90ZW1w
+bGF0ZXMvTWFrZWZpbGUgYi90ZW1wbGF0ZXMvTWFrZWZpbGUKaW5kZXggOGY3ZjRmZS4uOWUxYWUx
+YSAxMDA2NDQKLS0tIGEvdGVtcGxhdGVzL01ha2VmaWxlCisrKyBiL3RlbXBsYXRlcy9NYWtlZmls
+ZQpAQCAtNiwxMSArNiw5IEBAIHByZWZpeCA/PSAkKEhPTUUpCiB0ZW1wbGF0ZV9kaXIgPz0gJChw
+cmVmaXgpL3NoYXJlL2dpdC1jb3JlL3RlbXBsYXRlcy8KICMgREVTVERJUj0KIAotIyBTaGVsbCBx
+dW90ZTsKLSMgUmVzdWx0IG9mIHRoaXMgbmVlZHMgdG8gYmUgcGxhY2VkIGluc2lkZSAnJwotc2hx
+ID0gJChzdWJzdCAnLCdcJycsJCgxKSkKLSMgVGhpcyBoYXMgc3Vycm91bmRpbmcgJycKLXNoZWxs
+cXVvdGUgPSAnJChjYWxsIHNocSwkKDEpKScKKyMgU2hlbGwgcXVvdGUgKGRvIG5vdCB1c2UgJChj
+YWxsKSB0byBhY2NvbW9kYXRlIGFuY2llbnQgc2V0dXBzKTsKK0RFU1RESVJfU1EgPSAkKHN1YnN0
+ICcsJ1wnJywkKERFU1RESVIpKQordGVtcGxhdGVfZGlyX1NRID0gJChzdWJzdCAnLCdcJycsJCh0
+ZW1wbGF0ZV9kaXIpKQogCiBhbGw6IGJvaWxlcnBsYXRlcy5tYWRlIGN1c3RvbQogCkBAIC00Myw2
+ICs0MSw2IEBAIGNsZWFuOgogCXJtIC1yZiBibHQgYm9pbGVycGxhdGVzLm1hZGUKIAogaW5zdGFs
+bDogYWxsCi0JJChJTlNUQUxMKSAtZCAtbTc1NSAkKGNhbGwgc2hlbGxxdW90ZSwkKERFU1RESVIp
+JCh0ZW1wbGF0ZV9kaXIpKQorCSQoSU5TVEFMTCkgLWQgLW03NTUgJyQoREVTVERJUl9TUSkkKHRl
+bXBsYXRlX2Rpcl9TUSknCiAJKGNkIGJsdCAmJiAkKFRBUikgY2YgLSAuKSB8IFwKLQkoY2QgJChj
+YWxsIHNoZWxscXVvdGUsJChERVNURElSKSQodGVtcGxhdGVfZGlyKSkgJiYgJChUQVIpIHhmIC0p
+CisJKGNkICckKERFU1RESVJfU1EpJCh0ZW1wbGF0ZV9kaXJfU1EpJyAmJiAkKFRBUikgeGYgLSkK
+LS0gCjEuNC4xCgo=
 
-------=_NextPart_000_00A3_01C6B5D7.D1A538A0--
+------=_NextPart_000_00AB_01C6B5D7.D3E78780--
