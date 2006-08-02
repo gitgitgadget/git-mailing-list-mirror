@@ -1,30 +1,30 @@
 From: "Ramsay Jones" <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH 10/10] Fix perl scripts to work with version 5.005_03.
-Date: Wed, 2 Aug 2006 02:03:49 +0100
-Message-ID: <00c601c6b5cf$83a627c0$c47eedc1@ramsay1.demon.co.uk>
+Subject: [PATCH 9/10] Remove cmd_usage() routine and re-organize the help/usage code.
+Date: Wed, 2 Aug 2006 02:03:44 +0100
+Message-ID: <00c201c6b5cf$8089a580$c47eedc1@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: multipart/mixed;
-	boundary="----=_NextPart_000_00C7_01C6B5D7.E56A8FC0"
-X-From: git-owner@vger.kernel.org Wed Aug 02 03:03:43 2006
+	boundary="----=_NextPart_000_00C3_01C6B5D7.E24E0D80"
+X-From: git-owner@vger.kernel.org Wed Aug 02 03:03:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G859C-00074N-Qo
-	for gcvg-git@gmane.org; Wed, 02 Aug 2006 03:03:43 +0200
+	id 1G8595-00073c-B0
+	for gcvg-git@gmane.org; Wed, 02 Aug 2006 03:03:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750920AbWHBBDi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Aug 2006 21:03:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750921AbWHBBDi
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 21:03:38 -0400
-Received: from anchor-post-35.mail.demon.net ([194.217.242.85]:4106 "EHLO
+	id S1750918AbWHBBD3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Aug 2006 21:03:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750919AbWHBBD3
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 21:03:29 -0400
+Received: from anchor-post-35.mail.demon.net ([194.217.242.85]:62473 "EHLO
 	anchor-post-35.mail.demon.net") by vger.kernel.org with ESMTP
-	id S1750919AbWHBBDh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Aug 2006 21:03:37 -0400
+	id S1750917AbWHBBD2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Aug 2006 21:03:28 -0400
 Received: from ramsay1.demon.co.uk ([193.237.126.196])
 	by anchor-post-35.mail.demon.net with smtp (Exim 4.42)
-	id 1G8590-000C1I-JD
-	for git@vger.kernel.org; Wed, 02 Aug 2006 01:03:36 +0000
+	id 1G858u-000C1I-HM
+	for git@vger.kernel.org; Wed, 02 Aug 2006 01:03:27 +0000
 To: <git@vger.kernel.org>
 X-Priority: 3 (Normal)
 X-MSMail-Priority: Normal
@@ -34,450 +34,257 @@ Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24629>
 
 This is a multi-part message in MIME format.
 
-------=_NextPart_000_00C7_01C6B5D7.E56A8FC0
+------=_NextPart_000_00C3_01C6B5D7.E24E0D80
 Content-Type: text/plain;
 	charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 
-In order to make git work on an ancient Linux (Mandrake 7.0) we
-need to make the perl scripts work with verion 5.005_03.
-
-The changes include:
-
-  - comment out the "use warnings" pragma
-  - open has only two arguments; eg. `open FH, "<$file"` rather
-    than `open FH, '<', $file`
-  - replace "our" with "my" in the declaration of global (package)
-    variables.
-  - replace the use of some indirect file-handles with regular
-    file-handles.
-
-Note that only those perl scripts which are exercised by the test
-suite or that I have called directly have been modified.
+The cmd_usage() routine was causing warning messages due to a NULL
+format parameter being passed in three out of four calls. This is a
+problem if you want to compile with -Werror. A simple solution is to
+simply remove the GNU __attribute__ format pragma from the cmd_usage()
+declaration in the header file. The function interface was somewhat
+muddled anyway, so re-write the code to finesse the problem.
 
 Signed-off-by: Ramsay Allan Jones <ramsay@ramsay1.demon.co.uk>
 ---
- Documentation/build-docdep.perl |    2 +-
- git-annotate.perl               |   25 ++++++++++++-------------
- git-clone.sh                    |    6 +++---
- git-mv.perl                     |    4 ++--
- git-send-email.perl             |   27 +++++++++++++--------------
- git-shortlog.perl               |    2 +-
- 6 files changed, 32 insertions(+), 34 deletions(-)
+ builtin-help.c |   54
++++++++++++++++++++++++-------------------------------
+ builtin.h      |    7 ++-----
+ git.c          |    7 +++++--
+ 3 files changed, 30 insertions(+), 38 deletions(-)
 
-diff --git a/Documentation/build-docdep.perl
-b/Documentation/build-docdep.perl
-index 489389c..cd40f56 100755
---- a/Documentation/build-docdep.perl
-+++ b/Documentation/build-docdep.perl
-@@ -4,7 +4,7 @@ my %include = ();
- my %included = ();
+diff --git a/builtin-help.c b/builtin-help.c
+index 7470faa..006da05 100644
+--- a/builtin-help.c
++++ b/builtin-help.c
+@@ -9,8 +9,6 @@ #include "builtin.h"
+ #include "exec_cmd.h"
+ #include "common-cmds.h"
 
- for my $text (<*.txt>) {
--    open I, '<', $text || die "cannot read: $text";
-+    open I, "<$text" || die "cannot read: $text";
-     while (<I>) {
- 	if (/^include::/) {
- 	    chomp;
-diff --git a/git-annotate.perl b/git-annotate.perl
-index a6a7a48..629f480 100755
---- a/git-annotate.perl
-+++ b/git-annotate.perl
-@@ -6,7 +6,7 @@ #
- # This file is licensed under the GPL v2, or a later version
- # at the discretion of Linus Torvalds.
+-static const char git_usage[] =
+-	"Usage: git [--version] [--exec-path[=GIT_EXEC_PATH]] [--help] COMMAND
+ ARGS ]";
 
--use warnings;
-+#use warnings;
- use strict;
- use Getopt::Long;
- use POSIX qw(strftime gmtime);
-@@ -29,7 +29,7 @@ sub usage() {
- 	exit(1);
+ /* most gui terms set COLUMNS (although some don't export it) */
+ static int term_columns(void)
+@@ -178,31 +176,6 @@ static void list_common_cmds_help(void)
+ 	puts("(use 'git help -a' to get a list of all installed git commands)");
  }
 
--our ($help, $longrev, $rename, $rawtime, $starting_rev, $rev_file) = (0, 0,
-1);
-+my ($help, $longrev, $rename, $rawtime, $starting_rev, $rev_file) = (0, 0,
-1);
-
- my $rc = GetOptions(	"long|l" => \$longrev,
- 			"time|t" => \$rawtime,
-@@ -52,12 +52,12 @@ my @stack = (
- 	},
- );
-
--our @filelines = ();
-+my @filelines = ();
-
- if (defined $starting_rev) {
- 	@filelines = git_cat_file($starting_rev, $filename);
- } else {
--	open(F,"<",$filename)
-+	open(F,"<$filename")
- 		or die "Failed to open filename: $!";
-
- 	while(<F>) {
-@@ -68,9 +68,9 @@ if (defined $starting_rev) {
-
+-void cmd_usage(int show_all, const char *exec_path, const char *fmt, ...)
+-{
+-	if (fmt) {
+-		va_list ap;
+-
+-		va_start(ap, fmt);
+-		printf("git: ");
+-		vprintf(fmt, ap);
+-		va_end(ap);
+-		putchar('\n');
+-	}
+-	else
+-		puts(git_usage);
+-
+-	if (exec_path) {
+-		putchar('\n');
+-		if (show_all)
+-			list_commands(exec_path, "git-*");
+-		else
+-			list_common_cmds_help();
+-        }
+-
+-	exit(1);
+-}
+-
+ static void show_man_page(const char *git_cmd)
+ {
+ 	const char *page;
+@@ -221,6 +194,13 @@ static void show_man_page(const char *gi
+ 	execlp("man", "man", page, NULL);
  }
 
--our %revs;
--our @revqueue;
--our $head;
-+my %revs;
-+my @revqueue;
-+my $head;
-
- my $revsprocessed = 0;
- while (my $bound = pop @stack) {
-@@ -436,14 +436,13 @@ sub format_date {
- # Copied from git-send-email.perl - We need a Git.pm module..
- sub gitvar {
-     my ($var) = @_;
--    my $fh;
--    my $pid = open($fh, '-|');
-+    my $pid = open(FH, '-|');
-     die "$!" unless defined $pid;
-     if (!$pid) {
- 	exec('git-var', $var) or die "$!";
-     }
--    my ($val) = <$fh>;
--    close $fh or die "$!";
-+    my ($val) = <FH>;
-+    close FH or die "$!";
-     chomp($val);
-     return $val;
- }
-@@ -471,7 +470,7 @@ sub open_pipe_activestate {
- sub open_pipe_normal {
- 	my (@execlist) = @_;
-
--	my $pid = open my $kid, "-|";
-+	my $pid = open KID, "-|";
- 	defined $pid or die "Cannot fork: $!";
-
- 	unless ($pid) {
-@@ -479,7 +478,7 @@ sub open_pipe_normal {
- 		die "Cannot exec @execlist: $!";
- 	}
-
--	return $kid;
-+	return *KID;
++void help_unknown_cmd(const char *cmd)
++{
++	printf("git: '%s' is not a git-command\n\n", cmd);
++	list_common_cmds_help();
++	exit(1);
++}
++
+ int cmd_version(int argc, const char **argv, char **envp)
+ {
+ 	printf("git version %s\n", git_version_string);
+@@ -230,12 +210,24 @@ int cmd_version(int argc, const char **a
+ int cmd_help(int argc, const char **argv, char **envp)
+ {
+ 	const char *help_cmd = argv[1];
+-	if (!help_cmd)
+-		cmd_usage(0, git_exec_path(), NULL);
+-	else if (!strcmp(help_cmd, "--all") || !strcmp(help_cmd, "-a"))
+-		cmd_usage(1, git_exec_path(), NULL);
++	const char *exec_path = git_exec_path();
++
++	if (!help_cmd) {
++		printf("usage: %s\n\n", git_usage_string);
++		list_common_cmds_help();
++		exit(1);
++	}
++
++	else if (!strcmp(help_cmd, "--all") || !strcmp(help_cmd, "-a")) {
++		printf("usage: %s\n\n", git_usage_string);
++		if(exec_path)
++			list_commands(exec_path, "git-*");
++		exit(1);
++	}
++
+ 	else
+ 		show_man_page(help_cmd);
++
+ 	return 0;
  }
 
- package Git::ActiveStatePipe;
-diff --git a/git-clone.sh b/git-clone.sh
-index 47bd8e7..430c892 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -71,17 +71,17 @@ sub store {
- 	my ($sha1, $name, $top) = @_;
- 	$name = "$git_dir/refs/$top/$name";
- 	mkpath(dirname($name));
--	open O, ">", "$name";
-+	open O, ">$name";
- 	print O "$sha1\n";
- 	close O;
- }
+diff --git a/builtin.h b/builtin.h
+index 7bfff11..b6cf5be 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -5,12 +5,9 @@ #include <stdio.h>
+ #include <limits.h>
 
--open FH, "<", "$git_dir/CLONE_HEAD";
-+open FH, "<$git_dir/CLONE_HEAD";
- while (<FH>) {
- 	my ($sha1, $name) = /^([0-9a-f]{40})\s(.*)$/;
- 	next if ($name =~ /\^\173/);
- 	if ($name eq "HEAD") {
--		open O, ">", "$git_dir/REMOTE_HEAD";
-+		open O, ">$git_dir/REMOTE_HEAD";
- 		print O "$sha1\n";
- 		close O;
- 		next;
-diff --git a/git-mv.perl b/git-mv.perl
-index 75aa8fe..7aceeb8 100755
---- a/git-mv.perl
-+++ b/git-mv.perl
-@@ -7,7 +7,7 @@ # This file is licensed under the GPL v2
- # at the discretion of Linus Torvalds.
+ extern const char git_version_string[];
++extern const char git_usage_string[];
 
+-void cmd_usage(int show_all, const char *exec_path, const char *fmt, ...)
+-#ifdef __GNUC__
+-	__attribute__((__format__(__printf__, 3, 4), __noreturn__))
+-#endif
+-	;
++extern void help_unknown_cmd(const char *cmd);
 
--use warnings;
-+#use warnings;
- use strict;
- use Getopt::Std;
+ extern int cmd_help(int argc, const char **argv, char **envp);
+ extern int cmd_version(int argc, const char **argv, char **envp);
+diff --git a/git.c b/git.c
+index ca8961f..f414df9 100644
+--- a/git.c
++++ b/git.c
+@@ -14,6 +14,9 @@ #include "cache.h"
 
-@@ -19,7 +19,7 @@ EOT
- 	exit(1);
- }
+ #include "builtin.h"
 
--our ($opt_n, $opt_f, $opt_h, $opt_k, $opt_v);
-+my ($opt_n, $opt_f, $opt_h, $opt_k, $opt_v);
- getopts("hnfkv") || usage;
- usage() if $opt_h;
- @ARGV >= 1 or usage;
-diff --git a/git-send-email.perl b/git-send-email.perl
-index c5d9e73..e670f28 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -17,7 +17,7 @@ #    and second line is the subject of t
- #
-
- use strict;
--use warnings;
-+#use warnings;
- use Term::ReadLine;
- use Getopt::Long;
- use Data::Dumper;
-@@ -83,14 +83,13 @@ # Now, let's fill any that aren't set in
-
- sub gitvar {
-     my ($var) = @_;
--    my $fh;
--    my $pid = open($fh, '-|');
-+    my $pid = open(FH, '-|');
-     die "$!" unless defined $pid;
-     if (!$pid) {
- 	exec('git-var', $var) or die "$!";
-     }
--    my ($val) = <$fh>;
--    close $fh or die "$!";
-+    my ($val) = <FH>;
-+    close FH or die "$!";
-     chomp($val);
-     return $val;
- }
-@@ -134,7 +133,7 @@ my %parse_alias = (
-
- if (@alias_files && defined $parse_alias{$aliasfiletype}) {
- 	foreach my $file (@alias_files) {
--		open my $fh, '<', $file or die "opening $file: $!\n";
-+		open my $fh, "<$file" or die "opening $file: $!\n";
- 		$parse_alias{$aliasfiletype}->($fh);
- 		close $fh;
- 	}
-@@ -209,7 +208,7 @@ if (!$smtp_server) {
- if ($compose) {
- 	# Note that this does not need to be secure, but we will make a small
- 	# effort to have it be unique
--	open(C,">",$compose_filename)
-+	open(C,">$compose_filename")
- 		or die "Failed to open for writing $compose_filename: $!";
- 	print C "From $from # This line is ignored.\n";
- 	printf C "Subject: %s\n\n", $initial_subject;
-@@ -226,10 +225,10 @@ EOT
- 	$editor = 'vi' unless defined $editor;
- 	system($editor, $compose_filename);
-
--	open(C2,">",$compose_filename . ".final")
-+	open(C2,">$compose_filename" . ".final")
- 		or die "Failed to open $compose_filename.final : " . $!;
-
--	open(C,"<",$compose_filename)
-+	open(C,"<$compose_filename")
- 		or die "Failed to open $compose_filename : " . $!;
-
- 	while(<C>) {
-@@ -322,7 +321,7 @@ EOT
- }
-
- # Variables we set as part of the loop over files
--our ($message_id, $cc, %mail, $subject, $reply_to, $references, $message);
-+my ($message_id, $cc, %mail, $subject, $reply_to, $references, $message);
-
- sub extract_valid_address {
- 	my $address = shift;
-@@ -396,15 +395,15 @@ X-Mailer: git-send-email $gitversion
- 	}
-
- 	if ($smtp_server =~ m#^/#) {
--		my $pid = open my $sm, '|-';
-+		my $pid = open SM, '|-';
- 		defined $pid or die $!;
- 		if (!$pid) {
- 			exec($smtp_server,'-i',
- 			     map { extract_valid_address($_) }
- 			     @recipients) or die $!;
++const char git_usage_string[] =
++	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [--help] COMMAND [ ARGS ]";
++
+ static void prepend_to_path(const char *dir, int len)
+ {
+ 	const char *old_path = getenv("PATH");
+@@ -279,7 +282,7 @@ int main(int argc, const char **argv, ch
+ 			puts(git_exec_path());
+ 			exit(0);
  		}
--		print $sm "$header\n$message";
--		close $sm or die $?;
-+		print SM "$header\n$message";
-+		close SM or die $?;
- 	} else {
- 		require Net::SMTP;
- 		$smtp ||= Net::SMTP->new( $smtp_server );
-@@ -440,7 +439,7 @@ make_message_id();
- $subject = $initial_subject;
-
- foreach my $t (@files) {
--	open(F,"<",$t) or die "can't open file $t";
-+	open(F,"<$t") or die "can't open file $t";
-
- 	my $author_not_sender = undef;
- 	@cc = @initial_cc;
-diff --git a/git-shortlog.perl b/git-shortlog.perl
-index 0b14f83..57604dd 100755
---- a/git-shortlog.perl
-+++ b/git-shortlog.perl
-@@ -128,7 +128,7 @@ sub setup_mailmap {
- 	read_mailmap(\*DATA, \%mailmap);
- 	if (-f '.mailmap') {
- 		my $fh = undef;
--		open $fh, '<', '.mailmap';
-+		open $fh, '<.mailmap';
- 		read_mailmap($fh, \%mailmap);
- 		close $fh;
+-		cmd_usage(0, NULL, NULL);
++		usage(git_usage_string);
  	}
+ 	argv[0] = cmd;
+
+@@ -312,7 +315,7 @@ int main(int argc, const char **argv, ch
+ 	}
+
+ 	if (errno == ENOENT)
+-		cmd_usage(0, exec_path, "'%s' is not a git-command", cmd);
++		help_unknown_cmd(cmd);
+
+ 	fprintf(stderr, "Failed to run command '%s': %s\n",
+ 		cmd, strerror(errno));
 --
 1.4.1
 
-------=_NextPart_000_00C7_01C6B5D7.E56A8FC0
+------=_NextPart_000_00C3_01C6B5D7.E24E0D80
 Content-Type: text/plain;
-	name="P0010.TXT"
+	name="P0009.TXT"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment;
-	filename="P0010.TXT"
+	filename="P0009.TXT"
 
-RnJvbSBiOTRkY2FjOTRmNzBjYzY3N2Q0ZDI2YWFhYjQ3YTNlOWVlY2NjYmEyIE1vbiBTZXAgMTcg
+RnJvbSAxY2U0MmUyYjViNjViMDM2NTdiM2NhOWEzYjA2ZGM5N2NjNjY1NzNjIE1vbiBTZXAgMTcg
 MDA6MDA6MDAgMjAwMQpGcm9tOiBSYW1zYXkgQWxsYW4gSm9uZXMgPHJhbXNheUByYW1zYXkxLmRl
-bW9uLmNvLnVrPgpEYXRlOiBTdW4sIDMwIEp1bCAyMDA2IDIzOjEzOjE0ICswMTAwClN1YmplY3Q6
-IFtQQVRDSCAxMC8xMF0gRml4IHBlcmwgc2NyaXB0cyB0byB3b3JrIHdpdGggdmVyc2lvbiA1LjAw
-NV8wMy4KCkluIG9yZGVyIHRvIG1ha2UgZ2l0IHdvcmsgb24gYW4gYW5jaWVudCBMaW51eCAoTWFu
-ZHJha2UgNy4wKSB3ZQpuZWVkIHRvIG1ha2UgdGhlIHBlcmwgc2NyaXB0cyB3b3JrIHdpdGggdmVy
-aW9uIDUuMDA1XzAzLgoKVGhlIGNoYW5nZXMgaW5jbHVkZToKCiAgLSBjb21tZW50IG91dCB0aGUg
-InVzZSB3YXJuaW5ncyIgcHJhZ21hCiAgLSBvcGVuIGhhcyBvbmx5IHR3byBhcmd1bWVudHM7IGVn
-LiBgb3BlbiBGSCwgIjwkZmlsZSJgIHJhdGhlcgogICAgdGhhbiBgb3BlbiBGSCwgJzwnLCAkZmls
-ZWAKICAtIHJlcGxhY2UgIm91ciIgd2l0aCAibXkiIGluIHRoZSBkZWNsYXJhdGlvbiBvZiBnbG9i
-YWwgKHBhY2thZ2UpCiAgICB2YXJpYWJsZXMuCiAgLSByZXBsYWNlIHRoZSB1c2Ugb2Ygc29tZSBp
-bmRpcmVjdCBmaWxlLWhhbmRsZXMgd2l0aCByZWd1bGFyCiAgICBmaWxlLWhhbmRsZXMuCgpOb3Rl
-IHRoYXQgb25seSB0aG9zZSBwZXJsIHNjcmlwdHMgd2hpY2ggYXJlIGV4ZXJjaXNlZCBieSB0aGUg
-dGVzdApzdWl0ZSBvciB0aGF0IEkgaGF2ZSBjYWxsZWQgZGlyZWN0bHkgaGF2ZSBiZWVuIG1vZGlm
-aWVkLgoKU2lnbmVkLW9mZi1ieTogUmFtc2F5IEFsbGFuIEpvbmVzIDxyYW1zYXlAcmFtc2F5MS5k
-ZW1vbi5jby51az4KLS0tCiBEb2N1bWVudGF0aW9uL2J1aWxkLWRvY2RlcC5wZXJsIHwgICAgMiAr
-LQogZ2l0LWFubm90YXRlLnBlcmwgICAgICAgICAgICAgICB8ICAgMjUgKysrKysrKysrKysrLS0t
-LS0tLS0tLS0tLQogZ2l0LWNsb25lLnNoICAgICAgICAgICAgICAgICAgICB8ICAgIDYgKysrLS0t
-CiBnaXQtbXYucGVybCAgICAgICAgICAgICAgICAgICAgIHwgICAgNCArKy0tCiBnaXQtc2VuZC1l
-bWFpbC5wZXJsICAgICAgICAgICAgIHwgICAyNyArKysrKysrKysrKysrLS0tLS0tLS0tLS0tLS0K
-IGdpdC1zaG9ydGxvZy5wZXJsICAgICAgICAgICAgICAgfCAgICAyICstCiA2IGZpbGVzIGNoYW5n
-ZWQsIDMyIGluc2VydGlvbnMoKyksIDM0IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL0RvY3Vt
-ZW50YXRpb24vYnVpbGQtZG9jZGVwLnBlcmwgYi9Eb2N1bWVudGF0aW9uL2J1aWxkLWRvY2RlcC5w
-ZXJsCmluZGV4IDQ4OTM4OWMuLmNkNDBmNTYgMTAwNzU1Ci0tLSBhL0RvY3VtZW50YXRpb24vYnVp
-bGQtZG9jZGVwLnBlcmwKKysrIGIvRG9jdW1lbnRhdGlvbi9idWlsZC1kb2NkZXAucGVybApAQCAt
-NCw3ICs0LDcgQEAgbXkgJWluY2x1ZGUgPSAoKTsKIG15ICVpbmNsdWRlZCA9ICgpOwogCiBmb3Ig
-bXkgJHRleHQgKDwqLnR4dD4pIHsKLSAgICBvcGVuIEksICc8JywgJHRleHQgfHwgZGllICJjYW5u
-b3QgcmVhZDogJHRleHQiOworICAgIG9wZW4gSSwgIjwkdGV4dCIgfHwgZGllICJjYW5ub3QgcmVh
-ZDogJHRleHQiOwogICAgIHdoaWxlICg8ST4pIHsKIAlpZiAoL15pbmNsdWRlOjovKSB7CiAJICAg
-IGNob21wOwpkaWZmIC0tZ2l0IGEvZ2l0LWFubm90YXRlLnBlcmwgYi9naXQtYW5ub3RhdGUucGVy
-bAppbmRleCBhNmE3YTQ4Li42MjlmNDgwIDEwMDc1NQotLS0gYS9naXQtYW5ub3RhdGUucGVybAor
-KysgYi9naXQtYW5ub3RhdGUucGVybApAQCAtNiw3ICs2LDcgQEAgIwogIyBUaGlzIGZpbGUgaXMg
-bGljZW5zZWQgdW5kZXIgdGhlIEdQTCB2Miwgb3IgYSBsYXRlciB2ZXJzaW9uCiAjIGF0IHRoZSBk
-aXNjcmV0aW9uIG9mIExpbnVzIFRvcnZhbGRzLgogCi11c2Ugd2FybmluZ3M7CisjdXNlIHdhcm5p
-bmdzOwogdXNlIHN0cmljdDsKIHVzZSBHZXRvcHQ6Okxvbmc7CiB1c2UgUE9TSVggcXcoc3RyZnRp
-bWUgZ210aW1lKTsKQEAgLTI5LDcgKzI5LDcgQEAgc3ViIHVzYWdlKCkgewogCWV4aXQoMSk7CiB9
-CiAKLW91ciAoJGhlbHAsICRsb25ncmV2LCAkcmVuYW1lLCAkcmF3dGltZSwgJHN0YXJ0aW5nX3Jl
-diwgJHJldl9maWxlKSA9ICgwLCAwLCAxKTsKK215ICgkaGVscCwgJGxvbmdyZXYsICRyZW5hbWUs
-ICRyYXd0aW1lLCAkc3RhcnRpbmdfcmV2LCAkcmV2X2ZpbGUpID0gKDAsIDAsIDEpOwogCiBteSAk
-cmMgPSBHZXRPcHRpb25zKAkibG9uZ3xsIiA9PiBcJGxvbmdyZXYsCiAJCQkidGltZXx0IiA9PiBc
-JHJhd3RpbWUsCkBAIC01MiwxMiArNTIsMTIgQEAgbXkgQHN0YWNrID0gKAogCX0sCiApOwogCi1v
-dXIgQGZpbGVsaW5lcyA9ICgpOworbXkgQGZpbGVsaW5lcyA9ICgpOwogCiBpZiAoZGVmaW5lZCAk
-c3RhcnRpbmdfcmV2KSB7CiAJQGZpbGVsaW5lcyA9IGdpdF9jYXRfZmlsZSgkc3RhcnRpbmdfcmV2
-LCAkZmlsZW5hbWUpOwogfSBlbHNlIHsKLQlvcGVuKEYsIjwiLCRmaWxlbmFtZSkKKwlvcGVuKEYs
-IjwkZmlsZW5hbWUiKQogCQlvciBkaWUgIkZhaWxlZCB0byBvcGVuIGZpbGVuYW1lOiAkISI7CiAK
-IAl3aGlsZSg8Rj4pIHsKQEAgLTY4LDkgKzY4LDkgQEAgaWYgKGRlZmluZWQgJHN0YXJ0aW5nX3Jl
-dikgewogCiB9CiAKLW91ciAlcmV2czsKLW91ciBAcmV2cXVldWU7Ci1vdXIgJGhlYWQ7CitteSAl
-cmV2czsKK215IEByZXZxdWV1ZTsKK215ICRoZWFkOwogCiBteSAkcmV2c3Byb2Nlc3NlZCA9IDA7
-CiB3aGlsZSAobXkgJGJvdW5kID0gcG9wIEBzdGFjaykgewpAQCAtNDM2LDE0ICs0MzYsMTMgQEAg
-c3ViIGZvcm1hdF9kYXRlIHsKICMgQ29waWVkIGZyb20gZ2l0LXNlbmQtZW1haWwucGVybCAtIFdl
-IG5lZWQgYSBHaXQucG0gbW9kdWxlLi4KIHN1YiBnaXR2YXIgewogICAgIG15ICgkdmFyKSA9IEBf
-OwotICAgIG15ICRmaDsKLSAgICBteSAkcGlkID0gb3BlbigkZmgsICctfCcpOworICAgIG15ICRw
-aWQgPSBvcGVuKEZILCAnLXwnKTsKICAgICBkaWUgIiQhIiB1bmxlc3MgZGVmaW5lZCAkcGlkOwog
-ICAgIGlmICghJHBpZCkgewogCWV4ZWMoJ2dpdC12YXInLCAkdmFyKSBvciBkaWUgIiQhIjsKICAg
-ICB9Ci0gICAgbXkgKCR2YWwpID0gPCRmaD47Ci0gICAgY2xvc2UgJGZoIG9yIGRpZSAiJCEiOwor
-ICAgIG15ICgkdmFsKSA9IDxGSD47CisgICAgY2xvc2UgRkggb3IgZGllICIkISI7CiAgICAgY2hv
-bXAoJHZhbCk7CiAgICAgcmV0dXJuICR2YWw7CiB9CkBAIC00NzEsNyArNDcwLDcgQEAgc3ViIG9w
-ZW5fcGlwZV9hY3RpdmVzdGF0ZSB7CiBzdWIgb3Blbl9waXBlX25vcm1hbCB7CiAJbXkgKEBleGVj
-bGlzdCkgPSBAXzsKIAotCW15ICRwaWQgPSBvcGVuIG15ICRraWQsICItfCI7CisJbXkgJHBpZCA9
-IG9wZW4gS0lELCAiLXwiOwogCWRlZmluZWQgJHBpZCBvciBkaWUgIkNhbm5vdCBmb3JrOiAkISI7
-CiAKIAl1bmxlc3MgKCRwaWQpIHsKQEAgLTQ3OSw3ICs0NzgsNyBAQCBzdWIgb3Blbl9waXBlX25v
-cm1hbCB7CiAJCWRpZSAiQ2Fubm90IGV4ZWMgQGV4ZWNsaXN0OiAkISI7CiAJfQogCi0JcmV0dXJu
-ICRraWQ7CisJcmV0dXJuICpLSUQ7CiB9CiAKIHBhY2thZ2UgR2l0OjpBY3RpdmVTdGF0ZVBpcGU7
-CmRpZmYgLS1naXQgYS9naXQtY2xvbmUuc2ggYi9naXQtY2xvbmUuc2gKaW5kZXggNDdiZDhlNy4u
-NDMwYzg5MiAxMDA3NTUKLS0tIGEvZ2l0LWNsb25lLnNoCisrKyBiL2dpdC1jbG9uZS5zaApAQCAt
-NzEsMTcgKzcxLDE3IEBAIHN1YiBzdG9yZSB7CiAJbXkgKCRzaGExLCAkbmFtZSwgJHRvcCkgPSBA
-XzsKIAkkbmFtZSA9ICIkZ2l0X2Rpci9yZWZzLyR0b3AvJG5hbWUiOwogCW1rcGF0aChkaXJuYW1l
-KCRuYW1lKSk7Ci0Jb3BlbiBPLCAiPiIsICIkbmFtZSI7CisJb3BlbiBPLCAiPiRuYW1lIjsKIAlw
-cmludCBPICIkc2hhMVxuIjsKIAljbG9zZSBPOwogfQogCi1vcGVuIEZILCAiPCIsICIkZ2l0X2Rp
-ci9DTE9ORV9IRUFEIjsKK29wZW4gRkgsICI8JGdpdF9kaXIvQ0xPTkVfSEVBRCI7CiB3aGlsZSAo
-PEZIPikgewogCW15ICgkc2hhMSwgJG5hbWUpID0gL14oWzAtOWEtZl17NDB9KVxzKC4qKSQvOwog
-CW5leHQgaWYgKCRuYW1lID1+IC9cXlwxNzMvKTsKIAlpZiAoJG5hbWUgZXEgIkhFQUQiKSB7Ci0J
-CW9wZW4gTywgIj4iLCAiJGdpdF9kaXIvUkVNT1RFX0hFQUQiOworCQlvcGVuIE8sICI+JGdpdF9k
-aXIvUkVNT1RFX0hFQUQiOwogCQlwcmludCBPICIkc2hhMVxuIjsKIAkJY2xvc2UgTzsKIAkJbmV4
-dDsKZGlmZiAtLWdpdCBhL2dpdC1tdi5wZXJsIGIvZ2l0LW12LnBlcmwKaW5kZXggNzVhYThmZS4u
-N2FjZWViOCAxMDA3NTUKLS0tIGEvZ2l0LW12LnBlcmwKKysrIGIvZ2l0LW12LnBlcmwKQEAgLTcs
-NyArNyw3IEBAICMgVGhpcyBmaWxlIGlzIGxpY2Vuc2VkIHVuZGVyIHRoZSBHUEwgdjIKICMgYXQg
-dGhlIGRpc2NyZXRpb24gb2YgTGludXMgVG9ydmFsZHMuCiAKIAotdXNlIHdhcm5pbmdzOworI3Vz
-ZSB3YXJuaW5nczsKIHVzZSBzdHJpY3Q7CiB1c2UgR2V0b3B0OjpTdGQ7CiAKQEAgLTE5LDcgKzE5
-LDcgQEAgRU9UCiAJZXhpdCgxKTsKIH0KIAotb3VyICgkb3B0X24sICRvcHRfZiwgJG9wdF9oLCAk
-b3B0X2ssICRvcHRfdik7CitteSAoJG9wdF9uLCAkb3B0X2YsICRvcHRfaCwgJG9wdF9rLCAkb3B0
-X3YpOwogZ2V0b3B0cygiaG5ma3YiKSB8fCB1c2FnZTsKIHVzYWdlKCkgaWYgJG9wdF9oOwogQEFS
-R1YgPj0gMSBvciB1c2FnZTsKZGlmZiAtLWdpdCBhL2dpdC1zZW5kLWVtYWlsLnBlcmwgYi9naXQt
-c2VuZC1lbWFpbC5wZXJsCmluZGV4IGM1ZDllNzMuLmU2NzBmMjggMTAwNzU1Ci0tLSBhL2dpdC1z
-ZW5kLWVtYWlsLnBlcmwKKysrIGIvZ2l0LXNlbmQtZW1haWwucGVybApAQCAtMTcsNyArMTcsNyBA
-QCAjICAgIGFuZCBzZWNvbmQgbGluZSBpcyB0aGUgc3ViamVjdCBvZiB0CiAjCiAKIHVzZSBzdHJp
-Y3Q7Ci11c2Ugd2FybmluZ3M7CisjdXNlIHdhcm5pbmdzOwogdXNlIFRlcm06OlJlYWRMaW5lOwog
-dXNlIEdldG9wdDo6TG9uZzsKIHVzZSBEYXRhOjpEdW1wZXI7CkBAIC04MywxNCArODMsMTMgQEAg
-IyBOb3csIGxldCdzIGZpbGwgYW55IHRoYXQgYXJlbid0IHNldCBpbgogCiBzdWIgZ2l0dmFyIHsK
-ICAgICBteSAoJHZhcikgPSBAXzsKLSAgICBteSAkZmg7Ci0gICAgbXkgJHBpZCA9IG9wZW4oJGZo
-LCAnLXwnKTsKKyAgICBteSAkcGlkID0gb3BlbihGSCwgJy18Jyk7CiAgICAgZGllICIkISIgdW5s
-ZXNzIGRlZmluZWQgJHBpZDsKICAgICBpZiAoISRwaWQpIHsKIAlleGVjKCdnaXQtdmFyJywgJHZh
-cikgb3IgZGllICIkISI7CiAgICAgfQotICAgIG15ICgkdmFsKSA9IDwkZmg+OwotICAgIGNsb3Nl
-ICRmaCBvciBkaWUgIiQhIjsKKyAgICBteSAoJHZhbCkgPSA8Rkg+OworICAgIGNsb3NlIEZIIG9y
-IGRpZSAiJCEiOwogICAgIGNob21wKCR2YWwpOwogICAgIHJldHVybiAkdmFsOwogfQpAQCAtMTM0
-LDcgKzEzMyw3IEBAIG15ICVwYXJzZV9hbGlhcyA9ICgKIAogaWYgKEBhbGlhc19maWxlcyAmJiBk
-ZWZpbmVkICRwYXJzZV9hbGlhc3skYWxpYXNmaWxldHlwZX0pIHsKIAlmb3JlYWNoIG15ICRmaWxl
-IChAYWxpYXNfZmlsZXMpIHsKLQkJb3BlbiBteSAkZmgsICc8JywgJGZpbGUgb3IgZGllICJvcGVu
-aW5nICRmaWxlOiAkIVxuIjsKKwkJb3BlbiBteSAkZmgsICI8JGZpbGUiIG9yIGRpZSAib3Blbmlu
-ZyAkZmlsZTogJCFcbiI7CiAJCSRwYXJzZV9hbGlhc3skYWxpYXNmaWxldHlwZX0tPigkZmgpOwog
-CQljbG9zZSAkZmg7CiAJfQpAQCAtMjA5LDcgKzIwOCw3IEBAIGlmICghJHNtdHBfc2VydmVyKSB7
-CiBpZiAoJGNvbXBvc2UpIHsKIAkjIE5vdGUgdGhhdCB0aGlzIGRvZXMgbm90IG5lZWQgdG8gYmUg
-c2VjdXJlLCBidXQgd2Ugd2lsbCBtYWtlIGEgc21hbGwKIAkjIGVmZm9ydCB0byBoYXZlIGl0IGJl
-IHVuaXF1ZQotCW9wZW4oQywiPiIsJGNvbXBvc2VfZmlsZW5hbWUpCisJb3BlbihDLCI+JGNvbXBv
-c2VfZmlsZW5hbWUiKQogCQlvciBkaWUgIkZhaWxlZCB0byBvcGVuIGZvciB3cml0aW5nICRjb21w
-b3NlX2ZpbGVuYW1lOiAkISI7CiAJcHJpbnQgQyAiRnJvbSAkZnJvbSAjIFRoaXMgbGluZSBpcyBp
-Z25vcmVkLlxuIjsKIAlwcmludGYgQyAiU3ViamVjdDogJXNcblxuIiwgJGluaXRpYWxfc3ViamVj
-dDsKQEAgLTIyNiwxMCArMjI1LDEwIEBAIEVPVAogCSRlZGl0b3IgPSAndmknIHVubGVzcyBkZWZp
-bmVkICRlZGl0b3I7CiAJc3lzdGVtKCRlZGl0b3IsICRjb21wb3NlX2ZpbGVuYW1lKTsKIAotCW9w
-ZW4oQzIsIj4iLCRjb21wb3NlX2ZpbGVuYW1lIC4gIi5maW5hbCIpCisJb3BlbihDMiwiPiRjb21w
-b3NlX2ZpbGVuYW1lIiAuICIuZmluYWwiKQogCQlvciBkaWUgIkZhaWxlZCB0byBvcGVuICRjb21w
-b3NlX2ZpbGVuYW1lLmZpbmFsIDogIiAuICQhOwogCi0Jb3BlbihDLCI8IiwkY29tcG9zZV9maWxl
-bmFtZSkKKwlvcGVuKEMsIjwkY29tcG9zZV9maWxlbmFtZSIpCiAJCW9yIGRpZSAiRmFpbGVkIHRv
-IG9wZW4gJGNvbXBvc2VfZmlsZW5hbWUgOiAiIC4gJCE7CiAKIAl3aGlsZSg8Qz4pIHsKQEAgLTMy
-Miw3ICszMjEsNyBAQCBFT1QKIH0KIAogIyBWYXJpYWJsZXMgd2Ugc2V0IGFzIHBhcnQgb2YgdGhl
-IGxvb3Agb3ZlciBmaWxlcwotb3VyICgkbWVzc2FnZV9pZCwgJGNjLCAlbWFpbCwgJHN1YmplY3Qs
-ICRyZXBseV90bywgJHJlZmVyZW5jZXMsICRtZXNzYWdlKTsKK215ICgkbWVzc2FnZV9pZCwgJGNj
-LCAlbWFpbCwgJHN1YmplY3QsICRyZXBseV90bywgJHJlZmVyZW5jZXMsICRtZXNzYWdlKTsKIAog
-c3ViIGV4dHJhY3RfdmFsaWRfYWRkcmVzcyB7CiAJbXkgJGFkZHJlc3MgPSBzaGlmdDsKQEAgLTM5
-NiwxNSArMzk1LDE1IEBAIFgtTWFpbGVyOiBnaXQtc2VuZC1lbWFpbCAkZ2l0dmVyc2lvbgogCX0K
-IAogCWlmICgkc210cF9zZXJ2ZXIgPX4gbSNeLyMpIHsKLQkJbXkgJHBpZCA9IG9wZW4gbXkgJHNt
-LCAnfC0nOworCQlteSAkcGlkID0gb3BlbiBTTSwgJ3wtJzsKIAkJZGVmaW5lZCAkcGlkIG9yIGRp
-ZSAkITsKIAkJaWYgKCEkcGlkKSB7CiAJCQlleGVjKCRzbXRwX3NlcnZlciwnLWknLAogCQkJICAg
-ICBtYXAgeyBleHRyYWN0X3ZhbGlkX2FkZHJlc3MoJF8pIH0KIAkJCSAgICAgQHJlY2lwaWVudHMp
-IG9yIGRpZSAkITsKIAkJfQotCQlwcmludCAkc20gIiRoZWFkZXJcbiRtZXNzYWdlIjsKLQkJY2xv
-c2UgJHNtIG9yIGRpZSAkPzsKKwkJcHJpbnQgU00gIiRoZWFkZXJcbiRtZXNzYWdlIjsKKwkJY2xv
-c2UgU00gb3IgZGllICQ/OwogCX0gZWxzZSB7CiAJCXJlcXVpcmUgTmV0OjpTTVRQOwogCQkkc210
-cCB8fD0gTmV0OjpTTVRQLT5uZXcoICRzbXRwX3NlcnZlciApOwpAQCAtNDQwLDcgKzQzOSw3IEBA
-IG1ha2VfbWVzc2FnZV9pZCgpOwogJHN1YmplY3QgPSAkaW5pdGlhbF9zdWJqZWN0OwogCiBmb3Jl
-YWNoIG15ICR0IChAZmlsZXMpIHsKLQlvcGVuKEYsIjwiLCR0KSBvciBkaWUgImNhbid0IG9wZW4g
-ZmlsZSAkdCI7CisJb3BlbihGLCI8JHQiKSBvciBkaWUgImNhbid0IG9wZW4gZmlsZSAkdCI7CiAK
-IAlteSAkYXV0aG9yX25vdF9zZW5kZXIgPSB1bmRlZjsKIAlAY2MgPSBAaW5pdGlhbF9jYzsKZGlm
-ZiAtLWdpdCBhL2dpdC1zaG9ydGxvZy5wZXJsIGIvZ2l0LXNob3J0bG9nLnBlcmwKaW5kZXggMGIx
-NGY4My4uNTc2MDRkZCAxMDA3NTUKLS0tIGEvZ2l0LXNob3J0bG9nLnBlcmwKKysrIGIvZ2l0LXNo
-b3J0bG9nLnBlcmwKQEAgLTEyOCw3ICsxMjgsNyBAQCBzdWIgc2V0dXBfbWFpbG1hcCB7CiAJcmVh
-ZF9tYWlsbWFwKFwqREFUQSwgXCVtYWlsbWFwKTsKIAlpZiAoLWYgJy5tYWlsbWFwJykgewogCQlt
-eSAkZmggPSB1bmRlZjsKLQkJb3BlbiAkZmgsICc8JywgJy5tYWlsbWFwJzsKKwkJb3BlbiAkZmgs
-ICc8Lm1haWxtYXAnOwogCQlyZWFkX21haWxtYXAoJGZoLCBcJW1haWxtYXApOwogCQljbG9zZSAk
-Zmg7CiAJfQotLSAKMS40LjEKCg==
+bW9uLmNvLnVrPgpEYXRlOiBTdW4sIDMwIEp1bCAyMDA2IDIyOjQyOjI1ICswMTAwClN1YmplY3Q6
+IFtQQVRDSCA5LzEwXSBSZW1vdmUgY21kX3VzYWdlKCkgcm91dGluZSBhbmQgcmUtb3JnYW5pemUg
+dGhlIGhlbHAvdXNhZ2UgY29kZS4KClRoZSBjbWRfdXNhZ2UoKSByb3V0aW5lIHdhcyBjYXVzaW5n
+IHdhcm5pbmcgbWVzc2FnZXMgZHVlIHRvIGEgTlVMTApmb3JtYXQgcGFyYW1ldGVyIGJlaW5nIHBh
+c3NlZCBpbiB0aHJlZSBvdXQgb2YgZm91ciBjYWxscy4gVGhpcyBpcyBhCnByb2JsZW0gaWYgeW91
+IHdhbnQgdG8gY29tcGlsZSB3aXRoIC1XZXJyb3IuIEEgc2ltcGxlIHNvbHV0aW9uIGlzIHRvCnNp
+bXBseSByZW1vdmUgdGhlIEdOVSBfX2F0dHJpYnV0ZV9fIGZvcm1hdCBwcmFnbWEgZnJvbSB0aGUg
+Y21kX3VzYWdlKCkKZGVjbGFyYXRpb24gaW4gdGhlIGhlYWRlciBmaWxlLiBUaGUgZnVuY3Rpb24g
+aW50ZXJmYWNlIHdhcyBzb21ld2hhdAptdWRkbGVkIGFueXdheSwgc28gcmUtd3JpdGUgdGhlIGNv
+ZGUgdG8gZmluZXNzZSB0aGUgcHJvYmxlbS4KClNpZ25lZC1vZmYtYnk6IFJhbXNheSBBbGxhbiBK
+b25lcyA8cmFtc2F5QHJhbXNheTEuZGVtb24uY28udWs+Ci0tLQogYnVpbHRpbi1oZWxwLmMgfCAg
+IDU0ICsrKysrKysrKysrKysrKysrKysrKysrLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LQogYnVpbHRpbi5oICAgICAgfCAgICA3ICsrLS0tLS0KIGdpdC5jICAgICAgICAgIHwgICAgNyAr
+KysrKy0tCiAzIGZpbGVzIGNoYW5nZWQsIDMwIGluc2VydGlvbnMoKyksIDM4IGRlbGV0aW9ucygt
+KQoKZGlmZiAtLWdpdCBhL2J1aWx0aW4taGVscC5jIGIvYnVpbHRpbi1oZWxwLmMKaW5kZXggNzQ3
+MGZhYS4uMDA2ZGEwNSAxMDA2NDQKLS0tIGEvYnVpbHRpbi1oZWxwLmMKKysrIGIvYnVpbHRpbi1o
+ZWxwLmMKQEAgLTksOCArOSw2IEBAICNpbmNsdWRlICJidWlsdGluLmgiCiAjaW5jbHVkZSAiZXhl
+Y19jbWQuaCIKICNpbmNsdWRlICJjb21tb24tY21kcy5oIgogCi1zdGF0aWMgY29uc3QgY2hhciBn
+aXRfdXNhZ2VbXSA9Ci0JIlVzYWdlOiBnaXQgWy0tdmVyc2lvbl0gWy0tZXhlYy1wYXRoWz1HSVRf
+RVhFQ19QQVRIXV0gWy0taGVscF0gQ09NTUFORCBbIEFSR1MgXSI7CiAKIC8qIG1vc3QgZ3VpIHRl
+cm1zIHNldCBDT0xVTU5TIChhbHRob3VnaCBzb21lIGRvbid0IGV4cG9ydCBpdCkgKi8KIHN0YXRp
+YyBpbnQgdGVybV9jb2x1bW5zKHZvaWQpCkBAIC0xNzgsMzEgKzE3Niw2IEBAIHN0YXRpYyB2b2lk
+IGxpc3RfY29tbW9uX2NtZHNfaGVscCh2b2lkKQogCXB1dHMoIih1c2UgJ2dpdCBoZWxwIC1hJyB0
+byBnZXQgYSBsaXN0IG9mIGFsbCBpbnN0YWxsZWQgZ2l0IGNvbW1hbmRzKSIpOwogfQogCi12b2lk
+IGNtZF91c2FnZShpbnQgc2hvd19hbGwsIGNvbnN0IGNoYXIgKmV4ZWNfcGF0aCwgY29uc3QgY2hh
+ciAqZm10LCAuLi4pCi17Ci0JaWYgKGZtdCkgewotCQl2YV9saXN0IGFwOwotCi0JCXZhX3N0YXJ0
+KGFwLCBmbXQpOwotCQlwcmludGYoImdpdDogIik7Ci0JCXZwcmludGYoZm10LCBhcCk7Ci0JCXZh
+X2VuZChhcCk7Ci0JCXB1dGNoYXIoJ1xuJyk7Ci0JfQotCWVsc2UKLQkJcHV0cyhnaXRfdXNhZ2Up
+OwotCi0JaWYgKGV4ZWNfcGF0aCkgewotCQlwdXRjaGFyKCdcbicpOwotCQlpZiAoc2hvd19hbGwp
+Ci0JCQlsaXN0X2NvbW1hbmRzKGV4ZWNfcGF0aCwgImdpdC0qIik7Ci0JCWVsc2UKLQkJCWxpc3Rf
+Y29tbW9uX2NtZHNfaGVscCgpOwotICAgICAgICB9Ci0KLQlleGl0KDEpOwotfQotCiBzdGF0aWMg
+dm9pZCBzaG93X21hbl9wYWdlKGNvbnN0IGNoYXIgKmdpdF9jbWQpCiB7CiAJY29uc3QgY2hhciAq
+cGFnZTsKQEAgLTIyMSw2ICsxOTQsMTMgQEAgc3RhdGljIHZvaWQgc2hvd19tYW5fcGFnZShjb25z
+dCBjaGFyICpnaQogCWV4ZWNscCgibWFuIiwgIm1hbiIsIHBhZ2UsIE5VTEwpOwogfQogCit2b2lk
+IGhlbHBfdW5rbm93bl9jbWQoY29uc3QgY2hhciAqY21kKQoreworCXByaW50ZigiZ2l0OiAnJXMn
+IGlzIG5vdCBhIGdpdC1jb21tYW5kXG5cbiIsIGNtZCk7CisJbGlzdF9jb21tb25fY21kc19oZWxw
+KCk7CisJZXhpdCgxKTsKK30KKwogaW50IGNtZF92ZXJzaW9uKGludCBhcmdjLCBjb25zdCBjaGFy
+ICoqYXJndiwgY2hhciAqKmVudnApCiB7CiAJcHJpbnRmKCJnaXQgdmVyc2lvbiAlc1xuIiwgZ2l0
+X3ZlcnNpb25fc3RyaW5nKTsKQEAgLTIzMCwxMiArMjEwLDI0IEBAIGludCBjbWRfdmVyc2lvbihp
+bnQgYXJnYywgY29uc3QgY2hhciAqKmEKIGludCBjbWRfaGVscChpbnQgYXJnYywgY29uc3QgY2hh
+ciAqKmFyZ3YsIGNoYXIgKiplbnZwKQogewogCWNvbnN0IGNoYXIgKmhlbHBfY21kID0gYXJndlsx
+XTsKLQlpZiAoIWhlbHBfY21kKQotCQljbWRfdXNhZ2UoMCwgZ2l0X2V4ZWNfcGF0aCgpLCBOVUxM
+KTsKLQllbHNlIGlmICghc3RyY21wKGhlbHBfY21kLCAiLS1hbGwiKSB8fCAhc3RyY21wKGhlbHBf
+Y21kLCAiLWEiKSkKLQkJY21kX3VzYWdlKDEsIGdpdF9leGVjX3BhdGgoKSwgTlVMTCk7CisJY29u
+c3QgY2hhciAqZXhlY19wYXRoID0gZ2l0X2V4ZWNfcGF0aCgpOworCisJaWYgKCFoZWxwX2NtZCkg
+eworCQlwcmludGYoInVzYWdlOiAlc1xuXG4iLCBnaXRfdXNhZ2Vfc3RyaW5nKTsKKwkJbGlzdF9j
+b21tb25fY21kc19oZWxwKCk7CisJCWV4aXQoMSk7CisJfQorCisJZWxzZSBpZiAoIXN0cmNtcCho
+ZWxwX2NtZCwgIi0tYWxsIikgfHwgIXN0cmNtcChoZWxwX2NtZCwgIi1hIikpIHsKKwkJcHJpbnRm
+KCJ1c2FnZTogJXNcblxuIiwgZ2l0X3VzYWdlX3N0cmluZyk7CisJCWlmKGV4ZWNfcGF0aCkKKwkJ
+CWxpc3RfY29tbWFuZHMoZXhlY19wYXRoLCAiZ2l0LSoiKTsKKwkJZXhpdCgxKTsKKwl9CisKIAll
+bHNlCiAJCXNob3dfbWFuX3BhZ2UoaGVscF9jbWQpOworCiAJcmV0dXJuIDA7CiB9CiAKZGlmZiAt
+LWdpdCBhL2J1aWx0aW4uaCBiL2J1aWx0aW4uaAppbmRleCA3YmZmZjExLi5iNmNmNWJlIDEwMDY0
+NAotLS0gYS9idWlsdGluLmgKKysrIGIvYnVpbHRpbi5oCkBAIC01LDEyICs1LDkgQEAgI2luY2x1
+ZGUgPHN0ZGlvLmg+CiAjaW5jbHVkZSA8bGltaXRzLmg+CiAKIGV4dGVybiBjb25zdCBjaGFyIGdp
+dF92ZXJzaW9uX3N0cmluZ1tdOworZXh0ZXJuIGNvbnN0IGNoYXIgZ2l0X3VzYWdlX3N0cmluZ1td
+OwogCi12b2lkIGNtZF91c2FnZShpbnQgc2hvd19hbGwsIGNvbnN0IGNoYXIgKmV4ZWNfcGF0aCwg
+Y29uc3QgY2hhciAqZm10LCAuLi4pCi0jaWZkZWYgX19HTlVDX18KLQlfX2F0dHJpYnV0ZV9fKChf
+X2Zvcm1hdF9fKF9fcHJpbnRmX18sIDMsIDQpLCBfX25vcmV0dXJuX18pKQotI2VuZGlmCi0JOwor
+ZXh0ZXJuIHZvaWQgaGVscF91bmtub3duX2NtZChjb25zdCBjaGFyICpjbWQpOwogCiBleHRlcm4g
+aW50IGNtZF9oZWxwKGludCBhcmdjLCBjb25zdCBjaGFyICoqYXJndiwgY2hhciAqKmVudnApOwog
+ZXh0ZXJuIGludCBjbWRfdmVyc2lvbihpbnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsIGNoYXIg
+KiplbnZwKTsKZGlmZiAtLWdpdCBhL2dpdC5jIGIvZ2l0LmMKaW5kZXggY2E4OTYxZi4uZjQxNGRm
+OSAxMDA2NDQKLS0tIGEvZ2l0LmMKKysrIGIvZ2l0LmMKQEAgLTE0LDYgKzE0LDkgQEAgI2luY2x1
+ZGUgImNhY2hlLmgiCiAKICNpbmNsdWRlICJidWlsdGluLmgiCiAKK2NvbnN0IGNoYXIgZ2l0X3Vz
+YWdlX3N0cmluZ1tdID0KKwkiZ2l0IFstLXZlcnNpb25dIFstLWV4ZWMtcGF0aFs9R0lUX0VYRUNf
+UEFUSF1dIFstLWhlbHBdIENPTU1BTkQgWyBBUkdTIF0iOworCiBzdGF0aWMgdm9pZCBwcmVwZW5k
+X3RvX3BhdGgoY29uc3QgY2hhciAqZGlyLCBpbnQgbGVuKQogewogCWNvbnN0IGNoYXIgKm9sZF9w
+YXRoID0gZ2V0ZW52KCJQQVRIIik7CkBAIC0yNzksNyArMjgyLDcgQEAgaW50IG1haW4oaW50IGFy
+Z2MsIGNvbnN0IGNoYXIgKiphcmd2LCBjaAogCQkJcHV0cyhnaXRfZXhlY19wYXRoKCkpOwogCQkJ
+ZXhpdCgwKTsKIAkJfQotCQljbWRfdXNhZ2UoMCwgTlVMTCwgTlVMTCk7CisJCXVzYWdlKGdpdF91
+c2FnZV9zdHJpbmcpOwogCX0KIAlhcmd2WzBdID0gY21kOwogCkBAIC0zMTIsNyArMzE1LDcgQEAg
+aW50IG1haW4oaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2LCBjaAogCX0KIAogCWlmIChlcnJu
+byA9PSBFTk9FTlQpCi0JCWNtZF91c2FnZSgwLCBleGVjX3BhdGgsICInJXMnIGlzIG5vdCBhIGdp
+dC1jb21tYW5kIiwgY21kKTsKKwkJaGVscF91bmtub3duX2NtZChjbWQpOwogCiAJZnByaW50Zihz
+dGRlcnIsICJGYWlsZWQgdG8gcnVuIGNvbW1hbmQgJyVzJzogJXNcbiIsCiAJCWNtZCwgc3RyZXJy
+b3IoZXJybm8pKTsKLS0gCjEuNC4xCgo=
 
-------=_NextPart_000_00C7_01C6B5D7.E56A8FC0--
+------=_NextPart_000_00C3_01C6B5D7.E24E0D80--
