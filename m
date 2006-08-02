@@ -1,56 +1,81 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: Re: [PATCH] gitweb: use single quotes for values replaced by the Makefile
-Date: Wed, 2 Aug 2006 22:57:07 +0200
-Message-ID: <E1G8Nm7-0007bC-7d@moooo.ath.cx>
-References: <20060802192333.GA30861@coredump.intra.peff.net> <E1G8N9c-0004GK-Gz@moooo.ath.cx> <7vmzamuaj6.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: require $ENV{'GITWEB_CONFIG'}
+Date: Wed, 02 Aug 2006 13:58:33 -0700
+Message-ID: <7vhd0uua6e.fsf@assigned-by-dhcp.cox.net>
+References: <20060802192333.GA30861@coredump.intra.peff.net>
+	<E1G8NLU-0006TL-J7@moooo.ath.cx>
+	<20060802205033.GB15678@sigio.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 02 22:57:28 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 02 22:58:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8NmJ-0003fi-2B
-	for gcvg-git@gmane.org; Wed, 02 Aug 2006 22:57:19 +0200
+	id 1G8NnZ-000413-F1
+	for gcvg-git@gmane.org; Wed, 02 Aug 2006 22:58:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751199AbWHBU5N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Aug 2006 16:57:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751227AbWHBU5N
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 16:57:13 -0400
-Received: from moooo.ath.cx ([85.116.203.178]:46772 "EHLO moooo.ath.cx")
-	by vger.kernel.org with ESMTP id S1751199AbWHBU5L (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Aug 2006 16:57:11 -0400
-To: Junio C Hamano <junkio@cox.net>
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vmzamuaj6.fsf@assigned-by-dhcp.cox.net>
+	id S932086AbWHBU6f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Aug 2006 16:58:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932088AbWHBU6f
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 16:58:35 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:58321 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S932086AbWHBU6e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Aug 2006 16:58:34 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060802205834.SOQ6303.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 2 Aug 2006 16:58:34 -0400
+To: Jeff King <peff@peff.net>
+In-Reply-To: <20060802205033.GB15678@sigio.intra.peff.net> (Jeff King's
+	message of "Wed, 2 Aug 2006 16:50:33 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24688>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> I understand that (1) "@@FOO@@" is problematic, (2) being able
-> to run gitweb/gitweb.perl while coming up with improvements is
-> nice, but (3) not being able to say "/etc/foo/$ENV{SITE_NAME}"
-> is quite a drawback on the deployment side.
-> 
-> So why don't we use something other than @@, perhaps "++FOO++"?
-That's the other way to solve this.  If there is no typical character
-for filenames which is handled different in double quotes this is fine
-for me too.
+Jeff King <peff@peff.net> writes:
 
-> I'm inclined to take these two patches:
-> 
->     gitweb: optionally read config from GITWEB_CONFIG (Jeff King)
->     gitweb: require $ENV{'GITWEB_CONFIG'} (Matthias Lederhofer)
-The suggestion by Jeff King to use
-our $GITWEB_CONFIG = $ENV{GITWEB_CONFIG} || '@@GITWEB_CONFIG@@';
-sounds reasonable too.
+> I think this patch is a good idea, but it seems confusing to have two
+> Maybe the environment should trump the built-in
+> default:
+>   our $GITWEB_CONFIG = $ENV{GITWEB_CONFIG} || '@@GITWEB_CONFIG@@';
+> which actually might be a reasonable thing for all of the config
+> directives (so people can use a config file, apache environment munging,
+> or the built-in defaults).
 
-> so on top of them something like this?
-[patch replacing @@ with ++]
+Sounds very sane.  So Matthias's patch now becomes something
+like this:
 
-Ack.
+-- >8 --
+diff --git a/gitweb/README b/gitweb/README
+index b91d42a..dc4b850 100644
+--- a/gitweb/README
++++ b/gitweb/README
+@@ -23,6 +23,11 @@ You can specify the following configurat
+    Points to the location where you put gitweb.css on your web server.
+  * GITWEB_LOGO
+    Points to the location where you put git-logo.png on your web server.
++ * GITWEB_CONFIG
++   This file will be loaded using 'require'.  If the environment
++   $GITWEB_CONFIG is set when gitweb.cgi is executed the file in the
++   environment variable will be loaded instead of the file
++   specified when gitweb.cgi was created.
+ 
+ Originally written by:
+   Kay Sievers <kay.sievers@vrfy.org>
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index d5b2de8..c7f13e7 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -63,6 +63,6 @@ our $mimetypes_file = undef;
+-our $GITWEB_CONFIG = "@@GITWEB_CONFIG@@";
++our $GITWEB_CONFIG = $ENV{'GITWEB_CONFIG'} || "@@GITWEB_CONFIG@@";
+ require $GITWEB_CONFIG if -e $GITWEB_CONFIG;
+ 
+ # version of the core git binary
+ our $git_version = qx($GIT --version) =~ m/git version (.*)$/ ? $1 : "unknown";
