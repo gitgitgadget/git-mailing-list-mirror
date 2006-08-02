@@ -1,30 +1,30 @@
 From: "Ramsay Jones" <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH 8/10] Fix some minor warnings to allow -Werror.
-Date: Wed, 2 Aug 2006 02:03:42 +0100
-Message-ID: <00be01c6b5cf$7f7e9e20$c47eedc1@ramsay1.demon.co.uk>
+Subject: [PATCH 6/10] Fix header breakage with _XOPEN_SOURCE.
+Date: Wed, 2 Aug 2006 02:03:39 +0100
+Message-ID: <00b601c6b5cf$7d54b940$c47eedc1@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: multipart/mixed;
-	boundary="----=_NextPart_000_00BF_01C6B5D7.E1430620"
-X-From: git-owner@vger.kernel.org Wed Aug 02 03:03:33 2006
+	boundary="----=_NextPart_000_00B7_01C6B5D7.DF192140"
+X-From: git-owner@vger.kernel.org Wed Aug 02 03:03:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G858y-00071U-Vk
-	for gcvg-git@gmane.org; Wed, 02 Aug 2006 03:03:29 +0200
+	id 1G858z-00071U-VZ
+	for gcvg-git@gmane.org; Wed, 02 Aug 2006 03:03:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750916AbWHBBDY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Aug 2006 21:03:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750917AbWHBBDY
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 21:03:24 -0400
-Received: from anchor-post-35.mail.demon.net ([194.217.242.85]:56073 "EHLO
+	id S1750909AbWHBBDU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Aug 2006 21:03:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750910AbWHBBDU
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 21:03:20 -0400
+Received: from anchor-post-35.mail.demon.net ([194.217.242.85]:52233 "EHLO
 	anchor-post-35.mail.demon.net") by vger.kernel.org with ESMTP
-	id S1750908AbWHBBDX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Aug 2006 21:03:23 -0400
+	id S1750908AbWHBBDT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Aug 2006 21:03:19 -0400
 Received: from ramsay1.demon.co.uk ([193.237.126.196])
 	by anchor-post-35.mail.demon.net with smtp (Exim 4.42)
-	id 1G858r-000C1I-Gp
-	for git@vger.kernel.org; Wed, 02 Aug 2006 01:03:22 +0000
+	id 1G858n-000C1I-Hv
+	for git@vger.kernel.org; Wed, 02 Aug 2006 01:03:19 +0000
 To: <git@vger.kernel.org>
 X-Priority: 3 (Normal)
 X-MSMail-Priority: Normal
@@ -34,77 +34,77 @@ Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24627>
 
 This is a multi-part message in MIME format.
 
-------=_NextPart_000_00BF_01C6B5D7.E1430620
+------=_NextPart_000_00B7_01C6B5D7.DF192140
 Content-Type: text/plain;
 	charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 
+convert-objects.c sets _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED before
+including <time.h>, in order to get the declaration of strptime().
+This leads to breakage in cache.h, due to S_ISLNK and S_IFLNK no longer
+being defined by <sys/stat.h>.  These definitions are protected by the
+__USE_BSD symbol, which is not set when _XOPEN_SOURCE is set.  Moving
+the #defines and #include <time.h> below all other #includes does not
+fix the problem, however, since now _USE_XOPEN, which protects the
+declaration of strptime(), is now not defined (don't ask!).
+
+The fix is to #define _GNU_SOURCE, which enables the definition of
+practically everything.
+
 Signed-off-by: Ramsay Allan Jones <ramsay@ramsay1.demon.co.uk>
 ---
- builtin-mailinfo.c |    3 ++-
- diff.c             |    1 +
- 2 files changed, 3 insertions(+), 1 deletions(-)
+ convert-objects.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-index 3e40747..bb5e7b7 100644
---- a/builtin-mailinfo.c
-+++ b/builtin-mailinfo.c
-@@ -531,7 +531,8 @@ static int decode_b_segment(char *in, ch
- static void convert_to_utf8(char *line, char *charset)
- {
- #ifndef NO_ICONV
--	char *in, *out;
-+	const char *in;
-+	char *out;
- 	size_t insize, outsize, nrc;
- 	char outbuf[4096]; /* cheat */
- 	static char latin_one[] = "latin1";
-diff --git a/diff.c b/diff.c
-index 5a71489..81630c0 100644
---- a/diff.c
-+++ b/diff.c
-@@ -614,6 +614,7 @@ static void emit_binary_diff(mmfile_t *o
- 	 * whichever is smaller.
- 	 */
- 	delta = NULL;
-+	orig_size = 0;
- 	deflated = deflate_it(two->ptr, two->size, &deflate_size);
- 	if (one->size && two->size) {
- 		delta = diff_delta(one->ptr, one->size,
+diff --git a/convert-objects.c b/convert-objects.c
+index 0fabd89..971ad6d 100644
+--- a/convert-objects.c
++++ b/convert-objects.c
+@@ -1,5 +1,6 @@
+ #define _XOPEN_SOURCE 500 /* glibc2 and AIX 5.3L need this */
+ #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
++#define _GNU_SOURCE
+ #include <time.h>
+ #include "cache.h"
+ #include "blob.h"
 -- 
 1.4.1
 
-------=_NextPart_000_00BF_01C6B5D7.E1430620
+------=_NextPart_000_00B7_01C6B5D7.DF192140
 Content-Type: text/plain;
-	name="P0008.TXT"
+	name="P0006.TXT"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment;
-	filename="P0008.TXT"
+	filename="P0006.TXT"
 
-RnJvbSAyNjJiNTc5MTdmZjAxZjc0Yzk1NjcwYWU1OWYxY2Q1OWE5MDI0MTM1IE1vbiBTZXAgMTcg
+RnJvbSA3MmY3NDVjNGMxZTM2NmEwZjFmYzc1ZWM4ZGE1NWEzY2ZiNTQ1N2M3IE1vbiBTZXAgMTcg
 MDA6MDA6MDAgMjAwMQpGcm9tOiBSYW1zYXkgQWxsYW4gSm9uZXMgPHJhbXNheUByYW1zYXkxLmRl
-bW9uLmNvLnVrPgpEYXRlOiBTdW4sIDMwIEp1bCAyMDA2IDE3OjA2OjI1ICswMTAwClN1YmplY3Q6
-IFtQQVRDSCA4LzEwXSBGaXggc29tZSBtaW5vciB3YXJuaW5ncyB0byBhbGxvdyAtV2Vycm9yLgoK
-U2lnbmVkLW9mZi1ieTogUmFtc2F5IEFsbGFuIEpvbmVzIDxyYW1zYXlAcmFtc2F5MS5kZW1vbi5j
-by51az4KLS0tCiBidWlsdGluLW1haWxpbmZvLmMgfCAgICAzICsrLQogZGlmZi5jICAgICAgICAg
-ICAgIHwgICAgMSArCiAyIGZpbGVzIGNoYW5nZWQsIDMgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlv
-bnMoLSkKCmRpZmYgLS1naXQgYS9idWlsdGluLW1haWxpbmZvLmMgYi9idWlsdGluLW1haWxpbmZv
-LmMKaW5kZXggM2U0MDc0Ny4uYmI1ZTdiNyAxMDA2NDQKLS0tIGEvYnVpbHRpbi1tYWlsaW5mby5j
-CisrKyBiL2J1aWx0aW4tbWFpbGluZm8uYwpAQCAtNTMxLDcgKzUzMSw4IEBAIHN0YXRpYyBpbnQg
-ZGVjb2RlX2Jfc2VnbWVudChjaGFyICppbiwgY2gKIHN0YXRpYyB2b2lkIGNvbnZlcnRfdG9fdXRm
-OChjaGFyICpsaW5lLCBjaGFyICpjaGFyc2V0KQogewogI2lmbmRlZiBOT19JQ09OVgotCWNoYXIg
-KmluLCAqb3V0OworCWNvbnN0IGNoYXIgKmluOworCWNoYXIgKm91dDsKIAlzaXplX3QgaW5zaXpl
-LCBvdXRzaXplLCBucmM7CiAJY2hhciBvdXRidWZbNDA5Nl07IC8qIGNoZWF0ICovCiAJc3RhdGlj
-IGNoYXIgbGF0aW5fb25lW10gPSAibGF0aW4xIjsKZGlmZiAtLWdpdCBhL2RpZmYuYyBiL2RpZmYu
-YwppbmRleCA1YTcxNDg5Li44MTYzMGMwIDEwMDY0NAotLS0gYS9kaWZmLmMKKysrIGIvZGlmZi5j
-CkBAIC02MTQsNiArNjE0LDcgQEAgc3RhdGljIHZvaWQgZW1pdF9iaW5hcnlfZGlmZihtbWZpbGVf
-dCAqbwogCSAqIHdoaWNoZXZlciBpcyBzbWFsbGVyLgogCSAqLwogCWRlbHRhID0gTlVMTDsKKwlv
-cmlnX3NpemUgPSAwOwogCWRlZmxhdGVkID0gZGVmbGF0ZV9pdCh0d28tPnB0ciwgdHdvLT5zaXpl
-LCAmZGVmbGF0ZV9zaXplKTsKIAlpZiAob25lLT5zaXplICYmIHR3by0+c2l6ZSkgewogCQlkZWx0
-YSA9IGRpZmZfZGVsdGEob25lLT5wdHIsIG9uZS0+c2l6ZSwKLS0gCjEuNC4xCgo=
+bW9uLmNvLnVrPgpEYXRlOiBTdW4sIDMwIEp1bCAyMDA2IDE2OjUyOjA5ICswMTAwClN1YmplY3Q6
+IFtQQVRDSCA2LzEwXSBGaXggaGVhZGVyIGJyZWFrYWdlIHdpdGggX1hPUEVOX1NPVVJDRS4KCmNv
+bnZlcnQtb2JqZWN0cy5jIHNldHMgX1hPUEVOX1NPVVJDRSBhbmQgX1hPUEVOX1NPVVJDRV9FWFRF
+TkRFRCBiZWZvcmUKaW5jbHVkaW5nIDx0aW1lLmg+LCBpbiBvcmRlciB0byBnZXQgdGhlIGRlY2xh
+cmF0aW9uIG9mIHN0cnB0aW1lKCkuClRoaXMgbGVhZHMgdG8gYnJlYWthZ2UgaW4gY2FjaGUuaCwg
+ZHVlIHRvIFNfSVNMTksgYW5kIFNfSUZMTksgbm8gbG9uZ2VyCmJlaW5nIGRlZmluZWQgYnkgPHN5
+cy9zdGF0Lmg+LiAgVGhlc2UgZGVmaW5pdGlvbnMgYXJlIHByb3RlY3RlZCBieSB0aGUKX19VU0Vf
+QlNEIHN5bWJvbCwgd2hpY2ggaXMgbm90IHNldCB3aGVuIF9YT1BFTl9TT1VSQ0UgaXMgc2V0LiAg
+TW92aW5nCnRoZSAjZGVmaW5lcyBhbmQgI2luY2x1ZGUgPHRpbWUuaD4gYmVsb3cgYWxsIG90aGVy
+ICNpbmNsdWRlcyBkb2VzIG5vdApmaXggdGhlIHByb2JsZW0sIGhvd2V2ZXIsIHNpbmNlIG5vdyBf
+VVNFX1hPUEVOLCB3aGljaCBwcm90ZWN0cyB0aGUKZGVjbGFyYXRpb24gb2Ygc3RycHRpbWUoKSwg
+aXMgbm93IG5vdCBkZWZpbmVkIChkb24ndCBhc2shKS4KClRoZSBmaXggaXMgdG8gI2RlZmluZSBf
+R05VX1NPVVJDRSwgd2hpY2ggZW5hYmxlcyB0aGUgZGVmaW5pdGlvbiBvZgpwcmFjdGljYWxseSBl
+dmVyeXRoaW5nLgoKU2lnbmVkLW9mZi1ieTogUmFtc2F5IEFsbGFuIEpvbmVzIDxyYW1zYXlAcmFt
+c2F5MS5kZW1vbi5jby51az4KLS0tCiBjb252ZXJ0LW9iamVjdHMuYyB8ICAgIDEgKwogMSBmaWxl
+cyBjaGFuZ2VkLCAxIGluc2VydGlvbnMoKyksIDAgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEv
+Y29udmVydC1vYmplY3RzLmMgYi9jb252ZXJ0LW9iamVjdHMuYwppbmRleCAwZmFiZDg5Li45NzFh
+ZDZkIDEwMDY0NAotLS0gYS9jb252ZXJ0LW9iamVjdHMuYworKysgYi9jb252ZXJ0LW9iamVjdHMu
+YwpAQCAtMSw1ICsxLDYgQEAKICNkZWZpbmUgX1hPUEVOX1NPVVJDRSA1MDAgLyogZ2xpYmMyIGFu
+ZCBBSVggNS4zTCBuZWVkIHRoaXMgKi8KICNkZWZpbmUgX1hPUEVOX1NPVVJDRV9FWFRFTkRFRCAx
+IC8qIEFJWCA1LjNMIG5lZWRzIHRoaXMgKi8KKyNkZWZpbmUgX0dOVV9TT1VSQ0UKICNpbmNsdWRl
+IDx0aW1lLmg+CiAjaW5jbHVkZSAiY2FjaGUuaCIKICNpbmNsdWRlICJibG9iLmgiCi0tIAoxLjQu
+MQoK
 
-------=_NextPart_000_00BF_01C6B5D7.E1430620--
+------=_NextPart_000_00B7_01C6B5D7.DF192140--
