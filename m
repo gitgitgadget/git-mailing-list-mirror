@@ -1,53 +1,87 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: What's in git.git
-Date: Wed, 2 Aug 2006 16:02:26 +0200
-Message-ID: <81b0412b0608020702q2fd4ec83ga43714c15538f7ad@mail.gmail.com>
-References: <7v1ws0xb9y.fsf@assigned-by-dhcp.cox.net>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] git-push: allow -f as an alias for --force
+Date: Wed, 2 Aug 2006 11:28:16 -0400
+Message-ID: <20060802152816.GA3923@coredump.intra.peff.net>
+References: <cc723f590608020133o3c960cf0v1546c59319253dc0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 02 16:03:02 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Aneesh Kumar <aneesh.kumar@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 02 17:28:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8HJI-0003dp-VB
-	for gcvg-git@gmane.org; Wed, 02 Aug 2006 16:02:57 +0200
+	id 1G8Idy-00079k-CJ
+	for gcvg-git@gmane.org; Wed, 02 Aug 2006 17:28:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750704AbWHBOC2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Aug 2006 10:02:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750771AbWHBOC2
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 10:02:28 -0400
-Received: from nf-out-0910.google.com ([64.233.182.191]:48020 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1750704AbWHBOC1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Aug 2006 10:02:27 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so647596nfa
-        for <git@vger.kernel.org>; Wed, 02 Aug 2006 07:02:26 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=L2W5jea/ZJCLJvWgUBC/syoOLEkRfZnc9TkIAHfryV0pC0HcqPWgxOgYt/1rJMTslJkcnNMM44XGCMoe0tlPDT0gIw7TRaG5nvjpF0CCS3TmU1n95i2xniUvlDu/3Zeza4RvxyGd6WPJ5G5zP1B1ooCxZYwKLAE/XcE4Wq/+MvU=
-Received: by 10.78.107.8 with SMTP id f8mr338210huc;
-        Wed, 02 Aug 2006 07:02:26 -0700 (PDT)
-Received: by 10.78.160.12 with HTTP; Wed, 2 Aug 2006 07:02:26 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7v1ws0xb9y.fsf@assigned-by-dhcp.cox.net>
+	id S1751199AbWHBP2T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Aug 2006 11:28:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751206AbWHBP2T
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 11:28:19 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:33236 "HELO
+	peff.net") by vger.kernel.org with SMTP id S1751199AbWHBP2S (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Aug 2006 11:28:18 -0400
+Received: (qmail 31842 invoked from network); 2 Aug 2006 11:27:42 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 2 Aug 2006 11:27:42 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed,  2 Aug 2006 11:28:16 -0400
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <cc723f590608020133o3c960cf0v1546c59319253dc0@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24649>
 
-On 8/2/06, Junio C Hamano <junkio@cox.net> wrote:
->   - Git.pm by Pasky with help from Pavel Roskin and others.
->
->     I'd like to merge this immediately after 1.4.2, unless there
->     still are concerns about its portability (in which case
->     please help fixing them up before this hits the "master"
->     branch).
+This was already documented in the options section of the manpage. This
+patch implements it, adds it to the usage message, and mentions it at the
+top of the manpage.
 
-Completely broken on ActiveState Perl and cygwin. Generated Makefile
-contains pathnames with backslashes and the whole file has
-CRLF line endings.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+On Wed, Aug 02, 2006 at 02:03:12PM +0530, Aneesh Kumar wrote:
+> The man page says -f is same as --force.  But the script doesn't seems
+> to handle this.
+
+ Documentation/git-push.txt |    2 +-
+ builtin-push.c             |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 56afd64..d4ae99f 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -8,7 +8,7 @@ git-push - Update remote refs along with
+ 
+ SYNOPSIS
+ --------
+-'git-push' [--all] [--tags] [--force] <repository> <refspec>...
++'git-push' [--all] [--tags] [-f | --force] <repository> <refspec>...
+ 
+ DESCRIPTION
+ -----------
+diff --git a/builtin-push.c b/builtin-push.c
+index a824171..c39dd1e 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -8,7 +8,7 @@ #include "builtin.h"
+ 
+ #define MAX_URI (16)
+ 
+-static const char push_usage[] = "git push [--all] [--tags] [--force] <repository> [<refspec>...]";
++static const char push_usage[] = "git push [--all] [--tags] [-f | --force] <repository> [<refspec>...]";
+ 
+ static int all = 0, tags = 0, force = 0, thin = 1;
+ static const char *execute = NULL;
+@@ -291,7 +291,7 @@ int cmd_push(int argc, const char **argv
+ 			tags = 1;
+ 			continue;
+ 		}
+-		if (!strcmp(arg, "--force")) {
++		if (!strcmp(arg, "--force") || !strcmp(arg, "-f")) {
+ 			force = 1;
+ 			continue;
+ 		}
+-- 
+1.4.2.rc2.g822a-dirty
