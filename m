@@ -1,49 +1,52 @@
-From: carbonated beverage <ramune@net-ronin.org>
-Subject: Re: What's in git.git
-Date: Wed, 2 Aug 2006 12:29:22 -0700
-Message-ID: <20060802192922.GA30539@prophet.net-ronin.org>
-References: <7v1ws0xb9y.fsf@assigned-by-dhcp.cox.net>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: [PATCH] gitweb.cgi: Customization
+Date: Wed, 2 Aug 2006 21:40:11 +0200
+Message-ID: <E1G8MZf-00022S-0v@moooo.ath.cx>
+References: <20060801225352.26998.qmail@web31801.mail.mud.yahoo.com> <7v8xm8xbaa.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 02 21:29:42 2006
+Cc: Luben Tuikov <ltuikov@yahoo.com>, git@vger.kernel.org,
+	Martin Waitz <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Wed Aug 02 21:40:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8MPL-0002Uj-Kq
-	for gcvg-git@gmane.org; Wed, 02 Aug 2006 21:29:31 +0200
+	id 1G8MZr-0004sr-Qb
+	for gcvg-git@gmane.org; Wed, 02 Aug 2006 21:40:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932161AbWHBT32 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 Aug 2006 15:29:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932183AbWHBT32
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 15:29:28 -0400
-Received: from S0106000ea6c7835e.no.shawcable.net ([70.67.106.153]:11720 "EHLO
-	prophet.net-ronin.org") by vger.kernel.org with ESMTP
-	id S932161AbWHBT31 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Aug 2006 15:29:27 -0400
-Received: from ramune by prophet.net-ronin.org with local (Exim 3.35 #1 (Debian))
-	id 1G8MPC-0007zM-00; Wed, 02 Aug 2006 12:29:22 -0700
+	id S932183AbWHBTkT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Aug 2006 15:40:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932186AbWHBTkT
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 15:40:19 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:13722 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S932183AbWHBTkR (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Aug 2006 15:40:17 -0400
 To: Junio C Hamano <junkio@cox.net>
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>,
+	Luben Tuikov <ltuikov@yahoo.com>, git@vger.kernel.org,
+	Martin Waitz <tali@admingilde.org>
 Content-Disposition: inline
-In-Reply-To: <7v1ws0xb9y.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7v8xm8xbaa.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24672>
 
-Any plans on a fix for:
-http://marc.theaimsgroup.com/?l=git&m=115089393505286&w=2
-
-I use gitk a lot, but having to nuke ~/.gitk every time I launch it is a bit
-annoying. :-)
-
-Commenting out the line mentioned in the reply lets me resize the window and
-see the bottom panel properly -- but I do have to resize it every time so it
-doesn't extend past the bottom of the screen.
-
-FYI, if it's not easy to reproduct, I'm running it on Debian/stable systems,
-i386 and x86_64, both with backports.org X servers, using tcl/tk 8.4
-
--- DN
-Daniel Nobuto
+Junio C Hamano <junkio@cox.net> wrote:
+> They all try to make customization can be done in one
+> place, and the difference is mostly of taste, so I'd just pick
+> one from Martin.
+I hope it will be possible (see require suggestion from Jeff King) to
+specify the file also from the environment because then it is possible
+to develop on an uncostumized version of gitweb.perl.  Now I noticed
+a problem: do not use the @@FOO@@ in double quotes because perl will
+spit a lot of warnings like
+"Possible unintended interpolation of @GIT_VERSION in string"
+Either we should use another delimiter or use single quotes (this is
+the way it is done in git-send-email.perl and git-svn.perl).  I don't
+know how likely it is that characters that are interpreted different
+in double quotes are in filenames but I'd prefer single quotes just to
+be on the safe site.  This disallows using '/etc/foo/$ENV{SITE_NAME}'
+as config file but one can just use '/etc/foo/bar' which requires
+'/etc/foo/$ENV{SITE_NAME}'.
