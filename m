@@ -1,69 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb testing with non-apache web server
-Date: Thu, 03 Aug 2006 20:37:39 +0200
-Organization: At home
-Message-ID: <eatfog$8er$1@sea.gmane.org>
-References: <20060803075403.GA5238@buici.com> <easbev$act$1@sea.gmane.org> <20060803153403.GA30729@buici.com> <eat5qp$3sr$1@sea.gmane.org> <7vfygdr888.fsf@assigned-by-dhcp.cox.net>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [PATCH] fix git-revert command-line options
+Date: Thu, 3 Aug 2006 20:41:42 +0200
+Message-ID: <20060803184141.GA5476@admingilde.org>
+References: <20060803153742.109978@dial-up-mi-12.lombardiacom.it>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Thu Aug 03 20:38:13 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="X1bOJ3K7DJ5YkBrT"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 03 20:41:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8i4r-0007D4-BM
-	for gcvg-git@gmane.org; Thu, 03 Aug 2006 20:37:49 +0200
+	id 1G8i8k-00083T-Uq
+	for gcvg-git@gmane.org; Thu, 03 Aug 2006 20:41:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030187AbWHCShq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Aug 2006 14:37:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030194AbWHCShq
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 14:37:46 -0400
-Received: from main.gmane.org ([80.91.229.2]:17840 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1030187AbWHCShp (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Aug 2006 14:37:45 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1G8i4Y-00077j-N9
-	for git@vger.kernel.org; Thu, 03 Aug 2006 20:37:30 +0200
-Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 03 Aug 2006 20:37:30 +0200
-Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 03 Aug 2006 20:37:30 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1030199AbWHCSlr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 Aug 2006 14:41:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030207AbWHCSlr
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 14:41:47 -0400
+Received: from admingilde.org ([213.95.32.146]:15236 "EHLO mail.admingilde.org")
+	by vger.kernel.org with ESMTP id S1030199AbWHCSlr (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Aug 2006 14:41:47 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1G8i8c-0001a2-2j; Thu, 03 Aug 2006 20:41:42 +0200
+To: Michael <barra_cuda@katamail.com>
+Content-Disposition: inline
+In-Reply-To: <20060803153742.109978@dial-up-mi-12.lombardiacom.it>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24745>
 
-Junio C Hamano wrote:
 
-> Jakub Narebski <jnareb@gmail.com> writes:
->
->>
->> Strange... PATH_INFO is used _only_ if 'p' parameter is not set. And all
->> links use 'p=$project', not PATH_INFO...
->>
->> Are you sure you did changes mentioned in earlier post?
-> 
-> Well, more importantly, why would we do something like this in the first 
-> place?
-> 
-> Wouldn't it be a lot better to just rip out PATH_INFO stuff,
-> especially since all pages the script generates use ?p=$project 
-> to pass that information around and never uses PATH_INFO?
+--X1bOJ3K7DJ5YkBrT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The PATH_INFO is here because it is easier to edit parameters by hand when
-the most important one, the project to examine, can be passed as PATH_INFO.
+hoi :)
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+On Thu, Aug 03, 2006 at 05:42:23PM +0200, Michael wrote:
+> -	-n|--n|--no|--no-|--no-c|--no-co|--no-com|--no-comm|\
+> +	-n|--no-c|--no-co|--no-com|--no-comm|\
+
+> -	--n|--no|--no-|--no-e|--no-ed|--no-edi|--no-edit)
+> +	--n|--no-e|--no-ed|--no-edi|--no-edit)
+
+well spottet, but now we still have "-n" versus "--n".
+Perhaps we should drop the single-letter options or at least only
+keep one of them and then explicitly document that in the manpage.
+
+--=20
+Martin Waitz
+
+--X1bOJ3K7DJ5YkBrT
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFE0kNlj/Eaxd/oD7IRAlVkAJ48BGuODRWD+aTG+dWSRjUjlNYuTwCeLHhV
+3YzPMy9QO823w3wIXWTZ5Qk=
+=3MK+
+-----END PGP SIGNATURE-----
+
+--X1bOJ3K7DJ5YkBrT--
