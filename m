@@ -1,68 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
+From: carbonated beverage <ramune@net-ronin.org>
 Subject: Re: What's in git.git
-Date: Thu, 03 Aug 2006 02:16:31 -0700
-Message-ID: <7vmzamqivk.fsf@assigned-by-dhcp.cox.net>
-References: <7v1ws0xb9y.fsf@assigned-by-dhcp.cox.net>
-	<81b0412b0608020702q2fd4ec83ga43714c15538f7ad@mail.gmail.com>
-	<7vd5bis9ha.fsf@assigned-by-dhcp.cox.net>
-	<81b0412b0608030109g6f49113ep5cf577475117469b@mail.gmail.com>
+Date: Thu, 3 Aug 2006 02:31:13 -0700
+Message-ID: <20060803093113.GB14400@prophet.net-ronin.org>
+References: <7v1ws0xb9y.fsf@assigned-by-dhcp.cox.net> <20060802192922.GA30539@prophet.net-ronin.org> <7virlas9ol.fsf@assigned-by-dhcp.cox.net> <20060803053004.GA10413@prophet.net-ronin.org> <20060803054831.GB10413@prophet.net-ronin.org> <20060803073636.GA12755@prophet.net-ronin.org> <7vvepaqkki.fsf@assigned-by-dhcp.cox.net> <20060803085002.GA14400@prophet.net-ronin.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 03 11:16:44 2006
+X-From: git-owner@vger.kernel.org Thu Aug 03 11:31:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8ZJk-00007x-9K
-	for gcvg-git@gmane.org; Thu, 03 Aug 2006 11:16:36 +0200
+	id 1G8ZY1-0003CB-Ec
+	for gcvg-git@gmane.org; Thu, 03 Aug 2006 11:31:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932410AbWHCJQd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Aug 2006 05:16:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932412AbWHCJQd
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 05:16:33 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:6055 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S932410AbWHCJQc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Aug 2006 05:16:32 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060803091632.RSTU27857.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 3 Aug 2006 05:16:32 -0400
-To: "Alex Riesen" <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b0608030109g6f49113ep5cf577475117469b@mail.gmail.com>
-	(Alex Riesen's message of "Thu, 3 Aug 2006 10:09:56 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932429AbWHCJbS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 Aug 2006 05:31:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932435AbWHCJbS
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 05:31:18 -0400
+Received: from S0106000ea6c7835e.no.shawcable.net ([70.67.106.153]:56784 "EHLO
+	prophet.net-ronin.org") by vger.kernel.org with ESMTP
+	id S932429AbWHCJbS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Aug 2006 05:31:18 -0400
+Received: from ramune by prophet.net-ronin.org with local (Exim 3.35 #1 (Debian))
+	id 1G8ZXt-0003z1-00; Thu, 03 Aug 2006 02:31:13 -0700
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <20060803085002.GA14400@prophet.net-ronin.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24717>
 
-"Alex Riesen" <raa.lkml@gmail.com> writes:
+Okay, dug around a bit more, and I admit, I'm not very familiar with Tk
+(just started reading about it when poking at the gitk weirdness).
 
->> What's the standard workflow/procedure ActiveState users would
->> use to build and install .xs extensions?  Maybe they have their
->> own $(MAKE) equivalent that groks such a Makefile with
->> backslashed pathnames and CRLF endings?
->
-> I don't know. It's a bit more than backslashes and CRLF. The pathnames
-> must be _completely_ converted from windows to cygwin. Cygwin even
-> provides an utility for that (cygpath). Besides, there still is that stupid
-> case-sensitivity problem.
+After applying your patch, rm'ing ~/.gitk, *and* doing:
 
-What I meant to say was that the real mistake might be for us to
-try using the Cygwin toolchain (GNU make, gcc and GNU C library)
-while working with ActiveState.
+--- gitk        2006-08-03 02:27:20.000000000 -0700
++++ /home/barbeque/bin/gitk     2006-08-03 02:24:52.000000000 -0700
+@@ -429,7 +429,7 @@
+     panedwindow .ctop -orient vertical
+     if {[info exists geometry(width)]} {
+        .ctop conf -width $geometry(width) -height $geometry(height)
+-       set texth [expr {$geometry(height) - $geometry(canvh) - 56}]
++       set texth [expr {$geometry(height) - $geometry(canvh) - 136}]
+        set geometry(ctexth) [expr {($texth - 8) /
+                                    [font metrics $textfont -linespace]}]
+     }
 
-Now, I admit I know very little about ActiveState and know
-nothing about Windows build environment, but I would not be
-surprised if in ActiveState land there were a MakeMaker
-equivalent that spits out Makefile equivalent that is suitable
-for MS development environment, and the users are expected to
-work in that environment, perhaps using MS C compiler toolchain,
-to produce object files if they want to link with ActiveState
-stuff.  If that were the case, maybe what is needed is to port
-the build infrastructure to MS development environment, and
-making Makefile generated from perl/Makefile.PL usable might not
-be of much use.
+Then subsequent launches of gitk appear to be correct.  However, if the stale
+~/.gitk is still around, the bug stays around.
+
+Since my eyes are getting fuzzy, can someone that knows TCL/Tk eyeball that
+and see if it's the actual cause, or just papering over a bug?
+
+Thanks!
+
+-- DN
+Daniel
