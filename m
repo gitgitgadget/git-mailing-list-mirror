@@ -1,71 +1,86 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: What's in git.git
-Date: Thu, 3 Aug 2006 10:09:56 +0200
-Message-ID: <81b0412b0608030109g6f49113ep5cf577475117469b@mail.gmail.com>
-References: <7v1ws0xb9y.fsf@assigned-by-dhcp.cox.net>
-	 <81b0412b0608020702q2fd4ec83ga43714c15538f7ad@mail.gmail.com>
-	 <7vd5bis9ha.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb testing with non-apache web server
+Date: Thu, 03 Aug 2006 10:18:07 +0200
+Organization: At home
+Message-ID: <easbev$act$1@sea.gmane.org>
+References: <20060803075403.GA5238@buici.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 03 10:10:10 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Thu Aug 03 10:18:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8YHR-0003mZ-EK
-	for gcvg-git@gmane.org; Thu, 03 Aug 2006 10:10:09 +0200
+	id 1G8YP9-0005Et-4H
+	for gcvg-git@gmane.org; Thu, 03 Aug 2006 10:18:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932392AbWHCIJ7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Aug 2006 04:09:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932397AbWHCIJ7
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 04:09:59 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:41 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S932392AbWHCIJ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Aug 2006 04:09:58 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so924715nfa
-        for <git@vger.kernel.org>; Thu, 03 Aug 2006 01:09:57 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Di9ln9SDmZf126wSNGJRxByYrY+wnDZgNpysfx6w8WY2pP7Ydyb8FiHM8BhGgq2lmHRjhIGFR6woRciVpV/Wur/hzd4R3BZF7WtfbH1DLUctK9k1+WrzklyYzlSjt2Ev2/aUuMIV+ZwFjBetD51fG2H4rbrV7sZ7UEOtSnX6K3Y=
-Received: by 10.78.117.10 with SMTP id p10mr646449huc;
-        Thu, 03 Aug 2006 01:09:56 -0700 (PDT)
-Received: by 10.78.160.12 with HTTP; Thu, 3 Aug 2006 01:09:56 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vd5bis9ha.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S932393AbWHCIRx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 3 Aug 2006 04:17:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932394AbWHCIRx
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 04:17:53 -0400
+Received: from main.gmane.org ([80.91.229.2]:48061 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932393AbWHCIRw (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Aug 2006 04:17:52 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1G8YOj-0005Ay-Ky
+	for git@vger.kernel.org; Thu, 03 Aug 2006 10:17:41 +0200
+Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 03 Aug 2006 10:17:41 +0200
+Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 03 Aug 2006 10:17:41 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24711>
 
-On 8/3/06, Junio C Hamano <junkio@cox.net> wrote:
-> >>   - Git.pm by Pasky with help from Pavel Roskin and others.
-> >>
-> >>     I'd like to merge this immediately after 1.4.2, unless there
-> >>     still are concerns about its portability (in which case
-> >>     please help fixing them up before this hits the "master"
-> >>     branch).
-> >
-> > Completely broken on ActiveState Perl and cygwin. Generated Makefile
-> > contains pathnames with backslashes and the whole file has
-> > CRLF line endings.
->
-> Anything constructive other than "doctor it hurts when I use
-> activestate", so you can help improve things to be more
-> ActiveState friendly?
+<opublikowany i wys=B3any>
 
-Nothing. If I had something, I'd post it.
+Marc Singer wrote:
 
-> What's the standard workflow/procedure ActiveState users would
-> use to build and install .xs extensions?  Maybe they have their
-> own $(MAKE) equivalent that groks such a Makefile with
-> backslashed pathnames and CRLF endings?
 
-I don't know. It's a bit more than backslashes and CRLF. The pathnames
-must be _completely_ converted from windows to cygwin. Cygwin even
-provides an utility for that (cygpath). Besides, there still is that stupid
-case-sensitivity problem.
+> I did some debugging on the latest repo version.  The lines
+>=20
+>   our $project =3D ($cgi->param('p') || $ENV{'PATH_INFO'});
+>   if (defined $project) {
+>      ...
+>=20
+> are being executed even though the url is
+>=20
+>   http://server/git
+>=20
+> I think that the problem is that Cherokee translates the request URL
+> into
+>=20
+>   http://server/git/
+>=20
+> which means that the $ENV{'PATH_INFO'} is the string "/" insted of
+> being undefined.
+
+Try changing
+
+my $project =3D ($cgi->param('p') || $ENV{'PATH_INFO'});
+if (defined $project) {
+        $project =3D~ s|^/||; $project =3D~ s|/$||;
+
+to
+
+my $project =3D ($cgi->param('p') || $ENV{'PATH_INFO'});
+$project =3D~ s|^/||; $project =3D~ s|/$||;
+if (defined $project && $project) {    =20
+
+(and send patch if it works, please).
+
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
