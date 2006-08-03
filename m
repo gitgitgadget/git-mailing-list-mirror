@@ -1,58 +1,59 @@
-From: Robert Shearman <rob@codeweavers.com>
-Subject: Regression: git-commit no longer works from within subdirectories
-Date: Thu, 03 Aug 2006 19:06:20 +0100
-Organization: CodeWeavers
-Message-ID: <44D23B1C.80704@codeweavers.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: gitweb testing with non-apache web server
+Date: Thu, 03 Aug 2006 11:21:11 -0700
+Message-ID: <7vfygdr888.fsf@assigned-by-dhcp.cox.net>
+References: <20060803075403.GA5238@buici.com> <easbev$act$1@sea.gmane.org>
+	<20060803153403.GA30729@buici.com> <eat5qp$3sr$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Aug 03 20:07:05 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: jnareb@gmail.com
+X-From: git-owner@vger.kernel.org Thu Aug 03 20:22:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8haz-00070j-6p
-	for gcvg-git@gmane.org; Thu, 03 Aug 2006 20:06:58 +0200
+	id 1G8hot-0002zU-La
+	for gcvg-git@gmane.org; Thu, 03 Aug 2006 20:21:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751376AbWHCSGy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Aug 2006 14:06:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbWHCSGx
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 14:06:53 -0400
-Received: from mail.codeweavers.com ([216.251.189.131]:39096 "EHLO
-	mail.codeweavers.com") by vger.kernel.org with ESMTP
-	id S1751376AbWHCSGx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Aug 2006 14:06:53 -0400
-Received: from host86-139-253-196.range86-139.btcentralplus.com ([86.139.253.196] helo=[172.16.0.10])
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1G8hau-0000KH-54
-	for git@vger.kernel.org; Thu, 03 Aug 2006 13:06:52 -0500
-User-Agent: Mozilla Thunderbird 1.0.8 (X11/20060725)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
+	id S964788AbWHCSVN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 Aug 2006 14:21:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964793AbWHCSVN
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 14:21:13 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:11672 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S964788AbWHCSVN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Aug 2006 14:21:13 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060803182112.CHPV18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 3 Aug 2006 14:21:12 -0400
+To: git@vger.kernel.org
+In-Reply-To: <eat5qp$3sr$1@sea.gmane.org> (Jakub Narebski's message of "Thu,
+	03 Aug 2006 17:48:11 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24741>
 
-Hi,
+Jakub Narebski <jnareb@gmail.com> writes:
 
-In the latest master branch git-commit no longer works from within 
-subdirectories. Instead, you have to go to the top-level directory of 
-the git tree to do the commit.
+> Marc Singer wrote:
+>
+>> That isn't enough.  I did something like that when I was exploring the
+>> script.  While the change *does* eliminate the 403 error, it doesn't
+>> make the rest of the script work properly.  All of the links return to
+>> the same page that lists the projects.
+>
+> Strange... PATH_INFO is used _only_ if 'p' parameter is not set. And all
+> links use 'p=$project', not PATH_INFO...
+>
+> Are you sure you did changes mentioned in earlier post?
 
-It fails with a confusing message when you are in a subdirectory:
-rob@saturn:~/wine-git/dlls/msi$ git commit action.c
-usage: git-read-tree (<sha> | [[-m [--aggressive] | --reset | 
---prefix=<prefix>] [-u | -i]] <sha1> [<sha2> [<sha3>]])
+Well, more importantly, why would we do something like this in the first 
+place?
 
-I'm not sure whether the previous behaviour was intentional, but I got 
-used to it. Either way, I don't think users upgrading from 1.4.1 would 
-appreciate a user-facing change like this in a 0.0.1 incremental release.
-
-Can this be changed back to the previous behaviour?
-
-Thanks,
-
--- 
-Rob Shearman
+Wouldn't it be a lot better to just rip out PATH_INFO stuff,
+especially since all pages the script generates use ?p=$project 
+to pass that information around and never uses PATH_INFO?
