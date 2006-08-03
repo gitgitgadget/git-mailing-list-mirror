@@ -1,101 +1,66 @@
-From: Marc Singer <elf@buici.com>
-Subject: Re: gitweb testing with non-apache web server
-Date: Thu, 3 Aug 2006 13:27:03 -0700
-Message-ID: <20060803202703.GA13147@buici.com>
-References: <20060803075403.GA5238@buici.com> <20060803155603.GS7533@daga.cl> <20060803162241.GB1287@buici.com> <20060803192152.GT7533@daga.cl>
+From: Jeff King <peff@peff.net>
+Subject: Re: Regression: git-commit no longer works from within subdirectories
+Date: Thu, 3 Aug 2006 16:29:57 -0400
+Message-ID: <20060803202957.GA26838@coredump.intra.peff.net>
+References: <44D23B1C.80704@codeweavers.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Aug 03 22:27:42 2006
+Cc: Robert Shearman <rob@codeweavers.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 03 22:30:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8jme-0003GK-BH
-	for gcvg-git@gmane.org; Thu, 03 Aug 2006 22:27:08 +0200
+	id 1G8jpa-0003yQ-Rv
+	for gcvg-git@gmane.org; Thu, 03 Aug 2006 22:30:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750905AbWHCU1F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Aug 2006 16:27:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751056AbWHCU1F
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 16:27:05 -0400
-Received: from 206-124-142-26.buici.com ([206.124.142.26]:13284 "HELO
-	florence.buici.com") by vger.kernel.org with SMTP id S1750905AbWHCU1D
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 3 Aug 2006 16:27:03 -0400
-Received: (qmail 14071 invoked by uid 1000); 3 Aug 2006 20:27:03 -0000
-To: git@vger.kernel.org
+	id S1751202AbWHCUaB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 Aug 2006 16:30:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751205AbWHCUaB
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 16:30:01 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:23490 "HELO
+	peff.net") by vger.kernel.org with SMTP id S1751202AbWHCUaA (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Aug 2006 16:30:00 -0400
+Received: (qmail 7464 invoked from network); 3 Aug 2006 16:29:23 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 3 Aug 2006 16:29:23 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu,  3 Aug 2006 16:29:57 -0400
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <20060803192152.GT7533@daga.cl>
-User-Agent: Mutt/1.5.11+cvs20060403
+In-Reply-To: <44D23B1C.80704@codeweavers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24754>
 
-On Thu, Aug 03, 2006 at 03:21:52PM -0400, Blu Corater wrote:
-> Here is the interesting part of my cherokee.conf
-> 
-> ------------------------------------------
-> UserDir public_html {
->     Directory / {
->        Handler common
->     }
-> 
->     Directory /scm/ {
->         Handler cgi {
->                 ScriptAlias /home/blu/bin/gitweb.cgi
->         }
->     }
-> }
-> -----------------------------------------
-> 
-> So, I have the gitweb.cgi executable in a bin directory on my home and I
-> am telling Cherokee that when it sees the url http://server/~blu/scm/, it
-> should execute /home/blu/bin/gitweb.cgi
-> 
-> If I request http://server/~blu/scm, Cherokee returns Cherokee's default
-> index page. Only if I request http://server/~blu/scm/, Cherokee returns
-> the expected output from gitweb.
-> 
-> Now, if I add 
-> 
->     Directory /test/ {
-> 	Handler cgi
->     }
-> 
-> And copy gitweb.cgi to ~/public_html/test/, it seems there is no problem.
-> 
-> I can request http://server/~blu/test/gitweb.cgi or
-> http://server/~blu/test/gitweb.cgi/ and get the expected gitweb output.
-> 
-> It looks more like a Cherokee problem to me, but I don't have time to
-> investigate further right now.
+On Thu, Aug 03, 2006 at 07:06:20PM +0100, Robert Shearman wrote:
 
-Hmm.  I was hopeful when I saw that your configuration was different
-from mine.  However, it seems to be something else.  BTW, I'm running
-cherokee on ARM.
+> It fails with a confusing message when you are in a subdirectory:
+> rob@saturn:~/wine-git/dlls/msi$ git commit action.c
+> usage: git-read-tree (<sha> | [[-m [--aggressive] | --reset | 
+> --prefix=<prefix>] [-u | -i]] <sha1> [<sha2> [<sha3>]])
 
-========================================
-Directory / {
-    Handler common
-}
+The culprit is the recent changes to the builtins. cmd_read_tree now
+takes an extra parameter 'prefix' which shadows the global declaration
+in builtin-read-tree.c (and has a completely different meaning).
 
-Directory /g/ {
-    Handler cgi {
-        Scriptalias /usr/lib/cgi-bin/git.cgi
-    }
-}
-Directory /git/ {
-    Handler cgi {
-        Scriptalias /usr/lib/cgi-bin/gitweb.cgi
-    }
-}
-========================================
+The one-liner below fixes it (though style-wise, you may prefer to rename the
+shadowed variable).
 
-gitweb.cgi is an old version.  git.cgi is the latest release.
+-Peff
 
-I can see the project overview page, but all of the links bring me
-back to the same top-level page, no summary, not logs.  I've verified
-that the web server's user can read the git repo. 
-
-I don't doubt that this is a cherokee issue.
-
-Cheers.
+---
+diff --git a/builtin-read-tree.c b/builtin-read-tree.c
+index 49c10bf..8e3b04e 100644
+--- a/builtin-read-tree.c
++++ b/builtin-read-tree.c
+@@ -870,7 +870,7 @@ static const char read_tree_usage[] = "g
+ 
+ static struct lock_file lock_file;
+ 
+-int cmd_read_tree(int argc, const char **argv, const char *prefix)
++int cmd_read_tree(int argc, const char **argv, const char *git_prefix)
+ {
+        int i, newfd, stage = 0;
+        unsigned char sha1[20];
