@@ -1,53 +1,61 @@
-From: Michael <barra_cuda@katamail.com>
-Subject: [PATCH] fixed variable declaration in gitk
-Date: Thu, 3 Aug 2006 17:42:44 +0200
-Message-ID: <200608031742.44349.barra_cuda@katamail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb testing with non-apache web server
+Date: Thu, 03 Aug 2006 17:48:11 +0200
+Organization: At home
+Message-ID: <eat5qp$3sr$1@sea.gmane.org>
+References: <20060803075403.GA5238@buici.com> <easbev$act$1@sea.gmane.org> <20060803153403.GA30729@buici.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Aug 03 17:38:46 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Thu Aug 03 17:49:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8fHZ-0007rZ-Hx
-	for gcvg-git@gmane.org; Thu, 03 Aug 2006 17:38:46 +0200
+	id 1G8fRP-0001U8-UA
+	for gcvg-git@gmane.org; Thu, 03 Aug 2006 17:48:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964800AbWHCPiF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Aug 2006 11:38:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964802AbWHCPiF
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 11:38:05 -0400
-Received: from fe-7a.inet.it ([213.92.5.113]:62949 "EHLO fe-7a.inet.it")
-	by vger.kernel.org with ESMTP id S964800AbWHCPiE (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Aug 2006 11:38:04 -0400
-Received: from dial-up-mi-12.lombardiacom.it ([::ffff:212.34.225.12]) by fe-7a.inet.it via I-SMTP-5.4.4-546
-	id ::ffff:212.34.225.12+tKguh0m4Y6t; Thu, 03 Aug 2006 17:38:02 +0200
+	id S964802AbWHCPss (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 Aug 2006 11:48:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964816AbWHCPss
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 11:48:48 -0400
+Received: from main.gmane.org ([80.91.229.2]:26313 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964802AbWHCPsq (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Aug 2006 11:48:46 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1G8fQu-0001L6-C9
+	for git@vger.kernel.org; Thu, 03 Aug 2006 17:48:24 +0200
+Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 03 Aug 2006 17:48:24 +0200
+Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 03 Aug 2006 17:48:24 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-User-Agent: KMail/1.8.2
-Content-Disposition: inline
-Message-ID: <20060803153802.756931@dial-up-mi-12.lombardiacom.it>
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24735>
 
-Signed-off-by: Michael <barra_cuda@katamail.com>
----
- gitk |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Marc Singer wrote:
 
-diff --git a/gitk b/gitk
-index ba4644f..5acaadf 100755
---- a/gitk
-+++ b/gitk
-@@ -4901,7 +4901,7 @@ proc domktag {} {
- 
- proc redrawtags {id} {
-     global canv linehtag commitrow idpos selectedline curview
--    global mainfont
-+    global mainfont canvxmax
- 
-     if {![info exists commitrow($curview,$id)]} return
-     drawcmitrow $commitrow($curview,$id)
+> That isn't enough.  I did something like that when I was exploring the
+> script.  While the change *does* eliminate the 403 error, it doesn't
+> make the rest of the script work properly.  All of the links return to
+> the same page that lists the projects.
+
+Strange... PATH_INFO is used _only_ if 'p' parameter is not set. And all
+links use 'p=$project', not PATH_INFO...
+
+Are you sure you did changes mentioned in earlier post?
+
 -- 
-1.4.1
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
