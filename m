@@ -1,86 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb testing with non-apache web server
-Date: Thu, 03 Aug 2006 10:18:07 +0200
-Organization: At home
-Message-ID: <easbev$act$1@sea.gmane.org>
-References: <20060803075403.GA5238@buici.com>
+From: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
+Subject: Re: setting up git-cvsserver
+Date: Thu, 3 Aug 2006 10:36:40 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20060803083640.GB3816@informatik.uni-freiburg.de>
+References: <20060801154906.GA18772@informatik.uni-freiburg.de> <Pine.LNX.4.63.0608011822080.17230@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Thu Aug 03 10:18:08 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 03 10:38:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8YP9-0005Et-4H
-	for gcvg-git@gmane.org; Thu, 03 Aug 2006 10:18:07 +0200
+	id 1G8YhG-0000JT-Ih
+	for gcvg-git@gmane.org; Thu, 03 Aug 2006 10:36:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932393AbWHCIRx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 3 Aug 2006 04:17:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932394AbWHCIRx
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 04:17:53 -0400
-Received: from main.gmane.org ([80.91.229.2]:48061 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932393AbWHCIRw (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Aug 2006 04:17:52 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1G8YOj-0005Ay-Ky
-	for git@vger.kernel.org; Thu, 03 Aug 2006 10:17:41 +0200
-Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 03 Aug 2006 10:17:41 +0200
-Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 03 Aug 2006 10:17:41 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S932400AbWHCIgr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 Aug 2006 04:36:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932401AbWHCIgr
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 04:36:47 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:3284 "EHLO
+	atlas.informatik.uni-freiburg.de") by vger.kernel.org with ESMTP
+	id S932400AbWHCIgr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Aug 2006 04:36:47 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtp (Exim 4.60)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1G8YhC-0001dP-3m; Thu, 03 Aug 2006 10:36:46 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.6/8.12.11) with ESMTP id k738aeMD007324;
+	Thu, 3 Aug 2006 10:36:40 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.6/8.12.11/Submit) id k738aeg1007323;
+	Thu, 3 Aug 2006 10:36:40 +0200 (MEST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Mail-Followup-To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0608011822080.17230@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24712>
 
-<opublikowany i wys=B3any>
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Tue, 1 Aug 2006, Uwe Zeisberger wrote:
+> 
+> > I cannot checkout a git repo via cvs, I think the only problem is, that
+> > I don't know how to specify the CVSROOT:
+> > 
+> > fs-n1:~# grep git- /etc/inetd.conf 
+> > 2402    stream  tcp     nowait  root    /usr/local/sbin/git-cvsserver pserver
+> 
+> From Documentation/git-cvsserver.txt:
+> 
+> -- snip --
+> Note: In some cases, you need to pass the 'pserver' argument twice for
+> git-cvsserver to see it. So the line would look like
+> 
+> ------
+>    cvspserver stream tcp nowait nobody git-cvsserver pserver pserver
+> -- snap --
+> 
+> So, maybe this solves your problem?
+Yes, thanks.  Sorry.  The mail was written in a hurry because I wanted
+to reach a bus.
 
-Marc Singer wrote:
+BTW, after reading inetd.conf(5), I think the git-cvsserver should occur
+twice, not pserver.  The first (actually the 6th) item specifies the
+path to the binary to call and the next it the program name the program
+sees (i.e. argv[0] (in C) resp. $0 (in Perl)).
 
+You could circumvent that by testing $0 == "pserver" in git-cvsserver.
 
-> I did some debugging on the latest repo version.  The lines
->=20
->   our $project =3D ($cgi->param('p') || $ENV{'PATH_INFO'});
->   if (defined $project) {
->      ...
->=20
-> are being executed even though the url is
->=20
->   http://server/git
->=20
-> I think that the problem is that Cherokee translates the request URL
-> into
->=20
->   http://server/git/
->=20
-> which means that the $ENV{'PATH_INFO'} is the string "/" insted of
-> being undefined.
+> OTOH it might be cleverer to use SSH transport to begin with.
+For me not.  I have to convice some managers in my company that it is
+sensible to only switch the linux department to git.  They want to
+assert that every engineer can access anybodys code.  Because not every
+"other" developper has an account on our cvs server anonymous pserver is
+what *I* want.
 
-Try changing
+Best regards
+Uwe
 
-my $project =3D ($cgi->param('p') || $ENV{'PATH_INFO'});
-if (defined $project) {
-        $project =3D~ s|^/||; $project =3D~ s|/$||;
+-- 
+Uwe Zeisberger
 
-to
-
-my $project =3D ($cgi->param('p') || $ENV{'PATH_INFO'});
-$project =3D~ s|^/||; $project =3D~ s|/$||;
-if (defined $project && $project) {    =20
-
-(and send patch if it works, please).
-
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+http://www.google.com/search?q=sin%28pi%2F2%29
