@@ -1,88 +1,66 @@
-From: Marc Singer <elf@buici.com>
-Subject: Re: gitweb testing with non-apache web server
-Date: Thu, 3 Aug 2006 09:22:41 -0700
-Message-ID: <20060803162241.GB1287@buici.com>
-References: <20060803075403.GA5238@buici.com> <20060803155603.GS7533@daga.cl>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] gitweb.cgi: Customization
+Date: Thu, 3 Aug 2006 12:24:27 -0400
+Message-ID: <20060803162427.GA4215@coredump.intra.peff.net>
+References: <20060801225352.26998.qmail@web31801.mail.mud.yahoo.com> <7v8xm8xbaa.fsf@assigned-by-dhcp.cox.net> <46a038f90608011913t777cf20dh9baaf355b19d18e6@mail.gmail.com> <20060803065852.GH16364@admingilde.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Aug 03 18:22:48 2006
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Junio C Hamano <junkio@cox.net>,
+	Luben Tuikov <ltuikov@yahoo.com>, git@vger.kernel.org,
+	Matthias Lederhofer <matled@gmx.net>
+X-From: git-owner@vger.kernel.org Thu Aug 03 18:25:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8fyA-0000QU-0a
-	for gcvg-git@gmane.org; Thu, 03 Aug 2006 18:22:46 +0200
+	id 1G8fzt-0000hd-E2
+	for gcvg-git@gmane.org; Thu, 03 Aug 2006 18:24:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964778AbWHCQWn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Aug 2006 12:22:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932579AbWHCQWn
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 12:22:43 -0400
-Received: from 206-124-142-26.buici.com ([206.124.142.26]:37013 "HELO
-	florence.buici.com") by vger.kernel.org with SMTP id S932578AbWHCQWm
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 3 Aug 2006 12:22:42 -0400
-Received: (qmail 1535 invoked by uid 1000); 3 Aug 2006 16:22:41 -0000
-To: git@vger.kernel.org
+	id S964780AbWHCQYa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 Aug 2006 12:24:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932579AbWHCQYa
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 12:24:30 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:53704 "HELO
+	peff.net") by vger.kernel.org with SMTP id S932578AbWHCQYa (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Aug 2006 12:24:30 -0400
+Received: (qmail 24402 invoked from network); 3 Aug 2006 12:23:53 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 3 Aug 2006 12:23:53 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu,  3 Aug 2006 12:24:27 -0400
+To: Martin Waitz <tali@admingilde.org>
 Content-Disposition: inline
-In-Reply-To: <20060803155603.GS7533@daga.cl>
-User-Agent: Mutt/1.5.11+cvs20060403
+In-Reply-To: <20060803065852.GH16364@admingilde.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24739>
 
-On Thu, Aug 03, 2006 at 11:56:03AM -0400, Blu Corater wrote:
-> On Thu, Aug 03, 2006 at 12:54:03AM -0700, Marc Singer wrote:
-> > I would like to use gitweb with the Cherokee web server because the
-> > host that I have on hand has very limited RAM, 32MiB.  Neither the
-> > version of gitweb available on Debian (v264) nor the latest in the git
-> > repo works.
-> > 
-> > I did some debugging on the latest repo version.  The lines
-> > 
-> >   our $project = ($cgi->param('p') || $ENV{'PATH_INFO'});
-> >   if (defined $project) {
-> >      ...
-> > 
-> > are being executed even though the url is
-> > 
-> >   http://server/git
-> > 
-> > I think that the problem is that Cherokee translates the request URL
-> > into
-> > 
-> >   http://server/git/
-> > 
-> > which means that the $ENV{'PATH_INFO'} is the string "/" insted of
-> > being undefined.
-> > 
-> > The error I'm seeing is that the request path is forbidden, but I
-> > suspect that this is some sort of misunderstanding between the web
-> > server and the script.
+On Thu, Aug 03, 2006 at 08:58:52AM +0200, Martin Waitz wrote:
+
+> we could make the default use %ENV.
 > 
-> I am using Cherokee+GitWeb and the behaviour observed is that
-> http://server/git will return the default Cherokee index page, but
-> http://server/git/, with a slash at the end, works. 
-
-Will you share your Cherokee configuration script?
-
-The links look like this:
-
-  http://scarlet/g?p=bsp.git;a=summary
-
-even when I start with 
-
-  http://scarlet/g
-
-or
-
-  http://scarlet/g/
-
-So, I'm not sure I understand what you are saying.
-
+> Something like (in Makefile):
 > 
-> -- 
-> Blu.
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> GITWEB_SITENAME = $$ENV{GITWEB_SITENAME}
+> GITWEB_PROJECTROOT = $$ENV{GITWEB_SITENAME} || "/pub/git"
+
+An interesting idea, but it means that gitweb.perl no longer parses as
+valid perl, since we have things like:
+
+> our $projectroot = @@GITWEB_PROJECTROOT@@;
+
+Do the environment variable names really need to be configurable, or
+would something like this work:
+  1. accept from config file if it exists and defines $projectroot
+  2. otherwise, accept from environment if GITWEB_PROJECTROOT is defined
+  3. otherwise, default to compile-time value
+
+Speaking of which, perhaps we should clean up the names of variables
+that are used by the config file now, before they get into widespread
+use. The names are very inconsistent (e.g., projectroot, git_temp) and
+undocumented. We could standardize on something like
+$GITWEB_PROJECTROOT, matched to GITWEB_PROJECTROOT in the environment
+and GITWEB_PROJECTROOT in the Makefile.
+
+-Peff
