@@ -1,61 +1,94 @@
-From: carbonated beverage <ramune@net-ronin.org>
-Subject: Re: What's in git.git
-Date: Thu, 3 Aug 2006 02:31:13 -0700
-Message-ID: <20060803093113.GB14400@prophet.net-ronin.org>
-References: <7v1ws0xb9y.fsf@assigned-by-dhcp.cox.net> <20060802192922.GA30539@prophet.net-ronin.org> <7virlas9ol.fsf@assigned-by-dhcp.cox.net> <20060803053004.GA10413@prophet.net-ronin.org> <20060803054831.GB10413@prophet.net-ronin.org> <20060803073636.GA12755@prophet.net-ronin.org> <7vvepaqkki.fsf@assigned-by-dhcp.cox.net> <20060803085002.GA14400@prophet.net-ronin.org>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: gitweb testing with non-apache web server
+Date: Thu, 03 Aug 2006 23:42:21 +1200
+Message-ID: <44D1E11D.1090409@vilain.net>
+References: <20060803075403.GA5238@buici.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 03 11:31:25 2006
+X-From: git-owner@vger.kernel.org Thu Aug 03 13:43:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8ZY1-0003CB-Ec
-	for gcvg-git@gmane.org; Thu, 03 Aug 2006 11:31:21 +0200
+	id 1G8bbZ-0007qh-DR
+	for gcvg-git@gmane.org; Thu, 03 Aug 2006 13:43:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932429AbWHCJbS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Aug 2006 05:31:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932435AbWHCJbS
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 05:31:18 -0400
-Received: from S0106000ea6c7835e.no.shawcable.net ([70.67.106.153]:56784 "EHLO
-	prophet.net-ronin.org") by vger.kernel.org with ESMTP
-	id S932429AbWHCJbS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Aug 2006 05:31:18 -0400
-Received: from ramune by prophet.net-ronin.org with local (Exim 3.35 #1 (Debian))
-	id 1G8ZXt-0003z1-00; Thu, 03 Aug 2006 02:31:13 -0700
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <20060803085002.GA14400@prophet.net-ronin.org>
+	id S932474AbWHCLnA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 Aug 2006 07:43:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932475AbWHCLm7
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 07:42:59 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:1755 "EHLO watts.utsl.gen.nz")
+	by vger.kernel.org with ESMTP id S932474AbWHCLm7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Aug 2006 07:42:59 -0400
+Received: by watts.utsl.gen.nz (Postfix, from userid 65534)
+	id 2F9E84844; Thu,  3 Aug 2006 23:42:56 +1200 (NZST)
+Received: from [192.168.1.4] (unknown [203.110.28.85])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by watts.utsl.gen.nz (Postfix) with ESMTP id 071EB3EC8;
+	Thu,  3 Aug 2006 23:42:47 +1200 (NZST)
+User-Agent: Thunderbird 1.5.0.4 (X11/20060615)
+To: Marc Singer <elf@buici.com>
+In-Reply-To: <20060803075403.GA5238@buici.com>
+X-Enigmail-Version: 0.94.0.0
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
+	mail.watts.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=0.4 required=5.0 tests=SPF_HELO_FAIL autolearn=no 
+	version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24718>
 
-Okay, dug around a bit more, and I admit, I'm not very familiar with Tk
-(just started reading about it when poking at the gitk weirdness).
+Marc Singer wrote:
+> I would like to use gitweb with the Cherokee web server because the
+> host that I have on hand has very limited RAM, 32MiB.  Neither the
+> version of gitweb available on Debian (v264) nor the latest in the git
+> repo works.
 
-After applying your patch, rm'ing ~/.gitk, *and* doing:
+Marc,
 
---- gitk        2006-08-03 02:27:20.000000000 -0700
-+++ /home/barbeque/bin/gitk     2006-08-03 02:24:52.000000000 -0700
-@@ -429,7 +429,7 @@
-     panedwindow .ctop -orient vertical
-     if {[info exists geometry(width)]} {
-        .ctop conf -width $geometry(width) -height $geometry(height)
--       set texth [expr {$geometry(height) - $geometry(canvh) - 56}]
-+       set texth [expr {$geometry(height) - $geometry(canvh) - 136}]
-        set geometry(ctexth) [expr {($texth - 8) /
-                                    [font metrics $textfont -linespace]}]
-     }
+I use lighttpd on utsl.gen.nz, which is only a wee box, too.  I hacked
+FastCGI support into gitweb.cgi, my changes are available at
+git://utsl.gen.nz/gitweb (gitweb url at
+http://utsl.gen.nz/gitweb/?p=gitweb).
 
-Then subsequent launches of gitk appear to be correct.  However, if the stale
-~/.gitk is still around, the bug stays around.
+I just set up the /git path to redirect to /git/ in the web server.
 
-Since my eyes are getting fuzzy, can someone that knows TCL/Tk eyeball that
-and see if it's the actual cause, or just papering over a bug?
+Sam.
 
-Thanks!
-
--- DN
-Daniel
+> 
+> I did some debugging on the latest repo version.  The lines
+> 
+>   our $project = ($cgi->param('p') || $ENV{'PATH_INFO'});
+>   if (defined $project) {
+>      ...
+> 
+> are being executed even though the url is
+> 
+>   http://server/git
+> 
+> I think that the problem is that Cherokee translates the request URL
+> into
+> 
+>   http://server/git/
+> 
+> which means that the $ENV{'PATH_INFO'} is the string "/" insted of
+> being undefined.
+> 
+> The error I'm seeing is that the request path is forbidden, but I
+> suspect that this is some sort of misunderstanding between the web
+> server and the script.
+> 
+> So, I wonder if someone who has a working gitweb would be willing to
+> test with Cherokee or some other resource conservative web server.
+> 
+> Cheers.
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
