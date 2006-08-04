@@ -1,40 +1,79 @@
-From: "Prince" <Princedesolater@dublin.com>
-Subject: Oh, you are not able to control your feelings!
-Date: Sat, 5 Aug 2006 05:46:49 +0900
-Message-ID: <82867000168016.5ADC904256@LSDGK>
+From: "Ramsay Jones" <ramsay@ramsay1.demon.co.uk>
+Subject: http-push: email address problem with LOCK_REQUEST?
+Date: Fri, 4 Aug 2006 22:01:33 +0100
+Message-ID: <000401c6b809$2a4f62e0$c47eedc1@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain;
-        charset="Windows-1252"
+	charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Aug 04 22:44:51 2006
+X-From: git-owner@vger.kernel.org Fri Aug 04 23:02:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G96XF-0003oy-I5
-	for gcvg-git@gmane.org; Fri, 04 Aug 2006 22:44:46 +0200
+	id 1G96nU-0007Hj-Eb
+	for gcvg-git@gmane.org; Fri, 04 Aug 2006 23:01:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161402AbWHDUoc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Aug 2006 16:44:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161430AbWHDUoc
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 16:44:32 -0400
-Received: from [211.225.122.164] ([211.225.122.164]:13 "EHLO DEFAULT-UUKLEHV")
-	by vger.kernel.org with ESMTP id S1161402AbWHDUob (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Aug 2006 16:44:31 -0400
-To: <glenda@vger.kernel.org>
-X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
-Thread-Index: GtWQ6OzVLoMZgAUA0fqakE5tEf6z8nsJyU9d
+	id S1161445AbWHDVBY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Aug 2006 17:01:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161446AbWHDVBY
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 17:01:24 -0400
+Received: from anchor-post-36.mail.demon.net ([194.217.242.86]:41230 "EHLO
+	anchor-post-36.mail.demon.net") by vger.kernel.org with ESMTP
+	id S1161445AbWHDVBW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Aug 2006 17:01:22 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-36.mail.demon.net with smtp (Exim 4.42)
+	id 1G96nJ-000M7y-Jp
+	for git@vger.kernel.org; Fri, 04 Aug 2006 21:01:21 +0000
+To: <git@vger.kernel.org>
+X-Priority: 3 (Normal)
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook 8.5, Build 4.71.2173.0
+Importance: Normal
+X-MimeOLE: Produced By Microsoft MimeOLE V4.72.2106.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 7.0 points;
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4762]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?211.225.122.164>]
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: finepont.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24839>
 
-Hello my friend! The good news are that this obstacle can be overcome by you, the real man. Extra-Time is ready to contribute to your durability, confidence and happiness. Many of us know the bitter feeling of not being able to deliver longer acts of mutual pleasure. Enter here:  http://finepont.com/gal/get/ Girls will start spreading rumors about the duration they got with you.
+Hi all,
+
+Whilst fixing the git-format-patch "Signed-off-by identity bug", I
+decided to have a look at the other calls to setup_ident(), to check
+for similar problems. I noticed a couple of things that didn't look
+quite right (see also next email).
+
+In particular, http-push accesses git_default_email directly, using
+it as part of a (DAV?) LOCK_REQUEST. However, since http-push does
+not call git_config(), only the generic <user@localhost.localdomain>
+determined by setup_ident() will be used.
+
+Now this may not be a problem. I don't really know what the email
+address is used for in the lock request; it could have no effect
+on the transaction at all, apart from perhaps some message text
+in the web-server logs.
+
+Also, there may be a reason for not reading the config file. I can't
+think of one, but hey ...
+
+Unfortunately, since my config has NO_CURL, I can't even compile
+http-push.c, let alone test the change given below.
+
+comments anyone?
+
+Ramsay
+
+
+diff --git a/http-push.c b/http-push.c
+index e281f70..4de62e4 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -2340,6 +2340,7 @@ int main(int argc, char **argv)
+ 
+ 	setup_git_directory();
+ 	setup_ident();
++	git_config(git_default_config);
+ 
+ 	remote = xcalloc(sizeof(*remote), 1);
+ 
