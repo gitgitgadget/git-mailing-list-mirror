@@ -1,87 +1,74 @@
-From: Uwe Zeisberger <Uwe_Zeisberger@digi.com>
-Subject: [PATCH] Document rev-list's option --mergegit@vger.kernel.org
-Date: Fri, 4 Aug 2006 10:11:15 +0200
-Message-ID: <20060804081114.GA32338@digi.com>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] git-tar-tree: fix minor memory leak
+Date: Fri, 4 Aug 2006 10:54:08 +0200
+Message-ID: <20060804085408.GA22305@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Aug 04 10:11:49 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 04 10:54:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8umS-0007S8-UK
-	for gcvg-git@gmane.org; Fri, 04 Aug 2006 10:11:41 +0200
+	id 1G8vRf-000766-4w
+	for gcvg-git@gmane.org; Fri, 04 Aug 2006 10:54:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161100AbWHDILg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Aug 2006 04:11:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161102AbWHDILg
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 04:11:36 -0400
-Received: from mail29.messagelabs.com ([216.82.249.147]:23733 "HELO
-	mail29.messagelabs.com") by vger.kernel.org with SMTP
-	id S1161100AbWHDILf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Aug 2006 04:11:35 -0400
-X-VirusChecked: Checked
-X-Env-Sender: Uwe_Zeisberger@digi.com
-X-Msg-Ref: server-22.tower-29.messagelabs.com!1154679094!22086593!1
-X-StarScan-Version: 5.5.10.7; banners=-,-,-
-X-Originating-IP: [66.77.174.21]
-Received: (qmail 12649 invoked from network); 4 Aug 2006 08:11:34 -0000
-Received: from unknown (HELO owa.digi.com) (66.77.174.21)
-  by server-22.tower-29.messagelabs.com with SMTP; 4 Aug 2006 08:11:34 -0000
-Received: from mtk-sms-mail01.digi.com ([10.10.8.120]) by owa.digi.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 4 Aug 2006 03:11:34 -0500
-Received: from dor-sms-mail1.digi.com ([10.49.1.105]) by mtk-sms-mail01.digi.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 4 Aug 2006 03:11:33 -0500
-Received: from io.fsforth.de ([192.168.40.169]) by dor-sms-mail1.digi.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 4 Aug 2006 10:11:32 +0200
-Received: by io.fsforth.de (Postfix, from userid 1080)
-	id 8A602E198; Fri,  4 Aug 2006 10:11:15 +0200 (CEST)
-To: git@vger.kernel.org
+	id S1161117AbWHDIyL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Aug 2006 04:54:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030236AbWHDIyL
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 04:54:11 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:38553
+	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S1030209AbWHDIyJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Aug 2006 04:54:09 -0400
+Received: by neapel230.server4you.de (Postfix, from userid 1000)
+	id 9F095702C; Fri,  4 Aug 2006 10:54:08 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11+cvs20060403
-X-OriginalArrivalTime: 04 Aug 2006 08:11:32.0271 (UTC) FILETIME=[987CEBF0:01C6B79D]
+User-Agent: Mutt/1.5.12-2006-07-14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24781>
 
-Signed-off-by: Uwe Zeisberger <Uwe_Zeisberger@digi.com>
+Free the root tree object buffer when we're done, plugging a minor leak
+in generate_tar().  Note: we cannot simply free(tree.buf) because this
+pointer is modified by tree_entry() calls in traverse_tree().
+
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 ---
-The description is not very verbose, but at least it is mentioned now.
 
- Documentation/git-rev-list.txt |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+My first Valgrind run. :)
 
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index f60eacd..dd9fff1 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -22,6 +22,7 @@ SYNOPSIS
- 	     [ [\--objects | \--objects-edge] [ \--unpacked ] ]
- 	     [ \--pretty | \--header ]
- 	     [ \--bisect ]
-+	     [ \--merge ]
- 	     <commit>... [ \-- <paths>... ]
+
+diff --git a/builtin-tar-tree.c b/builtin-tar-tree.c
+index 7c48db9..215892b 100644
+--- a/builtin-tar-tree.c
++++ b/builtin-tar-tree.c
+@@ -314,6 +314,7 @@ static int generate_tar(int argc, const 
+ 	struct commit *commit;
+ 	struct tree_desc tree;
+ 	struct strbuf current_path;
++	void *buffer;
  
- DESCRIPTION
-@@ -123,6 +124,10 @@ OPTIONS
- 	topological order (i.e. descendant commits are shown
- 	before their parents).
+ 	current_path.buf = xmalloc(PATH_MAX);
+ 	current_path.alloc = PATH_MAX;
+@@ -341,8 +342,8 @@ static int generate_tar(int argc, const 
+ 	} else
+ 		archive_time = time(NULL);
  
-+--merge::
-+	After a failed merge, show refs that touch files having a
-+	conflict and don't exist on all heads to merge.
-+
- Author
- ------
- Written by Linus Torvalds <torvalds@osdl.org>
--- 
-1.4.2.rc2.gb63f
-
-
--- 
-Uwe Zeisberger
-FS Forth-Systeme GmbH, A Digi International Company
-Kueferstrasse 8, D-79206 Breisach, Germany
-Phone: +49 (7667) 908 0 Fax: +49 (7667) 908 200
-Web: www.fsforth.de, www.digi.com
+-	tree.buf = read_object_with_reference(sha1, tree_type, &tree.size,
+-	                                      tree_sha1);
++	tree.buf = buffer = read_object_with_reference(sha1, tree_type,
++	                                               &tree.size, tree_sha1);
+ 	if (!tree.buf)
+ 		die("not a reference to a tag, commit or tree object: %s",
+ 		    sha1_to_hex(sha1));
+@@ -351,6 +352,7 @@ static int generate_tar(int argc, const 
+ 		write_entry(tree_sha1, &current_path, 040777, NULL, 0);
+ 	traverse_tree(&tree, &current_path);
+ 	write_trailer();
++	free(buffer);
+ 	free(current_path.buf);
+ 	return 0;
+ }
