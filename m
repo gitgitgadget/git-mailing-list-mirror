@@ -1,63 +1,65 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Rogan Dawes <discard@dawes.za.net>
 Subject: Re: Creating objects manually and repack
-Date: Fri, 4 Aug 2006 09:32:00 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0608040931000.5167@g5.osdl.org>
-References: <9e4733910608032043u689f431rc5408c6d89398142@mail.gmail.com> 
- <Pine.LNX.4.64.0608032052210.4168@g5.osdl.org> 
- <9e4733910608032124o5b5b69b5hda2eb8cb1e0ac959@mail.gmail.com> 
- <Pine.LNX.4.64.0608032138330.4168@g5.osdl.org>  <Pine.LNX.4.64.0608032150510.4168@g5.osdl.org>
-  <9e4733910608040740x23a8b0cs3bc276ef9e6fb8f7@mail.gmail.com> 
- <9e4733910608040750g3f72c07ct43f54347e47f25b4@mail.gmail.com> 
- <Pine.LNX.4.64.0608040818270.5167@g5.osdl.org> 
- <9e4733910608040841v7f4f27efra63e5ead2656e07@mail.gmail.com> 
- <44D36F64.5040404@gmail.com> <9e4733910608040911p443a1360k6d9d1aab00039100@mail.gmail.com>
+Date: Fri, 04 Aug 2006 18:39:33 +0200
+Message-ID: <44D37845.5010009@dawes.za.net>
+References: <9e4733910608032043u689f431rc5408c6d89398142@mail.gmail.com>	 <Pine.LNX.4.64.0608032052210.4168@g5.osdl.org>	 <9e4733910608032124o5b5b69b5hda2eb8cb1e0ac959@mail.gmail.com>	 <Pine.LNX.4.64.0608032138330.4168@g5.osdl.org>	 <Pine.LNX.4.64.0608032150510.4168@g5.osdl.org>	 <9e4733910608040740x23a8b0cs3bc276ef9e6fb8f7@mail.gmail.com>	 <9e4733910608040750g3f72c07ct43f54347e47f25b4@mail.gmail.com>	 <Pine.LNX.4.64.0608040818270.5167@g5.osdl.org> <9e4733910608040841v7f4f27efra63e5ead2656e07@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitzilla@gmail.com, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 04 18:32:19 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 04 18:39:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G92aq-0006t0-6M
-	for gcvg-git@gmane.org; Fri, 04 Aug 2006 18:32:12 +0200
+	id 1G92i9-0000PE-HX
+	for gcvg-git@gmane.org; Fri, 04 Aug 2006 18:39:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161285AbWHDQcI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Aug 2006 12:32:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161289AbWHDQcI
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 12:32:08 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:3287 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1161285AbWHDQcH (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Aug 2006 12:32:07 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k74GW1nW028275
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 4 Aug 2006 09:32:01 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k74GW0AN006414;
-	Fri, 4 Aug 2006 09:32:00 -0700
+	id S1161291AbWHDQjm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Aug 2006 12:39:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161293AbWHDQjm
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 12:39:42 -0400
+Received: from sd-green-bigip-61.dreamhost.com ([208.97.132.61]:17577 "EHLO
+	spunkymail-a13.dreamhost.com") by vger.kernel.org with ESMTP
+	id S1161291AbWHDQjm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Aug 2006 12:39:42 -0400
+Received: from [192.168.201.66] (dsl-165-3-155.telkomadsl.co.za [165.165.3.155])
+	by spunkymail-a13.dreamhost.com (Postfix) with ESMTP id E82ED129ADB;
+	Fri,  4 Aug 2006 09:39:39 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.5 (Windows/20060719)
+Newsgroups: gmane.comp.version-control.git
 To: Jon Smirl <jonsmirl@gmail.com>
-In-Reply-To: <9e4733910608040911p443a1360k6d9d1aab00039100@mail.gmail.com>
-X-Spam-Status: No, hits=-0.453 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.142 $
-X-Scanned-By: MIMEDefang 2.36
+In-Reply-To: <9e4733910608040841v7f4f27efra63e5ead2656e07@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24806>
 
-
-
-On Fri, 4 Aug 2006, Jon Smirl wrote:
+Jon Smirl wrote:
+> On 8/4/06, Linus Torvalds <torvalds@osdl.org> wrote:
+>> I'd suggest against it, but you can (and should) just repack often enough
+>> that you shouldn't ever have gigabytes of objects "in flight". I'd have
+>> expected that with a repack every few ten thousand files, and most files
+>> being on the order of a few kB, you'd have been more than ok, but
+>> especially if you have large files, you may want to make things "every 
+>> <n>
+>> bytes" rather than "every <n> files".
 > 
-> That is under consideration but the undeltafied pack is about 12GB and
-> it takes forever (about a day) to deltafy it. I'm not convinced yet
-> that an undeltafied pack is any faster than just having the objects in
-> the directories.
+> How about forking off a pack-objects and handing it one file name at a
+> time over a pipe. When I hand it the next file name I delete the first
+> file. Does pack-objects make multiple passes over the files? This
+> model would let me hand it all 1M files.
+> 
 
-Yeah, I think it's worth it deltifying things early, as you seem to get 
-all the object info in the right order anyway (ie you do the revisions for 
-one file in one go).
+I'd imagine that this would not necessarily save you a lot, if you have 
+to write it to disk, and then read it back again. Your only chance here 
+is if you stay in the buffer, and avoid actually writing to disk at all.
 
-		Linus
+Of course, using a ramdisk/tmpfs for your object directories might be 
+enough to save you. Just use a symlink to tmpfs for the objects 
+directory, and leave the pack files on persistent storage.
+
+That doesn't answer your question about how many passes pack-objects 
+does. Nicholas Pitre should be able to answer that.
+
+Rogan
