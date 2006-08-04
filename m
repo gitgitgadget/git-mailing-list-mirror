@@ -1,59 +1,57 @@
 From: Luben Tuikov <ltuikov@yahoo.com>
 Subject: Re: [PATCH 1/5] gitweb: Cleanup input validation and error messages
-Date: Fri, 4 Aug 2006 16:54:14 -0700 (PDT)
-Message-ID: <20060804235414.66496.qmail@web31801.mail.mud.yahoo.com>
+Date: Fri, 4 Aug 2006 16:54:50 -0700 (PDT)
+Message-ID: <20060804235450.33762.qmail@web31804.mail.mud.yahoo.com>
 References: <200608050038.20534.jnareb@gmail.com>
 Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Sat Aug 05 01:54:23 2006
+X-From: git-owner@vger.kernel.org Sat Aug 05 01:54:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G99Ui-00011E-4X
-	for gcvg-git@gmane.org; Sat, 05 Aug 2006 01:54:20 +0200
+	id 1G99VH-00015I-9b
+	for gcvg-git@gmane.org; Sat, 05 Aug 2006 01:54:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161493AbWHDXyQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Aug 2006 19:54:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161586AbWHDXyQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 19:54:16 -0400
-Received: from web31801.mail.mud.yahoo.com ([68.142.207.64]:25694 "HELO
-	web31801.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1161493AbWHDXyP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Aug 2006 19:54:15 -0400
-Received: (qmail 66498 invoked by uid 60001); 4 Aug 2006 23:54:14 -0000
+	id S1161586AbWHDXyw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Aug 2006 19:54:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161589AbWHDXyw
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 19:54:52 -0400
+Received: from web31804.mail.mud.yahoo.com ([68.142.207.67]:26299 "HELO
+	web31804.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1161586AbWHDXyv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Aug 2006 19:54:51 -0400
+Received: (qmail 33764 invoked by uid 60001); 4 Aug 2006 23:54:50 -0000
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
   s=s1024; d=yahoo.com;
   h=Message-ID:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=kWPIxJ6KgsmaeLYdYgautbmnnRNEhJlqcGNeKgmB95L0lOhOEonU7zyWwbxq1WUP8Eye0n8s/WrVFajuYtMmCFRZX8bmv/nm+fSjqSFc3nszk5xjBOD9bGIGhObHZBf+Um7NOHoY9/t+96iU+uuBcEusVIrD/w8fT36CJrcJd7g=  ;
-Received: from [64.215.88.90] by web31801.mail.mud.yahoo.com via HTTP; Fri, 04 Aug 2006 16:54:14 PDT
+  b=gwu/Bfl/5Oc6qPHrvUjZoskfEwjpscEwRC16+TVGpvF1UL8lJIY99Rt4fVpWComX6hl9t02nHgYBQrc0Tbl5yo4ohu8zfPi/PuKM5R/+iBCbAb+7jvxspFt3m7AwWKqgsY4OgOh0uXEYzdsxrNxCCplKj4lm5AMw+oQsLJ0fFOA=  ;
+Received: from [64.215.88.90] by web31804.mail.mud.yahoo.com via HTTP; Fri, 04 Aug 2006 16:54:50 PDT
 To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 In-Reply-To: <200608050038.20534.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24864>
 
 --- Jakub Narebski <jnareb@gmail.com> wrote:
 > Clean up input validation, including removing $rss_link variable and
 > making error messages more explicit.  Expand and uniquify other error
 > messages.
-
-Can you fix your patch then?
-
-Error messages in general do not end with a period.
-
-    Luben
-
-
 > 
 > Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 > ---
 > This probably conflicts "[PATCH 4/4] gitweb: No periods for error messages".
 > It uses periods for error messages which does not end in with some 
 > value of some variable.
+
+Can you fix your patch then?
+Error messages in general do not end with a period.
+
+    Luben
+
 > 
 >  gitweb/gitweb.perl |   88 ++++++++++++++++++++++++----------------------------
 >  1 files changed, 40 insertions(+), 48 deletions(-)
