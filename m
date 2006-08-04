@@ -1,65 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] merge-recursive: fix rename handling
-Date: Fri, 4 Aug 2006 18:21:41 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0608041821040.1800@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [KORG] kernel.org/git/ showing nothing
+Date: Fri, 04 Aug 2006 09:25:02 -0700
+Message-ID: <44D374DE.5080808@zytor.com>
+References: <44D3208E.8090403@garzik.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Fri Aug 04 18:22:05 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: ftpadmin@kernel.org, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 04 18:28:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G92Qm-0004XY-Ot
-	for gcvg-git@gmane.org; Fri, 04 Aug 2006 18:21:49 +0200
+	id 1G92XX-00066g-NX
+	for gcvg-git@gmane.org; Fri, 04 Aug 2006 18:28:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161277AbWHDQVp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Aug 2006 12:21:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161243AbWHDQVp
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 12:21:45 -0400
-Received: from mail.gmx.de ([213.165.64.20]:30918 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1161277AbWHDQVp (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Aug 2006 12:21:45 -0400
-Received: (qmail invoked by alias); 04 Aug 2006 16:21:41 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp018) with SMTP; 04 Aug 2006 18:21:41 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org, junkio@cox.net
-X-Y-GMX-Trusted: 0
+	id S1161288AbWHDQ2p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Aug 2006 12:28:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161289AbWHDQ2p
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 12:28:45 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:19096 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1161288AbWHDQ2o
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 4 Aug 2006 12:28:44 -0400
+Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.7/8.13.4) with ESMTP id k74GP2Ug005511
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 4 Aug 2006 09:25:03 -0700
+User-Agent: Thunderbird 1.5.0.4 (X11/20060614)
+To: Jeff Garzik <jeff@garzik.org>
+In-Reply-To: <44D3208E.8090403@garzik.org>
+X-Virus-Scanned: ClamAV version 0.88.3, clamav-milter version 0.88.3 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.9 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.6
+X-Spam-Checker-Version: SpamAssassin 3.0.6 (2005-12-07) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24804>
 
+Jeff Garzik wrote:
+> When I visit http://www.kernel.org/git/ no projects at all are listed.
+> 
+> At least one other person independently noted this, as well.
+> 
 
-To handle renames properly, we iterate through all file names of both
-heads, the current one, and the one to be merged.
+Bloody Hades.
 
-Only that there was a bug, where it was checked if the file name was present
-in both heads, but the result of the check was never used. Instead, the
-merge proceeded as if both heads contained that file.
+I swear if I ever meet the guy who decided that FC5 didn't need to be 
+binary compatible with FC4 I will personally kill him with my bare hands...
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- merge-recursive.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+Fixed now.
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 10bce70..1e176ca 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -808,8 +808,10 @@ static int process_renames(struct path_l
- 		} else {
- 			compare = strcmp(a_renames->items[i].path,
- 					b_renames->items[j].path);
--			ren1 = a_renames->items[i++].util;
--			ren2 = b_renames->items[j++].util;
-+			if (compare <= 0)
-+				ren1 = a_renames->items[i++].util;
-+			if (compare >= 0)
-+				ren2 = b_renames->items[j++].util;
- 		}
- 
- 		/* TODO: refactor, so that 1/2 are not needed */
--- 
-1.4.2.rc2.ga8a2
+	-hpa
