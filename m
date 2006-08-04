@@ -1,52 +1,55 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 0/5] Some further gitweb patches
-Date: Sat, 5 Aug 2006 00:36:06 +0200
-Message-ID: <200608050036.06490.jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Fix crash when GIT_DIR is invalid
+Date: Sat, 5 Aug 2006 00:42:27 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0608050041230.1800@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0608041745500.1800@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7virl8jpnw.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Aug 05 00:35:34 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 05 00:42:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G98GS-00069d-J1
-	for gcvg-git@gmane.org; Sat, 05 Aug 2006 00:35:32 +0200
+	id 1G98NF-0007FV-Dx
+	for gcvg-git@gmane.org; Sat, 05 Aug 2006 00:42:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161541AbWHDWf3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Aug 2006 18:35:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161542AbWHDWf3
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 18:35:29 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:57539 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1161541AbWHDWf2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Aug 2006 18:35:28 -0400
-Received: by nf-out-0910.google.com with SMTP id k26so43582nfc
-        for <git@vger.kernel.org>; Fri, 04 Aug 2006 15:35:27 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=qsl0WVPN8DBfDsarfGqE7yesTcaROwqdiI+0Q03HoAXvyZ5wAH0+Cya6/F7MWBRXhR6gtr2oiqo4Vvsc8VgPnysevelp6rezfb8x0wgPE8HkenBPE8a7N5lCKbeUTYxnHDLZdNrQmNf4GR1NSSaSGkJG/G62i4FT39cWtbE835Y=
-Received: by 10.49.10.3 with SMTP id n3mr6032730nfi;
-        Fri, 04 Aug 2006 15:35:27 -0700 (PDT)
-Received: from host-81-190-31-92.torun.mm.pl ( [81.190.31.92])
-        by mx.gmail.com with ESMTP id p72sm2938268nfc.2006.08.04.15.35.27;
-        Fri, 04 Aug 2006 15:35:27 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+	id S1161542AbWHDWma (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Aug 2006 18:42:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161544AbWHDWma
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 18:42:30 -0400
+Received: from mail.gmx.net ([213.165.64.20]:1250 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1161542AbWHDWm3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Aug 2006 18:42:29 -0400
+Received: (qmail invoked by alias); 04 Aug 2006 22:42:28 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp029) with SMTP; 05 Aug 2006 00:42:28 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7virl8jpnw.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24855>
 
-Based on 'next' branch, v1.4.2-rc3-g1c4b267
+Hi,
 
-This is also kind of cleanup series of patches, although it introduces 
-minor improvements (patches 1 and 5).
+On Fri, 4 Aug 2006, Junio C Hamano wrote:
 
-This series does not include latest Luben Tuikov series...
--- 
-Jakub Narebski
-Poland
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >  	bad_dir_environ:
+> > -		if (!nongit_ok) {
+> > +		if (nongit_ok) {
+> >  			*nongit_ok = 1;
+> 
+> *BLUSH*  How could I have missed something like this...
+
+It's too easy. I actually reviewed that patch, saw that I did the same 
+(not!), and hit the bug...
+
+Ciao,
+Dscho "errare humanum est" --
