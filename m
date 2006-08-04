@@ -1,58 +1,101 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] Introduce git-xxdiff to invoke xxdiff for manual conflict resolution
-Date: Thu, 3 Aug 2006 23:31:44 -0400
-Message-ID: <20060804033144.GB24818@coredump.intra.peff.net>
-References: <11546492331601-git-send-email-martin@catalyst.net.nz> <7v64h9pdx4.fsf@assigned-by-dhcp.cox.net> <44D296D8.4030200@catalyst.net.nz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 04 05:31:56 2006
+From: Martin Langhoff <martin@catalyst.net.nz>
+Subject: [PATCH] Introducing cg-xxdiff for conflict resolution
+Date: Fri,  4 Aug 2006 15:34:07 +1200
+Message-ID: <11546624471356-git-send-email-martin@catalyst.net.nz>
+Cc: Martin Langhoff <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Fri Aug 04 05:32:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8qPf-00041Y-En
-	for gcvg-git@gmane.org; Fri, 04 Aug 2006 05:31:51 +0200
+	id 1G8qPn-00047U-ND
+	for gcvg-git@gmane.org; Fri, 04 Aug 2006 05:32:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030196AbWHDDbs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Aug 2006 23:31:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030209AbWHDDbr
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 23:31:47 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:30649 "HELO
-	peff.net") by vger.kernel.org with SMTP id S1030196AbWHDDbq (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Aug 2006 23:31:46 -0400
-Received: (qmail 28725 invoked from network); 3 Aug 2006 23:31:10 -0400
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 3 Aug 2006 23:31:10 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu,  3 Aug 2006 23:31:44 -0400
-To: "Martin Langhoff (CatalystIT)" <martin@catalyst.net.nz>
-Content-Disposition: inline
-In-Reply-To: <44D296D8.4030200@catalyst.net.nz>
+	id S1030224AbWHDDbz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 Aug 2006 23:31:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030209AbWHDDbz
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 23:31:55 -0400
+Received: from godel.catalyst.net.nz ([202.78.240.40]:8616 "EHLO
+	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
+	id S1030224AbWHDDby (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Aug 2006 23:31:54 -0400
+Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=mltest)
+	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
+	id 1G8qPg-0003Lq-7a; Fri, 04 Aug 2006 15:31:52 +1200
+Received: from martin by mltest with local (Exim 3.36 #1 (Debian))
+	id 1G8qRr-0000Xe-00; Fri, 04 Aug 2006 15:34:07 +1200
+To: git@vger.kernel.org
+X-Mailer: git-send-email 1.4.2.rc2.ge1f7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24766>
 
-On Fri, Aug 04, 2006 at 12:37:44PM +1200, Martin Langhoff (CatalystIT) wrote:
+This is a bit of a crude but really useful shortcut for conflict resolution.
+The name is bad, but matches git-xxdiff which has been around for like... ages
 
-> >instead check for stage 2 ("ours") for the path.
-> Reading Documentation/git-read-tree.txt it seems to mean that stage 1 is 
-> merge base, 1 is ours and 2 is the branch being merged in.
-> 
-> I am confused...
-> 
-> Quote:
-> >When performing a merge of another
-> >branch into the current branch, we use the common ancestor tree
-> >as <tree1>, the current branch head as <tree2>, and the other
-> >branch head as <tree3>.
+As Cogito doesn't make use of the index during merges/applies, cg-xxdiff
+is somewhat more brittle and cannot not help during conflict resolution when
+using cg-patch.
 
-Look further down:
-   OK, this all sounds like a collection of totally nonsensical rules,
-   but it's actually exactly what you want in order to do a  fast
-   merge.  The different stages  represent the "result tree" (stage 0,
-   aka "merged"), the original tree (stage 1, aka "orig"), and the two
-   trees you are trying to merge (stage 2 and 3 respectively).
+Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
+---
+ Makefile  |    3 ++-
+ cg-xxdiff |   33 +++++++++++++++++++++++++++++++++
+ 2 files changed, 35 insertions(+), 1 deletions(-)
 
-HTH,
--Peff
+diff --git a/Makefile b/Makefile
+index ba9bf9a..dc21702 100644
+--- a/Makefile
++++ b/Makefile
+@@ -18,7 +18,8 @@ SCRIPT=	cg-object-id cg-add cg-admin-lso
+ 	cg-export cg-help cg-init cg-log cg-merge cg-mkpatch cg-patch \
+ 	cg-fetch cg-restore cg-rm cg-seek cg-status cg-tag cg-tag-ls cg-update \
+ 	cg cg-admin-ls cg-push cg-branch-chg cg-admin-cat cg-clean \
+-	cg-admin-setuprepo cg-switch cg-mv cg-admin-rewritehist cg-tag-show
++	cg-admin-setuprepo cg-switch cg-mv cg-admin-rewritehist cg-tag-show \
++	cg-xxdiff
+ 
+ LIB_SCRIPT=cg-Xlib cg-Xmergefile cg-Xfetchprogress cg-Xfollowrenames
+ 
+diff --git a/cg-xxdiff b/cg-xxdiff
+new file mode 100755
+index 0000000..7a1a863
+--- /dev/null
++++ b/cg-xxdiff
+@@ -0,0 +1,33 @@
++#!/bin/sh
++
++USAGE='<path-with-conflict>'
++SUBDIRECTORY_OK=No
++. git-sh-setup
++
++FILE=$1
++
++# Sanity checks
++if test ! -n "$FILE"
++then
++	echo Need a path
++	exit 1
++fi
++
++git cat-file blob `git rev-parse HEAD`:$FILE > $FILE~ours
++if test $? -gt 0
++then 
++	echo "Error - $FILE is not tracked by git or does not have a conflict"
++	exit 1
++fi
++echo Written $FILE~ours
++
++git cat-file blob `git rev-parse FETCH_HEAD`:$FILE > $FILE~branch
++if  test $? -gt 0
++then 
++	echo "Error - $FILE is not tracked by git or does not have a conflict"
++	exit 1
++fi
++echo Written $FILE~branch
++echo Resolved file will be saved as $FILE~merged
++
++xxdiff -wbB --show-merged-pane --merged-filename $FILE~merged $FILE~ours $FILE~branch
+-- 
+1.4.2.rc2.ge1f7
