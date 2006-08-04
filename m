@@ -1,78 +1,244 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Creating objects manually and repack
-Date: Fri, 4 Aug 2006 12:20:36 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0608041218390.5167@g5.osdl.org>
-References: <9e4733910608032043u689f431rc5408c6d89398142@mail.gmail.com>
- <Pine.LNX.4.64.0608032052210.4168@g5.osdl.org>
- <9e4733910608032124o5b5b69b5hda2eb8cb1e0ac959@mail.gmail.com>
- <Pine.LNX.4.64.0608032138330.4168@g5.osdl.org> <Pine.LNX.4.64.0608032150510.4168@g5.osdl.org>
- <9e4733910608040740x23a8b0cs3bc276ef9e6fb8f7@mail.gmail.com>
- <9e4733910608040750g3f72c07ct43f54347e47f25b4@mail.gmail.com>
- <Pine.LNX.4.64.0608040818270.5167@g5.osdl.org>
- <9e4733910608040841v7f4f27efra63e5ead2656e07@mail.gmail.com>
- <Pine.LNX.4.64.0608040945070.5167@g5.osdl.org>
- <9e4733910608041017v235da03ocd3eeeb0ba0e259b@mail.gmail.com>
- <Pine.LNX.4.64.0608041027530.5167@g5.osdl.org> <Pine.LNX.4.64.0608041052030.5167@g5.osdl.org>
- <7v64h8l5om.fsf@assigned-by-dhcp.cox.net>
+From: ebiederm@xmission.com (Eric W. Biederman)
+Subject: [RFC][PATCH] Branch history
+Date: Fri, 04 Aug 2006 13:24:47 -0600
+Message-ID: <m1mzakpam8.fsf@ebiederm.dsl.xmission.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 04 21:21:00 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Aug 04 21:26:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G95Dz-0007CK-DC
-	for gcvg-git@gmane.org; Fri, 04 Aug 2006 21:20:47 +0200
+	id 1G95JI-00080W-Sy
+	for gcvg-git@gmane.org; Fri, 04 Aug 2006 21:26:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161376AbWHDTUo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Aug 2006 15:20:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161377AbWHDTUo
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 15:20:44 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:46243 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1161376AbWHDTUn (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Aug 2006 15:20:43 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k74JKbnW006909
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 4 Aug 2006 12:20:38 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k74JKaAx011933;
-	Fri, 4 Aug 2006 12:20:37 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v64h8l5om.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.448 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.142 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1161381AbWHDTZ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Aug 2006 15:25:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161380AbWHDTZ5
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 15:25:57 -0400
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:10467 "EHLO
+	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
+	id S1161379AbWHDTZ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Aug 2006 15:25:56 -0400
+Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
+	by ebiederm.dsl.xmission.com (8.13.6/8.13.6/Debian-1) with ESMTP id k74JOnSr032055;
+	Fri, 4 Aug 2006 13:24:49 -0600
+Received: (from eric@localhost)
+	by ebiederm.dsl.xmission.com (8.13.6/8.13.6/Submit) id k74JOlHh032054;
+	Fri, 4 Aug 2006 13:24:48 -0600
+X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+To: <git@vger.kernel.org>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24826>
+
+
+The problem:
+git-rebase, stgit and the like destructively edit the commit history
+on a branch.  Making it a challenge to go back to a known good point.
+
+revlog and the like sort of help this but they don't address the
+issues that they capture irrelevant points and are not git-prune safe.
+
+With current git the best technique I have found is to always make
+a new branch before I would call git-rebase.
 
 
 
-On Fri, 4 Aug 2006, Junio C Hamano wrote:
-> 
-> That would only work *once*, because the resulting pack would
-> now have blobs from two or more different files and you cannot
-> tell them apart.
 
-You don't care. You need to keep track of the blob names separately 
-_anyway_: the pack information is not enough to re-create all the revision 
-info.
+After thinking about the problem some more I believe I have found
+a rather simple solution to the problem of keeping branch history.
 
-So clearly, to create the tree and commit objects, the cvsimport really 
-needs to keep track of the objects it has created, and what their 
-relationship is, and it needs to do that separately. The pack-file just 
-contains the contents, so that you only ever afterwards need to worry 
-about the 20-byte SHA1, not the actual file itself.
+For each branch you want to keep the history of keep 2 branches.
+A normal working branch, and a second archive branch that records
+the history of the branch you are editing.
 
-> > To get a list of all object names in a pack-file, you'd basically do just
-> > something like the appended.
-> 
-> git-show-index?
+The history can be kept simply by placing an additional commit on the
+top of each branch.  The new commit on top of each branch will point
+to the same tree object as the previous top commit on the branch but
+it will have 2 parent commit objects.  The first parent commit object
+is the previous top commit object of the branch.  The second parent
+commit object is the commit object on top of the previous version of
+this branch.
 
-Yeah, that might be good.
+The work flow is you edit a branch to your hearts comment then when
+you get to an interesting point you commit the branch to your archive
+branch so you can keep track of things.
 
-		Linus
+To gitk and friends the archive branch looks like a series of branch
+merges where one input branch is always the same as the merge result.
+So all of the git tools work normally.
+
+The implementation is trivial.
+
+The neat thing is that it gives an immutable history of a branch that
+is actively being edited.  So if you export your archive branch people
+will never see time roll backward.
+
+
+
+Below is my patch to implement this idea.  Currently I am storing
+the archive branch in .git/refs/archive/$branchname.  And calling
+the command to commit a branch git-archive-branch.
+
+I think my initial naming is most likely lacking so suggestions
+for something better would be appreciated.
+
+Comments?
+
+
+Eric
+
+diff --git a/Makefile b/Makefile
+index 700c77f..411ae95 100644
+--- a/Makefile
++++ b/Makefile
+@@ -150,7 +150,7 @@ SCRIPT_SH = \
+ 	git-applymbox.sh git-applypatch.sh git-am.sh \
+ 	git-merge.sh git-merge-stupid.sh git-merge-octopus.sh \
+ 	git-merge-resolve.sh git-merge-ours.sh \
+-	git-lost-found.sh git-quiltimport.sh
++	git-lost-found.sh git-quiltimport.sh git-archive-branch.sh
+ 
+ SCRIPT_PERL = \
+ 	git-archimport.perl git-cvsimport.perl git-relink.perl \
+diff --git a/git-archive-branch.sh b/git-archive-branch.sh
+new file mode 100755
+index 0000000..00638de
+--- /dev/null
++++ b/git-archive-branch.sh
+@@ -0,0 +1,131 @@
++#!/bin/sh
++
++USAGE='[-m <message> | -F logfile] [-e]'
++
++. git-sh-setup
++
++headref=$(git-symbolic-ref HEAD | sed -e 's|^refs/heads/||')
++headsha1=$(git-rev-parse "$headref")
++archiveref="refs/archive/$headref"
++
++
++logfile=
++edit_flag=
++no_edit=
++log_given=
++log_message=
++while case "$#" in 0) break;; esac
++do
++  case "$1" in
++  -F|--F|-f|--f|--fi|--fil|--file)
++      case "$#" in 1) usage ;; esac
++      shift
++      no_edit=t
++      log_given=t$log_given
++      logfile="$1"
++      shift
++      ;;
++  -F*|-f*)
++      no_edit=t
++      log_given=t$log_given
++      logfile=`expr "z$1" : 'z-[Ff]\(.*\)'`
++      shift
++      ;;
++  --F=*|--f=*|--fi=*|--fil=*|--file=*)
++      no_edit=t
++      log_given=t$log_given
++      logfile=`expr "z$1" : 'z-[^=]*=\(.*\)'`
++      shift
++      ;;
++  -e|--e|--ed|--edi|--edit)
++      edit_flag=t
++      shift
++      ;;
++  -m|--m|--me|--mes|--mess|--messa|--messag|--message)
++      case "$#" in 1) usage ;; esac
++      shift
++      log_given=m$log_given
++      if test "$log_message" = ''
++      then
++          log_message="$1"
++      else
++          log_message="$log_message
++
++$1"
++      fi
++      no_edit=t
++      shift
++      ;;
++  -m*)
++      log_given=m$log_given
++      if test "$log_message" = ''
++      then
++          log_message=`expr "z$1" : 'z-m\(.*\)'`
++      else
++          log_message="$log_message
++
++`expr "z$1" : 'z-m\(.*\)'`"
++      fi
++      no_edit=t
++      shift
++      ;;
++  --m=*|--me=*|--mes=*|--mess=*|--messa=*|--messag=*|--message=*)
++      log_given=m$log_given
++      if test "$log_message" = ''
++      then
++          log_message=`expr "z$1" : 'z-[^=]*=\(.*\)'`
++      else
++          log_message="$log_message
++
++`expr "z$1" : 'zq-[^=]*=\(.*\)'`"
++      fi
++      no_edit=t
++      shift
++      ;;
++  esac
++done
++case "$edit_flag" in t) no_edit= ;; esac
++
++if test "$log_message" != ""
++then
++	echo "$log_message"
++elif test "$logfile" != ""
++then
++	if test "$logfile" = -
++	then
++		test -t 0 &&
++		echo >&2 "(read log message from standard input)"
++		cat
++	else
++		cat <"$logfile"
++	fi
++fi | git-stripspace > "$GIT_DIR"/COMMIT_EDITMSG
++
++case "$no_edit" in
++'')
++	case "${VISUAL:-$EDITOR},$TERM" in
++	,dumb)
++		echo >&2 "Terminal is dumb but no VISUAL nor EDITOR defined."
++		echo >&2 "Please supply the commit log message using either"
++		echo >&2 "-m or -F option.  A boilerplate log message has"
++		echo >&2 "been prepared in $GIT_DIR/COMMIT_EDITMSG"
++		exit 1
++		;;
++	esac
++	git-var GIT_AUTHOR_IDENT > /dev/null || die
++	git-var GIT_COMMITTER_IDENT > /dev/null || die
++	${VISUAL:-${EDITOR:-vi}} "$GIT_DIR/COMMIT_EDITMSG"
++	;;
++esac
++
++cat $GIT_DIR/COMMIT_EDITMSG | git-stripspace > "$GIT_DIR"/COMMIT_MSG
++
++parents="-p $headsha1"
++if git-rev-parse --verify $archiveref > /dev/null 2> /dev/null; then
++	parents="$parents -p $(git-rev-parse $archiveref)"
++fi
++
++tree=$(git-cat-file commit $headsha1 | sed -n -e 's/^tree \(.*\)$/\1/p') &&
++commit=$(cat $GIT_DIR/COMMIT_MSG | git-commit-tree $tree $parents) 
++git-update-ref "$archiveref" $commit 
++rm -f "$GIT_DIR/COMMIT_MSG" "$GIT_DIR/COMMIT_EDITMSG"
