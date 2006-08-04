@@ -1,30 +1,31 @@
 From: "Ramsay Jones" <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH] Allow config file to specify Signed-off-by identity in format-patch.
-Date: Fri, 4 Aug 2006 22:01:30 +0100
-Message-ID: <000001c6b809$2919a200$c47eedc1@ramsay1.demon.co.uk>
+Subject: update-ref logs: problem with committer info?
+Date: Fri, 4 Aug 2006 22:01:34 +0100
+Message-ID: <000501c6b809$2b18cd60$c47eedc1@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="----=_NextPart_000_0001_01C6B811.8ADE0A00"
-X-From: git-owner@vger.kernel.org Fri Aug 04 23:02:43 2006
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Aug 04 23:03:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G96nN-0007Eq-OY
-	for gcvg-git@gmane.org; Fri, 04 Aug 2006 23:01:26 +0200
+	id 1G96nV-0007Hj-Qg
+	for gcvg-git@gmane.org; Fri, 04 Aug 2006 23:01:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161444AbWHDVBW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Aug 2006 17:01:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161442AbWHDVBW
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 17:01:22 -0400
-Received: from anchor-post-36.mail.demon.net ([194.217.242.86]:39950 "EHLO
+	id S1161442AbWHDVB0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Aug 2006 17:01:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161446AbWHDVB0
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 17:01:26 -0400
+Received: from anchor-post-36.mail.demon.net ([194.217.242.86]:42510 "EHLO
 	anchor-post-36.mail.demon.net") by vger.kernel.org with ESMTP
-	id S1161445AbWHDVBV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Aug 2006 17:01:21 -0400
+	id S1161442AbWHDVBY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Aug 2006 17:01:24 -0400
 Received: from ramsay1.demon.co.uk ([193.237.126.196])
 	by anchor-post-36.mail.demon.net with smtp (Exim 4.42)
-	id 1G96nH-000M7y-JV
-	for git@vger.kernel.org; Fri, 04 Aug 2006 21:01:20 +0000
+	id 1G96nK-000M7y-Ku
+	for git@vger.kernel.org; Fri, 04 Aug 2006 21:01:23 +0000
 To: <git@vger.kernel.org>
 X-Priority: 3 (Normal)
 X-MSMail-Priority: Normal
@@ -34,81 +35,96 @@ X-MimeOLE: Produced By Microsoft MimeOLE V4.72.2106.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24841>
 
-This is a multi-part message in MIME format.
+Hi all,
 
-------=_NextPart_000_0001_01C6B811.8ADE0A00
-Content-Type: text/plain;
-	charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+As a follow-up to the previous (two) email, this concerns the ability
+to override the committer info from the config file. As before, this
+depends on the relative call sites of setup_ident() and git_config().
 
+In particular, the call to setup_ident(), from log_ref_write(),
+which in turn is called from write_ref_sha1() in file refs.c.
+Here, the call to setup_ident() seems to me to be misplaced and to
+almost guarantee that it will over-write the values set by an
+earlier call to git_config(). It is possible, I suppose, that there
+has been no previous call to git_config(); just not very likely, and
+even if that were so, then it should be the responsibility of the
+*callers* of write_ref_sha1() to ensure this happens.
 
-Unlike git-commit, git-format-patch was not picking up and using the
-user.email config variable for the email part of the committer info.
-I was forced to use the GIT_COMMITTER_EMAIL environment variable to
-override the default <user@localhost.localdomain>. The fix was to
-simply move the call to setup_ident() to come before the git_config()
-call.
+Indeed, tracing the callers of write_ref_sha1(), we find cmd_update_ref()
+in builtin-update-ref.c and pull() in fetch.c. Adding a call to
+setup_ident() in cmd_update_ref() takes care of that route. The callers
+of pull() are to be found in http-fetch.c, local-fetch.c and ssh-fetch.c.
+Adding calls to setup_ident() in these callers is equally simple, so it
+only remains to remove the call from refs.c.
 
-Signed-off-by: Ramsay Allan Jones <ramsay@ramsay1.demon.co.uk>
----
- builtin-log.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Now, as in the previous email, I can't compile http-fetch.c or test
+the result. (Yes, I could test a local fetch, but I'm feeling lazy!)
+In addition, I feel that somebody who knows the code better than I
+should take a look.
 
-diff --git a/builtin-log.c b/builtin-log.c
-index f9515a8..dcee141 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -243,6 +243,7 @@ int cmd_format_patch(int argc, const cha
- 	rev.ignore_merges = 1;
- 	rev.diffopt.output_format = DIFF_FORMAT_PATCH;
+comments?
+
+Ramsay
+
+diff --git a/builtin-update-ref.c b/builtin-update-ref.c
+index 00333c7..83094ab 100644
+--- a/builtin-update-ref.c
++++ b/builtin-update-ref.c
+@@ -12,6 +12,7 @@ int cmd_update_ref(int argc, const char 
+ 	unsigned char sha1[20], oldsha1[20];
+ 	int i;
  
 +	setup_ident();
- 	git_config(git_format_config);
- 	rev.extra_headers = extra_headers;
+ 	setup_git_directory();
+ 	git_config(git_default_config);
  
-@@ -283,7 +284,6 @@ int cmd_format_patch(int argc, const cha
- 			 !strcmp(argv[i], "-s")) {
- 			const char *committer;
- 			const char *endpos;
--			setup_ident();
- 			committer = git_committer_info(1);
- 			endpos = strchr(committer, '>');
- 			if (!endpos)
--- 
-1.4.1
-
-------=_NextPart_000_0001_01C6B811.8ADE0A00
-Content-Type: text/plain;
-	name="P0013.TXT"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
-	filename="P0013.TXT"
-
-RnJvbSAyYmMwMWYyY2ViMDQyMTkyODI3ZDA1ZTk0MWNhODFjMWE3ZGMzMGZlIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBSYW1zYXkgQWxsYW4gSm9uZXMgPHJhbXNheUByYW1zYXkxLmRl
-bW9uLmNvLnVrPgpEYXRlOiBGcmksIDQgQXVnIDIwMDYgMTc6MTg6MTUgKzAxMDAKU3ViamVjdDog
-W1BBVENIXSBBbGxvdyBjb25maWcgZmlsZSB0byBzcGVjaWZ5IFNpZ25lZC1vZmYtYnkgaWRlbnRp
-dHkgaW4gZm9ybWF0LXBhdGNoLgoKVW5saWtlIGdpdC1jb21taXQsIGdpdC1mb3JtYXQtcGF0Y2gg
-d2FzIG5vdCBwaWNraW5nIHVwIGFuZCB1c2luZyB0aGUKdXNlci5lbWFpbCBjb25maWcgdmFyaWFi
-bGUgZm9yIHRoZSBlbWFpbCBwYXJ0IG9mIHRoZSBjb21taXR0ZXIgaW5mby4KSSB3YXMgZm9yY2Vk
-IHRvIHVzZSB0aGUgR0lUX0NPTU1JVFRFUl9FTUFJTCBlbnZpcm9ubWVudCB2YXJpYWJsZSB0bwpv
-dmVycmlkZSB0aGUgZGVmYXVsdCA8dXNlckBsb2NhbGhvc3QubG9jYWxkb21haW4+LiBUaGUgZml4
-IHdhcyB0bwpzaW1wbHkgbW92ZSB0aGUgY2FsbCB0byBzZXR1cF9pZGVudCgpIHRvIGNvbWUgYmVm
-b3JlIHRoZSBnaXRfY29uZmlnKCkKY2FsbC4KClNpZ25lZC1vZmYtYnk6IFJhbXNheSBBbGxhbiBK
-b25lcyA8cmFtc2F5QHJhbXNheTEuZGVtb24uY28udWs+Ci0tLQogYnVpbHRpbi1sb2cuYyB8ICAg
-IDIgKy0KIDEgZmlsZXMgY2hhbmdlZCwgMSBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9ucygtKQoK
-ZGlmZiAtLWdpdCBhL2J1aWx0aW4tbG9nLmMgYi9idWlsdGluLWxvZy5jCmluZGV4IGY5NTE1YTgu
-LmRjZWUxNDEgMTAwNjQ0Ci0tLSBhL2J1aWx0aW4tbG9nLmMKKysrIGIvYnVpbHRpbi1sb2cuYwpA
-QCAtMjQzLDYgKzI0Myw3IEBAIGludCBjbWRfZm9ybWF0X3BhdGNoKGludCBhcmdjLCBjb25zdCBj
-aGEKIAlyZXYuaWdub3JlX21lcmdlcyA9IDE7CiAJcmV2LmRpZmZvcHQub3V0cHV0X2Zvcm1hdCA9
-IERJRkZfRk9STUFUX1BBVENIOwogCisJc2V0dXBfaWRlbnQoKTsKIAlnaXRfY29uZmlnKGdpdF9m
-b3JtYXRfY29uZmlnKTsKIAlyZXYuZXh0cmFfaGVhZGVycyA9IGV4dHJhX2hlYWRlcnM7CiAKQEAg
-LTI4Myw3ICsyODQsNiBAQCBpbnQgY21kX2Zvcm1hdF9wYXRjaChpbnQgYXJnYywgY29uc3QgY2hh
-CiAJCQkgIXN0cmNtcChhcmd2W2ldLCAiLXMiKSkgewogCQkJY29uc3QgY2hhciAqY29tbWl0dGVy
-OwogCQkJY29uc3QgY2hhciAqZW5kcG9zOwotCQkJc2V0dXBfaWRlbnQoKTsKIAkJCWNvbW1pdHRl
-ciA9IGdpdF9jb21taXR0ZXJfaW5mbygxKTsKIAkJCWVuZHBvcyA9IHN0cmNocihjb21taXR0ZXIs
-ICc+Jyk7CiAJCQlpZiAoIWVuZHBvcykKLS0gCjEuNC4xCgo=
-
-------=_NextPart_000_0001_01C6B811.8ADE0A00--
+diff --git a/http-fetch.c b/http-fetch.c
+index 44eba5f..fe3a4fd 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -1222,6 +1222,7 @@ int main(int argc, char **argv)
+ 	int arg = 1;
+ 	int rc = 0;
+ 
++	setup_ident();
+ 	setup_git_directory();
+ 	git_config(git_default_config);
+ 
+diff --git a/local-fetch.c b/local-fetch.c
+index ffa4887..d059a51 100644
+--- a/local-fetch.c
++++ b/local-fetch.c
+@@ -207,6 +207,7 @@ int main(int argc, char **argv)
+ 	char *commit_id;
+ 	int arg = 1;
+ 
++	setup_ident();
+ 	setup_git_directory();
+ 	git_config(git_default_config);
+ 
+diff --git a/refs.c b/refs.c
+index 713ca46..a4060d8 100644
+--- a/refs.c
++++ b/refs.c
+@@ -379,7 +379,6 @@ static int log_ref_write(struct ref_lock
+ 			lock->log_file, strerror(errno));
+ 	}
+ 
+-	setup_ident();
+ 	comitter = git_committer_info(1);
+ 	if (msg) {
+ 		maxlen = strlen(comitter) + strlen(msg) + 2*40 + 5;
+diff --git a/ssh-fetch.c b/ssh-fetch.c
+index 1e59cd2..a42d17e 100644
+--- a/ssh-fetch.c
++++ b/ssh-fetch.c
+@@ -131,6 +131,7 @@ int main(int argc, char **argv)
+ 	prog = getenv("GIT_SSH_PUSH");
+ 	if (!prog) prog = "git-ssh-upload";
+ 
++	setup_ident();
+ 	setup_git_directory();
+ 	git_config(git_default_config);
+ 
