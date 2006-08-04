@@ -1,102 +1,84 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] http-push: avoid fork() by calling merge_bases() directly
-Date: Fri, 4 Aug 2006 17:50:41 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0608041750150.1800@wbgn013.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Fri Aug 04 17:50:50 2006
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 2/4] autoconf: Check for ll hh j z t size specifiers introduced by C99
+Date: Fri,  4 Aug 2006 17:55:57 +0200
+Message-ID: <11547069591228-git-send-email-jnareb@gmail.com>
+References: <7v7j1on71n.fsf@assigned-by-dhcp.cox.net>
+Cc: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 04 17:56:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G91wk-00063Z-Ob
-	for gcvg-git@gmane.org; Fri, 04 Aug 2006 17:50:47 +0200
+	id 1G922I-0007FZ-WA
+	for gcvg-git@gmane.org; Fri, 04 Aug 2006 17:56:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161259AbWHDPuo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Aug 2006 11:50:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161262AbWHDPun
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 11:50:43 -0400
-Received: from mail.gmx.de ([213.165.64.20]:5328 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1161259AbWHDPun (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Aug 2006 11:50:43 -0400
-Received: (qmail invoked by alias); 04 Aug 2006 15:50:41 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp037) with SMTP; 04 Aug 2006 17:50:41 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org, junkio@cox.net
-X-Y-GMX-Trusted: 0
+	id S1161267AbWHDP4I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Aug 2006 11:56:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161268AbWHDP4I
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 11:56:08 -0400
+Received: from mail.fuw.edu.pl ([193.0.80.14]:63396 "EHLO mail.fuw.edu.pl")
+	by vger.kernel.org with ESMTP id S1161267AbWHDP4H (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Aug 2006 11:56:07 -0400
+Received: from front.fuw.edu.pl (front.fuw.edu.pl [193.0.83.59])
+	by mail.fuw.edu.pl (8.13.6/8.13.6) with ESMTP id k74Ft7om029218
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 4 Aug 2006 17:55:07 +0200
+Received: from front.fuw.edu.pl (IDENT:10582@localhost [127.0.0.1])
+	by front.fuw.edu.pl (8.13.3/8.12.4) with ESMTP id k74FtxH9018885;
+	Fri, 4 Aug 2006 17:55:59 +0200
+Received: (from jnareb@localhost)
+	by front.fuw.edu.pl (8.13.3/8.12.4/Submit) id k74Ftxix018884;
+	Fri, 4 Aug 2006 17:55:59 +0200
+To: git@vger.kernel.org
+X-Mailer: git-send-email 1.3.0
+In-Reply-To: <7v7j1on71n.fsf@assigned-by-dhcp.cox.net>
+X-Scanned-By: MIMEDefang 2.56 on 193.0.80.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24797>
 
+Add custom test for checking whether formatted IO functions
+(printf/scanf et.al.) support 'size specifiers' introduced by C99,
+namely ll, hh, j, z, t. (representing long long int, char, intmax_t,
+size_t, ptrdiff_t).
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
- http-push.c |   49 +++++++------------------------------------------
- 1 files changed, 7 insertions(+), 42 deletions(-)
+ configure.ac |   21 +++++++++++++++++++++
+ 1 files changed, 21 insertions(+), 0 deletions(-)
 
-diff --git a/http-push.c b/http-push.c
-index 4021e7d..dc82657 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -2182,49 +2182,14 @@ static void fetch_symref(const char *pat
+diff --git a/configure.ac b/configure.ac
+index 178220f..1796cf4 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -189,6 +189,27 @@ # sockaddr_storage.
+ AC_CHECK_TYPE(struct sockaddr_storage,[],
+ [GIT_CONF_APPEND_LINE(NO_SOCKADDR_STORAGE=YesPlease)],
+ [#include <netinet/in.h>])
++#
++# Define NO_C99_FORMAT if your formatted IO functions (printf/scanf et.al.)
++# do not support the 'size specifiers' introduced by C99, namely ll, hh,
++# j, z, t. (representing long long int, char, intmax_t, size_t, ptrdiff_t).
++# some C compilers supported these specifiers prior to C99 as an extension.
++AC_CACHE_CHECK(whether IO functions support %ll %hh %j %z %t size specifiers,
++ ac_cv_c_c99_format,
++[# Actually git uses only %z (%zu) in alloc.c, and %t (%td) in mktag.c
++AC_RUN_IFELSE(
++	[AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],
++		[[char buf[64];
++		if (sprintf(buf, "%lld%hhd%jd%zd%td", (long long int)1, (char)2, (intmax_t)3, (size_t)4, (ptrdiff_t)5) != 5)
++		  exit(1);
++		else if (strcmp(buf, "12345"))
++		  exit(2);]])],
++	[ac_cv_c_c99_format=yes],
++	[ac_cv_c_c99_format=no])
++])
++if test $ac_cv_c_c99_format = no; then
++	GIT_CONF_APPEND_LINE(NO_C99_FORMAT=YesPlease)
++fi
  
- static int verify_merge_base(unsigned char *head_sha1, unsigned char *branch_sha1)
- {
--	int pipe_fd[2];
--	pid_t merge_base_pid;
--	char line[PATH_MAX + 20];
--	unsigned char merge_sha1[20];
--	int verified = 0;
--
--	if (pipe(pipe_fd) < 0)
--		die("Verify merge base: pipe failed");
--
--	merge_base_pid = fork();
--	if (!merge_base_pid) {
--		static const char *args[] = {
--			"merge-base",
--			"-a",
--			NULL,
--			NULL,
--			NULL
--		};
--		args[2] = strdup(sha1_to_hex(head_sha1));
--		args[3] = sha1_to_hex(branch_sha1);
--
--		dup2(pipe_fd[1], 1);
--		close(pipe_fd[0]);
--		close(pipe_fd[1]);
--		execv_git_cmd(args);
--		die("merge-base setup failed");
--	}
--	if (merge_base_pid < 0)
--		die("merge-base fork failed");
--
--	dup2(pipe_fd[0], 0);
--	close(pipe_fd[0]);
--	close(pipe_fd[1]);
--	while (fgets(line, sizeof(line), stdin) != NULL) {
--		if (get_sha1_hex(line, merge_sha1))
--			die("expected sha1, got garbage:\n %s", line);
--		if (!memcmp(branch_sha1, merge_sha1, 20)) {
--			verified = 1;
--			break;
--		}
--	}
-+	struct commit *head = lookup_commit(head_sha1);
-+	struct commit *branch = lookup_commit(branch_sha1);
-+	struct commit_list *merge_bases = get_merge_bases(head, branch, 1);
  
--	return verified;
-+	if (merge_bases && !merge_bases->next && merge_bases->item == branch)
-+		return 1;
-+
-+	return 0;
- }
- 
- static int delete_remote_branch(char *pattern, int force)
+ ## Checks for library functions.
 -- 
-1.4.2.rc2.g0bca-dirty
+1.4.1.1
