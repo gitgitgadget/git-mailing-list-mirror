@@ -1,91 +1,60 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] add NO_PERL_XS for environments which are not able to support perl extensions
-Date: Fri, 4 Aug 2006 16:02:37 +0200
-Message-ID: <81b0412b0608040702l7c7676adk30b792d69c05e05f@mail.gmail.com>
-References: <81b0412b0608040640s44c0d84et94871bce0271b047@mail.gmail.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Creating objects manually and repack
+Date: Fri, 4 Aug 2006 10:40:50 -0400
+Message-ID: <9e4733910608040740x23a8b0cs3bc276ef9e6fb8f7@mail.gmail.com>
+References: <9e4733910608032043u689f431rc5408c6d89398142@mail.gmail.com>
+	 <Pine.LNX.4.64.0608032052210.4168@g5.osdl.org>
+	 <9e4733910608032124o5b5b69b5hda2eb8cb1e0ac959@mail.gmail.com>
+	 <Pine.LNX.4.64.0608032138330.4168@g5.osdl.org>
+	 <Pine.LNX.4.64.0608032150510.4168@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_37902_18362486.1154700157520"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 04 16:03:07 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 04 16:41:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G90GC-0005ie-RK
-	for gcvg-git@gmane.org; Fri, 04 Aug 2006 16:02:45 +0200
+	id 1G90r9-0007Kv-PY
+	for gcvg-git@gmane.org; Fri, 04 Aug 2006 16:40:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161207AbWHDOCl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Aug 2006 10:02:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161213AbWHDOCl
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 10:02:41 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:17792 "EHLO
+	id S1161232AbWHDOkw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Aug 2006 10:40:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161234AbWHDOkw
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 10:40:52 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:22598 "EHLO
 	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1161207AbWHDOCl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Aug 2006 10:02:41 -0400
-Received: by nf-out-0910.google.com with SMTP id x37so1062219nfc
-        for <git@vger.kernel.org>; Fri, 04 Aug 2006 07:02:37 -0700 (PDT)
+	id S1161232AbWHDOkv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Aug 2006 10:40:51 -0400
+Received: by nf-out-0910.google.com with SMTP id x37so1073694nfc
+        for <git@vger.kernel.org>; Fri, 04 Aug 2006 07:40:50 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        b=MB/3dJAnOZEH0JV5tl+HhfFvsAxqr5dQvD4xbOu3fD5mYectqDmBoqQJ7wA2efdiaCcx3+/ajkbUIqQprdptaam/n1zg9CPyViTsKcVmLfHDl74BdelmdjVlacse4vhgIoL6UHvIbISb7PGF7ufFF1DInxj2d2Vp4JSVW0M0vVQ=
-Received: by 10.78.183.8 with SMTP id g8mr1558000huf;
-        Fri, 04 Aug 2006 07:02:37 -0700 (PDT)
-Received: by 10.78.160.12 with HTTP; Fri, 4 Aug 2006 07:02:37 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <81b0412b0608040640s44c0d84et94871bce0271b047@mail.gmail.com>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Cm18/yo5TkmgnT5rNTI1iFh+O8WZnGUfIwbm31w532EGrmOdnV6CCYXvMBGDlIJJ7mB6qKmIY/l+zkgt3zpz7EpYkjg/skHUkdT1xVFqiqFgjQs3+c/MslKmgwJk50omAWdRkWoNvYdzdCr3+3AHUY7xeaN4y91NGfEZ2KWGTS0=
+Received: by 10.78.133.10 with SMTP id g10mr1579946hud;
+        Fri, 04 Aug 2006 07:40:50 -0700 (PDT)
+Received: by 10.78.148.9 with HTTP; Fri, 4 Aug 2006 07:40:50 -0700 (PDT)
+To: "Linus Torvalds" <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0608032150510.4168@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24791>
 
-------=_Part_37902_18362486.1154700157520
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+One thing is obvious, I need to tune the repacks to happen before
+things spill out of the cache.  git repack-objects has been chugging
+away for 2hrs now at 2% CPU and 3000 io/sec. It is in one of those
+modes where it went back to get the early stuff and in the process of
+getting that it knocked the later stuff out of the cache basically
+rendering the cache useless.
 
-On 8/4/06, Alex Riesen <raa.lkml@gmail.com> wrote:
-> At the moment, the only known example of such environment is Cygwin with
-> ActiveState Perl: Makefile, generated by the MakeMaker from ActiveState perl
-> distribution is not usable by cygwin's gmake.
->
+I'm making good progress with this. I have hit two bugs in cvs2svn
+that I will need to get fixed. cvs2svn is claiming two of the ,v files
+to be invalid but to my eyes they look ok.
 
-Damn. Please add attached patch on top of the previous one. I broke
-the normal, xs-supported, platforms.
-
-diff --git a/Makefile b/Makefile
-index 9cfd677..5d58eca 100644
---- a/Makefile
-+++ b/Makefile
-@@ -591,7 +591,9 @@ all:
- 	$(MAKE) -C templates
-
- ifndef NO_PERL_XS
--all: perl/Makefile
-+.PHONY: perl-dir
-+all: perl-dir
-+perl-dir: perl/Makefile
- 	$(MAKE) -C perl
- endif
-
-------=_Part_37902_18362486.1154700157520
-Content-Type: text/plain; 
-	name=0001-fix-dependencies-for-xs-supported-platforms.txt; 
-	charset=ANSI_X3.4-1968
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_eqgmn9g9
-Content-Disposition: attachment; filename="0001-fix-dependencies-for-xs-supported-platforms.txt"
-
-RnJvbSBmZjljOTM0MTM0MWQ4OGIxZDNlZjU1MTQxY2FiMTRkYjQ1ZDU1Y2Y3IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
-OiBGcmksIDQgQXVnIDIwMDYgMTU6NTk6MTEgKzAyMDAKU3ViamVjdDogW1BBVENIXSBmaXggZGVw
-ZW5kZW5jaWVzIGZvciB4cy1zdXBwb3J0ZWQgcGxhdGZvcm1zCgpTaWduZWQtb2ZmLWJ5OiBBbGV4
-IFJpZXNlbiA8YXJpZXNlbkBoYXJtYW5iZWNrZXIuY29tPgotLS0KIE1ha2VmaWxlIHwgICAgNCAr
-KystCiAxIGZpbGVzIGNoYW5nZWQsIDMgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbnMoLSkKCmRp
-ZmYgLS1naXQgYS9NYWtlZmlsZSBiL01ha2VmaWxlCmluZGV4IDljZmQ2NzcuLjVkNThlY2EgMTAw
-NjQ0Ci0tLSBhL01ha2VmaWxlCisrKyBiL01ha2VmaWxlCkBAIC01OTEsNyArNTkxLDkgQEAgYWxs
-OgogCSQoTUFLRSkgLUMgdGVtcGxhdGVzCiAKIGlmbmRlZiBOT19QRVJMX1hTCi1hbGw6IHBlcmwv
-TWFrZWZpbGUKKy5QSE9OWTogcGVybC1kaXIKK2FsbDogcGVybC1kaXIKK3BlcmwtZGlyOiBwZXJs
-L01ha2VmaWxlCiAJJChNQUtFKSAtQyBwZXJsCiBlbmRpZgogCi0tIAoxLjQuMi5yYzIuZzY1MzQK
-Cg==
-------=_Part_37902_18362486.1154700157520--
+-- 
+Jon Smirl
+jonsmirl@gmail.com
