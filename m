@@ -1,101 +1,49 @@
-From: Martin Langhoff <martin@catalyst.net.nz>
-Subject: [PATCH] Introducing cg-xxdiff for conflict resolution
-Date: Fri,  4 Aug 2006 15:34:07 +1200
-Message-ID: <11546624471356-git-send-email-martin@catalyst.net.nz>
-Cc: Martin Langhoff <martin@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Fri Aug 04 05:32:08 2006
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Creating objects manually and repack
+Date: Thu, 3 Aug 2006 23:43:42 -0400
+Message-ID: <9e4733910608032043u689f431rc5408c6d89398142@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Aug 04 05:43:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8qPn-00047U-ND
-	for gcvg-git@gmane.org; Fri, 04 Aug 2006 05:32:00 +0200
+	id 1G8qbL-0007gU-Vf
+	for gcvg-git@gmane.org; Fri, 04 Aug 2006 05:43:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030224AbWHDDbz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Aug 2006 23:31:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030209AbWHDDbz
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 23:31:55 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:8616 "EHLO
-	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
-	id S1030224AbWHDDby (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Aug 2006 23:31:54 -0400
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=mltest)
-	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
-	id 1G8qPg-0003Lq-7a; Fri, 04 Aug 2006 15:31:52 +1200
-Received: from martin by mltest with local (Exim 3.36 #1 (Debian))
-	id 1G8qRr-0000Xe-00; Fri, 04 Aug 2006 15:34:07 +1200
-To: git@vger.kernel.org
-X-Mailer: git-send-email 1.4.2.rc2.ge1f7
+	id S1030209AbWHDDno (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 Aug 2006 23:43:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030232AbWHDDno
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 23:43:44 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:32885 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1030209AbWHDDno (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Aug 2006 23:43:44 -0400
+Received: by nf-out-0910.google.com with SMTP id l23so1560207nfc
+        for <git@vger.kernel.org>; Thu, 03 Aug 2006 20:43:42 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=AoijyV/hkXZl8MdYbE33GvJHI7Ji8zQo/8AEF572ZVj1g19OIUxTR/R9H3ZMb8Z3tIDjDfpLw3q+osEW79aYRHo2zX/lIZNgvXNhe5dKs2tf5V+fMa+EP2fkZDuqQMdSLIMKyWi5W5xXL0oUNnt+h5pBNHI8ngL1wuvmkmncHAc=
+Received: by 10.78.117.10 with SMTP id p10mr1401865huc;
+        Thu, 03 Aug 2006 20:43:42 -0700 (PDT)
+Received: by 10.78.148.9 with HTTP; Thu, 3 Aug 2006 20:43:42 -0700 (PDT)
+To: git <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24767>
 
-This is a bit of a crude but really useful shortcut for conflict resolution.
-The name is bad, but matches git-xxdiff which has been around for like... ages
+I've made 500K object files with my cvs2svn front end. This is 500K of
+revision files and no tree files. Now I run get-repack. It says done
+counting zero objects. What needs to be update so that repack will
+find all of my objects?
 
-As Cogito doesn't make use of the index during merges/applies, cg-xxdiff
-is somewhat more brittle and cannot not help during conflict resolution when
-using cg-patch.
+git-fsck isn't happy either since I have no HEAD.
 
-Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
----
- Makefile  |    3 ++-
- cg-xxdiff |   33 +++++++++++++++++++++++++++++++++
- 2 files changed, 35 insertions(+), 1 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index ba9bf9a..dc21702 100644
---- a/Makefile
-+++ b/Makefile
-@@ -18,7 +18,8 @@ SCRIPT=	cg-object-id cg-add cg-admin-lso
- 	cg-export cg-help cg-init cg-log cg-merge cg-mkpatch cg-patch \
- 	cg-fetch cg-restore cg-rm cg-seek cg-status cg-tag cg-tag-ls cg-update \
- 	cg cg-admin-ls cg-push cg-branch-chg cg-admin-cat cg-clean \
--	cg-admin-setuprepo cg-switch cg-mv cg-admin-rewritehist cg-tag-show
-+	cg-admin-setuprepo cg-switch cg-mv cg-admin-rewritehist cg-tag-show \
-+	cg-xxdiff
- 
- LIB_SCRIPT=cg-Xlib cg-Xmergefile cg-Xfetchprogress cg-Xfollowrenames
- 
-diff --git a/cg-xxdiff b/cg-xxdiff
-new file mode 100755
-index 0000000..7a1a863
---- /dev/null
-+++ b/cg-xxdiff
-@@ -0,0 +1,33 @@
-+#!/bin/sh
-+
-+USAGE='<path-with-conflict>'
-+SUBDIRECTORY_OK=No
-+. git-sh-setup
-+
-+FILE=$1
-+
-+# Sanity checks
-+if test ! -n "$FILE"
-+then
-+	echo Need a path
-+	exit 1
-+fi
-+
-+git cat-file blob `git rev-parse HEAD`:$FILE > $FILE~ours
-+if test $? -gt 0
-+then 
-+	echo "Error - $FILE is not tracked by git or does not have a conflict"
-+	exit 1
-+fi
-+echo Written $FILE~ours
-+
-+git cat-file blob `git rev-parse FETCH_HEAD`:$FILE > $FILE~branch
-+if  test $? -gt 0
-+then 
-+	echo "Error - $FILE is not tracked by git or does not have a conflict"
-+	exit 1
-+fi
-+echo Written $FILE~branch
-+echo Resolved file will be saved as $FILE~merged
-+
-+xxdiff -wbB --show-merged-pane --merged-filename $FILE~merged $FILE~ours $FILE~branch
 -- 
-1.4.2.rc2.ge1f7
+Jon Smirl
+jonsmirl@gmail.com
