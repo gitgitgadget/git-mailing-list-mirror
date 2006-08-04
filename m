@@ -1,130 +1,92 @@
-From: "Ramsay Jones" <ramsay@ramsay1.demon.co.uk>
-Subject: update-ref logs: problem with committer info?
-Date: Fri, 4 Aug 2006 22:01:34 +0100
-Message-ID: <000501c6b809$2b18cd60$c47eedc1@ramsay1.demon.co.uk>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 4/5] autoconf: Double check for IPv6 support
+Date: Fri, 4 Aug 2006 23:30:56 +0200
+Message-ID: <200608042330.57413.jnareb@gmail.com>
+References: <200608042333.19011.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
-	charset="iso-8859-1"
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Aug 04 23:03:01 2006
+X-From: git-owner@vger.kernel.org Fri Aug 04 23:41:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G96nV-0007Hj-Qg
-	for gcvg-git@gmane.org; Fri, 04 Aug 2006 23:01:34 +0200
+	id 1G97PP-0005gS-NV
+	for gcvg-git@gmane.org; Fri, 04 Aug 2006 23:40:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161442AbWHDVB0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Aug 2006 17:01:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161446AbWHDVB0
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 17:01:26 -0400
-Received: from anchor-post-36.mail.demon.net ([194.217.242.86]:42510 "EHLO
-	anchor-post-36.mail.demon.net") by vger.kernel.org with ESMTP
-	id S1161442AbWHDVBY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Aug 2006 17:01:24 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-36.mail.demon.net with smtp (Exim 4.42)
-	id 1G96nK-000M7y-Ku
-	for git@vger.kernel.org; Fri, 04 Aug 2006 21:01:23 +0000
-To: <git@vger.kernel.org>
-X-Priority: 3 (Normal)
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook 8.5, Build 4.71.2173.0
-Importance: Normal
-X-MimeOLE: Produced By Microsoft MimeOLE V4.72.2106.4
+	id S1161500AbWHDVki (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Aug 2006 17:40:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161497AbWHDVkh
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 17:40:37 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:14256 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1161498AbWHDVkf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Aug 2006 17:40:35 -0400
+Received: by nf-out-0910.google.com with SMTP id k26so30462nfc
+        for <git@vger.kernel.org>; Fri, 04 Aug 2006 14:40:34 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=PWbSBvack5mqmHJ/8UwpGpf4p6009I+feXIi1JRu/OkFjc1XnCNGxB6+9KclEhe37pb3NWWRZ0rnX0TsyOcbv9XW8Ntgue6z6OX9Ea66UswtKg92en8q75kn/hSO/BvaByG5y3DLcqWlHghwrQlI6yo3ZVTIqQnuYkw8zzoXCLU=
+Received: by 10.48.48.18 with SMTP id v18mr6012191nfv;
+        Fri, 04 Aug 2006 14:40:34 -0700 (PDT)
+Received: from host-81-190-31-92.torun.mm.pl ( [81.190.31.92])
+        by mx.gmail.com with ESMTP id r34sm1038674nfc.2006.08.04.14.40.33;
+        Fri, 04 Aug 2006 14:40:34 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.3
+In-Reply-To: <200608042333.19011.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24842>
 
-Hi all,
+Check for IPv6 support, first by checking if "struct addrinfo" exists,
+then by checking if there is getaddrinfo() in standard libraries.
 
-As a follow-up to the previous (two) email, this concerns the ability
-to override the committer info from the config file. As before, this
-depends on the relative call sites of setup_ident() and git_config().
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ configure.ac |   13 +++++++++++--
+ 1 files changed, 11 insertions(+), 2 deletions(-)
 
-In particular, the call to setup_ident(), from log_ref_write(),
-which in turn is called from write_ref_sha1() in file refs.c.
-Here, the call to setup_ident() seems to me to be misplaced and to
-almost guarantee that it will over-write the values set by an
-earlier call to git_config(). It is possible, I suppose, that there
-has been no previous call to git_config(); just not very likely, and
-even if that were so, then it should be the responsibility of the
-*callers* of write_ref_sha1() to ensure this happens.
-
-Indeed, tracing the callers of write_ref_sha1(), we find cmd_update_ref()
-in builtin-update-ref.c and pull() in fetch.c. Adding a call to
-setup_ident() in cmd_update_ref() takes care of that route. The callers
-of pull() are to be found in http-fetch.c, local-fetch.c and ssh-fetch.c.
-Adding calls to setup_ident() in these callers is equally simple, so it
-only remains to remove the call from refs.c.
-
-Now, as in the previous email, I can't compile http-fetch.c or test
-the result. (Yes, I could test a local fetch, but I'm feeling lazy!)
-In addition, I feel that somebody who knows the code better than I
-should take a look.
-
-comments?
-
-Ramsay
-
-diff --git a/builtin-update-ref.c b/builtin-update-ref.c
-index 00333c7..83094ab 100644
---- a/builtin-update-ref.c
-+++ b/builtin-update-ref.c
-@@ -12,6 +12,7 @@ int cmd_update_ref(int argc, const char 
- 	unsigned char sha1[20], oldsha1[20];
- 	int i;
+diff --git a/configure.ac b/configure.ac
+index a49bd1f..6557bd2 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -204,6 +204,13 @@ AC_CHECK_TYPE(struct sockaddr_storage,[]
+ [GIT_CONF_APPEND_LINE(NO_SOCKADDR_STORAGE=YesPlease)],
+ [#include <netinet/in.h>])
+ #
++# Define NO_IPV6 if you lack IPv6 support and getaddrinfo().
++AC_CHECK_TYPE(struct addrinfo,[],
++[GIT_CONF_APPEND_LINE(NO_IPV6=YesPlease)],
++[#include <sys/types.h>
++#include <sys/socket.h>
++#include <netdb.h>])
++#
+ # Define NO_C99_FORMAT if your formatted IO functions (printf/scanf et.al.)
+ # do not support the 'size specifiers' introduced by C99, namely ll, hh,
+ # j, z, t. (representing long long int, char, intmax_t, size_t, ptrdiff_t).
+@@ -242,14 +249,16 @@ # Define NO_SETENV if you don't have set
+ AC_CHECK_FUNC(setenv,[],
+ [GIT_CONF_APPEND_LINE(NO_SETENV=YesPlease)])
+ #
++# Define NO_IPV6 if you lack IPv6 support and getaddrinfo().
++AC_CHECK_FUNC(getaddrinfo,[],
++[GIT_CONF_APPEND_LINE(NO_IPV6=YesPlease)])
++#
+ # Define NO_MMAP if you want to avoid mmap.
+ AC_FUNC_MMAP
+ if test $ac_cv_func_mmap_fixed_mapped != yes; then
+ 	GIT_CONF_APPEND_LINE(NO_MMAP=YesPlease)
+ fi
+ #
+-# Define NO_IPV6 if you lack IPv6 support and getaddrinfo().
+-#
+ # Define NO_ICONV if your libc does not properly support iconv.
  
-+	setup_ident();
- 	setup_git_directory();
- 	git_config(git_default_config);
  
-diff --git a/http-fetch.c b/http-fetch.c
-index 44eba5f..fe3a4fd 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -1222,6 +1222,7 @@ int main(int argc, char **argv)
- 	int arg = 1;
- 	int rc = 0;
- 
-+	setup_ident();
- 	setup_git_directory();
- 	git_config(git_default_config);
- 
-diff --git a/local-fetch.c b/local-fetch.c
-index ffa4887..d059a51 100644
---- a/local-fetch.c
-+++ b/local-fetch.c
-@@ -207,6 +207,7 @@ int main(int argc, char **argv)
- 	char *commit_id;
- 	int arg = 1;
- 
-+	setup_ident();
- 	setup_git_directory();
- 	git_config(git_default_config);
- 
-diff --git a/refs.c b/refs.c
-index 713ca46..a4060d8 100644
---- a/refs.c
-+++ b/refs.c
-@@ -379,7 +379,6 @@ static int log_ref_write(struct ref_lock
- 			lock->log_file, strerror(errno));
- 	}
- 
--	setup_ident();
- 	comitter = git_committer_info(1);
- 	if (msg) {
- 		maxlen = strlen(comitter) + strlen(msg) + 2*40 + 5;
-diff --git a/ssh-fetch.c b/ssh-fetch.c
-index 1e59cd2..a42d17e 100644
---- a/ssh-fetch.c
-+++ b/ssh-fetch.c
-@@ -131,6 +131,7 @@ int main(int argc, char **argv)
- 	prog = getenv("GIT_SSH_PUSH");
- 	if (!prog) prog = "git-ssh-upload";
- 
-+	setup_ident();
- 	setup_git_directory();
- 	git_config(git_default_config);
- 
+-- 
+1.4.1.1
