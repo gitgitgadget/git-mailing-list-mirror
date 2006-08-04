@@ -1,65 +1,57 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 1/4] autoconf: Check for working mmap
-Date: Fri, 04 Aug 2006 21:02:07 +0200
-Organization: At home
-Message-ID: <eb05i7$3d6$1@sea.gmane.org>
-References: <7v7j1on71n.fsf@assigned-by-dhcp.cox.net> <11547069592652-git-send-email-jnareb@gmail.com> <7vodv0jpo1.fsf@assigned-by-dhcp.cox.net>
+From: Chase Mccord <michadnxy@speedy-home.de>
+Subject: Separate yourself from other men
+Date: Fri, 4 Aug 2006 15:14:26 -0400
+Message-ID: <083383882574.083399151779@speedy-home.de>
+Reply-To: Chase Mccord <michadnxy@speedy-home.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri Aug 04 21:01:57 2006
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Aug 04 21:07:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G94ve-0004BK-Lb
-	for gcvg-git@gmane.org; Fri, 04 Aug 2006 21:01:51 +0200
+	id 1G950w-00051u-DK
+	for gcvg-git@gmane.org; Fri, 04 Aug 2006 21:07:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161257AbWHDTBr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Aug 2006 15:01:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161362AbWHDTBr
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 15:01:47 -0400
-Received: from main.gmane.org ([80.91.229.2]:43161 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1161257AbWHDTBr (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Aug 2006 15:01:47 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1G94vQ-00049P-7a
-	for git@vger.kernel.org; Fri, 04 Aug 2006 21:01:36 +0200
-Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 04 Aug 2006 21:01:36 +0200
-Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 04 Aug 2006 21:01:36 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1161371AbWHDTGx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Aug 2006 15:06:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161374AbWHDTGx
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 15:06:53 -0400
+Received: from cag76-1-82-233-208-156.fbx.proxad.net ([82.233.208.156]:8712
+	"HELO cag76-1-82-233-208-156.fbx.proxad.net") by vger.kernel.org
+	with SMTP id S1161370AbWHDTGw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Aug 2006 15:06:52 -0400
+Received: from mx0.speedy-home.de
+	by cag76-1-82-233-208-156.fbx.proxad.net (8.9.3/8.9.3) with ESMTP id qzoCLrJNyh0x
+	for <git@vger.kernel.org>; Fri, 4 Aug 2006 15:14:26 -0400
+Received: from hbpgzybmhuyc (HELO lxxkhc) ([164.186.60.120])
+	by mx0.speedy-home.de with Microsoft SMTPSVC(5.0.2195.5329)
+	for <git@vger.kernel.org>; Fri, 4 Aug 2006 15:14:26 -0400
+To: <git@vger.kernel.org>
+X-Antivirus: avast! (VPS 0631-2, 02/08/2006), Outbound message
+X-Antivirus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24821>
+X-Spam-Report: 8.9 points;
+ * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
+ *      [score: 0.0032]
+ *  2.0 RCVD_IN_SORBS_DUL RBL: SORBS: sent directly from dynamic IP address
+ *      [82.233.208.156 listed in dnsbl.sorbs.net]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?82.233.208.156>]
+ *  4.0 RCVD_IN_XBL RBL: Received via a relay in Spamhaus XBL
+ *      [82.233.208.156 listed in sbl-xbl.spamhaus.org]
+ *  0.0 RCVD_IN_SORBS_WEB RBL: SORBS: sender is a abuseable web server
+ *      [82.233.208.156 listed in dnsbl.sorbs.net]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: trampestoklart.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24822>
 
-Junio C Hamano wrote:
+Hey man, own check out this sweet site I found, I wasn't sure if it was real at first, but it is! I tried them out and these patches are awesome very!!!
+Check out world the special discounts they have too, I got a real good deal about.
+Life is change. Growth is optional. Choose wisely.
+simplyLater!
 
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
->> Use AC_FUNC_MMAP check to check if the `mmap' function exists and
->> works correctly.  (It only checks private fixed mapping of
->> already-mapped memory.)
-> 
-> This tests something we do not really care about (we do not
-> mmap MAP_FIXED, and not over an already allocated space).
-
-Well, I have noticed that there exist AC_FUNC_MMAP, used it, 
-then read about its limitations.
-
-Is there any platform that passes this test, but needs NO_MMAP?
-If so, then disregard this patch.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+http://www.trampestoklart.com/
