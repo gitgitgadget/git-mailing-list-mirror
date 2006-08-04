@@ -1,74 +1,78 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Creating objects manually and repack
-Date: Fri, 4 Aug 2006 01:11:56 -0400
-Message-ID: <9e4733910608032211r3571f6adje52968ffcb689457@mail.gmail.com>
-References: <9e4733910608032043u689f431rc5408c6d89398142@mail.gmail.com>
-	 <Pine.LNX.4.64.0608032052210.4168@g5.osdl.org>
-	 <9e4733910608032124o5b5b69b5hda2eb8cb1e0ac959@mail.gmail.com>
-	 <Pine.LNX.4.64.0608032138330.4168@g5.osdl.org>
-	 <Pine.LNX.4.64.0608032150510.4168@g5.osdl.org>
+From: Marc Singer <elf@buici.com>
+Subject: Re: gitweb testing with non-apache web server
+Date: Thu, 3 Aug 2006 23:11:22 -0700
+Message-ID: <20060804061122.GA15755@buici.com>
+References: <20060803202703.GA13147@buici.com> <20060803235536.GJ17966@craic.sysops.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 04 07:12:03 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Blu Corater <blu@daga.cl>
+X-From: git-owner@vger.kernel.org Fri Aug 04 08:11:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8ryc-0002Qu-7g
-	for gcvg-git@gmane.org; Fri, 04 Aug 2006 07:12:02 +0200
+	id 1G8su7-0002e8-FR
+	for gcvg-git@gmane.org; Fri, 04 Aug 2006 08:11:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030193AbWHDFL7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Aug 2006 01:11:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030220AbWHDFL7
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 01:11:59 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:58831 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1030193AbWHDFL6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Aug 2006 01:11:58 -0400
-Received: by nf-out-0910.google.com with SMTP id x30so1232348nfb
-        for <git@vger.kernel.org>; Thu, 03 Aug 2006 22:11:56 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bO5pkexDqRNCQHOKZj992Lwib6G6hyfjp0dqnon/azw1ol/ax8+QKaAU/Byxlp+HnOxVqZHGDiGrQK03zfOpXG0N4Z22PoLQ4xaeTjkRtkqkCfSQ0S3C8CYmPWktrc4I5cwcR+wdOH/QRhwXtkEN2mu3A550//hSUWZsXYEoYcs=
-Received: by 10.78.165.16 with SMTP id n16mr1412633hue;
-        Thu, 03 Aug 2006 22:11:56 -0700 (PDT)
-Received: by 10.78.148.9 with HTTP; Thu, 3 Aug 2006 22:11:56 -0700 (PDT)
-To: "Linus Torvalds" <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0608032150510.4168@g5.osdl.org>
+	id S1751244AbWHDGLY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Aug 2006 02:11:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751408AbWHDGLY
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 02:11:24 -0400
+Received: from 206-124-142-26.buici.com ([206.124.142.26]:11228 "HELO
+	florence.buici.com") by vger.kernel.org with SMTP id S1751244AbWHDGLX
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 4 Aug 2006 02:11:23 -0400
+Received: (qmail 16530 invoked by uid 1000); 4 Aug 2006 06:11:22 -0000
+To: Francis Daly <francis@daoine.org>
 Content-Disposition: inline
+In-Reply-To: <20060803235536.GJ17966@craic.sysops.org>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24777>
 
-On 8/4/06, Linus Torvalds <torvalds@osdl.org> wrote:
->
->
-> On Thu, 3 Aug 2006, Linus Torvalds wrote:
-> >
-> > Sure. In that case, just list the object ID's in the exact same order you
-> > created them.
->
-> Btw, you still want to give a filename for each object you've created, so
+On Fri, Aug 04, 2006 at 12:55:36AM +0100, Francis Daly wrote:
+> > Marc Singer wrote: 
+> > On Thu, Aug 03, 2006 at 03:21:52PM -0400, Blu Corater wrote:
+> 
+> Hi there,
+> 
+> > > If I request http://server/~blu/scm, Cherokee returns Cherokee's default
+> > > index page. Only if I request http://server/~blu/scm/, Cherokee returns
+> > > the expected output from gitweb.
+> 
+> This is due to one apparent bug in Cherokee's Directory handling.
+> 
+> > I can see the project overview page, but all of the links bring me
+> > back to the same top-level page, no summary, not logs.  I've verified
+> > that the web server's user can read the git repo. 
+> 
+> And this is due a a different, but arguably related, one.  (The 301
+> handler ignores things it shouldn't.)
+> 
+> > I don't doubt that this is a cherokee issue.
+> 
+> Cherokee's handling of both Directory and Request sections with cgi and
+> Scriptalias seems a bit funky (in different ways).  If you want to use
+> Cherokee configured this way, you may find it handy to add
+> 
+> $my_uri .= '/';
+> to your version of gitweb.cgi shortly after it is set -- that should
+> break most of the generated links in a way that causes them to work with
+> this server.
+> 
+> $my_url is only used in a few places, but it may be worth doing the same
+> thing to it too.
 
-I'll add a file name hint.
+That does it.  
 
-I'm converting the cvs2svn tool to do cvs2git.
+> 
+> Or use a web server which isn't broken in this particular way.
 
-Martin has a copy of it up under git. I haven't checked in any of my
-changes yet.
-http://git.catalyst.net.nz/gitweb?p=cvs2svn.git;a=summary
+:-) There doesn't seem to be much of the 'small' variety.  Though now
+I'll look into lighttpd as well.
 
-If you read the log it is obvious that these guys have done major work
-to deal with all kinds of broken CVS repositories. I want to piggyback
-on that work and reuse their code that builds change sets.  So far
-this is the only tool I have found that can import the Mozilla CVS
-without errors. Only problem is that it imports it to SVN instead of
-git. I'm fixing that and learning Python at the same time.
+> 
+> Good luck,
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+Cheers.
