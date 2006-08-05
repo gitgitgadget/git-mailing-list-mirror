@@ -1,91 +1,128 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Creating objects manually and repack
-Date: Sat, 5 Aug 2006 01:12:53 -0400
-Message-ID: <9e4733910608042212p6bf56224ye0ecf3f06b2840cf@mail.gmail.com>
-References: <9e4733910608032043u689f431rc5408c6d89398142@mail.gmail.com>
-	 <Pine.LNX.4.64.0608032138330.4168@g5.osdl.org>
-	 <Pine.LNX.4.64.0608032150510.4168@g5.osdl.org>
-	 <9e4733910608040740x23a8b0cs3bc276ef9e6fb8f7@mail.gmail.com>
-	 <9e4733910608040750g3f72c07ct43f54347e47f25b4@mail.gmail.com>
-	 <Pine.LNX.4.64.0608040818270.5167@g5.osdl.org>
-	 <9e4733910608040841v7f4f27efra63e5ead2656e07@mail.gmail.com>
-	 <Pine.LNX.4.64.0608040945070.5167@g5.osdl.org>
-	 <9e4733910608041017v235da03ocd3eeeb0ba0e259b@mail.gmail.com>
-	 <46a038f90608042115m71adc8ffo77de7940efa847a8@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [RFC/PATCH] Fix "grep -w"
+Date: Fri, 04 Aug 2006 22:16:42 -0700
+Message-ID: <7vwt9ng3t1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@osdl.org>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 05 07:13:32 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sat Aug 05 07:16:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G9ETY-0004o1-CE
-	for gcvg-git@gmane.org; Sat, 05 Aug 2006 07:13:28 +0200
+	id 1G9EWp-0005AZ-Sy
+	for gcvg-git@gmane.org; Sat, 05 Aug 2006 07:16:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932486AbWHEFM4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 Aug 2006 01:12:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932522AbWHEFM4
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 01:12:56 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:7081 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S932486AbWHEFMz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Aug 2006 01:12:55 -0400
-Received: by nf-out-0910.google.com with SMTP id k26so114558nfc
-        for <git@vger.kernel.org>; Fri, 04 Aug 2006 22:12:54 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=eKRwgtBCb9KKFvgO1k7C7N8VZeN4ooLFaSwWjzr5G6fQ7reKadfFYTdI2VJeAFWK1M5/3yjwv8fdvwsYvEIiyK4PqyXlxIwKl5zUeOcABk1JhEflUb5E23j8yHOcsb9MP1x0Rc7hy/iLxxOUIKijQupIB5BHM7xL05Q8UXYEtVA=
-Received: by 10.78.139.5 with SMTP id m5mr1823594hud;
-        Fri, 04 Aug 2006 22:12:54 -0700 (PDT)
-Received: by 10.78.148.9 with HTTP; Fri, 4 Aug 2006 22:12:53 -0700 (PDT)
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90608042115m71adc8ffo77de7940efa847a8@mail.gmail.com>
-Content-Disposition: inline
+	id S1161133AbWHEFQo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 Aug 2006 01:16:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932606AbWHEFQo
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 01:16:44 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:58571 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S932522AbWHEFQo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Aug 2006 01:16:44 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060805051643.GYJM6235.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 5 Aug 2006 01:16:43 -0400
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24882>
 
-On 8/5/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> On 8/5/06, Jon Smirl <jonsmirl@gmail.com> wrote:
-> > On 8/4/06, Linus Torvalds <torvalds@osdl.org> wrote:
-> > > and you're basically all done. The above would turn each *,v file into a
-> > > *-<sha>.pack/*-<sha>.idx file pair, so you'd have exactly as many
-> > > pack-files as you have *,v files.
-> >
-> > I'll end up with 110,000 pack files.
->
-> Then just do it every 100 files, and you'll only have 1,100 pack
-> files, and it'll be fine.
+We used to find the first match of the pattern and then if the
+match is not for the entire word, declared that the whole line
+does not match.
 
-This is something that has to be tuned. If you wait too long
-everything spills out of RAM and you go totally IO bound for days. If
-you do it too often you end up with too many packs and it takes a day
-to repack them.
+But that is wrong.  The command "git grep -w -e mmap" should
+find that a line "foo_mmap bar mmap baz" matches, by tring the
+second instance of pattern "mmap" on the same line.
 
-If I had a way to pipe the all of the objects into repack one at a
-time without repack doing multiple passes none of this tuning would be
-necessary. In this model the standalone objects never get created in
-the first place. The fastest IO is IO that has been eliminated.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-> > I suspect when I run repack over
-> > that it is going to take 24hrs or more,
->
-> Probably, but only the initial import has to incur that huge cost.
+---
 
-Mozilla developers aren't all rushing to switch to git. A switch needs
-to be as painless as possible. If things are too complex they simply
-won't switch.
+ builtin-grep.c  |   10 ++++++++++
+ t/t7002-grep.sh |   45 +++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 55 insertions(+), 0 deletions(-)
 
-Switching Mozilla to git is going to require a sales job and proof
-that the tools are reliable and better than CVS. Right now I can't
-even reliably import Mozilla CVS. One of the conditions for even
-considering git is that they can easily do the CVS import internally
-and verify it for accuracy.
-
--- 
-Jon Smirl
-jonsmirl@gmail.com
+diff --git a/builtin-grep.c b/builtin-grep.c
+index 69b7c48..b5feda4 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -412,6 +412,7 @@ static int match_one_pattern(struct grep
+ 	int hit = 0;
+ 	regmatch_t pmatch[10];
+ 
++ again:
+ 	if (!opt->fixed) {
+ 		regex_t *exp = &p->regexp;
+ 		hit = !regexec(exp, bol, ARRAY_SIZE(pmatch),
+@@ -438,6 +439,15 @@ static int match_one_pattern(struct grep
+ 		if (pmatch[0].rm_eo != (eol-bol) &&
+ 		    word_char(bol[pmatch[0].rm_eo]))
+ 			hit = 0;
++
++		if (!hit && pmatch[0].rm_eo + bol < eol) {
++			/* there could be more than one match on the
++			 * line, and the first match might not be
++			 * strict word match.  But later ones could be!
++			 */
++			bol += pmatch[0].rm_eo;
++			goto again;
++		}
+ 	}
+ 	return hit;
+ }
+diff --git a/t/t7002-grep.sh b/t/t7002-grep.sh
+new file mode 100755
+index 0000000..0a0e302
+--- /dev/null
++++ b/t/t7002-grep.sh
+@@ -0,0 +1,45 @@
++#!/bin/sh
++#
++# Copyright (c) 2006 Junio C Hamano
++#
++
++test_description='git grep -w
++'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++	{
++		echo foo mmap bar
++		echo foo_mmap bar
++		echo foo_mmap bar mmap
++		echo foo mmap bar_mmap
++		echo foo_mmap bar mmap baz
++	} >file &&
++	git add file &&
++	git commit -m initial
++'
++
++test_expect_success 'grep -w HEAD' '
++	git grep -n -w -e mmap HEAD >actual &&
++	{
++		echo HEAD:file:1:foo mmap bar
++		echo HEAD:file:3:foo_mmap bar mmap
++		echo HEAD:file:4:foo mmap bar_mmap
++		echo HEAD:file:5:foo_mmap bar mmap baz
++	} >expected &&
++	diff expected actual
++'
++
++test_expect_success 'grep -w in working tree' '
++	git grep -n -w -e mmap >actual &&
++	{
++		echo file:1:foo mmap bar
++		echo file:3:foo_mmap bar mmap
++		echo file:4:foo mmap bar_mmap
++		echo file:5:foo_mmap bar mmap baz
++	} >expected &&
++	diff expected actual
++'
++
++test_done
