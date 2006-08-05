@@ -1,119 +1,247 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: update-ref logs: problem with committer info?
-Date: Fri, 4 Aug 2006 22:56:00 -0400
-Message-ID: <20060805025600.GA18223@spearce.org>
-References: <000501c6b809$2b18cd60$c47eedc1@ramsay1.demon.co.uk>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] git-status: colorize status output
+Date: Fri, 4 Aug 2006 23:14:19 -0400
+Message-ID: <20060805031418.GA11102@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 05 04:56:12 2006
+X-From: git-owner@vger.kernel.org Sat Aug 05 05:14:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G9CKg-0004BU-Mw
-	for gcvg-git@gmane.org; Sat, 05 Aug 2006 04:56:11 +0200
+	id 1G9Ccf-0005vu-Eo
+	for gcvg-git@gmane.org; Sat, 05 Aug 2006 05:14:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422721AbWHEC4H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Aug 2006 22:56:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422722AbWHEC4H
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 22:56:07 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:44474 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1422721AbWHEC4G (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Aug 2006 22:56:06 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1G9CKN-0004Rr-CA; Fri, 04 Aug 2006 22:55:51 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 43F8A20FB77; Fri,  4 Aug 2006 22:56:01 -0400 (EDT)
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Junio C Hamano <junkio@cox.net>
+	id S1422722AbWHEDOW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Aug 2006 23:14:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422723AbWHEDOW
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 23:14:22 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:24225 "HELO
+	peff.net") by vger.kernel.org with SMTP id S1422722AbWHEDOW (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Aug 2006 23:14:22 -0400
+Received: (qmail 16461 invoked from network); 4 Aug 2006 23:13:45 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 4 Aug 2006 23:13:45 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri,  4 Aug 2006 23:14:19 -0400
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <000501c6b809$2b18cd60$c47eedc1@ramsay1.demon.co.uk>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24875>
 
-Ramsay Jones <ramsay@ramsay1.demon.co.uk> wrote:
-> diff --git a/builtin-update-ref.c b/builtin-update-ref.c
-> index 00333c7..83094ab 100644
-> --- a/builtin-update-ref.c
-> +++ b/builtin-update-ref.c
-> @@ -12,6 +12,7 @@ int cmd_update_ref(int argc, const char 
->  	unsigned char sha1[20], oldsha1[20];
->  	int i;
->  
-> +	setup_ident();
->  	setup_git_directory();
->  	git_config(git_default_config);
-> diff --git a/refs.c b/refs.c
-> index 713ca46..a4060d8 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -379,7 +379,6 @@ static int log_ref_write(struct ref_lock
->  			lock->log_file, strerror(errno));
->  	}
->  
-> -	setup_ident();
->  	comitter = git_committer_info(1);
->  	if (msg) {
->  		maxlen = strlen(comitter) + strlen(msg) + 2*40 + 5;
+The git-status output can sometimes be very verbose, making it difficult to
+quickly see whether your files are updated in the index. This adds 4 levels
+of colorizing to the status output:
+  - general header (defaults to normal white)
+  - updated but not committed (defaults to green)
+  - changed but not updated (defaults to red)
+  - untracked files (defaults to red)
+The idea is that red things indicate a potential mistake on the part of the
+user (e.g., forgetting to update a file, forgetting to git-add a file).
 
-These two changes were already fixed by me in 0b0fe4a6 on July
-10th.  That change is in `next`, in `master` and in v1.4.2-rc3.
-So I expect it to be available in a final release real-soon-now.
-Maybe you should consider running a newer version of GIT?
+This patch also has a few minor output related cleanups. Untracked files are
+now displayed using the 'report' function (marked with the character 'O').
+The report function now uses a simple hdr_shown variable instead of
+flip-flopping the header and trailer, which was somewhat difficult to read.
 
-> diff --git a/http-fetch.c b/http-fetch.c
-> index 44eba5f..fe3a4fd 100644
-> --- a/http-fetch.c
-> +++ b/http-fetch.c
-> @@ -1222,6 +1222,7 @@ int main(int argc, char **argv)
->  	int arg = 1;
->  	int rc = 0;
->  
-> +	setup_ident();
->  	setup_git_directory();
->  	git_config(git_default_config);
->  
-> diff --git a/local-fetch.c b/local-fetch.c
-> index ffa4887..d059a51 100644
-> --- a/local-fetch.c
-> +++ b/local-fetch.c
-> @@ -207,6 +207,7 @@ int main(int argc, char **argv)
->  	char *commit_id;
->  	int arg = 1;
->  
-> +	setup_ident();
->  	setup_git_directory();
->  	git_config(git_default_config);
->  
-> diff --git a/ssh-fetch.c b/ssh-fetch.c
-> index 1e59cd2..a42d17e 100644
-> --- a/ssh-fetch.c
-> +++ b/ssh-fetch.c
-> @@ -131,6 +131,7 @@ int main(int argc, char **argv)
->  	prog = getenv("GIT_SSH_PUSH");
->  	if (!prog) prog = "git-ssh-upload";
->  
-> +	setup_ident();
->  	setup_git_directory();
->  	git_config(git_default_config);
->  
+Color support is controlled by status.color and status.color.*. There is no
+command line option, and the status.color variable is a simple boolean (no
+checking for tty output).
 
-These changes aren't in `next` right now, but should be.  Junio,
-can you apply them?
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/config.txt |   12 ++++++
+ git-commit.sh            |   99 ++++++++++++++++++++++++++++++----------------
+ 2 files changed, 77 insertions(+), 34 deletions(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index d89916b..83f4627 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -222,6 +222,18 @@ showbranch.default::
+ 	The default set of branches for gitlink:git-show-branch[1].
+ 	See gitlink:git-show-branch[1].
+ 
++status.color::
++	A boolean to enable/disable color in the output of
++	gitlink:git-status[1]. Defaults to false.
++
++status.color.<slot>::
++	Use customized color for status colorization. `<slot>` is
++	one of `header` (the header text of the status message),
++	`updated` (files which are updated but not committed),
++	`changed` (files which are changed but not updated in the index),
++	or `untracked` (files which are not tracked by git). The values of
++	these variables may be specified as in diff.color.<slot>.
++
+ tar.umask::
+ 	By default, gitlink:git-tar-tree[1] sets file and directories modes
+ 	to 0666 or 0777. While this is both useful and acceptable for projects
+diff --git a/git-commit.sh b/git-commit.sh
+index 4cf3fab..b7269c2 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -10,15 +10,49 @@ SUBDIRECTORY_OK=Yes
+ git-rev-parse --verify HEAD >/dev/null 2>&1 || initial_commit=t
+ branch=$(GIT_DIR="$GIT_DIR" git-symbolic-ref HEAD)
+ 
++color=false
++color_header=normal
++color_updated=green
++color_changed=red
++color_untracked=red
++
+ case "$0" in
+ *status)
+ 	status_only=t
+-	unmerged_ok_if_status=--unmerged ;;
++	unmerged_ok_if_status=--unmerged
++	color=`git-repo-config --bool --get status.color`
++	eval `git-repo-config --get-regexp status.color. \
++	      | while read k v; do
++	          echo color_${k#status.color.}=$v
++	        done`
++	;;
+ *commit)
+ 	status_only=
+ 	unmerged_ok_if_status= ;;
+ esac
+ 
++color() {
++	case "$color" in true) ;; *) return ;; esac
++	case `eval "echo \\$color_$1"` in
++	  normal) ;;
++	  bold)    printf '\033[1m' ;;
++	  red)     printf '\033[31m' ;;
++	  green)   printf '\033[32m' ;;
++	  yellow)  printf '\033[33m' ;;
++	  blue)    printf '\033[34m' ;;
++	  magenta) printf '\033[35m' ;;
++	  cyan)    printf '\033[36m' ;;
++	esac
++}
++
++uncolor() {
++	case "$color" in true) ;; *) return ;; esac
++	case "$1" in
++	  normal) ;;
++	  *) printf '\033[m' ;;
++	esac
++}
++
+ refuse_partial () {
+ 	echo >&2 "$1"
+ 	echo >&2 "You might have meant to say 'git commit -i paths...', perhaps?"
+@@ -33,30 +67,32 @@ save_index () {
+ }
+ 
+ report () {
+-  header="#
+-# $1:
+-#   ($2)
+-#
+-"
+-  trailer=""
++  hdr_shown=0
+   while read status name newname
+   do
+-    printf '%s' "$header"
+-    header=""
+-    trailer="#
+-"
++    case "$hdr_shown" in
++      0) color header; echo "# $2:"; uncolor header
++         color header; echo "#   ($3)"; uncolor header
++	 color header; echo "#"; uncolor header
++	 hdr_shown=1
++	 ;;
++    esac
++    color header; printf '#\t'; uncolor header
+     case "$status" in
+-    M ) echo "#	modified: $name";;
+-    D*) echo "#	deleted:  $name";;
+-    T ) echo "#	typechange: $name";;
+-    C*) echo "#	copied: $name -> $newname";;
+-    R*) echo "#	renamed: $name -> $newname";;
+-    A*) echo "#	new file: $name";;
+-    U ) echo "#	unmerged: $name";;
++    M ) color $1; echo "modified: $name"; uncolor $1;;
++    D*) color $1; echo "deleted:  $name"; uncolor $1;;
++    T ) color $1; echo "1change: $name"; uncolor $1;;
++    C*) color $1; echo "copied: $name -> $newname"; uncolor $1;;
++    R*) color $1; echo "renamed: $name -> $newname"; uncolor $1;;
++    A*) color $1; echo "new file: $name"; uncolor $1;;
++    U ) color $1; echo "unmerged: $name"; uncolor $1;;
++    O ) color $1; echo "$name"; uncolor $1;;
+     esac
+   done
+-  printf '%s' "$trailer"
+-  [ "$header" ]
++  case "$hdr_shown" in
++    1) color header; echo '#'; uncolor header;;
++  esac
++  test "$hdr_shown" = 0
+ }
+ 
+ run_status () {
+@@ -109,7 +145,7 @@ run_status () {
+ 		    s/\\/\\\\/g
+ 		    s/ /\\ /g
+ 	    ' |
+-	    report "Updated but not checked in" "will commit"
++	    report updated "Updated but not checked in" "will commit"
+ 	    committable="$?"
+ 	else
+ 	    echo '#
+@@ -121,7 +157,7 @@ #'
+ 		    s/ /\\ /g
+ 		    s/^/A /
+ 	    ' |
+-	    report "Updated but not checked in" "will commit"
++	    report updated "Updated but not checked in" "will commit"
+ 
+ 	    committable="$?"
+ 	fi
+@@ -131,14 +167,13 @@ #'
+ 		s/\\/\\\\/g
+ 		s/ /\\ /g
+ 	' |
+-	report "Changed but not updated" \
++	report changed "Changed but not updated" \
+ 	    "use git-update-index to mark for commit"
+ 
+         option=""
+         if test -z "$untracked_files"; then
+             option="--directory --no-empty-directory"
+         fi
+-	hdr_shown=
+ 	if test -f "$GIT_DIR/info/exclude"
+ 	then
+ 	    git-ls-files --others $option \
+@@ -148,16 +183,12 @@ #'
+ 	    git-ls-files --others $option \
+ 		--exclude-per-directory=.gitignore
+ 	fi |
+-	while read line; do
+-	    if [ -z "$hdr_shown" ]; then
+-		echo '#'
+-		echo '# Untracked files:'
+-		echo '#   (use "git add" to add to commit)'
+-		echo '#'
+-		hdr_shown=1
+-	    fi
+-	    echo "#	$line"
+-	done
++	sed -e '
++		s/\\/\\\\/g
++		s/ /\\ /g
++		s/^/O /
++	' |
++	report untracked "Untracked files" "use git add to commit"
+ 
+ 	if test -n "$verbose" -a -z "$IS_INITIAL"
+ 	then
 -- 
-Shawn.
+1.4.2.rc3.g06c3
