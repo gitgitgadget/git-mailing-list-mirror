@@ -1,72 +1,85 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: Git files data formats documentation
-Date: Sat, 05 Aug 2006 13:15:14 -0700
-Message-ID: <44D4FC52.6030807@gmail.com>
-References: <44D42F0D.3040707@gmail.com> <eb2onf$7up$1@sea.gmane.org>
-Reply-To: gitzilla@gmail.com
+From: "Ramsay Jones" <ramsay@ramsay1.demon.co.uk>
+Subject: RE: update-ref logs: problem with committer info?
+Date: Sat, 5 Aug 2006 21:23:40 +0100
+Message-ID: <001a01c6b8cd$0a7b5860$c47eedc1@ramsay1.demon.co.uk>
+References: <20060805025600.GA18223@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2; format=flowed
+Content-Type: text/plain;
+	charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Aug 05 22:15:28 2006
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 05 22:23:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G9SYL-0001Fj-RE
-	for gcvg-git@gmane.org; Sat, 05 Aug 2006 22:15:22 +0200
+	id 1G9SgM-0002R7-TD
+	for gcvg-git@gmane.org; Sat, 05 Aug 2006 22:23:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932398AbWHEUPT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 Aug 2006 16:15:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932402AbWHEUPS
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 16:15:18 -0400
-Received: from py-out-1112.google.com ([64.233.166.178]:37580 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S932398AbWHEUPS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Aug 2006 16:15:18 -0400
-Received: by py-out-1112.google.com with SMTP id z74so651355pyg
-        for <git@vger.kernel.org>; Sat, 05 Aug 2006 13:15:17 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=HvGLeb+cLhtOibnEIm6oKW8sSC2QE5XDr7DfEOX/FeUsShqdIXRJj9B8NUEoTpHksQp3IZzA4ME1W8aVdvhlHzL75j+ZWSagGiBSeDNy+XUIRSdfCasoOtVuDDGr424sPfnG7K4mMqiAArWtwrgpiIYl6GIJd4cAd7Mre4bNzXE=
-Received: by 10.35.9.15 with SMTP id m15mr8108062pyi;
-        Sat, 05 Aug 2006 13:15:16 -0700 (PDT)
-Received: from ?10.0.0.6? ( [70.32.187.210])
-        by mx.gmail.com with ESMTP id i72sm1878196pye.2006.08.05.13.15.15;
-        Sat, 05 Aug 2006 13:15:15 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0.8 (X11/20060411)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-In-Reply-To: <eb2onf$7up$1@sea.gmane.org>
+	id S932377AbWHEUXc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 Aug 2006 16:23:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751484AbWHEUXc
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 16:23:32 -0400
+Received: from anchor-post-34.mail.demon.net ([194.217.242.92]:32019 "EHLO
+	anchor-post-34.mail.demon.net") by vger.kernel.org with ESMTP
+	id S1751323AbWHEUXb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Aug 2006 16:23:31 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-34.mail.demon.net with smtp (Exim 4.42)
+	id 1G9SgC-000PXP-FQ; Sat, 05 Aug 2006 20:23:29 +0000
+To: <spearce@spearce.org>, "Junio C Hamano" <junkio@cox.net>
+X-Priority: 3 (Normal)
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook 8.5, Build 4.71.2173.0
+X-MimeOLE: Produced By Microsoft MimeOLE V4.72.2106.4
+Importance: Normal
+In-Reply-To: <20060805025600.GA18223@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24931>
 
-Jakub Narebski wrote:
-> A Large Angry SCM wrote:
-> 
->> <TREE_ENTRY>
->>         # The type of the object referenced MUST be appropriate for
->>         # the mode. Regular files and symbolic links reference a BLOB
->>         # and directories reference a TREE.
->>         :       <OCTAL_MODE> <SP> <NAME> <NUL> <BINARY_OBJ_ID>
->>         ;
-> [...]
->> <OCTAL_MODE>
->>         # Octal encoding, without prefix, of the file system object
->>         # type and permission bits. The bit layout is according to the
->>         # POSIX standard, with only regular files, directories, and
->>         # symbolic links permitted. The actual permission bits are
->>         # all zero except for regular files. The only permission bit
->>         # of any consequence to Git is the owner executable bit. By
->>         # default, the permission bits for files will be either 0644
->>         # or 0755, depending on the owner executable bit.
->>         ;
-> 
-> I do wonder why there is <OCTAL_MODE> (and not <BINARY_OCTAL_MODE>) 
-> but <BINARY_OBJ_ID> (and not <HEX_OBJ_ID>).
-> 
 
-<OCTAL_MODE> because it's an ASCII string. <BINARY_OBJ_ID> because it's 
-the 20 byte digest.
+On Sat 2006-08-05 at 3:56, spearce@spearce.org wrote:
+
+> Ramsay Jones <ramsay@ramsay1.demon.co.uk> wrote:
+> > diff --git a/builtin-update-ref.c b/builtin-update-ref.c
+> > index 00333c7..83094ab 100644
+> > --- a/builtin-update-ref.c
+> > +++ b/builtin-update-ref.c
+> > @@ -12,6 +12,7 @@ int cmd_update_ref(int argc, const char
+> >  	unsigned char sha1[20], oldsha1[20];
+> >  	int i;
+> >
+> > +	setup_ident();
+> >  	setup_git_directory();
+> >  	git_config(git_default_config);
+> > diff --git a/refs.c b/refs.c
+> > index 713ca46..a4060d8 100644
+> > --- a/refs.c
+> > +++ b/refs.c
+> > @@ -379,7 +379,6 @@ static int log_ref_write(struct ref_lock
+> >  			lock->log_file, strerror(errno));
+> >  	}
+> >
+> > -	setup_ident();
+> >  	comitter = git_committer_info(1);
+> >  	if (msg) {
+> >  		maxlen = strlen(comitter) + strlen(msg) + 2*40 + 5;
+>
+> These two changes were already fixed by me in 0b0fe4a6 on July
+> 10th.  That change is in `next`, in `master` and in v1.4.2-rc3.
+> So I expect it to be available in a final release real-soon-now.
+> Maybe you should consider running a newer version of GIT?
+>
+
+Yes, I am quite a long way behind, at version 1.4.1, which is light-years
+in git-time!  Unfortunately, since I can't pull from the git repo (I don't
+have internet access from Linux), I won't be able to update until the v1.4.2
+tar-ball is posted. Yep, not exactly ideal.
+
+OK, for now I will refrain from contributing, at least until v1.4.2 is out.
+
+Sorry for the noise.
+
+Ramsay
