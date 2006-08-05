@@ -1,128 +1,93 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [RFC/PATCH] Fix "grep -w"
-Date: Fri, 04 Aug 2006 22:16:42 -0700
-Message-ID: <7vwt9ng3t1.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Creating objects manually and repack
+Date: Sat, 5 Aug 2006 01:21:36 -0400
+Message-ID: <20060805052135.GA18679@spearce.org>
+References: <Pine.LNX.4.64.0608032138330.4168@g5.osdl.org> <Pine.LNX.4.64.0608032150510.4168@g5.osdl.org> <9e4733910608040740x23a8b0cs3bc276ef9e6fb8f7@mail.gmail.com> <9e4733910608040750g3f72c07ct43f54347e47f25b4@mail.gmail.com> <Pine.LNX.4.64.0608040818270.5167@g5.osdl.org> <9e4733910608040841v7f4f27efra63e5ead2656e07@mail.gmail.com> <Pine.LNX.4.64.0608040945070.5167@g5.osdl.org> <9e4733910608041017v235da03ocd3eeeb0ba0e259b@mail.gmail.com> <46a038f90608042115m71adc8ffo77de7940efa847a8@mail.gmail.com> <9e4733910608042212p6bf56224ye0ecf3f06b2840cf@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Aug 05 07:16:54 2006
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Linus Torvalds <torvalds@osdl.org>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 05 07:21:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G9EWp-0005AZ-Sy
-	for gcvg-git@gmane.org; Sat, 05 Aug 2006 07:16:52 +0200
+	id 1G9Ebf-0005fb-DO
+	for gcvg-git@gmane.org; Sat, 05 Aug 2006 07:21:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161133AbWHEFQo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 Aug 2006 01:16:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932606AbWHEFQo
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 01:16:44 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:58571 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S932522AbWHEFQo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Aug 2006 01:16:44 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060805051643.GYJM6235.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 5 Aug 2006 01:16:43 -0400
-To: git@vger.kernel.org
+	id S932522AbWHEFVq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 Aug 2006 01:21:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932606AbWHEFVq
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 01:21:46 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:19659 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S932522AbWHEFVq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Aug 2006 01:21:46 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1G9EbS-0005fy-7R; Sat, 05 Aug 2006 01:21:38 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 325F920FB77; Sat,  5 Aug 2006 01:21:36 -0400 (EDT)
+To: Jon Smirl <jonsmirl@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <9e4733910608042212p6bf56224ye0ecf3f06b2840cf@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24883>
 
-We used to find the first match of the pattern and then if the
-match is not for the entire word, declared that the whole line
-does not match.
+Jon Smirl <jonsmirl@gmail.com> wrote:
+> On 8/5/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> >On 8/5/06, Jon Smirl <jonsmirl@gmail.com> wrote:
+> >> On 8/4/06, Linus Torvalds <torvalds@osdl.org> wrote:
+> >> > and you're basically all done. The above would turn each *,v file into 
+> >a
+> >> > *-<sha>.pack/*-<sha>.idx file pair, so you'd have exactly as many
+> >> > pack-files as you have *,v files.
+> >>
+> >> I'll end up with 110,000 pack files.
+> >
+> >Then just do it every 100 files, and you'll only have 1,100 pack
+> >files, and it'll be fine.
+> 
+> This is something that has to be tuned. If you wait too long
+> everything spills out of RAM and you go totally IO bound for days. If
+> you do it too often you end up with too many packs and it takes a day
+> to repack them.
+> 
+> If I had a way to pipe the all of the objects into repack one at a
+> time without repack doing multiple passes none of this tuning would be
+> necessary. In this model the standalone objects never get created in
+> the first place. The fastest IO is IO that has been eliminated.
 
-But that is wrong.  The command "git grep -w -e mmap" should
-find that a line "foo_mmap bar mmap baz" matches, by tring the
-second instance of pattern "mmap" on the same line.
+I'm almost done with what I'm calling `git-fast-import`.  It takes
+a stream of blobs on STDIN and writes the pack to a file, printing
+SHA1s in hex format to STDOUT.  The basic format for STDIN is a 4
+byte length (native format) followed by that many bytes of blob data.
+It prints the SHA1 for that blob to STDOUT, then waits for another
+length.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+It naively deltas each object against the prior object, thus it
+would be best to feed it one ,v file at a time working from the most
+recent revision back to the oldest revision.  This works well for
+an RCS file as that's the natural order to process the file in.  :-)
 
----
+When done you close STDIN and it'll rip through and update the pack
+object count and the trailing checksum.  This should let you pack
+the entire repository in delta format using only two passes over the
+data: one to write out the pack file and one to compute its checksum.
 
- builtin-grep.c  |   10 ++++++++++
- t/t7002-grep.sh |   45 +++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 55 insertions(+), 0 deletions(-)
 
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 69b7c48..b5feda4 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -412,6 +412,7 @@ static int match_one_pattern(struct grep
- 	int hit = 0;
- 	regmatch_t pmatch[10];
- 
-+ again:
- 	if (!opt->fixed) {
- 		regex_t *exp = &p->regexp;
- 		hit = !regexec(exp, bol, ARRAY_SIZE(pmatch),
-@@ -438,6 +439,15 @@ static int match_one_pattern(struct grep
- 		if (pmatch[0].rm_eo != (eol-bol) &&
- 		    word_char(bol[pmatch[0].rm_eo]))
- 			hit = 0;
-+
-+		if (!hit && pmatch[0].rm_eo + bol < eol) {
-+			/* there could be more than one match on the
-+			 * line, and the first match might not be
-+			 * strict word match.  But later ones could be!
-+			 */
-+			bol += pmatch[0].rm_eo;
-+			goto again;
-+		}
- 	}
- 	return hit;
- }
-diff --git a/t/t7002-grep.sh b/t/t7002-grep.sh
-new file mode 100755
-index 0000000..0a0e302
---- /dev/null
-+++ b/t/t7002-grep.sh
-@@ -0,0 +1,45 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2006 Junio C Hamano
-+#
-+
-+test_description='git grep -w
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	{
-+		echo foo mmap bar
-+		echo foo_mmap bar
-+		echo foo_mmap bar mmap
-+		echo foo mmap bar_mmap
-+		echo foo_mmap bar mmap baz
-+	} >file &&
-+	git add file &&
-+	git commit -m initial
-+'
-+
-+test_expect_success 'grep -w HEAD' '
-+	git grep -n -w -e mmap HEAD >actual &&
-+	{
-+		echo HEAD:file:1:foo mmap bar
-+		echo HEAD:file:3:foo_mmap bar mmap
-+		echo HEAD:file:4:foo mmap bar_mmap
-+		echo HEAD:file:5:foo_mmap bar mmap baz
-+	} >expected &&
-+	diff expected actual
-+'
-+
-+test_expect_success 'grep -w in working tree' '
-+	git grep -n -w -e mmap >actual &&
-+	{
-+		echo file:1:foo mmap bar
-+		echo file:3:foo_mmap bar mmap
-+		echo file:4:foo mmap bar_mmap
-+		echo file:5:foo_mmap bar mmap baz
-+	} >expected &&
-+	diff expected actual
-+'
-+
-+test_done
+I'll post the code in a couple of hours.
+
+-- 
+Shawn.
