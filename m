@@ -1,80 +1,71 @@
-From: "Ramsay Jones" <ramsay@ramsay1.demon.co.uk>
-Subject: RE: [PATCH 6/10] Fix header breakage with _XOPEN_SOURCE.
-Date: Sat, 5 Aug 2006 18:11:28 +0100
-Message-ID: <000101c6b8b2$30c76060$c47eedc1@ramsay1.demon.co.uk>
-References: <Pine.LNX.4.63.0608040211160.1800@wbgn013.biozentrum.uni-wuerzburg.de>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: Git files data formats documentation
+Date: Sat, 05 Aug 2006 10:31:09 -0700
+Message-ID: <44D4D5DD.8070908@gmail.com>
+References: <44D42F0D.3040707@gmail.com> <20060805162233.GA19909@spearce.org>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 05 19:11:37 2006
+X-From: git-owner@vger.kernel.org Sat Aug 05 19:31:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G9PgU-0007qd-8D
-	for gcvg-git@gmane.org; Sat, 05 Aug 2006 19:11:34 +0200
+	id 1G9PzY-0003KC-R7
+	for gcvg-git@gmane.org; Sat, 05 Aug 2006 19:31:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030225AbWHERLX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 Aug 2006 13:11:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030257AbWHERLX
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 13:11:23 -0400
-Received: from anchor-post-33.mail.demon.net ([194.217.242.91]:5388 "EHLO
-	anchor-post-33.mail.demon.net") by vger.kernel.org with ESMTP
-	id S1030225AbWHERLW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Aug 2006 13:11:22 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-33.mail.demon.net with smtp (Exim 4.42)
-	id 1G9PgD-00070C-Ck; Sat, 05 Aug 2006 17:11:18 +0000
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-Priority: 3 (Normal)
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook 8.5, Build 4.71.2173.0
-Importance: Normal
-X-MimeOLE: Produced By Microsoft MimeOLE V4.72.2106.4
-In-Reply-To: <Pine.LNX.4.63.0608040211160.1800@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S1422632AbWHERbN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 Aug 2006 13:31:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422638AbWHERbN
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 13:31:13 -0400
+Received: from py-out-1112.google.com ([64.233.166.183]:52520 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1422632AbWHERbN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Aug 2006 13:31:13 -0400
+Received: by py-out-1112.google.com with SMTP id z74so497652pyg
+        for <git@vger.kernel.org>; Sat, 05 Aug 2006 10:31:12 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=fsodBVZEfhidV7L1sZxKXveJrs2Va7Pn6V4PsC7ySXBPdZF4wyM4J0NE0gKMzYmLdvnu3lfSQVidxRGTA64uTvbfPBbl3ipUYUFi07+DSvfFr4X6EP7krKGsrjPFbhrmoH7aJpNP9GsPXSLRab444mNseUcnKwdMF16b610BpEU=
+Received: by 10.35.113.12 with SMTP id q12mr7771651pym;
+        Sat, 05 Aug 2006 10:31:11 -0700 (PDT)
+Received: from ?10.0.0.6? ( [70.32.187.210])
+        by mx.gmail.com with ESMTP id w28sm2062741pyc.2006.08.05.10.31.10;
+        Sat, 05 Aug 2006 10:31:11 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0.8 (X11/20060411)
+X-Accept-Language: en-us, en
+To: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+In-Reply-To: <20060805162233.GA19909@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24922>
 
+Shawn Pearce wrote:
+> A Large Angry SCM <gitzilla@gmail.com> wrote:
+>> This information may be useful for reading and writing the various Git 
+>> files.
+> [snip]
+>> 	#	/* -  -  -  -  -  -  -  -  -  -  -  - *\
+>> 	#	 | This reflects version 3 pack files |
+>> 	#	\* -  -  -  -  -  -  -  -  -  -  -  - */
+> [snip]
+>> 	#	/* -  -  -  -  -  -  -  -  -  -  -  - *\
+>> 	#	 | This reflects version 2 pack files |
+>> 	#	\* -  -  -  -  -  -  -  -  -  -  -  - */
+> 
+> Thanks for taking the time to write these out.  The pack delta
+> formats were particularly helpful as it caused me to go back
+> and look at the unpacking code in jgit.
+> 
+> Apparently I wasn't handling the version 2 pack file correctly as I
+> didn't support copy-from-result; I had an infinite loop if the base
+> didn't decompress in one read (never happen right now, but could
+> in the future); and apparently my insert opcode implementation was
+> causing an infinite loop.  Nasty bugs.  I need to get more unit
+> tests written apparently.  :-)
 
-On Fri, 2006-08-04 at 1:20, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Wed, 2 Aug 2006, Ramsay Jones wrote:
-> 
-> > [...] but strptime() remains undeclared.
-> 
-> Note that there is just one call to strptime() in the C sources: 
-> convert-objects.
-> 
-> Also, we have something more portable in git now: you might be able to 
-> substitute
-> 
-> 	const char *next = strptime(buf, *fmt, &tm);
-> 	if (next) {
-> 
-> by something like
-> 
-> 	char buffer[50];
-> 	int len = parse_date(buf, buffer, sizeof(buffer));
-> 	const char *next = buf + len;
-> 
-> 	if (len) {
-> 		const char *tzstring = strchr(buffer, ' ') + 1;
-> 		int tz = (int)strtol(tzstring, NULL, 10);
-> 		tm = *time_to_tm(strtoul(buffer, NULL, 10), tz);
-> 
-> However, I did not test it, and this might be completely bogus.
-> 
-
-Yes, I'm sure something like that could be done, but I really don't
-think we need anything that intrusive to fix such a simple problem.
-Indeed, I would rather Junio ignore the patch if it appears to cause
-anyone else a problem. I can maintain it locally (it's only one line!).
-After all, I'm pretty sure I'm the only idiot^H^H^H^H^H person using a
-six year old dev system.
-
-Ramsay
+Keep in mind that the git-core code for reading version 2 or version 3 
+pack files does _not_ handle copy-from-result correctly.
