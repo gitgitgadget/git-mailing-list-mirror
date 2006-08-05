@@ -1,66 +1,72 @@
 From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [RFC] Introduce git-xxdiff to invoke xxdiff for manual conflict resolution - take 2
-Date: Sat, 5 Aug 2006 15:26:34 +1200
-Message-ID: <46a038f90608042026l732cef04u46df9b3429cd04d4@mail.gmail.com>
-References: <7v64h9pdx4.fsf@assigned-by-dhcp.cox.net>
-	 <11546518271379-git-send-email-martin@catalyst.net.nz>
-	 <81b0412b0608040109q683bd628rd9238662e0fdfb0@mail.gmail.com>
+Subject: Re: Creating objects manually and repack
+Date: Sat, 5 Aug 2006 16:15:00 +1200
+Message-ID: <46a038f90608042115m71adc8ffo77de7940efa847a8@mail.gmail.com>
+References: <9e4733910608032043u689f431rc5408c6d89398142@mail.gmail.com>
+	 <9e4733910608032124o5b5b69b5hda2eb8cb1e0ac959@mail.gmail.com>
+	 <Pine.LNX.4.64.0608032138330.4168@g5.osdl.org>
+	 <Pine.LNX.4.64.0608032150510.4168@g5.osdl.org>
+	 <9e4733910608040740x23a8b0cs3bc276ef9e6fb8f7@mail.gmail.com>
+	 <9e4733910608040750g3f72c07ct43f54347e47f25b4@mail.gmail.com>
+	 <Pine.LNX.4.64.0608040818270.5167@g5.osdl.org>
+	 <9e4733910608040841v7f4f27efra63e5ead2656e07@mail.gmail.com>
+	 <Pine.LNX.4.64.0608040945070.5167@g5.osdl.org>
+	 <9e4733910608041017v235da03ocd3eeeb0ba0e259b@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 05 05:26:47 2006
+Cc: "Linus Torvalds" <torvalds@osdl.org>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 05 06:15:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G9CoE-0007Qg-DM
-	for gcvg-git@gmane.org; Sat, 05 Aug 2006 05:26:42 +0200
+	id 1G9DZD-0007RV-28
+	for gcvg-git@gmane.org; Sat, 05 Aug 2006 06:15:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422751AbWHED0i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Aug 2006 23:26:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422745AbWHED0h
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 23:26:37 -0400
-Received: from nf-out-0910.google.com ([64.233.182.189]:24550 "EHLO
+	id S1422724AbWHEEPE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 Aug 2006 00:15:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422729AbWHEEPE
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 00:15:04 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:51380 "EHLO
 	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1422751AbWHED0g (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Aug 2006 23:26:36 -0400
-Received: by nf-out-0910.google.com with SMTP id k26so97108nfc
-        for <git@vger.kernel.org>; Fri, 04 Aug 2006 20:26:35 -0700 (PDT)
+	id S1422724AbWHEEPC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Aug 2006 00:15:02 -0400
+Received: by nf-out-0910.google.com with SMTP id k26so104994nfc
+        for <git@vger.kernel.org>; Fri, 04 Aug 2006 21:15:01 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BlsAMWYzP+Mnyk7eRdri3PfRIwt4ojbTGHuxgpOqEHGSWiMRvGK8YcKvi3ujpna8+RxEytxCTi/EWeJbSd0/9sOU0zkTJ1+9MHJ1Ur8fjkUO6guqtvxm+7WLM/NIJDV1sKqCSHxDxS6/16Eq/mWgrt2TXSOboHObRI/+JmKt0v8=
-Received: by 10.78.180.18 with SMTP id c18mr1804241huf;
-        Fri, 04 Aug 2006 20:26:34 -0700 (PDT)
-Received: by 10.78.97.17 with HTTP; Fri, 4 Aug 2006 20:26:34 -0700 (PDT)
-To: "Alex Riesen" <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b0608040109q683bd628rd9238662e0fdfb0@mail.gmail.com>
+        b=n13oOkhGXQUy5ng/B35Rek/Scn7kMRpsyqvrQ2pYekBEInY6nCF0VM1nRUR6K4xVQUKM5iXyJdKvJYdA2GhLizmVIa1QNw969iIFqpK5WgEMRY0YZ1FWx9nUmJdCGRa0lJmbpmQR4E62sguObiYlnygJ1kJtON9762OIaU91K9M=
+Received: by 10.78.183.8 with SMTP id g8mr1810247huf;
+        Fri, 04 Aug 2006 21:15:01 -0700 (PDT)
+Received: by 10.78.97.17 with HTTP; Fri, 4 Aug 2006 21:15:00 -0700 (PDT)
+To: "Jon Smirl" <jonsmirl@gmail.com>
+In-Reply-To: <9e4733910608041017v235da03ocd3eeeb0ba0e259b@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24880>
 
-On 8/4/06, Alex Riesen <raa.lkml@gmail.com> wrote:
-> On 8/4/06, Martin Langhoff <martin@catalyst.net.nz> wrote:
-> > This is a bit of a crude but really useful shortcut for conflict resolution.
-> > The name is bad, but git-merge-* is a different 'namespace', and git-resolve is
-> > also taken.
+On 8/5/06, Jon Smirl <jonsmirl@gmail.com> wrote:
+> On 8/4/06, Linus Torvalds <torvalds@osdl.org> wrote:
+> > and you're basically all done. The above would turn each *,v file into a
+> > *-<sha>.pack/*-<sha>.idx file pair, so you'd have exactly as many
+> > pack-files as you have *,v files.
 >
-> git-xxmerge?
+> I'll end up with 110,000 pack files.
 
-Well, the xx part is taken because it uses xxdiff, so I thought
-perhaps we can have trivial git wrappers for many popular mergers. Ie:
-git-wiggle, git-sdiff.
+Then just do it every 100 files, and you'll only have 1,100 pack
+files, and it'll be fine.
 
-We could have a single command with a 'strategy' parameter, say
+> I suspect when I run repack over
+> that it is going to take 24hrs or more,
 
-     git-mergehelper -s [xxdiff|sdiff|wiggle] path/to/file
-
-but separate commands are easier for prototyping IMVHO.
+Probably, but only the initial import has to incur that huge cost.
 
 cheers,
+
 
 
 martin
