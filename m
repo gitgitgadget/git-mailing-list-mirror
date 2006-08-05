@@ -1,49 +1,65 @@
-From: "Eaton" <culinarybaltimore@samerica.com>
-Subject: FWD Recent stuff  Have you ever dreamt to have a very hard peenis during all process?
-Date: Sat, 5 Aug 2006 17:04:29 -0400
-Message-ID: <74049542818031.AE56210368@FP57RFE5>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC/PATCH] Fix "grep -w"
+Date: Sat, 05 Aug 2006 14:08:28 -0700
+Message-ID: <7vlkq2dh6b.fsf@assigned-by-dhcp.cox.net>
+References: <7vwt9ng3t1.fsf@assigned-by-dhcp.cox.net>
+	<118833cc0608051219q7e19800alc05870058973c2e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1252"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Aug 05 23:02:15 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 05 23:08:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G9THf-0007af-Mg
-	for gcvg-git@gmane.org; Sat, 05 Aug 2006 23:02:12 +0200
+	id 1G9TNr-0008UD-9f
+	for gcvg-git@gmane.org; Sat, 05 Aug 2006 23:08:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932621AbWHEVCI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 Aug 2006 17:02:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932649AbWHEVCI
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 17:02:08 -0400
-Received: from pool-162-84-232-124.ny5030.east.verizon.net ([162.84.232.124]:9479
-	"EHLO DFTGBZ91.ioi04q25.com") by vger.kernel.org with ESMTP
-	id S932621AbWHEVCH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Aug 2006 17:02:07 -0400
-To: <git@vger.kernel.org>
-X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
-Thread-Index: 4oNpvoQcLiWsD9SIQ8rmc9PlaC1BVY91VbHT
+	id S1161304AbWHEVIb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 Aug 2006 17:08:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161328AbWHEVIa
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 17:08:30 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:16538 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1161304AbWHEVIa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Aug 2006 17:08:30 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060805210829.ZEA6711.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 5 Aug 2006 17:08:29 -0400
+To: "Morten Welinder" <mwelinder@gmail.com>
+In-Reply-To: <118833cc0608051219q7e19800alc05870058973c2e@mail.gmail.com>
+	(Morten Welinder's message of "Sat, 5 Aug 2006 15:19:02 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 18.1 points;
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4983]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?162.84.232.124>]
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: isjaser.com]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: isjaser.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: isjaser.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: isjaser.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: isjaser.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24936>
 
-Good afternoon Buy it now – and this night will be the best in your life Don’t be afraid But without any results… Now it’s possible to do with magic tab You gape for shooting like you had seen in those films… Find what you need: http://isjaser.com/gal/gsm/
+"Morten Welinder" <mwelinder@gmail.com> writes:
+
+> 1. Are you sure that going to the end of the first match is correct?
+> It seems to me that this will skip matches.  Say you search
+> for ".*" on a line that reads
+>   " xxx".
+
+It is fine for your example, I think.  .* matches the entire
+line the first time, and BOL and EOL are defined to be word
+boundaries.  But you are right.  If the pattern is "x xx* x" and
+the line is "x x xx x", the first round would match the first 5
+bytes, we find that 6th byte 'x' makes it not a word boundary,
+and redoing the match starting at 6th is a wrong thing to do.
+We should find "x xx x" starting at the 3rd byte.
+
+> 2. What about "^"?
+
+The pattern would not match the second time anyway, so I do not
+think it is such a big deal.
+
+But there is another bug I just spotted.  git grep -w -e '^x'
+matches line "xxx" (when not cheating with external grep).
+
+> 3. What about empty matches?  That could take a while...
+
+True.  So we would need to make sure we advance at least one.
