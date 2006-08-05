@@ -1,37 +1,37 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 4/9] gitweb: Don't undefine query parameter related variables before die_error
-Date: Sat, 05 Aug 2006 12:58:06 +0200
+Subject: [PATCH 5/9] gitweb: Cleanup and uniquify error messages
+Date: Sat, 05 Aug 2006 13:12:51 +0200
 Organization: At home
-Message-ID: <eb1tij$6kf$4@sea.gmane.org>
+Message-ID: <eb1ue8$8ti$1@sea.gmane.org>
 References: <200608050036.06490.jnareb@gmail.com> <200608050038.20534.jnareb@gmail.com> <7vu04sghr0.fsf@assigned-by-dhcp.cox.net> <eb0oiu$sj1$1@sea.gmane.org> <44d47813.36251c31.2553.3cf7@mx.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sat Aug 05 13:10:18 2006
+X-From: git-owner@vger.kernel.org Sat Aug 05 13:15:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G9K2n-0001kS-7P
-	for gcvg-git@gmane.org; Sat, 05 Aug 2006 13:10:13 +0200
+	id 1G9K7j-0002XR-3O
+	for gcvg-git@gmane.org; Sat, 05 Aug 2006 13:15:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161596AbWHELKH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 Aug 2006 07:10:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161594AbWHELKH
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 07:10:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:9403 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1161598AbWHELKF (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Aug 2006 07:10:05 -0400
+	id S1161594AbWHELPP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 Aug 2006 07:15:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161598AbWHELPP
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 07:15:15 -0400
+Received: from main.gmane.org ([80.91.229.2]:58578 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1161594AbWHELPN (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Aug 2006 07:15:13 -0400
 Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1G9K2c-0001hx-An
-	for git@vger.kernel.org; Sat, 05 Aug 2006 13:10:02 +0200
+	id 1G9K7S-0002UY-5k
+	for git@vger.kernel.org; Sat, 05 Aug 2006 13:15:02 +0200
 Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 05 Aug 2006 13:10:02 +0200
+        for <git@vger.kernel.org>; Sat, 05 Aug 2006 13:15:02 +0200
 Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 05 Aug 2006 13:10:02 +0200
+        for <git@vger.kernel.org>; Sat, 05 Aug 2006 13:15:02 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
 X-Complaints-To: usenet@sea.gmane.org
@@ -41,105 +41,64 @@ User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24904>
 
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-It would allow to include value of invalid parameter in error message
-
- gitweb/gitweb.perl |   21 +++++----------------
- 1 files changed, 5 insertions(+), 16 deletions(-)
+ gitweb/gitweb.perl |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 9b9bf37..6f3f465 100755
+index 6f3f465..8773a8d 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -76,7 +76,6 @@ # input validation and dispatch
- our $action = $cgi->param('a');
- if (defined $action) {
-        if ($action =~ m/[^0-9a-zA-Z\.\-_]/) {
--               undef $action;
-                die_error(undef, "Invalid action parameter.");
+@@ -1464,7 +1464,7 @@ sub git_blame2 {
+        die_error(undef, "Permission denied.") if (!git_get_project_config_bool ('blame'));
+        die_error('404 Not Found', "File name not defined") if (!$file_name);
+        $hash_base ||= git_read_head($project);
+-       die_error(undef, "Reading commit failed") unless ($hash_base);
++       die_error(undef, "Couldn't find base commit.") unless ($hash_base);
+        my %co = git_read_commit($hash_base)
+                or die_error(undef, "Reading commit failed");
+        if (!defined $hash) {
+@@ -1473,7 +1473,7 @@ sub git_blame2 {
         }
-        # action which does not check rest of parameters
-@@ -89,16 +88,13 @@ if (defined $action) {
- our $project = ($cgi->param('p') || $ENV{'PATH_INFO'});
- if (defined $project) {
-        $project =~ s|^/||; $project =~ s|/$||;
--       $project = validate_input($project);
--       if (!defined($project)) {
-+       if (!validate_input($project)) {
-                die_error(undef, "Invalid project parameter.");
+        $ftype = git_get_type($hash);
+        if ($ftype !~ "blob") {
+-               die_error("400 Bad Request", "object is not a blob");
++               die_error("400 Bad Request", "Object is not a blob");
         }
-        if (!(-d "$projectroot/$project")) {
--               undef $project;
-                die_error(undef, "No such directory.");
-        }
-        if (!(-e "$projectroot/$project/HEAD")) {
--               undef $project;
-                die_error(undef, "No such project.");
-        }
-        $rss_link = "<link rel=\"alternate\" title=\"" . esc_param($project) . " log\" href=\"" .
-@@ -111,32 +107,28 @@ if (defined $project) {
+        open ($fd, "-|", $GIT, "blame", '-l', $file_name, $hash_base)
+                or die_error(undef, "Open git-blame failed.");
+@@ -1520,9 +1520,9 @@ sub git_blame2 {
+ sub git_blame {
+        my $fd;
+        die_error('403 Permission denied', "Permission denied.") if (!git_get_project_config_bool ('blame'));
+-       die_error('404 Not Found', "What file will it be, master?") if (!$file_name);
++       die_error('404 Not Found', "File name not defined.") if (!$file_name);
+        $hash_base ||= git_read_head($project);
+-       die_error(undef, "Reading commit failed.") unless ($hash_base);
++       die_error(undef, "Couldn't find base commit.") unless ($hash_base);
+        my %co = git_read_commit($hash_base)
+                or die_error(undef, "Reading commit failed.");
+        if (!defined $hash) {
+@@ -2113,7 +2113,7 @@ sub git_commitdiff {
+        open my $fd, "-|", $GIT, "diff-tree", '-r', $hash_parent, $hash
+                or die_error(undef, "Open git-diff-tree failed.");
+        my @difftree = map { chomp; $_ } <$fd>;
+-       close $fd or die_error(undef, "Reading diff-tree failed.");
++       close $fd or die_error(undef, "Reading git-diff-tree failed.");
  
- our $file_name = $cgi->param('f');
- if (defined $file_name) {
--       $file_name = validate_input($file_name);
--       if (!defined($file_name)) {
-+       if (!validate_input($file_name)) {
-                die_error(undef, "Invalid file parameter.");
-        }
- }
- 
- our $hash = $cgi->param('h');
- if (defined $hash) {
--       $hash = validate_input($hash);
--       if (!defined($hash)) {
-+       if (!validate_input($hash)) {
-                die_error(undef, "Invalid hash parameter.");
-        }
- }
- 
- our $hash_parent = $cgi->param('hp');
- if (defined $hash_parent) {
--       $hash_parent = validate_input($hash_parent);
--       if (!defined($hash_parent)) {
-+       if (!validate_input($hash_parent)) {
-                die_error(undef, "Invalid hash parent parameter.");
-        }
- }
- 
- our $hash_base = $cgi->param('hb');
- if (defined $hash_base) {
--       $hash_base = validate_input($hash_base);
--       if (!defined($hash_base)) {
-+       if (!validate_input($hash_base)) {
-                die_error(undef, "Invalid hash base parameter.");
-        }
- }
-@@ -144,7 +136,6 @@ if (defined $hash_base) {
- our $page = $cgi->param('pg');
- if (defined $page) {
-        if ($page =~ m/[^0-9]$/) {
--               undef $page;
-                die_error(undef, "Invalid page parameter.");
-        }
- }
-@@ -152,7 +143,6 @@ if (defined $page) {
- our $searchtext = $cgi->param('s');
- if (defined $searchtext) {
-        if ($searchtext =~ m/[^a-zA-Z0-9_\.\/\-\+\:\@ ]/) {
--               undef $searchtext;
-                die_error(undef, "Invalid search parameter.");
-        }
-        $searchtext = quotemeta $searchtext;
-@@ -182,7 +172,6 @@ my %actions = (
- 
- $action = 'summary' if (!defined($action));
- if (!defined($actions{$action})) {
--       undef $action;
-        die_error(undef, "Unknown action.");
- }
- $actions{$action}->();
+        # non-textual hash id's can be cached
+        my $expires;
+@@ -2484,7 +2484,7 @@ sub git_rss {
+        open my $fd, "-|", $GIT, "rev-list", "--max-count=150", git_read_head($project)
+                or die_error(undef, "Open git-rev-list failed.");
+        my @revlist = map { chomp; $_ } <$fd>;
+-       close $fd or die_error(undef, "Reading rev-list failed.");
++       close $fd or die_error(undef, "Reading git-rev-list failed.");
+        print $cgi->header(-type => 'text/xml', -charset => 'utf-8');
+        print "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n".
+              "<rss version=\"2.0\" xmlns:content=\"http://purl.org/rss/1.0/modules/content/\">\n";
 -- 
 1.4.1.1
