@@ -1,44 +1,66 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: Re: [PATCH] git-status: colorize status output
-Date: Sat, 5 Aug 2006 22:31:07 +0200
-Message-ID: <20060805203107.GB16186@moooo.ath.cx>
-References: <20060805031418.GA11102@coredump.intra.peff.net> <20060805105953.GA5410@moooo.ath.cx> <7vejvve8ci.fsf@assigned-by-dhcp.cox.net> <20060805112851.GA20807@moooo.ath.cx> <7v64h7e7dm.fsf@assigned-by-dhcp.cox.net> <20060805121821.GB20807@moooo.ath.cx> <20060805195411.GA4733@sigio.intra.peff.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: update-ref logs: problem with committer info?
+Date: Sat, 5 Aug 2006 16:33:04 -0400
+Message-ID: <20060805203304.GB20565@spearce.org>
+References: <20060805025600.GA18223@spearce.org> <001a01c6b8cd$0a7b5860$c47eedc1@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 05 22:31:16 2006
+X-From: git-owner@vger.kernel.org Sat Aug 05 22:33:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G9Snh-0003aU-Ep
-	for gcvg-git@gmane.org; Sat, 05 Aug 2006 22:31:13 +0200
+	id 1G9Spc-0003rH-FS
+	for gcvg-git@gmane.org; Sat, 05 Aug 2006 22:33:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932416AbWHEUbK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 Aug 2006 16:31:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751491AbWHEUbJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 16:31:09 -0400
-Received: from moooo.ath.cx ([85.116.203.178]:652 "EHLO moooo.ath.cx")
-	by vger.kernel.org with ESMTP id S1751489AbWHEUbI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Aug 2006 16:31:08 -0400
-To: Jeff King <peff@peff.net>
-Mail-Followup-To: Jeff King <peff@peff.net>, git@vger.kernel.org
+	id S932502AbWHEUdJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 Aug 2006 16:33:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932504AbWHEUdI
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 16:33:08 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:49099 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S932502AbWHEUdH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Aug 2006 16:33:07 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1G9SpO-0005rH-17; Sat, 05 Aug 2006 16:32:58 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 87D9820FB77; Sat,  5 Aug 2006 16:33:04 -0400 (EDT)
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 Content-Disposition: inline
-In-Reply-To: <20060805195411.GA4733@sigio.intra.peff.net>
+In-Reply-To: <001a01c6b8cd$0a7b5860$c47eedc1@ramsay1.demon.co.uk>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24934>
 
-Jeff King <peff@peff.net> wrote:
-> On Sat, Aug 05, 2006 at 02:18:21PM +0200, Matthias Lederhofer wrote:
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> wrote:
 > 
-> > I like the colored git status.  Here is a patch to honor isatty(1) and
-> > pager_in_use (exporting GIT_PAGER_IN_USE) with pager.color.
+> Yes, I am quite a long way behind, at version 1.4.1, which is light-years
+> in git-time!  Unfortunately, since I can't pull from the git repo (I don't
+> have internet access from Linux), I won't be able to update until the v1.4.2
+> tar-ball is posted. Yep, not exactly ideal.
+
+Yea, that's not much fun.  I found that tracking GIT with GIT is
+really the easiest way to stay current.  Not having direct net
+access makes that nearly impossible.
+ 
+> OK, for now I will refrain from contributing, at least until v1.4.2 is out.
 > 
-> Doesn't this have different behavior when you use 'git-status' rather
-> than 'git status'? Maybe rather than a boolean, we would be better off
-> with a true/false/auto value similar to diff.color.
-I don't see the case where git-status and git status behave
-differently (except for git -p status but git-status does not have an
-option for paging at all).
+> Sorry for the noise.
+
+Its not noise, three of your five changes were current bugs that
+needed fixing.  :-)
+
+-- 
+Shawn.
