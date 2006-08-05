@@ -1,66 +1,49 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: update-ref logs: problem with committer info?
-Date: Sat, 5 Aug 2006 16:33:04 -0400
-Message-ID: <20060805203304.GB20565@spearce.org>
-References: <20060805025600.GA18223@spearce.org> <001a01c6b8cd$0a7b5860$c47eedc1@ramsay1.demon.co.uk>
+From: "Eaton" <culinarybaltimore@samerica.com>
+Subject: FWD Recent stuff  Have you ever dreamt to have a very hard peenis during all process?
+Date: Sat, 5 Aug 2006 17:04:29 -0400
+Message-ID: <74049542818031.AE56210368@FP57RFE5>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 05 22:33:22 2006
+Content-Type: text/plain;
+        charset="Windows-1252"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Aug 05 23:02:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G9Spc-0003rH-FS
-	for gcvg-git@gmane.org; Sat, 05 Aug 2006 22:33:13 +0200
+	id 1G9THf-0007af-Mg
+	for gcvg-git@gmane.org; Sat, 05 Aug 2006 23:02:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932502AbWHEUdJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 Aug 2006 16:33:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932504AbWHEUdI
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 16:33:08 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:49099 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S932502AbWHEUdH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Aug 2006 16:33:07 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1G9SpO-0005rH-17; Sat, 05 Aug 2006 16:32:58 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 87D9820FB77; Sat,  5 Aug 2006 16:33:04 -0400 (EDT)
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Content-Disposition: inline
-In-Reply-To: <001a01c6b8cd$0a7b5860$c47eedc1@ramsay1.demon.co.uk>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932621AbWHEVCI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 Aug 2006 17:02:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932649AbWHEVCI
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 17:02:08 -0400
+Received: from pool-162-84-232-124.ny5030.east.verizon.net ([162.84.232.124]:9479
+	"EHLO DFTGBZ91.ioi04q25.com") by vger.kernel.org with ESMTP
+	id S932621AbWHEVCH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Aug 2006 17:02:07 -0400
+To: <git@vger.kernel.org>
+X-Mailer: Microsoft Office Outlook, Build 11.0.5510
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+Thread-Index: 4oNpvoQcLiWsD9SIQ8rmc9PlaC1BVY91VbHT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24934>
+X-Spam-Report: 18.1 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.4983]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?162.84.232.124>]
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: isjaser.com]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: isjaser.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: isjaser.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: isjaser.com]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: isjaser.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24935>
 
-Ramsay Jones <ramsay@ramsay1.demon.co.uk> wrote:
-> 
-> Yes, I am quite a long way behind, at version 1.4.1, which is light-years
-> in git-time!  Unfortunately, since I can't pull from the git repo (I don't
-> have internet access from Linux), I won't be able to update until the v1.4.2
-> tar-ball is posted. Yep, not exactly ideal.
-
-Yea, that's not much fun.  I found that tracking GIT with GIT is
-really the easiest way to stay current.  Not having direct net
-access makes that nearly impossible.
- 
-> OK, for now I will refrain from contributing, at least until v1.4.2 is out.
-> 
-> Sorry for the noise.
-
-Its not noise, three of your five changes were current bugs that
-needed fixing.  :-)
-
--- 
-Shawn.
+Good afternoon Buy it now – and this night will be the best in your life Don’t be afraid But without any results… Now it’s possible to do with magic tab You gape for shooting like you had seen in those films… Find what you need: http://isjaser.com/gal/gsm/
