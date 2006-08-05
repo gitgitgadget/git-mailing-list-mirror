@@ -1,67 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 6/9] gitweb: No periods for error messages
-Date: Sat, 05 Aug 2006 18:15:30 +0200
-Organization: At home
-Message-ID: <eb2g5l$ipo$1@sea.gmane.org>
-References: <eb1ug6$8ti$2@sea.gmane.org> <20060805155504.6832.qmail@web31807.mail.mud.yahoo.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Git files data formats documentation
+Date: Sat, 5 Aug 2006 12:22:33 -0400
+Message-ID: <20060805162233.GA19909@spearce.org>
+References: <44D42F0D.3040707@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sat Aug 05 18:15:15 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 05 18:25:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G9Onu-0007JW-Ay
-	for gcvg-git@gmane.org; Sat, 05 Aug 2006 18:15:11 +0200
+	id 1G9OxY-0000JN-V9
+	for gcvg-git@gmane.org; Sat, 05 Aug 2006 18:25:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932591AbWHEQPD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 Aug 2006 12:15:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932599AbWHEQPC
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 12:15:02 -0400
-Received: from main.gmane.org ([80.91.229.2]:46544 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932591AbWHEQPA (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Aug 2006 12:15:00 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1G9Onj-0007I9-5k
-	for git@vger.kernel.org; Sat, 05 Aug 2006 18:14:59 +0200
-Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 05 Aug 2006 18:14:59 +0200
-Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 05 Aug 2006 18:14:59 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1161155AbWHEQZE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 Aug 2006 12:25:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932637AbWHEQZE
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 12:25:04 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:38827 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S932632AbWHEQZC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Aug 2006 12:25:02 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1G9OxK-0001yo-Qx; Sat, 05 Aug 2006 12:24:55 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id BF63920FB77; Sat,  5 Aug 2006 12:22:33 -0400 (EDT)
+To: A Large Angry SCM <gitzilla@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <44D42F0D.3040707@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24920>
 
-Luben Tuikov wrote:
+A Large Angry SCM <gitzilla@gmail.com> wrote:
+> This information may be useful for reading and writing the various Git 
+> files.
+[snip]
+> 	#	/* -  -  -  -  -  -  -  -  -  -  -  - *\
+> 	#	 | This reflects version 3 pack files |
+> 	#	\* -  -  -  -  -  -  -  -  -  -  -  - */
+[snip]
+> 	#	/* -  -  -  -  -  -  -  -  -  -  -  - *\
+> 	#	 | This reflects version 2 pack files |
+> 	#	\* -  -  -  -  -  -  -  -  -  -  -  - */
 
-> --- Jakub Narebski <jnareb@gmail.com> wrote:
-> 
->> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
->> ---
->> Like in Luben Tuikov patch
-> 
-> Good work!
-> 
-> I see this patch bears identical Subject line and
-> is logically identical as the one I posted.
-> 
-> Maybe you ment to include the above line above your
-> Signed-off-by: line?
+Thanks for taking the time to write these out.  The pack delta
+formats were particularly helpful as it caused me to go back
+and look at the unpacking code in jgit.
 
-Probably should have just added you to Signed-off-by: line.
+Apparently I wasn't handling the version 2 pack file correctly as I
+didn't support copy-from-result; I had an infinite loop if the base
+didn't decompress in one read (never happen right now, but could
+in the future); and apparently my insert opcode implementation was
+causing an infinite loop.  Nasty bugs.  I need to get more unit
+tests written apparently.  :-)
+
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Shawn.
