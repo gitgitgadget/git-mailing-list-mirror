@@ -1,53 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-status: colorize status output
-Date: Sat, 5 Aug 2006 19:42:40 -0400
-Message-ID: <20060805234240.GA11545@coredump.intra.peff.net>
-References: <7vejvve8ci.fsf@assigned-by-dhcp.cox.net> <20060805112851.GA20807@moooo.ath.cx> <7v64h7e7dm.fsf@assigned-by-dhcp.cox.net> <20060805121821.GB20807@moooo.ath.cx> <20060805195411.GA4733@sigio.intra.peff.net> <20060805203107.GB16186@moooo.ath.cx> <20060805031418.GA11102@coredump.intra.peff.net> <20060805105953.GA5410@moooo.ath.cx> <20060805194513.GA4836@sigio.intra.peff.net> <20060805202759.GA16186@moooo.ath.cx>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git files data formats documentation
+Date: Sun, 06 Aug 2006 01:43:19 +0200
+Organization: At home
+Message-ID: <eb3ad8$fq6$1@sea.gmane.org>
+References: <44D42F0D.3040707@gmail.com> <eb2onf$7up$1@sea.gmane.org> <44D4FC52.6030807@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Aug 06 01:43:01 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sun Aug 06 01:43:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G9VnC-0007YJ-W2
-	for gcvg-git@gmane.org; Sun, 06 Aug 2006 01:42:55 +0200
+	id 1G9VnC-0007YJ-DM
+	for gcvg-git@gmane.org; Sun, 06 Aug 2006 01:42:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932641AbWHEXmn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 Aug 2006 19:42:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932664AbWHEXmn
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 19:42:43 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:8651 "HELO
-	peff.net") by vger.kernel.org with SMTP id S932641AbWHEXmn (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Aug 2006 19:42:43 -0400
-Received: (qmail 20298 invoked from network); 5 Aug 2006 19:42:07 -0400
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 5 Aug 2006 19:42:07 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat,  5 Aug 2006 19:42:40 -0400
+	id S932664AbWHEXmv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 Aug 2006 19:42:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932669AbWHEXmv
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 19:42:51 -0400
+Received: from main.gmane.org ([80.91.229.2]:36540 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932664AbWHEXmu (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Aug 2006 19:42:50 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1G9Vn1-0007XB-38
+	for git@vger.kernel.org; Sun, 06 Aug 2006 01:42:43 +0200
+Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 06 Aug 2006 01:42:43 +0200
+Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 06 Aug 2006 01:42:43 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060805203107.GB16186@moooo.ath.cx> <20060805202759.GA16186@moooo.ath.cx>
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24940>
 
-On Sat, Aug 05, 2006 at 10:27:59PM +0200, Matthias Lederhofer wrote:
+A Large Angry SCM wrote:
 
-> I would suggest that all scripts that use colors have a
-> always/auto/never (with boolean fallback) option and also honor
-> pager.color if the pager is in use.
+> Jakub Narebski wrote:
 
-I'll send out a patch in a moment.
+>> I do wonder why there is <OCTAL_MODE> (and not <BINARY_OCTAL_MODE>) 
+>> but <BINARY_OBJ_ID> (and not <HEX_OBJ_ID>).
+>> 
+> 
+> <OCTAL_MODE> because it's an ASCII string. <BINARY_OBJ_ID> because it's 
+> the 20 byte digest.
 
-> I don't see the case where git-status and git status behave
-> differently (except for git -p status but git-status does not have an
-> option for paging at all).
+I meant why git use ASCII string for octal mode, while using 20 byte digest
+for object-id in tree format. More consistent would be use binary and
+binary, or ASCII and ASCII (i.e. <HEX_OBJ_ID>).
 
-Sorry, I didn't say what I meant at all. My problem was that one
-cannot get color with a pager using git-status (by doing
-'git-status | less'). The output is not a tty, but GIT_PAGER_IN_USE is
-not set (and of course I cannot use '-p'). However, that is a moot point
-with always/auto/never, since in such a case I can just use 'always'.
-
--Peff
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
