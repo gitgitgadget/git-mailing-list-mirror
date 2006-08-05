@@ -1,70 +1,83 @@
-From: "Maryann Godfrey" <MaryannGodfrey@0451.com>
-Subject: Your cash, olive nut
-Date: Sat, 5 Aug 2006 17:37:13 +0240
-Message-ID: <684381394.20060805173713@0451.com>
-Reply-To: "Maryann Godfrey" <MaryannGodfrey@0451.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git files data formats documentation
+Date: Sat, 05 Aug 2006 20:41:32 +0200
+Organization: At home
+Message-ID: <eb2onf$7up$1@sea.gmane.org>
+References: <44D42F0D.3040707@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Aug 05 19:37:10 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Sat Aug 05 20:41:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G9Q5B-0004Zi-AV
-	for gcvg-git@gmane.org; Sat, 05 Aug 2006 19:37:06 +0200
+	id 1G9R5K-0001bX-Fn
+	for gcvg-git@gmane.org; Sat, 05 Aug 2006 20:41:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422644AbWHERhB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 Aug 2006 13:37:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422653AbWHERhB
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 13:37:01 -0400
-Received: from pc-209-68-86-200.cm.vtr.net ([200.86.68.209]:33029 "EHLO
-	oficina.vtr.net") by vger.kernel.org with ESMTP id S1422644AbWHERhA
-	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 5 Aug 2006 13:37:00 -0400
-X-Mailer: The Bat! (v3.01 RC8) Educational
-X-Priority: 3 (Normal)
-To: git-commits-head-owner@vger.kernel.org
+	id S1751466AbWHESlM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 5 Aug 2006 14:41:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751467AbWHESlM
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 14:41:12 -0400
+Received: from main.gmane.org ([80.91.229.2]:21222 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751466AbWHESlL (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Aug 2006 14:41:11 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1G9R5B-0001Yu-UR
+	for git@vger.kernel.org; Sat, 05 Aug 2006 20:41:09 +0200
+Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 05 Aug 2006 20:41:09 +0200
+Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 05 Aug 2006 20:41:09 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 13.4 points;
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5165]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?200.86.68.209>]
- *  0.3 DNS_FROM_AHBL_RHSBL RBL: From: sender listed in dnsbl.ahbl.org
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: mustguest.com]
- *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: mustguest.com]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: mustguest.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: mustguest.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24924>
 
-Even if you have no erectin problems SOFT CIA7LIS 
-would help you to make BETTER SEMX MORE OFTEN!
-and to bring  unimagnable plesure to her.
+A Large Angry SCM wrote:
 
-Just disolve half a pil under your tongue 
-and get ready for action in 15 minutes. 
+> <TREE_ENTRY>
+> =A0=A0=A0=A0=A0=A0=A0=A0# The type of the object referenced MUST be a=
+ppropriate for
+> =A0=A0=A0=A0=A0=A0=A0=A0# the mode. Regular files and symbolic links =
+reference a BLOB
+> =A0=A0=A0=A0=A0=A0=A0=A0# and directories reference a TREE.
+> =A0=A0=A0=A0=A0=A0=A0=A0:=A0=A0=A0=A0=A0=A0=A0<OCTAL_MODE> <SP> <NAME=
+> <NUL> <BINARY_OBJ_ID>
+> =A0=A0=A0=A0=A0=A0=A0=A0;
+[...]
+> <OCTAL_MODE>
+> =A0=A0=A0=A0=A0=A0=A0=A0# Octal encoding, without prefix, of the file=
+ system object
+> =A0=A0=A0=A0=A0=A0=A0=A0# type and permission bits. The bit layout is=
+ according to the
+> =A0=A0=A0=A0=A0=A0=A0=A0# POSIX standard, with only regular files, di=
+rectories, and
+> =A0=A0=A0=A0=A0=A0=A0=A0# symbolic links permitted. The actual permis=
+sion bits are
+> =A0=A0=A0=A0=A0=A0=A0=A0# all zero except for regular files. The only=
+ permission bit
+> =A0=A0=A0=A0=A0=A0=A0=A0# of any consequence to Git is the owner exec=
+utable bit. By
+> =A0=A0=A0=A0=A0=A0=A0=A0# default, the permission bits for files will=
+ be either 0644
+> =A0=A0=A0=A0=A0=A0=A0=A0# or 0755, depending on the owner executable =
+bit.
+> =A0=A0=A0=A0=A0=A0=A0=A0;
 
-The tests showed that the majority of men 
-after taking this medic ation were able to have 
-PERFECT ERTECTION during 36 hours!
+I do wonder why there is <OCTAL_MODE> (and not <BINARY_OCTAL_MODE>)=20
+but <BINARY_OBJ_ID> (and not <HEX_OBJ_ID>).
 
-VISIT US, AND GET OUR SPECIAL 70% DISCWOUNT OFER!
-
-http://lsfajf.mustguest.com/?83963344
-
-==========
-horizons out ahead for us all. He stepped forward.
-the whole thing-just  emptiness and more emptiness,  thin  air. And for  all
-speak, the shots came is the Pilman Radiant."
-unscrewed the  cap, and attached myself to it  like  a lamprey. I sat on the
-     Without warning, Chiang vanished and appeared  at  the  water's  edge
-     "What web? Where?"
-
-     His vows of a moment before were forgotten, swept away in that  great
-technology that we command," he  blathered, "al- most  completely guarantees
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
