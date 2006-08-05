@@ -1,64 +1,56 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git files data formats documentation
-Date: Sun, 06 Aug 2006 01:43:19 +0200
-Organization: At home
-Message-ID: <eb3ad8$fq6$1@sea.gmane.org>
-References: <44D42F0D.3040707@gmail.com> <eb2onf$7up$1@sea.gmane.org> <44D4FC52.6030807@gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: RE: update-ref logs: problem with committer info?
+Date: Sun, 6 Aug 2006 01:55:05 +0200
+Organization: Dewire
+Message-ID: <200608060155.06723.robin.rosenberg.lists@dewire.com>
+References: <001a01c6b8cd$0a7b5860$c47eedc1@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sun Aug 06 01:43:03 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: spearce@spearce.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 06 01:55:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G9VnC-0007YJ-DM
-	for gcvg-git@gmane.org; Sun, 06 Aug 2006 01:42:54 +0200
+	id 1G9VzE-0000hn-HG
+	for gcvg-git@gmane.org; Sun, 06 Aug 2006 01:55:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932664AbWHEXmv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 Aug 2006 19:42:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932669AbWHEXmv
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 19:42:51 -0400
-Received: from main.gmane.org ([80.91.229.2]:36540 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932664AbWHEXmu (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Aug 2006 19:42:50 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1G9Vn1-0007XB-38
-	for git@vger.kernel.org; Sun, 06 Aug 2006 01:42:43 +0200
-Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 06 Aug 2006 01:42:43 +0200
-Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 06 Aug 2006 01:42:43 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751400AbWHEXzQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 Aug 2006 19:55:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751404AbWHEXzQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 19:55:16 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:34609 "EHLO
+	torino.dewire.com") by vger.kernel.org with ESMTP id S1751400AbWHEXzO
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 5 Aug 2006 19:55:14 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by torino.dewire.com (Postfix) with ESMTP id 8113BAE5738;
+	Sun,  6 Aug 2006 01:53:11 +0200 (CEST)
+Received: from torino.dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 06107-05; Sun,  6 Aug 2006 01:53:11 +0200 (CEST)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by torino.dewire.com (Postfix) with ESMTP id 2CE9980264C;
+	Sun,  6 Aug 2006 01:53:09 +0200 (CEST)
+To: "Ramsay Jones" <ramsay@ramsay1.demon.co.uk>
+User-Agent: KMail/1.9.4
+In-Reply-To: <001a01c6b8cd$0a7b5860$c47eedc1@ramsay1.demon.co.uk>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24941>
 
-A Large Angry SCM wrote:
+> Yes, I am quite a long way behind, at version 1.4.1, which is light-years
+> in git-time!  Unfortunately, since I can't pull from the git repo (I don't
+> have internet access from Linux), I won't be able to update until the
+> v1.4.2 tar-ball is posted. Yep, not exactly ideal.
 
-> Jakub Narebski wrote:
+Couldn't you track git with another machine? Then copy that clone to
+your linux box and then do a local pull from the copied clone. 
 
->> I do wonder why there is <OCTAL_MODE> (and not <BINARY_OCTAL_MODE>) 
->> but <BINARY_OBJ_ID> (and not <HEX_OBJ_ID>).
->> 
-> 
-> <OCTAL_MODE> because it's an ASCII string. <BINARY_OBJ_ID> because it's 
-> the 20 byte digest.
+There's also the http_proxy, but I guess you know that already.
 
-I meant why git use ASCII string for octal mode, while using 20 byte digest
-for object-id in tree format. More consistent would be use binary and
-binary, or ASCII and ASCII (i.e. <HEX_OBJ_ID>).
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+-- robin
