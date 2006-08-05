@@ -1,78 +1,55 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 1/5] gitweb: Cleanup input validation and error messages
-Date: Sat, 05 Aug 2006 02:26:47 +0200
-Organization: At home
-Message-ID: <eb0oiu$sj1$1@sea.gmane.org>
-References: <200608050036.06490.jnareb@gmail.com> <200608050038.20534.jnareb@gmail.com> <7vu04sghr0.fsf@assigned-by-dhcp.cox.net>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH 1/4] gitweb: blame table row no highlight fix
+Date: Fri, 4 Aug 2006 17:51:48 -0700 (PDT)
+Message-ID: <20060805005148.12923.qmail@web31807.mail.mud.yahoo.com>
+References: <7v4pwshx3h.fsf@assigned-by-dhcp.cox.net>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sat Aug 05 02:26:49 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 05 02:51:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G99zz-0005Ly-SG
-	for gcvg-git@gmane.org; Sat, 05 Aug 2006 02:26:40 +0200
+	id 1G9AOO-0004RG-QE
+	for gcvg-git@gmane.org; Sat, 05 Aug 2006 02:51:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422669AbWHEA0h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 Aug 2006 20:26:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422672AbWHEA0h
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 20:26:37 -0400
-Received: from main.gmane.org ([80.91.229.2]:987 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1422669AbWHEA0g (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Aug 2006 20:26:36 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1G99zk-0005KJ-LI
-	for git@vger.kernel.org; Sat, 05 Aug 2006 02:26:24 +0200
-Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 05 Aug 2006 02:26:24 +0200
-Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 05 Aug 2006 02:26:24 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1422677AbWHEAvt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 Aug 2006 20:51:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422686AbWHEAvt
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Aug 2006 20:51:49 -0400
+Received: from web31807.mail.mud.yahoo.com ([68.142.207.70]:21689 "HELO
+	web31807.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1422677AbWHEAvt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Aug 2006 20:51:49 -0400
+Received: (qmail 12925 invoked by uid 60001); 5 Aug 2006 00:51:48 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=WyLBTdBShdyt4BLpH+6eRGUmDKzMmShjYGbpxMCp7wLX0ky3EzfwTj+tPzmgA8pUqORwjvZe6v/KqGYB9VXGX+GpOnIa2ZLZ7N8+cQV+g7BUOq8A0pAT25fbFV4NITeRIAQkE3Vp6h8ixN+2U8KuS1R5IV3VZ36+5WRp5VCj4rU=  ;
+Received: from [64.215.88.90] by web31807.mail.mud.yahoo.com via HTTP; Fri, 04 Aug 2006 17:51:48 PDT
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v4pwshx3h.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24871>
 
-Junio C Hamano wrote:
+--- Junio C Hamano <junkio@cox.net> wrote:
+> I do not see "tr.light" but "tr.light:hover" in the original
+> CSS.  That is kind of understandable (unhovered light ones just
+> use default), but this patch completely lost me.  You use light2
+> class but nothing affects that class in the CSS.
 
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
->>  our $action = $cgi->param('a');
->>  if (defined $action) {
->>      if ($action =~ m/[^0-9a-zA-Z\.\-_]/) {
->> -            undef $action;
->> -            die_error(undef, "Invalid action parameter.");
->> +            die_error(undef, "Invalid action parameter $action");
->>      }
-> 
-> Doesn't this make us parrot what the browser threw at us without
-> escaping back for HTML (iow, die_error does not seem to escape
-> $error)?
+Yes, it is the default, just as there is no "tr.light", there is
+no "tr.light2".
 
-I wanted to know what is the parameter gitweb considers invalid.
-Perhaps the execution wasn't the best...
+> Maybe it is the commit log message that is misleading?  I guess
+> what you are trying to achieve is to disable the color change
+> that follows the pointer?
 
-[...]
->> -    $rss_link = "<link rel=\"alternate\" title=\"" . esc_param($project) . " log\" href=\"" .
->> -                "$my_uri?" . esc_param("p=$project;a=rss") . "\" type=\"application/rss+xml\"/>";
-> 
-> The reason of removal is...?  Ah, you inlined it.  It was not
-> clear from the proposed commit log message.
+Yes, indeed.  It is very annoying.
 
-I'm sorry for unrelated changes (the commit could be probably split 
-into four).
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+   Luben
