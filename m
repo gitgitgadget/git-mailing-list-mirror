@@ -1,92 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] git-status: support always/auto/never in colorization
-Date: Sat, 5 Aug 2006 19:57:56 -0400
-Message-ID: <20060805235756.GA15075@coredump.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 0/6] gitweb: Further refactoring
+Date: Sun, 6 Aug 2006 02:06:48 +0200
+Message-ID: <200608060206.49086.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 06 01:58:04 2006
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Aug 06 02:06:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G9W1p-000166-Fw
-	for gcvg-git@gmane.org; Sun, 06 Aug 2006 01:58:01 +0200
+	id 1G9WA8-0002Dm-ED
+	for gcvg-git@gmane.org; Sun, 06 Aug 2006 02:06:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750760AbWHEX57 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 Aug 2006 19:57:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750907AbWHEX56
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 19:57:58 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:28106 "HELO
-	peff.net") by vger.kernel.org with SMTP id S1750760AbWHEX56 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Aug 2006 19:57:58 -0400
-Received: (qmail 21052 invoked from network); 5 Aug 2006 19:57:23 -0400
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 5 Aug 2006 19:57:23 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat,  5 Aug 2006 19:57:56 -0400
-To: Junio C Hamano <junkio@cox.net>
+	id S1750907AbWHFAGR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 Aug 2006 20:06:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751417AbWHFAGR
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 20:06:17 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:21004 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1750907AbWHFAGQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Aug 2006 20:06:16 -0400
+Received: by nf-out-0910.google.com with SMTP id p46so38989nfa
+        for <git@vger.kernel.org>; Sat, 05 Aug 2006 17:06:14 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=aGepELjvjQG/1zlBcMQZtXTBP8MtpTNVYx7MSvFq4QThlAbWf2PpSpAXoSoSRGRuwatPKXDSoHw2s9QYMYGd34p7f0cjOBHg1rfmmpFt1NazUNi0cjUNny6jfCNrJ5/8jXFP4T9zHFhdZzkenxXmq/yYQxiFPsdjG+FgiCOjeeA=
+Received: by 10.49.93.13 with SMTP id v13mr629617nfl;
+        Sat, 05 Aug 2006 17:06:14 -0700 (PDT)
+Received: from host-81-190-31-92.torun.mm.pl ( [81.190.31.92])
+        by mx.gmail.com with ESMTP id o53sm4194042nfa.2006.08.05.17.06.14;
+        Sat, 05 Aug 2006 17:06:14 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.3
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24943>
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This is on top of the previous two patches:
-    git-status: colorize status output (me)
-    git-status: do not use colors all the time (Matthias)
+This series of patches, on top of my merged series
+'[PATCH 7/5] Merge changes in "split patch 1" series'
+although probably would apply on top of 'next'.
 
-I was hoping to join the term selection logic with the diff.color logic
-in git_config_termbool or similar (and a git-repo-config --termbool),
-but unfortunately that doesn't work since git-repo-config can't do an
-isatty test (since we call it as `git-repo-config`). In general, config
-parsing is a little awkward (and inefficient) in sh. Is there any
-interest in me converting git-commit/git-status to C builtins (I know
-Johannes will be happy...)?
+ * [PATCH 1/5] gitweb: Refactor untabifying - converting tabs to spaces
+ * [PATCH 2/6] gitweb: Simplify git_diff_print
+ * [PATCH 3/6] gitweb: Remove unused parse_date invocation from
+   git_shortlog_body
+ * [PATCH 4/6] gitweb: Make blob diff -p1 like commit diff
+ * [PATCH 5/6] gitweb: Refactor printing shortened title in
+   git_shortlog_body and git_tags_body
+ * [PATCH 6/6] gitweb: Refactor git_history_body
 
- Documentation/config.txt |    4 +++-
- git-commit.sh            |   13 ++++++++-----
- 2 files changed, 11 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 83f4627..43766bd 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -224,7 +224,9 @@ showbranch.default::
- 
- status.color::
- 	A boolean to enable/disable color in the output of
--	gitlink:git-status[1]. Defaults to false.
-+	gitlink:git-status[1]. May be set to `true` (or `always`),
-+	`false` (or `never`) or `auto`, in which case colors are used
-+	only when the output is to a terminal. Defaults to false.
- 
- status.color.<slot>::
- 	Use customized color for status colorization. `<slot>` is
-diff --git a/git-commit.sh b/git-commit.sh
-index ad0cbb1..2ab1974 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -20,11 +20,14 @@ case "$0" in
- *status)
- 	status_only=t
- 	unmerged_ok_if_status=--unmerged
--	[ "`git-repo-config --bool --get status.color`" = 'true' ] &&
--		([ -t 1 ] || (
--			[ -n "$GIT_PAGER_IN_USE" ] &&
--			[ "`git-repo-config --bool --get pager.color`" != 'false' ]
--		)) && color=true
-+	case "`git-repo-config --get status.color`" in
-+	  always) color=true ;;
-+	  never ) color=false ;;
-+	  auto  ) test -t 1 -o \( -n "$GIT_PAGER_IN_USE" -a \
-+		     "`git-repo-config --bool --get pager.color`" != false \) \
-+		  && color=true ;;
-+	  *     ) color="`git-repo-config --bool --get status.color`" ;;
-+	esac
- 	eval `git-repo-config --get-regexp status.color. \
- 	      | while read k v; do
- 	          echo color_${k#status.color.}=$v
 -- 
-1.4.2.rc3.gf3bd-dirty
+Jakub Narebski
+Poland
