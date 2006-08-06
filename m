@@ -1,100 +1,63 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 4/6] gitweb: Make blob diff -p1 like commit diff
-Date: Sun, 6 Aug 2006 02:13:50 +0200
-Message-ID: <200608060213.50613.jnareb@gmail.com>
-References: <200608060206.49086.jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Git files data formats documentation
+Date: Sat, 05 Aug 2006 17:37:16 -0700
+Message-ID: <7vejvud7ib.fsf@assigned-by-dhcp.cox.net>
+References: <44D42F0D.3040707@gmail.com>
+	<7vac6jfzem.fsf@assigned-by-dhcp.cox.net> <44D5141A.2070004@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Aug 06 02:16:53 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 06 02:37:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G9WK3-0003bb-ML
-	for gcvg-git@gmane.org; Sun, 06 Aug 2006 02:16:52 +0200
+	id 1G9We0-0007oT-MP
+	for gcvg-git@gmane.org; Sun, 06 Aug 2006 02:37:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751445AbWHFAQl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 Aug 2006 20:16:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751451AbWHFAQk
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 20:16:40 -0400
-Received: from nf-out-0910.google.com ([64.233.182.186]:7474 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751453AbWHFAQf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Aug 2006 20:16:35 -0400
-Received: by nf-out-0910.google.com with SMTP id p46so40350nfa
-        for <git@vger.kernel.org>; Sat, 05 Aug 2006 17:16:33 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=KObwwysOOz2IMIa8O5ejNSnk6JUEKFruzUoaW0K0I0mijGzhK9x2bMDF//zZocY2mMPCIV7zEJqAK03FWfgpuAta3xLC+cTwzPOYDrLKYUpppsAgw4K+qG09M2k4nHHlLa+RaCmISEi5b4v+pfAbFvIaoJgaO5TIoV7Xiuo++Us=
-Received: by 10.49.29.3 with SMTP id g3mr6980226nfj;
-        Sat, 05 Aug 2006 17:16:33 -0700 (PDT)
-Received: from host-81-190-31-92.torun.mm.pl ( [81.190.31.92])
-        by mx.gmail.com with ESMTP id r33sm4188262nfc.2006.08.05.17.16.33;
-        Sat, 05 Aug 2006 17:16:33 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-In-Reply-To: <200608060206.49086.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1751473AbWHFAhT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 Aug 2006 20:37:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751476AbWHFAhT
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 20:37:19 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:38640 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1751473AbWHFAhS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Aug 2006 20:37:18 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060806003717.UZUC554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 5 Aug 2006 20:37:17 -0400
+To: gitzilla@gmail.com
+In-Reply-To: <44D5141A.2070004@gmail.com> (A. Large Angry's message of "Sat,
+	05 Aug 2006 14:56:42 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24950>
 
-Add 'a/' and 'b/' as prefix for blobdiff, blobdiff_plain, like it is
-in commitdiff, commitdiff_plain.  Ensure that label for /dev/null is
-actually /dev/null.
+A Large Angry SCM <gitzilla@gmail.com> writes:
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-For consistency.
+> Junio C Hamano wrote:
+> ...
+>>> <OCTAL_MODE>
+>>> 	# Octal encoding, without prefix, of the file system object
+>>> 	# type and permission bits. The bit layout is according to the
+>>> 	# POSIX standard, with only regular files, directories, and
+>>> 	# symbolic links permitted. The actual permission bits are
+>>> 	# all zero except for regular files. The only permission bit
+>>> 	# of any consequence to Git is the owner executable bit. By
+>>> 	# default, the permission bits for files will be either 0644
+>>> 	# or 0755, depending on the owner executable bit.
+>>> 	;
+>>
+>> It's not really "by default" -- more like "by definition", since
+>> there is no way for the program to use something different.  We
+>> used to record non-canonical modes in ancient versions of git,
+>> but I think fsck-objects would warn on objects created that way.
+>>
+>
+> See git-mktree.
 
- gitweb/gitweb.perl |   10 ++++++++--
- 1 files changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index cdce481..f402c8f 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1236,6 +1236,8 @@ sub git_diff_print {
- 		print { $fd2 } <$fd>;
- 		close $fd2;
- 		close $fd;
-+	} else {
-+		$from_name = "/dev/null";
- 	}
- 
- 	# create tmp to-file
-@@ -1247,6 +1249,8 @@ sub git_diff_print {
- 		print { $fd2 } <$fd>;
- 		close $fd2;
- 		close $fd;
-+	} else {
-+		$to_name = "/dev/null";
- 	}
- 
- 	open my $fd, "-|", "/usr/bin/diff",
-@@ -2105,7 +2109,8 @@ sub git_blobdiff {
- 	      " -> blob:" .
- 	      $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=blob;h=$hash;hb=$hash_base;f=$file_name")}, $hash) .
- 	      "</div>\n";
--	git_diff_print($hash_parent, $file_name || $hash_parent, $hash, $file_name || $hash);
-+	git_diff_print($hash_parent, 'a/' . ($file_name || $hash_parent),
-+	               $hash,        'b/' . ($file_name || $hash));
- 	print "</div>";
- 	git_footer_html();
- }
-@@ -2113,7 +2118,8 @@ sub git_blobdiff {
- sub git_blobdiff_plain {
- 	mkdir($git_temp, 0700);
- 	print $cgi->header(-type => "text/plain", -charset => 'utf-8');
--	git_diff_print($hash_parent, $file_name || $hash_parent, $hash, $file_name || $hash, "plain");
-+	git_diff_print($hash_parent, 'a/' . ($file_name || $hash_parent),
-+	               $hash,        'b/' . ($file_name || $hash), "plain");
- }
- 
- sub git_commitdiff {
--- 
-1.4.1.1
+That's a bad example -- the tool being too loose.
