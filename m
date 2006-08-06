@@ -1,75 +1,48 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: [PATCH] gitweb: fix $project usage
-Date: Sun, 6 Aug 2006 13:25:41 +0200
-Message-ID: <20060806112541.GA21515@moooo.ath.cx>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: fast-import and unique objects.
+Date: Sun, 6 Aug 2006 08:32:06 -0400
+Message-ID: <9e4733910608060532w51fca2c0r8038828df0d41eeb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Aug 06 13:25:52 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Aug 06 14:32:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G9glQ-0003tl-MQ
-	for gcvg-git@gmane.org; Sun, 06 Aug 2006 13:25:49 +0200
+	id 1G9hnk-0007ig-2P
+	for gcvg-git@gmane.org; Sun, 06 Aug 2006 14:32:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751426AbWHFLZp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 Aug 2006 07:25:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751429AbWHFLZp
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Aug 2006 07:25:45 -0400
-Received: from moooo.ath.cx ([85.116.203.178]:57992 "EHLO moooo.ath.cx")
-	by vger.kernel.org with ESMTP id S1751426AbWHFLZp (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Aug 2006 07:25:45 -0400
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
+	id S932106AbWHFMcN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 Aug 2006 08:32:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751154AbWHFMcN
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Aug 2006 08:32:13 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:5098 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751116AbWHFMcM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Aug 2006 08:32:12 -0400
+Received: by nf-out-0910.google.com with SMTP id p46so143653nfa
+        for <git@vger.kernel.org>; Sun, 06 Aug 2006 05:32:11 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=mRcWatXdh0EurAvBRMzPxbtn1qw99YfhJRKhiZ6GX+wp1wDxJ9EcKa6VAV2YBah4olZqMvhApYd7Fk1EXcPKGZ+Gg0UpODSVJ1b45460bR/9rHMfAaDzFRKTNcY9wL/Z7JabYf+kriZjis681e0XFjngJFesbekMAsXktXXVwTo=
+Received: by 10.78.185.7 with SMTP id i7mr2106938huf;
+        Sun, 06 Aug 2006 05:32:11 -0700 (PDT)
+Received: by 10.78.148.9 with HTTP; Sun, 6 Aug 2006 05:32:06 -0700 (PDT)
+To: git <git@vger.kernel.org>, "Shawn Pearce" <spearce@spearce.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24975>
 
-There were some places where $project was used even if it was not
-defined.
+This model has a lot of object duplication. I generated 949,305
+revisions, but only 754,165 are unique. I'll modify my code to build a
+hash of the objects it has seen and then not send the duplicates to
+fast-import. Those 195,140 duplicated objects may be what is tripping
+index-pack up.
 
-Signed-off-by: Matthias Lederhofer <matled@gmx.net>
----
- gitweb/gitweb.perl |   17 ++++++++++++-----
- 1 files changed, 12 insertions(+), 5 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index d0672cd..fa9ecce 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -85,7 +85,10 @@ if (defined $action) {
- }
- 
- our $project = ($cgi->param('p') || $ENV{'PATH_INFO'});
--$project =~ s|^/||; $project =~ s|/$||;
-+if (defined $project) {
-+	$project =~ s|^/||;
-+	$project =~ s|/$||;
-+}
- if (defined $project && $project) {
- 	if (!validate_input($project)) {
- 		die_error(undef, "Invalid project parameter");
-@@ -874,11 +877,15 @@ sub git_header_html {
- <title>$title</title>
- <link rel="stylesheet" type="text/css" href="$stylesheet"/>
- EOF
--	print "<link rel=\"alternate\" title=\"" . esc_param($project) . " log\" href=\"" .
--	      "$my_uri?" . esc_param("p=$project;a=rss") . "\" type=\"application/rss+xml\"/>\n" .
--	      "</head>\n";
-+	if (defined $project) {
-+		printf('<link rel="alternate" title="%s log" '.
-+		       'href="%s" type="application/rss+xml"/>'."\n",
-+		       esc_param($project),
-+		       esc_param("$my_uri?p=$project;a=rss"));
-+	}
- 
--	print "<body>\n" .
-+	print "</head>\n" .
-+	      "<body>\n" .
- 	      "<div class=\"page_header\">\n" .
- 	      "<a href=\"http://www.kernel.org/pub/software/scm/git/docs/\" title=\"git documentation\">" .
- 	      "<img src=\"$logo\" width=\"72\" height=\"27\" alt=\"git\" style=\"float:right; border-width:0px;\"/>" .
 -- 
-1.4.2.rc3.g2f52
+Jon Smirl
+jonsmirl@gmail.com
