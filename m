@@ -1,136 +1,73 @@
 From: Matthias Lederhofer <matled@gmx.net>
-Subject: [RFC] gitweb test script
-Date: Sun, 6 Aug 2006 18:51:51 +0200
-Message-ID: <20060806165151.GB9548@moooo.ath.cx>
+Subject: [PATCH] gitweb: fix commitdiff_plain for root commits
+Date: Sun, 6 Aug 2006 19:24:47 +0200
+Message-ID: <20060806172447.GA12085@moooo.ath.cx>
+References: <20060806155505.GA9548@moooo.ath.cx> <11548799921728-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Aug 06 18:52:18 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 06 19:25:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G9lrF-0005K9-G1
-	for gcvg-git@gmane.org; Sun, 06 Aug 2006 18:52:09 +0200
+	id 1G9mMy-0003Qn-77
+	for gcvg-git@gmane.org; Sun, 06 Aug 2006 19:24:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750818AbWHFQv5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 Aug 2006 12:51:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750822AbWHFQv4
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Aug 2006 12:51:56 -0400
-Received: from moooo.ath.cx ([85.116.203.178]:65002 "EHLO moooo.ath.cx")
-	by vger.kernel.org with ESMTP id S1750818AbWHFQv4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Aug 2006 12:51:56 -0400
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
+	id S1751283AbWHFRYw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 Aug 2006 13:24:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751482AbWHFRYw
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Aug 2006 13:24:52 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:35484 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S1751283AbWHFRYv (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Aug 2006 13:24:51 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+Mail-Followup-To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <11548799921728-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24986>
 
-Perhaps this script has a place in the git repository.  Creating some automated
-tests at least checking for warnings should be easy too.  This should work from
-the git repository and makes gitweb use .git as repository.  At the moment it
-still needs the git binary to be in the path already to find the top repository
-directory.
-
-This could also be extended for automated tests.  Here is an example how this
-could look like (currently this does not test much of gitweb):
-
-#!/bin/sh
-die() {
-	echo "$0: $*" >&2
-	exit 1
-}
-
-cleanup() {
-	[ -e "$TMP" ] && rm "$TMP"
-}
-
-test() {
-	echo "test: $@"
-	"$gitweb" "$@" > /dev/null 2> "$TMP"
-	if [ ! -s "$TMP" ]; then
-		return
-	fi
-	echo "========== ERRORS =========="
-	cat "$TMP"
-	echo "============================"
-}
-
-gitweb="./`git rev-parse --show-cdup`/t/gitweb.sh"
-TMP=""
-trap cleanup EXIT
-TMP="`mktemp`" || die mktemp failed
-
-# repository overview
-test
-# summary
-test p=.git
-
-# commitdiff
-
-# initial commit
-test p=.git a=commitdiff \
-	h=e83c5163316f89bfbde7d9ab23ca2e25604af290
-# some other commit
-test p=.git a=commitdiff \
-	h=5a716826a6f7f209777f344143cdd9e4f2903097
-# merge commit withouth specified parent
-test p=.git a=commitdiff \
-	h=e190bc55431d906b8c70dc07f8b6d823721f12c9
-# merge commit with specified parent
-test p=.git a=commitdiff \
-	h=e190bc55431d906b8c70dc07f8b6d823721f12c9 \
-	hp=360204c324ca9178e2bcb4d75f3986201f8ac7e1
+Signed-off-by: Matthias Lederhofer <matled@gmx.net>
 ---
- t/gitweb.sh          |   29 +++++++++++++++++++++++++++++
- t/gitweb_config.perl |    4 ++++
- 2 files changed, 33 insertions(+), 0 deletions(-)
+See [PATCH] gitweb: fix commitdiff for root commits from Jakub:
+> No checking for empty $hash_parent in git_commitdiff_plain -- we
+> rely on gitweb to give correct parameters for commitdiff_plain
+> action.
+I think we should always check the input and prevent any warnings.
+This patch is on top of Jakubs patch, mine just did the if (!($line =~
+m/..)) { next; } to be consistent with the other ifs.
+---
+ gitweb/gitweb.perl |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
 
-diff --git a/t/gitweb.sh b/t/gitweb.sh
-new file mode 100755
-index 0000000..b0dff26
---- /dev/null
-+++ b/t/gitweb.sh
-@@ -0,0 +1,29 @@
-+#!/bin/sh
-+# this script runs gitweb.perl from the shell having .git as repository
-+# command line parameters are used as query string
-+
-+TOPDIR="`pwd``git rev-parse --show-cdup`"
-+if [ ! -e "$TOPDIR/git" ]; then
-+	echo "$0: You haven't built things yet, have you?" >&2
-+	exit 1
-+fi
-+
-+export PATH="$TOPDIR:$PATH"
-+export GIT_EXEC_PATH="$TOPDIR"
-+
-+# cgi environment
-+export GATEWAY_INTERFACE=CGI/1.1
-+export REQUEST_METHOD=GET
-+QUERY_STRING=""
-+if [ $# -gt 0 ]; then
-+	QUERY_STRING="$1"
-+	shift
-+fi
-+while [ $# -gt 0 ]; do
-+	QUERY_STRING="$QUERY_STRING;$1"
-+	shift
-+done
-+export QUERY_STRING
-+
-+export GITWEB_CONFIG="$TOPDIR/t/gitweb_config.perl"
-+exec "$TOPDIR/gitweb/gitweb.perl"
-diff --git a/t/gitweb_config.perl b/t/gitweb_config.perl
-new file mode 100644
-index 0000000..5c245ff
---- /dev/null
-+++ b/t/gitweb_config.perl
-@@ -0,0 +1,4 @@
-+$projectroot = "./".qx(git rev-parse --show-cdup);
-+chomp($projectroot);
-+$projects_list = $projectroot;
-+$GIT = $projectroot.'/git';
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index d9648a0..b3bfc6b 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2200,6 +2200,13 @@ sub git_commitdiff {
+ 
+ sub git_commitdiff_plain {
+ 	mkdir($git_temp, 0700);
++	my %co = git_read_commit($hash);
++	if (!%co) {
++		die_error(undef, "Unknown commit object");
++	}
++	if (!defined $hash_parent) {
++		$hash_parent = $co{'parent'} || '--root';
++	}
+ 	open my $fd, "-|", $GIT, "diff-tree", '-r', $hash_parent, $hash
+ 		or die_error(undef, "Open git-diff-tree failed");
+ 	my @difftree = map { chomp; $_ } <$fd>;
+@@ -2221,7 +2228,6 @@ sub git_commitdiff_plain {
+ 	}
+ 
+ 	print $cgi->header(-type => "text/plain", -charset => 'utf-8', '-content-disposition' => "inline; filename=\"git-$hash.patch\"");
+-	my %co = git_read_commit($hash);
+ 	my %ad = date_str($co{'author_epoch'}, $co{'author_tz'});
+ 	my $comment = $co{'comment'};
+ 	print "From: $co{'author'}\n" .
 -- 
 1.4.1.gfd699
