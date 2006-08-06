@@ -1,38 +1,38 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 5/6] gitweb: Refactor printing shortened title in git_shortlog_body and git_tags_body
-Date: Sun, 6 Aug 2006 02:14:33 +0200
-Message-ID: <200608060214.33866.jnareb@gmail.com>
+Subject: [PATCH 6/6] gitweb: Refactor git_history_body
+Date: Sun, 6 Aug 2006 02:17:07 +0200
+Message-ID: <200608060217.07512.jnareb@gmail.com>
 References: <200608060206.49086.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Aug 06 02:16:44 2006
+X-From: git-owner@vger.kernel.org Sun Aug 06 02:16:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G9WJs-0003ZT-Fg
-	for gcvg-git@gmane.org; Sun, 06 Aug 2006 02:16:40 +0200
+	id 1G9WK4-0003bb-I1
+	for gcvg-git@gmane.org; Sun, 06 Aug 2006 02:16:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932678AbWHFAQi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 Aug 2006 20:16:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932192AbWHFAQi
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 20:16:38 -0400
-Received: from nf-out-0910.google.com ([64.233.182.186]:63281 "EHLO
+	id S1751448AbWHFAQk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 Aug 2006 20:16:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751445AbWHFAQj
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Aug 2006 20:16:39 -0400
+Received: from nf-out-0910.google.com ([64.233.182.185]:12338 "EHLO
 	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751451AbWHFAQf (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751448AbWHFAQf (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 5 Aug 2006 20:16:35 -0400
-Received: by nf-out-0910.google.com with SMTP id p46so40344nfa
-        for <git@vger.kernel.org>; Sat, 05 Aug 2006 17:16:34 -0700 (PDT)
+Received: by nf-out-0910.google.com with SMTP id p46so40346nfa
+        for <git@vger.kernel.org>; Sat, 05 Aug 2006 17:16:35 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=JsQNo+sWp/LTZnTAs1f1yg3NOCbeU0e4xgc8GkmYw4VJUGlaEksWavJSsymrGlOSw1SYpTQKM/KtsokFF8+aNewV9AIm7VHzhxUFyfaKoglRn6Y2/09MGGkB1MJjtva+c4tR9fBxFtd9lFAKwNLT5HeRPz9GPHP/Wof56m+jQEI=
-Received: by 10.49.29.2 with SMTP id g2mr636690nfj;
-        Sat, 05 Aug 2006 17:16:34 -0700 (PDT)
+        b=W0OkXn+zGJE6RIPsBj3rJf3egQNisJg2xGBY7mBK4mS1jh973MIWSi3/ETdXOhH8Itva9erfhWD40N9bHQpKUEnGWVe9nnA1fnou00Lw0u3lZkaOh5K6kz3SultT1NBipanwCJ3n1kKHYxWCtr8XAY1mqESldI91AmpzoDdI6Fk=
+Received: by 10.49.90.4 with SMTP id s4mr6989196nfl;
+        Sat, 05 Aug 2006 17:16:35 -0700 (PDT)
 Received: from host-81-190-31-92.torun.mm.pl ( [81.190.31.92])
-        by mx.gmail.com with ESMTP id r33sm4188262nfc.2006.08.05.17.16.33;
+        by mx.gmail.com with ESMTP id r33sm4188262nfc.2006.08.05.17.16.34;
         Sat, 05 Aug 2006 17:16:34 -0700 (PDT)
 To: git@vger.kernel.org
 User-Agent: KMail/1.9.3
@@ -41,81 +41,131 @@ Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24948>
 
-Uses ugly workaround with $bold argument because style is not set via
-CSS, but via presentation element <b>...</b>.
+Separates main part of git_history into git_history_body subroutine,
+and make output more similar to git_shortlog.
 
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-Probably needs better name, too
+We couldn't just modify git_shortlog, because git_shortlog reads full
+(--max-count limited) output of rev-list to array, which is needed 
+for dividing into pages and pagination navigation bar, while git_history
+reads rev-list output line by line.
 
- gitweb/gitweb.perl |   39 +++++++++++++++++++++++----------------
- 1 files changed, 23 insertions(+), 16 deletions(-)
+ gitweb/gitweb.perl |   93 ++++++++++++++++++++++++++++++++--------------------
+ 1 files changed, 57 insertions(+), 36 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index f402c8f..7ea52b1 100755
+index 7ea52b1..2a39145 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -1062,6 +1062,27 @@ sub git_print_page_path {
+@@ -1124,6 +1124,62 @@ sub git_shortlog_body {
+ 	print "</table>\n";
  }
  
- ## ......................................................................
-+## functions printing or outputting HTML: inline elements
++sub git_history_body {
++	# Warning: assumes constant type (blob or tree) during history
++	my ($fd, $refs, $hash_base, $ftype, $extra) = @_;
 +
-+# print, perhaps shortened and with markers, title line
-+sub print_title_html {
-+	# $bold argument is workaround until style will be set via CSS
-+	my ($long, $short, $query, $bold, $extra) = @_;
-+	$extra = '' unless defined($extra);
++	print "<table class=\"history\" cellspacing=\"0\">\n";
++	my $alternate = 0;
++	while (my $line = <$fd>) {
++		if ($line !~ m/^([0-9a-fA-F]{40})/) {
++			next;
++		}
 +
-+	if (length($short) < length($long)) {
-+		print $cgi->a({-href => "$my_uri?" . esc_param($query),
-+		               -class => "list", -title => $long},
-+		      ($bold ? "<b>" : "") . esc_html($short) . $extra . ($bold ? "</b>" : ""));
-+	} else {
-+		print $cgi->a({-href => "$my_uri?" . esc_param($query),
-+		               -class => "list"},
-+		      ($bold ? "<b>" : "") . esc_html($long)  . $extra . ($bold ? "</b>" : ""));
++		my $commit = $1;
++		my %co = parse_commit($commit);
++		if (!%co) {
++			next;
++		}
++
++		my $ref = format_mark_referencing($refs, $commit);
++
++		if ($alternate) {
++			print "<tr class=\"dark\">\n";
++		} else {
++			print "<tr class=\"light\">\n";
++		}
++		$alternate ^= 1;
++		print "<td title=\"$co{'age_string_age'}\"><i>$co{'age_string_date'}</i></td>\n" .
++		      # shortlog uses      chop_str($co{'author_name'}, 10)
++		      "<td><i>" . esc_html(chop_str($co{'author_name'}, 15, 3)) . "</i></td>\n" .
++		      "<td>";
++		# originally git_history used chop_str($co{'title'}, 50)
++		print_title_html($co{'title'}, $co{'title_short'}, "p=$project;a=commit;h=$commit", 1, $ref);
++		print "</td>\n" .
++		      "<td class=\"link\">" .
++		      $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=commit;h=$commit")}, "commit") . " | " .
++		      $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=commitdiff;h=$commit")}, "commitdiff") . " | " .
++		      $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=$ftype;hb=$commit;f=$file_name")}, $ftype);
++
++		my $blob_current = git_get_hash_by_path($hash_base, $file_name);
++		my $blob_parent  = git_get_hash_by_path($commit, $file_name);
++		if (defined $blob_current && defined $blob_parent &&
++				$blob_current ne $blob_parent) {
++			print " | " .
++				$cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=blobdiff;h=$blob_current;hp=$blob_parent;hb=$commit;f=$file_name")},
++				"diff to current");
++		}
++		print "</td>\n" .
++		      "</tr>\n";
 +	}
++	if (defined $extra) {
++		print "<tr>\n" .
++		      "<td colspan=\"4\">$extra</td>\n" .
++		      "</tr>\n";
++	}
++	print "</table>\n";
 +}
 +
-+
-+## ......................................................................
- ## functions printing large fragments of HTML
+ sub git_tags_body {
+ 	# uses global variable $project
+ 	my ($taglist, $from, $to, $extra) = @_;
+@@ -2295,42 +2351,7 @@ sub git_history {
  
- sub git_shortlog_body {
-@@ -1087,15 +1108,7 @@ sub git_shortlog_body {
- 		print "<td title=\"$co{'age_string_age'}\"><i>$co{'age_string_date'}</i></td>\n" .
- 		      "<td><i>" . esc_html(chop_str($co{'author_name'}, 10)) . "</i></td>\n" .
- 		      "<td>";
--		if (length($co{'title_short'}) < length($co{'title'})) {
--			print $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=commit;h=$commit"),
--			               -class => "list", -title => "$co{'title'}"},
--			      "<b>" . esc_html($co{'title_short'}) . "$ref</b>");
--		} else {
--			print $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=commit;h=$commit"),
--			               -class => "list"},
--			      "<b>" . esc_html($co{'title'}) . "$ref</b>");
--		}
-+		print_title_html($co{'title'}, $co{'title_short'}, "p=$project;a=commit;h=$commit", 1, $ref);
- 		print "</td>\n" .
- 		      "<td class=\"link\">" .
- 		      $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=commit;h=$commit")}, "commit") . " | " .
-@@ -1141,13 +1154,7 @@ sub git_tags_body {
- 		      "</td>\n" .
- 		      "<td>";
- 		if (defined $comment) {
--			if (length($comment_short) < length($comment)) {
--				print $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=tag;h=$tag{'id'}"),
--				               -class => "list", -title => $comment}, $comment_short);
--			} else {
--				print $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=tag;h=$tag{'id'}"),
--				               -class => "list"}, $comment);
+ 	open my $fd, "-|",
+ 		$GIT, "rev-list", "--full-history", $hash_base, "--", $file_name;
+-	print "<table cellspacing=\"0\">\n";
+-	my $alternate = 0;
+-	while (my $line = <$fd>) {
+-		if ($line =~ m/^([0-9a-fA-F]{40})/){
+-			my $commit = $1;
+-			my %co = parse_commit($commit);
+-			if (!%co) {
+-				next;
 -			}
-+			print_title_html($comment, $comment_short, "p=$project;a=tag;h=$tag{'id'}");
- 		}
- 		print "</td>\n" .
- 		      "<td class=\"selflink\">";
+-			my $ref = format_mark_referencing($refs, $commit);
+-			if ($alternate) {
+-				print "<tr class=\"dark\">\n";
+-			} else {
+-				print "<tr class=\"light\">\n";
+-			}
+-			$alternate ^= 1;
+-			print "<td title=\"$co{'age_string_age'}\"><i>$co{'age_string_date'}</i></td>\n" .
+-			      "<td><i>" . esc_html(chop_str($co{'author_name'}, 15, 3)) . "</i></td>\n" .
+-			      "<td>" . $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=commit;h=$commit"), -class => "list"}, "<b>" .
+-			      esc_html(chop_str($co{'title'}, 50)) . "$ref</b>") . "</td>\n" .
+-			      "<td class=\"link\">" .
+-			      $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=commit;h=$commit")}, "commit") .
+-			      " | " . $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=commitdiff;h=$commit")}, "commitdiff") .
+-			      " | " . $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=$ftype;hb=$commit;f=$file_name")}, $ftype);
+-			my $blob = git_get_hash_by_path($hash_base, $file_name);
+-			my $blob_parent = git_get_hash_by_path($commit, $file_name);
+-			if (defined $blob && defined $blob_parent && $blob ne $blob_parent) {
+-				print " | " .
+-				$cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=blobdiff;h=$blob;hp=$blob_parent;hb=$commit;f=$file_name")},
+-				"diff to current");
+-			}
+-			print "</td>\n" .
+-			      "</tr>\n";
+-		}
+-	}
+-	print "</table>\n";
++	git_history_body($fd, $refs, $hash_base, $ftype);
+ 	close $fd;
+ 	git_footer_html();
+ }
 -- 
 1.4.1.1
