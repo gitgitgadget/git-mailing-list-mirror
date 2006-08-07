@@ -1,69 +1,79 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: Re: Annotate another problem report
-Date: Mon, 7 Aug 2006 13:19:21 -0700
-Message-ID: <20060807201920.GE15477@h4x0r5.com>
-References: <20060807115000.GC15477@h4x0r5.com> <1154952684908-git-send-email-ryan@michonline.com> <11549526841904-git-send-email-ryan@michonline.com> <7virl42w6s.fsf@assigned-by-dhcp.cox.net> <7vpsfc1fkt.fsf_-_@assigned-by-dhcp.cox.net>
+From: "Michael S. Tsirkin" <mst@mellanox.co.il>
+Subject: [PATCH] make git compile on old version of engarde linux
+Date: Mon, 7 Aug 2006 23:26:10 +0300
+Message-ID: <20060807202610.GB24206@mellanox.co.il>
+Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 07 22:20:42 2006
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Aug 07 22:24:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GABaR-00014d-7r
-	for gcvg-git@gmane.org; Mon, 07 Aug 2006 22:20:31 +0200
+	id 1GABeI-0001gk-Fa
+	for gcvg-git@gmane.org; Mon, 07 Aug 2006 22:24:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932291AbWHGUU1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 Aug 2006 16:20:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751050AbWHGUU1
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Aug 2006 16:20:27 -0400
-Received: from h4x0r5.com ([70.85.31.202]:59407 "EHLO h4x0r5.com")
-	by vger.kernel.org with ESMTP id S1751039AbWHGUU1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Aug 2006 16:20:27 -0400
-Received: from ryan by h4x0r5.com with local (Exim 4.50)
-	id 1GABZJ-0003Jo-E6; Mon, 07 Aug 2006 13:19:21 -0700
-To: Junio C Hamano <junkio@cox.net>
+	id S1751008AbWHGUY0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 Aug 2006 16:24:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750990AbWHGUYZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Aug 2006 16:24:25 -0400
+Received: from mxl145v66.mxlogic.net ([208.65.145.66]:8133 "EHLO
+	p02c11o143.mxlogic.net") by vger.kernel.org with ESMTP
+	id S1751044AbWHGUYX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Aug 2006 16:24:23 -0400
+Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
+	by p02c11o143.mxlogic.net (mxl_mta-3.0.0-12)
+	with ESMTP id 771a7d44.2491534256.6760.00-004.p02c11o143.mxlogic.net (envelope-from <mst@mellanox.co.il>);
+	Mon, 07 Aug 2006 14:24:23 -0600 (MDT)
+Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Mon, 7 Aug 2006 23:30:16 +0300
+Received: by mellanox.co.il (sSMTP sendmail emulation); Mon,  7 Aug 2006 23:26:10 +0300
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vpsfc1fkt.fsf_-_@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.9i
-X-michonline.com-MailScanner: Found to be clean
-X-michonline.com-MailScanner-From: ryan@h4x0r5.com
+User-Agent: Mutt/1.4.2.1i
+X-OriginalArrivalTime: 07 Aug 2006 20:30:16.0750 (UTC) FILETIME=[4B2CECE0:01C6BA60]
+X-Spam: [F=0.0100000000; S=0.010(2006062901)]
+X-MAIL-FROM: <mst@mellanox.co.il>
+X-SOURCE-IP: [194.90.237.34]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25040>
 
-On Mon, Aug 07, 2006 at 01:00:34PM -0700, Junio C Hamano wrote:
-> "git annotate Makefile v1.4.0" outputs this:
+The following makes git build on my instance of Engarde Linux 1.x
 
-Known.  I think this is related to the merge-parsing bug.
+The definition of S_IFLNK and S_ISLNK seems to be mising in the headers,
+but a simple test showed that the correct value for it is still 0120000,
+same as on more modern systems.
 
-Unfortunately, the only test cases I've found for this involve things
-with both a lot of revisions and a lot of lines, so it's a bit hard to
-manually see what's going wrong.
+With this patch, git built with 
+$make NO_CURL=1 NO_SYMLINK_HEAD=1 NO_PYTHON=1
+seems to work with no issues so far (more than a week now).
 
-> ...
-> 58e60dd2	(Nick Hengeveld	2005-11-02 11:19:24 -0800	13)# git.......
-> 58e60dd2	(Nick Hengeveld	2005-11-02 11:19:24 -0800	14)# tra.......
-> 	(          	1970-01-01 00:00:00 	15)#
-> 6d9bbc50	(Patrick Mauritz	2005-09-19 16:11:19 +0200	16)# ..
-> 6d9bbc50	(Patrick Mauritz	2005-09-19 16:11:19 +0200	17)# ..
-> ...
-> 
-> There are a handful lines it couldn't tell where they came from:
-> 
-> 	(          	1970-01-01 00:00:00 	15)#
-> 	(          	1970-01-01 00:00:00 	179)
-> 	(          	1970-01-01 00:00:00 	182)
-> 	(          	1970-01-01 00:00:00 	274)endif
-> 	(          	1970-01-01 00:00:00 	323)
-> 	(          	1970-01-01 00:00:00 	384)else
-> 	(          	1970-01-01 00:00:00 	385)	LIB_4_ICONV =
-> 
-> 
+---
+
+Make git build on Engarde Linux 1.x (which is missing
+the definition for S_IFLNK/S_ISLNK)
+
+Signed-off-by: Michael S. Tsirkin <mst@mellanox.co.il>
+
+--- git/cache.h.orig	Thu Jun 29 11:43:45 2006
++++ git/cache.h	Thu Jun 29 11:45:13 2006
+@@ -6,6 +6,13 @@
+ #include SHA1_HEADER
+ #include <zlib.h>
+ 
++#ifndef S_IFLNK
++#define S_IFLNK        0120000
++#endif
++#ifndef S_ISLNK
++#define S_ISLNK(m)    (((m) & S_IFMT) == S_IFLNK)
++#endif
++
+ #if ZLIB_VERNUM < 0x1200
+ #define deflateBound(c,s)  ((s) + (((s) + 7) >> 3) + (((s) + 63) >> 6) + 11)
+ #endif
 
 -- 
-
-Ryan Anderson
-  sometimes Pug Majere
+MST
