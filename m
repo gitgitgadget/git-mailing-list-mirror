@@ -1,78 +1,75 @@
-From: "Michael S. Tsirkin" <mst@mellanox.co.il>
-Subject: Multiple pulls from the same branch in .git/remotes/origin
-Date: Mon, 7 Aug 2006 15:51:16 +0300
-Message-ID: <20060807125116.GA28658@mellanox.co.il>
-References: <20060727140343.GS9411@mellanox.co.il>
-Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git-diff between /dev/null and blob
+Date: Mon, 07 Aug 2006 14:52:50 +0200
+Organization: At home
+Message-ID: <eb7d2s$cq2$1@sea.gmane.org>
+References: <eajl4r$b7o$1@sea.gmane.org> <7vmzaq9sjs.fsf@assigned-by-dhcp.cox.net> <eb5ld6$36k$1@sea.gmane.org> <7vejvt8s24.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Aug 07 14:51:29 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Mon Aug 07 14:53:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GA4Zm-0000W1-My
-	for gcvg-git@gmane.org; Mon, 07 Aug 2006 14:51:23 +0200
+	id 1GA4bb-0000xN-Gk
+	for gcvg-git@gmane.org; Mon, 07 Aug 2006 14:53:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932099AbWHGMvT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 Aug 2006 08:51:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932094AbWHGMvT
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Aug 2006 08:51:19 -0400
-Received: from mxl145v64.mxlogic.net ([208.65.145.64]:56745 "EHLO
-	p02c11o141.mxlogic.net") by vger.kernel.org with ESMTP
-	id S932096AbWHGMvS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Aug 2006 08:51:18 -0400
-Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
-	by p02c11o141.mxlogic.net (mxl_mta-3.0.0-12)
-	with ESMTP id 64737d44.2392038320.32212.00-002.p02c11o141.mxlogic.net (envelope-from <mst@mellanox.co.il>);
-	Mon, 07 Aug 2006 06:51:18 -0600 (MDT)
-Received: from mellanox.co.il ([10.4.3.68]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Mon, 7 Aug 2006 15:57:11 +0300
-Received: by mellanox.co.il (sSMTP sendmail emulation); Mon,  7 Aug 2006 15:51:16 +0300
+	id S932094AbWHGMxM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 7 Aug 2006 08:53:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932096AbWHGMxM
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Aug 2006 08:53:12 -0400
+Received: from main.gmane.org ([80.91.229.2]:22184 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932094AbWHGMxL (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Aug 2006 08:53:11 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GA4bL-0000sE-UG
+	for git@vger.kernel.org; Mon, 07 Aug 2006 14:52:59 +0200
+Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 07 Aug 2006 14:52:59 +0200
+Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 07 Aug 2006 14:52:59 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060727140343.GS9411@mellanox.co.il>
-User-Agent: Mutt/1.4.2.1i
-X-OriginalArrivalTime: 07 Aug 2006 12:57:11.0421 (UTC) FILETIME=[FF74EAD0:01C6BA20]
-X-Spam: [F=0.0100000000; S=0.010(2006062901)]
-X-MAIL-FROM: <mst@mellanox.co.il>
-X-SOURCE-IP: [194.90.237.34]
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25012>
 
-Hi, all!
-I have
-> git --version
-git version 1.4.2.rc3.g0d95
-and I have put the following in .git/remotes/origin
+Junio C Hamano wrote:
 
->cat .git/remotes/origin
-URL: ssh://mst@frodo/scm/git/linux-2.6
-Pull: refs/heads/linus_master:refs/heads/origin
-Pull: refs/heads/linus_master:refs/heads/linus_master_branch
+> Jakub Narebski <jnareb@gmail.com> writes:=20
 
-now I get:
+>=A0=A0=A0=A0=A0=A0=A0=A0git diff v0.99:pull.h fetch.h
+>
+>         echo extra >>Makefile && git diff :0:Makefile HEAD^^:Makefile
+>=20
+>         H=3D`(cat Makefile; echo extra) | git hash-object -w --stdin`
+>       echo "100644 $H 2       foobar" | git update-index --add --inde=
+x-info
+>       git diff :2:foobar :Makefile
+>=20
+>> git-diff doesn't understand :<stage>:<filename> and :<filename> for
+>> accessing index version of blob (git-cat-file for example understand=
+s
+>> it).
+>=20
+> You probably got this impression from a botched experiment or
+> something, but this statement is wrong as demonstrated above.
 
->git fetch origin
-error: no such remote ref refs/heads/linus_master
-Fetch failure: ssh://mst@frodo/scm/git/linux-2.6
+Right, sorry.
 
-However, if I remove the second line, like this:
+And you can write ./<filename> to distinguish it from revision name, so
+proposed ::<filename> extension is not needed.
 
->cat .git/remotes/origin
-URL: ssh://mst@frodo/scm/git/linux-2.6
-Pull: refs/heads/linus_master:refs/heads/origin
-
-I get remote linus_master properly fetched into local origin.
-Two questions:
-1. Isn't is possible to pull from the same remote branch into multiple local
-   branches?
-2. Even if not, isn't the error message above a bit strange?
-   After all, the remote branch *does* exist.
-
-Thanks,
-
--- 
-MST
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
