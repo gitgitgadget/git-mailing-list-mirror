@@ -1,91 +1,130 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC] gitweb: Great subroutines renaming
-Date: Tue, 08 Aug 2006 00:15:05 +0200
-Organization: At home
-Message-ID: <eb8e12$2aa$1@sea.gmane.org>
-References: <200608071626.52655.jnareb@gmail.com> <7v3bc82v7l.fsf@assigned-by-dhcp.cox.net> <eb8cdh$s6n$1@sea.gmane.org> <7v4pwo1a0r.fsf@assigned-by-dhcp.cox.net>
+From: "Michael S. Tsirkin" <mst@mellanox.co.il>
+Subject: [PATCH] Multiple refs from the same remote in one git fetch
+Date: Tue, 8 Aug 2006 01:19:14 +0300
+Message-ID: <20060807221914.GA24393@mellanox.co.il>
+References: <7vu04o1fwm.fsf@assigned-by-dhcp.cox.net>
+Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Aug 08 00:15:57 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 08 00:17:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GADNm-0005PF-0h
-	for gcvg-git@gmane.org; Tue, 08 Aug 2006 00:15:34 +0200
+	id 1GADPh-0005q5-CZ
+	for gcvg-git@gmane.org; Tue, 08 Aug 2006 00:17:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932138AbWHGWPa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 Aug 2006 18:15:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932161AbWHGWPa
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Aug 2006 18:15:30 -0400
-Received: from main.gmane.org ([80.91.229.2]:5347 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932138AbWHGWP3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Aug 2006 18:15:29 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GADNT-0005Lf-Hc
-	for git@vger.kernel.org; Tue, 08 Aug 2006 00:15:15 +0200
-Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 08 Aug 2006 00:15:15 +0200
-Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 08 Aug 2006 00:15:15 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S932227AbWHGWR2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 Aug 2006 18:17:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932232AbWHGWR2
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Aug 2006 18:17:28 -0400
+Received: from mxl145v64.mxlogic.net ([208.65.145.64]:37329 "EHLO
+	p02c11o141.mxlogic.net") by vger.kernel.org with ESMTP
+	id S932227AbWHGWR1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Aug 2006 18:17:27 -0400
+Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
+	by p02c11o141.mxlogic.net (mxl_mta-3.0.0-12)
+	with ESMTP id 7fbb7d44.2315770800.63159.00-024.p02c11o141.mxlogic.net (envelope-from <mst@mellanox.co.il>);
+	Mon, 07 Aug 2006 16:17:27 -0600 (MDT)
+Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 8 Aug 2006 01:23:21 +0300
+Received: by mellanox.co.il (sSMTP sendmail emulation); Tue,  8 Aug 2006 01:19:14 +0300
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vu04o1fwm.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4.2.1i
+X-OriginalArrivalTime: 07 Aug 2006 22:23:21.0109 (UTC) FILETIME=[16F7F450:01C6BA70]
+X-Spam: [F=0.0100000000; S=0.010(2006062901)]
+X-MAIL-FROM: <mst@mellanox.co.il>
+X-SOURCE-IP: [194.90.237.34]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25047>
 
-Junio C Hamano wrote:
-
-> Jakub Narebski <jnareb@gmail.com> writes: 
-
->> What is also important is the fast that git_read_* functions are fast,
->> with exception of git_read_info_refs...
+Quoting r. Junio C Hamano <junkio@cox.net>:
+> > At least, fix the error message?
 > 
-> Hmph.  readdir-refs is quite bad for future compatibility, so is
-> read_hash.
+> That would touch the same vicinity of code so if I were to do
+> that myself I would rather see if the restriction can be
+> loosened properly first.
 
-Fast = doesn't call git commands, so no delay for fork+exec.
+The following seems to fix this issue: simply scan the full
+refspec list for each remote instead of breaking on the first match.
+I had to touch the git-fetch.sh script as well as it is scanning
+the remote list, too. Works for me.
 
-> If you want _fast_ then make the implementation fast (or leave
-> room to make it fast later); encoding the fastness assumption in
-> the name IS WRONG.
+---
 
-Matthias Lederhofer has noticed that parsing all the tags in "summary" and
-"tags" views, while we use only epoch/timestamp information to sort them
-and discard most of parsed input, is bottleneck due to the fact that
-usually number of tags is linear with history (version tags) and the fact
-that for each tag is one invocation of git (one fork, two execs).
+Fix git fetch for when multiple refspecs reference the same remote head.
 
-> For example, sub git_get_hash (not git_read_hash) can stay as
-> (potentially buggy wrt symrefs) "reading from .git/refs/$thing"
-> or could even be fixed to read from git-rev-parse (which is the
-> kosher way).  If it turns out to be a bottleneck, it could be
-> rewritten using Git.xs.  The same thing for read_refs which I
-> think should be doing ls-remote on the repository if it wants to
-> be kosher.
+Signed-off-by: Michael S. Tsirkin <mst@mellanox.co.il>
 
-True. So _read_ based on actually reading the files is out.
-git_get_hash_by_ref, git_get_HEAD_hash (or just git_get_ref, git_get_head)
-return single scalar value; git_read_info_refs and git_read_refs return
-reference to hash or array, while git_read_projects returns array.
-
-So the new guidelines would be:
-* git_get_ prefix for subroutines related to git repository
-  and returning single scalar (single value).
-* git_read_ prefix for subroutines related to git repository, reading some
-  files or multiline output, and returning hash reference, or list
-  reference, or list.
+diff --git a/Makefile b/Makefile
+diff --git a/connect.c b/connect.c
+index 4422a0d..3880191 100644
+--- a/connect.c
++++ b/connect.c
+@@ -115,6 +115,7 @@ int get_ack(int fd, unsigned char *resul
+ int path_match(const char *path, int nr, char **match)
+ {
+ 	int i;
++	int found = 0;
+ 	int pathlen = strlen(path);
+ 
+ 	for (i = 0; i < nr; i++) {
+@@ -128,9 +129,9 @@ int path_match(const char *path, int nr,
+ 		if (pathlen > len && path[pathlen - len - 1] != '/')
+ 			continue;
+ 		*s = 0;
+-		return (i + 1);
++		found = i + 1;
+ 	}
+-	return 0;
++	return found;
+ }
+ 
+ struct refspec {
+diff --git a/fetch-pack.c b/fetch-pack.c
+diff --git a/git-fetch.sh b/git-fetch.sh
+index c2eebee..c35bae6 100755
+--- a/git-fetch.sh
++++ b/git-fetch.sh
+@@ -373,26 +373,22 @@ fetch_main () {
+ 	      +$remote_name:*)
+ 		  single_force=t
+ 		  not_for_merge=
+-		  found="$ref"
+-		  break ;;
++		  found="$ref";;
+ 	      .+$remote_name:*)
+ 		  single_force=t
+ 		  not_for_merge=t
+-		  found="$ref"
+-		  break ;;
++		  found="$ref";;
+ 	      .$remote_name:*)
+ 		  not_for_merge=t
+-		  found="$ref"
+-		  break ;;
++		  found="$ref";;
+ 	      $remote_name:*)
+ 		  not_for_merge=
+-		  found="$ref"
+-		  break ;;
++		  found="$ref";;
+ 	      esac
+-	  done
+-	  local_name=$(expr "z$found" : 'z[^:]*:\(.*\)')
+-	  append_fetch_head "$sha1" "$remote" \
++	      local_name=$(expr "z$found" : 'z[^:]*:\(.*\)')
++	      append_fetch_head "$sha1" "$remote" \
+ 		  "$remote_name" "$remote_nick" "$local_name" "$not_for_merge"
++	  done
+       done
+     ) || exit ;;
+   esac
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+MST
