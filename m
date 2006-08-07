@@ -1,73 +1,92 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] diff: support custom callbacks for output
-Date: Mon, 07 Aug 2006 03:16:20 -0700
-Message-ID: <7vhd0o4zrf.fsf@assigned-by-dhcp.cox.net>
-References: <20060807075002.GA29693@coredump.intra.peff.net>
-	<7vr6zt3oz5.fsf@assigned-by-dhcp.cox.net>
-	<20060807091953.GA31137@coredump.intra.peff.net>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: git-annotate bug report
+Date: Mon, 7 Aug 2006 04:50:01 -0700
+Message-ID: <20060807115000.GC15477@h4x0r5.com>
+References: <20060803203848.GA15121@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 07 12:16:59 2006
+Cc: ryan@michonline.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 07 13:51:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GA2AM-0001mq-KE
-	for gcvg-git@gmane.org; Mon, 07 Aug 2006 12:16:59 +0200
+	id 1GA3da-0004k3-NF
+	for gcvg-git@gmane.org; Mon, 07 Aug 2006 13:51:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751050AbWHGKQW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 Aug 2006 06:16:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751059AbWHGKQW
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Aug 2006 06:16:22 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:21948 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751050AbWHGKQW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Aug 2006 06:16:22 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060807101621.UGLS6235.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 7 Aug 2006 06:16:21 -0400
+	id S1750746AbWHGLvK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 Aug 2006 07:51:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750794AbWHGLvK
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Aug 2006 07:51:10 -0400
+Received: from h4x0r5.com ([70.85.31.202]:35333 "EHLO h4x0r5.com")
+	by vger.kernel.org with ESMTP id S1750746AbWHGLvJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Aug 2006 07:51:09 -0400
+Received: from ryan by h4x0r5.com with local (Exim 4.50)
+	id 1GA3cP-00039v-9L; Mon, 07 Aug 2006 04:50:01 -0700
 To: Jeff King <peff@peff.net>
-In-Reply-To: <20060807091953.GA31137@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 7 Aug 2006 05:19:53 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <20060803203848.GA15121@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.9i
+X-michonline.com-MailScanner: Found to be clean
+X-michonline.com-MailScanner-From: ryan@h4x0r5.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25007>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Aug 03, 2006 at 04:38:48PM -0400, Jeff King wrote:
+> git-annotate on the tip of master seems to be broken for some files (but
+> not for others):
 
-> I'm starting by writing run_status in C. Once that is working (which
-> should be soon), I believe it should suffice as a vanilla git-status
-> (do people actually do things like git-status with flags? It's not
-> documented, but it does work).
+Well, I think I've found a few bugs here tonight, basically all are
+related to handling merges correctly.
 
-Well, "git-status" is by definition (see list discussion when it
-was made into its current shape) a preview of "git-commit", so
-all the options are supported and needs to work with options.  I
-just noticed that its documentation has not been updated, though.
+First, a trivial one:
 
-So I'd suggest, mildly, against naming your "run_status()
-equivalent" git-status.  And if you follow through your plan,
-you would most likely have git-status _and_ git-commit both in C
-at about the same time when you finish.
+git diff-tree -M --name-status -z outputs the sha1 without honoring the
+-z.  Patch following this email.
 
-> I'm definitely in favor.
->
->>         Will commit
->>                 modified: Makefile (warning: further changed)
->
-> I like it (the double-mention of files which were changed, updated, then
-> changed has always bothered me). However, I'm not sure how we can get
-> the diff machinery to figure this out easily. Getting the knowledge for
-> the line above requires diffing tree to cache and cache to working
-> directory. Is there a better way than saving the queue from one diff and
-> cross-referencing it with the other?
+Second, one I don't know how to fix, at the moment:
 
-I do not think so.  I was initially planning to write a new
-traversal function that walks working tree, index _and_ a tree
-in parallel, but that would not work well with -M and -C, so I
-dropped it.
+git annotate uses the automatic tree simplification that git rev-list
+does.  So, when it sees a commit with 1 parent, it assumes that it
+really only has one parent.  git diff-tree -c doesn't know about this
+same tree simplification, and, in the case of a merge commit, will still
+output the -c format patch.
+
+That particular case is trivial, simply remove the -c from commits where
+I *know* there is only parent, and ask for the exact diff I need, from
+the parent to the current rev.
+
+There is, unfortunately, another situation, that of an octopus merge.
+In the case of read-tree.c (after the rename is followed), the commit
+7bd1527d2d8c80a6e9a0f8583082a5aee5428c68 is problematic.  In it we have
+a 4-way merge, yet only 3 paths affected read-tree.c.  The diff-parsing
+in annotate constructs a regular expression to find the diff header and
+read out the line number to work on, and also to construct some regular
+expressions from which to tell which lines affect which parents.
+
+For example, it looks for a line like:
++ ++Line added in 3 parents
+with dynamically generated regular expressions.  These, of course, need
+to know how many parents there are.  The fact that diff-tree uses a
+different number of parents makes the parsing fail, and then, the fact
+that there isn't a great way to figure out which of the real parents
+corresponds to the pseudo parents, makes this whole thing very
+messy to fix.
+
+So, the solution I've settled on is to use git merge-base to perform
+some analysis and create a pseudo-parent list that is the same size as
+the actual parent list, but consisting mostly of the fake parents
+git-rev-list gives me.
+
+If anyone else is confused by this email, it's probably because I
+stopped and fixed a bug in the middle of writing it.
+
+Patches as followups to this.
+
+
+-- 
+
+Ryan Anderson
+  sometimes Pug Majere
