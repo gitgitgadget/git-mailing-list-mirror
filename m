@@ -1,55 +1,48 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC] gitweb: Great subroutines renaming
-Date: Tue, 08 Aug 2006 00:58:40 +0200
-Organization: At home
-Message-ID: <eb8gio$8i7$1@sea.gmane.org>
-References: <200608071626.52655.jnareb@gmail.com> <7v3bc82v7l.fsf@assigned-by-dhcp.cox.net> <eb8cdh$s6n$1@sea.gmane.org> <7v4pwo1a0r.fsf@assigned-by-dhcp.cox.net> <eb8e12$2aa$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Multiple refs from the same remote in one git fetch
+Date: Mon, 07 Aug 2006 16:05:49 -0700
+Message-ID: <7vr6zsywmq.fsf@assigned-by-dhcp.cox.net>
+References: <7vu04o1fwm.fsf@assigned-by-dhcp.cox.net>
+	<20060807221914.GA24393@mellanox.co.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Aug 08 00:59:14 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 08 01:05:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GAE3n-0003u1-Rz
-	for gcvg-git@gmane.org; Tue, 08 Aug 2006 00:59:00 +0200
+	id 1GAEAU-0004iR-Pu
+	for gcvg-git@gmane.org; Tue, 08 Aug 2006 01:05:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932330AbWHGW64 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 Aug 2006 18:58:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932291AbWHGW64
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Aug 2006 18:58:56 -0400
-Received: from main.gmane.org ([80.91.229.2]:29922 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750853AbWHGW6y (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Aug 2006 18:58:54 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GAE3Y-0003rQ-7Q
-	for git@vger.kernel.org; Tue, 08 Aug 2006 00:58:44 +0200
-Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 08 Aug 2006 00:58:44 +0200
-Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 08 Aug 2006 00:58:44 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751031AbWHGXFv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 Aug 2006 19:05:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751120AbWHGXFv
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Aug 2006 19:05:51 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:19689 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751031AbWHGXFv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Aug 2006 19:05:51 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060807230550.UQXV12909.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 7 Aug 2006 19:05:50 -0400
+To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+In-Reply-To: <20060807221914.GA24393@mellanox.co.il> (Michael S. Tsirkin's
+	message of "Tue, 8 Aug 2006 01:19:14 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25052>
 
-Jakub Narebski wrote:
+"Michael S. Tsirkin" <mst@mellanox.co.il> writes:
 
-> True. So _read_ based on actually reading the files is out.
-> git_get_hash_by_ref, git_get_HEAD_hash (or just git_get_ref, git_get_head)
-Or git_get_hash, git_get_head_hash
+> The following seems to fix this issue: simply scan the full
+> refspec list for each remote instead of breaking on the first match.
+> I had to touch the git-fetch.sh script as well as it is scanning
+> the remote list, too. Works for me.
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Looks Ok, although I have to admit I just gave a cursory look.
+Thanks.
