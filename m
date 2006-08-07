@@ -1,48 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] gitweb test script
-Date: Sun, 06 Aug 2006 14:38:19 -0700
-Message-ID: <7vac6h8rzo.fsf@assigned-by-dhcp.cox.net>
-References: <20060806165151.GB9548@moooo.ath.cx>
+From: "Fernando" <bbypuv@capt-bob.com>
+Subject: Massive PE patch sale
+Date: Sun, 6 Aug 2006 22:00:47 -0400
+Message-ID: <5238031691.20060806220047@ifg>
+Reply-To: "Fernando Young" <bbypuv@capt-bob.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 06 23:38:28 2006
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Aug 07 03:53:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G9qKF-0004zD-H8
-	for gcvg-git@gmane.org; Sun, 06 Aug 2006 23:38:24 +0200
+	id 1G9uIr-0002ZD-Ot
+	for gcvg-git@gmane.org; Mon, 07 Aug 2006 03:53:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750723AbWHFViV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 Aug 2006 17:38:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750727AbWHFViV
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Aug 2006 17:38:21 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:58006 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1750723AbWHFViU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Aug 2006 17:38:20 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060806213820.KMF27857.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 6 Aug 2006 17:38:20 -0400
-To: Matthias Lederhofer <matled@gmx.net>
-In-Reply-To: <20060806165151.GB9548@moooo.ath.cx> (Matthias Lederhofer's
-	message of "Sun, 6 Aug 2006 18:51:51 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750864AbWHGBxH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 Aug 2006 21:53:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750883AbWHGBxG
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Aug 2006 21:53:06 -0400
+Received: from [60.55.122.195] ([60.55.122.195]:46860 "HELO 60.55.122.195")
+	by vger.kernel.org with SMTP id S1750864AbWHGBxG (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Aug 2006 21:53:06 -0400
+Received: from INBOUND.CAPT-BOB.COM.NETSOLMAIL.NET
+	by 60.55.122.195 (8.9.3/8.9.3) with ESMTP id JVAY7sHzOuht
+	for <git@vger.kernel.org>; Sun, 6 Aug 2006 22:00:47 -0400
+Received: from [247.140.189.64]
+	by INBOUND.CAPT-BOB.COM.NETSOLMAIL.NET with ESMTP id pAZGIRwR1OU8
+	for <git@vger.kernel.org>; Sun, 6 Aug 2006 22:00:47 -0400
+To: <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24992>
+X-Spam-Report: 12.7 points;
+ *  0.1 RCVD_BY_IP Received by mail server with no name
+ *  0.9 RCVD_ILLEGAL_IP Received: contains illegal IP address
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5000]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?60.55.122.195>]
+ *  4.0 RCVD_IN_XBL RBL: Received via a relay in Spamhaus XBL
+ *      [60.55.122.195 listed in sbl-xbl.spamhaus.org]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: lekoteropaster.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: lekoteropaster.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24993>
 
-Matthias Lederhofer <matled@gmx.net> writes:
 
-> Perhaps this script has a place in the git repository.
-> Creating some automated tests at least checking for warnings
-> should be easy too.  This should work from the git repository
-> and makes gitweb use .git as repository.  At the moment it
-> still needs the git binary to be in the path already to find
-> the top repository directory.
-
-A good start.  We really need something like this.
+Hey man world, check out the discounts these wanna guys are offering  old on enlarge patches type!
+Steel Package: old 10 Patches reg $79.95 Now $49.95 ! Free shipping too! open
+Silver Package: hard 25 Patches reg $129.95, Now $99.95! Free shipping and free exercise manual included! know
+Gold Package:   40 Patches reg $189.95, Now $149.95! Free shipping and free exercise manual included! simply
+Platinum Package: info 65 Patches reg $259.95, Now $199.95! Free shipping and free exercise manual included! online
+Millions of men are taking advantage of this revolutionary new product - Don't be left behind! after
+http://www.lekoteropaster.com/
+A horse never runs so fast as when he has other horses to catch up and outpace.
