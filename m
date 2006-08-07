@@ -1,67 +1,111 @@
-From: "Michael S. Tsirkin" <mst@mellanox.co.il>
-Subject: Re: Multiple pulls from the same branch in .git/remotes/origin
-Date: Tue, 8 Aug 2006 00:05:45 +0300
-Message-ID: <20060807210545.GC24206@mellanox.co.il>
-References: <7vu04o1fwm.fsf@assigned-by-dhcp.cox.net>
-Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH/RFC] gitweb: Great subroutines renaming
+Date: Mon, 07 Aug 2006 23:47:37 +0200
+Organization: At home
+Message-ID: <eb8cdh$s6n$1@sea.gmane.org>
+References: <200608071626.52655.jnareb@gmail.com> <7v3bc82v7l.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 07 23:04:09 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Mon Aug 07 23:48:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GACGZ-000064-Jl
-	for gcvg-git@gmane.org; Mon, 07 Aug 2006 23:04:04 +0200
+	id 1GACxG-0000LY-Iv
+	for gcvg-git@gmane.org; Mon, 07 Aug 2006 23:48:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932371AbWHGVEA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 Aug 2006 17:04:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932393AbWHGVD7
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Aug 2006 17:03:59 -0400
-Received: from mxl145v68.mxlogic.net ([208.65.145.68]:15258 "EHLO
-	p02c11o145.mxlogic.net") by vger.kernel.org with ESMTP
-	id S932371AbWHGVD6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Aug 2006 17:03:58 -0400
-Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
-	by p02c11o145.mxlogic.net (mxl_mta-3.0.0-12)
-	with ESMTP id ebaa7d44.2634312624.12262.00-001.p02c11o145.mxlogic.net (envelope-from <mst@mellanox.co.il>);
-	Mon, 07 Aug 2006 15:03:58 -0600 (MDT)
-Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 8 Aug 2006 00:09:51 +0300
-Received: by mellanox.co.il (sSMTP sendmail emulation); Tue,  8 Aug 2006 00:05:45 +0300
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vu04o1fwm.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4.2.1i
-X-OriginalArrivalTime: 07 Aug 2006 21:09:51.0859 (UTC) FILETIME=[D2D9CC30:01C6BA65]
-X-Spam: [F=0.0100000000; S=0.010(2006062901)]
-X-MAIL-FROM: <mst@mellanox.co.il>
-X-SOURCE-IP: [194.90.237.34]
+	id S1751078AbWHGVrw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 Aug 2006 17:47:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751087AbWHGVrw
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Aug 2006 17:47:52 -0400
+Received: from main.gmane.org ([80.91.229.2]:25001 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751078AbWHGVrv (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Aug 2006 17:47:51 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GACwl-0000Fl-Qf
+	for git@vger.kernel.org; Mon, 07 Aug 2006 23:47:39 +0200
+Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 07 Aug 2006 23:47:39 +0200
+Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 07 Aug 2006 23:47:39 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25042>
 
-Quoting r. Junio C Hamano <junkio@cox.net>:
-> Subject: Re: Multiple pulls from the same branch in .git/remotes/origin
-> 
-> "Michael S. Tsirkin" <mst@mellanox.co.il> writes:
-> 
-> >> It might not be too difficult to change it though.  This part of
-> >> the code is relatively old and I do not remember the details
-> >> offhand, other than I remember that the first time I saw it I
-> >> had the same confused "Huh?  we do not let a ref fetched twice?"
-> >> reaction ;-).
-> >
-> > At least, fix the error message?
-> 
-> That would touch the same vicinity of code so if I were to do
-> that myself I would rather see if the restriction can be
-> loosened properly first.
+Junio C Hamano wrote:
 
-It seems that have to make path_match in connect.c return an array
-of indexes for that to work. Right?
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> This RFC is about better naming of subroutines in gitweb. The patch was
+>> generated on top of 'next' (7c7e45d0cc0f482aeb19ecb0b56e9e7b65472c56)
+>> using embedded gitweb-rename.sh script.
+[...]
+>> * git_read_ prefix for subroutines directly accessing git
+>>   repository files
+> 
+>  - (I am not complaining or objecting yet -- this is just an
+>    observation. ) The distinction between git_get_foo and
+>    git_read_foo is an implementation detail.  The latter could
+>    signal that the implementation bypasses the published
+>    interface but depends on the implementation detail of the
+>    low-level git, so it might be a good idea, but on the other
+>    hand the only instance is git_read_info_refs which reads from
+>    .git/info/refs -- and its format is part of the published
+>    interface -- so I am not so sure this distinction is worth
+>    it.  And certainly we would not want to rely too heavily on
+>    the current implementation of the low-level git, so we
+>    obviously do not want to add more git_read_foo's needlessly,
+>    which makes me feel even less sure if we would want
+>    git_read_foo...
+
+Currently after rename we have the following git_read_* functions
+
+* git_read_info_refs, which reads .git/info/refs directly and relies on it's
+format
+* git_read_hash which translates ref to hash by reading ref file
+(e.g. .git/refs/heads/master) which means that it doesn't support symrefs
+yet; but first, it should be easy to implement without invoking any git
+command, and second, there are usually no symrefs beside HEAD, and I'm not
+sure that git would work with non-HEAD symref.
+* git_read_refs (or rather git_readdir_refs) which reads .git/refs directory
+* git_read_projects (or rather git_readdir_projects) which checks for
+projects checking if HEAD file exists
+* git_read_description which reads .git/description; but in the future
+description might be stored in repository config
+
+What is also important is the fast that git_read_* functions are fast,
+with exception of git_read_info_refs...
+
+[...]
+> If we are to have many more fixes and clean-ups on gitweb,
+> readable and consistent names would be very helpful.
+> 
+> The problem is when.  If we are going to apply this, we need to
+> pick a point of time when not many patches on gitweb are in
+> flight; otherwise I'd end up asking people to resend using new
+> names.
+
+With two scripts attached to the first post in this thread it would be
+simple to apply pre-rename patch, by converting gitweb to pre-rename using
+gitweb-unrename.sh script, then applying patch, then restoring new names
+using gitweb-rename.sh script, and finally comitting changes (or amending
+commit).
+
+But I agree that it would be best to do "subroutine renaming" during lull in
+gitweb development.
 
 -- 
-MST
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
