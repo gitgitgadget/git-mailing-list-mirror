@@ -1,57 +1,51 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC] gitweb: Great subroutines renaming
-Date: Tue, 08 Aug 2006 11:51:03 +0200
-Organization: At home
-Message-ID: <eb9mpt$68v$2@sea.gmane.org>
-References: <200608071626.52655.jnareb@gmail.com> <7v3bc82v7l.fsf@assigned-by-dhcp.cox.net> <eb8cdh$s6n$1@sea.gmane.org> <7v4pwo1a0r.fsf@assigned-by-dhcp.cox.net> <eb8e12$2aa$1@sea.gmane.org> <7vejvsyum8.fsf@assigned-by-dhcp.cox.net>
+From: Jeff Garzik <jeff@garzik.org>
+Subject: gitweb age bug
+Date: Tue, 08 Aug 2006 07:26:40 -0400
+Message-ID: <44D874F0.6000907@garzik.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Aug 08 11:55:10 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Aug 08 13:26:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GAOIn-0004TP-0f
-	for gcvg-git@gmane.org; Tue, 08 Aug 2006 11:55:09 +0200
+	id 1GAPjS-0003kI-4K
+	for gcvg-git@gmane.org; Tue, 08 Aug 2006 13:26:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932226AbWHHJzF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 Aug 2006 05:55:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932289AbWHHJzF
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Aug 2006 05:55:05 -0400
-Received: from main.gmane.org ([80.91.229.2]:42886 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932226AbWHHJzD (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Aug 2006 05:55:03 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1GAOIg-0004Rk-0h
-	for git@vger.kernel.org; Tue, 08 Aug 2006 11:55:02 +0200
-Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 08 Aug 2006 11:55:02 +0200
-Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 08 Aug 2006 11:55:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S964855AbWHHL0m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 Aug 2006 07:26:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964852AbWHHL0m
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Aug 2006 07:26:42 -0400
+Received: from srv5.dvmed.net ([207.36.208.214]:46307 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S964855AbWHHL0m (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Aug 2006 07:26:42 -0400
+Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75] helo=[10.10.10.99])
+	by mail.dvmed.net with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
+	id 1GAPjN-0008NY-8d
+	for git@vger.kernel.org; Tue, 08 Aug 2006 11:26:41 +0000
+User-Agent: Thunderbird 1.5.0.4 (X11/20060614)
+To: Git Mailing List <git@vger.kernel.org>
+X-Spam-Score: -4.3 (----)
+X-Spam-Report: SpamAssassin version 3.1.3 on srv5.dvmed.net summary:
+	Content analysis details:   (-4.3 points, 5.0 required)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25066>
 
-Junio C Hamano wrote:
+At URL
 
+	http://www.kernel.org/git/?o=age
 
-> +`git-branch` without argument::
-> +     git-show-refs --format='%(ishead)%(name)' 'heads/*'
+one can see the various repositories, sorted by last-modified time.
 
-        git-show-refs --format='%(ishead?"* ":"  ")%(name)' 'refs/heads/*'
+However, AFAICS, only the 'master' branch is checked.  This causes an 
+incorrect age to be returned, for kernel hackers who always do work in 
+topic branches ('master' is Linus vanilla kernel).
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Thus, the age on my repositories is only updated when I update the 
+'master' branch with new linux-2.6.git goodies.  Development work I do 
+in topic branches is never noted in the 'age' column.
+
+	Jeff
