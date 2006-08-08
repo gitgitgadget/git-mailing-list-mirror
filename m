@@ -1,103 +1,61 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC] gitweb: Great subroutines renaming
-Date: Tue, 08 Aug 2006 23:13:51 +0200
-Organization: At home
-Message-ID: <ebauq1$kcb$1@sea.gmane.org>
-References: <200608071626.52655.jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] autoconf: clean temporary file mak.append
+Date: Tue, 08 Aug 2006 14:35:02 -0700
+Message-ID: <7vbqquvrll.fsf@assigned-by-dhcp.cox.net>
+References: <200608081834.09271.jnareb@gmail.com>
+	<7vk65juff7.fsf@assigned-by-dhcp.cox.net> <ebatsd$f1g$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Aug 08 23:15:31 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 08 23:35:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GAYut-0002WA-2a
-	for gcvg-git@gmane.org; Tue, 08 Aug 2006 23:15:11 +0200
+	id 1GAZET-0006UQ-IF
+	for gcvg-git@gmane.org; Tue, 08 Aug 2006 23:35:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030298AbWHHVOV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 Aug 2006 17:14:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030289AbWHHVOT
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Aug 2006 17:14:19 -0400
-Received: from main.gmane.org ([80.91.229.2]:40912 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1030298AbWHHVOI (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Aug 2006 17:14:08 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GAYtZ-0002DW-Qt
-	for git@vger.kernel.org; Tue, 08 Aug 2006 23:13:50 +0200
-Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 08 Aug 2006 23:13:49 +0200
-Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 08 Aug 2006 23:13:49 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S965052AbWHHVfG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 Aug 2006 17:35:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965051AbWHHVfG
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Aug 2006 17:35:06 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:38817 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S965052AbWHHVfE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Aug 2006 17:35:04 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060808213503.YZIZ2704.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 8 Aug 2006 17:35:03 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <ebatsd$f1g$1@sea.gmane.org> (Jakub Narebski's message of "Tue,
+	08 Aug 2006 22:58:02 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25091>
 
-Jakub Narebski wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Renames:
-> - git_get_referencing => format_mark_referencing
-> - git_read_head => git_get_head
-> - read_info_ref => git_read_info_refs
-> - date_str => parse_date
-> - git_read_tag => parse_tag
-> - git_read_commit => parse_commit
-> - git_blob_plain_mimetype => blob_plain_mimetype
-> - git_page_nav => git_print_page_nav
-> - git_header_div => git_print_header_div
+> Junio C Hamano wrote:
+>
+>> diff --git a/Makefile b/Makefile
+>> index d8cc835..d4297c2 100644
+>> --- a/Makefile
+>> +++ b/Makefile
+>> @@ -793,7 +793,7 @@ clean:
+>>       rm -f $(ALL_PROGRAMS) $(BUILT_INS) git$X
+>>       rm -f *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags
+>>       rm -rf autom4te.cache
+>> -     rm -f config.log config.mak.autogen configure config.status config.cache
+>> +     rm -f configure config.log config.mak.autogen config.mak.append config.status config.cache
+>>       rm -rf $(GIT_TARNAME) .doc-tmp-dir
+>>       rm -f $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
+>>       rm -f $(htmldocs).tar.gz $(manpages).tar.gz
+>
+> I didn't add configure to make clean, because there was hand-crafted 
+> configure script in git.git.
 
-Summary of discussion: using *_read_* to distinguish between git calling
-commands, and file reading commands is not a good idea. So now the
-guideline is to be more fluid with *_get_* vs *_read_* subroutine naming:
-it would depend on the noun after _get_ or _read_.
-
-
-Proposed renames:
-1. Renames I think everybody would agree on
- - git_get_referencing => format_mark_referencing
-
- - date_str => parse_date
- - git_read_tag => parse_tag
- - git_read_commit => parse_commit
-
- - git_blob_plain_mimetype => blob_plain_mimetype
-
- - git_page_nav => git_print_page_nav
- - git_header_div => git_print_header_div
-
-
-2. Renames about which I'm less sure
- - git_read_head => git_get_head_hash
- - git_read_hash => git_get_hash_by_ref
-
- - git_read_description => git_project_description
- - git_read_projects => git_get_projects_list or git_list_projects
-
- - read_info_ref => git_read_info_refs => git_get_references
- (this one depend too much on implementation, which might be changed to 
-  parsing 'git ls-remotes .' output instead of relying on info/refs being
-  up to date thanks to git-update-server-info in post-update hook, 
-  and on its format).
-
- - age_string => ????
- (it returns 'nn ago' string)
-
-
-Thoughts? Comments? I'm especially interested in answer of other people
-working on gitweb (Luben Tuikov, Matthias Lederhofer, Jeff King,  
-Sham Chukoury, and others).
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Did anybody ask who added 'configure'?
