@@ -1,67 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 5/4] autoconf: Mention "make configure" instead of "autoconf" in INSTALL
-Date: Tue, 8 Aug 2006 18:48:47 +0200
-Message-ID: <200608081848.48181.jnareb@gmail.com>
-References: <200608081834.09271.jnareb@gmail.com> <200608081835.23448.jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Racy git: avoid having to be always too careful
+Date: Tue, 08 Aug 2006 10:25:45 -0700
+Message-ID: <7vr6zrw352.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0607310945490.4168@g5.osdl.org>
+	<7virl7e8ed.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0608081659320.1800@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Aug 08 18:48:53 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 08 19:26:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GAUl6-0005Xx-96
-	for gcvg-git@gmane.org; Tue, 08 Aug 2006 18:48:48 +0200
+	id 1GAVKy-0004QT-0v
+	for gcvg-git@gmane.org; Tue, 08 Aug 2006 19:25:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964984AbWHHQsp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 Aug 2006 12:48:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964988AbWHHQsp
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Aug 2006 12:48:45 -0400
-Received: from nf-out-0910.google.com ([64.233.182.185]:32950 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S964984AbWHHQso (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Aug 2006 12:48:44 -0400
-Received: by nf-out-0910.google.com with SMTP id q29so227664nfc
-        for <git@vger.kernel.org>; Tue, 08 Aug 2006 09:48:43 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=GEc7lb1tyZ9sis8Nk3tUe+9iVO7EXXLviBICc3GBfl8uQ1QHzq1hgPLV1oOq7nKks3iAIR7j1ty4a4aSuJR2XbQneip94tk0fJ9wX6pWD05OPMVaQxGR7uJ3Kz5Z8iUQkpDRKGlOAoA3UAKrimrRa8wY1kdwHIj/EfJ/xE67+j0=
-Received: by 10.49.8.1 with SMTP id l1mr580713nfi;
-        Tue, 08 Aug 2006 09:48:42 -0700 (PDT)
-Received: from host-81-190-31-92.torun.mm.pl ( [81.190.31.92])
-        by mx.gmail.com with ESMTP id c10sm1009901nfb.2006.08.08.09.48.42;
-        Tue, 08 Aug 2006 09:48:42 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-In-Reply-To: <200608081835.23448.jnareb@gmail.com>
-Content-Disposition: inline
+	id S964951AbWHHRZs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 Aug 2006 13:25:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965007AbWHHRZr
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Aug 2006 13:25:47 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:49545 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S964951AbWHHRZr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Aug 2006 13:25:47 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060808172546.GJFM18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 8 Aug 2006 13:25:46 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0608081659320.1800@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Tue, 8 Aug 2006 17:43:20 +0200
+	(CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25078>
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Should be part of [PATCH 1/4] in this series (replied-to patch)
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
- INSTALL |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> This makes "make test" dog slow. How about making this overrideable?
+> (It is just a guess, but I _think_ that the sleeping is worse than having 
+> to check the files with the same time stamp again and again -- a "git 
+> status" will help that).
+>
+>
+> -- 8< --
+> [PATCH] read-cache: optionally disable being cautious with racy caches
+>
+> By setting the environment variable GIT_RISK_RACY_CACHE or the config
+> variable core.riskRacyCache, the sleeping (to avoid a racy cache) is
+> disabled.
 
-diff --git a/INSTALL b/INSTALL
-index f8dfa19..0d432d7 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -16,7 +16,7 @@ install" would not work.
- Alternatively you can use autoconf generated ./configure script to
- set up install paths (via config.mak.autogen), so you can write instead
- 
--	$ autoconf ;# as yourself if ./configure doesn't exist yet
-+	$ make configure ;# as yourself
- 	$ ./configure --prefix=/usr ;# as yourself
- 	$ make all doc ;# as yourself
- 	# make install install-doc ;# as root
--- 
-1.4.1.1
+"RISK" is a misnomer here -- the original code without patch is
+being cautious and taking a runtime hit but not risky.  The
+"delay while writing the cache out for the first time" is trying
+to avoid the runtime hit by taking a hit at cache generation
+time.  In either case you never risk racy cache.
+
+Perhaps throwing away the whole "delay" thing might be simpler
+and more worthwhile.
+
+Another possibility is to tweak the heuristics -- currently we
+say 20 paths or 1/4 of whole paths is too many and would cause
+too much runtime hit but that was done without any measurement.
+We could raise the threashold which would solve the case for the
+testsuite whose trees are all small.
