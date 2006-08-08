@@ -1,84 +1,81 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-annotate bug report
-Date: Tue, 08 Aug 2006 01:49:42 -0700
-Message-ID: <7vvep3wr15.fsf@assigned-by-dhcp.cox.net>
-References: <20060803203848.GA15121@coredump.intra.peff.net>
-	<20060807115000.GC15477@h4x0r5.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Since when is a tag a commit?
+Date: Tue, 08 Aug 2006 11:34:56 +0200
+Organization: At home
+Message-ID: <eb9lrm$3ef$1@sea.gmane.org>
+References: <20060808021251.GA19548@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 08 10:50:04 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Tue Aug 08 11:35:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GANHX-0002n0-ST
-	for gcvg-git@gmane.org; Tue, 08 Aug 2006 10:49:48 +0200
+	id 1GANzl-00019f-3f
+	for gcvg-git@gmane.org; Tue, 08 Aug 2006 11:35:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932544AbWHHIto (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 Aug 2006 04:49:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932545AbWHHIto
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Aug 2006 04:49:44 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:38904 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S932544AbWHHIto (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Aug 2006 04:49:44 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060808084943.UZAF12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 8 Aug 2006 04:49:43 -0400
-To: Ryan Anderson <ryan@michonline.com>
-In-Reply-To: <20060807115000.GC15477@h4x0r5.com> (Ryan Anderson's message of
-	"Mon, 7 Aug 2006 04:50:01 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932164AbWHHJfO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 8 Aug 2006 05:35:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932166AbWHHJfN
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Aug 2006 05:35:13 -0400
+Received: from main.gmane.org ([80.91.229.2]:43173 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932164AbWHHJfM (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Aug 2006 05:35:12 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GANzH-00013j-4L
+	for git@vger.kernel.org; Tue, 08 Aug 2006 11:35:00 +0200
+Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 08 Aug 2006 11:34:59 +0200
+Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 08 Aug 2006 11:34:59 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25062>
 
-Ryan Anderson <ryan@michonline.com> writes:
+Shawn Pearce wrote:
 
-> Second, one I don't know how to fix, at the moment:
->
-> git annotate uses the automatic tree simplification that git rev-list
-> does.  So, when it sees a commit with 1 parent, it assumes that it
-> really only has one parent.  git diff-tree -c doesn't know about this
-> same tree simplification, and, in the case of a merge commit, will still
-> output the -c format patch.
+> Current `next`:
+>=20
+>   [spearce@pb15 git]$ git cat-file commit v1.4.1
+>   tree 34c8f9c263c1c20592d3f56c3d86bea322577155
+>   parent 6631c73685bea3c6300938f4900db0d0c6bee457
+>   author Linus Torvalds <torvalds@osdl.org> 1151691633 -0700
+>   committer Junio C Hamano <junkio@cox.net> 1151803695 -0700
+>   ...
 
-When a merge M between A and B is simplified to have only A as a
-parent, that means the file in question are identical in M and
-A.  So you can just pass all the remaining blame on to A without
-letting M taking any blame for itself.  So you do not need to do
-any diff at all for a simplified merge.
+This is commit referenced by tag, i.e. v1.4.1^{commit}
 
-> There is, unfortunately, another situation, that of an octopus merge.
-> In the case of read-tree.c (after the rename is followed), the commit
-> 7bd1527d2d8c80a6e9a0f8583082a5aee5428c68 is problematic.  In it we have
-> a 4-way merge, yet only 3 paths affected read-tree.c.  The diff-parsing
-> in annotate constructs a regular expression to find the diff header and
-> read out the line number to work on, and also to construct some regular
-> expressions from which to tell which lines affect which parents.
+> Uhhh, that's a tag.  I know it is:
+>=20
+>   [spearce@pb15 git]$ git cat-file tag v1.4.1
+>   object 0556a11a0df6b4119e01aa77dfb795561e62eb34
+>   type commit
+>   tag v1.4.1
+>   tagger Junio C Hamano <junkio@cox.net> 1151818415 -0700
+>   ...
 
-If a merge is not simplified, and if you end up reading from
---cc or -c -p, then:
+This is tag itself.
 
-> For example, it looks for a line like:
-> + ++Line added in 3 parents
-> with dynamically generated regular expressions.
+> And I know its not a tree:
+>=20
+>   [spearce@pb15 git]$ git cat-file tree v1.4.1
+>   100644 .gitignore{?MX~=C4=83????y?v?X?u100644 COPYINGo?...
 
-the merge needs to claim responsibility only for lines that have
-all pluses (i.e. evil merge), which you are already doing, I
-think.  Any line without a minus that has at least one space can
-be blamed on the parent that corresponds to the space (and if
-there are more than one space, pick the first one).
+This is tree referenced by commit, referenced by tag, i.e. v1.4.1^{tree=
+}
 
-Your particular "octopus" case, I think, is the same story.
-
-$ git diff-tree --pretty=short -p -c 7bd1527 -- read-tree.c builtin-read-tree.c
-
-would give you a combined diff, none of which has $allparentplus
-(so nothing should be attributed to this merge), and the header
-would tell you which parent to pass the blame on from that
-point.
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
