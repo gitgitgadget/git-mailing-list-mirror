@@ -1,51 +1,52 @@
-From: Jeff Garzik <jeff@garzik.org>
-Subject: gitweb age bug
-Date: Tue, 08 Aug 2006 07:26:40 -0400
-Message-ID: <44D874F0.6000907@garzik.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: qgit feature idea: multiple Patch tabs
+Date: Tue, 08 Aug 2006 13:59:46 +0200
+Organization: At home
+Message-ID: <eb9ub9$u5m$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Aug 08 13:26:57 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue Aug 08 14:00:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GAPjS-0003kI-4K
-	for gcvg-git@gmane.org; Tue, 08 Aug 2006 13:26:46 +0200
+	id 1GAQFl-0001kE-9M
+	for gcvg-git@gmane.org; Tue, 08 Aug 2006 14:00:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964855AbWHHL0m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 Aug 2006 07:26:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964852AbWHHL0m
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Aug 2006 07:26:42 -0400
-Received: from srv5.dvmed.net ([207.36.208.214]:46307 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S964855AbWHHL0m (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Aug 2006 07:26:42 -0400
-Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75] helo=[10.10.10.99])
-	by mail.dvmed.net with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
-	id 1GAPjN-0008NY-8d
-	for git@vger.kernel.org; Tue, 08 Aug 2006 11:26:41 +0000
-User-Agent: Thunderbird 1.5.0.4 (X11/20060614)
-To: Git Mailing List <git@vger.kernel.org>
-X-Spam-Score: -4.3 (----)
-X-Spam-Report: SpamAssassin version 3.1.3 on srv5.dvmed.net summary:
-	Content analysis details:   (-4.3 points, 5.0 required)
+	id S932470AbWHHMAF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 Aug 2006 08:00:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932561AbWHHMAE
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Aug 2006 08:00:04 -0400
+Received: from main.gmane.org ([80.91.229.2]:3220 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932470AbWHHMAC (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Aug 2006 08:00:02 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GAQFT-0001hh-6w
+	for git@vger.kernel.org; Tue, 08 Aug 2006 13:59:51 +0200
+Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 08 Aug 2006 13:59:51 +0200
+Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 08 Aug 2006 13:59:51 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25067>
 
-At URL
+It would be nice to be able to have multiple "Patch" tabs,
+e.g. by using "Open in new tab"/Ctrl-Click, instead of default
+being only one Patch tab, and new patch replacing the old.
 
-	http://www.kernel.org/git/?o=age
-
-one can see the various repositories, sorted by last-modified time.
-
-However, AFAICS, only the 'master' branch is checked.  This causes an 
-incorrect age to be returned, for kernel hackers who always do work in 
-topic branches ('master' is Linus vanilla kernel).
-
-Thus, the age on my repositories is only updated when I update the 
-'master' branch with new linux-2.6.git goodies.  Development work I do 
-in topic branches is never noted in the 'age' column.
-
-	Jeff
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
