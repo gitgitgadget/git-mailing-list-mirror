@@ -1,70 +1,79 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC] gitweb: Great subroutines renaming
-Date: Tue, 08 Aug 2006 02:10:33 +0200
-Organization: At home
-Message-ID: <eb8kph$j6i$1@sea.gmane.org>
-References: <200608071626.52655.jnareb@gmail.com> <7v3bc82v7l.fsf@assigned-by-dhcp.cox.net> <eb8cdh$s6n$1@sea.gmane.org> <7v4pwo1a0r.fsf@assigned-by-dhcp.cox.net> <eb8e12$2aa$1@sea.gmane.org> <7vejvsyum8.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Since when is a tag a commit?
+Date: Mon, 7 Aug 2006 22:12:51 -0400
+Message-ID: <20060808021251.GA19548@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Aug 08 02:10:44 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Tue Aug 08 04:13:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GAFBA-0004zF-W1
-	for gcvg-git@gmane.org; Tue, 08 Aug 2006 02:10:41 +0200
+	id 1GAH5c-0002oR-Iw
+	for gcvg-git@gmane.org; Tue, 08 Aug 2006 04:13:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932393AbWHHAKh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 Aug 2006 20:10:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932452AbWHHAKh
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Aug 2006 20:10:37 -0400
-Received: from main.gmane.org ([80.91.229.2]:17132 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932393AbWHHAKg (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Aug 2006 20:10:36 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GAFB2-0004yi-LT
-	for git@vger.kernel.org; Tue, 08 Aug 2006 02:10:33 +0200
-Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 08 Aug 2006 02:10:32 +0200
-Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 08 Aug 2006 02:10:32 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1751185AbWHHCM7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 7 Aug 2006 22:12:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751173AbWHHCM7
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Aug 2006 22:12:59 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:26028 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751185AbWHHCM6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Aug 2006 22:12:58 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GAH5J-0004MY-9w
+	for git@vger.kernel.org; Mon, 07 Aug 2006 22:12:45 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 0E0DB20FB77; Mon,  7 Aug 2006 22:12:51 -0400 (EDT)
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25057>
 
-Junio C Hamano wrote:
+Current `next`:
 
-> Jakub Narebski <jnareb@gmail.com> writes:
+  [spearce@pb15 git]$ git cat-file commit v1.4.1
+  tree 34c8f9c263c1c20592d3f56c3d86bea322577155
+  parent 6631c73685bea3c6300938f4900db0d0c6bee457
+  author Linus Torvalds <torvalds@osdl.org> 1151691633 -0700
+  committer Junio C Hamano <junkio@cox.net> 1151803695 -0700
+  ...
 
->> So the new guidelines would be:
->> * git_get_ prefix for subroutines related to git repository
->>   and returning single scalar (single value).
->> * git_read_ prefix for subroutines related to git repository, reading some
->>   files or multiline output, and returning hash reference, or list
->>   reference, or list.
-> 
-> I would suggest to use git_get for both, unless there is a good
-> reason to differenciate them, since I do not understand why you
-> would want to differenciate one value vs multivalue.
+Uhhh, that's a tag.  I know it is:
 
-I'd rather have git_read_info_refs, because it _reads_ info/refs file, 
-and git_read_refs as opposed to git_get_hash/git_get_ref/git_ref_to_hash
-(or hash_from_ref). I'm not sure about git_read_projects vs. perhaps
-git_get_project_list or git_list_projects. Neither about 
-git_read_description vs. git_get_project_description
+  [spearce@pb15 git]$ git cat-file tag v1.4.1
+  object 0556a11a0df6b4119e01aa77dfb795561e62eb34
+  type commit
+  tag v1.4.1
+  tagger Junio C Hamano <junkio@cox.net> 1151818415 -0700
+  ...
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+And I know its not a tree:
+
+  [spearce@pb15 git]$ git cat-file tree v1.4.1
+  100644 .gitignore{?MX~=C4=83????y?v?X?u100644 COPYINGo?...
+
+So it better not be a blob:
+
+  [spearce@pb15 git]$ git cat-file blob v1.4.1
+  fatal: git-cat-file v1.4.1: bad file
+
+What the heck is going on?  Since when did git cat-file happily
+consider a tag to be a tag, a commit and a tree?  Its that
+intentional that we're peeling back the object to the requested type?
+
+--=20
+Shawn.
