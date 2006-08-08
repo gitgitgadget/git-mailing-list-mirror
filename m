@@ -1,68 +1,71 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git-show-refs (was: [PATCH/RFC] gitweb: Great subroutines renaming)
-Date: Tue, 08 Aug 2006 20:12:18 +0200
-Organization: At home
-Message-ID: <ebak5n$etr$1@sea.gmane.org>
-References: <200608071626.52655.jnareb@gmail.com> <7v3bc82v7l.fsf@assigned-by-dhcp.cox.net> <eb8cdh$s6n$1@sea.gmane.org> <7v4pwo1a0r.fsf@assigned-by-dhcp.cox.net> <eb8e12$2aa$1@sea.gmane.org> <7vejvsyum8.fsf@assigned-by-dhcp.cox.net>
+From: Juergen Ruehle <j.ruehle@bmiag.de>
+Subject: Re: [PATCH 2/2] builtin git-mv: support moving directories
+Date: Tue, 8 Aug 2006 20:34:24 +0200
+Message-ID: <17624.55600.423000.61479@lapjr.intranet.kiel.bmiag.de>
+References: <Pine.LNX.4.63.0607261941210.29667@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Tue Aug 08 20:14:06 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Jon Smirl <jonsmirl@gmail.com>, git@vger.kernel.org,
+	junkio@cox.net, Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Aug 08 20:35:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GAW4V-0005xq-Bm
-	for gcvg-git@gmane.org; Tue, 08 Aug 2006 20:12:56 +0200
+	id 1GAWPs-0002jo-FW
+	for gcvg-git@gmane.org; Tue, 08 Aug 2006 20:35:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030219AbWHHSMw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 8 Aug 2006 14:12:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030220AbWHHSMw
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Aug 2006 14:12:52 -0400
-Received: from main.gmane.org ([80.91.229.2]:24012 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1030219AbWHHSMw (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Aug 2006 14:12:52 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GAW4P-0005vM-Gn
-	for git@vger.kernel.org; Tue, 08 Aug 2006 20:12:49 +0200
-Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 08 Aug 2006 20:12:49 +0200
-Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 08 Aug 2006 20:12:49 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S965023AbWHHSe5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 Aug 2006 14:34:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965024AbWHHSe4
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Aug 2006 14:34:56 -0400
+Received: from bilbo.bmiag.de ([62.154.210.131]:43780 "HELO bilbo.bmiag.de")
+	by vger.kernel.org with SMTP id S965023AbWHHSe4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Aug 2006 14:34:56 -0400
+Received: (qmail 9773 invoked by uid 106); 8 Aug 2006 18:34:54 -0000
+Received: from eotheod.intranet.kiel.bmiag.de(10.130.2.1)
+ via SMTP by bilbo.bmiag.de, id smtpdu5usum; Tue Aug  8 20:34:46 2006
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by eotheod.intranet.kiel.bmiag.de (Postfix) with ESMTP id A77743BB50
+	for <git@vger.kernel.org>; Tue,  8 Aug 2006 20:34:45 +0200 (CEST)
+Received: from eotheod.intranet.kiel.bmiag.de ([127.0.0.1])
+	by localhost (eotheod [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 05720-09 for <git@vger.kernel.org>;
+	Tue, 8 Aug 2006 20:34:36 +0200 (CEST)
+Received: from bmiag.de (elros.intranet.kiel.bmiag.de [10.132.1.1])
+	by eotheod.intranet.kiel.bmiag.de (Postfix) with SMTP id F0BA43AF51
+	for <git@vger.kernel.org>; Tue,  8 Aug 2006 20:34:35 +0200 (CEST)
+Received: (qmail 21735 invoked by uid 5002); 8 Aug 2006 18:34:35 -0000
+Received: from dialin5.galadriel.bmiag.de (HELO LAPJR) (192.168.251.5)
+  by elros.intranet.kiel.bmiag.de with SMTP; 8 Aug 2006 18:34:35 -0000
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0607261941210.29667@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: VM 7.19 under Emacs 21.3.1
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at eotheod.intranet.kiel.bmiag.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25080>
 
-Junio C Hamano wrote:
+This might have been fixed already (my tree is a couple of days old),
+but the strcat fails for me, because the alloced memory is not
+cleared.
 
-> +<format>::
-> +=A0=A0=A0=A0=A0=A0=A0A string that interpolates `%(field name)` from=
- the
-> +=A0=A0=A0=A0=A0=A0=A0object pointed at by a ref being shown. =A0When
-> +=A0=A0=A0=A0=A0=A0=A0unspecified, `%(name)` is used.
+Johannes Schindelin writes:
+ > +static const char *add_slash(const char *path)
+ > +{
+ > +	int len = strlen(path);
+ > +	if (path[len - 1] != '/') {
+ > +		char *with_slash = xmalloc(len + 2);
+ > +		memcpy(with_slash, path, len);
+ > +		strcat(with_slash + len, "/");
+ > +		return with_slash;
+ > +	}
+ > +	return path;
+ > +}
 
-Wouldn't it be better to (re)use notation of rpm's --query-format,=20
-i.e. use %{name}, or %30{name}, or %-30{name} for single scalar values,
-use :typetag output formats, like ':date' (Use strftime(3) "%c" format.=
-) and
-':day' (Use strftime(3) "%a %b %d %Y" format.) for epoch/timestamp fiel=
-d,
-use square brackets for iterating over multivalue output, e.g.
-"[parent: %{parent}]" for writing out all parents, etc.
+perhaps morph the strcat into a memcopy or append the slash and the
+NUL manually?
 
-Perhaps we could even borrow some code...
-
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+  jr
