@@ -1,86 +1,69 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC] gitweb: Great subroutines renaming
-Date: Wed, 09 Aug 2006 12:26:50 +0200
-Organization: At home
-Message-ID: <ebcd8r$bi7$1@sea.gmane.org>
-References: <200608071626.52655.jnareb@gmail.com> <7v3bc82v7l.fsf@assigned-by-dhcp.cox.net> <eb8cdh$s6n$1@sea.gmane.org> <7v4pwo1a0r.fsf@assigned-by-dhcp.cox.net> <eb8e12$2aa$1@sea.gmane.org> <7vejvsyum8.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Workaround for strange cmp bug
+Date: Wed, 09 Aug 2006 03:50:23 -0700
+Message-ID: <7v3bc65gk0.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0608091221550.1800@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Wed Aug 09 12:26:58 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 09 12:50:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GAlH0-0008Rr-0s
-	for gcvg-git@gmane.org; Wed, 09 Aug 2006 12:26:50 +0200
+	id 1GAldt-00043C-68
+	for gcvg-git@gmane.org; Wed, 09 Aug 2006 12:50:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030645AbWHIK0q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 Aug 2006 06:26:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030655AbWHIK0q
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Aug 2006 06:26:46 -0400
-Received: from main.gmane.org ([80.91.229.2]:24515 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1030645AbWHIK0p (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Aug 2006 06:26:45 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GAlGq-0008QA-3r
-	for git@vger.kernel.org; Wed, 09 Aug 2006 12:26:40 +0200
-Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 09 Aug 2006 12:26:40 +0200
-Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 09 Aug 2006 12:26:40 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1030597AbWHIKu0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 Aug 2006 06:50:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030660AbWHIKu0
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Aug 2006 06:50:26 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:1762 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1030597AbWHIKuZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Aug 2006 06:50:25 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060809105024.SAQK6303.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 9 Aug 2006 06:50:24 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0608091221550.1800@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Wed, 9 Aug 2006 12:24:06 +0200
+	(CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25109>
 
-Junio C Hamano wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
->> Matthias Lederhofer has noticed that parsing all the tags in "summary" and
->> "tags" views, while we use only epoch/timestamp information to sort them
->> and discard most of parsed input, is bottleneck due to the fact that
->> usually number of tags is linear with history (version tags) and the fact
->> that for each tag is one invocation of git (one fork, two execs).
-> 
-> Maybe we would want to expose for_each_ref somehow to the
-> command level then.  Looking at how "git branch" without any
-> argument lists the branches, and how "git tag -l" lists the
-> tags, it appears that we could benefit from such a command [*1*].
+> The cmp(1) (cmp (GNU diffutils) 2.8.7) distributed with openSUSE 10.1 has
+> a subtle "shortcoming":
+>
+> 	$ echo a > a
+> 	$ echo b > b
+> 	$ cmp a b && echo nonono
+> 	a b differ: char 1, line 1
+> 	$ cmp a b >/dev/null && echo nonono
+> 	nonono
+> 	$ cmp -s a b >/dev/null && echo nonono
+>
+> So, if cmp should _not_ be quiet, _and_ the output is redirected to
+> /dev/null, it has a bogus exit value. Our test suite redirects to
+> /dev/null, which triggers that bug. (Obviously, the tests pass when
+> running with '-v', which made that a real bugger to debug.)
 
-> -- >8 -- [*1*] -- >8 --
-> [PATCH] git-show-refs
-> 
-> Implementation is left as an exercise ;-)
-[...]
-> +SYNOPSIS
-> +--------
-> +'git-show-refs' [--count=<max>] [--sort=<sortkeys>] [--format=<format>] [<pattern>]
+While I sympathize unfortunate users who are stuck with such a
+broken implementation of an important basic tool, such a rewrite
+unnecessarily makes debugging of both test scripts _and_ real
+breakage harder.
 
-It would be useful for application in gitweb to have [-l|--count-lines]
-option which would print number of lines (excluding the one with number
-of lines) before any output. It could be used to know before reading all
-the output how many lines would be, and if there is something more than
-(for --count=<max>) <max> lines. 
+It actually is very useful, in the chain of &&, to see that
+these steps in our tests output something when they shouldn't
+when the tests are run under -v; you may have noticed that the
+tests written by me have seemingly useless "echo happy" (which
+always returns true) and such, and they are there for a reason.
 
-It is needed in gitweb to create pagination/paging navigation bar. 
-Currently it is done by reading all the output into array, and 
-checking length of this array.
-
-While at it, --skip=<count> would also be nice, although not that
-necessary.
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Please get the distribution fixed.
