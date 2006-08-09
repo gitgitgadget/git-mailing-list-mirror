@@ -1,37 +1,37 @@
 From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [PATCH and RFC] gitweb: Remove --full-history from git_history
-Date: Wed, 09 Aug 2006 14:04:11 +0200
+Date: Wed, 09 Aug 2006 14:56:36 +0200
 Organization: At home
-Message-ID: <ebcivb$t6m$1@sea.gmane.org>
-References: <200608091257.19461.jnareb@gmail.com> <7vu04m413f.fsf@assigned-by-dhcp.cox.net>
+Message-ID: <ebcm1j$6gi$1@sea.gmane.org>
+References: <200608091257.19461.jnareb@gmail.com> <7vu04m413f.fsf@assigned-by-dhcp.cox.net> <ebcivb$t6m$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Wed Aug 09 14:04:19 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Wed Aug 09 14:57:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GAmnK-0000T5-EC
-	for gcvg-git@gmane.org; Wed, 09 Aug 2006 14:04:18 +0200
+	id 1GAncR-0002B1-Kv
+	for gcvg-git@gmane.org; Wed, 09 Aug 2006 14:57:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161012AbWHIMEN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 Aug 2006 08:04:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161011AbWHIMEN
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Aug 2006 08:04:13 -0400
-Received: from main.gmane.org ([80.91.229.2]:28610 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1161008AbWHIMEN (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Aug 2006 08:04:13 -0400
+	id S1750730AbWHIM5D convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 9 Aug 2006 08:57:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750737AbWHIM5D
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Aug 2006 08:57:03 -0400
+Received: from main.gmane.org ([80.91.229.2]:33240 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750730AbWHIM5B (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Aug 2006 08:57:01 -0400
 Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GAmnB-0000Rf-UP
-	for git@vger.kernel.org; Wed, 09 Aug 2006 14:04:09 +0200
+	id 1GAnc5-000267-KX
+	for git@vger.kernel.org; Wed, 09 Aug 2006 14:56:45 +0200
 Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 09 Aug 2006 14:04:09 +0200
+        for <git@vger.kernel.org>; Wed, 09 Aug 2006 14:56:45 +0200
 Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 09 Aug 2006 14:04:09 +0200
+        for <git@vger.kernel.org>; Wed, 09 Aug 2006 14:56:45 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
 X-Complaints-To: usenet@sea.gmane.org
@@ -41,77 +41,50 @@ User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25117>
 
-Junio C Hamano wrote:
+Jakub Narebski wrote:
 
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
->> Stop pretending that gitweb is rename-aware, and remove --full-history
->> option to git-rev-list in git_history (for "history" action):
-> 
-> Where did you get the idea that --full-history has anything to
-> do with renames?
+> I wonder which version is faster: --full-history, or filter using=20
+> diff-tree?
+>=20
+> ab -n 10 "http://localhost/cgi-bin/gitweb/gitweb.cgi?p=3Dgit.git;a=3D=
+history;hb=3Dnext;f=3Dgitweb/gitweb.perl"
+> (ApacheBench, Version 2.0.41-dev <$Revision: 1.141 $> apache-2.0) say=
+s
+>=20
+> =A0 Requests per second: =A0 =A00.09 [#/sec] (mean)
+> =A0 Time per request: =A0 =A0 =A0 10918.552 [ms] (mean)
+> =A0 Time per request: =A0 =A0 =A0 10918.552 [ms] (mean, across all co=
+ncurrent requests)
+> =A0 Transfer rate: =A0 =A0 =A0 =A0 =A02.13 [Kbytes/sec] received
+>=20
+> =A0 Connection Times (ms)
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 min =A0mean[+/-sd] median =A0 =A0 max
+> =A0 Connect: =A0 =A0 =A0 =A00 =A0 =A00 =A0 =A0 0.0 =A0 =A0 =A00 =A0 =A0=
+ =A0 0
+> =A0 Processing: =A08851 10917 2776.1 =A0 9284 =A0 16420
+> =A0 Waiting: =A0 =A0 =A0407 =A0457 =A0 =A095.1 =A0 =A0428 =A0 =A0 721
+> =A0 Total: =A0 =A0 =A0 8851 10917 2776.1 =A0 9284 =A0 16420
 
-> Message-ID: <20060701005924.7726.qmail@web31812.mail.mud.yahoo.com>
-  http://marc.theaimsgroup.com/?l=git&m=115171557714437
-> Message-ID: <Pine.LNX.4.64.0606301818480.12404@g5.osdl.org>
-  http://marc.theaimsgroup.com/?l=git&m=115171683714119
+Adding "--remove-empty" (would this change output for git_history much?=
+)
+changes this to:
 
-Ooops, sorry, my mistake. Still, even if the patch is to be dropped,
-the proposal about rename detection is still valid.
-
-I wonder which version is faster: --full-history, or filter using 
-diff-tree?
-
-ab -n 10 "http://localhost/cgi-bin/gitweb/gitweb.cgi?p=git.git;a=history;hb=next;f=gitweb/gitweb.perl"
-(ApacheBench, Version 2.0.41-dev <$Revision: 1.141 $> apache-2.0) says
-
-  Requests per second:    0.09 [#/sec] (mean)
-  Time per request:       10918.552 [ms] (mean)
-  Time per request:       10918.552 [ms] (mean, across all concurrent requests)
-  Transfer rate:          2.13 [Kbytes/sec] received
-
-  Connection Times (ms)
-                min  mean[+/-sd] median     max
-  Connect:        0    0     0.0      0       0
-  Processing:  8851 10917 2776.1   9284   16420
-  Waiting:      407  457    95.1    428     721
-  Total:       8851 10917 2776.1   9284   16420
-
-for --full-history version, and
-
-  Requests per second:    0.11 [#/sec] (mean)
-  Time per request:       9076.865 [ms] (mean)
-  Time per request:       9076.865 [ms] (mean, across all concurrent requests)
-  Transfer rate:          2.57 [Kbytes/sec] received
+  Requests per second:    0.75 [#/sec] (mean)
+  Time per request:       1341.702 [ms] (mean)
+  Time per request:       1341.702 [ms] (mean, across all concurrent re=
+quests)
+  Transfer rate:          17.37 [Kbytes/sec] received
 
   Connection Times (ms)
                 min  mean[+/-sd] median   max
   Connect:        0    0   0.0      0       0
-  Processing:  8741 9076 271.7   9100    9581
-  Waiting:      299  405  49.5    404     507
-  Total:       8741 9076 271.7   9100    9581
+  Processing:  1208 1340 206.6   1241    1729
+  Waiting:      386  408  36.6    403     510
+  Total:       1208 1340 206.6   1241    1729
 
-for the pipe through git-diff-tree version, both with very similar
-times (check out median column), although --full-history version
-seems slightly slower...
-
-Still, it is ab on workstation, not separate server, an only average 
-over 10 requests.
-
-And 
-1025:jnareb@roke:~/git> time git rev-list next -- gitweb/gitweb.perl
-  [...]
-  real    0m2.623s
-  user    0m2.536s
-  sys     0m0.016s
-1024:jnareb@roke:~/git> time git rev-list next | git diff-tree -r --stdin -- gitweb/gitweb.perl
-  [...]
-  real    0m6.857s
-  user    0m6.024s
-  sys     0m0.068s
--- 
+--=20
 Jakub Narebski
 Warsaw, Poland
 ShadeHawk on #git
