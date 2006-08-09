@@ -1,65 +1,170 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 8] autoconf: It is --without-python, not --no-python
-Date: Wed, 9 Aug 2006 02:19:22 +0200
-Message-ID: <200608090219.22769.jnareb@gmail.com>
-References: <200608081834.09271.jnareb@gmail.com>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH] Update git-init-db(1) and documentation of core.sharedRepository
+Date: Wed, 9 Aug 2006 02:26:23 +0200
+Message-ID: <20060809002623.GB10115@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Aug 09 02:19:20 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Aug 09 02:26:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GAbn1-0001Qb-Bs
-	for gcvg-git@gmane.org; Wed, 09 Aug 2006 02:19:16 +0200
+	id 1GAbu6-0002VZ-Rk
+	for gcvg-git@gmane.org; Wed, 09 Aug 2006 02:26:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030366AbWHIATM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 Aug 2006 20:19:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030367AbWHIATM
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Aug 2006 20:19:12 -0400
-Received: from nf-out-0910.google.com ([64.233.182.185]:32093 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1030366AbWHIATL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Aug 2006 20:19:11 -0400
-Received: by nf-out-0910.google.com with SMTP id a4so21000nfc
-        for <git@vger.kernel.org>; Tue, 08 Aug 2006 17:19:10 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=LzJUx83rn2bBy5W9v3T82Lndu+dxdrTuuedX3TmC/AxHCDoyteladeb3kk9jVku702MBz8sJ4VAz9vmYkKsHoIr7vpaIXUYlENLfK50Cf4LlFaYq7kuRq0cFMxvgtcrICbUIwfl3VvW/kf5Z6OvMG11DuvB4I3AyEnIZp4qMCG0=
-Received: by 10.49.8.10 with SMTP id l10mr981772nfi;
-        Tue, 08 Aug 2006 17:19:10 -0700 (PDT)
-Received: from host-81-190-31-92.torun.mm.pl ( [81.190.31.92])
-        by mx.gmail.com with ESMTP id k23sm1439868nfc.2006.08.08.17.19.09;
-        Tue, 08 Aug 2006 17:19:10 -0700 (PDT)
+	id S1030374AbWHIA03 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 Aug 2006 20:26:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030378AbWHIA03
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Aug 2006 20:26:29 -0400
+Received: from [130.225.96.91] ([130.225.96.91]:8903 "EHLO mgw1.diku.dk")
+	by vger.kernel.org with ESMTP id S1030374AbWHIA02 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Aug 2006 20:26:28 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id 905DE770002;
+	Wed,  9 Aug 2006 02:26:25 +0200 (CEST)
+Received: from mgw1.diku.dk ([127.0.0.1])
+ by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 03042-12; Wed,  9 Aug 2006 02:26:24 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id F23C4770001;
+	Wed,  9 Aug 2006 02:26:23 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 291F46DF845; Wed,  9 Aug 2006 02:25:26 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id D849E629EB; Wed,  9 Aug 2006 02:26:23 +0200 (CEST)
 To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-In-Reply-To: <200608081834.09271.jnareb@gmail.com>
 Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
+X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25105>
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+Combine option descriptions in git-init-db(1). Reflect the changes to
+additionally allow all users to read the created git repository.
+
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 ---
- configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/configure.ac b/configure.ac
-index ae56462..e890131 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -78,7 +78,7 @@ #
- # Define NO_PYTHON if you want to lose all benefits of the recursive merge.
- # Define PYTHON_PATH to provide path to Python.
- AC_ARG_WITH(python,[AS_HELP_STRING([--with-python=PATH], [provide PATH to python])
--AS_HELP_STRING([--no-python], [don't use python scripts])],
-+AS_HELP_STRING([--without-python], [don't use python scripts])],
-  [if test "$withval" = "no"; then \
-     NO_PYTHON=YesPlease; \
-   elif test "$withval" = "yes"; then \
+I noticed that the git-init-db(1) --template description says: "The
+default template directory is `/usr/share/git-core/templates`", which
+makes me wonder if we should substitute these hard-coded paths when
+installing the man pages ...
+
+   $ sed \
+	-e 's#/usr/share/git-core/templates#$(template_dir)#'
+	... etc ...
+
+... at least git-clone(1) also hard-codes this path.
+
+ Documentation/config.txt      |    9 +++++--
+ Documentation/git-init-db.txt |   51 ++++++++++++++++++++++++++++-------------
+ 2 files changed, 41 insertions(+), 19 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index d89916b..4de7d72 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -83,9 +83,12 @@ core.repositoryFormatVersion::
+ 	version.
+ 
+ core.sharedRepository::
+-	If true, the repository is made shareable between several users
+-	in a group (making sure all the files and objects are group-writable).
+-	See gitlink:git-init-db[1]. False by default.
++	When 'group' (or 'true'), the repository is made shareable between
++	several users in a group (making sure all the files and objects are
++	group-writable). When 'all' (or 'world' or 'everybody'), the
++	repository will be readable by all users, additionally to being
++	group-shareable. When 'umask' (or 'false'), git will use permissions
++	reported by umask(2). See gitlink:git-init-db[1]. False by default.
+ 
+ core.warnAmbiguousRefs::
+ 	If true, git will warn you if the ref name you passed it is ambiguous
+diff --git a/Documentation/git-init-db.txt b/Documentation/git-init-db.txt
+index 0a4fc14..3d04096 100644
+--- a/Documentation/git-init-db.txt
++++ b/Documentation/git-init-db.txt
+@@ -8,17 +8,47 @@ git-init-db - Creates an empty git repos
+ 
+ SYNOPSIS
+ --------
+-'git-init-db' [--template=<template_directory>] [--shared]
++'git-init-db' [--template=<template_directory>] [--shared[=<permissions>]]
+ 
+ 
+ OPTIONS
+ -------
++
++--
++
+ --template=<template_directory>::
+-	Provide the directory from which templates will be used.
+-	The default template directory is `/usr/share/git-core/templates`.
+ 
+---shared::
+-	Specify that the git repository is to be shared amongst several users.
++Provide the directory from which templates will be used.  The default template
++directory is `/usr/share/git-core/templates`.
++
++When specified, `<template_directory>` is used as the source of the template
++files rather than the default.  The template files include some directory
++structure, some suggested "exclude patterns", and copies of non-executing
++"hook" files.  The suggested patterns and hook files are all modifiable and
++extensible.
++
++--shared[={false|true|umask|group|all|world|everybody}]::
++
++Specify that the git repository is to be shared amongst several users.  This
++allows users belonging to the same group to push into that
++repository.  When specified, the config variable "core.sharedRepository" is
++set so that files and directories under `$GIT_DIR` are created with the
++requested permissions.  When not specified, git will use permissions reported
++by umask(2).
++
++The option can have the following values, defaulting to 'group' if no value
++is given:
++
++ - 'umask' (or 'false'): Use permissions reported by umask(2). The default,
++   when `--shared` is not specified.
++
++ - 'group' (or 'true'): Make the repository group-writable, (and g+sx, since
++   the git group may be not the primary group of all users).
++
++ - 'all' (or 'world' or 'everybody'): Same as 'group', but make the repository
++   readable by all users.
++
++--
+ 
+ 
+ DESCRIPTION
+@@ -29,12 +59,6 @@ template files.
+ An initial `HEAD` file that references the HEAD of the master branch
+ is also created.
+ 
+-If `--template=<template_directory>` is specified, `<template_directory>`
+-is used as the source of the template files rather than the default.
+-The template files include some directory structure, some suggested
+-"exclude patterns", and copies of non-executing "hook" files.  The
+-suggested patterns and hook files are all modifiable and extensible.
+-
+ If the `$GIT_DIR` environment variable is set then it specifies a path
+ to use instead of `./.git` for the base of the repository.
+ 
+@@ -42,11 +66,6 @@ If the object storage directory is speci
+ environment variable then the sha1 directories are created underneath -
+ otherwise the default `$GIT_DIR/objects` directory is used.
+ 
+-A shared repository allows users belonging to the same group to push into that
+-repository. When specifying `--shared` the config variable "core.sharedRepository" 
+-is set to 'true' so that directories under `$GIT_DIR` are made group writable
+-(and g+sx, since the git group may be not the primary group of all users).
+-
+ Running `git-init-db` in an existing repository is safe. It will not overwrite
+ things that are already there. The primary reason for rerunning `git-init-db`
+ is to pick up newly added templates.
 -- 
-1.4.1.1
+Jonas Fonseca
