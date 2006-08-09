@@ -1,63 +1,77 @@
-From: Rutger Nijlunsing <rutger@nospam.com>
+From: Alan Larkin <nobrow@eircom.net>
 Subject: Re: setting up a git repo on apache
-Date: Wed, 9 Aug 2006 18:43:05 +0200
-Organization: M38c
-Message-ID: <20060809164305.GA7841@nospam.com>
-References: <44DA060B.2050601@eircom.net>
-Reply-To: git@wingding.demon.nl
+Date: Wed, 09 Aug 2006 18:01:51 +0100
+Message-ID: <44DA14FF.7080402@eircom.net>
+References: <44DA060B.2050601@eircom.net> <Pine.LNX.4.63.0608091831320.1800@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 09 18:43:40 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Aug 09 19:02:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GAr9J-0000qp-10
-	for gcvg-git@gmane.org; Wed, 09 Aug 2006 18:43:19 +0200
+	id 1GArRN-0004bm-3r
+	for gcvg-git@gmane.org; Wed, 09 Aug 2006 19:01:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750940AbWHIQnK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 Aug 2006 12:43:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751017AbWHIQnK
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Aug 2006 12:43:10 -0400
-Received: from post-24.mail.nl.demon.net ([194.159.73.194]:60375 "EHLO
-	post-24.mail.nl.demon.net") by vger.kernel.org with ESMTP
-	id S1750996AbWHIQnJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Aug 2006 12:43:09 -0400
-Received: from wingding.demon.nl ([82.161.27.36]:38413)
-	by post-24.mail.nl.demon.net with esmtp (Exim 4.51)
-	id 1GAr99-0002zR-H2; Wed, 09 Aug 2006 16:43:07 +0000
-Received: from rutger by wingding.demon.nl with local (Exim 4.62)
-	(envelope-from <rutger@wingding.demon.nl>)
-	id 1GAr97-0002rB-Ny; Wed, 09 Aug 2006 18:43:05 +0200
-To: Alan Larkin <nobrow@eircom.net>
-Content-Disposition: inline
-In-Reply-To: <44DA060B.2050601@eircom.net>
-User-Agent: Mutt/1.5.12-2006-07-14
+	id S1750878AbWHIRBx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 Aug 2006 13:01:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751156AbWHIRBx
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Aug 2006 13:01:53 -0400
+Received: from mail04.svc.cra.dublin.eircom.net ([159.134.118.20]:8495 "HELO
+	mail04.svc.cra.dublin.eircom.net") by vger.kernel.org with SMTP
+	id S1750878AbWHIRBw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Aug 2006 13:01:52 -0400
+Received: (qmail 51161 messnum 5271304 invoked from network[193.1.133.115/affront.ucd.ie]); 9 Aug 2006 17:01:51 -0000
+Received: from affront.ucd.ie (HELO ?193.1.133.115?) (193.1.133.115)
+  by mail04.svc.cra.dublin.eircom.net (qp 51161) with SMTP; 9 Aug 2006 17:01:51 -0000
+User-Agent: Thunderbird 1.5.0.5 (X11/20060719)
+To: git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.63.0608091831320.1800@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25127>
 
-On Wed, Aug 09, 2006 at 04:58:03PM +0100, Alan Larkin wrote:
-> New user ... Hi.
+Johannes Schindelin wrote:
+> Hi,
 > 
-> I realise that this is really an apache question, but Im not getting any
-> help from their mailing lists and figure that there must be someone here
-> whos done this.
+> On Wed, 9 Aug 2006, Alan Larkin wrote:
 > 
-> Can someone please help me get a GIT repo running on Apache 2.
-> Specifically my problem is with DAV.
+>> $ git push http://localhost:/webdav/git/myproj master
+>> Error: no DAV locking support on remote repo
 > 
-> $ git push http://localhost:/webdav/git/myproj master
-> Error: no DAV locking support on remote repo
+> What do the access_log and the error_log say about this?
+> 
+> It could also be that you have a "Require valid-user" somewhere in there 
+> by mistake.
+> 
+> Further, you might want to check if it works _with_ authentication (I 
+> never tried without, and I am not sure if it should be allowed to begin 
+> with).
+> 
+> There is a recent thread by Junio, Rutger and me, which might help you:
+> 
+> http://thread.gmane.org/gmane.comp.version-control.git/24816/focus=24861
+> 
+> Hth,
+> Dscho
+> 
+> 
+> 
 
-This 'localhost:' is a typo, right?
+I initially had authentication in place (which was working insofar as I
+couldnt browse the repo without logging in) but I removed it to simplify
+the process of tracking down the DAV problem. I have also removed all
+.htaccess files so nothing can be overriding apache2.conf and that only
+contains:
 
-(just to be sure)
+<Directory /var/www/webdav>
+	Order allow,deny
+        Allow from localhost
+        DAV on
+</Directory>
 
 
--- 
-Rutger Nijlunsing ---------------------------------- eludias ed dse.nl
-never attribute to a conspiracy which can be explained by incompetence
-----------------------------------------------------------------------
+Ill look into that previous thread. Apologies for not finding it before
+posting.
