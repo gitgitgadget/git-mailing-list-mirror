@@ -1,90 +1,107 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH and RFC] gitweb: Remove --full-history from git_history
-Date: Wed, 09 Aug 2006 14:56:36 +0200
-Organization: At home
-Message-ID: <ebcm1j$6gi$1@sea.gmane.org>
-References: <200608091257.19461.jnareb@gmail.com> <7vu04m413f.fsf@assigned-by-dhcp.cox.net> <ebcivb$t6m$1@sea.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 1/2] merge-recur: do not call git-write-tree
+Date: Wed, 9 Aug 2006 15:04:16 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0608091503170.1800@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Wed Aug 09 14:57:22 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Wed Aug 09 15:04:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GAncR-0002B1-Kv
-	for gcvg-git@gmane.org; Wed, 09 Aug 2006 14:57:08 +0200
+	id 1GAnjS-0003bZ-Du
+	for gcvg-git@gmane.org; Wed, 09 Aug 2006 15:04:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750730AbWHIM5D convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 9 Aug 2006 08:57:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750737AbWHIM5D
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Aug 2006 08:57:03 -0400
-Received: from main.gmane.org ([80.91.229.2]:33240 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750730AbWHIM5B (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Aug 2006 08:57:01 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GAnc5-000267-KX
-	for git@vger.kernel.org; Wed, 09 Aug 2006 14:56:45 +0200
-Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 09 Aug 2006 14:56:45 +0200
-Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 09 Aug 2006 14:56:45 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1750740AbWHINET (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 Aug 2006 09:04:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750747AbWHINET
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Aug 2006 09:04:19 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52392 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750740AbWHINES (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Aug 2006 09:04:18 -0400
+Received: (qmail invoked by alias); 09 Aug 2006 13:04:17 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp041) with SMTP; 09 Aug 2006 15:04:17 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25118>
 
-Jakub Narebski wrote:
 
-> I wonder which version is faster: --full-history, or filter using=20
-> diff-tree?
->=20
-> ab -n 10 "http://localhost/cgi-bin/gitweb/gitweb.cgi?p=3Dgit.git;a=3D=
-history;hb=3Dnext;f=3Dgitweb/gitweb.perl"
-> (ApacheBench, Version 2.0.41-dev <$Revision: 1.141 $> apache-2.0) say=
-s
->=20
-> =A0 Requests per second: =A0 =A00.09 [#/sec] (mean)
-> =A0 Time per request: =A0 =A0 =A0 10918.552 [ms] (mean)
-> =A0 Time per request: =A0 =A0 =A0 10918.552 [ms] (mean, across all co=
-ncurrent requests)
-> =A0 Transfer rate: =A0 =A0 =A0 =A0 =A02.13 [Kbytes/sec] received
->=20
-> =A0 Connection Times (ms)
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 min =A0mean[+/-sd] median =A0 =A0 max
-> =A0 Connect: =A0 =A0 =A0 =A00 =A0 =A00 =A0 =A0 0.0 =A0 =A0 =A00 =A0 =A0=
- =A0 0
-> =A0 Processing: =A08851 10917 2776.1 =A0 9284 =A0 16420
-> =A0 Waiting: =A0 =A0 =A0407 =A0457 =A0 =A095.1 =A0 =A0428 =A0 =A0 721
-> =A0 Total: =A0 =A0 =A0 8851 10917 2776.1 =A0 9284 =A0 16420
+Since merge-recur is in C, and uses libgit, it can call the relevant
+functions directly, without writing the index file.
 
-Adding "--remove-empty" (would this change output for git_history much?=
-)
-changes this to:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ merge-recursive.c |   44 ++++++++++++++++++++------------------------
+ 1 files changed, 20 insertions(+), 24 deletions(-)
 
-  Requests per second:    0.75 [#/sec] (mean)
-  Time per request:       1341.702 [ms] (mean)
-  Time per request:       1341.702 [ms] (mean, across all concurrent re=
-quests)
-  Transfer rate:          17.37 [Kbytes/sec] received
-
-  Connection Times (ms)
-                min  mean[+/-sd] median   max
-  Connect:        0    0   0.0      0       0
-  Processing:  1208 1340 206.6   1241    1729
-  Waiting:      386  408  36.6    403     510
-  Total:       1208 1340 206.6   1241    1729
-
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+diff --git a/merge-recursive.c b/merge-recursive.c
+index f5c0080..b8b0951 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -248,38 +248,34 @@ static int git_merge_trees(int index_onl
+ 	return rc;
+ }
+ 
+-/*
+- * TODO: this can be streamlined by refactoring builtin-write-tree.c
+- */
+ static struct tree *git_write_tree(void)
+ {
+-	FILE *fp;
+-	int rc;
+-	char buf[41];
+-	unsigned char sha1[20];
+-	int ch;
+-	unsigned i = 0;
++	struct tree *result = NULL;
++
+ 	if (cache_dirty) {
++		unsigned i;
+ 		for (i = 0; i < active_nr; i++) {
+ 			struct cache_entry *ce = active_cache[i];
+ 			if (ce_stage(ce))
+ 				return NULL;
+ 		}
+-		flush_cache();
+-	}
+-	fp = popen("git-write-tree 2>/dev/null", "r");
+-	while ((ch = fgetc(fp)) != EOF)
+-		if (i < sizeof(buf)-1 && ch >= '0' && ch <= 'f')
+-			buf[i++] = ch;
+-		else
+-			break;
+-	rc = pclose(fp);
+-	if (rc == -1 || WEXITSTATUS(rc))
+-		return NULL;
+-	buf[i] = '\0';
+-	if (get_sha1(buf, sha1) != 0)
+-		return NULL;
+-	return lookup_tree(sha1);
++	} else
++		read_cache_from(getenv("GIT_INDEX_FILE"));
++
++	if (!active_cache_tree)
++		active_cache_tree = cache_tree();
++
++	if (!cache_tree_fully_valid(active_cache_tree) &&
++			cache_tree_update(active_cache_tree,
++				active_cache, active_nr, 0, 0) < 0)
++		die("error building trees");
++
++	result = lookup_tree(active_cache_tree->sha1);
++
++	flush_cache();
++	cache_dirty = 0;
++
++	return result;
+ }
+ 
+ static int save_files_dirs(const unsigned char *sha1,
+-- 
+1.4.2.rc3.g55597-dirty
