@@ -1,81 +1,54 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Strange output of git-diff-tree
-Date: Wed, 09 Aug 2006 15:24:54 +0200
-Organization: At home
-Message-ID: <ebcnml$btf$1@sea.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Workaround for strange cmp bug
+Date: Wed, 9 Aug 2006 15:42:11 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0608091540040.1800@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0608091221550.1800@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v3bc65gk0.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0608091309590.1800@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Wed Aug 09 15:25:10 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 09 15:42:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GAo3S-0007sk-04
-	for gcvg-git@gmane.org; Wed, 09 Aug 2006 15:25:02 +0200
+	id 1GAoK9-0002kz-Ut
+	for gcvg-git@gmane.org; Wed, 09 Aug 2006 15:42:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750770AbWHINY6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 Aug 2006 09:24:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750771AbWHINY6
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Aug 2006 09:24:58 -0400
-Received: from main.gmane.org ([80.91.229.2]:698 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750770AbWHINY6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Aug 2006 09:24:58 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GAo3H-0007qQ-OU
-	for git@vger.kernel.org; Wed, 09 Aug 2006 15:24:51 +0200
-Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 09 Aug 2006 15:24:51 +0200
-Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 09 Aug 2006 15:24:51 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1750802AbWHINmO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 Aug 2006 09:42:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750796AbWHINmO
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Aug 2006 09:42:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35233 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750802AbWHINmN (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Aug 2006 09:42:13 -0400
+Received: (qmail invoked by alias); 09 Aug 2006 13:42:12 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp001) with SMTP; 09 Aug 2006 15:42:12 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <Pine.LNX.4.63.0608091309590.1800@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25122>
 
-First (noticed by matled) is that for git-diff-tree with single tree
-as an argument it outputs fist commit-id of commit given at input. 
-It is not mentioned in documentation and I think totally unnecessary:
+Hi,
 
-1038:jnareb@roke:~/git> git diff-tree --abbrev origin
-d5dc6a76d49367cddc015e01d2e9aa22e64d7e28
-:040000 040000 44fb36d... 1c26294... M  Documentation
+On Wed, 9 Aug 2006, Johannes Schindelin wrote:
 
+> On Wed, 9 Aug 2006, Junio C Hamano wrote:
+> 
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > 
+> > > [ a whole lot about the output of cmp when calling a test with -v ]
 
-Second, for some combination of options for it returns "..." instead of
-0{40} for file creation. It seems that the culprit is "--find-copies-harder"
-option:
+Thinking about it again, I remember replacing 'cmp' by 'diff -u' quite a 
+few times, because the output of the latter was even more helpful... And 
+besides, 'diff -u' is not broken in my setup ;-)
 
-1043:jnareb@roke:~/git> git rev-list --full-history next | \
- git diff-tree --find-copies-harder -B -C -M -r --full-history --stdin \
- -- gitweb/gitweb.perl gitweb/gitweb.cgi gitweb.cgi | less | grep " A"
-:000000 100755 ... 017664b8f440f5ec151cf5653245ee02aefd3db2 A   gitweb.cgi
-
-1047:jnareb@roke:~/git> git rev-list --full-history next | \
- git diff-tree -B -C -M -r --stdin \
- -- gitweb/gitweb.perl gitweb/gitweb.cgi gitweb.cgi | less | grep " A"
-:000000 100755 0000000000000000000000000000000000000000 017664b8f440f5ec151cf5653245ee02aefd3db2 A     gitweb.cgi
-
-
-Third, while it detects that gitweb/gitweb.perl was renamed from 
-gitweb/gitweb.cgi:
-  [...]  R100   gitweb/gitweb.cgi       gitweb/gitweb.perl
-it does not notice that gitweb/gitweb.cgi was gitweb.cgi in 
-1130ef362fc8d9c3422c23f5d5a833e93d3f5c13.
-
-
-All those for git version 1.4.1.1
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Ciao,
+Dscho
