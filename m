@@ -1,63 +1,58 @@
-From: Alan Larkin <nobrow@eircom.net>
-Subject: setting up a git repo on apache
-Date: Wed, 09 Aug 2006 16:58:03 +0100
-Message-ID: <44DA060B.2050601@eircom.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: setting up a git repo on apache
+Date: Wed, 9 Aug 2006 18:35:26 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0608091831320.1800@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <44DA060B.2050601@eircom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Aug 09 17:58:30 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 09 18:36:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GAqRd-0007sP-VR
-	for gcvg-git@gmane.org; Wed, 09 Aug 2006 17:58:10 +0200
+	id 1GAr1z-0007qV-0k
+	for gcvg-git@gmane.org; Wed, 09 Aug 2006 18:35:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751081AbWHIP6G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 Aug 2006 11:58:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751041AbWHIP6F
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Aug 2006 11:58:05 -0400
-Received: from mail09.svc.cra.dublin.eircom.net ([159.134.118.25]:1801 "HELO
-	mail09.svc.cra.dublin.eircom.net") by vger.kernel.org with SMTP
-	id S1751081AbWHIP6E (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Aug 2006 11:58:04 -0400
-Received: (qmail 22431 messnum 2876717 invoked from network[193.1.133.115/affront.ucd.ie]); 9 Aug 2006 15:58:03 -0000
-Received: from affront.ucd.ie (HELO ?193.1.133.115?) (193.1.133.115)
-  by mail09.svc.cra.dublin.eircom.net (qp 22431) with SMTP; 9 Aug 2006 15:58:03 -0000
-User-Agent: Thunderbird 1.5.0.5 (X11/20060719)
-To: git@vger.kernel.org
+	id S1751145AbWHIQf3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 Aug 2006 12:35:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751097AbWHIQf3
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Aug 2006 12:35:29 -0400
+Received: from mail.gmx.de ([213.165.64.20]:9372 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751017AbWHIQf1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Aug 2006 12:35:27 -0400
+Received: (qmail invoked by alias); 09 Aug 2006 16:35:26 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp037) with SMTP; 09 Aug 2006 18:35:26 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Alan Larkin <nobrow@eircom.net>
+In-Reply-To: <44DA060B.2050601@eircom.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25124>
 
-New user ... Hi.
+Hi,
 
-I realise that this is really an apache question, but Im not getting any
-help from their mailing lists and figure that there must be someone here
-whos done this.
+On Wed, 9 Aug 2006, Alan Larkin wrote:
 
-Can someone please help me get a GIT repo running on Apache 2.
-Specifically my problem is with DAV.
+> $ git push http://localhost:/webdav/git/myproj master
+> Error: no DAV locking support on remote repo
 
-$ git push http://localhost:/webdav/git/myproj master
-Error: no DAV locking support on remote repo
+What do the access_log and the error_log say about this?
 
-I have dav_fs.conf, dav_fs.load, and dav.load in mods-enabled. They
-load the modules and set
+It could also be that you have a "Require valid-user" somewhere in there 
+by mistake.
 
-DAVLockDB /var/lock/apache2/DAV.lock
+Further, you might want to check if it works _with_ authentication (I 
+never tried without, and I am not sure if it should be allowed to begin 
+with).
 
-Apache owns and has full access to that directory.
+There is a recent thread by Junio, Rutger and me, which might help you:
 
-I have removed all .htaccess files below /var/www/webdav. I am not
-using any form of authentication. I have tried with and without aliases
-for the repo directory. I have tried setting DAV on for
-/var/www/webdav/git, and /var/www/webdav/git/myproj.
+http://thread.gmane.org/gmane.comp.version-control.git/24816/focus=24861
 
-Its always the same. No DAV locking support.
-
-If could help or even point me to some appropriate documentation (Ive
-looked and looked and cant find any) Id appreciate it.
-
-Thanks.
+Hth,
+Dscho
