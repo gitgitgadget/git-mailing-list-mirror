@@ -1,160 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Strange output of git-diff-tree
-Date: Wed, 09 Aug 2006 13:17:43 -0700
-Message-ID: <7v7j1h3bq0.fsf@assigned-by-dhcp.cox.net>
-References: <ebcnml$btf$1@sea.gmane.org>
-	<7vfyg54vjb.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: HOWTO set up a repository which can be pushed into over HTTP
+Date: Wed, 9 Aug 2006 22:20:04 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0608092215240.13885@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0608042021300.1800@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vac6kjoxh.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0608050044000.1800@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vd5bd6ku8.fsf@assigned-by-dhcp.cox.net> <20060808190220.GA6001@nospam.com>
+ <Pine.LNX.4.63.0608090049480.1800@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060809193118.GC7841@nospam.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 09 22:18:03 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 09 22:20:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GAuV0-0008Qa-VX
-	for gcvg-git@gmane.org; Wed, 09 Aug 2006 22:17:55 +0200
+	id 1GAuXF-0000Ls-QC
+	for gcvg-git@gmane.org; Wed, 09 Aug 2006 22:20:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751357AbWHIURq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 Aug 2006 16:17:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751349AbWHIURq
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Aug 2006 16:17:46 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:1501 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751362AbWHIURp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Aug 2006 16:17:45 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060809201744.UHNI27846.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 9 Aug 2006 16:17:44 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <7vfyg54vjb.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 09 Aug 2006 11:24:24 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751363AbWHIUUJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 Aug 2006 16:20:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751362AbWHIUUI
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Aug 2006 16:20:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35788 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751363AbWHIUUG (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Aug 2006 16:20:06 -0400
+Received: (qmail invoked by alias); 09 Aug 2006 20:20:05 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp001) with SMTP; 09 Aug 2006 22:20:05 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@wingding.demon.nl
+In-Reply-To: <20060809193118.GC7841@nospam.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25142>
 
-Junio C Hamano <junkio@cox.net> writes:
+Hi,
 
-> Well spotted.  The minimum reproduction recipe is:
->
->      $ git diff-tree --find-copies-harder 2ad9331
->
-> Will look into it.
+On Wed, 9 Aug 2006, Rutger Nijlunsing wrote:
 
-This is because the original command line has -C and -M in this
-order, and the minimum reproduction does not have either.
+> > [...] but refer the user to the Apache manual if she cannot find it.
+> 
+> Ok, but I find it always very convenient when someone describes the
+> situation for _me_. So if other distro's would join in, I would be
+> delighted. And indeed a general fallback to the Apache documentation
+> would be good for all distro's (+ homegrown) not covered.
 
-diff_setup_done() "silently" complains about it but the caller
-was not taking notice.
+If everybody did this, you would not _find_ your distro-specific things 
+;-)
 
-What happens is that the check at the top of diff_setup_done()
-fails, and does not set up options->abbrev to 40 upon seeing
-abbrev is set to zero.  This later causes find_unique_abbrev()
-to be called with len=0, which returns an empty string, because
-it is not expecing to get something like that.
+But I agree, Debian is a bureaucrat's dream. I positively _hate_ it. So 
+much so, that I left Knoppix behind.
 
-Incidentally, there is another funny breakage related to this.
+> [lots of explanations of Debian, Windows Explorer, etc.]
 
-	$ git diff-tree --find-copies-harder v1.4.1
+Thanks for clearing these up for me!
 
-complains quite a lot about "feeding unmodified" file pairs.
-This is because "harder" is given without -C.
+> Do you want to finish it, or should I do a reedit?
 
-So there are three things to fix:
+I am a little short on time, and I want to finish the merge-recur stuff, 
+so I would be really grateful if you did it.
 
- (1) callers of diff_setup_done() that do not check and die
-     should do so like others.
-
- (2) find_unique_abbrev() should prepare being called with
-     len=0.
-
- (3) make --find-copies-harder imply -C.
-
-Strictly speaking, the third is an incompatible change, but it
-makes something that used to be an invalid/undefined operation
-to a valid one, so it would not be so bad.
-
-*1*
-
-diff --git a/builtin-diff.c b/builtin-diff.c
-index 1075855..dd9886c 100644
---- a/builtin-diff.c
-+++ b/builtin-diff.c
-@@ -253,7 +253,8 @@ int cmd_diff(int argc, const char **argv
- 	argc = setup_revisions(argc, argv, &rev, NULL);
- 	if (!rev.diffopt.output_format) {
- 		rev.diffopt.output_format = DIFF_FORMAT_PATCH;
--		diff_setup_done(&rev.diffopt);
-+		if (diff_setup_done(&rev.diffopt) < 0)
-+			die("diff_setup_done failed");
- 	}
- 
- 	/* Do we have --cached and not have a pending object, then
-diff --git a/revision.c b/revision.c
-index a58257a..5a91d06 100644
---- a/revision.c
-+++ b/revision.c
-@@ -936,7 +936,8 @@ int setup_revisions(int argc, const char
- 			revs->diffopt.output_format = DIFF_FORMAT_PATCH;
- 	}
- 	revs->diffopt.abbrev = revs->abbrev;
--	diff_setup_done(&revs->diffopt);
-+	if (diff_setup_done(&revs->diffopt) < 0)
-+		die("diff_setup_done failed");
- 
- 	return left;
- }
-
-*2*
-
-diff --git a/sha1_name.c b/sha1_name.c
-index 5fe8e5d..c5a05fa 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -193,7 +193,7 @@ const char *find_unique_abbrev(const uns
- 
- 	is_null = !memcmp(sha1, null_sha1, 20);
- 	memcpy(hex, sha1_to_hex(sha1), 40);
--	if (len == 40)
-+	if (len == 40 || !len)
- 		return hex;
- 	while (len < 40) {
- 		unsigned char sha1_ret[20];
-
-*3*
-
-diff --git a/diff.c b/diff.c
-index 895c137..02a409d 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1515,9 +1515,10 @@ void diff_setup(struct diff_options *opt
- 
- int diff_setup_done(struct diff_options *options)
- {
--	if ((options->find_copies_harder &&
--	     options->detect_rename != DIFF_DETECT_COPY) ||
--	    (0 <= options->rename_limit && !options->detect_rename))
-+	if (options->find_copies_harder)
-+		options->detect_rename = DIFF_DETECT_COPY;
-+
-+	if ((0 <= options->rename_limit && !options->detect_rename)
- 		return -1;
- 
- 	if (options->output_format & (DIFF_FORMAT_NAME |
-diff --git a/sha1_name.c b/sha1_name.c
-index 5fe8e5d..c5a05fa 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -193,7 +193,7 @@ const char *find_unique_abbrev(const uns
- 
- 	is_null = !memcmp(sha1, null_sha1, 20);
- 	memcpy(hex, sha1_to_hex(sha1), 40);
--	if (len == 40)
-+	if (len == 40 || !len)
- 		return hex;
- 	while (len < 40) {
- 		unsigned char sha1_ret[20];
+Ciao,
+Dscho
