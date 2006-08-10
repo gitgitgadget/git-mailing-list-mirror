@@ -1,48 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/9] Add has_extension()
-Date: Thu, 10 Aug 2006 18:25:43 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0608101825000.10541@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <11552221582769-git-send-email-rene.scharfe@lsrfire.ath.cx>
- <11552221581171-git-send-email-rene.scharfe@lsrfire.ath.cx>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: diff machinery cleanup
+Date: Thu, 10 Aug 2006 10:06:42 -0700
+Message-ID: <7vzmecv7tp.fsf@assigned-by-dhcp.cox.net>
+References: <20060810082455.GA30739@coredump.intra.peff.net>
+	<7vejvpvsni.fsf@assigned-by-dhcp.cox.net>
+	<20060810103836.GA1317@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 10 18:26:25 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 10 19:06:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GBDME-0000vS-Tm
-	for gcvg-git@gmane.org; Thu, 10 Aug 2006 18:26:07 +0200
+	id 1GBDzc-0000xj-R8
+	for gcvg-git@gmane.org; Thu, 10 Aug 2006 19:06:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161442AbWHJQZr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Aug 2006 12:25:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161425AbWHJQZq
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Aug 2006 12:25:46 -0400
-Received: from mail.gmx.net ([213.165.64.20]:62672 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1161442AbWHJQZp (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Aug 2006 12:25:45 -0400
-Received: (qmail invoked by alias); 10 Aug 2006 16:25:44 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp042) with SMTP; 10 Aug 2006 18:25:44 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-In-Reply-To: <11552221581171-git-send-email-rene.scharfe@lsrfire.ath.cx>
-X-Y-GMX-Trusted: 0
+	id S1161462AbWHJRGo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Aug 2006 13:06:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161464AbWHJRGo
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Aug 2006 13:06:44 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:62598 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1161462AbWHJRGo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Aug 2006 13:06:44 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060810170643.OHXI18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 10 Aug 2006 13:06:43 -0400
+To: Jeff King <peff@peff.net>
+In-Reply-To: <20060810103836.GA1317@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 10 Aug 2006 06:38:37 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25202>
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-On Thu, 10 Aug 2006, Rene Scharfe wrote:
+> OK, doing a discard_cache() between the call to run_diff_index and
+> run_diff_files seems to clear up the problem. But if I understand
+> correctly, are you saying that run_diff_index has munged the index on
+> disk, and I really need to be poking at a temporary copy? If so, why
+> isn't that a problem when running (e.g.) "git-diff-index; git-ls-files"?
 
-> The little helper has_extension() documents through its name what we are
-> trying to do and makes sure we don't forget the underrun check.
+No, run_diff_index munges the index in-core, and it does not
+writes it out for obvious reasons.
 
-While I think it is a good change, it is independent of verify-pack, no?
+Some of the "interrogation commands" do munge the index without
+writing it out because that is the easiest/cleanest way to
+implement what they do.  ls-files does it to filter by paths,
+for example.
 
-Ciao,
-Dscho
+> That does sound the cleanest, and it would enable a more useful status
+> message, as you mentioned before. What caused you to stop working on it?
+> Infeasible, or simply more infeasible than you would like right now?
+
+Finding out somebody was already working on it?
