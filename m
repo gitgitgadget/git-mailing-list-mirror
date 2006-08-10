@@ -1,66 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: diff machinery cleanup
-Date: Thu, 10 Aug 2006 06:38:37 -0400
-Message-ID: <20060810103836.GA1317@coredump.intra.peff.net>
-References: <20060810082455.GA30739@coredump.intra.peff.net> <7vejvpvsni.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH and RFC] gitweb: Remove --full-history from git_history
+Date: Thu, 10 Aug 2006 12:46:44 +0200
+Organization: At home
+Message-ID: <ebf2pu$8qv$1@sea.gmane.org>
+References: <200608091257.19461.jnareb@gmail.com> <20060809192815.GA7954@c165.ib.student.liu.se> <7vk65h1t8q.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 10 12:39:01 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Thu Aug 10 12:46:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GB7w4-0001WG-Jr
-	for gcvg-git@gmane.org; Thu, 10 Aug 2006 12:38:45 +0200
+	id 1GB83h-0002iq-Hw
+	for gcvg-git@gmane.org; Thu, 10 Aug 2006 12:46:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161149AbWHJKik (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Aug 2006 06:38:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161151AbWHJKij
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Aug 2006 06:38:39 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:63888 "HELO
-	peff.net") by vger.kernel.org with SMTP id S1161149AbWHJKij (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Aug 2006 06:38:39 -0400
-Received: (qmail 10189 invoked from network); 10 Aug 2006 06:38:05 -0400
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 10 Aug 2006 06:38:05 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Aug 2006 06:38:37 -0400
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vejvpvsni.fsf@assigned-by-dhcp.cox.net>
+	id S1161155AbWHJKqe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Aug 2006 06:46:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161159AbWHJKqe
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Aug 2006 06:46:34 -0400
+Received: from main.gmane.org ([80.91.229.2]:64692 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1161155AbWHJKqd (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Aug 2006 06:46:33 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GB83X-0002hf-M3
+	for git@vger.kernel.org; Thu, 10 Aug 2006 12:46:27 +0200
+Received: from host-81-190-31-92.torun.mm.pl ([81.190.31.92])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 10 Aug 2006 12:46:27 +0200
+Received: from jnareb by host-81-190-31-92.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 10 Aug 2006 12:46:27 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-31-92.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25180>
 
-On Thu, Aug 10, 2006 at 02:36:49AM -0700, Junio C Hamano wrote:
+Junio C Hamano wrote:
 
-> In general, run_diff_X are _not_ designed to run twice.
+> Fredrik Kuivinen <freku045@student.liu.se> writes:
+> 
+>> I don't think it was dropped in favor --full-history.
+> 
+> Correct.
+> 
+> The --full-history option is about merge simplification and has
+> nothing to do with renames.
 
-OK, makes sense. As you probably guessed, the reason is for the
-run-status in C.
+By the way, --full-history option is not documented: neither in
+Documentation/git-rev-list.txt, nor in git-rev-list --usage
 
-> If you are working in "next" branch where Johannes's merge-recur
-> work introduced discard_cache(), you could fake this somehow
-> stashing away a copy of the original index, and once you are
-> done with run_diff_index(), clean the slate by calling
-> discard_cache() once you are done, and swap the original index
-> in before running run_diff_files().
-
-OK, doing a discard_cache() between the call to run_diff_index and
-run_diff_files seems to clear up the problem. But if I understand
-correctly, are you saying that run_diff_index has munged the index on
-disk, and I really need to be poking at a temporary copy? If so, why
-isn't that a problem when running (e.g.) "git-diff-index; git-ls-files"?
-
-> To solve this cleanly without doing the index munging hack, you
-> would (actually, I would) need to have a new path walker that
-> walks index, tree and working tree in parallel, which I was
-> working on in the git-status/git-commit rewrite I started and
-> discarded a few days ago.
-
-That does sound the cleanest, and it would enable a more useful status
-message, as you mentioned before. What caused you to stop working on it?
-Infeasible, or simply more infeasible than you would like right now?
-
--Peff
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
