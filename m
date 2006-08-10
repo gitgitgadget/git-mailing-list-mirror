@@ -1,77 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 7] autoconf: Add support for setting CURLDIR, OPENSSLDIR, EXPATDIR
-Date: Thu, 10 Aug 2006 23:43:39 +0200
-Organization: At home
-Message-ID: <ebg99i$ijq$1@sea.gmane.org>
-References: <200608081834.09271.jnareb@gmail.com> <200608090215.10917.jnareb@gmail.com> <ebf31a$8qv$2@sea.gmane.org> <7vejvouvqm.fsf@assigned-by-dhcp.cox.net>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: Re: [PATCH 1/9] Add has_extension()
+Date: Thu, 10 Aug 2006 23:47:18 +0200
+Message-ID: <20060810214718.GD13446@c165.ib.student.liu.se>
+References: <11552221582769-git-send-email-rene.scharfe@lsrfire.ath.cx> <11552221581171-git-send-email-rene.scharfe@lsrfire.ath.cx> <20060810182117.GA13446@c165.ib.student.liu.se> <44DB7E01.4000901@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Thu Aug 10 23:43:55 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 10 23:47:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GBIJe-0008V4-Ou
-	for gcvg-git@gmane.org; Thu, 10 Aug 2006 23:43:47 +0200
+	id 1GBINA-0000dq-Ia
+	for gcvg-git@gmane.org; Thu, 10 Aug 2006 23:47:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932067AbWHJVnm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 10 Aug 2006 17:43:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932092AbWHJVnl
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Aug 2006 17:43:41 -0400
-Received: from main.gmane.org ([80.91.229.2]:55458 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932067AbWHJVnk (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Aug 2006 17:43:40 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GBIJJ-0008Qv-RY
-	for git@vger.kernel.org; Thu, 10 Aug 2006 23:43:26 +0200
-Received: from host-81-190-28-159.torun.mm.pl ([81.190.28.159])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 10 Aug 2006 23:43:25 +0200
-Received: from jnareb by host-81-190-28-159.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 10 Aug 2006 23:43:25 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-28-159.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S932112AbWHJVrV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Aug 2006 17:47:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932122AbWHJVrU
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Aug 2006 17:47:20 -0400
+Received: from mxfep02.bredband.com ([195.54.107.73]:55728 "EHLO
+	mxfep02.bredband.com") by vger.kernel.org with ESMTP
+	id S932112AbWHJVrU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Aug 2006 17:47:20 -0400
+Received: from c165 ([213.114.27.85] [213.114.27.85])
+          by mxfep02.bredband.com with ESMTP
+          id <20060810214718.HOQG23359.mxfep02.bredband.com@c165>;
+          Thu, 10 Aug 2006 23:47:18 +0200
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1GBIN4-0004Zt-00; Thu, 10 Aug 2006 23:47:18 +0200
+To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Content-Disposition: inline
+In-Reply-To: <44DB7E01.4000901@lsrfire.ath.cx>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25214>
 
-<opublikowany i wys=B3any>
+On Thu, Aug 10, 2006 at 08:42:09PM +0200, Rene Scharfe wrote:
+> Fredrik Kuivinen schrieb:
+> > On Thu, Aug 10, 2006 at 05:02:30PM +0200, Rene Scharfe wrote:
+> >> +static inline int has_extension(const char *filename, int len,
+> >> const char *ext) +{ +	int extlen = strlen(ext); +	return len >
+> >> extlen && !memcmp(filename + len - extlen, ext, extlen); +} +
+> > 
+> > Wouldn't this function be much easier to use if len is computed from 
+> > filename with strlen? (after a quick look through the other patches I
+> >  couldn't find a call site where filename wasn't NUL-terminated)
+> 
+> Yes, it would be a bit easier, and my first version had only two
+> arguments.  Then I found out that the length of the first string is
+> already known at _all_ potential callsites, using this command to
+> identify candidates:
+> 
+> 	$ grep 'cmp.*"\..*"' *.[ch]
+> 
+> We could add something like this:
+> 
+> 	#define has_ext(a, b) has_extension(a, strlen(a), b)
+> 
+> to make it easier to use for code that doesn't already determine the
+> string length.  I think we should add it only after a user has been
+> identified, though.
+> 
 
-Junio C Hamano wrote:
+IMHO the small speed-up isn't worth it. Drop the extra argument and
+avoid a possible future bug.
 
-> Jakub Narebski <jnareb@gmail.com> writes:
->=20
->> Jakub Narebski wrote:
->>
->>> Add support for --with-openssl=3DPATH and --without-openssl,
->>> --with-curl=3DPATH and --without-curl, --with-expat=3DPATH and
->>> --without-expat ./configure options, each setting or unsetting
->>> appropriate NO_PACKAGE and if called with argument also PACKAGEDIR
->>> (of which only CURLDIR is documented in Makefile)
->>>=20
->>> All above options are supported as override to autodetection; more =
-to
->>> come in the same style (override to autodetection), so moved the bu=
-lk
->>> of comments for site configuration down.
->>
->> Is this patch dropped?
->=20
-> I think it should be on "pu" but I might have missed it; it came
-> with a warning not to apply didn't it?
-
-Yes, although the warning is more about the _style_ than about what
-it does. It works as far as I tested, but IMVHO it is a bit of hack.=20
-
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+- Fredrik
