@@ -1,68 +1,60 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 8/9] git-verify-pack: no need to count errors
-Date: Thu, 10 Aug 2006 17:02:37 +0200
-Message-ID: <11552221583276-git-send-email-rene.scharfe@lsrfire.ath.cx>
-References: <11552221582769-git-send-email-rene.scharfe@lsrfire.ath.cx>
+From: Haavard Skinnemoen <hskinnemoen@atmel.com>
+Subject: Re: [PATCH 3/14] Generic ioremap_page_range: alpha conversion
+Date: Thu, 10 Aug 2006 18:09:02 +0200
+Organization: Atmel Norway
+Message-ID: <20060810180902.0e9523da@cad-250-152.norway.atmel.com>
+References: <1155225826761-git-send-email-hskinnemoen@atmel.com>
+	<1155225827754-git-send-email-hskinnemoen@atmel.com>
+	<11552258271630-git-send-email-hskinnemoen@atmel.com>
+	<115522582724-git-send-email-hskinnemoen@atmel.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 10 17:04:38 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1161410AbWHJQJH@vger.kernel.org Thu Aug 10 18:10:34 2006
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1161410AbWHJQJH@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GBC3y-0007Pt-5u
-	for gcvg-git@gmane.org; Thu, 10 Aug 2006 17:03:10 +0200
+	id 1GBD76-0006Ft-IG
+	for glk-linux-kernel-3@gmane.org; Thu, 10 Aug 2006 18:10:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161303AbWHJPCs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Aug 2006 11:02:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161304AbWHJPCr
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Aug 2006 11:02:47 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:10949
-	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S1161310AbWHJPCk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Aug 2006 11:02:40 -0400
-Received: by neapel230.server4you.de (Postfix, from userid 1000)
-	id BDDC47035; Thu, 10 Aug 2006 17:02:38 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
-X-Mailer: git-send-email 1.4.2.rc4.g242a
-In-Reply-To: <11552221582769-git-send-email-rene.scharfe@lsrfire.ath.cx>
-Sender: git-owner@vger.kernel.org
+	id S1161410AbWHJQJH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Thu, 10 Aug 2006 12:09:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161418AbWHJQJH
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Thu, 10 Aug 2006 12:09:07 -0400
+Received: from nat-132.atmel.no ([80.232.32.132]:2026 "EHLO relay.atmel.no")
+	by vger.kernel.org with ESMTP id S1161414AbWHJQJE (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Thu, 10 Aug 2006 12:09:04 -0400
+Received: from cad-250-152.norway.atmel.com (cad-250-152.norway.atmel.com [10.191.250.152])
+	by relay.atmel.no (8.13.4/8.13.4) with ESMTP id k7AG92j1022637;
+	Thu, 10 Aug 2006 18:09:02 +0200 (CEST)
+	(envelope-from hskinnemoen@atmel.com)
+To: linux-kernel@vger.kernel.org
+In-Reply-To: <115522582724-git-send-email-hskinnemoen@atmel.com>
+X-Mailer: Sylpheed-Claws 2.3.1 (GTK+ 2.8.18; i486-pc-linux-gnu)
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25196>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25197>
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- verify-pack.c |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+On Thu, 10 Aug 2006 18:03:35 +0200
+Haavard Skinnemoen <hskinnemoen@atmel.com> wrote:
 
-diff --git a/verify-pack.c b/verify-pack.c
-index 1076001..f12cefe 100644
---- a/verify-pack.c
-+++ b/verify-pack.c
-@@ -49,7 +49,7 @@ static const char verify_pack_usage[] = 
- 
- int main(int ac, char **av)
- {
--	int errs = 0;
-+	int err = 0;
- 	int verbose = 0;
- 	int no_more_options = 0;
- 	int nothing_done = 1;
-@@ -65,7 +65,7 @@ int main(int ac, char **av)
- 		}
- 		else {
- 			if (verify_one_pack(av[1], verbose))
--				errs++;
-+				err = 1;
- 			nothing_done = 0;
- 		}
- 		ac--; av++;
-@@ -74,5 +74,5 @@ int main(int ac, char **av)
- 	if (nothing_done)
- 		usage(verify_pack_usage);
- 
--	return !!errs;
-+	return err;
- }
--- 
-1.4.2.rc2.g822a
+> From: Richard Henderson <rth@twiddle.net>
+
+Uh...does anyone have an idea why git-send-email added this line for
+me? All I did was add a Cc line to the mbox like this:
+
+Cc: Richard Henderson <rth@twiddle.net>
+
+> Convert Alpha to use generic ioremap_page_range() by turning
+> __alpha_remap_area_pages() into an inline wrapper around
+> ioremap_page_range().
+>=20
+> Signed-off-by: Haavard Skinnemoen <hskinnemoen@atmel.com>
+
+H=C3=A5vard
