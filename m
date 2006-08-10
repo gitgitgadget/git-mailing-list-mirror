@@ -1,78 +1,55 @@
-From: Robert Shearman <rob@codeweavers.com>
-Subject: [PATCH] repo-config needs a prefix.
-Date: Thu, 10 Aug 2006 10:41:55 +0100
-Organization: CodeWeavers
-Message-ID: <44DAFF63.8010800@codeweavers.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: repo-config needs a prefix.
+Date: Thu, 10 Aug 2006 11:42:47 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0608101140040.13885@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <44DAFE34.50701@codeweavers.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------060607060509060902070905"
-X-From: git-owner@vger.kernel.org Thu Aug 10 11:42:45 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 10 11:43:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GB73h-0000GO-CK
-	for gcvg-git@gmane.org; Thu, 10 Aug 2006 11:42:34 +0200
+	id 1GB741-0000KP-4p
+	for gcvg-git@gmane.org; Thu, 10 Aug 2006 11:42:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161089AbWHJJm2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 Aug 2006 05:42:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751491AbWHJJm2
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Aug 2006 05:42:28 -0400
-Received: from mail.codeweavers.com ([216.251.189.131]:20686 "EHLO
-	mail.codeweavers.com") by vger.kernel.org with ESMTP
-	id S1751490AbWHJJm1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Aug 2006 05:42:27 -0400
-Received: from host86-139-253-196.range86-139.btcentralplus.com ([86.139.253.196] helo=[172.16.0.10])
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1GB73b-0001Xq-29
-	for git@vger.kernel.org; Thu, 10 Aug 2006 04:42:27 -0500
-User-Agent: Mozilla Thunderbird 1.0.8 (X11/20060725)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
+	id S1751490AbWHJJmu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 Aug 2006 05:42:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751491AbWHJJmt
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Aug 2006 05:42:49 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36329 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751490AbWHJJmt (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Aug 2006 05:42:49 -0400
+Received: (qmail invoked by alias); 10 Aug 2006 09:42:47 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp023) with SMTP; 10 Aug 2006 11:42:47 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Robert Shearman <rob@codeweavers.com>
+In-Reply-To: <44DAFE34.50701@codeweavers.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25175>
 
-This is a multi-part message in MIME format.
---------------060607060509060902070905
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Hi,
 
+On Thu, 10 Aug 2006, Robert Shearman wrote:
 
-This fixes the message received when invoking certain commands from 
-outside of a git tree, so e.g. instead of receiving this:
-/home/rob/bin/git-fetch: line 89: /FETCH_HEAD: Permission denied
-We get this again:
-fatal: Not a git repository: '.git'
-Signed-off-by: Robert Shearman <rob@codeweavers.com>
----
-  git.c |    2 +-
-  1 files changed, 1 insertions(+), 1 deletions(-)
+> -               { "repo-config", cmd_repo_config },
+> +               { "repo-config", cmd_repo_config, NEEDS_PREFIX },
 
-This time with Signed-off-by line.
+Doesn't this prevent
 
---------------060607060509060902070905
-Content-Type: text/x-patch;
- name="c0aa527060f6ba202986564731e7277f11f31639.diff"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="c0aa527060f6ba202986564731e7277f11f31639.diff"
+$ git-ls-remote kernel
 
-diff --git a/git.c b/git.c
-index 18ba14a..f9c76a1 100644
---- a/git.c
-+++ b/git.c
-@@ -264,7 +264,7 @@ static void handle_internal_command(int 
- 		{ "prune", cmd_prune, NEEDS_PREFIX },
- 		{ "mv", cmd_mv, NEEDS_PREFIX },
- 		{ "prune-packed", cmd_prune_packed, NEEDS_PREFIX },
--		{ "repo-config", cmd_repo_config },
-+		{ "repo-config", cmd_repo_config, NEEDS_PREFIX },
- 	};
- 	int i;
- 
+from being run anywhere, when the relevant information is in 
+$HOME/.gitconfig?
 
+I'd rather fix git-fetch to cd to the root of the repo, since it really 
+does not make sense to expect git-fetch to fetch just one subdirectory.
 
---------------060607060509060902070905--
+Ciao,
+Dscho
