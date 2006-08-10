@@ -1,102 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH and RFC] gitweb: Remove --full-history from git_history
-Date: Wed, 09 Aug 2006 14:42:13 -0700
-Message-ID: <7vk65h1t8q.fsf@assigned-by-dhcp.cox.net>
-References: <200608091257.19461.jnareb@gmail.com>
-	<20060809192815.GA7954@c165.ib.student.liu.se>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: cvs2svn and git progress
+Date: Wed, 9 Aug 2006 21:29:00 -0400
+Message-ID: <9e4733910608091828l1744822cjf001b2722fea6c5a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 09 23:42:38 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Aug 10 03:29:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GAvoi-0006b1-V1
-	for gcvg-git@gmane.org; Wed, 09 Aug 2006 23:42:21 +0200
+	id 1GAzMI-0006S1-Ky
+	for gcvg-git@gmane.org; Thu, 10 Aug 2006 03:29:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751382AbWHIVmS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 Aug 2006 17:42:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751388AbWHIVmS
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Aug 2006 17:42:18 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:46840 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1751382AbWHIVmR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Aug 2006 17:42:17 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060809214214.KNAZ554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 9 Aug 2006 17:42:14 -0400
-To: Fredrik Kuivinen <freku045@student.liu.se>
-In-Reply-To: <20060809192815.GA7954@c165.ib.student.liu.se> (Fredrik
-	Kuivinen's message of "Wed, 9 Aug 2006 21:28:15 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030552AbWHJB3I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 Aug 2006 21:29:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030558AbWHJB3I
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Aug 2006 21:29:08 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:26899 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1030552AbWHJB3H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Aug 2006 21:29:07 -0400
+Received: by nf-out-0910.google.com with SMTP id a4so348316nfc
+        for <git@vger.kernel.org>; Wed, 09 Aug 2006 18:29:00 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=snsx1d9jajnHHTTtjl7zgCIg8oRXJS8ff4kq4LsudPHj+HYoSXWZ5M/b35ZNcFs0fPpQGgv4+KX+sWX40MIQG5BehBqsj4EH2C0l7WMIeqa8KUxrQeNJqAUs9FCZ17G2J8MmI22kODG2FjT7IAcU6t1+2nb0LY6ImBPxsq1gnP0=
+Received: by 10.78.127.2 with SMTP id z2mr899695huc;
+        Wed, 09 Aug 2006 18:29:00 -0700 (PDT)
+Received: by 10.78.148.9 with HTTP; Wed, 9 Aug 2006 18:28:59 -0700 (PDT)
+To: git <git@vger.kernel.org>, "Shawn Pearce" <spearce@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25150>
 
-Fredrik Kuivinen <freku045@student.liu.se> writes:
+I've finally got cvs2svn running through pass 7 now. It took me a
+while to fix errors where it would run five hours and then die with
+"key error 357" or something similar.
 
-> I don't think it was dropped in favor --full-history.
+pass 1:  7663 seconds
+pass 2:     1 second
+pass 3:  1043 seconds
+pass 4:     3 seconds
+pass 5:   204 seconds
+pass 6:  1165 seconds
+pass 7:    37 seconds
 
-Correct.
+Total is a little less than three hours. The new cvs2svn code is many
+times faster than the old version which ran for several days. The
+total includes the time needed to write the git pack and index file
+for the revisions.
 
-The --full-history option is about merge simplification and has
-nothing to do with renames.
+Pass 8 is where the final output is generated. Now that I have a
+database I can only run pass 8 as needed to work on the back-end code.
 
-The thing is, your patch, while I very much liked the direction
-it was taking us, was so intrusive that it scared the h*ck out
-of me ;-).
+I believe I have the sha1 from the git revisions correctly in the
+final database but I need to write my first try at dumping the change
+sets to be sure.
 
->> What is needed by gitweb is for git-rev-list to not only follow revisions
->> of file contents across renames, and return more revisions, 
->
-> Note that it is not enough to only return more revisions.
->
-> For example, consider the commits (newest commit first)
-> A: Rename "bar" to "foo"
-> B: No changes to "bar"
-> C: No changes to "bar", delete "foo"
-> <more commits here>
->
-> Then you want "git-rev-list --renames A -- foo" to return A,... not A,C,...
-
-Yes.  For this "following renames for a single file" example, we
-should not extend the pathspec which originally starts out as
-"foo" to _include_ "bar"; instead it should _replace_, and after
-that point we should not care about "foo".
-
-This was another reason I shied away from your patch back then.
-We would need to think about interactions between this pathspec
-for a single file (which should be switched) and pathspecs for
-directories ("more useful form of usage than single file", as
-Linus would put it).
-
-I have this vague feeling, without revisiting the code to make
-an informed argument, that it might be cleaner and with less
-impact (read: smaller chance to break the "directories" usage)
-if we special case "follow a single file" case.  I dunno.
-
-Also I was not sure how well your pathspec switching worked
-across forks and merges.
-
-                            M bar
-           .----------------4------5
-          /                         \
- A bar   /    R bar->foo  M foo      \     M foo
- 0------1-----2-----------3-----------6----7-------8
-
-Suppose we are at 8 and start digging for the history of "foo".
-Our pathspec starts out as "foo" at 8 and stays so until we hit
-6.  If the lower branch renamed bar->foo while the upper didn't,
-and merge-recursive merged them correctly at 6, we would use
-"foo" as pathspec while on the lower branch while traversing 6,
-3 and 2 (at that point we switch to "bar").  On the upper
-branch, we switch pathspec to "bar" while traversing 6, 5, 4.
-When we hit 1, pathspec of both of its children (2 and 4) happen
-to match in this example.  But what would we do if for some
-reason they didn't?  Do we care?  Is that die("an internal
-error")?  I did not have a good anser to that question, and I
-still don't.
+-- 
+Jon Smirl
+jonsmirl@gmail.com
