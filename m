@@ -1,87 +1,76 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitweb: Different colours for tags and heads
-Date: Fri, 11 Aug 2006 14:50:31 -0700
-Message-ID: <7vodurrlg8.fsf@assigned-by-dhcp.cox.net>
-References: <20060811151224.177110@gmx.net> <ebi81l$qu$1@sea.gmane.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git rebase syntax question
+Date: Fri, 11 Aug 2006 18:07:17 -0400
+Message-ID: <20060811220717.GC4788@sigio.intra.peff.net>
+References: <44DCC880.1080108@austin.rr.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Thomas Kolejka" <Thomas.Kolejka@gmx.at>
-X-From: git-owner@vger.kernel.org Fri Aug 11 23:51:00 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 12 00:07:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GBeu4-0007YU-IW
-	for gcvg-git@gmane.org; Fri, 11 Aug 2006 23:50:53 +0200
+	id 1GBfA8-0001ww-CG
+	for gcvg-git@gmane.org; Sat, 12 Aug 2006 00:07:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750951AbWHKVuf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Aug 2006 17:50:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750862AbWHKVuf
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Aug 2006 17:50:35 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:14035 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1750951AbWHKVud (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Aug 2006 17:50:33 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060811215032.MSOD18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 11 Aug 2006 17:50:32 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <ebi81l$qu$1@sea.gmane.org> (Jakub Narebski's message of "Fri, 11
-	Aug 2006 17:34:42 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932445AbWHKWHX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Aug 2006 18:07:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932448AbWHKWHW
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Aug 2006 18:07:22 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:28322 "HELO
+	peff.net") by vger.kernel.org with SMTP id S932445AbWHKWHV (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Aug 2006 18:07:21 -0400
+Received: (qmail 30398 invoked from network); 11 Aug 2006 18:06:45 -0400
+Received: from unknown (HELO sigio.intra.peff.net) (10.0.0.10)
+  by segfault.intra.peff.net with SMTP; 11 Aug 2006 18:06:45 -0400
+Received: by sigio.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Aug 2006 18:07:17 -0400
+To: Steve French <smfrench@austin.rr.com>
+Content-Disposition: inline
+In-Reply-To: <44DCC880.1080108@austin.rr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25241>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Fri, Aug 11, 2006 at 01:12:16PM -0500, Steve French wrote:
 
-> By the way, please do not put "Hello," in the commit message
-> part of patch. You can put your comments (like which branch
-> and/or commit is the batch based on) either after "---" and
-> before the patch itself, or at the beginning and separate them
-> from the commit message by "+++" (this separator is supported
-> by git tools,...
+> The git repository is cloned from 
+> /pub/scm/linux/kernel/git/torvalds/linux-2.6.git and has one branch and 
+> history like
+>         ...->A->MyCommits->B->MoreOfMyCommits->C->EmptyMergeMessages
+> and I want to make my master look like
+>         ...->A->B->C->MyCommits->MoreOfMyCommits
 
-???
+Since A, B, and C are from upstream, they should still be linked
+directly together. So your history is probably more like this:
+    MyCommits--Merge--MoreOfMyCommits--EmptyMergeMessage
+   /          /                       /
+  A----------B-----------------------C
 
-> I've planned on patch which does something similar to
-> yours, but in slightly different way: instead of two calls 
-> to git_get_referencing (format_mark_referencing[*1*] after rename)
-> and two calls to read_info_ref (git_get_references after rename)
-> in your patch, read_info_ref would always add full name, of
-> which first component is the type of the tag.
+> I tried doing the obvious
+>    "git rebase master"
+> but that appears to be a no op
 
-get_referencing to get, and format_ref to format perhaps?
+You are already merged with master, so rebase doesn't think there is
+anything to do. You will have to rebase each of your merged segments
+onto a new rebase branch:
+  # Go back to just before the first merge...
+  $ git-branch commits1 Merge^
+  # And add all of C..commits1 on top of C
+  $ git-rebase C commits1
+  # Now we go back for the second merge...
+  $ git-branch commits2 EmptyMergeMessage^
+  # And add all of that on top of our previous work
+  $ git-rebase commits1 commits2
+  # At this point commits2 has A->B->C->MyCommits->MoreOfMyCommits.
+  # Now we can clean things up, making master the new desired branch.
+  $ git-checkout master
+  $ git-reset --hard commits2
+  $ git-branch -d commits1 commits2
+  $ git-prune
 
-> I am wondering if to do this like in my abovementioned patch,
-> putting references in single string, separated by ':' (':' cannot
-> be part of valid ref name), or use array (anonymous array reference
-> to be more exact). 
+I'm not sure if there's a simpler way to do it. Obviously if you do the
+rebase as you go along (instead of merging) it's much easier.
 
-Two things and half come to mind.
-
-get_referencing could get and return the full refname without
-abbreviation ('heads/jn/web' or 'tags/v1.0'), and the caller can
-do whatever with them (e.g. see what the name begins with to
-tell heads and tags apart).  This is probably the most flexible
-if we do not want to cast the categorization of refs in stone.
-
-Otherwise, return an arrayref, like ['tag', 'v1.0', 'v1.0'] or
-['head', 'web', 'jn/web'], to say what kind, short name and full
-name.
-
-I've always wondered if the span that shows the short refname
-could have an on-hover pop-up (title attribute is often shown
-that way) to show the full name.  Then you could do something
-like:
-
-    $long_name = 'heads/jn/web'; # or 'tags/v1.0'
-    $kind = ($long_name =~ /^heads/) ? 'head' : 'tag';
-    $long_name = s|^[^/]*/||;
-    ($short_name = $long_name) =~ s|.*/||;
-    $long_name = esc_html($long_name);
-    $short_name = esc_html($short_name);
-    return " <span class='$kind' title='$long_name'>$short_name</span>";
+-Peff
