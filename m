@@ -1,56 +1,65 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: GIT user survey
-Date: Fri, 11 Aug 2006 17:12:45 +0200
-Organization: At home
-Message-ID: <ebi6og$rh0$1@sea.gmane.org>
-References: <4d8e3fd30607230123m459aa1cle2ab8c1c1dd0fcd2@mail.gmail.com>
+From: Sam Ravnborg <sam@ravnborg.org>
+Subject: Re: [PATCH] git-grep --relative: show pathnames relative to the current directory
+Date: Fri, 11 Aug 2006 17:23:05 +0200
+Message-ID: <20060811152305.GB9211@mars.ravnborg.org>
+References: <7vpsf7u2x7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri Aug 11 17:13:12 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 11 17:23:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GBYgy-0001V8-KK
-	for gcvg-git@gmane.org; Fri, 11 Aug 2006 17:12:58 +0200
+	id 1GBYrI-0003kk-Ho
+	for gcvg-git@gmane.org; Fri, 11 Aug 2006 17:23:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751167AbWHKPMy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Aug 2006 11:12:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751174AbWHKPMy
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Aug 2006 11:12:54 -0400
-Received: from main.gmane.org ([80.91.229.2]:36576 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751167AbWHKPMx (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Aug 2006 11:12:53 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GBYgg-0001TI-K4
-	for git@vger.kernel.org; Fri, 11 Aug 2006 17:12:39 +0200
-Received: from host-81-190-24-83.torun.mm.pl ([81.190.24.83])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 11 Aug 2006 17:12:38 +0200
-Received: from jnareb by host-81-190-24-83.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 11 Aug 2006 17:12:38 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-83.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751186AbWHKPX3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Aug 2006 11:23:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751188AbWHKPX2
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Aug 2006 11:23:28 -0400
+Received: from pasmtpa.tele.dk ([80.160.77.114]:32925 "EHLO pasmtp.tele.dk")
+	by vger.kernel.org with ESMTP id S1751186AbWHKPX2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Aug 2006 11:23:28 -0400
+Received: from mars.ravnborg.org (0x535d98d8.hrnxx9.adsl-dhcp.tele.dk [83.93.152.216])
+	by pasmtp.tele.dk (Postfix) with ESMTP id 4F6B218294;
+	Fri, 11 Aug 2006 17:23:27 +0200 (CEST)
+Received: by mars.ravnborg.org (Postfix, from userid 1000)
+	id 3564143C01F; Fri, 11 Aug 2006 17:23:05 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vpsf7u2x7.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.12-2006-07-14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25229>
 
-Paolo Ciarrocchi wrote:
+On Fri, Aug 11, 2006 at 12:50:12AM -0700, Junio C Hamano wrote:
+> By default, the command shows pathnames relative to the project
+> root, even when run from a subdirectory.  With --relative flag,
+> however, the command outputs pathnames relative to the current
+> directory.
+> 
+> This makes it very pleasant to run in Emacs compilation (or
+> "grep-find") buffer.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+> ---
+> 
+>  * Now the question is, shouldn't this be the default, with
+>    the current output available as an option --full-name, just
+>    like ls-files?
+> 
+>    Changing the default always risks breaking people's habit and
+>    scripts, but I tend to think the current output is a
+>    misfeature which we'd better fix sooner rather than later.
+> 
+>    Opinions? 
 
-> We'll close the survey in two weeks starting from today, 23rd of July.
+I always felt confused when path was relative to root of .git directory
+and not relative to current directory.
+But I never looked into changing this or reporting it - so it has not
+been a big issue.
 
-Will you be closing survey and publishing results (e.g. on GitWiki) soon,
-or would you wait for more answers?
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+	Sam
