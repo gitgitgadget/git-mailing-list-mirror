@@ -1,90 +1,80 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-sh-setup: Fail if the git directory was not found.
-Date: Fri, 11 Aug 2006 15:39:11 -0700
-Message-ID: <7vfyg2sxrk.fsf@assigned-by-dhcp.cox.net>
-References: <44DC4C92.5060009@codeweavers.com>
+Subject: Re: [PATCH] git-svn: split the path from the url correctly with limited perms
+Date: Fri, 11 Aug 2006 16:40:39 -0700
+Message-ID: <7vac6asux4.fsf@assigned-by-dhcp.cox.net>
+References: <11553198891741-git-send-email-normalperson@yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 12 00:39:59 2006
+X-From: git-owner@vger.kernel.org Sat Aug 12 01:41:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GBffT-00075m-V4
-	for gcvg-git@gmane.org; Sat, 12 Aug 2006 00:39:52 +0200
+	id 1GBgce-00088n-Rs
+	for gcvg-git@gmane.org; Sat, 12 Aug 2006 01:41:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751230AbWHKWjO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Aug 2006 18:39:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbWHKWjO
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Aug 2006 18:39:14 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:13747 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751230AbWHKWjN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Aug 2006 18:39:13 -0400
+	id S1751088AbWHKXkl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Aug 2006 19:40:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751226AbWHKXkl
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Aug 2006 19:40:41 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:2041 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751088AbWHKXkl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Aug 2006 19:40:41 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao06.cox.net
+          by fed1rmmtao07.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060811223912.FCLI6235.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 11 Aug 2006 18:39:12 -0400
-To: Robert Shearman <rob@codeweavers.com>
+          id <20060811234040.PZGP23903.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 11 Aug 2006 19:40:40 -0400
+To: Eric Wong <normalperson@yhbt.net>
+In-Reply-To: <11553198891741-git-send-email-normalperson@yhbt.net> (Eric
+	Wong's message of "Fri, 11 Aug 2006 11:11:28 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25243>
 
-Robert Shearman <rob@codeweavers.com> writes:
+Eric Wong <normalperson@yhbt.net> writes:
 
-> Always use git-rev-parse to find a valid git directory, as
-> git-repo-config no longer returns an error code if a git directory
-> wasn't found.
->
-> This fixes the message received when invoking certain commands
-> implemented as shell scripts from outside of a git tree, so
-> e.g. instead of receiving this:
-> /home/rob/bin/git-fetch: line 89: /FETCH_HEAD: Permission denied
-> We get this again:
-> fatal: Not a git repository: '.git'
->
-> Also, move the setting of GIT_OBJECT_DIRECTORY to outside of the
-> non-subdir-ok case as it isn't specific to that case.
->
-> Signed-off-by: Robert Shearman <rob@codeweavers.com>
+> This version of the splitter (that only affects SVN:: library
+> users) works when one only has limited read-permissions to
+> the repository they're fetching from.
 
-Moving the assignment of GIT_OBJECT_DIRECTORY is fine, but
-changing it to an unconditional assignment is wrong.  The user
-can have a GIT_OBJECT_DIRECTORY set independently from GIT_DIR
-(or ../some/where/.git that is detected).
+This seems to break all of t9100 series test without
+GIT_SVN_NO_LIB environment set.
 
-The rest looks sane; the new test should still detect the case the
-original test tried to catch.
+"dpkg -l libsvn-core-perl" reports 1.3.2-3 here.
 
->  git-sh-setup.sh |   12 +++---------
->  1 files changed, 3 insertions(+), 9 deletions(-)
->
-> Hopefully this patch addresses the concerns of Junio and others by
-> continuing to allow git-ls-remotes to work outside of a git repository.
-> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-> index d15747f..49f9e3b 100755
-> --- a/git-sh-setup.sh
-> +++ b/git-sh-setup.sh
-> @@ -37,15 +37,9 @@ esac
->  
->  if [ -z "$SUBDIRECTORY_OK" ]
->  then
-> -	: ${GIT_DIR=.git}
-> -	: ${GIT_OBJECT_DIRECTORY="$GIT_DIR/objects"}
-> -
-> -	# Make sure we are in a valid repository of a vintage we understand.
-> -	GIT_DIR="$GIT_DIR" git repo-config --get core.nosuch >/dev/null
-> -	if test $? = 128
-> -	then
-> -	    exit
-> -	fi
-> +	GIT_DIR=$(GIT_DIR=.git git-rev-parse --git-dir) || exit
->  else
->  	GIT_DIR=$(git-rev-parse --git-dir) || exit
->  fi
-> +
-> +GIT_OBJECT_DIRECTORY="$GIT_DIR/objects"
+$ for i in t91*; do echo $i; sh $i; done
+t9100-git-svn-basic.sh
+define NO_SVN_TESTS to skip git-svn tests
+*   ok 1: initialize git-svn
+FATAL: Unexpected exit with code 255
+t9101-git-svn-props.sh
+*   ok 1: checkout working copy from svn
+*   ok 2: setup some commits to svn
+*   ok 3: initialize git-svn
+FATAL: Unexpected exit with code 255
+t9102-git-svn-deep-rmdir.sh
+*   ok 1: initialize repo
+FATAL: Unexpected exit with code 255
+t9103-git-svn-graft-branches.sh
+FATAL: Unexpected exit with code 255
+t9104-git-svn-follow-parent.sh
+*   ok 1: initialize repo
+FATAL: Unexpected exit with code 255
+t9105-git-svn-commit-diff.sh
+*   ok 1: initialize repo
+FATAL: Unexpected exit with code 9
+
+$ sh t9100-git-svn-basic.sh -i -v
+define NO_SVN_TESTS to skip git-svn tests
+* expecting success: git-svn init file:///git/t/trash/svnrepo/test-git-svn
+*   ok 1: initialize git-svn
+* expecting success: git-svn fetch
+11 at /git/t/../git-svn line 422
+        main::fetch_lib() called at /git/t/../git-svn line 290
+        main::fetch() called at /git/t/../git-svn line 149
+FATAL: Unexpected exit with code 255
