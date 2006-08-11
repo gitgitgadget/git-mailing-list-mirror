@@ -1,70 +1,85 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: bugfix: allow SVN:: lib users to track the root of the repository
-Date: Fri, 11 Aug 2006 11:11:29 -0700
-Message-ID: <11553198912549-git-send-email-normalperson@yhbt.net>
-References: <11553198891741-git-send-email-normalperson@yhbt.net>
+Subject: [PATCH] git-svn: split the path from the url correctly with limited perms
+Date: Fri, 11 Aug 2006 11:11:28 -0700
+Message-ID: <11553198891741-git-send-email-normalperson@yhbt.net>
 Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Aug 11 20:11:52 2006
+X-From: git-owner@vger.kernel.org Fri Aug 11 20:11:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GBbU1-0002nw-KT
-	for gcvg-git@gmane.org; Fri, 11 Aug 2006 20:11:48 +0200
+	id 1GBbU5-0002nw-9j
+	for gcvg-git@gmane.org; Fri, 11 Aug 2006 20:11:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932374AbWHKSLg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Aug 2006 14:11:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932194AbWHKSLg
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Aug 2006 14:11:36 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:53125 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1751223AbWHKSLe (ORCPT
+	id S1751222AbWHKSLf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Aug 2006 14:11:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751226AbWHKSLf
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Aug 2006 14:11:35 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:52357 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1751222AbWHKSLe (ORCPT
 	<rfc822;git@vger.kernel.org>); Fri, 11 Aug 2006 14:11:34 -0400
 Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 2DA087DC029;
-	Fri, 11 Aug 2006 11:11:31 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 11 Aug 2006 11:11:31 -0700
+	by hand.yhbt.net (Postfix) with SMTP id D5B8D7DC025;
+	Fri, 11 Aug 2006 11:11:29 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 11 Aug 2006 11:11:29 -0700
 To: Junio C Hamano <junkio@cox.net>
 X-Mailer: git-send-email 1.4.2.rc1.g018f
-In-Reply-To: <11553198891741-git-send-email-normalperson@yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25234>
 
-I'm not sure if anybody has hit this (besides me), but this
-fixes the problem where I ran into while attempting to import a
-small repo at the root level:  I ended up with all the commits, but
-with no file/tree changes at all throughout the entire history.
-
-Also, fix a warning if the commit message is not defined for revision 0.
+This version of the splitter (that only affects SVN:: library
+users) works when one only has limited read-permissions to
+the repository they're fetching from.
 
 Signed-off-by: Eric Wong <normalperson@yhbt.net>
 ---
- git-svn.perl |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+ git-svn.perl |   25 +++++++++++--------------
+ 1 files changed, 11 insertions(+), 14 deletions(-)
 
 diff --git a/git-svn.perl b/git-svn.perl
-index a033237..fb792be 100755
+index 6453771..a033237 100755
 --- a/git-svn.perl
 +++ b/git-svn.perl
-@@ -2614,7 +2614,9 @@ sub libsvn_connect {
- sub libsvn_get_file {
- 	my ($gui, $f, $rev) = @_;
- 	my $p = $f;
--	return unless ($p =~ s#^\Q$SVN_PATH\E/##);
-+	if (length $SVN_PATH > 0) {
-+		return unless ($p =~ s#^\Q$SVN_PATH\E/##);
-+	}
- 
- 	my ($hash, $pid, $in, $out);
- 	my $pool = SVN::Pool->new;
-@@ -2661,6 +2663,7 @@ sub libsvn_log_entry {
- 	if (defined $_authors && ! defined $users{$author}) {
- 		die "Author: $author not defined in $_authors file\n";
+@@ -1160,27 +1160,24 @@ sub repo_path_split {
+ 		}
  	}
-+	$msg = '' if ($rev == 0 && !defined $msg);
- 	return { revision => $rev, date => "+0000 $Y-$m-$d $H:$M:$S",
- 		author => $author, msg => $msg."\n", parents => $parents || [] }
+ 
+-	my ($url, $path) = ($full_url =~ m!^([a-z\+]+://[^/]*)(.*)$!i);
+-	$path =~ s#^/+##;
+-	my @paths = split(m#/+#, $path);
+-
+ 	if ($_use_lib) {
+-		while (1) {
+-			$SVN = libsvn_connect($url);
+-			last if (defined $SVN &&
+-				defined eval { $SVN->get_latest_revnum });
+-			my $n = shift @paths || last;
+-			$url .= "/$n";
+-		}
++		$SVN = libsvn_connect($full_url);
++		my $url = $SVN->get_repos_root;
++		$full_url =~ s#^\Q$url\E/*##;
++		push @repo_path_split_cache, qr/^(\Q$url\E)/;
++		return ($url, $full_url);
+ 	} else {
++		my ($url, $path) = ($full_url =~ m!^([a-z\+]+://[^/]*)(.*)$!i);
++		$path =~ s#^/+##;
++		my @paths = split(m#/+#, $path);
+ 		while (quiet_run(qw/svn ls --non-interactive/, $url)) {
+ 			my $n = shift @paths || last;
+ 			$url .= "/$n";
+ 		}
++		push @repo_path_split_cache, qr/^(\Q$url\E)/;
++		$path = join('/',@paths);
++		return ($url, $path);
+ 	}
+-	push @repo_path_split_cache, qr/^(\Q$url\E)/;
+-	$path = join('/',@paths);
+-	return ($url, $path);
  }
+ 
+ sub setup_git_svn {
 -- 
 1.4.2.rc1.g018f
