@@ -1,81 +1,87 @@
-From: Brendan Cully <brendan@kublai.com>
-Subject: git patch format with copy/rename + modify, and binary files
-Date: Fri, 11 Aug 2006 13:50:23 -0700
-Message-ID: <20060811205022.GA13521@xanadu.kublai.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: Different colours for tags and heads
+Date: Fri, 11 Aug 2006 14:50:31 -0700
+Message-ID: <7vodurrlg8.fsf@assigned-by-dhcp.cox.net>
+References: <20060811151224.177110@gmx.net> <ebi81l$qu$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Aug 11 22:51:06 2006
+Cc: git@vger.kernel.org, "Thomas Kolejka" <Thomas.Kolejka@gmx.at>
+X-From: git-owner@vger.kernel.org Fri Aug 11 23:51:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GBdy3-0005SG-5r
-	for gcvg-git@gmane.org; Fri, 11 Aug 2006 22:50:57 +0200
+	id 1GBeu4-0007YU-IW
+	for gcvg-git@gmane.org; Fri, 11 Aug 2006 23:50:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932414AbWHKUut (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Aug 2006 16:50:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932083AbWHKUus
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Aug 2006 16:50:48 -0400
-Received: from zakopane.cs.ubc.ca ([198.162.51.68]:50628 "EHLO
-	mail.quuxuum.com") by vger.kernel.org with ESMTP id S932414AbWHKUus
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Aug 2006 16:50:48 -0400
-Received: from xanadu.kublai.com (S01060016b6db031a.vc.shawcable.net [24.82.90.210])
-	by mail.quuxuum.com (Postfix) with ESMTP id 256505C227
-	for <git@vger.kernel.org>; Fri, 11 Aug 2006 13:50:26 -0700 (PDT)
-Received: by xanadu.kublai.com (Postfix, from userid 3121)
-	id 0316389839D; Fri, 11 Aug 2006 13:50:23 -0700 (PDT)
-To: git@vger.kernel.org
-Content-Disposition: inline
-X-Operating-System: Darwin 8.7.0 Power Macintosh
-User-Agent: Mutt/1.5.12 (2006-08-11)
+	id S1750951AbWHKVuf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Aug 2006 17:50:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750862AbWHKVuf
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Aug 2006 17:50:35 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:14035 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1750951AbWHKVud (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Aug 2006 17:50:33 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060811215032.MSOD18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 11 Aug 2006 17:50:32 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <ebi81l$qu$1@sea.gmane.org> (Jakub Narebski's message of "Fri, 11
+	Aug 2006 17:34:42 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25240>
 
-Hi,
+Jakub Narebski <jnareb@gmail.com> writes:
 
-While working on an external git patch importer, I noticed that git
-patches can break silently when fed to vanilla patch. Take this hunk
-from the git tree:
+> By the way, please do not put "Hello," in the commit message
+> part of patch. You can put your comments (like which branch
+> and/or commit is the batch based on) either after "---" and
+> before the patch itself, or at the beginning and separate them
+> from the commit message by "+++" (this separator is supported
+> by git tools,...
 
-diff --git a/git-pull-script b/git-fetch-script   
-similarity index 89%
-copy from git-pull-script
-copy to git-fetch-script
-index bd892c7..17f22af 100755
---- a/git-pull-script
-+++ b/git-fetch-script
-@@ -39,8 +39,3 @@ download_one "$merge_repo/$merge_name" "
+???
 
- echo "Getting object database"
- download_objects "$merge_repo" "$(cat "$GIT_DIR"/MERGE_HEAD)"
--
--git-resolve-script \
--       "$(cat "$GIT_DIR"/HEAD)" \
--       "$(cat "$GIT_DIR"/MERGE_HEAD)" \
--       "$merge_repo"
+> I've planned on patch which does something similar to
+> yours, but in slightly different way: instead of two calls 
+> to git_get_referencing (format_mark_referencing[*1*] after rename)
+> and two calls to read_info_ref (git_get_references after rename)
+> in your patch, read_info_ref would always add full name, of
+> which first component is the type of the tag.
 
-git-apply would presumably create git-fetch-script by copying
-git-pull-script then deleting this hunk. Vanilla patch simply deletes
-the hunk from git-pull-script. This seems bad. Is there any reason why
-git diff shouldn't use
+get_referencing to get, and format_ref to format perhaps?
 
---- a/git-fetch-script
-+++ b/git-fetch-script
+> I am wondering if to do this like in my abovementioned patch,
+> putting references in single string, separated by ':' (':' cannot
+> be part of valid ref name), or use array (anonymous array reference
+> to be more exact). 
 
-instead?
+Two things and half come to mind.
 
-On a related note, it'd be nice if the format allowed for some kind of
-representation of binary data. I had a half-baked idea that it could
-hold a line describing the encoding of the diff, eg
+get_referencing could get and return the full refname without
+abbreviation ('heads/jn/web' or 'tags/v1.0'), and the caller can
+do whatever with them (e.g. see what the name begins with to
+tell heads and tags apart).  This is probably the most flexible
+if we do not want to cast the categorization of refs in stone.
 
-encoding base64
+Otherwise, return an arrayref, like ['tag', 'v1.0', 'v1.0'] or
+['head', 'web', 'jn/web'], to say what kind, short name and full
+name.
 
-which could indicate that the diff should be decoded as base64 before
-being applied. This could allow a patch to hold a binary file add, or
-wrap a binary diff, though it doesn't specify what form such a diff
-should take...
+I've always wondered if the span that shows the short refname
+could have an on-hover pop-up (title attribute is often shown
+that way) to show the full name.  Then you could do something
+like:
 
-thoughts?
+    $long_name = 'heads/jn/web'; # or 'tags/v1.0'
+    $kind = ($long_name =~ /^heads/) ? 'head' : 'tag';
+    $long_name = s|^[^/]*/||;
+    ($short_name = $long_name) =~ s|.*/||;
+    $long_name = esc_html($long_name);
+    $short_name = esc_html($short_name);
+    return " <span class='$kind' title='$long_name'>$short_name</span>";
