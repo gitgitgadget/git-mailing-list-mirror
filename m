@@ -1,120 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Different colours for tags and heads
-Date: Fri, 11 Aug 2006 17:34:42 +0200
-Organization: At home
-Message-ID: <ebi81l$qu$1@sea.gmane.org>
-References: <20060811151224.177110@gmx.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri Aug 11 17:35:40 2006
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-svn: bugfix: allow SVN:: lib users to track the root of the repository
+Date: Fri, 11 Aug 2006 11:11:29 -0700
+Message-ID: <11553198912549-git-send-email-normalperson@yhbt.net>
+References: <11553198891741-git-send-email-normalperson@yhbt.net>
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri Aug 11 20:11:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GBZ2V-0006Fs-T1
-	for gcvg-git@gmane.org; Fri, 11 Aug 2006 17:35:13 +0200
+	id 1GBbU1-0002nw-KT
+	for gcvg-git@gmane.org; Fri, 11 Aug 2006 20:11:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932101AbWHKPfF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Aug 2006 11:35:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932126AbWHKPfF
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Aug 2006 11:35:05 -0400
-Received: from main.gmane.org ([80.91.229.2]:30184 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932101AbWHKPfC (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Aug 2006 11:35:02 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GBZ28-0006Bg-84
-	for git@vger.kernel.org; Fri, 11 Aug 2006 17:34:48 +0200
-Received: from host-81-190-24-83.torun.mm.pl ([81.190.24.83])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 11 Aug 2006 17:34:48 +0200
-Received: from jnareb by host-81-190-24-83.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 11 Aug 2006 17:34:48 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-83.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S932374AbWHKSLg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Aug 2006 14:11:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932194AbWHKSLg
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Aug 2006 14:11:36 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:53125 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1751223AbWHKSLe (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Aug 2006 14:11:34 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 2DA087DC029;
+	Fri, 11 Aug 2006 11:11:31 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 11 Aug 2006 11:11:31 -0700
+To: Junio C Hamano <junkio@cox.net>
+X-Mailer: git-send-email 1.4.2.rc1.g018f
+In-Reply-To: <11553198891741-git-send-email-normalperson@yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25233>
 
-Thomas Kolejka wrote:
+I'm not sure if anybody has hit this (besides me), but this
+fixes the problem where I ran into while attempting to import a
+small repo at the root level:  I ended up with all the commits, but
+with no file/tree changes at all throughout the entire history.
 
-> Hello,
-> 
-> with the following patch there are different colours for tags
-> and heads in gitweb. So you can easily differentiate between 
-> them.
-> 
-> Commit ca9e3b124f6313187da641b5cd55100c4ade6a9a
+Also, fix a warning if the commit message is not defined for revision 0.
 
-Based on which branch? Master, next? Which commit?
-
-By the way, please do not put "Hello," in the commit message
-part of patch. You can put your comments (like which branch
-and/or commit is the batch based on) either after "---" and
-before the patch itself, or at the beginning and separate them
-from the commit message by "+++" (this separator is supported
-by git tools, but some people use "-- >8 --" 'scissors' separator).
-git-format-patch helps in correct formatting, and adds diffstat.
-
-You would also be most probably asked to sign your patches, i.e.
-add
-  Signed-off-by: Thomas Kolejka <Thomas.Kolejka@gmx.at>
-line at the end of commit message.
-
-
-I have send patch of similar nature:
-  "[PATCH 5/5] gitweb: Change appereance of marker of refs pointing to given object"
-  http://permalink.gmane.org/gmane.comp.version-control.git/24860
-in which I split marker for refs poining to given object into
-separate span elements. The patch was dropped because it followed
-first version of "Great subroutine renames" patch.
-
-I've planned on patch which does something similar to
-yours, but in slightly different way: instead of two calls 
-to git_get_referencing (format_mark_referencing[*1*] after rename)
-and two calls to read_info_ref (git_get_references after rename)
-in your patch, read_info_ref would always add full name, of
-which first component is the type of the tag.
-
-I am wondering if to do this like in my abovementioned patch,
-putting references in single string, separated by ':' (':' cannot
-be part of valid ref name), or use array (anonymous array reference
-to be more exact). 
-
-
-[*1*] Do you have better proposal for this name? Perhaps
-format_referencing_marker, or just format_marker?
-
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 ---
->  # format marker of refs pointing to given object
->  sub git_get_referencing {
-> -     my ($refs, $id) = @_;
-> +     my ($refs, $id, $class) = @_;
->  
->       if (defined $refs->{$id}) {
-> -             return ' <span class="tag">' . esc_html($refs->{$id}) . '</span>';
-> +             return " <span class=\"$class\">" . esc_html($refs->{$id}) . "</span>";
->       } else {
->               return "";
->       }
-[...]
-> -     my ($revlist, $from, $to, $refs, $extra) = @_;
-> +     my ($revlist, $from, $to, $refs, $heads, $extra) = @_;
-[...]
-> -             #my $ref = defined $refs ? git_get_referencing($refs, $commit) : '';
-> -             my $ref = git_get_referencing($refs, $commit);
-> +             #my $ref = defined $refs ? git_get_referencing($refs, $commit, "tag") : '';
-> +             my $ref = git_get_referencing($refs, $commit, "tag");
-> +             my $head = git_get_referencing($heads, $commit, "head");
+ git-svn.perl |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
+diff --git a/git-svn.perl b/git-svn.perl
+index a033237..fb792be 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2614,7 +2614,9 @@ sub libsvn_connect {
+ sub libsvn_get_file {
+ 	my ($gui, $f, $rev) = @_;
+ 	my $p = $f;
+-	return unless ($p =~ s#^\Q$SVN_PATH\E/##);
++	if (length $SVN_PATH > 0) {
++		return unless ($p =~ s#^\Q$SVN_PATH\E/##);
++	}
+ 
+ 	my ($hash, $pid, $in, $out);
+ 	my $pool = SVN::Pool->new;
+@@ -2661,6 +2663,7 @@ sub libsvn_log_entry {
+ 	if (defined $_authors && ! defined $users{$author}) {
+ 		die "Author: $author not defined in $_authors file\n";
+ 	}
++	$msg = '' if ($rev == 0 && !defined $msg);
+ 	return { revision => $rev, date => "+0000 $Y-$m-$d $H:$M:$S",
+ 		author => $author, msg => $msg."\n", parents => $parents || [] }
+ }
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+1.4.2.rc1.g018f
