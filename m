@@ -1,50 +1,63 @@
-From: "Dallas" <DallasMuller@soon.com>
-Subject: Hottest new offer Every man wishes it.  Delight
-Date: Sat, 12 Aug 2006 16:38:47 -0400
-Message-ID: <09759936922741.1F6F8035E7@5J3AM4H>
+From: "Michael S. Tsirkin" <mst@mellanox.co.il>
+Subject: Re: [PATCH] Multiple refs from the same remote in one git fetch
+Date: Sun, 13 Aug 2006 01:39:47 +0300
+Message-ID: <20060812223947.GA13704@mellanox.co.il>
+References: <7vr6zsywmq.fsf@assigned-by-dhcp.cox.net>
+Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1252"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Aug 12 22:40:53 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 13 00:38:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GC0Hp-0007xd-CZ
-	for gcvg-git@gmane.org; Sat, 12 Aug 2006 22:40:49 +0200
+	id 1GC27C-0000Cp-0u
+	for gcvg-git@gmane.org; Sun, 13 Aug 2006 00:37:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932602AbWHLUkm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Aug 2006 16:40:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932608AbWHLUkm
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Aug 2006 16:40:42 -0400
-Received: from pool-70-110-115-96.lyn.east.verizon.net ([70.110.115.96]:14861
-	"EHLO JUSJONES-6Q8PL3.oiun.com") by vger.kernel.org with ESMTP
-	id S932602AbWHLUkl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Aug 2006 16:40:41 -0400
-To: <git@vger.kernel.org>
-X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
-Thread-Index: UL33uv17wICSNjgQjQFnYklfDb6gHAU9M9bX
+	id S964888AbWHLWhs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Aug 2006 18:37:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964951AbWHLWhs
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Aug 2006 18:37:48 -0400
+Received: from mxl145v66.mxlogic.net ([208.65.145.66]:60332 "EHLO
+	p02c11o143.mxlogic.net") by vger.kernel.org with ESMTP
+	id S964888AbWHLWhr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Aug 2006 18:37:47 -0400
+Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
+	by p02c11o143.mxlogic.net (mxl_mta-3.0.0-12)
+	with ESMTP id b385ed44.2584509360.10955.00-002.p02c11o143.mxlogic.net (envelope-from <mst@mellanox.co.il>);
+	Sat, 12 Aug 2006 16:37:47 -0600 (MDT)
+Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sun, 13 Aug 2006 01:43:47 +0300
+Received: by mellanox.co.il (sSMTP sendmail emulation); Sun, 13 Aug 2006 01:39:47 +0300
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vr6zsywmq.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4.2.1i
+X-OriginalArrivalTime: 12 Aug 2006 22:43:47.0937 (UTC) FILETIME=[C647CD10:01C6BE60]
+X-Spam: [F=0.0100000000; S=0.010(2006062901)]
+X-MAIL-FROM: <mst@mellanox.co.il>
+X-SOURCE-IP: [194.90.237.34]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 8.7 points;
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4987]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?70.110.115.96>]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: milokinter.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: milokinter.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25267>
 
-Yo!
+Quoting r. Junio C Hamano <junkio@cox.net>:
+> Subject: Re: [PATCH] Multiple refs from the same remote in one git fetch
+> 
+> "Michael S. Tsirkin" <mst@mellanox.co.il> writes:
+> 
+> > The following seems to fix this issue: simply scan the full
+> > refspec list for each remote instead of breaking on the first match.
+> > I had to touch the git-fetch.sh script as well as it is scanning
+> > the remote list, too. Works for me.
+> 
+> Looks Ok, although I have to admit I just gave a cursory look.
+> Thanks.
+> 
 
-Do you wish to increase your volume by up to 500%? 
+Could this go into next then? 
 
-Become stronger – show your volume
- Don’t be afraid
- Find what you need: http://milokinter.com/gal/gsm/ 
- We offer reliable service and 5 years expirience on the marcket!
+-- 
+MST
