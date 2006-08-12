@@ -1,83 +1,99 @@
-From: Shawn Pearce <spearce@spearce.org>
+From: Fredrik Kuivinen <freku045@student.liu.se>
 Subject: Re: [PATCH] Better error message when we are unable to lock the index file
-Date: Sat, 12 Aug 2006 13:16:26 -0400
-Message-ID: <20060812171626.GA18401@spearce.org>
-References: <20060812073756.5442.5498.stgit@c165> <7v8xluqt24.fsf@assigned-by-dhcp.cox.net> <7v4pwiqss7.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 12 Aug 2006 21:19:30 +0200
+Message-ID: <20060812191930.GA5205@c165.ib.student.liu.se>
+References: <20060812073756.5442.5498.stgit@c165> <7v8xluqt24.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Fredrik Kuivinen <freku045@student.liu.se>
-X-From: git-owner@vger.kernel.org Sat Aug 12 19:16:45 2006
+Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 12 21:19:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GBx6D-0002c8-Jn
-	for gcvg-git@gmane.org; Sat, 12 Aug 2006 19:16:38 +0200
+	id 1GBz1E-00058h-I8
+	for gcvg-git@gmane.org; Sat, 12 Aug 2006 21:19:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964928AbWHLRQe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Aug 2006 13:16:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964930AbWHLRQe
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Aug 2006 13:16:34 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:33488 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S964928AbWHLRQe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Aug 2006 13:16:34 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GBx5x-0006Wa-VT; Sat, 12 Aug 2006 13:16:22 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 6A7E320FB77; Sat, 12 Aug 2006 13:16:26 -0400 (EDT)
+	id S1422642AbWHLTTd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Aug 2006 15:19:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422648AbWHLTTd
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Aug 2006 15:19:33 -0400
+Received: from mxfep02.bredband.com ([195.54.107.73]:28859 "EHLO
+	mxfep02.bredband.com") by vger.kernel.org with ESMTP
+	id S1422642AbWHLTTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Aug 2006 15:19:32 -0400
+Received: from c165 ([213.114.27.85] [213.114.27.85])
+          by mxfep02.bredband.com with ESMTP
+          id <20060812191930.IAFY11843.mxfep02.bredband.com@c165>;
+          Sat, 12 Aug 2006 21:19:30 +0200
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1GBz18-000296-00; Sat, 12 Aug 2006 21:19:30 +0200
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <7v4pwiqss7.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <7v8xluqt24.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25262>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Junio C Hamano <junkio@cox.net> writes:
+On Sat, Aug 12, 2006 at 01:03:47AM -0700, Junio C Hamano wrote:
+> Fredrik Kuivinen <freku045@student.liu.se> writes:
 > 
-> > Looking at output from:
-> >
-> > 	$ git grep -A 3 hold_lock_file_for_update
-> >
-> > I wonder if it might be more consistent to do something like
-> > this instead.  It removes more lines than it adds ;-).
-> >
-> > Most of the callers except the one in refs.c use the function to
-> > update the index file.  Among the index writers, everybody
-> > except write-tree dies if they cannot open it for writing.
-> >
-> > diff --git a/refs.c b/refs.c
-> > index 28a9394..564f8a7 100644
-> > --- a/refs.c
-> > +++ b/refs.c
-> > @@ -319,7 +319,7 @@ static struct ref_lock *lock_ref_sha1_ba
+> > diff --git a/builtin-update-index.c b/builtin-update-index.c
+> > index 24dca47..f8f5e10 100644
+> > --- a/builtin-update-index.c
+> > +++ b/builtin-update-index.c
+> > @@ -493,7 +493,7 @@ int cmd_update_index(int argc, const cha
 > >  
-> >  	if (safe_create_leading_directories(lock->ref_file))
-> >  		die("unable to create directory for %s", lock->ref_file);
-> > -	lock->lock_fd = hold_lock_file_for_update(lock->lk, lock->ref_file);
-> > +	lock->lock_fd = hold_lock_file_for_update(lock->lk, lock->ref_file, 0);
-> >  	if (lock->lock_fd < 0) {
-> >  		error("Couldn't open lock file %s: %s",
-> >  		      lock->lk->filename, strerror(errno));
+> >  	newfd = hold_lock_file_for_update(lock_file, get_index_file());
+> >  	if (newfd < 0)
+> > -		die("unable to create new cachefile");
+> > +		die("unable to lock index file: %s", strerror(errno));
 > 
-> Looking at this part further, it seems that this one could
-> simply die when it fails -- after all it dies when leading
-> directories cannot be created, so dying upon failure of
-> hold_lock_file_for_update() would be consistent ;-).
+> Looking at output from:
+> 
+> 	$ git grep -A 3 hold_lock_file_for_update
+> 
+> I wonder if it might be more consistent to do something like
+> this instead.  It removes more lines than it adds ;-).
 
-Agreed.
+Looks good, one small comment below.
 
--- 
-Shawn.
+> diff --git a/lockfile.c b/lockfile.c
+> index 2346e0e..a5ea49b 100644
+> --- a/lockfile.c
+> +++ b/lockfile.c
+> @@ -22,7 +22,7 @@ static void remove_lock_file_on_signal(i
+>  	raise(signo);
+>  }
+>  
+> -int hold_lock_file_for_update(struct lock_file *lk, const char *path)
+> +static int lock_file(struct lock_file *lk, const char *path)
+>  {
+>  	int fd;
+>  	sprintf(lk->filename, "%s.lock", path);
+> @@ -41,6 +41,14 @@ int hold_lock_file_for_update(struct loc
+>  	return fd;
+>  }
+>  
+> +int hold_lock_file_for_update(struct lock_file *lk, const char *path, int die_on_error)
+> +{
+> +	int fd = lock_file(lk, path);
+> +	if (fd < 0 && die_on_error)
+> +		die("unable to create new index file");
+
+Could we have (something like)
+
+    die("unable to lock index file: %s", strerror(errno));
+
+here instead?
+
+> +	return fd;
+> +}
+> +
+>  int commit_lock_file(struct lock_file *lk)
+>  {
+> 	char result_file[PATH_MAX];
+
+- Fredrik
