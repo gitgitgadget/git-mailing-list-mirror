@@ -1,60 +1,116 @@
-From: NewsAlert <oblivious@ev.net>
-Subject: Mortgage Market Weakens Sat, 12 Aug 2006 09:55:45 +0300
-Date: Sat, 12 Aug 2006 00:49:45 -0600
-Message-ID: <browne.cutthroat@delilah>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-svn: split the path from the url correctly with limited perms
+Date: Fri, 11 Aug 2006 23:21:41 -0700
+Message-ID: <20060812062134.GA7609@localdomain>
+References: <11553198891741-git-send-email-normalperson@yhbt.net> <7vac6asux4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Aug 12 07:55:53 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 12 08:22:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GBmTQ-0002OP-Di
-	for gcvg-git@gmane.org; Sat, 12 Aug 2006 07:55:52 +0200
+	id 1GBmsi-0005HJ-Nj
+	for gcvg-git@gmane.org; Sat, 12 Aug 2006 08:22:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751072AbWHLFzq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Aug 2006 01:55:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932351AbWHLFzq
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Aug 2006 01:55:46 -0400
-Received: from 201-1-176-42.dsl.telesp.net.br ([201.1.176.42]:10244 "HELO
-	201-1-176-42.dsl.telesp.net.br") by vger.kernel.org with SMTP
-	id S1751072AbWHLFzp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Aug 2006 01:55:45 -0400
-X-Priority: 3 (Normal)
-To: linux-crypto@vger.kernel.org
+	id S1751091AbWHLGVq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Aug 2006 02:21:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751330AbWHLGVq
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Aug 2006 02:21:46 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:34441 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1751091AbWHLGVq (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Aug 2006 02:21:46 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 6B8DD7DC025;
+	Fri, 11 Aug 2006 23:21:44 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 11 Aug 2006 23:21:41 -0700
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vac6asux4.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.12-2006-07-14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 12.3 points;
- * -0.4 BAYES_05 BODY: Bayesian spam probability is 1 to 5%
- *      [score: 0.0267]
- *  0.4 RCVD_IN_NJABL_PROXY RBL: NJABL: sender is an open proxy
- *      [201.1.176.42 listed in combined.njabl.org]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: neckerchiefloving.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: neckerchiefloving.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: neckerchiefloving.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: neckerchiefloving.com]
- *  1.1 PRIORITY_NO_NAME Message has priority, but no X-Mailer/User-Agent
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25252>
 
-Hello,
+This version of the splitter (that only affects SVN:: library
+users) works when one only has limited read-permissions to
+the repository they're fetching from.
 
-We tried contacting you awhile ago about your low interest mor/tag rate.
+Updated from the original patch to workaround some SVN bug
+somewhere, which only seems to happen against file://
+repositories...  Here's the diff against the original patch I
+submitted:
 
-You have qualified for the lowest rate in years...
+@@ -1159,8 +1159,8 @@ sub repo_path_split {
+ 	}
 
-You could get over 380,000 for as little as 500 a month!
+ 	if ($_use_lib) {
+-		$SVN = libsvn_connect($full_url);
+-		my $url = $SVN->get_repos_root;
++		my $tmp = libsvn_connect($full_url);
++		my $url = $tmp->get_repos_root;
+ 		$full_url =~ s#^\Q$url\E/*##;
+ 		push @repo_path_split_cache, qr/^(\Q$url\E)/;
+ 		return ($url, $full_url);
 
-B ad credit? Doesn't matter, low rates are fixed no matter what!
+Somehow connecting to a repository with the full url makes the
+returned SVN::Ra object act strangely and break things, so now
+we just drop the SVN::Ra object that we made our initial
+connection with...
 
-To get a free, no oblig-ation consultation click below:
+Thanks to Junio for remembering to run the test suite when I
+thought the change was too trivial (I tested it against remote
+repostories, of course).
 
-http://neckerchiefloving.com/
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-svn.perl |   25 +++++++++++--------------
+ 1 files changed, 11 insertions(+), 14 deletions(-)
 
-Regards,
-Adam Epps
+diff --git a/git-svn.perl b/git-svn.perl
+index 7d9839e..0d58bb9 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1158,27 +1158,24 @@ sub repo_path_split {
+ 		}
+ 	}
+ 
+-	my ($url, $path) = ($full_url =~ m!^([a-z\+]+://[^/]*)(.*)$!i);
+-	$path =~ s#^/+##;
+-	my @paths = split(m#/+#, $path);
+-
+ 	if ($_use_lib) {
+-		while (1) {
+-			$SVN = libsvn_connect($url);
+-			last if (defined $SVN &&
+-				defined eval { $SVN->get_latest_revnum });
+-			my $n = shift @paths || last;
+-			$url .= "/$n";
+-		}
++		my $tmp = libsvn_connect($full_url);
++		my $url = $tmp->get_repos_root;
++		$full_url =~ s#^\Q$url\E/*##;
++		push @repo_path_split_cache, qr/^(\Q$url\E)/;
++		return ($url, $full_url);
+ 	} else {
++		my ($url, $path) = ($full_url =~ m!^([a-z\+]+://[^/]*)(.*)$!i);
++		$path =~ s#^/+##;
++		my @paths = split(m#/+#, $path);
+ 		while (quiet_run(qw/svn ls --non-interactive/, $url)) {
+ 			my $n = shift @paths || last;
+ 			$url .= "/$n";
+ 		}
++		push @repo_path_split_cache, qr/^(\Q$url\E)/;
++		$path = join('/',@paths);
++		return ($url, $path);
+ 	}
+-	push @repo_path_split_cache, qr/^(\Q$url\E)/;
+-	$path = join('/',@paths);
+-	return ($url, $path);
+ }
+ 
+ sub setup_git_svn {
+-- 
+1.4.1.g018f
