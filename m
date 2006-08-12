@@ -1,59 +1,83 @@
-From: "Caris" <akitashova@8.cellimm.bio.msu.ru>
-Subject: Re[5]: Hi my Dear!
-Date: Sat, 12 Aug 2006 18:22:27 +0300
-Message-ID: <007a01c6be23$16114080$d206000a@oZUQXo>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] Better error message when we are unable to lock the index file
+Date: Sat, 12 Aug 2006 13:16:26 -0400
+Message-ID: <20060812171626.GA18401@spearce.org>
+References: <20060812073756.5442.5498.stgit@c165> <7v8xluqt24.fsf@assigned-by-dhcp.cox.net> <7v4pwiqss7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="windows-1251"
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Sat Aug 12 17:22:41 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Fredrik Kuivinen <freku045@student.liu.se>
+X-From: git-owner@vger.kernel.org Sat Aug 12 19:16:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GBvJt-00016f-JF
-	for gcvg-git@gmane.org; Sat, 12 Aug 2006 17:22:37 +0200
+	id 1GBx6D-0002c8-Jn
+	for gcvg-git@gmane.org; Sat, 12 Aug 2006 19:16:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964914AbWHLPV5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Aug 2006 11:21:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964893AbWHLPVz
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Aug 2006 11:21:55 -0400
-Received: from [200.220.247.237] ([200.220.247.237]:44040 "EHLO
-	200.220.247.237") by vger.kernel.org with ESMTP id S964861AbWHLPVx
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Aug 2006 11:21:53 -0400
-Received: from [10.0.6.210] (HELO oZUQXo)
-	by 200.220.247.237 with SMTP id 23VhIwvcgwsxtq;
-	Sat, 12 Aug 2006 18:22:27 +0300
-To: "majordomo" <majordomo@vger.kernel.org>
+	id S964928AbWHLRQe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Aug 2006 13:16:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964930AbWHLRQe
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Aug 2006 13:16:34 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:33488 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S964928AbWHLRQe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Aug 2006 13:16:34 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GBx5x-0006Wa-VT; Sat, 12 Aug 2006 13:16:22 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 6A7E320FB77; Sat, 12 Aug 2006 13:16:26 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v4pwiqss7.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 9.5 points;
- *  0.1 RCVD_BY_IP Received by mail server with no name
- * -0.4 BAYES_05 BODY: Bayesian spam probability is 1 to 5%
- *      [score: 0.0429]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: justwaitingforyou.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: justwaitingforyou.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: justwaitingforyou.com]
- *  2.7 MSGID_DOLLARS Message-Id has pattern used in spam
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25261>
 
-Hi,	
+Junio C Hamano <junkio@cox.net> wrote:
+> Junio C Hamano <junkio@cox.net> writes:
+> 
+> > Looking at output from:
+> >
+> > 	$ git grep -A 3 hold_lock_file_for_update
+> >
+> > I wonder if it might be more consistent to do something like
+> > this instead.  It removes more lines than it adds ;-).
+> >
+> > Most of the callers except the one in refs.c use the function to
+> > update the index file.  Among the index writers, everybody
+> > except write-tree dies if they cannot open it for writing.
+> >
+> > diff --git a/refs.c b/refs.c
+> > index 28a9394..564f8a7 100644
+> > --- a/refs.c
+> > +++ b/refs.c
+> > @@ -319,7 +319,7 @@ static struct ref_lock *lock_ref_sha1_ba
+> >  
+> >  	if (safe_create_leading_directories(lock->ref_file))
+> >  		die("unable to create directory for %s", lock->ref_file);
+> > -	lock->lock_fd = hold_lock_file_for_update(lock->lk, lock->ref_file);
+> > +	lock->lock_fd = hold_lock_file_for_update(lock->lk, lock->ref_file, 0);
+> >  	if (lock->lock_fd < 0) {
+> >  		error("Couldn't open lock file %s: %s",
+> >  		      lock->lk->filename, strerror(errno));
+> 
+> Looking at this part further, it seems that this one could
+> simply die when it fails -- after all it dies when leading
+> directories cannot be created, so dying upon failure of
+> hold_lock_file_for_update() would be consistent ;-).
 
-I am writing to you with a hope in my heart to find in you my love that I have been looking for!
-I have just parted my ex-boyfriend because I realized that we were a nice couple but nothing more.
-He was not my true love so I decided to keep on looking!
-So, maybe I will take a chance on you? What do you think? Maybe we should be together?
-If you are interested find me here http://justwaitingforyou.com/loveyou/
-and we could start our virtual relations!
+Agreed.
 
-talk to you soon
-Caris
-
-If you think that you were subscribed by mistake for this mail
-delivery or if your email has been added without your permission,
-please, visit http://justwaitingforyou.com/loveyou/ and unsubscribe from our mails.
+-- 
+Shawn.
