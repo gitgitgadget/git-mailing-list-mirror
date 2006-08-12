@@ -1,99 +1,74 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: Re: [PATCH] Better error message when we are unable to lock the index file
-Date: Sat, 12 Aug 2006 21:19:30 +0200
-Message-ID: <20060812191930.GA5205@c165.ib.student.liu.se>
-References: <20060812073756.5442.5498.stgit@c165> <7v8xluqt24.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: How to resolve git-am conflict (possible bug)
+Date: Sat, 12 Aug 2006 12:49:21 -0700
+Message-ID: <7v7j1dpwe6.fsf@assigned-by-dhcp.cox.net>
+References: <ebj7er$64j$1@sea.gmane.org>
+	<7vslk2rbq8.fsf@assigned-by-dhcp.cox.net> <ebk5tf$31k$1@sea.gmane.org>
+	<Pine.LNX.4.63.0608121146550.10541@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 12 21:19:37 2006
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Aug 12 21:49:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GBz1E-00058h-I8
-	for gcvg-git@gmane.org; Sat, 12 Aug 2006 21:19:36 +0200
+	id 1GBzU6-000109-MR
+	for gcvg-git@gmane.org; Sat, 12 Aug 2006 21:49:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422642AbWHLTTd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Aug 2006 15:19:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422648AbWHLTTd
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Aug 2006 15:19:33 -0400
-Received: from mxfep02.bredband.com ([195.54.107.73]:28859 "EHLO
-	mxfep02.bredband.com") by vger.kernel.org with ESMTP
-	id S1422642AbWHLTTc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Aug 2006 15:19:32 -0400
-Received: from c165 ([213.114.27.85] [213.114.27.85])
-          by mxfep02.bredband.com with ESMTP
-          id <20060812191930.IAFY11843.mxfep02.bredband.com@c165>;
-          Sat, 12 Aug 2006 21:19:30 +0200
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1GBz18-000296-00; Sat, 12 Aug 2006 21:19:30 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v8xluqt24.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11+cvs20060403
+	id S1030271AbWHLTtY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Aug 2006 15:49:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030273AbWHLTtX
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Aug 2006 15:49:23 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:53227 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1030271AbWHLTtX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Aug 2006 15:49:23 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060812194922.LFXZ23903.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 12 Aug 2006 15:49:22 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <Pine.LNX.4.63.0608121146550.10541@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sat, 12 Aug 2006 11:52:54 +0200
+	(CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25263>
 
-On Sat, Aug 12, 2006 at 01:03:47AM -0700, Junio C Hamano wrote:
-> Fredrik Kuivinen <freku045@student.liu.se> writes:
-> 
-> > diff --git a/builtin-update-index.c b/builtin-update-index.c
-> > index 24dca47..f8f5e10 100644
-> > --- a/builtin-update-index.c
-> > +++ b/builtin-update-index.c
-> > @@ -493,7 +493,7 @@ int cmd_update_index(int argc, const cha
-> >  
-> >  	newfd = hold_lock_file_for_update(lock_file, get_index_file());
-> >  	if (newfd < 0)
-> > -		die("unable to create new cachefile");
-> > +		die("unable to lock index file: %s", strerror(errno));
-> 
-> Looking at output from:
-> 
-> 	$ git grep -A 3 hold_lock_file_for_update
-> 
-> I wonder if it might be more consistent to do something like
-> this instead.  It removes more lines than it adds ;-).
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Looks good, one small comment below.
+> On Sat, 12 Aug 2006, Jakub Narebski wrote:
+>
+>> Why do we not record commit id in patch?
+>
+> Because we do not have to.
 
-> diff --git a/lockfile.c b/lockfile.c
-> index 2346e0e..a5ea49b 100644
-> --- a/lockfile.c
-> +++ b/lockfile.c
-> @@ -22,7 +22,7 @@ static void remove_lock_file_on_signal(i
->  	raise(signo);
->  }
->  
-> -int hold_lock_file_for_update(struct lock_file *lk, const char *path)
-> +static int lock_file(struct lock_file *lk, const char *path)
->  {
->  	int fd;
->  	sprintf(lk->filename, "%s.lock", path);
-> @@ -41,6 +41,14 @@ int hold_lock_file_for_update(struct loc
->  	return fd;
->  }
->  
-> +int hold_lock_file_for_update(struct lock_file *lk, const char *path, int die_on_error)
-> +{
-> +	int fd = lock_file(lk, path);
-> +	if (fd < 0 && die_on_error)
-> +		die("unable to create new index file");
+More relevant point is that more often than not it does not
+help.  The most common workflow that involves format-patch
+output is to give your change to somebody else that does not
+have (and does not merge with) your repository, and the commit
+that is formatted is your own.  The other party does not have
+the commit so telling its object name is useless.
 
-Could we have (something like)
+Even if you recorded the commit object name of the pre-image
+that would not help unless the patch happens to be the first
+patch in a series forked from something the other party has.
 
-    die("unable to lock index file: %s", strerror(errno));
+>> And how git-rebase deals with this? 
 
-here instead?
-
-> +	return fd;
-> +}
-> +
->  int commit_lock_file(struct lock_file *lk)
->  {
-> 	char result_file[PATH_MAX];
-
-- Fredrik
+It applies the format-patch output using "git-am -3".  In this
+case, the preimage blobs recorded on "index" lines are
+guaranteed to exist in the repository the "git-am" runs, because
+the patches are coming from the same repository.  And the
+patches are obviously not munged (we do not give you a chance to
+muck with them between the time we generate and we apply) so
+they are guaranteed to apply to the blobs recorded on "index"
+lines.  Running the three-way fallback procedure on a change
+already present on the new "onto" branch results in no change in
+the index and that is how it notices the patch has already been
+applied.
