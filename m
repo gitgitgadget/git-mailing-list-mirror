@@ -1,72 +1,93 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Better error message when we are unable to lock the index file
-Date: Sat, 12 Aug 2006 01:09:44 -0700
-Message-ID: <7v4pwiqss7.fsf@assigned-by-dhcp.cox.net>
-References: <20060812073756.5442.5498.stgit@c165>
-	<7v8xluqt24.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: How to resolve git-am conflict (possible bug)
+Date: Sat, 12 Aug 2006 11:10:40 +0200
+Organization: At home
+Message-ID: <ebk5tf$31k$1@sea.gmane.org>
+References: <ebj7er$64j$1@sea.gmane.org> <7vslk2rbq8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Fredrik Kuivinen <freku045@student.liu.se>
-X-From: git-owner@vger.kernel.org Sat Aug 12 10:09:54 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sat Aug 12 11:10:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GBoZ6-0007qW-5i
-	for gcvg-git@gmane.org; Sat, 12 Aug 2006 10:09:52 +0200
+	id 1GBpVo-0006c8-NO
+	for gcvg-git@gmane.org; Sat, 12 Aug 2006 11:10:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932293AbWHLIJr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Aug 2006 04:09:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932339AbWHLIJr
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Aug 2006 04:09:47 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:8618 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932293AbWHLIJq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Aug 2006 04:09:46 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060812080946.LITU2704.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 12 Aug 2006 04:09:46 -0400
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <7v8xluqt24.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 12 Aug 2006 01:03:47 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932114AbWHLJKT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Aug 2006 05:10:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932261AbWHLJKT
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Aug 2006 05:10:19 -0400
+Received: from main.gmane.org ([80.91.229.2]:58037 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932114AbWHLJKR (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Aug 2006 05:10:17 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GBpVW-0006Yq-95
+	for git@vger.kernel.org; Sat, 12 Aug 2006 11:10:14 +0200
+Received: from host-81-190-24-83.torun.mm.pl ([81.190.24.83])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 12 Aug 2006 11:10:14 +0200
+Received: from jnareb by host-81-190-24-83.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 12 Aug 2006 11:10:14 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-83.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25256>
 
-Junio C Hamano <junkio@cox.net> writes:
+Junio C Hamano wrote:
 
-> Looking at output from:
->
-> 	$ git grep -A 3 hold_lock_file_for_update
->
-> I wonder if it might be more consistent to do something like
-> this instead.  It removes more lines than it adds ;-).
->
-> Most of the callers except the one in refs.c use the function to
-> update the index file.  Among the index writers, everybody
-> except write-tree dies if they cannot open it for writing.
->
-> diff --git a/refs.c b/refs.c
-> index 28a9394..564f8a7 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -319,7 +319,7 @@ static struct ref_lock *lock_ref_sha1_ba
->  
->  	if (safe_create_leading_directories(lock->ref_file))
->  		die("unable to create directory for %s", lock->ref_file);
-> -	lock->lock_fd = hold_lock_file_for_update(lock->lk, lock->ref_file);
-> +	lock->lock_fd = hold_lock_file_for_update(lock->lk, lock->ref_file, 0);
->  	if (lock->lock_fd < 0) {
->  		error("Couldn't open lock file %s: %s",
->  		      lock->lk->filename, strerror(errno));
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> Third, I wonder why it printed the same error message _twice_.
+> 
+> Do you have blob 7ea52b1?  Otherwise you would not see two "does
+> not apply" messages, so I suspect you do.  Does the patch
+> cleanly apply to that blob?
+> 
+> More likely explanation is that you edited the patch by hand for
+> some reason, and made it inapplicable to the base blob the
+> "index" line records.
 
-Looking at this part further, it seems that this one could
-simply die when it fails -- after all it dies when leading
-directories cannot be created, so dying upon failure of
-hold_lock_file_for_update() would be consistent ;-).
+Yes, I have edited "post-sub-rename" patch by hand (by script) in attempt
+for it to apply cleanly to the top of "pre-sub-rename" development branch.
+BTW patch applies cleanly to merge-base of the branch the patch is from and
+the branch it is applied to.
 
-Which makes write-tree the only odd-man-out.
+Why do we not record commit id in patch? And how git-rebase deals with this? 
+
+> The first "patch does not apply" comes from ll. 363 of git-am.
+> After it fails because the patch does not apply to the version
+> of gitweb.perl in your index, since you told it to fall back to
+> three-way merge, l. 391 calls fall_back_3way, which inspects the
+> patch, finds the "index" line and notices that the patch claims
+> to apply to blob 7ea52b1, finds the blob in your repository, and
+> prepares a temporary index with "update-index -z --index-info"
+> on l. 58 successfully, tries to apply the patch again on l. 63.
+> 
+> However, the patch contents and the blob object name recorded on
+> the index line are not necessarily consistent if you hand edited
+> the patch (IOW, the context lines in the patch contents may not
+> match blob 7ea52b1).
+
+It would be nice then if git-am was more verbose, for example
+"Applying patch to blob 7ea52b1... gitweb/gitweb.perl" or something
+like that.
+
+And first complaint still apply: in git-am(1) there is precious few
+documentation (or at least references) about _how_ to resolve merge
+conflict or failed patch (does git-apply creates *.orig and *.rej 
+files?)
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
