@@ -1,74 +1,114 @@
 From: Junio C Hamano <junkio@cox.net>
 Subject: Re: How to resolve git-am conflict (possible bug)
-Date: Sat, 12 Aug 2006 12:49:21 -0700
-Message-ID: <7v7j1dpwe6.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 12 Aug 2006 12:49:38 -0700
+Message-ID: <7vzme9oht9.fsf@assigned-by-dhcp.cox.net>
 References: <ebj7er$64j$1@sea.gmane.org>
 	<7vslk2rbq8.fsf@assigned-by-dhcp.cox.net> <ebk5tf$31k$1@sea.gmane.org>
-	<Pine.LNX.4.63.0608121146550.10541@wbgn013.biozentrum.uni-wuerzburg.de>
+	<ebk6be$31k$2@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Aug 12 21:49:27 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 12 21:49:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GBzU6-000109-MR
-	for gcvg-git@gmane.org; Sat, 12 Aug 2006 21:49:27 +0200
+	id 1GBzUM-000125-Ut
+	for gcvg-git@gmane.org; Sat, 12 Aug 2006 21:49:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030271AbWHLTtY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Aug 2006 15:49:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030273AbWHLTtX
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Aug 2006 15:49:23 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:53227 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1030271AbWHLTtX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Aug 2006 15:49:23 -0400
+	id S1030273AbWHLTtk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Aug 2006 15:49:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030275AbWHLTtk
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Aug 2006 15:49:40 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:16290 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1030273AbWHLTtj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Aug 2006 15:49:39 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao07.cox.net
+          by fed1rmmtao11.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060812194922.LFXZ23903.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 12 Aug 2006 15:49:22 -0400
+          id <20060812194939.PRLD554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 12 Aug 2006 15:49:39 -0400
 To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <Pine.LNX.4.63.0608121146550.10541@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Sat, 12 Aug 2006 11:52:54 +0200
-	(CEST)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25264>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> On Sat, 12 Aug 2006, Jakub Narebski wrote:
+> Jakub Narebski wrote:
 >
->> Why do we not record commit id in patch?
+>> Junio C Hamano wrote:
+> [...] 
+>>> More likely explanation is that you edited the patch by hand for
+>>> some reason, and made it inapplicable to the base blob the
+>>> "index" line records.
 >
-> Because we do not have to.
+> Original (not edited) version of patch generates nice merge conflict.
 
-More relevant point is that more often than not it does not
-help.  The most common workflow that involves format-patch
-output is to give your change to somebody else that does not
-have (and does not merge with) your repository, and the commit
-that is formatted is your own.  The other party does not have
-the commit so telling its object name is useless.
+The moral of the story is that either (1) you hand edit the
+patch to apply cleanly to the target, or (2) if you do edit, do
+not make it inapplicable to the preimage blob recorded in the
+patch, so that -3 still would work.
 
-Even if you recorded the commit object name of the pre-image
-that would not help unless the patch happens to be the first
-patch in a series forked from something the other party has.
+>> It would be nice then if git-am was more verbose, for example
+>> "Applying patch to blob 7ea52b1... gitweb/gitweb.perl" or something
+>> like that.
+>
+> Or at least some information what git-am is attempting before second 
+> 'patch failed' error message...
 
->> And how git-rebase deals with this? 
+How about this?
 
-It applies the format-patch output using "git-am -3".  In this
-case, the preimage blobs recorded on "index" lines are
-guaranteed to exist in the repository the "git-am" runs, because
-the patches are coming from the same repository.  And the
-patches are obviously not munged (we do not give you a chance to
-muck with them between the time we generate and we apply) so
-they are guaranteed to apply to the blobs recorded on "index"
-lines.  Running the three-way fallback procedure on a change
-already present on the new "onto" branch results in no change in
-the index and that is how it notices the patch has already been
-applied.
+diff --git a/git-am.sh b/git-am.sh
+index 04f0119..aff4bb7 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -45,6 +45,12 @@ go_next () {
+ 	this=$next
+ }
+ 
++cannot_fallback () {
++	echo >&2 "$1"
++	echo >&2 "Cannot fall back to three-way merge."
++	exit 1
++}
++
+ fall_back_3way () {
+     O_OBJECT=`cd "$GIT_OBJECT_DIRECTORY" && pwd`
+ 
+@@ -52,19 +58,23 @@ fall_back_3way () {
+     mkdir "$dotest/patch-merge-tmp-dir"
+ 
+     # First see if the patch records the index info that we can use.
+-    if git-apply -z --index-info "$dotest/patch" \
+-	>"$dotest/patch-merge-index-info" 2>/dev/null &&
+-	GIT_INDEX_FILE="$dotest/patch-merge-tmp-index" \
+-	git-update-index -z --index-info <"$dotest/patch-merge-index-info" &&
+-	GIT_INDEX_FILE="$dotest/patch-merge-tmp-index" \
+-	git-write-tree >"$dotest/patch-merge-base+" &&
+-	# index has the base tree now.
+-	GIT_INDEX_FILE="$dotest/patch-merge-tmp-index" \
++    git-apply -z --index-info "$dotest/patch" \
++    	>"$dotest/patch-merge-index-info" &&
++    GIT_INDEX_FILE="$dotest/patch-merge-tmp-index" \
++    git-update-index -z --index-info <"$dotest/patch-merge-index-info" &&
++    GIT_INDEX_FILE="$dotest/patch-merge-tmp-index" \
++    git-write-tree >"$dotest/patch-merge-base+" ||
++    cannot_fallback "Patch does not record usable index information."
++
++    echo Using index info to reconstruct a base tree...
++    if GIT_INDEX_FILE="$dotest/patch-merge-tmp-index" \
+ 	git-apply $binary --cached <"$dotest/patch"
+     then
+-	echo Using index info to reconstruct a base tree...
+ 	mv "$dotest/patch-merge-base+" "$dotest/patch-merge-base"
+ 	mv "$dotest/patch-merge-tmp-index" "$dotest/patch-merge-index"
++    else
++        cannot_fallback "Did you hand edit your patch?
++It does not apply to blobs recorded in its index."
+     fi
+ 
+     test -f "$dotest/patch-merge-index" &&
