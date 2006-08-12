@@ -1,69 +1,59 @@
-From: "Michael S. Tsirkin" <mst@mellanox.co.il>
-Subject: Re: [PATCH] make git compile on old version of engarde linux
-Date: Sun, 13 Aug 2006 01:45:20 +0300
-Message-ID: <20060812224520.GB13704@mellanox.co.il>
-References: <7vac6etz5n.fsf@assigned-by-dhcp.cox.net>
-Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Multiple refs from the same remote in one git fetch
+Date: Sat, 12 Aug 2006 16:07:29 -0700
+Message-ID: <7vveoxo8ni.fsf@assigned-by-dhcp.cox.net>
+References: <7vr6zsywmq.fsf@assigned-by-dhcp.cox.net>
+	<20060812223947.GA13704@mellanox.co.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 13 00:43:26 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 13 01:07:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GC2CT-0000xi-4J
-	for gcvg-git@gmane.org; Sun, 13 Aug 2006 00:43:25 +0200
+	id 1GC2Zu-0004R5-Jc
+	for gcvg-git@gmane.org; Sun, 13 Aug 2006 01:07:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964968AbWHLWnW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Aug 2006 18:43:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964972AbWHLWnW
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Aug 2006 18:43:22 -0400
-Received: from mxl145v67.mxlogic.net ([208.65.145.67]:56277 "EHLO
-	p02c11o144.mxlogic.net") by vger.kernel.org with ESMTP
-	id S964968AbWHLWnV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Aug 2006 18:43:21 -0400
-Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
-	by p02c11o144.mxlogic.net (mxl_mta-3.0.0-12)
-	with ESMTP id 9895ed44.1992022960.18428.00-007.p02c11o144.mxlogic.net (envelope-from <mst@mellanox.co.il>);
-	Sat, 12 Aug 2006 16:43:21 -0600 (MDT)
-Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sun, 13 Aug 2006 01:49:21 +0300
-Received: by mellanox.co.il (sSMTP sendmail emulation); Sun, 13 Aug 2006 01:45:20 +0300
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vac6etz5n.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4.2.1i
-X-OriginalArrivalTime: 12 Aug 2006 22:49:21.0421 (UTC) FILETIME=[8D0D6BD0:01C6BE61]
-X-Spam: [F=0.1944351784; S=0.194(2006062901)]
-X-MAIL-FROM: <mst@mellanox.co.il>
-X-SOURCE-IP: [194.90.237.34]
+	id S964899AbWHLXHb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Aug 2006 19:07:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964950AbWHLXHb
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Aug 2006 19:07:31 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:31121 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S964899AbWHLXHb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Aug 2006 19:07:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060812230730.BBIE2704.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 12 Aug 2006 19:07:30 -0400
+To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+In-Reply-To: <20060812223947.GA13704@mellanox.co.il> (Michael S. Tsirkin's
+	message of "Sun, 13 Aug 2006 01:39:47 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25269>
 
-Quoting r. Junio C Hamano <junkio@cox.net>:
-> > This looks familiar; did the build error out when compiling
-> > convert-objects.c by any chance? I suspect you have the same problem
-> > that I encountered.  My fix was posted in "[PATCH 6/10] Fix header breakage
-> > with _XOPEN_SOURCE."
-> >
-> > I have included my earlier mail message inline below, in case you wish
-> > to confirm the that it fixes things for you too.
-> 
-> Alternatively Ramsay's _XOPEN_SOURCE patch is part of "next", so
-> if it fixes the problem for you that would confirm the patch is
-> a good one to have.
-> 
+"Michael S. Tsirkin" <mst@mellanox.co.il> writes:
 
-BTW, would it make sense fr this patch to be cherry-picked into 1.4.8?
-I guess the reason that LNK macros are under GNU_SOURCE is the following
-text from stat(2):
- 
-       The S_ISLNK and S_ISSOCK macros
-       are not in POSIX.1-1996, but both will be in the next  POSIX  standard;
-       the former is from SVID 4v2, the latter from SUSv2.
+> Quoting r. Junio C Hamano <junkio@cox.net>:
+>> Subject: Re: [PATCH] Multiple refs from the same remote in one git fetch
+>> 
+>> "Michael S. Tsirkin" <mst@mellanox.co.il> writes:
+>> 
+>> > The following seems to fix this issue: simply scan the full
+>> > refspec list for each remote instead of breaking on the first match.
+>> > I had to touch the git-fetch.sh script as well as it is scanning
+>> > the remote list, too. Works for me.
+>> 
+>> Looks Ok, although I have to admit I just gave a cursory look.
+>> Thanks.
+>> 
+>
+> Could this go into next then? 
 
--- 
-MST
+No.  Spoke too fast.  Breaks t6200 test because it reports the
+refs fetched in duplicates.
