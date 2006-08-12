@@ -1,80 +1,122 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-svn: split the path from the url correctly with limited perms
-Date: Fri, 11 Aug 2006 16:40:39 -0700
-Message-ID: <7vac6asux4.fsf@assigned-by-dhcp.cox.net>
-References: <11553198891741-git-send-email-normalperson@yhbt.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Different colours for tags and heads
+Date: Sat, 12 Aug 2006 02:12:19 +0200
+Organization: At home
+Message-ID: <ebj6c3$4cj$1@sea.gmane.org>
+References: <20060811151224.177110@gmx.net> <ebi81l$qu$1@sea.gmane.org> <7vodurrlg8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 12 01:41:05 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sat Aug 12 02:12:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GBgce-00088n-Rs
-	for gcvg-git@gmane.org; Sat, 12 Aug 2006 01:41:01 +0200
+	id 1GBh6u-0003Wv-LF
+	for gcvg-git@gmane.org; Sat, 12 Aug 2006 02:12:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751088AbWHKXkl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 Aug 2006 19:40:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751226AbWHKXkl
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Aug 2006 19:40:41 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:2041 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1751088AbWHKXkl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Aug 2006 19:40:41 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060811234040.PZGP23903.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 11 Aug 2006 19:40:40 -0400
-To: Eric Wong <normalperson@yhbt.net>
-In-Reply-To: <11553198891741-git-send-email-normalperson@yhbt.net> (Eric
-	Wong's message of "Fri, 11 Aug 2006 11:11:28 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932377AbWHLAMN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 Aug 2006 20:12:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932408AbWHLAMN
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Aug 2006 20:12:13 -0400
+Received: from main.gmane.org ([80.91.229.2]:20153 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932377AbWHLAMM (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Aug 2006 20:12:12 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GBh6i-0003Vk-Hv
+	for git@vger.kernel.org; Sat, 12 Aug 2006 02:12:04 +0200
+Received: from host-81-190-24-83.torun.mm.pl ([81.190.24.83])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 12 Aug 2006 02:12:04 +0200
+Received: from jnareb by host-81-190-24-83.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 12 Aug 2006 02:12:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-83.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25244>
 
-Eric Wong <normalperson@yhbt.net> writes:
+Junio C Hamano wrote:
 
-> This version of the splitter (that only affects SVN:: library
-> users) works when one only has limited read-permissions to
-> the repository they're fetching from.
+> Jakub Narebski <jnareb@gmail.com> writes:
 
-This seems to break all of t9100 series test without
-GIT_SVN_NO_LIB environment set.
+>> I've planned on patch which does something similar to
+>> yours, but in slightly different way: instead of two calls 
+>> to git_get_referencing (format_mark_referencing[*1*] after rename)
+>> and two calls to read_info_ref (git_get_references after rename)
+>> in your patch, read_info_ref would always add full name, of
+>> which first component is the type of the tag.
+> 
+> get_referencing to get, and format_ref to format perhaps?
 
-"dpkg -l libsvn-core-perl" reports 1.3.2-3 here.
+Thanks for a suggestion. I've decided on git_get_references, and
+format_ref_marker,but it isn't cast in stone.
+ 
+>> I am wondering if to do this like in my abovementioned patch,
+>> putting references in single string, separated by ':' (':' cannot
+>> be part of valid ref name), or use array (anonymous array reference
+>> to be more exact). 
+> 
+> Two things and half come to mind.
+> 
+> get_referencing could get and return the full refname without
+> abbreviation ('heads/jn/web' or 'tags/v1.0'), and the caller can
+> do whatever with them (e.g. see what the name begins with to
+> tell heads and tags apart).  This is probably the most flexible
+> if we do not want to cast the categorization of refs in stone.
+> 
+> Otherwise, return an arrayref, like ['tag', 'v1.0', 'v1.0'] or
+> ['head', 'web', 'jn/web'], to say what kind, short name and full
+> name.
 
-$ for i in t91*; do echo $i; sh $i; done
-t9100-git-svn-basic.sh
-define NO_SVN_TESTS to skip git-svn tests
-*   ok 1: initialize git-svn
-FATAL: Unexpected exit with code 255
-t9101-git-svn-props.sh
-*   ok 1: checkout working copy from svn
-*   ok 2: setup some commits to svn
-*   ok 3: initialize git-svn
-FATAL: Unexpected exit with code 255
-t9102-git-svn-deep-rmdir.sh
-*   ok 1: initialize repo
-FATAL: Unexpected exit with code 255
-t9103-git-svn-graft-branches.sh
-FATAL: Unexpected exit with code 255
-t9104-git-svn-follow-parent.sh
-*   ok 1: initialize repo
-FATAL: Unexpected exit with code 255
-t9105-git-svn-commit-diff.sh
-*   ok 1: initialize repo
-FATAL: Unexpected exit with code 9
+Perhaps I have not said things clearly. The problem I meant to solve is the
+fact that there might be more than one ref pointing to a given object.
+Currently read_info_ref does not its job joining references pointing to
+given object (referenced object is key of a hash) using " / ", i.e.
+creating the "joined tag".
 
-$ sh t9100-git-svn-basic.sh -i -v
-define NO_SVN_TESTS to skip git-svn tests
-* expecting success: git-svn init file:///git/t/trash/svnrepo/test-git-svn
-*   ok 1: initialize git-svn
-* expecting success: git-svn fetch
-11 at /git/t/../git-svn line 422
-        main::fetch_lib() called at /git/t/../git-svn line 290
-        main::fetch() called at /git/t/../git-svn line 149
-FATAL: Unexpected exit with code 255
+In dropped patch I've mentioned I joined references using ':' as it can't be
+part of valid ref name, then split it on ':' on formatting.
+
+But they can be put into anonymous arrayref (e.g. ['heads/next',
+'heads/autoconf'] at the start of 'autoconf' branch, or ['heads/master',
+'heads/next', 'tags/v1.4.2'], not 'heads/master:heads/next:tags/v1.4.2'
+my patch did.
+
+> I've always wondered if the span that shows the short refname
+> could have an on-hover pop-up (title attribute is often shown
+> that way) to show the full name.  Then you could do something
+> like:
+> 
+>     $long_name = 'heads/jn/web'; # or 'tags/v1.0'
+>     $kind = ($long_name =~ /^heads/) ? 'head' : 'tag';
+>     $long_name = s|^[^/]*/||;
+>     ($short_name = $long_name) =~ s|.*/||;
+>     $long_name = esc_html($long_name);
+>     $short_name = esc_html($short_name);
+>     return " <span class='$kind' title='$long_name'>$short_name</span>";
+
+Currently (in core-git) besides 'heads' and 'tags' there might be
+'remotes' (when using --use-separate-remote' option of git-clone), all
+following the rule of being plural (in English) to the type of tag, so one
+could use
+        $ref =~ m|(^[^/])*s?/|;
+        $kind = $1;
+for kind.
+
+By the way, is it really usefull to have shortened ref name, e.g. 'web' for
+'jn/web'? That is what gitweb does currently (only without giving ling name
+at all). It is probably bad practice, but I've had branches ab/sth and
+zz/sth, with the same shortname.
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
