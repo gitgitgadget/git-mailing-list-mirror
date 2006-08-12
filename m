@@ -1,116 +1,60 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: split the path from the url correctly with limited perms
-Date: Fri, 11 Aug 2006 23:21:41 -0700
-Message-ID: <20060812062134.GA7609@localdomain>
-References: <11553198891741-git-send-email-normalperson@yhbt.net> <7vac6asux4.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 12 08:22:02 2006
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: [PATCH] Better error message when we are unable to lock the index file
+Date: Sat, 12 Aug 2006 09:37:56 +0200
+Message-ID: <20060812073756.5442.5498.stgit@c165>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
+Cc: junkio@cox.net
+X-From: git-owner@vger.kernel.org Sat Aug 12 09:38:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GBmsi-0005HJ-Nj
-	for gcvg-git@gmane.org; Sat, 12 Aug 2006 08:22:01 +0200
+	id 1GBo4I-0004Og-EI
+	for gcvg-git@gmane.org; Sat, 12 Aug 2006 09:38:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751091AbWHLGVq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Aug 2006 02:21:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751330AbWHLGVq
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Aug 2006 02:21:46 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:34441 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1751091AbWHLGVq (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Aug 2006 02:21:46 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 6B8DD7DC025;
-	Fri, 11 Aug 2006 23:21:44 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 11 Aug 2006 23:21:41 -0700
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vac6asux4.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.12-2006-07-14
+	id S964814AbWHLHh7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Aug 2006 03:37:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964815AbWHLHh7
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Aug 2006 03:37:59 -0400
+Received: from mxfep01.bredband.com ([195.54.107.70]:26615 "EHLO
+	mxfep01.bredband.com") by vger.kernel.org with ESMTP
+	id S964814AbWHLHh6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Aug 2006 03:37:58 -0400
+Received: from c165 ([213.114.27.85] [213.114.27.85])
+          by mxfep01.bredband.com with ESMTP
+          id <20060812073757.EWLH5813.mxfep01.bredband.com@c165>;
+          Sat, 12 Aug 2006 09:37:57 +0200
+Received: from c165 ([127.0.0.1])
+	by c165 with esmtp (Exim 3.36 #1 (Debian))
+	id 1GBo4C-0001Pt-00; Sat, 12 Aug 2006 09:37:56 +0200
+To: git@vger.kernel.org
+User-Agent: StGIT/0.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25253>
 
-This version of the splitter (that only affects SVN:: library
-users) works when one only has limited read-permissions to
-the repository they're fetching from.
 
-Updated from the original patch to workaround some SVN bug
-somewhere, which only seems to happen against file://
-repositories...  Here's the diff against the original patch I
-submitted:
 
-@@ -1159,8 +1159,8 @@ sub repo_path_split {
- 	}
 
- 	if ($_use_lib) {
--		$SVN = libsvn_connect($full_url);
--		my $url = $SVN->get_repos_root;
-+		my $tmp = libsvn_connect($full_url);
-+		my $url = $tmp->get_repos_root;
- 		$full_url =~ s#^\Q$url\E/*##;
- 		push @repo_path_split_cache, qr/^(\Q$url\E)/;
- 		return ($url, $full_url);
+Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
 
-Somehow connecting to a repository with the full url makes the
-returned SVN::Ra object act strangely and break things, so now
-we just drop the SVN::Ra object that we made our initial
-connection with...
-
-Thanks to Junio for remembering to run the test suite when I
-thought the change was too trivial (I tested it against remote
-repostories, of course).
-
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
 ---
- git-svn.perl |   25 +++++++++++--------------
- 1 files changed, 11 insertions(+), 14 deletions(-)
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 7d9839e..0d58bb9 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -1158,27 +1158,24 @@ sub repo_path_split {
- 		}
- 	}
+ builtin-update-index.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/builtin-update-index.c b/builtin-update-index.c
+index 24dca47..f8f5e10 100644
+--- a/builtin-update-index.c
++++ b/builtin-update-index.c
+@@ -493,7 +493,7 @@ int cmd_update_index(int argc, const cha
  
--	my ($url, $path) = ($full_url =~ m!^([a-z\+]+://[^/]*)(.*)$!i);
--	$path =~ s#^/+##;
--	my @paths = split(m#/+#, $path);
--
- 	if ($_use_lib) {
--		while (1) {
--			$SVN = libsvn_connect($url);
--			last if (defined $SVN &&
--				defined eval { $SVN->get_latest_revnum });
--			my $n = shift @paths || last;
--			$url .= "/$n";
--		}
-+		my $tmp = libsvn_connect($full_url);
-+		my $url = $tmp->get_repos_root;
-+		$full_url =~ s#^\Q$url\E/*##;
-+		push @repo_path_split_cache, qr/^(\Q$url\E)/;
-+		return ($url, $full_url);
- 	} else {
-+		my ($url, $path) = ($full_url =~ m!^([a-z\+]+://[^/]*)(.*)$!i);
-+		$path =~ s#^/+##;
-+		my @paths = split(m#/+#, $path);
- 		while (quiet_run(qw/svn ls --non-interactive/, $url)) {
- 			my $n = shift @paths || last;
- 			$url .= "/$n";
- 		}
-+		push @repo_path_split_cache, qr/^(\Q$url\E)/;
-+		$path = join('/',@paths);
-+		return ($url, $path);
- 	}
--	push @repo_path_split_cache, qr/^(\Q$url\E)/;
--	$path = join('/',@paths);
--	return ($url, $path);
- }
+ 	newfd = hold_lock_file_for_update(lock_file, get_index_file());
+ 	if (newfd < 0)
+-		die("unable to create new cachefile");
++		die("unable to lock index file: %s", strerror(errno));
  
- sub setup_git_svn {
--- 
-1.4.1.g018f
+ 	entries = read_cache();
+ 	if (entries < 0)
