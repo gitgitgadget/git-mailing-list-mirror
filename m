@@ -1,61 +1,111 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] git-publish
-Date: Sun, 13 Aug 2006 10:07:59 -0700
-Message-ID: <7vzme8lg28.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0608131158500.9789@iabervon.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: recur status on linux-2.6
+Date: Sun, 13 Aug 2006 20:16:29 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0608132006510.10541@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0608131550290.10541@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v64gwmv2j.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 13 19:08:17 2006
+X-From: git-owner@vger.kernel.org Sun Aug 13 20:16:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GCJRf-0002WT-L4
-	for gcvg-git@gmane.org; Sun, 13 Aug 2006 19:08:16 +0200
+	id 1GCKVz-0007mH-82
+	for gcvg-git@gmane.org; Sun, 13 Aug 2006 20:16:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751319AbWHMRIC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 Aug 2006 13:08:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751327AbWHMRIB
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Aug 2006 13:08:01 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:17595 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1751319AbWHMRIA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Aug 2006 13:08:00 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060813170800.HUVJ23903.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 13 Aug 2006 13:08:00 -0400
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.64.0608131158500.9789@iabervon.org> (Daniel
-	Barkalow's message of "Sun, 13 Aug 2006 12:34:49 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750707AbWHMSQc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 Aug 2006 14:16:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750712AbWHMSQc
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Aug 2006 14:16:32 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38594 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750707AbWHMSQb (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 Aug 2006 14:16:31 -0400
+Received: (qmail invoked by alias); 13 Aug 2006 18:16:30 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp003) with SMTP; 13 Aug 2006 20:16:30 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v64gwmv2j.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25287>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+Hi,
 
-> My suspicion is that most people who run commit directly and have a 
-> default push location tend to want to push after every commit (or, at 
-> least, be fine with that, and really want to have pushed after the last of 
-> a batch).
+On Sun, 13 Aug 2006, Junio C Hamano wrote:
 
-I for one would be horrified ;-) but that's probably just me.
+> Recreating the tip of "next" (10a6653) might be fun.  I do not know why, 
+> but it ended up having 14 merge bases.  The speed-up is about 6x, and 
+> the resulting half-merge is worse than recursive (not using rerere 
+> cache).
 
-Some people seem to like 'commit -o' (which now is the default),
-and worse yet (from 'discipline' point of view) there are even
-people who want to be able to edit the patch preview in place in
-'commit -v' buffer.  Commits by these people are by definition
-not even compile tested in isolation.  I suspect those are the
-very people who would want to push immediately after they make
-commits.
+Well, my guess for these 14 merge bases is that you merge a lot between 
+topic branches.
 
-Chilly.
+As for the worse half-merge: I get only this difference:
 
-Don't get me wrong -- I am not opposed to "git-commit && git-push".
-It may be handy if you are pushing into some alternate (backup)
-location.  But "publish" (implying "public consumption") is too
-much for my taste, and I am hesitant to endorse such a workflow.
+-100644 fad39ff609f3ea27981e7a9ffdfc29731d1065d0 1      upload-pack.c
++100644 b6cc43c3c89c68e950c6d86298c928e9aab25e70 1      upload-pack.c
+
+So, after both -recur and -recursive, upload-pack.c is in the index in an 
+unmerged state.
+
+The difference between fad39ff6 (from -recur) and b6cc43c3 (from 
+-recursive) is that this block
+
+-- snip --
+
+        if (nr_has < MAX_HAS) {
+                struct object *o = lookup_object(sha1);
+                if (!(o && o->parsed))
+                        o = parse_object(sha1);
+                if (!o)
+                        die("oops (%s)", sha1_to_hex(sha1));
+                if (o->type == OBJ_COMMIT) {
+                        struct commit_list *parents;
+                        if (o->flags & THEY_HAVE)
+                                return 0;
+                        o->flags |= THEY_HAVE;
+                        for (parents = ((struct commit*)o)->parents;
+                             parents;
+                             parents = parents->next)
+                                parents->item->object.flags |= THEY_HAVE;
+                }
+                memcpy(has_sha1[nr_has++], sha1, 20);
+
+-- snap --
+
+is inserted after (-recur), instead of before (-recursive), the clashing 
+block
+
+-- snip --
+
+        o = lookup_object(sha1);
+        if (!(o && o->parsed))
+                o = parse_object(sha1);
+        if (!o)
+                die("oops (%s)", sha1_to_hex(sha1));
+        if (o->type == TYPE_COMMIT) {
+                struct commit_list *parents;
+                if (o->flags & THEY_HAVE)
+                        return 0;
+                o->flags |= THEY_HAVE;
+                for (parents = ((struct commit*)o)->parents;
+                     parents;
+                     parents = parents->next)
+                        parents->item->object.flags |= THEY_HAVE;
+
+-- snap --
+
+So, the order is actually saner, since one expects the upstream (newer) 
+version to come after the "====" line.
+
+I fail to see how this is worse than -recursive...
+
+Ciao,
+Dscho
