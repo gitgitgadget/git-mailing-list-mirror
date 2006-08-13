@@ -1,57 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Sam Ravnborg <sam@ravnborg.org>
 Subject: Re: [RFC] git-publish
-Date: Sun, 13 Aug 2006 20:20:43 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0608132017090.10541@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Sun, 13 Aug 2006 21:13:46 +0200
+Message-ID: <20060813191346.GA21487@mars.ravnborg.org>
 References: <Pine.LNX.4.64.0608131158500.9789@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 13 20:21:01 2006
+X-From: git-owner@vger.kernel.org Sun Aug 13 21:14:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GCKZw-00008k-B4
-	for gcvg-git@gmane.org; Sun, 13 Aug 2006 20:20:52 +0200
+	id 1GCLPS-00026u-1v
+	for gcvg-git@gmane.org; Sun, 13 Aug 2006 21:14:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750703AbWHMSUq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 Aug 2006 14:20:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750712AbWHMSUq
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Aug 2006 14:20:46 -0400
-Received: from mail.gmx.de ([213.165.64.20]:12471 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1750703AbWHMSUq (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Aug 2006 14:20:46 -0400
-Received: (qmail invoked by alias); 13 Aug 2006 18:20:44 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp042) with SMTP; 13 Aug 2006 20:20:44 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S1751364AbWHMTNx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 Aug 2006 15:13:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751367AbWHMTNx
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Aug 2006 15:13:53 -0400
+Received: from pasmtpb.tele.dk ([80.160.77.98]:53481 "EHLO pasmtp.tele.dk")
+	by vger.kernel.org with ESMTP id S1751364AbWHMTNw (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 Aug 2006 15:13:52 -0400
+Received: from mars.ravnborg.org (0x535d98d8.hrnxx9.adsl-dhcp.tele.dk [83.93.152.216])
+	by pasmtp.tele.dk (Postfix) with ESMTP id 9CFD0E3084D;
+	Sun, 13 Aug 2006 21:13:47 +0200 (CEST)
+Received: by mars.ravnborg.org (Postfix, from userid 1000)
+	id B220243C01F; Sun, 13 Aug 2006 21:13:46 +0200 (CEST)
 To: Daniel Barkalow <barkalow@iabervon.org>
+Content-Disposition: inline
 In-Reply-To: <Pine.LNX.4.64.0608131158500.9789@iabervon.org>
-X-Y-GMX-Trusted: 0
+User-Agent: Mutt/1.5.12-2006-07-14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25289>
 
-Hi,
+On Sun, Aug 13, 2006 at 12:34:49PM -0400, Daniel Barkalow wrote:
+> 
+> Actually, I'm also curious as to how other people generate the series of 
+> commits for a patch series, when they've actually got a working directory 
+> that contains the end result. I doubt that people actually do their 
+> modifications in patch order, committing each time, without writing 
+> and testing the end result.
+hack hack
+git commit -a
+test <= ohh crap a trivial bug
+git format-patch HEAD^..HEAD
+git reset HEAD^ --hard
+patch -p1 0001*
+hack hack
+git commit -a <= reading in old changelog from 0001*
 
-On Sun, 13 Aug 2006, Daniel Barkalow wrote:
+The above is easier if you know git I expect.
+If I find bugs in older patches I just go back more steps.
 
-> Like how "pull" is "fetch" + "merge", I think it would be useful to have 
-> a "commit" + "push".
+I often (twice or more for each kernel release) throw away my kbuild.git
+tree and start all over.
+That gives me a recent kernel to work with and still providing Linux
+with a linar history.
 
-I found myself the other day, looking for files I committed on a box which 
-was 280 kilometer away, where I forgot to push. So I understand your 
-feeling.
+I have considered stgit - but have not tried it. The above works pretty
+well for me (my fingers and my logic i accused to it now) so the
+incentive to shift is small.
 
-However, adding to Junio's arguments, I find it saner to keep them 
-separated: you should commit _often_. Way more often than you would need 
-to push. There are many reasons, why small patches are more beautiful than 
-big ones, and git actually encourages you to make small patches.
+But important note is that publishing is something I defer until some
+limited test has been done. And when I omit that I have always ended u
+pushing some crappy stuff that needs to be dealt with.
 
-I'd rather have a command which tells me if I have commits after the last 
-time I pushed.
-
-Ciao,
-Dscho
+	Sam
