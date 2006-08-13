@@ -1,56 +1,50 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] make git compile on old version of engarde linux
-Date: Sat, 12 Aug 2006 16:09:11 -0700
-Message-ID: <7vr6zlo8ko.fsf@assigned-by-dhcp.cox.net>
-References: <7vac6etz5n.fsf@assigned-by-dhcp.cox.net>
-	<20060812224520.GB13704@mellanox.co.il>
+From: "Marcum" <amongcentrifugate@cutey.com>
+Subject: With every order guaranteed, you have nothing to lose! (except weight)
+Date: Sun, 13 Aug 2006 10:09:21 +0900
+Message-ID: <42458210750555.346C588256@WFVE2EM>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 13 01:09:20 2006
+Content-Type: text/plain;
+        charset="Windows-1252"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Aug 13 03:09:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GC2bW-0004fW-4x
-	for gcvg-git@gmane.org; Sun, 13 Aug 2006 01:09:18 +0200
+	id 1GC4TR-0006ka-Iu
+	for gcvg-git@gmane.org; Sun, 13 Aug 2006 03:09:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964954AbWHLXJP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 Aug 2006 19:09:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964955AbWHLXJO
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Aug 2006 19:09:14 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:8683 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S964954AbWHLXJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Aug 2006 19:09:13 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060812230912.MVVD14543.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 12 Aug 2006 19:09:12 -0400
-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
-In-Reply-To: <20060812224520.GB13704@mellanox.co.il> (Michael S. Tsirkin's
-	message of "Sun, 13 Aug 2006 01:45:20 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932645AbWHMBJA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 Aug 2006 21:09:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932644AbWHMBJA
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Aug 2006 21:09:00 -0400
+Received: from softbank219061218158.bbtec.net ([219.61.218.158]:27408 "EHLO
+	ieqwxep1.xbdt.optonline.net") by vger.kernel.org with ESMTP
+	id S932645AbWHMBI7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Aug 2006 21:08:59 -0400
+To: <glenn@vger.kernel.org>
+X-Mailer: Microsoft Office Outlook, Build 11.0.5510
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+Thread-Index: 1UcnsSLQye3fgDk8vHz56NxAdavIyqfPU5BY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25271>
+X-Spam-Report: 10.1 points;
+ *  0.4 JOIN_MILLIONS BODY: Join Millions of Americans
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.4358]
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: erritans.com]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: erritans.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: erritans.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25272>
 
-"Michael S. Tsirkin" <mst@mellanox.co.il> writes:
+Hello! 
 
->> Alternatively Ramsay's _XOPEN_SOURCE patch is part of "next", so
->> if it fixes the problem for you that would confirm the patch is
->> a good one to have.
->
-> BTW, would it make sense fr this patch to be cherry-picked into 1.4.8?
-> I guess the reason that LNK macros are under GNU_SOURCE is the following
-> text from stat(2):
->  
->        The S_ISLNK and S_ISSOCK macros
->        are not in POSIX.1-1996, but both will be in the next  POSIX  standard;
->        the former is from SVID 4v2, the latter from SUSv2.
+ Supplement your life today! Join thousands of satisfied customers and experience for yourself the proven benefits of Fatblaster.  Nutritional substances can also stimulate thermogenesis. Thermogenesis, when not simply needed for routine food digestion and metabolism, is both a source of heat and when stimulated through appropriate dietary supplementation, a mechanism to increase metabolic rate.  Nutritional substances can also stimulate thermogenesis. Thermogenesis, when not simply needed for routine food digestion and metabolism, is both a source of heat and when stimulated through appropriate dietary supplementation, a mechanism to increase metabolic rate.  Enter here:  http://erritans.com/gall/fb/ 
 
-I originally scheduled it for immediately after 1.4.2 but I
-would say why not.  It makes sense and does not seem to break
-for people (otherwise I would have heard screams, hopefully).
+ Easy come, easy go Better to have loved and lost, than never have loved at all  Dream of a funeral and you hear of a marriage 
+
+ The hand that rocks the cradle rules the world She crieth in the chief place of concourse, in the openings of the gates: in the city she uttereth her words, saying. Eat well, stay fit, die anyway.  Easy come, easy go
