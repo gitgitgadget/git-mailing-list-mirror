@@ -1,76 +1,56 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH] gitweb: Different colours for tags and heads
-Date: Mon, 14 Aug 2006 07:22:38 +0200
-Message-ID: <20060814052238.GA11970@admingilde.org>
-References: <20060811151224.177110@gmx.net> <ebi81l$qu$1@sea.gmane.org> <7vodurrlg8.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Multiple refs from the same remote in one git fetch
+Date: Sun, 13 Aug 2006 22:53:38 -0700
+Message-ID: <7vzme7g8wt.fsf@assigned-by-dhcp.cox.net>
+References: <7vac68i2wv.fsf@assigned-by-dhcp.cox.net>
+	<20060814051302.GB21963@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="6c2NcOVqGQ03X4Wi"
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Thomas Kolejka <Thomas.Kolejka@gmx.at>
-X-From: git-owner@vger.kernel.org Mon Aug 14 07:22:50 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 14 07:53:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GCUuS-0003Uu-DZ
-	for gcvg-git@gmane.org; Mon, 14 Aug 2006 07:22:44 +0200
+	id 1GCVOV-0008Cn-Tf
+	for gcvg-git@gmane.org; Mon, 14 Aug 2006 07:53:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751856AbWHNFWl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Aug 2006 01:22:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751859AbWHNFWl
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 01:22:41 -0400
-Received: from agent.admingilde.org ([213.95.21.5]:36749 "EHLO
-	mail.admingilde.org") by vger.kernel.org with ESMTP
-	id S1751856AbWHNFWk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Aug 2006 01:22:40 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1GCUuM-0002xd-Pd; Mon, 14 Aug 2006 07:22:38 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vodurrlg8.fsf@assigned-by-dhcp.cox.net>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S1751623AbWHNFxk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Aug 2006 01:53:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751650AbWHNFxk
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 01:53:40 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:15585 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1751570AbWHNFxj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Aug 2006 01:53:39 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060814055339.CIMB12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 14 Aug 2006 01:53:39 -0400
+To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+In-Reply-To: <20060814051302.GB21963@mellanox.co.il> (Michael S. Tsirkin's
+	message of "Mon, 14 Aug 2006 08:13:02 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25319>
 
+"Michael S. Tsirkin" <mst@mellanox.co.il> writes:
 
---6c2NcOVqGQ03X4Wi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> BTW, does it still look like it's worth it the effort to lift the restriction,
+> or does fixing the error message to something like
+> "no such remote or duplicate ref %s"
+> make more sense to you?
 
-hoi :)
+I have been hesitant to claim that it does not make any sense to
+use more than one tracking branch for the same remote branch,
+because the only reason I might say so is because I haven't
+thought of a good usage pattern to do so.
 
-On Fri, Aug 11, 2006 at 02:50:31PM -0700, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> > By the way, please do not put "Hello," in the commit message
-> > part of patch. You can put your comments (like which branch
-> > and/or commit is the batch based on) either after "---" and
-> > before the patch itself, or at the beginning and separate them
-> > from the commit message by "+++" (this separator is supported
-> > by git tools,...
->=20
-> ???
-
-the +++ feature has never been accepted for GIT.
-
---=20
-Martin Waitz
-
---6c2NcOVqGQ03X4Wi
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFE4Aiej/Eaxd/oD7IRAteMAJ9QXcI/2OfunAD7AjPfbGBsxvBiQgCfVmgp
-SL+swnyQUqWpwzmjj5MP4Tk=
-=iamm
------END PGP SIGNATURE-----
-
---6c2NcOVqGQ03X4Wi--
+But apparently you do use more than one local branch to keep
+track of one remote branch.  How do you use it for?  Do you feel
+it is a good feature to be able to do that, or do you think it
+is just a mistake and more sensible error message is what we
+would really want?
