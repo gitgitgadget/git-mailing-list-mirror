@@ -1,101 +1,78 @@
-From: jeffpc@josefsipek.net (Josef "Jeff" Sipek)
-Subject: Git network protocol
-Date: Mon, 14 Aug 2006 02:21:17 -0400
-Message-ID: <20060814062117.GC10476@josefsipek.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Validation of a commit object?
+Date: Mon, 14 Aug 2006 02:28:30 -0400
+Message-ID: <20060814062830.GF18667@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Aug 14 08:21:30 2006
+X-From: git-owner@vger.kernel.org Mon Aug 14 08:28:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GCVpH-0003Md-M0
-	for gcvg-git@gmane.org; Mon, 14 Aug 2006 08:21:28 +0200
+	id 1GCVwG-0004Vz-Pg
+	for gcvg-git@gmane.org; Mon, 14 Aug 2006 08:28:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751877AbWHNGVZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Aug 2006 02:21:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751884AbWHNGVZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 02:21:25 -0400
-Received: from mrs.stonybrook.edu ([129.49.1.206]:7381 "EHLO
-	mrs.stonybrook.edu") by vger.kernel.org with ESMTP id S1751877AbWHNGVY
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Aug 2006 02:21:24 -0400
-Received: from relay2.stonybrook.edu (relay2 [172.30.255.14])
-	by mrs.stonybrook.edu (8.13.6/8.13.6) with SMTP id k7E6LOVD000496
-	for <git@vger.kernel.org>; Mon, 14 Aug 2006 02:21:24 -0400 (EDT)
-Received: from mailrelay.stonybrook.edu ([172.30.255.14])
- by relay2.stonybrook.edu (SMSSMTP 4.1.12.43) with SMTP id M2006081402212308861
- for <git@vger.kernel.org>; Mon, 14 Aug 2006 02:21:23 -0400
-Received: from josefsipek.net (turing.ams.sunysb.edu [129.49.108.158])
-	by mailrelay.stonybrook.edu (8.13.6/8.13.6) with ESMTP id k7E6LMLH000493
-	for <git@vger.kernel.org>; Mon, 14 Aug 2006 02:21:23 -0400 (EDT)
-Received: by josefsipek.net (Postfix, from userid 1000)
-	id 5C95B1C00DF0; Mon, 14 Aug 2006 02:21:17 -0400 (EDT)
+	id S1751885AbWHNG2i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Aug 2006 02:28:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751884AbWHNG2i
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 02:28:38 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:33428 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751885AbWHNG2h (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Aug 2006 02:28:37 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GCVwA-0006fh-4X
+	for git@vger.kernel.org; Mon, 14 Aug 2006 02:28:34 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 413A620FB77; Mon, 14 Aug 2006 02:28:30 -0400 (EDT)
 To: git@vger.kernel.org
 Content-Disposition: inline
-User-Agent: Mutt/1.5.12-2006-07-14
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25323>
 
-Hello,
+In looking at fsck-objects.c the only thing it tries to validate
+about a commit is:
 
-I'm trying to implement the git protocol, and I am having a bit of an issue
-with the lack of information available about it (please correct me if I
-missed some source of information.)
+ - the commit has a tree ("tree NNNNNN\n");
+ - the commit maybe has parent(s) ("parent NNNNN\n");
+ - the commit has "author ".
 
-I understand the basic format of the protocol, however I'm not sure what
-"command" can follow what. I also noticed some odd inconsistencies (or maybe
-I just don't see the pattern yet.) For example, a git-clone generates this
-traffic:
+That's it.
 
-C: git-upload-pack ....
-S: SHA1 HEAD....
-S: SHA1 refs/heads/master
-S: flush
-C: want SHA1...
-C: want SHA1... (it wants the same SHA1 twice!)
-C: flush
-C: done
-S: NAK
-S: the pack...
+Its OK for an author line to be completely corrupt and have no
+timestamp, no name, no timezone.  Or to have a timestamp such as
+"bobthetalkingdog".
 
-Then, when it is time to git-fetch a new commit, I get:
+Its OK for a committer line to just plain not exist or to be
+equally corrupt.
 
-C: git-upload-pack ....
-S: SHA1 HEAD....
-S: SHA1 refs/heads/master
-S: flush
-C: want SHA1...
-C: flush
-C: have SHA1
-C: done
-S: ACK SHA1 continue
-S: ACK SHA1 (same hash)
-S: the pack...
 
-Then, if I try to git-fetch but there is nothing new, I get:
+I'm thinking that can't be right.  Shouldn't fsck-objects be doing
+better checking on commits?
 
-C: git-upload-pack ....
-S: SHA1 HEAD....
-S: SHA1 refs/heads/master
-S: flush
-C: flush
-<client closes connection>
+The reason I ask is I'm working on my (bastard) fast-import program
+for Jon's Mozilla CVS -> GIT conversion effort and I'm taking the
+author and committer lines blind from the Python code.  If the
+Python code gives me a bad line its going to go into the pack that
+way, with that possibly resulting in a totally corrupt repository.
+I hoped to apply the same verification that fsck-objects applies
+but apparently it doesn't do anything.  :-)
 
-So, I can _assume_ that "done" tells the server that it is time to make a
-pack. Why does the server use NAK during the clone operation, but ACK
-during fetch? Why does the server ACK the same SHA1 twice? And why does the
-client "want" the same SHA1 twice? It just seems odd.
-
-I think it would be great if there was some kind of description somewhere
-that detailed the protocol. Also, the daemon source isn't the prettiest
-thing in the world.
-
-Thanks,
-Josef "Jeff" Sipek.
+I'm willing to write some better validation in fsck-objects.c
+and submit the patch if folks think we should do stronger checks
+in there.
 
 -- 
-Reality is merely an illusion, albeit a very persistent one.
-		- Albert Einstein
+Shawn.
