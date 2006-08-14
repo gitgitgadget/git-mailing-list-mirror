@@ -1,55 +1,60 @@
-From: "Rosario Graham" <wilson@ringlestone.com>
-Subject: Open something new for your self
-Date: Sun, 13 Aug 2006 21:31:38 -0700
-Message-ID: <03182711973807.F5442B252C@WTTOLOB>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Compression and dictionaries
+Date: Sun, 13 Aug 2006 23:37:21 -0400
+Message-ID: <9e4733910608132037t4297c3bbq9b0cd6ebaa03b979@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1252"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Aug 14 05:00:00 2006
+X-From: git-owner@vger.kernel.org Mon Aug 14 05:37:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GCSgF-00014Y-7P
-	for gcvg-git@gmane.org; Mon, 14 Aug 2006 04:59:55 +0200
+	id 1GCTGf-0006hm-Pl
+	for gcvg-git@gmane.org; Mon, 14 Aug 2006 05:37:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751815AbWHNC7F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 Aug 2006 22:59:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751811AbWHNC67
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Aug 2006 22:58:59 -0400
-Received: from c-69-244-42-28.hsd1.ar.comcast.net ([69.244.42.28]:53263 "EHLO
-	JTS-UT48MI1L92A") by vger.kernel.org with ESMTP id S1751812AbWHNC6x
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Aug 2006 22:58:53 -0400
-To: <gc2dfa47ddihhah7@vger.kernel.org>
-X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
-Thread-Index: HVy2wkAz3A2I5AWly6kArpMgtqks0Hz9d3cr
+	id S1751828AbWHNDhX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 Aug 2006 23:37:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751829AbWHNDhX
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Aug 2006 23:37:23 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:28703 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751828AbWHNDhW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Aug 2006 23:37:22 -0400
+Received: by nf-out-0910.google.com with SMTP id a4so1586136nfc
+        for <git@vger.kernel.org>; Sun, 13 Aug 2006 20:37:21 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=JRpocdIH8bel3s+I4/n+1ACRHScc2m/XiKmttL1FZeN/M4U/iY59M62u+6JgJ3HbjZRjLbV+xEAeDQ05GHu3vWtiiyx5kFfKJBGiTkBAlhHiZ687EKZrI93EzJB2ujr4rAxZqgNDaoPA5vLnHt+vizQ1sutGUy3o0yTbRre7wRg=
+Received: by 10.78.133.10 with SMTP id g10mr3089687hud;
+        Sun, 13 Aug 2006 20:37:21 -0700 (PDT)
+Received: by 10.78.148.9 with HTTP; Sun, 13 Aug 2006 20:37:21 -0700 (PDT)
+To: git <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 15.4 points;
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5000]
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: cancanwieldy.com]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: cancanwieldy.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: cancanwieldy.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: cancanwieldy.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: cancanwieldy.com]
- *  0.2 DRUGS_ERECTILE Refers to an erectile drug
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25313>
 
-Cialis Soft Tabs is the new impotence treatment drug that everyone is talking about. It has benefits over Viagra and other ED treatment solutions. Here goes some reasons to choose Cialis Soft Tabs: 
-1. You can mix alcohol drinks with Cialis Soft Tabs without any undesired effects. 
-2.Cialis Soft Tabs does not make you feel dizzy or make vision blurred, so you can easily drive a car or operate heavy machinery. 
-3.Cialis soft tabs works much faster than any known ED treatment solution. Cialis Soft Tabs enters the bloodstream directly instead of going through the stomach, thus you need only 15 minutes till you feel the effect. Just look at the graph below 
-If you are interested ? Just click here and Read more about it 
-http://9it1.cancanwieldy.com/ct
-AND ALSO 
-Cialis Soft Tabs formula is effective for 95% of the patients. If this treatment is not effective for you, we will refund you for every unopened pack. All you have to do is send them back, and we will immediatley refund your account! 
+>From what I remember from long ago most compression schemes build
+dictionaries as a way of achieving significant compression. If so,
+since we zlib compress each entry in a pack individually, are there
+many copies of very similar dictionaries in the pack?
+
+Some compression schemes support being initialized with a fixed
+dictionary and sharing it over all entries. A fixed dictionary could
+be built by analysing a large pack file. Sharing a compression
+dictionary would probably be a win for me since I have 1M+ entries in
+a pack.
+
+Poking around in the zlib it appears that zlib supports precomputed
+dictionaries.
+http://www.zlib.net/manual.html
+
+  int deflateSetDictionary (z_streamp strm, const Bytef *dictionary,
+uInt dictLength);
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
