@@ -1,80 +1,50 @@
-From: "Michael S. Tsirkin" <mst@mellanox.co.il>
-Subject: Re: [PATCH] Multiple refs from the same remote in one git fetch
-Date: Mon, 14 Aug 2006 20:51:30 +0300
-Message-ID: <20060814175130.GB16821@mellanox.co.il>
-References: <ebpket$7dt$1@sea.gmane.org>
-Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+From: Jeff Garzik <jeff@garzik.org>
+Subject: Re: Compression and dictionaries
+Date: Mon, 14 Aug 2006 13:50:31 -0400
+Message-ID: <44E0B7E7.6020207@garzik.org>
+References: <9e4733910608132037t4297c3bbq9b0cd6ebaa03b979@mail.gmail.com>  <Pine.LNX.4.63.0608141415560.10541@wbgn013.biozentrum.uni-wuerzburg.de>  <9e4733910608140708i45e3d6day6b87676783fd6511@mail.gmail.com>  <Pine.LNX.4.63.0608141641330.28360@wbgn013.biozentrum.uni-wuerzburg.de>  <9e4733910608140915i728004c1p216bf3d74fcc6ab7@mail.gmail.com>  <Pine.LNX.4.63.0608140930380.14796@qynat.qvtvafvgr.pbz>  <ebq9tc$3gl$1@sea.gmane.org> <44E0AFCB.10908@garzik.org> <Pine.LNX.4.63.0608141033080.14796@qynat.qvtvafvgr.pbz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 14 19:49:39 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 14 19:50:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GCgZ9-0005m8-Fd
-	for gcvg-git@gmane.org; Mon, 14 Aug 2006 19:49:31 +0200
+	id 1GCgaF-00065X-59
+	for gcvg-git@gmane.org; Mon, 14 Aug 2006 19:50:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932479AbWHNRt1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Aug 2006 13:49:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932501AbWHNRt1
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 13:49:27 -0400
-Received: from mxl145v67.mxlogic.net ([208.65.145.67]:34263 "EHLO
-	p02c11o144.mxlogic.net") by vger.kernel.org with ESMTP
-	id S932455AbWHNRtZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Aug 2006 13:49:25 -0400
-Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
-	by p02c11o144.mxlogic.net (mxl_mta-3.0.0-12)
-	with ESMTP id 5a7b0e44.2313149360.124583.00-002.p02c11o144.mxlogic.net (envelope-from <mst@mellanox.co.il>);
-	Mon, 14 Aug 2006 11:49:25 -0600 (MDT)
-Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Mon, 14 Aug 2006 20:55:28 +0300
-Received: by mellanox.co.il (sSMTP sendmail emulation); Mon, 14 Aug 2006 20:51:30 +0300
-To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <ebpket$7dt$1@sea.gmane.org>
-User-Agent: Mutt/1.4.2.1i
-X-OriginalArrivalTime: 14 Aug 2006 17:55:28.0312 (UTC) FILETIME=[D3BA0380:01C6BFCA]
-X-Spam: [F=0.0100000000; S=0.010(2006062901)]
-X-MAIL-FROM: <mst@mellanox.co.il>
-X-SOURCE-IP: [194.90.237.34]
+	id S932493AbWHNRug (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Aug 2006 13:50:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932501AbWHNRug
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 13:50:36 -0400
+Received: from srv5.dvmed.net ([207.36.208.214]:34204 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S932493AbWHNRuf (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Aug 2006 13:50:35 -0400
+Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75] helo=[10.10.10.99])
+	by mail.dvmed.net with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
+	id 1GCga9-0002Zu-CW; Mon, 14 Aug 2006 17:50:33 +0000
+User-Agent: Thunderbird 1.5.0.4 (X11/20060614)
+To: David Lang <dlang@digitalinsight.com>
+In-Reply-To: <Pine.LNX.4.63.0608141033080.14796@qynat.qvtvafvgr.pbz>
+X-Spam-Score: -4.3 (----)
+X-Spam-Report: SpamAssassin version 3.1.3 on srv5.dvmed.net summary:
+	Content analysis details:   (-4.3 points, 5.0 required)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25371>
 
-Quoting r. Jakub Narebski <jnareb@gmail.com>:
-> Subject: Re: [PATCH] Multiple refs from the same remote in one git fetch
-> 
-> Michael S. Tsirkin wrote:
-> 
-> > Quoting r. Junio C Hamano <junkio@cox.net>:
-> [...]
-> >> I have been hesitant to claim that it does not make any sense to
-> >> use more than one tracking branch for the same remote branch,
-> >> because the only reason I might say so is because I haven't
-> >> thought of a good usage pattern to do so.
-> >> 
-> >> But apparently you do use more than one local branch to keep
-> >> track of one remote branch.  How do you use it for?  Do you feel
-> >> it is a good feature to be able to do that, or do you think it
-> >> is just a mistake and more sensible error message is what we
-> >> would really want?
-> >> 
-> > 
-> > Well, what I was *trying* to do is simply add a more descriptive name for
-> > the linus master branch to my existing tree.
-> > So it seemed like an obvious idea to add
-> > 
-> > Pull: master:origin
-> > Pull: master:linus_master
-> 
-> Couldn't you do this via symlinks or symrefs? 
-> 
-> BTW. Do we support symrefs other than HEAD, and does reflog works with
-> symref heads, and symlinked heads?
+David Lang wrote:
+> that would only tell you that what you have is garbage (and you need to 
+> restore from backup(, useing a ECC costs some space, but lets you 
+> recover from some errors without having to resort to backups.
 
-How?
+ECC permits you to recover from very specific, very-limited-damage 
+scenarios like bit errors.
 
--- 
-MST
+On modern hard drives, single-bit data corruption is very very very rare 
+(particularly since ECC is already employed on the platter).
+
+	Jeff
