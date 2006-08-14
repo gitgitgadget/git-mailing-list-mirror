@@ -1,55 +1,58 @@
-From: "Bradly Sykes" <bonaventuregy@bravadi.com>
-Subject: hound is?
-Date: Sun, 13 Aug 2006 13:53:45 -0300
-Message-ID: <253870v64687600ic562j209ywpvf3s1@tidni.com>
+From: "Lidia" <beijingamerada@graphic-designer.com>
+Subject: Fresh stuff Boost your manhood to astonishing levels Everything a real man would ever need.
+Date: Mon, 14 Aug 2006 14:04:37 +0800
+Message-ID: <36105322258146.2D9BAC5D9E@CYB9UR4U>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain;
+        charset="Windows-1252"
 Content-Transfer-Encoding: 7bit
-Cc: ddissettqldf@vger.kernel.org, git@vger.kernel.org, ajl@vger.net,
-	atiles@vger.net, appana@vger.net, reynoza@vger.net
-X-From: git-owner@vger.kernel.org Mon Aug 14 08:00:53 2006
+X-From: git-owner@vger.kernel.org Mon Aug 14 08:04:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GCVVG-0000ow-1W
-	for gcvg-git@gmane.org; Mon, 14 Aug 2006 08:00:46 +0200
+	id 1GCVYk-0001CJ-8K
+	for gcvg-git@gmane.org; Mon, 14 Aug 2006 08:04:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751871AbWHNF74 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Aug 2006 01:59:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751867AbWHNF7z
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 01:59:55 -0400
-Received: from dsl-del-static-133.170.144.59.touchtelindia.net ([59.144.170.133]:32007
-	"EHLO chetan") by vger.kernel.org with ESMTP id S1751869AbWHNF7y
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Aug 2006 01:59:54 -0400
-Received: from 3BAF0 ([210.22.15.95]) by chetan with Microsoft SMTPSVC(6.0.2600.2180);
-	 Sun, 13 Aug 2006 22:23:55 +0530
-Received: from localhost ([66.14.183.221]) by mail.tidni.com (Tidni Mail Server v8.3.1) with SMTP id uhk13893 for <germany@vgcargo.com>;  Sun, 13 Aug 2006 13:53:45 -0300
-To: germany@vgcargo.com
-X-Mailer: IceWarp Web Mail 5.6.0
-X-Originating-IP: 
-X-OriginalArrivalTime: 13 Aug 2006 16:53:55.0625 (UTC) FILETIME=[104CF190:01C6BEF9]
+	id S1751886AbWHNGEI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Aug 2006 02:04:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751885AbWHNGEH
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 02:04:07 -0400
+Received: from [61.138.107.252] ([61.138.107.252]:13210 "EHLO LB-8A3BRG996BP6")
+	by vger.kernel.org with ESMTP id S1751888AbWHNGEE (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Aug 2006 02:04:04 -0400
+To: <git@vger.kernel.org>
+X-Mailer: Microsoft Office Outlook, Build 11.0.5510
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+Thread-Index: g2EDxCQukBJQuP6JX03z1Vv01oe0vhZmS6Lp
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 13.2 points;
- *  2.6 X_ORIG_IP_NOT_IPV4 X-Originating-IP doesn't look like IPv4 address
- *  1.9 SUSPICIOUS_RECIPS Similar addresses in recipient list
- *  0.3 J_CHICKENPOX_44 BODY: {4}Letter - dot - {4}Letter
+X-Spam-Report: 15.6 points;
  *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4086]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?210.22.15.95>]
- *  1.4 RCVD_IN_NJABL_RELAY RBL: NJABL: sender is confirmed open relay
- *      [59.144.170.133 listed in combined.njabl.org]
- *  4.0 RCVD_IN_XBL RBL: Received via a relay in Spamhaus XBL
- *      [210.22.15.95 listed in sbl-xbl.spamhaus.org]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25320>
+ *      [score: 0.4221]
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: purgerkl.st]
+ *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: purgerkl.st]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: purgerkl.st]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: purgerkl.st]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: purgerkl.st]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: purgerkl.st]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25321>
 
-Minimize your monthly rent.mort payments by more than 500 bucks.
-We will beat your current, below is the average we've given all year.
+Dear client.
+ Impress your girl with prolonged hardness, plentiful explosions and increased durationMake other men envy you and girls worship you Most efficient products for men
 
-$553,000.00 at 3.95% int.
+Rock hard manhood, multiple explosions and several times more semen volume
 
-http://simurl.com/sopkor
+ Enter here:  http://www.purgerkl.st
+
+Lidia Harrington
+
+When good cheer is lacking, our friends will be packingWhen yuh deh in bad luck wet paper self ah cut yuh. No man is wise at all times 
+You can't teach an old dog new tricks.
