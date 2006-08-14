@@ -1,103 +1,57 @@
-From: "Randy.Dunlap" <rdunlap@xenotime.net>
-Subject: Re: 2 build issues
-Date: Mon, 14 Aug 2006 15:29:23 -0700
-Organization: YPO4
-Message-ID: <20060814152923.bc295ef3.rdunlap@xenotime.net>
-References: <20060814121156.84bc6e34.rdunlap@xenotime.net>
-	<7vd5b3dl4c.fsf@assigned-by-dhcp.cox.net>
+From: "Nikolai Weibull" <now@bitwi.se>
+Subject: Re: [PATCH 28/28] makes upload_pack void
+Date: Tue, 15 Aug 2006 00:45:20 +0200
+Message-ID: <dbfc82860608141545s3e75457eo4be1201395e24354@mail.gmail.com>
+References: <Pine.LNX.4.63.0608141340060.19383@chino.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 15 00:26:39 2006
+X-From: git-owner@vger.kernel.org Tue Aug 15 00:45:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GCktH-0003KN-OF
-	for gcvg-git@gmane.org; Tue, 15 Aug 2006 00:26:36 +0200
+	id 1GClBe-00062Q-U1
+	for gcvg-git@gmane.org; Tue, 15 Aug 2006 00:45:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932538AbWHNW0c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Aug 2006 18:26:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932693AbWHNW0c
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 18:26:32 -0400
-Received: from xenotime.net ([66.160.160.81]:41690 "HELO xenotime.net")
-	by vger.kernel.org with SMTP id S932538AbWHNW0c (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Aug 2006 18:26:32 -0400
-Received: from midway.site ([71.117.253.75]) by xenotime.net for <git@vger.kernel.org>; Mon, 14 Aug 2006 15:26:30 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd5b3dl4c.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.8.10; x86_64-unknown-linux-gnu)
+	id S932737AbWHNWpW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Aug 2006 18:45:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932738AbWHNWpW
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 18:45:22 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:30565 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S932737AbWHNWpV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Aug 2006 18:45:21 -0400
+Received: by nf-out-0910.google.com with SMTP id x30so106007nfb
+        for <git@vger.kernel.org>; Mon, 14 Aug 2006 15:45:20 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=Kb8cATSF35EIPpkTJdc6NEbctE87ViMwQZrKKbuIEf9kMe+yQMJqte1yZWlOEJukfgdIEXzY/Xb7KmzYqXQXeNtEdEu5WWC2Hu4sv5QBUatoghZ5HZhMtNAfCiuA0mnxPoZyxTMsypGImRNNdc7BkQMDw6E/cUsclZJ3YWHVfhI=
+Received: by 10.48.254.1 with SMTP id b1mr458870nfi;
+        Mon, 14 Aug 2006 15:45:20 -0700 (PDT)
+Received: by 10.78.178.17 with HTTP; Mon, 14 Aug 2006 15:45:20 -0700 (PDT)
+To: "David Rientjes" <rientjes@google.com>
+In-Reply-To: <Pine.LNX.4.63.0608141340060.19383@chino.corp.google.com>
+Content-Disposition: inline
+X-Google-Sender-Auth: 3aa218c1b9af1fff
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25417>
 
-On Mon, 14 Aug 2006 15:10:27 -0700 Junio C Hamano wrote:
+On 8/14/06, David Rientjes <rientjes@google.com> wrote:
+> Makes upload_pack void and removes conditional return.
 
-> "Randy.Dunlap" <rdunlap@xenotime.net> writes:
-> 
-> > xmlto -m callouts.xsl man git-add.xml
-> > I/O error : Attempt to load network entity
-> > http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl
-> > warning: failed to load external entity
-> > "http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl"
-> > compilation error: file /tmp/xmlto-xsl.l27115 line 4 element
-> > import xsl:import : unable to load
-> > http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl
-> > make[1]: *** [git-add.1] Error 1 rm git-add.xml make[1]: Leaving
-> > directory
-> > `/home/rddunlap/builds/git-snapshot-20060814/Documentation' make:
-> > *** [doc] Error 2
-> 
-> Sorry, I am not docbook expert -- help from the list please?
-> I seem to be using:
-> 
->                         (home)		(kernel.org)
-> 	asciidoc	7.1.2		7.0.2
->         xmlto		0.0.18		0.0.18
+> -static int upload_pack(void)
+> +static void upload_pack(void)
 
-I have same versions as your (home).
+I don't know for sure, but I'm guessing the intention was to be able
+to return a failing code /if/ there ever was a condition where
+upload_pack() would fail, e.g., if send_ref() would return a status
+code instead of die():ing if it can't parse the given sha1.  In a
+future libification, the change of return type may have to be
+reverted.
 
-> > make -C templates install
-> > make[1]: Entering directory
-> > `/home/rddunlap/builds/git-snapshot-20060814/templates' : no
-> > custom templates yet install -d -m755
-> > '/usr/local/share/git-core/templates/' (cd blt && tar cf - .) | \
-> > (cd '/usr/local/share/git-core/templates/' && tar xf -)
-> > tar: This does not look like a tar archive
-> > tar: Skipping to next header
-> > tar: Archive contains obsolescent base-64 headers
-> > tar: Error exit delayed from previous errors
-> > make[1]: *** [install] Error 2
-> > make[1]: Leaving directory
-> > `/home/rddunlap/builds/git-snapshot-20060814/templates' make: ***
-> > [install] Error 
-> 
-> Hmph.  I suspect (cd blt && tar cf - .) is failing silently.
-> When built, "make -C templates" creates templates/blt directory
-> and leaves templates/boilerplates.made file.  Do you have them?
-
-I have templates/blt directory but no boilerplates.made file.
-
-> Ah, another possibility.  Does your "cd" say anything
-> unnecessary even when running scripts, not interactively?  For
-> example, do you have CDPATH set and _exported_ to the
-> environment?  CDPATH might be a useful shell variable for
-> interactive session, but you never want to export it to affect
-> unsuspecting shell scripts you invoke directly or indirectly.
-
-I suppose that could be the problem.  (I do have/use CDPATH.)
-I started a new shell that does not have CDPATH and 'make install'
-works fine. Thanks.
-When CDPATH is set & exported, I don't see any responses from
-"cd".
-
-> I see many documents floating on the web that call CDPATH "an
-> environment variable".  It is a disease X-<.
-
-What is CDPATH then?  (other than trouble/disease)
-I find it useful (usually :).
-
----
-~Randy
+  nikolai
