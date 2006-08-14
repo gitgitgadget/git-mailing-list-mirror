@@ -1,64 +1,98 @@
-From: David Rientjes <rientjes@google.com>
-Subject: Re: [PATCH 28/28] makes upload_pack void
-Date: Mon, 14 Aug 2006 15:51:01 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0608141549150.21515@chino.corp.google.com>
-References: <Pine.LNX.4.63.0608141340060.19383@chino.corp.google.com>
- <dbfc82860608141545s3e75457eo4be1201395e24354@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 15 00:51:24 2006
+From: Yasushi SHOJI <yashi@atmark-techno.com>
+Subject: [PATCH] gitweb: configurable home link string
+Date: Tue, 15 Aug 2006 07:50:49 +0900
+Message-ID: <11555958491891-git-send-email-yashi@atmark-techno.com>
+Cc: Yasushi SHOJI <yashi@atmark-techno.com>
+X-From: git-owner@vger.kernel.org Tue Aug 15 00:51:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GClHB-0006nx-5q
-	for gcvg-git@gmane.org; Tue, 15 Aug 2006 00:51:17 +0200
+	id 1GClHH-0006oB-VF
+	for gcvg-git@gmane.org; Tue, 15 Aug 2006 00:51:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965012AbWHNWvO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Aug 2006 18:51:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965020AbWHNWvN
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 18:51:13 -0400
-Received: from smtp-out.google.com ([216.239.45.12]:51680 "EHLO
-	smtp-out.google.com") by vger.kernel.org with ESMTP id S965012AbWHNWvN
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Aug 2006 18:51:13 -0400
-Received: from zps75.corp.google.com (zps75.corp.google.com [172.25.146.75])
-	by smtp-out.google.com with ESMTP id k7EMp9Nl003652;
-	Mon, 14 Aug 2006 15:51:09 -0700
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=received:date:from:x-x-sender:to:cc:subject:in-reply-to:
-	message-id:references:mime-version:content-type;
-	b=lgOYwPWYbou8/uIxTdUwvfZecrLaTu4eRqKn+WOhPGWPm/O7o6i0iIS4h8Wo1E9x1
-	RsbHvTZsgVfGuVtCL+BkQ==
-Received: from localhost (chino.corp.google.com [172.24.88.221])
-	by zps75.corp.google.com with ESMTP id k7EMp2dx011421;
-	Mon, 14 Aug 2006 15:51:03 -0700
-Received: by localhost (Postfix, from userid 24081)
-	id DF09F87D71; Mon, 14 Aug 2006 15:51:01 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-	by localhost (Postfix) with ESMTP id 9708E87D70;
-	Mon, 14 Aug 2006 15:51:01 -0700 (PDT)
-X-X-Sender: rientjes@chino.corp.google.com
-To: Nikolai Weibull <now@bitwi.se>
-In-Reply-To: <dbfc82860608141545s3e75457eo4be1201395e24354@mail.gmail.com>
+	id S965020AbWHNWvS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Aug 2006 18:51:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965021AbWHNWvS
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 18:51:18 -0400
+Received: from shop.atmark-techno.com ([210.191.215.173]:27573 "EHLO
+	mail2.atmark-techno.com") by vger.kernel.org with ESMTP
+	id S965020AbWHNWvR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Aug 2006 18:51:17 -0400
+Received: from localhost (dns1.atmark-techno.com [210.191.215.170])
+	by mail2.atmark-techno.com (Postfix) with ESMTP id 9E73F46E9;
+	Tue, 15 Aug 2006 07:51:14 +0900 (JST)
+Received: from yashi by localhost with local (Exim 4.62)
+	(envelope-from <yashi@atmark-techno.com>)
+	id 1GClGt-0000xm-Io; Tue, 15 Aug 2006 07:50:59 +0900
+To: git@vger.kernel.org
+X-Mailer: git-send-email 1.4.2.g182a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25419>
 
-On Tue, 15 Aug 2006, Nikolai Weibull wrote:
-> I don't know for sure, but I'm guessing the intention was to be able
-> to return a failing code /if/ there ever was a condition where
-> upload_pack() would fail, e.g., if send_ref() would return a status
-> code instead of die():ing if it can't parse the given sha1.  In a
-> future libification, the change of return type may have to be
-> reverted.
-> 
+I've always found difficult to figure out git URL for clone from
+gitweb URL because git:// and http:// are different on many site
+including kernel.org.
 
-Of course.
+I've found this enhancement at http://dev.laptop.org/git when I was on
+git channel, and thought that it'd be nice if all public gitweb site
+show it's git URL on its page.
 
-If upload_pack were modified to return an error code based on a specific code 
-path, I trust the implementer would know how to change void to int.
+This patch allow us to change the home link string.  The current
+default is "projects" as we all see on gitweb now.
 
-		David
+ie. kernel.org might set this variable to "git://git.kernel.org/pub/scm/"
+
+Signed-off-by: Yasushi SHOJI <yashi@atmark-techno.com>
+---
+ Makefile           |    2 ++
+ gitweb/gitweb.perl |    5 ++++-
+ 2 files changed, 6 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index a538710..b363f50 100644
+--- a/Makefile
++++ b/Makefile
+@@ -123,6 +123,7 @@ # DESTDIR=
+ 
+ # default configuration for gitweb
+ GITWEB_CONFIG = gitweb_config.perl
++GITWEB_HOME_LINK_STR = projects
+ GITWEB_SITENAME =
+ GITWEB_PROJECTROOT = /pub/git
+ GITWEB_LIST =
+@@ -617,6 +618,7 @@ gitweb/gitweb.cgi: gitweb/gitweb.perl
+ 	    -e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
+ 	    -e 's|++GIT_BINDIR++|$(bindir)|g' \
+ 	    -e 's|++GITWEB_CONFIG++|$(GITWEB_CONFIG)|g' \
++	    -e 's|++GITWEB_HOME_LINK_STR++|$(GITWEB_HOME_LINK_STR)|g' \
+ 	    -e 's|++GITWEB_SITENAME++|$(GITWEB_SITENAME)|g' \
+ 	    -e 's|++GITWEB_PROJECTROOT++|$(GITWEB_PROJECTROOT)|g' \
+ 	    -e 's|++GITWEB_LIST++|$(GITWEB_LIST)|g' \
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 626fcc9..76e8376 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -36,6 +36,9 @@ our $git_temp = "/tmp/gitweb";
+ # target of the home link on top of all pages
+ our $home_link = $my_uri;
+ 
++# string of the home link on top of all pages
++our $home_link_str = "++GITWEB_HOME_LINK_STR++";
++
+ # name of your site or organization to appear in page titles
+ # replace this with something more descriptive for clearer bookmarks
+ our $site_name = "++GITWEB_SITENAME++" || $ENV{'SERVER_NAME'} || "Untitled";
+@@ -890,7 +893,7 @@ EOF
+ 	      "<a href=\"http://www.kernel.org/pub/software/scm/git/docs/\" title=\"git documentation\">" .
+ 	      "<img src=\"$logo\" width=\"72\" height=\"27\" alt=\"git\" style=\"float:right; border-width:0px;\"/>" .
+ 	      "</a>\n";
+-	print $cgi->a({-href => esc_param($home_link)}, "projects") . " / ";
++	print $cgi->a({-href => esc_param($home_link)}, $home_link_str) . " / ";
+ 	if (defined $project) {
+ 		print $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=summary")}, esc_html($project));
+ 		if (defined $action) {
+-- 
+1.4.2.g182a
