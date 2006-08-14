@@ -1,87 +1,58 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 1/2] Add a --parent flag to "stgit pick".
-Date: Mon, 14 Aug 2006 18:55:42 +0200
-Message-ID: <20060814165542.20350.34612.stgit@gandelf.nowhere.earth>
-References: <20060814165307.20350.63286.stgit@gandelf.nowhere.earth>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 14 18:56:16 2006
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Compression and dictionaries
+Date: Mon, 14 Aug 2006 18:55:53 +0200
+Organization: At home
+Message-ID: <ebq9tc$3gl$1@sea.gmane.org>
+References: <9e4733910608132037t4297c3bbq9b0cd6ebaa03b979@mail.gmail.com> <Pine.LNX.4.63.0608141415560.10541@wbgn013.biozentrum.uni-wuerzburg.de> <9e4733910608140708i45e3d6day6b87676783fd6511@mail.gmail.com> <Pine.LNX.4.63.0608141641330.28360@wbgn013.biozentrum.uni-wuerzburg.de> <9e4733910608140915i728004c1p216bf3d74fcc6ab7@mail.gmail.com> <Pine.LNX.4.63.0608140930380.14796@qynat.qvtvafvgr.pbz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Mon Aug 14 18:56:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GCfiy-0005LB-UH
-	for gcvg-git@gmane.org; Mon, 14 Aug 2006 18:55:37 +0200
+	id 1GCfjd-0005ai-QQ
+	for gcvg-git@gmane.org; Mon, 14 Aug 2006 18:56:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932187AbWHNQzc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Aug 2006 12:55:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932196AbWHNQzc
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 12:55:32 -0400
-Received: from smtp6-g19.free.fr ([212.27.42.36]:25003 "EHLO smtp6-g19.free.fr")
-	by vger.kernel.org with ESMTP id S932187AbWHNQzc (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Aug 2006 12:55:32 -0400
-Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id D1E1822598;
-	Mon, 14 Aug 2006 18:55:30 +0200 (CEST)
-Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch)
-	by bylbo.nowhere.earth with esmtp (Exim 4.62)
-	(envelope-from <ydirson@altern.org>)
-	id 1GCfjD-00060Y-6f; Mon, 14 Aug 2006 18:55:51 +0200
-To: Catalin Marinas <catalin.marinas@gmail.com>
-In-Reply-To: <20060814165307.20350.63286.stgit@gandelf.nowhere.earth>
-User-Agent: StGIT/0.10
+	id S932204AbWHNQ4Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Aug 2006 12:56:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932207AbWHNQ4Q
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 12:56:16 -0400
+Received: from main.gmane.org ([80.91.229.2]:26525 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932204AbWHNQ4P (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Aug 2006 12:56:15 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GCfis-0005HW-Jn
+	for git@vger.kernel.org; Mon, 14 Aug 2006 18:55:30 +0200
+Received: from host-81-190-23-158.torun.mm.pl ([81.190.23.158])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 14 Aug 2006 18:55:30 +0200
+Received: from jnareb by host-81-190-23-158.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 14 Aug 2006 18:55:30 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-23-158.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25366>
 
+David Lang wrote:
 
-This is useful to pick changes from a non-stgit branch, that were
-recorded as a merge commit, while giving control on the parent to
-use as "bottom" for the patch (for some reason stgit selects the
-first parent by default).
+> the other factor that was mentioned was that a single-bit corruption in the 
+> dictionary would make the entire pack file useless. if this is really a concern 
+> then just store multiple copies of the dictionary. on a pack with lots of files 
+> in it it can still be a significant win.
 
-Incidentally, it can be used to pick changes between arbitrary
-trees in the revision graph.  Since that can be useful as well,
-I did not implement the is_parent check I originally meant to add.
+Or use some error-correcting code for storing dictionary.
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
-
- stgit/commands/pick.py |   11 +++++++++--
- 1 files changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/stgit/commands/pick.py b/stgit/commands/pick.py
-index 1aa83d0..2916b6e 100644
---- a/stgit/commands/pick.py
-+++ b/stgit/commands/pick.py
-@@ -37,6 +37,8 @@ options = [make_option('-n', '--name',
-            make_option('-r', '--reverse',
-                        help = 'reverse the commit object before importing',
-                        action = 'store_true'),
-+           make_option('-p', '--parent',
-+                       help = 'use COMMITID as parent'),
-            make_option('--fold',
-                        help = 'fold the commit object into the current patch',
-                        action = 'store_true'),
-@@ -73,12 +75,17 @@ def func(parser, options, args):
-             if not patch:
-                 raise CmdException, 'Unknown patch name'
- 
-+    if options.parent:
-+        parent = options.parent
-+    else:
-+        parent = commit.get_parent()
-+
-     if not options.reverse:
--        bottom = commit.get_parent()
-+        bottom = parent
-         top = commit_id
-     else:
-         bottom = commit_id
--        top = commit.get_parent()
-+        top = parent
- 
-     if options.fold:
-         print 'Folding commit %s...' % commit_id,
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
