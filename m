@@ -1,56 +1,100 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/9] gitweb: Great subroutines renaming
-Date: Mon, 14 Aug 2006 16:28:11 -0700
-Message-ID: <7v8xlqdhis.fsf@assigned-by-dhcp.cox.net>
-References: <200608140202.46160.jnareb@gmail.com>
-	<200608140205.47380.jnareb@gmail.com>
+From: David Rientjes <rientjes@google.com>
+Subject: Re: [PATCH 00/28] clean-ups of static functions and returns
+Date: Mon, 14 Aug 2006 16:30:51 -0700 (PDT)
+Message-ID: <Pine.LNX.4.63.0608141618470.21705@chino.corp.google.com>
+References: <Pine.LNX.4.63.0608141314350.19383@chino.corp.google.com>
+ <7vlkpqdikx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 15 01:28:23 2006
+X-From: git-owner@vger.kernel.org Tue Aug 15 01:31:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GClqy-0002ut-7Q
-	for gcvg-git@gmane.org; Tue, 15 Aug 2006 01:28:16 +0200
+	id 1GCltp-0003Cm-BZ
+	for gcvg-git@gmane.org; Tue, 15 Aug 2006 01:31:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965056AbWHNX2N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Aug 2006 19:28:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965060AbWHNX2N
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 19:28:13 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:43906 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S965056AbWHNX2M (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Aug 2006 19:28:12 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060814232812.HOPZ18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 14 Aug 2006 19:28:12 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200608140205.47380.jnareb@gmail.com> (Jakub Narebski's message
-	of "Mon, 14 Aug 2006 02:05:47 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965061AbWHNXbJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Aug 2006 19:31:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965063AbWHNXbJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 19:31:09 -0400
+Received: from smtp-out.google.com ([216.239.45.12]:49397 "EHLO
+	smtp-out.google.com") by vger.kernel.org with ESMTP id S965061AbWHNXbI
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Aug 2006 19:31:08 -0400
+Received: from zps35.corp.google.com (zps35.corp.google.com [172.25.146.35])
+	by smtp-out.google.com with ESMTP id k7ENUrDq006300;
+	Mon, 14 Aug 2006 16:30:53 -0700
+DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
+	h=received:date:from:x-x-sender:to:cc:subject:in-reply-to:
+	message-id:references:mime-version:content-type;
+	b=iGq4t9vk4qExLTsx2q/W8iH3QcxpZSRe8+E2ykURJsTQk/MZTfbHTpe6W/nBOiGI/
+	+NklKPiycLjNZwuo34Anw==
+Received: from localhost (chino.corp.google.com [172.24.88.221])
+	by zps35.corp.google.com with ESMTP id k7ENUqrs027000;
+	Mon, 14 Aug 2006 16:30:52 -0700
+Received: by localhost (Postfix, from userid 24081)
+	id 1E5A187D71; Mon, 14 Aug 2006 16:30:51 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+	by localhost (Postfix) with ESMTP id AFB6A87D70;
+	Mon, 14 Aug 2006 16:30:51 -0700 (PDT)
+X-X-Sender: rientjes@chino.corp.google.com
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vlkpqdikx.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25424>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Mon, 14 Aug 2006, Junio C Hamano wrote:
 
-> I'm not sure if to add script used to create this commit, and to
-> port changes to be "post-rename". Here it is:
->
-> #!/bin/bash
-> if test -z "$1"; then
-> 	FILE=`git rev-parse --show-cdup`gitweb/gitweb.perl
-> else
-> 	FILE=$1
-> fi
-> echo "Great subroutine renaming: $FILE"
-> perl -s -p -i.re~ \
-> 	-e 's/\bgit_get_referencing\b/format_ref_marker/;' \
+> Interesting.  Did you use some automated tool to spot them?
+> 
 
-Will apply, but I suspect all of these need g at the end as in
-"s/foo/bar/g;".
+No, these changes are from my own personal tree that optimizes everything for 
+speed since I am working with terabytes of data.  I only submitted changes that 
+I thought would be beneficial for your project as well.
+
+>  * Making stricter error checking in the future harder.  There
+>    are three classes, but the lines between them are fuzzy.
+> 
+>         [PATCH 04/28] builtin-diff.c cleanup
+>         [PATCH 06/28] make cmd_log_walk void
+>         [PATCH 07/28] builtin-mailinfo.c cleanup
+>         [PATCH 09/28] makes prune_dir void
+>         [PATCH 11/28] makes append_ref and show_indepedent void
+>         [PATCH 12/28] makes generate_tar void
+>         [PATCH 13/28] builtin-unpack-objects.c cleanup
+>         [PATCH 14/28] make do_reupdate void
+>         [PATCH 16/28] daemon.c cleanup
+>         [PATCH 17/28] makes diff_cache void
+>         [PATCH 19/28] makes finish_pack void
+>         [PATCH 20/28] makes fetch_pack void
+>         [PATCH 23/28] makes peek_remote void
+> 
+>    The callers of the first group check their return values, so
+>    we could make error checking of these functions stricter in
+>    the future without affecting the rest of the code.  The ones
+>    that currently die() (or usage()) could be made into more
+>    libified form to return error codes.
+> 
+>    So I do not think it is worth doing these.
+>    
+
+I disagree.  Having static functions return ints that are the same for _every_ 
+code path and are checked against upon return is never good style.  It implies 
+that error checking is already done and the return value is of importance.  It 
+also suggests you can program against a specific return value with expected 
+results which are, in fact, true for any return.  Additionally, changes in the 
+future will be easier, in my opinion, because a void -> int change is very 
+simple and existant calls need not be changed (their return values are 
+discarded) so that the implementer can make the checks where necessary.
+
+I do not understand your point about making error checking of the functions 
+stricter without affecting the rest of the code when int returns are discarded 
+if not assigned upon return.  It would certainly be bad style to declare new 
+error codes with a specific meaning without checking all the affected code and 
+we certainly cannot predict this behavior now.
+
+		David
