@@ -1,94 +1,136 @@
 From: David Rientjes <rientjes@google.com>
-Subject: [PATCH 15/28] makes sha1flush void
-Date: Mon, 14 Aug 2006 13:32:01 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0608141331160.19383@chino.corp.google.com>
+Subject: [PATCH 16/28] daemon.c cleanup
+Date: Mon, 14 Aug 2006 13:32:43 -0700 (PDT)
+Message-ID: <Pine.LNX.4.63.0608141332020.19383@chino.corp.google.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon Aug 14 22:32:11 2006
+X-From: git-owner@vger.kernel.org Mon Aug 14 22:33:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GCj6Z-0000E7-8k
-	for gcvg-git@gmane.org; Mon, 14 Aug 2006 22:32:11 +0200
+	id 1GCj7Y-0000UG-Tr
+	for gcvg-git@gmane.org; Mon, 14 Aug 2006 22:33:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932728AbWHNUcI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Aug 2006 16:32:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932729AbWHNUcH
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 16:32:07 -0400
-Received: from smtp-out.google.com ([216.239.45.12]:18325 "EHLO
-	smtp-out.google.com") by vger.kernel.org with ESMTP id S932728AbWHNUcG
+	id S932727AbWHNUdJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Aug 2006 16:33:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932729AbWHNUdJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 16:33:09 -0400
+Received: from smtp-out.google.com ([216.239.45.12]:54677 "EHLO
+	smtp-out.google.com") by vger.kernel.org with ESMTP id S932727AbWHNUdI
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Aug 2006 16:32:06 -0400
-Received: from zps75.corp.google.com (zps75.corp.google.com [172.25.146.75])
-	by smtp-out.google.com with ESMTP id k7EKW25o022914
-	for <git@vger.kernel.org>; Mon, 14 Aug 2006 13:32:02 -0700
+	Mon, 14 Aug 2006 16:33:08 -0400
+Received: from zps37.corp.google.com (zps37.corp.google.com [172.25.146.37])
+	by smtp-out.google.com with ESMTP id k7EKWm1v013681
+	for <git@vger.kernel.org>; Mon, 14 Aug 2006 13:32:48 -0700
 DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
 	h=received:date:from:x-x-sender:to:subject:message-id:
 	mime-version:content-type;
-	b=IzYKjoRgBa1e156zRr8vxVJOj+PETLlHXTm8ZwHq3PaukqhWn2BwQfRsn9CRmxJdy
-	tBwPW6wQEEgzHMJb4KTeA==
+	b=AukG0E2UBJ8nMXDGxYxRDUg+ipRgmk3KHtCA/oZ/8Aw0GSuIPJkI1Bp0vzary+1LN
+	ue+LdnsbgPPMzxrCxJTVA==
 Received: from localhost (chino.corp.google.com [172.24.88.221])
-	by zps75.corp.google.com with ESMTP id k7EKW1Gs008966
-	for <git@vger.kernel.org>; Mon, 14 Aug 2006 13:32:02 -0700
+	by zps37.corp.google.com with ESMTP id k7EKWlhZ006066
+	for <git@vger.kernel.org>; Mon, 14 Aug 2006 13:32:47 -0700
 Received: by localhost (Postfix, from userid 24081)
-	id D659787D71; Mon, 14 Aug 2006 13:32:01 -0700 (PDT)
+	id ECDB187D71; Mon, 14 Aug 2006 13:32:43 -0700 (PDT)
 Received: from localhost (localhost [127.0.0.1])
-	by localhost (Postfix) with ESMTP id D386B87D70
-	for <git@vger.kernel.org>; Mon, 14 Aug 2006 13:32:01 -0700 (PDT)
+	by localhost (Postfix) with ESMTP id EA80687D70
+	for <git@vger.kernel.org>; Mon, 14 Aug 2006 13:32:43 -0700 (PDT)
 X-X-Sender: rientjes@chino.corp.google.com
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25396>
 
-Makes sha1flush void and removes conditional return.
+Makes execute and upload void and cleans up function calls.
 
 		David
 
 Signed-off-by: David Rientjes <rientjes@google.com>
 ---
- combine-diff.c |    4 +---
- csum-file.c    |    4 ++--
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ daemon.c |   25 +++++++++++++------------
+ 1 files changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/combine-diff.c b/combine-diff.c
-index f2f3806..312035a 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -9,9 +9,7 @@ #include "log-tree.h"
- 
- static int uninteresting(struct diff_filepair *p)
- {
--	if (diff_unmodified_pair(p))
--		return 1;
--	return 0;
-+	return !!diff_unmodified_pair(p);
+diff --git a/daemon.c b/daemon.c
+index 810837f..53ef514 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -229,7 +229,7 @@ static char *path_ok(char *dir)
+ 	return NULL;		/* Fallthrough. Deny by default */
  }
  
- static struct combine_diff_path *intersect_paths(struct combine_diff_path *curr, int n, int num_parent)
-diff --git a/csum-file.c b/csum-file.c
-index 6a7b40f..e227889 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -10,7 +10,7 @@
- #include "cache.h"
- #include "csum-file.h"
- 
--static int sha1flush(struct sha1file *f, unsigned int count)
-+static void sha1flush(struct sha1file *f, unsigned int count)
+-static int upload(char *dir)
++static void upload(char *dir)
  {
- 	void *buf = f->buffer;
+ 	/* Timeout as string */
+ 	char timeout_buf[64];
+@@ -238,7 +238,7 @@ static int upload(char *dir)
+ 	loginfo("Request for '%s'", dir);
  
-@@ -21,7 +21,7 @@ static int sha1flush(struct sha1file *f,
- 			count -= ret;
- 			if (count)
- 				continue;
--			return 0;
-+			return;
- 		}
- 		if (!ret)
- 			die("sha1 file '%s' write error. Out of diskspace", f->name);
+ 	if (!(path = path_ok(dir)))
+-		return -1;
++		return;
+ 
+ 	/*
+ 	 * Security on the cheap.
+@@ -254,7 +254,7 @@ static int upload(char *dir)
+ 	if (!export_all_trees && access("git-daemon-export-ok", F_OK)) {
+ 		logerror("'%s': repository not exported.", path);
+ 		errno = EACCES;
+-		return -1;
++		return;
+ 	}
+ 
+ 	/*
+@@ -267,10 +267,9 @@ static int upload(char *dir)
+ 
+ 	/* git-upload-pack only ever reads stuff, so this is safe */
+ 	execl_git_cmd("upload-pack", "--strict", timeout_buf, ".", NULL);
+-	return -1;
+ }
+ 
+-static int execute(struct sockaddr *addr)
++static void execute(struct sockaddr *addr)
+ {
+ 	static char line[1000];
+ 	int pktlen, len;
+@@ -310,11 +309,11 @@ #endif
+ 	if (len && line[len-1] == '\n')
+ 		line[--len] = 0;
+ 
+-	if (!strncmp("git-upload-pack ", line, 16))
+-		return upload(line+16);
+-
+-	logerror("Protocol error: '%s'", line);
+-	return -1;
++	if (!strncmp("git-upload-pack ", line, 16)) {
++		upload(line+16);
++	} else {
++		logerror("Protocol error: '%s'", line);
++	}
+ }
+ 
+ 
+@@ -463,7 +462,8 @@ static void handle(int incoming, struct 
+ 	dup2(incoming, 1);
+ 	close(incoming);
+ 
+-	exit(execute(addr));
++	execute(addr);
++	exit(-1);
+ }
+ 
+ static void child_handler(int signo)
+@@ -820,7 +820,8 @@ int main(int argc, char **argv)
+ 		if (getpeername(0, peer, &slen))
+ 			peer = NULL;
+ 
+-		return execute(peer);
++		execute(peer);
++		return -1;
+ 	}
+ 
+ 	if (detach)
 -- 
 1.4.2.g89bb-dirty
