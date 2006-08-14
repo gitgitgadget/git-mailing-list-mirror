@@ -1,100 +1,73 @@
 From: David Rientjes <rientjes@google.com>
-Subject: [PATCH 09/28] makes prune_dir void
-Date: Mon, 14 Aug 2006 13:26:15 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0608141325350.19383@chino.corp.google.com>
+Subject: [PATCH 10/28] builtin-push.c cleanup
+Date: Mon, 14 Aug 2006 13:26:58 -0700 (PDT)
+Message-ID: <Pine.LNX.4.63.0608141326160.19383@chino.corp.google.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon Aug 14 22:26:31 2006
+X-From: git-owner@vger.kernel.org Mon Aug 14 22:27:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GCj0z-0007TT-AE
-	for gcvg-git@gmane.org; Mon, 14 Aug 2006 22:26:25 +0200
+	id 1GCj1l-0007cL-7M
+	for gcvg-git@gmane.org; Mon, 14 Aug 2006 22:27:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932719AbWHNU0W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Aug 2006 16:26:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932721AbWHNU0W
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 16:26:22 -0400
-Received: from smtp-out.google.com ([216.239.45.12]:2962 "EHLO
-	smtp-out.google.com") by vger.kernel.org with ESMTP id S932719AbWHNU0V
+	id S932721AbWHNU1K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Aug 2006 16:27:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932722AbWHNU1K
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 16:27:10 -0400
+Received: from smtp-out.google.com ([216.239.45.12]:26514 "EHLO
+	smtp-out.google.com") by vger.kernel.org with ESMTP id S932721AbWHNU1I
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Aug 2006 16:26:21 -0400
-Received: from zps38.corp.google.com (zps38.corp.google.com [172.25.146.38])
-	by smtp-out.google.com with ESMTP id k7EKQGbZ012887
-	for <git@vger.kernel.org>; Mon, 14 Aug 2006 13:26:16 -0700
+	Mon, 14 Aug 2006 16:27:08 -0400
+Received: from zps75.corp.google.com (zps75.corp.google.com [172.25.146.75])
+	by smtp-out.google.com with ESMTP id k7EKR2ki003393
+	for <git@vger.kernel.org>; Mon, 14 Aug 2006 13:27:02 -0700
 DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
 	h=received:date:from:x-x-sender:to:subject:message-id:
 	mime-version:content-type;
-	b=sJfExT+WlNm0iKGMXSPX7fhofdpd41DC0itD19m8prAgMeki0ZcmKP34Zpt5FZmBf
-	kExWK69fD48Aclk1+J0Ig==
+	b=ZVLtFTLVbhUy6UGEBsDJc1UE7ua3Cqy8McAm6iiwQizcMNUTdn7qMqswSKioeirMi
+	6nTcnahwiwQGSW7AyoN7g==
 Received: from localhost (chino.corp.google.com [172.24.88.221])
-	by zps38.corp.google.com with ESMTP id k7EKQFU1014922
-	for <git@vger.kernel.org>; Mon, 14 Aug 2006 13:26:15 -0700
+	by zps75.corp.google.com with ESMTP id k7EKQwHt020001
+	for <git@vger.kernel.org>; Mon, 14 Aug 2006 13:26:58 -0700
 Received: by localhost (Postfix, from userid 24081)
-	id 3D14F87D71; Mon, 14 Aug 2006 13:26:15 -0700 (PDT)
+	id 3CCFC87D71; Mon, 14 Aug 2006 13:26:58 -0700 (PDT)
 Received: from localhost (localhost [127.0.0.1])
-	by localhost (Postfix) with ESMTP id 3AFF987D70
-	for <git@vger.kernel.org>; Mon, 14 Aug 2006 13:26:15 -0700 (PDT)
+	by localhost (Postfix) with ESMTP id 39F9F87D70
+	for <git@vger.kernel.org>; Mon, 14 Aug 2006 13:26:58 -0700 (PDT)
 X-X-Sender: rientjes@chino.corp.google.com
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25390>
 
-Makes prune_dir void and cleans up function calls.
+Removes conditional return in builtin-push.c
 
 		David
 
 Signed-off-by: David Rientjes <rientjes@google.com>
 ---
- builtin-prune.c |   15 +++++++--------
- 1 files changed, 7 insertions(+), 8 deletions(-)
+ builtin-push.c |    6 ++----
+ 1 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/builtin-prune.c b/builtin-prune.c
-index 89ec7f1..f01f275 100644
---- a/builtin-prune.c
-+++ b/builtin-prune.c
-@@ -14,24 +14,24 @@ static const char prune_usage[] = "git-p
- static int show_only = 0;
- static struct rev_info revs;
+diff --git a/builtin-push.c b/builtin-push.c
+index 53bc378..c09ff2f 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -32,10 +32,8 @@ static int expand_one_ref(const char *re
+ 	/* Ignore the "refs/" at the beginning of the refname */
+ 	ref += 5;
  
--static int prune_object(char *path, const char *filename, const unsigned char *sha1)
-+static void prune_object(char *path, const char *filename,
-+			 const unsigned char *sha1)
- {
- 	if (show_only) {
- 		printf("would prune %s/%s\n", path, filename);
+-	if (strncmp(ref, "tags/", 5))
 -		return 0;
-+	} else {
-+		unlink(mkpath("%s/%s", path, filename));
-+		rmdir(path);
- 	}
--	unlink(mkpath("%s/%s", path, filename));
--	rmdir(path);
--	return 0;
+-
+-	add_refspec(strdup(ref));
++	if (!strncmp(ref, "tags/", 5))
++		add_refspec(strdup(ref));
+ 	return 0;
  }
  
--static int prune_dir(int i, char *path)
-+static void prune_dir(int i, char *path)
- {
- 	DIR *dir = opendir(path);
- 	struct dirent *de;
- 
- 	if (!dir)
--		return 0;
-+		return;
- 
- 	while ((de = readdir(dir)) != NULL) {
- 		char name[100];
-@@ -65,7 +65,6 @@ static int prune_dir(int i, char *path)
- 		fprintf(stderr, "bad sha1 file: %s/%s\n", path, de->d_name);
- 	}
- 	closedir(dir);
--	return 0;
- }
- 
- static void prune_object_dir(const char *path)
 -- 
 1.4.2.g89bb-dirty
