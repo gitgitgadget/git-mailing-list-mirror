@@ -1,76 +1,56 @@
-From: David Lang <dlang@digitalinsight.com>
-Subject: Re: Compression and dictionaries
-Date: Mon, 14 Aug 2006 12:08:04 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0608141206260.14796@qynat.qvtvafvgr.pbz>
-References: <9e4733910608132037t4297c3bbq9b0cd6ebaa03b979@mail.gmail.com> 
- <Pine.LNX.4.63.0608141415560.10541@wbgn013.biozentrum.uni-wuerzburg.de> 
- <9e4733910608140708i45e3d6day6b87676783fd6511@mail.gmail.com> 
- <Pine.LNX.4.63.0608141641330.28360@wbgn013.biozentrum.uni-wuerzburg.de> 
- <9e4733910608140915i728004c1p216bf3d74fcc6ab7@mail.gmail.com> 
- <Pine.LNX.4.63.0608140930380.14796@qynat.qvtvafvgr.pbz>
- <9e4733910608141148t636f9874wfcf66b56161352c3@mail.gmail.com>
+From: "Michael S. Tsirkin" <mst@mellanox.co.il>
+Subject: Re: [PATCH] Multiple refs from the same remote in one git fetch
+Date: Mon, 14 Aug 2006 22:17:33 +0300
+Message-ID: <20060814191733.GD16821@mellanox.co.il>
+References: <ebqfjq$ujd$1@sea.gmane.org>
+Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 14 21:09:20 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 14 21:15:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GChoI-0000ct-Pk
-	for gcvg-git@gmane.org; Mon, 14 Aug 2006 21:09:15 +0200
+	id 1GChuQ-0001xf-IJ
+	for gcvg-git@gmane.org; Mon, 14 Aug 2006 21:15:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932529AbWHNTJG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Aug 2006 15:09:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932501AbWHNTJG
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 15:09:06 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:31106 "HELO
-	warden.diginsite.com") by vger.kernel.org with SMTP id S932529AbWHNTJE
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Aug 2006 15:09:04 -0400
-Received: from wlvims02.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Mon, 14 Aug 2006 12:09:04 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Mon, 14 Aug 2006 12:08:56 -0700
-X-X-Sender: dlang@dlang.diginsite.com
-To: Jon Smirl <jonsmirl@gmail.com>
-In-Reply-To: <9e4733910608141148t636f9874wfcf66b56161352c3@mail.gmail.com>
+	id S932624AbWHNTP3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Aug 2006 15:15:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932609AbWHNTP3
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 15:15:29 -0400
+Received: from mxl145v64.mxlogic.net ([208.65.145.64]:11954 "EHLO
+	p02c11o141.mxlogic.net") by vger.kernel.org with ESMTP
+	id S932624AbWHNTP2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Aug 2006 15:15:28 -0400
+Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
+	by p02c11o141.mxlogic.net (mxl_mta-3.0.0-12)
+	with ESMTP id 0dbc0e44.2271169456.132970.00-009.p02c11o141.mxlogic.net (envelope-from <mst@mellanox.co.il>);
+	Mon, 14 Aug 2006 13:15:28 -0600 (MDT)
+Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Mon, 14 Aug 2006 22:21:30 +0300
+Received: by mellanox.co.il (sSMTP sendmail emulation); Mon, 14 Aug 2006 22:17:33 +0300
+To: Jakub Narebski <jnareb@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <ebqfjq$ujd$1@sea.gmane.org>
+User-Agent: Mutt/1.4.2.1i
+X-OriginalArrivalTime: 14 Aug 2006 19:21:30.0984 (UTC) FILETIME=[D8EB3E80:01C6BFD6]
+X-Spam: [F=0.0100000000; S=0.010(2006062901)]
+X-MAIL-FROM: <mst@mellanox.co.il>
+X-SOURCE-IP: [194.90.237.34]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25377>
 
-On Mon, 14 Aug 2006, Jon Smirl wrote:
 
-> On 8/14/06, David Lang <dlang@digitalinsight.com> wrote:
->> On Mon, 14 Aug 2006, Jon Smirl wrote:
->> 
->> > On 8/14/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->> >> I still think that this is important to think through: Is it worth a
->> >> couple of kilobytes (I doubt that it would be as much as 1MB in 
->> _total_),
->> >> and be on the unsafe side?
->> >
->> > The only "unsafe" aspect I see to this is if the global dictionary
->> > doesn't contain any of the words in the documents being encoded. In
->> > that case the global dictionary will occupy the short huffman keys
->> > forcing longer internal keys.  The keys for the words in the document
->> > would be longer by a about a bit on average.
->> 
->> the other factor that was mentioned was that a single-bit corruption in the
->> dictionary would make the entire pack file useless. if this is really a 
->> concern
->> then just store multiple copies of the dictionary. on a pack with lots of 
->> files
->> in it it can still be a significant win.
->
-> Bit errors can mess the pack up in lots of ways. If it hits a commit
-> you won't be able to follow the tree back in time. Packs were never
-> designed to be error tolerant.
+Quoting r. Jakub Narebski <jnareb@gmail.com>:
+> Have only "Pull: master:linus_master" as the pull line, and make origin
+> symlink (ln -s $GIT_DIR/refs/heads/linus_master $GIT_DIR/refs/heads/origin)
+> or symref (echo "ref: refs/heads/linus_master" > $GIT_DIR/refs/heads/origin)
+> or vice versa.
 
-I'm not claiming that this is a problem, I'm reponding to other people's claim 
-that useing a global dictionary for a pack is a problem becouse if something 
-happens to that dictionary the whole pack is worthless by pointing out that, if 
-this is viewed as a real problem, it's easy to solve.
+Thanks.
 
-David Lang
+-- 
+MST
