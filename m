@@ -1,63 +1,116 @@
-From: "David Rientjes" <rientjes@google.com>
-Subject: Re: [PATCH] combine-diff.c remove unused return variable
-Date: Sun, 13 Aug 2006 18:27:06 -0700
-Message-ID: <9ec263480608131827j1a945016xaa9b7a1c8de41698@mail.google.com>
-References: <Pine.LNX.4.63.0608131730470.24283@chino.corp.google.com>
-	 <7voduogmfm.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [RFC] git-publish
+Date: Sun, 13 Aug 2006 21:51:27 -0400
+Message-ID: <20060814015127.GA18667@spearce.org>
+References: <Pine.LNX.4.64.0608131158500.9789@iabervon.org> <20060813191346.GA21487@mars.ravnborg.org> <Pine.LNX.4.64.0608131536590.9789@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 14 03:27:51 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Sam Ravnborg <sam@ravnborg.org>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Aug 14 03:52:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GCRF2-0006Xd-LN
-	for gcvg-git@gmane.org; Mon, 14 Aug 2006 03:27:45 +0200
+	id 1GCRcQ-0000LO-Lt
+	for gcvg-git@gmane.org; Mon, 14 Aug 2006 03:51:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751714AbWHNB1N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 Aug 2006 21:27:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751775AbWHNB1M
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Aug 2006 21:27:12 -0400
-Received: from smtp-out.google.com ([216.239.45.12]:60337 "EHLO
-	smtp-out.google.com") by vger.kernel.org with ESMTP
-	id S1751714AbWHNB1M (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Aug 2006 21:27:12 -0400
-Received: from zps38.corp.google.com (zps38.corp.google.com [172.25.146.38])
-	by smtp-out.google.com with ESMTP id k7E1R81e019483
-	for <git@vger.kernel.org>; Sun, 13 Aug 2006 18:27:08 -0700
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=received:message-id:date:from:to:subject:cc:in-reply-to:
-	mime-version:content-type:content-transfer-encoding:
-	content-disposition:references;
-	b=we92VXvr5MyEqcwm8isVWT5KmVH7olQaD7j0UruvN/7yoqpVDOuCJxM+bjA89PQkY
-	DXOriabuYPGCrP+779r5g==
-Received: from smtp-out2.google.com (fpe16.prod.google.com [10.253.5.16])
-	by zps38.corp.google.com with ESMTP id k7E1NP7h011292
-	for <git@vger.kernel.org>; Sun, 13 Aug 2006 18:27:06 -0700
-Received: by smtp-out2.google.com with SMTP id 16so19597fpe
-        for <git@vger.kernel.org>; Sun, 13 Aug 2006 18:27:06 -0700 (PDT)
-Received: by 10.253.1.18 with SMTP id 18mr155541fpa;
-        Sun, 13 Aug 2006 18:27:06 -0700 (PDT)
-Received: by 10.253.15.12 with HTTP; Sun, 13 Aug 2006 18:27:06 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7voduogmfm.fsf@assigned-by-dhcp.cox.net>
+	id S1751788AbWHNBvt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 Aug 2006 21:51:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751790AbWHNBvs
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Aug 2006 21:51:48 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:23277 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751788AbWHNBvr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Aug 2006 21:51:47 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GCRbr-00043M-HT; Sun, 13 Aug 2006 21:51:19 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 0D1D720FB77; Sun, 13 Aug 2006 21:51:27 -0400 (EDT)
+To: Daniel Barkalow <barkalow@iabervon.org>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0608131536590.9789@iabervon.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25307>
 
-On 8/13/06, Junio C Hamano <junkio@cox.net> wrote:
-> dave rientjes <rientjes@google.com> writes:
->
-> > Removes unused return variable.
->
-> True.  Then making the function void would make more sense, like
-> this?
->
+Daniel Barkalow <barkalow@iabervon.org> wrote:
+> On Sun, 13 Aug 2006, Sam Ravnborg wrote:
+> 
+> > But important note is that publishing is something I defer until some
+> > limited test has been done. And when I omit that I have always ended u
+> > pushing some crappy stuff that needs to be dealt with.
+> 
+> I also test before publishing. But I test before committing, too, because 
+> I never get anything right (or even logically complete) the first time. My 
+> cycle is edit/build/test, and if the test is successful, I commit and 
+> push. Do other people really commit after editing each time? Or are they 
+> testing before the commit, and doing more extensive testing after the 
+> commit before the push?
 
-Sure, as long as the author was not planning something for it later.
+I typically edit/commit/test, with a possible commit --amend after
+the test to fix whatever trivial bug came up during the test.
+But usually I get the initial edit right, so I don't --amend
+that often.
 
-David
+When building a patch series for core GIT I tend to make heavy use
+of git-format-pach and git-am; e.g. I'll edit/commit/test each change,
+then go back and do something like:
+
+	git format-patch -o .. next
+	git reset --hard next
+	git am ../0003-*
+	git am ../0001-*
+	git am ../0002-*
+
+or whatever to clean up my history before doing a final test and
+format-patch for emailing.  The reason I do this is I tend to to
+pay attention to "patch size" when writing a change but I try to
+minimize the number of changed lines before submitting so the patch
+is cleaner.  :-)
+
+When I'm not hacking on core GIT I'm typically using `git push`
+to publish my changes to a common repository.  In this case I
+still tend to commit before I test so I'd definately _not_ use a
+`git commit && git push` style of operation.
+
+
+Although other SCMs (e.g. SVN or CVS) would encourage you to commit
+and push to the remote immediately this is actually a pretty bad
+idea in GIT.
+
+If the remote is ahead of you then the push would automatically fail.
+If you are working on a team where everyone is doing `git commit &&
+git push` then you will probably find that every other commit the
+remote is ahead of you, requiring you to pull first.  But with CVS
+and SVN you usually don't run into that issue unless you touched the
+same files, and typically in that type of workflow users only edit
+"their" files so conflicts like that tend not to happen very often.
+
+But even worse this style of workflow will generate a very messy
+history.  Almost every commit will have been done in isolation,
+with yet another merge commit to connect it to the commit that
+beat it into the shared repository.  This is not going to look very
+pretty in gitk.
+
+
+So in my humble opinion I think this is not really a workflow style
+that should be encouraged with GIT.  But perhaps tools to show you
+what would happen if you pushed right now (e.g. a shortlog of the
+commits that would upload or that must be downloaded and merged)
+would be useful.
+
+-- 
+Shawn.
