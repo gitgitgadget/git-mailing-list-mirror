@@ -1,64 +1,64 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 7/9] gitweb: Skip comments in mime.types like file
-Date: Mon, 14 Aug 2006 02:15:22 +0200
-Message-ID: <200608140215.22378.jnareb@gmail.com>
-References: <200608140202.46160.jnareb@gmail.com>
+Subject: Re: [PATCH 6/9] gitweb: Change appereance of marker of refs pointing to given object
+Date: Mon, 14 Aug 2006 11:30:03 +0200
+Message-ID: <200608141130.04148.jnareb@gmail.com>
+References: <200608140202.46160.jnareb@gmail.com> <200608140214.20450.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Aug 14 12:17:08 2006
+X-From: git-owner@vger.kernel.org Mon Aug 14 12:17:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GCZVE-0001tP-WF
-	for gcvg-git@gmane.org; Mon, 14 Aug 2006 12:17:01 +0200
+	id 1GCZVD-0001tP-Ki
+	for gcvg-git@gmane.org; Mon, 14 Aug 2006 12:17:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751977AbWHNKQu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Aug 2006 06:16:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751981AbWHNKQu
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 06:16:50 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:24460 "EHLO
+	id S932188AbWHNKQs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Aug 2006 06:16:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932168AbWHNKQr
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 06:16:47 -0400
+Received: from nf-out-0910.google.com ([64.233.182.191]:50060 "EHLO
 	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751980AbWHNKQl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Aug 2006 06:16:41 -0400
-Received: by nf-out-0910.google.com with SMTP id a4so20978nfc
-        for <git@vger.kernel.org>; Mon, 14 Aug 2006 03:16:41 -0700 (PDT)
+	id S1751988AbWHNKQo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Aug 2006 06:16:44 -0400
+Received: by nf-out-0910.google.com with SMTP id k26so20482nfc
+        for <git@vger.kernel.org>; Mon, 14 Aug 2006 03:16:43 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=TUBr1gq+wzKe09kfDsq2TuiHc3OPnL1E7BU0gWBokiuocxDK+wj6MZhLc6ZE4BLexwvuD5VOLYWE4C6kzGMlVTcbbvfoj8GadeoxlssOh8S3JDyvMkjgHixYhHAOl87FqszE3QPutyH0szU52e8WnzC4R6wjd9lMdIOH1PhZOts=
-Received: by 10.49.41.18 with SMTP id t18mr975736nfj;
-        Mon, 14 Aug 2006 03:16:41 -0700 (PDT)
+        b=BePp4qlgHbt5BhVbDOnf6u2R7LLW5dThlBYE2cn9ruW5kA4svjwmBD7JGX7reN7RWbrT//cNmDGkaN6w1aYhw+cIuxMKZKfkd2uYiP7eD9eAx78FrNxz6ElZTCACsx992X6O8oqOMmJki9q+dlPjKkvl+2fS0Jx1tGAm63gm8f0=
+Received: by 10.49.29.2 with SMTP id g2mr1045183nfj;
+        Mon, 14 Aug 2006 03:16:43 -0700 (PDT)
 Received: from host-81-190-23-158.torun.mm.pl ( [81.190.23.158])
-        by mx.gmail.com with ESMTP id m16sm9637471nfc.2006.08.14.03.16.40;
-        Mon, 14 Aug 2006 03:16:40 -0700 (PDT)
+        by mx.gmail.com with ESMTP id m16sm9637471nfc.2006.08.14.03.16.43;
+        Mon, 14 Aug 2006 03:16:43 -0700 (PDT)
 To: git@vger.kernel.org
 User-Agent: KMail/1.9.3
-In-Reply-To: <200608140202.46160.jnareb@gmail.com>
+In-Reply-To: <200608140214.20450.jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25343>
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/gitweb.perl |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+Jakub Narebski wrote:
+> Change git_get_references to include type of ref in the %refs value, which
+> means putting everything after 'refs/' as a ref name, not only last
+> part of the name.  Instead of separating refs pointing to the same
+> object by " / " separator, use anonymous array reference to store all
+> refs pointing to given object.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 4fe3fc7..52ae2aa 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -858,6 +858,7 @@ sub mimetype_guess_file {
- 	my %mimemap;
- 	open(MIME, $mimemap) or return undef;
- 	while (<MIME>) {
-+		next if m/^#/; # skip comments
- 		my ($mime, $exts) = split(/\t+/);
- 		if (defined $exts) {
- 			my @exts = split(/\s+/, $exts);
+Earlier version of the patch used ':' (instead of ' / ') to concatenate
+multiple refs pointing to the same object, then split on ':'. Character
+':' was used because it cannot be part of valid ref name (as of
+git-check-ref-name).
+
+Note that usually there is at most one ref pointing to given object;
+multiple refs are quite rare (usually when starting new branch, or just
+tagged a branch).
+
 -- 
-1.4.1.1
+Jakub Narebski
+Poland
