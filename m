@@ -1,153 +1,107 @@
-From: "Michael S. Tsirkin" <mst@mellanox.co.il>
-Subject: Re: [PATCH] Multiple refs from the same remote in one git fetch
-Date: Mon, 14 Aug 2006 03:13:29 +0300
-Message-ID: <20060814001329.GA24694@mellanox.co.il>
-References: <7vveoxo8ni.fsf@assigned-by-dhcp.cox.net>
-Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH/RFC] gitweb: Great subroutines renaming
+Date: Sun, 13 Aug 2006 17:11:30 -0700
+Message-ID: <7vejvki3bh.fsf@assigned-by-dhcp.cox.net>
+References: <200608071626.52655.jnareb@gmail.com> <ebln1v$s6j$1@sea.gmane.org>
+	<7v7j1dnzo5.fsf@assigned-by-dhcp.cox.net> <ebmrbm$umk$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 14 02:11:32 2006
+X-From: git-owner@vger.kernel.org Mon Aug 14 02:11:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GCQ3H-0004Ip-5F
-	for gcvg-git@gmane.org; Mon, 14 Aug 2006 02:11:31 +0200
+	id 1GCQ3M-0004Ji-P0
+	for gcvg-git@gmane.org; Mon, 14 Aug 2006 02:11:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751750AbWHNAL1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 Aug 2006 20:11:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751753AbWHNAL1
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Aug 2006 20:11:27 -0400
-Received: from mxl145v69.mxlogic.net ([208.65.145.69]:6278 "EHLO
-	p02c11o146.mxlogic.net") by vger.kernel.org with ESMTP
-	id S1751750AbWHNAL1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Aug 2006 20:11:27 -0400
-Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
-	by p02c11o146.mxlogic.net (mxl_mta-3.0.0-12)
-	with ESMTP id eafbfd44.2545642416.181408.00-002.p02c11o146.mxlogic.net (envelope-from <mst@mellanox.co.il>);
-	Sun, 13 Aug 2006 18:11:26 -0600 (MDT)
-Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Mon, 14 Aug 2006 03:17:28 +0300
-Received: by mellanox.co.il (sSMTP sendmail emulation); Mon, 14 Aug 2006 03:13:29 +0300
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vveoxo8ni.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4.2.1i
-X-OriginalArrivalTime: 14 Aug 2006 00:17:28.0203 (UTC) FILETIME=[06A215B0:01C6BF37]
-X-Spam: [F=0.0100000000; S=0.010(2006062901)]
-X-MAIL-FROM: <mst@mellanox.co.il>
-X-SOURCE-IP: [194.90.237.34]
+	id S1751753AbWHNALd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 Aug 2006 20:11:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751754AbWHNALd
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Aug 2006 20:11:33 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:1437 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1751753AbWHNALc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Aug 2006 20:11:32 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060814001131.KUQF6235.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 13 Aug 2006 20:11:31 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <ebmrbm$umk$1@sea.gmane.org> (Jakub Narebski's message of "Sun,
+	13 Aug 2006 11:29:00 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25301>
 
-Quoting r. Junio C Hamano <junkio@cox.net>:
-> >> Looks Ok, although I have to admit I just gave a cursory look.
-> >> Thanks.
-> >> 
-> >
-> > Could this go into next then? 
-> 
-> No.  Spoke too fast.  Breaks t6200 test because it reports the
-> refs fetched in duplicates.
-> 
-> 
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Right, The problem was with the way I coded the loop in git-fetch.sh.
-Here's the fixed versin - seems to pass make test fine.
+> Junio C Hamano wrote:
+>
+>> I'll be pushing out 1.4.2 this weekend, and then moving all the
+>> gitweb stuff pending in "next" to "master" after that.
+>> 
+>> Let's have the rename immediately on top of it first, then
+>> continue cleaning up after that.
+>
+> So after 1.4.2 gitweb patches should be based on next, or on master?
 
----
+Well, since "git diff master next -- gitweb/" reports empty, the
+question should not matter at this moment ;-).
 
-Fix git fetch for when multiple refspecs reference the same remote head.
+Here are my preferences, as a general guideline:
 
-Signed-off-by: Michael S. Tsirkin <mst@mellanox.co.il>
+ * If it is a general clean-up (e.g. changing a function
+   signature declared in cache.h to tighten constness), I would
+   prefer two patches; one to apply on "master", and another one
+   created by assuming:
 
+    - your first patch for "master" is accepted;
+    - resulting "master" (with your first patch applied) will be
+      merged into "next";
 
-diff --git a/connect.c b/connect.c
-index 4422a0d..3880191 100644
---- a/connect.c
-+++ b/connect.c
-@@ -115,6 +115,7 @@ int get_ack(int fd, unsigned char *resul
- int path_match(const char *path, int nr, char **match)
- {
- 	int i;
-+	int found = 0;
- 	int pathlen = strlen(path);
- 
- 	for (i = 0; i < nr; i++) {
-@@ -128,9 +129,9 @@ int path_match(const char *path, int nr,
- 		if (pathlen > len && path[pathlen - len - 1] != '/')
- 			continue;
- 		*s = 0;
--		return (i + 1);
-+		found = i + 1;
- 	}
--	return 0;
-+	return found;
- }
- 
- struct refspec {
-diff --git a/git-fetch.sh b/git-fetch.sh
-index c2eebee..80a7a5d 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -366,6 +366,7 @@ fetch_main () {
- 		  exit 1 ;;
- 	  esac
- 	  found=
-+	  found_any=
- 	  single_force=
- 	  for ref in $refs
- 	  do
-@@ -373,26 +374,34 @@ fetch_main () {
- 	      +$remote_name:*)
- 		  single_force=t
- 		  not_for_merge=
--		  found="$ref"
--		  break ;;
-+		  found="$ref";;
- 	      .+$remote_name:*)
- 		  single_force=t
- 		  not_for_merge=t
--		  found="$ref"
--		  break ;;
-+		  found="$ref";;
- 	      .$remote_name:*)
- 		  not_for_merge=t
--		  found="$ref"
--		  break ;;
-+		  found="$ref";;
- 	      $remote_name:*)
- 		  not_for_merge=
--		  found="$ref"
--		  break ;;
-+		  found="$ref";;
-+	      *)
-+		  found=;;
- 	      esac
-+	      if test "$found" != ""
-+	      then
-+		  found_any=1
-+		  local_name=$(expr "z$found" : 'z[^:]*:\(.*\)')
-+		  append_fetch_head "$sha1" "$remote" "$remote_name" \
-+		      "$remote_nick" "$local_name" "$not_for_merge"
-+	      fi
- 	  done
--	  local_name=$(expr "z$found" : 'z[^:]*:\(.*\)')
--	  append_fetch_head "$sha1" "$remote" \
--		  "$remote_name" "$remote_nick" "$local_name" "$not_for_merge"
-+	  if test "$found_any" == ""
-+	  then
-+	      local_name=$(expr "z$found" : 'z[^:]*:\(.*\)')
-+	      append_fetch_head "$sha1" "$remote" "$remote_name" \
-+	          "$remote_nick" "$local_name" "$not_for_merge"
-+	  fi
-       done
-     ) || exit ;;
-   esac
-diff --git a/t/Makefile b/t/Makefile
+   Then the other patch is to clean-up the remaining stuff
+   introduced between "master" and "next" (e.g. the function
+   whose signature you changed in the first patch may have more
+   call sites in "next" you may need to fix them up).
 
--- 
-MST
+   If you know the specific topic I internally have (you can
+   tell them by looking at the merge commits on "next"),
+   separating the remainder patch into one per topic would be
+   even nicer, but that is probably too much work to ask from
+   contributors.
+
+   Most of the time I can do this split myself, though, so it is
+   Ok to send a patch to fix things up only in "master", and
+   have me find out that it breaks "next", at that time I may
+   fix things up myself similarly or I may ask you to send in a
+   separete patch in similar spirit to fix up things in "next".
+
+ * If it is a new series, I would prefer things be based on
+   "master", unless you use some feature (either internal or
+   external) that only exists in "next" or in "pu".
+
+ * If it is a follow-up on stuff still in "next", obviously
+   basing the patch on "master" is not possible.
+
+ * If you have independent fix even though we have stuff that
+   touch the same general area in "next", it is very much
+   preferable if it applies to "master".  A critical fix for
+   "next" that does not apply to "master" is taking the fix
+   hostage to whatever is in "next".
+
+ * If you need to base on "next", telling me why (i.e. "this
+   uses such and such function which are not in master") helps
+   me identify which topic I internally have to base a topic to
+   house your series in.
+
+ * If you need to base on "pu", think twice.  You will be taken
+   hostage by whatever you are basing on (this is the same if
+   you base on something in "next", but "pu" is for stuff of
+   even more dubious merits than "next").  On the other hand,
+   your new series may turn out to be the killer application for
+   the feature that was earlier felt not-so-useful and help it
+   (and your series) merged to "next".
