@@ -1,92 +1,94 @@
 From: David Rientjes <rientjes@google.com>
-Subject: [PATCH 14/28] make do_reupdate void
-Date: Mon, 14 Aug 2006 13:31:16 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0608141330340.19383@chino.corp.google.com>
+Subject: [PATCH 15/28] makes sha1flush void
+Date: Mon, 14 Aug 2006 13:32:01 -0700 (PDT)
+Message-ID: <Pine.LNX.4.63.0608141331160.19383@chino.corp.google.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon Aug 14 22:31:36 2006
+X-From: git-owner@vger.kernel.org Mon Aug 14 22:32:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GCj5u-0008WD-0a
-	for gcvg-git@gmane.org; Mon, 14 Aug 2006 22:31:30 +0200
+	id 1GCj6Z-0000E7-8k
+	for gcvg-git@gmane.org; Mon, 14 Aug 2006 22:32:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932726AbWHNUb1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Aug 2006 16:31:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932727AbWHNUb0
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 16:31:26 -0400
-Received: from smtp-out.google.com ([216.239.45.12]:56468 "EHLO
-	smtp-out.google.com") by vger.kernel.org with ESMTP id S932726AbWHNUb0
+	id S932728AbWHNUcI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Aug 2006 16:32:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932729AbWHNUcH
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 16:32:07 -0400
+Received: from smtp-out.google.com ([216.239.45.12]:18325 "EHLO
+	smtp-out.google.com") by vger.kernel.org with ESMTP id S932728AbWHNUcG
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Aug 2006 16:31:26 -0400
-Received: from zps36.corp.google.com (zps36.corp.google.com [172.25.146.36])
-	by smtp-out.google.com with ESMTP id k7EKVMXa021692
-	for <git@vger.kernel.org>; Mon, 14 Aug 2006 13:31:22 -0700
+	Mon, 14 Aug 2006 16:32:06 -0400
+Received: from zps75.corp.google.com (zps75.corp.google.com [172.25.146.75])
+	by smtp-out.google.com with ESMTP id k7EKW25o022914
+	for <git@vger.kernel.org>; Mon, 14 Aug 2006 13:32:02 -0700
 DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
 	h=received:date:from:x-x-sender:to:subject:message-id:
 	mime-version:content-type;
-	b=WFRaE+O0shWU5Pqr6Xh/9daXr0wd9xNKTcyOjP5d+yCUyQ+0rb8UrCP5PB7j/2H8M
-	6gBtIEPqKFcu5AbSq+AEg==
+	b=IzYKjoRgBa1e156zRr8vxVJOj+PETLlHXTm8ZwHq3PaukqhWn2BwQfRsn9CRmxJdy
+	tBwPW6wQEEgzHMJb4KTeA==
 Received: from localhost (chino.corp.google.com [172.24.88.221])
-	by zps36.corp.google.com with ESMTP id k7EKVGWR019237
-	for <git@vger.kernel.org>; Mon, 14 Aug 2006 13:31:16 -0700
+	by zps75.corp.google.com with ESMTP id k7EKW1Gs008966
+	for <git@vger.kernel.org>; Mon, 14 Aug 2006 13:32:02 -0700
 Received: by localhost (Postfix, from userid 24081)
-	id 0F04F87D71; Mon, 14 Aug 2006 13:31:16 -0700 (PDT)
+	id D659787D71; Mon, 14 Aug 2006 13:32:01 -0700 (PDT)
 Received: from localhost (localhost [127.0.0.1])
-	by localhost (Postfix) with ESMTP id 0CA2D87D70
-	for <git@vger.kernel.org>; Mon, 14 Aug 2006 13:31:16 -0700 (PDT)
+	by localhost (Postfix) with ESMTP id D386B87D70
+	for <git@vger.kernel.org>; Mon, 14 Aug 2006 13:32:01 -0700 (PDT)
 X-X-Sender: rientjes@chino.corp.google.com
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25395>
 
-Makes do_reupdate void and cleans up function calls.
+Makes sha1flush void and removes conditional return.
 
 		David
 
 Signed-off-by: David Rientjes <rientjes@google.com>
 ---
- builtin-update-index.c |   11 ++++-------
- 1 files changed, 4 insertions(+), 7 deletions(-)
+ combine-diff.c |    4 +---
+ csum-file.c    |    4 ++--
+ 2 files changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/builtin-update-index.c b/builtin-update-index.c
-index d2556f3..010adcf 100644
---- a/builtin-update-index.c
-+++ b/builtin-update-index.c
-@@ -433,8 +433,8 @@ static int do_unresolve(int ac, const ch
- 	return err;
- }
+diff --git a/combine-diff.c b/combine-diff.c
+index f2f3806..312035a 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -9,9 +9,7 @@ #include "log-tree.h"
  
--static int do_reupdate(int ac, const char **av,
--		       const char *prefix, int prefix_length)
-+static void do_reupdate(int ac, const char **av,
-+			const char *prefix, int prefix_length)
+ static int uninteresting(struct diff_filepair *p)
  {
- 	/* Read HEAD and run update-index on paths that are
- 	 * merged and already different between index and HEAD.
-@@ -473,7 +473,6 @@ static int do_reupdate(int ac, const cha
- 		if (save_nr != active_nr)
- 			goto redo;
- 	}
+-	if (diff_unmodified_pair(p))
+-		return 1;
 -	return 0;
++	return !!diff_unmodified_pair(p);
  }
  
- int cmd_update_index(int argc, const char **argv, const char *prefix)
-@@ -596,10 +595,8 @@ int cmd_update_index(int argc, const cha
- 				goto finish;
- 			}
- 			if (!strcmp(path, "--again")) {
--				has_errors = do_reupdate(argc - i, argv + i,
--							 prefix, prefix_length);
--				if (has_errors)
--					active_cache_changed = 0;
-+				do_reupdate(argc - i, argv + i, prefix,
-+					    prefix_length);
- 				goto finish;
- 			}
- 			if (!strcmp(path, "--ignore-missing")) {
+ static struct combine_diff_path *intersect_paths(struct combine_diff_path *curr, int n, int num_parent)
+diff --git a/csum-file.c b/csum-file.c
+index 6a7b40f..e227889 100644
+--- a/csum-file.c
++++ b/csum-file.c
+@@ -10,7 +10,7 @@
+ #include "cache.h"
+ #include "csum-file.h"
+ 
+-static int sha1flush(struct sha1file *f, unsigned int count)
++static void sha1flush(struct sha1file *f, unsigned int count)
+ {
+ 	void *buf = f->buffer;
+ 
+@@ -21,7 +21,7 @@ static int sha1flush(struct sha1file *f,
+ 			count -= ret;
+ 			if (count)
+ 				continue;
+-			return 0;
++			return;
+ 		}
+ 		if (!ret)
+ 			die("sha1 file '%s' write error. Out of diskspace", f->name);
 -- 
 1.4.2.g89bb-dirty
