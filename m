@@ -1,47 +1,46 @@
-From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-Subject: A better way to inform about git clone url. [2de21fac9842650fceb3db68f15711e38fabc3c8]
-Date: Tue, 15 Aug 2006 11:57:07 +0530
-Message-ID: <ebrpfs$grn$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: external static var initialization
+Date: Tue, 15 Aug 2006 00:14:21 -0700
+Message-ID: <7vhd0ea2sy.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0608142309030.23498@chino.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Aug 15 08:35:17 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 15 09:14:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GCsWA-00088x-0y
-	for gcvg-git@gmane.org; Tue, 15 Aug 2006 08:35:14 +0200
+	id 1GCt8R-0004gC-Q9
+	for gcvg-git@gmane.org; Tue, 15 Aug 2006 09:14:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965178AbWHOGfG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Aug 2006 02:35:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965216AbWHOGfG
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Aug 2006 02:35:06 -0400
-Received: from main.gmane.org ([80.91.229.2]:683 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S965178AbWHOGfE (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Aug 2006 02:35:04 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1GCsVy-00087u-8b
-	for git@vger.kernel.org; Tue, 15 Aug 2006 08:35:02 +0200
-Received: from 59.92.139.58 ([59.92.139.58])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 15 Aug 2006 08:35:02 +0200
-Received: from aneesh.kumar by 59.92.139.58 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 15 Aug 2006 08:35:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 59.92.139.58
-User-Agent: Thunderbird 1.5.0.5 (X11/20060728)
+	id S965222AbWHOHOo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Aug 2006 03:14:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965270AbWHOHOo
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Aug 2006 03:14:44 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:50628 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S965222AbWHOHOo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Aug 2006 03:14:44 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060815071422.ILZT29796.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 15 Aug 2006 03:14:22 -0400
+To: David Rientjes <rientjes@google.com>
+In-Reply-To: <Pine.LNX.4.63.0608142309030.23498@chino.corp.google.com> (David
+	Rientjes's message of "Mon, 14 Aug 2006 23:10:44 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25440>
 
-http://gitweb.freedesktop.org/?p=PolicyKit.git;a=summary
+David Rientjes <rientjes@google.com> writes:
 
-This shows it in the URL part of each project. 
+> Is there a plan to eliminate the ~100 unnecessary external static variable 
+> initializations to 0 that occur in the code base?
 
--aneesh 
+No plan but there is no big patch pending that would conflict
+with such so it probably is a good time to do so if you are
+inclined to.
