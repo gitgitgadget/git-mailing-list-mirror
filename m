@@ -1,46 +1,50 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: external static var initialization
-Date: Tue, 15 Aug 2006 00:14:21 -0700
-Message-ID: <7vhd0ea2sy.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0608142309030.23498@chino.corp.google.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: RFC: git pull <remote> making an octopus?
+Date: Tue, 15 Aug 2006 09:40:06 +0200
+Message-ID: <81b0412b0608150040m422e695fl68650dad6b692533@mail.gmail.com>
+References: <20060814075305.GH21963@mellanox.co.il>
+	 <20060814175523.GC16821@mellanox.co.il>
+	 <7vk65bdm9f.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 15 09:14:48 2006
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Michael S. Tsirkin" <mst@mellanox.co.il>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 15 09:40:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GCt8R-0004gC-Q9
-	for gcvg-git@gmane.org; Tue, 15 Aug 2006 09:14:48 +0200
+	id 1GCtXE-0007qR-Ed
+	for gcvg-git@gmane.org; Tue, 15 Aug 2006 09:40:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965222AbWHOHOo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Aug 2006 03:14:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965270AbWHOHOo
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Aug 2006 03:14:44 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:50628 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S965222AbWHOHOo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Aug 2006 03:14:44 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060815071422.ILZT29796.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 15 Aug 2006 03:14:22 -0400
-To: David Rientjes <rientjes@google.com>
-In-Reply-To: <Pine.LNX.4.63.0608142309030.23498@chino.corp.google.com> (David
-	Rientjes's message of "Mon, 14 Aug 2006 23:10:44 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965221AbWHOHkK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Aug 2006 03:40:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965273AbWHOHkK
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Aug 2006 03:40:10 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:18191 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S965241AbWHOHkI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Aug 2006 03:40:08 -0400
+Received: by nf-out-0910.google.com with SMTP id x30so239428nfb
+        for <git@vger.kernel.org>; Tue, 15 Aug 2006 00:40:07 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qwOLMGWuPKRZEcvYcwts7sKLYcHM3HfxvfnUGggKq45Wr5YeSWxhd/hZd6dmdSU35bFDnd98Yt2qn+IrsTtEuUoWUW81jbAvZemwdPpVz920Q9BVvnZsMrzHi+nD0VkzDGRg/BX6c9bbMOOBdXY6YyaGvnUO0JpXCAwg8JQvVfI=
+Received: by 10.48.163.19 with SMTP id l19mr882873nfe;
+        Tue, 15 Aug 2006 00:40:06 -0700 (PDT)
+Received: by 10.78.160.12 with HTTP; Tue, 15 Aug 2006 00:40:06 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vk65bdm9f.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25441>
 
-David Rientjes <rientjes@google.com> writes:
+On 8/14/06, Junio C Hamano <junkio@cox.net> wrote:
+>  - when dealing with the refspecs from the shorthand
+>    (.git/remotes), the one on the first "Pull: " line is for
+>    merge and everything else is not.
 
-> Is there a plan to eliminate the ~100 unnecessary external static variable 
-> initializations to 0 that occur in the code base?
-
-No plan but there is no big patch pending that would conflict
-with such so it probably is a good time to do so if you are
-inclined to.
+What happens if you have _many_ refspecs in a "Pull:"-line?
