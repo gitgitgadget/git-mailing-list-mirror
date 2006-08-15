@@ -1,61 +1,71 @@
 From: David Rientjes <rientjes@google.com>
-Subject: Re: [PATCH] use appropriate typedefs
-Date: Tue, 15 Aug 2006 10:21:52 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0608151019390.26891@chino.corp.google.com>
-References: <Pine.LNX.4.63.0608142305290.23445@chino.corp.google.com>
- <Pine.LNX.4.63.0608151204540.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: [PATCH] remove inline iteration variable
+Date: Tue, 15 Aug 2006 10:23:19 -0700 (PDT)
+Message-ID: <Pine.LNX.4.63.0608151022340.26891@chino.corp.google.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 15 19:22:32 2006
+X-From: git-owner@vger.kernel.org Tue Aug 15 19:23:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GD2cH-0001HC-Fr
-	for gcvg-git@gmane.org; Tue, 15 Aug 2006 19:22:14 +0200
+	id 1GD2dS-0001ZH-9s
+	for gcvg-git@gmane.org; Tue, 15 Aug 2006 19:23:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030394AbWHORWJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Aug 2006 13:22:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030415AbWHORWI
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Aug 2006 13:22:08 -0400
-Received: from smtp-out.google.com ([216.239.45.12]:33747 "EHLO
+	id S1030415AbWHORXV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Aug 2006 13:23:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030418AbWHORXV
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Aug 2006 13:23:21 -0400
+Received: from smtp-out.google.com ([216.239.45.12]:31956 "EHLO
 	smtp-out.google.com") by vger.kernel.org with ESMTP
-	id S1030394AbWHORWH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Aug 2006 13:22:07 -0400
-Received: from zps38.corp.google.com (zps38.corp.google.com [172.25.146.38])
-	by smtp-out.google.com with ESMTP id k7FHM1UP004016;
-	Tue, 15 Aug 2006 10:22:01 -0700
+	id S1030415AbWHORXU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Aug 2006 13:23:20 -0400
+Received: from zps76.corp.google.com (zps76.corp.google.com [172.25.146.76])
+	by smtp-out.google.com with ESMTP id k7FHNKpn015957
+	for <git@vger.kernel.org>; Tue, 15 Aug 2006 10:23:20 -0700
 DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=received:date:from:x-x-sender:to:cc:subject:in-reply-to:
-	message-id:references:mime-version:content-type;
-	b=lmvr4n0BvGHqw8E+udtrBv25y8KUiXA4tBGtjczvXuGQgP43Bk1KjF4yfBsRzh3hW
-	tI3utTr8A/Hrp92HU0+lg==
+	h=received:date:from:x-x-sender:to:subject:message-id:
+	mime-version:content-type;
+	b=AFoR6u3L26P3ShCLZrysfFV0v8PfU5T6JohndfqvPM8vXV5wRPfDvTZqnnn+1QZx5
+	JPDBrGeGMWZ0TQbF0TWtA==
 Received: from localhost (chino.corp.google.com [172.24.88.221])
-	by zps38.corp.google.com with ESMTP id k7FHLq8J026805;
-	Tue, 15 Aug 2006 10:21:52 -0700
+	by zps76.corp.google.com with ESMTP id k7FHNJgH008387
+	for <git@vger.kernel.org>; Tue, 15 Aug 2006 10:23:19 -0700
 Received: by localhost (Postfix, from userid 24081)
-	id AA40C87D71; Tue, 15 Aug 2006 10:21:52 -0700 (PDT)
+	id 385C087D71; Tue, 15 Aug 2006 10:23:19 -0700 (PDT)
 Received: from localhost (localhost [127.0.0.1])
-	by localhost (Postfix) with ESMTP id 6B40D87D70;
-	Tue, 15 Aug 2006 10:21:52 -0700 (PDT)
+	by localhost (Postfix) with ESMTP id 35C3487D70
+	for <git@vger.kernel.org>; Tue, 15 Aug 2006 10:23:19 -0700 (PDT)
 X-X-Sender: rientjes@chino.corp.google.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0608151204540.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25468>
 
-On Tue, 15 Aug 2006, Johannes Schindelin wrote:
-> 
-> I was looking forward to the performance boosts you hinted at. But this 
-> patch, and the proposed static variables patch do nothing for it.
-> 
-
-My optimization for speed is mostly architecture specific so it's not useful for 
-your project and a lot of the functionality is actually stripped because it's 
-handled by a wrapper.  My use of register variables were actually stripped out 
-by hand before I submitted these patches here.
+Remove unnecessary iteration variable in inline.
 
 		David
+
+Signed-off-by: David Rientjes <rientjes@google.com>
+---
+ builtin-grep.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/builtin-grep.c b/builtin-grep.c
+index 93b7e07..6476fe1 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -176,8 +176,8 @@ static void compile_regexp(struct grep_p
+ #if DEBUG
+ static inline void indent(int in)
+ {
+-	int i;
+-	for (i = 0; i < in; i++) putchar(' ');
++	for (; in > 0; in--)
++		putchar(' ');
+ }
+ 
+ static void dump_pattern_exp(struct grep_expr *x, int in)
+-- 
+1.4.2.rc4.gf615-dirty
