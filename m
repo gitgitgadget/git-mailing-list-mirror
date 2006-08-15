@@ -1,87 +1,117 @@
-From: jeffpc@josefsipek.net (Josef "Jeff" Sipek)
-Subject: Re: Git network protocol
-Date: Mon, 14 Aug 2006 19:48:26 -0400
-Message-ID: <20060814234826.GA21861@josefsipek.net>
-References: <20060814062117.GC10476@josefsipek.net> <7vk65bg6na.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 6/9] gitweb: Change appereance of marker of refs pointing to given object
+Date: Mon, 14 Aug 2006 17:27:53 -0700
+Message-ID: <7vy7tqc06u.fsf@assigned-by-dhcp.cox.net>
+References: <200608140202.46160.jnareb@gmail.com>
+	<200608140214.20450.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 15 01:48:50 2006
+X-From: git-owner@vger.kernel.org Tue Aug 15 02:28:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GCmAi-00056F-In
-	for gcvg-git@gmane.org; Tue, 15 Aug 2006 01:48:40 +0200
+	id 1GCmmw-0001Js-4h
+	for gcvg-git@gmane.org; Tue, 15 Aug 2006 02:28:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965072AbWHNXsi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 Aug 2006 19:48:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932741AbWHNXsi
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 19:48:38 -0400
-Received: from mrs.stonybrook.edu ([129.49.1.206]:34192 "EHLO
-	mrs.stonybrook.edu") by vger.kernel.org with ESMTP id S932739AbWHNXsh
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Aug 2006 19:48:37 -0400
-Received: from relay2.stonybrook.edu (relay2 [172.30.255.14])
-	by mrs.stonybrook.edu (8.13.6/8.13.6) with SMTP id k7ENmX1i010401;
-	Mon, 14 Aug 2006 19:48:33 -0400 (EDT)
-Received: from mailrelay.stonybrook.edu ([172.30.255.14])
- by relay2.stonybrook.edu (SMSSMTP 4.1.12.43) with SMTP id M2006081419483311143
- ; Mon, 14 Aug 2006 19:48:33 -0400
-Received: from josefsipek.net (turing.ams.sunysb.edu [129.49.108.158])
-	by mailrelay.stonybrook.edu (8.13.6/8.13.6) with ESMTP id k7ENmVSI010397;
-	Mon, 14 Aug 2006 19:48:33 -0400 (EDT)
-Received: by josefsipek.net (Postfix, from userid 1000)
-	id E735F1C00DF0; Mon, 14 Aug 2006 19:48:26 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vk65bg6na.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.12-2006-07-14
+	id S932758AbWHOA14 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 Aug 2006 20:27:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932756AbWHOA14
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Aug 2006 20:27:56 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:18408 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S932755AbWHOA1z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Aug 2006 20:27:55 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060815002754.JGUX12581.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 14 Aug 2006 20:27:54 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200608140214.20450.jnareb@gmail.com> (Jakub Narebski's message
+	of "Mon, 14 Aug 2006 02:14:20 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25426>
 
-On Sun, Aug 13, 2006 at 11:42:33PM -0700, Junio C Hamano wrote:
-> jeffpc@josefsipek.net (Josef "Jeff" Sipek) writes:
-> 
-> > I'm trying to implement the git protocol, and I am having a bit of an issue
-> > with the lack of information available about it (please correct me if I
-> > missed some source of information.)
-> 
-> Documentation/technical/pack-protocol.txt
+Jakub Narebski <jnareb@gmail.com> writes:
 
-This is pretty much a vague example - or at least it feels vague if you
-don't know the protocol. After reading the source, and your description, the
-example makes a lot more sense.
+> Change git_get_references to include type of ref in the %refs value, which
+> means putting everything after 'refs/' as a ref name, not only last
+> part of the name.  Instead of separating refs pointing to the same
+> object by " / " separator, use anonymous array reference to store all
+> refs pointing to given object.
+>
+> Use 'git-ls-remote .' if $projectroot/$project/info/refs does not
+> exist.  (Perhaps it should be used always.)
+>
+> Refs are now in separate span elements.  Class is dependent on the ref
+> type: currently known classes are 'tag', 'head', 'remote', and 'ref'
+> (last one for HEAD and other refs in the main directory).  There is
+> encompassing span element of class refs, just in case of unknown ref
+> type.
 
-> "git show 1bd8c8f0".
+I do not see definition that matches "span.refs span.remote" in
+the CSS, though.
 
-Neat.
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 6be6c55..4fe3fc7 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -364,9 +364,26 @@ sub format_log_line_html {
+>  # format marker of refs pointing to given object
+>  sub format_ref_marker {
+>  	my ($refs, $id) = @_;
+> +	my $markers = '';
+>  
+>  	if (defined $refs->{$id}) {
+> -		return ' <span class="tag">' . esc_html($refs->{$id}) . '</span>';
+> +		foreach my $ref (@{$refs->{$id}}) {
+> +			my ($type, $name) = qw();
 
-> After that, the client and the server try to determine what
-> commits the client has that are recent ancestors of "want"
-> commits.  This exchange is done by client sending bunch of
-> "have" to the server.  The server responds "ACK" (in the
-> original protocol) to say "I've seen enough and know a common
-> ancestor to use".  In multi-ack protocol (which is used in
-> modern git, v0.99.9 and later), the server can respond "ACK
-> continue" to say "I've seen enough on that branch so do not
-> bother sending 'have's for its ancestors, but do keep sending
-> from other branch."  If the server does not feel it saw enough,
-> it does not send either.
+Just () -- qw() is not needed.
 
-So, if I understand this correctly, multi_ack allows for multiple branches
-to be fetched using the same connection?
+> +			# e.g. tags/v2.6.11 or heads/next
+> +			if ($ref =~ m!^(.*?)s?/(.*)$!) {
+> +				$type = $1;
+> +				$name = $2;
+> +			} else {
+> +				$type = "ref";
+> +				$name = $ref;
+> +			}
 
-> The protocol streams; if you see an ACK from server it does not
-> usually mean it is ACKing the last 'have' client has sent.
+Hmph.  Maybe have a hash that defines the ones you know how to
+handle, and do something like:
 
-Yeah, makes sense. Doing things over lo does things like that - I'm not sure
-why I didn't realize it earlier.
+        if ($ref =~ m|^([^/]+)/(.*)$| &&  exists $i_know_this_class{$1}) {
+        	$type = $1;
+                $name = $2;
+	}
+        else {
+        	$type = 'ref';
+                $name = $ref;
+	}
 
-Thanks,
-Josef "Jeff" Sipek.
+> @@ -561,18 +578,24 @@ sub git_get_project_owner {
+>...
+> +		if ($line =~ m/^([0-9a-fA-F]{40})\trefs\/($type\/?[^\^]+)/) {
+>  			if (defined $refs{$1}) {
+> -				$refs{$1} .= " / $2";
+> +				push @{$refs{$1}}, $2;
+>  			} else {
+> -				$refs{$1} = $2;
+> +				$refs{$1} = [ $2 ];
+>  			}
+>  		}
 
--- 
-Don't drink and derive. Alcohol and algebra don't mix.
+It would work as in your patch, but I would have preferred to
+see "exists $refs{$1}" there instead of "defined".
+
+Or lose the if() and do it like this, which would be cleaner?
+
+	if ($line =~ ...) {
+        	push @{$refs{$1}}, $2;
+	}
