@@ -1,80 +1,69 @@
-From: David Rientjes <rientjes@google.com>
-Subject: Re: git-mv is broken in master
-Date: Tue, 15 Aug 2006 14:02:38 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0608151401510.3965@chino.corp.google.com>
-References: <20060815205150.GA467@c165.ib.student.liu.se>
+From: "David Rientjes" <rientjes@google.com>
+Subject: Re: [PATCH (revised)] gitweb: Show project's git URL on summary page
+Date: Tue, 15 Aug 2006 14:36:33 -0700
+Message-ID: <9ec263480608151436l4a31359erd9acb095247d9095@mail.google.com>
+References: <200608152003.05693.jnareb@gmail.com>
+	 <200608152303.17994.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 15 23:03:40 2006
+X-From: git-owner@vger.kernel.org Tue Aug 15 23:38:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GD64U-0000Ml-N6
-	for gcvg-git@gmane.org; Tue, 15 Aug 2006 23:03:35 +0200
+	id 1GD6aa-00015A-TH
+	for gcvg-git@gmane.org; Tue, 15 Aug 2006 23:36:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750710AbWHOVDc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Aug 2006 17:03:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750711AbWHOVDc
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Aug 2006 17:03:32 -0400
-Received: from smtp-out.google.com ([216.239.45.12]:53605 "EHLO
+	id S1750727AbWHOVgl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Aug 2006 17:36:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750728AbWHOVgl
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Aug 2006 17:36:41 -0400
+Received: from smtp-out.google.com ([216.239.45.12]:50811 "EHLO
 	smtp-out.google.com") by vger.kernel.org with ESMTP
-	id S1750710AbWHOVDb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Aug 2006 17:03:31 -0400
-Received: from zps78.corp.google.com (zps78.corp.google.com [172.25.146.78])
-	by smtp-out.google.com with ESMTP id k7FL35lU005246;
-	Tue, 15 Aug 2006 14:03:10 -0700
+	id S1750727AbWHOVgk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Aug 2006 17:36:40 -0400
+Received: from zps76.corp.google.com (zps76.corp.google.com [172.25.146.76])
+	by smtp-out.google.com with ESMTP id k7FLaZVt030848
+	for <git@vger.kernel.org>; Tue, 15 Aug 2006 14:36:35 -0700
 DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=received:date:from:x-x-sender:to:cc:subject:in-reply-to:
-	message-id:references:mime-version:content-type;
-	b=qojEfNoDlK7Jgv4MH3iHrJBf//xCd5O+FLoe6De//WcZWrmR2nRlmsh9dGeec6X1X
-	qP6SSxzk6I8Hn/9NBp+kg==
-Received: from localhost (chino.corp.google.com [172.24.88.221])
-	by zps78.corp.google.com with ESMTP id k7FL2dI9008200;
-	Tue, 15 Aug 2006 14:02:43 -0700
-Received: by localhost (Postfix, from userid 24081)
-	id 051EC87D71; Tue, 15 Aug 2006 14:02:38 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-	by localhost (Postfix) with ESMTP id A87E987D70;
-	Tue, 15 Aug 2006 14:02:38 -0700 (PDT)
-X-X-Sender: rientjes@chino.corp.google.com
-To: Fredrik Kuivinen <freku045@student.liu.se>
-In-Reply-To: <20060815205150.GA467@c165.ib.student.liu.se>
+	h=received:message-id:date:from:to:subject:cc:in-reply-to:
+	mime-version:content-type:content-transfer-encoding:
+	content-disposition:references;
+	b=U998SuebwqtrGJiulrsAW+WodjLGyW7zC6085on9c0JmqRdIDZtWdlQDR8bTwD7PU
+	aNHBBIe8T5Yeid3KVQImw==
+Received: from smtp-out2.google.com (fpe16.prod.google.com [10.253.5.16])
+	by zps76.corp.google.com with ESMTP id k7FHVPg7010665
+	for <git@vger.kernel.org>; Tue, 15 Aug 2006 14:36:34 -0700
+Received: by smtp-out2.google.com with SMTP id 16so175216fpe
+        for <git@vger.kernel.org>; Tue, 15 Aug 2006 14:36:34 -0700 (PDT)
+Received: by 10.253.29.11 with SMTP id c11mr649043fpc;
+        Tue, 15 Aug 2006 14:36:33 -0700 (PDT)
+Received: by 10.253.15.12 with HTTP; Tue, 15 Aug 2006 14:36:33 -0700 (PDT)
+To: "Jakub Narebski" <jnareb@gmail.com>
+In-Reply-To: <200608152303.17994.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25485>
 
-On Tue, 15 Aug 2006, Fredrik Kuivinen wrote:
-> With the current master I get the following:
-> 
->     $ git-mv README README-renamed
->     fatal: can not move directory into itself, source=README, destination=README-renamed
-> 
-
-Please try the following patch.
-
-		David
+On 8/15/06, Jakub Narebski <jnareb@gmail.com> wrote:
+> From 31e4de9f22a3b17d4ad0ac800132e4e1a0a15006 Mon Sep 17 00:00:00 2001
+> From: David Rientjes <rientjes@google.com>
+> Date: Tue, 15 Aug 2006 11:43:04 -0700
+> Subject: [PATCH] gitweb: Show project's git URL on summary page
+>
+> Add support for showing multiple clone/fetch git URLs for project on
+> a summary page. URL for project is created from base URL and project
+> name.
+>
+> For example for XMMS2 project (xmms.se) the git base URL would be
+> git://git.xmms.se/xmms2.
+>
+> With corrections from David Rientjes <rientjes@google.com>
+>
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 
 Signed-off-by: David Rientjes <rientjes@google.com>
----
- builtin-mv.c |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
-
-diff --git a/builtin-mv.c b/builtin-mv.c
-index a731f8d..1d11bbb 100644
---- a/builtin-mv.c
-+++ b/builtin-mv.c
-@@ -203,8 +203,7 @@ int cmd_mv(int argc, const char **argv, 
- 			}
- 		}
- 
--		if (!bad &&
--		    !strncmp(destination[i], source[i], strlen(source[i])))
-+		if (!bad && !strcmp(destination[i], source[i]))
- 			bad = "can not move directory into itself";
- 
- 		if (!bad && cache_name_pos(source[i], strlen(source[i])) < 0)
--- 
-1.4.2.g460c-dirty
