@@ -1,69 +1,67 @@
-From: "David Rientjes" <rientjes@google.com>
-Subject: Re: [PATCH (revised)] gitweb: Show project's git URL on summary page
-Date: Tue, 15 Aug 2006 14:36:33 -0700
-Message-ID: <9ec263480608151436l4a31359erd9acb095247d9095@mail.google.com>
-References: <200608152003.05693.jnareb@gmail.com>
-	 <200608152303.17994.jnareb@gmail.com>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [PATCH] make inline is_null_sha1 global
+Date: Tue, 15 Aug 2006 23:58:12 +0200
+Message-ID: <20060815215812.GB15797@diku.dk>
+References: <Pine.LNX.4.63.0608151335020.1475@chino.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 15 23:38:45 2006
+X-From: git-owner@vger.kernel.org Tue Aug 15 23:59:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GD6aa-00015A-TH
-	for gcvg-git@gmane.org; Tue, 15 Aug 2006 23:36:45 +0200
+	id 1GD6wA-0007JW-6L
+	for gcvg-git@gmane.org; Tue, 15 Aug 2006 23:59:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750727AbWHOVgl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Aug 2006 17:36:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750728AbWHOVgl
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Aug 2006 17:36:41 -0400
-Received: from smtp-out.google.com ([216.239.45.12]:50811 "EHLO
-	smtp-out.google.com") by vger.kernel.org with ESMTP
-	id S1750727AbWHOVgk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Aug 2006 17:36:40 -0400
-Received: from zps76.corp.google.com (zps76.corp.google.com [172.25.146.76])
-	by smtp-out.google.com with ESMTP id k7FLaZVt030848
-	for <git@vger.kernel.org>; Tue, 15 Aug 2006 14:36:35 -0700
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=received:message-id:date:from:to:subject:cc:in-reply-to:
-	mime-version:content-type:content-transfer-encoding:
-	content-disposition:references;
-	b=U998SuebwqtrGJiulrsAW+WodjLGyW7zC6085on9c0JmqRdIDZtWdlQDR8bTwD7PU
-	aNHBBIe8T5Yeid3KVQImw==
-Received: from smtp-out2.google.com (fpe16.prod.google.com [10.253.5.16])
-	by zps76.corp.google.com with ESMTP id k7FHVPg7010665
-	for <git@vger.kernel.org>; Tue, 15 Aug 2006 14:36:34 -0700
-Received: by smtp-out2.google.com with SMTP id 16so175216fpe
-        for <git@vger.kernel.org>; Tue, 15 Aug 2006 14:36:34 -0700 (PDT)
-Received: by 10.253.29.11 with SMTP id c11mr649043fpc;
-        Tue, 15 Aug 2006 14:36:33 -0700 (PDT)
-Received: by 10.253.15.12 with HTTP; Tue, 15 Aug 2006 14:36:33 -0700 (PDT)
-To: "Jakub Narebski" <jnareb@gmail.com>
-In-Reply-To: <200608152303.17994.jnareb@gmail.com>
+	id S1750742AbWHOV6z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Aug 2006 17:58:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750746AbWHOV6z
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Aug 2006 17:58:55 -0400
+Received: from [130.225.96.91] ([130.225.96.91]:4240 "EHLO mgw1.diku.dk")
+	by vger.kernel.org with ESMTP id S1750742AbWHOV6y (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Aug 2006 17:58:54 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id 21FA07700CC;
+	Tue, 15 Aug 2006 23:58:42 +0200 (CEST)
+Received: from mgw1.diku.dk ([127.0.0.1])
+ by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 32363-08; Tue, 15 Aug 2006 23:58:13 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id F16867700C5;
+	Tue, 15 Aug 2006 23:58:12 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 60C0B6DF835; Tue, 15 Aug 2006 23:57:06 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id D68AB629F3; Tue, 15 Aug 2006 23:58:12 +0200 (CEST)
+To: David Rientjes <rientjes@google.com>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0608151335020.1475@chino.corp.google.com>
+User-Agent: Mutt/1.5.6i
+X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25486>
 
-On 8/15/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> From 31e4de9f22a3b17d4ad0ac800132e4e1a0a15006 Mon Sep 17 00:00:00 2001
-> From: David Rientjes <rientjes@google.com>
-> Date: Tue, 15 Aug 2006 11:43:04 -0700
-> Subject: [PATCH] gitweb: Show project's git URL on summary page
->
-> Add support for showing multiple clone/fetch git URLs for project on
-> a summary page. URL for project is created from base URL and project
-> name.
->
-> For example for XMMS2 project (xmms.se) the git base URL would be
-> git://git.xmms.se/xmms2.
->
-> With corrections from David Rientjes <rientjes@google.com>
->
-> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+David Rientjes <rientjes@google.com> wrote Tue, Aug 15, 2006:
+> diff --git a/builtin-diff.c b/builtin-diff.c
+> index 82afce7..9003d55 100644
+> --- a/builtin-diff.c
+> +++ b/builtin-diff.c
+> @@ -68,8 +68,7 @@ static void stuff_change(struct diff_opt
+>  {
+>  	struct diff_filespec *one, *two;
+>  
+> -	if (memcmp(null_sha1, old_sha1, 20) &&
+> -	    memcmp(null_sha1, new_sha1, 20) &&
+> +	if (is_null_sha1(old_sha1) && is_null_sha1(new_sha1) &&
+>  	    !memcmp(old_sha1, new_sha1, 20))
+>  		return;
+>  
 
-Signed-off-by: David Rientjes <rientjes@google.com>
+Looks like this should be !is_null_sha1(...) in both cases.
+
+-- 
+Jonas Fonseca
