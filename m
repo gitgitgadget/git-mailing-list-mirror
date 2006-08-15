@@ -1,62 +1,47 @@
-From: jeffpc@josefsipek.net (Josef "Jeff" Sipek)
-Subject: Re: Git network protocol
-Date: Tue, 15 Aug 2006 05:14:10 -0400
-Message-ID: <20060815091410.GA28369@josefsipek.net>
-References: <20060814062117.GC10476@josefsipek.net> <7vk65bg6na.fsf@assigned-by-dhcp.cox.net> <20060814234826.GA21861@josefsipek.net> <7vwt9aak5i.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] use appropriate typedefs
+Date: Tue, 15 Aug 2006 12:05:56 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0608151204540.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0608142305290.23445@chino.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 15 11:14:27 2006
+X-From: git-owner@vger.kernel.org Tue Aug 15 12:06:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GCv09-000442-CP
-	for gcvg-git@gmane.org; Tue, 15 Aug 2006 11:14:22 +0200
+	id 1GCvoM-0002oi-5S
+	for gcvg-git@gmane.org; Tue, 15 Aug 2006 12:06:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965320AbWHOJOR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Aug 2006 05:14:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965321AbWHOJOR
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Aug 2006 05:14:17 -0400
-Received: from mrs.stonybrook.edu ([129.49.1.206]:51436 "EHLO
-	mrs.stonybrook.edu") by vger.kernel.org with ESMTP id S965320AbWHOJOP
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Aug 2006 05:14:15 -0400
-Received: from relay2.stonybrook.edu (relay2 [172.30.255.14])
-	by mrs.stonybrook.edu (8.13.6/8.13.6) with SMTP id k7F9ECdA029838;
-	Tue, 15 Aug 2006 05:14:12 -0400 (EDT)
-Received: from mailrelay.stonybrook.edu ([172.30.255.14])
- by relay2.stonybrook.edu (SMSSMTP 4.1.12.43) with SMTP id M2006081505141211957
- ; Tue, 15 Aug 2006 05:14:12 -0400
-Received: from josefsipek.net (turing.ams.sunysb.edu [129.49.108.158])
-	by mailrelay.stonybrook.edu (8.13.6/8.13.6) with ESMTP id k7F9EB74029834;
-	Tue, 15 Aug 2006 05:14:12 -0400 (EDT)
-Received: by josefsipek.net (Postfix, from userid 1000)
-	id 1CCFD1C00DF0; Tue, 15 Aug 2006 05:14:10 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vwt9aak5i.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.12-2006-07-14
+	id S965354AbWHOKF7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Aug 2006 06:05:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965358AbWHOKF7
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Aug 2006 06:05:59 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60836 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S965356AbWHOKF6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Aug 2006 06:05:58 -0400
+Received: (qmail invoked by alias); 15 Aug 2006 10:05:56 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp006) with SMTP; 15 Aug 2006 12:05:56 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: David Rientjes <rientjes@google.com>
+In-Reply-To: <Pine.LNX.4.63.0608142305290.23445@chino.corp.google.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25453>
 
-On Mon, Aug 14, 2006 at 05:59:37PM -0700, Junio C Hamano wrote:
-> jeffpc@josefsipek.net (Josef "Jeff" Sipek) writes:
-> 
-> > So, if I understand this correctly, multi_ack allows for multiple branches
-> > to be fetched using the same connection?
-> 
-> The original protocol without extension already allowed it.
-> Suppose the global history was like this:
-...
+Hi,
 
-Thanks. That helped a lot.
+On Mon, 14 Aug 2006, David Rientjes wrote:
 
-Josef "Jeff" Sipek.
+> Replaces int types with the appropriate definition in atomic and PID instances.
 
--- 
-Linux, n.:
-  Generous programmers from around the world all join forces to help you
-  shoot yourself in the foot for free. 
+I was looking forward to the performance boosts you hinted at. But this 
+patch, and the proposed static variables patch do nothing for it.
+
+Ciao,
+Dscho
