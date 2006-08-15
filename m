@@ -1,60 +1,71 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH 5/6] On Solaris nanosleep() is not in libc but in librt
-Date: Tue, 15 Aug 2006 13:18:17 +0200
-Message-ID: <81b0412b0608150418g3fc8efd7n51f1095a98a3d08f@mail.gmail.com>
-References: <20060815090031.5223.27458.stgit@leonov.stosberg.net>
-	 <20060815090129.5223.17174.stgit@leonov.stosberg.net>
-	 <7vzme670dm.fsf@assigned-by-dhcp.cox.net>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Compression and dictionaries
+Date: Tue, 15 Aug 2006 09:29:28 -0400
+Message-ID: <9e4733910608150629t1826717cqc4bde9f1ab5cc725@mail.gmail.com>
+References: <20060815083303.13253.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Dennis Stosberg" <dennis@stosberg.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 15 13:18:36 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 15 15:29:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GCwwF-0006yv-KN
-	for gcvg-git@gmane.org; Tue, 15 Aug 2006 13:18:28 +0200
+	id 1GCyzG-0006E3-7d
+	for gcvg-git@gmane.org; Tue, 15 Aug 2006 15:29:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030236AbWHOLSU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Aug 2006 07:18:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030246AbWHOLSU
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Aug 2006 07:18:20 -0400
-Received: from nf-out-0910.google.com ([64.233.182.185]:18843 "EHLO
+	id S1752101AbWHON3b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Aug 2006 09:29:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752103AbWHON3b
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Aug 2006 09:29:31 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:41942 "EHLO
 	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1030236AbWHOLST (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Aug 2006 07:18:19 -0400
-Received: by nf-out-0910.google.com with SMTP id x30so292016nfb
-        for <git@vger.kernel.org>; Tue, 15 Aug 2006 04:18:18 -0700 (PDT)
+	id S1752101AbWHON3b (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Aug 2006 09:29:31 -0400
+Received: by nf-out-0910.google.com with SMTP id x30so328367nfb
+        for <git@vger.kernel.org>; Tue, 15 Aug 2006 06:29:29 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bCXDvpjxcs8j7N9lGPeFUgX1RAnRGWPMsiJvS2vdYXTZofXMeZRGU8Tov5zGL2LS2xGCa+aEyXORD52O2PudCVQFwx049gVHKYLoCZrvjDlKSqzBCLsT6mLTNoPLCHtrberiUtWqYIgT4KZOo7yvmqABm+cwY992Mk/70bUohM4=
-Received: by 10.49.43.2 with SMTP id v2mr1150656nfj;
-        Tue, 15 Aug 2006 04:18:18 -0700 (PDT)
-Received: by 10.78.160.12 with HTTP; Tue, 15 Aug 2006 04:18:17 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vzme670dm.fsf@assigned-by-dhcp.cox.net>
+        b=aVDeQZnveYD0dtDdKscVXqo5Y0J87Y3H3/eiHcmhAAySOXnMlkAPWnpvizBHOBlUEfGKhBjORq4Yh2IYqBPGU0jqIlP/T742MeBOrNKPlwKm9vJ+YqtQhOtObk9nVAUfdn7YqI45z7KrJMuXUJK6D8fiVfcBcyIHHNZB7l2zHOI=
+Received: by 10.49.29.3 with SMTP id g3mr1394553nfj;
+        Tue, 15 Aug 2006 06:29:29 -0700 (PDT)
+Received: by 10.78.148.9 with HTTP; Tue, 15 Aug 2006 06:29:28 -0700 (PDT)
+To: "linux@horizon.com" <linux@horizon.com>
+In-Reply-To: <20060815083303.13253.qmail@science.horizon.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25456>
 
-On 8/15/06, Junio C Hamano <junkio@cox.net> wrote:
-> > -# Define NEEDS_SOCKET if linking with libc is not enough (SunOS,
-> > -# Patrick Mauritz).
-> > +# Define NEEDS_SOCKET if linking with libc is not enough for socket()
-> > +# (SunOS, Patrick Mauritz).
-> > +#
-> > +# Define NEEDS_RT if linking with libc is not enough for nanosleep() (SunOS)
+On 15 Aug 2006 04:33:03 -0400, linux@horizon.com <linux@horizon.com> wrote:
+> Just to inform this discussion, a brief description of the zlib
+> "deflate" algorithm.  A full description is in RFC1951.
 >
-> Ah, nanosleep(2) was my fault, and we should be able to just use
-> straight sleep(3) there.  The purpose of the loop is to wait
-> until the next filesystem timestamp granularity, and the code
-> uses subsecond sleep in the hope that it can shorten the delay
-> to 0.5 seconds on average instead of a full second.
+> This is LZ77 compression, meaning that what is actually encoded is
+> a series of instruction to either
+> - Insert a specified byte, or
+> - Copy a run of n bytes, starting m bytes ago.
 
-Was it not SunOS where sleep was implemented by means of SIGALRM?
-Besides, we still can shorten the delay by using select(2).
+Shawn and I did some testing overnight. A simple 4KB preload table
+yielded a 4% size reduction in my 850MB pack. I'm still hoping for 10%
+using an optimal 32K table.
+
+Paper on computing the optimal preload table:
+http://www.eecs.harvard.edu/~michaelm/postscripts/dcc2001a.pdf
+
+If anyone is interested in doing some research, it would be
+interesting to build a pack engine based on full-text search
+technology. For example cLucene,
+http://clucene.sourceforge.net/index.php/Main_Page The full-text
+search app contains the code for extracting the dictionary and then
+encoding all of the blobs using it.
+
+My prediction is that a large global dictionary based scheme will
+compress significantly better than zlib is capable of.
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
