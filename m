@@ -1,41 +1,77 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] make inline is_null_sha1 global
-Date: Tue, 15 Aug 2006 23:40:50 -0700
-Message-ID: <7vlkpp41zh.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0608151335020.1475@chino.corp.google.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Compression and dictionaries
+Date: Wed, 16 Aug 2006 02:55:15 -0400
+Message-ID: <20060816065515.GB18778@spearce.org>
+References: <9e4733910608150755q54757386n13c705b0043e8308@mail.gmail.com> <20060816003712.32000.qmail@science.horizon.com> <4b73d43f0608152243i15b37036x7aa50aa3afc2b02f@mail.gmail.com> <9e4733910608152250h1bcb8bf5qebb29ef84b971abd@mail.gmail.com> <Pine.LNX.4.63.0608160832320.28360@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Wed Aug 16 08:41:03 2006
+Cc: Jon Smirl <jonsmirl@gmail.com>, John Rigby <jcrigby@gmail.com>,
+	"linux@horizon.com" <linux@horizon.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 16 08:55:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDF5F-0001uQ-0f
-	for gcvg-git@gmane.org; Wed, 16 Aug 2006 08:40:57 +0200
+	id 1GDFJM-0004hl-Nm
+	for gcvg-git@gmane.org; Wed, 16 Aug 2006 08:55:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750856AbWHPGkw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Aug 2006 02:40:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750857AbWHPGkw
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 02:40:52 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:51703 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1750855AbWHPGkv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Aug 2006 02:40:51 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060816064051.YKLL6077.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 16 Aug 2006 02:40:51 -0400
-To: David Rientjes <rientjes@google.com>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750865AbWHPGz3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Aug 2006 02:55:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750892AbWHPGz3
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 02:55:29 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:56240 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1750865AbWHPGz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Aug 2006 02:55:29 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GDFJ7-0005Hk-Fb; Wed, 16 Aug 2006 02:55:18 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 9491220FB77; Wed, 16 Aug 2006 02:55:15 -0400 (EDT)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0608160832320.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25504>
 
-Makes sense, except the gotcha found by Jonas.
-Thanks, both.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+> 
+> On Wed, 16 Aug 2006, Jon Smirl wrote:
+> 
+> > On 8/16/06, John Rigby <jcrigby@gmail.com> wrote:
+> > > Sorry if this is off topic, but could the dictionary be used to make
+> > > git-grep alot faster?
+> > 
+> > It would be almost instant.
+> 
+> But only if you are not using a regular expression, but a single word.
 
-BTW, please drop the "\n\t\tDavid\n" from these messages and
-fold lines to a reasonable length.
+Yes and no.  If the inverted index contains terms broken by some
+known pattern (e.g. break on word-type boundaries) and the regex
+in question has constant sections (it should, otherwise it might
+as well just be '.') then you can reduce your search space to a
+fraction of the overall data by looking at the inverted index to
+select likely terms, select the related revisions containing those
+possible terms, then run the regex only on those revisions.
+
+Sure you would be possibly pulling out a number of false positives
+but if the constant sequence(s) in the regex reduce your search
+space to below 1/2 of the overall data that's probably a lot less
+I/O and CPU required to complete the query, even if you have to
+read the entire dictionary and apply each term in the dictionary
+to the regex to look for those possible matches.
+
+-- 
+Shawn.
