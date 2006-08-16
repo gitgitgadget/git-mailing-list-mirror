@@ -1,70 +1,55 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: Re: [PATCH] git-mv: succeed even if source is a prefix of destination
-Date: Wed, 16 Aug 2006 07:49:44 +0200
-Message-ID: <20060816054944.GA5218@c165.ib.student.liu.se>
-References: <20060815205150.GA467@c165.ib.student.liu.se> <Pine.LNX.4.63.0608151401510.3965@chino.corp.google.com> <Pine.LNX.4.63.0608160209150.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Compression and dictionaries
+Date: Wed, 16 Aug 2006 01:50:24 -0400
+Message-ID: <9e4733910608152250h1bcb8bf5qebb29ef84b971abd@mail.gmail.com>
+References: <9e4733910608150755q54757386n13c705b0043e8308@mail.gmail.com>
+	 <20060816003712.32000.qmail@science.horizon.com>
+	 <4b73d43f0608152243i15b37036x7aa50aa3afc2b02f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Rientjes <rientjes@google.com>,
-	Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 16 07:49:55 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "linux@horizon.com" <linux@horizon.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 16 07:50:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDEHq-0006pY-E8
-	for gcvg-git@gmane.org; Wed, 16 Aug 2006 07:49:54 +0200
+	id 1GDEIa-0006yM-C0
+	for gcvg-git@gmane.org; Wed, 16 Aug 2006 07:50:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750748AbWHPFtr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Aug 2006 01:49:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750769AbWHPFtq
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 01:49:46 -0400
-Received: from mxfep02.bredband.com ([195.54.107.73]:6132 "EHLO
-	mxfep02.bredband.com") by vger.kernel.org with ESMTP
-	id S1750748AbWHPFtq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Aug 2006 01:49:46 -0400
-Received: from c165 ([213.114.27.99] [213.114.27.99])
-          by mxfep02.bredband.com with ESMTP
-          id <20060816054944.STOG11843.mxfep02.bredband.com@c165>;
-          Wed, 16 Aug 2006 07:49:44 +0200
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1GDEHg-0001wS-00; Wed, 16 Aug 2006 07:49:44 +0200
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	id S1750769AbWHPFug (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Aug 2006 01:50:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750800AbWHPFug
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 01:50:36 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:40553 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1750769AbWHPFuf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Aug 2006 01:50:35 -0400
+Received: by nf-out-0910.google.com with SMTP id x30so579363nfb
+        for <git@vger.kernel.org>; Tue, 15 Aug 2006 22:50:34 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=dW8LFSYOswveAlVeKXG+kCqM5+NDz8IsfN7sGZnzUjBBHcbCR6TF+YmsLNoEXyKPo3axLMz7OoKjoeW+2jAu18It/AofYfdIYOTf5HivEKbAbyunpDlqb43CHisAzD0BbXOX9GGLgFua6i4NKKT3fdYpLY5WYww7pJ3AP10bGaA=
+Received: by 10.49.8.15 with SMTP id l15mr274826nfi;
+        Tue, 15 Aug 2006 22:50:34 -0700 (PDT)
+Received: by 10.78.148.9 with HTTP; Tue, 15 Aug 2006 22:50:24 -0700 (PDT)
+To: "John Rigby" <jcrigby@gmail.com>
+In-Reply-To: <4b73d43f0608152243i15b37036x7aa50aa3afc2b02f@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0608160209150.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25498>
 
-On Wed, Aug 16, 2006 at 02:20:32AM +0200, Johannes Schindelin wrote:
-> 
-> As noted by Fredrik Kuivinen, without this patch, git-mv fails on
-> 
-> 	git-mv README README-renamed
-> 
-> because "README" is a prefix of "README-renamed".
-> 
+On 8/16/06, John Rigby <jcrigby@gmail.com> wrote:
+> Sorry if this is off topic, but could the dictionary be used to make
+> git-grep alot faster?
 
-Thank you. 'git-mv README README-renamed' works for me too now.
+It would be almost instant.
 
-However, there still seems to be some minor problem with git-mv.
+Inverted full-text indices are what Google uses to grep 20B web pages in 1 sec.
 
-    $ git mv t t
-    fatal: renaming t failed: Invalid argument
-    $ git mv t t/
-    fatal: renaming t failed: Invalid argument
-    $ git mv t/ t/
-    fatal: cannot move directory over file, source=t/, destination=t/
-    $ git mv t/ t 
-    fatal: cannot move directory over file, source=t/, destination=t/
-
-I kind of expected to get 'can not move directory into itself' in all
-of those cases. At least the same error messages should be given in
-all cases.
-
-It looks like we need some kind of path normalization before we do
-those tests.
-
-- Fredrik
+-- 
+Jon Smirl
+jonsmirl@gmail.com
