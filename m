@@ -1,64 +1,63 @@
-From: David Rientjes <rientjes@google.com>
-Subject: Re: [PATCH] remove inline iteration variable
-Date: Wed, 16 Aug 2006 10:14:44 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0608161011100.20470@chino.corp.google.com>
-References: <Pine.LNX.4.63.0608151022340.26891@chino.corp.google.com>
- <81b0412b0608160027l2ac53c10gd9a75525ca144f1d@mail.gmail.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Huge win, compressing a window of delta runs as a unit
+Date: Wed, 16 Aug 2006 13:20:30 -0400
+Message-ID: <9e4733910608161020s6855140bs68aaab6e1bbd3bad@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 16 19:15:21 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Aug 16 19:20:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDOyu-0003Km-Hw
-	for gcvg-git@gmane.org; Wed, 16 Aug 2006 19:15:05 +0200
+	id 1GDP4N-0004OS-OR
+	for gcvg-git@gmane.org; Wed, 16 Aug 2006 19:20:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750972AbWHPRO6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Aug 2006 13:14:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751131AbWHPRO5
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 13:14:57 -0400
-Received: from smtp-out.google.com ([216.239.45.12]:43510 "EHLO
-	smtp-out.google.com") by vger.kernel.org with ESMTP
-	id S1750972AbWHPRO4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Aug 2006 13:14:56 -0400
-Received: from zps78.corp.google.com (zps78.corp.google.com [172.25.146.78])
-	by smtp-out.google.com with ESMTP id k7GHEoY4032070;
-	Wed, 16 Aug 2006 10:14:50 -0700
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=received:date:from:x-x-sender:to:cc:subject:in-reply-to:
-	message-id:references:mime-version:content-type;
-	b=Tqd+hYLlco8STtdSsafMMewndNk0N/4ALuGiaz2daBX3cJjXIbAx3SXNhV2LgOBMD
-	7OTNrQS2kDarLQ/WfGIwA==
-Received: from localhost (chino.corp.google.com [172.24.88.221])
-	by zps78.corp.google.com with ESMTP id k7GHEjYq027631;
-	Wed, 16 Aug 2006 10:14:45 -0700
-Received: by localhost (Postfix, from userid 24081)
-	id 9A4EF87D71; Wed, 16 Aug 2006 10:14:44 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-	by localhost (Postfix) with ESMTP id 4E28887D70;
-	Wed, 16 Aug 2006 10:14:44 -0700 (PDT)
-X-X-Sender: rientjes@chino.corp.google.com
-To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b0608160027l2ac53c10gd9a75525ca144f1d@mail.gmail.com>
+	id S1751162AbWHPRUk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Aug 2006 13:20:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751205AbWHPRUk
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 13:20:40 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:48157 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751162AbWHPRUj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Aug 2006 13:20:39 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so706366nfa
+        for <git@vger.kernel.org>; Wed, 16 Aug 2006 10:20:38 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=uiXt8ihLr+vEf7mMDVIOgAOJdMn5wP6pdK95J9edvL5QW55qHJfY8yGGLv3giEe/3bV10nTt8HRSMUw1iams0rAL+CDRu54NK1lwFtZuozqNO2OhqZLgTOeU/129XuFW7wCie+CkhUlLZ03KdzPx20tp7wTwjcTgc6U06f5LMC4=
+Received: by 10.48.163.19 with SMTP id l19mr941101nfe;
+        Wed, 16 Aug 2006 10:20:33 -0700 (PDT)
+Received: by 10.78.148.9 with HTTP; Wed, 16 Aug 2006 10:20:30 -0700 (PDT)
+To: "Shawn Pearce" <spearce@spearce.org>, git <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25519>
 
-On Wed, 16 Aug 2006, Alex Riesen wrote:
+Shawn put together a new version of his import utility that packs all
+of the deltas from a run into a single blob instead of one blob per
+delta. The idea is to put 10 or more deltas into each delta entry
+instead of one. The index format would map the 10 sha1's to a single
+packed delta entry which would be expanded when needed. Note that you
+probably needed multiple entries out of the delta pack to generate the
+revision you were looking for so this is no real loss on extraction.
 
-> On 8/15/06, David Rientjes <rientjes@google.com> wrote:
-> > Remove unnecessary iteration variable in inline.
-> > -       for (i = 0; i < in; i++) putchar(' ');
-> > +       for (; in > 0; in--)
-> 
-> while(in--) putchar(' ');
-> 
+I ran it overnight on mozcvs. If his delta pack code is correct this
+is a huge win.
 
-That goes into an infinite loop if the argument is negative because it emits a 
-cmpl $0, x(%ebp).  Should never happen, but there's no reason not to prevent it 
-with a for loop.
+One entry per delta -  845,42,0150
+Packed deltas - 295,018,474
+65% smaller
 
-		David
+The effect of packing the deltas is to totally eliminate many of the
+redundant zlib dictionaries.
+
+This is without using a zlib dictionary which gains another 4% form a
+4KB dictionary.
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
