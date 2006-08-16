@@ -1,102 +1,90 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: [RFC] Enable 'check for copy and renames' (-C) also when path filtering
-Date: Wed, 16 Aug 2006 11:06:49 +0200
-Message-ID: <e5bfff550608160206w606008ddv2da42ce49e98fa2b@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb / cg-export
+Date: Wed, 16 Aug 2006 11:54:18 +0200
+Organization: At home
+Message-ID: <ebupuk$dgl$1@sea.gmane.org>
+References: <44E263DD.6030305@cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Aug 16 11:07:14 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed Aug 16 11:54:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDHMa-0005ag-3z
-	for gcvg-git@gmane.org; Wed, 16 Aug 2006 11:07:01 +0200
+	id 1GDI5s-0006XT-QW
+	for gcvg-git@gmane.org; Wed, 16 Aug 2006 11:53:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751035AbWHPJGv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Aug 2006 05:06:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751044AbWHPJGv
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 05:06:51 -0400
-Received: from py-out-1112.google.com ([64.233.166.179]:21480 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1751035AbWHPJGu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Aug 2006 05:06:50 -0400
-Received: by py-out-1112.google.com with SMTP id z74so536309pyg
-        for <git@vger.kernel.org>; Wed, 16 Aug 2006 02:06:49 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=hrymMnM8A4IdYuQ+T5Jxr46hrTTBn+ioKLEg6a8aWVB0AsMxrQvALMQj6AkmlVw6W/LKFC7GgIqaUs/BCCkBB/FnaYp8SV9uzgXxbh5/AAgGvSvO3rodkINHjYBq9DwJn9Ks0S4oMzlUmQx8rjfo4ThCndF1hWAtqwtfkDGr61w=
-Received: by 10.35.98.6 with SMTP id a6mr961302pym;
-        Wed, 16 Aug 2006 02:06:49 -0700 (PDT)
-Received: by 10.35.95.9 with HTTP; Wed, 16 Aug 2006 02:06:49 -0700 (PDT)
+	id S1751082AbWHPJxo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Aug 2006 05:53:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751081AbWHPJxo
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 05:53:44 -0400
+Received: from main.gmane.org ([80.91.229.2]:46556 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751082AbWHPJxn (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Aug 2006 05:53:43 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GDI5i-0006US-QJ
+	for git@vger.kernel.org; Wed, 16 Aug 2006 11:53:38 +0200
+Received: from host-81-190-28-152.torun.mm.pl ([81.190.28.152])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 16 Aug 2006 11:53:38 +0200
+Received: from jnareb by host-81-190-28-152.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 16 Aug 2006 11:53:38 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-Content-Disposition: inline
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-28-152.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25510>
 
-It seems that -C option of git-diff-tree it works only if the whole
-changeset is retrieved.
+Toby White wrote:
 
->From git repository:
+> I was wondering if a feature like the following would be of
+> use to anyone except me: I'd like to be able to download
+> the full source of a given tree from gitweb.
+[...]
+So you want to have snapshot of a tree. Why not snapshot of a commit, 
+or of a tag?
 
-- Ask for all
+> I've quickly hacked gitweb to do this for me - patch below.
+> 
+> It adds an extra link to the 'commit' page. Next to the link
+> that would lead you to 'tree', there is 'tar.gz' which simply
+> returns the tar.gz of the same tree.
+> 
+> The patch is against the version of gitweb currently in
+> Debian, which is, erm, '264-1', apparently, because that's
+> what I had to hand.
 
-$git diff-tree  -r -p -C 5d4a600
-5d4a60033543e063bc9d77ca957de0187fb58fb3
-diff --git a/Makefile b/Makefile
-index 132c9cf..4fd62bc 100644
---- a/Makefile
-+++ b/Makefile
-@@ -177,7 +177,7 @@ PROGRAMS = \
-  	git-convert-objects$X git-fetch-pack$X git-fsck-objects$X \
+It is really better to hack git with git. And you can use current gitweb
+with old git (well, not always, as current gitweb requires --full-history
+option to git-rev-list to be available).
+ 
+> Anyway. I'm no git expert so perhaps this is a really bad
+> idea, but I find it useful.
 
-            ----cut----
+It is usefull idea, as it was implemented independently by Sven Verdoolaege
+in http://marc.theaimsgroup.com/?l=git&m=111909432415478&w=2 directly in
+gitweb, and by Sham Chukoury in gitweb-xmms2 using snapshot.cgi in Python
+in "Snapshot links support" commit
+http://git.xmms.se/?p=gitweb-xmms2.git;a=commit;h=3d0284bb784041907de33df5cff8449f8aeb072e
+and "Add xmms2 project's snapshot.cgi" commit
+http://git.xmms.se/?p=gitweb-xmms2.git;a=commit;h=3d0284bb784041907de33df5cff8449f8aeb072e
 
-diff --git a/pack-objects.c b/builtin-pack-objects.c
-similarity index 100%                          <-------  similarity and
-rename from pack-objects.c              <--------  rename info shown
-rename to builtin-pack-objects.c      <--------  only in this case
-index 861c7f0..2301cd5 100644
---- a/pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -1,3 +1,4 @@
-+#include "builtin.h"
- #include "cache.h"
+I have planned to add snapshot support, see "[RFC] gitweb wishlist and TODO
+list" thread in mailing list archives, check
+   http://git.or.cz/gitwiki/GitCommunity
+for list, but I was planning to do some refactoring, including 
+<td class="link"> links refactoring (that is where snapshot links would be
+added).
 
-
-- Ask for pack-objects.c only
-
-$git diff-tree  -r -p -C 5d4a600 -- pack-objects.c
-5d4a60033543e063bc9d77ca957de0187fb58fb3
-diff --git a/pack-objects.c b/pack-objects.c
-deleted file mode 100644
-index 861c7f0..0000000
---- a/pack-objects.c
-+++ /dev/null
-@@ -1,1376 +0,0 @@
--#include "cache.h"
--#include "object.h"
-
-
-- Ask for builtin-pack-objects.conly
-
-$git diff-tree  -r -p -C 5d4a600 -- builtin-pack-objects.c
-5d4a60033543e063bc9d77ca957de0187fb58fb3
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-new file mode 100644
-index 0000000..2301cd5
---- /dev/null
-+++ b/builtin-pack-objects.c
-@@ -0,0 +1,1376 @@
-+#include "builtin.h"
-+#include "cache.h"
-+#include "object.h"
-
-Showing rename info also when filtering on a specified path could be
-useful to retrieve a single file history following renames.
-
-Thanks
-Marco
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
