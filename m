@@ -1,93 +1,80 @@
-From: Toby White <tow21@cam.ac.uk>
-Subject: Re: gitweb / cg-export - corrected patch
-Date: Wed, 16 Aug 2006 01:23:41 +0100
-Message-ID: <44E2658D.9020600@cam.ac.uk>
-References: <44E263DD.6030305@cam.ac.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 16 02:24:02 2006
+From: linux@horizon.com
+Subject: Re: Compression and dictionaries
+Date: 15 Aug 2006 20:37:12 -0400
+Message-ID: <20060816003712.32000.qmail@science.horizon.com>
+References: <9e4733910608150755q54757386n13c705b0043e8308@mail.gmail.com>
+Cc: git@vger.kernel.org, linux@horizon.com
+X-From: git-owner@vger.kernel.org Wed Aug 16 02:37:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GD9CR-0002ms-Uh
-	for gcvg-git@gmane.org; Wed, 16 Aug 2006 02:24:00 +0200
+	id 1GD9PT-0005bO-WA
+	for gcvg-git@gmane.org; Wed, 16 Aug 2006 02:37:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750727AbWHPAX4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Aug 2006 20:23:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750728AbWHPAX4
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Aug 2006 20:23:56 -0400
-Received: from ppsw-1.csi.cam.ac.uk ([131.111.8.131]:59537 "EHLO
-	ppsw-1.csi.cam.ac.uk") by vger.kernel.org with ESMTP
-	id S1750727AbWHPAXz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Aug 2006 20:23:55 -0400
-X-Cam-SpamDetails: Not scanned
-X-Cam-AntiVirus: No virus found
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from cpc2-cmbg1-0-0-cust798.cmbg.cable.ntl.com ([82.21.107.31]:60647 helo=[192.168.0.100])
-	by ppsw-1.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.151]:25)
-	with esmtpsa (PLAIN:tow21) (TLSv1:DHE-RSA-AES256-SHA:256)
-	id 1GD9CJ-0006Ii-4X (Exim 4.54)
-	(return-path <tow21@cam.ac.uk>); Wed, 16 Aug 2006 01:23:51 +0100
-User-Agent: Thunderbird 1.5.0.5 (Macintosh/20060719)
-To: Toby White <tow21@cam.ac.uk>
-In-Reply-To: <44E263DD.6030305@cam.ac.uk>
-X-Enigmail-Version: 0.94.0.0
+	id S1750728AbWHPAhW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 Aug 2006 20:37:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750734AbWHPAhW
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Aug 2006 20:37:22 -0400
+Received: from science.horizon.com ([192.35.100.1]:52534 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S1750728AbWHPAhV
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Aug 2006 20:37:21 -0400
+Received: (qmail 32001 invoked by uid 1000); 15 Aug 2006 20:37:12 -0400
+To: jonsmirl@gmail.com
+In-Reply-To: <9e4733910608150755q54757386n13c705b0043e8308@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25496>
 
-Argh - sorry, patch got mangled somehow in previous message.
+> I explained our situation to Mark Adler, zlib author, and he recommend
+> checking out this book for techniques that can be used.
+> 
+> http://www.cs.mu.oz.au/mg/
 
-Correct patch below.
+I was about to suggest the same thing!  It's an excellent book.
 
-Toby
+It's about a piece of software and the choices made there, but it
+explains in detail many alternatives and why they weren't chosen for
+the mg software, but what they might be useful for.
 
---- gitweb.cgi.orig     2006-08-16 01:00:03.000000000 +0100
-+++ gitweb.cgi  2006-08-16 00:58:38.000000000 +0100
-@@ -180,6 +180,9 @@
- } elsif ($action eq "tree") {
-        git_tree();
-        exit;
-+} elsif ($action eq "export") {
-+       git_export();
-+       exit;
- } elsif ($action eq "rss") {
-        git_rss();
-        exit;
-@@ -1523,6 +1526,21 @@
-        git_footer_html();
- }
+The mg software itself is designed for human-language text, and does
+indexing as well.  So it does a fixed breakdown into alternate word and
+non-word tokens, builds a lexicon with frequency tables, then uses the
+frequencies to build Huffman trees, and Huffman-compresses each token.
+The "word" dictionary is also used as part of the search index, as each
+word has a (very cleverly compressed to less than one byte on average)
+pointer to each document it appears in with a count of the number of
+appearances.
 
-+sub git_export {
-+       if (!defined $hash) {
-+               $hash = git_read_head($project);
-+               if (defined $file_name) {
-+                       my $base = $hash_base || $hash;
-+                       $hash = git_get_hash_by_path($base, $file_name, "tree");
-+               }
-+               if (!defined $hash_base) {
-+                       $hash_base = $hash;
-+               }
-+       }
-+       print $cgi->header(-type=>'application/x-tar',  -Content-Encoding=>'x-gzip', -status=> '200 OK');
-+       exec "$gitbin/git-tar-tree $hash $project | gzip -c9" or die_error(undef, "Execute git-tar-tree failed.");
-+}
-+
- sub git_rss {
-        # http://www.notestips.com/80256B3A007F2692/1/NAMO5P9UPQ
-        open my $fd, "-|", "$gitbin/git-rev-list --max-count=150 " . git_read_head($project) or die_error(undef, "Open failed.");
-@@ -1779,6 +1797,7 @@
-              $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=tree;h=$co{'tree'};hb=$hash"), class => "list"}, $co{'tree'})
-.
-              "</td>" .
-              "<td class=\"link\">" . $cgi->a({-href => "$my_uri?" . esc_param("p=$project;a=tree;h=$co{'tree'};hb=$hash")}, "tree"
-) .
-+              "|" . $cgi->a({-href => "$my_uri/$project.tar.gz?" . esc_param("p=$project;a=export;h=$co{'tree'};hb=$hash")}, "tar.
-gz") .
-              "</td>" .
-              "</tr>\n";
-        my $parents  = $co{'parents'};
+The word encoding is straight zero-order Huffman, so inter-word
+correlations are not used.
+
+For software, with lots of punctuation and multi-word idioms
+("for (i = 0; i < n; i++) {"), the basic design is not very well suited.
+(To say nothing of binary data, like some people who want to
+check images or multi-megabyte video files into git.)
+
+But there is a good description of many possible algorithms, with
+lots of emphasis on practicalities.
+
+And the software *does* support dynamic collections, via auxiliary indexes
+and escape codes for any new words not found in the main dictionary.
+In fact, generating the Huffman tree from as little as 1/8 of the material
+to be compressed only loses you 5.7% of the compression.  (Table 9011,
+p. 360.)
+
+However, that is for English text, with a pretty Zipf-like distribution.
+In code, we generate new words (new function names) frequently, and
+proceed to use them heavily.
+
+It's worth noting the similarity between generating a good base dictionary
+with finding a good base version of a file for delta-encoding.
+You may end up having to divide the documents into classes (different
+source languages for example - C vs. asm vs. perl vs. python vs.
+docs vs. GIFs), and use a different dictionary per class.  But that
+drives up the cost of compression (you have to see which class the
+file to be compressed falls into).
+
+Anyway, highly recommended.
