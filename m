@@ -1,95 +1,61 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: Re: gitweb / cg-export
-Date: Wed, 16 Aug 2006 22:05:57 +0200
-Message-ID: <20060816200557.GB9575@c165.ib.student.liu.se>
-References: <44E263DD.6030305@cam.ac.uk> <ebupuk$dgl$1@sea.gmane.org> <44E2F911.6060002@gmail.com> <ebuvok$vnv$1@sea.gmane.org>
+From: fork0@t-online.de (Alex Riesen)
+Subject: Re: [PATCH] remove inline iteration variable
+Date: Wed, 16 Aug 2006 22:10:19 +0200
+Message-ID: <20060816201019.GA6083@steel.home>
+References: <Pine.LNX.4.63.0608151022340.26891@chino.corp.google.com> <81b0412b0608160027l2ac53c10gd9a75525ca144f1d@mail.gmail.com> <Pine.LNX.4.63.0608161011100.20470@chino.corp.google.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 16 22:06:24 2006
+X-From: git-owner@vger.kernel.org Wed Aug 16 22:10:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDReO-000422-SF
-	for gcvg-git@gmane.org; Wed, 16 Aug 2006 22:06:06 +0200
+	id 1GDRiy-0004yI-28
+	for gcvg-git@gmane.org; Wed, 16 Aug 2006 22:10:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932199AbWHPUGA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Aug 2006 16:06:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932202AbWHPUGA
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 16:06:00 -0400
-Received: from mxfep02.bredband.com ([195.54.107.73]:30206 "EHLO
-	mxfep02.bredband.com") by vger.kernel.org with ESMTP
-	id S932199AbWHPUF7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Aug 2006 16:05:59 -0400
-Received: from c165 ([213.114.27.99] [213.114.27.99])
-          by mxfep02.bredband.com with ESMTP
-          id <20060816200558.FOYG11843.mxfep02.bredband.com@c165>;
-          Wed, 16 Aug 2006 22:05:58 +0200
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1GDReH-0007Mn-00; Wed, 16 Aug 2006 22:05:57 +0200
-To: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
+	id S932202AbWHPUKo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Aug 2006 16:10:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932204AbWHPUKo
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 16:10:44 -0400
+Received: from mailout10.sul.t-online.com ([194.25.134.21]:30402 "EHLO
+	mailout10.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S932202AbWHPUKo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Aug 2006 16:10:44 -0400
+Received: from fwd26.aul.t-online.de 
+	by mailout10.sul.t-online.com with smtp 
+	id 1GDRip-0005OB-01; Wed, 16 Aug 2006 22:10:39 +0200
+Received: from tigra.home (JON96sZTgeR46Ilz644orulpo3mnv1arC9OtNwCx6mJNghOCrxmfch@[84.160.109.190]) by fwd26.sul.t-online.de
+	with esmtp id 1GDRiW-1GClNo0; Wed, 16 Aug 2006 22:10:20 +0200
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 82421277AF;
+	Wed, 16 Aug 2006 22:10:19 +0200 (CEST)
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1GDRiV-0007Rz-6I; Wed, 16 Aug 2006 22:10:19 +0200
+To: David Rientjes <rientjes@google.com>
 Content-Disposition: inline
-In-Reply-To: <ebuvok$vnv$1@sea.gmane.org>
-User-Agent: Mutt/1.5.11+cvs20060403
+In-Reply-To: <Pine.LNX.4.63.0608161011100.20470@chino.corp.google.com>
+User-Agent: Mutt/1.5.11
+X-ID: JON96sZTgeR46Ilz644orulpo3mnv1arC9OtNwCx6mJNghOCrxmfch
+X-TOI-MSGID: f9929636-d620-4c1d-b6c3-28d274cce244
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25524>
 
-On Wed, Aug 16, 2006 at 05:02:36PM +0530, Aneesh Kumar K.V wrote:
-> Aneesh Kumar K.V wrote:
-> >Jakub Narebski wrote:
-> >>Toby White wrote:
-> >>
-> >>>I was wondering if a feature like the following would be of
-> >>>use to anyone except me: I'd like to be able to download
-> >>>the full source of a given tree from gitweb.
-> >>[...]
-> >>So you want to have snapshot of a tree. Why not snapshot of a commit, 
-> >>or of a tag?
-> >>
-> >>>I've quickly hacked gitweb to do this for me - patch below.
-> >>>
-> >>>It adds an extra link to the 'commit' page. Next to the link
-> >>>that would lead you to 'tree', there is 'tar.gz' which simply
-> >>>returns the tar.gz of the same tree.
-> >>>
-> >>>The patch is against the version of gitweb currently in
-> >>>Debian, which is, erm, '264-1', apparently, because that's
-> >>>what I had to hand.
-> >>
-> >>It is really better to hack git with git. And you can use current gitweb
-> >>with old git (well, not always, as current gitweb requires --full-history
-> >>option to git-rev-list to be available).
-> >>
-> >
-> >How about the below on top of latest git
+David Rientjes, Wed, Aug 16, 2006 19:14:44 +0200:
+> > > Remove unnecessary iteration variable in inline.
+> > > -       for (i = 0; i < in; i++) putchar(' ');
+> > > +       for (; in > 0; in--)
+> > 
+> > while(in--) putchar(' ');
+> > 
 > 
-> Add it to git_commit too. The patch contains the pervious changes also.
-> 
+> That goes into an infinite loop if the argument is negative because
+> it emits a cmpl $0, x(%ebp).  Should never happen, but there's no
+> reason not to prevent it with a for loop.
 
-Nice.
+while (in-- > 0) putchar(' ');
 
-> +sub git_snapshot {
-> +	if (!defined $hash) {
-> +		$hash = git_get_head_hash($project);
-> +	}
-> +	print $cgi->header(-type=>'application/x-tar',
-> +			  -Content-Encoding=>'x-gzip', -status=> '200 OK');
-> +	open my $fd, "-|", "$GIT tar-tree $hash $project | gzip -c9" or die_error(undef, "Execute git-tar-tree failed.");
-
-It might be better to use -6 (the default compression/speed trade-off)
-instead of using -9 (best but slowest compression) here.  Or maybe
-even make it configurable. On some servers it is probably preferable
-to make the snapshot (slightly) larger and gain some cpu time.
-
-To get some numbers I made a small benchmark with the current git
-tree. I get the following on my machine:
-
-Compression/speed    Size   Time
--1                   1.1M   0.16s
--6                   923K   0.36s
--9                   917K   0.50s  
-
-- Fredrik
+still shorter :)
