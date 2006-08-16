@@ -1,80 +1,70 @@
-From: linux@horizon.com
-Subject: Re: Compression and dictionaries
-Date: 15 Aug 2006 20:37:12 -0400
-Message-ID: <20060816003712.32000.qmail@science.horizon.com>
-References: <9e4733910608150755q54757386n13c705b0043e8308@mail.gmail.com>
-Cc: git@vger.kernel.org, linux@horizon.com
-X-From: git-owner@vger.kernel.org Wed Aug 16 02:37:35 2006
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: Re: [PATCH] git-mv: succeed even if source is a prefix of destination
+Date: Wed, 16 Aug 2006 07:49:44 +0200
+Message-ID: <20060816054944.GA5218@c165.ib.student.liu.se>
+References: <20060815205150.GA467@c165.ib.student.liu.se> <Pine.LNX.4.63.0608151401510.3965@chino.corp.google.com> <Pine.LNX.4.63.0608160209150.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: David Rientjes <rientjes@google.com>,
+	Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 16 07:49:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GD9PT-0005bO-WA
-	for gcvg-git@gmane.org; Wed, 16 Aug 2006 02:37:28 +0200
+	id 1GDEHq-0006pY-E8
+	for gcvg-git@gmane.org; Wed, 16 Aug 2006 07:49:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750728AbWHPAhW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 Aug 2006 20:37:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750734AbWHPAhW
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Aug 2006 20:37:22 -0400
-Received: from science.horizon.com ([192.35.100.1]:52534 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S1750728AbWHPAhV
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Aug 2006 20:37:21 -0400
-Received: (qmail 32001 invoked by uid 1000); 15 Aug 2006 20:37:12 -0400
-To: jonsmirl@gmail.com
-In-Reply-To: <9e4733910608150755q54757386n13c705b0043e8308@mail.gmail.com>
+	id S1750748AbWHPFtr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Aug 2006 01:49:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750769AbWHPFtq
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 01:49:46 -0400
+Received: from mxfep02.bredband.com ([195.54.107.73]:6132 "EHLO
+	mxfep02.bredband.com") by vger.kernel.org with ESMTP
+	id S1750748AbWHPFtq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Aug 2006 01:49:46 -0400
+Received: from c165 ([213.114.27.99] [213.114.27.99])
+          by mxfep02.bredband.com with ESMTP
+          id <20060816054944.STOG11843.mxfep02.bredband.com@c165>;
+          Wed, 16 Aug 2006 07:49:44 +0200
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1GDEHg-0001wS-00; Wed, 16 Aug 2006 07:49:44 +0200
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0608160209150.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11+cvs20060403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25497>
 
-> I explained our situation to Mark Adler, zlib author, and he recommend
-> checking out this book for techniques that can be used.
+On Wed, Aug 16, 2006 at 02:20:32AM +0200, Johannes Schindelin wrote:
 > 
-> http://www.cs.mu.oz.au/mg/
+> As noted by Fredrik Kuivinen, without this patch, git-mv fails on
+> 
+> 	git-mv README README-renamed
+> 
+> because "README" is a prefix of "README-renamed".
+> 
 
-I was about to suggest the same thing!  It's an excellent book.
+Thank you. 'git-mv README README-renamed' works for me too now.
 
-It's about a piece of software and the choices made there, but it
-explains in detail many alternatives and why they weren't chosen for
-the mg software, but what they might be useful for.
+However, there still seems to be some minor problem with git-mv.
 
-The mg software itself is designed for human-language text, and does
-indexing as well.  So it does a fixed breakdown into alternate word and
-non-word tokens, builds a lexicon with frequency tables, then uses the
-frequencies to build Huffman trees, and Huffman-compresses each token.
-The "word" dictionary is also used as part of the search index, as each
-word has a (very cleverly compressed to less than one byte on average)
-pointer to each document it appears in with a count of the number of
-appearances.
+    $ git mv t t
+    fatal: renaming t failed: Invalid argument
+    $ git mv t t/
+    fatal: renaming t failed: Invalid argument
+    $ git mv t/ t/
+    fatal: cannot move directory over file, source=t/, destination=t/
+    $ git mv t/ t 
+    fatal: cannot move directory over file, source=t/, destination=t/
 
-The word encoding is straight zero-order Huffman, so inter-word
-correlations are not used.
+I kind of expected to get 'can not move directory into itself' in all
+of those cases. At least the same error messages should be given in
+all cases.
 
-For software, with lots of punctuation and multi-word idioms
-("for (i = 0; i < n; i++) {"), the basic design is not very well suited.
-(To say nothing of binary data, like some people who want to
-check images or multi-megabyte video files into git.)
+It looks like we need some kind of path normalization before we do
+those tests.
 
-But there is a good description of many possible algorithms, with
-lots of emphasis on practicalities.
-
-And the software *does* support dynamic collections, via auxiliary indexes
-and escape codes for any new words not found in the main dictionary.
-In fact, generating the Huffman tree from as little as 1/8 of the material
-to be compressed only loses you 5.7% of the compression.  (Table 9011,
-p. 360.)
-
-However, that is for English text, with a pretty Zipf-like distribution.
-In code, we generate new words (new function names) frequently, and
-proceed to use them heavily.
-
-It's worth noting the similarity between generating a good base dictionary
-with finding a good base version of a file for delta-encoding.
-You may end up having to divide the documents into classes (different
-source languages for example - C vs. asm vs. perl vs. python vs.
-docs vs. GIFs), and use a different dictionary per class.  But that
-drives up the cost of compression (you have to see which class the
-file to be compressed falls into).
-
-Anyway, highly recommended.
+- Fredrik
