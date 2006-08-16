@@ -1,63 +1,65 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Huge win, compressing a window of delta runs as a unit
-Date: Wed, 16 Aug 2006 13:20:30 -0400
-Message-ID: <9e4733910608161020s6855140bs68aaab6e1bbd3bad@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] Enable 'check for copy and renames' (-C) also when path filtering
+Date: Wed, 16 Aug 2006 10:51:42 -0700
+Message-ID: <7v8xlo4lht.fsf@assigned-by-dhcp.cox.net>
+References: <e5bfff550608160206w606008ddv2da42ce49e98fa2b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Aug 16 19:20:52 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 16 19:51:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDP4N-0004OS-OR
-	for gcvg-git@gmane.org; Wed, 16 Aug 2006 19:20:44 +0200
+	id 1GDPYV-0001zU-Rm
+	for gcvg-git@gmane.org; Wed, 16 Aug 2006 19:51:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751162AbWHPRUk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Aug 2006 13:20:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751205AbWHPRUk
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 13:20:40 -0400
-Received: from nf-out-0910.google.com ([64.233.182.189]:48157 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751162AbWHPRUj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Aug 2006 13:20:39 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so706366nfa
-        for <git@vger.kernel.org>; Wed, 16 Aug 2006 10:20:38 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=uiXt8ihLr+vEf7mMDVIOgAOJdMn5wP6pdK95J9edvL5QW55qHJfY8yGGLv3giEe/3bV10nTt8HRSMUw1iams0rAL+CDRu54NK1lwFtZuozqNO2OhqZLgTOeU/129XuFW7wCie+CkhUlLZ03KdzPx20tp7wTwjcTgc6U06f5LMC4=
-Received: by 10.48.163.19 with SMTP id l19mr941101nfe;
-        Wed, 16 Aug 2006 10:20:33 -0700 (PDT)
-Received: by 10.78.148.9 with HTTP; Wed, 16 Aug 2006 10:20:30 -0700 (PDT)
-To: "Shawn Pearce" <spearce@spearce.org>, git <git@vger.kernel.org>
-Content-Disposition: inline
+	id S932120AbWHPRvt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Aug 2006 13:51:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932122AbWHPRvt
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 13:51:49 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:38311 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932120AbWHPRvs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Aug 2006 13:51:48 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060816175145.PUTO6077.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 16 Aug 2006 13:51:45 -0400
+To: "Marco Costalba" <mcostalba@gmail.com>
+In-Reply-To: <e5bfff550608160206w606008ddv2da42ce49e98fa2b@mail.gmail.com>
+	(Marco Costalba's message of "Wed, 16 Aug 2006 11:06:49 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25520>
 
-Shawn put together a new version of his import utility that packs all
-of the deltas from a run into a single blob instead of one blob per
-delta. The idea is to put 10 or more deltas into each delta entry
-instead of one. The index format would map the 10 sha1's to a single
-packed delta entry which would be expanded when needed. Note that you
-probably needed multiple entries out of the delta pack to generate the
-revision you were looking for so this is no real loss on extraction.
+"Marco Costalba" <mcostalba@gmail.com> writes:
 
-I ran it overnight on mozcvs. If his delta pack code is correct this
-is a huge win.
+> It seems that -C option of git-diff-tree it works only if the whole
+> changeset is retrieved.
 
-One entry per delta -  845,42,0150
-Packed deltas - 295,018,474
-65% smaller
+Correct (sort of).  Pathspec works on the input side not on the
+output side.  It's been specified and worked that way from the
+beginning (check the list archive to see me arguing that it
+would be easier to use on the output side, and Linus vetoing
+because following a single file is not that interesting and the
+cost outweighs the benefit of that uninteresting case).
 
-The effect of packing the deltas is to totally eliminate many of the
-redundant zlib dictionaries.
+Always feeding the whole tree is wasteful, but if we are
+interested in following a single file, we could do something
+like:
 
-This is without using a zlib dictionary which gains another 4% form a
-4KB dictionary.
+ - follow that file and that file only from the recent to past;
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+ - notice when that file disappears -- that is the point the
+   file was created.  it may have created from scratch, it may
+   have been renamed or copied.
+
+ - on that commit that creates the file, look at the whole tree
+   to see if we can find an origin.
+
+ - if we find that the file was created by renaming or copying
+   another, keep following that other file from that point on.
