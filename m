@@ -1,48 +1,67 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] remove inline iteration variable
-Date: Wed, 16 Aug 2006 09:27:49 +0200
-Message-ID: <81b0412b0608160027l2ac53c10gd9a75525ca144f1d@mail.gmail.com>
-References: <Pine.LNX.4.63.0608151022340.26891@chino.corp.google.com>
+From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
+Subject: Re: [PATCH (revised)] gitweb: Show project's git URL on summary page
+Date: Wed, 16 Aug 2006 13:01:01 +0530
+Message-ID: <ebuhjn$kdm$1@sea.gmane.org>
+References: <200608152003.05693.jnareb@gmail.com> <200608152303.17994.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 16 09:27:55 2006
+X-From: git-owner@vger.kernel.org Wed Aug 16 09:31:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDFog-0002m3-Bq
-	for gcvg-git@gmane.org; Wed, 16 Aug 2006 09:27:54 +0200
+	id 1GDFsT-0003ZI-ER
+	for gcvg-git@gmane.org; Wed, 16 Aug 2006 09:31:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750976AbWHPH1v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Aug 2006 03:27:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750978AbWHPH1v
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 03:27:51 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:5683 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1750976AbWHPH1u (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Aug 2006 03:27:50 -0400
-Received: by nf-out-0910.google.com with SMTP id x30so602676nfb
-        for <git@vger.kernel.org>; Wed, 16 Aug 2006 00:27:49 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Lx5S0EfO4yW8BM5NXlFKWI/4izfmBIdIlVZ3U5JcdjEI8YubH1m7vWyNvUJmglM7J35UQH/TekTUVqGzGX9IL8qo8ppLzJ6iUmQcTANyYyqDzJwuQkMCsmM2XTR06GHwAhRzuIzi8hbomQO6kPW4gE1wIAm3j0JqcKaCnUKgoRk=
-Received: by 10.49.8.15 with SMTP id l15mr321825nfi;
-        Wed, 16 Aug 2006 00:27:49 -0700 (PDT)
-Received: by 10.78.160.12 with HTTP; Wed, 16 Aug 2006 00:27:48 -0700 (PDT)
-To: "David Rientjes" <rientjes@google.com>
-In-Reply-To: <Pine.LNX.4.63.0608151022340.26891@chino.corp.google.com>
-Content-Disposition: inline
+	id S1750985AbWHPHbr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Aug 2006 03:31:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750984AbWHPHbr
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 03:31:47 -0400
+Received: from main.gmane.org ([80.91.229.2]:33422 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750983AbWHPHbq (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Aug 2006 03:31:46 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GDFsA-0003Vd-UI
+	for git@vger.kernel.org; Wed, 16 Aug 2006 09:31:30 +0200
+Received: from palrel2.hp.com ([156.153.255.234])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 16 Aug 2006 09:31:30 +0200
+Received: from aneesh.kumar by palrel2.hp.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 16 Aug 2006 09:31:30 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: palrel2.hp.com
+User-Agent: Thunderbird 1.5.0.5 (X11/20060728)
+In-Reply-To: <200608152303.17994.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25507>
 
-On 8/15/06, David Rientjes <rientjes@google.com> wrote:
-> Remove unnecessary iteration variable in inline.
-> -       for (i = 0; i < in; i++) putchar(' ');
-> +       for (; in > 0; in--)
+Jakub Narebski wrote:
+> From 31e4de9f22a3b17d4ad0ac800132e4e1a0a15006 Mon Sep 17 00:00:00 2001
+> From: David Rientjes <rientjes@google.com>
+> Date: Tue, 15 Aug 2006 11:43:04 -0700
+> Subject: [PATCH] gitweb: Show project's git URL on summary page
+> 
+> Add support for showing multiple clone/fetch git URLs for project on
+> a summary page. URL for project is created from base URL and project
+> name.
+> 
+> For example for XMMS2 project (xmms.se) the git base URL would be
+> git://git.xmms.se/xmms2.
+> 
+> With corrections from David Rientjes <rientjes@google.com>
+>
 
-while(in--) putchar(' ');
+this can give wrong value is some case with index.aux as projects_list. I have a setup where
+project details are displayed via gitweb but not reachable via http:// url and some reachable via http:// url.
+
+For the first one only ssh:// based clone mechanism will work and for the other both will work. How do we handle 
+that
+
+-aneesh
