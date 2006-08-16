@@ -1,53 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC/PATCH] Trace into a file if GIT_TRACE can interpreted as a filename.
-Date: Wed, 16 Aug 2006 14:18:56 -0700
-Message-ID: <7vhd0c2xbz.fsf@assigned-by-dhcp.cox.net>
-References: <20060816225846.ae424b46.chriscool@tuxfamily.org>
+From: David Rientjes <rientjes@google.com>
+Subject: Re: [PATCH] remove inline iteration variable
+Date: Wed, 16 Aug 2006 14:41:50 -0700 (PDT)
+Message-ID: <Pine.LNX.4.63.0608161441070.29566@chino.corp.google.com>
+References: <Pine.LNX.4.63.0608151022340.26891@chino.corp.google.com>
+ <81b0412b0608160027l2ac53c10gd9a75525ca144f1d@mail.gmail.com>
+ <Pine.LNX.4.63.0608161011100.20470@chino.corp.google.com>
+ <20060816201019.GA6083@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 16 23:19:11 2006
+X-From: git-owner@vger.kernel.org Wed Aug 16 23:42:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDSn1-0002CT-T3
-	for gcvg-git@gmane.org; Wed, 16 Aug 2006 23:19:04 +0200
+	id 1GDT9O-0007Ai-Pg
+	for gcvg-git@gmane.org; Wed, 16 Aug 2006 23:42:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932236AbWHPVTA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Aug 2006 17:19:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932237AbWHPVTA
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 17:19:00 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:43958 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932236AbWHPVS7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Aug 2006 17:18:59 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060816211857.NNSO554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 16 Aug 2006 17:18:57 -0400
-To: Christian Couder <chriscool@tuxfamily.org>
-In-Reply-To: <20060816225846.ae424b46.chriscool@tuxfamily.org> (Christian
-	Couder's message of "Wed, 16 Aug 2006 22:58:46 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932241AbWHPVmH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Aug 2006 17:42:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932243AbWHPVmH
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 17:42:07 -0400
+Received: from smtp-out.google.com ([216.239.45.12]:5546 "EHLO
+	smtp-out.google.com") by vger.kernel.org with ESMTP id S932241AbWHPVmG
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Aug 2006 17:42:06 -0400
+Received: from zps75.corp.google.com (zps75.corp.google.com [172.25.146.75])
+	by smtp-out.google.com with ESMTP id k7GLftDb001242;
+	Wed, 16 Aug 2006 14:41:56 -0700
+DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
+	h=received:date:from:x-x-sender:to:cc:subject:in-reply-to:
+	message-id:references:mime-version:content-type;
+	b=IRjlWjPJlPne+BPKUxBQEmqNsuDcU4tbpgJMi5XU50FEYFMm9H5cEdw+ErlHPXcuJ
+	rZ5wP3zxeIwMK8H/nGacA==
+Received: from localhost (chino.corp.google.com [172.24.88.221])
+	by zps75.corp.google.com with ESMTP id k7GLfooQ020421;
+	Wed, 16 Aug 2006 14:41:50 -0700
+Received: by localhost (Postfix, from userid 24081)
+	id E4B4587D71; Wed, 16 Aug 2006 14:41:50 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+	by localhost (Postfix) with ESMTP id 9663D87D70;
+	Wed, 16 Aug 2006 14:41:50 -0700 (PDT)
+X-X-Sender: rientjes@chino.corp.google.com
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <20060816201019.GA6083@steel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25531>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+On Wed, 16 Aug 2006, Alex Riesen wrote:
 
-> So this change is not compatible with the previous
-> behavior, because stderr will not be used anymore if
-> GIT_TRACE is set to something other than "1" or "true".
-> No file locking is done. This maybe a problem.
+> David Rientjes, Wed, Aug 16, 2006 19:14:44 +0200:
+> > > > Remove unnecessary iteration variable in inline.
+> > > > -       for (i = 0; i < in; i++) putchar(' ');
+> > > > +       for (; in > 0; in--)
+> > > 
+> > > while(in--) putchar(' ');
+> > > 
+> > 
+> > That goes into an infinite loop if the argument is negative because
+> > it emits a cmpl $0, x(%ebp).  Should never happen, but there's no
+> > reason not to prevent it with a for loop.
+> 
+> while (in-- > 0) putchar(' ');
+> 
+> still shorter :)
+> 
 
-I wonder if we can pass an already opened file descriptor to
-GIT_TRACE.  E.g.
+It emits a slightly rearranged assembly with the same number of instructions.
 
-	GIT_TRACE=9 make test 9>/var/tmp/trace.log
-
-and make the trace code to emit the message with one write(2) to
-make sure messages from processes do not get mixed up in the
-middle.
+		David
