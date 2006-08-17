@@ -1,85 +1,83 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] introduce inline is_same_sha1
-Date: Wed, 16 Aug 2006 18:12:17 -0700
-Message-ID: <7vveos17ym.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0608161721020.11465@chino.corp.google.com>
+Subject: Re: [PATCH] gitweb: continue consolidation of URL generation.
+Date: Wed, 16 Aug 2006 18:59:15 -0700
+Message-ID: <7voduk15sc.fsf@assigned-by-dhcp.cox.net>
+References: <11557673213372-git-send-email-tali@admingilde.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 17 03:12:40 2006
+X-From: git-owner@vger.kernel.org Thu Aug 17 03:59:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDWQz-0004tU-Gd
-	for gcvg-git@gmane.org; Thu, 17 Aug 2006 03:12:33 +0200
+	id 1GDXAI-0005gd-H8
+	for gcvg-git@gmane.org; Thu, 17 Aug 2006 03:59:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932172AbWHQBMT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Aug 2006 21:12:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932175AbWHQBMT
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 21:12:19 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:4750 "EHLO
+	id S932358AbWHQB7S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Aug 2006 21:59:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932359AbWHQB7S
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 21:59:18 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:65462 "EHLO
 	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932172AbWHQBMS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Aug 2006 21:12:18 -0400
+	id S932358AbWHQB7R (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Aug 2006 21:59:17 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
           by fed1rmmtao11.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060817011217.ZMQR554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 16 Aug 2006 21:12:17 -0400
-To: David Rientjes <rientjes@google.com>
-In-Reply-To: <Pine.LNX.4.63.0608161721020.11465@chino.corp.google.com> (David
-	Rientjes's message of "Wed, 16 Aug 2006 17:25:30 -0700 (PDT)")
+          id <20060817015916.BJOP554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 16 Aug 2006 21:59:16 -0400
+To: Martin Waitz <tali@admingilde.org>
+In-Reply-To: <11557673213372-git-send-email-tali@admingilde.org> (Martin
+	Waitz's message of "Thu, 17 Aug 2006 00:28:36 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25544>
 
-David Rientjes <rientjes@google.com> writes:
+Martin Waitz <tali@admingilde.org> writes:
 
-> Introduces global inline:
-> 	is_same_sha1(const unsigned char *sha1,
-> 		     const unsigned char *sha2);
+> Further use href() instead of URL generation by string concatenation.
+> Almost all functions are converted now.
 >
-> Uses memcmp for comparison and returns the result.  All tests
-> for comparisons for sha1 have been changed to use the new
-> global inline, but existing uses of memcmp have been preserved
-> where the return value other than 0 is needed, i.e.:
+> Signed-off-by: Martin Waitz <tali@admingilde.org>
+> ---
+>  gitweb/gitweb.perl |   68 +++++++++++++++++++++++++++-------------------------
+>  1 files changed, 35 insertions(+), 33 deletions(-)
 >
-> 	int cmp = !memcmp(old_sha1, new_sha1, 20);
->
-> Conversions from char* to unsigned char* casts have been made
-> where appropriate.
->
-> Signed-off-by: David Rientjes <rientjes@google.com>
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 37a6284..72e687e 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -204,7 +204,9 @@ sub href(%) {
+>  
+>  	my $href = "$my_uri?";
+>  	$href .= esc_param( join(";",
+> -		map { "$mapping{$_}=$params{$_}" } keys %params
+> +		map {
+> +			"$mapping{$_}=$params{$_}" if $params{$_}
+> +		} keys %params
+>  	) );
+>  
+>  	return $href;
 
-I would have expected the inline function to be:
+This is not about "further use href()".
 
-	int cmp_object_name(const void *, const void *)
+I think "if $params{$_}" is unsafe here.  Can you guarantee that
+we will never want to pass 0 or an empty string as an parameter
+value both in the current and the future code?
 
-No need for "unsigned char *" that way [*1*].  
+I think it needs to be "if defined $params{$_}", at least.
 
-I do not know what your ultimate goal with this patch is, but I
-like the fact that we do not have to hardcode "20" everywhere.
-With a yet-to-be-written companion patch to make the "20" into a
-symbolic constant OBJECT_NAME_LENGTH, we could someday have a
-flag day to use a hash different from SHA-1 with an updated
-'git-convert-objects' ;-).
+> @@ -1252,7 +1254,7 @@ sub git_difftree_body {
+>  			      "<td class=\"link\">" .
+>  				$cgi->a({-href => href(action=>"blob", hash=>$to_id, hash_base=>$hash, file_name=>$file)}, "blob");
+>  			if ($to_id ne $from_id) { # modified
+> -				print $cgi->a({-href => href(action=>"blobdiff", hash=>$to_id, hash_parent=>$from_id, hash_base=>$hash, file_name=>$file)}, "diff");
+> +				print " | " . $cgi->a({-href => href(action=>"blobdiff", hash=>$to_id, hash_parent=>$from_id, hash_base=>$hash, file_name=>$file)}, "diff");
+>  			}
+>  			print " | " . $cgi->a({-href => href(action=>"history", hash_base=>$hash, file_name=>$file)}, "history") . "\n";
+>  			print "</td>\n";
 
-I would have liked if the function were to give the comparison
-results similar to standard comparison functions such as memcmp
-and strcmp.  I do not know off-hand if we order by the object
-names, and we might only be interested in equality tests, but
-still...
-
-Line-wrap the message for comfortable viewing on 80-column
-terminals, please.
-
-[Footnote]
-
-*1* On the other hand if stricter type checking is wanted,
-    "const unsigned char *" is too weak.  We would need either
-    sparse annotation or a new type (maybe a struct that has a
-    single member that has 20-byte uchar array).  I personally
-    think that is an overkill, though.
+Well spotted.
