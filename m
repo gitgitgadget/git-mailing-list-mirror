@@ -1,113 +1,83 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: Huge win, compressing a window of delta runs as a unit
-Date: Thu, 17 Aug 2006 13:17:33 -0400
-Message-ID: <9e4733910608171017k628ef754s4fcd075d60aaf062@mail.gmail.com>
+Date: Thu, 17 Aug 2006 13:22:02 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0608171233370.11359@localhost.localdomain>
 References: <9e4733910608161020s6855140bs68aaab6e1bbd3bad@mail.gmail.com>
-	 <20060817040719.GC18500@spearce.org>
-	 <Pine.LNX.4.63.0608170943470.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <Pine.LNX.4.63.0608171003020.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <9e4733910608170736y4863e0ebr55c6c822ae548cca@mail.gmail.com>
-	 <Pine.LNX.4.63.0608171738490.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060817040719.GC18500@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn Pearce" <spearce@spearce.org>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 17 19:17:56 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jon Smirl <jonsmirl@gmail.com>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 17 19:22:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDlUw-0007OR-Tt
-	for gcvg-git@gmane.org; Thu, 17 Aug 2006 19:17:39 +0200
+	id 1GDlZJ-00088N-5v
+	for gcvg-git@gmane.org; Thu, 17 Aug 2006 19:22:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030183AbWHQRRf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Aug 2006 13:17:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030185AbWHQRRf
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Aug 2006 13:17:35 -0400
-Received: from nz-out-0102.google.com ([64.233.162.203]:39319 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1030183AbWHQRRe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Aug 2006 13:17:34 -0400
-Received: by nz-out-0102.google.com with SMTP id n1so389251nzf
-        for <git@vger.kernel.org>; Thu, 17 Aug 2006 10:17:34 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VehcAN3rgfdpRjd9RLtjG9f6ixJuGIc/XQUrBbei3wuyRqIsgFo6deaFI9a2eLDV2Q7UUAtt8gEv2qcfEqU3KvOy9dEn7Gh06JxGQBypFeBw4yZXGu1We8zixTZ/nSDujyVFU8N2dH+HXzezg/G698o7MjXd9R8pvC/pWLBFxno=
-Received: by 10.65.237.1 with SMTP id o1mr2499691qbr;
-        Thu, 17 Aug 2006 10:17:33 -0700 (PDT)
-Received: by 10.65.133.17 with HTTP; Thu, 17 Aug 2006 10:17:32 -0700 (PDT)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0608171738490.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	id S1030184AbWHQRWF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Aug 2006 13:22:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030186AbWHQRWE
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Aug 2006 13:22:04 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:64981 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1030184AbWHQRWD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Aug 2006 13:22:03 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J4500MGMK8Q9XE0@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 17 Aug 2006 13:22:02 -0400 (EDT)
+In-reply-to: <20060817040719.GC18500@spearce.org>
+X-X-Sender: nico@localhost.localdomain
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25594>
 
-On 8/17/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Thu, 17 Aug 2006, Jon Smirl wrote:
->
-> > On 8/17/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > At least, the delta-chains should be limited by size (_not_ by number of
-> > > deltas: you can have huge deltas, and if you have to unpack 5 huge deltas
-> > > before getting to the huge delta you really need, it takes really long).
-> >
-> > This is not an obvious conclusion.
->
-> The big win is bought by having _one_ zlib stream for multiple deltas,
-> right?
->
-> So, everytime you want to access the _last_ delta in the chain, you unpack
-> _all_ of them. This quite obvious conclusion is obviously your reason to
-> propose two packs, one for the archive of "old" objects, and one for the
-> "new" objects.
+On Thu, 17 Aug 2006, Shawn Pearce wrote:
 
-Do some measurements, the IO vs CPU time trade off is way in favor of
-eliminating the IO. It really doesn't take very much CPU to unpack the
-delta chain.
+> I'm going to try to integrate this into core GIT this weekend.
+> My current idea is to make use of the OBJ_EXT type flag to add
+> an extended header field behind the length which describes the
+> "chunk" as being a delta chain compressed in one zlib stream.
+> I'm not overly concerned about saving lots of space in the header
+> here as it looks like we're winning a huge amount of pack space,
+> so the extended header will probably itself be a couple of bytes.
+> This keeps the shorter reserved types free for other great ideas.  :)
 
-The two pack proprosal was not about reducing the delta chain length;
-they are reverse deltas, the newest version is always at the front.
-Two packs are used to avoid repacking the 280MB pack when you do a
-repack command. It takes 2-3 hours to repack 280MB. Even if if you
-just copy the old pack to the new it take 30 minutes to do all of the
-IO.
+We're streaving for optimal data storage here so don't be afraid to use 
+one of the available types for an "object stream" object.  Because when 
+you think of it, the deflating of multiple objects into a single zlib 
+stream can be applied to all object types not only deltas.  If ever 
+deflating many blobs into one zlib stream is dimmed worth it then the 
+encoding will already be ready for it.  Also you can leverage existing 
+code to write headers, etc.
 
-> > As for public servers there is an immediate win in shifting to the new
-> > pack format.  Three hour downloads vs one hour, plus the bandwidth
-> > bills. Are the tools smart enough to say this is a newer pack format,
-> > upgrade? It takes far less than two hours to upgrade your git install.
->
-> Have you thought about a non-upgraded client? The server has to repack in
-> that case, and if the client wants a clone, you might not even have the
-> time to kiss your server good-bye before it goes belly up.
+I'd suggest you use OBJ_GROUP = 0 as a new primary object type.  Then 
+the "size" field in the header could then become the number of objects 
+that are included in the group.  Most of the time that will fit in the 
+low 4 bits of the first header byte, but if there is more than 15 
+grouped objects then more bits can be used on the following byte.  
+Anyway so far all the code to generate and parse that is already there.  
+If ever there is a need for more extensions that could be prefixed with 
+a pure zero byte (an object group with a zero object count which is 
+distinguishable from a real group).
 
-Is there a pack format version number built into the server procotol?
-If not there needs to be one. When there is a mismatch with the server
-pack version the client should simply display an error requesting an
-upgrade of the client software.
+Then, having the number of grouped objects, you just have to list the 
+usual headers for those objects, which are their type and inflated size 
+just like regular object headers, including the base sha1 for deltas.  
+Again you already have code to produce and parse those.
 
-Git should be designed for forward evolution, not infinite backward
-compatibility. It is easy to upgrade your client to support the new
-protocol. The protocol just needs to ensure that the client reliably
-gets an error about the need to upgrade.
+And finally just append the objects payload in a single deflated stream.
 
-Forward evolution implies that a client is able to work with older
-servers, but not the inverse, that new servers have to work with old
-clients.
-
-> There is an obvious choice here as to how fast people would upgrade their
-> servers.
->
-> Ciao,
-> Dscho
->
->
+This way the reading of an object from a group can be optimized if the 
+object data is located at the beginning of the stream such that you only 
+need to inflate the amount of bytes leading to the desired data 
+(possibly caching those for further delta replaying), inflate 
+the needed data for the desired object and then ignoring the remaining 
+of the stream.
 
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+Nicolas
