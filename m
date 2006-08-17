@@ -1,65 +1,102 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitweb: use action dispatcher for non-project actions, too.
-Date: Wed, 16 Aug 2006 19:06:02 -0700
-Message-ID: <7vk65815h1.fsf@assigned-by-dhcp.cox.net>
-References: <11557673213372-git-send-email-tali@admingilde.org>
-	<11557673212235-git-send-email-tali@admingilde.org>
-	<1155767325181-git-send-email-tali@admingilde.org>
-	<11557673263081-git-send-email-tali@admingilde.org>
-	<11557673262714-git-send-email-tali@admingilde.org>
-	<11557673281583-git-send-email-tali@admingilde.org>
+From: David Rientjes <rientjes@google.com>
+Subject: Re: [PATCH] introduce inline is_same_sha1
+Date: Wed, 16 Aug 2006 20:51:58 -0700 (PDT)
+Message-ID: <Pine.LNX.4.63.0608162029540.14684@chino.corp.google.com>
+References: <Pine.LNX.4.63.0608161721020.11465@chino.corp.google.com>
+ <7vveos17ym.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 17 04:06:15 2006
+X-From: git-owner@vger.kernel.org Thu Aug 17 05:52:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDXGw-0006ms-LI
-	for gcvg-git@gmane.org; Thu, 17 Aug 2006 04:06:15 +0200
+	id 1GDYvw-000476-TD
+	for gcvg-git@gmane.org; Thu, 17 Aug 2006 05:52:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932359AbWHQCGF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 Aug 2006 22:06:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932377AbWHQCGE
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 22:06:04 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:51643 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932359AbWHQCGD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Aug 2006 22:06:03 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060817020603.BTZB554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 16 Aug 2006 22:06:03 -0400
-To: Martin Waitz <tali@admingilde.org>
-In-Reply-To: <11557673281583-git-send-email-tali@admingilde.org> (Martin
-	Waitz's message of "Thu, 17 Aug 2006 00:28:41 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751276AbWHQDwX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 Aug 2006 23:52:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751271AbWHQDwX
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Aug 2006 23:52:23 -0400
+Received: from smtp-out.google.com ([216.239.45.12]:38995 "EHLO
+	smtp-out.google.com") by vger.kernel.org with ESMTP
+	id S1751267AbWHQDwX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Aug 2006 23:52:23 -0400
+Received: from zps78.corp.google.com (zps78.corp.google.com [172.25.146.78])
+	by smtp-out.google.com with ESMTP id k7H3qAWq008411;
+	Wed, 16 Aug 2006 20:52:15 -0700
+DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
+	h=received:date:from:x-x-sender:to:cc:subject:in-reply-to:
+	message-id:references:mime-version:content-type;
+	b=WjJN5PSigGqEByOXX8j17VqecdwsTcyZeWvtch+8DQicHvyS4dq8GEFJx+D1l9Vz8
+	qURiKz+72OQXmtqP4OnxQ==
+Received: from localhost (chino.corp.google.com [172.24.88.221])
+	by zps78.corp.google.com with ESMTP id k7H3q0qV014349;
+	Wed, 16 Aug 2006 20:52:00 -0700
+Received: by localhost (Postfix, from userid 24081)
+	id 3F22887D71; Wed, 16 Aug 2006 20:51:58 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+	by localhost (Postfix) with ESMTP id E082487D70;
+	Wed, 16 Aug 2006 20:51:58 -0700 (PDT)
+X-X-Sender: rientjes@chino.corp.google.com
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vveos17ym.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25546>
 
-Martin Waitz <tali@admingilde.org> writes:
+On Wed, 16 Aug 2006, Junio C Hamano wrote:
 
-> Allow to use the global action dispatcher for all actions by introducing
-> "/actions".  If no project directory is given then a / is prepended to the
-> action and the normal dispatcher is called.
-> Project list and OPML generation are now hooked into the list as "/summary"
-> and "/opml".
->
-> As "/" is not an allowed character in actions accepted through the CGI
-> parameters, it is still ensured that no normal action can be called without
-> giving a valid project directory.
->
-> Signed-off-by: Martin Waitz <tali@admingilde.org>
-> ---
->  gitweb/gitweb.perl |   17 ++++++++---------
->  1 files changed, 8 insertions(+), 9 deletions(-)
+> I would have expected the inline function to be:
+> 
+> 	int cmp_object_name(const void *, const void *)
+> 
+> No need for "unsigned char *" that way [*1*].  
+> 
+> I do not know what your ultimate goal with this patch is, but I
+> like the fact that we do not have to hardcode "20" everywhere.
+> With a yet-to-be-written companion patch to make the "20" into a
+> symbolic constant OBJECT_NAME_LENGTH, we could someday have a
+> flag day to use a hash different from SHA-1 with an updated
+> 'git-convert-objects' ;-).
+> 
 
-You completely lost me.  What are you trying to achieve here?
+The reason it is not
+	int cmp_object_name(const void *, const void *)
 
-I suspect this kind of funkies (and PATH_INFO) might be easier
-to do in mod_rewrite() outside gitweb, but that is probably just
-me.
+ties into the ultimate goal.  As you said, 20 is hardcoded everywhere in 
+the code as the length sha1's name.  Since my own development tree uses 
+two different hashes configurable at runtime, I decided to create a single 
+static inline that would deal with name comparisons.  I submitted a 
+similar change to your tree because, like you, I envisioned that someday 
+you may have several different hashes that require different comparison 
+lengths.  The easy solution is using strcmp in the inline but then you're 
+required to cast based on signness and sometimes you want to truncate the 
+comparison to n bytes anyway depending on your hash of choice.  If you 
+want to open your project to the possibility of implementing other 
+hashes, my patch is a step in that direction.
+
+> I would have liked if the function were to give the comparison
+> results similar to standard comparison functions such as memcmp
+> and strcmp.  I do not know off-hand if we order by the object
+> names, and we might only be interested in equality tests, but
+> still...
+> 
+
+Remember, this is an inline function.  The only reason for writing it 
+would be to isolate the number 20 to this particular function (those that 
+require comparisons were untouched, as I previously stated, so it still 
+exists there as well), otherwise it's useless.  If you're going to allow a 
+configurable hash function, then you'll need to isolate the n-bytes 
+somewhere if you don't want to pass HASH_NAME_LENGTH around everywhere.
+
+git does sort on sha1 name, specifically with qsort in pack-objects using 
+sha1_sort (which isn't an inline, but should be).
+
+(It would be helpful if you were to specifically request changes to a 
+patch or explicitly state whether or not you queued to apply it, I can 
+never tell).
+
+		David
