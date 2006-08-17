@@ -1,89 +1,60 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [Possible bug] diff-tree --stat info does not count copies
-Date: Thu, 17 Aug 2006 02:40:08 -0700
-Message-ID: <7vveorsnt3.fsf@assigned-by-dhcp.cox.net>
-References: <e5bfff550608170219q12fcb34ewf93a195eabe0b94a@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: use action dispatcher for non-project actions, too.
+Date: Thu, 17 Aug 2006 11:41:43 +0200
+Organization: At home
+Message-ID: <ec1dis$823$3@sea.gmane.org>
+References: <11557673213372-git-send-email-tali@admingilde.org> <11557673212235-git-send-email-tali@admingilde.org> <1155767325181-git-send-email-tali@admingilde.org> <11557673263081-git-send-email-tali@admingilde.org> <11557673262714-git-send-email-tali@admingilde.org> <11557673281583-git-send-email-tali@admingilde.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 17 11:40:24 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Thu Aug 17 11:41:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDeMI-0004nU-Bx
-	for gcvg-git@gmane.org; Thu, 17 Aug 2006 11:40:14 +0200
+	id 1GDeN9-0004us-K7
+	for gcvg-git@gmane.org; Thu, 17 Aug 2006 11:41:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964787AbWHQJkL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Aug 2006 05:40:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964788AbWHQJkL
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Aug 2006 05:40:11 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:36316 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S964787AbWHQJkJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Aug 2006 05:40:09 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060817094009.TRKG12909.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 17 Aug 2006 05:40:09 -0400
-To: "Marco Costalba" <mcostalba@gmail.com>
-In-Reply-To: <e5bfff550608170219q12fcb34ewf93a195eabe0b94a@mail.gmail.com>
-	(Marco Costalba's message of "Thu, 17 Aug 2006 11:19:06 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S964786AbWHQJlE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Aug 2006 05:41:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964788AbWHQJlE
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Aug 2006 05:41:04 -0400
+Received: from main.gmane.org ([80.91.229.2]:43406 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964786AbWHQJlC (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Aug 2006 05:41:02 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GDeN1-0004tb-JC
+	for git@vger.kernel.org; Thu, 17 Aug 2006 11:40:59 +0200
+Received: from host-81-190-24-196.torun.mm.pl ([81.190.24.196])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 17 Aug 2006 11:40:59 +0200
+Received: from jnareb by host-81-190-24-196.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 17 Aug 2006 11:40:59 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-196.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25575>
 
-"Marco Costalba" <mcostalba@gmail.com> writes:
+Martin Waitz wrote:
 
-> While testing qgit with the new rename/copy support  I found this
-> (possible) bug playing on git tree.
->
-> $ git-diff-tree -r --stat 6973dca
-> 6973dcaee76ef7b7bfcabd2f26e76205aae07858
->  Makefile                      |    2
-> diff-files.c                  |  212 +----
-> diff-lib.c                    | 1862 ++---------------------------------------
-> diff.c                        | 1795 ++++++++++++++++++++++++++++++++++++++++
-> diff.h                        |    7
-> t/t1001-read-tree-m-2way.sh   |    2
-> t/t1002-read-tree-m-u-2way.sh |    2
-> 7 files changed, 1929 insertions(+), 1953 deletions(-)
->
-> $ git-diff-tree -r --stat -C 6973dca
-> 6973dcaee76ef7b7bfcabd2f26e76205aae07858
->  Makefile                      |    2
-> diff-files.c                  |  212 +----
-> diff-lib.c                    | 1862 ++---------------------------------------
-> diff-lib.c => diff.c          |    0
-> diff.h                        |    7
-> t/t1001-read-tree-m-2way.sh   |    2
-> t/t1002-read-tree-m-u-2way.sh |    2
-> 7 files changed, 134 insertions(+), 1953 deletions(-)
->
-> IMHO the bug is
->
->   "diff-lib.c => diff.c          |    0"
->
-> instead of
->
->   "diff-lib.c => diff.c          |    1795"
->
-> because, after the patch applied, in the repository we have
-> 1953-1929=24 lines of code more, not 1953-134= 1819 less.
+> Project list and OPML generation are now hooked into the list as
+> "/summary" and "/opml".
 
-Interesting.  That's really a matter of taste and interpretation.
+It would be better to use "/list" or "/projects", although empty or undef or
+"/" action would work as well.
 
-If it were a straight rename without changing a single line,
-then would you say 1795 lines were removed (from the LHS file)
-and 1795 lines were added (to the RHS file)?
+Having both "/summary" (for projects list) and "summary" (for project
+summary) is bad, bad idea.
 
-I personally find that output would be useless and would prefer
-it to say "I renamed file A to file B.  Content-wise, there were
-N lines added and M lines removed, compared to the straight
-rename case, by the way".
-
-And that is what the current output does.  I do not see why it
-should be different in the case of a copy instead of a rename.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
