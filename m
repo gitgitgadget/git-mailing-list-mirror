@@ -1,90 +1,77 @@
-From: Nicolas Pitre <nico@cam.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Huge win, compressing a window of delta runs as a unit
-Date: Thu, 17 Aug 2006 12:33:21 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0608171220260.11359@localhost.localdomain>
+Date: Thu, 17 Aug 2006 19:05:46 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0608171900130.28360@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <9e4733910608161020s6855140bs68aaab6e1bbd3bad@mail.gmail.com>
- <20060817040719.GC18500@spearce.org>
- <Pine.LNX.4.63.0608170943470.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060817040719.GC18500@spearce.org> <Pine.LNX.4.63.0608170943470.28360@wbgn013.biozentrum.uni-wuerzburg.de>
  <Pine.LNX.4.63.0608171003020.28360@wbgn013.biozentrum.uni-wuerzburg.de>
  <9e4733910608170736y4863e0ebr55c6c822ae548cca@mail.gmail.com>
  <Pine.LNX.4.63.0608171738490.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0608171220260.11359@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
 Cc: Jon Smirl <jonsmirl@gmail.com>, Shawn Pearce <spearce@spearce.org>,
 	git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 17 18:33:44 2006
+X-From: git-owner@vger.kernel.org Thu Aug 17 19:06:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDkoA-0006QQ-9p
-	for gcvg-git@gmane.org; Thu, 17 Aug 2006 18:33:26 +0200
+	id 1GDlJd-000562-JB
+	for gcvg-git@gmane.org; Thu, 17 Aug 2006 19:05:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965059AbWHQQdX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Aug 2006 12:33:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965063AbWHQQdX
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Aug 2006 12:33:23 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:59722 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S965059AbWHQQdW
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Aug 2006 12:33:22 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J4500ILSHZLBI60@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 17 Aug 2006 12:33:21 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.63.0608171738490.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-X-X-Sender: nico@localhost.localdomain
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	id S965056AbWHQRFu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Aug 2006 13:05:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965147AbWHQRFt
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Aug 2006 13:05:49 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41382 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S965056AbWHQRFs (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Aug 2006 13:05:48 -0400
+Received: (qmail invoked by alias); 17 Aug 2006 17:05:47 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp010) with SMTP; 17 Aug 2006 19:05:47 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0608171220260.11359@localhost.localdomain>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25592>
 
-On Thu, 17 Aug 2006, Johannes Schindelin wrote:
+Hi,
 
-> Hi,
+On Thu, 17 Aug 2006, Nicolas Pitre wrote:
+
+> On Thu, 17 Aug 2006, Johannes Schindelin wrote:
 > 
-> On Thu, 17 Aug 2006, Jon Smirl wrote:
-> 
-> > On 8/17/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > At least, the delta-chains should be limited by size (_not_ by number of
-> > > deltas: you can have huge deltas, and if you have to unpack 5 huge deltas
-> > > before getting to the huge delta you really need, it takes really long).
+> > On Thu, 17 Aug 2006, Jon Smirl wrote:
 > > 
-> > This is not an obvious conclusion.
+> > > On 8/17/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > > > At least, the delta-chains should be limited by size (_not_ by number of
+> > > > deltas: you can have huge deltas, and if you have to unpack 5 huge deltas
+> > > > before getting to the huge delta you really need, it takes really long).
+> > > 
+> > > This is not an obvious conclusion.
+> > 
+> > The big win is bought by having _one_ zlib stream for multiple deltas, 
+> > right?
+> > 
+> > So, everytime you want to access the _last_ delta in the chain, you unpack 
+> > _all_ of them.
 > 
-> The big win is bought by having _one_ zlib stream for multiple deltas, 
-> right?
-> 
-> So, everytime you want to access the _last_ delta in the chain, you unpack 
-> _all_ of them.
+> This is the case whether deltas are separately deflated or not.
 
-This is the case whether deltas are separately deflated or not.
+Oh, now I get it! The delta chain is comprised of exactly those deltas 
+which are needed to reconstruct a certain object from another object which 
+was stored undeltified in the pack.
 
-> This quite obvious conclusion is obviously your reason to 
-> propose two packs, one for the archive of "old" objects, and one for the 
-> "new" objects.
+Now it makes sense to me that they could be bundled before being deflated. 
+In the pack-index, the objects of that delta-chain could just point to 
+the delta-chain object. Which has a mini-index in its extended header.
 
-Old objects are usually further down the delta chain and also stored 
-further from the beginning of the pack.  Hence "new" objects could still 
-have quick access since even if a delta chain is all in the same zlib 
-stream, it is likely that inflating the whole of the zlib stream to get 
-"new" objects won't be necessary, just like it is done now where only 
-the needed deltas are inflated.
+Or did I misunderstand again?
 
-> > As for public servers there is an immediate win in shifting to the new
-> > pack format.  Three hour downloads vs one hour, plus the bandwidth
-> > bills. Are the tools smart enough to say this is a newer pack format,
-> > upgrade? It takes far less than two hours to upgrade your git install.
-> 
-> Have you thought about a non-upgraded client? The server has to repack in 
-> that case, and if the client wants a clone, you might not even have the 
-> time to kiss your server good-bye before it goes belly up.
-
-Nah.  The only overhead for a server to feed an "old" pack format from a 
-"new" pack file is to inflate and deflate some data.  That is not _that_ 
-costly.
-
-
-Nicolas
+Ciao,
+Dscho
