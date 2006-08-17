@@ -1,61 +1,78 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: Huge win, compressing a window of delta runs as a unit
-Date: Thu, 17 Aug 2006 13:22:15 -0400
-Message-ID: <9e4733910608171022w25886d13ka40e5752fec4680b@mail.gmail.com>
+Date: Thu, 17 Aug 2006 13:32:26 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0608171323330.11359@localhost.localdomain>
 References: <9e4733910608161020s6855140bs68aaab6e1bbd3bad@mail.gmail.com>
-	 <20060817040719.GC18500@spearce.org>
-	 <Pine.LNX.4.63.0608170943470.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <Pine.LNX.4.63.0608171003020.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <9e4733910608170736y4863e0ebr55c6c822ae548cca@mail.gmail.com>
-	 <Pine.LNX.4.63.0608171738490.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <Pine.LNX.4.64.0608171220260.11359@localhost.localdomain>
+ <20060817040719.GC18500@spearce.org>
+ <Pine.LNX.4.63.0608170943470.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.63.0608171003020.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+ <9e4733910608170736y4863e0ebr55c6c822ae548cca@mail.gmail.com>
+ <Pine.LNX.4.63.0608171738490.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+ <9e4733910608171017k628ef754s4fcd075d60aaf062@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Shawn Pearce" <spearce@spearce.org>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 17 19:22:35 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 17 19:32:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDlZU-0008B1-K3
-	for gcvg-git@gmane.org; Thu, 17 Aug 2006 19:22:21 +0200
+	id 1GDljL-0001Pr-0c
+	for gcvg-git@gmane.org; Thu, 17 Aug 2006 19:32:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030186AbWHQRWQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Aug 2006 13:22:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030187AbWHQRWQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Aug 2006 13:22:16 -0400
-Received: from nz-out-0102.google.com ([64.233.162.197]:3926 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1030186AbWHQRWP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Aug 2006 13:22:15 -0400
-Received: by nz-out-0102.google.com with SMTP id n1so390334nzf
-        for <git@vger.kernel.org>; Thu, 17 Aug 2006 10:22:15 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=a3Cn67m/qB/8ugnw4g7WWtvjHeFQDID+GZW7J9w8ycrGIIsKUXQLd34SA+j2t+qVad1ZOG5l20pT3wERba1djBG7fTjs7/EbVzmCa3oXtJN/4hJQ0i2PZ+SBZ45iMpu3a8MqxsLTir3ZqTRPhBfnDe9pxAc4s81+mdQWH6QieZ0=
-Received: by 10.65.251.1 with SMTP id d1mr2510267qbs;
-        Thu, 17 Aug 2006 10:22:15 -0700 (PDT)
-Received: by 10.65.133.17 with HTTP; Thu, 17 Aug 2006 10:22:15 -0700 (PDT)
-To: "Nicolas Pitre" <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0608171220260.11359@localhost.localdomain>
-Content-Disposition: inline
+	id S1030192AbWHQRc2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Aug 2006 13:32:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932474AbWHQRc2
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Aug 2006 13:32:28 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:54521 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S932348AbWHQRc0
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Aug 2006 13:32:26 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J4500BE7KQ2JN30@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 17 Aug 2006 13:32:26 -0400 (EDT)
+In-reply-to: <9e4733910608171017k628ef754s4fcd075d60aaf062@mail.gmail.com>
+X-X-Sender: nico@localhost.localdomain
+To: Jon Smirl <jonsmirl@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25597>
 
-On 8/17/06, Nicolas Pitre <nico@cam.org> wrote:
-> Nah.  The only overhead for a server to feed an "old" pack format from a
-> "new" pack file is to inflate and deflate some data.  That is not _that_
-> costly.
+On Thu, 17 Aug 2006, Jon Smirl wrote:
 
-It is costly because the Mozilla pack is going to inflate from 295MB
-to 845MB. It will take you much longer to download an extra 500MB than
-upgrading your client would take.
+> Is there a pack format version number built into the server procotol?
+> If not there needs to be one. When there is a mismatch with the server
+> pack version the client should simply display an error requesting an
+> upgrade of the client software.
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+There is a pack version number.  Reception of an unknown pack already 
+produces an error:
+
+        if (!pack_version_ok(hdr->hdr_version))
+                die("unknown pack file version %d", ntohl(hdr->hdr_version));
+
+That will occur really early in a pull or clone when using the native 
+protocol.
+
+> Git should be designed for forward evolution, not infinite backward
+> compatibility. It is easy to upgrade your client to support the new
+> protocol. The protocol just needs to ensure that the client reliably
+> gets an error about the need to upgrade.
+> 
+> Forward evolution implies that a client is able to work with older
+> servers, but not the inverse, that new servers have to work with old
+> clients.
+
+And still, if we really wanted, the server could have the ability to 
+stream an old pack format by simply inflating the grouped objects and 
+deflating them individually all on the fly, which is not necessarily 
+that costly.  But it might still be a good idea to simply have the 
+ability to generate both formats and make the grouped deltas the default 
+only after a while.
+
+
+Nicolas
