@@ -1,64 +1,88 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Huge win, compressing a window of delta runs as a unit
-Date: Thu, 17 Aug 2006 10:07:24 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0608171003020.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <9e4733910608161020s6855140bs68aaab6e1bbd3bad@mail.gmail.com>
- <20060817040719.GC18500@spearce.org> <Pine.LNX.4.63.0608170943470.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Michael S. Tsirkin" <mst@mellanox.co.il>
+Subject: git log - filter missing changesets
+Date: Thu, 17 Aug 2006 11:25:58 +0300
+Message-ID: <20060817082558.GB2630@mellanox.co.il>
+Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jon Smirl <jonsmirl@gmail.com>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 17 10:07:34 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Aug 17 10:27:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDcua-0000FG-5A
-	for gcvg-git@gmane.org; Thu, 17 Aug 2006 10:07:32 +0200
+	id 1GDdDQ-0002xW-Pi
+	for gcvg-git@gmane.org; Thu, 17 Aug 2006 10:27:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932163AbWHQIH2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Aug 2006 04:07:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932262AbWHQIH1
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Aug 2006 04:07:27 -0400
-Received: from mail.gmx.de ([213.165.64.20]:37078 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932163AbWHQIH0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Aug 2006 04:07:26 -0400
-Received: (qmail invoked by alias); 17 Aug 2006 08:07:24 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp037) with SMTP; 17 Aug 2006 10:07:24 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <Pine.LNX.4.63.0608170943470.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Y-GMX-Trusted: 0
+	id S932309AbWHQI00 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Aug 2006 04:26:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932312AbWHQI00
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Aug 2006 04:26:26 -0400
+Received: from mxl145v67.mxlogic.net ([208.65.145.67]:43733 "EHLO
+	p02c11o144.mxlogic.net") by vger.kernel.org with ESMTP
+	id S932305AbWHQI0Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Aug 2006 04:26:25 -0400
+Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
+	by p02c11o144.mxlogic.net (mxl_mta-3.0.0-12)
+	with ESMTP id 03824e44.2638146480.9301.00-005.p02c11o144.mxlogic.net (envelope-from <mst@mellanox.co.il>);
+	Thu, 17 Aug 2006 02:26:24 -0600 (MDT)
+Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 17 Aug 2006 11:32:30 +0300
+Received: by mellanox.co.il (sSMTP sendmail emulation); Thu, 17 Aug 2006 11:25:58 +0300
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.1i
+X-OriginalArrivalTime: 17 Aug 2006 08:32:30.0859 (UTC) FILETIME=[AE08F5B0:01C6C1D7]
+X-Spam: [F=0.0100000000; S=0.010(2006062901)]
+X-MAIL-FROM: <mst@mellanox.co.il>
+X-SOURCE-IP: [194.90.237.34]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25557>
 
-Hi,
+Hi!
+git log with -- parameter seems to sometimes miss changesets that
+affect a specific directory:
 
-On Thu, 17 Aug 2006, Johannes Schindelin wrote:
+>git  log -p vofed-1.1-rc1.. -- drivers/infiniband/ulp/sdp/ | \
+  grep drivers/infiniband/ulp/sdp
+diff --git a/drivers/infiniband/ulp/sdp/sdp.h b/drivers/infiniband/ulp/sdp/sdp.h
+--- a/drivers/infiniband/ulp/sdp/sdp.h
++++ b/drivers/infiniband/ulp/sdp/sdp.h
+diff --git a/drivers/infiniband/ulp/sdp/sdp_bcopy.c
+b/drivers/infiniband/ulp/sdp/sdp_bcopy.c
+--- a/drivers/infiniband/ulp/sdp/sdp_bcopy.c
++++ b/drivers/infiniband/ulp/sdp/sdp_bcopy.c
+diff --git a/drivers/infiniband/ulp/sdp/sdp_main.c
+b/drivers/infiniband/ulp/sdp/sdp_main.c
+--- a/drivers/infiniband/ulp/sdp/sdp_main.c
++++ b/drivers/infiniband/ulp/sdp/sdp_main.c
 
-> However, I see some real problems when a public repository has a pack like 
-> this: if the client is older, the server has to do some real work, 
-> especially in the case of a fresh clone. It gets even worse with a public 
-> HTTP repo.
-> 
-> The obvious short-time solution would be to make this opt-in, and use it 
-> only on private repositories.
-> 
-> Then, one could think about how to handle the delta-chains in the pack 
-> protocol (it should be easy, since you just have to store one object 
-> instead of a few), and make this a "supports" option.
 
-Oh, and I completely forgot: IIUC you have to unpack the (possibly big) 
-delta-chain until you have the delta you really want, right? So, you might 
-want to have a clever mechanism to keep the delta-chains short for recent 
-objects (i.e. objects you are likely to need more often).
+but without a filter:
 
-At least, the delta-chains should be limited by size (_not_ by number of 
-deltas: you can have huge deltas, and if you have to unpack 5 huge deltas 
-before getting to the huge delta you really need, it takes really long).
+>git  log -p vofed-1.1-rc1.. | \
+      grep drivers/infiniband/ulp/sdp drivers/infiniband/ulp/sdp/sdp_main.c
+diff --git a/drivers/infiniband/ulp/sdp/sdp.h b/drivers/infiniband/ulp/sdp/sdp.h
+--- a/drivers/infiniband/ulp/sdp/sdp.h
++++ b/drivers/infiniband/ulp/sdp/sdp.h
+diff --git a/drivers/infiniband/ulp/sdp/sdp_bcopy.c b/drivers/infiniband/ulp/sdp/sdp_bcopy.c
+--- a/drivers/infiniband/ulp/sdp/sdp_bcopy.c
++++ b/drivers/infiniband/ulp/sdp/sdp_bcopy.c
+diff --git a/drivers/infiniband/ulp/sdp/sdp_main.c b/drivers/infiniband/ulp/sdp/sdp_main.c
+--- a/drivers/infiniband/ulp/sdp/sdp_main.c
++++ b/drivers/infiniband/ulp/sdp/sdp_main.c
+diff --git a/drivers/infiniband/ulp/sdp/sdp.h b/drivers/infiniband/ulp/sdp/sdp.h
+--- a/drivers/infiniband/ulp/sdp/sdp.h
++++ b/drivers/infiniband/ulp/sdp/sdp.h
+diff --git a/drivers/infiniband/ulp/sdp/sdp_bcopy.c b/drivers/infiniband/ulp/sdp/sdp_bcopy.c
+--- a/drivers/infiniband/ulp/sdp/sdp_bcopy.c
++++ b/drivers/infiniband/ulp/sdp/sdp_bcopy.c
+diff --git a/drivers/infiniband/ulp/sdp/sdp_main.c b/drivers/infiniband/ulp/sdp/sdp_main.c
+--- a/drivers/infiniband/ulp/sdp/sdp_main.c
++++ b/drivers/infiniband/ulp/sdp/sdp_main.c
 
-Ciao,
-Dscho
+what gives?
+
+-- 
+MST
