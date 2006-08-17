@@ -1,83 +1,61 @@
-From: Nicolas Pitre <nico@cam.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
 Subject: Re: Huge win, compressing a window of delta runs as a unit
-Date: Thu, 17 Aug 2006 13:22:02 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0608171233370.11359@localhost.localdomain>
+Date: Thu, 17 Aug 2006 13:22:15 -0400
+Message-ID: <9e4733910608171022w25886d13ka40e5752fec4680b@mail.gmail.com>
 References: <9e4733910608161020s6855140bs68aaab6e1bbd3bad@mail.gmail.com>
- <20060817040719.GC18500@spearce.org>
+	 <20060817040719.GC18500@spearce.org>
+	 <Pine.LNX.4.63.0608170943470.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <Pine.LNX.4.63.0608171003020.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <9e4733910608170736y4863e0ebr55c6c822ae548cca@mail.gmail.com>
+	 <Pine.LNX.4.63.0608171738490.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <Pine.LNX.4.64.0608171220260.11359@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jon Smirl <jonsmirl@gmail.com>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 17 19:22:14 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Shawn Pearce" <spearce@spearce.org>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 17 19:22:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDlZJ-00088N-5v
-	for gcvg-git@gmane.org; Thu, 17 Aug 2006 19:22:09 +0200
+	id 1GDlZU-0008B1-K3
+	for gcvg-git@gmane.org; Thu, 17 Aug 2006 19:22:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030184AbWHQRWF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Aug 2006 13:22:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030186AbWHQRWE
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Aug 2006 13:22:04 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:64981 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1030184AbWHQRWD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Aug 2006 13:22:03 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J4500MGMK8Q9XE0@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 17 Aug 2006 13:22:02 -0400 (EDT)
-In-reply-to: <20060817040719.GC18500@spearce.org>
-X-X-Sender: nico@localhost.localdomain
-To: Shawn Pearce <spearce@spearce.org>
+	id S1030186AbWHQRWQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Aug 2006 13:22:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030187AbWHQRWQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Aug 2006 13:22:16 -0400
+Received: from nz-out-0102.google.com ([64.233.162.197]:3926 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1030186AbWHQRWP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Aug 2006 13:22:15 -0400
+Received: by nz-out-0102.google.com with SMTP id n1so390334nzf
+        for <git@vger.kernel.org>; Thu, 17 Aug 2006 10:22:15 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=a3Cn67m/qB/8ugnw4g7WWtvjHeFQDID+GZW7J9w8ycrGIIsKUXQLd34SA+j2t+qVad1ZOG5l20pT3wERba1djBG7fTjs7/EbVzmCa3oXtJN/4hJQ0i2PZ+SBZ45iMpu3a8MqxsLTir3ZqTRPhBfnDe9pxAc4s81+mdQWH6QieZ0=
+Received: by 10.65.251.1 with SMTP id d1mr2510267qbs;
+        Thu, 17 Aug 2006 10:22:15 -0700 (PDT)
+Received: by 10.65.133.17 with HTTP; Thu, 17 Aug 2006 10:22:15 -0700 (PDT)
+To: "Nicolas Pitre" <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0608171220260.11359@localhost.localdomain>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25595>
 
-On Thu, 17 Aug 2006, Shawn Pearce wrote:
+On 8/17/06, Nicolas Pitre <nico@cam.org> wrote:
+> Nah.  The only overhead for a server to feed an "old" pack format from a
+> "new" pack file is to inflate and deflate some data.  That is not _that_
+> costly.
 
-> I'm going to try to integrate this into core GIT this weekend.
-> My current idea is to make use of the OBJ_EXT type flag to add
-> an extended header field behind the length which describes the
-> "chunk" as being a delta chain compressed in one zlib stream.
-> I'm not overly concerned about saving lots of space in the header
-> here as it looks like we're winning a huge amount of pack space,
-> so the extended header will probably itself be a couple of bytes.
-> This keeps the shorter reserved types free for other great ideas.  :)
+It is costly because the Mozilla pack is going to inflate from 295MB
+to 845MB. It will take you much longer to download an extra 500MB than
+upgrading your client would take.
 
-We're streaving for optimal data storage here so don't be afraid to use 
-one of the available types for an "object stream" object.  Because when 
-you think of it, the deflating of multiple objects into a single zlib 
-stream can be applied to all object types not only deltas.  If ever 
-deflating many blobs into one zlib stream is dimmed worth it then the 
-encoding will already be ready for it.  Also you can leverage existing 
-code to write headers, etc.
-
-I'd suggest you use OBJ_GROUP = 0 as a new primary object type.  Then 
-the "size" field in the header could then become the number of objects 
-that are included in the group.  Most of the time that will fit in the 
-low 4 bits of the first header byte, but if there is more than 15 
-grouped objects then more bits can be used on the following byte.  
-Anyway so far all the code to generate and parse that is already there.  
-If ever there is a need for more extensions that could be prefixed with 
-a pure zero byte (an object group with a zero object count which is 
-distinguishable from a real group).
-
-Then, having the number of grouped objects, you just have to list the 
-usual headers for those objects, which are their type and inflated size 
-just like regular object headers, including the base sha1 for deltas.  
-Again you already have code to produce and parse those.
-
-And finally just append the objects payload in a single deflated stream.
-
-This way the reading of an object from a group can be optimized if the 
-object data is located at the beginning of the stream such that you only 
-need to inflate the amount of bytes leading to the desired data 
-(possibly caching those for further delta replaying), inflate 
-the needed data for the desired object and then ignoring the remaining 
-of the stream.
-
-
-Nicolas
+-- 
+Jon Smirl
+jonsmirl@gmail.com
