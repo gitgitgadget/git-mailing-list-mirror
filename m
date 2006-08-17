@@ -1,66 +1,133 @@
-From: "Jakub Narebski" <jnareb@gmail.com>
-Subject: Re: [PATCH 4/7] gitweb: Expand href() function to use key as param name for no mapping
-Date: Thu, 17 Aug 2006 12:08:06 +0200
-Message-ID: <8fe92b430608170308n42942798xf50f814052bee1c4@mail.gmail.com>
-References: <11558064883957-git-send-email-jnareb@gmail.com>
-	 <11558064893139-git-send-email-jnareb@gmail.com>
-	 <7v8xlnsmyl.fsf@assigned-by-dhcp.cox.net>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [Possible bug] diff-tree --stat info does not count copies
+Date: Thu, 17 Aug 2006 12:54:15 +0200
+Message-ID: <e5bfff550608170354i45104458h3b7e2ec8c668fb9c@mail.gmail.com>
+References: <e5bfff550608170219q12fcb34ewf93a195eabe0b94a@mail.gmail.com>
+	 <7vveorsnt3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 17 12:08:29 2006
+X-From: git-owner@vger.kernel.org Thu Aug 17 12:54:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDenN-0008W4-RR
-	for gcvg-git@gmane.org; Thu, 17 Aug 2006 12:08:14 +0200
+	id 1GDfVz-0006Dx-JA
+	for gcvg-git@gmane.org; Thu, 17 Aug 2006 12:54:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932414AbWHQKIJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Aug 2006 06:08:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932468AbWHQKII
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Aug 2006 06:08:08 -0400
-Received: from nf-out-0910.google.com ([64.233.182.189]:46221 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S932414AbWHQKIH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Aug 2006 06:08:07 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so926401nfa
-        for <git@vger.kernel.org>; Thu, 17 Aug 2006 03:08:06 -0700 (PDT)
+	id S964794AbWHQKyQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Aug 2006 06:54:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932475AbWHQKyQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Aug 2006 06:54:16 -0400
+Received: from py-out-1112.google.com ([64.233.166.183]:5955 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S932474AbWHQKyP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Aug 2006 06:54:15 -0400
+Received: by py-out-1112.google.com with SMTP id z74so1390791pyg
+        for <git@vger.kernel.org>; Thu, 17 Aug 2006 03:54:15 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=S6/rZgCnSKW4NuDepie+WIKPeuLU3BZ5lx8OKsGtdWweztA44ywTTrUTMYCfB1rXIwTb0taGOPg7hDiq0ceMIvz/Y0VWCu6zTseIEFjCTSvL8elGAUfKxHWHmKoGfY3gl7mowD89HWMxbsRcyb/cKwH5o8OtbPw18rIXGRxqNAs=
-Received: by 10.48.210.20 with SMTP id i20mr2018454nfg;
-        Thu, 17 Aug 2006 03:08:06 -0700 (PDT)
-Received: by 10.78.128.20 with HTTP; Thu, 17 Aug 2006 03:08:06 -0700 (PDT)
+        b=HgVWgMK/+e2LZ3hYhPIPokwjw+GFarJP1dgnWJfk7zR0qkyMACm/G8Bwid8S5PdYMv36/++3NQORPajYWmfsmZwhno6j1zoPY/WZKhOM+hWexKuoeBaYI5Cl7aGMxPjRgdyYyBwfYWpDyMR6mYzvEIvGezZyxPYuHyfKMFh1xvo=
+Received: by 10.35.63.2 with SMTP id q2mr3328141pyk;
+        Thu, 17 Aug 2006 03:54:15 -0700 (PDT)
+Received: by 10.35.95.9 with HTTP; Thu, 17 Aug 2006 03:54:14 -0700 (PDT)
 To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7v8xlnsmyl.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7vveorsnt3.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25581>
 
 On 8/17/06, Junio C Hamano <junkio@cox.net> wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
+> "Marco Costalba" <mcostalba@gmail.com> writes:
 >
-> > Expand href() function to use key name of params hash as a query param
-> > name, if there is no mapping for given key name.
+> > While testing qgit with the new rename/copy support  I found this
+> > (possible) bug playing on git tree.
 > >
-> > It is now safer to use href(); no errors, but links might not work
-> > correctly if caller didn't provide correct arguments.
+> > $ git-diff-tree -r --stat 6973dca
+> > 6973dcaee76ef7b7bfcabd2f26e76205aae07858
+> >  Makefile                      |    2
+> > diff-files.c                  |  212 +----
+> > diff-lib.c                    | 1862 ++---------------------------------------
+> > diff.c                        | 1795 ++++++++++++++++++++++++++++++++++++++++
+> > diff.h                        |    7
+> > t/t1001-read-tree-m-2way.sh   |    2
+> > t/t1002-read-tree-m-u-2way.sh |    2
+> > 7 files changed, 1929 insertions(+), 1953 deletions(-)
 > >
-> > Future proofing.
+> > $ git-diff-tree -r --stat -C 6973dca
+> > 6973dcaee76ef7b7bfcabd2f26e76205aae07858
+> >  Makefile                      |    2
+> > diff-files.c                  |  212 +----
+> > diff-lib.c                    | 1862 ++---------------------------------------
+> > diff-lib.c => diff.c          |    0
+> > diff.h                        |    7
+> > t/t1001-read-tree-m-2way.sh   |    2
+> > t/t1002-read-tree-m-u-2way.sh |    2
+> > 7 files changed, 134 insertions(+), 1953 deletions(-)
+> >
+> > IMHO the bug is
+> >
+> >   "diff-lib.c => diff.c          |    0"
+> >
+> > instead of
+> >
+> >   "diff-lib.c => diff.c          |    1795"
+> >
+> > because, after the patch applied, in the repository we have
+> > 1953-1929=24 lines of code more, not 1953-134= 1819 less.
 >
-> I think that is not a "future proofing" but is "sweeping mess
-> under the rug" ;-).
-At least leave 'if (exists $mapping{$_})' even if you remove the 'else' part.
+> Interesting.  That's really a matter of taste and interpretation.
+>
+> If it were a straight rename without changing a single line,
+> then would you say 1795 lines were removed (from the LHS file)
+> and 1795 lines were added (to the RHS file)?
+>
+> I personally find that output would be useless and would prefer
+> it to say "I renamed file A to file B.  Content-wise, there were
+> N lines added and M lines removed, compared to the straight
+> rename case, by the way".
+>
+> And that is what the current output does.  I do not see why it
+> should be different in the case of a copy instead of a rename.
+>
 
-[...]
-> Obviously unrelated and probably unplanned revert of [2/7] in
-> the series, so will not apply.
-Ooops, sorry, I haven't noticed this... Very unplanned.
+Because after a copy you have 2 files, not still one. And the 'after
+copied' file cannot be the original, but a new file, because the
+original is still alive.
 
--- 
-Jakub Narebski
+Perhaps I can explain better myself taking in account the _couple_ of
+files involved in both cases:
+
+Without -C we have
+
+diff-lib.c                    | 1862 ++---------------------------------------
+diff.c                        | 1795 ++++++++++++++++++++++++++++++++++++++++
+
+With -C option is
+
+ diff-lib.c                    | 1862 ++---------------------------------------
+ diff-lib.c => diff.c          |    0
+
+If it was a rename we had something like:
+
+diff-lib.c                  | 1795 -----------------------------------------
+diff.c                        | 1795 ++++++++++++++++++++++++++++++++++++++++
+
+and, with -C
+
+diff-lib.c => diff.c          |    0
+
+and _this_ is correct. But with copy  diff-lib.c => diff.c  should not
+stay at zero lines changed because diff.c is not the same of
+diff-lib.c, but it's a _new_ file created with the same content of
+diff-lib.c and _then_ the original and only diff-lib.c file is further
+modified on his own (in our case changing 1862 lines).
+
+Please tell me where I get wrong.
+
+Thanks
+Marco
