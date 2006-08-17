@@ -1,78 +1,102 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: [Possible bug] diff-tree --stat info does not count copies
-Date: Thu, 17 Aug 2006 11:19:06 +0200
-Message-ID: <e5bfff550608170219q12fcb34ewf93a195eabe0b94a@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "GIT list" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 17 11:19:28 2006
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 1/7] gitweb: Add support for per project git URLs
+Date: Thu, 17 Aug 2006 11:21:22 +0200
+Message-ID: <11558064894129-git-send-email-jnareb@gmail.com>
+References: <11558064883957-git-send-email-jnareb@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	"Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 17 11:21:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDe1z-0001mw-59
-	for gcvg-git@gmane.org; Thu, 17 Aug 2006 11:19:15 +0200
+	id 1GDe4K-00029F-4r
+	for gcvg-git@gmane.org; Thu, 17 Aug 2006 11:21:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932393AbWHQJTK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Aug 2006 05:19:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932409AbWHQJTK
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Aug 2006 05:19:10 -0400
-Received: from py-out-1112.google.com ([64.233.166.182]:30997 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S932393AbWHQJTH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Aug 2006 05:19:07 -0400
-Received: by py-out-1112.google.com with SMTP id z74so1349863pyg
-        for <git@vger.kernel.org>; Thu, 17 Aug 2006 02:19:06 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=HHWv4491+EAoAhWFSYwNBlwmOL/0940ortPeiaGgWveEn/b05kKpSfRFgKVGUubaEKYPWs4Vu3g62cKmmOjtIFV/D0jutn3o9JpCus14M8L2n3fE1EMQGjp6ijA7STmddkbvEjFhddJWInezUNr44YQNjoOT80G7JvyCLofUO5M=
-Received: by 10.35.9.15 with SMTP id m15mr3237231pyi;
-        Thu, 17 Aug 2006 02:19:06 -0700 (PDT)
-Received: by 10.35.95.9 with HTTP; Thu, 17 Aug 2006 02:19:06 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-Content-Disposition: inline
+	id S932457AbWHQJVh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Aug 2006 05:21:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932458AbWHQJVg
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Aug 2006 05:21:36 -0400
+Received: from mail.fuw.edu.pl ([193.0.80.14]:17032 "EHLO mail.fuw.edu.pl")
+	by vger.kernel.org with ESMTP id S932457AbWHQJVe (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Aug 2006 05:21:34 -0400
+Received: from front.fuw.edu.pl (front.fuw.edu.pl [193.0.83.59])
+	by mail.fuw.edu.pl (8.13.6/8.13.6) with ESMTP id k7H9KPGR023242
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 17 Aug 2006 11:20:25 +0200
+Received: from front.fuw.edu.pl (IDENT:10582@localhost [127.0.0.1])
+	by front.fuw.edu.pl (8.13.3/8.12.4) with ESMTP id k7H9LTqF003689;
+	Thu, 17 Aug 2006 11:21:29 +0200
+Received: (from jnareb@localhost)
+	by front.fuw.edu.pl (8.13.3/8.12.4/Submit) id k7H9LTd5003688;
+	Thu, 17 Aug 2006 11:21:29 +0200
+To: git@vger.kernel.org
+X-Mailer: git-send-email 1.3.0
+In-Reply-To: <11558064883957-git-send-email-jnareb@gmail.com>
+X-Scanned-By: MIMEDefang 2.56 on 193.0.80.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25564>
 
-While testing qgit with the new rename/copy support  I found this
-(possible) bug playing on git tree.
+It is now possible for project to have individual clone/fetch URLs.
+They are provided in new file 'cloneurl' added below project's
+$GIT_DIR directory.
 
-$ git-diff-tree -r --stat 6973dca
-6973dcaee76ef7b7bfcabd2f26e76205aae07858
-  Makefile                      |    2
- diff-files.c                  |  212 +----
- diff-lib.c                    | 1862 ++---------------------------------------
- diff.c                        | 1795 ++++++++++++++++++++++++++++++++++++++++
- diff.h                        |    7
- t/t1001-read-tree-m-2way.sh   |    2
- t/t1002-read-tree-m-u-2way.sh |    2
- 7 files changed, 1929 insertions(+), 1953 deletions(-)
+If there is no cloneurl file, concatenation of git base URLs with
+project name is used.
 
-$ git-diff-tree -r --stat -C 6973dca
-6973dcaee76ef7b7bfcabd2f26e76205aae07858
-  Makefile                      |    2
- diff-files.c                  |  212 +----
- diff-lib.c                    | 1862 ++---------------------------------------
- diff-lib.c => diff.c          |    0
- diff.h                        |    7
- t/t1001-read-tree-m-2way.sh   |    2
- t/t1002-read-tree-m-u-2way.sh |    2
- 7 files changed, 134 insertions(+), 1953 deletions(-)
+This is merge of Jakub Narebski and David Rientjes
+  gitweb: Show project's git URL on summary page
+with Aneesh Kumar
+  gitweb: Add support for cloneurl.
+  gitweb: Support multiple clone urls
+patches.
 
-IMHO the bug is
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
+---
+ gitweb/gitweb.perl |   20 +++++++++++++++++---
+ 1 files changed, 17 insertions(+), 3 deletions(-)
 
-   "diff-lib.c => diff.c          |    0"
-
-instead of
-
-   "diff-lib.c => diff.c          |    1795"
-
-because, after the patch applied, in the repository we have
-1953-1929=24 lines of code more, not 1953-134= 1819 less.
-
-Thanks
-Marco
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 37a6284..7c92ac3 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -533,6 +533,16 @@ sub git_get_project_description {
+ 	return $descr;
+ }
+ 
++sub git_get_project_url_list {
++	my $path = shift;
++
++	open my $fd, "$projectroot/$path/cloneurl" or return undef;
++	my @git_project_url_list = map { chomp; $_ } <$fd>;
++	close $fd;
++
++	return wantarray ? @git_project_url_list : \@git_project_url_list;
++}
++
+ sub git_get_projects_list {
+ 	my @list;
+ 
+@@ -1697,10 +1707,14 @@ sub git_summary {
+ 	      "<tr><td>description</td><td>" . esc_html($descr) . "</td></tr>\n" .
+ 	      "<tr><td>owner</td><td>$owner</td></tr>\n" .
+ 	      "<tr><td>last change</td><td>$cd{'rfc2822'}</td></tr>\n";
++	# use per project git URL list in $projectroot/$project/cloneurl
++	# or make project git URL from git base URL and project name
+ 	my $url_tag = "URL";
+-	foreach my $git_base_url (@git_base_url_list) {
+-		next unless $git_base_url;
+-		print "<tr><td>$url_tag</td><td>$git_base_url/$project</td></tr>\n";
++	my @url_list = git_get_project_url_list($project);
++	@url_list = map { "$_/$project" } @git_base_url_list unless @url_list;
++	foreach my $git_url (@url_list) {
++		next unless $git_url;
++		print "<tr><td>$url_tag</td><td>$git_url</td></tr>\n";
+ 		$url_tag = "";
+ 	}
+ 	print "</table>\n";
+-- 
+1.4.1.1
