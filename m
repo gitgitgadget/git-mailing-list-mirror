@@ -1,73 +1,100 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: use common parameter parsing and generation for "o", too.
-Date: Thu, 17 Aug 2006 21:34:38 +0200
-Message-ID: <200608172134.38751.jnareb@gmail.com>
-References: <11557673213372-git-send-email-tali@admingilde.org> <ec1d6q$823$2@sea.gmane.org> <20060817191300.GA11477@admingilde.org>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [PATCH] gitweb: use action dispatcher for non-project actions, too.
+Date: Thu, 17 Aug 2006 21:43:32 +0200
+Message-ID: <20060817194332.GC11477@admingilde.org>
+References: <11557673213372-git-send-email-tali@admingilde.org> <11557673212235-git-send-email-tali@admingilde.org> <1155767325181-git-send-email-tali@admingilde.org> <11557673263081-git-send-email-tali@admingilde.org> <11557673262714-git-send-email-tali@admingilde.org> <11557673281583-git-send-email-tali@admingilde.org> <7vk65815h1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="f+W+jCU1fRNres8c"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 17 21:33:59 2006
+X-From: git-owner@vger.kernel.org Thu Aug 17 21:43:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDncr-0003P8-JV
-	for gcvg-git@gmane.org; Thu, 17 Aug 2006 21:33:58 +0200
+	id 1GDnmD-00053W-DT
+	for gcvg-git@gmane.org; Thu, 17 Aug 2006 21:43:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030193AbWHQTdy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 Aug 2006 15:33:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751269AbWHQTdy
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Aug 2006 15:33:54 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:7702 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1751266AbWHQTdx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Aug 2006 15:33:53 -0400
-Received: by ug-out-1314.google.com with SMTP id m3so642375ugc
-        for <git@vger.kernel.org>; Thu, 17 Aug 2006 12:33:52 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=PaQKoJv1KN0i/uODf2GxA44ZqTpqGV5TmPQkaSU4HJ4vpXU04x268i6liydp9ekBKM4V4qrSqIw8Acoo5eUanGzS0GD96pYW2oQzMkhe/MlNgh70J0NdRAA+Iy+Wg2rMY7XU4blYTucOSwmPM7MARWodObKyA6r5/7RmmPR2iyk=
-Received: by 10.67.100.17 with SMTP id c17mr1393412ugm;
-        Thu, 17 Aug 2006 12:33:52 -0700 (PDT)
-Received: from host-81-190-26-94.torun.mm.pl ( [81.190.26.94])
-        by mx.gmail.com with ESMTP id y7sm3090808ugc.2006.08.17.12.33.51;
-        Thu, 17 Aug 2006 12:33:51 -0700 (PDT)
-To: Martin Waitz <tali@admingilde.org>
-User-Agent: KMail/1.9.3
-In-Reply-To: <20060817191300.GA11477@admingilde.org>
+	id S1751269AbWHQTne (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 Aug 2006 15:43:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751270AbWHQTne
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Aug 2006 15:43:34 -0400
+Received: from agent.admingilde.org ([213.95.21.5]:35035 "EHLO
+	mail.admingilde.org") by vger.kernel.org with ESMTP
+	id S1751269AbWHQTnd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Aug 2006 15:43:33 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1GDnm8-0003lk-6e; Thu, 17 Aug 2006 21:43:32 +0200
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <7vk65815h1.fsf@assigned-by-dhcp.cox.net>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25609>
 
-On Thu, Aug 17, 2006 at 21:13, Martin Waitz wrote:
-> On Thu, Aug 17, 2006 at 11:35:18AM +0200, Jakub Narebski wrote:
->>> The "o" (list order) parameter was handled special.
->>> Now it is generated with the common href() function and parsed together with
->>> all other parameters.
->>  
->> This was because "o" (sort table by) parameter was used only
->> in one place, and valid values of order parameter depends on
->> the place it is used.
-> 
-> But I'd really like to have all the parameter parsing and generation
-> code in one place.
-> 
-> Perhaps we can agree that only the validation should be coupled with the
-> actual user?  E.g. use normal validate_input() for it and then check
-> for actual values inside git_project_list (which is already done now).
 
-The validate_input() function has too generic name and is too widely used:
-it should be split into validate_ref() and validate_path(); perhaps "o"
-should be validate with $order =~ m/^[a-zA-Z]$/ 
+--f+W+jCU1fRNres8c
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-But I was thinking about moving parameter parsing to the "action" functions
-which use them, the opposite of what you want to do...
+hoi :)
 
--- 
-Jakub Narebski
-Poland
+On Wed, Aug 16, 2006 at 07:06:02PM -0700, Junio C Hamano wrote:
+> Martin Waitz <tali@admingilde.org> writes:
+>=20
+> > Allow to use the global action dispatcher for all actions by introducing
+> > "/actions".  If no project directory is given then a / is prepended to =
+the
+> > action and the normal dispatcher is called.
+> > Project list and OPML generation are now hooked into the list as "/summ=
+ary"
+> > and "/opml".
+> >
+> > As "/" is not an allowed character in actions accepted through the CGI
+> > parameters, it is still ensured that no normal action can be called wit=
+hout
+> > giving a valid project directory.
+> >
+> > Signed-off-by: Martin Waitz <tali@admingilde.org>
+> > ---
+> >  gitweb/gitweb.perl |   17 ++++++++---------
+> >  1 files changed, 8 insertions(+), 9 deletions(-)
+>=20
+> You completely lost me.  What are you trying to achieve here?
+
+I just want to separate all the URL generation/parsing from the rest
+of the code.
+So I removed the opml/project list calls from the parsing code.
+
+The target is to be able to be able to replace it without influencing
+other parts of the code.
+
+> I suspect this kind of funkies (and PATH_INFO) might be easier
+> to do in mod_rewrite() outside gitweb, but that is probably just
+> me.
+
+Well, I think that the URL shown in the browser is one important
+part of the user interface of a web page. So we should not rely
+on the system administrator to implement it on his own.
+
+--=20
+Martin Waitz
+
+--f+W+jCU1fRNres8c
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFE5Mbkj/Eaxd/oD7IRAkSlAJ0U05jFD2HOCf1K+9HF3nSIRE3NFwCeLUBH
+hzz/Mksq2A5ISqQoJ7He3Ek=
+=fPHX
+-----END PGP SIGNATURE-----
+
+--f+W+jCU1fRNres8c--
