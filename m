@@ -1,104 +1,119 @@
-From: David Rientjes <rientjes@google.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] cleans up builtin-mv
-Date: Fri, 18 Aug 2006 12:01:33 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0608181143040.30274@chino.corp.google.com>
+Date: Fri, 18 Aug 2006 12:33:21 -0700
+Message-ID: <7vbqqh96v2.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.63.0608172230470.25827@chino.corp.google.com>
- <Pine.LNX.4.63.0608181137000.28360@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.63.0608180956100.29405@chino.corp.google.com>
- <200608182035.47208.Josef.Weidendorfer@gmx.de>
+	<Pine.LNX.4.63.0608172301520.25827@chino.corp.google.com>
+	<Pine.LNX.4.63.0608181137000.28360@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 18 21:02:40 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Rientjes <rientjes@google.com>
+X-From: git-owner@vger.kernel.org Fri Aug 18 21:33:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GE9be-00050p-PX
-	for gcvg-git@gmane.org; Fri, 18 Aug 2006 21:02:11 +0200
+	id 1GEA5v-000348-R2
+	for gcvg-git@gmane.org; Fri, 18 Aug 2006 21:33:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751482AbWHRTBt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Aug 2006 15:01:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751480AbWHRTBs
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 15:01:48 -0400
-Received: from smtp-out.google.com ([216.239.45.12]:58648 "EHLO
-	smtp-out.google.com") by vger.kernel.org with ESMTP
-	id S1751476AbWHRTBr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Aug 2006 15:01:47 -0400
-Received: from zps35.corp.google.com (zps35.corp.google.com [172.25.146.35])
-	by smtp-out.google.com with ESMTP id k7IJ1fGJ020983;
-	Fri, 18 Aug 2006 12:01:41 -0700
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=received:date:from:x-x-sender:to:cc:subject:in-reply-to:
-	message-id:references:mime-version:content-type;
-	b=t8oGRJcj1EoaG8a2IjHNGTAWqzQJ/KpDwdeuKNOzD2l/PWE7kxx8OyzH673RNRjKO
-	7UpYwh68PGMyOom1TUFQg==
-Received: from localhost (chino.corp.google.com [172.24.88.221])
-	by zps35.corp.google.com with ESMTP id k7IJ1YrC009812;
-	Fri, 18 Aug 2006 12:01:34 -0700
-Received: by localhost (Postfix, from userid 24081)
-	id 0B7DA87D71; Fri, 18 Aug 2006 12:01:34 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-	by localhost (Postfix) with ESMTP id 0628B87D70;
-	Fri, 18 Aug 2006 12:01:34 -0700 (PDT)
-X-X-Sender: rientjes@chino.corp.google.com
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-In-Reply-To: <200608182035.47208.Josef.Weidendorfer@gmx.de>
+	id S1161095AbWHRTdY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Aug 2006 15:33:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932246AbWHRTdY
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 15:33:24 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:61153 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S932243AbWHRTdX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Aug 2006 15:33:23 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060818193322.IGYW2704.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 18 Aug 2006 15:33:22 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25690>
 
-On Fri, 18 Aug 2006, Josef Weidendorfer wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Can you explain your reasoning in more detail?
-> C compiles to native code. Bash itself first has to
-> parse the script. How on earth can this be faster than native code?
-> 
-> I simply do not understand this discussion about implementation language,
-> especially in this case where most of the work is probably done changing
-> git's index (the add's and rm's of tree entries). Of course it could have
-> been done in /bin/sh, but it wasn't (it started as git-rename.perl).
-> 
+> What you cleverly did not mention: It was inside a
+>
+> 	if (!bad &&
+> 		(length = strlen(source[i])) >= 0 &&
+> 		!strncmp(destination[i], source[i], length) &&
+> 		(destination[i][length] == 0 || destination[i][length] == '/'))
+>
+> construct. So, we assign the "length" variable only if we have to. And the 
+> ">= 0" trick is a common one. I could have done
+>
+> 		!strncmp(destination[i], source[i], (length = strlen(source[i])))
+>
+> but even I find that ugly.
 
-It's not faster than native code, it's faster than the current 
-implementation of builtin-mv.  And when you're working with terabytes of 
-data like I am, I would prefer to use something fast.
+I usually side with you but on this I can't.
 
-> Hmm... I suppose Dscho's argument was that this "... >=0" is a standard way
-> to code an assignment inside of an expression.
-> 
+There are 2 ways to generate branch instructions in C.
 
-That argument is unjustified since the only advantage of putting it in an 
-expression is to not evaluate it if the lstat failed (and not fail by 
-means of ENOENT because copy_pathspec guarantees all results have strlen > 
-0).  So "length" is set unnecessarily only if lstat fails which should 
-never happen if copy_pathspec does it's job with correct arguments.  I'm 
-willing to sacrifice that if the _working_ case is faster (and 
-significantly faster) especially since this is an iteration and is 
-directly tied to the command's speed.
+ - compound statements specifically designed for expressing
+   control structure: if () ... else ..., for (), while (),
+   switch (), etc.
 
-The comparison to 0 simply creates a cmpl $0, x(%ebp) that will always be 
-true and a jump to a label that never needed to exist.
+ - expressions using conditional operators or logical operators
+   that short circuit: ... ? ... : ..., ... && ... || ...
 
-Likewise, the additional declaration and initilization of a completely 
-redundant case call to strlen slows us down FOR EVERY ITERATION OF THE 
-MOVE:
-	movl	%eax, x(%ebp)
-	movl	(x*2)(%ebp), %eax
-	movl	$-1, %ecx
-	movl	%eax, (x*4)(%ebp)
-	movb	%0, %al
-	cld
-	movl	(x*4)(%ebp), %edi
-	repnz
-	scasb
-	movl	%ecx, %eax
-	notl	%eax
-	decl	%eax
+The latter form may still be readable even with simple side
+effects inside its terms, but "(l = strlen(s)) >= 0" is done
+solely for the side effect, and its computed value does not have
+anything to do with the logical operation &&.
 
-And then repeat that same call again because of its miscall later on when 
-it's already been assigned to a variable.
+THIS IS UGLY.  And do not want to live in a world where this
+ugliness is a "common one", as you put it.
 
-		David
+And this avoiding one call to strlen(source[i]) is unnecessary
+even as an optimization -- you end up calling strlen() on it
+later in the code anyway, as David points out.
+
+I think this part is far easier to read if you did it like this:
+ 
+		length = strlen(source[i]);
+		if (lstat(source[i], &st) < 0)
+			bad = "bad source";
+		else if (!strncmp(destination[i], source[i], length) &&
+			 (destination[i][length] == 0 ||
+			  destination[i][length] == '/'))
+			bad = "can not move directory into itself";
+
+		if (S_ISDIR(st.st_mode)) {
+			...
+
+Note that the above is an absolute minimum rewrite.  Other
+things I noticed are:
+
+ - source[i] and destination[i] are referenced all the time; the
+   code would be easer to read if you had something like this
+   upfront:
+
+                /* Checking */
+                for (i = 0; i < count; i++) {
+                        const char *bad = NULL;
+			const char *src = source[i];
+                        const char *dst = destination[i];
+                        int srclen = strlen(src);
+                        int dstlen = strlen(dst);
+
+   You might end up not using dstlen in some cases, but I think
+   this would be far easier to read.  Micro-optimizing by saying
+   "this is used only in this branch of this later if()
+   statement but in that case it is always set in that branch of
+   that earlier if() statement" makes unmaintainably confusing
+   code.
+
+ - I do not think you need "const char *dir, *dest_dir" inside
+   the "source is directory" branch; I would just use src and dst
+   consistently;
+
+ - You muck with dest_dir by calling add_slash(dest_dir) but
+   call prefix_path() with dst_len you computed earlier;
+   prefix_path() may know what to do, but is this intended?
