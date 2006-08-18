@@ -1,73 +1,98 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Unresolved issues #3
-Date: Fri, 18 Aug 2006 10:56:36 +0200
-Organization: At home
-Message-ID: <ec3va4$ru1$1@sea.gmane.org>
+Date: Fri, 18 Aug 2006 02:26:27 -0700
+Message-ID: <7vbqqics3g.fsf@assigned-by-dhcp.cox.net>
 References: <7vpseyelcw.fsf@assigned-by-dhcp.cox.net>
+	<tnx1wre4e6s.fsf@arm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Fri Aug 18 10:56:26 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 18 11:26:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GE09D-0006RD-IW
-	for gcvg-git@gmane.org; Fri, 18 Aug 2006 10:56:13 +0200
+	id 1GE0cb-0005CX-K8
+	for gcvg-git@gmane.org; Fri, 18 Aug 2006 11:26:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751281AbWHRI4H convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 18 Aug 2006 04:56:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751292AbWHRI4H
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 04:56:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:56241 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751281AbWHRI4G (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Aug 2006 04:56:06 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GE08v-0006Ms-V4
-	for git@vger.kernel.org; Fri, 18 Aug 2006 10:55:54 +0200
-Received: from host-81-190-24-244.torun.mm.pl ([81.190.24.244])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 18 Aug 2006 10:55:53 +0200
-Received: from jnareb by host-81-190-24-244.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 18 Aug 2006 10:55:53 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-244.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751319AbWHRJ0a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Aug 2006 05:26:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751320AbWHRJ0a
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 05:26:30 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:21650 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751319AbWHRJ03 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Aug 2006 05:26:29 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060818092628.OSDL12909.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 18 Aug 2006 05:26:28 -0400
+To: Catalin Marinas <catalin.marinas@gmail.com>
+In-Reply-To: <tnx1wre4e6s.fsf@arm.com> (Catalin Marinas's message of "Fri, 18
+	Aug 2006 09:54:03 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25638>
 
-Junio C Hamano wrote:
+Catalin Marinas <catalin.marinas@arm.com> writes:
 
-> * Jeff Garzik reports that the summary page of gitweb does not
-> =A0 look at anything other than "master" which is not appropriate
-> =A0 for his tree.
->=20
-> =A0 Message-ID: <44D874F0.6000907@garzik.org>
->=20
-> =A0 I probably should bug gitweb gang (Jakub, Luben, Martin Waitz,
-> =A0 Aneesh) about this.
+> Junio C Hamano <junkio@cox.net> wrote:
+>> * Martin Langhoff proposed git-xxdiff as a helper after a failed
+>>   merge.
+>>
+>>   Message-ID: <11546492331601-git-send-email-martin@catalyst.net.nz>
+>>
+>>   I like the general idea of this a lot, but am having a bit of
+>>   trouble envisioning how we can integrate this while making
+>>   sure mergers other than xxdiff can be added easily without
+>>   disrupting the end user experience.
+>
+> In StGIT I can configure the merge command and I currently use the
+> attached script (I need to add it to the StGIT repository). It tries
+> diff3 first and, if that fails, invokes emacs' merge (can use xxdiff
+> as well). It also checks whether the file was modified in case I want
+> to exit and solve the conflict later (maybe after getting conflict
+> information for the other files).
 
-=46or performance reasons this should probably wait for functioning
-git-show-refs command. BTW. summary page doesn't show "Last Updated" ba=
-sed
-on "master", but based on "HEAD" (current branch)... which usually is
-"master" I guess in typical usage.
+Thanks.  That is interesting.  However, the workflow Martin
+wants to use this is a bit different from this.  He wants
+regular diff3/merge to leave conflicted result and have "xxdiff
+-U" to sort out the resulting mess (I do that manually myself
+but without any wrapper).
 
-Another thing that I think is/might be important to gitweb, is to rewri=
-te
-commitdiff and blobdiff to not use external diff, but builtin
-git-diff-tree... this probably would lead to changes in the output.
-I'm thinking about "-B" without "-C" nor "-M" for plain output (is this
-no-op for this combination?), and "-C", "-M" for HTML output.
+Having said that...
 
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+> # default merger
+> if os.system('diff3 -L current -L ancestor -L patched -m -E '
+>              '"%s" "%s" "%s" > "%s"'
+>              % (branch1, ancestor, branch2, output)):
+>     # interactive merge
+>     if os.path.exists(output):
+>         mtime = os.path.getmtime(output)
+>     else:
+>         mtime = 0
+
+This reminds me that I should make the git barebone
+porcelain-ish to use diff3 directly without using merge
+wrapper.
+
+I wonder why you do not error out when "if os.path.exists(output)"
+does not hold true; you are redirecting into it, so the possibilities
+are:
+
+ - the filesystem is full;
+ - your quota ran out;
+ - you do not have write permission to the directory "output"
+   wants to be in;
+ - the user gave 'fooled you"; rm -fr . "bye' as the value of
+   sys.argv[4];
+
+etc.  No matter what the reason, the fall-back interactive merge
+would not be able to write into output either anyway, no?
+
+Also I wonder what would happen upon a user error where an
+existing file that is unwritable by the user is specified as
+output.
