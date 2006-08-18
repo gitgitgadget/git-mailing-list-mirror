@@ -1,227 +1,220 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Huge win, compressing a window of delta runs as a unit
-Date: Fri, 18 Aug 2006 00:03:37 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0608172323520.11359@localhost.localdomain>
-References: <9e4733910608161020s6855140bs68aaab6e1bbd3bad@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Unresolved issues #3
+Date: Thu, 17 Aug 2006 21:09:03 -0700
+Message-ID: <7vpseyelcw.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 18 06:03:51 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Aug 18 06:09:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDvaA-0001Nr-7h
-	for gcvg-git@gmane.org; Fri, 18 Aug 2006 06:03:42 +0200
+	id 1GDvfU-0002HL-Na
+	for gcvg-git@gmane.org; Fri, 18 Aug 2006 06:09:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932335AbWHREDj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Aug 2006 00:03:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932357AbWHREDi
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 00:03:38 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:60194 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S932335AbWHREDi
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Aug 2006 00:03:38 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J4600DRBDY1XE40@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 18 Aug 2006 00:03:37 -0400 (EDT)
-In-reply-to: <9e4733910608161020s6855140bs68aaab6e1bbd3bad@mail.gmail.com>
-X-X-Sender: nico@localhost.localdomain
-To: Jon Smirl <jonsmirl@gmail.com>
+	id S1030235AbWHREJH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Aug 2006 00:09:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030236AbWHREJG
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 00:09:06 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:5312 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1030235AbWHREJF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Aug 2006 00:09:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060818040904.MRDP6711.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 18 Aug 2006 00:09:04 -0400
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25619>
 
-On Wed, 16 Aug 2006, Jon Smirl wrote:
+As everybody has probably noticed already, I am terrible at
+maintaining "the current issues" list.  The most recent issue of
+this series was done when?  Back on May 4th this year.
 
-> Shawn put together a new version of his import utility that packs all
-> of the deltas from a run into a single blob instead of one blob per
-> delta. The idea is to put 10 or more deltas into each delta entry
-> instead of one. The index format would map the 10 sha1's to a single
-> packed delta entry which would be expanded when needed. Note that you
-> probably needed multiple entries out of the delta pack to generate the
-> revision you were looking for so this is no real loss on extraction.
-> 
-> I ran it overnight on mozcvs. If his delta pack code is correct this
-> is a huge win.
-> 
-> One entry per delta -  845,42,0150
-> Packed deltas - 295,018,474
-> 65% smaller
-
-Well, I have to state that I don't believe those results to be right.
-
-Not that I question the results you obtained, but rather that Shawn's 
-pack generation is most probably broken.
-
-Since I was highly suspicious looking at the above size difference (it 
-is just too good to be true), I did a quick hack to pack-objects.c to 
-produce packs with all deltas depending on the same root object into the 
-same zlib stream.  In effect I implemented exactly what Shawn pretends 
-to have done but directly in pack-objects.c so git-repack could be used 
-with existing repositories like the linux kernel in order to validate 
-the concept.
-
-Results:
-
-One entry per delta - 122,103,455 
-Packed (or grouped) deltas : 108,479,014
-
-Only 11% smaller.
-
-I was really enthousiastic at first when I saw the result you obtained, 
-but I no longer believe it can be right.  
-
-Furthermore, such a pack organization has many disadvantages: it 
-prevents trivial delta data reuse for incremental push/pull operations 
-which is a huge performance penalty (bad for servers), as well as making 
-random object extraction from such a pack somewhat more complex.  Those 
-disadvantages greatly outweight the 11% size saving IMHO.
-
-A better way to get such a size saving is to increase the window and 
-depth parameters.  For example, a window of 20 and depth of 20 can 
-usually provide a pack size saving greater than 11% with none of the 
-disadvantages mentioned above.
-
-I therefore don't think this idea should be pursued any further.
-
-For completeness you can find my changes to pack-objects below.  Beware 
-that this produces packs that cannot be read back so backup your 
-repository first before playing with this.
-
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 448461b..bfae892 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -227,7 +227,7 @@ static int encode_header(enum object_typ
- 	int n = 1;
- 	unsigned char c;
- 
--	if (type < OBJ_COMMIT || type > OBJ_DELTA)
-+	if (type < 0 || type > OBJ_DELTA)
- 		die("bad type %d", type);
- 
- 	c = (type << 4) | (size & 15);
-@@ -332,6 +332,8 @@ static unsigned long write_object(struct
- 	return hdrlen + datalen;
- }
- 
-+#if 0
-+
- static unsigned long write_one(struct sha1file *f,
- 			       struct object_entry *e,
- 			       unsigned long offset)
-@@ -349,6 +351,107 @@ static unsigned long write_one(struct sh
- 	return offset;
- }
- 
-+#else
-+
-+static unsigned count_delta_childs(struct object_entry *e, unsigned long o)
-+{
-+	unsigned count = 0;
-+	struct object_entry *child = e->delta_child;
-+	while (child) {
-+		count += 1 + count_delta_childs(child, o);
-+		if (child->offset)
-+			die("object already seen???");
-+		child->offset = o;
-+		child = child->delta_sibling;
-+	}
-+	return count;
-+}
-+
-+static unsigned long write_delta_headers(struct sha1file *f, struct object_entry *e, unsigned long *size)
-+{
-+	unsigned long offset = 0;
-+	struct object_entry *child = e->delta_child;
-+	while (child) {
-+		unsigned char header[10];
-+		unsigned hdrlen;
-+		hdrlen = encode_header(OBJ_DELTA, child->delta_size, header);
-+		*size += child->delta_size;
-+		sha1write(f, header, hdrlen);
-+		sha1write(f, child->delta, 20);
-+		offset += hdrlen + 20;
-+		offset += write_delta_headers(f, child, size);
-+		child = child->delta_sibling;
-+	}
-+	return offset;
-+}
-+
-+static void * concat_delta_data(struct object_entry *e, void *buf)
-+{
-+	struct object_entry *child = e->delta_child;
-+	while (child) {
-+		char type[10];
-+		unsigned long size;
-+		void *data = read_sha1_file(child->sha1, type, &size);
-+		if (!data)
-+			die("unable to read %s", sha1_to_hex(child->sha1));
-+		data = delta_against(data, size, child);
-+		memcpy(buf, data, child->delta_size);
-+		buf += child->delta_size;
-+		free(data);
-+		written++;
-+		written_delta++;
-+		buf = concat_delta_data(child, buf);
-+		child = child->delta_sibling;
-+	}
-+	return buf;
-+}
-+
-+static unsigned long write_one(struct sha1file *f,
-+			       struct object_entry *e,
-+			       unsigned long offset)
-+{
-+	unsigned char header[10];
-+	unsigned count, hdrlen;
-+	unsigned long size;
-+	void *buf, *p;
-+
-+	if (e->offset)
-+		/* offset starts from header size and cannot be zero
-+		 * if it is written already.
-+		 */
-+		return offset;
-+	if (!e->delta) {
-+		e->offset = offset;
-+		return offset + write_object(f, e);
-+	}
-+
-+	/* find delta root object */
-+	while (e->delta)
-+		e = e->delta;
-+
-+	/* count how many deltas depend on it */
-+	count = count_delta_childs(e, offset);
-+
-+	/* write header for object group */
-+	hdrlen = encode_header(0, count, header);
-+	sha1write(f, header, hdrlen);
-+	offset += hdrlen;
-+
-+	/* write each object's header and find total data size */
-+	size = 0;
-+	offset += write_delta_headers(f, e, &size);
-+
-+	/* write concatenated object data buffer */
-+	buf = xmalloc(size);
-+	p = concat_delta_data(e, buf);	
-+	offset += sha1write_compressed(f, buf, p-buf);
-+	free(buf);
-+
-+	return offset;
-+}
-+
-+#endif
-+
- static void write_pack_file(void)
- {
- 	int i;
+Shame on me.
 
 
-Nicolas
+Here is a list of topics in the recent git traffic that I feel
+inadequately addressed, in no particular order.  I've commented
+on some of them to give people a feel for what my priorities
+are.  Somebody might want to rehash the ones low on my priority
+list to conclusion with a concrete proposal if they cared about
+them enough.
+
+
+* Mozilla import team seems to be making an interesting set of
+  discoveries around the area of scalability, although I haven't
+  personally looked at any of the tools they are using so far.
+
+  Continued discussion is encouraged, and I am looking forward
+  to see the fruits of this effort.  Very much appreciated.
+
+* Eric W Biederman outlined an alternative workflow to track
+  history of the tip of a branch that does not use ref-log
+  facility.
+
+  Message-ID: <m1mzakpam8.fsf@ebiederm.dsl.xmission.com>
+
+  I think this sort-of makes sense when everybody involved does
+  not misuse the fake parallel branch for purposes other than
+  tracking the tip of the other, "true", branch, but I fear it
+  would confuse people quite a bit.  Eric talks about making
+  rewinding and rebasing in distributed manner possible, but I
+  do not know what merging between the fake branches would mean,
+  for example.
+
+* Matthias Lederhofer's helper for stand alone gitweb test looked
+  very promising:
+
+  Message-ID: <20060806165151.GB9548@moooo.ath.cx>
+
+  With the recent flurry of gitweb changes, we really need a
+  test suite to catch obvious breakages in the t/ hierarchy, and
+  something like this patch would help.
+
+  I'd like to apply this patch, if somebody wants to add gitweb
+  tests.
+
+* Jeff King sent a patch to color git-status output
+
+  Message-ID: <20060805031418.GA11102@coredump.intra.peff.net>
+
+  But later he started working on rewriting one core function
+  from git-status in C, which I think makes a lot of sense.
+  That would make this patch unnecessary.  A thread related to
+  this effort is this:
+  
+  Message-ID: <20060810082455.GA30739@coredump.intra.peff.net>
+
+  Hoping to see the C implementation of run_status but I am in
+  no rush myself.
+
+  I vaguely recall there was a companion patch to add vim
+  colorizer for the current git-status output, meant for
+  contrib/vim, but I lost it.  If somebody cares deeply enough
+  please send it over.
+
+* Alex Riesen still has problems with Git.pm/Git.xs on Windows
+  with ActiveState Perl.
+
+  Message-ID: <81b0412b0608020702q2fd4ec83ga43714c15538f7ad@mail.gmail.com>
+
+  There was a workaround patch by Alex to disable certain
+  commands that happen to use Git.pm:
+
+  Message-ID: <81b0412b0608040640s44c0d84et94871bce0271b047@mail.gmail.com>
+
+  But I sense this would make us think twice before using Git.pm
+  in new programs (i.e. "Can Alex live without this new nice
+  program?  If not maybe we should write it without Git.pm"),
+  which feels backwards and I would like to avoid it if we can.
+
+  I am not sure what the resolution of this should be.
+
+* Michael S. Tsirkin discovered that we have trouble dealing
+  with the same remote ref tracked by multiple tracking
+  branches.
+
+  Message-ID: <20060807125116.GA28658@mellanox.co.il>
+
+  Since I do not see a valid use case that _must_ use more than
+  one local tracking branch to track one remote ref, I think it
+  is Ok to declare it an error to do so.  However, at least, we
+  would need a better error message even then.
+
+* Jeff Garzik reports that the summary page of gitweb does not
+  look at anything other than "master" which is not appropriate
+  for his tree.
+
+  Message-ID: <44D874F0.6000907@garzik.org>
+
+  I probably should bug gitweb gang (Jakub, Luben, Martin Waitz,
+  Aneesh) about this.
+
+* gitk bottom-left pane layout is reported to be broken for some
+  people.
+
+  Message-ID: <20060802192922.GA30539@prophet.net-ronin.org>
+
+  "carbonated beverage" tried some random hacks to work it
+  around but I do not think we have gotten anywhere, and the
+  discussion fizzled out.
+
+  I vaguely recall paulus saying it was a Tk bug but do not
+  recall hearing nor understanding any details myself.
+
+* "A Large Angry SCM" wrote a nice summary, "Git files data
+  formats documentation".
+
+  Message-ID: <44D51D47.9090700@gmail.com>
+
+  With one final update by Nico yesterday, I think it is ready
+  for inclusion.
+
+  Does somebody care to make a patch out of it to add it to
+  Documentation/technical/, maybe removing pack-format.txt there
+  after making sure all it talks about is covered by the new
+  documentation?
+
+  I do not have enough "virginity" to spot omissions in the
+  description anymore, so comments from somebody new to the
+  system are very much appreciated.
+
+* Martin Langhoff proposed git-xxdiff as a helper after a failed
+  merge.
+
+  Message-ID: <11546492331601-git-send-email-martin@catalyst.net.nz>
+
+  I like the general idea of this a lot, but am having a bit of
+  trouble envisioning how we can integrate this while making
+  sure mergers other than xxdiff can be added easily without
+  disrupting the end user experience.
+
+* Shawn Pearce noticed that fsck-objects do not fully check some
+  fields in commits:
+
+  Message-ID: <20060814062830.GF18667@spearce.org>
+
+* Although "annotate" had some big fixes just before 1.4.2, Ryan
+  seems to feel "blame" has already won.
+
+  Message-ID: <20060807194539.GD15477@h4x0r5.com>
+
+  Is there still an area "annotate" shines more than "blame -c"?
+
+* "Michael barra_cuda" noticed that an option "--no" is
+  ambiguous to git-revert:
+
+  Message-ID: <200608031742.23170.barra_cuda@katamail.com>
+
+  I need to fix this.
+
+* Cherry-pick should not require -r to suppress "cherry-picked
+  from" message.
+
+  Message-ID: <Pine.LNX.4.64.0607120834200.5623@g5.osdl.org>
+
+  This was requested by Linus, which I haven't done anything
+  about yet.  Maybe making -r a no-op, defaulting not to add the
+  message, and introducing --record-original flag to add it
+  would be a way to go?  My fingers are trained to automatically
+  type -r when doing cherry-pick which is a very good indication
+  that the flag was a mistake.
+
+* Martin Waitz has a patch to accept "end-of-cover-letter"
+  marker in patch messages.
+
+  Message-ID: <20060723214524.GC20068@admingilde.org>
+
+  I did not take the patch, primarily because I do not want to
+  encourage "cover letter then log then patch" format, and also
+  the proposed marker "+++" looked somewhat ugly (see Message-ID:
+  <20060801193408.GF16364@admingilde.org> for an example).
+
+  If somebody wants to rehash this I am still open to reconsider
+  it, but I sense a veto from Linus coming...
