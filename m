@@ -1,72 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC] adding support for md5
-Date: Fri, 18 Aug 2006 13:37:58 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0608181330210.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0608172259280.25827@chino.corp.google.com>
- <44E59BF6.2070909@sinister.cz> <Pine.LNX.4.63.0608181255060.28360@wbgn013.biozentrum.uni-wuerzburg.de>
- <44E5A416.9040709@sinister.cz>
+From: Petr Sebor <petr@scssoft.com>
+Subject: git diff - no newline after @@ ?
+Date: Fri, 18 Aug 2006 14:10:42 +0200
+Organization: SCS Software
+Message-ID: <44E5AE42.6090506@scssoft.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 18 13:38:14 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Aug 18 14:11:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GE2fv-0008Gy-Uy
-	for gcvg-git@gmane.org; Fri, 18 Aug 2006 13:38:08 +0200
+	id 1GE3C5-0006Ih-43
+	for gcvg-git@gmane.org; Fri, 18 Aug 2006 14:11:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030186AbWHRLiE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Aug 2006 07:38:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030192AbWHRLiD
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 07:38:03 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40846 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1030186AbWHRLiC (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Aug 2006 07:38:02 -0400
-Received: (qmail invoked by alias); 18 Aug 2006 11:38:01 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp002) with SMTP; 18 Aug 2006 13:38:01 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Trekie <trekie@sinister.cz>
-In-Reply-To: <44E5A416.9040709@sinister.cz>
-X-Y-GMX-Trusted: 0
+	id S1030311AbWHRMKk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Aug 2006 08:10:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030317AbWHRMKk
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 08:10:40 -0400
+Received: from opteron.scssoft.com ([85.207.19.51]:63643 "EHLO
+	opteron.scssoft.com") by vger.kernel.org with ESMTP
+	id S1030308AbWHRMKj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Aug 2006 08:10:39 -0400
+Received: from [IPv6:2001:6f8:12f6:1:211:9ff:fec1:49c7] (donkey.scssoft.com [IPv6:2001:6f8:12f6:1:211:9ff:fec1:49c7])
+	by opteron.scssoft.com (Postfix) with ESMTP id CA1055566DA
+	for <git@vger.kernel.org>; Fri, 18 Aug 2006 14:10:37 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.5 (Windows/20060719)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25653>
 
-Hi,
+Hello,
 
-On Fri, 18 Aug 2006, Trekie wrote:
+has anyone noticed that the 'git diff' output somehow lacks the newline 
+after the @@ tag?
 
-> Johannes Schindelin wrote:
-> > SHA1 has been broken (collisions have been found):
-> > 
-> > http://www.schneier.com/blog/archives/2005/02/sha1_broken.html
-> 
-> I don't think you're right. That blog just says, that Wang can find
-> 
-> "collisions in the the full SHA-1 in 2**69 hash operations, much less
-> than the brute-force attack of 2**80 operations based on the hash length."
+The linux-kernel list is full of diffs whose hunks begin like:
 
-True. I have not heard of a collision either.
+@@ -1475,6 +1475,7 @@ int do_coredump(long signr, int exit_cod
 
-> The point is why use MD5 if anyone can compute a collision?
+@@ -1516,22 +1517,34 @@ int do_coredump(long signr, int exit_cod
 
-It does not suffice to generate collisions to make a hash unusable for our 
-purposes: you would have to find a way to produce another text for a 
-_given_ hash. Plus, this text would not only have to look meaningful, but 
-compile. And preferrably introduce a back door.
+@@ -1428,7 +1442,7 @@ static int elf_core_dump(long signr, str
 
-Granted, once people find out how to generate another text, they can try 
-to "optimize" some block between "/*" and "*/", so that the hash stays the 
-same. But AFAICT none of the breaks of SHA1 or MD5 point into such a 
-direction. Yet.
+instead of:
 
-But _even if_ somebody succeeds in all that, that somebody has to convince 
-_you_ to pull. And if you already have that object (the "good" version), 
-it will not get overwritten.
+@@ -1475,6 +1475,7 @@
+ int do_coredump(long signr, int exit_cod
 
-Ciao,
-Dscho
+@@ -1516,22 +1517,34 @@
+ int do_coredump(long signr, int exit_cod
+
+@@ -1428,7 +1442,7 @@
+ static int elf_core_dump(long signr, str
+
+
+It is not only a problem of the linux-kernel, my local git installation 
+suffers from this as well...
+
+Regards
+Petr
