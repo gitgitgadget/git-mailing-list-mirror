@@ -1,62 +1,74 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [RFC] adding support for md5
-Date: Fri, 18 Aug 2006 14:31:10 +0200
-Message-ID: <20060818123110.GQ13776@pasky.or.cz>
-References: <Pine.LNX.4.63.0608172259280.25827@chino.corp.google.com> <Pine.LNX.4.63.0608181209210.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Petr Sebor <petr@scssoft.com>
+Subject: Re: git diff - no newline after @@ ?
+Date: Fri, 18 Aug 2006 14:37:42 +0200
+Organization: SCS Software
+Message-ID: <44E5B496.3070901@scssoft.com>
+References: <44E5AE42.6090506@scssoft.com> <81b0412b0608180525t284d3124j867a9461bf14ed91@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Rientjes <rientjes@google.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 18 14:31:47 2006
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 18 14:37:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GE3VM-0002V5-Gh
-	for gcvg-git@gmane.org; Fri, 18 Aug 2006 14:31:17 +0200
+	id 1GE3bc-00047n-K2
+	for gcvg-git@gmane.org; Fri, 18 Aug 2006 14:37:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932445AbWHRMbN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Aug 2006 08:31:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932447AbWHRMbN
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 08:31:13 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:22712 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932445AbWHRMbM (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Aug 2006 08:31:12 -0400
-Received: (qmail 23065 invoked by uid 2001); 18 Aug 2006 14:31:10 +0200
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0608181209210.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S932083AbWHRMhl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Aug 2006 08:37:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932086AbWHRMhl
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 08:37:41 -0400
+Received: from opteron.scssoft.com ([85.207.19.51]:44983 "EHLO
+	opteron.scssoft.com") by vger.kernel.org with ESMTP id S932083AbWHRMhk
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Aug 2006 08:37:40 -0400
+Received: from [IPv6:2001:6f8:12f6:1:211:9ff:fec1:49c7] (donkey.scssoft.com [IPv6:2001:6f8:12f6:1:211:9ff:fec1:49c7])
+	by opteron.scssoft.com (Postfix) with ESMTP id AF8845647CF;
+	Fri, 18 Aug 2006 14:37:38 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.5 (Windows/20060719)
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <81b0412b0608180525t284d3124j867a9461bf14ed91@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25656>
 
-Hi,
+Alex Riesen wrote:
+> On 8/18/06, Petr Sebor <petr@scssoft.com> wrote:
+>> Hello,
+>>
+>> has anyone noticed that the 'git diff' output somehow lacks the newline
+>> after the @@ tag?
+>>
+>
+> Why should it? It's hunk comment.
+Hunk comment? Maybe we don't understand each other...
 
-Dear diary, on Fri, Aug 18, 2006 at 12:21:11PM CEST, I got a letter
-where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
-> However, you should know that there is _no way_ to use both hashes on the 
-> same project. Yes, you could rewrite the history, trying to convert also 
-> the hashes in the commit objects, but people actually started relying on 
-> naming commits with the short-SHA1.
+check another example:
 
-I don't really like having IDs ambiguous in this sense - having the same
-type of IDs in all git-tracked projects has some cute benefits which are
-of the kind that you don't know ahead that you will need them: joining
-history of two distinct projects in a merge and theoretical possibility
-of having subprojects where the main project references an exact
-tree/commit of the sub project.
+--- a/include/linux/kernel.h
++++ b/include/linux/kernel.h
+@@ -13,6 +13,7 @@ #include <linux/stddef.h>
+ #include <linux/types.h>
+ #include <linux/compiler.h>
+ #include <linux/bitops.h>
++#include <linux/memleak.h>
+ #include <asm/byteorder.h>
+ #include <asm/bug.h>
 
-If we are ever going to implement support for multiple hashes, the hash
-type should at least be part of the object id, in textual representation
-as e.g. the first letter. This can still lead to convergence issues and
-duplicate objects, but it enables smooth transition without rewriting
-the history and it is much less confusing than just switching to a
-different function.
+whereas gnu diff would output
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Snow falling on Perl. White noise covering line noise.
-Hides all the bugs too. -- J. Putnam
+--- a/include/linux/kernel.h
++++ b/include/linux/kernel.h
+@@ -13,6 +13,7 @@
+ #include <linux/stddef.h>
+ #include <linux/types.h>
+ #include <linux/compiler.h>
+ #include <linux/bitops.h>
++#include <linux/memleak.h>
+ #include <asm/byteorder.h>
+ #include <asm/bug.h>
+
+Petr
