@@ -1,58 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Unresolved issues #3
-Date: Fri, 18 Aug 2006 01:10:13 -0400
-Message-ID: <20060818051013.GA10900@sigio.intra.peff.net>
-References: <7vpseyelcw.fsf@assigned-by-dhcp.cox.net>
+From: David Rientjes <rientjes@google.com>
+Subject: [PATCH] make sha1_sort inline
+Date: Thu, 17 Aug 2006 22:30:46 -0700 (PDT)
+Message-ID: <Pine.LNX.4.63.0608172229070.25827@chino.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 18 07:10:32 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Fri Aug 18 07:31:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GDwcj-0003SN-E1
-	for gcvg-git@gmane.org; Fri, 18 Aug 2006 07:10:25 +0200
+	id 1GDwwq-0006kH-0d
+	for gcvg-git@gmane.org; Fri, 18 Aug 2006 07:31:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932392AbWHRFKR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Aug 2006 01:10:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932393AbWHRFKR
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 01:10:17 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:43193 "HELO
-	peff.net") by vger.kernel.org with SMTP id S932392AbWHRFKQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Aug 2006 01:10:16 -0400
-Received: (qmail 14992 invoked from network); 18 Aug 2006 01:09:44 -0400
-Received: from unknown (HELO sigio.intra.peff.net) (10.0.0.10)
-  by segfault.intra.peff.net with SMTP; 18 Aug 2006 01:09:44 -0400
-Received: by sigio.intra.peff.net (sSMTP sendmail emulation); Fri, 18 Aug 2006 01:10:13 -0400
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vpseyelcw.fsf@assigned-by-dhcp.cox.net>
+	id S964798AbWHRFaw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Aug 2006 01:30:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964796AbWHRFaw
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 01:30:52 -0400
+Received: from smtp-out.google.com ([216.239.45.12]:13036 "EHLO
+	smtp-out.google.com") by vger.kernel.org with ESMTP id S964799AbWHRFaw
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Aug 2006 01:30:52 -0400
+Received: from zps35.corp.google.com (zps35.corp.google.com [172.25.146.35])
+	by smtp-out.google.com with ESMTP id k7I5UnQF031881
+	for <git@vger.kernel.org>; Thu, 17 Aug 2006 22:30:49 -0700
+DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
+	h=received:date:from:x-x-sender:to:subject:message-id:
+	mime-version:content-type;
+	b=v/XOt0iznWt8MBBAT2y59ICIYFQjbBhnJboAVewcP2y6GyznIrGMeQMViLRJZlyTw
+	Fej4TQuVx2pKgGf0bp8YQ==
+Received: from localhost (chino.corp.google.com [172.24.88.221])
+	by zps35.corp.google.com with ESMTP id k7I5UkwC007343
+	for <git@vger.kernel.org>; Thu, 17 Aug 2006 22:30:46 -0700
+Received: by localhost (Postfix, from userid 24081)
+	id 2A9B087D71; Thu, 17 Aug 2006 22:30:46 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+	by localhost (Postfix) with ESMTP id 25FDA87D70
+	for <git@vger.kernel.org>; Thu, 17 Aug 2006 22:30:46 -0700 (PDT)
+X-X-Sender: rientjes@chino.corp.google.com
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25629>
 
-On Thu, Aug 17, 2006 at 09:09:03PM -0700, Junio C Hamano wrote:
+Inlines sha1_sort as discussed in previous thread.
 
-> * Jeff King sent a patch to color git-status output
-[...]
->   Hoping to see the C implementation of run_status but I am in
->   no rush myself.
+Signed-off-by: David Rientjes <rientjes@google.com>
+---
+ builtin-pack-objects.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-I am working on this but got side-tracked by "real" work. The current
-state is that I have a simplistic working C run_status, but I'm still
-hoping to hack the diff code to simultaneously do the tree<->index and
-index<->files diffs. I will try to send out something next week.
-
->   I vaguely recall there was a companion patch to add vim
->   colorizer for the current git-status output, meant for
->   contrib/vim, but I lost it.  If somebody cares deeply enough
->   please send it over.
-
-It's in <20060805032135.GA11244@coredump.intra.peff.net>. However, if I
-can get the multi-diff support working, then the status format will
-change. I will wait until that is resolved before submitting a patch to
-put vim highlighting into contrib/.
-
--Peff
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index f19f0d6..b7ba558 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -929,7 +929,8 @@ static struct object_entry **create_sort
+ 	return list;
+ }
+ 
+-static int sha1_sort(const struct object_entry *a, const struct object_entry *b)
++static inline int sha1_sort(const struct object_entry *a,
++			    const struct object_entry *b)
+ {
+ 	return hashcmp(a->sha1, b->sha1);
+ }
+-- 
+1.4.2.rc4.gd070-dirty
