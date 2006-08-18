@@ -1,56 +1,68 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Huge win, compressing a window of delta runs as a unit
-Date: Fri, 18 Aug 2006 12:30:41 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0608181226460.11359@localhost.localdomain>
-References: <9e4733910608161020s6855140bs68aaab6e1bbd3bad@mail.gmail.com>
- <Pine.LNX.4.64.0608172323520.11359@localhost.localdomain>
- <9e4733910608180553r34fa7b25he0bf910ef804630f@mail.gmail.com>
+From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
+Subject: Re: Unresolved issues #3
+Date: Fri, 18 Aug 2006 22:10:34 +0530
+Message-ID: <44E5ED82.8090904@gmail.com>
+References: <7vpseyelcw.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 18 18:30:51 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Aug 18 18:41:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GE7F8-0003BR-Mb
-	for gcvg-git@gmane.org; Fri, 18 Aug 2006 18:30:47 +0200
+	id 1GE7Pe-0005t5-Kl
+	for gcvg-git@gmane.org; Fri, 18 Aug 2006 18:41:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751409AbWHRQan (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Aug 2006 12:30:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751407AbWHRQan
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 12:30:43 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:57309 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1751409AbWHRQam (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Aug 2006 12:30:42 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J4700E36CJ5ZQ30@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 18 Aug 2006 12:30:41 -0400 (EDT)
-In-reply-to: <9e4733910608180553r34fa7b25he0bf910ef804630f@mail.gmail.com>
-X-X-Sender: nico@localhost.localdomain
-To: Jon Smirl <jonsmirl@gmail.com>
+	id S1751405AbWHRQla (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Aug 2006 12:41:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751414AbWHRQla
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 12:41:30 -0400
+Received: from main.gmane.org ([80.91.229.2]:39040 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751405AbWHRQl3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Aug 2006 12:41:29 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GE7PF-0005na-Tb
+	for git@vger.kernel.org; Fri, 18 Aug 2006 18:41:13 +0200
+Received: from 59.92.199.81 ([59.92.199.81])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 18 Aug 2006 18:41:13 +0200
+Received: from aneesh.kumar by 59.92.199.81 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 18 Aug 2006 18:41:13 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 59.92.199.81
+User-Agent: Thunderbird 1.5.0.5 (X11/20060728)
+In-Reply-To: <7vpseyelcw.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25676>
 
-On Fri, 18 Aug 2006, Jon Smirl wrote:
+Junio C Hamano wrote:
 
-> I attached Shawn's code. He is gone until Monday and can't defend it.
-
-I will have a look at it next week as I'll be gone for the weekend as 
-well.
-
-> Do note that I am running this on the Mozilla CVS which is over 10
-> years old. Some of the files have over 2,000 deltas. I average 10
-> deltas per file but the distribution is not at all even. Many files
-> get checked-in and never changed, for example 1000's of images.
-
-This is IMHO more evidence that something is wrong with the results 
-you obtained.
+> * Jeff Garzik reports that the summary page of gitweb does not
+>   look at anything other than "master" which is not appropriate
+>   for his tree.
+> 
+>   Message-ID: <44D874F0.6000907@garzik.org>
+> 
+>   I probably should bug gitweb gang (Jakub, Luben, Martin Waitz,
+>   Aneesh) about this.
+> 
 
 
-Nicolas
+I just tried editing HEAD. For the project 
+
+http://git.openssi.org/~kvaneesh/gitweb.cgi?p=ci-to-linus.git;a=summary
+
+$more HEAD
+ref: refs/heads/from-linus
+$
+
+Is this solution fine ?. Or do we want to add a git-rep-config variable to indicate which branch to show.
+
+-aneesh 
