@@ -1,119 +1,153 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] cleans up builtin-mv
-Date: Fri, 18 Aug 2006 12:33:21 -0700
-Message-ID: <7vbqqh96v2.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0608172230470.25827@chino.corp.google.com>
-	<Pine.LNX.4.63.0608172301520.25827@chino.corp.google.com>
-	<Pine.LNX.4.63.0608181137000.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH] gitweb: Support for snapshot
+Date: Fri, 18 Aug 2006 12:51:48 -0700 (PDT)
+Message-ID: <20060818195148.66411.qmail@web31807.mail.mud.yahoo.com>
+References: <44E54AC6.9010600@gmail.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Rientjes <rientjes@google.com>
-X-From: git-owner@vger.kernel.org Fri Aug 18 21:33:45 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Fri Aug 18 21:52:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GEA5v-000348-R2
-	for gcvg-git@gmane.org; Fri, 18 Aug 2006 21:33:30 +0200
+	id 1GEANm-0006jg-KH
+	for gcvg-git@gmane.org; Fri, 18 Aug 2006 21:51:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161095AbWHRTdY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Aug 2006 15:33:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932246AbWHRTdY
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 15:33:24 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:61153 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932243AbWHRTdX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Aug 2006 15:33:23 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060818193322.IGYW2704.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 18 Aug 2006 15:33:22 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932261AbWHRTvu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Aug 2006 15:51:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932312AbWHRTvu
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 15:51:50 -0400
+Received: from web31807.mail.mud.yahoo.com ([68.142.207.70]:26454 "HELO
+	web31807.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S932261AbWHRTvt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Aug 2006 15:51:49 -0400
+Received: (qmail 66413 invoked by uid 60001); 18 Aug 2006 19:51:48 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=j8jzc+kZZC3BW+h+a3hW2QSdeMnUQA9LXuXHBeKLsCupQmnDFo/mj+cjNaPkAgZwGBQJysyXjowWFewsv+fpoCmjUTxQo4jDkPvs+ouDdj1+zyDinRWXZLbrbMHpjXh6WZCO5aIZCDscDUHx5owGJs0jTxqEOg6DQbMoA8BdsUU=  ;
+Received: from [64.215.88.90] by web31807.mail.mud.yahoo.com via HTTP; Fri, 18 Aug 2006 12:51:48 PDT
+To: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>, git@vger.kernel.org
+In-Reply-To: <44E54AC6.9010600@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25691>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+--- "Aneesh Kumar K.V" <aneesh.kumar@gmail.com> wrote:
+> This adds snapshort support in gitweb. To enable one need to
+> set gitweb.snapshot = true in the config file.
 
-> What you cleverly did not mention: It was inside a
->
-> 	if (!bad &&
-> 		(length = strlen(source[i])) >= 0 &&
-> 		!strncmp(destination[i], source[i], length) &&
-> 		(destination[i][length] == 0 || destination[i][length] == '/'))
->
-> construct. So, we assign the "length" variable only if we have to. And the 
-> ">= 0" trick is a common one. I could have done
->
-> 		!strncmp(destination[i], source[i], (length = strlen(source[i])))
->
-> but even I find that ugly.
+Could you use bzip2?  It generates smaller files (better compression),
+which is a good thing when downloading over a network.
 
-I usually side with you but on this I can't.
+   Luben
 
-There are 2 ways to generate branch instructions in C.
-
- - compound statements specifically designed for expressing
-   control structure: if () ... else ..., for (), while (),
-   switch (), etc.
-
- - expressions using conditional operators or logical operators
-   that short circuit: ... ? ... : ..., ... && ... || ...
-
-The latter form may still be readable even with simple side
-effects inside its terms, but "(l = strlen(s)) >= 0" is done
-solely for the side effect, and its computed value does not have
-anything to do with the logical operation &&.
-
-THIS IS UGLY.  And do not want to live in a world where this
-ugliness is a "common one", as you put it.
-
-And this avoiding one call to strlen(source[i]) is unnecessary
-even as an optimization -- you end up calling strlen() on it
-later in the code anyway, as David points out.
-
-I think this part is far easier to read if you did it like this:
- 
-		length = strlen(source[i]);
-		if (lstat(source[i], &st) < 0)
-			bad = "bad source";
-		else if (!strncmp(destination[i], source[i], length) &&
-			 (destination[i][length] == 0 ||
-			  destination[i][length] == '/'))
-			bad = "can not move directory into itself";
-
-		if (S_ISDIR(st.st_mode)) {
-			...
-
-Note that the above is an absolute minimum rewrite.  Other
-things I noticed are:
-
- - source[i] and destination[i] are referenced all the time; the
-   code would be easer to read if you had something like this
-   upfront:
-
-                /* Checking */
-                for (i = 0; i < count; i++) {
-                        const char *bad = NULL;
-			const char *src = source[i];
-                        const char *dst = destination[i];
-                        int srclen = strlen(src);
-                        int dstlen = strlen(dst);
-
-   You might end up not using dstlen in some cases, but I think
-   this would be far easier to read.  Micro-optimizing by saying
-   "this is used only in this branch of this later if()
-   statement but in that case it is always set in that branch of
-   that earlier if() statement" makes unmaintainably confusing
-   code.
-
- - I do not think you need "const char *dir, *dest_dir" inside
-   the "source is directory" branch; I would just use src and dst
-   consistently;
-
- - You muck with dest_dir by calling add_slash(dest_dir) but
-   call prefix_path() with dst_len you computed earlier;
-   prefix_path() may know what to do, but is this intended?
+> Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
+> ---
+>  gitweb/gitweb.perl |   41 +++++++++++++++++++++++++++++++++++++----
+>  1 files changed, 37 insertions(+), 4 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 04282fa..d6f96a3 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -15,6 +15,7 @@ use CGI::Carp qw(fatalsToBrowser);
+>  use Encode;
+>  use Fcntl ':mode';
+>  use File::Find qw();
+> +use File::Basename qw(basename);
+>  binmode STDOUT, ':utf8';
+>  
+>  our $cgi = new CGI;
+> @@ -175,6 +176,7 @@ my %actions = (
+>  	"tag" => \&git_tag,
+>  	"tags" => \&git_tags,
+>  	"tree" => \&git_tree,
+> +	"snapshot" => \&git_snapshot,
+>  );
+>  
+>  $action = 'summary' if (!defined($action));
+> @@ -1320,6 +1322,7 @@ sub git_difftree_body {
+>  sub git_shortlog_body {
+>  	# uses global variable $project
+>  	my ($revlist, $from, $to, $refs, $extra) = @_;
+> +	my $have_snapshot = git_get_project_config_bool('snapshot');
+>  	$from = 0 unless defined $from;
+>  	$to = $#{$revlist} if (!defined $to || $#{$revlist} < $to);
+>  
+> @@ -1344,8 +1347,11 @@ sub git_shortlog_body {
+>  		print "</td>\n" .
+>  		      "<td class=\"link\">" .
+>  		      $cgi->a({-href => href(action=>"commit", hash=>$commit)}, "commit") . " | " .
+> -		      $cgi->a({-href => href(action=>"commitdiff", hash=>$commit)}, "commitdiff") .
+> -		      "</td>\n" .
+> +		      $cgi->a({-href => href(action=>"commitdiff", hash=>$commit)}, "commitdiff");
+> +		if ($have_snapshot) {
+> +			print " | " .  $cgi->a({-href => href(action=>"snapshot", hash=>$commit)}, "snapshot");
+> +		}
+> +		print "</td>\n" .
+>  		      "</tr>\n";
+>  	}
+>  	if (defined $extra) {
+> @@ -2112,6 +2118,29 @@ sub git_tree {
+>  	git_footer_html();
+>  }
+>  
+> +sub git_snapshot {
+> +
+> +	if (!defined $hash) {
+> +		$hash = git_get_head_hash($project);
+> +	}
+> +
+> +	my $filename = basename($project) . "-$hash.tar.gz";
+> +
+> +	print $cgi->header(-type => 'application/x-tar',
+> +			-content-encoding => 'x-gzip',
+> +			'-content-disposition' => "inline; filename=\"$filename\"",
+> +			-status => '200 OK');
+> +
+> +	open my $fd, "-|", "$GIT tar-tree $hash \'$project\' | gzip" or
+> +				die_error(undef, "Execute git-tar-tree failed.");
+> +	binmode STDOUT, ':raw';
+> +	print <$fd>;
+> +	binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
+> +	close $fd;
+> +
+> +
+> +}
+> +
+>  sub git_log {
+>  	my $head = git_get_head_hash($project);
+>  	if (!defined $hash) {
+> @@ -2206,6 +2235,7 @@ sub git_commit {
+>  	}
+>  	my $refs = git_get_references();
+>  	my $ref = format_ref_marker($refs, $co{'id'});
+> +	my $have_snapshot = git_get_project_config_bool('snapshot');
+>  	my $formats_nav = '';
+>  	if (defined $file_name && defined $co{'parent'}) {
+>  		my $parent = $co{'parent'};
+> @@ -2241,8 +2271,11 @@ sub git_commit {
+>  	      "<td class=\"sha1\">" .
+>  	      $cgi->a({-href => href(action=>"tree", hash=>$co{'tree'}, hash_base=>$hash), class =>
+> "list"}, $co{'tree'}) .
+>  	      "</td>" .
+> -	      "<td class=\"link\">" . $cgi->a({-href => href(action=>"tree", hash=>$co{'tree'},
+> hash_base=>$hash)}, "tree") .
+> -	      "</td>" .
+> +	      "<td class=\"link\">" . $cgi->a({-href => href(action=>"tree", hash=>$co{'tree'},
+> hash_base=>$hash)}, "tree");
+> +	if ($have_snapshot) {
+> +		print " | " .  $cgi->a({-href => href(action=>"snapshot", hash=>$hash)}, "snapshot");
+> +	}
+> +	print "</td>" .
+>  	      "</tr>\n";
+>  	my $parents = $co{'parents'};
+>  	foreach my $par (@$parents) {
+> -- 
+> 1.4.2.rc1.g83e1-dirty
+> 
+> 
