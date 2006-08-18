@@ -1,71 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC] adding support for md5
-Date: Fri, 18 Aug 2006 12:21:11 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0608181209210.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0608172259280.25827@chino.corp.google.com>
+From: Wolfgang Denk <wd@denx.de>
+Subject: (unknown)
+Date: Fri, 18 Aug 2006 12:35:11 +0200
+Message-ID: <20060818103511.4C278353A32@atlas.denx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 18 12:21:33 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Fri Aug 18 12:35:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GE1Tl-0008TR-S7
-	for gcvg-git@gmane.org; Fri, 18 Aug 2006 12:21:30 +0200
+	id 1GE1hA-00034q-B9
+	for gcvg-git@gmane.org; Fri, 18 Aug 2006 12:35:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751348AbWHRKVO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Aug 2006 06:21:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751345AbWHRKVO
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 06:21:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:14030 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751346AbWHRKVN (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Aug 2006 06:21:13 -0400
-Received: (qmail invoked by alias); 18 Aug 2006 10:21:11 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp018) with SMTP; 18 Aug 2006 12:21:11 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: David Rientjes <rientjes@google.com>
-In-Reply-To: <Pine.LNX.4.63.0608172259280.25827@chino.corp.google.com>
-X-Y-GMX-Trusted: 0
+	id S1751351AbWHRKfP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Aug 2006 06:35:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751350AbWHRKfP
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 06:35:15 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:8679 "EHLO
+	mail-out.m-online.net") by vger.kernel.org with ESMTP
+	id S1751351AbWHRKfN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Aug 2006 06:35:13 -0400
+Received: from mail01.m-online.net (svr21.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id DB00C9842C
+	for <git@vger.kernel.org>; Fri, 18 Aug 2006 12:35:11 +0200 (CEST)
+X-Auth-Info: XuJ6IwuQtrkqqIp9ea8Hf8Uv0cviOBHAFKqt88I5om4=
+Received: from mail.denx.de (p5496628C.dip.t-dialin.net [84.150.98.140])
+	by smtp-auth.mnet-online.de (Postfix) with ESMTP id C295492633
+	for <git@vger.kernel.org>; Fri, 18 Aug 2006 12:35:11 +0200 (CEST)
+Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
+	by mail.denx.de (Postfix) with ESMTP id 5B08B6D004A
+	for <git@vger.kernel.org>; Fri, 18 Aug 2006 12:35:11 +0200 (MEST)
+Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
+	by atlas.denx.de (Postfix) with ESMTP id 4C278353A32
+	for <git@vger.kernel.org>; Fri, 18 Aug 2006 12:35:11 +0200 (MEST)
+To: git@vger.kernel.org
+Subject: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25645>
 
 Hi,
 
-On Thu, 17 Aug 2006, David Rientjes wrote:
+"gitk" procudes output like this:
 
-> I'd like to solicit some comments about implementing support for md5 as a 
-> hash function that could be determined at runtime by the user during a 
-> project init-db.
+	Author: Stefan Roese <sr@denx.de>  2006-01-26 13:51:42
+	Committer: Stefan Roese <sr@denx.de>  2006-01-26 13:51:42
+	Parent: f565c2d4c8b945b5bfbafb8dda50b8784167b4e3 (Merge with /home/git/linux-2.6)
+	Child:  d216d89489cce4021a75dea19ef1b19ad93958ec (Git rid of debug output.) Branches: origin, master
+	Follows: DENX-v2.6.15
+	Precedes: DENX-2006-02-01-2215
 
-Make it a config variable, too, right?
+Is there a CLI tool or a hidden option to "git log"  or  "cg-log"  or
+some  other  clever command to get similar "Follows:" and "Precedes:"
+tag information?
 
-It would be interesting to have other hashes, for three reasons:
+Best regards,
 
-1. they could be faster to calculate,
-2. they could reduce clashes, and related to that,
-3. it is possible that some day SHA1 is broken, i.e. that there is an 
-   algorithm to generate a different text for a given hash.
+Wolfgang Denk
 
-As for 2 and 3, it seems MD5 is equivalent, since another sort of attacks 
-was already successful on both SHA1 and MD5: generating two different 
-texts with the same hash.
-
-So, 1 could be a good reason to have another hash. IIRC SHA1 is about 25% 
-slower than MD5, so it could be worth it.
-
-However, you should know that there is _no way_ to use both hashes on the 
-same project. Yes, you could rewrite the history, trying to convert also 
-the hashes in the commit objects, but people actually started relying on 
-naming commits with the short-SHA1.
-
-I think it would be a nice thing to play through (for example, to find 
-out how much impact the hash calculation has on the overall performance 
-of git), but I doubt it will ever come to real use.
-
-Ciao,
-Dscho
+-- 
+Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
+Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
+The IQ of the group is the lowest IQ of a member of the group divided
+by the number of people in the group.
