@@ -1,98 +1,77 @@
-From: David Rientjes <rientjes@google.com>
-Subject: Re: [PATCH] make sha1_sort inline
-Date: Fri, 18 Aug 2006 09:56:01 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0608180947240.29405@chino.corp.google.com>
-References: <Pine.LNX.4.63.0608172229070.25827@chino.corp.google.com>
- <7vsljud2fs.fsf@assigned-by-dhcp.cox.net>
+From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
+Subject: Re: Unresolved issues #3
+Date: Fri, 18 Aug 2006 22:33:21 +0530
+Message-ID: <ec4rsp$2vi$1@sea.gmane.org>
+References: <7vpseyelcw.fsf@assigned-by-dhcp.cox.net> <44E5ED82.8090904@gmail.com> <ec4r0h$u9m$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 18 18:57:18 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Aug 18 19:04:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GE7eS-0001NV-F8
-	for gcvg-git@gmane.org; Fri, 18 Aug 2006 18:56:57 +0200
+	id 1GE7lY-0003KB-7K
+	for gcvg-git@gmane.org; Fri, 18 Aug 2006 19:04:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751423AbWHRQ4h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Aug 2006 12:56:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751424AbWHRQ4h
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 12:56:37 -0400
-Received: from smtp-out.google.com ([216.239.45.12]:60119 "EHLO
-	smtp-out.google.com") by vger.kernel.org with ESMTP
-	id S1751423AbWHRQ4g (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Aug 2006 12:56:36 -0400
-Received: from zps78.corp.google.com (zps78.corp.google.com [172.25.146.78])
-	by smtp-out.google.com with ESMTP id k7IGu6Uu016801;
-	Fri, 18 Aug 2006 09:56:06 -0700
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=received:date:from:x-x-sender:to:cc:subject:in-reply-to:
-	message-id:references:mime-version:content-type;
-	b=mPWHFOjUkhkr71szLgre1TBedO3+mcl6jI0bQFaTmwQHDEf57SCPovCZguidMPK3f
-	lWPGbR2Oqa92JN7aqSxGw==
-Received: from localhost (chino.corp.google.com [172.24.88.221])
-	by zps78.corp.google.com with ESMTP id k7IGu1mT000503;
-	Fri, 18 Aug 2006 09:56:01 -0700
-Received: by localhost (Postfix, from userid 24081)
-	id 49C4287D71; Fri, 18 Aug 2006 09:56:01 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-	by localhost (Postfix) with ESMTP id 0733587D70;
-	Fri, 18 Aug 2006 09:56:01 -0700 (PDT)
-X-X-Sender: rientjes@chino.corp.google.com
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vsljud2fs.fsf@assigned-by-dhcp.cox.net>
+	id S1030293AbWHRREN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Aug 2006 13:04:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030291AbWHRREM
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 13:04:12 -0400
+Received: from main.gmane.org ([80.91.229.2]:44472 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1030279AbWHRREL (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Aug 2006 13:04:11 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GE7lH-0003Fr-CV
+	for git@vger.kernel.org; Fri, 18 Aug 2006 19:03:59 +0200
+Received: from 59.92.199.81 ([59.92.199.81])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 18 Aug 2006 19:03:59 +0200
+Received: from aneesh.kumar by 59.92.199.81 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 18 Aug 2006 19:03:59 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 59.92.199.81
+User-Agent: Thunderbird 1.5.0.5 (X11/20060728)
+In-Reply-To: <ec4r0h$u9m$1@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25680>
 
-On Thu, 17 Aug 2006, Junio C Hamano wrote:
-
-> The only use of this function is to got its address taken of,
-> and then the variable that has its address (current_sort) is
-> used by sort_comparator() function, whose address is given to
-> the library routine qsort(3).
+Jakub Narebski wrote:
+> Aneesh Kumar K.V wrote:
 > 
-> Does it still make sense to declare it inline?
+>> Junio C Hamano wrote:
+>>
+>>> * Jeff Garzik reports that the summary page of gitweb does not
+>>>   look at anything other than "master" which is not appropriate
+>>>   for his tree.
+>>>
+>>>   Message-ID: <44D874F0.6000907@garzik.org>
+>>>
+>>>   I probably should bug gitweb gang (Jakub, Luben, Martin Waitz,
+>>>   Aneesh) about this.
+>> I just tried editing HEAD. For the project 
+>>
+>> http://git.openssi.org/~kvaneesh/gitweb.cgi?p=ci-to-linus.git;a=summary
+>>
+>> $more HEAD
+>> ref: refs/heads/from-linus
+>> $
+>>
+>> Is this solution fine ?. Or do we want to add a git-rep-config 
+>> variable to indicate which branch to show. 
 > 
+> Err, of course gitweb shows "Last Change" for HEAD, which usually is master.
+> The solution would be to show "Last Change" date to be the date of last
+> change of all/any branch.
 > 
 
-No.
+I didn't quiet understand that. AFAIU what jeff wanted is to make gitweb show some branch other than master
+by default in the summary page.  I guess editing HEAD enables that.
 
-Well, maybe just "not yet."  The idea is to isolate the sort functions for 
-hashes since we may add support for additional ones in the future (re: my 
-thread on md5).  Then all these functions would probably be abstracted to 
-a single file and labeled as static with a single global function:
-
-	static int hash_sort(const struct object_entry,
-			     const struct object_entry);
-
-which would call the static inline function that corresponds to the hash 
-in use for that database.  This can't simply be #ifdef's since the choice 
-of hash would not be compile-time, it would be run-time depending on what 
-flags are sent during init-db.
-
-And instead of:
-	struct object_entry {
-		unsigned char sha1[20];
-		...
-	}
-
-it becomes:
-	struct object_entry {
-		union hash_name {
-			unsigned char sha1[20];
-			...
-		}
-		...
-	}
-
-So in that case, the static inline of the sort does have its advantage as 
-opposed to two function calls on any hash_sort.  But I agree in the 
-meantime while additional hashes are still be considered that this would 
-not be an advantageous addition to the code.
-
-(At least you get an idea of what I'm thinking about hashes)
-
-		David
+-aneesh
