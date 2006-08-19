@@ -1,78 +1,53 @@
-From: Tilman Sauerbeck <tilman@code-monkey.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] Added support for dropping privileges to git-daemon.
-Date: Sat, 19 Aug 2006 15:29:24 +0200
-Message-ID: <20060819132922.GA6644@code-monkey.de>
-References: <1155990772.6591@hammerfest> <e5bfff550608190623j58de8c1cn6a9304249ee1ecb8@mail.gmail.com>
+Date: Sat, 19 Aug 2006 15:32:10 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0608191529300.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <1155990772.6591@hammerfest>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="TB36FDmn/VVEgNH/"
-X-From: git-owner@vger.kernel.org Sat Aug 19 15:29:33 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 19 15:32:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GEQtH-0000Yp-C8
-	for gcvg-git@gmane.org; Sat, 19 Aug 2006 15:29:31 +0200
+	id 1GEQvv-00014V-N1
+	for gcvg-git@gmane.org; Sat, 19 Aug 2006 15:32:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751378AbWHSN30 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 Aug 2006 09:29:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751427AbWHSN30
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Aug 2006 09:29:26 -0400
-Received: from code-monkey.de ([81.169.170.126]:39943 "EHLO code-monkey.de")
-	by vger.kernel.org with ESMTP id S1751378AbWHSN30 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Aug 2006 09:29:26 -0400
-Received: from hammerfest (c-180-198-91.bi.dial.de.ignite.net [62.180.198.91])
-	by code-monkey.de (Postfix) with ESMTP id ADCC3B428
-	for <git@vger.kernel.org>; Sat, 19 Aug 2006 15:29:24 +0200 (CEST)
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <e5bfff550608190623j58de8c1cn6a9304249ee1ecb8@mail.gmail.com>
-User-Agent: Mutt/1.5.12-2006-07-14
+	id S1751295AbWHSNcN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 Aug 2006 09:32:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751402AbWHSNcN
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Aug 2006 09:32:13 -0400
+Received: from mail.gmx.de ([213.165.64.20]:6091 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751295AbWHSNcM (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Aug 2006 09:32:12 -0400
+Received: (qmail invoked by alias); 19 Aug 2006 13:32:10 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp028) with SMTP; 19 Aug 2006 15:32:10 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Tilman Sauerbeck <tilman@code-monkey.de>
+In-Reply-To: <1155990772.6591@hammerfest>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25721>
 
+Hi,
 
---TB36FDmn/VVEgNH/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Sat, 19 Aug 2006, Tilman Sauerbeck wrote:
 
-Marco Costalba [2006-08-19 15:23]:
-> >
-> >+       if (!user ^ !group)
-> >+               die("either set both user and group or none of them");
-> >+
-> >
->=20
-> Just a  question. Why simply not
->=20
->       if (user ^ group)
+>  What do you think?
 
-Because gcc doesn't like that:
- error: invalid operands to binary ^
+I think it is a good addition. Note that most people will probably use 
+inetd instead, though.
 
-Regards,
-Tilman
+> +	     [--user=u] [--group=g] [directory...]
 
---=20
-A: Because it messes up the order in which people normally read text.
-Q: Why is top-posting such a bad thing?
-A: Top-posting.
-Q: What is the most annoying thing on usenet and in e-mail?
+Since you enforce both --user and --group, this should read
 
---TB36FDmn/VVEgNH/
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+	 [--user=u --group=g]
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iD8DBQFE5xIy27uLisrW2w8RAo7kAJ4oQtKI1J1kHMbMoEUyMA092jgX+QCeK2wu
-/prmdMn3qkmGr0988bQly9Y=
-=4x53
------END PGP SIGNATURE-----
-
---TB36FDmn/VVEgNH/--
+Ciao,
+Dscho
