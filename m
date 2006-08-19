@@ -1,44 +1,136 @@
-From: "Dana" <compellabledateline@royal-gorge.com>
-Subject: Delight in Introducing a great product which will make you a better, more confident man!
-Date: Sat, 19 Aug 2006 10:45:28 +1000
-Message-ID: <81914795873377.35CF037FE8@127ZN3AA>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] cleans up builtin-mv
+Date: Sat, 19 Aug 2006 03:26:39 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0608190323010.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0608172230470.25827@chino.corp.google.com>
+ <Pine.LNX.4.63.0608172301520.25827@chino.corp.google.com>
+ <Pine.LNX.4.63.0608181137000.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vbqqh96v2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1252"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Aug 19 02:46:11 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 19 03:26:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GEEyX-00056E-KY
-	for gcvg-git@gmane.org; Sat, 19 Aug 2006 02:46:10 +0200
+	id 1GEFbp-0005g4-0t
+	for gcvg-git@gmane.org; Sat, 19 Aug 2006 03:26:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751072AbWHSAqG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Aug 2006 20:46:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751604AbWHSAqG
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 20:46:06 -0400
-Received: from zeus1.kernel.org ([204.152.191.4]:22404 "EHLO zeus1.kernel.org")
-	by vger.kernel.org with ESMTP id S1751072AbWHSAqF (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Aug 2006 20:46:05 -0400
-Received: from SAMANTHA (58-163-133-61.dsl.dodo.com.au [58.163.133.61] (may be forged))
-	by zeus1.kernel.org (8.13.7/8.13.1) with ESMTP id k7J0iZ4I021228;
-	Sat, 19 Aug 2006 00:46:00 GMT
-To: <git@vger.kernel.org>
-X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
-Thread-Index: uK1KML1nevkrFsrdfmSVi8AyLoOMSDd1mcce
-X-Virus-Scanned: ClamAV 0.88.3/1686/Fri Aug 18 20:43:48 2006 on zeus1.kernel.org
-X-Virus-Status: Clean
+	id S1161055AbWHSB0m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Aug 2006 21:26:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161104AbWHSB0m
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 21:26:42 -0400
+Received: from mail.gmx.de ([213.165.64.20]:62166 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1161055AbWHSB0l (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Aug 2006 21:26:41 -0400
+Received: (qmail invoked by alias); 19 Aug 2006 01:26:39 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp038) with SMTP; 19 Aug 2006 03:26:39 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vbqqh96v2.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25704>
 
-Get the freshest
- Introducing a great product which will make you a better, more confident man! Experience noticeable and stable results in your pants - just weeks of usage!
+Hi,
 
- You certainly thought about women worshipping you because of your size and performance. Try to imagine your totally new life free from size fears, lack of confidence and with terrific success among females. Take a look: http://www.ilmestelv.com/gal/ms/ 
-You won't increase your most important muscle in gyms - so this is what you have to try!
+On Fri, 18 Aug 2006, Junio C Hamano wrote:
 
- When dog hungry he ah nyam calabash. When I turned myself over to God, i took my life out the hands of an idiot Even a clock that does not work is right twice a day  Adversity Makes Strange Bedfellows
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > What you cleverly did not mention: It was inside a
+> >
+> > 	if (!bad &&
+> > 		(length = strlen(source[i])) >= 0 &&
+> > 		!strncmp(destination[i], source[i], length) &&
+> > 		(destination[i][length] == 0 || destination[i][length] == '/'))
+> >
+> > construct. So, we assign the "length" variable only if we have to. And the 
+> > ">= 0" trick is a common one. I could have done
+> >
+> > 		!strncmp(destination[i], source[i], (length = strlen(source[i])))
+> >
+> > but even I find that ugly.
+> 
+> I usually side with you but on this I can't.
+> 
+> There are 2 ways to generate branch instructions in C.
+> 
+>  - compound statements specifically designed for expressing
+>    control structure: if () ... else ..., for (), while (),
+>    switch (), etc.
+> 
+>  - expressions using conditional operators or logical operators
+>    that short circuit: ... ? ... : ..., ... && ... || ...
+> 
+> The latter form may still be readable even with simple side
+> effects inside its terms, but "(l = strlen(s)) >= 0" is done
+> solely for the side effect, and its computed value does not have
+> anything to do with the logical operation &&.
+> 
+> THIS IS UGLY.  And do not want to live in a world where this
+> ugliness is a "common one", as you put it.
+
+Okay. Probably the explanation is: I do not use git-mv myself, but only 
+got annoyed enough by a failing t7001 to rewrite it.
+
+> And this avoiding one call to strlen(source[i]) is unnecessary
+> even as an optimization -- you end up calling strlen() on it
+> later in the code anyway, as David points out.
+> 
+> I think this part is far easier to read if you did it like this:
+>  
+> 		length = strlen(source[i]);
+> 		if (lstat(source[i], &st) < 0)
+> 			bad = "bad source";
+> 		else if (!strncmp(destination[i], source[i], length) &&
+> 			 (destination[i][length] == 0 ||
+> 			  destination[i][length] == '/'))
+> 			bad = "can not move directory into itself";
+> 
+> 		if (S_ISDIR(st.st_mode)) {
+> 			...
+> 
+> Note that the above is an absolute minimum rewrite.  Other
+> things I noticed are:
+> 
+>  - source[i] and destination[i] are referenced all the time; the
+>    code would be easer to read if you had something like this
+>    upfront:
+> 
+>                 /* Checking */
+>                 for (i = 0; i < count; i++) {
+>                         const char *bad = NULL;
+> 			const char *src = source[i];
+>                         const char *dst = destination[i];
+>                         int srclen = strlen(src);
+>                         int dstlen = strlen(dst);
+> 
+>    You might end up not using dstlen in some cases, but I think
+>    this would be far easier to read.  Micro-optimizing by saying
+>    "this is used only in this branch of this later if()
+>    statement but in that case it is always set in that branch of
+>    that earlier if() statement" makes unmaintainably confusing
+>    code.
+> 
+>  - I do not think you need "const char *dir, *dest_dir" inside
+>    the "source is directory" branch; I would just use src and dst
+>    consistently;
+
+These changes would make the source more readable, yes.
+
+>  - You muck with dest_dir by calling add_slash(dest_dir) but
+>    call prefix_path() with dst_len you computed earlier;
+>    prefix_path() may know what to do, but is this intended?
+
+That is probably a late night oversight.
+
+If noone else is faster, I will do the requested changes tomorrow.
+
+Ciao,
+Dscho
