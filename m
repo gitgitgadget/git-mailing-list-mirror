@@ -1,77 +1,76 @@
-From: Mitchell Blank Jr <mitch@sfgoth.com>
-Subject: Re: [PATCH] Added support for dropping privileges to git-daemon.
-Date: Sat, 19 Aug 2006 10:25:33 -0700
-Message-ID: <20060819172533.GB64962@gaz.sfgoth.com>
-References: <1155990772.6591@hammerfest>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [PATCH] gitweb: use common parameter parsing and generation for "o", too.
+Date: Sat, 19 Aug 2006 20:33:03 +0200
+Message-ID: <20060819183303.GC30022@admingilde.org>
+References: <11557673213372-git-send-email-tali@admingilde.org> <ec1d6q$823$2@sea.gmane.org> <20060817191300.GA11477@admingilde.org> <200608172134.38751.jnareb@gmail.com> <20060818202013.GB30022@admingilde.org> <ec6qnp$aal$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="WhfpMioaduB5tiZL"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 19 19:17:11 2006
+X-From: git-owner@vger.kernel.org Sat Aug 19 20:33:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GEURT-0002ZZ-NG
-	for gcvg-git@gmane.org; Sat, 19 Aug 2006 19:17:04 +0200
+	id 1GEVdA-0008Vs-Mj
+	for gcvg-git@gmane.org; Sat, 19 Aug 2006 20:33:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422723AbWHSRQ7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 Aug 2006 13:16:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422724AbWHSRQ7
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Aug 2006 13:16:59 -0400
-Received: from gaz.sfgoth.com ([69.36.241.230]:34243 "EHLO gaz.sfgoth.com")
-	by vger.kernel.org with ESMTP id S1422723AbWHSRQ6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Aug 2006 13:16:58 -0400
-Received: from gaz.sfgoth.com (localhost.sfgoth.com [127.0.0.1])
-	by gaz.sfgoth.com (8.12.10/8.12.10) with ESMTP id k7JHPatV065765;
-	Sat, 19 Aug 2006 10:25:36 -0700 (PDT)
-	(envelope-from mitch@gaz.sfgoth.com)
-Received: (from mitch@localhost)
-	by gaz.sfgoth.com (8.12.10/8.12.6/Submit) id k7JHPXTE065764;
-	Sat, 19 Aug 2006 10:25:33 -0700 (PDT)
-	(envelope-from mitch)
-To: Tilman Sauerbeck <tilman@code-monkey.de>
+	id S1751765AbWHSSdF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 Aug 2006 14:33:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751771AbWHSSdF
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Aug 2006 14:33:05 -0400
+Received: from agent.admingilde.org ([213.95.21.5]:1170 "EHLO
+	mail.admingilde.org") by vger.kernel.org with ESMTP
+	id S1751765AbWHSSdE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Aug 2006 14:33:04 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1GEVd1-0002er-ME; Sat, 19 Aug 2006 20:33:03 +0200
+To: Jakub Narebski <jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <1155990772.6591@hammerfest>
-User-Agent: Mutt/1.4.2.1i
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.2.2 (gaz.sfgoth.com [127.0.0.1]); Sat, 19 Aug 2006 10:25:36 -0700 (PDT)
+In-Reply-To: <ec6qnp$aal$1@sea.gmane.org>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25731>
 
-Tilman Sauerbeck wrote:
-> +	if (user && group)
-> +		drop_privileges();
 
-It seems "if (user)" would be sufficient here.
+--WhfpMioaduB5tiZL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> +	if (!user ^ !group)
-> +		die("either set both user and group or none of them");
+hoi :)
 
-For simplicities sake I'd actually suggest allowing group==NULL.  So
-change this test to be
+On Sat, Aug 19, 2006 at 12:55:57PM +0200, Jakub Narebski wrote:
+> > Perhaps introduce a new function which is used to access the parameters?
+> > This new function could check the URL or CGI->param or whatever and then
+> > return the requested value.
+>=20
+> CGI->param. There is no reason to duplicate CGI module.
 
-	if (group && !user)
-		die("--group supplied without --user");
+yes there is.
+using CGI->param it is not possible to use nice URLs ala
+http://git.site.org/projectpath.git
 
-Then in drop_privileges() do something like:
+I would really appreciate to be able to use nice URLs in gitweb that
+correspond to the repository URL.
 
-	struct passwd *p;
-	gid_t gid;
+--=20
+Martin Waitz
 
-	p = getpwnam(user);
-	if (!p)
-		die("user not found - %s", user);
-	if (group == NULL)
-		gid = p->pw_gid;
-	else {
-		struct group *g = getgrnam(group);
-		if (!g)
-			die("group not found - %s", group);
-		gid = g->gr_gid;
-	}
+--WhfpMioaduB5tiZL
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-Since usually you want to use the same gid that is normally associated
-with that pid, this just makes things a little easier on the user
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
 
--Mitch
+iD8DBQFE51lfj/Eaxd/oD7IRAoZbAJ47BrHsKPjavv6JrAtv+z4mD7v7iQCcDZxG
+aoTJn7FErb1Kw7QgoZMv02U=
+=Xuhv
+-----END PGP SIGNATURE-----
+
+--WhfpMioaduB5tiZL--
