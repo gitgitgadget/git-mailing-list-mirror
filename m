@@ -1,100 +1,70 @@
-From: "Troy Telford" <ttelford@linuxnetworx.com>
-Subject: git clone dies (large git repository)
-Date: Fri, 18 Aug 2006 16:42:06 -0600
-Organization: Linux Networx
-Message-ID: <op.teh30gmyies9li@rygel.lnxi.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: Recover from a bad push in StGit
+Date: Sat, 19 Aug 2006 02:11:28 +0200
+Organization: Dewire
+Message-ID: <200608190211.29625.robin.rosenberg.lists@dewire.com>
+References: <200608190030.47257.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; delsp=yes; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Aug 19 00:43:21 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Sat Aug 19 02:14:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GED3Z-0000I3-Cv
-	for gcvg-git@gmane.org; Sat, 19 Aug 2006 00:43:13 +0200
+	id 1GEER9-0006Cu-Gb
+	for gcvg-git@gmane.org; Sat, 19 Aug 2006 02:11:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422632AbWHRWmm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Aug 2006 18:42:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751556AbWHRWmm
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 18:42:42 -0400
-Received: from 66.239.25.20.ptr.us.xo.net ([66.239.25.20]:40331 "EHLO
-	zoot.lnxi.com") by vger.kernel.org with ESMTP id S1422631AbWHRWmh
+	id S1751599AbWHSALg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 18 Aug 2006 20:11:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751600AbWHSALg
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 20:11:36 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:26970 "EHLO
+	torino.dewire.com") by vger.kernel.org with ESMTP id S1751598AbWHSALf convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Aug 2006 18:42:37 -0400
-Received: from rygel.lnxi.com ([::ffff:192.168.40.106])
-	by zoot.lnxi.com with ESMTP (TLS encrypted); Fri, 18 Aug 2006 16:42:07 -0600
-To: git@vger.kernel.org
-User-Agent: Opera Mail/9.01 (Linux)
+	Fri, 18 Aug 2006 20:11:35 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by torino.dewire.com (Postfix) with ESMTP id 1B32180284A
+	for <git@vger.kernel.org>; Sat, 19 Aug 2006 02:09:22 +0200 (CEST)
+Received: from torino.dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 23231-07 for <git@vger.kernel.org>; Sat, 19 Aug 2006 02:09:21 +0200 (CEST)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by torino.dewire.com (Postfix) with ESMTP id CB15F802664
+	for <git@vger.kernel.org>; Sat, 19 Aug 2006 02:09:21 +0200 (CEST)
+To: git <git@vger.kernel.org>
+User-Agent: KMail/1.9.4
+In-Reply-To: <200608190030.47257.robin.rosenberg.lists@dewire.com>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25702>
 
-I've got a git repository I use to manage a set of RPMs.  It's got history  
-stretching back for years, and imported nicely into git.  Since it's used  
-to create RPMs, the repository has a structure similar to this:
-.
-|--README
-|-- foo
-|    |--SOURCES
-|    |  |--foo.tar.bz2
-|    |  `--foo-build.patch
-|    `--SPECS
-|       `--foo.spec
-`-- bar
-      |--SOURCES
-      |  |--bar.tar.bz2
-      |  `--bar-build.patch
-      `--SPECS
-         `--bar.spec
+l=F6rdag 19 augusti 2006 00:30 skrev Robin Rosenberg:
+> Hi,
+>
+> I recently did some reordering of patches and goofed up (not totally,=
+ but
+> anyway). I pushed a number of patches and forgot one in the middle
+> resulting in a merge  conflict. Pop won't work since I have local cha=
+nges
+> from the conflict and I don't want to resolve the conflict either sin=
+ce I
+> didn't mean to push the patch at that point.
+>
+> Is there a simple way of undoing a bad push?
+It was so simple
 
-The source tarballs are updated when there's a new version of the  
-software; I don't need to worry about changes that are /inside/ the  
-tarball-- just that the tarball itself has changed.  As you can imagine, a  
-fair amount of the 'stuff' in the repository are these binary tarballs.
+	stg status --reset;stg pop
 
-The total repository size (ie. the '.git' folder):  4GB
+does the job. Sorry about the noise.
 
-I have only one complaint (and I can work around it anyway):  I can't 'git  
-clone' the repository.
+>
+> In this case I had a fresh export do help me out so I could just dele=
+te the
+> patches and re-import them again, but what if I didn't?
+>
 
-if I run:
-git clone git://my.server.net/git/rpms
-I get the following output:
-
-remote: Generating pack...
-remote: Done counting 20971 objects.
-remote: Deltifying 20971 objects.
-remote:  100% (20971/20971) done
-3707.885MB  (21657 kB/s)
-
-remote: Total 20971, written 20971 (delta 9604), reused 20971 (delta 9604)
-error: git-fetch-pack: unable to read from git-index-pack
-error: git-index-pack died of signal 11
-fetch-pack from 'git://my.server.net/git/rpms' failed.
-
-It's interesting to note that during the pack file transfer, it stops  
-incrementing at ~3700 MB; the pack file is 4.0 GB.  So either 300MB isn't  
-being transferred, or it's just not updating the display for the last few  
-hundred megs.
-
-My workaround is to just use 'rsync' to copy the data (although scp works  
-too), then checkout the working copy.  After that, fetch/pull and push  
-work fine.
-
-The behavior is consistent with git v1.4.1 and v1.4.2, on SLES 9, SLES 10,  
-RHEL 4, and Gentoo.
-
-It is also consistent if I clone via the git daemon, or the ssh protocol  
-('git clone server:/path/to/repo')
-
-I originally had everything as loose objects.  I then ran 'git-repack -d'  
-on occasion, so I had a combination of a large pack file, smaller pack  
-files, and loose objects.  Finally, I tried 'git repack -a -d' and  
-consolidated it all into a single 4GB pack file.  It didn't seem to make  
-much difference in the output.
-
-Am I bumping some sort of limitation within git, or have I uncovered a bug?
--- 
-Troy Telford
+-- robin
