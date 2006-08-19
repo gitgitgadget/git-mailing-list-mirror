@@ -1,227 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] builtin-mv: readability patch
-Date: Sat, 19 Aug 2006 16:52:21 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0608191651110.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [PATCH] Added support for dropping privileges to git-daemon.
+Date: Sat, 19 Aug 2006 17:19:30 +0200
+Message-ID: <e5bfff550608190819i3cade548g28b2c95fab172a49@mail.gmail.com>
+References: <1155990772.6591@hammerfest>
+	 <e5bfff550608190623j58de8c1cn6a9304249ee1ecb8@mail.gmail.com>
+	 <20060819132922.GA6644@code-monkey.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sat Aug 19 16:52:31 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Aug 19 17:20:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GESBZ-0000ZA-7M
-	for gcvg-git@gmane.org; Sat, 19 Aug 2006 16:52:29 +0200
+	id 1GEScJ-0007AX-8S
+	for gcvg-git@gmane.org; Sat, 19 Aug 2006 17:20:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751755AbWHSOwY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 Aug 2006 10:52:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751756AbWHSOwY
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Aug 2006 10:52:24 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46809 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751755AbWHSOwX (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Aug 2006 10:52:23 -0400
-Received: (qmail invoked by alias); 19 Aug 2006 14:52:22 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp020) with SMTP; 19 Aug 2006 16:52:22 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org, junkio@cox.net
-X-Y-GMX-Trusted: 0
+	id S1030186AbWHSPTd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 Aug 2006 11:19:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751469AbWHSPTc
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Aug 2006 11:19:32 -0400
+Received: from py-out-1112.google.com ([64.233.166.181]:60847 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1751459AbWHSPTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Aug 2006 11:19:32 -0400
+Received: by py-out-1112.google.com with SMTP id n25so1602139pyg
+        for <git@vger.kernel.org>; Sat, 19 Aug 2006 08:19:31 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ST/Jym8qfOC05TnT82Srh2xwyRKhXItdQbz/47whSzmsEtKu8Wa1pRfWSfYxMBfW1eQQ/mr/hnzO3jMzmST8eZT0ppan5yJ+Qek8VNha8c2lS81Hr3BcnYWYlG0iITyoXv1wKdasBGnCwyCRnmdhzYG4LFzZEJqBgsmhNe2UAiw=
+Received: by 10.35.45.1 with SMTP id x1mr8500998pyj;
+        Sat, 19 Aug 2006 08:19:30 -0700 (PDT)
+Received: by 10.35.95.9 with HTTP; Sat, 19 Aug 2006 08:19:30 -0700 (PDT)
+To: git@vger.kernel.org
+In-Reply-To: <20060819132922.GA6644@code-monkey.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25725>
 
+On 8/19/06, Tilman Sauerbeck <tilman@code-monkey.de> wrote:
+> Marco Costalba [2006-08-19 15:23]:
+> > >
+> > >+       if (!user ^ !group)
+> > >+               die("either set both user and group or none of them");
+> > >+
+> > >
+> >
+> > Just a  question. Why simply not
+> >
+> >       if (user ^ group)
+>
+> Because gcc doesn't like that:
+>  error: invalid operands to binary ^
+>
 
-The old version was not liked at all. This is hopefully better. Oh, and it 
-gets rid of the goto.
+Interesting!
 
-Note that it does not change any functionality.
+Indeed gcc it's right, operator ^ it's a bitwise operator, not a
+logical one. So operands must be booleans (or numerical types in case
+of C).
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
- builtin-mv.c |  104 +++++++++++++++++++++++++---------------------------------
- 1 files changed, 44 insertions(+), 60 deletions(-)
+The trick is that operator '!' performs an implicit conversion to
+integral on the 'user' and 'group' pointers.
 
-diff --git a/builtin-mv.c b/builtin-mv.c
-index c0c8764..1fdb0c7 100644
---- a/builtin-mv.c
-+++ b/builtin-mv.c
-@@ -126,48 +126,43 @@ int cmd_mv(int argc, const char **argv, 
- 
- 	/* Checking */
- 	for (i = 0; i < count; i++) {
--		int length;
-+		const char *src = source[i], *dst = destination[i];
-+		int length, src_is_dir;
- 		const char *bad = NULL;
- 
- 		if (show_only)
--			printf("Checking rename of '%s' to '%s'\n",
--				source[i], destination[i]);
-+			printf("Checking rename of '%s' to '%s'\n", src, dst);
- 
--		if (lstat(source[i], &st) < 0)
-+		length = strlen(src);
-+		if (lstat(src, &st) < 0)
- 			bad = "bad source";
--
--		if (!bad &&
--		    (length = strlen(source[i])) >= 0 &&
--		    !strncmp(destination[i], source[i], length) &&
--		    (destination[i][length] == 0 || destination[i][length] == '/'))
-+		else if (!strncmp(src, dst, length) &&
-+				(dst[length] == 0 || dst[length] == '/')) {
- 			bad = "can not move directory into itself";
--
--		if (S_ISDIR(st.st_mode)) {
--			const char *dir = source[i], *dest_dir = destination[i];
--			int first, last, len = strlen(dir);
--
--			if (lstat(dest_dir, &st) == 0) {
--				bad = "cannot move directory over file";
--				goto next;
--			}
-+		} else if ((src_is_dir = S_ISDIR(st.st_mode))
-+				&& lstat(dst, &st) == 0)
-+			bad = "cannot move directory over file";
-+		else if (src_is_dir) {
-+			int first, last;
- 
- 			modes[i] = WORKING_DIRECTORY;
- 
--			first = cache_name_pos(source[i], len);
-+			first = cache_name_pos(src, length);
- 			if (first >= 0)
--				die ("Huh? %s/ is in index?", dir);
-+				die ("Huh? %s/ is in index?", src);
- 
- 			first = -1 - first;
- 			for (last = first; last < active_nr; last++) {
- 				const char *path = active_cache[last]->name;
--				if (strncmp(path, dir, len) || path[len] != '/')
-+				if (strncmp(path, src, length)
-+						|| path[length] != '/')
- 					break;
- 			}
- 
- 			if (last - first < 1)
- 				bad = "source directory is empty";
--			else if (!bad) {
--				int j, dst_len = strlen(dest_dir);
-+			else {
-+				int j, dst_len;
- 
- 				if (last - first > 0) {
- 					source = realloc(source,
-@@ -181,24 +176,21 @@ int cmd_mv(int argc, const char **argv, 
- 							* sizeof(enum update_mode));
- 				}
- 
--				dest_dir = add_slash(dest_dir);
-+				dst = add_slash(dst);
-+				dst_len = strlen(dst) - 1;
- 
- 				for (j = 0; j < last - first; j++) {
- 					const char *path =
- 						active_cache[first + j]->name;
- 					source[count + j] = path;
- 					destination[count + j] =
--						prefix_path(dest_dir, dst_len,
--							path + len);
-+						prefix_path(dst, dst_len,
-+							path + length);
- 					modes[count + j] = INDEX;
- 				}
- 				count += last - first;
- 			}
--
--			goto next;
--		}
--
--		if (!bad && lstat(destination[i], &st) == 0) {
-+		} else if (lstat(dst, &st) == 0) {
- 			bad = "destination exists";
- 			if (force) {
- 				/*
-@@ -210,24 +202,17 @@ int cmd_mv(int argc, const char **argv, 
- 							" will overwrite!\n",
- 							bad);
- 					bad = NULL;
--					path_list_insert(destination[i],
--							&overwritten);
-+					path_list_insert(dst, &overwritten);
- 				} else
- 					bad = "Cannot overwrite";
- 			}
--		}
--
--		if (!bad && cache_name_pos(source[i], strlen(source[i])) < 0)
-+		} else if (cache_name_pos(src, length) < 0)
- 			bad = "not under version control";
-+		else if (path_list_has_path(&src_for_dst, dst))
-+			bad = "multiple sources for the same target";
-+		else
-+			path_list_insert(dst, &src_for_dst);
- 
--		if (!bad) {
--			if (path_list_has_path(&src_for_dst, destination[i]))
--				bad = "multiple sources for the same target";
--			else
--				path_list_insert(destination[i], &src_for_dst);
--		}
--
--next:
- 		if (bad) {
- 			if (ignore_errors) {
- 				if (--count > 0) {
-@@ -239,33 +224,32 @@ next:
- 				}
- 			} else
- 				die ("%s, source=%s, destination=%s",
--				     bad, source[i], destination[i]);
-+				     bad, src, dst);
- 		}
- 	}
- 
- 	for (i = 0; i < count; i++) {
-+		const char *src = source[i], *dst = destination[i];
-+		enum update_mode mode = modes[i];
- 		if (show_only || verbose)
--			printf("Renaming %s to %s\n",
--			       source[i], destination[i]);
--		if (!show_only && modes[i] != INDEX &&
--		    rename(source[i], destination[i]) < 0 &&
--		    !ignore_errors)
--			die ("renaming %s failed: %s",
--			     source[i], strerror(errno));
--
--		if (modes[i] == WORKING_DIRECTORY)
-+			printf("Renaming %s to %s\n", src, dst);
-+		if (!show_only && mode != INDEX &&
-+				rename(src, dst) < 0 && !ignore_errors)
-+			die ("renaming %s failed: %s", src, strerror(errno));
-+
-+		if (mode == WORKING_DIRECTORY)
- 			continue;
- 
--		if (cache_name_pos(source[i], strlen(source[i])) >= 0) {
--			path_list_insert(source[i], &deleted);
-+		if (cache_name_pos(src, strlen(src)) >= 0) {
-+			path_list_insert(src, &deleted);
- 
- 			/* destination can be a directory with 1 file inside */
--			if (path_list_has_path(&overwritten, destination[i]))
--				path_list_insert(destination[i], &changed);
-+			if (path_list_has_path(&overwritten, dst))
-+				path_list_insert(dst, &changed);
- 			else
--				path_list_insert(destination[i], &added);
-+				path_list_insert(dst, &added);
- 		} else
--			path_list_insert(destination[i], &added);
-+			path_list_insert(dst, &added);
- 	}
- 
-         if (show_only) {
--- 
-1.4.2.gd3f3-dirty
+BTW the following (very ugly) works.
+
+         if ((int)user ^ (int)group)
