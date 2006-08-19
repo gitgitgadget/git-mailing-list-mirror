@@ -1,136 +1,88 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] cleans up builtin-mv
-Date: Sat, 19 Aug 2006 03:26:39 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0608190323010.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0608172230470.25827@chino.corp.google.com>
- <Pine.LNX.4.63.0608172301520.25827@chino.corp.google.com>
- <Pine.LNX.4.63.0608181137000.28360@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vbqqh96v2.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [RFC] adding support for md5
+Date: Sat, 19 Aug 2006 04:35:55 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0608190416370.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0608172259280.25827@chino.corp.google.com>
+ <9e4733910608181452x65ca937aqbfde55caa98ff6da@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 19 03:26:50 2006
+X-From: git-owner@vger.kernel.org Sat Aug 19 04:36:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GEFbp-0005g4-0t
-	for gcvg-git@gmane.org; Sat, 19 Aug 2006 03:26:45 +0200
+	id 1GEGgr-0000Xa-6t
+	for gcvg-git@gmane.org; Sat, 19 Aug 2006 04:36:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161055AbWHSB0m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Aug 2006 21:26:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161104AbWHSB0m
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 21:26:42 -0400
-Received: from mail.gmx.de ([213.165.64.20]:62166 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1161055AbWHSB0l (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Aug 2006 21:26:41 -0400
-Received: (qmail invoked by alias); 19 Aug 2006 01:26:39 -0000
+	id S1750754AbWHSCf6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Aug 2006 22:35:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751376AbWHSCf5
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 22:35:57 -0400
+Received: from mail.gmx.de ([213.165.64.20]:58596 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750754AbWHSCf5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Aug 2006 22:35:57 -0400
+Received: (qmail invoked by alias); 19 Aug 2006 02:35:55 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp038) with SMTP; 19 Aug 2006 03:26:39 +0200
+  by mail.gmx.net (mp005) with SMTP; 19 Aug 2006 04:35:55 +0200
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbqqh96v2.fsf@assigned-by-dhcp.cox.net>
+To: Jon Smirl <jonsmirl@gmail.com>
+In-Reply-To: <9e4733910608181452x65ca937aqbfde55caa98ff6da@mail.gmail.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25705>
 
 Hi,
 
-On Fri, 18 Aug 2006, Junio C Hamano wrote:
+On Fri, 18 Aug 2006, Jon Smirl wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > What you cleverly did not mention: It was inside a
-> >
-> > 	if (!bad &&
-> > 		(length = strlen(source[i])) >= 0 &&
-> > 		!strncmp(destination[i], source[i], length) &&
-> > 		(destination[i][length] == 0 || destination[i][length] == '/'))
-> >
-> > construct. So, we assign the "length" variable only if we have to. And the 
-> > ">= 0" trick is a common one. I could have done
-> >
-> > 		!strncmp(destination[i], source[i], (length = strlen(source[i])))
-> >
-> > but even I find that ugly.
-> 
-> I usually side with you but on this I can't.
-> 
-> There are 2 ways to generate branch instructions in C.
-> 
->  - compound statements specifically designed for expressing
->    control structure: if () ... else ..., for (), while (),
->    switch (), etc.
-> 
->  - expressions using conditional operators or logical operators
->    that short circuit: ... ? ... : ..., ... && ... || ...
-> 
-> The latter form may still be readable even with simple side
-> effects inside its terms, but "(l = strlen(s)) >= 0" is done
-> solely for the side effect, and its computed value does not have
-> anything to do with the logical operation &&.
-> 
-> THIS IS UGLY.  And do not want to live in a world where this
-> ugliness is a "common one", as you put it.
+> If I have two repositories each with 100M objects in them and I merge 
+> them, what is the probability of a object id collision with MD5 (128b) 
+> versus SHA1 (160b)?
 
-Okay. Probably the explanation is: I do not use git-mv myself, but only 
-got annoyed enough by a failing t7001 to rewrite it.
+Assuming a uniform distribution of the hashes over our data, this is the 
+birthday problem:
 
-> And this avoiding one call to strlen(source[i]) is unnecessary
-> even as an optimization -- you end up calling strlen() on it
-> later in the code anyway, as David points out.
-> 
-> I think this part is far easier to read if you did it like this:
->  
-> 		length = strlen(source[i]);
-> 		if (lstat(source[i], &st) < 0)
-> 			bad = "bad source";
-> 		else if (!strncmp(destination[i], source[i], length) &&
-> 			 (destination[i][length] == 0 ||
-> 			  destination[i][length] == '/'))
-> 			bad = "can not move directory into itself";
-> 
-> 		if (S_ISDIR(st.st_mode)) {
-> 			...
-> 
-> Note that the above is an absolute minimum rewrite.  Other
-> things I noticed are:
-> 
->  - source[i] and destination[i] are referenced all the time; the
->    code would be easer to read if you had something like this
->    upfront:
-> 
->                 /* Checking */
->                 for (i = 0; i < count; i++) {
->                         const char *bad = NULL;
-> 			const char *src = source[i];
->                         const char *dst = destination[i];
->                         int srclen = strlen(src);
->                         int dstlen = strlen(dst);
-> 
->    You might end up not using dstlen in some cases, but I think
->    this would be far easier to read.  Micro-optimizing by saying
->    "this is used only in this branch of this later if()
->    statement but in that case it is always set in that branch of
->    that earlier if() statement" makes unmaintainably confusing
->    code.
-> 
->  - I do not think you need "const char *dir, *dest_dir" inside
->    the "source is directory" branch; I would just use src and dst
->    consistently;
+http://mathworld.wolfram.com/BirthdayProblem.html
 
-These changes would make the source more readable, yes.
+(In short, given a number of days in the year, how many people do I need 
+to pick randomly until at least two of them have the same birthday?)
 
->  - You muck with dest_dir by calling add_slash(dest_dir) but
->    call prefix_path() with dst_len you computed earlier;
->    prefix_path() may know what to do, but is this intended?
+In our case, we want to know how many objects we need in order to probably 
+have a clash in 2^128 (approx. 3.4e38) and 2^160 (approx. 1.5e48) hashes, 
+respectively.
 
-That is probably a late night oversight.
+Mathworld tells us that a good approximation of the probability is
 
-If noone else is faster, I will do the requested changes tomorrow.
+p = 1 - (1-n/(2d))^(n-1)
 
-Ciao,
+where n is the number of objects, and d is the total number of hashes. If 
+you have 100M = 1e5 objects, you probably want the probability of a clash 
+below 1/1e5 = 1e-5, so let's take 1e-10. Assuming n is way lower than d, 
+we can approximate
+
+p = 1 - (1 - (n - 1 over 1) * n/(2d)) = n(n-1)/2d
+
+and therefore (approximately)
+
+n = sqrt(2pd)
+
+which amounts to 2.6e14 in the case of a 128-bit hash, and 1.7e19 in the 
+case of a 160-bit hash, both well beyond your 100M objects. BTW the 
+addressable space of a 64-bit processor is about 1.9e19.
+
+If you want to know the probability of a clash, you can use the same 
+approximation:
+
+For 100M objects: p = 1.5e-59 for 128-bit, and p = 3.3e-69 for 160-bit. 
+This is so low as to be incomprehensible.
+
+Remember that all these approximations are really crude, so do not rely on 
+the precise numbers. But they'll give you good ballpark figures (if I did 
+not make a mistake...).
+
+Hth,
 Dscho
