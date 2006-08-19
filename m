@@ -1,76 +1,90 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH] gitweb: use common parameter parsing and generation for "o", too.
-Date: Sat, 19 Aug 2006 20:33:03 +0200
-Message-ID: <20060819183303.GC30022@admingilde.org>
-References: <11557673213372-git-send-email-tali@admingilde.org> <ec1d6q$823$2@sea.gmane.org> <20060817191300.GA11477@admingilde.org> <200608172134.38751.jnareb@gmail.com> <20060818202013.GB30022@admingilde.org> <ec6qnp$aal$1@sea.gmane.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Huge win, compressing a window of delta runs as a unit
+Date: Sat, 19 Aug 2006 12:25:08 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0608191218470.11811@g5.osdl.org>
+References: <9e4733910608161020s6855140bs68aaab6e1bbd3bad@mail.gmail.com> 
+ <Pine.LNX.4.64.0608172323520.11359@localhost.localdomain> 
+ <9e4733910608180615q4895334bw57c55e59a4ac5482@mail.gmail.com> 
+ <Pine.LNX.4.63.0608181536250.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+ <9e4733910608180650j4542ab09q7daf4250825d3333@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="WhfpMioaduB5tiZL"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 19 20:33:15 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nicolas Pitre <nico@cam.org>,
+	Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 19 21:25:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GEVdA-0008Vs-Mj
-	for gcvg-git@gmane.org; Sat, 19 Aug 2006 20:33:13 +0200
+	id 1GEWRr-00038L-RV
+	for gcvg-git@gmane.org; Sat, 19 Aug 2006 21:25:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751765AbWHSSdF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 Aug 2006 14:33:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751771AbWHSSdF
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Aug 2006 14:33:05 -0400
-Received: from agent.admingilde.org ([213.95.21.5]:1170 "EHLO
-	mail.admingilde.org") by vger.kernel.org with ESMTP
-	id S1751765AbWHSSdE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Aug 2006 14:33:04 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1GEVd1-0002er-ME; Sat, 19 Aug 2006 20:33:03 +0200
-To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <ec6qnp$aal$1@sea.gmane.org>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S1751776AbWHSTZc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 Aug 2006 15:25:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751777AbWHSTZb
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Aug 2006 15:25:31 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:57279 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751776AbWHSTZb (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Aug 2006 15:25:31 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k7JJP9nW018833
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 19 Aug 2006 12:25:09 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k7JJP8ps031275;
+	Sat, 19 Aug 2006 12:25:08 -0700
+To: Jon Smirl <jonsmirl@gmail.com>
+In-Reply-To: <9e4733910608180650j4542ab09q7daf4250825d3333@mail.gmail.com>
+X-Spam-Status: No, hits=-0.43 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.142 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25732>
 
 
---WhfpMioaduB5tiZL
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-hoi :)
+On Fri, 18 Aug 2006, Jon Smirl wrote:
 
-On Sat, Aug 19, 2006 at 12:55:57PM +0200, Jakub Narebski wrote:
-> > Perhaps introduce a new function which is used to access the parameters?
-> > This new function could check the URL or CGI->param or whatever and then
-> > return the requested value.
->=20
-> CGI->param. There is no reason to duplicate CGI module.
+> On 8/18/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > Hi,
+> > 
+> > On Fri, 18 Aug 2006, Jon Smirl wrote:
+> > 
+> > > I suspect the size reduction is directly proportional to the age of
+> > > the repository. The kernel repository only has three years worth of
+> > > data in it.  Linus has the full history in another repository that is
+> > > not in general distribution. We can get it from him when he gets back
+> > > from vacation.
+> > 
+> > Maybe you mean
+> > 
+> > http://www.kernel.org/git/gitweb.cgi?p=linux/kernel/git/tglx/history.git
+> 
+> That one only goes to 2002, the full one goes back to around 1990.
 
-yes there is.
-using CGI->param it is not possible to use nice URLs ala
-http://git.site.org/projectpath.git
+I don't actually have such a "full" history. It would be wonderful if 
+somebody took the time to try to piece such a thing together (and git 
+actually makes that a _lot_ easier than some other SCM's, because you can 
+just import random versions in any order, and then re-stich just the 
+commit history when you add a new thing in the middle, without generating 
+any new trees or deltas or anything strange at all).
 
-I would really appreciate to be able to use nice URLs in gitweb that
-correspond to the repository URL.
+But it's a lot of work. I tried to do a "Linux-Historic" archive about a 
+year ago (and imported some of the old kernels I had), but I gave up, just 
+because it was such a pain to try to do a good job and try to find old 
+release notes etc to import into the changelogs etc. 
 
---=20
-Martin Waitz
+Oh, well.
 
---WhfpMioaduB5tiZL
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+So the only "old" history I have is indeed that BK conversion by Thomas 
+Gleixner. Any pre-BK stuff only exists as patches and tar-balls on various 
+ftp sites (and I don't have any magic repository of my own, so everybody 
+else can do exactly as well as I could, with possibly the exception that I 
+might remember some random details about some old release history - but 
+considering my memory, that's pretty unlikely too. Google is your friend)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFE51lfj/Eaxd/oD7IRAoZbAJ47BrHsKPjavv6JrAtv+z4mD7v7iQCcDZxG
-aoTJn7FErb1Kw7QgoZMv02U=
-=Xuhv
------END PGP SIGNATURE-----
-
---WhfpMioaduB5tiZL--
+			Linus
