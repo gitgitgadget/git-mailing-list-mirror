@@ -1,67 +1,72 @@
 From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
 Subject: Re: [PATCH] gitweb: Support for snapshot
-Date: Sat, 19 Aug 2006 21:47:25 +0530
-Message-ID: <ec7dil$vcf$1@sea.gmane.org>
-References: <44E54AC6.9010600@gmail.com>	<20060818195148.66411.qmail@web31807.mail.mud.yahoo.com>	<7v64gp7prk.fsf@assigned-by-dhcp.cox.net>	<cc723f590608190110t68e6de8etbf6b5b002fd83ca1@mail.gmail.com> <7virkp3snv.fsf@assigned-by-dhcp.cox.net> <44E71888.30104@gmail.com> <ec76rd$8qf$1@sea.gmane.org>
+Date: Sat, 19 Aug 2006 21:56:31 +0530
+Message-ID: <44E73BB7.8070704@gmail.com>
+References: <44E54AC6.9010600@gmail.com>	<20060818195148.66411.qmail@web31807.mail.mud.yahoo.com>	<7v64gp7prk.fsf@assigned-by-dhcp.cox.net>	<cc723f590608190110t68e6de8etbf6b5b002fd83ca1@mail.gmail.com> <7virkp3snv.fsf@assigned-by-dhcp.cox.net> <44E71888.30104@gmail.com> <ec76rd$8qf$1@sea.gmane.org> <ec7dil$vcf$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: multipart/mixed;
- boundary="------------020707010109050207030404"
-X-From: git-owner@vger.kernel.org Sat Aug 19 18:18:49 2006
+ boundary="------------080301010407000109070501"
+X-From: git-owner@vger.kernel.org Sat Aug 19 18:26:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GETWq-0001B6-VT
-	for gcvg-git@gmane.org; Sat, 19 Aug 2006 18:18:33 +0200
+	id 1GETev-0002S1-Ty
+	for gcvg-git@gmane.org; Sat, 19 Aug 2006 18:26:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932081AbWHSQRv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 Aug 2006 12:17:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932216AbWHSQRv
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Aug 2006 12:17:51 -0400
-Received: from main.gmane.org ([80.91.229.2]:49602 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932081AbWHSQRu (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Aug 2006 12:17:50 -0400
+	id S932386AbWHSQ0u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 Aug 2006 12:26:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932397AbWHSQ0u
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Aug 2006 12:26:50 -0400
+Received: from main.gmane.org ([80.91.229.2]:14309 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932386AbWHSQ0t (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Aug 2006 12:26:49 -0400
 Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GETW0-000125-Lv
-	for git@vger.kernel.org; Sat, 19 Aug 2006 18:17:40 +0200
+	id 1GETeh-0002QP-Po
+	for git@vger.kernel.org; Sat, 19 Aug 2006 18:26:39 +0200
 Received: from 59.92.132.198 ([59.92.132.198])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 19 Aug 2006 18:17:40 +0200
+        for <git@vger.kernel.org>; Sat, 19 Aug 2006 18:26:39 +0200
 Received: from aneesh.kumar by 59.92.132.198 with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 19 Aug 2006 18:17:40 +0200
+        for <git@vger.kernel.org>; Sat, 19 Aug 2006 18:26:39 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
 X-Complaints-To: usenet@sea.gmane.org
 X-Gmane-NNTP-Posting-Host: 59.92.132.198
 User-Agent: Thunderbird 1.5.0.5 (X11/20060728)
-In-Reply-To: <ec76rd$8qf$1@sea.gmane.org>
+In-Reply-To: <ec7dil$vcf$1@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25728>
 
 This is a multi-part message in MIME format.
---------------020707010109050207030404
+--------------080301010407000109070501
 Content-Type: text/plain; charset=ISO-8859-2; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Jakub Narebski wrote:
-> Aneesh Kumar K.V wrote:
+Aneesh Kumar K.V wrote:
+> Jakub Narebski wrote:
+>> Aneesh Kumar K.V wrote:
+>>
+>>> I tested this and added some comments. I also fixed some code. I am 
+>>> attaching the full diff. 
+>>
+>> Below comments to the patch.
+>>
 > 
->> I tested this and added some comments. I also fixed some code. 
->> I am attaching the full diff. 
-> 
-> Below comments to the patch.
-> 
+> updated patch attached. I guess i have taken care of all your comments.
 
-updated patch attached. I guess i have taken care of all your comments. 
+After fixing some comments and adding signed-off
+
+Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
+
+-aneesh
 
 
--aneesh 
-
---------------020707010109050207030404
+--------------080301010407000109070501
 Content-Type: text/x-patch;
  name="gitweb.diff"
 Content-Transfer-Encoding: 7bit
@@ -69,7 +74,7 @@ Content-Disposition: inline;
  filename="gitweb.diff"
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index f8d1036..e8a4a6f 100755
+index f8d1036..063735d 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
 @@ -67,6 +67,68 @@ # file to use for guessing MIME types be
@@ -99,7 +104,7 @@ index f8d1036..e8a4a6f 100755
 +}
 +
 +# To enable system wide have in $GITWEB_CONFIG
-+# $feature{'blame'}{'default'} =  [0];
++# $feature{'blame'}{'default'} =  [1];
 +# To have project specific config enable override in  $GITWEB_CONFIG
 +# $feature{'blame'}{'override'} =  1;
 +# and in project config gitweb.blame = 0|1;
@@ -120,7 +125,7 @@ index f8d1036..e8a4a6f 100755
 +# $feature{'snapshot'}{'default'} =  [undef];
 +# To have project specific config enable override in  $GITWEB_CONFIG
 +# $feature{'blame'}{'override'} =  1;
-+# and in project config  gitweb.snapshot = no|gzip|bzip2
++# and in project config  gitweb.snapshot = none|gzip|bzip2
 +
 +sub feature_snapshot {
 +	my ($ctype, $suffix, $command) = @_;
@@ -279,4 +284,4 @@ index f8d1036..e8a4a6f 100755
  	if (defined $file_name && defined $co{'parent'}) {
  		my $parent = $co{'parent'};
 
---------------020707010109050207030404--
+--------------080301010407000109070501--
