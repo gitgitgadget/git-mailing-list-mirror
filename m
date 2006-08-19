@@ -1,88 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: linux@horizon.com
 Subject: Re: [RFC] adding support for md5
-Date: Sat, 19 Aug 2006 04:35:55 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0608190416370.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0608172259280.25827@chino.corp.google.com>
- <9e4733910608181452x65ca937aqbfde55caa98ff6da@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Date: 18 Aug 2006 23:19:31 -0400
+Message-ID: <20060819031931.486.qmail@science.horizon.com>
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 19 04:36:05 2006
+X-From: git-owner@vger.kernel.org Sat Aug 19 05:19:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GEGgr-0000Xa-6t
-	for gcvg-git@gmane.org; Sat, 19 Aug 2006 04:36:01 +0200
+	id 1GEHN7-0005Td-9Y
+	for gcvg-git@gmane.org; Sat, 19 Aug 2006 05:19:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750754AbWHSCf6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 Aug 2006 22:35:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751376AbWHSCf5
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 22:35:57 -0400
-Received: from mail.gmx.de ([213.165.64.20]:58596 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1750754AbWHSCf5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Aug 2006 22:35:57 -0400
-Received: (qmail invoked by alias); 19 Aug 2006 02:35:55 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp005) with SMTP; 19 Aug 2006 04:35:55 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Jon Smirl <jonsmirl@gmail.com>
-In-Reply-To: <9e4733910608181452x65ca937aqbfde55caa98ff6da@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1751377AbWHSDTd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 Aug 2006 23:19:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751452AbWHSDTd
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Aug 2006 23:19:33 -0400
+Received: from science.horizon.com ([192.35.100.1]:11576 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S1751377AbWHSDTd
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Aug 2006 23:19:33 -0400
+Received: (qmail 487 invoked by uid 1000); 18 Aug 2006 23:19:31 -0400
+To: rientjes@google.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25706>
 
-Hi,
+This is a Very Dumb Idea.
 
-On Fri, 18 Aug 2006, Jon Smirl wrote:
+I normally try to be polite, but this concept is particularly
+deserving of scorn.
 
-> If I have two repositories each with 100M objects in them and I merge 
-> them, what is the probability of a object id collision with MD5 (128b) 
-> versus SHA1 (160b)?
+The idea that more choice is a good thing is sometimes seductive, but when
+it comes to standards, that's not a good idea.  It's like the famous joke
+told about the dumb inhabitants of your favorite ethnic region: they're
+going to try driving on the other side of the road.  Starting next month,
+all the cars will drive on the other side.  If that goes well, the month
+after they'll add trucks and buses.
 
-Assuming a uniform distribution of the hashes over our data, this is the 
-birthday problem:
+If some disaster arose that required Git to change hash functions,
+it would be possible to build a conversion utility, although all the
+signatures in tag objects would break; you'd have to regenerate them, too.
 
-http://mathworld.wolfram.com/BirthdayProblem.html
+But this is an all-or-nothing change.  Trying to support *multiple*
+simultaneous hash functions is a mess.
 
-(In short, given a number of days in the year, how many people do I need 
-to pick randomly until at least two of them have the same birthday?)
+Git depends very fundamentally on identical objects having identical
+hashes.  The in-memory merge depends on it.  The network protocol
+depends on it.  Various kludges can be imagined to handle blob objects
+with multiple names, but tree objects quickly become unworkable.
 
-In our case, we want to know how many objects we need in order to probably 
-have a clash in 2^128 (approx. 3.4e38) and 2^160 (approx. 1.5e48) hashes, 
-respectively.
 
-Mathworld tells us that a good approximation of the probability is
+Let's break down the solutions.  There are basically four classes,
+depending on 
+1) whether objects are stored in the database indexed by both hashes,
+   or just one, and
+2) Whether pointers to objects include both hashes, or just one.
 
-p = 1 - (1-n/(2d))^(n-1)
+If you include both hashes everywhere, then you've just built
+a larger hash function that's the concatenation of SHA-1 and MD5,
+and while it works sanely, it just makes the object IDs even
+bigger, and there are obviously no speed benefts.  But this is
+the most reasonable alternative.
 
-where n is the number of objects, and d is the total number of hashes. If 
-you have 100M = 1e5 objects, you probably want the probability of a clash 
-below 1/1e5 = 1e-5, so let's take 1e-10. Assuming n is way lower than d, 
-we can approximate
+If pointers include both hashes, but objects are indexed by only one,
+then to find an object by pointer requires two lookups, and you still
+need to hash every blob twice when committing get the values to
+put in the tree objects.  So obviosuly no faster than the first option.
 
-p = 1 - (1 - (n - 1 over 1) * n/(2d)) = n(n-1)/2d
+Okay, so pointers are only one hash.  If they were always the same hash,
+the second hash would be utterly pointless, so we're assuming the
+database contains a mix.
 
-and therefore (approximately)
+If objects are indexed by both hashes, then you can hash new blobs once
+to check to see if they're already in the database, but if they're not,
+you have to hash again with the another algorithm.
 
-n = sqrt(2pd)
+On the other hand, if you index by only one, then every object being
+checked to see if it's already in the database needs to be hashed twice
+so it can be looked up twice.  What were the claimed speed gains?
 
-which amounts to 2.6e14 in the case of a 128-bit hash, and 1.7e19 in the 
-case of a 160-bit hash, both well beyond your 100M objects. BTW the 
-addressable space of a 64-bit processor is about 1.9e19.
+But more to the point, any system which stores one arbitrary hash as
+a pointer makes the the tree object created to describe a directory no
+longer unique, which results in its hash being fundamentally non-unique,
+which cascades all the way up to the commit object.
 
-If you want to know the probability of a clash, you can use the same 
-approximation:
+So you can get silly things like the need for a merge commit to
+record the merge of trees that are actually identical.
 
-For 100M objects: p = 1.5e-59 for 128-bit, and p = 3.3e-69 for 160-bit. 
-This is so low as to be incomprehensible.
 
-Remember that all these approximations are really crude, so do not rely on 
-the precise numbers. But they'll give you good ballpark figures (if I did 
-not make a mistake...).
-
-Hth,
-Dscho
+Just a big mess.
