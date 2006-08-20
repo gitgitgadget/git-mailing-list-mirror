@@ -1,65 +1,54 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Object hash (was: Re: [ANNOUNCE] git-rev-size: calculate sizes
- of repository)
-Date: Sun, 20 Aug 2006 20:47:30 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0608202047010.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060820105452.GA19630@nospam.com> <200608201837.33577.Josef.Weidendorfer@gmx.de>
- <Pine.LNX.4.63.0608201846110.28360@wbgn013.biozentrum.uni-wuerzburg.de>
- <200608202041.19644.Josef.Weidendorfer@gmx.de>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: git refuses to switch to older branches
+Date: Sun, 20 Aug 2006 21:11:33 +0200
+Message-ID: <200608202111.33470.Josef.Weidendorfer@gmx.de>
+References: <20060819202558.GE30022@admingilde.org> <20060820122128.GG30022@admingilde.org> <Pine.LNX.4.63.0608201447470.28360@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 20 20:47:52 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Aug 20 21:11:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GEsKe-00024N-1b
-	for gcvg-git@gmane.org; Sun, 20 Aug 2006 20:47:36 +0200
+	id 1GEsi3-0006ro-Ea
+	for gcvg-git@gmane.org; Sun, 20 Aug 2006 21:11:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751145AbWHTSrd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 Aug 2006 14:47:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751146AbWHTSrd
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Aug 2006 14:47:33 -0400
-Received: from mail.gmx.net ([213.165.64.20]:14723 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751145AbWHTSrc (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Aug 2006 14:47:32 -0400
-Received: (qmail invoked by alias); 20 Aug 2006 18:47:31 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp037) with SMTP; 20 Aug 2006 20:47:31 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-In-Reply-To: <200608202041.19644.Josef.Weidendorfer@gmx.de>
+	id S1751157AbWHTTLh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 Aug 2006 15:11:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbWHTTLh
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Aug 2006 15:11:37 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43988 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751157AbWHTTLg (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Aug 2006 15:11:36 -0400
+Received: (qmail invoked by alias); 20 Aug 2006 19:11:35 -0000
+Received: from p5496A45F.dip0.t-ipconnect.de (EHLO noname) [84.150.164.95]
+  by mail.gmx.net (mp034) with SMTP; 20 Aug 2006 21:11:35 +0200
+X-Authenticated: #352111
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.3
+In-Reply-To: <Pine.LNX.4.63.0608201447470.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25766>
 
-Hi,
+On Sunday 20 August 2006 14:48, you wrote:
+> Not necessarily. Sometimes you have files in your working directory, which 
+> are not in your repository, you know?
 
-On Sun, 20 Aug 2006, Josef Weidendorfer wrote:
+Yet, I think it is quite inconvenient the way it is now. The same happens if
+you track a generated file by accident, and remove it later from tracking.
 
-> On Sunday 20 August 2006 18:51, Johannes Schindelin wrote:
-> 
-> > > > +void hash_put(struct hash_map *hash, struct object *obj)
-> > > > +{
-> > > > +	if (++hash->nr > hash->alloc / 2)
-> > > > +		grow_hash(hash);
-> > > 
-> > > If you insert the same object multiple times, hash->nr will get too big.
-> > 
-> > First, you cannot put the same object multiple times. That is not what a  
-> > hash does (at least in this case): it stores unique objects (identified by 
-> > their sha1 in this case).
-> 
-> I put it the wrong way; I should have said "if you call hash_put() multiple
-> times with the same object". You get the same index, and nothing should
-> change. However, you still increment hash->nr, but this error is not really
-> important as you correct it in grow_hash().
+The real problem is that there are two reasons to put a file into .gitignore:
+You do not want to have it tracked and polluting git-status because
+(1) it is temporary and generated
+(2) it is private and not supposed to be in the repository
 
-Talk about unintended side effects ;-)
+To distinguish these cases, we could introduce a per-repository configuration
+file .git/nevertouch . Comments?
 
-Ciao,
-Dscho
+Josef
