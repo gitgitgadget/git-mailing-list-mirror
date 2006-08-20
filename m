@@ -1,73 +1,96 @@
-From: Rutger Nijlunsing <rutger@nospam.com>
-Subject: Re: Object hash (was: Re: [ANNOUNCE] git-rev-size: calculate sizes of repository)
-Date: Sun, 20 Aug 2006 19:40:54 +0200
-Organization: M38c
-Message-ID: <20060820174054.GB21362@nospam.com>
-References: <20060820105452.GA19630@nospam.com> <20060820152404.GA5679@nospam.com> <Pine.LNX.4.63.0608201805070.28360@wbgn013.biozentrum.uni-wuerzburg.de> <200608201837.33577.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.63.0608201846110.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-Reply-To: git@wingding.demon.nl
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: git refuses to switch to older branches
+Date: Sun, 20 Aug 2006 20:15:11 +0200
+Message-ID: <20060820181511.GH30022@admingilde.org>
+References: <20060819202558.GE30022@admingilde.org> <7vac601hbb.fsf@assigned-by-dhcp.cox.net> <20060819224457.GB23891@pasky.or.cz> <20060820122128.GG30022@admingilde.org> <Pine.LNX.4.63.0608201447470.28360@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	Rutger Nijlunsing <git@wingding.demon.nl>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 20 19:41:08 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="APlYHCtpeOhspHkB"
+Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 20 20:15:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GErIF-0005sP-MY
-	for gcvg-git@gmane.org; Sun, 20 Aug 2006 19:41:04 +0200
+	id 1GErpP-0004Vt-Tr
+	for gcvg-git@gmane.org; Sun, 20 Aug 2006 20:15:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751024AbWHTRlA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 Aug 2006 13:41:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751029AbWHTRk7
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Aug 2006 13:40:59 -0400
-Received: from post-23.mail.nl.demon.net ([194.159.73.193]:38349 "EHLO
-	post-23.mail.nl.demon.net") by vger.kernel.org with ESMTP
-	id S1751024AbWHTRk7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Aug 2006 13:40:59 -0400
-Received: from wingding.demon.nl ([82.161.27.36]:46249)
-	by post-23.mail.nl.demon.net with esmtp (Exim 4.51)
-	id 1GErI9-000IkN-7N; Sun, 20 Aug 2006 17:40:57 +0000
-Received: from rutger by wingding.demon.nl with local (Exim 4.62)
-	(envelope-from <rutger@wingding.demon.nl>)
-	id 1GErI6-0007S3-9j; Sun, 20 Aug 2006 19:40:54 +0200
+	id S1750931AbWHTSPQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 Aug 2006 14:15:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751022AbWHTSPQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Aug 2006 14:15:16 -0400
+Received: from agent.admingilde.org ([213.95.21.5]:21663 "EHLO
+	mail.admingilde.org") by vger.kernel.org with ESMTP
+	id S1750931AbWHTSPP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Aug 2006 14:15:15 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1GErpH-0006Sg-UR; Sun, 20 Aug 2006 20:15:11 +0200
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0608201846110.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.12-2006-07-14
+In-Reply-To: <Pine.LNX.4.63.0608201447470.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25760>
 
-> Second, since you call hash_put() once per object, hash->nr cannot grow 
-> too big, because grow_hash() doubles hash->alloc. And I call grow_hash() 
-> once the hash map is half-full; Somebody once told me that would be the 
-> optimal growing strategy.
 
-Optimal growing mainly means to be O(n) (amortized) after n
-inserts. That translates to at least _doubling_ (factor 2 or more) the
-capacity once you're too full.
+--APlYHCtpeOhspHkB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Assume doubling at a percentage full. Assume realloc(s) takes O(s)
-(where s = number of bytes). Assume we start with 1 element.
+hoi :)
 
-We realloc() then when we've got 1 element, then at 2, 4, 8 etc. The
-size of the realloc() at each point will also be 1, 2, 4, 8
-etc. However, this cost of O(s) can be amortized over the number of
-elements. So the work done _per insert_ is still a constant (amortized
-again).
+On Sun, Aug 20, 2006 at 02:48:34PM +0200, Johannes Schindelin wrote:
+> On Sun, 20 Aug 2006, Martin Waitz wrote:
+> > On Sun, Aug 20, 2006 at 12:44:57AM +0200, Petr Baudis wrote:
+> > > Dear diary, on Sun, Aug 20, 2006 at 12:39:20AM CEST, I got a letter
+> > > where Junio C Hamano <junkio@cox.net> said that...
+> > > > But I would suggest you to be _extremely_ careful if you want to
+> > > > try this.  I do not have an example offhand, but I would not be
+> > > > surprised at all if there is a valid use case where it is useful
+> > > > to have a pattern that matches a tracked file in .gitignore
+> > > > file.
+> > >=20
+> > >   *.o and binary blobs of closed-source software.
+> >=20
+> > but if you want to switch from one branch which has the .o file
+> > built from source to another branch which has the .o file tracked
+> > in binary form, wouldn't you want to remove the generated file
+> > in order to store the tracked one from the new branch?
+>=20
+> Not necessarily. Sometimes you have files in your working directory, whic=
+h=20
+> are not in your repository, you know?
 
-Ascilly:
+Sure. But we are only talking about files which are explicitly
+ignored in one branch and are tracked in another branch.
 
-   x x x x x x x x x x ...  (each insert)
-     R   R       R     ...  (each realloc)
-   1 2 0 4 0 0 0 8 0 0 ...  (cost of those realloc())
+Perhaps it makes sense to check that the file is _not_ ignored in the
+other branch (in which it is tracked).
+Would such a check make everybody happy?
 
-This has also to do with the infinite series of the sum(k>0) of 2^-k
-being a constant.
+Is there an easy way to check if some file is marked as ignored in
+an other branch?
 
--- 
-Rutger Nijlunsing ---------------------------------- eludias ed dse.nl
-never attribute to a conspiracy which can be explained by incompetence
-----------------------------------------------------------------------
+
+--=20
+Martin Waitz
+
+--APlYHCtpeOhspHkB
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFE6Kavj/Eaxd/oD7IRAuKBAJ4k9NsNtCEiMWU6y4jFjFwd/PPUFgCfd95T
+RcFYKVDkTlAtGfSxDghvELY=
+=FFBG
+-----END PGP SIGNATURE-----
+
+--APlYHCtpeOhspHkB--
