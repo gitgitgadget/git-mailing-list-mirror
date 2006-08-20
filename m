@@ -1,46 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Rutger Nijlunsing <git@wingding.demon.nl>
 Subject: Re: [ANNOUNCE] git-rev-size: calculate sizes of repository
-Date: Sun, 20 Aug 2006 15:20:19 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0608201519360.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060820105452.GA19630@nospam.com>
+Date: Sun, 20 Aug 2006 17:24:04 +0200
+Organization: M38c
+Message-ID: <20060820152404.GA5679@nospam.com>
+References: <20060820105452.GA19630@nospam.com> <Pine.LNX.4.63.0608201519360.28360@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 20 15:20:51 2006
+X-From: git-owner@vger.kernel.org Sun Aug 20 17:25:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GEnE0-0000dX-Lh
-	for gcvg-git@gmane.org; Sun, 20 Aug 2006 15:20:25 +0200
+	id 1GEpAQ-00049F-5j
+	for gcvg-git@gmane.org; Sun, 20 Aug 2006 17:24:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750729AbWHTNUW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 Aug 2006 09:20:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750751AbWHTNUW
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Aug 2006 09:20:22 -0400
-Received: from mail.gmx.net ([213.165.64.20]:30417 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1750729AbWHTNUV (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Aug 2006 09:20:21 -0400
-Received: (qmail invoked by alias); 20 Aug 2006 13:20:19 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp004) with SMTP; 20 Aug 2006 15:20:19 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@wingding.demon.nl
-In-Reply-To: <20060820105452.GA19630@nospam.com>
-X-Y-GMX-Trusted: 0
+	id S1750762AbWHTPYL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 Aug 2006 11:24:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750806AbWHTPYK
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Aug 2006 11:24:10 -0400
+Received: from post-26.mail.nl.demon.net ([194.159.73.196]:34290 "EHLO
+	post-26.mail.nl.demon.net") by vger.kernel.org with ESMTP
+	id S1750762AbWHTPYK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Aug 2006 11:24:10 -0400
+Received: from wingding.demon.nl ([82.161.27.36]:58291)
+	by post-26.mail.nl.demon.net with esmtp (Exim 4.51)
+	id 1GEp9k-000HLo-4w; Sun, 20 Aug 2006 15:24:08 +0000
+Received: from rutger by wingding.demon.nl with local (Exim 4.62)
+	(envelope-from <rutger@wingding.demon.nl>)
+	id 1GEp9h-0001n3-3H; Sun, 20 Aug 2006 17:24:05 +0200
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0608201519360.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.12-2006-07-14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25754>
 
-Hi,
+On Sun, Aug 20, 2006 at 03:20:19PM +0200, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Sun, 20 Aug 2006, Rutger Nijlunsing wrote:
+> 
+> > You can also find it on http://www.wingding.demon.nl/git-rev-size.rb
+> 
+> Ruby is _so_ mainstream. Could I have a Haskell version, pretty please?
 
-On Sun, 20 Aug 2006, Rutger Nijlunsing wrote:
+I _knew_ it... Please go bug someone else. The only thing I did was
+help someone, and for that I choose my own tools since I do it for
+fun. I don't ask for inclusion in the git archive. I don't ask you to
+review it, download it, read it nor use it. Just ignore this post if
+Ruby offends you and this problem wasn't your itch.
 
-> You can also find it on http://www.wingding.demon.nl/git-rev-size.rb
+Please.
 
-Ruby is _so_ mainstream. Could I have a Haskell version, pretty please?
-
-Ciao,
-Dscho
+-- 
+Rutger Nijlunsing ---------------------------------- eludias ed dse.nl
+never attribute to a conspiracy which can be explained by incompetence
+----------------------------------------------------------------------
