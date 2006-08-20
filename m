@@ -1,58 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Helper function to shell quote all arg values at once.
-Date: Sun, 20 Aug 2006 15:57:11 -0700
-Message-ID: <7vsljrxbg8.fsf@assigned-by-dhcp.cox.net>
-References: <20060820080749.e31276dd.chriscool@tuxfamily.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Unresolved issues #3
+Date: Sun, 20 Aug 2006 19:10:23 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0608201840310.11359@localhost.localdomain>
+References: <7vpseyelcw.fsf@assigned-by-dhcp.cox.net>
+ <44E546F2.7070902@gmail.com>
+ <Pine.LNX.4.64.0608181041420.11359@localhost.localdomain>
+ <44E5D522.8030407@gmail.com>
+ <Pine.LNX.4.64.0608181119410.11359@localhost.localdomain>
+ <44E68DCD.8010603@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 21 00:57:17 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 21 01:10:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GEwEF-0003WC-Tu
-	for gcvg-git@gmane.org; Mon, 21 Aug 2006 00:57:16 +0200
+	id 1GEwR1-0005Ix-Ou
+	for gcvg-git@gmane.org; Mon, 21 Aug 2006 01:10:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751776AbWHTW5N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 Aug 2006 18:57:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751783AbWHTW5N
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Aug 2006 18:57:13 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:20665 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1751776AbWHTW5M (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Aug 2006 18:57:12 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060820225712.JYJL18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 20 Aug 2006 18:57:12 -0400
-To: Christian Couder <chriscool@tuxfamily.org>
-In-Reply-To: <20060820080749.e31276dd.chriscool@tuxfamily.org> (Christian
-	Couder's message of "Sun, 20 Aug 2006 08:07:49 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751792AbWHTXKZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 Aug 2006 19:10:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751794AbWHTXKZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Aug 2006 19:10:25 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:15170 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1751792AbWHTXKY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Aug 2006 19:10:24 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J4B0026GKDBH640@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 20 Aug 2006 19:10:23 -0400 (EDT)
+In-reply-to: <44E68DCD.8010603@gmail.com>
+X-X-Sender: nico@localhost.localdomain
+To: A Large Angry SCM <gitzilla@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25771>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+On Fri, 18 Aug 2006, A Large Angry SCM wrote:
 
-> The new sq_quote_argv function is used to refactor the
-> tracing code in "git.c" and "exec_cmd.c".
-> This function allocates memory and fills it with a string
-> containing the quoted argument values. Then it returns a
-> pointer to this memory that must be freed afterwards.
+> Nicolas Pitre wrote:
+> > On Fri, 18 Aug 2006, A Large Angry SCM wrote:
+> >> That doesn't prove the non-existence of other code to do it.
+> > 
+> > So?  If the official and primary code for GIT doesn't support it, what 
+> > is the point?  I'm telling you that if such packs exist they will simply 
+> > barf with all official GIT releases later than v1.1.6 making your 
+> > argument pointless.
+> > 
+> > I don't mind you documenting that historic intent for a bit that was 
+> > never officially used, but at least let's document it right.
+> 
+> Historic fact. Between Thu May 19 08:56:22 2005 and Thu Feb  9 21:06:38
+> 2006 bit 6 of the first byte of a delta hunk was interpreted to mean
+> that the source of the copy was the result buffer. From Thu May 19
+> 08:56:22 2005 on, the code to decode delta hunks in type 2 packs was
+> available to everyone and anyone interested could make a pack encoder
+> that would create packs that the core Git code would correctly read. The
+> commit of Thu Feb  9 21:06:38 2006, d60fc, actually introduced a bug
+> that would treat valid type 2 packs as invalid.
 
-Sorry, I do not see a point in this.
+The "actually introduced a bug" sentence is your own interpretation not 
+a _fact_.
 
-If your original were doing malloc-print-free per iteration,
-then perhaps it makes sense to first format all into one
-allocated buffer, print all, and then free at once, like this
-patch does.  But that was not what the original had.
+And I simply disagree with that interpretation of yours.
 
-If the new function were to get a (const char **) array and
-FILE *, and print them, quoted and separated with spaces, then
-it would have shortened what two call sites did, which would
-have been an improvement.  But that is not what this patch does,
-either.
+I don't think this is worth arguing any further.
+
+
+Nicolas
