@@ -1,211 +1,257 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFD] gitweb: href() function to generate URLs for CGI
-Date: Mon, 21 Aug 2006 20:38:45 +0200
-Organization: At home
-Message-ID: <eccujr$90h$1@sea.gmane.org>
-References: <200608211739.32993.jnareb@gmail.com> <7v1wrauex2.fsf@assigned-by-dhcp.cox.net>
+From: "=?UTF-8?Q?Kristian_H=C3=B8gsberg?=" <krh@bitplanet.net>
+Subject: Re: [PATCH] branch as a builtin (again)
+Date: Mon, 21 Aug 2006 16:12:41 -0400
+Message-ID: <59ad55d30608211312u51a4657eyd52311314a6ee03c@mail.gmail.com>
+References: <59ad55d30608201422h4a6d40f7y7782212637380438@mail.gmail.com>
+	 <20060821101346.GA527@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Mon Aug 21 20:39:32 2006
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_49876_24878003.1156191161312"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 21 22:12:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFEgE-0000nC-7X
-	for gcvg-git@gmane.org; Mon, 21 Aug 2006 20:39:22 +0200
+	id 1GFG8c-0004n6-UZ
+	for gcvg-git@gmane.org; Mon, 21 Aug 2006 22:12:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750714AbWHUSjT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Aug 2006 14:39:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750718AbWHUSjT
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Aug 2006 14:39:19 -0400
-Received: from main.gmane.org ([80.91.229.2]:43673 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750714AbWHUSjS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Aug 2006 14:39:18 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GFEfv-0000je-2X
-	for git@vger.kernel.org; Mon, 21 Aug 2006 20:39:03 +0200
-Received: from host-81-190-21-215.torun.mm.pl ([81.190.21.215])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 21 Aug 2006 20:39:03 +0200
-Received: from jnareb by host-81-190-21-215.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 21 Aug 2006 20:39:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-21-215.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1750919AbWHUUMn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Aug 2006 16:12:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750920AbWHUUMn
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Aug 2006 16:12:43 -0400
+Received: from wx-out-0506.google.com ([66.249.82.231]:43207 "EHLO
+	wx-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1750918AbWHUUMm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Aug 2006 16:12:42 -0400
+Received: by wx-out-0506.google.com with SMTP id s14so1613184wxc
+        for <git@vger.kernel.org>; Mon, 21 Aug 2006 13:12:41 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:references:x-google-sender-auth;
+        b=PHzouRGPOwZ0eKUVJSNrEPaUJPQf6AyVhUnqXio6l7Kk0HwRCi7TEChXdcKmWCumaa+cKqo2u1W1ayvhYhb81DnxFzdHafpJkcTSTGeFi9JAqj+W5fzYjNNVuDiFLM/I51tyVGxxTM1y4vMwWsbdiFt2HX/Xs65JOgGqGRmD3YY=
+Received: by 10.70.32.13 with SMTP id f13mr10240488wxf;
+        Mon, 21 Aug 2006 13:12:41 -0700 (PDT)
+Received: by 10.70.33.1 with HTTP; Mon, 21 Aug 2006 13:12:41 -0700 (PDT)
+To: "Jonas Fonseca" <fonseca@diku.dk>,
+	"Shawn Pearce" <spearce@spearce.org>
+In-Reply-To: <20060821101346.GA527@diku.dk>
+X-Google-Sender-Auth: 06819f422fc181a6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25812>
 
-Junio C Hamano wrote:
+------=_Part_49876_24878003.1156191161312
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
->> In first version of href() function we had
->> (commit 06a9d86b49b826562e2b12b5c7e831e20b8f7dce)
->>
->>      my $href = "$my_uri?";
->>      $href .= esc_param( join(";",
->>              map {
->>                      "$mapping{$_}=$params{$_}"
->>              } keys %params
->>      ) );
->>
->> First, there was a question what happend if someone would enter 
->> parameter name incorrectly, and some key of %params is not found in 
->> %mapping hash. The above code would generate warnings (which web admins 
->> frown upon), and empty (because undef) parameters corresponding to e.g. 
->> mistyped parameter name. 
-> 
-> The one in "next" seems to do this (the diff is between "master"
-> and "next"):
-> 
-> @@ -204,7 +277,9 @@ sub href(%) {
->  
->       my $href = "$my_uri?";
->       $href .= esc_param( join(";",
-> -             map { "$mapping{$_}=$params{$_}" } keys %params
-> +             map {
-> +                     "$mapping{$_}=$params{$_}" if defined $params{$_}
-> +             } keys %params
->       ) );
->  
->       return $href;
-> 
+Thanks to all who reviewed the patch, here's an updated version which
+should address all issues.  In particular, thanks to Jonas who spotted
+the missing git_path() before resolve_ref() - this caused git branch
+to always overwrite existing branches because it failed to resolve the
+ref.
 
-This doesn't work as expected. Map works on _every_ element of list; if
-expression doesn't return anything it just puts undef I think. For example
-while
+As for the missing reflog functionality - when I first did the shell
+to C port, git branch didn't have this feature, and this time I just
+updated the old patch which is how I forgot about the reflog option.
+The new patch attached here should have the same reflog behavior as
+the current shell script.  Shawn, could you check that it has the
+correct sematics?  I wasn't sure whether git branch -f foo should
+truncate the old log or just keep appending.  The shell script does a
+'touch <logfile>' on creation, which means keep appending when
+forcibly overwriting a branch ref, so I kept that behavior.
 
-        print join(";", 
-                map { 
-                        "a/$_" if ($_ eq lc($_)) 
-                } ("a", "b", "C", "d")),
-                "\n";'
+cheers,
+Kristian
 
-returns "a/a;a/b;;a/d" (notice the doubled ';'), the correct way would be to
-use grep instead:
+------=_Part_49876_24878003.1156191161312
+Content-Type: application/octet-stream; name=builtin-branch.patch
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_er5a9xnk
+Content-Disposition: attachment; filename="builtin-branch.patch"
 
-        print join(";",
-                map {
-                        "a/$_"
-                } grep { 
-                        ($_ eq lc($_)) 
-                } ("a", "b", "C", "d")),
-                "\n";
-
-returns correct "a/a;a/b;a/d". So the fragment should read what I wrote:
-
-        my $href = "$my_uri?";
-        $href .= esc_param( join(";",
-                map {
-                        "$mapping{$_}=$params{$_}"
-                } grep { exists $mapping{$_} } keys %params
-        ) );
-
->> Second problem is that using href() function, although it consolidates 
->> to generate URL for CGI, it changes the order of CGI parameters. It 
->> used to be that 'p' (project) parameter was first, then 'a' (action) 
->> parameter, then hashes ('h', 'hp', 'hb'), last 'f' (filename) or 
->> 'p' (page) or 's' (searchtext). The simplest and fastest solution would 
->> be to create array with all keys of %mapping in appropriate order and 
->> do something like this:
->>
->>      my @mapping_sorted = ('project', 'action', 'hash',
->>              'hash_parent', 'hash_base', 'file_name', 'searchtext');
->>
->>      my $href = "$my_uri?";
->>      $href .= esc_param( join(";",
->>              map {
->>                      "$mapping{$_}=$params{$_}"
->>              } grep { exists $params{$_}} @mapping_sorted;
->>      ) );
->>
->> The problem is of course updating both %mappings and @mapping_sorted.
->>
->> Is this really a problem, should this (ordering of CGI parameters)
->> addressed?
-> 
-> Keeping the generated URL stable would be a very desirable
-> feature.  Perhaps something like this?
-> 
-> sub href(%) {
->         my @mapping = ( project => "p",
->                         action => "a",
->                         hash => "h",
->                         hash_parent => "hp",
->                         hash_base => "hb",
->                         file_name => "f",
->                         file_parent => "fp",
->                         page => "pg",
->                         searchtext => "s",
->                         );
->       my %mapping;                        
->         for (my $i = 0; $i < @mapping; $i += 2) {
->               my ($k, $v) = ($mapping[$i], $mapping[$i+1]);
->                 $mapping{$k} = [$i, $v];
->         }
->       my %params = @_;
->       $params{"project"} ||= $project;
-> 
->       my $href = "$my_uri?";
->       $href .= esc_param( join(";",
->               map { $_->[1] }
->               sort { $a->[0] <=> $b->[0] }
->               map {
->                       (defined $params{$_} && exists $mapping{$_})
->                       ? [ $mapping{$_}[0], "$mapping{$_}[1]=$params{$_}" ]
->                         : ();
->               } keys %params
->       ) );
-> 
->       return $href;
-> }
-
-What about my proposed solution? Don't sort, use sorted keys instead, i.e.
-something like (after unmangling whitespace)
-
-sub href(%) {
-        my @mapping = ( project => "p",
-                        action => "a",
-                        hash => "h",
-                        hash_parent => "hp",
-                        hash_base => "hb",
-                        file_name => "f",
-                        file_parent => "fp",
-                        page => "pg",
-                        searchtext => "s",
-                        );
-        my %mapping;
-        my @mapping_keys;                        
-        for (my $i = 0; $i < @mapping; $i += 2) {
-                my ($k, $v) = ($mapping[$i], $mapping[$i+1]);
-                $mapping{$k} = $v;
-                push @mapping_keys, $k;
-        }
-        my %params = @_;
-        $params{"project"} ||= $project;
-
-        my $href = "$my_uri?";
-        $href .= esc_param( join(";",
-                map { "$mapping{$_}=$params{$_}" }
-                grep { exists $params{$_} } 
-                @mapping_keys
-        ) );
-
-        return $href;
-}
-
-This has the advantage and disadvantage of constant cost, linear with number
-of %mapping keys, instead of N log N cost where N is number of parameters.
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Y29tbWl0IGQ1ZDgyYjljNDQ5M2RmNDY3ZWUzMTc3NmNhZGZmODA4NTYzZjAwYjEKQXV0aG9yOiBL
+cmlzdGlhbiBIw7hnc2JlcmcgPGtyaEByZWRoYXQuY29tPgpEYXRlOiAgIFN1biBBdWcgMjAgMTc6
+MDQ6MTQgMjAwNiAtMDQwMAoKICAgIFJld3JpdGUgYnJhbmNoIGluIEMgYW5kIG1ha2UgaXQgYSBi
+dWlsdGluLgoKZGlmZiAtLWdpdCBhL01ha2VmaWxlIGIvTWFrZWZpbGUKaW5kZXggMjNjZDhhMC4u
+YWRmMDQzZSAxMDA2NDQKLS0tIGEvTWFrZWZpbGUKKysrIGIvTWFrZWZpbGUKQEAgLTE0OSw3ICsx
+NDksNyBAQCBTUEFSU0VfRkxBR1MgPSAtRF9fQklHX0VORElBTl9fIC1EX19wb3dlCiAjIyMgLS0t
+IEVORCBDT05GSUdVUkFUSU9OIFNFQ1RJT04gLS0tCiAKIFNDUklQVF9TSCA9IFwKLQlnaXQtYmlz
+ZWN0LnNoIGdpdC1icmFuY2guc2ggZ2l0LWNoZWNrb3V0LnNoIFwKKwlnaXQtYmlzZWN0LnNoIGdp
+dC1jaGVja291dC5zaCBcCiAJZ2l0LWNoZXJyeS5zaCBnaXQtY2xlYW4uc2ggZ2l0LWNsb25lLnNo
+IGdpdC1jb21taXQuc2ggXAogCWdpdC1mZXRjaC5zaCBcCiAJZ2l0LWxzLXJlbW90ZS5zaCBcCkBA
+IC0yNTMsNiArMjUzLDcgQEAgTElCX09CSlMgPSBcCiBCVUlMVElOX09CSlMgPSBcCiAJYnVpbHRp
+bi1hZGQubyBcCiAJYnVpbHRpbi1hcHBseS5vIFwKKwlidWlsdGluLWJyYW5jaC5vIFwKIAlidWls
+dGluLWNhdC1maWxlLm8gXAogCWJ1aWx0aW4tY2hlY2tvdXQtaW5kZXgubyBcCiAJYnVpbHRpbi1j
+aGVjay1yZWYtZm9ybWF0Lm8gXApkaWZmIC0tZ2l0IGEvYnVpbHRpbi1icmFuY2guYyBiL2J1aWx0
+aW4tYnJhbmNoLmMKbmV3IGZpbGUgbW9kZSAxMDA2NDQKaW5kZXggMDAwMDAwMC4uNGU4ZmE3ZAot
+LS0gL2Rldi9udWxsCisrKyBiL2J1aWx0aW4tYnJhbmNoLmMKQEAgLTAsMCArMSwyMjcgQEAKKy8q
+CisgKiBCdWlsdGluICJnaXQgYnJhbmNoIgorICoKKyAqIENvcHlyaWdodCAoYykgMjAwNiBLcmlz
+dGlhbiBIw7hnc2JlcmcgPGtyaEByZWRoYXQuY29tPgorICogQmFzZWQgb24gZ2l0LWJyYW5jaC5z
+aCBieSBKdW5pbyBDIEhhbWFuby4KKyAqLworCisjaW5jbHVkZSAiY2FjaGUuaCIKKyNpbmNsdWRl
+ICJyZWZzLmgiCisjaW5jbHVkZSAiY29tbWl0LmgiCisjaW5jbHVkZSAiYnVpbHRpbi5oIgorCitz
+dGF0aWMgY29uc3QgY2hhciBidWlsdGluX2JyYW5jaF91c2FnZVtdID0KKyJnaXQtYnJhbmNoIFso
+LWQgfCAtRCkgPGJyYW5jaG5hbWU+XSB8IFtbLWZdIDxicmFuY2huYW1lPiBbPHN0YXJ0LXBvaW50
+Pl1dIHwgLXIiOworCisKK3N0YXRpYyBjb25zdCBjaGFyICpoZWFkOworc3RhdGljIHVuc2lnbmVk
+IGNoYXIgaGVhZF9zaGExWzIwXTsKKworc3RhdGljIGludCBpbl9tZXJnZV9iYXNlcyhjb25zdCB1
+bnNpZ25lZCBjaGFyICpzaGExLAorCQkJICBzdHJ1Y3QgY29tbWl0ICpyZXYxLAorCQkJICBzdHJ1
+Y3QgY29tbWl0ICpyZXYyKQoreworCXN0cnVjdCBjb21taXRfbGlzdCAqYmFzZXMsICpiOworCWlu
+dCByZXQgPSAwOworCisJYmFzZXMgPSBnZXRfbWVyZ2VfYmFzZXMocmV2MSwgcmV2MiwgMSk7CisJ
+Zm9yIChiID0gYmFzZXM7IGIgIT0gTlVMTDsgYiA9IGItPm5leHQpIHsKKwkJaWYgKCFoYXNoY21w
+KHNoYTEsIGItPml0ZW0tPm9iamVjdC5zaGExKSkgeworCQkJcmV0ID0gMTsKKwkJCWJyZWFrOwor
+CQl9CisJfQorCisJZnJlZV9jb21taXRfbGlzdChiYXNlcyk7CisJcmV0dXJuIHJldDsKK30KKwor
+c3RhdGljIHZvaWQgZGVsZXRlX2JyYW5jaGVzKGludCBhcmdjLCBjb25zdCBjaGFyICoqYXJndiwg
+aW50IGZvcmNlKQoreworCXN0cnVjdCBjb21taXQgKnJldiwgKmhlYWRfcmV2OworCXVuc2lnbmVk
+IGNoYXIgc2hhMVsyMF07CisJY29uc3QgY2hhciAqbmFtZSwgKnJlZmxvZzsKKwlpbnQgaTsKKwor
+CWhlYWRfcmV2ID0gbG9va3VwX2NvbW1pdF9yZWZlcmVuY2UoaGVhZF9zaGExKTsKKwlmb3IgKGkg
+PSAwOyBpIDwgYXJnYzsgaSsrKSB7CisJCWlmICghc3RyY21wKGhlYWQsIGFyZ3ZbaV0pKQorCQkJ
+ZGllKCJDYW5ub3QgZGVsZXRlIHRoZSBicmFuY2ggeW91IGFyZSBjdXJyZW50bHkgb24uIik7CisK
+KwkJbmFtZSA9IGdpdF9wYXRoKCJyZWZzL2hlYWRzLyVzIiwgYXJndltpXSk7CisJCWlmICghcmVz
+b2x2ZV9yZWYobmFtZSwgc2hhMSwgMSkpCisJCQlkaWUoIkJyYW5jaCAnJXMnIG5vdCBmb3VuZC4i
+LCBhcmd2W2ldKTsKKworCQlyZXYgPSBsb29rdXBfY29tbWl0X3JlZmVyZW5jZShzaGExKTsKKwkJ
+aWYgKCFyZXYgfHwgIWhlYWRfcmV2KQorCQkJZGllKCJDb3VsZG4ndCBsb29rIHVwIGNvbW1pdCBv
+YmplY3RzLiIpOworCisJCS8qIFRoaXMgY2hlY2tzIHdoZXRoZXIgdGhlIG1lcmdlIGJhc2VzIG9m
+IGJyYW5jaCBhbmQKKwkJICogSEVBRCBjb250YWlucyBicmFuY2ggLS0gd2hpY2ggbWVhbnMgdGhh
+dCB0aGUgSEVBRAorCQkgKiBjb250YWlucyBldmVyeXRoaW5nIGluIGJvdGguCisJCSAqLworCisJ
+CWlmICghZm9yY2UgJiYKKwkJICAgICFpbl9tZXJnZV9iYXNlcyhzaGExLCByZXYsIGhlYWRfcmV2
+KSkgeworCQkJZnByaW50ZihzdGRlcnIsCisJCQkJIlRoZSBicmFuY2ggJyVzJyBpcyBub3QgYSBz
+dHJpY3Qgc3Vic2V0IG9mIHlvdXIgY3VycmVudCBIRUFELlxuIgorCQkJCSJJZiB5b3UgYXJlIHN1
+cmUgeW91IHdhbnQgdG8gZGVsZXRlIGl0LCBydW4gJ2dpdCBicmFuY2ggLUQgJXMnLlxuIiwKKwkJ
+CQlhcmd2W2ldLCBhcmd2W2ldKTsKKwkJCWV4aXQoMSk7CisJCX0KKworCQl1bmxpbmsobmFtZSk7
+CisKKwkJLyogVW5saW5rIHJlZmxvZyBpZiBpdCBleGlzdHMuICovCisJCXJlZmxvZyA9IGdpdF9w
+YXRoKCJsb2dzL3JlZnMvaGVhZHMvJXMiLCBhcmd2W2ldKTsKKwkJdW5saW5rKHJlZmxvZyk7CisK
+KwkJcHJpbnRmKCJEZWxldGVkIGJyYW5jaCAlcy5cbiIsIGFyZ3ZbaV0pOworCX0KK30KKworc3Rh
+dGljIGludCByZWZfaW5kZXgsIHJlZl9hbGxvYzsKK3N0YXRpYyBjaGFyICoqcmVmX2xpc3Q7CisK
+K3N0YXRpYyBpbnQgYXBwZW5kX3JlZihjb25zdCBjaGFyICpyZWZuYW1lLCBjb25zdCB1bnNpZ25l
+ZCBjaGFyICpzaGExKQoreworCWlmIChyZWZfaW5kZXggPj0gcmVmX2FsbG9jKSB7CisJCXJlZl9h
+bGxvYyA9IHJlZl9hbGxvYyA+IDAgPyByZWZfYWxsb2MgKiAyIDogMTY7CisJCXJlZl9saXN0ID0g
+cmVhbGxvYyhyZWZfbGlzdCwgcmVmX2FsbG9jICogc2l6ZW9mIChjaGFyICopKTsKKwl9CisKKwly
+ZWZfbGlzdFtyZWZfaW5kZXgrK10gPSBzdHJkdXAocmVmbmFtZSk7CisKKwlyZXR1cm4gMDsKK30K
+Kworc3RhdGljIGludCByZWZfY21wIChjb25zdCB2b2lkICpyMSwgY29uc3Qgdm9pZCAqcjIpCit7
+CisJcmV0dXJuIHN0cmNtcCAoKihjaGFyICoqKXIxLCAqKGNoYXIgKiopcjIpOworfQorCitzdGF0
+aWMgdm9pZCBwcmludF9yZWZfbGlzdChpbnQgcmVtb3RlX29ubHkpCit7CisJaW50IGk7CisKKwlp
+ZiAocmVtb3RlX29ubHkpCisJCWZvcl9lYWNoX3JlbW90ZV9yZWYoYXBwZW5kX3JlZik7CisJZWxz
+ZQorCQlmb3JfZWFjaF9icmFuY2hfcmVmKGFwcGVuZF9yZWYpOworCisJcXNvcnQocmVmX2xpc3Qs
+IHJlZl9pbmRleCwgc2l6ZW9mIChjaGFyICopLCByZWZfY21wKTsKKworCWZvciAoaSA9IDA7IGkg
+PCByZWZfaW5kZXg7IGkrKykgeworCQlpZiAoIXN0cmNtcChyZWZfbGlzdFtpXSwgaGVhZCkpCisJ
+CQlwcmludGYoIiogJXNcbiIsIHJlZl9saXN0W2ldKTsKKwkJZWxzZQorCQkJcHJpbnRmKCIgICVz
+XG4iLCByZWZfbGlzdFtpXSk7CisJfQorfQorCitzdGF0aWMgdm9pZCBjcmVhdGVfcmVmbG9nKHN0
+cnVjdCByZWZfbG9jayAqbG9jaykKK3sKKwlzdHJ1Y3Qgc3RhdCBzdGJ1ZjsKKwlpbnQgZmQ7CisK
+KwlpZiAoIXN0YXQobG9jay0+bG9nX2ZpbGUsICZzdGJ1ZikgJiYgU19JU1JFRyhzdGJ1Zi5zdF9t
+b2RlKSkKKwkJcmV0dXJuOworCWlmIChzYWZlX2NyZWF0ZV9sZWFkaW5nX2RpcmVjdG9yaWVzKGxv
+Y2stPmxvZ19maWxlKSA8IDApCisJCWRpZSgiVW5hYmxlIHRvIGNyZWF0ZSBkaXJlY3RvcnkgZm9y
+ICVzLiIsIGxvY2stPmxvZ19maWxlKTsKKwlmZCA9IG9wZW4obG9jay0+bG9nX2ZpbGUsIE9fQ1JF
+QVQgfCBPX1RSVU5DIHwgT19XUk9OTFksIDA2NjYpOworCWlmIChmZCA8IDApCisJCWRpZSgiVW5h
+YmxlIHRvIGNyZWF0ZSByZWYgbG9nICVzOiAlcy4iLAorCQkgICAgbG9jay0+bG9nX2ZpbGUsIHN0
+cmVycm9yKGVycm5vKSk7CisJY2xvc2UoZmQpOworfQorCitzdGF0aWMgdm9pZCBjcmVhdGVfYnJh
+bmNoKGNvbnN0IGNoYXIgKm5hbWUsIGNvbnN0IGNoYXIgKnN0YXJ0LAorCQkJICBpbnQgZm9yY2Us
+IGludCByZWZsb2cpCit7CisJc3RydWN0IHJlZl9sb2NrICpsb2NrOworCXVuc2lnbmVkIGNoYXIg
+c2hhMVsyMF07CisJY2hhciByZWZbUEFUSF9NQVhdLCBtc2dbUEFUSF9NQVggKyAyMF07CisKKwlz
+bnByaW50ZihyZWYsIHNpemVvZiByZWYsICJyZWZzL2hlYWRzLyVzIiwgbmFtZSk7CisJaWYgKGNo
+ZWNrX3JlZl9mb3JtYXQocmVmKSkKKwkJZGllKCInJXMnIGlzIG5vdCBhIHZhbGlkIGJyYW5jaCBu
+YW1lLiIsIG5hbWUpOworCisJaWYgKHJlc29sdmVfcmVmKGdpdF9wYXRoKHJlZiksIHNoYTEsIDEp
+KSB7CisJCWlmICghZm9yY2UpCisJCQlkaWUoIkEgYnJhbmNoIG5hbWVkICclcycgYWxyZWFkeSBl
+eGlzdHMuIiwgbmFtZSk7CisJCWVsc2UgaWYgKCFzdHJjbXAoaGVhZCwgbmFtZSkpCisJCQlkaWUo
+IkNhbm5vdCBmb3JjZSB1cGRhdGUgdGhlIGN1cnJlbnQgYnJhbmNoLiIpOworCX0KKworCWlmIChn
+ZXRfc2hhMShzdGFydCwgc2hhMSkpCisJCWRpZSgiTm90IGEgdmFsaWQgYnJhbmNoIHBvaW50OiAn
+JXMnLiIsIHN0YXJ0KTsKKworCWxvY2sgPSBsb2NrX2FueV9yZWZfZm9yX3VwZGF0ZShyZWYsIE5V
+TEwsIDApOworCWlmICghbG9jaykKKwkJZGllKCJGYWlsZWQgdG8gbG9jayByZWYgZm9yIHVwZGF0
+ZTogJXMuIiwgc3RyZXJyb3IoZXJybm8pKTsKKwlpZiAocmVmbG9nKQorCQljcmVhdGVfcmVmbG9n
+KGxvY2spOworCXNucHJpbnRmKG1zZywgc2l6ZW9mIG1zZywgImJyYW5jaDogQ3JlYXRlZCBmcm9t
+ICVzIiwgc3RhcnQpOworCWlmICh3cml0ZV9yZWZfc2hhMShsb2NrLCBzaGExLCBtc2cpIDwgMCkK
+KwkJZGllKCJGYWlsZWQgdG8gd3JpdGUgcmVmOiAlcy4iLCBzdHJlcnJvcihlcnJubykpOworfQor
+CitpbnQgY21kX2JyYW5jaChpbnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0IGNoYXIg
+KnByZWZpeCkKK3sKKwlpbnQgZGVsZXRlID0gMCwgZm9yY2VfZGVsZXRlID0gMCwgZm9yY2VfY3Jl
+YXRlID0gMCwgcmVtb3RlX29ubHkgPSAwOworCWludCByZWZsb2cgPSAwOworCWludCBpLCBwcmVm
+aXhfbGVuZ3RoOworCWNvbnN0IGNoYXIgKnA7CisKKwlnaXRfY29uZmlnKGdpdF9kZWZhdWx0X2Nv
+bmZpZyk7CisKKwlmb3IgKGkgPSAxOyBpIDwgYXJnYzsgaSsrKSB7CisJCWNvbnN0IGNoYXIgKmFy
+ZyA9IGFyZ3ZbaV07CisKKwkJaWYgKGFyZ1swXSAhPSAnLScpCisJCQlicmVhazsKKwkJaWYgKCFz
+dHJjbXAoYXJnLCAiLS0iKSkgeworCQkJaSsrOworCQkJYnJlYWs7CisJCX0KKwkJaWYgKCFzdHJj
+bXAoYXJnLCAiLWQiKSkgeworCQkJZGVsZXRlID0gMTsKKwkJCWNvbnRpbnVlOworCQl9CisJCWlm
+ICghc3RyY21wKGFyZywgIi1EIikpIHsKKwkJCWRlbGV0ZSA9IDE7CisJCQlmb3JjZV9kZWxldGUg
+PSAxOworCQkJY29udGludWU7CisJCX0KKwkJaWYgKCFzdHJjbXAoYXJnLCAiLWYiKSkgeworCQkJ
+Zm9yY2VfY3JlYXRlID0gMTsKKwkJCWNvbnRpbnVlOworCQl9CisJCWlmICghc3RyY21wKGFyZywg
+Ii1yIikpIHsKKwkJCXJlbW90ZV9vbmx5ID0gMTsKKwkJCWNvbnRpbnVlOworCQl9CisJCWlmICgh
+c3RyY21wKGFyZywgIi1sIikpIHsKKwkJCXJlZmxvZyA9IDE7CisJCQljb250aW51ZTsKKwkJfQor
+CQl1c2FnZShidWlsdGluX2JyYW5jaF91c2FnZSk7CisJfQorCisJcHJlZml4X2xlbmd0aCA9IHN0
+cmxlbihnaXRfcGF0aCgicmVmcy9oZWFkcy8iKSk7CisJcCA9IHJlc29sdmVfcmVmKGdpdF9wYXRo
+KCJIRUFEIiksIGhlYWRfc2hhMSwgMCk7CisJaWYgKCFwKQorCQlkaWUoIkZhaWxlZCB0byByZXNv
+bHZlIEhFQUQgYXMgYSB2YWxpZCByZWYuIik7CisJaGVhZCA9IHN0cmR1cChwICsgcHJlZml4X2xl
+bmd0aCk7CisKKwlpZiAoZGVsZXRlKQorCQlkZWxldGVfYnJhbmNoZXMoYXJnYyAtIGksIGFyZ3Yg
+KyBpLCBmb3JjZV9kZWxldGUpOworCWVsc2UgaWYgKGkgPT0gYXJnYykKKwkJcHJpbnRfcmVmX2xp
+c3QocmVtb3RlX29ubHkpOworCWVsc2UgaWYgKGFyZ2MgLSBpID09IDEpCisJCWNyZWF0ZV9icmFu
+Y2goYXJndltpXSwgaGVhZCwgZm9yY2VfY3JlYXRlLCByZWZsb2cpOworCWVsc2UKKwkJY3JlYXRl
+X2JyYW5jaChhcmd2W2ldLCBhcmd2W2kgKyAxXSwgZm9yY2VfY3JlYXRlLCByZWZsb2cpOworCisJ
+cmV0dXJuIDA7Cit9CmRpZmYgLS1naXQgYS9idWlsdGluLmggYi9idWlsdGluLmgKaW5kZXggYWRl
+NThjNC4uZWIyODk4NiAxMDA2NDQKLS0tIGEvYnVpbHRpbi5oCisrKyBiL2J1aWx0aW4uaApAQCAt
+MTUsNiArMTUsNyBAQCBleHRlcm4gaW50IHdyaXRlX3RyZWUodW5zaWduZWQgY2hhciAqc2hhCiAK
+IGV4dGVybiBpbnQgY21kX2FkZChpbnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0IGNo
+YXIgKnByZWZpeCk7CiBleHRlcm4gaW50IGNtZF9hcHBseShpbnQgYXJnYywgY29uc3QgY2hhciAq
+KmFyZ3YsIGNvbnN0IGNoYXIgKnByZWZpeCk7CitleHRlcm4gaW50IGNtZF9icmFuY2goaW50IGFy
+Z2MsIGNvbnN0IGNoYXIgKiphcmd2LCBjb25zdCBjaGFyICpwcmVmaXgpOwogZXh0ZXJuIGludCBj
+bWRfY2F0X2ZpbGUoaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2LCBjb25zdCBjaGFyICpwcmVm
+aXgpOwogZXh0ZXJuIGludCBjbWRfY2hlY2tvdXRfaW5kZXgoaW50IGFyZ2MsIGNvbnN0IGNoYXIg
+Kiphcmd2LCBjb25zdCBjaGFyICpwcmVmaXgpOwogZXh0ZXJuIGludCBjbWRfY2hlY2tfcmVmX2Zv
+cm1hdChpbnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0IGNoYXIgKnByZWZpeCk7CmRp
+ZmYgLS1naXQgYS9naXQtYnJhbmNoLnNoIGIvZ2l0LWJyYW5jaC5zaApkZWxldGVkIGZpbGUgbW9k
+ZSAxMDA3NTUKaW5kZXggZTA1MDFlYy4uMDAwMDAwMAotLS0gYS9naXQtYnJhbmNoLnNoCisrKyAv
+ZGV2L251bGwKQEAgLTEsMTMwICswLDAgQEAKLSMhL2Jpbi9zaAotCi1VU0FHRT0nWy1sXSBbKC1k
+IHwgLUQpIDxicmFuY2huYW1lPl0gfCBbWy1mXSA8YnJhbmNobmFtZT4gWzxzdGFydC1wb2ludD5d
+XSB8IC1yJwotTE9OR19VU0FHRT0nSWYgbm8gYXJndW1lbnRzLCBzaG93IGF2YWlsYWJsZSBicmFu
+Y2hlcyBhbmQgbWFyayBjdXJyZW50IGJyYW5jaCB3aXRoIGEgc3Rhci4KLUlmIG9uZSBhcmd1bWVu
+dCwgY3JlYXRlIGEgbmV3IGJyYW5jaCA8YnJhbmNobmFtZT4gYmFzZWQgb2ZmIG9mIGN1cnJlbnQg
+SEVBRC4KLUlmIHR3byBhcmd1bWVudHMsIGNyZWF0ZSBhIG5ldyBicmFuY2ggPGJyYW5jaG5hbWU+
+IGJhc2VkIG9mZiBvZiA8c3RhcnQtcG9pbnQ+LicKLQotU1VCRElSRUNUT1JZX09LPSdZZXMnCi0u
+IGdpdC1zaC1zZXR1cAotCi1oZWFkcmVmPSQoZ2l0LXN5bWJvbGljLXJlZiBIRUFEIHwgc2VkIC1l
+ICdzfF5yZWZzL2hlYWRzL3x8JykKLQotZGVsZXRlX2JyYW5jaCAoKSB7Ci0gICAgb3B0aW9uPSIk
+MSIKLSAgICBzaGlmdAotICAgIGZvciBicmFuY2hfbmFtZQotICAgIGRvCi0JY2FzZSAiLCRoZWFk
+cmVmLCIgaW4KLQkiLCRicmFuY2hfbmFtZSwiKQotCSAgICBkaWUgIkNhbm5vdCBkZWxldGUgdGhl
+IGJyYW5jaCB5b3UgYXJlIG9uLiIgOzsKLQksLCkKLQkgICAgZGllICJXaGF0IGJyYW5jaCBhcmUg
+eW91IG9uIGFueXdheT8iIDs7Ci0JZXNhYwotCWJyYW5jaD0kKGNhdCAiJEdJVF9ESVIvcmVmcy9o
+ZWFkcy8kYnJhbmNoX25hbWUiKSAmJgotCSAgICBicmFuY2g9JChnaXQtcmV2LXBhcnNlIC0tdmVy
+aWZ5ICIkYnJhbmNoXjAiKSB8fAotCQlkaWUgIlNlcmlvdXNseSwgd2hhdCBicmFuY2ggYXJlIHlv
+dSB0YWxraW5nIGFib3V0PyIKLQljYXNlICIkb3B0aW9uIiBpbgotCS1EKQotCSAgICA7OwotCSop
+Ci0JICAgIG1icz0kKGdpdC1tZXJnZS1iYXNlIC1hICIkYnJhbmNoIiBIRUFEIHwgdHIgJ1wwMTIn
+ICcgJykKLQkgICAgY2FzZSAiICRtYnMgIiBpbgotCSAgICAqJyAnJGJyYW5jaCcgJyopCi0JCSMg
+dGhlIG1lcmdlIGJhc2Ugb2YgYnJhbmNoIGFuZCBIRUFEIGNvbnRhaW5zIGJyYW5jaCAtLQotCQkj
+IHdoaWNoIG1lYW5zIHRoYXQgdGhlIEhFQUQgY29udGFpbnMgZXZlcnl0aGluZyBpbiBib3RoLgot
+CQk7OwotCSAgICAqKQotCQllY2hvID4mMiAiVGhlIGJyYW5jaCAnJGJyYW5jaF9uYW1lJyBpcyBu
+b3QgYSBzdHJpY3Qgc3Vic2V0IG9mIHlvdXIgY3VycmVudCBIRUFELgotSWYgeW91IGFyZSBzdXJl
+IHlvdSB3YW50IHRvIGRlbGV0ZSBpdCwgcnVuICdnaXQgYnJhbmNoIC1EICRicmFuY2hfbmFtZScu
+IgotCQlleGl0IDEKLQkJOzsKLQkgICAgZXNhYwotCSAgICA7OwotCWVzYWMKLQlybSAtZiAiJEdJ
+VF9ESVIvbG9ncy9yZWZzL2hlYWRzLyRicmFuY2hfbmFtZSIKLQlybSAtZiAiJEdJVF9ESVIvcmVm
+cy9oZWFkcy8kYnJhbmNoX25hbWUiCi0JZWNobyAiRGVsZXRlZCBicmFuY2ggJGJyYW5jaF9uYW1l
+LiIKLSAgICBkb25lCi0gICAgZXhpdCAwCi19Ci0KLWxzX3JlbW90ZV9icmFuY2hlcyAoKSB7Ci0g
+ICAgZ2l0LXJldi1wYXJzZSAtLXN5bWJvbGljIC0tYWxsIHwKLSAgICBzZWQgLW5lICdzfF5yZWZz
+L1wocmVtb3Rlcy9cKXxcMXxwJyB8Ci0gICAgc29ydAotfQotCi1mb3JjZT0KLWNyZWF0ZV9sb2c9
+Ci13aGlsZSBjYXNlICIkIywkMSIgaW4gMCwqKSBicmVhayA7OyAqLC0qKSA7OyAqKSBicmVhayA7
+OyBlc2FjCi1kbwotCWNhc2UgIiQxIiBpbgotCS1kIHwgLUQpCi0JCWRlbGV0ZV9icmFuY2ggIiRA
+IgotCQlleGl0Ci0JCTs7Ci0JLXIpCi0JCWxzX3JlbW90ZV9icmFuY2hlcwotCQlleGl0Ci0JCTs7
+Ci0JLWYpCi0JCWZvcmNlPSIkMSIKLQkJOzsKLQktbCkKLQkJY3JlYXRlX2xvZz0ieWVzIgotCQk7
+OwotCS0tKQotCQlzaGlmdAotCQlicmVhawotCQk7OwotCS0qKQotCQl1c2FnZQotCQk7OwotCWVz
+YWMKLQlzaGlmdAotZG9uZQotCi1jYXNlICIkIyIgaW4KLTApCi0JZ2l0LXJldi1wYXJzZSAtLXN5
+bWJvbGljIC0tYnJhbmNoZXMgfAotCXNvcnQgfAotCXdoaWxlIHJlYWQgcmVmCi0JZG8KLQkJaWYg
+dGVzdCAiJGhlYWRyZWYiID0gIiRyZWYiCi0JCXRoZW4KLQkJCXBmeD0nKicKLQkJZWxzZQotCQkJ
+cGZ4PScgJwotCQlmaQotCQllY2hvICIkcGZ4ICRyZWYiCi0JZG9uZQotCWV4aXQgMCA7OwotMSkK
+LQloZWFkPUhFQUQgOzsKLTIpCi0JaGVhZD0iJDJeMCIgOzsKLWVzYWMKLWJyYW5jaG5hbWU9IiQx
+IgotCi1yZXY9JChnaXQtcmV2LXBhcnNlIC0tdmVyaWZ5ICIkaGVhZCIpIHx8IGV4aXQKLQotZ2l0
+LWNoZWNrLXJlZi1mb3JtYXQgImhlYWRzLyRicmFuY2huYW1lIiB8fAotCWRpZSAid2UgZG8gbm90
+IGxpa2UgJyRicmFuY2huYW1lJyBhcyBhIGJyYW5jaCBuYW1lLiIKLQotaWYgWyAtZSAiJEdJVF9E
+SVIvcmVmcy9oZWFkcy8kYnJhbmNobmFtZSIgXQotdGhlbgotCWlmIHRlc3QgJycgPSAiJGZvcmNl
+IgotCXRoZW4KLQkJZGllICIkYnJhbmNobmFtZSBhbHJlYWR5IGV4aXN0cy4iCi0JZWxpZiB0ZXN0
+ICIkYnJhbmNobmFtZSIgPSAiJGhlYWRyZWYiCi0JdGhlbgotCQlkaWUgImNhbm5vdCBmb3JjZS11
+cGRhdGUgdGhlIGN1cnJlbnQgYnJhbmNoLiIKLQlmaQotZmkKLWlmIHRlc3QgIiRjcmVhdGVfbG9n
+IiA9ICd5ZXMnCi10aGVuCi0JbWtkaXIgLXAgJChkaXJuYW1lICIkR0lUX0RJUi9sb2dzL3JlZnMv
+aGVhZHMvJGJyYW5jaG5hbWUiKQotCXRvdWNoICIkR0lUX0RJUi9sb2dzL3JlZnMvaGVhZHMvJGJy
+YW5jaG5hbWUiCi1maQotZ2l0IHVwZGF0ZS1yZWYgLW0gImJyYW5jaDogQ3JlYXRlZCBmcm9tICRo
+ZWFkIiAicmVmcy9oZWFkcy8kYnJhbmNobmFtZSIgJHJldgpkaWZmIC0tZ2l0IGEvZ2l0LmMgYi9n
+aXQuYwppbmRleCA5MzA5OThiLi41NzM4Y2I0IDEwMDY0NAotLS0gYS9naXQuYworKysgYi9naXQu
+YwpAQCAtMjI2LDYgKzIyNiw3IEBAIHN0YXRpYyB2b2lkIGhhbmRsZV9pbnRlcm5hbF9jb21tYW5k
+KGludCAKIAl9IGNvbW1hbmRzW10gPSB7CiAJCXsgImFkZCIsIGNtZF9hZGQsIFJVTl9TRVRVUCB9
+LAogCQl7ICJhcHBseSIsIGNtZF9hcHBseSB9LAorCQl7ICJicmFuY2giLCBjbWRfYnJhbmNoLCBS
+VU5fU0VUVVAgfSwKIAkJeyAiY2F0LWZpbGUiLCBjbWRfY2F0X2ZpbGUsIFJVTl9TRVRVUCB9LAog
+CQl7ICJjaGVja291dC1pbmRleCIsIGNtZF9jaGVja291dF9pbmRleCwgUlVOX1NFVFVQIH0sCiAJ
+CXsgImNoZWNrLXJlZi1mb3JtYXQiLCBjbWRfY2hlY2tfcmVmX2Zvcm1hdCB9LAo=
+------=_Part_49876_24878003.1156191161312--
