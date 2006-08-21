@@ -1,80 +1,211 @@
-From: Blu Corater <blu@daga.cl>
-Subject: use case
-Date: Mon, 21 Aug 2006 14:23:38 -0400
-Message-ID: <20060821182338.GA21395@daga.cl>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFD] gitweb: href() function to generate URLs for CGI
+Date: Mon, 21 Aug 2006 20:38:45 +0200
+Organization: At home
+Message-ID: <eccujr$90h$1@sea.gmane.org>
+References: <200608211739.32993.jnareb@gmail.com> <7v1wrauex2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Aug 21 20:24:14 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Mon Aug 21 20:39:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFERB-0005zF-AZ
-	for gcvg-git@gmane.org; Mon, 21 Aug 2006 20:23:49 +0200
+	id 1GFEgE-0000nC-7X
+	for gcvg-git@gmane.org; Mon, 21 Aug 2006 20:39:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932092AbWHUSXk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Aug 2006 14:23:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751236AbWHUSXk
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Aug 2006 14:23:40 -0400
-Received: from [201.215.212.46] ([201.215.212.46]:53730 "EHLO daga.cl")
-	by vger.kernel.org with ESMTP id S1751187AbWHUSXk (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Aug 2006 14:23:40 -0400
-Received: from blu by daga.cl with local (Exim 4.62)
-	(envelope-from <blu@daga.cl>)
-	id 1GFER0-00074l-LL
-	for git@vger.kernel.org; Mon, 21 Aug 2006 14:23:38 -0400
-To: git <git@vger.kernel.org>
-Mail-Followup-To: git <git@vger.kernel.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.12-2006-07-14
+	id S1750714AbWHUSjT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Aug 2006 14:39:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750718AbWHUSjT
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Aug 2006 14:39:19 -0400
+Received: from main.gmane.org ([80.91.229.2]:43673 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750714AbWHUSjS (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Aug 2006 14:39:18 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GFEfv-0000je-2X
+	for git@vger.kernel.org; Mon, 21 Aug 2006 20:39:03 +0200
+Received: from host-81-190-21-215.torun.mm.pl ([81.190.21.215])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 21 Aug 2006 20:39:03 +0200
+Received: from jnareb by host-81-190-21-215.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 21 Aug 2006 20:39:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-21-215.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25811>
 
-Hello all.
+Junio C Hamano wrote:
 
-I've just recently started to put my projects under git, and I have found
-a, maybe unusual, use case in which I am not sure how to procede or even
-if git is the right tool. Advice from more seasoned users is welcome.
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> In first version of href() function we had
+>> (commit 06a9d86b49b826562e2b12b5c7e831e20b8f7dce)
+>>
+>>      my $href = "$my_uri?";
+>>      $href .= esc_param( join(";",
+>>              map {
+>>                      "$mapping{$_}=$params{$_}"
+>>              } keys %params
+>>      ) );
+>>
+>> First, there was a question what happend if someone would enter 
+>> parameter name incorrectly, and some key of %params is not found in 
+>> %mapping hash. The above code would generate warnings (which web admins 
+>> frown upon), and empty (because undef) parameters corresponding to e.g. 
+>> mistyped parameter name. 
+> 
+> The one in "next" seems to do this (the diff is between "master"
+> and "next"):
+> 
+> @@ -204,7 +277,9 @@ sub href(%) {
+>  
+>       my $href = "$my_uri?";
+>       $href .= esc_param( join(";",
+> -             map { "$mapping{$_}=$params{$_}" } keys %params
+> +             map {
+> +                     "$mapping{$_}=$params{$_}" if defined $params{$_}
+> +             } keys %params
+>       ) );
+>  
+>       return $href;
+> 
 
-The picture is like this. I've just have to took over the maintenance of a
-piece of software which was not kept under scm. The previous developer
-used to just hack on the production systems and make a backup once in a
-while. No release policy or anything like that. The software runs on
-several machines and controls similar but not identical equipment. The
-machines should be swapable, therefore the software running should be
-identical in all of them and detect the working environment at runtime.
+This doesn't work as expected. Map works on _every_ element of list; if
+expression doesn't return anything it just puts undef I think. For example
+while
 
-In top of all, my predecesor was fired a few months before I took control
-and, in the meantime, people have been doing random modifications to the
-software on the production machines to satisfy new requirements, but not
-consolidating them, so the present state is slightly divergent and
-incompatible versions of the software on each production machine and the
-machines are not swapable any more.
+        print join(";", 
+                map { 
+                        "a/$_" if ($_ eq lc($_)) 
+                } ("a", "b", "C", "d")),
+                "\n";'
 
-My contingency plan, while I manage to refactor the code and establish
-a more sane workflow, was to create a git repository on each production
-machine, so I can track and audit changes made by random hackers (I have
-been unable to convince all of them to ask me to do it instead), and pull
-from all of them to a git repository on my develpment machine to produce a
-consolidated version.
+returns "a/a;a/b;;a/d" (notice the doubled ';'), the correct way would be to
+use grep instead:
 
-I am keeping local branches on my devel repo corresponding to each
-production machine and pulling from them every time somebody makes a
-modification (after commiting on the production machine of course).
+        print join(";",
+                map {
+                        "a/$_"
+                } grep { 
+                        ($_ eq lc($_)) 
+                } ("a", "b", "C", "d")),
+                "\n";
 
-The main problem I am facing now is that I have been unable to make an
-octopus merge from all the branches to consolidate them. When I do a
-"git-pull . branch1 branch2..." git tells me "Unable to find common commit
-with 5f83..." where 5f83... is the sha1 of the head commit of the first
-branch on the command line. I am merging every branch with my master
-branch one by one now, but it is a very time consumming and error prone
-process. I would very much like to octopus merge the branches, with all
-the conflicts, and then fix the master branch and release a consolidated
-version.
+returns correct "a/a;a/b;a/d". So the fragment should read what I wrote:
 
-Any hints?
+        my $href = "$my_uri?";
+        $href .= esc_param( join(";",
+                map {
+                        "$mapping{$_}=$params{$_}"
+                } grep { exists $mapping{$_} } keys %params
+        ) );
+
+>> Second problem is that using href() function, although it consolidates 
+>> to generate URL for CGI, it changes the order of CGI parameters. It 
+>> used to be that 'p' (project) parameter was first, then 'a' (action) 
+>> parameter, then hashes ('h', 'hp', 'hb'), last 'f' (filename) or 
+>> 'p' (page) or 's' (searchtext). The simplest and fastest solution would 
+>> be to create array with all keys of %mapping in appropriate order and 
+>> do something like this:
+>>
+>>      my @mapping_sorted = ('project', 'action', 'hash',
+>>              'hash_parent', 'hash_base', 'file_name', 'searchtext');
+>>
+>>      my $href = "$my_uri?";
+>>      $href .= esc_param( join(";",
+>>              map {
+>>                      "$mapping{$_}=$params{$_}"
+>>              } grep { exists $params{$_}} @mapping_sorted;
+>>      ) );
+>>
+>> The problem is of course updating both %mappings and @mapping_sorted.
+>>
+>> Is this really a problem, should this (ordering of CGI parameters)
+>> addressed?
+> 
+> Keeping the generated URL stable would be a very desirable
+> feature.  Perhaps something like this?
+> 
+> sub href(%) {
+>         my @mapping = ( project => "p",
+>                         action => "a",
+>                         hash => "h",
+>                         hash_parent => "hp",
+>                         hash_base => "hb",
+>                         file_name => "f",
+>                         file_parent => "fp",
+>                         page => "pg",
+>                         searchtext => "s",
+>                         );
+>       my %mapping;                        
+>         for (my $i = 0; $i < @mapping; $i += 2) {
+>               my ($k, $v) = ($mapping[$i], $mapping[$i+1]);
+>                 $mapping{$k} = [$i, $v];
+>         }
+>       my %params = @_;
+>       $params{"project"} ||= $project;
+> 
+>       my $href = "$my_uri?";
+>       $href .= esc_param( join(";",
+>               map { $_->[1] }
+>               sort { $a->[0] <=> $b->[0] }
+>               map {
+>                       (defined $params{$_} && exists $mapping{$_})
+>                       ? [ $mapping{$_}[0], "$mapping{$_}[1]=$params{$_}" ]
+>                         : ();
+>               } keys %params
+>       ) );
+> 
+>       return $href;
+> }
+
+What about my proposed solution? Don't sort, use sorted keys instead, i.e.
+something like (after unmangling whitespace)
+
+sub href(%) {
+        my @mapping = ( project => "p",
+                        action => "a",
+                        hash => "h",
+                        hash_parent => "hp",
+                        hash_base => "hb",
+                        file_name => "f",
+                        file_parent => "fp",
+                        page => "pg",
+                        searchtext => "s",
+                        );
+        my %mapping;
+        my @mapping_keys;                        
+        for (my $i = 0; $i < @mapping; $i += 2) {
+                my ($k, $v) = ($mapping[$i], $mapping[$i+1]);
+                $mapping{$k} = $v;
+                push @mapping_keys, $k;
+        }
+        my %params = @_;
+        $params{"project"} ||= $project;
+
+        my $href = "$my_uri?";
+        $href .= esc_param( join(";",
+                map { "$mapping{$_}=$params{$_}" }
+                grep { exists $params{$_} } 
+                @mapping_keys
+        ) );
+
+        return $href;
+}
+
+This has the advantage and disadvantage of constant cost, linear with number
+of %mapping keys, instead of N log N cost where N is number of parameters.
 
 -- 
-Blu.
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
