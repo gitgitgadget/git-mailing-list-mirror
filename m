@@ -1,49 +1,158 @@
-From: Chris Wedgwood <cw@f00f.org>
-Subject: Re: [RFC] adding support for md5
-Date: Mon, 21 Aug 2006 13:44:30 -0700
-Message-ID: <20060821204430.GA2700@tuatara.stupidest.org>
-References: <Pine.LNX.4.63.0608172259280.25827@chino.corp.google.com> <Pine.LNX.4.64.0608191339010.11811@g5.osdl.org>
+From: "=?UTF-8?Q?Kristian_H=C3=B8gsberg?=" <krh@bitplanet.net>
+Subject: Re: [PATCH] branch as a builtin (again)
+Date: Mon, 21 Aug 2006 16:45:14 -0400
+Message-ID: <59ad55d30608211345k7956a219m8ab450c6f2023461@mail.gmail.com>
+References: <59ad55d30608201422h4a6d40f7y7782212637380438@mail.gmail.com>
+	 <20060821101346.GA527@diku.dk>
+	 <59ad55d30608211312u51a4657eyd52311314a6ee03c@mail.gmail.com>
+	 <Pine.LNX.4.63.0608211319180.8662@chino.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Rientjes <rientjes@google.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 21 22:44:37 2006
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_50424_16488706.1156193114875"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 21 22:45:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFGdP-0003Lj-O6
-	for gcvg-git@gmane.org; Mon, 21 Aug 2006 22:44:36 +0200
+	id 1GFGeB-0003aA-09
+	for gcvg-git@gmane.org; Mon, 21 Aug 2006 22:45:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751072AbWHUUoc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Aug 2006 16:44:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751076AbWHUUoc
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Aug 2006 16:44:32 -0400
-Received: from smtp112.sbc.mail.mud.yahoo.com ([68.142.198.211]:14007 "HELO
-	smtp112.sbc.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1751049AbWHUUoc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Aug 2006 16:44:32 -0400
-Received: (qmail 93604 invoked from network); 21 Aug 2006 20:44:31 -0000
-Received: from unknown (HELO stupidest.org) (cwedgwood@sbcglobal.net@70.231.243.138 with login)
-  by smtp112.sbc.mail.mud.yahoo.com with SMTP; 21 Aug 2006 20:44:30 -0000
-Received: by tuatara.stupidest.org (Postfix, from userid 10000)
-	id 262F81811BD6; Mon, 21 Aug 2006 13:44:30 -0700 (PDT)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0608191339010.11811@g5.osdl.org>
+	id S1751076AbWHUUpT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Aug 2006 16:45:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751079AbWHUUpT
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Aug 2006 16:45:19 -0400
+Received: from wx-out-0506.google.com ([66.249.82.229]:28174 "EHLO
+	wx-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1751076AbWHUUpR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Aug 2006 16:45:17 -0400
+Received: by wx-out-0506.google.com with SMTP id s14so1621065wxc
+        for <git@vger.kernel.org>; Mon, 21 Aug 2006 13:45:16 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:references:x-google-sender-auth;
+        b=jOEmRPjR3xyBfbSd2wRtPcnfSiasyX6l63U/+IsaqYO8wRVsdIsn2vs+NR17gRNdQuvPaXoDpSpwK2iFJqRFSHwHpSgshkWC+nsPE75ZCDw+Mj5MnPEX61RDCcvuuHGfDz7yGRgylUSyyO6U6UOAQR4r0pj1+6gZ8PUHXbgpUDg=
+Received: by 10.70.21.10 with SMTP id 10mr10330579wxu;
+        Mon, 21 Aug 2006 13:45:16 -0700 (PDT)
+Received: by 10.70.33.1 with HTTP; Mon, 21 Aug 2006 13:45:14 -0700 (PDT)
+To: "David Rientjes" <rientjes@google.com>
+In-Reply-To: <Pine.LNX.4.63.0608211319180.8662@chino.corp.google.com>
+X-Google-Sender-Auth: 8f5ec7af121e3b16
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25818>
 
-On Sat, Aug 19, 2006 at 01:50:32PM -0700, Linus Torvalds wrote:
+------=_Part_50424_16488706.1156193114875
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-> I can see the point of configurable hashes, but it would be for a
-> stronger hash than sha1, not for a (much) weaker one.
+Ok, once more without the spaces.  I have to state that it's against
+my personal beliefs using pointers as boolean values, but I can go
+with the flow here.  For extra bonus, I'm using xrealloc instead of
+plain realloc now.
 
-Why any configuration option at all?  What in practice does it really
-buy?
+cheers,
+Kristian
 
-If someone (eventually) wants to do something malicious (which right
-now requires some effort and would probably not go undetected) there
-are probably easier ways to achieve this (like posting a patch with a
-non-obvious subtle side-effect).
+------=_Part_50424_16488706.1156193114875
+Content-Type: application/octet-stream; name=builtin-branch.c
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_er5bgiax
+Content-Disposition: attachment; filename="builtin-branch.c"
+
+LyoKICogQnVpbHRpbiAiZ2l0IGJyYW5jaCIKICoKICogQ29weXJpZ2h0IChjKSAyMDA2IEtyaXN0
+aWFuIEjDuGdzYmVyZyA8a3JoQHJlZGhhdC5jb20+CiAqIEJhc2VkIG9uIGdpdC1icmFuY2guc2gg
+YnkgSnVuaW8gQyBIYW1hbm8uCiAqLwoKI2luY2x1ZGUgImNhY2hlLmgiCiNpbmNsdWRlICJyZWZz
+LmgiCiNpbmNsdWRlICJjb21taXQuaCIKI2luY2x1ZGUgImJ1aWx0aW4uaCIKCnN0YXRpYyBjb25z
+dCBjaGFyIGJ1aWx0aW5fYnJhbmNoX3VzYWdlW10gPQoiZ2l0LWJyYW5jaCBbKC1kIHwgLUQpIDxi
+cmFuY2huYW1lPl0gfCBbWy1mXSA8YnJhbmNobmFtZT4gWzxzdGFydC1wb2ludD5dXSB8IC1yIjsK
+CgpzdGF0aWMgY29uc3QgY2hhciAqaGVhZDsKc3RhdGljIHVuc2lnbmVkIGNoYXIgaGVhZF9zaGEx
+WzIwXTsKCnN0YXRpYyBpbnQgaW5fbWVyZ2VfYmFzZXMoY29uc3QgdW5zaWduZWQgY2hhciAqc2hh
+MSwKCQkJICBzdHJ1Y3QgY29tbWl0ICpyZXYxLAoJCQkgIHN0cnVjdCBjb21taXQgKnJldjIpCnsK
+CXN0cnVjdCBjb21taXRfbGlzdCAqYmFzZXMsICpiOwoJaW50IHJldCA9IDA7CgoJYmFzZXMgPSBn
+ZXRfbWVyZ2VfYmFzZXMocmV2MSwgcmV2MiwgMSk7Cglmb3IgKGIgPSBiYXNlczsgYjsgYiA9IGIt
+Pm5leHQpIHsKCQlpZiAoIWhhc2hjbXAoc2hhMSwgYi0+aXRlbS0+b2JqZWN0LnNoYTEpKSB7CgkJ
+CXJldCA9IDE7CgkJCWJyZWFrOwoJCX0KCX0KCglmcmVlX2NvbW1pdF9saXN0KGJhc2VzKTsKCXJl
+dHVybiByZXQ7Cn0KCnN0YXRpYyB2b2lkIGRlbGV0ZV9icmFuY2hlcyhpbnQgYXJnYywgY29uc3Qg
+Y2hhciAqKmFyZ3YsIGludCBmb3JjZSkKewoJc3RydWN0IGNvbW1pdCAqcmV2LCAqaGVhZF9yZXY7
+Cgl1bnNpZ25lZCBjaGFyIHNoYTFbMjBdOwoJY29uc3QgY2hhciAqbmFtZSwgKnJlZmxvZzsKCWlu
+dCBpOwoKCWhlYWRfcmV2ID0gbG9va3VwX2NvbW1pdF9yZWZlcmVuY2UoaGVhZF9zaGExKTsKCWZv
+ciAoaSA9IDA7IGkgPCBhcmdjOyBpKyspIHsKCQlpZiAoIXN0cmNtcChoZWFkLCBhcmd2W2ldKSkK
+CQkJZGllKCJDYW5ub3QgZGVsZXRlIHRoZSBicmFuY2ggeW91IGFyZSBjdXJyZW50bHkgb24uIik7
+CgoJCW5hbWUgPSBnaXRfcGF0aCgicmVmcy9oZWFkcy8lcyIsIGFyZ3ZbaV0pOwoJCWlmICghcmVz
+b2x2ZV9yZWYobmFtZSwgc2hhMSwgMSkpCgkJCWRpZSgiQnJhbmNoICclcycgbm90IGZvdW5kLiIs
+IGFyZ3ZbaV0pOwoKCQlyZXYgPSBsb29rdXBfY29tbWl0X3JlZmVyZW5jZShzaGExKTsKCQlpZiAo
+IXJldiB8fCAhaGVhZF9yZXYpCgkJCWRpZSgiQ291bGRuJ3QgbG9vayB1cCBjb21taXQgb2JqZWN0
+cy4iKTsKCgkJLyogVGhpcyBjaGVja3Mgd2hldGhlciB0aGUgbWVyZ2UgYmFzZXMgb2YgYnJhbmNo
+IGFuZAoJCSAqIEhFQUQgY29udGFpbnMgYnJhbmNoIC0tIHdoaWNoIG1lYW5zIHRoYXQgdGhlIEhF
+QUQKCQkgKiBjb250YWlucyBldmVyeXRoaW5nIGluIGJvdGguCgkJICovCgoJCWlmICghZm9yY2Ug
+JiYKCQkgICAgIWluX21lcmdlX2Jhc2VzKHNoYTEsIHJldiwgaGVhZF9yZXYpKSB7CgkJCWZwcmlu
+dGYoc3RkZXJyLAoJCQkJIlRoZSBicmFuY2ggJyVzJyBpcyBub3QgYSBzdHJpY3Qgc3Vic2V0IG9m
+IHlvdXIgY3VycmVudCBIRUFELlxuIgoJCQkJIklmIHlvdSBhcmUgc3VyZSB5b3Ugd2FudCB0byBk
+ZWxldGUgaXQsIHJ1biAnZ2l0IGJyYW5jaCAtRCAlcycuXG4iLAoJCQkJYXJndltpXSwgYXJndltp
+XSk7CgkJCWV4aXQoMSk7CgkJfQoKCQl1bmxpbmsobmFtZSk7CgoJCS8qIFVubGluayByZWZsb2cg
+aWYgaXQgZXhpc3RzLiAqLwoJCXJlZmxvZyA9IGdpdF9wYXRoKCJsb2dzL3JlZnMvaGVhZHMvJXMi
+LCBhcmd2W2ldKTsKCQl1bmxpbmsocmVmbG9nKTsKCgkJcHJpbnRmKCJEZWxldGVkIGJyYW5jaCAl
+cy5cbiIsIGFyZ3ZbaV0pOwoJfQp9CgpzdGF0aWMgaW50IHJlZl9pbmRleCwgcmVmX2FsbG9jOwpz
+dGF0aWMgY2hhciAqKnJlZl9saXN0OwoKc3RhdGljIGludCBhcHBlbmRfcmVmKGNvbnN0IGNoYXIg
+KnJlZm5hbWUsIGNvbnN0IHVuc2lnbmVkIGNoYXIgKnNoYTEpCnsKCWlmIChyZWZfaW5kZXggPj0g
+cmVmX2FsbG9jKSB7CgkJcmVmX2FsbG9jID0gcmVmX2FsbG9jID4gMCA/IHJlZl9hbGxvYyAqIDIg
+OiAxNjsKCQlyZWZfbGlzdCA9IHhyZWFsbG9jKHJlZl9saXN0LCByZWZfYWxsb2MgKiBzaXplb2Yo
+Y2hhciAqKSk7Cgl9CgoJcmVmX2xpc3RbcmVmX2luZGV4KytdID0gc3RyZHVwKHJlZm5hbWUpOwoK
+CXJldHVybiAwOwp9CgpzdGF0aWMgaW50IHJlZl9jbXAoY29uc3Qgdm9pZCAqcjEsIGNvbnN0IHZv
+aWQgKnIyKQp7CglyZXR1cm4gc3RyY21wKCooY2hhciAqKilyMSwgKihjaGFyICoqKXIyKTsKfQoK
+c3RhdGljIHZvaWQgcHJpbnRfcmVmX2xpc3QoaW50IHJlbW90ZV9vbmx5KQp7CglpbnQgaTsKCglp
+ZiAocmVtb3RlX29ubHkpCgkJZm9yX2VhY2hfcmVtb3RlX3JlZihhcHBlbmRfcmVmKTsKCWVsc2UK
+CQlmb3JfZWFjaF9icmFuY2hfcmVmKGFwcGVuZF9yZWYpOwoKCXFzb3J0KHJlZl9saXN0LCByZWZf
+aW5kZXgsIHNpemVvZihjaGFyICopLCByZWZfY21wKTsKCglmb3IgKGkgPSAwOyBpIDwgcmVmX2lu
+ZGV4OyBpKyspIHsKCQlpZiAoIXN0cmNtcChyZWZfbGlzdFtpXSwgaGVhZCkpCgkJCXByaW50Zigi
+KiAlc1xuIiwgcmVmX2xpc3RbaV0pOwoJCWVsc2UKCQkJcHJpbnRmKCIgICVzXG4iLCByZWZfbGlz
+dFtpXSk7Cgl9Cn0KCnN0YXRpYyB2b2lkIGNyZWF0ZV9yZWZsb2coc3RydWN0IHJlZl9sb2NrICps
+b2NrKQp7CglzdHJ1Y3Qgc3RhdCBzdGJ1ZjsKCWludCBmZDsKCglpZiAoIXN0YXQobG9jay0+bG9n
+X2ZpbGUsICZzdGJ1ZikgJiYgU19JU1JFRyhzdGJ1Zi5zdF9tb2RlKSkKCQlyZXR1cm47CglpZiAo
+c2FmZV9jcmVhdGVfbGVhZGluZ19kaXJlY3Rvcmllcyhsb2NrLT5sb2dfZmlsZSkgPCAwKQoJCWRp
+ZSgiVW5hYmxlIHRvIGNyZWF0ZSBkaXJlY3RvcnkgZm9yICVzLiIsIGxvY2stPmxvZ19maWxlKTsK
+CWZkID0gb3Blbihsb2NrLT5sb2dfZmlsZSwgT19DUkVBVCB8IE9fVFJVTkMgfCBPX1dST05MWSwg
+MDY2Nik7CglpZiAoZmQgPCAwKQoJCWRpZSgiVW5hYmxlIHRvIGNyZWF0ZSByZWYgbG9nICVzOiAl
+cy4iLAoJCSAgICBsb2NrLT5sb2dfZmlsZSwgc3RyZXJyb3IoZXJybm8pKTsKCWNsb3NlKGZkKTsK
+fQoKc3RhdGljIHZvaWQgY3JlYXRlX2JyYW5jaChjb25zdCBjaGFyICpuYW1lLCBjb25zdCBjaGFy
+ICpzdGFydCwKCQkJICBpbnQgZm9yY2UsIGludCByZWZsb2cpCnsKCXN0cnVjdCByZWZfbG9jayAq
+bG9jazsKCXVuc2lnbmVkIGNoYXIgc2hhMVsyMF07CgljaGFyIHJlZltQQVRIX01BWF0sIG1zZ1tQ
+QVRIX01BWCArIDIwXTsKCglzbnByaW50ZihyZWYsIHNpemVvZiByZWYsICJyZWZzL2hlYWRzLyVz
+IiwgbmFtZSk7CglpZiAoY2hlY2tfcmVmX2Zvcm1hdChyZWYpKQoJCWRpZSgiJyVzJyBpcyBub3Qg
+YSB2YWxpZCBicmFuY2ggbmFtZS4iLCBuYW1lKTsKCglpZiAocmVzb2x2ZV9yZWYoZ2l0X3BhdGgo
+cmVmKSwgc2hhMSwgMSkpIHsKCQlpZiAoIWZvcmNlKQoJCQlkaWUoIkEgYnJhbmNoIG5hbWVkICcl
+cycgYWxyZWFkeSBleGlzdHMuIiwgbmFtZSk7CgkJZWxzZSBpZiAoIXN0cmNtcChoZWFkLCBuYW1l
+KSkKCQkJZGllKCJDYW5ub3QgZm9yY2UgdXBkYXRlIHRoZSBjdXJyZW50IGJyYW5jaC4iKTsKCX0K
+CglpZiAoZ2V0X3NoYTEoc3RhcnQsIHNoYTEpKQoJCWRpZSgiTm90IGEgdmFsaWQgYnJhbmNoIHBv
+aW50OiAnJXMnLiIsIHN0YXJ0KTsKCglsb2NrID0gbG9ja19hbnlfcmVmX2Zvcl91cGRhdGUocmVm
+LCBOVUxMLCAwKTsKCWlmICghbG9jaykKCQlkaWUoIkZhaWxlZCB0byBsb2NrIHJlZiBmb3IgdXBk
+YXRlOiAlcy4iLCBzdHJlcnJvcihlcnJubykpOwoJaWYgKHJlZmxvZykKCQljcmVhdGVfcmVmbG9n
+KGxvY2spOwoJc25wcmludGYobXNnLCBzaXplb2YgbXNnLCAiYnJhbmNoOiBDcmVhdGVkIGZyb20g
+JXMiLCBzdGFydCk7CglpZiAod3JpdGVfcmVmX3NoYTEobG9jaywgc2hhMSwgbXNnKSA8IDApCgkJ
+ZGllKCJGYWlsZWQgdG8gd3JpdGUgcmVmOiAlcy4iLCBzdHJlcnJvcihlcnJubykpOwp9CgppbnQg
+Y21kX2JyYW5jaChpbnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0IGNoYXIgKnByZWZp
+eCkKewoJaW50IGRlbGV0ZSA9IDAsIGZvcmNlX2RlbGV0ZSA9IDAsIGZvcmNlX2NyZWF0ZSA9IDAs
+IHJlbW90ZV9vbmx5ID0gMDsKCWludCByZWZsb2cgPSAwOwoJaW50IGksIHByZWZpeF9sZW5ndGg7
+Cgljb25zdCBjaGFyICpwOwoKCWdpdF9jb25maWcoZ2l0X2RlZmF1bHRfY29uZmlnKTsKCglmb3Ig
+KGkgPSAxOyBpIDwgYXJnYzsgaSsrKSB7CgkJY29uc3QgY2hhciAqYXJnID0gYXJndltpXTsKCgkJ
+aWYgKGFyZ1swXSAhPSAnLScpCgkJCWJyZWFrOwoJCWlmICghc3RyY21wKGFyZywgIi0tIikpIHsK
+CQkJaSsrOwoJCQlicmVhazsKCQl9CgkJaWYgKCFzdHJjbXAoYXJnLCAiLWQiKSkgewoJCQlkZWxl
+dGUgPSAxOwoJCQljb250aW51ZTsKCQl9CgkJaWYgKCFzdHJjbXAoYXJnLCAiLUQiKSkgewoJCQlk
+ZWxldGUgPSAxOwoJCQlmb3JjZV9kZWxldGUgPSAxOwoJCQljb250aW51ZTsKCQl9CgkJaWYgKCFz
+dHJjbXAoYXJnLCAiLWYiKSkgewoJCQlmb3JjZV9jcmVhdGUgPSAxOwoJCQljb250aW51ZTsKCQl9
+CgkJaWYgKCFzdHJjbXAoYXJnLCAiLXIiKSkgewoJCQlyZW1vdGVfb25seSA9IDE7CgkJCWNvbnRp
+bnVlOwoJCX0KCQlpZiAoIXN0cmNtcChhcmcsICItbCIpKSB7CgkJCXJlZmxvZyA9IDE7CgkJCWNv
+bnRpbnVlOwoJCX0KCQl1c2FnZShidWlsdGluX2JyYW5jaF91c2FnZSk7Cgl9CgoJcHJlZml4X2xl
+bmd0aCA9IHN0cmxlbihnaXRfcGF0aCgicmVmcy9oZWFkcy8iKSk7CglwID0gcmVzb2x2ZV9yZWYo
+Z2l0X3BhdGgoIkhFQUQiKSwgaGVhZF9zaGExLCAwKTsKCWlmICghcCkKCQlkaWUoIkZhaWxlZCB0
+byByZXNvbHZlIEhFQUQgYXMgYSB2YWxpZCByZWYuIik7CgloZWFkID0gc3RyZHVwKHAgKyBwcmVm
+aXhfbGVuZ3RoKTsKCglpZiAoZGVsZXRlKQoJCWRlbGV0ZV9icmFuY2hlcyhhcmdjIC0gaSwgYXJn
+diArIGksIGZvcmNlX2RlbGV0ZSk7CgllbHNlIGlmIChpID09IGFyZ2MpCgkJcHJpbnRfcmVmX2xp
+c3QocmVtb3RlX29ubHkpOwoJZWxzZSBpZiAoYXJnYyAtIGkgPT0gMSkKCQljcmVhdGVfYnJhbmNo
+KGFyZ3ZbaV0sIGhlYWQsIGZvcmNlX2NyZWF0ZSwgcmVmbG9nKTsKCWVsc2UKCQljcmVhdGVfYnJh
+bmNoKGFyZ3ZbaV0sIGFyZ3ZbaSArIDFdLCBmb3JjZV9jcmVhdGUsIHJlZmxvZyk7CgoJcmV0dXJu
+IDA7Cn0K
+------=_Part_50424_16488706.1156193114875--
