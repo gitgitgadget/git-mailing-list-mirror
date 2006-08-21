@@ -1,78 +1,119 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Recover from a bad push in StGit
-Date: Mon, 21 Aug 2006 17:03:59 +0200
-Organization: Dewire
-Message-ID: <200608211703.59873.robin.rosenberg.lists@dewire.com>
-References: <200608190030.47257.robin.rosenberg.lists@dewire.com> <tnxk652torl.fsf@arm.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFD] gitweb: href() function to generate URLs for CGI
+Date: Mon, 21 Aug 2006 17:21:39 +0200
+Organization: At home
+Message-ID: <eccj1n$sio$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 21 17:15:10 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Mon Aug 21 17:40:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFBLP-000763-LU
-	for gcvg-git@gmane.org; Mon, 21 Aug 2006 17:05:40 +0200
+	id 1GFBqJ-0006yR-DP
+	for gcvg-git@gmane.org; Mon, 21 Aug 2006 17:37:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422674AbWHUPFV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 21 Aug 2006 11:05:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422678AbWHUPFV
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Aug 2006 11:05:21 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:37664 "EHLO
-	torino.dewire.com") by vger.kernel.org with ESMTP id S1422674AbWHUPFS convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Aug 2006 11:05:18 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by torino.dewire.com (Postfix) with ESMTP id 29B9A802851;
-	Mon, 21 Aug 2006 17:03:03 +0200 (CEST)
-Received: from torino.dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 18698-04; Mon, 21 Aug 2006 17:03:02 +0200 (CEST)
-Received: from [10.9.0.5] (unknown [10.9.0.5])
-	by torino.dewire.com (Postfix) with ESMTP id CDECD80264C;
-	Mon, 21 Aug 2006 17:03:00 +0200 (CEST)
-To: Catalin Marinas <catalin.marinas@gmail.com>
-User-Agent: KMail/1.9.4
-In-Reply-To: <tnxk652torl.fsf@arm.com>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1751883AbWHUPha (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Aug 2006 11:37:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751884AbWHUPha
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Aug 2006 11:37:30 -0400
+Received: from main.gmane.org ([80.91.229.2]:20199 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751883AbWHUPha (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Aug 2006 11:37:30 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GFBkL-0005RX-Te
+	for git@vger.kernel.org; Mon, 21 Aug 2006 17:31:28 +0200
+Received: from host-81-190-21-215.torun.mm.pl ([81.190.21.215])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 21 Aug 2006 17:31:25 +0200
+Received: from jnareb by host-81-190-21-215.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 21 Aug 2006 17:31:25 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-21-215.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25797>
 
-m=E5ndag 21 augusti 2006 11:35 skrev Catalin Marinas:
-> Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> > I recently did some reordering of patches and goofed up (not totall=
-y, but
-> > anyway). I pushed a number of patches and forgot one in the middle
-> > resulting in a merge  conflict. Pop won't work since I have local c=
-hanges
-> > from the conflict and I don't want to resolve the conflict either s=
-ince I
-> > didn't mean to push the patch at that point.
-> >
-> > Is there a simple way of undoing a bad push?
-> >
-> > In this case I had a fresh export do help me out so I could just de=
-lete
-> > the patches and re-import them again, but what if I didn't?
->
-> "stg push --undo" (the same option for "refresh"; maybe I should add =
-a
-> separate "undo" command) resets the local changes and it restores the
-Not necessarily, but a hint about --undo when push/pop fail would have
-helped me.
+In first version of href() function we had
+(commit 06a9d86b49b826562e2b12b5c7e831e20b8f7dce)
 
-> original boundaries of the patch (no information is lost). You could
-> use the latest snapshot as it has some bug-fixes from release 0.10.
+        my $href = "$my_uri?";
+        $href .= esc_param( join(";",
+                map {
+                        "$mapping{$_}=$params{$_}"
+                } keys %params
+        ) );
 
-Does refresh --undo make me see the state of the patch like it was befo=
-re last=20
-refresh, ie. stgit remembers the history of my patces? I thought it dro=
-pped=20
-the references as obsolete.
+First, there was a question what happend if someone would enter parameter
+name incorrectly, and some key of %params is not found in %mapping hash.
+The above code would generate warnings (which web admins frown upon), and
+empty (because undef) parameters corresponding to e.g. mistyped parameter
+name. 
 
--- robin
+One solution (sweeping under the carpet) would be to use parameter key as
+CGI parameter name if it is not found in the %mapping, i.e.
+
+        my $href = "$my_uri?";
+        $href .= esc_param( join(";",
+                map {
+                        if (exists $mapping{$_}) {
+                                "$mapping{$_}=$params{$_}"
+                        } else {
+                                "$_=$params{$_}"
+                        }
+                } keys %params
+        ) );
+
+Another solution would be to skip parameters which are not found in
+%mapping. Correct way to do this is:
+
+        my $href = "$my_uri?";
+        $href .= esc_param( join(";",
+                map {
+                        "$mapping{$_}=$params{$_}"
+                } grep { exists $mapping{$_} } keys %params
+        ) );
+
+(we cannot put condition in map BLOCK, because map does not filter, only act
+on elements, so the result would be empty parameter (e.g. ";;" in generated
+URL), I guess without warnings).
+
+Which solutions should be chosen? If the one is chosen, I can send the
+patch.
+
+
+Second problem is that using href() function, although it consolidates to
+generate URL for CGI, it changes the order of CGI parameters. It used to be
+that 'p' (project) parameter was first, then 'a' (action) parameter, then
+hashes ('h', 'hp', 'hb'), last 'f' (filename) or 'p' (page) or
+'s' (searchtext). The simplest and fastest solution would be to create
+array with all keys of %mapping in appropriate order and do something like
+this:
+
+        my @mapping_sorted = ('project', 'action', 'hash', 'hash_parent',
+                'hash_base', 'file_name', 'searchtext');
+
+        my $href = "$my_uri?";
+        $href .= esc_param( join(";",
+                map {
+                        "$mapping{$_}=$params{$_}"
+                } grep { exists $params{$_}} @mapping_sorted;
+        ) );
+
+The problem is of course updating both %mappings and @mapping_sorted.
+
+Is this really a problem, should this (ordering of CGI parameters)
+addressed?
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
