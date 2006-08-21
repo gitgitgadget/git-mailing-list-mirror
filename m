@@ -1,65 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
 Subject: Re: Huge win, compressing a window of delta runs as a unit
-Date: Mon, 21 Aug 2006 12:24:44 +0200
-Organization: At home
-Message-ID: <ecc1ks$t3p$1@sea.gmane.org>
-References: <9e4733910608161020s6855140bs68aaab6e1bbd3bad@mail.gmail.com> <Pine.LNX.4.64.0608172323520.11359@localhost.localdomain> <9e4733910608180553r34fa7b25he0bf910ef804630f@mail.gmail.com> <Pine.LNX.4.64.0608181226460.11359@localhost.localdomain> <9e4733910608180956n64e3362fm5c72d652e6b6243a@mail.gmail.com> <Pine.LNX.4.64.0608202257020.3682@localhost.localdomain> <20060821064659.GB24054@spearce.org>
+Date: Mon, 21 Aug 2006 10:07:36 -0400
+Message-ID: <9e4733910608210707v67659a1co7b73e409e0d20132@mail.gmail.com>
+References: <9e4733910608161020s6855140bs68aaab6e1bbd3bad@mail.gmail.com>
+	 <Pine.LNX.4.64.0608172323520.11359@localhost.localdomain>
+	 <9e4733910608180615q4895334bw57c55e59a4ac5482@mail.gmail.com>
+	 <Pine.LNX.4.64.0608181057440.11359@localhost.localdomain>
+	 <20060821070609.GC24054@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Mon Aug 21 12:24:50 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Nicolas Pitre" <nico@cam.org>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 21 16:08:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GF6xa-0003um-CC
-	for gcvg-git@gmane.org; Mon, 21 Aug 2006 12:24:46 +0200
+	id 1GFARL-00085A-4g
+	for gcvg-git@gmane.org; Mon, 21 Aug 2006 16:07:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751842AbWHUKYn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 21 Aug 2006 06:24:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751846AbWHUKYn
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Aug 2006 06:24:43 -0400
-Received: from main.gmane.org ([80.91.229.2]:436 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751842AbWHUKYm (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Aug 2006 06:24:42 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GF6xR-0003sb-Hl
-	for git@vger.kernel.org; Mon, 21 Aug 2006 12:24:37 +0200
-Received: from host-81-190-21-215.torun.mm.pl ([81.190.21.215])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 21 Aug 2006 12:24:37 +0200
-Received: from jnareb by host-81-190-21-215.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 21 Aug 2006 12:24:37 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-21-215.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1030448AbWHUOHi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Aug 2006 10:07:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030496AbWHUOHi
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Aug 2006 10:07:38 -0400
+Received: from nz-out-0102.google.com ([64.233.162.198]:8884 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1030448AbWHUOHh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Aug 2006 10:07:37 -0400
+Received: by nz-out-0102.google.com with SMTP id 14so256033nzn
+        for <git@vger.kernel.org>; Mon, 21 Aug 2006 07:07:36 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=FXZH2wq8royj8c0VERH9UkDtEFzZcOQoX9DvwrIYHCOmii7oPnqH/sZ+3oH7s6+T+vtAP442R/MSoQsjLIhUIIB7uls1+d3yGyUnw3wfKSwvo+3Y86pwRc+5025S9puYEDPqHYn1V0FdHbwnmNN8dko/bQTq1+p1DddYvhgEd9c=
+Received: by 10.64.193.8 with SMTP id q8mr5266586qbf;
+        Mon, 21 Aug 2006 07:07:36 -0700 (PDT)
+Received: by 10.65.133.17 with HTTP; Mon, 21 Aug 2006 07:07:36 -0700 (PDT)
+To: "Shawn Pearce" <spearce@spearce.org>
+In-Reply-To: <20060821070609.GC24054@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25795>
 
-Shawn Pearce wrote:
+Mozilla CVS files have between 1 and 1700 deltas. The average is ten,
+but the deviation is high. I believe less than 10 files have over 1000
+deltas, they are all in the root directory and related to the build
+process. Many files have no deltas, or because of CVS artifacts all of
+the revisions are identical.
 
-> =A0- the strategy of how I'm slamming a very large number of objects
-> =A0 =A0into a pack may be useful in situations other than a foreign
-> =A0 =A0SCM import process. =A0I can see someone wanting to create a
-> =A0 =A0large commit with a lot of modified objects. =A0Doing this wit=
-h
-> =A0 =A0update-index and write-tree into loose objects would be far
-> =A0 =A0slower than just generating a new pack if the number of object=
-s
-> =A0 =A0you are writing exceeds about 100 on Windows or ~1k on UNIX;
+I am still IO bound. Random access IO is the problem, not stream IO. I
+have to open and read 110,000 (5GB total) files. It takes about 2hrs
+to do all of the IO. I'm not CPU bound yet but as we make things more
+efficient, I am getting closer to being CPU bound.
 
-Like e.g. initial import of large project, or incorporating some subpro=
-ject
-into a projects (e.g. gitk and gitweb in git)?
+Forking is not an option. It can takes days to fork 1M copies of an
+app. I have used oprofile on parsecvs. It spends 60% of the time in
+the kernel processing fork calls. Parsecvs runs for 6hrs on mozcvs and
+dies without finishing.
 
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+I am back to working on the branch code. I'm over the cold I got from
+my 2 yr old. It is slow going now. I am in the phase where the import
+process runs without error 5-10 minutes and then dies from some
+unusual branch case. I fix it up and try again. I am slowly
+identifying and removing all the code in cvs2svn that puts the
+branches and symbols into their own subdirectories.
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
