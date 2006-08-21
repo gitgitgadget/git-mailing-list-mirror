@@ -1,102 +1,49 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] branch as a builtin (again)
-Date: Mon, 21 Aug 2006 16:41:10 -0400
-Message-ID: <20060821204110.GA24465@spearce.org>
-References: <59ad55d30608201422h4a6d40f7y7782212637380438@mail.gmail.com> <20060821101346.GA527@diku.dk> <59ad55d30608211312u51a4657eyd52311314a6ee03c@mail.gmail.com>
+From: Chris Wedgwood <cw@f00f.org>
+Subject: Re: [RFC] adding support for md5
+Date: Mon, 21 Aug 2006 13:44:30 -0700
+Message-ID: <20060821204430.GA2700@tuatara.stupidest.org>
+References: <Pine.LNX.4.63.0608172259280.25827@chino.corp.google.com> <Pine.LNX.4.64.0608191339010.11811@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 21 22:42:03 2006
+Cc: David Rientjes <rientjes@google.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 21 22:44:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFGaf-0002cq-LK
-	for gcvg-git@gmane.org; Mon, 21 Aug 2006 22:41:46 +0200
+	id 1GFGdP-0003Lj-O6
+	for gcvg-git@gmane.org; Mon, 21 Aug 2006 22:44:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751003AbWHUUl2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Aug 2006 16:41:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751013AbWHUUl0
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Aug 2006 16:41:26 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:11142 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751003AbWHUUlV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Aug 2006 16:41:21 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GFGa0-0002ZI-VF; Mon, 21 Aug 2006 16:41:05 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 06A5F20FB7D; Mon, 21 Aug 2006 16:41:10 -0400 (EDT)
-To: Kristian =?iso-8859-1?Q?H=F8gsberg?= <krh@bitplanet.net>
+	id S1751072AbWHUUoc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Aug 2006 16:44:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751076AbWHUUoc
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Aug 2006 16:44:32 -0400
+Received: from smtp112.sbc.mail.mud.yahoo.com ([68.142.198.211]:14007 "HELO
+	smtp112.sbc.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1751049AbWHUUoc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Aug 2006 16:44:32 -0400
+Received: (qmail 93604 invoked from network); 21 Aug 2006 20:44:31 -0000
+Received: from unknown (HELO stupidest.org) (cwedgwood@sbcglobal.net@70.231.243.138 with login)
+  by smtp112.sbc.mail.mud.yahoo.com with SMTP; 21 Aug 2006 20:44:30 -0000
+Received: by tuatara.stupidest.org (Postfix, from userid 10000)
+	id 262F81811BD6; Mon, 21 Aug 2006 13:44:30 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <59ad55d30608211312u51a4657eyd52311314a6ee03c@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <Pine.LNX.4.64.0608191339010.11811@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25817>
 
-Kristian H?gsberg <krh@bitplanet.net> wrote:
-> +static void delete_branches(int argc, const char **argv, int force)
-[snip]
-> +		name = git_path("refs/heads/%s", argv[i]);
-> +		if (!resolve_ref(name, sha1, 1))
-> +			die("Branch '%s' not found.", argv[i]);
-[snip]
-> +		unlink(name);
-> +
-> +		/* Unlink reflog if it exists. */
-> +		reflog = git_path("logs/refs/heads/%s", argv[i]);
-> +		unlink(reflog);
+On Sat, Aug 19, 2006 at 01:50:32PM -0700, Linus Torvalds wrote:
 
-Hmm.  So git-branch.sh doesn't deal with symrefs, eh?  I guess this
-is OK but I'm wondering why not put this code into refs.c to lock
-the ref (refs.c:lock_ref_sha1) then instead of unlocking it delete
-it and its log (add new function to do this).
+> I can see the point of configurable hashes, but it would be for a
+> stronger hash than sha1, not for a (much) weaker one.
 
-The downside of this is that we'll chase a symref, which means that
-if refs/heads/FOO is a symref to refs/heads/master and the user calls
-`git-branch -D FOO` we'll kill refs/heads/master.  Maybe that's not
-what the the user would want to have happen.  :-)
+Why any configuration option at all?  What in practice does it really
+buy?
 
-> +static void create_reflog(struct ref_lock *lock)
-> +{
-> +	struct stat stbuf;
-> +	int fd;
-> +
-> +	if (!stat(lock->log_file, &stbuf) && S_ISREG(stbuf.st_mode))
-> +		return;
-> +	if (safe_create_leading_directories(lock->log_file) < 0)
-> +		die("Unable to create directory for %s.", lock->log_file);
-> +	fd = open(lock->log_file, O_CREAT | O_TRUNC | O_WRONLY, 0666);
-> +	if (fd < 0)
-> +		die("Unable to create ref log %s: %s.",
-> +		    lock->log_file, strerror(errno));
-> +	close(fd);
-> +}
-
-This probably should move into refs.c.  Look at log_ref_write,
-specifically around the if (log_all_ref_updates).  If this took
-an additional parameter to force creation of the log even if the log
-isn't present and OR'd against log_all_ref_updates then it would
-be possible to have the refs.c code create the log for you in the
-"library" part of GIT.
-
-Or maybe it is better to add this as a flag to the struct ref_lock,
-defaulting to false and letting the caller set it to true before
-invoking write_ref_sha1.  I only suggest this because of the number
-of parameters already in play here.
-
-> +static void create_branch(const char *name, const char *start,
-> +			  int force, int reflog)
-
-This all looked correct to me, at least as far as dealing with
-the reflog.  :-)
+If someone (eventually) wants to do something malicious (which right
+now requires some effort and would probably not go undetected) there
+are probably easier ways to achieve this (like posting a patch with a
+non-obvious subtle side-effect).
