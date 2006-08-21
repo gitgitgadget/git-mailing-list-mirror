@@ -1,72 +1,78 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Huge win, compressing a window of delta runs as a unit
-Date: Mon, 21 Aug 2006 10:07:36 -0400
-Message-ID: <9e4733910608210707v67659a1co7b73e409e0d20132@mail.gmail.com>
-References: <9e4733910608161020s6855140bs68aaab6e1bbd3bad@mail.gmail.com>
-	 <Pine.LNX.4.64.0608172323520.11359@localhost.localdomain>
-	 <9e4733910608180615q4895334bw57c55e59a4ac5482@mail.gmail.com>
-	 <Pine.LNX.4.64.0608181057440.11359@localhost.localdomain>
-	 <20060821070609.GC24054@spearce.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: Recover from a bad push in StGit
+Date: Mon, 21 Aug 2006 17:03:59 +0200
+Organization: Dewire
+Message-ID: <200608211703.59873.robin.rosenberg.lists@dewire.com>
+References: <200608190030.47257.robin.rosenberg.lists@dewire.com> <tnxk652torl.fsf@arm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Nicolas Pitre" <nico@cam.org>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 21 16:08:08 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 21 17:15:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFARL-00085A-4g
-	for gcvg-git@gmane.org; Mon, 21 Aug 2006 16:07:43 +0200
+	id 1GFBLP-000763-LU
+	for gcvg-git@gmane.org; Mon, 21 Aug 2006 17:05:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030448AbWHUOHi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 Aug 2006 10:07:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030496AbWHUOHi
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Aug 2006 10:07:38 -0400
-Received: from nz-out-0102.google.com ([64.233.162.198]:8884 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1030448AbWHUOHh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Aug 2006 10:07:37 -0400
-Received: by nz-out-0102.google.com with SMTP id 14so256033nzn
-        for <git@vger.kernel.org>; Mon, 21 Aug 2006 07:07:36 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FXZH2wq8royj8c0VERH9UkDtEFzZcOQoX9DvwrIYHCOmii7oPnqH/sZ+3oH7s6+T+vtAP442R/MSoQsjLIhUIIB7uls1+d3yGyUnw3wfKSwvo+3Y86pwRc+5025S9puYEDPqHYn1V0FdHbwnmNN8dko/bQTq1+p1DddYvhgEd9c=
-Received: by 10.64.193.8 with SMTP id q8mr5266586qbf;
-        Mon, 21 Aug 2006 07:07:36 -0700 (PDT)
-Received: by 10.65.133.17 with HTTP; Mon, 21 Aug 2006 07:07:36 -0700 (PDT)
-To: "Shawn Pearce" <spearce@spearce.org>
-In-Reply-To: <20060821070609.GC24054@spearce.org>
+	id S1422674AbWHUPFV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 21 Aug 2006 11:05:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422678AbWHUPFV
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Aug 2006 11:05:21 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:37664 "EHLO
+	torino.dewire.com") by vger.kernel.org with ESMTP id S1422674AbWHUPFS convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Aug 2006 11:05:18 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by torino.dewire.com (Postfix) with ESMTP id 29B9A802851;
+	Mon, 21 Aug 2006 17:03:03 +0200 (CEST)
+Received: from torino.dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 18698-04; Mon, 21 Aug 2006 17:03:02 +0200 (CEST)
+Received: from [10.9.0.5] (unknown [10.9.0.5])
+	by torino.dewire.com (Postfix) with ESMTP id CDECD80264C;
+	Mon, 21 Aug 2006 17:03:00 +0200 (CEST)
+To: Catalin Marinas <catalin.marinas@gmail.com>
+User-Agent: KMail/1.9.4
+In-Reply-To: <tnxk652torl.fsf@arm.com>
 Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25796>
 
-Mozilla CVS files have between 1 and 1700 deltas. The average is ten,
-but the deviation is high. I believe less than 10 files have over 1000
-deltas, they are all in the root directory and related to the build
-process. Many files have no deltas, or because of CVS artifacts all of
-the revisions are identical.
+m=E5ndag 21 augusti 2006 11:35 skrev Catalin Marinas:
+> Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+> > I recently did some reordering of patches and goofed up (not totall=
+y, but
+> > anyway). I pushed a number of patches and forgot one in the middle
+> > resulting in a merge  conflict. Pop won't work since I have local c=
+hanges
+> > from the conflict and I don't want to resolve the conflict either s=
+ince I
+> > didn't mean to push the patch at that point.
+> >
+> > Is there a simple way of undoing a bad push?
+> >
+> > In this case I had a fresh export do help me out so I could just de=
+lete
+> > the patches and re-import them again, but what if I didn't?
+>
+> "stg push --undo" (the same option for "refresh"; maybe I should add =
+a
+> separate "undo" command) resets the local changes and it restores the
+Not necessarily, but a hint about --undo when push/pop fail would have
+helped me.
 
-I am still IO bound. Random access IO is the problem, not stream IO. I
-have to open and read 110,000 (5GB total) files. It takes about 2hrs
-to do all of the IO. I'm not CPU bound yet but as we make things more
-efficient, I am getting closer to being CPU bound.
+> original boundaries of the patch (no information is lost). You could
+> use the latest snapshot as it has some bug-fixes from release 0.10.
 
-Forking is not an option. It can takes days to fork 1M copies of an
-app. I have used oprofile on parsecvs. It spends 60% of the time in
-the kernel processing fork calls. Parsecvs runs for 6hrs on mozcvs and
-dies without finishing.
+Does refresh --undo make me see the state of the patch like it was befo=
+re last=20
+refresh, ie. stgit remembers the history of my patces? I thought it dro=
+pped=20
+the references as obsolete.
 
-I am back to working on the branch code. I'm over the cold I got from
-my 2 yr old. It is slow going now. I am in the phase where the import
-process runs without error 5-10 minutes and then dies from some
-unusual branch case. I fix it up and try again. I am slowly
-identifying and removing all the code in cvs2svn that puts the
-branches and symbols into their own subdirectories.
-
--- 
-Jon Smirl
-jonsmirl@gmail.com
+-- robin
