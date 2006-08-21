@@ -1,122 +1,103 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Huge win, compressing a window of delta runs as a unit
-Date: Sun, 20 Aug 2006 23:45:42 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0608202257020.3682@localhost.localdomain>
-References: <9e4733910608161020s6855140bs68aaab6e1bbd3bad@mail.gmail.com>
- <Pine.LNX.4.64.0608172323520.11359@localhost.localdomain>
- <9e4733910608180553r34fa7b25he0bf910ef804630f@mail.gmail.com>
- <Pine.LNX.4.64.0608181226460.11359@localhost.localdomain>
- <9e4733910608180956n64e3362fm5c72d652e6b6243a@mail.gmail.com>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: Unresolved issues #3
+Date: Sun, 20 Aug 2006 21:05:18 -0700
+Message-ID: <44E930FE.3030704@gmail.com>
+References: <7vpseyelcw.fsf@assigned-by-dhcp.cox.net>	<44E546F2.7070902@gmail.com>	<Pine.LNX.4.64.0608181041420.11359@localhost.localdomain>	<44E5D522.8030407@gmail.com>	<Pine.LNX.4.64.0608181119410.11359@localhost.localdomain>	<44E68DCD.8010603@gmail.com>	<Pine.LNX.4.64.0608201840310.11359@localhost.localdomain> <7vk653xa3a.fsf@assigned-by-dhcp.cox.net>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 21 05:45:48 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Mon Aug 21 06:05:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GF0jT-0001Dv-CA
-	for gcvg-git@gmane.org; Mon, 21 Aug 2006 05:45:47 +0200
+	id 1GF12T-0004U1-Nq
+	for gcvg-git@gmane.org; Mon, 21 Aug 2006 06:05:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932595AbWHUDpo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 Aug 2006 23:45:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932596AbWHUDpo
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Aug 2006 23:45:44 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:46735 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S932595AbWHUDpo
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Aug 2006 23:45:44 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J4B006P3X46I490@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 20 Aug 2006 23:45:43 -0400 (EDT)
-In-reply-to: <9e4733910608180956n64e3362fm5c72d652e6b6243a@mail.gmail.com>
-X-X-Sender: nico@localhost.localdomain
-To: Jon Smirl <jonsmirl@gmail.com>
+	id S932596AbWHUEFW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 Aug 2006 00:05:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932599AbWHUEFW
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Aug 2006 00:05:22 -0400
+Received: from py-out-1112.google.com ([64.233.166.182]:26672 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S932596AbWHUEFV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Aug 2006 00:05:21 -0400
+Received: by py-out-1112.google.com with SMTP id n25so2282360pyg
+        for <git@vger.kernel.org>; Sun, 20 Aug 2006 21:05:21 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=g9bZec84Ic7EIdw+euMjplPUCweYr10Mtw6g47hrguGgcfh8/Q6wJbw7b8stx24JCa3gma6Hm7XFoNNsR9zXfmlw0yPmkoSZ9RbfkQnLSN5UATyW7tfvH0mPVZT8UrEVtOGRdKIEtWBKpmdBzC3by0/gk+ywIt+a4e9ZkaMyTao=
+Received: by 10.35.135.12 with SMTP id m12mr12331811pyn;
+        Sun, 20 Aug 2006 21:05:21 -0700 (PDT)
+Received: from ?10.0.0.6? ( [68.234.172.127])
+        by mx.gmail.com with ESMTP id c12sm309709nzc.2006.08.20.21.05.19;
+        Sun, 20 Aug 2006 21:05:21 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.5 (X11/20060725)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vk653xa3a.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25778>
 
-On Fri, 18 Aug 2006, Jon Smirl wrote:
-
-> On 8/18/06, Nicolas Pitre <nico@cam.org> wrote:
-> > On Fri, 18 Aug 2006, Jon Smirl wrote:
-> >
-> > > I attached Shawn's code. He is gone until Monday and can't defend it.
-> >
-> > I will have a look at it next week as I'll be gone for the weekend as
-> > well.
+Junio C Hamano wrote:
+> Nicolas Pitre <nico@cam.org> writes:
 > 
-> I looked at it some and couldn't see anything obviously wrong with it,
-> but it wasn't a detailed inspection.
+>> On Fri, 18 Aug 2006, A Large Angry SCM wrote:
+>>
+>>> Historic fact. Between Thu May 19 08:56:22 2005 and Thu Feb  9 21:06:38
+>>> 2006 bit 6 of the first byte of a delta hunk was interpreted to mean
+>>> that the source of the copy was the result buffer. From Thu May 19
+>>> 08:56:22 2005 on, the code to decode delta hunks in type 2 packs was
+>>> available to everyone and anyone interested could make a pack encoder
+>>> that would create packs that the core Git code would correctly read. The
+>>> commit of Thu Feb  9 21:06:38 2006, d60fc, actually introduced a bug
+>>> that would treat valid type 2 packs as invalid.
+> 
+> It is more like the said commit made the pack format extensible
+> by declaring the bit reserved for the future use, by declaring
+> retroactively that a type 2 pack that used that bit invalid.
+> And it was deemed a reasonable and safe decision because no
+> official git ever produced a type 2 pack that used that bit,
+> 
+> Yes, that was a backward incompatible change, strictly speaking,
+> and probably I should have made an announcement that looked
+> similar to this by Linus:
+> 
+>         From: Linus Torvalds <torvalds@osdl.org>
+>         Subject: CAREFUL! No more delta object support!
+>         Date: Mon, 27 Jun 2005 18:14:40 -0700 (PDT)
+>         Message-ID: <Pine.LNX.4.58.0506271755140.19755@ppc970.osdl.org>
+>         To: Git Mailing List <git@vger.kernel.org>
+> 
+> So you could argue I was incompetent not to make a big fuss
+> about this backward incompatibility back then, if you like.
+> 
+> I did not think it was worth it back then, and I do not think it
+> is worth it now, either.  But if it makes you feel better, I
+> could retroactively make such an announcement about the
+> unofficial bit 6.
+> 
+> The announcement would have read like this:
+> 
+>     The current git code does not support type #2 packs that
+>     uses delta with bit 6 to mean "copy inside destination
+>     buffer".  Although the code that interpreted delta data
+>     supported bit 6 that way for a brief period of time, no
+>     official git ever released produced delta that used the
+>     bit that way.
+> 
+>     In other words, if you have created packs with your own,
+>     modified git, that took advantage of "copy inside
+>     destination buffer" feature in the delta interpretation
+>     code, such packs are not usable by the official git, so
+>     you need to unpack them using your own version of git
+>     and then repack with the official version of git.
 
-I looked at it too and the code looks OK.
-
-This doesn't mean there is no problem at a higher level though.  The 
-deltification process is extremely crude and I think this is the cause 
-of the original pack size.
-
-For example, last April we discovered that a small change in the 
-heuristics to determine base delta objects in git-pack-objects could 
-create a pack size regression up to 4x the size of the same pack created 
-before such change.
-
-It is also possible to have a denser delta stream but once deflated it 
-is larger than a less dense delta to start with.
-
-Just to say that many tweaks and heuristics have been implemented and 
-studied in git-pack-objects for over a year now in order to get the 
-really small packs we have today.  And a really subtle and 
-inocent-looking change can break it size wize.
-
-So what I think is happening with the fastimport code is that the delta 
-selection is not really good.  It is certainly much better than no delta 
-at all but still not optimal which smells deja vu to me.  Then by 
-deflating them all together the redundent information that the bad delta 
-set still carries along is eliminated -- thanks to zlib sort of 
-mitigating the real issue.
-
-But... as my recent experiments show, the grouping of related deltas 
-into a single zlib stream doesn't produce significant improvements when 
-implemented directly into git-pack-objects.  Certainly not worth the 
-inconvenients and costs it brings along.  I even think that if you used 
-git-repack -a -f on the pack produced by the import process, with only 
-delta deflated individually just like it did originally, then the 
-repacked pack would _also_ shrink significantly.  Most probably around 
-4x just like you observed with the grouping of deltas in the same zlib 
-stream.
-
-Not only would git-repack make it much smaller, but it also provicdes a 
-much better layout where all objects for recent commits are all stored 
-together at the beginning of the pack.  The fastimport code is instead 
-storing them scattered all over the pack for every commit by making all 
-revisions of each file next to each other which will cause horrible 
-access patterns and really bad IO.
-
-So I think that trying to make fastimport too clever is wrong.  It 
-should instead focus on creating an initial pack as fast as possible and 
-then rely on a final git-repack pass to produce the shrinked pack.  I 
-really doubt the import code could ever make a better job than 
-git-pack-objects does.
-
-If I can make a suggestion, you should forget about this multiple deltas 
-in one zlib stream for now and focus on making the import process work 
-all the way to tree and commit objects instead.  Then, only then, if 
-git-repack -a -f doesn't produce satisfactory pack size we could look at 
-better pack encoding.  And so far the grouping of related deltas in one 
-zlib stream is _not_ a better encoding given the rather small 
-improvement over unmodified git-pack-objects vs the inconvenients and 
-cost it brings with it.
-
-> As comparison, I just tar/zipped the Mozilla CVS repo and it is 541MB.
-> The 295MB git pack number does not have commits and trees in it, it is
-> revisions only.
-
-Running git-repack -a -f from a recent GIT on the Mozilla repo converted 
-through cvsps and friends produces a pack smaller than 500MB.  I even 
-brought it down to 430MB by using non default delta window and depth.
-
-
-Nicolas
+Please read the commit message for commit d60fc. It's type _3_ pack
+files that redefined bit 6 to add the extra byte of copy length, not
+type 2. Thus, no need to retroactively invalidate the type 2 pack files
+that used copy from result.
