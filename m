@@ -1,100 +1,194 @@
-From: Phillip Susi <psusi@cfl.rr.com>
-Subject: Re: HELP: GIT Cloning failed
-Date: Tue, 22 Aug 2006 17:08:09 -0400
-Message-ID: <44EB7239.50105@cfl.rr.com>
-References: <890BF3111FB9484E9526987D912B261932E35B@NAMAIL3.ad.lsil.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 4/3] gitweb: Use here-doc
+Date: Tue, 22 Aug 2006 23:42:53 +0200
+Message-ID: <200608222342.53861.jnareb@gmail.com>
+References: <200608221651.19629.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Patro, Sumant" <Sumant.Patro@engenio.com>,
-	linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 22 23:08:43 2006
+X-From: git-owner@vger.kernel.org Tue Aug 22 23:43:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFdU5-0004SG-Gg
-	for gcvg-git@gmane.org; Tue, 22 Aug 2006 23:08:29 +0200
+	id 1GFe1l-0002eO-SZ
+	for gcvg-git@gmane.org; Tue, 22 Aug 2006 23:43:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750726AbWHVVI0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Aug 2006 17:08:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750743AbWHVVI0
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Aug 2006 17:08:26 -0400
-Received: from iriserv.iradimed.com ([69.44.168.233]:35107 "EHLO iradimed.com")
-	by vger.kernel.org with ESMTP id S1750726AbWHVVIZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Aug 2006 17:08:25 -0400
-Received: from [10.1.1.235] ([10.1.1.235]) by iradimed.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 22 Aug 2006 17:08:28 -0400
-User-Agent: Thunderbird 1.5.0.5 (Windows/20060719)
-To: "Ju, Seokmann" <Seokmann.Ju@lsil.com>
-In-Reply-To: <890BF3111FB9484E9526987D912B261932E35B@NAMAIL3.ad.lsil.com>
-X-OriginalArrivalTime: 22 Aug 2006 21:08:28.0027 (UTC) FILETIME=[1D144CB0:01C6C62F]
-X-TM-AS-Product-Ver: SMEX-7.2.0.1122-3.6.1039-14646.000
-X-TM-AS-Result: No--34.471200-5.000000-2
+	id S932209AbWHVVnK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Aug 2006 17:43:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751309AbWHVVnK
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Aug 2006 17:43:10 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:62066 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751307AbWHVVnI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Aug 2006 17:43:08 -0400
+Received: by nf-out-0910.google.com with SMTP id x30so173600nfb
+        for <git@vger.kernel.org>; Tue, 22 Aug 2006 14:42:53 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=ERXMrM0qpDOyABM+6VNy9wu66maqpUmJamfw29dM+LeIp/8AwhxdxfgH+7cD6Vt5Epi4CPAXEa1uvXrpYPE8TQn5wbkMYl+gNQgcWCQxLVz0rT86+pbLgRzOEvQO43go0S/j8kJyT8fV+XhkkUZxaJ5pSz2FUqImLDaW/rI1ax8=
+Received: by 10.49.75.2 with SMTP id c2mr1043003nfl;
+        Tue, 22 Aug 2006 14:42:53 -0700 (PDT)
+Received: from host-81-190-21-215.torun.mm.pl ( [81.190.21.215])
+        by mx.gmail.com with ESMTP id k9sm1170924nfc.2006.08.22.14.42.52;
+        Tue, 22 Aug 2006 14:42:52 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.3
+In-Reply-To: <200608221651.19629.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25874>
 
-Is there a reason that you regularly delete and re-download the entire 
-repository, rather than simply doing a git pull to update your existing 
-clone?
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+This patch uses undocumented, at least in perlop(1), trick in
+interpolation that allows calling function from interpolated string,
+using ${\subroutine_name(parameters...)}, found in git_blame,
+and used in git_rss here-doc in this patch.
 
-Ju, Seokmann wrote:
-> Hi,
-> 
-> Recently, I found that cloning from GIT server has been failed.
-> I'm using following script for it.
-> ---
-> ...
-> rm -r /home/git/kernels/2.4/linux-2.4.git
-> cg-clone
-> http://www.kernel.org/pub/scm/linux/kernel/git/marcelo/linux-2.4.git/
-> /home/git/kernels/2.4/linux-2.4.git/
-> sync
-> rm -r /home/git/kernels/2.4/linux-2.6.git
-> cg-clone
-> http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
-> /home/git/kernels/2.4/linux-2.6.git/
-> sync
-> rm -r /home/git/kernels/2.4/scsi-misc-2.6.git
-> cg-clone
-> http://www.kernel.org/pub/scm/linux/kernel/git/marcelo/scsi-misc-2.6.git
-> /home/git/kernels/2.4/scsi-misc-2.6.git
-> sync
-> ...
-> ---
-> 
-> In the script, I'm cloning 3 different sources. First two sources
-> getting successfully cloned, however, last one is getting failed with
-> following error messages,
-> ---
-> Fetching head...
-> Fetching objects...
-> Getting alternates list for
-> http://www.kernel.org/pub/scm/linux/kernel/git/jejb/scsi-misc-2.6.git
-> Also look at http://www.kernel.or
-> Error: The requested URL returned error: 502 (curl_result = 22,
-> http_code = 502, sha1 = 1039f0760e...)
-> Getting pack list for
-> http://www.kernel.org/pub/scm/linux/kernel/git/jejb/scsi-misc-2.6.git/
-> Getting pack list for http://www.kernel.or
-> Error: The requested URL returned error: 502
-> Error: Unable to find 27fd37621... Under
-> http://www.kernel.org/pub/scsm/linux/kernel/git/jejb/scsi-misc-2.6.git/
-> Cannot obtain needed blob 27fd37621...
-> While processing commit 4041b9cd87...
-> Progress: 8 objects, 13120 bytes
-> Cg-fetch: objects fetch failed
-> ---
-> 
-> Above script worked without any problem when I started several months
-> ago and I'm not sure when did it stop working.
-> I'm using _cron_ utility on my Linux box for scheduled execution of the
-> script.
-> 
-> Any comment would be appreciated.
-> 
-> Thank you,
-> 
-> Seokmann
+This patch is part of "[PATCH 0/3] gitweb: Yet another cleanup series"
+series.
+
+ gitweb/gitweb.perl |   75 
++++++++++++++++++++++++++++++++---------------------
+ 1 files changed, 44 insertions(+), 31 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index e09204d..5301213 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1185,11 +1185,13 @@ sub die_error {
+ 	my $error = shift || "Malformed query, file missing or permission 
+denied";
+ 
+ 	git_header_html($status);
+-	print "<div class=\"page_body\">\n" .
+-	      "<br/><br/>\n" .
+-	      "$status - $error\n" .
+-	      "<br/>\n" .
+-	      "</div>\n";
++	print <<EOF;
++<div class="page_body">
++<br /><br />
++$status - $error
++<br />
++</div>
++EOF
+ 	git_footer_html();
+ 	exit;
+ }
+@@ -2026,9 +2028,11 @@ sub git_blame2 {
+ 	my $num_colors = scalar(@rev_color);
+ 	my $current_color = 0;
+ 	my $last_rev;
+-	print "<div class=\"page_body\">\n";
+-	print "<table class=\"blame\">\n";
+-	print "<tr><th>Commit</th><th>Line</th><th>Data</th></tr>\n";
++	print <<HTML;
++<div class="page_body">
++<table class="blame">
++<tr><th>Commit</th><th>Line</th><th>Data</th></tr>
++HTML
+ 	while (<$fd>) {
+ 		/^([0-9a-fA-F]{40}).*?(\d+)\)\s{1}(\s*.*)/;
+ 		my $full_rev = $1;
+@@ -2570,9 +2574,10 @@ sub git_blobdiff {
+ 		git_print_page_nav('','', $hash_base,$co{'tree'},$hash_base, 
+$formats_nav);
+ 		git_print_header_div('commit', esc_html($co{'title'}), $hash_base);
+ 	} else {
+-		print "<div class=\"page_nav\">\n" .
+-		      "<br/><br/></div>\n" .
+-		      "<div class=\"title\">$hash vs $hash_parent</div>\n";
++		print <<HTML;
++<div class="page_nav"><br/><br/></div>
++<div class="title">$hash vs $hash_parent</div>
++HTML
+ 	}
+ 	git_print_page_path($file_name, "blob", $hash_base);
+ 	print "<div class=\"page_body\">\n" .
+@@ -2708,9 +2713,11 @@ sub git_commitdiff_plain {
+ 	                   -content_disposition => "inline; 
+filename=\"git-$hash.patch\"");
+ 	my %ad = parse_date($co{'author_epoch'}, $co{'author_tz'});
+ 	my $comment = $co{'comment'};
+-	print "From: $co{'author'}\n" .
+-	      "Date: $ad{'rfc2822'} ($ad{'tz_local'})\n".
+-	      "Subject: $co{'title'}\n";
++	print <<TEXT;
++From: $co{'author'}
++Date: $ad{'rfc2822'} ($ad{'tz_local'})
++Subject: $co{'title'}
++TEXT
+ 	if (defined $tagname) {
+ 		print "X-Git-Tag: $tagname\n";
+ 	}
+@@ -2995,13 +3002,15 @@ sub git_rss {
+ 	my @revlist = map { chomp; $_ } <$fd>;
+ 	close $fd or die_error(undef, "Reading git-rev-list failed");
+ 	print $cgi->header(-type => 'text/xml', -charset => 'utf-8');
+-	print "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n".
+-	      "<rss version=\"2.0\" 
+xmlns:content=\"http://purl.org/rss/1.0/modules/content/\">\n";
+-	print "<channel>\n";
+-	print "<title>$project</title>\n".
+-	      "<link>" . esc_html("$my_url?p=$project;a=summary") . 
+"</link>\n".
+-	      "<description>$project log</description>\n".
+-	      "<language>en</language>\n";
++	print <<XML;
++<?xml version="1.0" encoding="utf-8"?>
++<rss version="2.0" 
+xmlns:content="http://purl.org/rss/1.0/modules/content/">
++<channel>
++<title>$project $my_uri $my_url</title>
++<link>${\esc_html("$my_url?p=$project;a=summary")}</link>
++<description>$project log</description>
++<language>en</language>
++XML
+ 
+ 	for (my $i = 0; $i <= $#revlist; $i++) {
+ 		my $commit = $revlist[$i];
+@@ -3050,13 +3059,15 @@ sub git_opml {
+ 	my @list = git_get_projects_list();
+ 
+ 	print $cgi->header(-type => 'text/xml', -charset => 'utf-8');
+-	print "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n".
+-	      "<opml version=\"1.0\">\n".
+-	      "<head>".
+-	      "  <title>$site_name Git OPML Export</title>\n".
+-	      "</head>\n".
+-	      "<body>\n".
+-	      "<outline text=\"git RSS feeds\">\n";
++	print <<XML;
++<?xml version="1.0" encoding="utf-8"?>
++<opml version="1.0">
++<head>
++  <title>$site_name Git OPML Export</title>
++</head>
++<body>
++<outline text="git RSS feeds">
++XML
+ 
+ 	foreach my $pr (@list) {
+ 		my %proj = %$pr;
+@@ -3075,7 +3086,9 @@ sub git_opml {
+ 		my $html = "$my_url?p=$proj{'path'};a=summary";
+ 		print "<outline type=\"rss\" text=\"$path\" title=\"$path\" 
+xmlUrl=\"$rss\" htmlUrl=\"$html\"/>\n";
+ 	}
+-	print "</outline>\n".
+-	      "</body>\n".
+-	      "</opml>\n";
++	print <<XML;
++</outline>
++</body>
++</opml>
++XML
+ }
+-- 
+1.4.1.1
