@@ -1,56 +1,67 @@
-From: "Brant" <ebrillgtow@hrads.com>
-Subject: Hey baby, found this site and wanted you to check it out first
-Date: Mon, 21 Aug 2006 18:10:42 -0500
-Message-ID: <2406319120.20060821181042@ipuubbya>
-Reply-To: "Brant Conrad" <ebrillgtow@hrads.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: Paginate history output
+Date: Mon, 21 Aug 2006 23:15:52 -0700
+Message-ID: <7vveols3c7.fsf@assigned-by-dhcp.cox.net>
+References: <200608220053.10741.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Aug 22 06:08:10 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 22 08:16:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFNYf-0002H5-3K
-	for gcvg-git@gmane.org; Tue, 22 Aug 2006 06:08:09 +0200
+	id 1GFPYL-0003WC-D1
+	for gcvg-git@gmane.org; Tue, 22 Aug 2006 08:15:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751059AbWHVEH4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Aug 2006 00:07:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932092AbWHVEH4
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Aug 2006 00:07:56 -0400
-Received: from [211.178.152.124] ([211.178.152.124]:11800 "HELO
-	211.178.152.124") by vger.kernel.org with SMTP id S1751059AbWHVEH4
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Aug 2006 00:07:56 -0400
-Received: from svr-mail1.hrads.com
-	by 211.178.152.124 (8.9.3/8.9.3) with ESMTP id lfW33Q9biAN6
-	for <git@vger.kernel.org>; Mon, 21 Aug 2006 18:10:42 -0500
-Received: from ipuubbya (248.130.107.65)
-	by svr-mail1.hrads.com with ESMTP id HV8PD3exsVNj
-	for <git@vger.kernel.org>; Mon, 21 Aug 2006 18:10:42 -0500
-To: <git@vger.kernel.org>
+	id S1750785AbWHVGPy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Aug 2006 02:15:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750803AbWHVGPy
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Aug 2006 02:15:54 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:34270 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1750785AbWHVGPx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Aug 2006 02:15:53 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060822061553.EAPF18458.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 22 Aug 2006 02:15:53 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200608220053.10741.jnareb@gmail.com> (Jakub Narebski's message
+	of "Tue, 22 Aug 2006 00:53:10 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 13.0 points;
- *  0.1 RCVD_BY_IP Received by mail server with no name
- *  0.9 RCVD_ILLEGAL_IP Received: contains illegal IP address
- * -0.4 BAYES_05 BODY: Bayesian spam probability is 1 to 5%
- *      [score: 0.0345]
- *  2.0 RCVD_IN_SORBS_DUL RBL: SORBS: sent directly from dynamic IP address
- *      [211.178.152.124 listed in dnsbl.sorbs.net]
- *  4.0 RCVD_IN_XBL RBL: Received via a relay in Spamhaus XBL
- *      [211.178.152.124 listed in sbl-xbl.spamhaus.org]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: neroplaresampit.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: neroplaresampit.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25831>
 
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Hey man, self ok I had to send you this site, view I ordered a Gold package and these things work amazingly !
-For real,   I've tried a bunch of other ones but they don't work- these ones are the real deal though sell.
-If cooking becomes an art form rather than a means of providing a reasonable diet, then something is clearly wrong.
-soon Check out the site for yourself:
-http://www.neroplaresampit.com/
-I do not read advertisements. I would spend all of my time wanting things.
+> @@ -1559,6 +1562,7 @@ sub git_history_body {
+>  			next;
+>  		}
+>  
+> +		#my $ref = defined $refs ? format_ref_marker($refs, $commit) : '';
+>  		my $ref = format_ref_marker($refs, $commit);
+>  
+>  		if ($alternate) {
+
+Do you want to change this or not?  Make up your mind.
+
+> +		$paging_nav .= " &sdot; " .
+> +			$cgi->a({-href => href(action=>"history", hash=>$hash, hash_base=>$hash_base,
+> +			                       file_name=>$file_name, page=>$page-1),
+> +			         -accesskey => "p", -title => "Alt-p"}, "prev");
+
+This is something you inherited from the original and not your
+fault, but I am not sure if these -title entries are of good
+taste (we have corresponding "Alt-n" for "next").  Something
+more descriptive like "<Alt-p> for 100 newer changes", perhaps?
+
+Also, "first", "prev" and "next" have always confused me.  Maybe
+"latest", "older" and "newer" are better labels for them?
+
+Is 100 a good default?  It feels a bit unbalanced compared to
+the height of the default summary page with descriptions, 16
+shortlog entries, 16 tags and 12 heads.
