@@ -1,98 +1,68 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: [PATCH] gitweb: all bold lists are "list_bold" style
-Date: Tue, 22 Aug 2006 01:57:39 -0700 (PDT)
-Message-ID: <20060822085739.75519.qmail@web31810.mail.mud.yahoo.com>
-Reply-To: ltuikov@yahoo.com
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: bugfix: list regression
+Date: Tue, 22 Aug 2006 02:19:29 -0700
+Message-ID: <7vbqqdnn4u.fsf@assigned-by-dhcp.cox.net>
+References: <20060822085540.1104.qmail@web31812.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="0-1320975009-1156237059=:71989"
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Tue Aug 22 10:57:47 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 22 11:19:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFS4u-0006Ah-3r
-	for gcvg-git@gmane.org; Tue, 22 Aug 2006 10:57:44 +0200
+	id 1GFSQ2-0001sQ-Pr
+	for gcvg-git@gmane.org; Tue, 22 Aug 2006 11:19:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932145AbWHVI5l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Aug 2006 04:57:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932146AbWHVI5l
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Aug 2006 04:57:41 -0400
-Received: from web31810.mail.mud.yahoo.com ([68.142.207.73]:53414 "HELO
-	web31810.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S932145AbWHVI5k (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Aug 2006 04:57:40 -0400
-Received: (qmail 75521 invoked by uid 60001); 22 Aug 2006 08:57:39 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=spsgrCvandGmpE7R9l5r3AkegjanbR4irfE45L+1VMPmQNqp7pvkxOMvDAuyGEzBLmKYyb7yp0ZsRZuLbvYsC7uSpVwf8Htll6w7KJ3Oqv7d6l0qjSOkE9m9p56lQObf0rewXyTTt4+vZdcdtR8RWPAA0alnGgQN4OH48K63//M=  ;
-Received: from [71.84.29.50] by web31810.mail.mud.yahoo.com via HTTP; Tue, 22 Aug 2006 01:57:39 PDT
-To: git@vger.kernel.org
+	id S1750803AbWHVJTc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Aug 2006 05:19:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751369AbWHVJTc
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Aug 2006 05:19:32 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:23763 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1750803AbWHVJTa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Aug 2006 05:19:30 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060822091930.BMIP21457.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 22 Aug 2006 05:19:30 -0400
+To: Luben Tuikov <ltuikov@yahoo.com>
+In-Reply-To: <20060822085540.1104.qmail@web31812.mail.mud.yahoo.com> (Luben
+	Tuikov's message of "Tue, 22 Aug 2006 01:55:40 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25845>
 
---0-1320975009-1156237059=:71989
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 8bit
-Content-Id: 
-Content-Disposition: inline
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
-Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
----
- gitweb/gitweb.perl |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
+> Fix regression introduced by
+> commit 17d07443188909ef5f8b8c24043cb6d9fef51bca.
+>
+> 1. Commit 17d07443188909ef5f8b8c24043cb6d9fef51bca defines
+> "a.list" twice in gitweb.css, once with bold and once with
+> normal font-weight.
 
---0-1320975009-1156237059=:71989
-Content-Type: text/inline; name="p1.txt"
-Content-Description: 1207600725-p1.txt
-Content-Disposition: name="p1.txt"; filename="p1.txt"
+The normal one is limited to a.list that is inside table.tags
+isn't it?  I had an impression that this was done on purpose.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 5237f25..4caf69e 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1583,7 +1583,7 @@ sub git_tags_body {
- 		print "<td><i>$tag{'age'}</i></td>\n" .
- 		      "<td>" .
- 		      $cgi->a({-href => href(action=>$tag{'reftype'}, hash=>$tag{'refid'}),
--		               -class => "list"}, "<b>" . esc_html($tag{'name'}) . "</b>") .
-+		               -class => "list_bold"}, esc_html($tag{'name'})) .
- 		      "</td>\n" .
- 		      "<td>";
- 		if (defined $comment) {
-@@ -1637,7 +1637,7 @@ sub git_heads_body {
- 		print "<td><i>$tag{'age'}</i></td>\n" .
- 		      ($tag{'id'} eq $head ? "<td class=\"current_head\">" : "<td>") .
- 		      $cgi->a({-href => href(action=>"shortlog", hash=>$tag{'name'}),
--		               -class => "list"}, "<b>" . esc_html($tag{'name'}) . "</b>") .
-+		               -class => "list_bold"}, esc_html($tag{'name'})) .
- 		      "</td>\n" .
- 		      "<td class=\"link\">" .
- 		      $cgi->a({-href => href(action=>"shortlog", hash=>$tag{'name'})}, "shortlog") . " | " .
-@@ -2686,7 +2686,7 @@ sub git_search {
- 			print "<td title=\"$co{'age_string_age'}\"><i>$co{'age_string_date'}</i></td>\n" .
- 			      "<td><i>" . esc_html(chop_str($co{'author_name'}, 15, 5)) . "</i></td>\n" .
- 			      "<td>" .
--			      $cgi->a({-href => href(action=>"commit", hash=>$co{'id'}) -class => "list"}, "<b>" . esc_html(chop_str($co{'title'}, 50)) . "</b><br/>");
-+			      $cgi->a({-href => href(action=>"commit", hash=>$co{'id'}) -class => "list_bold"}, esc_html(chop_str($co{'title'}, 50)) . "<br/>");
- 			my $comment = $co{'comment'};
- 			foreach my $line (@$comment) {
- 				if ($line =~ m/^(.*)($searchtext)(.*)$/i) {
-@@ -2739,8 +2739,8 @@ sub git_search {
- 					print "<td title=\"$co{'age_string_age'}\"><i>$co{'age_string_date'}</i></td>\n" .
- 					      "<td><i>" . esc_html(chop_str($co{'author_name'}, 15, 5)) . "</i></td>\n" .
- 					      "<td>" .
--					      $cgi->a({-href => href(action=>"commit", hash=>$co{'id'}), -class => "list"}, "<b>" .
--					      esc_html(chop_str($co{'title'}, 50)) . "</b><br/>");
-+					      $cgi->a({-href => href(action=>"commit", hash=>$co{'id'}), -class => "list_bold"},
-+					      esc_html(chop_str($co{'title'}, 50)) . "<br/>");
- 					while (my $setref = shift @files) {
- 						my %set = %$setref;
- 						print $cgi->a({-href => href(action=>"blob", hash=>$set{'id'}, hash_base=>$co{'id'}, file_name=>$set{'file'}), class => "list"},
--- 
-1.4.2.g3851f
+> 2. "a.list" being "bold", makes a myriad of things shown by
+> gitweb in bold font-weight, which is a regression from
+> pre-17d07443188909ef5f8b8c24043cb6d9fef51bca behavior.
 
---0-1320975009-1156237059=:71989--
+The only difference I see offhand is that Jakub's version shows
+the tag text in normal weight in summary pane (tags section),
+while yours show it in bold.  Also clickable object names in
+many views are shown in bold in Jakub's version while yours do
+not distinguish them from unclickable ones.
+
+I tend to agree that bold looks too loud in tree view, but
+showing tree and parent diffently from commit itself in commit
+view may be a good thing.  I am not sure bold is a good choice,
+though.  Usually people underline clickable links not type in
+bold.
+
+I do not case either way myself that much.  Could you battle
+this out with the guilty party?
