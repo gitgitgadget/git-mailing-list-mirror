@@ -1,54 +1,71 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Source highlight in qgit
-Date: Tue, 22 Aug 2006 19:52:47 +0200
-Message-ID: <e5bfff550608221052n7bd2be7fy9639c4d78db5cd08@mail.gmail.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: [RFD] gitweb: href() function to generate URLs for CGI
+Date: 22 Aug 2006 11:35:12 -0700
+Message-ID: <86fyfohb4v.fsf@blue.stonehenge.com>
+References: <200608211739.32993.jnareb@gmail.com>
+	<7v1wrauex2.fsf@assigned-by-dhcp.cox.net> <eccujr$90h$1@sea.gmane.org>
+	<7vlkphqmac.fsf@assigned-by-dhcp.cox.net> <eceekl$b0l$2@sea.gmane.org>
+	<7vodudno88.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Lorenzo Bettini" <bettini@dsi.unifi.it>
-X-From: git-owner@vger.kernel.org Tue Aug 22 19:53:02 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 22 20:36:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFaQv-00012u-4I
-	for gcvg-git@gmane.org; Tue, 22 Aug 2006 19:53:01 +0200
+	id 1GFb5u-0001QQ-Ka
+	for gcvg-git@gmane.org; Tue, 22 Aug 2006 20:35:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751424AbWHVRwv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Aug 2006 13:52:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751426AbWHVRwv
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Aug 2006 13:52:51 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:41638 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751424AbWHVRwu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Aug 2006 13:52:50 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so122229nfa
-        for <git@vger.kernel.org>; Tue, 22 Aug 2006 10:52:48 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=n+mxJ6iNRTO0JTnJbXm6Sn2iRnIV0xOThAAEjKQiG6ckETbzXcta9LkqehYvy1tu20iWt7nuWxZxfRwLSLv4nirCBok12H7b9RuwDNCA14t/uAbTLsc6qiNkV933bFj42l9RKNUI0LbWXkVQ4y0le3JMN6vIJ4KU0Q7/D69PqXo=
-Received: by 10.35.106.15 with SMTP id i15mr15999027pym;
-        Tue, 22 Aug 2006 10:52:48 -0700 (PDT)
-Received: by 10.35.95.9 with HTTP; Tue, 22 Aug 2006 10:52:47 -0700 (PDT)
-To: "GIT list" <git@vger.kernel.org>
-Content-Disposition: inline
+	id S1750780AbWHVSfP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Aug 2006 14:35:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750776AbWHVSfP
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Aug 2006 14:35:15 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:13647 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1750775AbWHVSfO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Aug 2006 14:35:14 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 7971A8FBDA;
+	Tue, 22 Aug 2006 11:35:13 -0700 (PDT)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 23566-01-31; Tue, 22 Aug 2006 11:35:13 -0700 (PDT)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 0995D8FBD7; Tue, 22 Aug 2006 11:35:13 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+x-mayan-date: Long count = 12.19.13.10.7; tzolkin = 5 Manik; haab = 0 Mol
+In-Reply-To: <7vodudno88.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25866>
 
-Thanks to the nice and powerful tool  GNU Source-highlight
-(http://www.gnu.org/software/src-highlite/) qgit now supports file
-viewer with syntax highlight.
+>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
 
-Advertising screenshot: http://digilander.libero.it/mcostalba/src_hlt_3.png
+Junio> 	my @result = (); 
+Junio>         for (my $i = 0; $i < @mapping; $i += 2) {
+Junio>         	my ($name, $symbol) = ($mapping[$i], $mapping[$i+1]);
+Junio> 		if (defined $params{$name}) {
+Junio> 			push @result, "$symbol=$params{$name}";
+Junio> 		}
+Junio> 	}
+Junio>         return "$my_uri?" . esc_param(join(';', @result));
+Junio> }
 
-I've found GNU Source-highlight quite easy to integrate so I post this
-as an info/hint for people that could be interested (read gitweb
-team).
+If you already depend on the LWP package, then the "URI" module
+does precisely what you're reinventing.
 
-A patch as been pushed to git://git.kernel.org/pub/scm/qgit/qgit.git
+my $uri = URI->new("http://host/base/path")
+$uri->query_form(\%params);
+my $result = $uri->as_string;
 
-Thanks
-Marco
+And I'd rely on Gisle Aas's experience about constructing these things
+far more than the thread I've just witnessed here. :)
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
