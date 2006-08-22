@@ -1,28 +1,29 @@
 From: Sean <seanlkml@sympatico.ca>
 Subject: Re: HELP: GIT Cloning failed
 Date: Tue, 22 Aug 2006 16:08:22 -0400
-Message-ID: <BAYC1-PASMTP03D3DD61899A6464D26765AE460@CEZ.ICE>
+Message-ID: <20060822160822.b112421a.seanlkml__6732.01446556977$1156277346$gmane$org@sympatico.ca>
 References: <890BF3111FB9484E9526987D912B261932E35B@NAMAIL3.ad.lsil.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: <git@vger.kernel.org>, "Patro, Sumant" <Sumant.Patro@engenio.com>,
 	<linux-kernel@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 22 22:08:41 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1751239AbWHVUI0@vger.kernel.org Tue Aug 22 22:09:01 2006
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1751239AbWHVUI0@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFcY2-0001TJ-RT
-	for gcvg-git@gmane.org; Tue, 22 Aug 2006 22:08:31 +0200
+	id 1GFcYT-0001XZ-Bl
+	for glk-linux-kernel-3@gmane.org; Tue, 22 Aug 2006 22:08:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750993AbWHVUI0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	id S1751239AbWHVUI0 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
 	Tue, 22 Aug 2006 16:08:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751243AbWHVUI0
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Aug 2006 16:08:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751245AbWHVUI0
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Tue, 22 Aug 2006 16:08:26 -0400
 Received: from bayc1-pasmtp03.bayc1.hotmail.com ([65.54.191.163]:38000 "EHLO
 	BAYC1-PASMTP03.CEZ.ICE") by vger.kernel.org with ESMTP
-	id S1750993AbWHVUIZ (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1750993AbWHVUIZ (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
 	Tue, 22 Aug 2006 16:08:25 -0400
 X-Originating-IP: [65.94.249.130]
 X-Originating-Email: [seanlkml@sympatico.ca]
@@ -36,9 +37,10 @@ Message-Id: <20060822160822.b112421a.seanlkml@sympatico.ca>
 In-Reply-To: <890BF3111FB9484E9526987D912B261932E35B@NAMAIL3.ad.lsil.com>
 X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.10.1; i386-redhat-linux-gnu)
 X-OriginalArrivalTime: 22 Aug 2006 20:08:24.0640 (UTC) FILETIME=[B94B1400:01C6C626]
-Sender: git-owner@vger.kernel.org
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25871>
 
 On Tue, 22 Aug 2006 13:25:23 -0600
 "Ju, Seokmann" <Seokmann.Ju@lsil.com> wrote:
