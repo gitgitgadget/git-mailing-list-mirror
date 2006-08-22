@@ -1,101 +1,110 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: [PATCH] gitweb: bugfix: list regression
-Date: Tue, 22 Aug 2006 01:55:40 -0700 (PDT)
-Message-ID: <20060822085540.1104.qmail@web31812.mail.mud.yahoo.com>
-Reply-To: ltuikov@yahoo.com
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFD] gitweb: href() function to generate URLs for CGI
+Date: Tue, 22 Aug 2006 01:55:51 -0700
+Message-ID: <7vodudno88.fsf@assigned-by-dhcp.cox.net>
+References: <200608211739.32993.jnareb@gmail.com>
+	<7v1wrauex2.fsf@assigned-by-dhcp.cox.net> <eccujr$90h$1@sea.gmane.org>
+	<7vlkphqmac.fsf@assigned-by-dhcp.cox.net> <eceekl$b0l$2@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Tue Aug 22 10:56:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFS2z-0005oJ-68
-	for gcvg-git@gmane.org; Tue, 22 Aug 2006 10:55:46 +0200
+	id 1GFS3F-0005qS-4y
+	for gcvg-git@gmane.org; Tue, 22 Aug 2006 10:56:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932141AbWHVIzm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Aug 2006 04:55:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932143AbWHVIzm
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Aug 2006 04:55:42 -0400
-Received: from web31812.mail.mud.yahoo.com ([68.142.207.75]:54686 "HELO
-	web31812.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S932141AbWHVIzl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Aug 2006 04:55:41 -0400
-Received: (qmail 1106 invoked by uid 60001); 22 Aug 2006 08:55:40 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=4TRc9wxlkBo53MD0E0yjjfIhroYuKY8fI/ioVKqL0X/Ya9K6tf7YyF08ViBmJkmuYIw3ETG6m8XngbmFoFxEAn6tT5slNfIOiYosj6K6Lbc7f5XTmioUArodMVBqGrSbibFa1o5CkDq5Xql13zvRPB44hob8/4uo6qbm0MFwPgs=  ;
-Received: from [71.84.29.50] by web31812.mail.mud.yahoo.com via HTTP; Tue, 22 Aug 2006 01:55:40 PDT
-To: git@vger.kernel.org
+	id S932143AbWHVIz6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Aug 2006 04:55:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932144AbWHVIz6
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Aug 2006 04:55:58 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:61606 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S932143AbWHVIz5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Aug 2006 04:55:57 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060822085551.SQBW554.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 22 Aug 2006 04:55:51 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <eceekl$b0l$2@sea.gmane.org> (Jakub Narebski's message of "Tue,
+	22 Aug 2006 10:18:29 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25842>
 
-Fix regression introduced by
-commit 17d07443188909ef5f8b8c24043cb6d9fef51bca.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-1. Commit 17d07443188909ef5f8b8c24043cb6d9fef51bca defines
-"a.list" twice in gitweb.css, once with bold and once with
-normal font-weight.
+> So perhaps
+>
+>         my %mapping = @mapping;
+>         my @params_keys_sorted;
+>         for (my $i = 0; $i < @mapping; $i += 2) {
+>                 if (exists $params{$mapping[$i]}) {
+>                         push @params_keys_sorted, $mapping[$i];
+>                 }
+>         }
+>
+> This way we have only one loop over all valid parameter names,
+> and we wouldn't need grep nor conditional expression in map,
+> and map would loop over all (valid) params keys only.
 
-2. "a.list" being "bold", makes a myriad of things shown by
-gitweb in bold font-weight, which is a regression from
-pre-17d07443188909ef5f8b8c24043cb6d9fef51bca behavior.
+At that point I suspect that loop can do everything your map {}
+did, and would look simpler (albeit perhaps a little bit less
+Perlish) like this:
 
-The fix is to define separately "a.list_bold" and use
-that style in format_subject_html().
+sub href(%) {
+	my %params = @_;
+	$params{"project"} ||= $project;
+        my @mapping = ( project => "p",
+                        action => "a",
+                        hash => "h",
+                        hash_parent => "hp",
+                        hash_base => "hb",
+                        file_name => "f",
+                        file_parent => "fp",
+                        page => "pg",
+                        searchtext => "s",
+                        );
+	my @result = (); 
+        for (my $i = 0; $i < @mapping; $i += 2) {
+        	my ($name, $symbol) = ($mapping[$i], $mapping[$i+1]);
+		if (defined $params{$name}) {
+			push @result, "$symbol=$params{$name}";
+		}
+	}
+        return "$my_uri?" . esc_param(join(';', @result));
+}
 
-Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
----
- gitweb/gitweb.css  |    9 +++++++--
- gitweb/gitweb.perl |    4 ++--
- 2 files changed, 9 insertions(+), 4 deletions(-)
+By the way, is it really what we want to do to call esc_param()
+on joined result?
 
-diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-index 9013895..db58629 100644
---- a/gitweb/gitweb.css
-+++ b/gitweb/gitweb.css
-@@ -115,13 +115,18 @@ div.list_head {
- 	font-style: italic;
- }
- 
--a.list {
-+a.list_bold {
- 	text-decoration: none;
- 	font-weight: bold;
- 	color: #000000;
- }
- 
--table.tags a.list {
-+a.list {
-+	text-decoration: none;
-+	color: #000000;
-+}
-+
-+table.tags {
- 	font-weight: normal;
- }
- 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 063735d..5237f25 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -504,11 +504,11 @@ sub format_subject_html {
- 	$extra = '' unless defined($extra);
- 
- 	if (length($short) < length($long)) {
--		return $cgi->a({-href => $href, -class => "list",
-+		return $cgi->a({-href => $href, -class => "list_bold",
- 		                -title => $long},
- 		       esc_html($short) . $extra);
- 	} else {
--		return $cgi->a({-href => $href, -class => "list"},
-+		return $cgi->a({-href => $href, -class => "list_bold"},
- 		       esc_html($long)  . $extra);
- 	}
- }
--- 
-1.4.2.g3851f
+Maybe I am not reading this code correctly, but this feels quite
+counter-intuitive.  Actually, it feels downright wrong.
+
+Semicolons and equals are used as separators between key-value
+pairs (i.e. syntactic elements) so if we have a value
+$params{$name} that happens to contain a ';' or '=' character I
+suspect we would want to quote that but not the one we use
+before the value or between tuples.  Otherwise, how is a search
+text that is "a = b;" encoded in the resulting href?
+
+So the last part of the above should perhaps read:
+
+	my @result = (); 
+        for (my $i = 0; $i < @mapping; $i += 2) {
+        	my ($name, $symbol) = ($mapping[$i], $mapping[$i+1]);
+		if (defined $params{$name}) {
+			push @result, join('=', esc_param($symbol),
+						esc_param($params{$name}));
+		}
+	}
+        return "$my_uri?" . join(';', @result);
+
+We would also need to fix esc_param to quote ';' and '=' as
+well, which does not seem to quote them.
