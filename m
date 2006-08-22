@@ -1,105 +1,84 @@
-From: "Ju, Seokmann" <Seokmann.Ju@lsil.com>
-Subject: HELP: GIT Cloning failed
-Date: Tue, 22 Aug 2006 13:25:23 -0600
-Message-ID: <890BF3111FB9484E9526987D912B261932E35B@NAMAIL3.ad.lsil.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFD] gitweb: href() function to generate URLs for CGI
+Date: Tue, 22 Aug 2006 21:55:13 +0200
+Organization: At home
+Message-ID: <ecfnf0$4bg$1@sea.gmane.org>
+References: <200608211739.32993.jnareb@gmail.com> <7v1wrauex2.fsf@assigned-by-dhcp.cox.net> <eccujr$90h$1@sea.gmane.org> <7vlkphqmac.fsf@assigned-by-dhcp.cox.net> <eceekl$b0l$2@sea.gmane.org> <7vodudno88.fsf@assigned-by-dhcp.cox.net> <86fyfohb4v.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "Patro, Sumant" <Sumant.Patro@engenio.com>,
-	<linux-kernel@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 22 21:25:31 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue Aug 22 21:56:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFbsP-00024j-JG
-	for gcvg-git@gmane.org; Tue, 22 Aug 2006 21:25:29 +0200
+	id 1GFcM0-0007d3-4R
+	for gcvg-git@gmane.org; Tue, 22 Aug 2006 21:56:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751190AbWHVTZZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Aug 2006 15:25:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751206AbWHVTZZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Aug 2006 15:25:25 -0400
-Received: from mail0.lsil.com ([147.145.40.20]:41126 "EHLO mail0.lsil.com")
-	by vger.kernel.org with ESMTP id S1751190AbWHVTZY convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Aug 2006 15:25:24 -0400
-Received: from milmhbs0.lsil.com (mhbs.lsil.com [147.145.1.30])
-	by mail0.lsil.com (8.12.8/8.12.8) with ESMTP id k7MJP6Xu025467;
-	Tue, 22 Aug 2006 12:25:06 -0700 (PDT)
-Received: from namail.ad.lsil.com (namail.co.lsil.com [172.21.36.18])
-	by milmhbs0.lsil.com (8.12.11/8.12.11) with ESMTP id k7MIRPkc026153;
-	Tue, 22 Aug 2006 11:27:25 -0700
-Received: from NAMAIL3.ad.lsil.com ([172.21.36.22]) by namail.ad.lsil.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 22 Aug 2006 13:25:23 -0600
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: HELP: GIT Cloning failed
-Thread-Index: AcbGILZ87Cy8vC1iTYieANrPv7RILA==
-To: <git@vger.kernel.org>
-X-OriginalArrivalTime: 22 Aug 2006 19:25:23.0965 (UTC) FILETIME=[B71752D0:01C6C620]
-X-Scanned-By: MIMEDefang 2.39
+	id S1750758AbWHVTz7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 Aug 2006 15:55:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750832AbWHVTz7
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Aug 2006 15:55:59 -0400
+Received: from main.gmane.org ([80.91.229.2]:6857 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750758AbWHVTz6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Aug 2006 15:55:58 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GFcLb-0007VR-RW
+	for git@vger.kernel.org; Tue, 22 Aug 2006 21:55:39 +0200
+Received: from host-81-190-21-215.torun.mm.pl ([81.190.21.215])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 22 Aug 2006 21:55:39 +0200
+Received: from jnareb by host-81-190-21-215.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 22 Aug 2006 21:55:39 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-21-215.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25868>
 
-Hi,
+Randal L. Schwartz wrote:
 
-Recently, I found that cloning from GIT server has been failed.
-I'm using following script for it.
----
-...
-rm -r /home/git/kernels/2.4/linux-2.4.git
-cg-clone
-http://www.kernel.org/pub/scm/linux/kernel/git/marcelo/linux-2.4.git/
-/home/git/kernels/2.4/linux-2.4.git/
-sync
-rm -r /home/git/kernels/2.4/linux-2.6.git
-cg-clone
-http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
-/home/git/kernels/2.4/linux-2.6.git/
-sync
-rm -r /home/git/kernels/2.4/scsi-misc-2.6.git
-cg-clone
-http://www.kernel.org/pub/scm/linux/kernel/git/marcelo/scsi-misc-2.6.git
-/home/git/kernels/2.4/scsi-misc-2.6.git
-sync
-...
----
+>>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
+> 
+> Junio>        my @result = (); 
+> Junio>         for (my $i = 0; $i < @mapping; $i += 2) {
+> Junio>                my ($name, $symbol) = ($mapping[$i], $mapping[$i+1]);
+> Junio>                if (defined $params{$name}) {
+> Junio>                        push @result, "$symbol=$params{$name}";
+> Junio>                }
+> Junio>        }
+> Junio>         return "$my_uri?" . esc_param(join(';', @result));
+> Junio> }
+> 
+> If you already depend on the LWP package, then the "URI" module
+> does precisely what you're reinventing.
+> 
+> my $uri = URI->new("http://host/base/path")
+> $uri->query_form(\%params);
+> my $result = $uri->as_string;
+> 
+> And I'd rely on Gisle Aas's experience about constructing these things
+> far more than the thread I've just witnessed here. :)
 
-In the script, I'm cloning 3 different sources. First two sources
-getting successfully cloned, however, last one is getting failed with
-following error messages,
----
-Fetching head...
-Fetching objects...
-Getting alternates list for
-http://www.kernel.org/pub/scm/linux/kernel/git/jejb/scsi-misc-2.6.git
-Also look at http://www.kernel.or
-Error: The requested URL returned error: 502 (curl_result = 22,
-http_code = 502, sha1 = 1039f0760e...)
-Getting pack list for
-http://www.kernel.org/pub/scm/linux/kernel/git/jejb/scsi-misc-2.6.git/
-Getting pack list for http://www.kernel.or
-Error: The requested URL returned error: 502
-Error: Unable to find 27fd37621... Under
-http://www.kernel.org/pub/scsm/linux/kernel/git/jejb/scsi-misc-2.6.git/
-Cannot obtain needed blob 27fd37621...
-While processing commit 4041b9cd87...
-Progress: 8 objects, 13120 bytes
-Cg-fetch: objects fetch failed
----
+First, I'd rather not introduce new dependency to git (and I think Junio
+would agree). Second, more important, we do _parameters processing_,
+it means renaming parameters (e.g. 'file_name' in params is 'p' in CGI URI),
+in the future perhaps passing project via PATH_INFO not in query string,
+and sorting the CGI parameters.
 
-Above script worked without any problem when I started several months
-ago and I'm not sure when did it stop working.
-I'm using _cron_ utility on my Linux box for scheduled execution of the
-script.
-
-Any comment would be appreciated.
-
-Thank you,
-
-Seokmann
+So it wouldn't be as easy as writing 
+        $uri->query_form(\%params); 
+        return $uri->as_string;
+or as 
+        return "$my_uri?" . esc_param(join(";", "$_=$params{$_}") keys %params)'.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
