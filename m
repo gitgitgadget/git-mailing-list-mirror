@@ -1,54 +1,63 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: [PATCH 5/7] missing #define DEBUG 0 that made the preprocessor whine
-Date: Wed, 23 Aug 2006 12:39:14 +0200
-Message-ID: <11563295573035-git-send-email-madcoder@debian.org>
-References: 200608231238.10963.madcoder@debian.org <11563295562072-git-send-email-madcoder@debian.org> <11563295562422-git-send-email-madcoder@debian.org> <1156329556788-git-send-email-madcoder@debian.org> <11563295573215-git-send-email-madcoder@debian.org>
-Cc: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Wed Aug 23 12:41:49 2006
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: git cherry-pick feature request
+Date: Wed, 23 Aug 2006 23:07:33 +1000
+Message-ID: <17644.21269.128308.313284@cargo.ozlabs.ibm.com>
+References: <17643.62896.396783.890223@cargo.ozlabs.ibm.com>
+	<7vfyfnixv5.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 23 15:08:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFq9C-0007TY-B2
-	for gcvg-git@gmane.org; Wed, 23 Aug 2006 12:39:46 +0200
+	id 1GFsSN-000450-75
+	for gcvg-git@gmane.org; Wed, 23 Aug 2006 15:07:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964828AbWHWKja (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Aug 2006 06:39:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964830AbWHWKj2
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 06:39:28 -0400
-Received: from rudy.intersec.eu ([88.191.20.202]:12456 "EHLO mx2.intersec.fr")
-	by vger.kernel.org with ESMTP id S964828AbWHWKjU (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Aug 2006 06:39:20 -0400
-Received: from localhost.localdomain (beacon-free1.intersec.eu [81.57.219.236])
-	by mx1.intersec.eu (Postfix) with ESMTP id 47494D8242;
-	Wed, 23 Aug 2006 12:39:17 +0200 (CEST)
-Received: by localhost.localdomain (Postfix, from userid 1003)
-	id 13F7E409C0; Wed, 23 Aug 2006 12:39:17 +0200 (CEST)
-To: git@vger.kernel.org
-X-Mailer: git-send-email 1.4.2.g4caa
-In-Reply-To: <11563295573215-git-send-email-madcoder@debian.org>
+	id S932454AbWHWNHk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Aug 2006 09:07:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932456AbWHWNHk
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 09:07:40 -0400
+Received: from ozlabs.org ([203.10.76.45]:4817 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S932454AbWHWNHj (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Aug 2006 09:07:39 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 89EBE67C3D; Wed, 23 Aug 2006 23:07:38 +1000 (EST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vfyfnixv5.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25916>
 
-Signed-off-by: Pierre Habouzit <madcoder@debian.org>
----
- builtin-grep.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+Junio C Hamano writes:
 
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 0bd517b..3123494 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -14,6 +14,8 @@ #include <regex.h>
- #include <fnmatch.h>
- #include <sys/wait.h>
- 
-+#define DEBUG 0
-+
- /*
-  * git grep pathspecs are somewhat different from diff-tree pathspecs;
-  * pathname wildcards are allowed.
--- 
-1.4.1.1
+> Quiet sounds sane.
+> 
+> Reverting to its "previous state" I am not quite sure if it is
+> worth making it an option and run it as part of cherry-pick.
+
+OK.  If the git cherry-pick terminates with an error I'll get gitk to
+show the error message (if any) it printed along with a warning that
+the working directory might need to be cleaned up.  I don't really
+want to do a git reset automagically since the user might have local
+modifications that they want to preserve.
+
+While I'm asking for features, another one that would be really useful
+for another tool I'm writing is a 3-way diff for a file between the
+working directory, the index, and the current head commit, something
+like what git diff-tree -c does for merges.  That is, it would have
+two columns of +/-/space characters, one for the current head and one
+for the index.  A '-' would indicate that the line appears in the
+current head or the index but not in the version of the file in the
+working directory.  A '+' would indicate that the line appears in the
+working directory version.
+
+How hard would it be to adapt the git diff-tree -c mechanism to work
+on two blobs plus the file from the working directory?
+
+Thanks,
+Paul.
