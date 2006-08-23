@@ -1,85 +1,86 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Proposal for new git Merge Strategy
-Date: Wed, 23 Aug 2006 13:00:31 -0700
-Message-ID: <7vsljngr34.fsf@assigned-by-dhcp.cox.net>
-References: <E1GFxeZ-0000Nw-ED@jdl.com>
+Subject: Re: [PATCH] git-daemon virtual hosting implementation.
+Date: Wed, 23 Aug 2006 13:11:01 -0700
+Message-ID: <7vmz9vgqlm.fsf@assigned-by-dhcp.cox.net>
+References: <11563591572194-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 23 22:01:54 2006
+X-From: git-owner@vger.kernel.org Wed Aug 23 22:11:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFytw-0001Fh-86
-	for gcvg-git@gmane.org; Wed, 23 Aug 2006 22:00:36 +0200
+	id 1GFz48-0003Gj-Ul
+	for gcvg-git@gmane.org; Wed, 23 Aug 2006 22:11:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965176AbWHWUAc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Aug 2006 16:00:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965178AbWHWUAc
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 16:00:32 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:12936 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S965176AbWHWUAc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Aug 2006 16:00:32 -0400
+	id S965183AbWHWULF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Aug 2006 16:11:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965181AbWHWULF
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 16:11:05 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:4066 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S965179AbWHWULC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Aug 2006 16:11:02 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao05.cox.net
+          by fed1rmmtao02.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060823200031.DVDA12909.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 23 Aug 2006 16:00:31 -0400
+          id <20060823201102.JVTI12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 23 Aug 2006 16:11:02 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id DY0W1V00d4Noztg0000000
-	Wed, 23 Aug 2006 16:00:31 -0400
-To: Jon Loeliger <jdl@jdl.com>
-In-Reply-To: <E1GFxeZ-0000Nw-ED@jdl.com> (Jon Loeliger's message of "Wed, 23
-	Aug 2006 13:40:39 -0500")
+	id DYB11V00D4Noztg0000000
+	Wed, 23 Aug 2006 16:11:01 -0400
+To: Pierre Habouzit <madcoder@debian.org>
+In-Reply-To: <11563591572194-git-send-email-madcoder@debian.org> (Pierre
+	Habouzit's message of "Wed, 23 Aug 2006 20:52:37 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25927>
 
-Jon Loeliger <jdl@jdl.com> writes:
+Pierre Habouzit <madcoder@debian.org> writes:
 
-> But for complex or critical merges, a "guided merge"
-> strategy seems like it might be a useful tool.  Basically,
-> it would offer options to select Stage 1 or Stage 2
-> revisions, or step in and offer hunks from Stage 1 and 2,
-> revert to "ours" or "theirs", or "revert to 'ours' or 'theirs'
-> for all remaining files".  Things like that maybe.
+> just add the hostname in the path when using --base-path and --user-path.
+> this should be enough for most needs.
 >
-> Any thoughts down this line?  Good idea?  Bad idea?
+> Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+> ---
+>  Here is a proposal for daemon side virtualhosting support.
 
-We had some discussion on this with Catalin in "Unresolved
-issues #3" thread, regarding git-xxdiff (did I ever take it?  I
-liked it for what it does, but I was not sure about its
-odd-man-out-ness) which was proposed by Martin Langhoff.
+> @@ -158,6 +160,11 @@ static char *path_ok(char *dir)
+>  		return NULL;
+>  	}
+>  
+> +	if (use_vhosts && !vhost) {
+> +		logerror("using virtual hosting, and not host= was specified !");
+> +		return NULL;
+> +	}
+> +
 
-A merge that results in manual fixups conceptually take these
-steps:
+This part is objectionable -- older clients do not give "host=".
+I think the plan, when virtual hosting was proposed and we added
+this to the client side first, was to treat older clients as if
+they specified the "primary" host.  So we would need some
+mechanism to say where the repositories of the "primary" host
+lives.
 
- - revs involved in 3-way merge identified with git-merge-base;
+> +			if (use_vhosts) {
+> +				loginfo("host <%s>, "
+> +					"userpath <%s>, request <%s>, "
+> +					"namlen %d, restlen %d, slash <%s>",
+> +					vhost,
+> +					user_path, dir,
+> +					namlen, restlen, slash);
+> +				snprintf(rpath, PATH_MAX, "%.*s/%s/%s%.*s",
+> +					 namlen, dir, user_path, vhost,
+> +					 restlen, slash);
 
- - read-tree is given these three bases;
-
- - git-merge-index gives three stages as individual temporary
-   files to git-merge-one-file for each path that cannot be
-   resolved at tree-level.
-
-   - git-merge-one-file calls "merge" (reminds me that I should
-     replace this with "diff3").
-
-We should be able to make the part that call "merge/diff3" to
-alternatively call xxdiff or its friends (kompare, emerge, pick
-your favorites).  Catalin even showed us a code snippet used in
-StGIT for this in the thread.
-
-Martin's proposed tool git-xxdiff is meant to be invoked after
-all of the above still left conflict markers.  As Catalin
-pointed out, using "xxdiff -U" to work on a file with conflict
-markers is less powerful than working on three stages directly,
-but on the other hand it can be used as the last stage fixup,
-independent from what git-merge does internally.  In other
-words, it is meant to help solving the same problem but in a
-different part of the workflow.
+I am not sure if the interaction between user-path and vhost
+should go like this, but I do not think of a good alternative to
+suggest right now.  Your code allows ~user/host1 and ~user/host2
+to host different set of repositories, but I suspect if somebody
+is setting up a virtual hosting of two hosts, he might want to
+have two distinct set of users (iow to pretend that ~user exist
+only on host1 but not on host2).  I dunno.
