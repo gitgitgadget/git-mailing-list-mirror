@@ -1,79 +1,80 @@
 From: Pierre Habouzit <madcoder@debian.org>
-Subject: [PATCH 4/7] remove ugly shadowing of loop indexes in subloops.
-Date: Wed, 23 Aug 2006 12:39:13 +0200
-Message-ID: <11563295573215-git-send-email-madcoder@debian.org>
-References: 200608231238.10963.madcoder@debian.org <11563295562072-git-send-email-madcoder@debian.org> <11563295562422-git-send-email-madcoder@debian.org> <1156329556788-git-send-email-madcoder@debian.org>
+Subject: [PATCH 2/7] git_dir holds pointers to local strings, hence MUST be const.
+Date: Wed, 23 Aug 2006 12:39:11 +0200
+Message-ID: <11563295562422-git-send-email-madcoder@debian.org>
+References: 200608231238.10963.madcoder@debian.org <11563295562072-git-send-email-madcoder@debian.org>
 Cc: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Wed Aug 23 12:40:49 2006
+X-From: git-owner@vger.kernel.org Wed Aug 23 12:41:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFq8v-0007Mz-4D
-	for gcvg-git@gmane.org; Wed, 23 Aug 2006 12:39:29 +0200
+	id 1GFq99-0007TY-D8
+	for gcvg-git@gmane.org; Wed, 23 Aug 2006 12:39:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964831AbWHWKjZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Aug 2006 06:39:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964836AbWHWKjY
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 06:39:24 -0400
-Received: from rudy.intersec.eu ([88.191.20.202]:22181 "EHLO mx2.intersec.fr")
-	by vger.kernel.org with ESMTP id S964831AbWHWKjU (ORCPT
+	id S964830AbWHWKje (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Aug 2006 06:39:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964833AbWHWKjZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 06:39:25 -0400
+Received: from rudy.intersec.eu ([88.191.20.202]:33953 "EHLO mx2.intersec.fr")
+	by vger.kernel.org with ESMTP id S964829AbWHWKjU (ORCPT
 	<rfc822;git@vger.kernel.org>); Wed, 23 Aug 2006 06:39:20 -0400
 Received: from localhost.localdomain (beacon-free1.intersec.eu [81.57.219.236])
-	by mx1.intersec.eu (Postfix) with ESMTP id 370D2D81C3;
+	by mx1.intersec.eu (Postfix) with ESMTP id 23E88D81BA;
 	Wed, 23 Aug 2006 12:39:17 +0200 (CEST)
 Received: by localhost.localdomain (Postfix, from userid 1003)
-	id 0BAC23FE06; Wed, 23 Aug 2006 12:39:17 +0200 (CEST)
+	id EE8433FFEE; Wed, 23 Aug 2006 12:39:16 +0200 (CEST)
 To: git@vger.kernel.org
 X-Mailer: git-send-email 1.4.2.g4caa
-In-Reply-To: <1156329556788-git-send-email-madcoder@debian.org>
+In-Reply-To: <11563295562072-git-send-email-madcoder@debian.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25912>
 
 Signed-off-by: Pierre Habouzit <madcoder@debian.org>
 ---
- builtin-mv.c |    6 +++---
- git.c        |    6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ cache.h       |    2 +-
+ environment.c |    7 ++++---
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/builtin-mv.c b/builtin-mv.c
-index ff882be..fd1e520 100644
---- a/builtin-mv.c
-+++ b/builtin-mv.c
-@@ -262,10 +262,10 @@ int cmd_mv(int argc, const char **argv, 
- 	} else {
- 		for (i = 0; i < changed.nr; i++) {
- 			const char *path = changed.items[i].path;
--			int i = cache_name_pos(path, strlen(path));
--			struct cache_entry *ce = active_cache[i];
-+			int j = cache_name_pos(path, strlen(path));
-+			struct cache_entry *ce = active_cache[j];
+diff --git a/cache.h b/cache.h
+index 08d6a91..3044794 100644
+--- a/cache.h
++++ b/cache.h
+@@ -123,7 +123,7 @@ #define DB_ENVIRONMENT "GIT_OBJECT_DIREC
+ #define INDEX_ENVIRONMENT "GIT_INDEX_FILE"
+ #define GRAFT_ENVIRONMENT "GIT_GRAFT_FILE"
  
--			if (i < 0)
-+			if (j < 0)
- 				die ("Huh? Cache entry for %s unknown?", path);
- 			refresh_cache_entry(ce, 0);
- 		}
-diff --git a/git.c b/git.c
-index 930998b..a01d195 100644
---- a/git.c
-+++ b/git.c
-@@ -292,11 +292,11 @@ static void handle_internal_command(int 
- 		if (p->option & USE_PAGER)
- 			setup_pager();
- 		if (getenv("GIT_TRACE")) {
--			int i;
-+			int j;
- 			fprintf(stderr, "trace: built-in: git");
--			for (i = 0; i < argc; ++i) {
-+			for (j = 0; j < argc; ++j) {
- 				fputc(' ', stderr);
--				sq_quote_print(stderr, argv[i]);
-+				sq_quote_print(stderr, argv[j]);
- 			}
- 			putc('\n', stderr);
- 			fflush(stderr);
+-extern char *get_git_dir(void);
++extern const char *get_git_dir(void);
+ extern char *get_object_directory(void);
+ extern char *get_refs_directory(void);
+ extern char *get_index_file(void);
+diff --git a/environment.c b/environment.c
+index e6bd003..5fae9ac 100644
+--- a/environment.c
++++ b/environment.c
+@@ -25,8 +25,9 @@ int zlib_compression_level = Z_DEFAULT_C
+ int pager_in_use;
+ int pager_use_color = 1;
+ 
+-static char *git_dir, *git_object_dir, *git_index_file, *git_refs_dir,
+-	*git_graft_file;
++static const char *git_dir;
++static char *git_object_dir, *git_index_file, *git_refs_dir, *git_graft_file;
++
+ static void setup_git_env(void)
+ {
+ 	git_dir = getenv(GIT_DIR_ENVIRONMENT);
+@@ -49,7 +50,7 @@ static void setup_git_env(void)
+ 		git_graft_file = strdup(git_path("info/grafts"));
+ }
+ 
+-char *get_git_dir(void)
++const char *get_git_dir(void)
+ {
+ 	if (!git_dir)
+ 		setup_git_env();
 -- 
 1.4.1.1
