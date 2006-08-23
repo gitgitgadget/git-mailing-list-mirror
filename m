@@ -1,149 +1,523 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] git-daemon virtual hosting implementation.
-Date: Wed, 23 Aug 2006 22:56:07 +0200
-Organization: Polytechnique.org
-Message-ID: <200608232256.10108.madcoder@debian.org>
-References: <11563591572194-git-send-email-madcoder@debian.org> <7vmz9vgqlm.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH/RFC 1/x] gitweb: Use git-diff-tree patch output for commitdiff
+Date: Thu, 24 Aug 2006 00:15:14 +0200
+Message-ID: <200608240015.15071.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1289014.IgpVMiKz7N";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 23 22:56:55 2006
+X-From: git-owner@vger.kernel.org Thu Aug 24 00:15:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFzlr-0003uo-5Y
-	for gcvg-git@gmane.org; Wed, 23 Aug 2006 22:56:20 +0200
+	id 1GG10I-0001vZ-Tj
+	for gcvg-git@gmane.org; Thu, 24 Aug 2006 00:15:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965196AbWHWU4P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Aug 2006 16:56:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965198AbWHWU4P
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 16:56:15 -0400
-Received: from mx1.polytechnique.org ([129.104.30.34]:65461 "EHLO
-	mx1.polytechnique.org") by vger.kernel.org with ESMTP
-	id S965196AbWHWU4O (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Aug 2006 16:56:14 -0400
-Received: from hades.madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by ssl.polytechnique.org (Postfix) with ESMTP id F3300331CB;
-	Wed, 23 Aug 2006 22:56:12 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
+	id S965244AbWHWWPP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Aug 2006 18:15:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965245AbWHWWPO
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 18:15:14 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:19176 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S965244AbWHWWPM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Aug 2006 18:15:12 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so445793nfa
+        for <git@vger.kernel.org>; Wed, 23 Aug 2006 15:15:10 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=isJ/uPcNG1L0DoKy8iDb1LYQ9cJ1mtf3Og7j0i/QM4HB6cb6vD64joSbxj++4+X1VI2YFaxm6zRUdH6WqEzw/c1pefgnEwK0DsdZ/n9cAv6wTHRUk9h8r6yBDoWS6mixzkXOF9fG9sCvO4c0vK7QduQSe1hU/Sgt2P5gsqGsXxg=
+Received: by 10.49.90.4 with SMTP id s4mr2674867nfl;
+        Wed, 23 Aug 2006 15:15:10 -0700 (PDT)
+Received: from host-81-190-21-215.torun.mm.pl ( [81.190.21.215])
+        by mx.gmail.com with ESMTP id o53sm3152076nfa.2006.08.23.15.15.08;
+        Wed, 23 Aug 2006 15:15:10 -0700 (PDT)
+To: git@vger.kernel.org
 User-Agent: KMail/1.9.3
-In-Reply-To: <7vmz9vgqlm.fsf@assigned-by-dhcp.cox.net>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-X-AV-Checked: ClamAV using ClamSMTP at djali.polytechnique.org (Wed Aug 23 22:56:13 2006 +0200 (CEST))
-X-Spam-Flag: No, tests=bogofilter, spamicity=0.000000, queueID=42F65331CC
-X-Org-Mail: pierre.habouzit.2000@polytechnique.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25929>
 
---nextPart1289014.IgpVMiKz7N
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+As the subject indicates (RFC), I'd like some comments on that patch.
 
-Le mer 23 ao=FBt 2006 22:11, Junio C Hamano a =E9crit :
-> Pierre Habouzit <madcoder@debian.org> writes:
-> > just add the hostname in the path when using --base-path and
-> > --user-path. this should be enough for most needs.
-> >
-> > Signed-off-by: Pierre Habouzit <madcoder@debian.org>
-> > ---
-> >  Here is a proposal for daemon side virtualhosting support.
-> >
-> > @@ -158,6 +160,11 @@ static char *path_ok(char *dir)
-> >  		return NULL;
-> >  	}
-> >
-> > +	if (use_vhosts && !vhost) {
-> > +		logerror("using virtual hosting, and not host=3D was specified
-> > !"); +		return NULL;
-> > +	}
-> > +
->
-> This part is objectionable -- older clients do not give "host=3D".
-> I think the plan, when virtual hosting was proposed and we added
-> this to the client side first, was to treat older clients as if
-> they specified the "primary" host.  So we would need some
-> mechanism to say where the repositories of the "primary" host
-> lives.
 
-fair enough, so I suppose there is many choices:
- * replace --use-vhosts with --use-vhosts=3D${default hostname}
-   but I do not like it very much
- * use `hostname -f` as the default hostname (not very nice either)
- * use the magic _default_ (=E0 la apache) hostname ?
+This patch is the first patch in series which tries to remove external
+diff dependency in gitweb, and the need for temporary files.
 
-But just note that if a git repository is accessible on an host that is=20
-not the default, and only on that one, an older client won't be able to=20
-clone the repository anyway, because he will be redirected to the=20
-default virtual host. Meaning, that someone that uses virtual hosts=20
-will break older clients anyway.
+Converting "blobdiff" and "blobdiff_plain" format would be much easier
+if git-diff-tree and friends had -L <label>/--label=<label> option,
+like GNU diff has.
 
-what would be nicer would be a way to gracefully reject older clients in=20
-that case with an understandable error message, so that the user knows=20
-why it does not work. I don't know PROTO_GIT very well yet,so I don't=20
-know if older client support such communications yet or not.
+Current patch preserves much of current output; the question is if for
+example generate if 'plain' format should generate patch which could
+be appplied by ordinary patch which do not understand git diff
+extensions (including renaming and copying), as it is done in current
+version, and if 'html' version should detect renames and copying.
 
-> > +			if (use_vhosts) {
-> > +				loginfo("host <%s>, "
-> > +					"userpath <%s>, request <%s>, "
-> > +					"namlen %d, restlen %d, slash <%s>",
-> > +					vhost,
-> > +					user_path, dir,
-> > +					namlen, restlen, slash);
-> > +				snprintf(rpath, PATH_MAX, "%.*s/%s/%s%.*s",
-> > +					 namlen, dir, user_path, vhost,
-> > +					 restlen, slash);
->
-> I am not sure if the interaction between user-path and vhost
-> should go like this, but I do not think of a good alternative to
-> suggest right now.  Your code allows ~user/host1 and ~user/host2
-> to host different set of repositories, but I suspect if somebody
-> is setting up a virtual hosting of two hosts, he might want to
-> have two distinct set of users (iow to pretend that ~user exist
-> only on host1 but not on host2).  I dunno.
+Another question is if to have (as it is currently done) 'html' and
+'plain' format generated by one subroutine, even though they don't
+share that much code, and how to divide this code (currently invoking
+git-commit-diff is in one part, generating header and commit message
+is in second part, generating patch/patchset is in third part).
 
-Another option would be not to support virtual hosts, but instead=20
-superseed the --base-path and --user-path with some --base-path-fmt=20
-and --user-path-fmt where the user can specify how to build the path=20
-with simple sprintf-like formats. One could e.g. support:
- * %% obviously ;
- * %h that will be replaced with the hostname
- * %u (only for --user-path-fmt)
- * %p (asked path)
- * ...
 
-I think that's more clever, and allow more flexible use of the virtual=20
-hosting code. It e.g. allow to use the virtual host scheme for the=20
-`base-path` repos and to disallow it for the users.
+Further patches are planned, including getting rid of
+git_commitdiff_plain, changing format_diff_line to include incomplete
+lines in output, and converting git_blobdiff and git_blobdiff_plain to
+use git-diff-tree.
 
-=2D-*-path and --*-path-fmt are obviously mutually exclusive.
+This patch is based on 'next' (fbf19dd41bb51d5221fac739c5bdb48fd9012412)
 
-What do you think ?
 
-=2D-=20
-=B7O=B7  Pierre Habouzit
-=B7=B7O                                                madcoder@debian.org
-OOO                                                http://www.madism.org
+P.S. Perhaps the below separator should be made standard and
+recognized by git tools?
+ 
+-- >8 --
+Get rid of git_diff_print invocation in git_commitdiff and therefore
+external diff (/usr/bin/diff) invocation, and use only git-diff-tree
+to generate patch.
 
---nextPart1289014.IgpVMiKz7N
-Content-Type: application/pgp-signature
+git_commitdiff and git_commitdiff_plain are collapsed into one
+subroutine git_commitdiff, with format (currently 'html' which is
+default format corresponding to git_commitdiff, and 'plain'
+corresponding to git_commitdiff_plain) specified in argument.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
+Separate patch (diff) pretty-printing into git_patchset_body.
+It is used in git_commitdiff.
 
-iD8DBQBE7MDqvGr7W6HudhwRAtCOAJ0efggcGmn68ssHHilqoieC3bpcWgCdHTDN
-oe5ccIDp+r0ihy6QzvsLw0w=
-=GD1o
------END PGP SIGNATURE-----
+Separate patch (diff) line formatting from git_diff_print into
+format_diff_line function. It is used in git_patchset_body.
 
---nextPart1289014.IgpVMiKz7N--
+While at it, add $hash parameter to git_difftree_body, according to
+rule that inner functions should use parameter passing, and not global
+variables.
+
+CHANGES TO OUTPUT:
+ * "commitdiff" now products patches with renaming and copying
+   detection (git-diff-tree is invoked with -M and -C options).
+   Empty patches (mode changes and pure renames and copying)
+   are not written currently. Former version broke renaming and
+   copying, and didn't notice mode changes, like this version.
+
+ * "commitdiff" output is now divided into several div elements
+   of class "log", "patchset" and "patch".
+
+ * "commitdiff_plain" now only generates X-Git-Tag: line only if there
+   is tag pointing to the current commit. Former version which wrote
+   first tag following current commit was broken[*1*]; besides we are
+   interested rather in tags _preceding_ the commit, and _heads_
+   following the commit. X-Git-Url: now is current URL; former version
+   tried[*2*] to output URL to HTML version of commitdiff.
+
+ * "commitdiff_plain" is generated by git-diff-tree, and has therefore
+   has git specific extensions to diff format: "git diff" header and
+   optional extended header lines.
+
+FOOTNOTES
+[*1*] First it generated rev-list starting from HEAD even if hash_base
+parameter was set, second it wasn't corrected according to changes
+made in git_get_references (formerly read_info_ref) output, third even
+for older version of read_info_ref output it didn't work for multiple
+tags pointing to the current commit (rare).
+
+[*2*] It wrote URL for commitdiff without hash_parent, which produces
+diff to first parent and is not the same as current diff if it is diff
+of merge commit to non-first parent.
+
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |  323 ++++++++++++++++++++++++++++++++--------------------
+ 1 files changed, 201 insertions(+), 122 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 50083e3..9367685 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -524,6 +524,27 @@ sub format_subject_html {
+ 	}
+ }
+ 
++sub format_diff_line {
++	my $line = shift;
++	my $char = substr($line, 0, 1);
++	my $diff_class = "";
++
++	chomp $line;
++
++	if ($char eq '+') {
++		$diff_class = " add";
++	} elsif ($char eq "-") {
++		$diff_class = " rem";
++	} elsif ($char eq "@") {
++		$diff_class = " chunk_header";
++	} elsif ($char eq "\\") {
++		# skip errors (incomplete lines)
++		return "";
++	}
++	$line = untabify($line);
++	return "<div class=\"diff$diff_class\">" . esc_html($line) . "</div>\n";
++}
++
+ ## ----------------------------------------------------------------------
+ ## git utility subroutines, invoking git commands
+ 
+@@ -1367,7 +1388,7 @@ ## .....................................
+ ## functions printing large fragments of HTML
+ 
+ sub git_difftree_body {
+-	my ($difftree, $parent) = @_;
++	my ($difftree, $hash, $parent) = @_;
+ 
+ 	print "<div class=\"list_head\">\n";
+ 	if ($#{$difftree} > 10) {
+@@ -1518,6 +1539,101 @@ sub git_difftree_body {
+ 	print "</table>\n";
+ }
+ 
++sub git_patchset_body {
++	my ($patchset, $difftree, $hash, $hash_parent) = @_;
++
++	my $patch_idx = 0;
++	my $in_header = 0;
++	my $patch_found = 0;
++	my %diffinfo;
++
++	print "<div class=\"patchset\">\n";
++
++	LINE: foreach my $patch_line (@$patchset) {
++
++		if ($patch_line =~ m/^diff /) { # "git diff" header
++			# beginning of patch (in patchset)
++			if ($patch_found) {
++				# close previous patch
++				print "</div>\n"; # class="patch"
++			} else {
++				# first patch in patchset
++				$patch_found = 1;
++			}
++			print "<div class=\"patch\">\n";
++
++			%diffinfo = parse_difftree_raw_line($difftree->[$patch_idx++]);
++
++			# for now, no extended header, hence we skip empty patches
++			# companion to	next LINE if $in_header;
++			if ($diffinfo{'from_id'} eq $diffinfo{'to_id'}) { # no change
++				$in_header = 1;
++				next LINE;
++			}
++
++			if ($diffinfo{'status'} eq "A") { # added
++				print "<div class=\"diff_info\">" . file_type($diffinfo{'to_mode'}) . ":" .
++				      $cgi->a({-href => href(action=>"blob", hash_base=>$hash,
++				                             hash=>$diffinfo{'to_id'}, file_name=>$diffinfo{'file'})},
++				              $diffinfo{'to_id'}) . "(new)" .
++				      "</div>\n"; # class="diff_info"
++
++			} elsif ($diffinfo{'status'} eq "D") { # deleted
++				print "<div class=\"diff_info\">" . file_type($diffinfo{'from_mode'}) . ":" .
++				      $cgi->a({-href => href(action=>"blob", hash_base=>$hash_parent,
++				                             hash=>$diffinfo{'from_id'}, file_name=>$diffinfo{'file'})},
++				              $diffinfo{'from_id'}) . "(deleted)" .
++				      "</div>\n"; # class="diff_info"
++
++			} elsif ($diffinfo{'status'} eq "R" || # renamed
++			         $diffinfo{'status'} eq "C") { # copied
++				print "<div class=\"diff_info\">" .
++				      file_type($diffinfo{'from_mode'}) . ":" .
++				      $cgi->a({-href => href(action=>"blob", hash_base=>$hash_parent,
++				                             hash=>$diffinfo{'from_id'}, file_name=>$diffinfo{'from_file'})},
++				              $diffinfo{'from_id'}) .
++				      " -> " .
++				      file_type($diffinfo{'to_mode'}) . ":" .
++				      $cgi->a({-href => href(action=>"blob", hash_base=>$hash,
++				                             hash=>$diffinfo{'to_id'}, file_name=>$diffinfo{'to_file'})},
++				              $diffinfo{'to_id'});
++				print "</div>\n"; # class="diff_info"
++
++			} else { # modified, mode changed, ...
++				print "<div class=\"diff_info\">" .
++				      file_type($diffinfo{'from_mode'}) . ":" .
++				      $cgi->a({-href => href(action=>"blob", hash_base=>$hash_parent,
++				                             hash=>$diffinfo{'from_id'}, file_name=>$diffinfo{'file'})},
++				              $diffinfo{'from_id'}) .
++				      " -> " .
++				      file_type($diffinfo{'to_mode'}) . ":" .
++				      $cgi->a({-href => href(action=>"blob", hash_base=>$hash,
++				                             hash=>$diffinfo{'to_id'}, file_name=>$diffinfo{'file'})},
++				              $diffinfo{'to_id'});
++				print "</div>\n"; # class="diff_info"
++			}
++
++			#print "<div class=\"diff extended_header\">\n";
++			$in_header = 1;
++			next LINE;
++		} # start of patch in patchset
++
++
++		if ($in_header && $patch_line =~ m/^---/) {
++			#print "</div>\n"
++			$in_header = 0;
++		}
++		next LINE if $in_header;
++
++		print format_diff_line($patch_line);
++	}
++	print "</div>\n" if $patch_found; # class="patch"
++
++	print "</div>\n"; # class="patchset"
++}
++
++# . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
++
+ sub git_shortlog_body {
+ 	# uses global variable $project
+ 	my ($revlist, $from, $to, $refs, $extra) = @_;
+@@ -2556,7 +2672,7 @@ sub git_commit {
+ 	git_print_log($co{'comment'});
+ 	print "</div>\n";
+ 
+-	git_difftree_body(\@difftree, $parent);
++	git_difftree_body(\@difftree, $hash, $parent);
+ 
+ 	git_footer_html();
+ }
+@@ -2600,7 +2716,7 @@ sub git_blobdiff_plain {
+ }
+ 
+ sub git_commitdiff {
+-	mkdir($git_temp, 0700);
++	my $format = shift || 'html';
+ 	my %co = parse_commit($hash);
+ 	if (!%co) {
+ 		die_error(undef, "Unknown commit object");
+@@ -2608,143 +2724,106 @@ sub git_commitdiff {
+ 	if (!defined $hash_parent) {
+ 		$hash_parent = $co{'parent'} || '--root';
+ 	}
+-	open my $fd, "-|", $GIT, "diff-tree", '-r', $hash_parent, $hash
+-		or die_error(undef, "Open git-diff-tree failed");
+-	my @difftree = map { chomp; $_ } <$fd>;
+-	close $fd or die_error(undef, "Reading git-diff-tree failed");
++
++	# read commitdiff
++	my $fd;
++	my @difftree;
++	my @patchset;
++	if ($format eq 'html') {
++		open $fd, "-|", $GIT, "diff-tree", '-r', '-M', '-C',
++			"--patch-with-raw", "--full-index", $hash_parent, $hash
++			or die_error(undef, "Open git-diff-tree failed");
++
++		while (chomp(my $line = <$fd>)) {
++			# empty line ends raw part of diff-tree output
++			last unless $line;
++			push @difftree, $line;
++		}
++		@patchset = map { chomp; $_ } <$fd>;
++
++		close $fd
++			or die_error(undef, "Reading git-diff-tree failed");
++	} elsif ($format eq 'plain') {
++		open $fd, "-|", $GIT, "diff-tree", '-r', '-p', '-B', $hash_parent, $hash
++			or die_error(undef, "Open git-diff-tree failed");
++	} else {
++		die_error(undef, "Unknown commitdiff format");
++	}
+ 
+ 	# non-textual hash id's can be cached
+ 	my $expires;
+ 	if ($hash =~ m/^[0-9a-fA-F]{40}$/) {
+ 		$expires = "+1d";
+ 	}
+-	my $refs = git_get_references();
+-	my $ref = format_ref_marker($refs, $co{'id'});
+-	my $formats_nav =
+-		$cgi->a({-href => href(action=>"commitdiff_plain", hash=>$hash, hash_parent=>$hash_parent)},
+-		        "plain");
+-	git_header_html(undef, $expires);
+-	git_print_page_nav('commitdiff','', $hash,$co{'tree'},$hash, $formats_nav);
+-	git_print_header_div('commit', esc_html($co{'title'}) . $ref, $hash);
+-	print "<div class=\"page_body\">\n";
+-	git_print_simplified_log($co{'comment'}, 1); # skip title
+-	print "<br/>\n";
+-	foreach my $line (@difftree) {
+-		# ':100644 100644 03b218260e99b78c6df0ed378e59ed9205ccc96d 3b93d5e7cc7f7dd4ebed13a5cc1a4ad976fc94d8 M      ls-files.c'
+-		# ':100644 100644 7f9281985086971d3877aca27704f2aaf9c448ce bc190ebc71bbd923f2b728e505408f5e54bd073a M      rev-tree.c'
+-		if ($line !~ m/^:([0-7]{6}) ([0-7]{6}) ([0-9a-fA-F]{40}) ([0-9a-fA-F]{40}) (.)\t(.*)$/) {
+-			next;
+-		}
+-		my $from_mode = $1;
+-		my $to_mode = $2;
+-		my $from_id = $3;
+-		my $to_id = $4;
+-		my $status = $5;
+-		my $file = validate_input(unquote($6));
+-		if ($status eq "A") {
+-			print "<div class=\"diff_info\">" . file_type($to_mode) . ":" .
+-			      $cgi->a({-href => href(action=>"blob", hash_base=>$hash,
+-			                             hash=>$to_id, file_name=>$file)},
+-			              $to_id) . "(new)" .
+-			      "</div>\n";
+-			git_diff_print(undef, "/dev/null", $to_id, "b/$file");
+-		} elsif ($status eq "D") {
+-			print "<div class=\"diff_info\">" . file_type($from_mode) . ":" .
+-			      $cgi->a({-href => href(action=>"blob", hash_base=>$hash_parent,
+-			                             hash=>$from_id, file_name=>$file)},
+-			              $from_id) . "(deleted)" .
+-			      "</div>\n";
+-			git_diff_print($from_id, "a/$file", undef, "/dev/null");
+-		} elsif ($status eq "M") {
+-			if ($from_id ne $to_id) {
+-				print "<div class=\"diff_info\">" .
+-				      file_type($from_mode) . ":" .
+-				      $cgi->a({-href => href(action=>"blob", hash_base=>$hash_parent,
+-				                             hash=>$from_id, file_name=>$file)},
+-				              $from_id) .
+-				      " -> " .
+-				      file_type($to_mode) . ":" .
+-				      $cgi->a({-href => href(action=>"blob", hash_base=>$hash,
+-				                             hash=>$to_id, file_name=>$file)},
+-				              $to_id);
+-				print "</div>\n";
+-				git_diff_print($from_id, "a/$file",  $to_id, "b/$file");
+-			}
+-		}
+-	}
+-	print "<br/>\n" .
+-	      "</div>";
+-	git_footer_html();
+-}
+ 
+-sub git_commitdiff_plain {
+-	mkdir($git_temp, 0700);
+-	my %co = parse_commit($hash);
+-	if (!%co) {
+-		die_error(undef, "Unknown commit object");
+-	}
+-	if (!defined $hash_parent) {
+-		$hash_parent = $co{'parent'} || '--root';
+-	}
+-	open my $fd, "-|", $GIT, "diff-tree", '-r', $hash_parent, $hash
+-		or die_error(undef, "Open git-diff-tree failed");
+-	my @difftree = map { chomp; $_ } <$fd>;
+-	close $fd or die_error(undef, "Reading diff-tree failed");
+-
+-	# try to figure out the next tag after this commit
+-	my $tagname;
+-	my $refs = git_get_references("tags");
+-	open $fd, "-|", $GIT, "rev-list", "HEAD";
+-	my @commits = map { chomp; $_ } <$fd>;
+-	close $fd;
+-	foreach my $commit (@commits) {
+-		if (defined $refs->{$commit}) {
+-			$tagname = $refs->{$commit}
+-		}
+-		if ($commit eq $hash) {
+-			last;
+-		}
+-	}
++	# write commit message
++	if ($format eq 'html') {
++		my $refs = git_get_references();
++		my $ref = format_ref_marker($refs, $co{'id'});
++		my $formats_nav =
++			$cgi->a({-href => href(action=>"commitdiff_plain",
++			                       hash=>$hash, hash_parent=>$hash_parent)},
++			        "plain");
+ 
+-	print $cgi->header(-type => "text/plain",
+-	                   -charset => 'utf-8',
+-	                   -content_disposition => "inline; filename=\"git-$hash.patch\"");
+-	my %ad = parse_date($co{'author_epoch'}, $co{'author_tz'});
+-	my $comment = $co{'comment'};
+-	print <<TEXT;
++		git_header_html(undef, $expires);
++		git_print_page_nav('commitdiff','', $hash,$co{'tree'},$hash, $formats_nav);
++		git_print_header_div('commit', esc_html($co{'title'}) . $ref, $hash);
++		print "<div class=\"page_body\">\n";
++		print "<div class=\"log\">\n";
++		git_print_simplified_log($co{'comment'}, 1); # skip title
++		print "</div>\n"; # class="log"
++
++	} elsif ($format eq 'plain') {
++		my $refs = git_get_references("tags");
++		my @tagnames;
++		if (exists $refs->{$hash}) {
++			@tagnames = map { s|^tags/|| } $refs->{$hash};
++		}
++		my $filename = basename($project) . "-$hash.patch";
++
++		print $cgi->header(
++			-type => 'text/plain',
++			-charset => 'utf-8',
++			-expires => $expires,
++			-content_disposition => qq(inline; filename="$filename"));
++		my %ad = parse_date($co{'author_epoch'}, $co{'author_tz'});
++		print <<TEXT;
+ From: $co{'author'}
+ Date: $ad{'rfc2822'} ($ad{'tz_local'})
+ Subject: $co{'title'}
+ TEXT
+-	if (defined $tagname) {
+-		print "X-Git-Tag: $tagname\n";
++		foreach my $tag (@tagnames) {
++			print "X-Git-Tag: $tag\n";
++		}
++		print "X-Git-Url: " . $cgi->self_url() . "\n\n";
++		foreach my $line (@{$co{'comment'}}) {
++			print "$line\n";
++		}
++		print "---\n\n";
+ 	}
+-	print "X-Git-Url: $my_url?p=$project;a=commitdiff;h=$hash\n" .
+-	      "\n";
+ 
+-	foreach my $line (@$comment) {;
+-		print "$line\n";
+-	}
+-	print "---\n\n";
++	# write patch
++	if ($format eq 'html') {
++		#git_difftree_body(\@difftree, $hash, $hash_parent);
++		#print "<br/>\n";
+ 
+-	foreach my $line (@difftree) {
+-		if ($line !~ m/^:([0-7]{6}) ([0-7]{6}) ([0-9a-fA-F]{40}) ([0-9a-fA-F]{40}) (.)\t(.*)$/) {
+-			next;
+-		}
+-		my $from_id = $3;
+-		my $to_id = $4;
+-		my $status = $5;
+-		my $file = $6;
+-		if ($status eq "A") {
+-			git_diff_print(undef, "/dev/null", $to_id, "b/$file", "plain");
+-		} elsif ($status eq "D") {
+-			git_diff_print($from_id, "a/$file", undef, "/dev/null", "plain");
+-		} elsif ($status eq "M") {
+-			git_diff_print($from_id, "a/$file",  $to_id, "b/$file", "plain");
+-		}
++		git_patchset_body(\@patchset, \@difftree, $hash, $hash_parent);
++
++		print "</div>\n"; # class="page_body"
++		git_footer_html();
++
++	} elsif ($format eq 'plain') {
++		local $/ = undef;
++		print <$fd>;
++		close $fd
++			or print "Reading git-diff-tree failed\n";
+ 	}
+ }
+ 
++sub git_commitdiff_plain {
++	git_commitdiff('plain');
++}
++
+ sub git_history {
+ 	if (!defined $hash_base) {
+ 		$hash_base = git_get_head_hash($project);
+-- 
+1.4.1.1
