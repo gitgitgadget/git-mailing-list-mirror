@@ -1,64 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/3] gitweb: Whitespace cleanup: realign, reindent
-Date: Wed, 23 Aug 2006 02:55:38 -0700
-Message-ID: <7vac5vixnp.fsf@assigned-by-dhcp.cox.net>
-References: <200608221651.19629.jnareb@gmail.com>
-	<200608221652.50443.jnareb@gmail.com>
-	<7virkkjkvd.fsf@assigned-by-dhcp.cox.net> <ech55l$reh$1@sea.gmane.org>
+From: Jim Meyering <jim@meyering.net>
+Subject: "cg-commit -M msg-file ..." fails when not run from top of tree
+Date: Wed, 23 Aug 2006 12:27:38 +0200
+Message-ID: <87d5aru4px.fsf@rho.meyering.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 23 11:56:02 2006
+X-From: git-owner@vger.kernel.org Wed Aug 23 12:27:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFpSd-0003tw-Lw
-	for gcvg-git@gmane.org; Wed, 23 Aug 2006 11:55:48 +0200
+	id 1GFpxB-000413-WE
+	for gcvg-git@gmane.org; Wed, 23 Aug 2006 12:27:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751515AbWHWJzk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Aug 2006 05:55:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751516AbWHWJzk
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 05:55:40 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:35032 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1751515AbWHWJzj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Aug 2006 05:55:39 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060823095539.TYTF4015.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 23 Aug 2006 05:55:39 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <ech55l$reh$1@sea.gmane.org> (Jakub Narebski's message of "Wed,
-	23 Aug 2006 10:55:22 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S964819AbWHWK1R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Aug 2006 06:27:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964820AbWHWK1R
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 06:27:17 -0400
+Received: from mx.meyering.net ([82.230.74.64]:23953 "EHLO mx.meyering.net")
+	by vger.kernel.org with ESMTP id S964819AbWHWK1Q (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Aug 2006 06:27:16 -0400
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id 3E720B29; Wed, 23 Aug 2006 12:27:38 +0200 (CEST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25907>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Hello,
 
-> So what is the default? 5-column tabs? 8-column tabs? And to what width?
-> 80-column wide? 120-column wide?
+I discovered that "cg-commit -M MSG-FILE ..." fails when run from
+a subdirectory, and when MSG-FILE is a relative file name.
+This is using cogito-0.17.3-2 from Debian/unstable, but the problem
+remains when using the latest cogito sources, pulled minutes ago.
 
-Quoting the person who invented git:
+Here's an example:
 
-                    Chapter 1: Indentation
+  $ mkdir a; touch a/x; cg-init -m. .; cd a; echo . > x; cg-commit -M x x
+  defaulting to local storage area
+  Adding file a/x
+  Committing initial tree 341d89829a1bf9c0ccfbccf738815cbc862b3242
+  Committed as 6497164c6f8e86220ff26c6b89b9d0dbad5a7743
+  cat: x: No such file or directory
+  [Exit 1]
 
-    Tabs are 8 characters, and thus indentations are also 8 characters.
-    There are heretic movements that try to make indentations 4 (or even 2!)
-    characters deep, and that is akin to trying to define the value of PI to
-    be 3.
+This appears to be due to the "cd", that can happen in cg-Xlib:
 
-    Rationale: The whole idea behind indentation is to clearly define where
-    a block of control starts and ends.  Especially when you've been looking
-    at your screen for 20 straight hours, you'll find it a lot easier to see
-    how the indentation works if you have large indentations.
+  _git="${GIT_DIR:-.git}"
+  if [ ! "$_git_repo_unneeded" ] && [ ! "$GIT_DIR" ] && [ ! -d "$_git" ]; then
+          _git_abs_path="$(git-rev-parse --git-dir 2>/dev/null)"
+          if [ -d "$_git_abs_path" ]; then
+                  _git_relpath="$(git-rev-parse --show-prefix)"
+==========>       cd "$_git_abs_path/.."         <==============
+          fi
+  fi
+  _git_objects="${GIT_OBJECT_DIRECTORY:-$_git/objects}"
 
-    Now, some people will claim that having 8-character indentations makes
-    the code move too far to the right, and makes it hard to read on a
-    80-character terminal screen.  The answer to that is that if you need
-    more than 3 levels of indentation, you're screwed anyway, and should fix
-    your program.
+I can work around the problem by using an absolute name for
+the message file, but I shouldn't have to do that.
+
+FWIW, I tried setting GIT_DIR to the absolute name of the .git directory,
+but that just made it so cg-commit failed with this diagnostic:
+
+  cg-commit: Nothing to commit
+
+Jim
