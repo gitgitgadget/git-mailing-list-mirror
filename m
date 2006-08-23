@@ -1,41 +1,41 @@
 From: Luben Tuikov <ltuikov@yahoo.com>
 Subject: Re: [PATCH] gitweb: bugfix: a.list formatting regression
-Date: Tue, 22 Aug 2006 21:43:39 -0700 (PDT)
-Message-ID: <20060823044339.28307.qmail@web31806.mail.mud.yahoo.com>
+Date: Tue, 22 Aug 2006 21:45:45 -0700 (PDT)
+Message-ID: <20060823044545.25836.qmail@web31802.mail.mud.yahoo.com>
 References: <11562409683011-git-send-email-jnareb@git.vger.kernel.org>
 Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>, Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 23 06:43:50 2006
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Aug 23 06:46:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFkaj-0005ta-HF
-	for gcvg-git@gmane.org; Wed, 23 Aug 2006 06:43:50 +0200
+	id 1GFkcf-0006Fn-Ja
+	for gcvg-git@gmane.org; Wed, 23 Aug 2006 06:45:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932352AbWHWEnl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Aug 2006 00:43:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932353AbWHWEnl
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 00:43:41 -0400
-Received: from web31806.mail.mud.yahoo.com ([68.142.207.69]:604 "HELO
-	web31806.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S932352AbWHWEnk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Aug 2006 00:43:40 -0400
-Received: (qmail 28309 invoked by uid 60001); 23 Aug 2006 04:43:39 -0000
+	id S932350AbWHWEpq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Aug 2006 00:45:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932353AbWHWEpq
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 00:45:46 -0400
+Received: from web31802.mail.mud.yahoo.com ([68.142.207.65]:608 "HELO
+	web31802.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S932350AbWHWEpp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Aug 2006 00:45:45 -0400
+Received: (qmail 25838 invoked by uid 60001); 23 Aug 2006 04:45:45 -0000
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
   s=s1024; d=yahoo.com;
   h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=wBe5KkcyAKtJGfL6izR6TDCbKxnDrtoFUxGqtMXIl/ydPGcROOkx9QCb6rQXdluuDIdoe6N9fNS+O7covjVuTy9z1P+O+7O/Unao9IZSUM2ThdcLai10URf9/g0eU2wmwrrB5lJ2/mZmAsGA2gvC+lzlVCeNJ7dp7qp0ianyaOY=  ;
-Received: from [71.84.29.50] by web31806.mail.mud.yahoo.com via HTTP; Tue, 22 Aug 2006 21:43:39 PDT
-To: Jakub Narebski <jnareb@git.vger.kernel.org>, git@vger.kernel.org
+  b=5Rjo28xkHuKu4VxzCiD+CHBsXe7C/T3pCE7J21fKz58zpPvhSTtkFzcXP0bEKa2YT0Vtt/DwqXbE37meqe7gBtj1qvmhNxbjLVtjOrjjXVzELgRKuyIGRNTATV7fa4toDNDfPAOBmyMiQPDIzihdmahmsc0GqJeSbuL3UIn03dU=  ;
+Received: from [71.84.29.50] by web31802.mail.mud.yahoo.com via HTTP; Tue, 22 Aug 2006 21:45:45 PDT
+To: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
 In-Reply-To: <11562409683011-git-send-email-jnareb@git.vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25894>
 
 --- Jakub Narebski <jnareb@git.vger.kernel.org> wrote:
 
@@ -59,9 +59,9 @@ Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25893>
 > Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
 > ---
 
-ACK.  Looks good.
+ACK. Looks good.
 
-   Luben
+    Luben
 
 
 > Luben Tuikov wrote:
@@ -123,8 +123,4 @@ ACK.  Looks good.
 > -- 
 > 1.4.1.1
 > 
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 > 
