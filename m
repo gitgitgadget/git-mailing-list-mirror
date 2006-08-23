@@ -1,68 +1,72 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 1/3] gitweb: Whitespace cleanup: realign, reindent
-Date: Wed, 23 Aug 2006 11:07:04 +0200
-Message-ID: <44EC1AB8.1090005@op5.se>
-References: <200608221651.19629.jnareb@gmail.com> <200608221652.50443.jnareb@gmail.com> <7virkkjkvd.fsf@assigned-by-dhcp.cox.net> <ech55l$reh$1@sea.gmane.org>
+From: Haavard Skinnemoen <hskinnemoen@atmel.com>
+Subject: Re: [PATCH] git-send-email: Don't set author_not_sender from Cc:
+ lines
+Date: Wed, 23 Aug 2006 11:14:19 +0200
+Organization: Atmel Norway
+Message-ID: <20060823111419.22d92f51@cad-250-152.norway.atmel.com>
+References: <1156253919761-git-send-email-hskinnemoen@atmel.com>
+	<7vd5asjkvb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 23 11:07:33 2006
+X-From: git-owner@vger.kernel.org Wed Aug 23 11:14:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFohr-0001hx-42
-	for gcvg-git@gmane.org; Wed, 23 Aug 2006 11:07:27 +0200
+	id 1GFooi-00038O-FX
+	for gcvg-git@gmane.org; Wed, 23 Aug 2006 11:14:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751464AbWHWJHK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Aug 2006 05:07:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751465AbWHWJHJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 05:07:09 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:53736 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751464AbWHWJHH
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Aug 2006 05:07:07 -0400
-Received: by smtp-gw1.op5.se (Postfix, from userid 588)
-	id 11BC16BD3F; Wed, 23 Aug 2006 11:07:05 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
-	linux-server1.op5.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.1.4
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 172EA6BD2B; Wed, 23 Aug 2006 11:07:05 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.4 (X11/20060614)
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <ech55l$reh$1@sea.gmane.org>
+	id S1751463AbWHWJO2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Aug 2006 05:14:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751465AbWHWJO2
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 05:14:28 -0400
+Received: from nat-132.atmel.no ([80.232.32.132]:19177 "EHLO relay.atmel.no")
+	by vger.kernel.org with ESMTP id S1751463AbWHWJO1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Aug 2006 05:14:27 -0400
+Received: from cad-250-152.norway.atmel.com (cad-250-152.norway.atmel.com [10.191.250.152])
+	by relay.atmel.no (8.13.4/8.13.4) with ESMTP id k7N9EJB1051585;
+	Wed, 23 Aug 2006 11:14:19 +0200 (CEST)
+	(envelope-from hskinnemoen@atmel.com)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vd5asjkvb.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed-Claws 2.3.1 (GTK+ 2.8.18; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25902>
 
-Jakub Narebski wrote:
-> Junio C Hamano wrote:
-> 
->> Jakub Narebski <jnareb@gmail.com> writes:
->>
->>> This patch tries (but no too hard) to fit gitweb source in 80 columns,
->>> for 2 columns wide tabs, and indent and align source for better
->>> readibility.
->> If you are doing the wrapping, which I think is a good idea, I
->> do not think you should target for an oddball setting.  Where
->> did you get the idea of 2-column tabs?
-> 
-> So what is the default? 5-column tabs? 8-column tabs? And to what width?
-> 80-column wide? 120-column wide?
-> 
-> I use 2-column tabs to have code not too wide; minimal sensible width.
+On Tue, 22 Aug 2006 18:34:16 -0700
+Junio C Hamano <junkio@cox.net> wrote:
 
-Default is 8-column tabs. BSD folks use (used?) 4 column tabs by 
-default. I've never seen 2 column tabs, although GNU does 2-step 
-indentation (they use spaces though, not tabs).
+> The patch looks wrong.  If your name is on CC: and you want to
+> suppress sending to yourself what happens?
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+It will still send it to you, I guess. The documentation only mentions
+what happens with From: lines, so I wasn't really sure what behaviour is
+expected...
+
+> How about doing something like this instead?
+
+Yeah, that's probably better. I just tested it by sending a mail to
+myself, and it doesn't append an extra From: line, so it solves the
+problem as far as I'm concerned.
+
+Haavard
+
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index a83c7e9..8adb6b9 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -510,7 +510,7 @@ foreach my $t (@files) {
+>  					if ($2 eq $from) {
+>  						next if
+> ($suppress_from); }
+> -					else {
+> +					elsif ($1 eq 'From') {
+>  						$author_not_sender =
+> $2; }
+>  					printf("(mbox) Adding cc: %s
+> from line '%s'\n",
+> 
