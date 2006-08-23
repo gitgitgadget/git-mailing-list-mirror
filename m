@@ -1,56 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitweb: bugfix: a.list formatting regression
-Date: Tue, 22 Aug 2006 22:23:09 -0700
-Message-ID: <7vy7tghvpe.fsf@assigned-by-dhcp.cox.net>
-References: <20060823044545.25836.qmail@web31802.mail.mud.yahoo.com>
+From: Paul Mackerras <paulus@samba.org>
+Subject: git cherry-pick feature request
+Date: Wed, 23 Aug 2006 16:29:04 +1000
+Message-ID: <17643.62896.396783.890223@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 23 07:23:23 2006
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 23 08:29:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFlCt-0003f5-16
-	for gcvg-git@gmane.org; Wed, 23 Aug 2006 07:23:15 +0200
+	id 1GFmEo-0004jr-2m
+	for gcvg-git@gmane.org; Wed, 23 Aug 2006 08:29:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932348AbWHWFXM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Aug 2006 01:23:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751384AbWHWFXM
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 01:23:12 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:1482 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751376AbWHWFXL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Aug 2006 01:23:11 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060823052310.DFPV6235.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 23 Aug 2006 01:23:10 -0400
-To: ltuikov@yahoo.com
-In-Reply-To: <20060823044545.25836.qmail@web31802.mail.mud.yahoo.com> (Luben
-	Tuikov's message of "Tue, 22 Aug 2006 21:45:45 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932364AbWHWG3O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Aug 2006 02:29:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932367AbWHWG3O
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 02:29:14 -0400
+Received: from ozlabs.org ([203.10.76.45]:9088 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S932364AbWHWG3N (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Aug 2006 02:29:13 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id BBCAE67D14; Wed, 23 Aug 2006 16:29:12 +1000 (EST)
+To: Junio C Hamano <junkio@cox.net>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25897>
 
-Luben Tuikov <ltuikov@yahoo.com> writes:
+Junio,
 
->> The fix is to add "subject" class and use this class
->> to replace pre-format_subject_html formatting of subject
->> (comment) via using (or not) <b>...</b> element. This
->> should go back to the pre-17d0744318... style.
->> 
->> Regression noticed by Luben Tuikov.
->> 
->> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
->> Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
->> ---
->
-> ACK. Looks good.
->
->     Luben
+I have added a feature on the "new" branch of gitk which allows the
+user to cherry-pick commits on to the head of the current branch.
+Currently I am using 'sh -c "git cherry-pick -r $id 2>&1"' for this.
 
-Thanks, both.
+The reason for the "2>&1" is that git cherry-pick writes stuff to
+stderr even when there is no error, and the Tcl exec command assumes
+that if the command writes to stderr that it failed somehow.
+
+Also, if the merge fails, git cherry-pick leaves the commit partially
+merged rather than restoring the original state.
+
+Could I have a flag to git cherry-pick (-q for quiet, maybe) that
+tells it not to print anything if the command succeeds?  Could I also
+have a flag that tells it to clean up if the merge fails and leave the
+tree in its previous state?
+
+Or is there some other git command that already does all this that I
+should use instead?
+
+Thanks,
+Paul.
