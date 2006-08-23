@@ -1,55 +1,49 @@
 From: Paul Mackerras <paulus@samba.org>
-Subject: git cherry-pick feature request
-Date: Wed, 23 Aug 2006 16:29:04 +1000
-Message-ID: <17643.62896.396783.890223@cargo.ozlabs.ibm.com>
+Subject: Re: Tiny default fonts in gitk
+Date: Wed, 23 Aug 2006 16:37:58 +1000
+Message-ID: <17643.63430.187776.878100@cargo.ozlabs.ibm.com>
+References: <20060811100706.GA22767@bohr.gbar.dtu.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 23 08:29:29 2006
+X-From: git-owner@vger.kernel.org Wed Aug 23 08:48:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFmEo-0004jr-2m
-	for gcvg-git@gmane.org; Wed, 23 Aug 2006 08:29:18 +0200
+	id 1GFmWx-0007zY-N3
+	for gcvg-git@gmane.org; Wed, 23 Aug 2006 08:48:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932364AbWHWG3O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Aug 2006 02:29:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932367AbWHWG3O
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 02:29:14 -0400
-Received: from ozlabs.org ([203.10.76.45]:9088 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S932364AbWHWG3N (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Aug 2006 02:29:13 -0400
+	id S1750969AbWHWGru (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Aug 2006 02:47:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751414AbWHWGru
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 02:47:50 -0400
+Received: from ozlabs.tip.net.au ([203.10.76.45]:59520 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S1750969AbWHWGru (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Aug 2006 02:47:50 -0400
 Received: by ozlabs.org (Postfix, from userid 1003)
-	id BBCAE67D14; Wed, 23 Aug 2006 16:29:12 +1000 (EST)
-To: Junio C Hamano <junkio@cox.net>
+	id 31D9E67CED; Wed, 23 Aug 2006 16:47:49 +1000 (EST)
+To: "Peter Eriksen" <s022018@student.dtu.dk>
+In-Reply-To: <20060811100706.GA22767@bohr.gbar.dtu.dk>
 X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25898>
 
-Junio,
+Peter Eriksen writes:
 
-I have added a feature on the "new" branch of gitk which allows the
-user to cherry-pick commits on to the head of the current branch.
-Currently I am using 'sh -c "git cherry-pick -r $id 2>&1"' for this.
+> Is it just some X/Tk setting causing this, or is point 9 just very
+> small?  This is under Fedora Core 5.  Changing these sizes to 12 gives
+> the text the same size as in the rest of the desktop.  It would be nice,
+> if that was the default.
 
-The reason for the "2>&1" is that git cherry-pick writes stuff to
-stderr even when there is no error, and the Tcl exec command assumes
-that if the command writes to stderr that it failed somehow.
+First, check what X thinks your display resolution (dots per inch)
+is.  If it thinks the resolution is 75dpi but your monitor is doing
+more like 100dpi that will make the fonts small.
 
-Also, if the merge fails, git cherry-pick leaves the commit partially
-merged rather than restoring the original state.
+Secondly, you can use control -KP+ and control-KP- to change the font
+size.
 
-Could I have a flag to git cherry-pick (-q for quiet, maybe) that
-tells it not to print anything if the command succeeds?  Could I also
-have a flag that tells it to clean up if the merge fails and leave the
-tree in its previous state?
-
-Or is there some other git command that already does all this that I
-should use instead?
-
-Thanks,
 Paul.
