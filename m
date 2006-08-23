@@ -1,86 +1,64 @@
-From: Tilman Sauerbeck <tilman@code-monkey.de>
-Subject: Re: [PATCH] Added support for dropping privileges to git-daemon.
-Date: Wed, 23 Aug 2006 18:45:18 +0200
-Message-ID: <20060823164517.GA1066@code-monkey.de>
-References: <7vhd05s2b5.fsf@assigned-by-dhcp.cox.net> <1156268432.16120@hammerfest> <7virkkl4ph.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="opJtzjQTFsWo+cga"
-X-From: git-owner@vger.kernel.org Wed Aug 23 18:46:13 2006
+From: Jon Loeliger <jdl@jdl.com>
+Subject: Proposal for new git Merge Strategy
+Date: Wed, 23 Aug 2006 13:40:39 -0500
+Message-ID: <E1GFxeZ-0000Nw-ED@jdl.com>
+Cc: mwm@mired.org
+X-From: git-owner@vger.kernel.org Wed Aug 23 20:41:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFvr3-0002y5-Nt
-	for gcvg-git@gmane.org; Wed, 23 Aug 2006 18:45:26 +0200
+	id 1GFxep-0003Mp-2J
+	for gcvg-git@gmane.org; Wed, 23 Aug 2006 20:40:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965056AbWHWQpW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Aug 2006 12:45:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965057AbWHWQpW
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 12:45:22 -0400
-Received: from code-monkey.de ([81.169.170.126]:25359 "EHLO code-monkey.de")
-	by vger.kernel.org with ESMTP id S965056AbWHWQpV (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Aug 2006 12:45:21 -0400
-Received: from hammerfest (c-180-198-68.bi.dial.de.ignite.net [62.180.198.68])
-	by code-monkey.de (Postfix) with ESMTP id 2657CB428
-	for <git@vger.kernel.org>; Wed, 23 Aug 2006 18:45:18 +0200 (CEST)
+	id S965092AbWHWSkq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Aug 2006 14:40:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965101AbWHWSkp
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 14:40:45 -0400
+Received: from jdl.com ([66.118.10.122]:7581 "EHLO jdl.com")
+	by vger.kernel.org with ESMTP id S965092AbWHWSkp (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Aug 2006 14:40:45 -0400
+Received: from jdl (helo=jdl.com)
+	by jdl.com with local-esmtp (Exim 4.44)
+	id 1GFxeZ-0000Nw-ED; Wed, 23 Aug 2006 13:40:40 -0500
 To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7virkkl4ph.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Spam-Score: -5.9 (-----)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25922>
 
+Folks,
 
---opJtzjQTFsWo+cga
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The other day, I was talking to some other folks else-list
+about git's approach to merges and mentioned that there was
+some structure in place to handle different merge strategies.
 
-Junio C Hamano [2006-08-22 16:40]:
-> Tilman Sauerbeck <tilman@code-monkey.de> writes:
->=20
-> > +	These two options may be used to make `git-daemon` change its uid and
-> > +	gid	before entering the server loop.
-> > +	The uid that's used is the one of 'user'. If `group` is specified,
-> > +	the gid is set to the one of 'group', otherwise, the default gid
-> > +	of 'user' is used.
->=20
-> Funny whitespaces all over the place...
+One person observed that Perforce had a really good
+approach to merging and conflict resolution that allowed
+user interaction during the process specifically to
+help select the individual files and hunks that contributed
+to the final result.  I confess that I have never used
+Perforce, so this is all hear-say and interpretation. :-)
 
-There's exactly _one_ stray \t in the middle of a line. Not quite what
-I'd call "all over the place' ;)
-I should probably tell vim to hilight space errors in txt files, too.
+However, it does seem like an approach that we could
+easily add to git -- not as the default of course.
+(Just think how dead we'd all be if Linus had to manually
+interact with every merge he performed at the tip of the
+Linux Pyramid. :-)
 
-> Gaah again.  These options do not have any effect (other than
-> sanity checking) on the inetd_mode codepath, so instead of
-> saying this in the documentation I would suggest specifying
-> these options an error under --inetd.
+But for complex or critical merges, a "guided merge"
+strategy seems like it might be a useful tool.  Basically,
+it would offer options to select Stage 1 or Stage 2
+revisions, or step in and offer hunks from Stage 1 and 2,
+revert to "ours" or "theirs", or "revert to 'ours' or 'theirs'
+for all remaining files".  Things like that maybe.
 
-Good point.
+Any thoughts down this line?  Good idea?  Bad idea?
 
-Regards,
-Tilman
+Thanks,
+jdl
 
---=20
-A: Because it messes up the order in which people normally read text.
-Q: Why is top-posting such a bad thing?
-A: Top-posting.
-Q: What is the most annoying thing on usenet and in e-mail?
-
---opJtzjQTFsWo+cga
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iD8DBQFE7IYd27uLisrW2w8RAnuRAJ9QAPUeZN73a0wPfFsPuojWVTbMbACfesMj
-8IiFo9Ymbwh8r5Ulvsob2N0=
-=ezCn
------END PGP SIGNATURE-----
-
---opJtzjQTFsWo+cga--
+PS -- Please keep mwm on the CC: list as he doesn't
+      directly subscribe to the git list, but would
+      like to participate in the thread.  Thanks!
