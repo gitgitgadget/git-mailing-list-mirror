@@ -1,72 +1,60 @@
-From: Haavard Skinnemoen <hskinnemoen@atmel.com>
-Subject: Re: [PATCH] git-send-email: Don't set author_not_sender from Cc:
- lines
-Date: Wed, 23 Aug 2006 11:14:19 +0200
-Organization: Atmel Norway
-Message-ID: <20060823111419.22d92f51@cad-250-152.norway.atmel.com>
-References: <1156253919761-git-send-email-hskinnemoen@atmel.com>
-	<7vd5asjkvb.fsf@assigned-by-dhcp.cox.net>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: stgit: deleting a branch doesn't seem to work
+Date: Wed, 23 Aug 2006 10:15:00 +0100
+Message-ID: <b0943d9e0608230215y17f398fcjad2c8edf6aabf1a@mail.gmail.com>
+References: <e7bda7770608211027m298ca361pdd78e164b9a524a5@mail.gmail.com>
+	 <tnxd5attbhq.fsf@arm.com>
+	 <e7bda7770608221012u269ca577ye83a3a548c4faf08@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 23 11:14:44 2006
+X-From: git-owner@vger.kernel.org Wed Aug 23 11:15:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFooi-00038O-FX
-	for gcvg-git@gmane.org; Wed, 23 Aug 2006 11:14:33 +0200
+	id 1GFopQ-0003Hy-R7
+	for gcvg-git@gmane.org; Wed, 23 Aug 2006 11:15:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751463AbWHWJO2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Aug 2006 05:14:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751465AbWHWJO2
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 05:14:28 -0400
-Received: from nat-132.atmel.no ([80.232.32.132]:19177 "EHLO relay.atmel.no")
-	by vger.kernel.org with ESMTP id S1751463AbWHWJO1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Aug 2006 05:14:27 -0400
-Received: from cad-250-152.norway.atmel.com (cad-250-152.norway.atmel.com [10.191.250.152])
-	by relay.atmel.no (8.13.4/8.13.4) with ESMTP id k7N9EJB1051585;
-	Wed, 23 Aug 2006 11:14:19 +0200 (CEST)
-	(envelope-from hskinnemoen@atmel.com)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd5asjkvb.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed-Claws 2.3.1 (GTK+ 2.8.18; i486-pc-linux-gnu)
+	id S1751468AbWHWJPF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Aug 2006 05:15:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751467AbWHWJPE
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 05:15:04 -0400
+Received: from py-out-1112.google.com ([64.233.166.177]:32608 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1751468AbWHWJPC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Aug 2006 05:15:02 -0400
+Received: by py-out-1112.google.com with SMTP id x66so108927pye
+        for <git@vger.kernel.org>; Wed, 23 Aug 2006 02:15:01 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=G/OyYrjO24VkWiIDQ+bIvyDjpQIX5Jtkyuq/7+j5cus+zDG0RB7nEDQM/ZHq/jd2zCtEnHT2lZUhwP+Az8atfrlbNqHK4JFlauq42n1UcGcZ39MC+fcMmjdufHjRHiyAJe6QWfUQo7a1eGnztelWTwaW2KIlCH/+Bd+6ACkOYIA=
+Received: by 10.35.117.5 with SMTP id u5mr163182pym;
+        Wed, 23 Aug 2006 02:15:01 -0700 (PDT)
+Received: by 10.35.37.16 with HTTP; Wed, 23 Aug 2006 02:15:00 -0700 (PDT)
+To: "Torgil Svensson" <torgil.svensson@gmail.com>
+In-Reply-To: <e7bda7770608221012u269ca577ye83a3a548c4faf08@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25903>
 
-On Tue, 22 Aug 2006 18:34:16 -0700
-Junio C Hamano <junkio@cox.net> wrote:
+On 22/08/06, Torgil Svensson <torgil.svensson@gmail.com> wrote:
+> Otherwise I had no problem in my first stgit experience. I first took
+> a chance that "stgit import" recognized patches saved by
+> "format-patch", but this was easily solved with "stg refresh -e" once
+> I found it (thanks #git).
 
-> The patch looks wrong.  If your name is on CC: and you want to
-> suppress sending to yourself what happens?
+You could also use git-apply which understands the output of
+format-patch and change the commits into StGIT patches with "stg
+uncommit" (use the latest stgit snapshot as it has some bug-fixes and
+can automatically generate the patch name from the commit subject
+line).
 
-It will still send it to you, I guess. The documentation only mentions
-what happens with From: lines, so I wasn't really sure what behaviour is
-expected...
+The tutorial is pretty old and doesn't cover all the commands and options.
 
-> How about doing something like this instead?
-
-Yeah, that's probably better. I just tested it by sending a mail to
-myself, and it doesn't append an extra From: line, so it solves the
-problem as far as I'm concerned.
-
-Haavard
-
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index a83c7e9..8adb6b9 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -510,7 +510,7 @@ foreach my $t (@files) {
->  					if ($2 eq $from) {
->  						next if
-> ($suppress_from); }
-> -					else {
-> +					elsif ($1 eq 'From') {
->  						$author_not_sender =
-> $2; }
->  					printf("(mbox) Adding cc: %s
-> from line '%s'\n",
-> 
+-- 
+Catalin
