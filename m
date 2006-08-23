@@ -1,87 +1,69 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Proposal for new git Merge Strategy
-Date: Wed, 23 Aug 2006 21:02:09 +0200
-Organization: At home
-Message-ID: <eci8nh$uk3$1@sea.gmane.org>
-References: <E1GFxeZ-0000Nw-ED@jdl.com>
+From: "Orlando" <103haywood@aquantive.com>
+Subject: Be leaner and slimmer by next week!
+Date: Wed, 23 Aug 2006 15:42:31 -0400
+Message-ID: <200608231944.k7NJi5np006499@zeus1.kernel.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Wed Aug 23 21:03:37 2006
+Content-Type: text/plain;
+        charset="Windows-1251"
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Wed Aug 23 21:45:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFy0g-0007OG-BN
-	for gcvg-git@gmane.org; Wed, 23 Aug 2006 21:03:31 +0200
+	id 1GFyez-00074R-7e
+	for gcvg-git@gmane.org; Wed, 23 Aug 2006 21:45:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750973AbWHWTDY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Aug 2006 15:03:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965100AbWHWTDY
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 15:03:24 -0400
-Received: from main.gmane.org ([80.91.229.2]:62607 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750973AbWHWTDY (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Aug 2006 15:03:24 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GFy07-0007Gm-68
-	for git@vger.kernel.org; Wed, 23 Aug 2006 21:02:55 +0200
-Received: from host-81-190-21-215.torun.mm.pl ([81.190.21.215])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 23 Aug 2006 21:02:55 +0200
-Received: from jnareb by host-81-190-21-215.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 23 Aug 2006 21:02:55 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-21-215.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S965169AbWHWTo1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Aug 2006 15:44:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965167AbWHWTo1
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 15:44:27 -0400
+Received: from zeus1.kernel.org ([204.152.191.4]:62424 "EHLO zeus1.kernel.org")
+	by vger.kernel.org with ESMTP id S965157AbWHWToZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Aug 2006 15:44:25 -0400
+Received: from LUNAS-PMSBLQNNH.eapyoi3.com (c-68-37-218-158.hsd1.nj.comcast.net [68.37.218.158])
+	by zeus1.kernel.org (8.13.7/8.13.1) with ESMTP id k7NJi5np006499;
+	Wed, 23 Aug 2006 19:44:24 GMT
+To: <bk-commits-head@vger.kernel.org>
+X-Mailer: Microsoft Office Outlook, Build 11.0.5510
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+Thread-Index: Tp5wkGCBdDgZZhjEhB6Dp8F0bmZtAsVbL4oU
+X-Virus-Scanned: ClamAV 0.88.3/1717/Wed Aug 23 16:19:54 2006 on zeus1.kernel.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25924>
+X-Spam-Report: 15.1 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5000]
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: domseta.com]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: obesor.net domseta.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: obesor.net domseta.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: obesor.net]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: obesor.net domseta.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25925>
 
-Jon Loeliger wrote:
+Yo Bk-commits-head!!!
 
-> The other day, I was talking to some other folks else-list
-> about git's approach to merges and mentioned that there was
-> some structure in place to handle different merge strategies.
-> 
-> One person observed that Perforce had a really good
-> approach to merging and conflict resolution that allowed
-> user interaction during the process specifically to
-> help select the individual files and hunks that contributed
-> to the final result.  I confess that I have never used
-> Perforce, so this is all hear-say and interpretation. :-)
-> 
-> However, it does seem like an approach that we could
-> easily add to git -- not as the default of course.
-> (Just think how dead we'd all be if Linus had to manually
-> interact with every merge he performed at the tip of the
-> Linux Pyramid. :-)
-> 
-> But for complex or critical merges, a "guided merge"
-> strategy seems like it might be a useful tool.  Basically,
-> it would offer options to select Stage 1 or Stage 2
-> revisions, or step in and offer hunks from Stage 1 and 2,
-> revert to "ours" or "theirs", or "revert to 'ours' or 'theirs'
-> for all remaining files".  Things like that maybe.
 
-And select which files are which (after renaming, copying, etc.)
 
-> Any thoughts down this line?  Good idea?  Bad idea?
+Amazing weight loss stories here:
 
-Wouldn't it be better to fallback to graphical/user guided 
-merger only on _failed_ merge? Merge helpers like xxdiff, 
-Meld or KDiff3 
-  http://git.or.cz/gitwiki/InterfacesFrontendsAndToolsWishlist
-There was proposal of git script which run xxdiff with correct
-extracted files, if I remeber correctly postponed waiting for
-more generic version.
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+http://www.domseta.com/n/?52&crosspointdewar
+
+
+
+
+I've always had trouble with my weight ever since I was young. Of course I tried all the "best" fat loss products, nothing helped very much. It wasn't til I tried Anatrim that I saw the pounds seriously start to melt away! Nothing helped me lose weight faster. I literally saw 15 pounds melt away within the first few weeks! There's nothing more exciting than watching pounds disappear, especially when you've tried all sorts of different methods and products before. I've since read up on Anatrim and am amazed at the number of people who have benefited from its amazing results. I'm halfway to my goal, Anatrim will get me the rest of the way ;)
+
+
+Jordan McKenzie, New York
+
+
+http://www.obesor.net/hd/?52&diamagneticcadent
