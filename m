@@ -1,92 +1,99 @@
 From: Pierre Habouzit <madcoder@debian.org>
-Subject: [PATCH 0/7] C cleanup series, mostly nasty shadowing
-Date: Wed, 23 Aug 2006 12:38:10 +0200
-Organization: Polytechnique.org
-Message-ID: <200608231238.10963.madcoder@debian.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1266832.HvbWjUAKNA";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Aug 23 12:40:15 2006
+Subject: [PATCH 1/7] avoid to use error that shadows the function name, use err instead.
+Date: Wed, 23 Aug 2006 12:39:10 +0200
+Message-ID: <11563295562072-git-send-email-madcoder@debian.org>
+Cc: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Wed Aug 23 12:40:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFq7k-0006vb-Qn
-	for gcvg-git@gmane.org; Wed, 23 Aug 2006 12:38:17 +0200
+	id 1GFq9A-0007TY-Ia
+	for gcvg-git@gmane.org; Wed, 23 Aug 2006 12:39:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964822AbWHWKiO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Aug 2006 06:38:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964827AbWHWKiO
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 06:38:14 -0400
-Received: from mx1.polytechnique.org ([129.104.30.34]:30604 "EHLO
-	mx1.polytechnique.org") by vger.kernel.org with ESMTP
-	id S964822AbWHWKiN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Aug 2006 06:38:13 -0400
-Received: from mad.intersec.eu (beacon-free1.intersec.eu [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by ssl.polytechnique.org (Postfix) with ESMTP id 2554733296;
-	Wed, 23 Aug 2006 12:38:12 +0200 (CEST)
+	id S964829AbWHWKj2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Aug 2006 06:39:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964830AbWHWKj2
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 06:39:28 -0400
+Received: from rudy.intersec.eu ([88.191.20.202]:55229 "EHLO mx2.intersec.fr")
+	by vger.kernel.org with ESMTP id S964832AbWHWKjU (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Aug 2006 06:39:20 -0400
+Received: from localhost.localdomain (beacon-free1.intersec.eu [81.57.219.236])
+	by mx1.intersec.eu (Postfix) with ESMTP id 14186D817F;
+	Wed, 23 Aug 2006 12:39:17 +0200 (CEST)
+Received: by localhost.localdomain (Postfix, from userid 1003)
+	id E6DB23FE07; Wed, 23 Aug 2006 12:39:16 +0200 (CEST)
 To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-X-AV-Checked: ClamAV using ClamSMTP at djali.polytechnique.org (Wed Aug 23 12:38:12 2006 +0200 (CEST))
-X-Spam-Flag: No, tests=bogofilter, spamicity=0.000041, queueID=430073332C
-X-Org-Mail: pierre.habouzit.2000@polytechnique.org
+X-Mailer: git-send-email 1.4.2.g4caa
+In-Reply-To: 200608231238.10963.madcoder@debian.org
+References: 200608231238.10963.madcoder@debian.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25910>
 
---nextPart1266832.HvbWjUAKNA
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+---
+ builtin-apply.c |    6 +++---
+ builtin-push.c  |   10 +++++-----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
-
-This series of patches intend to fix some not very nice bits of code.
-None of them are critical though.
-
- 0001-avoid-to-use-error-that-shadows-the-function-name-use-err-instead.txt
- 0002-git_dir-holds-pointers-to-local-strings-hence-MUST-be-const.txt
- 0003-missing-static-keywords.txt
- 0004-remove-ugly-shadowing-of-loop-indexes-in-subloops.txt
- 0005-missing-define-DEBUG-0-that-made-the-preprocessor-whine.txt
- 0006-use-name-len-in-switch-directly-instead-of-creating-a-shadowed-variab=
-le.txt
- 0007-n-is-in-fact-unused-and-is-later-shadowed.txt
-
- builtin-apply.c    |   10 ++++------
- builtin-grep.c     |    2 ++
- builtin-mv.c       |    6 +++---
- builtin-push.c     |   10 +++++-----
- builtin-tar-tree.c |    2 +-
- cache.h            |    2 +-
- date.c             |    5 ++---
- environment.c      |    7 ++++---
- git.c              |    6 +++---
- http-push.c        |    2 +-
- 10 files changed, 26 insertions(+), 26 deletions(-)
-
-=2D-=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---nextPart1266832.HvbWjUAKNA
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iD8DBQBE7DASvGr7W6HudhwRAiQTAJ9Mkr6SbFoK0wPBBTQdxgLKPRoJ4ACfQZGh
-11XZv57S6uf43UxBN26lGj0=
-=Iml8
------END PGP SIGNATURE-----
-
---nextPart1266832.HvbWjUAKNA--
+diff --git a/builtin-apply.c b/builtin-apply.c
+index 4f0eef0..5991737 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -1907,13 +1907,13 @@ static int check_patch(struct patch *pat
+ static int check_patch_list(struct patch *patch)
+ {
+ 	struct patch *prev_patch = NULL;
+-	int error = 0;
++	int err = 0;
+ 
+ 	for (prev_patch = NULL; patch ; patch = patch->next) {
+-		error |= check_patch(patch, prev_patch);
++		err |= check_patch(patch, prev_patch);
+ 		prev_patch = patch;
+ 	}
+-	return error;
++	return err;
+ }
+ 
+ static void show_index_list(struct patch *list)
+diff --git a/builtin-push.c b/builtin-push.c
+index 2b5e6fa..ada8338 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -232,7 +232,7 @@ static int do_push(const char *repo)
+ 	common_argc = argc;
+ 
+ 	for (i = 0; i < n; i++) {
+-		int error;
++		int err;
+ 		int dest_argc = common_argc;
+ 		int dest_refspec_nr = refspec_nr;
+ 		const char **dest_refspec = refspec;
+@@ -248,10 +248,10 @@ static int do_push(const char *repo)
+ 		while (dest_refspec_nr--)
+ 			argv[dest_argc++] = *dest_refspec++;
+ 		argv[dest_argc] = NULL;
+-		error = run_command_v(argc, argv);
+-		if (!error)
++		err = run_command_v(argc, argv);
++		if (!err)
+ 			continue;
+-		switch (error) {
++		switch (err) {
+ 		case -ERR_RUN_COMMAND_FORK:
+ 			die("unable to fork for %s", sender);
+ 		case -ERR_RUN_COMMAND_EXEC:
+@@ -262,7 +262,7 @@ static int do_push(const char *repo)
+ 		case -ERR_RUN_COMMAND_WAITPID_NOEXIT:
+ 			die("%s died with strange error", sender);
+ 		default:
+-			return -error;
++			return -err;
+ 		}
+ 	}
+ 	return 0;
+-- 
+1.4.1.1
