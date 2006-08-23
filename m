@@ -1,67 +1,68 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: "cg-commit -M msg-file ..." fails when not run from top of tree
-Date: Wed, 23 Aug 2006 12:27:38 +0200
-Message-ID: <87d5aru4px.fsf@rho.meyering.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Aug 23 12:27:23 2006
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: [PATCH 3/7] missing 'static' keywords
+Date: Wed, 23 Aug 2006 12:39:12 +0200
+Message-ID: <1156329556788-git-send-email-madcoder@debian.org>
+References: 200608231238.10963.madcoder@debian.org <11563295562072-git-send-email-madcoder@debian.org> <11563295562422-git-send-email-madcoder@debian.org>
+Cc: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Wed Aug 23 12:39:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFpxB-000413-WE
-	for gcvg-git@gmane.org; Wed, 23 Aug 2006 12:27:22 +0200
+	id 1GFq9B-0007TY-Oj
+	for gcvg-git@gmane.org; Wed, 23 Aug 2006 12:39:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964819AbWHWK1R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Aug 2006 06:27:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964820AbWHWK1R
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 06:27:17 -0400
-Received: from mx.meyering.net ([82.230.74.64]:23953 "EHLO mx.meyering.net")
-	by vger.kernel.org with ESMTP id S964819AbWHWK1Q (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Aug 2006 06:27:16 -0400
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id 3E720B29; Wed, 23 Aug 2006 12:27:38 +0200 (CEST)
+	id S964832AbWHWKj2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Aug 2006 06:39:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964829AbWHWKj1
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 06:39:27 -0400
+Received: from rudy.intersec.eu ([88.191.20.202]:48550 "EHLO mx2.intersec.fr")
+	by vger.kernel.org with ESMTP id S964830AbWHWKjU (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Aug 2006 06:39:20 -0400
+Received: from localhost.localdomain (beacon-free1.intersec.eu [81.57.219.236])
+	by mx1.intersec.eu (Postfix) with ESMTP id 31DB5D81BB;
+	Wed, 23 Aug 2006 12:39:17 +0200 (CEST)
+Received: by localhost.localdomain (Postfix, from userid 1003)
+	id 066E0409BC; Wed, 23 Aug 2006 12:39:16 +0200 (CEST)
 To: git@vger.kernel.org
+X-Mailer: git-send-email 1.4.2.g4caa
+In-Reply-To: <11563295562422-git-send-email-madcoder@debian.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25908>
 
-Hello,
+Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+---
+ builtin-tar-tree.c |    2 +-
+ http-push.c        |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-I discovered that "cg-commit -M MSG-FILE ..." fails when run from
-a subdirectory, and when MSG-FILE is a relative file name.
-This is using cogito-0.17.3-2 from Debian/unstable, but the problem
-remains when using the latest cogito sources, pulled minutes ago.
-
-Here's an example:
-
-  $ mkdir a; touch a/x; cg-init -m. .; cd a; echo . > x; cg-commit -M x x
-  defaulting to local storage area
-  Adding file a/x
-  Committing initial tree 341d89829a1bf9c0ccfbccf738815cbc862b3242
-  Committed as 6497164c6f8e86220ff26c6b89b9d0dbad5a7743
-  cat: x: No such file or directory
-  [Exit 1]
-
-This appears to be due to the "cd", that can happen in cg-Xlib:
-
-  _git="${GIT_DIR:-.git}"
-  if [ ! "$_git_repo_unneeded" ] && [ ! "$GIT_DIR" ] && [ ! -d "$_git" ]; then
-          _git_abs_path="$(git-rev-parse --git-dir 2>/dev/null)"
-          if [ -d "$_git_abs_path" ]; then
-                  _git_relpath="$(git-rev-parse --show-prefix)"
-==========>       cd "$_git_abs_path/.."         <==============
-          fi
-  fi
-  _git_objects="${GIT_OBJECT_DIRECTORY:-$_git/objects}"
-
-I can work around the problem by using an absolute name for
-the message file, but I shouldn't have to do that.
-
-FWIW, I tried setting GIT_DIR to the absolute name of the .git directory,
-but that just made it so cg-commit failed with this diagnostic:
-
-  cg-commit: Nothing to commit
-
-Jim
+diff --git a/builtin-tar-tree.c b/builtin-tar-tree.c
+index e0bcb0a..61a4135 100644
+--- a/builtin-tar-tree.c
++++ b/builtin-tar-tree.c
+@@ -275,7 +275,7 @@ static void traverse_tree(struct tree_de
+ 	}
+ }
+ 
+-int git_tar_config(const char *var, const char *value)
++static int git_tar_config(const char *var, const char *value)
+ {
+ 	if (!strcmp(var, "tar.umask")) {
+ 		if (!strcmp(value, "user")) {
+diff --git a/http-push.c b/http-push.c
+index 4849779..7d12f69 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1700,7 +1700,7 @@ static int locking_available(void)
+ 	return lock_flags;
+ }
+ 
+-struct object_list **add_one_object(struct object *obj, struct object_list **p)
++static struct object_list **add_one_object(struct object *obj, struct object_list **p)
+ {
+ 	struct object_list *entry = xmalloc(sizeof(struct object_list));
+ 	entry->item = obj;
+-- 
+1.4.1.1
