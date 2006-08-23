@@ -1,69 +1,85 @@
-From: "Orlando" <103haywood@aquantive.com>
-Subject: Be leaner and slimmer by next week!
-Date: Wed, 23 Aug 2006 15:42:31 -0400
-Message-ID: <200608231944.k7NJi5np006499@zeus1.kernel.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Proposal for new git Merge Strategy
+Date: Wed, 23 Aug 2006 13:00:31 -0700
+Message-ID: <7vsljngr34.fsf@assigned-by-dhcp.cox.net>
+References: <E1GFxeZ-0000Nw-ED@jdl.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1251"
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Wed Aug 23 21:45:18 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 23 22:01:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFyez-00074R-7e
-	for gcvg-git@gmane.org; Wed, 23 Aug 2006 21:45:09 +0200
+	id 1GFytw-0001Fh-86
+	for gcvg-git@gmane.org; Wed, 23 Aug 2006 22:00:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965169AbWHWTo1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Aug 2006 15:44:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965167AbWHWTo1
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 15:44:27 -0400
-Received: from zeus1.kernel.org ([204.152.191.4]:62424 "EHLO zeus1.kernel.org")
-	by vger.kernel.org with ESMTP id S965157AbWHWToZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Aug 2006 15:44:25 -0400
-Received: from LUNAS-PMSBLQNNH.eapyoi3.com (c-68-37-218-158.hsd1.nj.comcast.net [68.37.218.158])
-	by zeus1.kernel.org (8.13.7/8.13.1) with ESMTP id k7NJi5np006499;
-	Wed, 23 Aug 2006 19:44:24 GMT
-To: <bk-commits-head@vger.kernel.org>
-X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
-Thread-Index: Tp5wkGCBdDgZZhjEhB6Dp8F0bmZtAsVbL4oU
-X-Virus-Scanned: ClamAV 0.88.3/1717/Wed Aug 23 16:19:54 2006 on zeus1.kernel.org
-X-Virus-Status: Clean
+	id S965176AbWHWUAc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Aug 2006 16:00:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965178AbWHWUAc
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 16:00:32 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:12936 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S965176AbWHWUAc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Aug 2006 16:00:32 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060823200031.DVDA12909.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 23 Aug 2006 16:00:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id DY0W1V00d4Noztg0000000
+	Wed, 23 Aug 2006 16:00:31 -0400
+To: Jon Loeliger <jdl@jdl.com>
+In-Reply-To: <E1GFxeZ-0000Nw-ED@jdl.com> (Jon Loeliger's message of "Wed, 23
+	Aug 2006 13:40:39 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 15.1 points;
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5000]
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: domseta.com]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: obesor.net domseta.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: obesor.net domseta.com]
- *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: obesor.net]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: obesor.net domseta.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25926>
 
-Yo Bk-commits-head!!!
+Jon Loeliger <jdl@jdl.com> writes:
 
+> But for complex or critical merges, a "guided merge"
+> strategy seems like it might be a useful tool.  Basically,
+> it would offer options to select Stage 1 or Stage 2
+> revisions, or step in and offer hunks from Stage 1 and 2,
+> revert to "ours" or "theirs", or "revert to 'ours' or 'theirs'
+> for all remaining files".  Things like that maybe.
+>
+> Any thoughts down this line?  Good idea?  Bad idea?
 
+We had some discussion on this with Catalin in "Unresolved
+issues #3" thread, regarding git-xxdiff (did I ever take it?  I
+liked it for what it does, but I was not sure about its
+odd-man-out-ness) which was proposed by Martin Langhoff.
 
-Amazing weight loss stories here:
+A merge that results in manual fixups conceptually take these
+steps:
 
+ - revs involved in 3-way merge identified with git-merge-base;
 
-http://www.domseta.com/n/?52&crosspointdewar
+ - read-tree is given these three bases;
 
+ - git-merge-index gives three stages as individual temporary
+   files to git-merge-one-file for each path that cannot be
+   resolved at tree-level.
 
+   - git-merge-one-file calls "merge" (reminds me that I should
+     replace this with "diff3").
 
+We should be able to make the part that call "merge/diff3" to
+alternatively call xxdiff or its friends (kompare, emerge, pick
+your favorites).  Catalin even showed us a code snippet used in
+StGIT for this in the thread.
 
-I've always had trouble with my weight ever since I was young. Of course I tried all the "best" fat loss products, nothing helped very much. It wasn't til I tried Anatrim that I saw the pounds seriously start to melt away! Nothing helped me lose weight faster. I literally saw 15 pounds melt away within the first few weeks! There's nothing more exciting than watching pounds disappear, especially when you've tried all sorts of different methods and products before. I've since read up on Anatrim and am amazed at the number of people who have benefited from its amazing results. I'm halfway to my goal, Anatrim will get me the rest of the way ;)
-
-
-Jordan McKenzie, New York
-
-
-http://www.obesor.net/hd/?52&diamagneticcadent
+Martin's proposed tool git-xxdiff is meant to be invoked after
+all of the above still left conflict markers.  As Catalin
+pointed out, using "xxdiff -U" to work on a file with conflict
+markers is less powerful than working on three stages directly,
+but on the other hand it can be used as the last stage fixup,
+independent from what git-merge does internally.  In other
+words, it is meant to help solving the same problem but in a
+different part of the workflow.
