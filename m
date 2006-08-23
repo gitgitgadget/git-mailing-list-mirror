@@ -1,49 +1,61 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Fix a comparison bug in diff-delta.c
-Date: Tue, 22 Aug 2006 23:17:24 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0608222311060.3683@localhost.localdomain>
-References: <1156300368160-git-send-email-madcoder@debian.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [RFC] adding support for md5
+Date: Wed, 23 Aug 2006 00:14:53 -0400
+Message-ID: <20060823041453.GA25796@spearce.org>
+References: <Pine.LNX.4.63.0608172259280.25827@chino.corp.google.com> <Pine.LNX.4.64.0608191339010.11811@g5.osdl.org> <20060821204430.GA2700@tuatara.stupidest.org> <7vr6z9s376.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 23 05:17:42 2006
+X-From: git-owner@vger.kernel.org Wed Aug 23 06:15:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GFjFD-0003Lb-3k
-	for gcvg-git@gmane.org; Wed, 23 Aug 2006 05:17:31 +0200
+	id 1GFk9h-0002wW-FX
+	for gcvg-git@gmane.org; Wed, 23 Aug 2006 06:15:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932309AbWHWDRZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 Aug 2006 23:17:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932321AbWHWDRZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Aug 2006 23:17:25 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:19523 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S932309AbWHWDRZ
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Aug 2006 23:17:25 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J4F00E3YL50WZ90@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 22 Aug 2006 23:17:24 -0400 (EDT)
-In-reply-to: <1156300368160-git-send-email-madcoder@debian.org>
-X-X-Sender: nico@localhost.localdomain
-To: Pierre Habouzit <madcoder@debian.org>
+	id S932341AbWHWEPb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Aug 2006 00:15:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932346AbWHWEPb
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 00:15:31 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:52893 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S932341AbWHWEPb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Aug 2006 00:15:31 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GFk9J-0008Gc-By; Wed, 23 Aug 2006 00:15:29 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id E568B20FB7D; Wed, 23 Aug 2006 00:14:53 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vr6z9s376.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25892>
 
-On Wed, 23 Aug 2006, Pierre Habouzit wrote:
+Junio C Hamano <junkio@cox.net> wrote:
+> I personally am not interested in making this configurable at
+> all.  The hashcmp() change on the other hand to abstract out 20
+> was a good preparation, if we ever want to switch to longer
+> hashes we would know where to look.
 
-> (1 << i) < hspace is compared in the `int` space rather that in the unsigned one.
-> the result will be wrong if hspace is between  0x40000000 and 0x80000000.
-> 
-> Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+What about all of those memcpy(a, b, 20)'s?  :-)
 
-Could you use (1u << i) instead of (unsigned)(1 << i) ?  That looks 
-prettier to me at least.
+I can see us wanting to support say SHA-128 or SHA-256 in a few
+years.  Especially as processors get faster and better attacks are
+developed against SHA-1 such that its no longer really the best
+trade-off hash function available.
 
-
-Nicolas
+-- 
+Shawn.
