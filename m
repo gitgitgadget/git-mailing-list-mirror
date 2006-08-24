@@ -1,66 +1,52 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: git-daemon hangs after invalid request
-Date: Thu, 24 Aug 2006 15:37:05 +0300
-Message-ID: <20060824153705.600f2b1a.tihirvon@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Running gitweb under mod_perl
+Date: Thu, 24 Aug 2006 14:43:06 +0200
+Organization: At home
+Message-ID: <eck6sq$agn$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Aug 24 14:37:24 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Thu Aug 24 14:43:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GGESN-0002Uq-1T
-	for gcvg-git@gmane.org; Thu, 24 Aug 2006 14:37:12 +0200
+	id 1GGEYa-00040S-De
+	for gcvg-git@gmane.org; Thu, 24 Aug 2006 14:43:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751205AbWHXMhG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 Aug 2006 08:37:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751207AbWHXMhG
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Aug 2006 08:37:06 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:50648 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751205AbWHXMhF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Aug 2006 08:37:05 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so562788nfa
-        for <git@vger.kernel.org>; Thu, 24 Aug 2006 05:36:57 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:subject:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=Y88/FMCrzswYIVd0lyAsvOmilhta4jVBalIFDJRTkUOkDtv4H4eX03s4ZqTFGI15E3hL8SiTd2UElL2HSGb6PGi5u68+1TiV+mQtJRB52stvlv6YOzXGv3vyE6ACBI6VvQrw535p6b3oF9h2181dx/toCGshqzrjUld3y4dAME8=
-Received: by 10.49.8.15 with SMTP id l15mr3492388nfi;
-        Thu, 24 Aug 2006 05:36:57 -0700 (PDT)
-Received: from garlic.home.net ( [82.128.229.21])
-        by mx.gmail.com with ESMTP id v20sm4362433nfc.2006.08.24.05.36.52;
-        Thu, 24 Aug 2006 05:36:54 -0700 (PDT)
+	id S1751208AbWHXMnd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 Aug 2006 08:43:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751210AbWHXMnd
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Aug 2006 08:43:33 -0400
+Received: from main.gmane.org ([80.91.229.2]:2988 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751208AbWHXMnc (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Aug 2006 08:43:32 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GGEYL-0003x6-D4
+	for git@vger.kernel.org; Thu, 24 Aug 2006 14:43:21 +0200
+Received: from host-81-190-21-215.torun.mm.pl ([81.190.21.215])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 24 Aug 2006 14:43:21 +0200
+Received: from jnareb by host-81-190-21-215.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 24 Aug 2006 14:43:21 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.10.1; i686-pc-linux-gnu)
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-21-215.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25957>
 
-Hi,
-
-I noticed git-daemon hangs sometimes...
-
-    git clone git://example.com/git/repo.git
-
-works just fine but this
-
-    git clone git://example.com/git/invalid.git
-
-hangs and I have to hit ^C.  It's OK but error message would be nice.
-git-daemon outputs these lines to syslog:
-
-    Request for '/git/invalid.git'
-    '/git/invalid.git': unable to chdir or not a git archive
-
-Now if I try to clone the existing repo again
-
-    git clone git://example.com/git/repo.git
-
-it hangs.  I have to restart git-daemon to get it working again.  I
-started git-daemon (1.4.2) with --syslog --verbose flags.
+Could you tell me what should I do to run gitweb under mod_perl,
+and not as CGI script? What should I put in Apache configuration
+(Apache 2.0.54 if this matters, mod_perl 2.0.1)
 
 -- 
-http://onion.dynserv.net/~timo/
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
