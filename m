@@ -1,99 +1,79 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-send-email: threaded view issue with Thunderbird
-Date: Thu, 24 Aug 2006 01:51:26 -0700
-Message-ID: <7v64gibjox.fsf@assigned-by-dhcp.cox.net>
-References: <20060824081228.69110.qmail@web25808.mail.ukl.yahoo.com>
+From: moreau francis <francis_moreau2000@yahoo.fr>
+Subject: Re : git-send-email: threaded view issue with Thunderbird
+Date: Thu, 24 Aug 2006 08:52:48 +0000 (GMT)
+Message-ID: <20060824085248.66612.qmail@web25814.mail.ukl.yahoo.com>
+References: <200608241043.02731.madcoder@debian.org>
+Reply-To: moreau francis <francis_moreau2000@yahoo.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 24 10:51:38 2006
+X-From: git-owner@vger.kernel.org Thu Aug 24 10:52:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GGAw1-0003K5-Cc
-	for gcvg-git@gmane.org; Thu, 24 Aug 2006 10:51:33 +0200
+	id 1GGAxJ-0003XL-3R
+	for gcvg-git@gmane.org; Thu, 24 Aug 2006 10:52:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750905AbWHXIv1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 Aug 2006 04:51:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750931AbWHXIv1
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Aug 2006 04:51:27 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:58032 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1750905AbWHXIv1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Aug 2006 04:51:27 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060824085126.LPDL12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 24 Aug 2006 04:51:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id DkrR1V0284Noztg0000000
-	Thu, 24 Aug 2006 04:51:26 -0400
-To: moreau francis <francis_moreau2000@yahoo.fr>
-In-Reply-To: <20060824081228.69110.qmail@web25808.mail.ukl.yahoo.com> (moreau
-	francis's message of "Thu, 24 Aug 2006 08:12:28 +0000 (GMT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750934AbWHXIwu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 24 Aug 2006 04:52:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750935AbWHXIwu
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Aug 2006 04:52:50 -0400
+Received: from web25814.mail.ukl.yahoo.com ([217.146.176.247]:63066 "HELO
+	web25814.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S1750933AbWHXIwt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Aug 2006 04:52:49 -0400
+Received: (qmail 66614 invoked by uid 60001); 24 Aug 2006 08:52:48 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.fr;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=d3YFLJinZRYuTyb5De1PgM384pPK5dV/VfKYehKQTlTrCf+chgk7tV9poaJJsAm7VcTKx7RcBdK0b2Dw28cg6X8NxQKhE+VP79rm9HgyUafOBIE0cOwhSL/eavRDbnRFiiAGQXtw1IPOmADyq6e5J5bYSPDioVetfRxP1CKClN4=  ;
+Received: from [194.3.162.233] by web25814.mail.ukl.yahoo.com via HTTP; Thu, 24 Aug 2006 08:52:48 GMT
+To: Pierre Habouzit <madcoder@debian.org>
+In-Reply-To: <200608241043.02731.madcoder@debian.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25950>
 
-moreau francis <francis_moreau2000@yahoo.fr> writes:
+bonjour,
 
-> Hi,
->
-> Sometimes, actually most of the time, git-send-email _seems_ to not
-> work properly with Thunderbird: for example if I send a patchset made
-> up by 4 single patchs, then Thunderbird show me this patchset 'broken'
-> that is [PATCH 2/4] is not shown as a reply to [PATCH 1/4].
-> ...
-> The strange thing is that all email headers are correct.
+Pierre Habouzit wrote:
+> Le jeu 24 ao=C3=BBt 2006 10:12, moreau francis a =C3=A9crit :
+>> Hi,
+>>
+>> Sometimes, actually most of the time, git-send-email _seems_ to not
+>> work properly with Thunderbird: for example if I send a patchset mad=
+e
+>> up by 4 single patchs, then Thunderbird show me this patchset
+>> 'broken' that is [PATCH 2/4] is not shown as a reply to [PATCH 1/4].
+>>
+>> For example I can see:
+>>
+>> [=E2=80=A6]
+>>
+>> [PATCH 0/7] C cleanup series, mostly nasty shadowing
+>>
+>> Does anybody have an idea on what's going wrong ?
+>=20
+> here the problem is that I manually sent the 0/7 as the initial mail,=
+=20
+> and passed its msg-id into --in-reply-to switch of git-send-email. bu=
+t=20
+> I did not specified the brackets, and those were not added, meaning=20
+> that the reference was bad formatted.
+>=20
 
-Then this is a wrong list perhaps ;-).
+well the problem occur with your [PATCH 2/7] and [PATCH 3/7] too. I don=
+'t
+think you manually setup the headers for these patches, do you ?
 
-> I recently notice that someone has sent a patchset using
-> git-send-email and I can see it 'broken' as well. The subject of the
-> first email of the set is
->
-> [PATCH 0/7] C cleanup series, mostly nasty shadowing
->
-> Does anybody have an idea on what's going wrong ?
+> I don't know where your other problems come from. What I know for sur=
+e=20
+> is that I will write my own git-send-email version, with less perl, a=
+nd=20
 
-I see that 7+1 series as "broken"; #1 is not a reply to #0.
-All others are reply to the previous one which is fine:
+that would be great since I don't speak perl.
 
-    Subject: [PATCH 0/7] C cleanup series, mostly nasty shadowing
-    Message-ID: <200608231238.10963.madcoder@debian.org>
-
-    Subject: [PATCH 1/7] avoid to use error that shadows the funct
-    Message-ID: <11563295562072-git-send-email-madcoder@debian.org>
-    In-Reply-To: 200608231238.10963.madcoder@debian.org
-
-    Subject: [PATCH 2/7] git_dir holds pointers to local strings,
-    Message-ID: <11563295562422-git-send-email-madcoder@debian.org>
-    In-Reply-To: <11563295562072-git-send-email-madcoder@debian.org>
-
-    Subject: [PATCH 3/7] missing 'static' keywords
-    Message-ID: <1156329556788-git-send-email-madcoder@debian.org>
-    In-Reply-To: <11563295562422-git-send-email-madcoder@debian.org>
-
-    Subject: [PATCH 4/7] remove ugly shadowing of loop indexes in s
-    Message-ID: <11563295573215-git-send-email-madcoder@debian.org>
-    In-Reply-To: <1156329556788-git-send-email-madcoder@debian.org>
-
-    Subject: [PATCH 5/7] missing #define DEBUG 0 that made the prep
-    Message-ID: <11563295573035-git-send-email-madcoder@debian.org>
-    In-Reply-To: <11563295573215-git-send-email-madcoder@debian.org>
-
-    Subject: [PATCH 6/7] use name[len] in switch directly, 
-    Message-ID: <1156329557424-git-send-email-madcoder@debian.org>
-    In-Reply-To: <11563295573035-git-send-email-madcoder@debian.org>
-
-    Subject: [PATCH 7/7] n is in fact unused, and is later shadowed.
-    Message-ID: <1156329557613-git-send-email-madcoder@debian.org>
-    In-Reply-To: <1156329557424-git-send-email-madcoder@debian.org>
-
-Because #1 has a bogus In-Reply-To field, #0 and #1 would be
-shown at the same level, but #2-7 would be staggered below #1.
+=46rancis
