@@ -1,84 +1,67 @@
-From: Dennis Stosberg <dennis@stosberg.net>
-Subject: Re: Running gitweb under mod_perl
-Date: Thu, 24 Aug 2006 21:32:21 +0200
-Message-ID: <20060824193220.G4a28fdc4@leonov.stosberg.net>
-References: <eck6sq$agn$1@sea.gmane.org> <eckor9$jje$1@sea.gmane.org>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: [PATCH] git-daemon virtual hosting implementation.
+Date: Thu, 24 Aug 2006 15:15:16 -0500
+Message-ID: <1156450516.10054.276.camel@cashmere.sps.mot.com>
+References: <11563591572194-git-send-email-madcoder@debian.org>
+	 <7vmz9vgqlm.fsf@assigned-by-dhcp.cox.net>
+	 <200608232256.10108.madcoder@debian.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 24 21:32:47 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 24 22:23:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GGKwG-0002zN-5r
-	for gcvg-git@gmane.org; Thu, 24 Aug 2006 21:32:28 +0200
+	id 1GGLiO-0007Vd-W0
+	for gcvg-git@gmane.org; Thu, 24 Aug 2006 22:22:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751604AbWHXTcZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 Aug 2006 15:32:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751672AbWHXTcZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Aug 2006 15:32:25 -0400
-Received: from kleekamp.stosberg.net ([85.116.201.130]:4993 "EHLO
-	kleekamp.stosberg.net") by vger.kernel.org with ESMTP
-	id S1751600AbWHXTcY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Aug 2006 15:32:24 -0400
-Received: by kleekamp.stosberg.net (Postfix, from userid 500)
-	id 87B1511D36A; Thu, 24 Aug 2006 21:32:21 +0200 (CEST)
-To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: attachment
-In-Reply-To: <eckor9$jje$1@sea.gmane.org>
-OpenPGP: id=1B2F2863BA13A814C3B133DACC2811F494951CAB; url=http://stosberg.net/dennis.asc
-User-Agent: mutt-ng/devel-r802 (Debian)
+	id S1422638AbWHXUVy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 Aug 2006 16:21:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422637AbWHXUVy
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Aug 2006 16:21:54 -0400
+Received: from az33egw02.freescale.net ([192.88.158.103]:47546 "EHLO
+	az33egw02.freescale.net") by vger.kernel.org with ESMTP
+	id S1422640AbWHXUVx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Aug 2006 16:21:53 -0400
+Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
+	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id k7OKLeSa018916;
+	Thu, 24 Aug 2006 13:21:40 -0700 (MST)
+Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
+	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id k7OKLd2K022217;
+	Thu, 24 Aug 2006 15:21:40 -0500 (CDT)
+To: Pierre Habouzit <madcoder@debian.org>
+In-Reply-To: <200608232256.10108.madcoder@debian.org>
+X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25975>
 
-Jakub Narebski wrote:
+On Wed, 2006-08-23 at 15:56, Pierre Habouzit wrote:
 
-> By the way, does the "static" variables works under mod_perl? i.e.
+> Another option would be not to support virtual hosts, but instead 
+> superseed the --base-path and --user-path with some --base-path-fmt 
+> and --user-path-fmt where the user can specify how to build the path 
+> with simple sprintf-like formats. One could e.g. support:
+>  * %% obviously ;
+>  * %h that will be replaced with the hostname
+>  * %u (only for --user-path-fmt)
+>  * %p (asked path)
+>  * ...
+
+And this is exactly what I have implemented and
+running on my system today!
+
+> I think that's more clever, and allow more flexible use of the virtual 
+> hosting code. It e.g. allow to use the virtual host scheme for the 
+> `base-path` repos and to disallow it for the users.
 > 
-> {
->   my $private_var = "something"
+> --*-path and --*-path-fmt are obviously mutually exclusive.
 > 
->   sub some_sub {
->     ...
->   }
-> 
->   sub other_sub {
->     ...
->   }
-> }
+> What do you think ?
 
-Depends on what you expect.  The variable will remain shared between
-those subs over successive executions, but it will not be reinitialised
-to "something" -- at least not visibly to the subs:
+I kinda like it... :-)
 
-On the first invocation, $private_var is initialised and the two
-subroutines are created.  Internally, they refer to the _instance_ of
-$private_var.  The next time the script is run by mod_perl, $private_var
-gets initialised again, but the subs are persistent and still refer to
-the old instance.  _Their_ copy of the variable will still be shared
-between them, but it will not be reset to "something".
-
-So it should work, but I would avoid such a construction if possible.
-
-Apache::Registry wraps the whole script in another function, which
-is called on each request, so your piece of code really looks somewhat
-like this:
-
-#!/usr/bin/perl
-sub handler {
-    # do something
-    {
-        my $a = 'A';
-	sub sub_a { $a .= 'B' }
-	sub sub_b { print $a."\n" }
-    }
-    sub_a();
-    sub_b();
-}
-for(1..10) { handler() }
-
-Regards,
-Dennis
+jdl
