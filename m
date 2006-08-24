@@ -1,63 +1,66 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Running gitweb under mod_perl
-Date: Thu, 24 Aug 2006 19:49:30 +0200
-Organization: At home
-Message-ID: <eckor9$jje$1@sea.gmane.org>
-References: <eck6sq$agn$1@sea.gmane.org>
+From: Jim Meyering <jim@meyering.net>
+Subject: [PATCH] cg-commit: Fix a typo that would inhibit running of post-commit script:
+Date: Thu, 24 Aug 2006 20:19:54 +0200
+Message-ID: <8764giro6t.fsf@rho.meyering.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Thu Aug 24 19:51:46 2006
+X-From: git-owner@vger.kernel.org Thu Aug 24 20:19:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GGJLz-0002Kf-PV
-	for gcvg-git@gmane.org; Thu, 24 Aug 2006 19:50:56 +0200
+	id 1GGJng-00011e-2S
+	for gcvg-git@gmane.org; Thu, 24 Aug 2006 20:19:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030431AbWHXRuu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 Aug 2006 13:50:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030442AbWHXRuu
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Aug 2006 13:50:50 -0400
-Received: from main.gmane.org ([80.91.229.2]:27105 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1030431AbWHXRut (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Aug 2006 13:50:49 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GGJLU-0002C8-VN
-	for git@vger.kernel.org; Thu, 24 Aug 2006 19:50:25 +0200
-Received: from host-81-190-21-215.torun.mm.pl ([81.190.21.215])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 24 Aug 2006 19:50:24 +0200
-Received: from jnareb by host-81-190-21-215.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 24 Aug 2006 19:50:24 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1751674AbWHXSTY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 Aug 2006 14:19:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751671AbWHXSTX
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Aug 2006 14:19:23 -0400
+Received: from mx.meyering.net ([82.230.74.64]:14986 "EHLO mx.meyering.net")
+	by vger.kernel.org with ESMTP id S1751674AbWHXSTW (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Aug 2006 14:19:22 -0400
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id 39C25F5E; Thu, 24 Aug 2006 20:19:54 +0200 (CEST)
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-21-215.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25970>
 
-By the way, does the "static" variables works under mod_perl? i.e.
+I tried cg-commit with a commit hook, but the hook never ran.
+The problem was a typo:
 
-{
-  my $private_var = "something"
+Fix a typo that would inhibit running the post-commit script:
+s/commit-post/post-commit/.
 
-  sub some_sub {
-    ...
-  }
+Signed-off-by: Jim Meyering <jim@meyering.net>
+---
+ cg-commit |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-  sub other_sub {
-    ...
-  }
-}
-
+diff --git a/cg-commit b/cg-commit
+index 9d3b1a1..82eea60 100755
+--- a/cg-commit
++++ b/cg-commit
+@@ -604,15 +604,16 @@ if [ "$newhead" ]; then
+ 		branchname="$(cat "$_git/branch-name")"
+ 	fi
+ 	[ -z "$branchname" ] && [ "$_git_head" != "master" ] && branchname="$_git_head"
+-	if [ -x "$_git/hooks/post-commit" -a ! "$no_hooks" ]; then
++	post_commit="$_git/hooks/post-commit"
++	if [ -x "$post_commit" -a ! "$no_hooks" ]; then
+ 		if [ "$(git-repo-config --bool cogito.hooks.commit.post.allmerged)" = "true" ]; then
+ 			# We just hope that for the initial commit, the user didn't
+ 			# manage to install the hook yet.
+ 			for merged in $(git-rev-list $newhead ^$oldhead | tac); do
+-				"$_git/hooks/post-commit" "$merged" "$branchname"
++				"$post_commit" "$merged" "$branchname"
+ 			done
+ 		else
+-			"$_git/hooks/post-commit" "$newhead" "$branchname"
++			"$post_commit" "$newhead" "$branchname"
+ 		fi
+ 	fi
+ 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+1.4.1.1
