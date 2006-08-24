@@ -1,80 +1,71 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [RFC] adding support for md5
-Date: Thu, 24 Aug 2006 04:08:07 -0400
-Message-ID: <20060824080807.GG25247@spearce.org>
-References: <Pine.LNX.4.63.0608172259280.25827@chino.corp.google.com> <Pine.LNX.4.64.0608191339010.11811@g5.osdl.org> <20060821204430.GA2700@tuatara.stupidest.org> <7vr6z9s376.fsf@assigned-by-dhcp.cox.net> <20060823041453.GA25796@spearce.org> <7v3bbojbzj.fsf@assigned-by-dhcp.cox.net> <20060823064900.GA26340@spearce.org> <7vac5ubn57.fsf@assigned-by-dhcp.cox.net>
+From: moreau francis <francis_moreau2000@yahoo.fr>
+Subject: git-send-email: threaded view issue with Thunderbird
+Date: Thu, 24 Aug 2006 08:12:28 +0000 (GMT)
+Message-ID: <20060824081228.69110.qmail@web25808.mail.ukl.yahoo.com>
+Reply-To: moreau francis <francis_moreau2000@yahoo.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 24 10:08:34 2006
+X-From: git-owner@vger.kernel.org Thu Aug 24 10:12:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GGAGH-0004p6-ON
-	for gcvg-git@gmane.org; Thu, 24 Aug 2006 10:08:26 +0200
+	id 1GGAKI-0005MM-FX
+	for gcvg-git@gmane.org; Thu, 24 Aug 2006 10:12:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750819AbWHXIIW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 Aug 2006 04:08:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750830AbWHXIIW
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Aug 2006 04:08:22 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:31622 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1750819AbWHXIIV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Aug 2006 04:08:21 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GGAG9-00029f-51; Thu, 24 Aug 2006 04:08:17 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 3833A20FB82; Thu, 24 Aug 2006 04:08:07 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vac5ubn57.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1750825AbWHXIMb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 Aug 2006 04:12:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750830AbWHXIMb
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Aug 2006 04:12:31 -0400
+Received: from web25808.mail.ukl.yahoo.com ([217.12.10.193]:16981 "HELO
+	web25808.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S1750825AbWHXIMa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Aug 2006 04:12:30 -0400
+Received: (qmail 69112 invoked by uid 60001); 24 Aug 2006 08:12:28 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.fr;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type;
+  b=sBSuVfU4pK14FlrpuN945HGErbIm/Db599J371uvIkTE2Yl1318ylAq28dX+j702HMd/MpHqtyu0eE/GLXjBS/IWwKS218S1HotRRvimiblsQmIK17hENN41HkTxsj5zPCAe/B8ojywcbQw+PjJd0zeE/0G5CdG7MiK3WqT93u8=  ;
+Received: from [194.3.162.233] by web25808.mail.ukl.yahoo.com via HTTP; Thu, 24 Aug 2006 08:12:28 GMT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25947>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Shawn Pearce <spearce@spearce.org> writes:
-> 
-> >> > What about all of those memcpy(a, b, 20)'s?  :-)
-> >> 
-> >> Surely.  If you are inclined to, go wild.
-> >
-> > Like this?  :-)
-> 
-> Except some minor nits, yes.
-> 
->  * I would have preferred two patches, one for "master" and one
->    for the C merge-recursive topic (or at least "next").
+Hi,
 
-Doh.  I didn't realize this was something you were interested in
-pulling into master.  Otherwise I would have done this.  Next time
-I'll try to keep that in mind.
- 
->  * You missed a few in "master".
+Sometimes, actually most of the time, git-send-email _seems_ to not
+work properly with Thunderbird: for example if I send a patchset made
+up by 4 single patchs, then Thunderbird show me this patchset 'broken'
+that is [PATCH 2/4] is not shown as a reply to [PATCH 1/4].
 
-Not surprising since I typically work against and use next.
- 
->  * The cast in the second hunk in combine-diff.c was wrong;
->    breakage was caught by our testsuite.
+For example I can see:
 
-OK, that's just flat out stupid of me.  I apologize for making you
-fix my mistakes.  :-)
+[PATCH 0/4]
+       [PATCH 1/4]
+[PATCH 2/4]
+[PATCH 3/4]
+       [PATCH 4/4]
 
-> I've pushed out a fixed up result in "master" and "next".
+instead of
 
-Thanks.
+[PATCH 0/4]
+       [PATCH 1/4]
+          [PATCH 2/4]
+             [PATCH 3/4]
+                [PATCH 4/4]
 
--- 
-Shawn.
+The strange thing is that all email headers are correct.
+
+I recently notice that someone has sent a patchset using
+git-send-email and I can see it 'broken' as well. The subject of the
+first email of the set is
+
+[PATCH 0/7] C cleanup series, mostly nasty shadowing
+
+Does anybody have an idea on what's going wrong ?
+
+thanks,
+
+Francis
