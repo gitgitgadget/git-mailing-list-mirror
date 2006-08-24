@@ -1,64 +1,101 @@
-From: Blu <blu@daga.cl>
-Subject: Re: use case
-Date: Wed, 23 Aug 2006 20:37:36 -0400
-Message-ID: <20060824003736.GJ14223@daga.cl>
-References: <20060821182338.GA21395@daga.cl> <Pine.LNX.4.63.0608212231430.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH/RFC 1/x] gitweb: Use git-diff-tree patch output for commitdiff
+Date: Wed, 23 Aug 2006 19:15:49 -0700
+Message-ID: <7v3bbmhoa2.fsf@assigned-by-dhcp.cox.net>
+References: <200608240015.15071.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Aug 24 02:37:53 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 24 04:15:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GG3E6-00083H-Pg
-	for gcvg-git@gmane.org; Thu, 24 Aug 2006 02:37:43 +0200
+	id 1GG4l8-0006oA-8e
+	for gcvg-git@gmane.org; Thu, 24 Aug 2006 04:15:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965240AbWHXAhj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Aug 2006 20:37:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965265AbWHXAhj
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 20:37:39 -0400
-Received: from [201.215.212.46] ([201.215.212.46]:35723 "EHLO daga.cl")
-	by vger.kernel.org with ESMTP id S965240AbWHXAhi (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Aug 2006 20:37:38 -0400
-Received: from blu by daga.cl with local (Exim 4.62)
-	(envelope-from <blu@daga.cl>)
-	id 1GG3E0-0005N0-Kg
-	for git@vger.kernel.org; Wed, 23 Aug 2006 20:37:36 -0400
-To: git <git@vger.kernel.org>
-Mail-Followup-To: git <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0608212231430.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.12-2006-07-14
+	id S1030197AbWHXCPv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Aug 2006 22:15:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030198AbWHXCPv
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 22:15:51 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:61913 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1030197AbWHXCPu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Aug 2006 22:15:50 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060824021550.VMNE18458.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 23 Aug 2006 22:15:50 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id DeFp1V00F4Noztg0000000
+	Wed, 23 Aug 2006 22:15:49 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200608240015.15071.jnareb@gmail.com> (Jakub Narebski's message
+	of "Thu, 24 Aug 2006 00:15:14 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25939>
 
-On Mon, Aug 21, 2006 at 10:47:47PM +0200, Johannes Schindelin wrote:
-> Ideally, you really would have a common revision to start from. Since you 
-> do not have that yet, you have to go low-level for the first octopus.
-> 
-> Suppose you have the last common version as tip of branch "ancestor", you 
-> could do
-> 
-> 	git merge-octopus ancestor -- HEAD branch1 branch2 ...
+Jakub Narebski <jnareb@gmail.com> writes:
 
-This one didn't work. It complains about not having common ancestors too.
-I did a manual merge anyway.
+> Converting "blobdiff" and "blobdiff_plain" format would be much easier
+> if git-diff-tree and friends had -L <label>/--label=<label> option,
+> like GNU diff has.
 
-> After this -- if everything went well -- you should have a committable 
-> state in the index. Before you commit, you should do
-> 
-> 	git rev-parse branch1 > .git/MERGE_HEAD
-> 	git rev-parse branch2 >> .git/MERGE_HEAD
-> 	git rev-parse branch3 >> .git/MERGE_HEAD
-> 	...
-> 
-> to tell git that you want to commit an octopus merge. This will tell 
-> git-commit what the parents of the merge are.
+I am not sure how that would be useful, given that you would
+disect the header line-by-line to colorize anyway.
 
-This trick did it. Now I have a proper merge commit with common ancestors.
-Thanks a lot.
+> Current patch preserves much of current output; the question is if for
+> example generate if 'plain' format should generate patch which could
+> be appplied by ordinary patch which do not understand git diff
+> extensions (including renaming and copying), as it is done in current
+> version, and if 'html' version should detect renames and copying.
 
--- 
-Blu.
+I would say html is definitely for human consumption; does
+anybody cut&paste html patch and expect to apply that?  Plain
+format I am easy but probably enabling rename is fine.  You can
+edit the header or tell patch to apply to which file anyway, and
+I think the value of being able to view the real changes outweigh
+that inconvenience.
+
+>  * "commitdiff" now products patches with renaming and copying
+>    detection (git-diff-tree is invoked with -M and -C options).
+
+You do not have to give -M and -C; a single -C is enough.
+I wonder if -B is also useful as a default (i.e. -B -C).
+
+For a merge, I often would want to see --cc just like gitk does,
+but it is probably just me.
+
+I do not know we would want to slurp the entier diff in an
+array before processing.  Is this easy to streamify by passing
+an pipe fd to the formatting sub?
+
+>    Empty patches (mode changes and pure renames and copying)
+>    are not written currently.
+
+That's quite bad.
+
+>  * "commitdiff" output is now divided into several div elements
+>    of class "log", "patchset" and "patch".
+>
+>  * "commitdiff_plain" now only generates X-Git-Tag: line only if there
+>    is tag pointing to the current commit.
+
+Hmph...
+
+>    ...; besides we are
+>    interested rather in tags _preceding_ the commit, and _heads_
+>    following the commit.
+
+Interesting observation.  When somebody says "feature X was
+introduced in such and such commit", people would want to know (1) the
+point release they are using has the feature -- which means you
+would want to know the earliest tag that comes after the commit,
+or (2) if the branch they are working on already has that
+feature -- which again means if the head follows the commit.  So
+I am not sure when preceding tag is interesting...
