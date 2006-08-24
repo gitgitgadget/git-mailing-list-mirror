@@ -1,61 +1,110 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: [PATCH] git-daemon virtual hosting implementation.
-Date: Thu, 24 Aug 2006 15:34:36 -0500
-Message-ID: <1156451675.10054.285.camel@cashmere.sps.mot.com>
-References: <11563591572194-git-send-email-madcoder@debian.org>
-	 <7vmz9vgqlm.fsf@assigned-by-dhcp.cox.net>
-	 <200608232256.10108.madcoder@debian.org>
-	 <1156450516.10054.276.camel@cashmere.sps.mot.com>
-	 <7vejv598iq.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Running gitweb under mod_perl
+Date: Thu, 24 Aug 2006 22:59:18 +0200
+Organization: At home
+Message-ID: <ecl3v4$s14$1@sea.gmane.org>
+References: <eck6sq$agn$1@sea.gmane.org> <eckor9$jje$1@sea.gmane.org> <20060824193220.G4a28fdc4@leonov.stosberg.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 24 22:41:19 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Thu Aug 24 23:00:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GGM0h-0003wH-5F
-	for gcvg-git@gmane.org; Thu, 24 Aug 2006 22:41:08 +0200
+	id 1GGMIy-00008o-4y
+	for gcvg-git@gmane.org; Thu, 24 Aug 2006 23:00:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422645AbWHXUlE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 Aug 2006 16:41:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422646AbWHXUlD
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Aug 2006 16:41:03 -0400
-Received: from az33egw01.freescale.net ([192.88.158.102]:34692 "EHLO
-	az33egw01.freescale.net") by vger.kernel.org with ESMTP
-	id S1422645AbWHXUlB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Aug 2006 16:41:01 -0400
-Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
-	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id k7OKewI9019490;
-	Thu, 24 Aug 2006 13:40:58 -0700 (MST)
-Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2])
-	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id k7OKewA5017975;
-	Thu, 24 Aug 2006 15:40:58 -0500 (CDT)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vejv598iq.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
+	id S1422658AbWHXU75 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 24 Aug 2006 16:59:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422659AbWHXU75
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Aug 2006 16:59:57 -0400
+Received: from main.gmane.org ([80.91.229.2]:12732 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1422658AbWHXU74 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Aug 2006 16:59:56 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GGMIl-0008W7-7s
+	for git@vger.kernel.org; Thu, 24 Aug 2006 22:59:47 +0200
+Received: from host-81-190-21-215.torun.mm.pl ([81.190.21.215])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 24 Aug 2006 22:59:47 +0200
+Received: from jnareb by host-81-190-21-215.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 24 Aug 2006 22:59:47 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-21-215.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25978>
 
-On Thu, 2006-08-24 at 15:35, Junio C Hamano wrote:
-> Where is the patch ;-)?
+Dennis Stosberg wrote:
 
-Heh.
+> Jakub Narebski wrote:
+>=20
+>> By the way, does the "static" variables works under mod_perl? i.e.
+>>=20
+>> {
+>>   my $private_var =3D "something"
+>>=20
+>>   sub some_sub {
+>>     ...
+>>   }
+>>=20
+>>   sub other_sub {
+>>     ...
+>>   }
+>> }
+>=20
+> Depends on what you expect.  The variable will remain shared between
+> those subs over successive executions, but it will not be reinitialis=
+ed
+> to "something" -- at least not visibly to the subs:
 
-Well, I rewrote the interpolation code.  As you pointed
-out earlier, it was crap.  I can send that in; no problem.
+Well, I wanted to share read-only variable, initialized once and not
+changed at all. It could be global variable, but it is used only by
+those two functions.
 
-There was some outstanding debate if this was actually
-the right way to go about things.  Specifically, the
-problem of canonical hostname.  A proposal was to use
-peer IP addresses instead, and I just haven't gotten
-around to messing with that yet.  So that is why I
-hadn't sent it in yet.  Sorry.
+> On the first invocation, $private_var is initialised and the two
+> subroutines are created.  Internally, they refer to the _instance_ of
+> $private_var.  The next time the script is run by mod_perl, $private_=
+var
+> gets initialised again, but the subs are persistent and still refer t=
+o
+> the old instance.  _Their_ copy of the variable will still be shared
+> between them, but it will not be reset to "something".
 
-But, I'll rebase it and send it in this evening.
+I don't need to reinitialize $private_var -- it is not changed.=20
 
-jdl
+> Apache::Registry wraps the whole script in another function, which
+> is called on each request, so your piece of code really looks somewha=
+t
+> like this:
+>=20
+> #!/usr/bin/perl
+> sub handler {
+> =A0 =A0 # do something
+> =A0 =A0 {
+> =A0 =A0 =A0 =A0 my $a =3D 'A';
+> =A0=A0=A0=A0=A0=A0=A0=A0sub sub_a { $a .=3D 'B' }
+> =A0=A0=A0=A0=A0=A0=A0=A0sub sub_b { print $a."\n" }
+> =A0 =A0 }
+> =A0 =A0 sub_a();
+> =A0 =A0 sub_b();
+> }
+> for(1..10) { handler() }
+
+Thanks for an explanation.
+
+Is there any way to check at _runtime_ if script is run under mod_perl,
+or would it be simplier (after script reorganization) for install time
+selection of using CGI, FastCGI, or Apache2::something...?
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
