@@ -1,117 +1,145 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] adding support for md5
-Date: Thu, 24 Aug 2006 03:34:22 -0700
-Message-ID: <7vmz9ua0cx.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0608172259280.25827@chino.corp.google.com>
-	<Pine.LNX.4.64.0608191339010.11811@g5.osdl.org>
-	<20060821204430.GA2700@tuatara.stupidest.org>
-	<7vr6z9s376.fsf@assigned-by-dhcp.cox.net>
-	<20060823041453.GA25796@spearce.org>
-	<7v3bbojbzj.fsf@assigned-by-dhcp.cox.net>
-	<20060823064900.GA26340@spearce.org>
-	<7vac5ubn57.fsf@assigned-by-dhcp.cox.net>
-	<20060824080807.GG25247@spearce.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH/RFC 1/x] gitweb: Use git-diff-tree patch output for commitdiff
+Date: Thu, 24 Aug 2006 13:10:13 +0200
+Organization: At home
+Message-ID: <eck1em$p8b$1@sea.gmane.org>
+References: <200608240015.15071.jnareb@gmail.com> <7v3bbmhoa2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 24 12:34:35 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Thu Aug 24 13:12:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GGCXa-0007et-F1
-	for gcvg-git@gmane.org; Thu, 24 Aug 2006 12:34:26 +0200
+	id 1GGD7n-00081r-ER
+	for gcvg-git@gmane.org; Thu, 24 Aug 2006 13:11:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751064AbWHXKeX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 Aug 2006 06:34:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751066AbWHXKeW
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Aug 2006 06:34:22 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:14783 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1751063AbWHXKeW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Aug 2006 06:34:22 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060824103421.MFVO12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 24 Aug 2006 06:34:21 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id DmaL1V0094Noztg0000000
-	Thu, 24 Aug 2006 06:34:21 -0400
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20060824080807.GG25247@spearce.org> (Shawn Pearce's message of
-	"Thu, 24 Aug 2006 04:08:07 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751113AbWHXLLs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 Aug 2006 07:11:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751121AbWHXLLs
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Aug 2006 07:11:48 -0400
+Received: from main.gmane.org ([80.91.229.2]:54686 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751113AbWHXLLr (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Aug 2006 07:11:47 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GGD7H-0007w8-MI
+	for git@vger.kernel.org; Thu, 24 Aug 2006 13:11:20 +0200
+Received: from host-81-190-21-215.torun.mm.pl ([81.190.21.215])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 24 Aug 2006 13:11:19 +0200
+Received: from jnareb by host-81-190-21-215.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 24 Aug 2006 13:11:19 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-21-215.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25954>
 
-Shawn Pearce <spearce@spearce.org> writes:
+Junio C Hamano wrote:
 
->> Except some minor nits, yes.
->> 
->>  * I would have preferred two patches, one for "master" and one
->>    for the C merge-recursive topic (or at least "next").
->
-> Doh.  I didn't realize this was something you were interested in
-> pulling into master.
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> Converting "blobdiff" and "blobdiff_plain" format would be much easier
+>> if git-diff-tree and friends had -L <label>/--label=<label> option,
+>> like GNU diff has.
+> 
+> I am not sure how that would be useful, given that you would
+> disect the header line-by-line to colorize anyway.
 
-Applying them directly to "master" does not have much to do with
-this.
+gitweb could output patch directly (slurp-print) in blobdiff_plain,
+if there were -L <label>/--label=<label> option to git-diff. As it is now
+git_blobdiff_plain (or git_blobdiff('plain')) would have to process diff
+header, replacing hashes by file names.
 
-Of course, if something is obviously the right thing to do, then
-I often apply them straight to "master" (or apply them to
-"maint" and pull the result into "master").  In other cases, I
-prefer to fork off a new series from the tip of the "master"
-into a new topic branch.  Then merge that into either "pu" (if I
-have suspicion that it is not ready for even testing yet) or
-"next", and cook there for a while until it is ready.
+Anyway to get full information you need commits to diff, not only blobs to
+diff, otherwise the mode change information is lost, I think. And then we
+would be able to reus git_patchset_body for git_blobdiff...
 
-While being cooked in "next", what happens is that changes to
-that specific topic are applied to the tip of the topic branch,
-and then pulled into "next", over and over.  Many topic branches
-are cooked simultaneously that way.  So the development history
-of "next" is, eh, messy.
+>> Current patch preserves much of current output; the question is if for
+>> example generate if 'plain' format should generate patch which could
+>> be appplied by ordinary patch which do not understand git diff
+>> extensions (including renaming and copying), as it is done in current
+>> version, and if 'html' version should detect renames and copying.
+> 
+> I would say html is definitely for human consumption; does
+> anybody cut&paste html patch and expect to apply that?  Plain
+> format I am easy but probably enabling rename is fine.  You can
+> edit the header or tell patch to apply to which file anyway, and
+> I think the value of being able to view the real changes outweigh
+> that inconvenience.
 
-I usually test "next", in other words, multiple topics cooking
-together.  But when some changes are applied to "master" that
-might interfere with an older but still not in "master", I pull
-"master" into the topic and test that topic alone in isolation.
+Or I we can add another format/option, 'broken' to git_commitdiff
+and friends.
 
-That way, when a topic matures, we can be reasonably sure that
-it can be pulled into "master" without breaking things.
+>>  * "commitdiff" now products patches with renaming and copying
+>>    detection (git-diff-tree is invoked with -M and -C options).
+> 
+> You do not have to give -M and -C; a single -C is enough.
+> I wonder if -B is also useful as a default (i.e. -B -C).
 
-A single patch on top of "next" depends on all existing topics
-that may or may not turn out to be useful.  That makes such a
-patch less useful than otherwise be.
+So -C implies -M?
 
-So if a series affects things in "master" and some other things
-still not in "master", a preferred way, from my workflow point
-of view, is to have at least two patches: one for "master" and
-another for the rest.  Then what I would do is to fork one topic
-off from "master" and apply the former, pull that into "next"
-and cook that.  That part of the topic can graduate to "master"
-without waiting for other topics in "next".
+> For a merge, I often would want to see --cc just like gitk does,
+> but it is probably just me.
 
-What happens to the rest is a bit more involved.  In the case of
-the hashcpy() patch, one thing that only exists in "next" was
-merge-recursive.c, but the story would be the same if "next" had
-more places that used memcpy(a, b, 20) than "master" in a file
-that are common in two branches.  Ideally, the remainder will be
-broken into pieces and applied as a fixup on top of existing
-topics (in this case, C merge-recursive topic) and then merged
-into "next".  This can be either done by applying the remainder
-directly on top of the affected topic, or forking a subtopic off
-of the affected topic (the latter is useful if the new series
-might turn out to be dud -- the original topic will not be
-contaminated by bad changes and can graduate to "master" more
-easily).
+Planned. The problem is that raw format for --cc differs, and parser
+has to be improved (and similarity is lost)
 
-In any case, I've done a split myself and the parts that can be
-applied to "master" is now sitting in gl/cleanup topic and the
-remainder is sitting in gl/cleanup-next topic which was forked
-off from C merge-recursive topic (you can tell where their tips
-are by looking at "gitk next" output) and both are merged into
-"next".
+> I do not know we would want to slurp the entier diff in an
+> array before processing.  Is this easy to streamify by passing
+> an pipe fd to the formatting sub?
+
+That was one question I meant to ask: slurp entire diff (process
+then output rule) or streamify (streamify larger output for faster 
+result)?  Will do (quite easy).
+
+>>    Empty patches (mode changes and pure renames and copying)
+>>    are not written currently.
+> 
+> That's quite bad.
+
+This can be easily changed. Question: what format? Current "gitweb diff
+header" (<filetype>:<sha1 link> -> <filetype>:<sha1 link>) has no place for
+that. Can be easily changed.
+
+Another question: do output difftree in commitdiff, like in commit view?
+Do write out extended header, perhaps except index line (repeats information
+in "gitweb diff header")?
+
+
+>>  * "commitdiff_plain" now only generates X-Git-Tag: line only if there
+>>    is tag pointing to the current commit.
+> 
+> Hmph...
+> 
+>>    ...; besides we are
+>>    interested rather in tags _preceding_ the commit, and _heads_
+>>    following the commit.
+> 
+> Interesting observation.  When somebody says "feature X was
+> introduced in such and such commit", people would want to know (1) the
+> point release they are using has the feature -- which means you
+> would want to know the earliest tag that comes after the commit,
+> or (2) if the branch they are working on already has that
+> feature -- which again means if the head follows the commit.  So
+> I am not sure when preceding tag is interesting...
+
+Qgit and gitk both show "Follows:" listing followed = preceding tag(s).
+This answers question if given commit has given feature.
+
+I have planned separating generation of first/all preceding/following
+tags/heads (from git_get_references) into subroutines anyway.
+
+I will add 'X-Git-Tag-After:' then.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
