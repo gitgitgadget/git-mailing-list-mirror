@@ -1,50 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Running gitweb under mod_perl
-Date: Thu, 24 Aug 2006 14:46:19 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0608241445420.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <eck6sq$agn$1@sea.gmane.org>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: git cherry-pick feature request
+Date: Thu, 24 Aug 2006 22:54:14 +1000
+Message-ID: <17645.41334.9069.267396@cargo.ozlabs.ibm.com>
+References: <17643.62896.396783.890223@cargo.ozlabs.ibm.com>
+	<7vfyfnixv5.fsf@assigned-by-dhcp.cox.net>
+	<17644.21269.128308.313284@cargo.ozlabs.ibm.com>
+	<7vhd02bn64.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 24 14:46:38 2006
+X-From: git-owner@vger.kernel.org Thu Aug 24 14:54:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GGEbJ-0004cJ-1R
-	for gcvg-git@gmane.org; Thu, 24 Aug 2006 14:46:25 +0200
+	id 1GGEj2-0006XF-OI
+	for gcvg-git@gmane.org; Thu, 24 Aug 2006 14:54:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751210AbWHXMqW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 Aug 2006 08:46:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751213AbWHXMqW
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Aug 2006 08:46:22 -0400
-Received: from mail.gmx.de ([213.165.64.20]:46521 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751210AbWHXMqV (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Aug 2006 08:46:21 -0400
-Received: (qmail invoked by alias); 24 Aug 2006 12:46:19 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp038) with SMTP; 24 Aug 2006 14:46:19 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <eck6sq$agn$1@sea.gmane.org>
-X-Y-GMX-Trusted: 0
+	id S1751230AbWHXMyW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 Aug 2006 08:54:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751266AbWHXMyW
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Aug 2006 08:54:22 -0400
+Received: from ozlabs.tip.net.au ([203.10.76.45]:24264 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S1751230AbWHXMyV (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Aug 2006 08:54:21 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 8C6E367CD0; Thu, 24 Aug 2006 22:54:20 +1000 (EST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vhd02bn64.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25959>
 
-Hi,
+Junio C Hamano writes:
 
-On Thu, 24 Aug 2006, Jakub Narebski wrote:
+> The combined diff (-c and --cc) comparison works by comparing a
+> single post-image (merge result) with multiple pre-images, so I
+> think it is reasonable to compare the working tree files as the
+> post-image and cached and HEAD-tree versions as the preimages.
 
-> Could you tell me what should I do to run gitweb under mod_perl,
-> and not as CGI script? What should I put in Apache configuration
-> (Apache 2.0.54 if this matters, mod_perl 2.0.1)
+Yes, I think that is probably the most useful way around.
 
-I have not checked closely, but it seems that git-instaweb supports 
-mod_perl. Maybe you can find out what you have to do by inspecting 
-git-instaweb?
+> I am not sure how useful this would be though -- I am guessing
+> that in most people's workflow the index and the HEAD would
+> exactly match most of the time, since that is the way Linus
+> encourages (and I follow that myself).  So for that extreme use
+> case, the difference between "diff-index HEAD" and the proposed
+> command (I am thinking about calling it git-diff-status) would
+> be that the latter always has two plus or minus signs instead of
+> one, and lines with a single plus or minus would be an
+> indication that HEAD and index have drifted.  In other words,
+> the largest benefit of "combined diff" which is to simplify
+> trivial "The result took this one not that one wholesale"
+> differences would not be felt.
 
-Hth,
-Dscho
+The tool I am writing knows whether the index matches the HEAD or the
+working directory, and uses a simple git diff-index -p in those
+cases.  The only time when the 3-way diff would be needed is when the
+user wants to commit a subset of the changes in the working version,
+because then the index (== changes to be committed) would be different
+from both the HEAD and the working directory.
+
+I could just do the two diffs and combine them in Tcl; I have done
+that sort of thing in dirdiff.  It gets a bit complicated though, and
+given that we already have C code for an N-way diff, I thought it made
+sense to reuse it.
+
+Thanks,
+Paul.
