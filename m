@@ -1,86 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 3] gitweb: Show information about incomplete lines in commitdiff
-Date: Thu, 24 Aug 2006 01:58:49 +0200
-Message-ID: <200608240158.49908.jnareb@gmail.com>
-References: <200608240015.15071.jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-daemon: more powerful base-path/user-path settings, using formats.
+Date: Wed, 23 Aug 2006 17:17:14 -0700
+Message-ID: <7vbqqbgf79.fsf@assigned-by-dhcp.cox.net>
+References: <7vmz9vgqlm.fsf@assigned-by-dhcp.cox.net>
+	<115637597423-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Aug 24 01:59:22 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 24 02:17:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GG2cu-0001oe-JQ
-	for gcvg-git@gmane.org; Thu, 24 Aug 2006 01:59:16 +0200
+	id 1GG2uQ-0004ZS-W4
+	for gcvg-git@gmane.org; Thu, 24 Aug 2006 02:17:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965211AbWHWX7M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 Aug 2006 19:59:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965310AbWHWX7M
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 19:59:12 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:27976 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S965309AbWHWX7I (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Aug 2006 19:59:08 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so459787nfa
-        for <git@vger.kernel.org>; Wed, 23 Aug 2006 16:58:53 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=gquSe8+RZfe1u6+K+rX8IWR4rMI3AW4TOnv9kfH/k8d8zONbM3l8jTqv8aTTQ2IdXYzB5nB7g3vg/Mr5IguIxE61Qkq6ufn2OifmDrCppdGE4mgFyOQNv5cvKQvwYtyUJ++AbRTuSOezxzbSXJuLtmy81HcikDplFRvLGtZ1BfY=
-Received: by 10.49.8.10 with SMTP id l10mr2793524nfi;
-        Wed, 23 Aug 2006 16:58:53 -0700 (PDT)
-Received: from host-81-190-21-215.torun.mm.pl ( [81.190.21.215])
-        by mx.gmail.com with ESMTP id q28sm3271090nfc.2006.08.23.16.58.51;
-        Wed, 23 Aug 2006 16:58:52 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-In-Reply-To: <200608240015.15071.jnareb@gmail.com>
-Content-Disposition: inline
+	id S965285AbWHXARR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 Aug 2006 20:17:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965296AbWHXARR
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Aug 2006 20:17:17 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:5564 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S965285AbWHXARP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Aug 2006 20:17:15 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060824001714.KOXY21457.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 23 Aug 2006 20:17:14 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id DcHE1V00K4Noztg0000000
+	Wed, 23 Aug 2006 20:17:14 -0400
+To: Pierre Habouzit <madcoder@debian.org>
+In-Reply-To: <115637597423-git-send-email-madcoder@debian.org> (Pierre
+	Habouzit's message of "Thu, 24 Aug 2006 01:32:54 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25937>
 
-In format_diff_line, instead of skipping errors/incomplete lines,
-for example
-  "\ No newline at end of file"
-in HTML pretty-printing of diff, use "incomplete" class for div.
+Pierre Habouzit <madcoder@debian.org> writes:
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/gitweb.css  |    4 ++++
- gitweb/gitweb.perl |    2 +-
- 2 files changed, 5 insertions(+), 1 deletions(-)
+> Allow a form of virtualhosting, when %h format is used.
+>
+> Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+> ---
+>
+>     This is intended to be a more flexible solution, that also gives virtual
+>     hosting as a bonus. I still see no way to deal with older clients when
+>     virtual hosting is used by the admin though, having a "default" hostname
+>     won't solve anything at all anyway.
 
-diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-index 4821022..5eaa24f 100644
---- a/gitweb/gitweb.css
-+++ b/gitweb/gitweb.css
-@@ -285,6 +285,10 @@ div.diff.chunk_header {
- 	color: #990099;
- }
- 
-+div.diff.incomplete {
-+	color: #cccccc;
-+}
-+
- div.diff_info {
- 	font-family: monospace;
- 	color: #000099;
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index c238824..42b8f93 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -539,7 +539,7 @@ sub format_diff_line {
- 		$diff_class = " chunk_header";
- 	} elsif ($char eq "\\") {
- 		# skip errors (incomplete lines)
--		return "";
-+		$diff_class = " incomplete";
- 	}
- 	$line = untabify($line);
- 	return "<div class=\"diff$diff_class\">" . esc_html($line) . "</div>\n";
--- 
-1.4.1.1
+I mildly disagree about the last sentence.  Enabling virtual
+hosting does not have to mean all virtual hosts are treated
+equal.  It is conceivable that a site hosts the primary,
+"collection of public repositories everybody would want to go
+to" set, with supplemental ones for specific audiences that are
+done via virtual hosting.  General public who would want to
+access the primary one can come with older clients that way, and
+only the narrower audiences have to be told to upgrade.
+
+The client-side host= support was done post 1.4.0-rc1 timeframe
+so we have to be nicer to 1.3 based people, at least give them a
+way to slurp newer version with their client ;-).
+
+Haven't looked at the rest of the patch yet.  Will comment
+later.
