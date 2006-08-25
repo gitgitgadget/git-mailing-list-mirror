@@ -1,92 +1,90 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: recommend rebase for syncing against an SVN repo
-Date: Fri, 25 Aug 2006 12:48:23 -0700
-Message-ID: <20060825194823.GC8957@localdomain>
-References: <m2u040n5e2.fsf@ziti.local> <20060825191516.GA8957@localdomain>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 00/19] gitweb: Remove dependency on external diff and need for temporary files
+Date: Fri, 25 Aug 2006 23:15:56 +0200
+Message-ID: <200608252315.57181.jnareb@gmail.com>
+References: <200608240015.15071.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 25 21:48:31 2006
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Aug 25 23:16:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GGhfK-0008UE-PK
-	for gcvg-git@gmane.org; Fri, 25 Aug 2006 21:48:31 +0200
+	id 1GGj1v-0000nf-Vo
+	for gcvg-git@gmane.org; Fri, 25 Aug 2006 23:15:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422871AbWHYTs1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 Aug 2006 15:48:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422865AbWHYTs1
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Aug 2006 15:48:27 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:8596 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1422830AbWHYTsZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Aug 2006 15:48:25 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id D58817DC02E;
-	Fri, 25 Aug 2006 12:48:23 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 25 Aug 2006 12:48:23 -0700
-To: Seth Falcon <sethfalcon@gmail.com>
+	id S1750830AbWHYVPx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 Aug 2006 17:15:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751004AbWHYVPx
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Aug 2006 17:15:53 -0400
+Received: from nf-out-0910.google.com ([64.233.182.185]:7398 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1750830AbWHYVPw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Aug 2006 17:15:52 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so892235nfa
+        for <git@vger.kernel.org>; Fri, 25 Aug 2006 14:15:51 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=sWDrBOL2CyZ8KL6H5qThzsSdenNTLfnPwYNPdkDdGIPfiMYekOQSyI8FQJMdLUnrGoTxchJjR5yHbx/ZXNPMN/pXglkXkeN4URhfC5K5PT0pTtrgEiedo8SePEPw5vK8Yqfu187Ai6WMbcxtI2YZcs0rI7MGhwdGUONzfzy4TCU=
+Received: by 10.48.48.18 with SMTP id v18mr5923873nfv;
+        Fri, 25 Aug 2006 14:15:51 -0700 (PDT)
+Received: from host-81-190-21-215.torun.mm.pl ( [81.190.21.215])
+        by mx.gmail.com with ESMTP id l27sm7308990nfa.2006.08.25.14.15.51;
+        Fri, 25 Aug 2006 14:15:51 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.3
+In-Reply-To: <200608240015.15071.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20060825191516.GA8957@localdomain>
-User-Agent: Mutt/1.5.12-2006-07-14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26015>
 
-Does this make sense to other git-svn users out there?
+This series of patches (now finished) removes dependency on
+external diff (/usr/bin/diff) to produce commitdiff and blobdiff
+views, and the need for temporary files.
 
-pull can give funky history unless you understand how git-svn works
-internally, which users should not be expected to do.
+Comments appreciated.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
+You can view new gitweb in work at
+  http://front.fuw.edu.pl/cgi-bin/jnareb/gitweb.cgi
 ---
- Documentation/git-svn.txt |   22 ++++++++++++++++++++--
- 1 files changed, 20 insertions(+), 2 deletions(-)
+ gitweb/gitweb.css  |   16 +
+ gitweb/gitweb.perl |  734 +++++++++++++++++++++++++++++++++++-----------------
+ 2 files changed, 515 insertions(+), 235 deletions(-)
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 7d86809..9fce4d3 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -212,12 +212,26 @@ # Commit only the git commits you want t
- 	git-svn commit <tree-ish> [<tree-ish_2> ...]
- # Commit all the git commits from my-branch that don't exist in SVN:
- 	git-svn commit remotes/git-svn..my-branch
--# Something is committed to SVN, pull the latest into your branch:
--	git-svn fetch && git pull . remotes/git-svn
-+# Something is committed to SVN, rebase the latest into your branch:
-+	git-svn fetch && git rebase remotes/git-svn
- # Append svn:ignore settings to the default git exclude file:
- 	git-svn show-ignore >> .git/info/exclude
- ------------------------------------------------------------------------
- 
-+REBASE VS. PULL
-+---------------
-+
-+Originally, git-svn recommended that the remotes/git-svn branch be
-+pulled from.  This is because the author favored 'git-svn commit B'
-+to commit a single head rather than the 'git-svn commit A..B' notation
-+to commit multiple commits.
-+
-+If you use 'git-svn commit A..B' to commit several diffs and you do not
-+have the latest remotes/git-svn merged into my-branch, you should use
-+'git rebase' to update your work branch instead of 'git pull'.  'pull'
-+can cause non-linear history to be flattened when committing into SVN,
-+which can lead to merge commits reversing previous commits in SVN.
-+
- DESIGN PHILOSOPHY
- -----------------
- Merge tracking in Subversion is lacking and doing branched development
-@@ -310,6 +324,10 @@ the possible corner cases (git doesn't d
- copied files are fully supported if they're similar enough for git to
- detect them.
- 
-+SEE ALSO
-+--------
-+gitlink:git-rebase[1]
-+
- Author
- ------
- Written by Eric Wong <normalperson@yhbt.net>.
+
+Shortlog:
+
+01/19 gitweb: Use git-diff-tree patch output for commitdiff
+02/19 gitweb: Replace git_commitdiff_plain by anonymous subroutine
+03/19 gitweb: Show information about incomplete lines in commitdiff
+      Revert "gitweb: Replace git_commitdiff_plain by anonymous
+              subroutine"
+04/19 gitweb: Remove invalid comment in format_diff_line
+05/19 gitweb: Streamify patch output in git_commitdiff
+06/19 gitweb: Add git_get_{following,preceding}_references functions
+07/19 gitweb: Return on first ref found when
+      git_get_preceding_references is called in scalar context
+08/19 gitweb: Add git_get_rev_name_tags function
+09/19 gitweb: Use git_get_name_rev_tags for commitdiff_plain 
+      X-Git-Tag: header
+10/19 gitweb: Add support for hash_parent_base parameter for blobdiffs
+11/19 gitweb: Allow for pre-parsed difftree info in git_patchset_body
+12/19 gitweb: Parse two-line from-file/to-file diff header
+      in git_patchset_body
+13/19 gitweb: Add invisible hyperlink to from-file/to-file diff header
+14/19 gitweb: Always display link to blobdiff_plain in git_blobdiff
+15/19 gitweb: Change here-doc back for consistency in git_blobdiff
+16/19 gitweb: Use git-diff-tree or git-diff patch output for blobdiff
+17/19 gitweb: git_blobdiff_plain is git_blobdiff('plain')
+18/19 gitweb: Remove git_diff_print subroutine
+19/19 gitweb: Remove creating directory for temporary files
+
 -- 
-1.4.2.g7c9b
+Jakub Narebski
+ShadeHawk on #git
+Poland
