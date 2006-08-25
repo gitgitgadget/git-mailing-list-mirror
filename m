@@ -1,39 +1,39 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 19/19] gitweb: Remove creating directory for temporary files
-Date: Fri, 25 Aug 2006 21:35:27 +0200
-Message-ID: <200608252135.27894.jnareb@gmail.com>
+Subject: [PATCH 17/19] gitweb: git_blobdiff_plain is git_blobdiff('plain')
+Date: Fri, 25 Aug 2006 21:14:49 +0200
+Message-ID: <200608252114.50142.jnareb@gmail.com>
 References: <200608240015.15071.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Aug 25 21:35:48 2006
+X-From: git-owner@vger.kernel.org Fri Aug 25 21:35:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GGhSz-0005vB-Oc
-	for gcvg-git@gmane.org; Fri, 25 Aug 2006 21:35:46 +0200
+	id 1GGhSy-0005vB-8P
+	for gcvg-git@gmane.org; Fri, 25 Aug 2006 21:35:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422813AbWHYTfk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 Aug 2006 15:35:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422799AbWHYTfk
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Aug 2006 15:35:40 -0400
-Received: from nf-out-0910.google.com ([64.233.182.189]:44690 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1422814AbWHYTfi (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1422806AbWHYTfi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
 	Fri, 25 Aug 2006 15:35:38 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so877293nfa
-        for <git@vger.kernel.org>; Fri, 25 Aug 2006 12:35:36 -0700 (PDT)
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422799AbWHYTfh
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Aug 2006 15:35:37 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:49811 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1422806AbWHYTfg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Aug 2006 15:35:36 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so877287nfa
+        for <git@vger.kernel.org>; Fri, 25 Aug 2006 12:35:35 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=DG8A/09XymLbZZjO2+euHQ/9lJ27Lqw6JlzrGUj/RiMK4cBbT1ZtSTmKDRbaKj6O7YIJj1oCLn+uqcyw5HVdOCG/Qr8zRJfXzEbUQNV/nHsdc0SIpYneQniXAV4xJ5+dgdKlxmbyt4mSlVfq7Pzxk2P4ndOPn+jQ3moOK6OzIUE=
-Received: by 10.48.202.19 with SMTP id z19mr5801920nff;
-        Fri, 25 Aug 2006 12:35:36 -0700 (PDT)
+        b=FL1nOvQ9w9qKedPK7SZHSSKJXkd0HkeRXdAos4ettUukdUgIS7HJErcYTOYF4Mkl72opba7QaRSkiHxjlL8YkOBooBJg7zTdvDWJMQNHb2Fmtmu/Rr3Ir32NZT/VhnPj8Yg1chfx5RptdXUdLip/yNthZtPZoSDsmBC51Utb8CM=
+Received: by 10.49.92.18 with SMTP id u18mr5817270nfl;
+        Fri, 25 Aug 2006 12:35:35 -0700 (PDT)
 Received: from host-81-190-21-215.torun.mm.pl ( [81.190.21.215])
-        by mx.gmail.com with ESMTP id d2sm2934344nfe.2006.08.25.12.35.36;
-        Fri, 25 Aug 2006 12:35:36 -0700 (PDT)
+        by mx.gmail.com with ESMTP id d2sm2934344nfe.2006.08.25.12.35.34;
+        Fri, 25 Aug 2006 12:35:34 -0700 (PDT)
 To: git@vger.kernel.org
 User-Agent: KMail/1.9.3
 In-Reply-To: <200608240015.15071.jnareb@gmail.com>
@@ -41,52 +41,165 @@ Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26012>
 
-Remove $git_temp variable which held location for temporary files
-needed by git_diff_print, and removed creating $git_temp directory.
+git_blobdiff and git_blobdiff_plain are now collapsed into one
+subroutine git_blobdiff, with format (currently 'html' which is
+default format corresponding to git_blobdiff, and 'plain'
+corresponding to git_blobdiff_plain) specified in argument.
+
+blobdiff_plain format is now generated either by git-diff-tree
+or by git-diff.  Added X-Git-Url: header.  From-file and to-file name
+in header are corrected.
+
+Note that for now commitdiff_plain does not detect renames 
+and copying, while blobdiff_plain does.
+
+While at it, set expires to "+1d" for non-textual hash ids.
 
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-This is last patch in this (admittedly quite large) series, removing
-dependency on external diff, and the need for temporary files, from
-gitweb.
 
-You can view new gitweb in work at
-  http://front.fuw.edu.pl/cgi-bin/jnareb/gitweb.cgi
-
-Changes are in branch "gitweb/web" in repository available at
-  http://front.fuw.edu.pl/jnareb/scm/git.git/
-
-Comments appreciated.
-
-
- gitweb/gitweb.perl |    6 ------
- 1 files changed, 0 insertions(+), 6 deletions(-)
+ gitweb/gitweb.perl |   95 ++++++++++++++++++++++++++++++++++++++--------------
+ 1 files changed, 69 insertions(+), 26 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 2f932f0..a6d6637 100755
+index 9be2b2c..b20640e 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -31,9 +31,6 @@ # absolute fs-path which will be prepend
- #our $projectroot = "/pub/scm";
- our $projectroot = "++GITWEB_PROJECTROOT++";
+@@ -2815,9 +2815,12 @@ sub git_commit {
+ }
  
--# location for temporary files needed for diffs
--our $git_temp = "/tmp/gitweb";
--
- # target of the home link on top of all pages
- our $home_link = $my_uri || "/";
+ sub git_blobdiff {
++	my $format = shift || 'html';
++
+ 	my $fd;
+ 	my @difftree;
+ 	my %diffinfo;
++	my $expires;
  
-@@ -144,9 +141,6 @@ # version of the core git binary
- our $git_version = qx($GIT --version) =~ m/git version (.*)$/ ? $1 : "unknown";
+ 	# preparing $fd and %diffinfo for git_patchset_body
+ 	# new style URI
+@@ -2866,6 +2869,12 @@ sub git_blobdiff {
+ 		$hash_parent ||= $diffinfo{'from_id'};
+ 		$hash        ||= $diffinfo{'to_id'};
  
- $projects_list ||= $projectroot;
--if (! -d $git_temp) {
--	mkdir($git_temp, 0700) || die_error(undef, "Couldn't mkdir $git_temp");
--}
++		# non-textual hash id's can be cached
++		if ($hash_base =~ m/^[0-9a-fA-F]{40}$/ &&
++		    $hash_parent_base =~ m/^[0-9a-fA-F]{40}$/) {
++			$expires = '+1d';
++		}
++
+ 		# open patch output
+ 		open $fd, "-|", $GIT, "diff-tree", '-r', '-p', '-M', '-C', $hash_parent_base, $hash_base,
+ 			"--", $file_name
+@@ -2894,7 +2903,14 @@ sub git_blobdiff {
+ 			$diffinfo{'from_file'} = $hash_parent;
+ 			$diffinfo{'to_file'}   = $hash;
+ 		}
  
- # ======================================================================
- # input validation and dispatch
++		# non-textual hash id's can be cached
++		if ($hash =~ m/^[0-9a-fA-F]{40}$/ &&
++		    $hash_parent =~ m/^[0-9a-fA-F]{40}$/) {
++			$expires = '+1d';
++		}
++
++		# open patch output
+ 		#open $fd, "-|", $GIT, "diff", '-p', $hash_parent, $hash
+ 		open $fd, "-|", $GIT, "diff", '-p', $hash, $hash_parent
+ 			or die_error(undef, "Open git-diff failed");
+@@ -2904,40 +2920,67 @@ sub git_blobdiff {
+ 	}
+ 
+ 	# header
+-	my $formats_nav =
+-		$cgi->a({-href => href(action=>"blobdiff_plain",
+-		                       hash=>$hash, hash_parent=>$hash_parent,
+-		                       hash_base=>$hash_base, hash_parent_base=>$hash_parent_base,
+-		                       file_name=>$file_name, file_parent=>$file_parent)},
+-		        "plain");
+-	git_header_html();
+-	if (defined $hash_base && (my %co = parse_commit($hash_base))) {
+-		git_print_page_nav('','', $hash_base,$co{'tree'},$hash_base, $formats_nav);
+-		git_print_header_div('commit', esc_html($co{'title'}), $hash_base);
+-	} else {
+-		print "<div class=\"page_nav\"><br/>$formats_nav<br/></div>\n";
+-		print "<div class=\"title\">$hash vs $hash_parent</div>\n";
+-	}
+-	if (defined $file_name) {
+-		git_print_page_path($file_name, "blob", $hash_base);
++	if ($format eq 'html') {
++		my $formats_nav =
++			$cgi->a({-href => href(action=>"blobdiff_plain",
++			                       hash=>$hash, hash_parent=>$hash_parent,
++			                       hash_base=>$hash_base, hash_parent_base=>$hash_parent_base,
++			                       file_name=>$file_name, file_parent=>$file_parent)},
++			        "plain");
++		git_header_html(undef, $expires);
++		if (defined $hash_base && (my %co = parse_commit($hash_base))) {
++			git_print_page_nav('','', $hash_base,$co{'tree'},$hash_base, $formats_nav);
++			git_print_header_div('commit', esc_html($co{'title'}), $hash_base);
++		} else {
++			print "<div class=\"page_nav\"><br/>$formats_nav<br/></div>\n";
++			print "<div class=\"title\">$hash vs $hash_parent</div>\n";
++		}
++		if (defined $file_name) {
++			git_print_page_path($file_name, "blob", $hash_base);
++		} else {
++			print "<div class=\"page_path\"></div>\n";
++		}
++
++	} elsif ($format eq 'plain') {
++		print $cgi->header(
++			-type => 'text/plain',
++			-charset => 'utf-8',
++			-expires => $expires,
++			-content_disposition => qq(inline; filename="${file_name}.patch"));
++
++		print "X-Git-Url: " . $cgi->self_url() . "\n\n";
++
+ 	} else {
+-		print "<div class=\"page_path\"></div>\n";
++		die_error(undef, "Unknown blobdiff format");
+ 	}
+ 
+ 	# patch
+-	print "<div class=\"page_body\">\n";
++	if ($format eq 'html') {
++		print "<div class=\"page_body\">\n";
+ 
+-	git_patchset_body($fd, [ \%diffinfo ], $hash_base, $hash_parent_base);
+-	close $fd;
++		git_patchset_body($fd, [ \%diffinfo ], $hash_base, $hash_parent_base);
++		close $fd;
+ 
+-	print "</div>\n"; # class="page_body"
+-	git_footer_html();
++		print "</div>\n"; # class="page_body"
++		git_footer_html();
++
++	} else {
++		while (my $line = <$fd>) {
++			$line =~ s!a/($hash|$hash_parent)!a/$diffinfo{'from_file'}!g;
++			$line =~ s!b/($hash|$hash_parent)!b/$diffinfo{'to_file'}!g;
++
++			print $line;
++
++			last if $line =~ m!^\+\+\+!;
++		}
++		local $/ = undef;
++		print <$fd>;
++		close $fd;
++	}
+ }
+ 
+ sub git_blobdiff_plain {
+-	mkdir($git_temp, 0700);
+-	print $cgi->header(-type => "text/plain", -charset => 'utf-8');
+-	git_diff_print($hash_parent, $file_name || $hash_parent, $hash, $file_name || $hash, "plain");
++	git_blobdiff('plain');
+ }
+ 
+ sub git_commitdiff {
 -- 
 1.4.1.1
