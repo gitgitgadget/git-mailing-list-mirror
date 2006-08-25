@@ -1,38 +1,38 @@
 From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] cg-commit: fix signed off handling
-Date: Fri, 25 Aug 2006 02:27:40 +0200
-Message-ID: <20060825002740.GH2817@diku.dk>
+Subject: [PATCH] describe: fix off-by-one error in --abbrev=40 handling
+Date: Fri, 25 Aug 2006 02:48:04 +0200
+Message-ID: <20060825004804.GA4069@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Aug 25 02:28:09 2006
+X-From: git-owner@vger.kernel.org Fri Aug 25 02:48:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GGPYF-0003eh-Dy
-	for gcvg-git@gmane.org; Fri, 25 Aug 2006 02:27:59 +0200
+	id 1GGPs6-00015x-So
+	for gcvg-git@gmane.org; Fri, 25 Aug 2006 02:48:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422789AbWHYA1z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 Aug 2006 20:27:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422790AbWHYA1z
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Aug 2006 20:27:55 -0400
-Received: from [130.225.96.91] ([130.225.96.91]:25254 "EHLO mgw1.diku.dk")
-	by vger.kernel.org with ESMTP id S1422789AbWHYA1y (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Aug 2006 20:27:54 -0400
+	id S1030484AbWHYAsO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 Aug 2006 20:48:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932127AbWHYAsO
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Aug 2006 20:48:14 -0400
+Received: from [130.225.96.91] ([130.225.96.91]:60320 "EHLO mgw1.diku.dk")
+	by vger.kernel.org with ESMTP id S932243AbWHYAsO (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Aug 2006 20:48:14 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 643C5770079
-	for <git@vger.kernel.org>; Fri, 25 Aug 2006 02:27:42 +0200 (CEST)
+	by mgw1.diku.dk (Postfix) with ESMTP id 4EDA177007C
+	for <git@vger.kernel.org>; Fri, 25 Aug 2006 02:48:06 +0200 (CEST)
 Received: from mgw1.diku.dk ([127.0.0.1])
  by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 25290-15 for <git@vger.kernel.org>; Fri, 25 Aug 2006 02:27:41 +0200 (CEST)
+ id 25670-03 for <git@vger.kernel.org>; Fri, 25 Aug 2006 02:48:05 +0200 (CEST)
 Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 3EC07770076
-	for <git@vger.kernel.org>; Fri, 25 Aug 2006 02:27:41 +0200 (CEST)
+	by mgw1.diku.dk (Postfix) with ESMTP id 2D825770076
+	for <git@vger.kernel.org>; Fri, 25 Aug 2006 02:48:05 +0200 (CEST)
 Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP id 1218F6DF88D
-	for <git@vger.kernel.org>; Fri, 25 Aug 2006 02:26:23 +0200 (CEST)
+	by nhugin.diku.dk (Postfix) with ESMTP id 124066DF88D
+	for <git@vger.kernel.org>; Fri, 25 Aug 2006 02:46:47 +0200 (CEST)
 Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 1125F629FB; Fri, 25 Aug 2006 02:27:41 +0200 (CEST)
+	id 152D2629FB; Fri, 25 Aug 2006 02:48:05 +0200 (CEST)
 To: git@vger.kernel.org
 Content-Disposition: inline
 User-Agent: Mutt/1.5.6i
@@ -40,57 +40,39 @@ X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25982>
-
-Handle the sign off insertion before starting the CG: comment lines. Also,
-fix typo in grepping for existing sign off lines.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25983>
 
 Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 ---
 
-The late calling of the add_signoff function has multiple problems,
-since at that point comment lines has already been added and the sign
-off line will end up in only one of the log message files.
+Possible stupid fix, but shouldn't one be able to say --abbrev=40 if only
+once in a life time?
 
- cg-commit |   12 ++++--------
- 1 files changed, 4 insertions(+), 8 deletions(-)
+ describe.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/cg-commit b/cg-commit
-index 5cebd81..b0b5c34 100755
---- a/cg-commit
-+++ b/cg-commit
-@@ -406,12 +406,10 @@ # Always have at least one blank line, t
- # the poor people whose text editor has no 'O' command.
- [ "$written" ] || { tty -s && echo >>"$LOGMSG"; }
+diff --git a/describe.c b/describe.c
+index 2b9301f..5dd8b2e 100644
+--- a/describe.c
++++ b/describe.c
+@@ -42,7 +42,7 @@ static void add_to_known_names(const cha
+ 	struct commit_name *name = xmalloc(sizeof(struct commit_name) + len);
  
--add_signoff() {
--	if [ "$signoff" ] && ! grep -q -i "signed-off-by: $signoff" $LOGMSG; then
--		grep -q -i sign-off-by $LOGMSG || echo
--		echo "Signed-off-by: $signoff"
--	fi >> $LOGMSG
--}
-+if [ "$signoff" ] && ! grep -q -i "signed-off-by: $signoff" $LOGMSG; then
-+	grep -q -i signed-off-by $LOGMSG || echo
-+	echo "Signed-off-by: $signoff"
-+fi >> $LOGMSG
- 
- # CG: -----------------------------------------------------------------------
- editor_comment_start commit
-@@ -472,7 +470,6 @@ editor_msg_end
- 
- cp "$LOGMSG" "$LOGMSG2"
- if tty -s; then
--	add_signoff
- 	if [ "$editor" ] && ! editor $commitalways commit c; then
- 		rm "$LOGMSG" "$LOGMSG2"
- 		[ "$review" ] && rm "$PATCH"
-@@ -503,7 +500,6 @@ __END__
- 	editor_parse_setif GIT_AUTHOR_DATE Date
- else
- 	cat >>"$LOGMSG2"
--	add_signoff
- fi
- 
- if [ ! "$review" ]; then
+ 	name->commit = commit;
+-	name->prio = prio; 
++	name->prio = prio;
+ 	memcpy(name->path, path, len);
+ 	idx = names;
+ 	if (idx >= allocs) {
+@@ -154,7 +154,7 @@ int main(int argc, char **argv)
+ 			tags = 1;
+ 		else if (!strncmp(arg, "--abbrev=", 9)) {
+ 			abbrev = strtoul(arg + 9, NULL, 10);
+-			if (abbrev < MINIMUM_ABBREV || 40 <= abbrev)
++			if (abbrev < MINIMUM_ABBREV || 40 < abbrev)
+ 				abbrev = DEFAULT_ABBREV;
+ 		}
+ 		else
+
 -- 
 Jonas Fonseca
