@@ -1,152 +1,98 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: [PATCH 5/5] Convert unpack_entry_gently and friends to use offsets.
-Date: Sat, 26 Aug 2006 04:12:27 -0400
-Message-ID: <20060826081227.GG22343@spearce.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 16/19] gitweb: Use git-diff-tree or git-diff patch output for blobdiff
+Date: Sat, 26 Aug 2006 11:23:47 +0200
+Organization: At home
+Message-ID: <ecp3uq$k1f$1@sea.gmane.org>
+References: <200608240015.15071.jnareb@gmail.com> <200608252113.34731.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 26 10:12:35 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sat Aug 26 11:24:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GGtHO-000362-CR
-	for gcvg-git@gmane.org; Sat, 26 Aug 2006 10:12:34 +0200
+	id 1GGuOh-0002eD-5K
+	for gcvg-git@gmane.org; Sat, 26 Aug 2006 11:24:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422900AbWHZIMb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 Aug 2006 04:12:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964924AbWHZIMb
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Aug 2006 04:12:31 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:27329 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S964922AbWHZIMa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Aug 2006 04:12:30 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GGtHG-0007I1-T9; Sat, 26 Aug 2006 04:12:27 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 32DA920FB7F; Sat, 26 Aug 2006 04:12:27 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932245AbWHZJXv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 Aug 2006 05:23:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751099AbWHZJXv
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Aug 2006 05:23:51 -0400
+Received: from main.gmane.org ([80.91.229.2]:18592 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750801AbWHZJXu (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Aug 2006 05:23:50 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GGuOK-0002cb-Hx
+	for git@vger.kernel.org; Sat, 26 Aug 2006 11:23:48 +0200
+Received: from host-81-190-21-215.torun.mm.pl ([81.190.21.215])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 26 Aug 2006 11:23:48 +0200
+Received: from jnareb by host-81-190-21-215.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 26 Aug 2006 11:23:48 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-21-215.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26041>
 
-Change unpack_entry_gently and its helper functions to use offsets
-rather than addresses and left counts to supply pack position
-information.  In most cases this makes the code easier to follow,
-and it reduces the number of local variables in a few functions.
-It also better prepares this code for mapping partial segments of
-packs and altering what regions of a pack are mapped while unpacking
-an entry.
+Jakub Narebski wrote:
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- sha1_file.c |   33 +++++++++++++++------------------
- 1 files changed, 15 insertions(+), 18 deletions(-)
+> ATTENTION: The order of arguments (operands) to git-diff is reversed
+> (sic!) to have correct diff in the legacy (no hash_parent_base) case.
+> $hash_parent, $hash ordering is commented out, as it gives reversed
+> patch (at least for git version 1.4.1.1) as compared to output in new
+> scheme and output of older gitweb version.
 
-diff --git a/sha1_file.c b/sha1_file.c
-index e6d47c1..558ec4a 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1041,9 +1041,9 @@ static int packed_object_info(struct pac
- 	return 0;
+By the way, wa it corrected later? git version 1.4.1.1
+
+
+1010:jnareb@roke:~/git> git diff-tree 599f8d63140^ 599f8d63140 
+:100644 100644 0bd517b2649af37d9980f85e784f9a00c3263922 8213ce240232a1dc8a0a498972323a33e8fcb7a0 M  builtin-grep.c
+
+
+1011:jnareb@roke:~/git> git diff-tree -p 599f8d63140^ 599f8d63140
+diff --git a/builtin-grep.c b/builtin-grep.c
+index 0bd517b..8213ce2 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -293,9 +293,6 @@ static void compile_patterns(struct grep
+         */
+        p = opt->pattern_list;
+        opt->pattern_expression = compile_pattern_expr(&p);
+-#if DEBUG
+-       dump_pattern_exp(opt->pattern_expression, 0);
+-#endif
+        if (p)
+                die("incomplete pattern expression: %s", p->pattern);
  }
- 
--static void *unpack_compressed_entry(unsigned char *data,
--				    unsigned long size,
--				    unsigned long left)
-+static void *unpack_compressed_entry(struct packed_git *p,
-+				    unsigned long offset,
-+				    unsigned long size)
- {
- 	int st;
- 	z_stream stream;
-@@ -1052,8 +1052,8 @@ static void *unpack_compressed_entry(uns
- 	buffer = xmalloc(size + 1);
- 	buffer[size] = 0;
- 	memset(&stream, 0, sizeof(stream));
--	stream.next_in = data;
--	stream.avail_in = left;
-+	stream.next_in = (unsigned char*)p->pack_base + offset;
-+	stream.avail_in = p->pack_size - offset;
- 	stream.next_out = buffer;
- 	stream.avail_out = size;
- 
-@@ -1068,21 +1068,22 @@ static void *unpack_compressed_entry(uns
- 	return buffer;
+
+
+1012:jnareb@roke:~/git> git diff 0bd517b2649af37d9980f85e784f9a00c3263922 8213ce240232a1dc8a0a498972323a33e8fcb7a0
+diff --git a/0bd517b2649af37d9980f85e784f9a00c3263922 b/0bd517b2649af37d9980f85e784f9a00c3263922
+index 8213ce2..0bd517b 100644
+--- a/0bd517b2649af37d9980f85e784f9a00c3263922
++++ b/0bd517b2649af37d9980f85e784f9a00c3263922
+@@ -293,6 +293,9 @@ static void compile_patterns(struct grep
+         */
+        p = opt->pattern_list;
+        opt->pattern_expression = compile_pattern_expr(&p);
++#if DEBUG
++       dump_pattern_exp(opt->pattern_expression, 0);
++#endif
+        if (p)
+                die("incomplete pattern expression: %s", p->pattern);
  }
- 
--static void *unpack_delta_entry(unsigned char *base_sha1,
-+static void *unpack_delta_entry(struct packed_git *p,
-+				unsigned long offset,
- 				unsigned long delta_size,
--				unsigned long left,
- 				char *type,
--				unsigned long *sizep,
--				struct packed_git *p)
-+				unsigned long *sizep)
- {
- 	struct pack_entry base_ent;
- 	void *delta_data, *result, *base;
- 	unsigned long result_size, base_size;
-+	unsigned char* base_sha1;
- 
--	if (left < 20)
-+	if ((offset + 20) >= p->pack_size)
- 		die("truncated pack file");
- 
- 	/* The base entry _must_ be in the same pack */
-+	base_sha1 = (unsigned char*)p->pack_base + offset;
- 	if (!find_pack_entry_one(base_sha1, &base_ent, p))
- 		die("failed to find delta-pack base object %s",
- 		    sha1_to_hex(base_sha1));
-@@ -1091,8 +1092,7 @@ static void *unpack_delta_entry(unsigned
- 		die("failed to read delta-pack base object %s",
- 		    sha1_to_hex(base_sha1));
- 
--	delta_data = unpack_compressed_entry(base_sha1 + 20,
--			     delta_size, left - 20);
-+	delta_data = unpack_compressed_entry(p, offset + 20, delta_size);
- 	result = patch_delta(base, base_size,
- 			     delta_data, delta_size,
- 			     &result_size);
-@@ -1124,23 +1124,20 @@ void *unpack_entry_gently(struct pack_en
- 			  char *type, unsigned long *sizep)
- {
- 	struct packed_git *p = entry->p;
--	unsigned long offset, size, left;
--	unsigned char *pack;
-+	unsigned long offset, size;
- 	enum object_type kind;
- 
- 	offset = unpack_object_header(p, entry->offset, &kind, &size);
--	pack = (unsigned char *) p->pack_base + offset;
--	left = p->pack_size - offset;
- 	switch (kind) {
- 	case OBJ_DELTA:
--		return unpack_delta_entry(pack, size, left, type, sizep, p);
-+		return unpack_delta_entry(p, offset, size, type, sizep);
- 	case OBJ_COMMIT:
- 	case OBJ_TREE:
- 	case OBJ_BLOB:
- 	case OBJ_TAG:
- 		strcpy(type, type_names[kind]);
- 		*sizep = size;
--		return unpack_compressed_entry(pack, size, left);
-+		return unpack_compressed_entry(p, offset, size);
- 	default:
- 		return NULL;
- 	}
+
+
 -- 
-1.4.2.g6580
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
