@@ -1,31 +1,31 @@
 From: Sergio Callegari <scallegari@arces.unibo.it>
 Subject: Re: Problem with pack
-Date: Sat, 26 Aug 2006 20:49:36 +0200
+Date: Sat, 26 Aug 2006 20:53:52 +0200
 Organization: ARCES - =?ISO-8859-15?Q?Universit=E0_di_Bologna?=
-Message-ID: <44F097C0.1000109@arces.unibo.it>
+Message-ID: <44F098C0.8000202@arces.unibo.it>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Aug 26 20:50:01 2006
+X-From: git-owner@vger.kernel.org Sat Aug 26 20:54:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GH3EF-0000Zu-K2
-	for gcvg-git@gmane.org; Sat, 26 Aug 2006 20:50:00 +0200
+	id 1GH3IE-0001JC-8X
+	for gcvg-git@gmane.org; Sat, 26 Aug 2006 20:54:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932126AbWHZSto (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 Aug 2006 14:49:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932337AbWHZSto
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Aug 2006 14:49:44 -0400
-Received: from arces.unibo.it ([137.204.143.6]:27116 "EHLO arces.unibo.it")
-	by vger.kernel.org with ESMTP id S932126AbWHZSto (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 Aug 2006 14:49:44 -0400
+	id S1751625AbWHZSyB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 Aug 2006 14:54:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751637AbWHZSyB
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Aug 2006 14:54:01 -0400
+Received: from arces.unibo.it ([137.204.143.6]:31468 "EHLO arces.unibo.it")
+	by vger.kernel.org with ESMTP id S1751565AbWHZSx4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Aug 2006 14:53:56 -0400
 Received: from [192.168.143.223] (mars-fw.arces.unibo.it [137.204.143.2])
 	(authenticated bits=0)
-	by arces.unibo.it (8.13.7/8.13.7) with ESMTP id k7QJ2cg2019208
+	by arces.unibo.it (8.13.7/8.13.7) with ESMTP id k7QJ6tXk019408
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Sat, 26 Aug 2006 21:02:40 +0200
+	for <git@vger.kernel.org>; Sat, 26 Aug 2006 21:06:56 +0200
 User-Agent: Thunderbird 1.5.0.5 (X11/20060719)
 To: git@vger.kernel.org
 X-Spam-Status: No, score=-100.0 required=5.0 tests=BAYES_50,USER_IN_WHITELIST 
@@ -37,50 +37,53 @@ X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26063>
 
+> Earlier you said that the mothership has 1.4.2, and the note has
+> 1.4.0.  The sequence of events as I understand are:
 >
-> Junio C Hamano <junkio@cox.net> writes:
+> 	- repack -a -d on the mothership with 1.4.2; no problems
+>           observed.
 >
-> > Earlier you said "unpack-objects <$that-pack.pack" fails with
-> > "error code -3 in inflate..."  What exact error do you get?
-> > I am guessing that it is get_data() which says:
-> >
-> > 	"inflate returned %d\n"
-> >
-> > (side note: we should not say \n there).
-> > ...
-> > This pattern appears practically everywhere...
-> > ...  I've been
-> > wondering if it is possible for inflate to eat some input but
-> > that was not enough to produce one byte of output, and what [it]
-> > would return in such a case...
+>         - transfer the results to note; this was done behind git so
+>           no problems observed.
 >
-> I do not think this fear does not apply to this particular case;
-> return value -3 is Z_DATA_ERROR, so the deflated stream is
-> corrupt.
->
-> > So there are only a few ways you can get that error message.
-> > ...
->
-> I just realized there is another not so inplausible explanation.
->
-> When the problematic pack was made on the mothership,
-> csum-file.c::sha1write_compressed() gave the data for the base
-> object to zlib, an alpha particle hit a memory cell that
-> contained zlib output buffer (resulting in a corrupt deflated
-> stream in variable "out"), and sha1write() wrote it out while
-> computing the right checksum.
->
-> Is the memory on your mothership reliable (I do not want to make
-> this message sound like one on the kernel list, but memtest86
-> might be in order)?
+>         - tried to repack on note with 1.4.0; got "failed to
+>           read delta-pack base object" error.
 >   
-For sure you can never say, but so far I have never had any problem with 
-that machine nor I had any after this incident...
+Yes... only before that I had a few more iterations PC<->notebook always
+syncing with unison.
+> Can you make the pack/idx available to the public for
+> postmortem?
+>   
+Yes... I can make them available... the pack/idx actually do not contain
+anything extremely confidential (just a bunch of LaTeX files).
+Only, being that there is conference data and stuff by people who
+professionally organize conferences, I'd prefer to make it available
+directly to some specific people that I can trust not re-distributing it
+rather than putting it in the general public.
+> Also I wonder if the pack can be read by 1.4.2.
+>   
+No it cannot.
+> Earlier you said "unpack-objects <$that-pack.pack" fails with
+> "error code -3 in inflate..."  What exact error do you get?
+> I am guessing that it is get_data() which says:
+>
+> 	"inflate returned %d\n"
+>   
+This is right...
+>   
+Just a question...
+Might the problem have come out of a scenario like the following...
+
+1) I use unison to sync my documents (rather than using the git tools...
+silly me!)
+2) I get things wrong in controlling unison (without realizing that I
+do) and the result is that I lose some blobs.
+3) I repack an unclean tree (missing some objects)
+
+Can this be the case?
+
+Thanks
 
 Sergio
->
->
->
->   
