@@ -1,68 +1,51 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Problem with pack
-Date: Sat, 26 Aug 2006 11:20:18 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0608261115570.11811@g5.osdl.org>
-References: <44EEED9C.1010000@arces.unibo.it>
+From: Mitchell Blank Jr <mitch@sfgoth.com>
+Subject: Re: [PATCH] dir: do all size checks before seeking back and fix file closing
+Date: Sat, 26 Aug 2006 11:43:30 -0700
+Message-ID: <20060826184330.GA34439@gaz.sfgoth.com>
+References: <20060826141709.GC11601@diku.dk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 26 20:20:35 2006
+X-From: git-owner@vger.kernel.org Sat Aug 26 20:34:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GH2lh-00055d-4P
-	for gcvg-git@gmane.org; Sat, 26 Aug 2006 20:20:29 +0200
+	id 1GH2zX-000739-UV
+	for gcvg-git@gmane.org; Sat, 26 Aug 2006 20:34:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422992AbWHZSU0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 Aug 2006 14:20:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422993AbWHZSU0
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Aug 2006 14:20:26 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:38803 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1422992AbWHZSUZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 Aug 2006 14:20:25 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k7QIKJnW004695
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 26 Aug 2006 11:20:20 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k7QIKICo028469;
-	Sat, 26 Aug 2006 11:20:19 -0700
-To: Sergio Callegari <scallegari@arces.unibo.it>
-In-Reply-To: <44EEED9C.1010000@arces.unibo.it>
-X-Spam-Status: No, hits=-0.424 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.143 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751056AbWHZSeQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 Aug 2006 14:34:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932117AbWHZSeQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Aug 2006 14:34:16 -0400
+Received: from gaz.sfgoth.com ([69.36.241.230]:19669 "EHLO gaz.sfgoth.com")
+	by vger.kernel.org with ESMTP id S1751056AbWHZSeP (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Aug 2006 14:34:15 -0400
+Received: from gaz.sfgoth.com (localhost.sfgoth.com [127.0.0.1])
+	by gaz.sfgoth.com (8.12.10/8.12.10) with ESMTP id k7QIhVtV046430;
+	Sat, 26 Aug 2006 11:43:31 -0700 (PDT)
+	(envelope-from mitch@gaz.sfgoth.com)
+Received: (from mitch@localhost)
+	by gaz.sfgoth.com (8.12.10/8.12.6/Submit) id k7QIhV1w046429;
+	Sat, 26 Aug 2006 11:43:31 -0700 (PDT)
+	(envelope-from mitch)
+To: Jonas Fonseca <fonseca@diku.dk>
+Content-Disposition: inline
+In-Reply-To: <20060826141709.GC11601@diku.dk>
+User-Agent: Mutt/1.4.2.1i
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.2.2 (gaz.sfgoth.com [127.0.0.1]); Sat, 26 Aug 2006 11:43:31 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26061>
 
+Jonas Fonseca wrote:
+>   err:
+> -	if (0 <= fd)
+> +	if (0 >= fd)
+>  		close(fd);
 
+Could you explain that piece?  You now only close "fd" if it's zero (stdin)
+or negative (invalid).  The old code (close if its >=0) make more sense.
 
-On Fri, 25 Aug 2006, Sergio Callegari wrote:
->
-> If I try to verify the pack I get:
-> 
-> git verify-pack -v pack-ebcdfbbda07e5a3e4136aa1f499990b35685bab4.idx
-> fatal: failed to read delta-pack base object 2849bd2bd8a76bbca37df2a4c8e8b990811d01a7
-> 
-> the package length seems reasonable, however... (no evident sign of
-> truncation, but I haven't looked inside the index to check the exact positions
-> of objects)...
-
-Can you make the corrupt pack-file and index available publically (or 
-perhaps at least to a few git people?)
-
-The fact that verify-pack is happy with the SHA1 checksum is interesting, 
-because it means that the pack-file at least didn't get corrupted on-disk 
-(or through the sync operation). Iow, it must have gotten corrupted at 
-write-out itself somehow, and it would be interesting to see what the 
-pack-file looks like.
-
-> and git unpack-object dies with error code -3 in inflate...
-
-That's Z_DATA_ERROR, which is what you get if the input to inflate is bad.
-
-		Linus
+-Mitch
