@@ -1,98 +1,65 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn problem: unexpected files/diffs in commit
-Date: Sat, 26 Aug 2006 00:33:54 -0700
-Message-ID: <20060826073354.GB10801@localdomain>
-References: <m2u040n5e2.fsf@ziti.local> <20060825191516.GA8957@localdomain> <m2lkpcfhml.fsf@ziti.local>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: [PATCH 0/5] sha1_file.c pack reading cleanups
+Date: Sat, 26 Aug 2006 04:10:16 -0400
+Message-ID: <20060826081016.GB22343@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 26 09:35:26 2006
+X-From: git-owner@vger.kernel.org Sat Aug 26 10:10:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GGshR-00079F-Nd
-	for gcvg-git@gmane.org; Sat, 26 Aug 2006 09:35:26 +0200
+	id 1GGtFS-0002p6-5Q
+	for gcvg-git@gmane.org; Sat, 26 Aug 2006 10:10:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751007AbWHZHd5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 Aug 2006 03:33:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030192AbWHZHd5
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Aug 2006 03:33:57 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:35989 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1751007AbWHZHd4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 Aug 2006 03:33:56 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 8F7847DC02E;
-	Sat, 26 Aug 2006 00:33:54 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 26 Aug 2006 00:33:54 -0700
-To: Seth Falcon <sethfalcon@gmail.com>
+	id S1422834AbWHZIKW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 Aug 2006 04:10:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422740AbWHZIKW
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Aug 2006 04:10:22 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:5569 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1422834AbWHZIKU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Aug 2006 04:10:20 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GGtFA-00073Y-VV; Sat, 26 Aug 2006 04:10:17 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id CE5D320FB7F; Sat, 26 Aug 2006 04:10:16 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <m2lkpcfhml.fsf@ziti.local>
-User-Agent: Mutt/1.5.12-2006-07-14
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26035>
 
-Seth Falcon <sethfalcon@gmail.com> wrote:
-> Eric Wong <normalperson@yhbt.net> writes:
+This is a 5 patch series built on `master`.  I discovered these
+cleanups when I lifted code from sha1_file.c for fast-import.c
+(as I needed to read the pack I was writing and thus didn't have
+a nice sorted index to work with).
 
-> > Outside of the SSL problems, the mis-commit isn't strictly user-error,
-> > but git-svn is confusing in this case, as the documentation is unclear
-> > about what git-svn should do in this case :x
-> 
-> > I usually check with git log remotes/git-svn..HEAD instead of git
-> > diff.  Perhaps adding --no-merges would be more correct?
+I'll probably follow this series with another one which libifies
+more of these functions to the point that I can actually use them
+from within fast-import.c, without having an index file.  But I
+might first send partial pack mapping as I'm also doing that in
+fast-import.c right now.
 
-No, --no-merges is not correct (see below).
+In this series:
 
-> I'm not sure how to reproduce the situation I was in, but what would
-> git log have shown me that git diff didn't -- IOW, would it have been
-> obvious that the commit op was going to add extra stuff and
-> effectively undo a rev in svn?
-
-> > I've been really slacking on the git-svn documentation the past few
-> > months, help would be much appreciated.
-> 
-> I will try to send some doc patches.  But I may have a few questions ;-)
-
-> I think commit-diff might be what I want to be using too, but I need
-> to contribute some documentation for it before I can read the man page
-> and start using it ;-)
-> 
-> An example call to git-svn commit-diff would be very helpful, I
-> suspect.
-
-git-svn commit-diff <a> <b>
-(git diff-tree <a> <b> to check the result)
-
-My new command, 'dcommit' wraps it.
-
-'commit-diff' very low-level command that does exactly what you tell
-it to do, compute the delta of two trees, and send it to the SVN repo.
-The <a> tree doesn't even have to strictly match what's in the SVN repo
-at the given moment if you're using the SVN:: libs.
-
-'commit' was the original command, that meant: write this tree to SVN.
-Period.  This was before SVN:: library support was available, so it had
-to be stupidly simple.
-
-foo..bar notation was supported, which in hindsight was a mistake
-that has probably confused lots of people....
-
-> I will have a look...
-> 
-> While I'm thinking of it, it would be really nice for git-svn's commit and
-> commit-diff to have a dry-run type of flag.  Commits to your own git
-> repos are easy to correct, but those made on some other public scm are
-> less pretty.
-
-I think everything is somewhat documented in the commit logs, but most
-of those were back when git-svn was in contrib/
-
-Otherwise, git-svn help attempts to be reasonably self-documenting, and
-I've tried to keep the code to git-svn fairly readable (except the code
-to generate the aforementioned help output :)
+  1/5 Reorganize/rename unpack_non_delta_entry to unpack_compressed_entry.
+  2/5 Reuse compression code in unpack_compressed_entry.
+  3/5 Cleanup unpack_entry_gently and friends to use type_name array.
+  4/5 Cleanup unpack_object_header to use only offsets.
+  5/5 Convert unpack_entry_gently and friends to use offsets.
 
 -- 
-Eric Wong
+Shawn.
