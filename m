@@ -1,72 +1,80 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 16/19] gitweb: Use git-diff-tree or git-diff patch output for blobdiff
-Date: Sat, 26 Aug 2006 12:17:10 +0200
-Organization: At home
-Message-ID: <ecp737$qqg$1@sea.gmane.org>
-References: <200608240015.15071.jnareb@gmail.com> <200608252113.34731.jnareb@gmail.com> <ecp3uq$k1f$1@sea.gmane.org> <7vpsen3itw.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Problem with pack
+Date: Sat, 26 Aug 2006 03:31:09 -0700
+Message-ID: <7vlkpb3i1e.fsf@assigned-by-dhcp.cox.net>
+References: <44EECBE2.7090801@arces.unibo.it>
+	<7vu03z3j1y.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sat Aug 26 12:17:33 2006
+Cc: Sergio Callegari <scallegari@arces.unibo.it>,
+	Nicolas Pitre <nico@cam.org>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Sat Aug 26 12:31:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GGvEG-0000k0-Mk
-	for gcvg-git@gmane.org; Sat, 26 Aug 2006 12:17:29 +0200
+	id 1GGvRg-0002Pd-4A
+	for gcvg-git@gmane.org; Sat, 26 Aug 2006 12:31:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751357AbWHZKR0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 Aug 2006 06:17:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751363AbWHZKR0
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Aug 2006 06:17:26 -0400
-Received: from main.gmane.org ([80.91.229.2]:46720 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751357AbWHZKRZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 Aug 2006 06:17:25 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GGvE4-0000iE-PQ
-	for git@vger.kernel.org; Sat, 26 Aug 2006 12:17:17 +0200
-Received: from host-81-190-21-215.torun.mm.pl ([81.190.21.215])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 26 Aug 2006 12:17:16 +0200
-Received: from jnareb by host-81-190-21-215.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 26 Aug 2006 12:17:16 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S932304AbWHZKaw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 Aug 2006 06:30:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932408AbWHZKaw
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Aug 2006 06:30:52 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:17541 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S932304AbWHZKav (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Aug 2006 06:30:51 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060826103051.WYGL12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 26 Aug 2006 06:30:51 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id EaWp1V0094Noztg0000000
+	Sat, 26 Aug 2006 06:30:49 -0400
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-21-215.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <7vu03z3j1y.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sat, 26 Aug 2006 03:09:13 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26045>
 
-Junio C Hamano wrote:
+Junio C Hamano <junkio@cox.net> writes:
 
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
->> Jakub Narebski wrote:
->>
->>> ATTENTION: The order of arguments (operands) to git-diff is reversed
->>> (sic!) to have correct diff in the legacy (no hash_parent_base) case.
->>> $hash_parent, $hash ordering is commented out, as it gives reversed
->>> patch (at least for git version 1.4.1.1) as compared to output in new
->>> scheme and output of older gitweb version.
->>
->> By the way, wa it corrected later? git version 1.4.1.1
-> 
-> I think you were involved in the thread that resulted in the 
-> fix...
-> 
-> 53dd8a9 Show both blob names from "git diff blob1 blob2"
-> f82cd3c Fix "git diff blob1 blob2" showing the diff in reverse.
+> Earlier you said "unpack-objects <$that-pack.pack" fails with
+> "error code -3 in inflate..."  What exact error do you get?
+> I am guessing that it is get_data() which says:
+>
+> 	"inflate returned %d\n"
+>
+> (side note: we should not say \n there).
+> ...
+> This pattern appears practically everywhere...
+> ...  I've been
+> wondering if it is possible for inflate to eat some input but
+> that was not enough to produce one byte of output, and what [it]
+> would return in such a case...
 
-Gaah. So I'd have to fix the gitweb, i.e. remove workaround
-(and update git to 1.4.2). 
+I do not think this fear does not apply to this particular case;
+return value -3 is Z_DATA_ERROR, so the deflated stream is
+corrupt.
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+> So there are only a few ways you can get that error message.
+> ...
+
+I just realized there is another not so inplausible explanation.
+
+When the problematic pack was made on the mothership,
+csum-file.c::sha1write_compressed() gave the data for the base
+object to zlib, an alpha particle hit a memory cell that
+contained zlib output buffer (resulting in a corrupt deflated
+stream in variable "out"), and sha1write() wrote it out while
+computing the right checksum.
+
+Is the memory on your mothership reliable (I do not want to make
+this message sound like one on the kernel list, but memtest86
+might be in order)?
