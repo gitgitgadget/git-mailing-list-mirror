@@ -1,99 +1,68 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 6/7] gitweb: blobs defined by non-textual hash ids can be cached
-Date: Sat, 26 Aug 2006 19:14:25 +0200
-Message-ID: <11566124672100-git-send-email-jnareb@gmail.com>
-References: <1156612392716-git-send-email-jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 26 19:14:53 2006
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Problem with pack
+Date: Sat, 26 Aug 2006 11:20:18 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0608261115570.11811@g5.osdl.org>
+References: <44EEED9C.1010000@arces.unibo.it>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 26 20:20:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GH1k9-00041P-36
-	for gcvg-git@gmane.org; Sat, 26 Aug 2006 19:14:49 +0200
+	id 1GH2lh-00055d-4P
+	for gcvg-git@gmane.org; Sat, 26 Aug 2006 20:20:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422899AbWHZROh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 Aug 2006 13:14:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422879AbWHZROg
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Aug 2006 13:14:36 -0400
-Received: from mail.fuw.edu.pl ([193.0.80.14]:34182 "EHLO mail.fuw.edu.pl")
-	by vger.kernel.org with ESMTP id S1030261AbWHZROe (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 Aug 2006 13:14:34 -0400
-Received: from front.fuw.edu.pl (front.fuw.edu.pl [193.0.83.59])
-	by mail.fuw.edu.pl (8.13.6/8.13.6) with ESMTP id k7QHDGpW004454
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 26 Aug 2006 19:13:16 +0200
-Received: from front.fuw.edu.pl (IDENT:10582@localhost [127.0.0.1])
-	by front.fuw.edu.pl (8.13.3/8.12.4) with ESMTP id k7QHERXd032753;
-	Sat, 26 Aug 2006 19:14:27 +0200
-Received: (from jnareb@localhost)
-	by front.fuw.edu.pl (8.13.3/8.12.4/Submit) id k7QHER0N032752;
-	Sat, 26 Aug 2006 19:14:27 +0200
-To: git@vger.kernel.org
-X-Mailer: git-send-email 1.3.0
-In-Reply-To: <1156612392716-git-send-email-jnareb@gmail.com>
-X-Scanned-By: MIMEDefang 2.56 on 193.0.80.14
+	id S1422992AbWHZSU0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 Aug 2006 14:20:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422993AbWHZSU0
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Aug 2006 14:20:26 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:38803 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1422992AbWHZSUZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Aug 2006 14:20:25 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k7QIKJnW004695
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 26 Aug 2006 11:20:20 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k7QIKICo028469;
+	Sat, 26 Aug 2006 11:20:19 -0700
+To: Sergio Callegari <scallegari@arces.unibo.it>
+In-Reply-To: <44EEED9C.1010000@arces.unibo.it>
+X-Spam-Status: No, hits=-0.424 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.143 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26060>
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/gitweb.perl |   20 +++++++++++++++++---
- 1 files changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index eae83e6..f6175bb 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2371,6 +2371,12 @@ sub git_heads {
- }
- 
- sub git_blob_plain {
-+	# blobs defined by non-textual hash id's can be cached
-+	my $expires;
-+	if ($hash =~ m/^[0-9a-fA-F]{40}$/) {
-+		$expires = "+1d";
-+	}
-+
- 	if (!defined $hash) {
- 		if (defined $file_name) {
- 			my $base = $hash_base || git_get_head_hash($project);
-@@ -2394,8 +2400,10 @@ sub git_blob_plain {
- 		$save_as .= '.txt';
- 	}
- 
--	print $cgi->header(-type => "$type",
--	                   -content_disposition => "inline; filename=\"$save_as\"");
-+	print $cgi->header(
-+		-type => "$type",
-+		-expires=>$expires,
-+		-content_disposition => "inline; filename=\"$save_as\"");
- 	binmode STDOUT, ':raw';
- 	local $/ = undef;
- 	print <$fd>;
-@@ -2404,6 +2412,12 @@ sub git_blob_plain {
- }
- 
- sub git_blob {
-+	# blobs defined by non-textual hash id's can be cached
-+	my $expires;
-+	if ($hash =~ m/^[0-9a-fA-F]{40}$/) {
-+		$expires = "+1d";
-+	}
-+
- 	if (!defined $hash) {
- 		if (defined $file_name) {
- 			my $base = $hash_base || git_get_head_hash($project);
-@@ -2421,7 +2435,7 @@ sub git_blob {
- 		close $fd;
- 		return git_blob_plain($mimetype);
- 	}
--	git_header_html();
-+	git_header_html(undef, $expires);
- 	my $formats_nav = '';
- 	if (defined $hash_base && (my %co = parse_commit($hash_base))) {
- 		if (defined $file_name) {
--- 
-1.4.1.1
+
+On Fri, 25 Aug 2006, Sergio Callegari wrote:
+>
+> If I try to verify the pack I get:
+> 
+> git verify-pack -v pack-ebcdfbbda07e5a3e4136aa1f499990b35685bab4.idx
+> fatal: failed to read delta-pack base object 2849bd2bd8a76bbca37df2a4c8e8b990811d01a7
+> 
+> the package length seems reasonable, however... (no evident sign of
+> truncation, but I haven't looked inside the index to check the exact positions
+> of objects)...
+
+Can you make the corrupt pack-file and index available publically (or 
+perhaps at least to a few git people?)
+
+The fact that verify-pack is happy with the SHA1 checksum is interesting, 
+because it means that the pack-file at least didn't get corrupted on-disk 
+(or through the sync operation). Iow, it must have gotten corrupted at 
+write-out itself somehow, and it would be interesting to see what the 
+pack-file looks like.
+
+> and git unpack-object dies with error code -3 in inflate...
+
+That's Z_DATA_ERROR, which is what you get if the input to inflate is bad.
+
+		Linus
