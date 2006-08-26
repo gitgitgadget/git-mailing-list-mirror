@@ -1,63 +1,97 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Fix typo in git_difftree_body
-Date: Sat, 26 Aug 2006 23:33:58 +0200
-Message-ID: <200608262333.59039.jnareb@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] dir: do all size checks before seeking back and fix file
+ closing
+Date: Sat, 26 Aug 2006 15:13:00 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0608261509290.11811@g5.osdl.org>
+References: <20060826141709.GC11601@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Aug 26 23:34:11 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 27 00:13:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GH5n8-0006ds-47
-	for gcvg-git@gmane.org; Sat, 26 Aug 2006 23:34:10 +0200
+	id 1GH6P4-0003Qj-8j
+	for gcvg-git@gmane.org; Sun, 27 Aug 2006 00:13:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750875AbWHZVeB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 Aug 2006 17:34:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750909AbWHZVeB
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Aug 2006 17:34:01 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:20053 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1750875AbWHZVeA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Aug 2006 17:34:00 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so1011588nfa
-        for <git@vger.kernel.org>; Sat, 26 Aug 2006 14:33:58 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=nq6l3uujjGJad7dRtv/dwbC/6B6N+SrXYLGNibrTa9mz0d92T320EeH5jCLLMAD8syipKkGvSYIK/pcE1HYUZKnFmuw40kwUz4tfZNqPaTYFK9efI+N3dN01uPgohIczzbC1wEMyvPeGtsxbDGL5zvKjCNhOkjDW0rm1Iyh6Gc4=
-Received: by 10.48.14.4 with SMTP id 4mr7086753nfn;
-        Sat, 26 Aug 2006 14:33:58 -0700 (PDT)
-Received: from host-81-190-21-215.torun.mm.pl ( [81.190.21.215])
-        by mx.gmail.com with ESMTP id c1sm4525130nfe.2006.08.26.14.33.58;
-        Sat, 26 Aug 2006 14:33:58 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+	id S1751219AbWHZWNJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 Aug 2006 18:13:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751223AbWHZWNJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Aug 2006 18:13:09 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:52681 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751219AbWHZWNG (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Aug 2006 18:13:06 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k7QMD1nW014782
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 26 Aug 2006 15:13:01 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k7QMD0T0001353;
+	Sat, 26 Aug 2006 15:13:00 -0700
+To: Jonas Fonseca <fonseca@diku.dk>
+In-Reply-To: <20060826141709.GC11601@diku.dk>
+X-Spam-Status: No, hits=-2.425 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.143 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26072>
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 02d327c..9cf2b78 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1557,7 +1557,7 @@ sub git_difftree_body {
- 			              "blob") .
- 			      " | " .
- 			      $cgi->a({-href => href(action=>"history", hash_base=>$parent,
--			                             file_name=>$diff{'file'})},\
-+			                             file_name=>$diff{'file'})},
- 			              "history") .
- 			      "</td>\n";
- 
--- 
-1.4.1.1
+
+On Sat, 26 Aug 2006, Jonas Fonseca wrote:
+> 
+> diff --git a/dir.c b/dir.c
+> index d53d48f..ff8a2fb 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -122,11 +122,11 @@ static int add_excludes_from_file_1(cons
+>  	size = lseek(fd, 0, SEEK_END);
+>  	if (size < 0)
+>  		goto err;
+> -	lseek(fd, 0, SEEK_SET);
+>  	if (size == 0) {
+>  		close(fd);
+>  		return 0;
+>  	}
+> +	lseek(fd, 0, SEEK_SET);
+
+I really think you'd be better off rewriting that to use "fstat()" 
+instead. I don't know why it uses two lseek's, but it's wrong, and looks 
+like some bad habit Junio picked up at some point.
+
+> @@ -146,7 +146,7 @@ static int add_excludes_from_file_1(cons
+>  	return 0;
+>  
+>   err:
+> -	if (0 <= fd)
+> +	if (0 >= fd)
+>  		close(fd);
+
+That's wrong. 
+
+Now, admittedly it's wrong because another bad habit Junio picked up 
+(doing comparisons with constants in the wrong order), so please write it 
+as
+
+	if (fd >= 0)
+		close(fd);
+
+instead.
+
+Junio: I realize that you claim that you learnt that syntax from an 
+authorative source, but he was _wrong_. Doing the constant first is more 
+likely to cause bugs, rather than less. Compilers will warn about the
+
+	if (x = 0)
+		..
+
+kind of bug, and putting the constant first just confuses humans.
+
+It's more important to _not_ confuse humans than it is to try to avoid an 
+uncommon error that compilers can and do warn about anyway.
+
+			Linus
