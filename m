@@ -1,59 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] dir: do all size checks before seeking back and fix file closing
-Date: Sat, 26 Aug 2006 20:04:18 -0700
-Message-ID: <7vy7tayj4d.fsf@assigned-by-dhcp.cox.net>
-References: <20060826141709.GC11601@diku.dk>
-	<Pine.LNX.4.64.0608261509290.11811@g5.osdl.org>
-	<7v4pvz11o6.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0608261931460.11811@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 00/19] gitweb: Remove dependency on external diff and
+ need for temporary files
+Date: Sat, 26 Aug 2006 20:30:49 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0608262026230.11811@g5.osdl.org>
+References: <200608240015.15071.jnareb@gmail.com> <200608252315.57181.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sun Aug 27 05:04:27 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 27 05:31:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GHAwe-0000ev-UW
-	for gcvg-git@gmane.org; Sun, 27 Aug 2006 05:04:21 +0200
+	id 1GHBMR-0004vX-3Y
+	for gcvg-git@gmane.org; Sun, 27 Aug 2006 05:30:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750930AbWH0DEI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 Aug 2006 23:04:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751144AbWH0DEI
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Aug 2006 23:04:08 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:27086 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1750930AbWH0DEF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Aug 2006 23:04:05 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060827030400.BGFZ27846.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 26 Aug 2006 23:04:00 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Er3x1V00K4Noztg0000000
-	Sat, 26 Aug 2006 23:03:58 -0400
-To: git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.64.0608261931460.11811@g5.osdl.org> (Linus Torvalds's
-	message of "Sat, 26 Aug 2006 19:37:57 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750982AbWH0Day (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 Aug 2006 23:30:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751180AbWH0Day
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Aug 2006 23:30:54 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:23196 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750982AbWH0Dax (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Aug 2006 23:30:53 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k7R3UonW027755
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 26 Aug 2006 20:30:50 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k7R3Un9u013429;
+	Sat, 26 Aug 2006 20:30:50 -0700
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200608252315.57181.jnareb@gmail.com>
+X-Spam-Status: No, hits=-0.933 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.143 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26083>
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
->> The comparison order is done in textual order.  You list smaller
->> things on the left and then larger things on the right (iow, you
->> almost never use >= or >).
+
+On Fri, 25 Aug 2006, Jakub Narebski wrote:
 >
-> Ahh. A number of people do the "0 == x" thing, because they want to be 
-> caught if they use "=" instead of "==" by mistake. I thought it was the 
-> same thing.
+> This series of patches (now finished) removes dependency on
+> external diff (/usr/bin/diff) to produce commitdiff and blobdiff
+> views, and the need for temporary files.
 
-The rest is repeating what you said 15 months ago, so I did not
-quote that part, but interested parties can follow this thread:
+Ok, can we now please fix my final annouyance, which is that gitweb from 
+the very beginning has apparently believed that the "Signed-off-by:" etc 
+lines are not important, and they get stripped away when looking at the 
+"commit-diff".
 
-http://thread.gmane.org/gmane.comp.version-control.git/3907/focus=4126
+Also, "commit-diff" really should have some minimal authorship 
+information. It's silly to have to go to "commit" and then separately ask 
+for "diff" to see all these very basic things.
+
+So I think that "commit-diff" should basically show the equivalent of "git 
+show --pretty", ie author, date, commit message (including sign-offs) and 
+then the diff.
+
+No?
+
+			Linus
