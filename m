@@ -1,126 +1,67 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Starting to think about sha-256?
-Date: Sun, 27 Aug 2006 15:35:20 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0608271522390.27779@g5.osdl.org>
-References: <44F1DCB7.6020804@garzik.org> <m31wr1exbf.fsf@defiant.localdomain>
- <Pine.LNX.4.64.0608271343120.27779@g5.osdl.org>
- <Pine.LNX.4.63.0608272341330.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add git-zip-tree to .gitignore
+Date: Sun, 27 Aug 2006 15:57:48 -0700
+Message-ID: <7vhczxvlar.fsf@assigned-by-dhcp.cox.net>
+References: <44F17FD5.2030000@lsrfire.ath.cx>
+	<7vlkp9x2b9.fsf@assigned-by-dhcp.cox.net>
+	<44F21E0B.9010600@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Krzysztof Halasa <khc@pm.waw.pl>, Jeff Garzik <jeff@garzik.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 28 00:38:17 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 28 00:57:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GHTGd-0003Ki-B3
-	for gcvg-git@gmane.org; Mon, 28 Aug 2006 00:38:11 +0200
+	id 1GHTZZ-0005Ve-4M
+	for gcvg-git@gmane.org; Mon, 28 Aug 2006 00:57:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751231AbWH0WiH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 Aug 2006 18:38:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751239AbWH0WiG
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Aug 2006 18:38:06 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:479 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751231AbWH0WiE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Aug 2006 18:38:04 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k7RMZLnW025076
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 27 Aug 2006 15:35:21 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k7RMZKKZ007505;
-	Sun, 27 Aug 2006 15:35:20 -0700
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0608272341330.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Spam-Status: No, hits=-0.433 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.143 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751221AbWH0W5S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 Aug 2006 18:57:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750980AbWH0W5S
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Aug 2006 18:57:18 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:42157 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1750787AbWH0W5R (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Aug 2006 18:57:17 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060827225716.DTOU21457.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 27 Aug 2006 18:57:16 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id FAxE1V0034Noztg0000000
+	Sun, 27 Aug 2006 18:57:14 -0400
+To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+In-Reply-To: <44F21E0B.9010600@lsrfire.ath.cx> (Rene Scharfe's message of
+	"Mon, 28 Aug 2006 00:34:51 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26126>
 
+Rene Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
+> Junio C Hamano schrieb:
+>> Although it was my fault applying it already to "master" without 
+>> asking this question first, I started to wonder how many more archive
+>> format people would want, and if it might make more sense to
+>> consolidate git-*-tree into a single frontend with an option to
+>> specify the archiver.
+>> 
+>> We would obviously need to keep git-tar-tree as a backward 
+>> compatibility alias for "git archive-tree -f tar", but doing things
+>> that way we do not have to introduce unbounded number of new
+>> git-{zip,rar,...}-tree programs.
+>
+> That thought occurred to me, too.  I guess there are not that many more
+> interesting archive formats, though.  Can we defer adding
+> git-archive-tree until a third archive format command appears?  I won't
+> submit another one, I promise. ;-)
 
-On Mon, 28 Aug 2006, Johannes Schindelin wrote:
-> > 
-> > Modifying git-convert-objects.c to rewrite the regular sha1 into a sha256 
-> > should be fairly straightforward. It's never been used since the early 
-> > days (and has limits like a maximum of a million objects etc that can need 
-> > fixing), but it shouldn't be "fundamentally hard" per se.
-> 
-> But what about signed tags? (This issue has come up before, but never has 
-> been adressed.)
-
-Signed tags fundamentally have to be re-signed. That's by design: if 
-somebody could rewrite an archive and signed tags would still be accepted 
-to have the right signature, that would be a _serious_ sign of a totally 
-broken security model.
-
-The git security model isn't broken.
-
-> I also thought about supporting hybrid hashes, i.e. that older objects 
-> still can be hashed with SHA-1. Alas, a simple thought experiment 
-> demonstrates how silly that idea is: most of the objects will not change 
-> between two revisions, and they'd have to be rehashed with SHA-256 (or 
-> whatever we decide upon) anyway, so hybrids would do no good.
-
-Indeed. Hybrids would not only do no good, but they would actually 
-_actively_ hurt things, because they'd fundamentally break the notion that 
-the hash being identical means that the object (blob, tree, subtree) is 
-the same.
-
-So allowing two names for the same object is very fundamentally wrong in 
-git-speak. 
-
-> A better idea would be to increment the repository version, and expect 
-> SHA-1 for version 1, SHA-256 for version >= 2.
-
-Yes. It would be reasonably painful for users, though (as Krzysztof 
-correctly points out). Every client would have to convert when a 
-repository they track is converted.
-
-> Even if the breakthrough really comes to full SHA-1, you still have to add 
-> _at least_ 20 bytes of gibberish. Which would be harder to spot, but it 
-> would be spotted.
-
-Yeah, I don't think this is at all critical, especially since git really 
-on a security level doesn't _depend_ on the hashes being cryptographically 
-secure. As I explained early on (ie over a year ago, back when the whole 
-design of git was being discussed), the _security_ of git actually depends 
-on not cryptographic hashes, but simply on everybody being able to secure 
-their own _private_ repository.
-
-So the only thing git really _requires_ is a hash that is _unique_ for the 
-developer (and there we are talking not of an _attacker_, but a benign 
-participant).
-
-That said, the cryptographic security of SHA-1 is obviously a real bonus. 
-So I'd be disappointed if SHA-1 can be broken more easily (and I obviously 
-already argued against using MD5, exactly because generating duplicates of 
-that is fairly easy). But it's not "fundamentally required" in git per se.
-
-[ The one exception: the "signed tags" security does depend on the hashes 
-  being cryptographically strong. So again, breaking SHA-1 would not mean 
-  that git stops working, but it _would_ potentially mean that if you 
-  don't trust your own _private_ repository, the signed tag may no longer 
-  protect you entirely ]
-
-> This made me think about the use of hashes in git. Why do we need a hash 
-> here (in no particular order):
-> 
-> 1) integrity checking,
-> 2) fast lookup,
-> 3) identifying objects (related to (2)),
-> 4) trust.
-> 
-> Except for (4), I do not see why SHA-1 -- even if broken -- should not be 
-> adequate. It is not like somebody found out that all JPGs tend to have 
-> similar hashes so that collisions are more likely.
-
-Correct. I'm pretty sure we had exactly this discussion around May 2005, 
-but I'm too lazy to search ;)
-
-		Linus
+I was more worried about possibly having to do --remote once in
+each for tar-tree and zip-tree in git-daemon.  The version of
+daemon currently in "pu" can allow git-tar-tree to be accessed
+from the client via git:// URL.
