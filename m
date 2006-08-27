@@ -1,79 +1,88 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: [PATCH] git-daemon: more powerful base-path/user-path  settings, using formats.
-Date: 27 Aug 2006 09:06:32 -0700
-Message-ID: <864pvyi2nr.fsf@blue.stonehenge.com>
-References: <7vmz9vgqlm.fsf@assigned-by-dhcp.cox.net>
-	<115637597423-git-send-email-madcoder@debian.org>
-	<7vfyfiyaex.fsf@assigned-by-dhcp.cox.net>
-	<200608271228.09718.madcoder@debian.org>
-	<7v64gexxgl.fsf@assigned-by-dhcp.cox.net>
+From: Pierre Habouzit <pierre.habouzit@m4x.org>
+Subject: Re: [PATCH] git-daemon: more powerful base-path/user-path settings, using formats.
+Date: Sun, 27 Aug 2006 18:26:45 +0200
+Organization: Polytechnique.org
+Message-ID: <200608271826.48155.pierre.habouzit@m4x.org>
+References: <7vmz9vgqlm.fsf@assigned-by-dhcp.cox.net> <200608271340.32792.madcoder@debian.org> <ecsdqa$1pi$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 27 18:06:50 2006
+Content-Type: multipart/signed;
+  boundary="nextPart1312548.Pq6IQR5JuX";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 27 18:27:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GHN9j-0000tk-MX
-	for gcvg-git@gmane.org; Sun, 27 Aug 2006 18:06:40 +0200
+	id 1GHNTK-0005Yh-49
+	for gcvg-git@gmane.org; Sun, 27 Aug 2006 18:26:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932152AbWH0QGh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 Aug 2006 12:06:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932156AbWH0QGg
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Aug 2006 12:06:36 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:9508 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP id S932152AbWH0QGg
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Aug 2006 12:06:36 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 82FF78F599;
-	Sun, 27 Aug 2006 09:06:35 -0700 (PDT)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 31789-01-16; Sun, 27 Aug 2006 09:06:33 -0700 (PDT)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id F3EE78F591; Sun, 27 Aug 2006 09:06:32 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-x-mayan-date: Long count = 12.19.13.10.12; tzolkin = 10 Eb; haab = 5 Mol
-In-Reply-To: <7v64gexxgl.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S932165AbWH0Q0v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 Aug 2006 12:26:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932167AbWH0Q0v
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Aug 2006 12:26:51 -0400
+Received: from mx1.polytechnique.org ([129.104.30.34]:65227 "EHLO
+	mx1.polytechnique.org") by vger.kernel.org with ESMTP
+	id S932165AbWH0Q0u (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Aug 2006 12:26:50 -0400
+Received: from hades.madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by ssl.polytechnique.org (Postfix) with ESMTP id 74D85332C1;
+	Sun, 27 Aug 2006 18:26:49 +0200 (CEST)
+To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KMail/1.9.3
+In-Reply-To: <ecsdqa$1pi$1@sea.gmane.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+X-AV-Checked: ClamAV using ClamSMTP at djali.polytechnique.org (Sun Aug 27 18:26:49 2006 +0200 (CEST))
+X-Spam-Flag: No, tests=bogofilter, spamicity=0.000152, queueID=B7BC4332E7
+X-Org-Mail: pierre.habouzit.2000@polytechnique.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26104>
 
->>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
+--nextPart1312548.Pq6IQR5JuX
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Junio> About vger potentially throwing things away, I use this script
-Junio> (called "taboo.perl") to check my messages before sending them
-Junio> out.
+Le dim 27 ao=C3=BBt 2006 17:30, Jakub Narebski a =C3=A9crit :
+> Pierre Habouzit wrote:
+> > Le dim 27 ao?t 2006 12:52, Junio C Hamano a =C3=A9crit :
+> >> About vger potentially throwing things away, I use this script
+> >> (called "taboo.perl") to check my messages before sending them
+> >> out.
+> >
+> > that was not it, I was biten (again) by git-send-mail that uses
+> > strftime (localized) to generate rfc822 dates, making them
+> > unparseable :|
+>
+> Update your git, or use ./git-send-email.perl directly from git
+> repository (from 'master' branch, as 'next' branch version uses
+> Git.pm). Strftime was replaced by pure Perl to generate rfc2822 date
+> some time ago...
 
-Junio> Obviously the taboo-word list itself is not attached here, but
-Junio> the actual script should have a copy of it after the __DATA__
-Junio> marker.
+I know that, I've done that on many of my system, but not the one where=20
+I hack git ... how lame isn't it ? :)
+=2D-=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-With "Inline::Files" from the CPAN, you could have a switch where the
-script updates itself with the new list:
+--nextPart1312548.Pq6IQR5JuX
+Content-Type: application/pgp-signature
 
-    use Inline::Files;
-    if (@ARGV == 1 and $ARGV[0] eq "-update") {
-      use LWP::Simple;
-      my $list = get "http://example.com/foo/bar.txt";
-      open DATA, ">$DATA" or die "cannot write myself: $!";
-      print DATA $list;
-      close DATA;
-      exit 0;
-    }
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
 
-    ... rest of your program here ...
-    ... read using <DATA> as before ...
+iD8DBQBE8cfIvGr7W6HudhwRAnrlAJ9eNFrYD0UlAmGFyMgEMifrJxkoogCfa9Pt
+KtzmS0uo86SUPYLeWqq90oY=
+=g1GM
+-----END PGP SIGNATURE-----
 
-    __DATA__
-    the list will magically go here.
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+--nextPart1312548.Pq6IQR5JuX--
