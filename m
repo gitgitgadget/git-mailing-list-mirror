@@ -1,71 +1,51 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 13/19] gitweb: Add invisible hyperlink to from-file/to-file
- diff header
-Date: Sat, 26 Aug 2006 20:38:32 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0608262033000.11811@g5.osdl.org>
-References: <200608240015.15071.jnareb@gmail.com> <200608252105.07500.jnareb@gmail.com>
+From: David Miller <davem@davemloft.net>
+Subject: Re: [PATCH 00/19] gitweb: Remove dependency on external diff and
+ need for temporary files
+Date: Sat, 26 Aug 2006 20:42:08 -0700 (PDT)
+Message-ID: <20060826.204208.85688529.davem@davemloft.net>
+References: <200608240015.15071.jnareb@gmail.com>
+	<200608252315.57181.jnareb@gmail.com>
+	<Pine.LNX.4.64.0608262026230.11811@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 27 05:38:58 2006
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: jnareb@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 27 05:42:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GHBU3-0006Z5-T5
-	for gcvg-git@gmane.org; Sun, 27 Aug 2006 05:38:52 +0200
+	id 1GHBXP-000748-Jz
+	for gcvg-git@gmane.org; Sun, 27 Aug 2006 05:42:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750977AbWH0Dih (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 Aug 2006 23:38:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751180AbWH0Dih
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Aug 2006 23:38:37 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:16286 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750977AbWH0Dig (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 Aug 2006 23:38:36 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k7R3cXnW028092
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 26 Aug 2006 20:38:34 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k7R3cWdL013579;
-	Sat, 26 Aug 2006 20:38:33 -0700
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200608252105.07500.jnareb@gmail.com>
-X-Spam-Status: No, hits=-0.934 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.143 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751180AbWH0DmM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 Aug 2006 23:42:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751184AbWH0DmM
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Aug 2006 23:42:12 -0400
+Received: from dsl027-180-168.sfo1.dsl.speakeasy.net ([216.27.180.168]:30406
+	"EHLO sunset.davemloft.net") by vger.kernel.org with ESMTP
+	id S1751180AbWH0DmM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Aug 2006 23:42:12 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by sunset.davemloft.net (Postfix) with ESMTP id 3D4A1AE45F6;
+	Sat, 26 Aug 2006 20:42:08 -0700 (PDT)
+To: torvalds@osdl.org
+In-Reply-To: <Pine.LNX.4.64.0608262026230.11811@g5.osdl.org>
+X-Mailer: Mew version 4.2 on Emacs 21.4 / Mule 5.0 (SAKAKI)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26085>
 
+From: Linus Torvalds <torvalds@osdl.org>
+Date: Sat, 26 Aug 2006 20:30:49 -0700 (PDT)
 
+> Ok, can we now please fix my final annouyance, which is that gitweb from 
+> the very beginning has apparently believed that the "Signed-off-by:" etc 
+> lines are not important, and they get stripped away when looking at the 
+> "commit-diff".
 
-On Fri, 25 Aug 2006, Jakub Narebski wrote:
->
-> Change replacing hashes as from-file/to-file with filenames from
-> difftree to adding invisible (except underlining on hover/mouseover)
-> hyperlink to from-file/to-file blob.  /dev/null as from-file or
-> to-file is not changed (is not hyperlinked).
+Isn't this to keep the email address from being published on the web
+and thus harvested by spammers?
 
-Wouldn't it be even better to have the hyperlink (or a new, separate one) 
-point to the history for that file, too?
-
-That way, you can go to the commit-diff, and when you see a diff for a 
-file, you can easily just ask for the whole history for that file. As it 
-is, you can get that, but only by going to the "commit" thing, not from 
-the "commit-diff" thing.
-
-Alternatively, maybe commit-diff should have a header with the files it 
-changes (ie it would truly be a superset of the "commit" case)? That might 
-be even nicer, since you'd not have to scroll through a potentially big 
-diff for other files in order to get to the one you care about.
-
-(If you do the "header with changed files", each file could have the same 
-three buttons as in the "commit" view: "blob" (pointing to the blob), 
-"diff" (which just points to _within_ the current window, so that you can 
-get to the start of that particular file diff) and "history" (which 
-obviously does what the "commit" case does too - generate a history page).
-
-			Linus
+If it will obfuscate the email address, that's fine I guess.
