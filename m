@@ -1,74 +1,79 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 00/19] gitweb: Remove dependency on external diff and need for temporary files
-Date: Sun, 27 Aug 2006 17:37:29 +0200
-Organization: At home
-Message-ID: <ecse7k$2q3$2@sea.gmane.org>
-References: <200608240015.15071.jnareb@gmail.com> <200608252315.57181.jnareb@gmail.com> <Pine.LNX.4.64.0608262026230.11811@g5.osdl.org>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: [PATCH] git-daemon: more powerful base-path/user-path  settings, using formats.
+Date: 27 Aug 2006 09:06:32 -0700
+Message-ID: <864pvyi2nr.fsf@blue.stonehenge.com>
+References: <7vmz9vgqlm.fsf@assigned-by-dhcp.cox.net>
+	<115637597423-git-send-email-madcoder@debian.org>
+	<7vfyfiyaex.fsf@assigned-by-dhcp.cox.net>
+	<200608271228.09718.madcoder@debian.org>
+	<7v64gexxgl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sun Aug 27 17:40:28 2006
+Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 27 18:06:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GHMkD-00048u-Vq
-	for gcvg-git@gmane.org; Sun, 27 Aug 2006 17:40:18 +0200
+	id 1GHN9j-0000tk-MX
+	for gcvg-git@gmane.org; Sun, 27 Aug 2006 18:06:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932145AbWH0PkN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 Aug 2006 11:40:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932147AbWH0PkN
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Aug 2006 11:40:13 -0400
-Received: from main.gmane.org ([80.91.229.2]:15286 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932145AbWH0PkL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Aug 2006 11:40:11 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1GHMjy-00045t-Ka
-	for git@vger.kernel.org; Sun, 27 Aug 2006 17:40:02 +0200
-Received: from host-81-190-21-215.torun.mm.pl ([81.190.21.215])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 27 Aug 2006 17:40:02 +0200
-Received: from jnareb by host-81-190-21-215.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 27 Aug 2006 17:40:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-21-215.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S932152AbWH0QGh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 Aug 2006 12:06:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932156AbWH0QGg
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Aug 2006 12:06:36 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:9508 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP id S932152AbWH0QGg
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Aug 2006 12:06:36 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 82FF78F599;
+	Sun, 27 Aug 2006 09:06:35 -0700 (PDT)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 31789-01-16; Sun, 27 Aug 2006 09:06:33 -0700 (PDT)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id F3EE78F591; Sun, 27 Aug 2006 09:06:32 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+x-mayan-date: Long count = 12.19.13.10.12; tzolkin = 10 Eb; haab = 5 Mol
+In-Reply-To: <7v64gexxgl.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26103>
 
-Linus Torvalds wrote:
+>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
 
-> On Fri, 25 Aug 2006, Jakub Narebski wrote:
->>
->> This series of patches (now finished) removes dependency on
->> external diff (/usr/bin/diff) to produce commitdiff and blobdiff
->> views, and the need for temporary files.
-> 
-> Ok, can we now please fix my final annoyance, which is that gitweb from 
-> the very beginning has apparently believed that the "Signed-off-by:" etc 
-> lines are not important, and they get stripped away when looking at the 
-> "commit-diff".
+Junio> About vger potentially throwing things away, I use this script
+Junio> (called "taboo.perl") to check my messages before sending them
+Junio> out.
 
-This can be easily fixed.
+Junio> Obviously the taboo-word list itself is not attached here, but
+Junio> the actual script should have a copy of it after the __DATA__
+Junio> marker.
 
-> Also, "commit-diff" really should have some minimal authorship 
-> information. It's silly to have to go to "commit" and then separately ask 
-> for "diff" to see all these very basic things.
+With "Inline::Files" from the CPAN, you could have a switch where the
+script updates itself with the new list:
 
-And this need some layout redesign for commitdiff and log views.
-Currently it is specially formatted subject/first line, simplified
-message (with empty lines collapsed), and without signoff.
+    use Inline::Files;
+    if (@ARGV == 1 and $ARGV[0] eq "-update") {
+      use LWP::Simple;
+      my $list = get "http://example.com/foo/bar.txt";
+      open DATA, ">$DATA" or die "cannot write myself: $!";
+      print DATA $list;
+      close DATA;
+      exit 0;
+    }
 
-Perhaps something similar to what "log" view uses?
+    ... rest of your program here ...
+    ... read using <DATA> as before ...
+
+    __DATA__
+    the list will magically go here.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
