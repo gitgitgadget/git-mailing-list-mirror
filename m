@@ -1,37 +1,37 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: File archiver using git
-Date: Sun, 27 Aug 2006 17:34:04 +0200
+Subject: Re: [PATCH 00/19] gitweb: Remove dependency on external diff and need for temporary files
+Date: Sun, 27 Aug 2006 17:37:29 +0200
 Organization: At home
-Message-ID: <ecse17$2q3$1@sea.gmane.org>
-References: <3bbc18d20608270610o102968d2kd340d40843262dc5@mail.gmail.com> <Pine.LNX.4.63.0608271528130.8018@alpha.polcom.net>
+Message-ID: <ecse7k$2q3$2@sea.gmane.org>
+References: <200608240015.15071.jnareb@gmail.com> <200608252315.57181.jnareb@gmail.com> <Pine.LNX.4.64.0608262026230.11811@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sun Aug 27 17:35:20 2006
+X-From: git-owner@vger.kernel.org Sun Aug 27 17:40:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GHMfI-000362-Ru
-	for gcvg-git@gmane.org; Sun, 27 Aug 2006 17:35:13 +0200
+	id 1GHMkD-00048u-Vq
+	for gcvg-git@gmane.org; Sun, 27 Aug 2006 17:40:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751075AbWH0PfI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 Aug 2006 11:35:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751078AbWH0PfI
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Aug 2006 11:35:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:55433 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751075AbWH0PfG (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Aug 2006 11:35:06 -0400
+	id S932145AbWH0PkN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 Aug 2006 11:40:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932147AbWH0PkN
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Aug 2006 11:40:13 -0400
+Received: from main.gmane.org ([80.91.229.2]:15286 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932145AbWH0PkL (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Aug 2006 11:40:11 -0400
 Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1GHMf8-00033t-KT
-	for git@vger.kernel.org; Sun, 27 Aug 2006 17:35:02 +0200
+	id 1GHMjy-00045t-Ka
+	for git@vger.kernel.org; Sun, 27 Aug 2006 17:40:02 +0200
 Received: from host-81-190-21-215.torun.mm.pl ([81.190.21.215])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 27 Aug 2006 17:35:02 +0200
+        for <git@vger.kernel.org>; Sun, 27 Aug 2006 17:40:02 +0200
 Received: from jnareb by host-81-190-21-215.torun.mm.pl with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 27 Aug 2006 17:35:02 +0200
+        for <git@vger.kernel.org>; Sun, 27 Aug 2006 17:40:02 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
 X-Complaints-To: usenet@sea.gmane.org
@@ -41,28 +41,32 @@ User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26102>
 
-Grzegorz Kulewski wrote:
+Linus Torvalds wrote:
 
-> On Sun, 27 Aug 2006, Matt McCutchen wrote:
->> Dear git people,
+> On Fri, 25 Aug 2006, Jakub Narebski wrote:
 >>
->> You might like the two attached scripts that I wrote around git to
->> pack file trees containing lots of redundancy into very small
->> packages.  For example, if I have ten slightly different versions of a
->> piece of software because I didn't use version control, I can use
->> gitar to compress them together.
+>> This series of patches (now finished) removes dependency on
+>> external diff (/usr/bin/diff) to produce commitdiff and blobdiff
+>> views, and the need for temporary files.
 > 
-> Does it (and GIT in general) work ok with file permisions, ownership, soft 
-> and hard links, named sockets, device files and similar "strange" 
-> filesystem objects? Do I need any options to GIT to make it work with 
-> them?
+> Ok, can we now please fix my final annoyance, which is that gitweb from 
+> the very beginning has apparently believed that the "Signed-off-by:" etc 
+> lines are not important, and they get stripped away when looking at the 
+> "commit-diff".
 
-Git in general only preserves executable bit, deals with symlinks,
-hardlinks after a fashion (stored once, but unpacked/checked out as separate
-files, not hardlinked), and does not deal with other "strange" filesystem
-objects as far as I know.
+This can be easily fixed.
+
+> Also, "commit-diff" really should have some minimal authorship 
+> information. It's silly to have to go to "commit" and then separately ask 
+> for "diff" to see all these very basic things.
+
+And this need some layout redesign for commitdiff and log views.
+Currently it is specially formatted subject/first line, simplified
+message (with empty lines collapsed), and without signoff.
+
+Perhaps something similar to what "log" view uses?
 
 -- 
 Jakub Narebski
