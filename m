@@ -1,96 +1,105 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Problem with pack
-Date: Sun, 27 Aug 2006 14:55:38 -0700
-Message-ID: <7vpselx2qt.fsf@assigned-by-dhcp.cox.net>
-References: <44F1DA25.3050403@arces.unibo.it>
-	<Pine.LNX.4.64.0608271102450.27779@g5.osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Starting to think about sha-256?
+Date: Mon, 28 Aug 2006 00:02:39 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0608272341330.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <44F1DCB7.6020804@garzik.org> <m31wr1exbf.fsf@defiant.localdomain>
+ <Pine.LNX.4.64.0608271343120.27779@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 27 23:55:23 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Krzysztof Halasa <khc@pm.waw.pl>, Jeff Garzik <jeff@garzik.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 28 00:03:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GHSb4-0005YC-4B
-	for gcvg-git@gmane.org; Sun, 27 Aug 2006 23:55:14 +0200
+	id 1GHSiY-0006UK-D8
+	for gcvg-git@gmane.org; Mon, 28 Aug 2006 00:03:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750952AbWH0VzK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 Aug 2006 17:55:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750978AbWH0VzK
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Aug 2006 17:55:10 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:48535 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1750952AbWH0VzI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Aug 2006 17:55:08 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060827215507.PHHA4015.fed1rmmtao09.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 27 Aug 2006 17:55:07 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id F9v41V00G4Noztg0000000
-	Sun, 27 Aug 2006 17:55:05 -0400
+	id S1751212AbWH0WCm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 Aug 2006 18:02:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751217AbWH0WCm
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Aug 2006 18:02:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:4296 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751212AbWH0WCl (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Aug 2006 18:02:41 -0400
+Received: (qmail invoked by alias); 27 Aug 2006 22:02:40 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp034) with SMTP; 28 Aug 2006 00:02:40 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0608271102450.27779@g5.osdl.org> (Linus Torvalds's
-	message of "Sun, 27 Aug 2006 11:27:04 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <Pine.LNX.4.64.0608271343120.27779@g5.osdl.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26121>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Hi,
 
-> NOTE! This is all assuming my theory that a packed entry was broken in the 
-> first place was correct. We obviously still don't _know_ what the problem 
-> was. So far it's just a theory.
+On Sun, 27 Aug 2006, Linus Torvalds wrote:
 
-But it is a good theory.  More plausible than alpha particle
-hitting the output buffer of zlib at the right moment, although
-the effects are the same ;-).
+> On Sun, 27 Aug 2006, Krzysztof Halasa wrote:
+> > 
+> > > Maybe sha-256 could be considered for the next major-rev of git?
+> > 
+> > Not sure, but _if_ we want it we should do it sooner rather than
+> > later.
+> 
+> Modifying git-convert-objects.c to rewrite the regular sha1 into a sha256 
+> should be fairly straightforward. It's never been used since the early 
+> days (and has limits like a maximum of a million objects etc that can need 
+> fixing), but it shouldn't be "fundamentally hard" per se.
 
-> So it might well be the case that we should simply add an extra integrity 
-> check to the raw data copy in builtin-pack-objects.c: write_object().
+But what about signed tags? (This issue has come up before, but never has 
+been adressed.)
 
-I would agree that it is a sensible thing to do to insert check
-at places shown in the attached.  The revalidate_pack_piece()
-would:
+I also thought about supporting hybrid hashes, i.e. that older objects 
+still can be hashed with SHA-1. Alas, a simple thought experiment 
+demonstrates how silly that idea is: most of the objects will not change 
+between two revisions, and they'd have to be rehashed with SHA-256 (or 
+whatever we decide upon) anyway, so hybrids would do no good.
 
- - decode object header to make sure it decodes to sensible
-   enum object_type value from the start of the buffer given as
-   its first argument;
+A better idea would be to increment the repository version, and expect 
+SHA-1 for version 1, SHA-256 for version >= 2.
 
- - if it is of type OBJ_DELTA, skip 20-byte base object name;
+However, I could imagine that we do not need this huge change (it would 
+break _many_ setups). The breakthrough was announced last Tuesday, and it 
+involved 75% payload, i.e. to fake a new -- say -- git.c, one would need 
+to enlarge git.c by a factor 4, and you would see a lot of gibberish 
+inside some comment. (Note that I did not listen to the talk myself, this 
+is all deducted from the scarce information which is available via the 
+'net.)
 
- - the second argument is the length of the piece -- make sure
-   the above steps did not require more than the length;
+Even if the breakthrough really comes to full SHA-1, you still have to add 
+_at least_ 20 bytes of gibberish. Which would be harder to spot, but it 
+would be spotted.
 
- - make sure the remainder is sane by running inflate() into
-   void.  When fed the remainder in full, inflate() should
-   return Z_OK.
+This made me think about the use of hashes in git. Why do we need a hash 
+here (in no particular order):
 
-For the first step we need to refactor unpack_object_header() in
-sha1_file.c a tiny bit to reuse it.
+1) integrity checking,
+2) fast lookup,
+3) identifying objects (related to (2)),
+4) trust.
 
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 46f524d..0521cad 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -276,6 +282,7 @@ static unsigned long write_object(struct
- 		map = map_sha1_file(entry->sha1, &mapsize);
- 		if (map && !legacy_loose_object(map)) {
- 			/* We can copy straight into the pack file */
-+			revalidate_pack_piece(map, mapsize);
- 			sha1write(f, map, mapsize);
- 			munmap(map, mapsize);
- 			written++;
-@@ -319,6 +326,7 @@ static unsigned long write_object(struct
- 
- 		datalen = find_packed_object_size(p, entry->in_pack_offset);
- 		buf = (char *) p->pack_base + entry->in_pack_offset;
-+		revalidate_pack_piece(buf, datalen);
- 		sha1write(f, buf, datalen);
- 		unuse_packed_git(p);
- 		hdrlen = 0; /* not really */
+Except for (4), I do not see why SHA-1 -- even if broken -- should not be 
+adequate. It is not like somebody found out that all JPGs tend to have 
+similar hashes so that collisions are more likely.
+
+And thinking about trust: The hash is augmented by thinking persons. It is 
+not like you blindly trust a person forever. You build up trust, and once 
+you were failed, the trust is lost, and very hard to build up again. So, 
+you just would try to get all objects again from somebody you still trust, 
+and never pull from the loser^H^H^H^H^Huntrusted person again. Ever.
+
+Besides, as has been pointed out several times, a dishonest person could 
+try to sneak bad code into your repository _regardless_ of a secure hash.
+
+So: Do we really need a secure hash, or do we need an adequate hash, and 
+just happen to use one which was intended as a secure hash, but no longer 
+is?
+
+Ciao,
+Dscho
