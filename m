@@ -1,63 +1,97 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH/RFC] gitweb: Make git_print_log generic; git_print_simplified_log uses it
-Date: Sun, 27 Aug 2006 16:11:51 -0700
-Message-ID: <7v4pvxvknc.fsf@assigned-by-dhcp.cox.net>
-References: <200608272355.07625.jnareb@gmail.com>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH] Use fstat instead of fseek
+Date: Mon, 28 Aug 2006 01:55:46 +0200
+Message-ID: <20060827235546.GA20904@diku.dk>
+References: <20060826141709.GC11601@diku.dk> <Pine.LNX.4.64.0608261509290.11811@g5.osdl.org> <7v4pvz11o6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 28 01:11:39 2006
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 28 01:56:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GHTn0-00073b-Um
-	for gcvg-git@gmane.org; Mon, 28 Aug 2006 01:11:39 +0200
+	id 1GHUTv-0003oZ-RY
+	for gcvg-git@gmane.org; Mon, 28 Aug 2006 01:56:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751255AbWH0XLV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 Aug 2006 19:11:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbWH0XLV
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Aug 2006 19:11:21 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:16841 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1751255AbWH0XLV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Aug 2006 19:11:21 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060827231120.SQBC4015.fed1rmmtao09.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 27 Aug 2006 19:11:20 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id FBBH1V00h4Noztg0000000
-	Sun, 27 Aug 2006 19:11:18 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200608272355.07625.jnareb@gmail.com> (Jakub Narebski's message
-	of "Sun, 27 Aug 2006 23:55:07 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932266AbWH0Xz5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 Aug 2006 19:55:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932297AbWH0Xz4
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Aug 2006 19:55:56 -0400
+Received: from [130.225.96.91] ([130.225.96.91]:55963 "EHLO mgw1.diku.dk")
+	by vger.kernel.org with ESMTP id S932266AbWH0Xz4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Aug 2006 19:55:56 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id 632BD77000B;
+	Mon, 28 Aug 2006 01:55:48 +0200 (CEST)
+Received: from mgw1.diku.dk ([127.0.0.1])
+ by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 31879-02; Mon, 28 Aug 2006 01:55:47 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id 2610D770004;
+	Mon, 28 Aug 2006 01:55:47 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 4A2736DF84F; Mon, 28 Aug 2006 01:54:25 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 08CB262A02; Mon, 28 Aug 2006 01:55:46 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v4pvz11o6.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.6i
+X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26129>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+---
 
-> The RFC is about style of git_print_log function. Is it a good idea
-> and good implementation to pass miscelaneus options as hash values
-> instead of using fixed order of parameters, and passing 1 or undef?
-> Is it a good naming of parameters like '-remove_title', or would
-> 'remove_title' or 'remove-title' be better?
+ dir.c |    8 +++-----
+ 1 files changed, 3 insertions(+), 5 deletions(-)
 
-I do not personally like the line-noise sub prototypes, since I
-have not seen it buys you much in real programs.  Although some
-cute hacks like rolling your own control structure lookalikes
-cannot be done without them, they are just that -- cute hacks --
-and tends to obfuscate what is really happening behind the scene
-(not that writing anything in Perl is not already obfuscating
-things ;-)).  But maybe it is just me.
+Junio C Hamano <junkio@cox.net> wrote Sat, Aug 26, 2006:
+> Linus Torvalds <torvalds@osdl.org> writes:
+> 
+> > I really think you'd be better off rewriting that to use "fstat()" 
+> > instead. I don't know why it uses two lseek's, but it's wrong, and looks 
+> > like some bad habit Junio picked up at some point.
+> 
+> I think the code was written to avoid getting confused by
+> unseekable input (pipes) but was done in early morning before
+> the first shot of caffeine.
 
-I think you already use CGI.pm and the argument passing style
-using things like "-remove_title" is the norm there, so I do not
-have objections against it.  You might even be able to lift the
-code CGI.pm uses to implement the hash-style passing with
-defaults.
+I take it that you want this change, so here's a little addition to the
+"use X instead of Y" series.
+
+diff --git a/dir.c b/dir.c
+index d53d48f..5a40d8f 100644
+--- a/dir.c
++++ b/dir.c
+@@ -112,17 +112,15 @@ static int add_excludes_from_file_1(cons
+ 				    int baselen,
+ 				    struct exclude_list *which)
+ {
++	struct stat st;
+ 	int fd, i;
+ 	long size;
+ 	char *buf, *entry;
+ 
+ 	fd = open(fname, O_RDONLY);
+-	if (fd < 0)
++	if (fd < 0 || fstat(fd, &st) < 0)
+ 		goto err;
+-	size = lseek(fd, 0, SEEK_END);
+-	if (size < 0)
+-		goto err;
+-	lseek(fd, 0, SEEK_SET);
++	size = st.st_size;
+ 	if (size == 0) {
+ 		close(fd);
+ 		return 0;
+-- 
+1.4.2.g2f76-dirty
+
+-- 
+Jonas Fonseca
