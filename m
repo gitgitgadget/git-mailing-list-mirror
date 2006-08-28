@@ -1,90 +1,85 @@
-From: Kai Blin <kai.blin@gmail.com>
-Subject: gitweb filter for patches by a specific person in a specific timeframe
-Date: Mon, 28 Aug 2006 14:59:21 +0200
-Message-ID: <200608281459.26643.kai.blin@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb filter for patches by a specific person in a specific timeframe
+Date: Mon, 28 Aug 2006 15:13:43 +0200
+Organization: At home
+Message-ID: <44f2ebff.71ddc839.5a4e.79a6@mx.gmail.com>
+References: <200608281459.26643.kai.blin@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart9728424.BFVzyFuDG1";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Aug 28 15:01:08 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Mon Aug 28 15:13:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GHgjT-0007nR-Sj
-	for gcvg-git@gmane.org; Mon, 28 Aug 2006 15:00:52 +0200
+	id 1GHgvv-0001yD-SY
+	for gcvg-git@gmane.org; Mon, 28 Aug 2006 15:13:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750754AbWH1NAq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 Aug 2006 09:00:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750770AbWH1NAq
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Aug 2006 09:00:46 -0400
-Received: from nz-out-0102.google.com ([64.233.162.206]:6176 "EHLO
+	id S1750806AbWH1NNg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 Aug 2006 09:13:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750807AbWH1NNg
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Aug 2006 09:13:36 -0400
+Received: from nz-out-0102.google.com ([64.233.162.194]:50140 "EHLO
 	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1750754AbWH1NAq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Aug 2006 09:00:46 -0400
-Received: by nz-out-0102.google.com with SMTP id n1so1007172nzf
-        for <git@vger.kernel.org>; Mon, 28 Aug 2006 06:00:45 -0700 (PDT)
+	id S1750806AbWH1NNg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Aug 2006 09:13:36 -0400
+Received: by nz-out-0102.google.com with SMTP id n1so1010454nzf
+        for <git@vger.kernel.org>; Mon, 28 Aug 2006 06:13:35 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:message-id;
-        b=pIxyW9FY0C22RhnmuXNHpxnS3w9wm7r7VALAG9pyd+6fPX4XG7/lxc0b07xzgz7u+rav6htCtpU7Qq1oJtRU9t33R5HcJ5pzTdyhJMSIrW2PrFyQwalISuphLBJk0O8s/pgnvZVwqhzwVibyy1QoPjVoFH8VanbXUWTO1WU4iqU=
-Received: by 10.64.156.3 with SMTP id d3mr6788561qbe;
-        Mon, 28 Aug 2006 06:00:45 -0700 (PDT)
-Received: from blackjack.home.nowhere-productions.org ( [212.23.126.23])
-        by mx.gmail.com with ESMTP id e18sm4305495qba.2006.08.28.06.00.43;
-        Mon, 28 Aug 2006 06:00:45 -0700 (PDT)
-Received: by blackjack.home.nowhere-productions.org (Postfix, from userid 1000)
-	id 163F5D093F; Mon, 28 Aug 2006 14:59:27 +0200 (CEST)
-To: git@vger.kernel.org
-User-Agent: KMail/1.8.2
+        h=received:from:subject:to:mail-copies-to:date:references:lines:organization:user-agent:mime-version:content-type:content-transfer-encoding:message-id;
+        b=M2/uzjCngzXLBF5qnOjpggebLxIIRQ7JPf2sOXm7vAujK02u0HCfeglfXs0ZfKM/GPm/oMoWa7RNRz9EHtm5lme0eSy8Zbi9d6YoOFIg9LwBcS3IKzLGOLaO68r9GX8vZYStqgabEtm+3yY/RB2bpgg6bm65vnQ2x0Vb59i8oiE=
+Received: by 10.65.240.5 with SMTP id s5mr6839750qbr;
+        Mon, 28 Aug 2006 06:13:35 -0700 (PDT)
+Received: from host-81-190-21-215.torun.mm.pl ( [81.190.21.215])
+        by mx.gmail.com with ESMTP id q13sm4352696qbq.2006.08.28.06.13.34;
+        Mon, 28 Aug 2006 06:13:35 -0700 (PDT)
+To: Kai Blin <kai.blin@gmail.com>, git@vger.kernel.org
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26155>
 
---nextPart9728424.BFVzyFuDG1
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Kai Blin wrote:
 
-Hi folks,
+> I have just completed my Google Summer of Code[1] project[2] working for the 
+> Wine project. Now, as I was submitting patches to a git repository, I don't 
+> have a branch solely containing my patches or something like that. Google 
+> seems to want something like this, so I figured maybe I could get gitweb to 
+> filter for my patches during the SoC period. Is that possible?
+> If not, does it sound like something feasible to add?
 
-I have just completed my Google Summer of Code[1] project[2] working for th=
-e=20
-Wine project. Now, as I was submitting patches to a git repository, I don't=
-=20
-have a branch solely containing my patches or something like that. Google=20
-seems to want something like this, so I figured maybe I could get gitweb to=
-=20
-filter for my patches during the SoC period. Is that possible?
-If not, does it sound like something feasible to add?
+It is possible. Simply enter "author:Kai Blin" (without space between ':' 
+and your name as it appears in author field) in the searchbox, and you 
+would get an URL similar to the URL below:
 
-Cheers,
-Kai
+  http://www.kernel.org/git/?p=git%2Fgit.git&a=search&h=HEAD&s=author%3AJonas+Fonseca
 
-PS: Please CC me, as I'm not on the list.
+Of course you should first go to proper branch.  If you are giving the link,
+you can write it in more human-friendly form, e.g.
 
-[1] http://code.google.com/soc/
-[2] http://wiki.winehq.org/NtlmSigningAndSealing
-=2D-=20
-Kai Blin, <kai Dot blin At gmail Dot com>
-WorldForge developer    http://www.worldforge.org/
-Wine developer          http://wiki.winehq.org/KaiBlin/
-=2D-
-Will code for cotton.
+  http://www.kernel.org/git/?p=git/git.git;a=search;h=HEAD;s=author:Jonas+Fonseca
 
---nextPart9728424.BFVzyFuDG1
-Content-Type: application/pgp-signature
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
+Or you can just search for your name, which gives URL like this one
 
-iD8DBQBE8uiuEKXX/bF2FpQRAsnVAKCJfsQgUqyeNY8An1QSY74XruF5dgCgovMU
-TQ6trzM+L5oTMyGrcfGECVo=
-=FyPG
------END PGP SIGNATURE-----
+  http://www.kernel.org/git/?p=git/git.git;a=search;h=HEAD;s=Jonas+Fonseca
 
---nextPart9728424.BFVzyFuDG1--
+which will find all commits in the lineage of given branch (HEAD is 
+the current branch) which have specified phrase in commit log (which 
+includes signoff lines)
+
+> PS: Please CC me, as I'm not on the list.
+
+You can always read the list using one of the many archives 
+of git@vger.kernel.org list, or using Usenet (news) client via NNTP
+gateway at GMane (nntp://news.gmane.org/gmane.comp.version-control.git).
+
+See http://git.or.cz/gitwiki/GitCommunity
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
