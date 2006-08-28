@@ -1,73 +1,117 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] parse_object: check if buffer is non-NULL before freeing it
-Date: Sun, 27 Aug 2006 22:46:09 -0700
-Message-ID: <7v3bbhtntq.fsf@assigned-by-dhcp.cox.net>
-References: <20060828003129.GE20904@diku.dk>
-	<7vsljhtrsv.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0608272131020.27779@g5.osdl.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Packfile can't be mapped
+Date: Mon, 28 Aug 2006 02:00:29 -0400
+Message-ID: <20060828060029.GB25285@spearce.org>
+References: <9e4733910608271804j762960a8ud83654c78ebe009a@mail.gmail.com> <20060828024720.GD24204@spearce.org> <Pine.LNX.4.64.0608280014190.3683@localhost.localdomain> <Pine.LNX.4.64.0608272133390.27779@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 28 07:45:49 2006
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
+	Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 28 08:01:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GHZwP-00069I-96
-	for gcvg-git@gmane.org; Mon, 28 Aug 2006 07:45:45 +0200
+	id 1GHaBS-0000Ad-7J
+	for gcvg-git@gmane.org; Mon, 28 Aug 2006 08:01:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750915AbWH1Fpg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 Aug 2006 01:45:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751264AbWH1Fpg
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Aug 2006 01:45:36 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:28116 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1750915AbWH1Fpf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Aug 2006 01:45:35 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060828054535.QAOS6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 28 Aug 2006 01:45:35 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id FHlY1V00K4Noztg0000000
-	Mon, 28 Aug 2006 01:45:32 -0400
+	id S1751391AbWH1GAw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 Aug 2006 02:00:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751390AbWH1GAw
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Aug 2006 02:00:52 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:1945 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751391AbWH1GAu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Aug 2006 02:00:50 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GHaAr-000789-Rm; Mon, 28 Aug 2006 02:00:43 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 7B8AA20FB7F; Mon, 28 Aug 2006 02:00:29 -0400 (EDT)
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0608272131020.27779@g5.osdl.org> (Linus Torvalds's
-	message of "Sun, 27 Aug 2006 21:33:16 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0608272133390.27779@g5.osdl.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26144>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Linus Torvalds <torvalds@osdl.org> wrote:
+> 
+> On Mon, 28 Aug 2006, Nicolas Pitre wrote:
+> > 
+> > Good job indeed.  Oh and you probably should not bother trying to 
+> > deltify commit objects at all since that would be a waste of time.
+> 
+> It might not necessarily always be a waste of time. Especially if you have 
+> multiple branches tracking a "maintenance" branch, you often end up having 
+> the same commit message repeated several times in "unrelated" commits 
+> (they're really the same commit, applied to another branch).
+> 
+> Also, I could imagine that some automated system generates very verbose 
+> (and possibly very regular) commit messages, so under certain 
+> circumstances it may well make sense to see if the commits migth delta 
+> against each other.
+> 
+> But I'll agree that in normal use it's not likely to be a huge saving, 
+> though. It's probably not worth doing for the fast importer unless it just 
+> happens to fall out of the code very easily.
 
-> On Sun, 27 Aug 2006, Junio C Hamano wrote:
->> 
->> Eh, free(NULL) should work just fine.  It is "other places" that
->> is misguided and needs to be fixed.
->
-> Well, some very old libraries will SIGSEGV on free(NULL). 
->
-> Admittedly those libraries are either very old or _very_ broken, but if 
-> you want to be strictly portable, you should not ever pass NULL to free(), 
-> unless you actually got it from a malloc(0) (and even then, it might be a 
-> really broken libc that just ran out of memory).
+Does git-pack-objects attempt to delta commits against each other?
 
-Fair enough, but I think there are many places we already assume
-the library handles free(NULL) sensibly.
 
-> I actually suspect we should wrap all free() calls as "xfree()", which may 
-> also help us some day if we want to do any memory usage statistics.
+I've been thinking about applying a pack-local but zlib-stream
+global dictionary.  If we added three global dicationaries to the
+front of the pack file, one for commits, one for trees and one
+for blobs, and use those as the global dictionaries for the zlib
+streams stored within that pack we could probably get a good space
+savings for trees and commits.
 
-That sounds sensible.
+I'd suspect that for many projects the commit global dictionary
+would contain the common required strings such as:
 
-Another thing I was thinking about was to extend the existing
-XMALLOC_POISON debugging to allow also xrealloc()'ed area.  That
-would unfortunately involve wrapping strdup() and x*alloc() to
-make sure all allocations we do go through xmalloc() and then
-store the current allocation size somewhere hidden (immediately
-before, perhaps) in the area xmalloc() returns, but at that
-point running git under valgrind would probably be easier.
+  'tree ', 'parent ', 'committer ', 'author ', 'Signed-off-by: '
+
+plus the top author/committer name/email combination strings.
+For GIT I'd expect 'Junio C Hamano <junkio@cox.net>' to be way up
+there in terms of frequency within commit objects.  Finding the most
+common authors and committer strings would be trivial, as would
+finding the most common 'footer' strings such as 'Signed-off-by: '
+and 'Acked-by: '.
+
+I think the same is true of trees, with '10644 ', '10755 ', '40000 '
+being way up there, but also file names that commonly appear within
+trees, e.g. "Makefile.in\0".
+
+Blobs would be more difficult to generate a reasonable global
+dictionary for.  But for some projects a crude estimated dictionary
+can shave off at least 4% of pack size (true in both GIT and Mozilla
+sources it seems).
+
+
+Of course the major problem with pack-local, stream global
+dictionaries is it voids the ability to reuse that zlib'd content
+from that pack in another pack without wholesale copying the
+dictionary as well.  This is an issue for servers which want to
+copy out the pack entry without recompressing it but also want the
+storage savings from the global dictionaries.
+
+But then again, if we just delta against a commit which uses the
+same author and committer, or against the same tree but different
+version then there should be a lot of delta copying from the base...
+which easily allows entry reuse and should provide similiar space
+savings, providing the delta depth is deep enough (or the delta graph
+is wide enough) to minimize the number of base objects containing
+repeated occurrances of the common strings.
+
+-- 
+Shawn.
