@@ -1,95 +1,154 @@
 From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] Use fstat instead of fseek
-Date: Mon, 28 Aug 2006 01:55:46 +0200
-Message-ID: <20060827235546.GA20904@diku.dk>
-References: <20060826141709.GC11601@diku.dk> <Pine.LNX.4.64.0608261509290.11811@g5.osdl.org> <7v4pvz11o6.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] Refactor sha1_pack_index_name and sha1_pack_name to use a common backend
+Date: Mon, 28 Aug 2006 02:16:10 +0200
+Message-ID: <20060828001610.GC20904@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 28 01:56:06 2006
+X-From: git-owner@vger.kernel.org Mon Aug 28 02:16:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GHUTv-0003oZ-RY
-	for gcvg-git@gmane.org; Mon, 28 Aug 2006 01:56:00 +0200
+	id 1GHUnb-0006pG-Ob
+	for gcvg-git@gmane.org; Mon, 28 Aug 2006 02:16:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932266AbWH0Xz5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 Aug 2006 19:55:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932297AbWH0Xz4
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Aug 2006 19:55:56 -0400
-Received: from [130.225.96.91] ([130.225.96.91]:55963 "EHLO mgw1.diku.dk")
-	by vger.kernel.org with ESMTP id S932266AbWH0Xz4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Aug 2006 19:55:56 -0400
+	id S1751259AbWH1AQQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 Aug 2006 20:16:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbWH1AQQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Aug 2006 20:16:16 -0400
+Received: from [130.225.96.91] ([130.225.96.91]:55766 "EHLO mgw1.diku.dk")
+	by vger.kernel.org with ESMTP id S1751259AbWH1AQP (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Aug 2006 20:16:15 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 632BD77000B;
-	Mon, 28 Aug 2006 01:55:48 +0200 (CEST)
+	by mgw1.diku.dk (Postfix) with ESMTP id 6BB49770022
+	for <git@vger.kernel.org>; Mon, 28 Aug 2006 02:16:12 +0200 (CEST)
 Received: from mgw1.diku.dk ([127.0.0.1])
  by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 31879-02; Mon, 28 Aug 2006 01:55:47 +0200 (CEST)
+ id 32108-08 for <git@vger.kernel.org>; Mon, 28 Aug 2006 02:16:11 +0200 (CEST)
 Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 2610D770004;
-	Mon, 28 Aug 2006 01:55:47 +0200 (CEST)
+	by mgw1.diku.dk (Postfix) with ESMTP id 34FD177000B
+	for <git@vger.kernel.org>; Mon, 28 Aug 2006 02:16:11 +0200 (CEST)
 Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 4A2736DF84F; Mon, 28 Aug 2006 01:54:25 +0200 (CEST)
+	by nhugin.diku.dk (Postfix) with ESMTP id 57C0D6DF88D
+	for <git@vger.kernel.org>; Mon, 28 Aug 2006 02:14:49 +0200 (CEST)
 Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 08CB262A02; Mon, 28 Aug 2006 01:55:46 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
+	id 1C0D962A02; Mon, 28 Aug 2006 02:16:11 +0200 (CEST)
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7v4pvz11o6.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.6i
 X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26130>
 
 Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 ---
 
- dir.c |    8 +++-----
- 1 files changed, 3 insertions(+), 5 deletions(-)
+Tested with doing a local cg-clone, since there doesn't seem to be any
+tests of users, such as git-local-fetch, under t/.
 
-Junio C Hamano <junkio@cox.net> wrote Sat, Aug 26, 2006:
-> Linus Torvalds <torvalds@osdl.org> writes:
-> 
-> > I really think you'd be better off rewriting that to use "fstat()" 
-> > instead. I don't know why it uses two lseek's, but it's wrong, and looks 
-> > like some bad habit Junio picked up at some point.
-> 
-> I think the code was written to avoid getting confused by
-> unseekable input (pipes) but was done in early morning before
-> the first shot of caffeine.
+This adds another pair of static buffers, if that's a problem and the
+cleanup is still wanted I can change it to use malloc.
 
-I take it that you want this change, so here's a little addition to the
-"use X instead of Y" series.
+ sha1_file.c |   64 +++++++++++++++++++++++------------------------------------
+ 1 files changed, 25 insertions(+), 39 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index d53d48f..5a40d8f 100644
---- a/dir.c
-+++ b/dir.c
-@@ -112,17 +112,15 @@ static int add_excludes_from_file_1(cons
- 				    int baselen,
- 				    struct exclude_list *which)
- {
-+	struct stat st;
- 	int fd, i;
- 	long size;
- 	char *buf, *entry;
+diff --git a/sha1_file.c b/sha1_file.c
+index 01aa745..5a846f5 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -147,65 +147,51 @@ char *sha1_file_name(const unsigned char
+ 	return base;
+ }
  
- 	fd = open(fname, O_RDONLY);
--	if (fd < 0)
-+	if (fd < 0 || fstat(fd, &st) < 0)
- 		goto err;
--	size = lseek(fd, 0, SEEK_END);
--	if (size < 0)
--		goto err;
--	lseek(fd, 0, SEEK_SET);
-+	size = st.st_size;
- 	if (size == 0) {
- 		close(fd);
- 		return 0;
+-char *sha1_pack_name(const unsigned char *sha1)
++static int fill_sha1_pack_name(const unsigned char *sha1, char base[], size_t baselen,
++			       int dir_offset, const char *extension)
+ {
+ 	static const char hex[] = "0123456789abcdef";
+-	static char *name, *base, *buf;
+-	static const char *last_objdir;
+ 	const char *sha1_file_directory = get_object_directory();
++	char *buf;
+ 	int i;
+ 
+-	if (!last_objdir || strcmp(last_objdir, sha1_file_directory)) {
+-		int len = strlen(sha1_file_directory);
+-		if (base)
+-			free(base);
+-		base = xmalloc(len + 60);
+-		sprintf(base, "%s/pack/pack-1234567890123456789012345678901234567890.pack", sha1_file_directory);
+-		name = base + len + 11;
+-		if (last_objdir)
+-			free((char *) last_objdir);
+-		last_objdir = strdup(sha1_file_directory);
++	base[dir_offset] = 0;
++	if (strcmp(base, sha1_file_directory)) {
++		dir_offset = strlen(sha1_file_directory);
++		if (snprintf(base, baselen,
++			     "%s/pack/pack-1234567890123456789012345678901234567890.%s",
++			     sha1_file_directory, extension) >= baselen)
++			die("pack name too long");
+ 	}
++	base[dir_offset] = '/';
+ 
+-	buf = name;
++	buf = base + dir_offset + 11;
+ 
+ 	for (i = 0; i < 20; i++) {
+ 		unsigned int val = *sha1++;
++
+ 		*buf++ = hex[val >> 4];
+ 		*buf++ = hex[val & 0xf];
+ 	}
+-	
+-	return base;
++
++	return dir_offset;
+ }
+ 
+ char *sha1_pack_index_name(const unsigned char *sha1)
+ {
+-	static const char hex[] = "0123456789abcdef";
+-	static char *name, *base, *buf;
+-	static const char *last_objdir;
+-	const char *sha1_file_directory = get_object_directory();
+-	int i;
++	static char base[PATH_MAX + 1];
++	static int offset;
+ 
+-	if (!last_objdir || strcmp(last_objdir, sha1_file_directory)) {
+-		int len = strlen(sha1_file_directory);
+-		if (base)
+-			free(base);
+-		base = xmalloc(len + 60);
+-		sprintf(base, "%s/pack/pack-1234567890123456789012345678901234567890.idx", sha1_file_directory);
+-		name = base + len + 11;
+-		if (last_objdir)
+-			free((char *) last_objdir);
+-		last_objdir = strdup(sha1_file_directory);
+-	}
++	offset = fill_sha1_pack_name(sha1, base, sizeof(base), offset, "idx");
++	return base;
++}
+ 
+-	buf = name;
++char *sha1_pack_name(const unsigned char *sha1)
++{
++	static char base[PATH_MAX + 1];
++	static int offset;
+ 
+-	for (i = 0; i < 20; i++) {
+-		unsigned int val = *sha1++;
+-		*buf++ = hex[val >> 4];
+-		*buf++ = hex[val & 0xf];
+-	}
+-	
++	offset = fill_sha1_pack_name(sha1, base, sizeof(base), offset, "pack");
+ 	return base;
+ }
+ 
 -- 
 1.4.2.g2f76-dirty
 
