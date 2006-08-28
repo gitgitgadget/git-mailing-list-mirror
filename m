@@ -1,77 +1,97 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 0/5] gitweb: Additions to commitdiff view
-Date: Mon, 28 Aug 2006 10:26:18 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0608281016380.27779@g5.osdl.org>
-References: <11567692943154-git-send-email-jnareb@gmail.com>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: Starting to think about sha-256?
+Date: Mon, 28 Aug 2006 10:27:29 -0700
+Message-ID: <656C30A1EFC89F6B2082D9B6@localhost>
+References: <44F1DCB7.6020804@garzik.org>
+ 	<m31wr1exbf.fsf@defiant.localdomain>
+ <Pine.LNX.4.64.0608271343120.27779@g5.o	sdl.org>
+ <Pine.LNX.4.63.0608272341330.28360@wbgn013.biozentrum.uni-wuerzburg	.de>
+ <Pine.LNX.4.64.0608271522390.27779@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 28 19:26:42 2006
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Krzysztof Halasa <khc@pm.waw.pl>, Jeff Garzik <jeff@garzik.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 28 19:33:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GHksh-0006H9-RC
-	for gcvg-git@gmane.org; Mon, 28 Aug 2006 19:26:40 +0200
+	id 1GHkyn-0007rf-9b
+	for gcvg-git@gmane.org; Mon, 28 Aug 2006 19:32:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750778AbWH1R00 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 Aug 2006 13:26:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750803AbWH1R0Z
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Aug 2006 13:26:25 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:28636 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750795AbWH1R0Y (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Aug 2006 13:26:24 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k7SHQJnW014583
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 28 Aug 2006 10:26:20 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k7SHQIlN005412;
-	Mon, 28 Aug 2006 10:26:19 -0700
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <11567692943154-git-send-email-jnareb@gmail.com>
-X-Spam-Status: No, hits=-0.937 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.143 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750796AbWH1Rcy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 Aug 2006 13:32:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750803AbWH1Rcy
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Aug 2006 13:32:54 -0400
+Received: from warden-p.diginsite.com ([208.29.163.248]:60835 "HELO
+	warden.diginsite.com") by vger.kernel.org with SMTP
+	id S1750796AbWH1Rcx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Aug 2006 13:32:53 -0400
+Received: from wlvims02.diginsite.com by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Mon, 28 Aug 2006 10:32:53 -0700
+Received: from [10.201.10.67] ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Mon, 28 Aug 2006 10:32:19 -0700
+To: Linus Torvalds <torvalds@osdl.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.64.0608271522390.27779@g5.osdl.org>
+X-Mailer: Mulberry/4.0.5 (Linux/x86)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26169>
 
-
-
-On Mon, 28 Aug 2006, Jakub Narebski wrote:
+--On Sunday, August 27, 2006 03:35:20 PM -0700 Linus Torvalds 
+<torvalds@osdl.org> wrote:
 >
-> This series of patches makes signoff lines to be not removed in commitdiff and log 
-> views, adds author information to comittdiff view, and adds diff tree with links
-> to patches in commitdiff view.
-> 
-> You will be able to see it at work at
->   http://front.fuw.edu.pl/cgi-bin/jnareb/gitweb.cgi
+> On Mon, 28 Aug 2006, Johannes Schindelin wrote:
+>> Even if the breakthrough really comes to full SHA-1, you still have to
+>> add  _at least_ 20 bytes of gibberish. Which would be harder to spot,
+>> but it  would be spotted.
+>
+> Yeah, I don't think this is at all critical, especially since git really
+> on a security level doesn't _depend_ on the hashes being
+> cryptographically  secure. As I explained early on (ie over a year ago,
+> back when the whole  design of git was being discussed), the _security_
+> of git actually depends  on not cryptographic hashes, but simply on
+> everybody being able to secure  their own _private_ repository.
+>
+> So the only thing git really _requires_ is a hash that is _unique_ for
+> the  developer (and there we are talking not of an _attacker_, but a
+> benign  participant).
+>
+> That said, the cryptographic security of SHA-1 is obviously a real bonus.
+> So I'd be disappointed if SHA-1 can be broken more easily (and I
+> obviously  already argued against using MD5, exactly because generating
+> duplicates of  that is fairly easy). But it's not "fundamentally
+> required" in git per se.
 
-Goodie, that looks exactly like I envisioned. And the shortcuts to find 
-the patch to a specific file (when the patch is larger) works beautifully.
 
-Now I think "commit-diff" is prettier than the "commit" view (the latter 
-ends up showing the "--pretty=full" information, which can be useful, but 
-usually is just distracting). That's as it should be - I consider 
-"commit-diff" to be the _normal_ thing, and then the "commit" view is the 
-"give me all the ugly details in just the commit".
+>> This made me think about the use of hashes in git. Why do we need a hash
+>> here (in no particular order):
+>>
+>> 1) integrity checking,
+>> 2) fast lookup,
+>> 3) identifying objects (related to (2)),
+>> 4) trust.
+>>
+>> Except for (4), I do not see why SHA-1 -- even if broken -- should not
+>> be  adequate. It is not like somebody found out that all JPGs tend to
+>> have  similar hashes so that collisions are more likely.
+>
+> Correct. I'm pretty sure we had exactly this discussion around May 2005,
+> but I'm too lazy to search ;)
 
-I've got _one_ small beef with gitweb still, which is that it seems to 
-like always showing things in UTC rather than the "native" timezone, but I 
-can see why people would sometimes want that. So I'm not actually sure 
-it's wrong.
+just to double check.
 
-I think it _may_ be worth showing the native timezone in the "commit-diff" 
-view (when you see only one commit), and then show the UTC time in the 
-"log" view (when you see a lot of commits, and might want to compare times 
-in different timezones more easily).
+if you already have a file A in git with hash X is there any condition 
+where a remote file with hash X (but different contents) would overwrite 
+the local version?
 
-But I think that timezone thing is probably a matter of taste rather than 
-much anything else.
+what would happen if you ended up with two packs that both contained a file 
+with hash X but with different contents and then did a repack on them? 
+(either packs from different sources, or packs downloaded through some 
+mechanism other then the git protocol are two ways this could happen that I 
+can think of)
 
-Thanks,
-
-		Linus
+David Lang
