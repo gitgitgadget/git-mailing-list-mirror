@@ -1,85 +1,62 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb filter for patches by a specific person in a specific timeframe
-Date: Mon, 28 Aug 2006 15:13:43 +0200
-Organization: At home
-Message-ID: <44f2ebff.71ddc839.5a4e.79a6@mx.gmail.com>
-References: <200608281459.26643.kai.blin@gmail.com>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [PATCH] Refactor sha1_pack_index_name and sha1_pack_name to use a common backend
+Date: Mon, 28 Aug 2006 15:34:44 +0200
+Message-ID: <20060828133444.GA32266@diku.dk>
+References: <20060828001610.GC20904@diku.dk> <7vlkp9tquz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Mon Aug 28 15:13:51 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 28 15:35:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GHgvv-0001yD-SY
-	for gcvg-git@gmane.org; Mon, 28 Aug 2006 15:13:44 +0200
+	id 1GHhGT-0006eS-0v
+	for gcvg-git@gmane.org; Mon, 28 Aug 2006 15:34:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750806AbWH1NNg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 Aug 2006 09:13:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750807AbWH1NNg
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Aug 2006 09:13:36 -0400
-Received: from nz-out-0102.google.com ([64.233.162.194]:50140 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1750806AbWH1NNg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Aug 2006 09:13:36 -0400
-Received: by nz-out-0102.google.com with SMTP id n1so1010454nzf
-        for <git@vger.kernel.org>; Mon, 28 Aug 2006 06:13:35 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:subject:to:mail-copies-to:date:references:lines:organization:user-agent:mime-version:content-type:content-transfer-encoding:message-id;
-        b=M2/uzjCngzXLBF5qnOjpggebLxIIRQ7JPf2sOXm7vAujK02u0HCfeglfXs0ZfKM/GPm/oMoWa7RNRz9EHtm5lme0eSy8Zbi9d6YoOFIg9LwBcS3IKzLGOLaO68r9GX8vZYStqgabEtm+3yY/RB2bpgg6bm65vnQ2x0Vb59i8oiE=
-Received: by 10.65.240.5 with SMTP id s5mr6839750qbr;
-        Mon, 28 Aug 2006 06:13:35 -0700 (PDT)
-Received: from host-81-190-21-215.torun.mm.pl ( [81.190.21.215])
-        by mx.gmail.com with ESMTP id q13sm4352696qbq.2006.08.28.06.13.34;
-        Mon, 28 Aug 2006 06:13:35 -0700 (PDT)
-To: Kai Blin <kai.blin@gmail.com>, git@vger.kernel.org
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1750809AbWH1Ney (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 Aug 2006 09:34:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750817AbWH1Ney
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Aug 2006 09:34:54 -0400
+Received: from [130.225.96.91] ([130.225.96.91]:49841 "EHLO mgw1.diku.dk")
+	by vger.kernel.org with ESMTP id S1750809AbWH1Nex (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Aug 2006 09:34:53 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id 8D153770026;
+	Mon, 28 Aug 2006 15:34:45 +0200 (CEST)
+Received: from mgw1.diku.dk ([127.0.0.1])
+ by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 19927-10; Mon, 28 Aug 2006 15:34:44 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id 5B7AA770005;
+	Mon, 28 Aug 2006 15:34:44 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id C62296DF88D; Mon, 28 Aug 2006 15:33:21 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 3E1AE62A01; Mon, 28 Aug 2006 15:34:44 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vlkp9tquz.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.6i
+X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26156>
 
-Kai Blin wrote:
+Junio C Hamano <junkio@cox.net> wrote Sun, Aug 27, 2006:
+> Jonas Fonseca <fonseca@diku.dk> writes:
+> 
+> > This adds another pair of static buffers, if that's a problem and the
+> > cleanup is still wanted I can change it to use malloc.
+> 
+> As a clean-up, I'd rather see a patch that removes the need for
+> these two functions and one struct member, rather than keeping
+> these two misguided functions and consolidating their
+> implementations.
 
-> I have just completed my Google Summer of Code[1] project[2] working for the 
-> Wine project. Now, as I was submitting patches to a git repository, I don't 
-> have a branch solely containing my patches or something like that. Google 
-> seems to want something like this, so I figured maybe I could get gitweb to 
-> filter for my patches during the SoC period. Is that possible?
-> If not, does it sound like something feasible to add?
-
-It is possible. Simply enter "author:Kai Blin" (without space between ':' 
-and your name as it appears in author field) in the searchbox, and you 
-would get an URL similar to the URL below:
-
-  http://www.kernel.org/git/?p=git%2Fgit.git&a=search&h=HEAD&s=author%3AJonas+Fonseca
-
-Of course you should first go to proper branch.  If you are giving the link,
-you can write it in more human-friendly form, e.g.
-
-  http://www.kernel.org/git/?p=git/git.git;a=search;h=HEAD;s=author:Jonas+Fonseca
-
-
-Or you can just search for your name, which gives URL like this one
-
-  http://www.kernel.org/git/?p=git/git.git;a=search;h=HEAD;s=Jonas+Fonseca
-
-which will find all commits in the lineage of given branch (HEAD is 
-the current branch) which have specified phrase in commit log (which 
-includes signoff lines)
-
-> PS: Please CC me, as I'm not on the list.
-
-You can always read the list using one of the many archives 
-of git@vger.kernel.org list, or using Usenet (news) client via NNTP
-gateway at GMane (nntp://news.gmane.org/gmane.comp.version-control.git).
-
-See http://git.or.cz/gitwiki/GitCommunity
+Thanks for the outline, I will look into removing this limitation.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Jonas Fonseca
