@@ -1,144 +1,73 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] full featured formating function of the --{base,user}_path arguments,
-Date: Sun, 27 Aug 2006 22:35:42 -0700
-Message-ID: <7vd5altob5.fsf@assigned-by-dhcp.cox.net>
-References: <11566787581030-git-send-email-madcoder@debian.org>
+Subject: Re: [PATCH] parse_object: check if buffer is non-NULL before freeing it
+Date: Sun, 27 Aug 2006 22:46:09 -0700
+Message-ID: <7v3bbhtntq.fsf@assigned-by-dhcp.cox.net>
+References: <20060828003129.GE20904@diku.dk>
+	<7vsljhtrsv.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0608272131020.27779@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 28 07:35:23 2006
+X-From: git-owner@vger.kernel.org Mon Aug 28 07:45:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GHZmF-0004Kl-TA
-	for gcvg-git@gmane.org; Mon, 28 Aug 2006 07:35:17 +0200
+	id 1GHZwP-00069I-96
+	for gcvg-git@gmane.org; Mon, 28 Aug 2006 07:45:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750778AbWH1FfL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 Aug 2006 01:35:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750915AbWH1FfL
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Aug 2006 01:35:11 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:32463 "EHLO
+	id S1750915AbWH1Fpg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 Aug 2006 01:45:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751264AbWH1Fpg
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Aug 2006 01:45:36 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:28116 "EHLO
 	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1750778AbWH1FfJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Aug 2006 01:35:09 -0400
+	id S1750915AbWH1Fpf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Aug 2006 01:45:35 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
           by fed1rmmtao01.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060828053508.PSJW6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 28 Aug 2006 01:35:08 -0400
+          id <20060828054535.QAOS6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 28 Aug 2006 01:45:35 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id FHb51V00X4Noztg0000000
-	Mon, 28 Aug 2006 01:35:06 -0400
-To: Pierre Habouzit <madcoder@debian.org>
-In-Reply-To: <11566787581030-git-send-email-madcoder@debian.org> (Pierre
-	Habouzit's message of "Sun, 27 Aug 2006 13:39:18 +0200")
+	id FHlY1V00K4Noztg0000000
+	Mon, 28 Aug 2006 01:45:32 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0608272131020.27779@g5.osdl.org> (Linus Torvalds's
+	message of "Sun, 27 Aug 2006 21:33:16 -0700 (PDT)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26143>
 
-Pierre Habouzit <madcoder@debian.org> writes:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> +static struct {
-> +	const char *path;
-> +	int use_as_fmt;
-> +} base_path;
->  
->  /* If defined, ~user notation is allowed and the string is inserted
->   * after ~user/.  E.g. a request to git://host/~alice/frotz would
->   * go to /home/alice/pub_git/frotz with --user-path=pub_git.
->   */
-> -static const char *user_path;
-> +static struct {
-> +	const char *path;
-> +	int use_as_fmt;
-> +} user_path;
+> On Sun, 27 Aug 2006, Junio C Hamano wrote:
+>> 
+>> Eh, free(NULL) should work just fine.  It is "other places" that
+>> is misguided and needs to be fixed.
+>
+> Well, some very old libraries will SIGSEGV on free(NULL). 
+>
+> Admittedly those libraries are either very old or _very_ broken, but if 
+> you want to be strictly portable, you should not ever pass NULL to free(), 
+> unless you actually got it from a malloc(0) (and even then, it might be a 
+> really broken libc that just ran out of memory).
 
-Maybe it does not matter much, but I wonder if we want to keep
-two structs the same type, like:
+Fair enough, but I think there are many places we already assume
+the library handles free(NULL) sensibly.
 
-        static struct {
-                const char *path;
-                int use_as_fmt;
-        } base_path, user_path;
+> I actually suspect we should wrap all free() calls as "xfree()", which may 
+> also help us some day if we want to do any memory usage statistics.
 
-I also wondered if we can just extend the semantics of base_path
-and user_path to autodetect the fmt-ness of them, but that means
-we would break existing setups that uses per-cent in the
-pathname.  Arguably that would not be so common and we may not
-need to worry about such an installation, though.  What do you
-think?
+That sounds sensible.
 
-> @@ -174,24 +285,45 @@ static char *path_ok(char *dir)
->  				slash = dir + restlen;
->  			namlen = slash - dir;
->  			restlen -= namlen;
-> +
-> +			if (user_path.use_as_fmt) {
-> +				loginfo("host <%s>, "
-> +					"userpathfmt <%s>, request <%s>, "
-> +					"namlen %d, restlen %d, slash <%s>",
-> +					vhost,
-> +					user_path.path, dir,
-> +					namlen, restlen, slash);
-> +				dir = git_path_fmt(rpath, user_path.path, vhost,
-> +						   slash, dir + 1, namlen - 1);
-
-When vhost is NULL you would feed it to "%s", which I think
-glibc works around with (null) fine but other C libraries would
-not like it.  git_path_fmt()'s logging does not have this
-problem, though.
-
-> +	else if (base_path.path) {
->  		if (*dir != '/') {
->  			/* Allow only absolute */
->  			logerror("'%s': Non-absolute path denied (base-path active)", dir);
->  			return NULL;
->  		}
-> +
-> +		if (base_path.use_as_fmt) {
-> +			dir = git_base_path_fmt(rpath, base_path.path, vhost, dir);
-> +		} else {
-> +			snprintf(rpath, PATH_MAX, "%s%s", base_path.path, dir);
-
-The level of logging in this branch and in user_path.use_as_fmt
-branch are inconsistent.  Maybe the more detailed one above I
-commented about vhost==NULL case was primarily meant for
-debugging and you forgot to remove it?
-
-> @@ -274,6 +406,7 @@ static int execute(struct sockaddr *addr
-> @@ -303,15 +436,30 @@ #endif
->  	alarm(0);
->  
->  	len = strlen(line);
-> +
-> +	if (pktlen != len) {
-> +		int arg_pos = len + 1;
-> +
->  		loginfo("Extended attributes (%d bytes) exist <%.*s>",
->  			(int) pktlen - len,
-> +			(int) pktlen - len, line + arg_pos);
-> +
-> +		while (arg_pos < pktlen) {
-> +			int arg_len = strlen(line + arg_pos);
-> +
-> +			if (!strncmp("host=", line + arg_pos, 5)) {
-> +				vhost = line + arg_pos + 5;
-> +			}
-> +
-> +			arg_pos += arg_len + 1;
-> +		}
-> +	}
-> +
-
-I think it is easier to do:
-
-	if (!vhost)
-        	vhost = default_host;
-
-and have git_base_path_fmt() barf if the format calls for %h and
-vhost passed to it is NULL.  Lack of "host=" in the request is
-logged here already.
+Another thing I was thinking about was to extend the existing
+XMALLOC_POISON debugging to allow also xrealloc()'ed area.  That
+would unfortunately involve wrapping strdup() and x*alloc() to
+make sure all allocations we do go through xmalloc() and then
+store the current allocation size somewhere hidden (immediately
+before, perhaps) in the area xmalloc() returns, but at that
+point running git under valgrind would probably be easier.
