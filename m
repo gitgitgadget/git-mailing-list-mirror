@@ -1,138 +1,177 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git
-Date: Mon, 28 Aug 2006 00:19:36 -0700
-Message-ID: <7vodu5qqd3.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 28 09:19:36 2006
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 5/5] gitweb: Add diff tree, with links to patches, to commitdiff view
+Date: Mon, 28 Aug 2006 14:48:14 +0200
+Message-ID: <11567692951193-git-send-email-jnareb@gmail.com>
+References: <11567692943154-git-send-email-jnareb@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 28 14:48:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GHbP7-0005qO-2o
-	for gcvg-git@gmane.org; Mon, 28 Aug 2006 09:19:29 +0200
+	id 1GHgXT-0005XD-RY
+	for gcvg-git@gmane.org; Mon, 28 Aug 2006 14:48:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932407AbWH1HTT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 Aug 2006 03:19:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932406AbWH1HTT
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Aug 2006 03:19:19 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:14580 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S932403AbWH1HTS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Aug 2006 03:19:18 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060828071917.SEQA6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 28 Aug 2006 03:19:17 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id FKK91V0074Noztg0000000
-	Mon, 28 Aug 2006 03:19:15 -0400
+	id S1750760AbWH1MsY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 Aug 2006 08:48:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750756AbWH1MsY
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Aug 2006 08:48:24 -0400
+Received: from mail.fuw.edu.pl ([193.0.80.14]:8626 "EHLO mail.fuw.edu.pl")
+	by vger.kernel.org with ESMTP id S1750729AbWH1MsV (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Aug 2006 08:48:21 -0400
+Received: from front.fuw.edu.pl (front.fuw.edu.pl [193.0.83.59])
+	by mail.fuw.edu.pl (8.13.6/8.13.6) with ESMTP id k7SCl3fb031919
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 28 Aug 2006 14:47:04 +0200
+Received: from front.fuw.edu.pl (IDENT:10582@localhost [127.0.0.1])
+	by front.fuw.edu.pl (8.13.3/8.12.4) with ESMTP id k7SCmFsk017632;
+	Mon, 28 Aug 2006 14:48:15 +0200
+Received: (from jnareb@localhost)
+	by front.fuw.edu.pl (8.13.3/8.12.4/Submit) id k7SCmFEE017631;
+	Mon, 28 Aug 2006 14:48:15 +0200
 To: git@vger.kernel.org
-X-maint-at: 60a6bf5f53635005f4f68d8b8a33172309193623
-X-master-at: 370e0966ef4abff81f08c9ea5c7d167eb0b0d354
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Mailer: git-send-email 1.3.0
+In-Reply-To: <11567692943154-git-send-email-jnareb@gmail.com>
+X-Scanned-By: MIMEDefang 2.56 on 193.0.80.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26148>
 
-This is CC'ed to the kernel list as well because the "master"
-update is rather large.
+Added/uncommented git_difftree_body invocation in git_commitdiff.
+Added anchors (via 'id' attribute) to patches in patchset.
+git_difftree_body is modified to link to patch anchor when called from
+git_commitdiff, instead of link to blobdiff.
 
-On the "maint" front, I've been wanting to cut 1.4.2.1 for some
-time, but various time constraints prevented me doing so so far.
-I have a vague suspicion that 1.4.3 might happen before that.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |   71 ++++++++++++++++++++++++++++++++++++----------------
+ 1 files changed, 49 insertions(+), 22 deletions(-)
 
-Also I have been sort-of waiting for the x86-32 machine at
-kernel.org to become available again so that I can do an RPM for
-end users, which unfortunately hasn't happened yet.
-
-* The 'maint' branch has these fixes since the last announcement.
-
-   Johannes Schindelin:
-      git-mv: special case destination "."
-      git-mv: fix off-by-one error
-      builtin-mv: readability patch
-
-* The 'master' branch has these since the last announcement.
-
-  - Johannes's reimplementation of merge-recursive in C is in
-    'master' for early adopter testing.  Currently it is called
-    'merge-recur', so you either (1) invoke it explicitly with
-    the -s option to 'git pull' and/or 'git merge', or (2) have
-    an environment variable GIT_USE_RECUR_FOR_RECURSIVE set to
-    non-empty string, in which case places that call
-    'git-merge-recursive' would use 'git-merge-recur' instead.
-
-    This has been tested in 'next' for some time, and Johannes
-    ran tests to reproduce all merges in post 2.6.12-rc2 kernel
-    history to validate it produces the same result as the
-    current merge-recursive.  The only difference is that it is
-    about 6x-10x faster and you do not have to have Python
-    installed.
-
-    I intend to retire the current merge-recursive.py and
-    replace it with merge-recur before 1.4.3 happens.
-
-  - Various calls to memcmp/memcpy/memset with length '20' to
-    compare, copy and clear object names have been abstracted
-    out to hashcmp/hashcpy/hashclr wrappers, spearheaded by
-    David Rientjes.  This would make it easier to migrate the
-    code to hashes of other lengths if it is ever needed.
-
-    Obviously migrating the existing data is another story.
-
-  - Updates to git-svn by Eric Wong.
-
-  - git-apply can be given --reject to produce *.rej files,
-    instead of failing the whole patch atomically.  It also can
-    be given --verbose to report what it is doing.
-
-  - Rene Scharfe helped git-tar-tree find its soulmate
-    git-zip-tree.
-
-  - Tilman Sauerbeck taught git-daemon to setuid/setgid before
-    serving the clients.
-
-  - Various small fixes and clean-ups by Haavard Skinnemoen, Jakub
-    Narebski, Jonas Fonseca, Pierre Habouzit, Rene Scharfe,
-    Shawn Pearce, and Tilman Sauerbeck.
-
-  - Various documentation clean-ups by Jonas Fonseca, and Rene
-    Scharfe.
-
-  - The internal is readied to be able to say "32 hours ago" in
-    "git log" and friends by Linus; we do not have an UI to
-    enable it yet.
-
-
-* The 'next' branch, in addition, has these.
-
-  - Various gitweb updates by Jakub Narebski with help from
-    Aneesh Kumar, Luben Tuikov, and Martin Waitz.  The most
-    attractive thing these updates have is that we finally got
-    rid of having to use temporary files to show diffs.
-
-    I'd like to push this out to "master" soonish.  You can get
-    a taste of how it works at the site Jakub maintains
-
-	http://front.fuw.edu.pl/cgi-bin/jnareb/gitweb.cgi
-
-  - Git.pm by Pasky with help from Dennis Stosberg, Eric Wong,
-    Johannes, and Pavel Roskin.  During the next round I'd like
-    to push this out to "master" to see who screams ;-).
-
-  - upload-pack has a bit of updates still held back.
-
-  - git-daemon is taught to optionally serve git-tar-tree
-    output.
-
-
-* In the 'pu' branch, I have my WIP of a library to walk the
-  index, the working tree, and zero or more tree objects in
-  parallel.  Its test program does something that vaguely looks
-  like diff-index with and without --cached in parallel, but it
-  is not polished enough for public testing/consumption yet.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 8987967..ef09cf5 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1447,6 +1447,7 @@ sub git_difftree_body {
+ 
+ 	print "<table class=\"diff_tree\">\n";
+ 	my $alternate = 0;
++	my $patchno = 0;
+ 	foreach my $line (@{$difftree}) {
+ 		my %diff = parse_difftree_raw_line($line);
+ 
+@@ -1487,8 +1488,14 @@ sub git_difftree_body {
+ 			      "<td class=\"link\">" .
+ 			      $cgi->a({-href => href(action=>"blob", hash=>$diff{'to_id'},
+ 			                             hash_base=>$hash, file_name=>$diff{'file'})},
+-			              "blob") .
+-			      "</td>\n";
++			              "blob");
++			if ($action == "commitdiff") {
++				# link to patch
++				$patchno++;
++				print " | " .
++				      $cgi->a({-href => "#patch$patchno"}, "patch");
++			}
++			print "</td>\n";
+ 
+ 		} elsif ($diff{'status'} eq "D") { # deleted
+ 			my $mode_chng = "<span class=\"file_status deleted\">[deleted $from_file_type]</span>";
+@@ -1502,8 +1509,14 @@ sub git_difftree_body {
+ 			      $cgi->a({-href => href(action=>"blob", hash=>$diff{'from_id'},
+ 			                             hash_base=>$parent, file_name=>$diff{'file'})},
+ 			              "blob") .
+-			      " | " .
+-			      $cgi->a({-href => href(action=>"history", hash_base=>$parent,
++			      " | ";
++			if ($action == "commitdiff") {
++				# link to patch
++				$patchno++;
++				print " | " .
++				      $cgi->a({-href => "#patch$patchno"}, "patch");
++			}
++			print $cgi->a({-href => href(action=>"history", hash_base=>$parent,
+ 			                             file_name=>$diff{'file'})},
+ 			              "history") .
+ 			      "</td>\n";
+@@ -1539,16 +1552,23 @@ sub git_difftree_body {
+ 			print "</td>\n" .
+ 			      "<td>$mode_chnge</td>\n" .
+ 			      "<td class=\"link\">" .
+-				$cgi->a({-href => href(action=>"blob", hash=>$diff{'to_id'},
+-				                       hash_base=>$hash, file_name=>$diff{'file'})},
+-				        "blob");
++			      $cgi->a({-href => href(action=>"blob", hash=>$diff{'to_id'},
++			                             hash_base=>$hash, file_name=>$diff{'file'})},
++			              "blob");
+ 			if ($diff{'to_id'} ne $diff{'from_id'}) { # modified
+-				print " | " .
+-					$cgi->a({-href => href(action=>"blobdiff",
+-					                       hash=>$diff{'to_id'}, hash_parent=>$diff{'from_id'},
+-					                       hash_base=>$hash, hash_parent_base=>$parent,
+-					                       file_name=>$diff{'file'})},
+-					        "diff");
++				if ($action == "commitdiff") {
++					# link to patch
++					$patchno++;
++					print " | " .
++						$cgi->a({-href => "#patch$patchno"}, "patch");
++				} else {
++					print " | " .
++						$cgi->a({-href => href(action=>"blobdiff",
++						                       hash=>$diff{'to_id'}, hash_parent=>$diff{'from_id'},
++						                       hash_base=>$hash, hash_parent_base=>$parent,
++						                       file_name=>$diff{'file'})},
++						        "diff");
++				}
+ 			}
+ 			print " | " .
+ 				$cgi->a({-href => href(action=>"history",
+@@ -1578,12 +1598,19 @@ sub git_difftree_body {
+ 			                             hash=>$diff{'to_id'}, file_name=>$diff{'to_file'})},
+ 			              "blob");
+ 			if ($diff{'to_id'} ne $diff{'from_id'}) {
+-				print " | " .
+-					$cgi->a({-href => href(action=>"blobdiff",
+-					                       hash=>$diff{'to_id'}, hash_parent=>$diff{'from_id'},
+-					                       hash_base=>$hash, hash_parent_base=>$parent,
+-					                       file_name=>$diff{'to_file'}, file_parent=>$diff{'from_file'})},
+-					        "diff");
++				if ($action == "commitdiff") {
++					# link to patch
++					$patchno++;
++					print " | " .
++						$cgi->a({-href => "#patch$patchno"}, "patch");
++				} else {
++					print " | " .
++						$cgi->a({-href => href(action=>"blobdiff",
++						                       hash=>$diff{'to_id'}, hash_parent=>$diff{'from_id'},
++						                       hash_base=>$hash, hash_parent_base=>$parent,
++						                       file_name=>$diff{'to_file'}, file_parent=>$diff{'from_file'})},
++						        "diff");
++				}
+ 			}
+ 			print "</td>\n";
+ 
+@@ -1616,7 +1643,7 @@ sub git_patchset_body {
+ 				# first patch in patchset
+ 				$patch_found = 1;
+ 			}
+-			print "<div class=\"patch\">\n";
++			print "<div class=\"patch\" id=\"patch". ($patch_idx+1) ."\">\n";
+ 
+ 			if (ref($difftree->[$patch_idx]) eq "HASH") {
+ 				$diffinfo = $difftree->[$patch_idx];
+@@ -2958,8 +2985,8 @@ TEXT
+ 
+ 	# write patch
+ 	if ($format eq 'html') {
+-		#git_difftree_body(\@difftree, $hash, $hash_parent);
+-		#print "<br/>\n";
++		git_difftree_body(\@difftree, $hash, $hash_parent);
++		print "<br/>\n";
+ 
+ 		git_patchset_body($fd, \@difftree, $hash, $hash_parent);
+ 		close $fd;
+-- 
+1.4.1.1
