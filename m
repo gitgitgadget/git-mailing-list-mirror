@@ -1,84 +1,144 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Packfile can't be mapped
-Date: Mon, 28 Aug 2006 01:33:01 -0400
-Message-ID: <20060828053301.GA25285@spearce.org>
-References: <9e4733910608271804j762960a8ud83654c78ebe009a@mail.gmail.com> <20060828024720.GD24204@spearce.org> <Pine.LNX.4.64.0608280014190.3683@localhost.localdomain>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] full featured formating function of the --{base,user}_path arguments,
+Date: Sun, 27 Aug 2006 22:35:42 -0700
+Message-ID: <7vd5altob5.fsf@assigned-by-dhcp.cox.net>
+References: <11566787581030-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 28 07:33:58 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 28 07:35:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GHZkx-00046R-SK
-	for gcvg-git@gmane.org; Mon, 28 Aug 2006 07:33:56 +0200
+	id 1GHZmF-0004Kl-TA
+	for gcvg-git@gmane.org; Mon, 28 Aug 2006 07:35:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750746AbWH1Fds (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 Aug 2006 01:33:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750763AbWH1Fds
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Aug 2006 01:33:48 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:57750 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1750746AbWH1Fds (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Aug 2006 01:33:48 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GHZki-0005U8-7I; Mon, 28 Aug 2006 01:33:40 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id E0A2620FB7F; Mon, 28 Aug 2006 01:33:01 -0400 (EDT)
-To: Nicolas Pitre <nico@cam.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0608280014190.3683@localhost.localdomain>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1750778AbWH1FfL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 Aug 2006 01:35:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750915AbWH1FfL
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Aug 2006 01:35:11 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:32463 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1750778AbWH1FfJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Aug 2006 01:35:09 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060828053508.PSJW6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 28 Aug 2006 01:35:08 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.5.203])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id FHb51V00X4Noztg0000000
+	Mon, 28 Aug 2006 01:35:06 -0400
+To: Pierre Habouzit <madcoder@debian.org>
+In-Reply-To: <11566787581030-git-send-email-madcoder@debian.org> (Pierre
+	Habouzit's message of "Sun, 27 Aug 2006 13:39:18 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26142>
 
-Nicolas Pitre <nico@cam.org> wrote:
-> On Sun, 27 Aug 2006, Shawn Pearce wrote:
-> 
-> > I'm going to try to get tree deltas written to the pack sometime this
-> > week. That should compact this intermediate pack down to something
-> > that git-pack-objects would be able to successfully mmap into a
-> > 32 bit address space.  A complete repack with no delta reuse will
-> > hopefully generate a pack closer to 400 MB in size.  But I know
-> > Jon would like to get that pack even smaller.  :)
-> 
-> One thing to consider in your code (if you didn't implement that 
-> already) is to _not_ attempt any delta on any object whose size is 
-> smaller than 50 bytes, and then limit the maximum delta size to 
-> object_size/2 - 20 (use that for the last argument to diff-delta() and 
-> store the undeltified object when diff-delta returns NULL).  This way 
-> you'll avoid creating delta objects that are most likely to end up being 
-> _larger_ than the undeltified object.
+Pierre Habouzit <madcoder@debian.org> writes:
 
-I haven't tried this.  Should be trivial to implement.  Thanks for
-the suggestion.
+> +static struct {
+> +	const char *path;
+> +	int use_as_fmt;
+> +} base_path;
+>  
+>  /* If defined, ~user notation is allowed and the string is inserted
+>   * after ~user/.  E.g. a request to git://host/~alice/frotz would
+>   * go to /home/alice/pub_git/frotz with --user-path=pub_git.
+>   */
+> -static const char *user_path;
+> +static struct {
+> +	const char *path;
+> +	int use_as_fmt;
+> +} user_path;
 
-> > I should point out that the input stream to fast-import was 20 GB
-> > (completely decompressed revisions from RCS) plus all commit data.
-> > The original CVS ,v files are around 3 GB.  An archive .tar.gz'ing
-> > the ,v files is around 550 MB.  Going to only 1.7 GB without tree
-> > or commit deltas is certainly pretty good.  :)
-> 
-> Good job indeed.  Oh and you probably should not bother trying to 
-> deltify commit objects at all since that would be a waste of time.
+Maybe it does not matter much, but I wonder if we want to keep
+two structs the same type, like:
 
-I wasn't going to bother even trying to delta the commits.  In this
-import the 200k commits isn't a very large percentage of the data.
-As I'm sure you are well aware its pretty much a waste time to try
-with the commits, especially with an "intermediate" pack such as
-this one.
+        static struct {
+                const char *path;
+                int use_as_fmt;
+        } base_path, user_path;
 
--- 
-Shawn.
+I also wondered if we can just extend the semantics of base_path
+and user_path to autodetect the fmt-ness of them, but that means
+we would break existing setups that uses per-cent in the
+pathname.  Arguably that would not be so common and we may not
+need to worry about such an installation, though.  What do you
+think?
+
+> @@ -174,24 +285,45 @@ static char *path_ok(char *dir)
+>  				slash = dir + restlen;
+>  			namlen = slash - dir;
+>  			restlen -= namlen;
+> +
+> +			if (user_path.use_as_fmt) {
+> +				loginfo("host <%s>, "
+> +					"userpathfmt <%s>, request <%s>, "
+> +					"namlen %d, restlen %d, slash <%s>",
+> +					vhost,
+> +					user_path.path, dir,
+> +					namlen, restlen, slash);
+> +				dir = git_path_fmt(rpath, user_path.path, vhost,
+> +						   slash, dir + 1, namlen - 1);
+
+When vhost is NULL you would feed it to "%s", which I think
+glibc works around with (null) fine but other C libraries would
+not like it.  git_path_fmt()'s logging does not have this
+problem, though.
+
+> +	else if (base_path.path) {
+>  		if (*dir != '/') {
+>  			/* Allow only absolute */
+>  			logerror("'%s': Non-absolute path denied (base-path active)", dir);
+>  			return NULL;
+>  		}
+> +
+> +		if (base_path.use_as_fmt) {
+> +			dir = git_base_path_fmt(rpath, base_path.path, vhost, dir);
+> +		} else {
+> +			snprintf(rpath, PATH_MAX, "%s%s", base_path.path, dir);
+
+The level of logging in this branch and in user_path.use_as_fmt
+branch are inconsistent.  Maybe the more detailed one above I
+commented about vhost==NULL case was primarily meant for
+debugging and you forgot to remove it?
+
+> @@ -274,6 +406,7 @@ static int execute(struct sockaddr *addr
+> @@ -303,15 +436,30 @@ #endif
+>  	alarm(0);
+>  
+>  	len = strlen(line);
+> +
+> +	if (pktlen != len) {
+> +		int arg_pos = len + 1;
+> +
+>  		loginfo("Extended attributes (%d bytes) exist <%.*s>",
+>  			(int) pktlen - len,
+> +			(int) pktlen - len, line + arg_pos);
+> +
+> +		while (arg_pos < pktlen) {
+> +			int arg_len = strlen(line + arg_pos);
+> +
+> +			if (!strncmp("host=", line + arg_pos, 5)) {
+> +				vhost = line + arg_pos + 5;
+> +			}
+> +
+> +			arg_pos += arg_len + 1;
+> +		}
+> +	}
+> +
+
+I think it is easier to do:
+
+	if (!vhost)
+        	vhost = default_host;
+
+and have git_base_path_fmt() barf if the format calls for %h and
+vhost passed to it is NULL.  Lack of "host=" in the request is
+logged here already.
