@@ -1,66 +1,60 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Packfile can't be mapped
-Date: Mon, 28 Aug 2006 00:27:02 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0608280014190.3683@localhost.localdomain>
-References: <9e4733910608271804j762960a8ud83654c78ebe009a@mail.gmail.com>
- <20060828024720.GD24204@spearce.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] parse_object: check if buffer is non-NULL before freeing
+ it
+Date: Sun, 27 Aug 2006 21:33:16 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0608272131020.27779@g5.osdl.org>
+References: <20060828003129.GE20904@diku.dk> <7vsljhtrsv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 28 06:27:18 2006
+Cc: Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 28 06:33:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GHYiT-0002GD-86
-	for gcvg-git@gmane.org; Mon, 28 Aug 2006 06:27:17 +0200
+	id 1GHYoV-00037G-0b
+	for gcvg-git@gmane.org; Mon, 28 Aug 2006 06:33:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750785AbWH1E1E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 Aug 2006 00:27:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750840AbWH1E1E
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Aug 2006 00:27:04 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:11500 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1750785AbWH1E1D (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Aug 2006 00:27:03 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J4O004CWXP2PA80@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 28 Aug 2006 00:27:02 -0400 (EDT)
-In-reply-to: <20060828024720.GD24204@spearce.org>
-X-X-Sender: nico@localhost.localdomain
-To: Shawn Pearce <spearce@spearce.org>
+	id S932130AbWH1EdZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 Aug 2006 00:33:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932254AbWH1EdZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Aug 2006 00:33:25 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:46285 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932130AbWH1EdZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Aug 2006 00:33:25 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k7S4XHnW008514
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 27 Aug 2006 21:33:19 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k7S4XGLb016659;
+	Sun, 27 Aug 2006 21:33:17 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vsljhtrsv.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-2.431 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.143 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26137>
-
-On Sun, 27 Aug 2006, Shawn Pearce wrote:
-
-> I'm going to try to get tree deltas written to the pack sometime this
-> week. That should compact this intermediate pack down to something
-> that git-pack-objects would be able to successfully mmap into a
-> 32 bit address space.  A complete repack with no delta reuse will
-> hopefully generate a pack closer to 400 MB in size.  But I know
-> Jon would like to get that pack even smaller.  :)
-
-One thing to consider in your code (if you didn't implement that 
-already) is to _not_ attempt any delta on any object whose size is 
-smaller than 50 bytes, and then limit the maximum delta size to 
-object_size/2 - 20 (use that for the last argument to diff-delta() and 
-store the undeltified object when diff-delta returns NULL).  This way 
-you'll avoid creating delta objects that are most likely to end up being 
-_larger_ than the undeltified object.
-
-> I should point out that the input stream to fast-import was 20 GB
-> (completely decompressed revisions from RCS) plus all commit data.
-> The original CVS ,v files are around 3 GB.  An archive .tar.gz'ing
-> the ,v files is around 550 MB.  Going to only 1.7 GB without tree
-> or commit deltas is certainly pretty good.  :)
-
-Good job indeed.  Oh and you probably should not bother trying to 
-deltify commit objects at all since that would be a waste of time.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26138>
 
 
-Nicolas
+
+On Sun, 27 Aug 2006, Junio C Hamano wrote:
+> 
+> Eh, free(NULL) should work just fine.  It is "other places" that
+> is misguided and needs to be fixed.
+
+Well, some very old libraries will SIGSEGV on free(NULL). 
+
+Admittedly those libraries are either very old or _very_ broken, but if 
+you want to be strictly portable, you should not ever pass NULL to free(), 
+unless you actually got it from a malloc(0) (and even then, it might be a 
+really broken libc that just ran out of memory).
+
+I actually suspect we should wrap all free() calls as "xfree()", which may 
+also help us some day if we want to do any memory usage statistics.
+
+		Linus
