@@ -1,59 +1,65 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Packfile can't be mapped
-Date: Mon, 28 Aug 2006 10:48:52 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0608281045590.3683@localhost.localdomain>
-References: <9e4733910608271804j762960a8ud83654c78ebe009a@mail.gmail.com>
- <20060828024720.GD24204@spearce.org>
- <Pine.LNX.4.64.0608280014190.3683@localhost.localdomain>
- <Pine.LNX.4.64.0608272133390.27779@g5.osdl.org>
+From: "affidavit" <affidavit.dolan@rpsinfo.nl>
+Subject: We can credit you
+Date: Mon, 28 Aug 2006 11:39:10 -0400
+Message-ID: <67441000957765.6072D85116@BRN22>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org,
-	Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 28 16:49:08 2006
+Content-Type: text/plain;
+        charset="Windows-1252"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Aug 28 17:39:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GHiQ6-0004Sw-6V
-	for gcvg-git@gmane.org; Mon, 28 Aug 2006 16:48:58 +0200
+	id 1GHjDC-0006os-1l
+	for gcvg-git@gmane.org; Mon, 28 Aug 2006 17:39:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751042AbWH1Osy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 Aug 2006 10:48:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751047AbWH1Osy
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Aug 2006 10:48:54 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:33459 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1751042AbWH1Osx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Aug 2006 10:48:53 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J4P00CLNQHGC480@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 28 Aug 2006 10:48:52 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.64.0608272133390.27779@g5.osdl.org>
-X-X-Sender: nico@localhost.localdomain
-To: Linus Torvalds <torvalds@osdl.org>
+	id S1751141AbWH1Pj3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 Aug 2006 11:39:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751136AbWH1Pj2
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Aug 2006 11:39:28 -0400
+Received: from 70-90-12-177-BusName-hershey.pa.panjde.hfc.comcastbusiness.net ([70.90.12.177]:64782 "EHLO YOUR-PG3RJG1ZIQ")
+	by vger.kernel.org with ESMTP id S1751141AbWH1Pj2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Aug 2006 11:39:28 -0400
+To: <git@vger.kernel.org>
+X-Mailer: Microsoft Office Outlook, Build 11.0.5510
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+Thread-Index: QC2CbY6Wb9K7ciCh9zmQY1d1fz0pz3qJqnwc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26160>
+X-Spam-Report: 9.8 points;
+ *  0.1 CLICK_BELOW_CAPS BODY: Asks you to click below (in capital letters)
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5000]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: expresshomecredit.us]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: expresshomecredit.us]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: expresshomecredit.us]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26161>
 
-On Sun, 27 Aug 2006, Linus Torvalds wrote:
+Yo! 
 
-> 
-> 
-> On Mon, 28 Aug 2006, Nicolas Pitre wrote:
-> > 
-> > Good job indeed.  Oh and you probably should not bother trying to 
-> > deltify commit objects at all since that would be a waste of time.
-> 
-> It might not necessarily always be a waste of time.
-[...]
-> It's probably not worth doing for the fast importer unless it just 
-> happens to fall out of the code very easily.
+Your credit doesn't matter to us!
+If you OWN real estate and want IMMEDIATE cash to spend ANY way you 
+like, or simply wish to LOWER your monthly payments by a third or more, here are the deals we have TODAY:
 
-... which is what my comment was all about.
+$488,000.00 at a 3.67% fixed-rate
+$372,000.00 at a 3.90% variable-rate
+$492,000.00 at a 3.21% interest-only
+$248,000.00 at a 3.36% fixed-rate
+$198,000.00 at a 3.55% variable-rate
 
+Hurry, we have requests limits, so when these deals are gone, they are 
+gone!
 
-Nicolas
+We have one-mimute form to apply the request,
+please CLICK HERE
+
+http://3M3RN.expresshomecredit.us/?ncache=103380
+
+Don't worry about approval, your credit will not disqualify you!
+
+Approval Manager.
