@@ -1,62 +1,64 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Why do base objects appear behind the delta in packs?
-Date: Tue, 29 Aug 2006 15:23:52 -0400
-Message-ID: <9e4733910608291223s7ca574bfh88627f2bec60e424@mail.gmail.com>
-References: <20060829134233.GA21335@spearce.org> <ed1kn3$c3r$1@sea.gmane.org>
-	 <20060829162747.GA21729@spearce.org>
-	 <7v8xl7moo7.fsf@assigned-by-dhcp.cox.net>
-	 <20060829174448.GD21729@spearce.org>
-	 <Pine.LNX.4.64.0608291410290.9796@xanadu.home>
-	 <20060829183239.GH21729@spearce.org>
+From: "algeria" <algeria.brokerage@royalsrevival.com>
+Subject: Ask us for credit you
+Date: Tue, 29 Aug 2006 22:47:52 +0200
+Message-ID: <69037340058077.F9E34F9E35@OI1OLZOC>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+        charset="Windows-1252"
 Content-Transfer-Encoding: 7bit
-Cc: "Nicolas Pitre" <nico@cam.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 29 21:24:09 2006
+X-From: git-owner@vger.kernel.org Tue Aug 29 22:48:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GI9Bs-00087X-Oh
-	for gcvg-git@gmane.org; Tue, 29 Aug 2006 21:24:05 +0200
+	id 1GIAVI-0003XG-L7
+	for gcvg-git@gmane.org; Tue, 29 Aug 2006 22:48:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965115AbWH2TXy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 Aug 2006 15:23:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965261AbWH2TXy
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Aug 2006 15:23:54 -0400
-Received: from nz-out-0102.google.com ([64.233.162.207]:33800 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S965115AbWH2TXx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Aug 2006 15:23:53 -0400
-Received: by nz-out-0102.google.com with SMTP id n1so1372977nzf
-        for <git@vger.kernel.org>; Tue, 29 Aug 2006 12:23:52 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bOt6LideNtvOGCFlI3i53j3/1sHSdo/z2wljTs+Z7BTMbjHkJ6FNpBYEpXHqs64NDNRvkuafk9svCva40R8AD9mR6PH8AptVzkuqxXCsrtVJ69zKT/sFw1MIpw8jJi+kZ5hvsC4Ze5VDa4L0BB/PFVY8xBMtklf/M4V/YJHUUV0=
-Received: by 10.65.154.10 with SMTP id g10mr9012961qbo;
-        Tue, 29 Aug 2006 12:23:52 -0700 (PDT)
-Received: by 10.65.133.17 with HTTP; Tue, 29 Aug 2006 12:23:51 -0700 (PDT)
-To: "Shawn Pearce" <spearce@spearce.org>
-In-Reply-To: <20060829183239.GH21729@spearce.org>
-Content-Disposition: inline
+	id S965328AbWH2Urz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 Aug 2006 16:47:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965334AbWH2Urz
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Aug 2006 16:47:55 -0400
+Received: from 189.Red-81-37-230.dynamicIP.rima-tde.net ([81.37.230.189]:61714
+	"EHLO avu6t.csxrj0lo.cox.net") by vger.kernel.org with ESMTP
+	id S965328AbWH2Ury (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Aug 2006 16:47:54 -0400
+To: <git@vger.kernel.org>
+X-Mailer: Microsoft Office Outlook, Build 11.0.5510
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+Thread-Index: 5zIvJBiOnrKXhd5f1qetRnbrME6aBkBoz8N2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26214>
+X-Spam-Report: 5.6 points;
+ *  0.1 CLICK_BELOW_CAPS BODY: Asks you to click below (in capital letters)
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5000]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?81.37.230.189>]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: capitalpartnerusa.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26216>
 
-On 8/29/06, Shawn Pearce <spearce@spearce.org> wrote:
-> I don't have Jon's cvs2svn code and I don't know if its ready for
-> public consumption yet.  git-fast-import however looks like its
-> almost there, so I'm making the URL publicly available for those
-> that may be interested in it.
+How are you Guys?! 
 
-If anyone is interested in cvs2svn mods let me know (they are in
-Python) and I will send you a snap shot. The current code gets all the
-blobs, tree and commits into a pack via fast-import, but the trees not
-being generated correctly for complex branching when there are issues
-with the symbols in CVS.
+Your credit doesn't matter to us!
+If you OWN real estate and want IMMEDIATE cash to spend ANY way you 
+like, or simply wish to LOWER your monthly payments by a third or more, here are the deals we have TODAY:
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+$488,000.00 at a 3.67% fixed-rate
+$372,000.00 at a 3.90% variable-rate
+$492,000.00 at a 3.21% interest-only
+$248,000.00 at a 3.36% fixed-rate
+$198,000.00 at a 3.55% variable-rate
+
+Hurry, we have requests limits, so when these deals are gone, they are 
+gone!
+
+We have one-mimute form to apply the request,
+please CLICK HERE
+
+http://J8MTH.capitalpartnerusa.com/?ncache=103790
+
+Don't worry about approval, your credit will not disqualify you!
+
+Approval Manager.
