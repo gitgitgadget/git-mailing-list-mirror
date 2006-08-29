@@ -1,62 +1,63 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Add local time and timezone to git_print_authorship
-Date: Tue, 29 Aug 2006 12:15:10 +0200
-Organization: At home
-Message-ID: <ed142v$fbi$1@sea.gmane.org>
-References: <Pine.LNX.4.64.0608281016380.27779@g5.osdl.org> <11567998513000-git-send-email-jnareb@gmail.com> <7vveocpfa3.fsf@assigned-by-dhcp.cox.net> <ed0ths$okn$1@sea.gmane.org> <7vu03voqss.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] unpack-objects: remove unused variable "eof"
+Date: Tue, 29 Aug 2006 12:50:29 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0608291250060.28360@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Tue Aug 29 12:15:36 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Tue Aug 29 12:51:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GI0ct-00080m-8A
-	for gcvg-git@gmane.org; Tue, 29 Aug 2006 12:15:23 +0200
+	id 1GI1BG-0007TW-OM
+	for gcvg-git@gmane.org; Tue, 29 Aug 2006 12:50:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964875AbWH2KPT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 29 Aug 2006 06:15:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964881AbWH2KPT
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Aug 2006 06:15:19 -0400
-Received: from main.gmane.org ([80.91.229.2]:7843 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S964875AbWH2KPR (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Aug 2006 06:15:17 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GI0cg-0007xq-RZ
-	for git@vger.kernel.org; Tue, 29 Aug 2006 12:15:10 +0200
-Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 29 Aug 2006 12:15:10 +0200
-Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 29 Aug 2006 12:15:10 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S932273AbWH2Kud (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 Aug 2006 06:50:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932276AbWH2Kud
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Aug 2006 06:50:33 -0400
+Received: from mail.gmx.net ([213.165.64.20]:62690 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932273AbWH2Kub (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Aug 2006 06:50:31 -0400
+Received: (qmail invoked by alias); 29 Aug 2006 10:50:30 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp040) with SMTP; 29 Aug 2006 12:50:30 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26200>
 
-Junio C Hamano wrote:
 
-> =A0(3) I'd like to eventually get rid of the abbreviated commit
-> =A0 =A0 =A0object name from blame output, so the setting in gitweb.cs=
-s
-> =A0 =A0 =A0for table.blame td.age[012] (different colors and font
-> =A0 =A0 =A0styles) is not appropriate for what I am shooting at.
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
+ builtin-unpack-objects.c |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
 
-What do you want to replace it with? Link can be to "commit" or "commit=
-diff"
-view, but some marker for commit (perhaps 'git-name-rev --tags'?) is
-needed.
-
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+diff --git a/builtin-unpack-objects.c b/builtin-unpack-objects.c
+index ca0ebc2..0c180b5 100644
+--- a/builtin-unpack-objects.c
++++ b/builtin-unpack-objects.c
+@@ -15,7 +15,7 @@ static const char unpack_usage[] = "git-
+ 
+ /* We always read in 4kB chunks. */
+ static unsigned char buffer[4096];
+-static unsigned long offset, len, eof;
++static unsigned long offset, len;
+ static SHA_CTX ctx;
+ 
+ /*
+@@ -26,8 +26,6 @@ static void * fill(int min)
+ {
+ 	if (min <= len)
+ 		return buffer + offset;
+-	if (eof)
+-		die("unable to fill input");
+ 	if (min > sizeof(buffer))
+ 		die("cannot fill %d bytes", min);
+ 	if (offset) {
+-- 
+1.4.2.g0f6b-dirty
