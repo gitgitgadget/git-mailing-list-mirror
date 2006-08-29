@@ -1,77 +1,89 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Why do base objects appear behind the delta in packs?
-Date: Tue, 29 Aug 2006 14:32:39 -0400
-Message-ID: <20060829183239.GH21729@spearce.org>
-References: <20060829134233.GA21335@spearce.org> <ed1kn3$c3r$1@sea.gmane.org> <20060829162747.GA21729@spearce.org> <7v8xl7moo7.fsf@assigned-by-dhcp.cox.net> <20060829174448.GD21729@spearce.org> <Pine.LNX.4.64.0608291410290.9796@xanadu.home>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: git-fsck-objects: lacking default references should not be fatal
+Date: Tue, 29 Aug 2006 11:47:30 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0608291141140.27779@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 29 20:33:14 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Tue Aug 29 20:48:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GI8OR-0003jR-US
-	for gcvg-git@gmane.org; Tue, 29 Aug 2006 20:33:00 +0200
+	id 1GI8ce-0007W6-5g
+	for gcvg-git@gmane.org; Tue, 29 Aug 2006 20:47:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965252AbWH2Sco (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 Aug 2006 14:32:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965253AbWH2Sco
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Aug 2006 14:32:44 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:27112 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S965249AbWH2Scn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Aug 2006 14:32:43 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GI8O2-00009o-03; Tue, 29 Aug 2006 14:32:34 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 111AE20FB7F; Tue, 29 Aug 2006 14:32:40 -0400 (EDT)
-To: Nicolas Pitre <nico@cam.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0608291410290.9796@xanadu.home>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S965126AbWH2Srg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 Aug 2006 14:47:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965133AbWH2Srg
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Aug 2006 14:47:36 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:47538 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S965126AbWH2Srg (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Aug 2006 14:47:36 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k7TIlVnW003778
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 29 Aug 2006 11:47:32 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k7TIlUbY023819;
+	Tue, 29 Aug 2006 11:47:31 -0700
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=-0.432 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.143 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26213>
 
-Nicolas Pitre <nico@cam.org> wrote:
-> I look forward to being able to use your (and Jon's) fast-import work in 
-> order to play with (re)generation of big packs myself.
 
-My repository is here:
+The comment added says it all: if we have lost all references in a git 
+archive, git-fsck-objects should still work, so instead of dying it should 
+just notify the user about that condition.
 
-  http://www.spearce.org/projects/scm/git.git
+This change was triggered by me just doing a "git-init-db" and then 
+populating that empty git archive with a pack/index file to look at it. 
+Having git-fsck-objects not work just because I didn't have any references 
+handy was rather irritating, since part of the reason for running 
+git-fsck-objects in the first place was to _find_ the missing references.
 
-branch 'refs/heads/sp/fastpack'.
+However, "--unreachable" really doesn't make sense in that situation, and 
+we want to turn it off to protect anybody who uses the old "git prune" 
+shell-script (rather than the modern built-in). The old pruning script 
+used to remove all objects that were reported as unreachable, and without 
+any refs, that obviously means everything - not worth it.
 
-I'd appreciate it if folks didn't clone directly from me but instead
-used an existing clone to pull the branch down into.  Its based on
-a fairly recent 'next' branch.  Anything not available via Junio's
-'next' on kernel.org is loose objects in this repository and are
-specific to my fast-import work.
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
 
-Documentation of the protocol used to stuff a pack is in the
-header of fast-import.c.  Its a relatively trivial stream format.
-It should be quite simple to generate a random large project and
-pipe it into fast-import to get a resulting pack to play with.
-
-I don't have Jon's cvs2svn code and I don't know if its ready for
-public consumption yet.  git-fast-import however looks like its
-almost there, so I'm making the URL publicly available for those
-that may be interested in it.
-
-[Junio: please do the lazy thing and don't pull this into Git just
- yet, I don't think this branch is ready for that, not even for pu.]
-
--- 
-Shawn.
+diff --git a/fsck-objects.c b/fsck-objects.c
+index ae0ec8d..24286de 100644
+--- a/fsck-objects.c
++++ b/fsck-objects.c
+@@ -425,8 +425,23 @@ static int fsck_handle_ref(const char *r
+ static void get_default_heads(void)
+ {
+ 	for_each_ref(fsck_handle_ref);
+-	if (!default_refs)
+-		die("No default references");
++
++	/*
++	 * Not having any default heads isn't really fatal, but
++	 * it does mean that "--unreachable" no longer makes any
++	 * sense (since in this case everything will obviously
++	 * be unreachable by definition.
++	 *
++	 * Showing dangling objects is valid, though (as those
++	 * dangling objects are likely lost heads).
++	 *
++	 * So we just print a warning about it, and clear the
++	 * "show_unreachable" flag.
++	 */
++	if (!default_refs) {
++		error("No default references");
++		show_unreachable = 0;
++	}
+ }
+ 
+ static void fsck_object_dir(const char *path)
