@@ -1,90 +1,101 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Mozilla .git tree
-Date: Wed, 30 Aug 2006 04:42:05 -0700
-Message-ID: <7vzmdmh2lu.fsf@assigned-by-dhcp.cox.net>
-References: <20060829165811.GB21729@spearce.org>
-	<9e4733910608291037k2d9fb791v18abc19bdddf5e89@mail.gmail.com>
-	<20060829175819.GE21729@spearce.org>
-	<9e4733910608291155g782953bbv5df1b74878f4fcf1@mail.gmail.com>
-	<20060829190548.GK21729@spearce.org>
-	<9e4733910608291252q130fc723r945e6ab906ca6969@mail.gmail.com>
-	<20060829232007.GC22935@spearce.org>
-	<9e4733910608291807q9b896e4sdbfaa9e49de58c2b@mail.gmail.com>
-	<20060830015122.GE22935@spearce.org>
-	<9e4733910608291958l45c0257dla6e5ebd4176f7164@mail.gmail.com>
-	<20060830031029.GA23967@spearce.org>
-	<Pine.LNX.4.64.0608300124550.9796@xanadu.home>
+From: aonghus <thecolourblue@gmail.com>
+Subject: problem with git-cvsserver
+Date: Wed, 30 Aug 2006 16:45:43 +0100
+Message-ID: <44F5B2A7.8070501@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed Aug 30 13:41:32 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Aug 30 17:51:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GIORd-0004ec-FG
-	for gcvg-git@gmane.org; Wed, 30 Aug 2006 13:41:22 +0200
+	id 1GISGG-0000dD-0R
+	for gcvg-git@gmane.org; Wed, 30 Aug 2006 17:45:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750852AbWH3LlM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 Aug 2006 07:41:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750844AbWH3LlM
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Aug 2006 07:41:12 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:18574 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1750775AbWH3LlL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Aug 2006 07:41:11 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060830114111.MRFP18458.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 30 Aug 2006 07:41:11 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id GBhB1V0091kojtg0000000
-	Wed, 30 Aug 2006 07:41:11 -0400
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0608300124550.9796@xanadu.home> (Nicolas Pitre's
-	message of "Wed, 30 Aug 2006 01:53:48 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751097AbWH3Pps (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 Aug 2006 11:45:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751098AbWH3Pps
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Aug 2006 11:45:48 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:2067 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751097AbWH3Ppr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Aug 2006 11:45:47 -0400
+Received: by nf-out-0910.google.com with SMTP id x30so170645nfb
+        for <git@vger.kernel.org>; Wed, 30 Aug 2006 08:45:46 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=S8VL/++R6t+kOHoeAhh7DdbGxZDSKt3W2+gHxhn5jjrfSJZcD5xVEV5n54kF6ABw8O4/AcJqh/c7HcE4PcQ1E0ciVjakz7gBtcAU6sanDbiBp/RSnKpQ2ee7GzkhsE9fs+gwe6TKMvxpFHmF1DzYxAumZyAA85sddJK77IFhAXg=
+Received: by 10.67.89.5 with SMTP id r5mr483603ugl;
+        Wed, 30 Aug 2006 08:45:45 -0700 (PDT)
+Received: from ?192.168.0.100? ( [137.43.156.41])
+        by mx.gmail.com with ESMTP id o1sm425325uge.2006.08.30.08.45.44;
+        Wed, 30 Aug 2006 08:45:45 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.5 (X11/20060728)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26227>
 
-Nicolas Pitre <nico@cam.org> writes:
+Hi,
 
-> And the zlib header contains a CRC which we're about to use for 
-> validating the data when doing delta data reuse in order to prevent pack 
-> corruption propagation like the one recently posted on the list.  
+I am trying to use git-cvsserver and I have come across this error:
 
-Ah, never thought of using the CRC directly.  I was thinking
-about inflating into void and see if it succeeds, which as you
-say is perhaps quite expensive.
+    $ cvs co -d project-master master
 
-This brings me back to my pet-peeve, though.  I do not think
-zlib stream seeks back and leaves some clue at the beginning to
-tell me the deflated length, so it is quite hard to find where
-each deflated stream ends in a packfile cheaply.  Loose objects
-(with new or legacy style header) are easy (st.st_size is
-available), but I do not think of a way short of building a
-reverse index of pack .idx file, which means I am already
-talking about not so cheap way X-<.
+    install_driver(SQLite) failed: Can't locate DBD/SQLite.pm in @INC (@INC contains: /etc/perl /usr/local/lib/perl/5.8.8 /usr/local/share/perl/5.8.8 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.8 /usr/share/perl/5.8 /usr/local/lib/site_perl /usr/local/lib/perl/5.8.7 /usr/local/share/perl/5.8.7 .) at (eval 7) line 3, <STDIN> line 14.
 
-It might be a reason to define a new .idx format.  We could lift
-32-bit offset limitation while we are at it.  Each entry could
-have 20-byte hash, 64-bit offset into the corresponding .pack,
-and 32-bit deflated length (heh, why not make it 64-bit while we
-are at it).  Luckily, .idx _is_ a local matter so we can even
-have a flag day and tell people to run the updated index-pack on
-existing packfiles to regenerate .idx.
+    Perhaps the DBD::SQLite perl module hasn't been fully installed,
 
-> Using an offset instead of a sha1 to reference a delta base object is 
-> certainly a good idea though.  But I'd use the same variable encoding as 
-> the object size to avoid the 32-bit limit issue.  When generating a thin 
-> pack the real sha1 of the delta object could be substituted for the 
-> offset quite easily if the base object is not sent a part of the same 
-> pack.
+    or perhaps the capitalisation of 'SQLite' isn't right.
 
-That sounds quite a reasonable suggestion.  I love this kind of
-moment when I find us very fortunate to have bright people on
-the list ;-).
+    Available drivers: DBM, ExampleP, File, Pg, Proxy, Sponge, mysql.
+
+     at /usr/bin/git-cvsserver line 2055
+
+    cvs [checkout aborted]: end of file from server (consult above messages if any)
+
+
+This is a debian testing/unstable machine with git, git-core, git-cvs 
+etc installed (with no problems):
+
+    $ dpkg --list git-cvs
+
+    ||/ Name                            Version                         Description
+
+    +++-===============================-===============================-
+
+    ii  git-cvs                         1.4.1.1-1                       content addressable filesystem (cvs interoperability)
+
+
+Also, the perl DBI modules are installed:
+
+    $ dpkg --list libdbd-sqlite3-perl
+
+    ||/ Name                            Version                         Description
+
+    +++-===============================-===============================-
+
+    ii  libdbd-sqlite3-perl             1.12-1                          Perl DBI driver with a self-contained RDBMS
+
+    $ dpkg -S SQLite
+
+    libdbd-sqlite3-perl: /usr/share/man/man3/DBD::SQLite.3pm.gz
+
+    libdbd-sqlite3-perl: /usr/share/perl5/DBD/SQLite.pm
+
+    libdbd-sqlite3-perl: /usr/lib/perl5/auto/DBD/SQLite
+
+    libdbd-sqlite3-perl: /usr/lib/perl5/auto/DBD/SQLite/SQLite.bs
+
+    libdbd-sqlite3-perl: /usr/lib/perl5/auto/DBD/SQLite/SQLite.so
+
+
+Anyone know whats wrong? If its a problem somewhere else (eg. with 
+debian packaging), please point me there,
+
+thanks
+
+a
