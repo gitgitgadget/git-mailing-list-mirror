@@ -1,39 +1,39 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 1/4] gitweb: Move git-ls-tree output parsing to parse_ls_tree_line
-Date: Thu, 31 Aug 2006 00:32:15 +0200
-Message-ID: <200608310032.15543.jnareb@gmail.com>
+Subject: [PATCH 2/4] gitweb: Separate printing of git_tree row into git_print_tree_entry
+Date: Thu, 31 Aug 2006 00:35:07 +0200
+Message-ID: <200608310035.07585.jnareb@gmail.com>
 References: <200608310030.33512.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Aug 31 00:37:22 2006
+X-From: git-owner@vger.kernel.org Thu Aug 31 00:37:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GIYgQ-0002iI-Ey
-	for gcvg-git@gmane.org; Thu, 31 Aug 2006 00:37:18 +0200
+	id 1GIYgR-0002iI-3F
+	for gcvg-git@gmane.org; Thu, 31 Aug 2006 00:37:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932216AbWH3WhO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 Aug 2006 18:37:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932217AbWH3WhO
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Aug 2006 18:37:14 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:13541 "EHLO
+	id S932214AbWH3WhP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 Aug 2006 18:37:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932221AbWH3WhP
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Aug 2006 18:37:15 -0400
+Received: from nf-out-0910.google.com ([64.233.182.185]:7397 "EHLO
 	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S932216AbWH3WhM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Aug 2006 18:37:12 -0400
-Received: by nf-out-0910.google.com with SMTP id x30so271641nfb
-        for <git@vger.kernel.org>; Wed, 30 Aug 2006 15:37:11 -0700 (PDT)
+	id S932214AbWH3WhN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Aug 2006 18:37:13 -0400
+Received: by nf-out-0910.google.com with SMTP id x30so271645nfb
+        for <git@vger.kernel.org>; Wed, 30 Aug 2006 15:37:12 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=av1VTd4M+zCrHkAJJ1oHNq2ItHEN1a/0ltsLGx8xYupoeaXrYqotCXmb1YoHrKq2wwyTrKaKzDuHfhXCSuve5BwkpP1rtbueR+NF++DaRwbIRaLqlqxhVWyZ3yBCTGeuuii5WYFZtIm2BSpOWJ69ymXCw57uno76sKrRiD5a51U=
-Received: by 10.49.75.2 with SMTP id c2mr301060nfl;
-        Wed, 30 Aug 2006 15:37:11 -0700 (PDT)
+        b=HqXWaWNm0r/pgxT6Wtwqg/RLYqcGpYj8mclxP7dltbNPrcvBpcou+vfjFTX1H8PFOsxNaI3S3Mi9rQvBKPhpuqGpOQZdC134mWqGe7PJmxzKRu6Z7O2y7Xv4vRIOeyq/IEMl6PZnVVekxr+N0x0CBXj7Wiojcioo2or2pKfWlp4=
+Received: by 10.49.29.3 with SMTP id g3mr322145nfj;
+        Wed, 30 Aug 2006 15:37:12 -0700 (PDT)
 Received: from host-81-190-21-28.torun.mm.pl ( [81.190.21.28])
-        by mx.gmail.com with ESMTP id o9sm377359nfa.2006.08.30.15.37.09;
-        Wed, 30 Aug 2006 15:37:10 -0700 (PDT)
+        by mx.gmail.com with ESMTP id o9sm377359nfa.2006.08.30.15.37.11;
+        Wed, 30 Aug 2006 15:37:11 -0700 (PDT)
 To: git@vger.kernel.org
 User-Agent: KMail/1.9.3
 In-Reply-To: <200608310030.33512.jnareb@gmail.com>
@@ -41,123 +41,154 @@ Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26234>
 
-Add new subroutine parse_ls_tree_line and use it in git_tree.
+This is preparation for "tree blame" (similar to what ViewVC shows)
+output, i.e. for each entry give commit where it was changed.
 
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-This patch could be applied regardless of the fact that this 
-"tree_blame" view series is proof-of-concept series.
+This could be applied even though it is proof-of-concept series,
+but I think it would be better to separate git_tree_body rather,
+although perhaps something like git_print_tree_entry subroutine
+is a good idea.
 
- gitweb/gitweb.perl |   62 ++++++++++++++++++++++++++++++++++++----------------
- 1 files changed, 43 insertions(+), 19 deletions(-)
+ gitweb/gitweb.perl |  103 ++++++++++++++++++++++++++++++----------------------
+ 1 files changed, 59 insertions(+), 44 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index fa7f62a..84a13fd 100755
+index 84a13fd..d8b94a1 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -1021,6 +1021,27 @@ sub parse_difftree_raw_line {
- 	return wantarray ? %res : \%res;
+@@ -1462,6 +1462,62 @@ sub git_print_simplified_log {
+ 		-remove_title => $remove_title);
  }
  
-+# parse line of git-ls-tree output
-+sub parse_ls_tree_line ($;%) {
-+	my $line = shift;
-+	my %opts = @_;
-+	my %res;
++# print tree entry (row of git_tree), but without encompassing <tr> element
++sub git_print_tree_entry {
++	my ($t, $basedir, $hash_base, $have_blame) = @_;
 +
-+	#'100644 blob 0fa3f3a66fb6a137f6ec2c19351ed4d807070ffa	panic.c'
-+	$line =~ m/^([0-9]+) (.+) ([0-9a-fA-F]{40})\t(.+)$/;
++	my %base_key = ();
++	$base_key{hash_base} = $hash_base if defined $hash_base;
 +
-+	$res{'mode'} = $1;
-+	$res{'type'} = $2;
-+	$res{'hash'} = $3;
-+	if ($opts{'-z'}) {
-+		$res{'name'} = $4;
-+	} else {
-+		$res{'name'} = unquote($4);
++	print "<td class=\"mode\">" . mode_str($t->{'mode'}) . "</td>\n";
++	if ($t->{'type'} eq "blob") {
++		print "<td class=\"list\">" .
++		      $cgi->a({-href => href(action=>"blob", hash=>$t->{'hash'},
++		                             file_name=>"$basedir$t->{'name'}", %base_key),
++		              -class => "list"}, esc_html($t->{'name'})) .
++		      "</td>\n" .
++		      "<td class=\"link\">" .
++		      $cgi->a({-href => href(action=>"blob", hash=>$t->{'hash'},
++		                             file_name=>"$basedir$t->{'name'}", %base_key)},
++		              "blob");
++		if ($have_blame) {
++			print " | " .
++				$cgi->a({-href => href(action=>"blame", hash=>$t->{'hash'},
++				                       file_name=>"$basedir$t->{'name'}", %base_key)},
++				        "blame");
++		}
++		if (defined $hash_base) {
++			print " | " .
++			      $cgi->a({-href => href(action=>"history", hash_base=>$hash_base,
++			                             hash=>$t->{'hash'}, file_name=>"$basedir$t->{'name'}")},
++			              "history");
++		}
++		print " | " .
++		      $cgi->a({-href => href(action=>"blob_plain",
++		                             hash=>$t->{'hash'}, file_name=>"$basedir$t->{'name'}")},
++		              "raw") .
++		      "</td>\n";
++
++	} elsif ($t->{'type'} eq "tree") {
++		print "<td class=\"list\">" .
++		      $cgi->a({-href => href(action=>"tree", hash=>$t->{'hash'},
++		                             file_name=>"$basedir$t->{'name'}", %base_key)},
++		              esc_html($t->{'name'})) .
++		      "</td>\n" .
++		      "<td class=\"link\">" .
++		      $cgi->a({-href => href(action=>"tree", hash=>$t->{'hash'},
++		                             file_name=>"$basedir$t->{'name'}", %base_key)},
++		              "tree");
++		if (defined $hash_base) {
++			print " | " .
++			      $cgi->a({-href => href(action=>"history", hash_base=>$hash_base,
++			                             file_name=>"$basedir$t->{'name'}")},
++			              "history");
++		}
++		print "</td>\n";
 +	}
-+
-+	return wantarray ? %res : \%res;
 +}
 +
  ## ......................................................................
- ## parse to array of hashes functions
+ ## functions printing large fragments of HTML
  
-@@ -2498,51 +2519,54 @@ sub git_tree {
- 	print "<table cellspacing=\"0\">\n";
- 	my $alternate = 0;
- 	foreach my $line (@entries) {
--		#'100644	blob	0fa3f3a66fb6a137f6ec2c19351ed4d807070ffa	panic.c'
--		$line =~ m/^([0-9]+) (.+) ([0-9a-fA-F]{40})\t(.+)$/;
--		my $t_mode = $1;
--		my $t_type = $2;
--		my $t_hash = $3;
--		my $t_name = validate_input($4);
-+		my %t = parse_ls_tree_line($line, -z => 1);
-+
- 		if ($alternate) {
- 			print "<tr class=\"dark\">\n";
- 		} else {
- 			print "<tr class=\"light\">\n";
+@@ -2499,14 +2555,13 @@ sub git_tree {
+ 	my $refs = git_get_references();
+ 	my $ref = format_ref_marker($refs, $hash_base);
+ 	git_header_html();
+-	my %base_key = ();
+ 	my $base = "";
+ 	my $have_blame = gitweb_check_feature('blame');
+ 	if (defined $hash_base && (my %co = parse_commit($hash_base))) {
+-		$base_key{hash_base} = $hash_base;
+ 		git_print_page_nav('tree','', $hash_base);
+ 		git_print_header_div('commit', esc_html($co{'title'}) . $ref, $hash_base);
+ 	} else {
++		undef $hash_base;
+ 		print "<div class=\"page_nav\">\n";
+ 		print "<br/><br/></div>\n";
+ 		print "<div class=\"title\">$hash</div>\n";
+@@ -2528,48 +2583,8 @@ sub git_tree {
  		}
  		$alternate ^= 1;
--		print "<td class=\"mode\">" . mode_str($t_mode) . "</td>\n";
--		if ($t_type eq "blob") {
+ 
+-		print "<td class=\"mode\">" . mode_str($t{'mode'}) . "</td>\n";
+-		if ($t{'type'} eq "blob") {
+-			print "<td class=\"list\">" .
+-			      $cgi->a({-href => href(action=>"blob", hash=>$t{'hash'},
+-			                             file_name=>"$base$t{'name'}", %base_key),
+-			              -class => "list"}, esc_html($t{'name'})) .
+-			      "</td>\n" .
+-			      "<td class=\"link\">" .
+-			      $cgi->a({-href => href(action=>"blob", hash=>$t{'hash'},
+-			                             file_name=>"$base$t{'name'}", %base_key)},
+-			              "blob");
+-			if ($have_blame) {
+-				print " | " .
+-					$cgi->a({-href => href(action=>"blame", hash=>$t{'hash'},
+-					                       file_name=>"$base$t{'name'}", %base_key)},
+-					        "blame");
+-			}
+-			print " | " .
+-			      $cgi->a({-href => href(action=>"history", hash_base=>$hash_base,
+-			                             hash=>$t{'hash'}, file_name=>"$base$t{'name'}")},
+-			              "history") .
+-			      " | " .
+-			      $cgi->a({-href => href(action=>"blob_plain",
+-			                             hash=>$t{'hash'}, file_name=>"$base$t{'name'}")},
+-			              "raw") .
+-			      "</td>\n";
+-		} elsif ($t{'type'} eq "tree") {
+-			print "<td class=\"list\">" .
+-			      $cgi->a({-href => href(action=>"tree", hash=>$t{'hash'},
+-			                             file_name=>"$base$t{'name'}", %base_key)},
+-			              esc_html($t{'name'})) .
+-			      "</td>\n" .
+-			      "<td class=\"link\">" .
+-			      $cgi->a({-href => href(action=>"tree", hash=>$t{'hash'},
+-			                             file_name=>"$base$t{'name'}", %base_key)},
+-			              "tree") .
+-			      " | " .
+-			      $cgi->a({-href => href(action=>"history", hash_base=>$hash_base,
+-			                             file_name=>"$base$t{'name'}")},
+-			              "history") .
+-			      "</td>\n";
+-		}
++		git_print_tree_entry(\%t, $base, $hash_base, $have_blame);
 +
-+		print "<td class=\"mode\">" . mode_str($t{'mode'}) . "</td>\n";
-+		if ($t{'type'} eq "blob") {
- 			print "<td class=\"list\">" .
--			      $cgi->a({-href => href(action=>"blob", hash=>$t_hash, file_name=>"$base$t_name", %base_key),
--			              -class => "list"}, esc_html($t_name)) .
-+			      $cgi->a({-href => href(action=>"blob", hash=>$t{'hash'},
-+			                             file_name=>"$base$t{'name'}", %base_key),
-+			              -class => "list"}, esc_html($t{'name'})) .
- 			      "</td>\n" .
- 			      "<td class=\"link\">" .
--			      $cgi->a({-href => href(action=>"blob", hash=>$t_hash, file_name=>"$base$t_name", %base_key)},
-+			      $cgi->a({-href => href(action=>"blob", hash=>$t{'hash'},
-+			                             file_name=>"$base$t{'name'}", %base_key)},
- 			              "blob");
- 			if ($have_blame) {
- 				print " | " .
--					$cgi->a({-href => href(action=>"blame", hash=>$t_hash, file_name=>"$base$t_name", %base_key)},
-+					$cgi->a({-href => href(action=>"blame", hash=>$t{'hash'},
-+					                       file_name=>"$base$t{'name'}", %base_key)},
- 					        "blame");
- 			}
- 			print " | " .
- 			      $cgi->a({-href => href(action=>"history", hash_base=>$hash_base,
--			                             hash=>$t_hash, file_name=>"$base$t_name")},
-+			                             hash=>$t{'hash'}, file_name=>"$base$t{'name'}")},
- 			              "history") .
- 			      " | " .
- 			      $cgi->a({-href => href(action=>"blob_plain",
--			                             hash=>$t_hash, file_name=>"$base$t_name")},
-+			                             hash=>$t{'hash'}, file_name=>"$base$t{'name'}")},
- 			              "raw") .
- 			      "</td>\n";
--		} elsif ($t_type eq "tree") {
-+		} elsif ($t{'type'} eq "tree") {
- 			print "<td class=\"list\">" .
--			      $cgi->a({-href => href(action=>"tree", hash=>$t_hash, file_name=>"$base$t_name", %base_key)},
--			              esc_html($t_name)) .
-+			      $cgi->a({-href => href(action=>"tree", hash=>$t{'hash'},
-+			                             file_name=>"$base$t{'name'}", %base_key)},
-+			              esc_html($t{'name'})) .
- 			      "</td>\n" .
- 			      "<td class=\"link\">" .
--			      $cgi->a({-href => href(action=>"tree", hash=>$t_hash, file_name=>"$base$t_name", %base_key)},
-+			      $cgi->a({-href => href(action=>"tree", hash=>$t{'hash'},
-+			                             file_name=>"$base$t{'name'}", %base_key)},
- 			              "tree") .
- 			      " | " .
--			      $cgi->a({-href => href(action=>"history", hash_base=>$hash_base, file_name=>"$base$t_name")},
-+			      $cgi->a({-href => href(action=>"history", hash_base=>$hash_base,
-+			                             file_name=>"$base$t{'name'}")},
- 			              "history") .
- 			      "</td>\n";
- 		}
+ 		print "</tr>\n";
+ 	}
+ 	print "</table>\n" .
 -- 
 1.4.1.1
