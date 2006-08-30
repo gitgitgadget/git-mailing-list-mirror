@@ -1,64 +1,136 @@
-From: "algeria" <algeria.brokerage@royalsrevival.com>
-Subject: Ask us for credit you
-Date: Tue, 29 Aug 2006 22:47:52 +0200
-Message-ID: <69037340058077.F9E34F9E35@OI1OLZOC>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Mozilla .git tree
+Date: Tue, 29 Aug 2006 21:51:22 -0400
+Message-ID: <20060830015122.GE22935@spearce.org>
+References: <9e4733910608290943g6aa79855q62b98caf4f19510@mail.gmail.com> <20060829165811.GB21729@spearce.org> <9e4733910608291037k2d9fb791v18abc19bdddf5e89@mail.gmail.com> <20060829175819.GE21729@spearce.org> <9e4733910608291155g782953bbv5df1b74878f4fcf1@mail.gmail.com> <20060829190548.GK21729@spearce.org> <9e4733910608291252q130fc723r945e6ab906ca6969@mail.gmail.com> <20060829232007.GC22935@spearce.org> <9e4733910608291807q9b896e4sdbfaa9e49de58c2b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1252"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Aug 29 22:48:43 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 30 03:51:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GIAVI-0003XG-L7
-	for gcvg-git@gmane.org; Tue, 29 Aug 2006 22:48:13 +0200
+	id 1GIFFD-0004yu-Fj
+	for gcvg-git@gmane.org; Wed, 30 Aug 2006 03:51:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965328AbWH2Urz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 Aug 2006 16:47:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965334AbWH2Urz
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Aug 2006 16:47:55 -0400
-Received: from 189.Red-81-37-230.dynamicIP.rima-tde.net ([81.37.230.189]:61714
-	"EHLO avu6t.csxrj0lo.cox.net") by vger.kernel.org with ESMTP
-	id S965328AbWH2Ury (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Aug 2006 16:47:54 -0400
-To: <git@vger.kernel.org>
-X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
-Thread-Index: 5zIvJBiOnrKXhd5f1qetRnbrME6aBkBoz8N2
+	id S932327AbWH3Bvw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 Aug 2006 21:51:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751508AbWH3Bvw
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Aug 2006 21:51:52 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:18874 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751148AbWH3Bvv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Aug 2006 21:51:51 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GIFEv-0007MJ-Pu; Tue, 29 Aug 2006 21:51:38 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 0EB3320FB7F; Tue, 29 Aug 2006 21:51:22 -0400 (EDT)
+To: Jon Smirl <jonsmirl@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <9e4733910608291807q9b896e4sdbfaa9e49de58c2b@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 5.6 points;
- *  0.1 CLICK_BELOW_CAPS BODY: Asks you to click below (in capital letters)
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5000]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?81.37.230.189>]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: capitalpartnerusa.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26218>
 
-How are you Guys?! 
+Jon Smirl <jonsmirl@gmail.com> wrote:
+> I suspect the bulk of the file will be the base blobs. A zlib
+> dictionary would help more with the trees and the 120K copies of the
+> GPL in the files.
 
-Your credit doesn't matter to us!
-If you OWN real estate and want IMMEDIATE cash to spend ANY way you 
-like, or simply wish to LOWER your monthly payments by a third or more, here are the deals we have TODAY:
+Here's what I got by taking the output of verify-pack -v run
+against the 430 MiB Mozilla pack and running that through a simple
+Perl script:
 
-$488,000.00 at a 3.67% fixed-rate
-$372,000.00 at a 3.90% variable-rate
-$492,000.00 at a 3.21% interest-only
-$248,000.00 at a 3.36% fixed-rate
-$198,000.00 at a 3.55% variable-rate
+  COUNT  BASE  commit: 197613
+  COUNT  BASE  tree:   154496
+  COUNT  BASE  blob:    49860
+  COUNT  BASE  tag:      1203
+  COUNT  DELTA commit:   3308
+  COUNT  DELTA tree:   976712
+  COUNT  DELTA blob:   579780
+  COUNT  DELTA tag:       353
 
-Hurry, we have requests limits, so when these deals are gone, they are 
-gone!
+Those are just raw numbers of objects of each type broken out by
+base and delta.  We gotta alotta objects.  :-)
 
-We have one-mimute form to apply the request,
-please CLICK HERE
+We probably also have around 49,860 copies of the identical license
+text (one per base object).  I'm just assuming the xdelta algorithm
+would recognize the identical run in the dependent object and
+copy it from the base rather than use a literal insert command.
+Thus I'm assuming the 579,780 deltas don't contain the license text.
 
-http://J8MTH.capitalpartnerusa.com/?ncache=103790
+  UNCOMP BASE  commit: 55 MiB
+  UNCOMP BASE  tree:   30 MiB
+  UNCOMP BASE  blob:  597 MiB
+  UNCOMP BASE  tag:     0 MiB
+  UNCOMP DELTA commit:  0 MiB
+  UNCOMP DELTA tree:   44 MiB
+  UNCOMP DELTA blob:  190 MiB
+  UNCOMP DELTA tag:     0 MiB
 
-Don't worry about approval, your credit will not disqualify you!
+These are the sizes of the objects and deltas prior to using zlib
+to deflate them (aka the decompression buffer size, stored in the
+object header).
 
-Approval Manager.
+  ZIPPED BASE  commit: 38 MiB
+  ZIPPED BASE  tree:   26 MiB
+  ZIPPED BASE  blob:  164 MiB
+  ZIPPED BASE  tag:     0 MiB
+  ZIPPED DELTA commit : 0 MiB
+  ZIPPED DELTA tree:   73 MiB
+  ZIPPED DELTA blob:  126 MiB
+  ZIPPED DELTA tag:     0 MiB
+
+These are the sizes of the objects within the pack, determined by
+computing the difference in adjacent objects' offsets.
+
+
+55 MiB of commits compressed into 38 MiB (saved 30%).
+We can probably do better.
+
+30 MiB of tree bases compressed into 26 MiB (saved 13.3%).
+With 154,496 tree bases I think we can do better _somehow_.  It may
+just mean using more deltas so we have less bases.  We don't have
+154k unique directories.  It may just mean using a tree specific
+pack dictionary is enough.
+
+44 MiB of tree deltas compressed into 73 MiB (saved -65.9%).
+Ouch!  We wasted 29 MiB by trying to compress tree deltas.
+Way to go zlib!
+
+Blob bases were 597 MiB uncompressed, 164 MiB compressed (saved 72%).
+Blob deltas were 190 MiB uncompressed, 126 MiB compressed (saved 33%).
+We might be able to do better here, but we're already fairing pretty
+well.
+
+
+To compare a .tar.gz of the ,v files from CVS is around 550 MiB.
+We're already smaller than that in a pack file.  But ,v is not the
+most compact representation.  I hoped we could do even better than
+430 MiB.
+
+
+I ran the same script against my Git pack.  There I'm seeing the
+same explosion of tree deltas: uncompressed they are 1380174 bytes,
+compressed they are 1620439 bytes (-17.4% saved).
+
+We may well have a general problem here with always compressing
+tree deltas.  It appears to be a minor dent in the space required
+for a pack but its certainly a non-trivial amount on the larger
+Mozilla pack.  The wasted space is 2% of the Git pack and its 6.7%
+of the Mozilla pack.
+
+-- 
+Shawn.
