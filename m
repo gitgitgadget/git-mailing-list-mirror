@@ -1,66 +1,97 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 0/3] git-daemon: plug new upload-tar command
-Date: Thu, 31 Aug 2006 19:45:29 +0200
-Message-ID: <44F72039.3040206@lsrfire.ath.cx>
-References: <11570277231100-git-send-email-vagabon.xyz@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Compiling git-snapshot-20069831
+Date: Thu, 31 Aug 2006 21:30:07 +0200
+Organization: At home
+Message-ID: <ed7dc6$7na$1@sea.gmane.org>
+References: <44F6D016.4050007@users.sourceforge.net> <Pine.LNX.4.63.0608311408350.28360@wbgn013.biozentrum.uni-wuerzburg.de> <44F6F478.1070708@users.sourceforge.net> <Pine.LNX.4.63.0608311727010.28360@wbgn013.biozentrum.uni-wuerzburg.de> <44F71557.1080404@users.sourceforge.net> <Pine.LNX.4.63.0608311904520.28360@wbgn013.biozentrum.uni-wuerzburg.de> <44F71B79.5070901@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 31 19:45:55 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Thu Aug 31 21:31:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GIqbj-0006R0-A0
-	for gcvg-git@gmane.org; Thu, 31 Aug 2006 19:45:40 +0200
+	id 1GIsFl-0006h6-55
+	for gcvg-git@gmane.org; Thu, 31 Aug 2006 21:31:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932379AbWHaRpg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 31 Aug 2006 13:45:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932409AbWHaRpg
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 13:45:36 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:59813
-	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S932379AbWHaRpf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Aug 2006 13:45:35 -0400
-Received: from [10.0.1.3] (p508E4C1A.dip.t-dialin.net [80.142.76.26])
-	by neapel230.server4you.de (Postfix) with ESMTP id A4244505A;
-	Thu, 31 Aug 2006 19:45:33 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.5 (Windows/20060719)
-To: Franck Bui-Huu <vagabon.xyz@gmail.com>
-In-Reply-To: <11570277231100-git-send-email-vagabon.xyz@gmail.com>
-X-Enigmail-Version: 0.94.0.0
+	id S932123AbWHaTak (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 31 Aug 2006 15:30:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932316AbWHaTak
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 15:30:40 -0400
+Received: from main.gmane.org ([80.91.229.2]:28044 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932123AbWHaTaj (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Aug 2006 15:30:39 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GIsFD-0006aV-NB
+	for git@vger.kernel.org; Thu, 31 Aug 2006 21:30:31 +0200
+Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 31 Aug 2006 21:30:31 +0200
+Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 31 Aug 2006 21:30:31 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26272>
 
-Hi,
+Jorma Karvonen wrote:
 
-=46ranck Bui-Huu schrieb:
-> Here's a simple patchset that basically teach git-daemon about the=20
-> upload-tar command added by Junio's commit:
+> Johannes Schindelin wrote:
+>
+>> On Thu, 31 Aug 2006, Jorma Karvonen wrote:
+>>   
+>>> I tried
+>>>
+>>> make configure
+>>>
+>>> and got an error message:
+>>>
+>>> /bin/sh: curl-config: command not found
+>>> make: **** No rule to make target `configure'. Stop.
+     
+The offending line seems to be
+        curl_check := $(shell (echo 070908; curl-config --vernum) | sort -r | sed -ne 2p)
+and it is turned off if you always run make with NO_CURL=1.
+Or write NO_CURL=1 (or NO_CURL=YesPlease) in the config.mak file
 
-Junio has similar code in the 'next' branch.  And he correctly pointed
-out that with the arrival of git-zip-tree the time has come to think
-about a format independent tree-to-archive converter command to avoid
-re-implementing essentially the same thing under the names of
-git-upload-zip, git-upload-rar etc.
+>> Okay. I deem this a bug in our Makefile.
+>>
+>> Could you please try "autoconf" and _then_ "./configure"?
+>>
+> I tried autoconf and result was:
+> 
+> autoconf: no input file
+ 
+"autoconf -o configure configure.ac" then
 
-I'm trying for a few days now to find time for implementing a
-git-archive command, but I'm failing.  And I won't be able to do so
-before the weekend (at least).
+By the way, from what directory you try to run make from?
+autoconf default input file is configure.ac, and AFAIK it is 
+present in 'master' from quite some time, and perhaps in 'maint'
+as well.
 
-I propose to make the command line syntax more similar to the one of
-git-ls-tree (e.g. --prefix instead of optional second non-option
-parameter for base dir, support for path specs).  In a previous mail I
-also proposed to merge the upload command into git-archive, but now tha=
-t
-I thought a bit about it it doesn't make sense to me anymore.
+What is in GIT-VERSION-FILE aftre running GIT-VERSION-GEN?
 
-So if you beat me to it, that would be great.  Or if you have a better
-idea, that would be also great. :-)
 
-I have to go now..
+Below my results of running make configure in git/ working directory:
 
-Ren=E9
+1047:jnareb@roke:~/git> make configure
+GIT_VERSION = 1.4.2.gf713
+rm -f configure configure.ac+
+sed -e 's/@@GIT_VERSION@@/1.4.2.gf713/g' \
+    configure.ac > configure.ac+
+autoconf -o configure configure.ac+
+rm -f configure.ac+
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
