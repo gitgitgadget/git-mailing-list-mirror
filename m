@@ -1,83 +1,65 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] git(7): move gitk(1) to the list of porcelain commands
-Date: Fri, 1 Sep 2006 01:15:38 +0200
-Message-ID: <20060831231538.GF482@diku.dk>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] git-rev-list(1): group options; reformat; document more
+ options
+Date: Thu, 31 Aug 2006 16:15:39 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0608311611440.27779@g5.osdl.org>
+References: <20060831223715.GC482@diku.dk> <Pine.LNX.4.64.0608311557470.27779@g5.osdl.org>
+ <20060831230811.GE482@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Sep 01 01:15:48 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Timo Hirvonen <tihirvon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 01 01:16:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GIvlC-0005gW-SA
-	for gcvg-git@gmane.org; Fri, 01 Sep 2006 01:15:47 +0200
+	id 1GIvlQ-0005ix-Ij
+	for gcvg-git@gmane.org; Fri, 01 Sep 2006 01:16:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964815AbWHaXPn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 31 Aug 2006 19:15:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964814AbWHaXPn
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 19:15:43 -0400
-Received: from [130.225.96.91] ([130.225.96.91]:49295 "EHLO mgw1.diku.dk")
-	by vger.kernel.org with ESMTP id S964815AbWHaXPn (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Aug 2006 19:15:43 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 379BC77004C
-	for <git@vger.kernel.org>; Fri,  1 Sep 2006 01:15:40 +0200 (CEST)
-Received: from mgw1.diku.dk ([127.0.0.1])
- by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 08706-17 for <git@vger.kernel.org>; Fri,  1 Sep 2006 01:15:39 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 07579770007
-	for <git@vger.kernel.org>; Fri,  1 Sep 2006 01:15:39 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP id 243B66DF893
-	for <git@vger.kernel.org>; Fri,  1 Sep 2006 01:14:12 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id CD29162A06; Fri,  1 Sep 2006 01:15:38 +0200 (CEST)
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-Virus-Scanned: amavisd-new at diku.dk
+	id S964814AbWHaXP5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 31 Aug 2006 19:15:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964818AbWHaXP5
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 19:15:57 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:63109 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964814AbWHaXP4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Aug 2006 19:15:56 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k7VNFfnW008644
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 31 Aug 2006 16:15:41 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k7VNFdmD028779;
+	Thu, 31 Aug 2006 16:15:40 -0700
+To: Jonas Fonseca <fonseca@diku.dk>
+In-Reply-To: <20060831230811.GE482@diku.dk>
+X-Spam-Status: No, hits=-2.447 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.146 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26289>
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
----
- Documentation/git.txt |   10 +++-------
- 1 files changed, 3 insertions(+), 7 deletions(-)
 
-... in lack of a better place to put it.
 
-Anyway, last patch from me for tonight.
+On Fri, 1 Sep 2006, Jonas Fonseca wrote:
+> Linus Torvalds <torvalds@osdl.org> wrote Thu, Aug 31, 2006:
+> > 
+> > Umm? You should get a "usage" error, no?
+> 
+> Yes, ok, they do not seem to make sense for git-rev-list, however if you
+> pass either to git-log, the output seems to make room for a diff, adding
+> one extra newline, but without appending any diff.
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index a9c87e3..76b41c8 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -303,6 +303,9 @@ gitlink:git-format-patch[1]::
- gitlink:git-grep[1]::
- 	Print lines matching a pattern.
- 
-+gitlink:gitk[1]::
-+	The git repository browser.
-+
- gitlink:git-log[1]::
- 	Shows commit logs.
- 
-@@ -483,13 +486,6 @@ gitlink:git-stripspace[1]::
- 	Filter out empty lines.
- 
- 
--Commands not yet documented
-----------------------------
--
--gitlink:gitk[1]::
--	The gitk repository browser.
--
--
- Configuration Mechanism
- -----------------------
- 
--- 
-Jonas Fonseca
+Ahh. I think that a "-r" without any other request for patches (or 
+"--name-status" or similar) should probably imply "--raw". At least that 
+was how it historically worked..
+
+Anyway, _if_ it ever worked (and I think it did, but I'm way too lazy to 
+bother checking), this may have been broken by the extensive diff option 
+cleanups by Timo in June. Timo? Junio?
+
+			Linus
