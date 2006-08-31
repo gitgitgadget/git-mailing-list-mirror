@@ -1,121 +1,77 @@
-From: Sergio Callegari <scallegari@arces.unibo.it>
-Subject: Re: Problematic git pack
-Date: Thu, 31 Aug 2006 10:45:12 +0200
-Organization: ARCES - =?ISO-8859-15?Q?Universit=E0_di_Bologna?=
-Message-ID: <44F6A198.4040902@arces.unibo.it>
+From: Marco Roeland <marco.roeland@xs4all.nl>
+Subject: Re: problem with git-cvsserver
+Date: Thu, 31 Aug 2006 11:03:33 +0200
+Message-ID: <20060831090333.GA28445@fiberbit.xs4all.nl>
+References: <44F5B2A7.8070501@gmail.com> <Pine.LNX.4.63.0608301904360.28360@wbgn013.biozentrum.uni-wuerzburg.de> <44F5D6F8.50307@gmail.com> <7vlkp6gh6e.fsf@assigned-by-dhcp.cox.net> <46a038f90608301329n14df4dd2tb1563cc48662cd14@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Aug 31 10:46:21 2006
+Content-Type: text/plain; charset=iso-8859-1
+Cc: Junio C Hamano <junkio@cox.net>, aonghus <thecolourblue@gmail.com>,
+	git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Aug 31 11:03:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GIiBO-0005k8-OW
-	for gcvg-git@gmane.org; Thu, 31 Aug 2006 10:45:55 +0200
+	id 1GIiSa-0000PT-4O
+	for gcvg-git@gmane.org; Thu, 31 Aug 2006 11:03:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750964AbWHaIpv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 31 Aug 2006 04:45:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750986AbWHaIpv
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 04:45:51 -0400
-Received: from arces.unibo.it ([137.204.143.6]:58796 "EHLO arces.unibo.it")
-	by vger.kernel.org with ESMTP id S1750964AbWHaIpu (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Aug 2006 04:45:50 -0400
-Received: from [192.168.143.223] (mars-fw.arces.unibo.it [137.204.143.2])
-	(authenticated bits=0)
-	by arces.unibo.it (8.13.7/8.13.7) with ESMTP id k7V8wtd7012163
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Thu, 31 Aug 2006 10:59:27 +0200
-User-Agent: Thunderbird 1.5.0.5 (X11/20060719)
-To: git@vger.kernel.org
-X-Spam-Status: No, score=-100.0 required=5.0 tests=BAYES_50,USER_IN_WHITELIST 
-	autolearn=unavailable version=3.1.3-gr0
-X-Spam-Checker-Version: SpamAssassin 3.1.3-gr0 (2006-06-01) on 
-	mail.arces.unibo.it
-X-Virus-Scanned: ClamAV 0.88.4/1778/Thu Aug 31 09:34:18 2006 on arces.unibo.it
-X-Virus-Status: Clean
+	id S1751015AbWHaJDh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 31 Aug 2006 05:03:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751018AbWHaJDh
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 05:03:37 -0400
+Received: from fiberbit.xs4all.nl ([213.84.224.214]:15280 "EHLO
+	fiberbit.xs4all.nl") by vger.kernel.org with ESMTP id S1750864AbWHaJDg
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Aug 2006 05:03:36 -0400
+Received: from marco by fiberbit.xs4all.nl with local (Exim 4.63)
+	(envelope-from <marco.roeland@xs4all.nl>)
+	id 1GIiST-0007bG-Qu; Thu, 31 Aug 2006 11:03:33 +0200
+To: Martin Langhoff <martin.langhoff@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <46a038f90608301329n14df4dd2tb1563cc48662cd14@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26246>
 
-What can I say... I had never seen before such an action at such a rapid 
-pace following the indication of a potential problem.
-Thanks Linus and Junio and everybody who might have contributed.
->   Junio could then generate a new pack with the one corrupted object 
->   fixed, which obviously meant that all the deltas now worked too.
->   
-Excellent news...
->   This is my (probably final) analysis of the resulting differences.. ]
->
-> On Wed, 30 Aug 2006, Junio C Hamano wrote:
-> > 
-> > Ok, I was going to attach the resurrected pack that should
-> > contain everything your corrupt pack had, but it is a bit too
-> > large, so I'll place it here [*1*].  Drop me a note when you
-> > retrieved it, so that I can remove it.
->   
-Junio, can you please send me privately details about [*1*] so I can 
-retrieve the pack also?
+On Thursday August 31st 2006 at 08:29 uur Martin Langhoff wrote:
 
-I also have another question... (maybe it was answered in some previous 
-thread on this list, in this case a pointer would be enough).
-Now I am going to have the fixed archive and also a new archive, which I 
-restarted from the latest working copy I had of my project.
-Is there any way to automatically do real "surgery" to attach one to the 
-other and get a single archive with all the history?
-Obviously, if I try to change a commit object to modify its parents, its 
-signature changes, so I need to modify its childs and so on, is this 
-correct?
-Alternatively I belive that grafts should be a way to go... I had never 
-used them before, do all git tools support them? Particularly do they 
-get pushed and pulled correctly?
-> So the _real_ difference is literally just the one byte at offset 0151000 
-> (decimal 53760) which in the fixed pack is 0x96, and in the corrupt pack 
-> it is 0x94. That's a single-bit difference (bit #1 has been cleared).
->
->   
-So, possibly, the alpha particle theory could be the plausible one in 
-the end...
-> Now, that makes me feel happy on one level, because it's almost certainly 
-> a hardware problem - subtle memory corruption, or disk corruption that 
-> happened when either reading or writing the image. Sergio may not be that 
-> happy about it, of course.
->   
-The bad thing is that I don't know which of my two machines (the laptop 
-or the desktop) caused the issue!
+> [git-cvsserver and trouble with Perl DBI and SQLite]
+> 
+> Actually, just looking at my etch dev box, libdbd-sqlite-perl is
+> 0.29-1 and sqlite is 2.8.16-1. Not sure if the difference is
+> significant. Perhaps SQLite v3 has a different invocation / driver
+> name?
 
-> Finally, this also points out that the corrupted packs _can_ be fixed, but 
-> I think Sergio was a bit lucky (to offset all the bad luck). Sergio still 
-> had access to the original file that had had its object corrupted. 
-Actually, this could possibly be a not so rare case... In my tree I had 
-the development of some LaTeX documents and packages (code like, the 
-really "precious" files) and a few binary objects (images and openoffice 
-files mainly, by far less precious).
-Since the binary objects were so much overwhelming in size with regard 
-to the text ones, assuming a single error the probability of having it 
-in a non-code object was much larger than that of having it in a 
-precious code object. Also commit and tree objects should be much 
-smaller than data objects.
-This assumption is the reason which initally pushed me to ask help to 
-try to unpack at least all the correct objects (one of my first 
-questions was: does git unpack-objects die on the first error or is 
-there a way to convince it to simply skip the wrong object (or the delta 
-against a wrong object)...
-If git unpack-objects can gain an option like --continue-on-errors and 
-if checkout/reset can also get an option to do the same (i.e. in a tree 
-with missing objects, checkout all that can be found), I believe that 
-one is at a good point already...
-Finally, having a command to create an object out of a single file 
-(contrary of git cat-file) could help re-creating the missing objects...
-> And it 
-> took a fair amount of work, and some git hacking by somebody who really 
-> understood git (Junio).
->
-> Maybe we'll end up having some of that effort being useful and checked in, 
-> and we'll eventually have more infrastructure for fixing these things, but 
-> I suspect that in most cases, even a _single_ bit of corruption will 
-> generally result in so much havoc that nobody should depend on that. It's 
-> a lot better to have backups.
->
-> 			Linus
+Yes, SQLite v2 and SQLite v3 are different and binary incompatible.
+
+However, on Debian 'etch' you can install packages for both versions
+concurrently; most packages for SQLite have either a '2' or a '3' in the
+name. Packages without the number use the "best current choice" which is
+"3" in 'etch' at the moment but was "2" not too long ago.
+
+So at this moment in Debian 'etch' SQLite3 is the default version and
+calling
+
+        my $dsn = 'dbi:SQLite:dbname=foo';
+
+will use the SQLite3 driver internally, for which you must have
+installed the "libdbd-sqlite3-perl" package. Just for the record, if
+you'd wanted the older SQLite2 version you would install the
+"libdbd-sqlite2-perl" package and from Perl call "my $dsn =
+'dbi:SQLite2:dbname=foo';".
+
+I'd guess that you were unfortunate enough to just install some packages
+during the transition and now some parts look for the "2" version
+and other parts for the "3" version. Probably just installing the
+"libdbd-sqlite3-perl" package and upgrading the other sqlite packages
+(from synaptic say to easily find them!) will probably cure your situation.
+
+Incidentally I'd guess that in itself SQLite2 (so version 2) would also
+function perfectly well for git-cvsserver (as would PostgreSQL or
+MySQL), it's probably in this case just a slight version skew between
+packages!
+-- 
+Marco Roeland
