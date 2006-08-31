@@ -1,70 +1,125 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Trace into open fd and refactor tracing code.
-Date: Thu, 31 Aug 2006 14:31:22 -0700
-Message-ID: <7vsljc8udx.fsf@assigned-by-dhcp.cox.net>
-References: <20060831084211.28d38764.chriscool@tuxfamily.org>
-	<Pine.LNX.4.64.0608311409470.27779@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Problematic git pack
+Date: Thu, 31 Aug 2006 14:33:06 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0608311416060.27779@g5.osdl.org>
+References: <44F6A198.4040902@arces.unibo.it>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 31 23:30:50 2006
+X-From: git-owner@vger.kernel.org Thu Aug 31 23:33:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GIu7C-0000jA-4E
-	for gcvg-git@gmane.org; Thu, 31 Aug 2006 23:30:22 +0200
+	id 1GIuA3-0001SV-PG
+	for gcvg-git@gmane.org; Thu, 31 Aug 2006 23:33:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751271AbWHaVaT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 31 Aug 2006 17:30:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751238AbWHaVaS
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 17:30:18 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:38378 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751182AbWHaVaR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Aug 2006 17:30:17 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060831213016.FBMQ6077.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 31 Aug 2006 17:30:16 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id GlWH1V0011kojtg0000000
-	Thu, 31 Aug 2006 17:30:17 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0608311409470.27779@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 31 Aug 2006 14:14:26 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932173AbWHaVdO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 31 Aug 2006 17:33:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932127AbWHaVdO
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 17:33:14 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:56025 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932173AbWHaVdO (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Aug 2006 17:33:14 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k7VLX7nW003295
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 31 Aug 2006 14:33:08 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k7VLX6oh024709;
+	Thu, 31 Aug 2006 14:33:07 -0700
+To: Sergio Callegari <scallegari@arces.unibo.it>
+In-Reply-To: <44F6A198.4040902@arces.unibo.it>
+X-Spam-Status: No, hits=-0.438 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.146 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26276>
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> That way, if you want to do the fd thing, you can always just do
+
+On Thu, 31 Aug 2006, Sergio Callegari wrote:
 >
-> 	GIT_TRACE=/proc/self/fd/9 make test 9>/var/tmp/trace.log
+> Junio, can you please send me privately details about [*1*] so I can retrieve
+> the pack also?
+
+He already did, search for "members.cox.net" in your email archive (it's 
+Message-ID: <7v7j0qihwl.fsf@assigned-by-dhcp.cox.net> to be precise).
+
+> I also have another question... (maybe it was answered in some previous thread
+> on this list, in this case a pointer would be enough).
+> Now I am going to have the fixed archive and also a new archive, which I
+> restarted from the latest working copy I had of my project.
+> Is there any way to automatically do real "surgery" to attach one to the other
+> and get a single archive with all the history?
+
+Yes. This is just what a "grafts" file is for.
+
+Put the old pack/idx files into the .git/objects/packs directory, and then 
+you can create "fake parenthood" information in a ".git/info/grafts" file 
+by just adding text-lines of the format "<sha1> <fakeparentsha1>" (with 
+each SHA being the regular 40-byte hex representation).
+
+> Obviously, if I try to change a commit object to modify its parents, its
+> signature changes, so I need to modify its childs and so on, is this correct?
+> Alternatively I belive that grafts should be a way to go... I had never used
+> them before, do all git tools support them? Particularly do they get pushed
+> and pulled correctly?
+
+Nope, they won't get pushed and pulled correctly, you need to put the 
+grafts files in all repositories. Alternatively, you can re-create the 
+whole history, I think cogito had some history re-writing tool.
+
+> > So the _real_ difference is literally just the one byte at offset 0151000
+> > (decimal 53760) which in the fixed pack is 0x96, and in the corrupt pack it
+> > is 0x94. That's a single-bit difference (bit #1 has been cleared).
+> 
+> So, possibly, the alpha particle theory could be the plausible one in the
+> end...
+
+Yes. It's just that Junio's original theory required it to not just hit a 
+memory cell, it also had to hit it at _just_ the right time in between 
+being written and the SHA1 of the buffer being computed. So the original 
+theory was very unlikely indeed.
+
+My theory of the corruption just causing a re-computed SHA1 when repacking 
+(and silently copying the corruption without realizing it) meant that 
+there was no such small and unlikely window, but that any regular memory 
+(or disk) corruption could easily have caused it at any time, and then a 
+subsequent re-pack "fixed" the SHA1 to match the corruption..
+
+> The bad thing is that I don't know which of my two machines (the laptop or the
+> desktop) caused the issue!
+
+I'd suggest running memtest86 for a few days on both (not necessarily at 
+the same time - keep one working machine to do you job on ;)
+
+> > Finally, this also points out that the corrupted packs _can_ be fixed, but I
+> > think Sergio was a bit lucky (to offset all the bad luck). Sergio still had
+> > access to the original file that had had its object corrupted. 
 >
-> although I really don't know how well that works across a fork/exec that 
-> may or may not be closing the file descriptor (I think it's much simpler 
-> and more obvious to just give the filename directly).
+> Actually, this could possibly be a not so rare case... In my tree I had the
+> development of some LaTeX documents and packages (code like, the really
+> "precious" files) and a few binary objects (images and openoffice files
+> mainly, by far less precious).
 
-Actually it was me who suggested the use of fd directly, along
-with trying to do one message in a single write (i.e. not doing
-stdio as much as possible).
+Sure. In your case you had checked in generated files too, and yes, they 
+were the larger ones. That's not true in general - in many other projects, 
+the _directory_ structure (ie the git "tree" objects) will be a large 
+portion of the project, and probably more likely to be corrupt. Now, to 
+some degree the tree objects are likely the ones easiest to "repair" 
+(because you can try to look at the history and figure things out by 
+hand), but at the same time, people also tend to have deeper delta-chains 
+and it would just be _very_ painful.
 
-Process A has fd=9 opened to /var/tmp/trace.log and forks
-process B.
+So I do think you were somewhat lucky.
 
-(1) process B execs something else, and just writes into fd=9
+> Finally, having a command to create an object out of a single file (contrary
+> of git cat-file) could help re-creating the missing objects...
 
-or
+Hmm. Like "git-hash-object"?
 
-(2) process B execs something else, perhaps after closing fd=9,
-    and the exec'ed image opens /var/tmp/trace.log with
-    "O_APPEND|O_CREAT" and gets a fd; it writes into this fd.
-
-I somehow felt there would be less interference between writes
-issued by process A and process B, but probably I am mistaken.
+			Linus
