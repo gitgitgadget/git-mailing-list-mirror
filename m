@@ -1,63 +1,178 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: git-snapshot-20060831 error
-Date: Thu, 31 Aug 2006 13:19:25 +0200
-Message-ID: <20060831111925.GA18896@pasky.or.cz>
-References: <44F6C262.8040605@users.sourceforge.net>
+From: Jorma Karvonen <karvjorm@users.sourceforge.net>
+Subject: Compiling git-snapshot-20069831
+Date: Thu, 31 Aug 2006 15:03:34 +0300
+Message-ID: <44F6D016.4050007@users.sourceforge.net>
+Reply-To: karvjorm@users.sourceforge.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 31 13:19:32 2006
+Content-Type: multipart/mixed;
+ boundary="------------070302010701090807070407"
+X-From: git-owner@vger.kernel.org Thu Aug 31 14:03:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GIka3-0005Uy-Ek
-	for gcvg-git@gmane.org; Thu, 31 Aug 2006 13:19:31 +0200
+	id 1GIlGV-0004ij-5o
+	for gcvg-git@gmane.org; Thu, 31 Aug 2006 14:03:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751271AbWHaLT1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 31 Aug 2006 07:19:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751511AbWHaLT1
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 07:19:27 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:23692 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751271AbWHaLT1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Aug 2006 07:19:27 -0400
-Received: (qmail 11545 invoked by uid 2001); 31 Aug 2006 13:19:25 +0200
-To: Jorma Karvonen <karvjorm@users.sourceforge.net>
-Content-Disposition: inline
-In-Reply-To: <44F6C262.8040605@users.sourceforge.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1751569AbWHaMDU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 31 Aug 2006 08:03:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751560AbWHaMDU
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 08:03:20 -0400
+Received: from smtp1.song.fi ([194.100.2.124]:41904 "EHLO smtp1.song.fi")
+	by vger.kernel.org with ESMTP id S1750823AbWHaMDT (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Aug 2006 08:03:19 -0400
+Received: from [192.168.1.34] (dsl-60-2-216-83.maxinetti.fi [83.216.2.60])
+	by smtp1.song.fi (Postfix) with ESMTP id C6E9E1794C4
+	for <git@vger.kernel.org>; Thu, 31 Aug 2006 15:03:16 +0300 (EEST)
+User-Agent: Thunderbird 2.0a1 (X11/20060724)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26251>
 
-  Hi,
+This is a multi-part message in MIME format.
+--------------070302010701090807070407
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Dear diary, on Thu, Aug 31, 2006 at 01:05:06PM CEST, I got a letter
-where Jorma Karvonen <karvjorm@users.sourceforge.net> said that...
-> I tried to compile git, but got the following error:
+Hello,
 
-  try doing
+I enclose here the file that includes error messages.
 
-	make NEEDS_LIBICONV=1
+Best regards,
 
-or running ./configure if you have git version new enough. If that
-doesn't help, what git version are trying to compile on what kind of
-system?
+Jorma Karvonen
+karvjorm@users.sourceforge.net
 
-> http://web.maxinetti.fi/maxi.joka/git_snapshot_20060831_error1.png
 
-  Please paste error messages as plain text, not screenshots. Thanks.
+--------------070302010701090807070407
+Content-Type: text/plain;
+ name="error1.txt"
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+ filename="error1.txt"
 
-> Please, can you forward that link to developers of git.
-
-  The developers are listening eagerly at git@vger.kernel.org.
-
-  Kind regards,
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Snow falling on Perl. White noise covering line noise.
-Hides all the bugs too. -- J. Putnam
+SGVsbG8sCgpJIHRyaWVkIHRvIGNvbXBpbGUgKHdpdGggZ2NjIDQuMC4zKSBnaXQtc25hcHNo
+b3QtMjAwNjA4MzEgYW5kIGdvdCB0aGUgZm9sbG93aW5nIGVycm9yIG1lc3NnZXM6CgptYWtl
+IC0tcHJlZml4PS91c3IvbG9jYWwKCm1haWxpbmZvLm86IEluIGZ1bnRpb24gJ2NvbnZlcnRf
+dG9fdXRmOCc6CmdpdC1zbmFwc2hvdC0yMDA2MDgzMS9tYWlsaW5mby5jOjQ4MjogdW5kZWZp
+bmVkIHJlZmVyZW5jZSB0byAnbGliaWNvbnZfb3BlbicKZ2l0LXNuYXBzaG90LTIwMDYwODMx
+L21haWxpbmZvLmM6NTAzOiB1bmRlZmluZWQgcmVmZXJlbmNlIHRvICdsaWJpY29udicKZ2l0
+LXNuYXBzaG90LTIwMDYwODMxL21haWxpbmZvLmM6NTA0OiB1bmRlZmluZWQgcmVmZXJlbmNl
+IHRvICdsaWJpY29udl9jbG9zZScKY29sbGVjdDI6IGxkIHJldHVybmVkIDEgZXhpdCBzdGF0
+dXMKCnRoZW4gSSB0cmllZCBtYWtlIC0tcHJlZml4PS91c3IvbG9jYWwgTkVFRFNfTElCSUNP
+TlY9MSBhbmQgZ290IHRoZSBmb2xsb3dpbmcgZXJyb3IgbWVzc3NhZ2VzOgoKSW4gZmlsZSBp
+bmNsdWRlZCBmcm9tIGh0dHAuYzoxOgpodHRwLmg6NjoyMzogZXJyb3I6IGN1cmwvY3VybC5o
+OiBUaWVkb3N0b2EgdGFpIGhha2VtaXN0b2EgZWkgb2xlCmh0dHAuaDo3OjIzOiBlcnJvcjog
+Y3VybC9lYXN5Lmg6IFRpZWRvc3RvYSB0YWkgaGFrZW1pc3RvYSBlaSBvbGUKSW4gZmlsZSBp
+bmNsdWRlZCBmcm9tIGh0dHAuYzoxOgpodHRwLmg6Mjc6IGVycm9yOiBzeW50YXggZXJyb3Ig
+YmVmb3JlICdDVVJMY29kZScKaHR0cC5oOjI3OiB3YXJuaW5nOiBubyBzZW1pY29sb24gYXQg
+ZW5kIG9mIHN0cnVjdCBvciB1bmlvbgpodHRwLmg6Mjk6IGVycm9yOiBzeW50YXggZXJyb3Ig
+YmVmb3JlICd9JyB0b2tlbgpodHRwLmg6MzM6IGVycm9yOiBzeW50YXggZXJyb3IgYmVmb3Jl
+ICdDVVJMJwpodHRwLmg6MzM6IHdhcm5pbmc6IG5vIHNlbWljb2xvbiBhdCBlbmQgb2Ygc3Ry
+dWN0IG9yIHVuaW9uCmh0dHAuaDozNjogZXJyb3I6IHN5bnRheCBlcnJvciBiZWZvcmUgJ2N1
+cmxfcmVzdWx0JwpodHRwLmg6MzY6IHdhcm5pbmc6IHR5cGUgZGVmYXVsdHMgdG8gJ2ludCcg
+aW4gZGVjbGFyYXRpb24gb2YgJ2N1cmxfcmVzdWx0JwpodHRwLmg6MzY6IHdhcm5pbmc6IGRh
+dGEgZGVmaW5pdGlvbiBoYXMgbm8gdHlwZSBvciBzdG9yYWdlIGNsYXNzCmh0dHAuaDo0Mzog
+ZXJyb3I6IHN5bnRheCBlcnJvciBiZWZvcmUgJ30nIHRva2VuCmh0dHAuaDo4NTogZXJyb3I6
+ICdDVVJMX0VSUk9SX1NJWkUnIHVuZGVjbGFyZWQgaGVyZSAobm90IGluIGEgZnVuY3Rpb24p
+Cmh0dHAuYzoxNjM6IGVycm9yOiBzeW50YXggZXJyb3IgYmVmb3JlICcqJyB0b2tlbgpodHRw
+LmM6MTY0OiB3YXJuaW5nOiByZXR1cm4gdHlwZSBkZWZhdWx0cyB0byAnaW50JwpodHRwLmM6
+IEluIGZ1bmN0aW9uICdnZXRfY3VybF9oYW5kbGUnOgpodHRwLmM6MTY1OiBlcnJvcjogJ0NV
+UkwnIHVuZGVjbGFyZWQgKGZpcnN0IHVzZSBpbiB0aGlzIGZ1bmN0aW9uKQpodHRwLmM6MTY1
+OiBlcnJvcjogKEVhY2ggdW5kZWNsYXJlZCBpZGVudGlmaWVyIGlzIHJlcG9ydGVkIG9ubHkg
+b25jZQpodHRwLmM6MTY1OiBlcnJvcjogZm9yIGVhY2ggZnVuY3Rpb24gaXQgYXBwZWFycyBp
+bi4pCmh0dHAuYzoxNjU6IGVycm9yOiAncmVzdWx0JyB1bmRlY2xhcmVkIChmaXJzdCB1c2Ug
+aW4gdGhpcyBmdW5jdGlvbikKaHR0cC5jOjE2NTogd2FybmluZzogaW1wbGljaXQgZGVjbGFy
+YXRpb24gb2YgZnVuY3Rpb24gJ2N1cmxfZWFzeV9pbml0JwpodHRwLmM6MTY3OiB3YXJuaW5n
+OiBpbXBsaWNpdCBkZWNsYXJhdGlvbiBvZiBmdW5jdGlvbiAnY3VybF9lYXN5X3NldG9wdCcK
+aHR0cC5jOjE2NzogZXJyb3I6ICdDVVJMT1BUX1NTTF9WRVJJRllQRUVSJyB1bmRlY2xhcmVk
+IChmaXJzdCB1c2UgaW4gdGhpcyBmdW5jdGlvbikKaHR0cC5jOjE3MzogZXJyb3I6ICdDVVJM
+T1BUX1NTTENFUlQnIHVuZGVjbGFyZWQgKGZpcnN0IHVzZSBpbiB0aGlzIGZ1bmN0aW9uKQpo
+dHRwLmM6MTgzOiBlcnJvcjogJ0NVUkxPUFRfQ0FJTkZPJyB1bmRlY2xhcmVkIChmaXJzdCB1
+c2UgaW4gdGhpcyBmdW5jdGlvbikKaHR0cC5jOjE4NDogZXJyb3I6ICdDVVJMT1BUX0ZBSUxP
+TkVSUk9SJyB1bmRlY2xhcmVkIChmaXJzdCB1c2UgaW4gdGhpcyBmdW5jdGlvbikKaHR0cC5j
+OjE4NzogZXJyb3I6ICdDVVJMT1BUX0xPV19TUEVFRF9MSU1JVCcgdW5kZWNsYXJlZCAoZmly
+c3QgdXNlIGluIHRoaXMgZnVuY3Rpb24pCmh0dHAuYzoxODk6IGVycm9yOiAnQ1VSTE9QVF9M
+T1dfU1BFRURfVElNRScgdW5kZWNsYXJlZCAoZmlyc3QgdXNlIGluIHRoaXMgZnVuY3Rpb24p
+Cmh0dHAuYzoxOTM6IGVycm9yOiAnQ1VSTE9QVF9GT0xMT1dMT0NBVElPTicgdW5kZWNsYXJl
+ZCAoZmlyc3QgdXNlIGluIHRoaXMgZnVuY3Rpb24pCmh0dHAuYzoxOTY6IGVycm9yOiAnQ1VS
+TE9QVF9WRVJCT1NFJyB1bmRlY2xhcmVkIChmaXJzdCB1c2UgaW4gdGhpcyBmdW5jdGlvbikK
+aHR0cC5jOjE5ODogZXJyb3I6ICdDVVJMT1BUX1VTRVJBR0VOVCcgdW5kZWNsYXJlZCAoZmly
+c3QgdXNlIGluIHRoaXMgZnVuY3Rpb24pCmh0dHAuYzogSW4gZnVuY3Rpb24gJ2h0dHBfaW5p
+dCc6Cmh0dHAuYzoyMTA6IHdhcm5pbmc6IGltcGxpY2l0IGRlY2xhcmF0aW9uIG9mIGZ1bmN0
+aW9uICdjdXJsX3NsaXN0X2FwcGVuZCcKaHR0cC5jOjIxMDogd2FybmluZzogYXNzaWdubWVu
+dCBtYWtlcyBwb2ludGVyIGZyb20gaW50ZWdlciB3aXRob3V0IGEgY2FzdApodHRwLmM6MjEx
+OiB3YXJuaW5nOiBhc3NpZ25tZW50IG1ha2VzIHBvaW50ZXIgZnJvbSBpbnRlZ2VyIHdpdGhv
+dXQgYSBjYXN0Cmh0dHAuYzogSW4gZnVuY3Rpb24gJ2h0dHBfY2xlYW51cCc6Cmh0dHAuYzoy
+Nzg6IGVycm9yOiBkZXJlZmVyZW5jaW5nIHBvaW50ZXIgdG8gaW5jb21wbGV0ZSB0eXBlCmh0
+dHAuYzoyNzk6IHdhcm5pbmc6IGltcGxpY2l0IGRlY2xhcmF0aW9uIG9mIGZ1bmN0aW9uICdj
+dXJsX2Vhc3lfY2xlYW51cCcKaHR0cC5jOjI3OTogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9p
+bnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjI4MDogZXJyb3I6IGRlcmVmZXJlbmNp
+bmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOiBJbiBmdW5jdGlvbiAnZ2V0
+X2FjdGl2ZV9zbG90JzoKaHR0cC5jOjMxMTogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRl
+ciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjMxMjogZXJyb3I6IGRlcmVmZXJlbmNpbmcg
+cG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjMxNTogZXJyb3I6IGRlcmVmZXJl
+bmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjMxNjogZXJyb3I6IGRl
+cmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjMxNzogZXJy
+b3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjMx
+ODogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0
+cC5jOjMyNDogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5
+cGUKaHR0cC5jOjMyNTogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBs
+ZXRlIHR5cGUKaHR0cC5jOjMyNzogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBp
+bmNvbXBsZXRlIHR5cGUKaHR0cC5jOjMzMjogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRl
+ciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjMzNDogZXJyb3I6IGRlcmVmZXJlbmNpbmcg
+cG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjM0MTogZXJyb3I6IGRlcmVmZXJl
+bmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjM0MjogZXJyb3I6IGRl
+cmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjM0MzogZXJy
+b3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjM0
+NDogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0
+cC5jOjM0NTogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5
+cGUKaHR0cC5jOjM0NjogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBs
+ZXRlIHR5cGUKaHR0cC5jOjM0NzogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBp
+bmNvbXBsZXRlIHR5cGUKaHR0cC5jOjM0NzogZXJyb3I6ICdDVVJMT1BUX0hUVFBIRUFERVIn
+IHVuZGVjbGFyZWQgKGZpcnN0IHVzZSBpbiB0aGlzIGZ1bmN0aW9uKQpodHRwLmM6MzQ4OiBl
+cnJvcjogZGVyZWZlcmVuY2luZyBwb2ludGVyIHRvIGluY29tcGxldGUgdHlwZQpodHRwLmM6
+MzQ5OiBlcnJvcjogZGVyZWZlcmVuY2luZyBwb2ludGVyIHRvIGluY29tcGxldGUgdHlwZQpo
+dHRwLmM6MzQ5OiBlcnJvcjogJ0NVUkxPUFRfRVJST1JCVUZGRVInIHVuZGVjbGFyZWQgKGZp
+cnN0IHVzZSBpbiB0aGlzIGZ1bmN0aW9uKQpodHRwLmM6IEluIGZ1bmN0aW9uICdydW5fYWN0
+aXZlX3Nsb3QnOgpodHRwLmM6NDIxOiBlcnJvcjogZGVyZWZlcmVuY2luZyBwb2ludGVyIHRv
+IGluY29tcGxldGUgdHlwZQpodHRwLmM6NDIyOiBlcnJvcjogZGVyZWZlcmVuY2luZyBwb2lu
+dGVyIHRvIGluY29tcGxldGUgdHlwZQpodHRwLmM6NDIyOiB3YXJuaW5nOiBpbXBsaWNpdCBk
+ZWNsYXJhdGlvbiBvZiBmdW5jdGlvbiAnY3VybF9lYXN5X3BlcmZvcm0nCmh0dHAuYzo0MjI6
+IGVycm9yOiBkZXJlZmVyZW5jaW5nIHBvaW50ZXIgdG8gaW5jb21wbGV0ZSB0eXBlCmh0dHAu
+YzogSW4gZnVuY3Rpb24gJ2Nsb3NlZG93bl9hY3RpdmVfc2xvdCc6Cmh0dHAuYzo0MzE6IGVy
+cm9yOiBkZXJlZmVyZW5jaW5nIHBvaW50ZXIgdG8gaW5jb21wbGV0ZSB0eXBlCmh0dHAuYzog
+SW4gZnVuY3Rpb24gJ3JlbGVhc2VfYWN0aXZlX3Nsb3QnOgpodHRwLmM6NDM3OiBlcnJvcjog
+ZGVyZWZlcmVuY2luZyBwb2ludGVyIHRvIGluY29tcGxldGUgdHlwZQpodHRwLmM6NDM4OiB3
+YXJuaW5nOiBpbXBsaWNpdCBkZWNsYXJhdGlvbiBvZiBmdW5jdGlvbiAnY3VybF9tdWx0aV9y
+ZW1vdmVfaGFuZGxlJwpodHRwLmM6NDM4OiBlcnJvcjogJ2N1cmxtJyB1bmRlY2xhcmVkIChm
+aXJzdCB1c2UgaW4gdGhpcyBmdW5jdGlvbikKaHR0cC5jOjQzODogZXJyb3I6IGRlcmVmZXJl
+bmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjQzOTogZXJyb3I6IGRl
+cmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjQ0MDogZXJy
+b3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjQ0
+Mjogd2FybmluZzogaW1wbGljaXQgZGVjbGFyYXRpb24gb2YgZnVuY3Rpb24gJ2ZpbGxfYWN0
+aXZlX3Nsb3RzJwpodHRwLmM6IEluIGZ1bmN0aW9uICdmaW5pc2hfYWN0aXZlX3Nsb3QnOgpo
+dHRwLmM6NDQ4OiB3YXJuaW5nOiBpbXBsaWNpdCBkZWNsYXJhdGlvbiBvZiBmdW5jdGlvbiAn
+Y3VybF9lYXN5X2dldGluZm8nCmh0dHAuYzo0NDg6IGVycm9yOiBkZXJlZmVyZW5jaW5nIHBv
+aW50ZXIgdG8gaW5jb21wbGV0ZSB0eXBlCmh0dHAuYzo0NDg6IGVycm9yOiAnQ1VSTElORk9f
+SFRUUF9DT0RFJyB1bmRlY2xhcmVkIChmaXJzdCB1c2UgaW4gdGhpcyBmdW5jdGlvbikKaHR0
+cC5jOjQ0ODogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5
+cGUKaHR0cC5jOjQ1MDogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBs
+ZXRlIHR5cGUKaHR0cC5jOjQ1MTogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBp
+bmNvbXBsZXRlIHR5cGUKaHR0cC5jOjQ1NDogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRl
+ciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjQ1NTogZXJyb3I6IGRlcmVmZXJlbmNpbmcg
+cG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjQ1NTogZXJyb3I6IGRlcmVmZXJl
+bmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjQ1NjogZXJyb3I6IGRl
+cmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjQ1NjogZXJy
+b3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjQ2
+MDogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0
+cC5jOjQ2MTogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5
+cGUKaHR0cC5jOjQ2MTogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBs
+ZXRlIHR5cGUKaHR0cC5jOiBJbiBmdW5jdGlvbiAnZmluaXNoX2FsbF9hY3RpdmVfc2xvdHMn
+OgpodHRwLmM6NDcwOiBlcnJvcjogZGVyZWZlcmVuY2luZyBwb2ludGVyIHRvIGluY29tcGxl
+dGUgdHlwZQpodHRwLmM6NDc0OiBlcnJvcjogZGVyZWZlcmVuY2luZyBwb2ludGVyIHRvIGlu
+Y29tcGxldGUgdHlwZQptYWtlOiAqKiogW2h0dHAub10gRXJyb3IgMQoKQmVzdCByZWdhcmRz
+LAoKSm9ybWEgS2Fydm9uZW4=
+--------------070302010701090807070407--
