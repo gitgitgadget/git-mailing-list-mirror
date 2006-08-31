@@ -1,84 +1,78 @@
-From: Andreas Ericsson <ae@op5.se>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Compiling git-snapshot-20069831
-Date: Thu, 31 Aug 2006 17:19:24 +0200
-Message-ID: <44F6FDFC.9050707@op5.se>
-References: <44F6D016.4050007@users.sourceforge.net> <Pine.LNX.4.63.0608311408350.28360@wbgn013.biozentrum.uni-wuerzburg.de> <44F6F478.1070708@users.sourceforge.net> <ed6tg9$9ij$1@sea.gmane.org>
+Date: Thu, 31 Aug 2006 17:28:37 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0608311727010.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <44F6D016.4050007@users.sourceforge.net>
+ <Pine.LNX.4.63.0608311408350.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+ <44F6F478.1070708@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 31 17:22:13 2006
+X-From: git-owner@vger.kernel.org Thu Aug 31 17:31:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GIoKI-00021v-1P
-	for gcvg-git@gmane.org; Thu, 31 Aug 2006 17:19:34 +0200
+	id 1GIoTD-0004vH-GV
+	for gcvg-git@gmane.org; Thu, 31 Aug 2006 17:28:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751641AbWHaPT1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 31 Aug 2006 11:19:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751635AbWHaPT1
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 11:19:27 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:26539 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751313AbWHaPT0
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Aug 2006 11:19:26 -0400
-Received: by smtp-gw1.op5.se (Postfix, from userid 588)
-	id 856106BD45; Thu, 31 Aug 2006 17:19:25 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
-	linux-server1.op5.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00,
-	SUBJ_HAS_UNIQ_ID autolearn=ham version=3.1.4
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 814086BD34; Thu, 31 Aug 2006 17:19:24 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.5 (X11/20060808)
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <ed6tg9$9ij$1@sea.gmane.org>
+	id S1751647AbWHaP2k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 31 Aug 2006 11:28:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751649AbWHaP2j
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 11:28:39 -0400
+Received: from mail.gmx.de ([213.165.64.20]:15490 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751647AbWHaP2j (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Aug 2006 11:28:39 -0400
+Received: (qmail invoked by alias); 31 Aug 2006 15:28:37 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp013) with SMTP; 31 Aug 2006 17:28:37 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Jorma Karvonen <karvjorm@users.sourceforge.net>
+In-Reply-To: <44F6F478.1070708@users.sourceforge.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26266>
 
-Jakub Narebski wrote:
-> Jorma Karvonen wrote:
->  
->> When I tested 
->>
->> make NEEDS_LIBICONV=1 NO_CURL=1
->>
->> the make succeeded but when trying make install I got error messages 
->> shown in the enclosed file.
+Hi,
+
+On Thu, 31 Aug 2006, Jorma Karvonen wrote:
+
+> Johannes Schindelin wrote:
+> > Hi,
+> > 
+> > since you do have a recent snapshot, why not try ./configure, as Pasky
+> > suggested?
+> > 
+> > BTW I cannot read Finnish, but it probably says that you do not have curl
+> > installed. configure would detect that, and automatically set NO_CURL=1.
+> > 
+> > Ciao,
+> > Dscho
+> > 
+> > 
+> >   
+> Sorry,
 > 
-> Try then
->   $ NEEDS_LIBICONV=YesPlease NO_CURL=YesPlease make
+> but I have not any git installed and there is no configure file in installing
+> directory.
+
+Ooops. As mentioned elsewhere, try "make configure" first.
+
+> When I tested 
+> make NEEDS_LIBICONV=1 NO_CURL=1
 > 
+> the make succeeded but when trying make install I got error messages shown in
+> the enclosed file.
 
-I think you meant
+You forgot to say "NEEDS_LIBICONV=1 NO_CURL=1" with the "make install":
 
-$ make NEEDS_LIBICONV=YesPlease NO_CURL=YesPlease install
+	make NEEDS_LIBICONV=1 NO_CURL=1 install
 
-there, Jakub.
+This would not be necessary with ./configure, since it writes these 
+settings into a file, which is read by "make".
 
-Jorma, since the Makefile has no ideas on state, it only notices that 
-some files it needs to make a complete install with the parameters 
-you're passing it when also passing 'install' are missing, it tries to 
-build them, but without the NEEDS_LIBICONV and NO_CURL flags. Pass them 
-both when doing normal 'make' and when doing 'make install' and you'll 
-be fine. You might also want to check if your distribution provides a 
-pre-compiled package. If that's the case, you should be able to get away 
-with something easy such as
-
-	$ apt-get install git
-
-or
-
-	$ yum install git
-
-Good luck
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Ciao,
+Dscho
