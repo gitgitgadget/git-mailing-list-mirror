@@ -1,178 +1,113 @@
-From: Jorma Karvonen <karvjorm@users.sourceforge.net>
-Subject: Compiling git-snapshot-20069831
-Date: Thu, 31 Aug 2006 15:03:34 +0300
-Message-ID: <44F6D016.4050007@users.sourceforge.net>
-Reply-To: karvjorm@users.sourceforge.net
+From: aonghus <thecolourblue@gmail.com>
+Subject: Re: problem with git-cvsserver
+Date: Thu, 31 Aug 2006 13:04:52 +0100
+Message-ID: <44F6D064.9020002@gmail.com>
+References: <44F5B2A7.8070501@gmail.com> <Pine.LNX.4.63.0608301904360.28360@wbgn013.biozentrum.uni-wuerzburg.de> <44F5D6F8.50307@gmail.com> <7vlkp6gh6e.fsf@assigned-by-dhcp.cox.net> <46a038f90608301329n14df4dd2tb1563cc48662cd14@mail.gmail.com> <20060831090333.GA28445@fiberbit.xs4all.nl>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------070302010701090807070407"
-X-From: git-owner@vger.kernel.org Thu Aug 31 14:03:24 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Aug 31 14:05:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GIlGV-0004ij-5o
-	for gcvg-git@gmane.org; Thu, 31 Aug 2006 14:03:23 +0200
+	id 1GIlI3-0004zA-Lm
+	for gcvg-git@gmane.org; Thu, 31 Aug 2006 14:05:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751569AbWHaMDU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 31 Aug 2006 08:03:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751560AbWHaMDU
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 08:03:20 -0400
-Received: from smtp1.song.fi ([194.100.2.124]:41904 "EHLO smtp1.song.fi")
-	by vger.kernel.org with ESMTP id S1750823AbWHaMDT (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Aug 2006 08:03:19 -0400
-Received: from [192.168.1.34] (dsl-60-2-216-83.maxinetti.fi [83.216.2.60])
-	by smtp1.song.fi (Postfix) with ESMTP id C6E9E1794C4
-	for <git@vger.kernel.org>; Thu, 31 Aug 2006 15:03:16 +0300 (EEST)
-User-Agent: Thunderbird 2.0a1 (X11/20060724)
-To: git@vger.kernel.org
+	id S1751570AbWHaME5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 31 Aug 2006 08:04:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751578AbWHaME4
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 08:04:56 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:5446 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1751560AbWHaME4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Aug 2006 08:04:56 -0400
+Received: by ug-out-1314.google.com with SMTP id m3so524935ugc
+        for <git@vger.kernel.org>; Thu, 31 Aug 2006 05:04:54 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=kYTT8zVye3D1ZVjVj+SAJqX+Ie3ynwx+0MTPXLTfjWVTTtxDh/eJyb8hwZ8LaesgO1L4KYDxnTChYAZFliGnsJqjK97BiC8EeQJ1MpQz+4O0+4ylUSRWTIK94fuFGkStcr7I/dq7DojPUl1lq2f4CPQ5vTlCXv+v/XIHXsmpgQU=
+Received: by 10.67.103.7 with SMTP id f7mr465226ugm;
+        Thu, 31 Aug 2006 05:04:54 -0700 (PDT)
+Received: from ?192.168.0.100? ( [137.43.156.41])
+        by mx.gmail.com with ESMTP id m1sm1169014uge.2006.08.31.05.04.53;
+        Thu, 31 Aug 2006 05:04:54 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.5 (X11/20060728)
+To: Marco Roeland <marco.roeland@xs4all.nl>
+In-Reply-To: <20060831090333.GA28445@fiberbit.xs4all.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26252>
 
-This is a multi-part message in MIME format.
---------------070302010701090807070407
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Marco Roeland wrote:
+> On Thursday August 31st 2006 at 08:29 uur Martin Langhoff wrote:
+>
+>   
+>> [git-cvsserver and trouble with Perl DBI and SQLite]
+>>
+>> Actually, just looking at my etch dev box, libdbd-sqlite-perl is
+>> 0.29-1 and sqlite is 2.8.16-1. Not sure if the difference is
+>> significant. Perhaps SQLite v3 has a different invocation / driver
+>> name?
+>>     
+>
+> Yes, SQLite v2 and SQLite v3 are different and binary incompatible.
+>
+> However, on Debian 'etch' you can install packages for both versions
+> concurrently; most packages for SQLite have either a '2' or a '3' in the
+> name. Packages without the number use the "best current choice" which is
+> "3" in 'etch' at the moment but was "2" not too long ago.
+>
+> So at this moment in Debian 'etch' SQLite3 is the default version and
+> calling
+>
+>         my $dsn = 'dbi:SQLite:dbname=foo';
+>
+> will use the SQLite3 driver internally, for which you must have
+> installed the "libdbd-sqlite3-perl" package. Just for the record, if
+> you'd wanted the older SQLite2 version you would install the
+> "libdbd-sqlite2-perl" package and from Perl call "my $dsn =
+> 'dbi:SQLite2:dbname=foo';".
+>
+> I'd guess that you were unfortunate enough to just install some packages
+> during the transition and now some parts look for the "2" version
+> and other parts for the "3" version. Probably just installing the
+> "libdbd-sqlite3-perl" package and upgrading the other sqlite packages
+> (from synaptic say to easily find them!) will probably cure your situation.
+>
+> Incidentally I'd guess that in itself SQLite2 (so version 2) would also
+> function perfectly well for git-cvsserver (as would PostgreSQL or
+> MySQL), it's probably in this case just a slight version skew between
+> packages!
+>   
 
-Hello,
+Hi,
 
-I enclose here the file that includes error messages.
+Thanks for all the help- I have it working now. It was not a fault with 
+git-cvsserver at all- more like my own stupidity. The problem was that I 
+had checked the versions on my client machine and forgotten to update 
+the cvs/git server! Once I updated it and installed the 
+libdbd-sqlite3-perl package (on the server) everything works as expected.
+ 
+So, just to confirm, git-cvsserver is working on a debian 
+testing/unstable machine (acting cvs/git server) with the following 
+versions:
 
-Best regards,
+    libdbd-sqlite3-perl (1.12-1)
+    libdbi-perl (1.51-2)
+    libsqlite3-0 (3.3.7-1)
+    perl (5.8.8-6.1)
+    perl-base (5.8.8-6.1)
 
-Jorma Karvonen
-karvjorm@users.sourceforge.net
 
+Apologies for wasting your time, looks like my caffeine levels are 
+getting dangerously low...
 
---------------070302010701090807070407
-Content-Type: text/plain;
- name="error1.txt"
-Content-Transfer-Encoding: base64
-Content-Disposition: inline;
- filename="error1.txt"
+a
 
-SGVsbG8sCgpJIHRyaWVkIHRvIGNvbXBpbGUgKHdpdGggZ2NjIDQuMC4zKSBnaXQtc25hcHNo
-b3QtMjAwNjA4MzEgYW5kIGdvdCB0aGUgZm9sbG93aW5nIGVycm9yIG1lc3NnZXM6CgptYWtl
-IC0tcHJlZml4PS91c3IvbG9jYWwKCm1haWxpbmZvLm86IEluIGZ1bnRpb24gJ2NvbnZlcnRf
-dG9fdXRmOCc6CmdpdC1zbmFwc2hvdC0yMDA2MDgzMS9tYWlsaW5mby5jOjQ4MjogdW5kZWZp
-bmVkIHJlZmVyZW5jZSB0byAnbGliaWNvbnZfb3BlbicKZ2l0LXNuYXBzaG90LTIwMDYwODMx
-L21haWxpbmZvLmM6NTAzOiB1bmRlZmluZWQgcmVmZXJlbmNlIHRvICdsaWJpY29udicKZ2l0
-LXNuYXBzaG90LTIwMDYwODMxL21haWxpbmZvLmM6NTA0OiB1bmRlZmluZWQgcmVmZXJlbmNl
-IHRvICdsaWJpY29udl9jbG9zZScKY29sbGVjdDI6IGxkIHJldHVybmVkIDEgZXhpdCBzdGF0
-dXMKCnRoZW4gSSB0cmllZCBtYWtlIC0tcHJlZml4PS91c3IvbG9jYWwgTkVFRFNfTElCSUNP
-TlY9MSBhbmQgZ290IHRoZSBmb2xsb3dpbmcgZXJyb3IgbWVzc3NhZ2VzOgoKSW4gZmlsZSBp
-bmNsdWRlZCBmcm9tIGh0dHAuYzoxOgpodHRwLmg6NjoyMzogZXJyb3I6IGN1cmwvY3VybC5o
-OiBUaWVkb3N0b2EgdGFpIGhha2VtaXN0b2EgZWkgb2xlCmh0dHAuaDo3OjIzOiBlcnJvcjog
-Y3VybC9lYXN5Lmg6IFRpZWRvc3RvYSB0YWkgaGFrZW1pc3RvYSBlaSBvbGUKSW4gZmlsZSBp
-bmNsdWRlZCBmcm9tIGh0dHAuYzoxOgpodHRwLmg6Mjc6IGVycm9yOiBzeW50YXggZXJyb3Ig
-YmVmb3JlICdDVVJMY29kZScKaHR0cC5oOjI3OiB3YXJuaW5nOiBubyBzZW1pY29sb24gYXQg
-ZW5kIG9mIHN0cnVjdCBvciB1bmlvbgpodHRwLmg6Mjk6IGVycm9yOiBzeW50YXggZXJyb3Ig
-YmVmb3JlICd9JyB0b2tlbgpodHRwLmg6MzM6IGVycm9yOiBzeW50YXggZXJyb3IgYmVmb3Jl
-ICdDVVJMJwpodHRwLmg6MzM6IHdhcm5pbmc6IG5vIHNlbWljb2xvbiBhdCBlbmQgb2Ygc3Ry
-dWN0IG9yIHVuaW9uCmh0dHAuaDozNjogZXJyb3I6IHN5bnRheCBlcnJvciBiZWZvcmUgJ2N1
-cmxfcmVzdWx0JwpodHRwLmg6MzY6IHdhcm5pbmc6IHR5cGUgZGVmYXVsdHMgdG8gJ2ludCcg
-aW4gZGVjbGFyYXRpb24gb2YgJ2N1cmxfcmVzdWx0JwpodHRwLmg6MzY6IHdhcm5pbmc6IGRh
-dGEgZGVmaW5pdGlvbiBoYXMgbm8gdHlwZSBvciBzdG9yYWdlIGNsYXNzCmh0dHAuaDo0Mzog
-ZXJyb3I6IHN5bnRheCBlcnJvciBiZWZvcmUgJ30nIHRva2VuCmh0dHAuaDo4NTogZXJyb3I6
-ICdDVVJMX0VSUk9SX1NJWkUnIHVuZGVjbGFyZWQgaGVyZSAobm90IGluIGEgZnVuY3Rpb24p
-Cmh0dHAuYzoxNjM6IGVycm9yOiBzeW50YXggZXJyb3IgYmVmb3JlICcqJyB0b2tlbgpodHRw
-LmM6MTY0OiB3YXJuaW5nOiByZXR1cm4gdHlwZSBkZWZhdWx0cyB0byAnaW50JwpodHRwLmM6
-IEluIGZ1bmN0aW9uICdnZXRfY3VybF9oYW5kbGUnOgpodHRwLmM6MTY1OiBlcnJvcjogJ0NV
-UkwnIHVuZGVjbGFyZWQgKGZpcnN0IHVzZSBpbiB0aGlzIGZ1bmN0aW9uKQpodHRwLmM6MTY1
-OiBlcnJvcjogKEVhY2ggdW5kZWNsYXJlZCBpZGVudGlmaWVyIGlzIHJlcG9ydGVkIG9ubHkg
-b25jZQpodHRwLmM6MTY1OiBlcnJvcjogZm9yIGVhY2ggZnVuY3Rpb24gaXQgYXBwZWFycyBp
-bi4pCmh0dHAuYzoxNjU6IGVycm9yOiAncmVzdWx0JyB1bmRlY2xhcmVkIChmaXJzdCB1c2Ug
-aW4gdGhpcyBmdW5jdGlvbikKaHR0cC5jOjE2NTogd2FybmluZzogaW1wbGljaXQgZGVjbGFy
-YXRpb24gb2YgZnVuY3Rpb24gJ2N1cmxfZWFzeV9pbml0JwpodHRwLmM6MTY3OiB3YXJuaW5n
-OiBpbXBsaWNpdCBkZWNsYXJhdGlvbiBvZiBmdW5jdGlvbiAnY3VybF9lYXN5X3NldG9wdCcK
-aHR0cC5jOjE2NzogZXJyb3I6ICdDVVJMT1BUX1NTTF9WRVJJRllQRUVSJyB1bmRlY2xhcmVk
-IChmaXJzdCB1c2UgaW4gdGhpcyBmdW5jdGlvbikKaHR0cC5jOjE3MzogZXJyb3I6ICdDVVJM
-T1BUX1NTTENFUlQnIHVuZGVjbGFyZWQgKGZpcnN0IHVzZSBpbiB0aGlzIGZ1bmN0aW9uKQpo
-dHRwLmM6MTgzOiBlcnJvcjogJ0NVUkxPUFRfQ0FJTkZPJyB1bmRlY2xhcmVkIChmaXJzdCB1
-c2UgaW4gdGhpcyBmdW5jdGlvbikKaHR0cC5jOjE4NDogZXJyb3I6ICdDVVJMT1BUX0ZBSUxP
-TkVSUk9SJyB1bmRlY2xhcmVkIChmaXJzdCB1c2UgaW4gdGhpcyBmdW5jdGlvbikKaHR0cC5j
-OjE4NzogZXJyb3I6ICdDVVJMT1BUX0xPV19TUEVFRF9MSU1JVCcgdW5kZWNsYXJlZCAoZmly
-c3QgdXNlIGluIHRoaXMgZnVuY3Rpb24pCmh0dHAuYzoxODk6IGVycm9yOiAnQ1VSTE9QVF9M
-T1dfU1BFRURfVElNRScgdW5kZWNsYXJlZCAoZmlyc3QgdXNlIGluIHRoaXMgZnVuY3Rpb24p
-Cmh0dHAuYzoxOTM6IGVycm9yOiAnQ1VSTE9QVF9GT0xMT1dMT0NBVElPTicgdW5kZWNsYXJl
-ZCAoZmlyc3QgdXNlIGluIHRoaXMgZnVuY3Rpb24pCmh0dHAuYzoxOTY6IGVycm9yOiAnQ1VS
-TE9QVF9WRVJCT1NFJyB1bmRlY2xhcmVkIChmaXJzdCB1c2UgaW4gdGhpcyBmdW5jdGlvbikK
-aHR0cC5jOjE5ODogZXJyb3I6ICdDVVJMT1BUX1VTRVJBR0VOVCcgdW5kZWNsYXJlZCAoZmly
-c3QgdXNlIGluIHRoaXMgZnVuY3Rpb24pCmh0dHAuYzogSW4gZnVuY3Rpb24gJ2h0dHBfaW5p
-dCc6Cmh0dHAuYzoyMTA6IHdhcm5pbmc6IGltcGxpY2l0IGRlY2xhcmF0aW9uIG9mIGZ1bmN0
-aW9uICdjdXJsX3NsaXN0X2FwcGVuZCcKaHR0cC5jOjIxMDogd2FybmluZzogYXNzaWdubWVu
-dCBtYWtlcyBwb2ludGVyIGZyb20gaW50ZWdlciB3aXRob3V0IGEgY2FzdApodHRwLmM6MjEx
-OiB3YXJuaW5nOiBhc3NpZ25tZW50IG1ha2VzIHBvaW50ZXIgZnJvbSBpbnRlZ2VyIHdpdGhv
-dXQgYSBjYXN0Cmh0dHAuYzogSW4gZnVuY3Rpb24gJ2h0dHBfY2xlYW51cCc6Cmh0dHAuYzoy
-Nzg6IGVycm9yOiBkZXJlZmVyZW5jaW5nIHBvaW50ZXIgdG8gaW5jb21wbGV0ZSB0eXBlCmh0
-dHAuYzoyNzk6IHdhcm5pbmc6IGltcGxpY2l0IGRlY2xhcmF0aW9uIG9mIGZ1bmN0aW9uICdj
-dXJsX2Vhc3lfY2xlYW51cCcKaHR0cC5jOjI3OTogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9p
-bnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjI4MDogZXJyb3I6IGRlcmVmZXJlbmNp
-bmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOiBJbiBmdW5jdGlvbiAnZ2V0
-X2FjdGl2ZV9zbG90JzoKaHR0cC5jOjMxMTogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRl
-ciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjMxMjogZXJyb3I6IGRlcmVmZXJlbmNpbmcg
-cG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjMxNTogZXJyb3I6IGRlcmVmZXJl
-bmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjMxNjogZXJyb3I6IGRl
-cmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjMxNzogZXJy
-b3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjMx
-ODogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0
-cC5jOjMyNDogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5
-cGUKaHR0cC5jOjMyNTogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBs
-ZXRlIHR5cGUKaHR0cC5jOjMyNzogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBp
-bmNvbXBsZXRlIHR5cGUKaHR0cC5jOjMzMjogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRl
-ciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjMzNDogZXJyb3I6IGRlcmVmZXJlbmNpbmcg
-cG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjM0MTogZXJyb3I6IGRlcmVmZXJl
-bmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjM0MjogZXJyb3I6IGRl
-cmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjM0MzogZXJy
-b3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjM0
-NDogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0
-cC5jOjM0NTogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5
-cGUKaHR0cC5jOjM0NjogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBs
-ZXRlIHR5cGUKaHR0cC5jOjM0NzogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBp
-bmNvbXBsZXRlIHR5cGUKaHR0cC5jOjM0NzogZXJyb3I6ICdDVVJMT1BUX0hUVFBIRUFERVIn
-IHVuZGVjbGFyZWQgKGZpcnN0IHVzZSBpbiB0aGlzIGZ1bmN0aW9uKQpodHRwLmM6MzQ4OiBl
-cnJvcjogZGVyZWZlcmVuY2luZyBwb2ludGVyIHRvIGluY29tcGxldGUgdHlwZQpodHRwLmM6
-MzQ5OiBlcnJvcjogZGVyZWZlcmVuY2luZyBwb2ludGVyIHRvIGluY29tcGxldGUgdHlwZQpo
-dHRwLmM6MzQ5OiBlcnJvcjogJ0NVUkxPUFRfRVJST1JCVUZGRVInIHVuZGVjbGFyZWQgKGZp
-cnN0IHVzZSBpbiB0aGlzIGZ1bmN0aW9uKQpodHRwLmM6IEluIGZ1bmN0aW9uICdydW5fYWN0
-aXZlX3Nsb3QnOgpodHRwLmM6NDIxOiBlcnJvcjogZGVyZWZlcmVuY2luZyBwb2ludGVyIHRv
-IGluY29tcGxldGUgdHlwZQpodHRwLmM6NDIyOiBlcnJvcjogZGVyZWZlcmVuY2luZyBwb2lu
-dGVyIHRvIGluY29tcGxldGUgdHlwZQpodHRwLmM6NDIyOiB3YXJuaW5nOiBpbXBsaWNpdCBk
-ZWNsYXJhdGlvbiBvZiBmdW5jdGlvbiAnY3VybF9lYXN5X3BlcmZvcm0nCmh0dHAuYzo0MjI6
-IGVycm9yOiBkZXJlZmVyZW5jaW5nIHBvaW50ZXIgdG8gaW5jb21wbGV0ZSB0eXBlCmh0dHAu
-YzogSW4gZnVuY3Rpb24gJ2Nsb3NlZG93bl9hY3RpdmVfc2xvdCc6Cmh0dHAuYzo0MzE6IGVy
-cm9yOiBkZXJlZmVyZW5jaW5nIHBvaW50ZXIgdG8gaW5jb21wbGV0ZSB0eXBlCmh0dHAuYzog
-SW4gZnVuY3Rpb24gJ3JlbGVhc2VfYWN0aXZlX3Nsb3QnOgpodHRwLmM6NDM3OiBlcnJvcjog
-ZGVyZWZlcmVuY2luZyBwb2ludGVyIHRvIGluY29tcGxldGUgdHlwZQpodHRwLmM6NDM4OiB3
-YXJuaW5nOiBpbXBsaWNpdCBkZWNsYXJhdGlvbiBvZiBmdW5jdGlvbiAnY3VybF9tdWx0aV9y
-ZW1vdmVfaGFuZGxlJwpodHRwLmM6NDM4OiBlcnJvcjogJ2N1cmxtJyB1bmRlY2xhcmVkIChm
-aXJzdCB1c2UgaW4gdGhpcyBmdW5jdGlvbikKaHR0cC5jOjQzODogZXJyb3I6IGRlcmVmZXJl
-bmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjQzOTogZXJyb3I6IGRl
-cmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjQ0MDogZXJy
-b3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjQ0
-Mjogd2FybmluZzogaW1wbGljaXQgZGVjbGFyYXRpb24gb2YgZnVuY3Rpb24gJ2ZpbGxfYWN0
-aXZlX3Nsb3RzJwpodHRwLmM6IEluIGZ1bmN0aW9uICdmaW5pc2hfYWN0aXZlX3Nsb3QnOgpo
-dHRwLmM6NDQ4OiB3YXJuaW5nOiBpbXBsaWNpdCBkZWNsYXJhdGlvbiBvZiBmdW5jdGlvbiAn
-Y3VybF9lYXN5X2dldGluZm8nCmh0dHAuYzo0NDg6IGVycm9yOiBkZXJlZmVyZW5jaW5nIHBv
-aW50ZXIgdG8gaW5jb21wbGV0ZSB0eXBlCmh0dHAuYzo0NDg6IGVycm9yOiAnQ1VSTElORk9f
-SFRUUF9DT0RFJyB1bmRlY2xhcmVkIChmaXJzdCB1c2UgaW4gdGhpcyBmdW5jdGlvbikKaHR0
-cC5jOjQ0ODogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5
-cGUKaHR0cC5jOjQ1MDogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBs
-ZXRlIHR5cGUKaHR0cC5jOjQ1MTogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBp
-bmNvbXBsZXRlIHR5cGUKaHR0cC5jOjQ1NDogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRl
-ciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjQ1NTogZXJyb3I6IGRlcmVmZXJlbmNpbmcg
-cG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjQ1NTogZXJyb3I6IGRlcmVmZXJl
-bmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjQ1NjogZXJyb3I6IGRl
-cmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjQ1NjogZXJy
-b3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0cC5jOjQ2
-MDogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5cGUKaHR0
-cC5jOjQ2MTogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBsZXRlIHR5
-cGUKaHR0cC5jOjQ2MTogZXJyb3I6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciB0byBpbmNvbXBs
-ZXRlIHR5cGUKaHR0cC5jOiBJbiBmdW5jdGlvbiAnZmluaXNoX2FsbF9hY3RpdmVfc2xvdHMn
-OgpodHRwLmM6NDcwOiBlcnJvcjogZGVyZWZlcmVuY2luZyBwb2ludGVyIHRvIGluY29tcGxl
-dGUgdHlwZQpodHRwLmM6NDc0OiBlcnJvcjogZGVyZWZlcmVuY2luZyBwb2ludGVyIHRvIGlu
-Y29tcGxldGUgdHlwZQptYWtlOiAqKiogW2h0dHAub10gRXJyb3IgMQoKQmVzdCByZWdhcmRz
-LAoKSm9ybWEgS2Fydm9uZW4=
---------------070302010701090807070407--
+ 
