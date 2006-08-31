@@ -1,77 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Problematic git pack
-Date: Thu, 31 Aug 2006 13:15:07 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0608311301260.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <44F6A198.4040902@arces.unibo.it>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: git-snapshot-20060831 error
+Date: Thu, 31 Aug 2006 13:19:25 +0200
+Message-ID: <20060831111925.GA18896@pasky.or.cz>
+References: <44F6C262.8040605@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 31 13:15:17 2006
+X-From: git-owner@vger.kernel.org Thu Aug 31 13:19:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GIkVw-0004nC-CG
-	for gcvg-git@gmane.org; Thu, 31 Aug 2006 13:15:16 +0200
+	id 1GIka3-0005Uy-Ek
+	for gcvg-git@gmane.org; Thu, 31 Aug 2006 13:19:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751461AbWHaLPM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 31 Aug 2006 07:15:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751480AbWHaLPM
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 07:15:12 -0400
-Received: from mail.gmx.de ([213.165.64.20]:55181 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751461AbWHaLPJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Aug 2006 07:15:09 -0400
-Received: (qmail invoked by alias); 31 Aug 2006 11:15:08 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp019) with SMTP; 31 Aug 2006 13:15:08 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Sergio Callegari <scallegari@arces.unibo.it>
-In-Reply-To: <44F6A198.4040902@arces.unibo.it>
-X-Y-GMX-Trusted: 0
+	id S1751271AbWHaLT1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 31 Aug 2006 07:19:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751511AbWHaLT1
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 07:19:27 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:23692 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751271AbWHaLT1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Aug 2006 07:19:27 -0400
+Received: (qmail 11545 invoked by uid 2001); 31 Aug 2006 13:19:25 +0200
+To: Jorma Karvonen <karvjorm@users.sourceforge.net>
+Content-Disposition: inline
+In-Reply-To: <44F6C262.8040605@users.sourceforge.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26250>
 
-Hi,
+  Hi,
 
-On Thu, 31 Aug 2006, Sergio Callegari wrote:
+Dear diary, on Thu, Aug 31, 2006 at 01:05:06PM CEST, I got a letter
+where Jorma Karvonen <karvjorm@users.sourceforge.net> said that...
+> I tried to compile git, but got the following error:
 
-> Now I am going to have the fixed archive and also a new archive, which I
-> restarted from the latest working copy I had of my project.
-> Is there any way to automatically do real "surgery" to attach one to the other
-> and get a single archive with all the history?
+  try doing
 
-You can "graft" the new onto the old branch:
+	make NEEDS_LIBICONV=1
 
-If <40-hex-chars-old> is the commit id of the youngest commit of the 
-reconstructed branch, and <40-hex-chars-new> is the commit id of the 
-initial commit of the newly started branch, you can put this line into 
-.git/info/grafts:
+or running ./configure if you have git version new enough. If that
+doesn't help, what git version are trying to compile on what kind of
+system?
 
-<40-hex-chars-new> <40-hex-chars-old>
+> http://web.maxinetti.fi/maxi.joka/git_snapshot_20060831_error1.png
 
-This will make git believe that the initial commit is no initial commit, 
-but has the old head as single parent. And yes, AFAICT all git tools 
-support this. I used this technique many times to be able to merge 
-unrelated developments.
+  Please paste error messages as plain text, not screenshots. Thanks.
 
-NOTE! This is the quickest way if you want to have the history _locally_.
+> Please, can you forward that link to developers of git.
 
-If you want to be able to distribute it (or synchronize it between your 
-laptop and PC _with git!_), you can rewrite the history by either 
-git-rebase, or by using cg-admin-rewritehist if you are using cogito.
+  The developers are listening eagerly at git@vger.kernel.org.
 
-Unfortunately, I do not use cogito nor git-rebase, so if you want to walk 
-that path, others have to help. (And most likely, we'd put the result into 
-Documentation/howto/.)
+  Kind regards,
 
-Ciao,
-Dscho
-
-P.S.: Of course, if you do not insist on a super clean history, you can 
-fake a merge. Just put <40-hex-chars-old> into .git/MERGE_HEAD and commit. 
-This will pretend that your new head and your old head were merged, and 
-the result is the new head. This _should_ even work with git-bisect, but 
-it is slightly ugly.
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Snow falling on Perl. White noise covering line noise.
+Hides all the bugs too. -- J. Putnam
