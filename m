@@ -1,75 +1,145 @@
 From: Franck Bui-Huu <vagabon.xyz@gmail.com>
-Subject: [PATCH 2/3] daemon.c: added upload-tar service
-Date: Thu, 31 Aug 2006 14:35:22 +0200
-Message-ID: <11570277232250-git-send-email-vagabon.xyz@gmail.com>
-References: <11570277231100-git-send-email-vagabon.xyz@gmail.com>
-Cc: git@vger.kernel.org, Franck Bui-Huu <vagabon.xyz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 31 14:35:48 2006
+Subject: Re: [PATCH 1/3] daemon.c: introduce daemon's service
+Date: Thu, 31 Aug 2006 15:07:00 +0200
+Message-ID: <44F6DEF4.6000609@innova-card.com>
+References: <11570277231100-git-send-email-vagabon.xyz@gmail.com> <1157027723594-git-send-email-vagabon.xyz@gmail.com>
+Reply-To: Franck <vagabon.xyz@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: junkio@cox.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 31 15:07:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GIllb-0003S9-U7
-	for gcvg-git@gmane.org; Thu, 31 Aug 2006 14:35:32 +0200
+	id 1GImGE-0001D4-JQ
+	for gcvg-git@gmane.org; Thu, 31 Aug 2006 15:07:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932076AbWHaMfa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 31 Aug 2006 08:35:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932105AbWHaMf3
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 08:35:29 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:51562 "EHLO
+	id S932196AbWHaNHF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 31 Aug 2006 09:07:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932195AbWHaNHF
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 09:07:05 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:15589 "EHLO
 	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S932076AbWHaMf1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Aug 2006 08:35:27 -0400
-Received: by nf-out-0910.google.com with SMTP id x30so387462nfb
-        for <git@vger.kernel.org>; Thu, 31 Aug 2006 05:35:26 -0700 (PDT)
+	id S932196AbWHaNHD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Aug 2006 09:07:03 -0400
+Received: by nf-out-0910.google.com with SMTP id x30so394085nfb
+        for <git@vger.kernel.org>; Thu, 31 Aug 2006 06:07:02 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=MPt71qxr/H+iWew4lbx14Al3wrgmEy1ia8PjFIzRZBrV4Qk0kW1mJ/S+aNFOYh+L+g0ZjKpB9/LG1syVm1x26cFUio1z73xNEzQ3cII8b4EWGVSi9KH1o8+2jhbmsSWv/yzBHu2dWk+9ahjGy2/8nskNr2UxE5OM46TKoqnsF8E=
-Received: by 10.49.29.3 with SMTP id g3mr1256112nfj;
-        Thu, 31 Aug 2006 05:35:25 -0700 (PDT)
-Received: from spoutnik.innova-card.com ( [194.3.162.233])
-        by mx.gmail.com with ESMTP id k9sm1559483nfc.2006.08.31.05.35.23;
-        Thu, 31 Aug 2006 05:35:24 -0700 (PDT)
-Received: by spoutnik.innova-card.com (Postfix, from userid 500)
-	id D075B23F76F; Thu, 31 Aug 2006 14:35:23 +0200 (CEST)
-To: junkio@cox.net
-X-Mailer: git-send-email 1.4.2
-In-Reply-To: <11570277231100-git-send-email-vagabon.xyz@gmail.com>
+        h=received:message-id:date:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        b=Q7FNqvn/AuO1APk1W5Mvb8px2rESYO1ka0islsEs8CDratdUvKU41KHMgj6r1aRCCHEqj5RZMJMsf7M5gZXaPYAnnwh5c0YGr+mK8OFFv4l/2+f9DP9BfkDsU4uLqrxHG1B5tw0Fwx65jLphKtcYUKSxM0lxULA7x3eWFsgTXEA=
+Received: by 10.49.10.3 with SMTP id n3mr1327655nfi;
+        Thu, 31 Aug 2006 06:07:01 -0700 (PDT)
+Received: from ?192.168.0.24? ( [194.3.162.233])
+        by mx.gmail.com with ESMTP id l38sm1609365nfc.2006.08.31.06.07.00;
+        Thu, 31 Aug 2006 06:07:01 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.4 (X11/20060614)
+To: Franck Bui-Huu <vagabon.xyz@gmail.com>
+In-Reply-To: <1157027723594-git-send-email-vagabon.xyz@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26259>
 
-Signed-off-by: Franck Bui-Huu <vagabon.xyz@gmail.com>
----
- daemon.c |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
+Franck Bui-Huu wrote:
+> Signed-off-by: Franck Bui-Huu <vagabon.xyz@gmail.com>
+> ---
+>  daemon.c |   78 ++++++++++++++++++++++++++++++++++++++++++++++++--------------
+>  1 files changed, 61 insertions(+), 17 deletions(-)
+> 
+> diff --git a/daemon.c b/daemon.c
+> index 66ec830..ed3a13d 100644
+> --- a/daemon.c
+> +++ b/daemon.c
+> @@ -232,16 +232,57 @@ static char *path_ok(char *dir)
+>  	return NULL;		/* Fallthrough. Deny by default */
+>  }
+>  
+> -static int upload(char *dir)
+> +/*
+> + * Services we're able to deal with.
+> + */
+> +static int service_upload_pack(const char *dir, const char *args)
+>  {
+>  	/* Timeout as string */
+>  	char timeout_buf[64];
+> +
+> +	snprintf(timeout_buf, sizeof timeout_buf, "--timeout=%u", timeout);
+> +
+> +	/* git-upload-pack only ever reads stuff, so this is safe */
+> +	execl_git_cmd("upload-pack", "--strict", timeout_buf, ".", NULL);
+> +	return -1;
+> +}
+> +
+> +/* service options */
+> +#define NEED_REPO	(1<<0)
+> +
+> +struct service_info {
+> +	const char *name;
+> +	int (*fn)(const char *dir, const char *args);
+> +	int options;
+> +};
+> +
+> +static struct service_info services[] = {
+> +	{ "git-upload-pack", service_upload_pack, NEED_REPO },
+> +};
+> +
+> +static int run_service(char *cmdline)
+> +{
+> +	struct service_info *serv;
+>  	const char *path;
+> +	size_t len;
+> +	int i;
+>  
+> -	loginfo("Request for '%s'", dir);
+> +	for (i = 0; i < ARRAY_SIZE(services); i++) {
+> +		serv = &services[i];
+> +		
 
-diff --git a/daemon.c b/daemon.c
-index ed3a13d..381e6ae 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -247,6 +247,12 @@ static int service_upload_pack(const cha
- 	return -1;
- }
- 
-+static int service_upload_tar(const char *dir, const char *args)
-+{
-+	execl_git_cmd("upload-tar", dir, NULL);
-+	return -1;
-+}
-+
- /* service options */
- #define NEED_REPO	(1<<0)
- 
-@@ -258,6 +264,7 @@ struct service_info {
- 
- static struct service_info services[] = {
- 	{ "git-upload-pack", service_upload_pack, NEED_REPO },
-+	{ "git-upload-tar", service_upload_tar, NEED_REPO },
- };
- 
- static int run_service(char *cmdline)
--- 
-1.4.2
+OMG, trailing white spaces !
+
+> +		len = strlen(serv->name);
+> +		if (strncmp(cmdline, serv->name, len))
+> +			continue;
+> +		if (cmdline[len] != ' ')
+> +			continue;
+> +		goto found;
+> +	}
+> +	return -1;
+> +found:
+> +	cmdline += len + 1;
+> +	path = NULL;
+>  
+> -	if (!(path = path_ok(dir)))
+> -		return -1;
+> +	loginfo("Request '%s' for '%s'", serv->name, cmdline);
+>  
+>  	/*
+>  	 * Security on the cheap.
+> @@ -253,30 +294,33 @@ static int upload(char *dir)
+>  	 * path_ok() uses enter_repo() and does whitelist checking.
+>  	 * We only need to make sure the repository is exported.
+>  	 */
+> +	if (serv->options & NEED_REPO) {
+> +		if (!(path = path_ok(cmdline)))
+> +			return -1;
+>  
+> -	if (!export_all_trees && access("git-daemon-export-ok", F_OK)) {
+> -		logerror("'%s': repository not exported.", path);
+> -		errno = EACCES;
+> -		return -1;
+> +		if (!export_all_trees && access("git-daemon-export-ok", F_OK)) {
+> +			logerror("'%s': repository not exported.", path);
+> +			errno = EACCES;
+> +			return -1;
+> +		}
+> +		cmdline += strlen(path) + 1;
+>  	}
+> -
+> +	
+
+ditto
+
+		Franck
