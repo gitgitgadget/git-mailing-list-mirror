@@ -1,74 +1,65 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Compiling git-snapshot-20069831
-Date: Thu, 31 Aug 2006 14:24:55 +0200
-Organization: At home
-Message-ID: <ed6ken$8e8$1@sea.gmane.org>
-References: <44F6D016.4050007@users.sourceforge.net> <Pine.LNX.4.63.0608311408350.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Thu Aug 31 14:26:17 2006
+From: Franck Bui-Huu <vagabon.xyz@gmail.com>
+Subject: [PATCH 0/3] git-daemon: plug new upload-tar command
+Date: Thu, 31 Aug 2006 14:35:20 +0200
+Message-ID: <11570277231100-git-send-email-vagabon.xyz@gmail.com>
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 31 14:35:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GIlcL-0001HY-OA
-	for gcvg-git@gmane.org; Thu, 31 Aug 2006 14:25:58 +0200
+	id 1GIlla-0003S9-P0
+	for gcvg-git@gmane.org; Thu, 31 Aug 2006 14:35:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751238AbWHaMZy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 31 Aug 2006 08:25:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751390AbWHaMZy
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 08:25:54 -0400
-Received: from main.gmane.org ([80.91.229.2]:41900 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751238AbWHaMZx (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Aug 2006 08:25:53 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GIlbn-00017o-Pl
-	for git@vger.kernel.org; Thu, 31 Aug 2006 14:25:23 +0200
-Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 31 Aug 2006 14:25:23 +0200
-Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 31 Aug 2006 14:25:23 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S932127AbWHaMf1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 31 Aug 2006 08:35:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932105AbWHaMf1
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 08:35:27 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:32618 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751411AbWHaMf0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Aug 2006 08:35:26 -0400
+Received: by nf-out-0910.google.com with SMTP id x30so387460nfb
+        for <git@vger.kernel.org>; Thu, 31 Aug 2006 05:35:24 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:cc:subject:date:message-id:x-mailer;
+        b=dM+7qcN54YbW/Kjh18djeFpEZFHpvJyKCan6Pb8OaQ+N24CMXiar9RmOfpjlma3RQyNRIN4AGosEOHPkAWdfuzllwJVRbvjUzK4gsgT6fwrGrpwruXQ1IbtZz95ig1TJd1ezKBriqDGnAjUu3fLIVn6RQRjOG9J0pNxm8k+LFVc=
+Received: by 10.48.14.4 with SMTP id 4mr1251247nfn;
+        Thu, 31 Aug 2006 05:35:24 -0700 (PDT)
+Received: from spoutnik.innova-card.com ( [194.3.162.233])
+        by mx.gmail.com with ESMTP id l21sm1543272nfc.2006.08.31.05.35.23;
+        Thu, 31 Aug 2006 05:35:23 -0700 (PDT)
+Received: by spoutnik.innova-card.com (Postfix, from userid 500)
+	id 6C62723F76A; Thu, 31 Aug 2006 14:35:23 +0200 (CEST)
+To: junkio@cox.net
+X-Mailer: git-send-email 1.4.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26255>
 
-Johannes Schindelin wrote:
+Here's a simple patchset that basically teach git-daemon about the
+upload-tar command added by Junio's commit:
 
-> since you do have a recent snapshot, why not try ./configure, as Pasky 
-> suggested?
-> 
-> BTW I cannot read Finnish, but (...)
+217542640ed219c980fff2b3c307c4520120f20f
 
-So when sending error codes it would be better to set LC_ALL=C (or
-equivalent) before producing and sending error message.
+With a patched daemon it's now possible to do:
 
-> (...) it probably says that you do not have curl 
-> installed. configure would detect that, and automatically set NO_CURL=1.
+$ git tar-tree --remote=git://host/path/to/repo HEAD > repo.tar
 
-Without curl http:// and https:// transports won't work. So you perhaps want
-to install curl instead.
+It also creates a 'service' structure to ease future command
+integration (like git internal commands handling does). I'm not sure
+how usefull it will be, but it improves at least code readability.
 
->From INSTALL:
- Alternatively you can use autoconf generated ./configure script to
- set up install paths (via config.mak.autogen), so you can write instead
+Something that may be usefull now is to make git-daemon able to
+compress data it sends back...
 
-        $ make configure ;# as yourself, if configure does not exist
-        $ ./configure --prefix=/usr ;# as yourself
-        $ make all doc ;# as yourself
-        # make install install-doc ;# as root
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+		Franck
+---
+
+ builtin-tar-tree.c |    2 +
+ daemon.c           |   85 ++++++++++++++++++++++++++++++++++++++++++----------
+ git.c              |    2 +
+ 3 files changed, 71 insertions(+), 18 deletions(-)
