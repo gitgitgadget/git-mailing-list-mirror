@@ -1,64 +1,56 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [PATCH] git-rev-list(1): group options; reformat; document more options
-Date: Fri, 1 Sep 2006 01:08:11 +0200
-Message-ID: <20060831230811.GE482@diku.dk>
-References: <20060831223715.GC482@diku.dk> <Pine.LNX.4.64.0608311557470.27779@g5.osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: problem with git-cvsserver
+Date: Fri, 1 Sep 2006 01:13:27 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0609010110540.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <44F5B2A7.8070501@gmail.com> 
+ <Pine.LNX.4.63.0608301904360.28360@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <44F5D6F8.50307@gmail.com> <7vlkp6gh6e.fsf@assigned-by-dhcp.cox.net> 
+ <46a038f90608301329n14df4dd2tb1563cc48662cd14@mail.gmail.com> 
+ <20060831090333.GA28445@fiberbit.xs4all.nl>
+ <46a038f90608311600p747c8a3anbe90dbac928e9923@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 01 01:08:32 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Marco Roeland <marco.roeland@xs4all.nl>,
+	Junio C Hamano <junkio@cox.net>,
+	aonghus <thecolourblue@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 01 01:13:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GIvdz-0004XF-Mi
-	for gcvg-git@gmane.org; Fri, 01 Sep 2006 01:08:20 +0200
+	id 1GIvj8-0005MT-Td
+	for gcvg-git@gmane.org; Fri, 01 Sep 2006 01:13:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750751AbWHaXIQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 31 Aug 2006 19:08:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932107AbWHaXIQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 19:08:16 -0400
-Received: from [130.225.96.91] ([130.225.96.91]:60620 "EHLO mgw1.diku.dk")
-	by vger.kernel.org with ESMTP id S1750751AbWHaXIP (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Aug 2006 19:08:15 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 95C4777004C;
-	Fri,  1 Sep 2006 01:08:12 +0200 (CEST)
-Received: from mgw1.diku.dk ([127.0.0.1])
- by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 08762-12; Fri,  1 Sep 2006 01:08:11 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 766D5770007;
-	Fri,  1 Sep 2006 01:08:11 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id A864C6DF88D; Fri,  1 Sep 2006 01:06:44 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 5DE3E62A06; Fri,  1 Sep 2006 01:08:11 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0608311557470.27779@g5.osdl.org>
-User-Agent: Mutt/1.5.6i
-X-Virus-Scanned: amavisd-new at diku.dk
+	id S1750884AbWHaXNb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 31 Aug 2006 19:13:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964814AbWHaXNb
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 19:13:31 -0400
+Received: from mail.gmx.de ([213.165.64.20]:36247 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751313AbWHaXN3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Aug 2006 19:13:29 -0400
+Received: (qmail invoked by alias); 31 Aug 2006 23:13:27 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp035) with SMTP; 01 Sep 2006 01:13:27 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90608311600p747c8a3anbe90dbac928e9923@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26287>
 
-Linus Torvalds <torvalds@osdl.org> wrote Thu, Aug 31, 2006:
-> 
-> 
-> On Fri, 1 Sep 2006, Jonas Fonseca wrote:
-> >
-> > An attempted facelift to the neglected git-rev-list manpage. One
-> > question if I may, the diff-related -r and -t options, how are they
-> > supposed to work?
-> 
-> Umm? You should get a "usage" error, no?
+Hi,
 
-Yes, ok, they do not seem to make sense for git-rev-list, however if you
-pass either to git-log, the output seems to make room for a diff, adding
-one extra newline, but without appending any diff.
+On Fri, 1 Sep 2006, Martin Langhoff wrote:
 
--- 
-Jonas Fonseca
+> Pg/MySQL aren't really supported, though it wouldn't be that hard.
+
+AFAIK Pg/MySQL/all-the-others want to have a common place where to put the 
+database files. This is a huge disadvantage over SQLite, where you can put 
+it anywhere you want (e.g. /blabla/.git/...). This also makes installation 
+way easier.
+
+Ciao,
+Dscho
