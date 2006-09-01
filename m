@@ -1,75 +1,108 @@
-From: Jorma Karvonen <karvjorm@users.sourceforge.net>
-Subject: Re: Compiling git-snapshot-20069831
-Date: Fri, 01 Sep 2006 16:30:58 +0300
-Message-ID: <44F83612.6070707@users.sourceforge.net>
-References: <44F6D016.4050007@users.sourceforge.net> <Pine.LNX.4.63.0608311408350.28360@wbgn013.biozentrum.uni-wuerzburg.de> <44F6F478.1070708@users.sourceforge.net> <Pine.LNX.4.63.0608311727010.28360@wbgn013.biozentrum.uni-wuerzburg.de> <44F71557.1080404@users.sourceforge.net> <Pine.LNX.4.63.0608311904520.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-Reply-To: karvjorm@users.sourceforge.net
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Joining a fixed archive with its continuation
+Date: Fri, 01 Sep 2006 16:12:04 +0200
+Organization: At home
+Message-ID: <ed9f3e$cvm$1@sea.gmane.org>
+References: <44F81FE5.1040509@arces.unibo.it>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 01 15:31:31 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Fri Sep 01 16:13:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GJ96Y-0003br-0v
-	for gcvg-git@gmane.org; Fri, 01 Sep 2006 15:30:42 +0200
+	id 1GJ9lC-0004CA-VV
+	for gcvg-git@gmane.org; Fri, 01 Sep 2006 16:12:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751283AbWIANai (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Sep 2006 09:30:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751328AbWIANai
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Sep 2006 09:30:38 -0400
-Received: from smtp1.song.fi ([194.100.2.124]:14220 "EHLO smtp1.song.fi")
-	by vger.kernel.org with ESMTP id S1751283AbWIANai (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Sep 2006 09:30:38 -0400
-Received: from [192.168.1.34] (dsl-60-2-216-83.maxinetti.fi [83.216.2.60])
-	by smtp1.song.fi (Postfix) with ESMTP id 1C3C817CE96;
-	Fri,  1 Sep 2006 16:30:37 +0300 (EEST)
-User-Agent: Thunderbird 2.0a1 (X11/20060724)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0608311904520.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S1751334AbWIAOMb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 1 Sep 2006 10:12:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750881AbWIAOMb
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Sep 2006 10:12:31 -0400
+Received: from main.gmane.org ([80.91.229.2]:46497 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750812AbWIAOMa (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Sep 2006 10:12:30 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GJ9kb-000439-OA
+	for git@vger.kernel.org; Fri, 01 Sep 2006 16:12:05 +0200
+Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 01 Sep 2006 16:12:05 +0200
+Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 01 Sep 2006 16:12:05 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26301>
 
-Johannes Schindelin wrote:
-> Hi,
->
-> On Thu, 31 Aug 2006, Jorma Karvonen wrote:
->
->   
->> I tried
+Sergio Callegari wrote:
+
+>> If you want to be able to distribute it (or synchronize it between y=
+our=20
+>> laptop and PC _with git!_), you can rewrite the history by either=20
+>> git-rebase, or by using cg-admin-rewritehist if you are using cogito=
+=2E
 >>
->> make configure
->>
->> and got an error message:
->>
->> /bin/sh: curl-config: command not found
->> make: **** No rule to make target `configure'. Stop.
->>     
->
-> Okay. I deem this a bug in our Makefile.
->
-> Could you please try "autoconf" and _then_ "./configure"?
->
-> Hth,
-> Dscho
->
->   
-Hi,
+>> =A0=20
+> I have tried using git-rebase (I do not have cg, at least not yet).
+> However I am encountering some problems...
+>=20
+> Everything is fine with the master branch of my continuation archive =
+doing
+>=20
+> git rebase fixed-master master
+>=20
+> (where fixed-master is the master head of the recovered archive)
+> This does the trick nicely. I.e. I start with
+>=20
+> A---B---C---D =A0 =A0E---F---G---H---I
+>=20
+>=20
+> where D is fixed-master and I is master, and I end up with
+>=20
+> A---B---C---D---E'---F'---G'---H'---I'
+>=20
+> plus the older tree E---...---I
+>=20
+> However I am then in trouble with the other branches of the continuat=
+ion
+> archive, which I simply cannot get right...
+> In fact, E...I has actually a branch, say at G, like in
+>=20
+> E---F---G---H---I
+> =A0 =A0 =A0 =A0 =A0\
+> =A0 =A0 =A0 =A0 =A0 --M---N
+>=20
+>=20
+> And I cannot make an M'---N' based at G'... the best that I am
+> succeeding in is building an
+>=20
+> E''--F''--G''--M'--N'=20
+>=20
+> based on D.
 
-I tried git-snapshot-20060901 and everything is now OK.
+It is where --onto parameter of git-rebase is used. It means you use
+<upstream> parameter to identify main branch in the continuation archiv=
+e,
+<branch> parameter being the branch you want to transplant into main
+archive (i.e. <upstream>..<branch> being the part you want to
+transplant/rebase), and '--onto <newbase>' with <newbase> being the new
+fork point.
 
-make prefix=/usr/local NEEDS_LIBICONV=1 NO_CURL=1
+So in the abovementioned case, try
 
-and
+        git rebase --onto G' I N=20
 
-make prefix=/usr/local NEEDS_LIBICONV=1 NO_CURL=1 install
-
-were the correct commands and git is now installed.
-
-Thank you very much,
-
-Jorma Karvonen
+and tell us if it works.
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
