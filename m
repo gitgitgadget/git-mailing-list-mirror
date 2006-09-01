@@ -1,103 +1,221 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [PATCH] git-rev-list(1): group options; reformat; document more options
-Date: Fri, 1 Sep 2006 22:33:48 +0200
-Message-ID: <20060901203348.GA27515@diku.dk>
-References: <20060831223715.GC482@diku.dk> <Pine.LNX.4.64.0608311557470.27779@g5.osdl.org> <20060831230811.GE482@diku.dk> <Pine.LNX.4.64.0608311611440.27779@g5.osdl.org> <7vsljc78m9.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] pack-objects: re-validate data we copy from elsewhere.
+Date: Fri, 01 Sep 2006 16:14:23 -0700
+Message-ID: <7vveo741tc.fsf_-_@assigned-by-dhcp.cox.net>
+References: <20060829165811.GB21729@spearce.org>
+	<9e4733910608291037k2d9fb791v18abc19bdddf5e89@mail.gmail.com>
+	<20060829175819.GE21729@spearce.org>
+	<9e4733910608291155g782953bbv5df1b74878f4fcf1@mail.gmail.com>
+	<20060829190548.GK21729@spearce.org>
+	<9e4733910608291252q130fc723r945e6ab906ca6969@mail.gmail.com>
+	<20060829232007.GC22935@spearce.org>
+	<9e4733910608291807q9b896e4sdbfaa9e49de58c2b@mail.gmail.com>
+	<20060830015122.GE22935@spearce.org>
+	<9e4733910608291958l45c0257dla6e5ebd4176f7164@mail.gmail.com>
+	<20060830031029.GA23967@spearce.org>
+	<Pine.LNX.4.64.0608300124550.9796@xanadu.home>
+	<7vzmdmh2lu.fsf@assigned-by-dhcp.cox.net> <44F871BA.3070303@gmail.com>
+	<Pine.LNX.4.64.0609011129270.27779@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Timo Hirvonen <tihirvon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 01 22:34:12 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 02 01:14:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GJFiH-0005D7-6G
-	for gcvg-git@gmane.org; Fri, 01 Sep 2006 22:34:05 +0200
+	id 1GJIDP-0002jU-Mt
+	for gcvg-git@gmane.org; Sat, 02 Sep 2006 01:14:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751241AbWIAUeA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Sep 2006 16:34:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750846AbWIAUd7
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Sep 2006 16:33:59 -0400
-Received: from [130.225.96.91] ([130.225.96.91]:48870 "EHLO mgw1.diku.dk")
-	by vger.kernel.org with ESMTP id S1750849AbWIAUd6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Sep 2006 16:33:58 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id E29A4770075;
-	Fri,  1 Sep 2006 22:33:50 +0200 (CEST)
-Received: from mgw1.diku.dk ([127.0.0.1])
- by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 08916-07; Fri,  1 Sep 2006 22:33:49 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 1FA4477006C;
-	Fri,  1 Sep 2006 22:33:49 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 330D66DF88D; Fri,  1 Sep 2006 22:32:21 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 036C262A06; Fri,  1 Sep 2006 22:33:48 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vsljc78m9.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.6i
-X-Virus-Scanned: amavisd-new at diku.dk
+	id S1751162AbWIAXOS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 1 Sep 2006 19:14:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751207AbWIAXOS
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Sep 2006 19:14:18 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:44533 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751162AbWIAXOR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Sep 2006 19:14:17 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060901231417.NFHX12909.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 1 Sep 2006 19:14:17 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id HBEG1V01G1kojtg0000000
+	Fri, 01 Sep 2006 19:14:18 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0609011129270.27779@g5.osdl.org> (Linus Torvalds's
+	message of "Fri, 1 Sep 2006 11:35:23 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26312>
 
-Junio C Hamano <junkio@cox.net> wrote Thu, Aug 31, 2006:
-> Linus Torvalds <torvalds@osdl.org> writes:
-> 
-> > On Fri, 1 Sep 2006, Jonas Fonseca wrote:
-> >
-> >> [The "-r" and "-t" option] do not seem to make sense for
-> >> git-rev-list, however if you pass either to git-log, the output
-> >> seems to make room for a diff, adding one extra newline, but
-> >> without appending any diff.
-> >
-> > Ahh. I think that a "-r" without any other request for patches (or
-> > "--name-status" or similar) should probably imply "--raw". At least
-> > that was how it historically worked..
+When reusing data from an existing pack and from a new style
+loose objects, we used to just copy it staight into the
+resulting pack.  Instead make sure they are not corrupt, but
+do so only when we are not streaming to stdout, in which case
+the receiving end will do the validation either by unpacking
+the stream or by constructing the .idx file.
 
-:set paste
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-commit 17985627455901b6ae3a471b67d46239463cebb5
-Author: Timo Hirvonen <tihirvon@gmail.com>
-Date:   Tue Jun 27 16:27:51 2006 +0300
+  Linus Torvalds <torvalds@osdl.org> writes:
 
-    log --raw: Don't descend into subdirectories by default
+  > On Fri, 1 Sep 2006, A Large Angry SCM wrote:
+  >> 
+  >> Unfortunately, the zlib CRC is of the _uncompressed_ data [1], so
+  >> inflating the stream is still necessary to check for corruption.
+  >
+  > I don't think that is unfortunate.
+  >
+  > We really should inflate the stream anyway, since not only inflating it, 
+  > but also applying any deltas to the base object is really the only way to 
+  > verify its correctness for a delta thing. Otherwise, the SHA1 of the base 
+  > could be totally corrupt.
+  >
+  > And once you inflate it and apply all deltas, you obviously also get the 
+  > full SHA1 check, so you're _really_ safe.
+  >
+  > So let's do the really safe thing first, and see if it actually results in 
+  > any problems.
 
-    Only do so when -r is given.
+  So here is an attempt to do this.
 
-> > Anyway, _if_ it ever worked (and I think it did, but I'm way too lazy to 
-> > bother checking), this may have been broken by the extensive diff option 
-> > cleanups by Timo in June. Timo? Junio?
-> 
-> I think it did too.  I am kind of surprised that nobody noticed
-> and t4013 test (which was done specifically to catch potential
-> behaviour change by Timo's patch) did not check for this
-> particular case.
+ builtin-pack-objects.c |   64 +++++++++++++++++++++++++++++++++++++++++++++---
+ 1 files changed, 60 insertions(+), 4 deletions(-)
 
-commit 0e677e1a6b0d1c0e848ed19d18dda1c3c797c75e
-Author: Timo Hirvonen <tihirvon@gmail.com>
-Date:   Sat Jun 24 20:25:08 2006 +0300
-
-    DIFF_FORMAT_RAW is not default anymore
-
-    diff_setup() used to initialize output_format to DIFF_FORMAT_RAW.  Now
-    the default is 0 (no output) so don't compare against DIFF_FORMAT_RAW to
-    see if any diff format command line flags were given.
-
-:set nopaste
-
-So they are working as intended. I'll look into updating the patch.
-
-BTW, --author=timo made this very easy. ;)
-
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 46f524d..10ba866 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -65,6 +65,7 @@ static unsigned char pack_file_sha1[20];
+ static int progress = 1;
+ static volatile sig_atomic_t progress_update;
+ static int window = 10;
++static int pack_to_stdout;
+ 
+ /*
+  * The object names in objects array are hashed with this hashtable,
+@@ -242,6 +243,55 @@ static int encode_header(enum object_typ
+ 	return n;
+ }
+ 
++static int revalidate_one(struct object_entry *entry,
++			  void *data, char *type, unsigned long size)
++{
++	unsigned char hdr[50];
++	int hdrlen;
++	unsigned char sha1[20];
++
++	if (!data)
++		return -1;
++	if (size != entry->size)
++		return -1;
++	write_sha1_file_prepare(data, size, type, sha1, hdr, &hdrlen);
++	free(data);
++	if (hashcmp(sha1, entry->sha1))
++		return -1;
++	return 0;
++}
++
++/*
++ * we are going to reuse the existing pack entry data.  make
++ * sure it is not corrupt.
++ */
++static int revalidate_pack_entry(struct object_entry *entry)
++{
++	void *data;
++	char type[20];
++	unsigned long size;
++	struct pack_entry e;
++
++	e.p = entry->in_pack;
++	e.offset = entry->in_pack_offset;
++
++	/* the caller has already called use_packed_git() for us */
++	data = unpack_entry_gently(&e, type, &size);
++	return revalidate_one(entry, data, type, size);
++}
++
++static int revalidate_loose_object(struct object_entry *entry,
++				   unsigned char *map,
++				   unsigned long mapsize)
++{
++	/* we already know this is a loose object with new type header. */
++	void *data;
++	char type[20];
++	unsigned long size;
++	data = unpack_sha1_file(map, mapsize, type, &size);
++	return revalidate_one(entry, data, type, size);
++}
++
+ static unsigned long write_object(struct sha1file *f,
+ 				  struct object_entry *entry)
+ {
+@@ -276,6 +326,9 @@ static unsigned long write_object(struct
+ 		map = map_sha1_file(entry->sha1, &mapsize);
+ 		if (map && !legacy_loose_object(map)) {
+ 			/* We can copy straight into the pack file */
++			if (revalidate_loose_object(entry, map, mapsize))
++				die("corrupt loose object %s",
++				    sha1_to_hex(entry->sha1));
+ 			sha1write(f, map, mapsize);
+ 			munmap(map, mapsize);
+ 			written++;
+@@ -286,7 +339,7 @@ static unsigned long write_object(struct
+ 			munmap(map, mapsize);
+ 	}
+ 
+-	if (! to_reuse) {
++	if (!to_reuse) {
+ 		buf = read_sha1_file(entry->sha1, type, &size);
+ 		if (!buf)
+ 			die("unable to read %s", sha1_to_hex(entry->sha1));
+@@ -319,6 +372,9 @@ static unsigned long write_object(struct
+ 
+ 		datalen = find_packed_object_size(p, entry->in_pack_offset);
+ 		buf = (char *) p->pack_base + entry->in_pack_offset;
++
++		if (revalidate_pack_entry(entry))
++			die("corrupt delta in pack %s", sha1_to_hex(entry->sha1));
+ 		sha1write(f, buf, datalen);
+ 		unuse_packed_git(p);
+ 		hdrlen = 0; /* not really */
+@@ -1163,7 +1219,7 @@ static void prepare_pack(int window, int
+ 		find_deltas(sorted_by_type, window+1, depth);
+ }
+ 
+-static int reuse_cached_pack(unsigned char *sha1, int pack_to_stdout)
++static int reuse_cached_pack(unsigned char *sha1)
+ {
+ 	static const char cache[] = "pack-cache/pack-%s.%s";
+ 	char *cached_pack, *cached_idx;
+@@ -1247,7 +1303,7 @@ int cmd_pack_objects(int argc, const cha
+ {
+ 	SHA_CTX ctx;
+ 	char line[40 + 1 + PATH_MAX + 2];
+-	int depth = 10, pack_to_stdout = 0;
++	int depth = 10;
+ 	struct object_entry **list;
+ 	int num_preferred_base = 0;
+ 	int i;
+@@ -1367,7 +1423,7 @@ int cmd_pack_objects(int argc, const cha
+ 	if (progress && (nr_objects != nr_result))
+ 		fprintf(stderr, "Result has %d objects.\n", nr_result);
+ 
+-	if (reuse_cached_pack(object_list_sha1, pack_to_stdout))
++	if (reuse_cached_pack(object_list_sha1))
+ 		;
+ 	else {
+ 		if (nr_result)
 -- 
-Jonas Fonseca
+1.4.2.ga2654
+
+
 
 -- 
 VGER BF report: U 0.5
