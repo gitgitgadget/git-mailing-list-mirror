@@ -1,76 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] t5710: fix two thinkos.
-Date: Thu, 31 Aug 2006 17:07:08 -0700
-Message-ID: <7vmz9k78lv.fsf@assigned-by-dhcp.cox.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: problem with git-cvsserver
+Date: Fri, 1 Sep 2006 12:07:19 +1200
+Message-ID: <46a038f90608311707t4ab5fc2fj45e852df4b91870f@mail.gmail.com>
+References: <44F5B2A7.8070501@gmail.com>
+	 <Pine.LNX.4.63.0608301904360.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <44F5D6F8.50307@gmail.com> <7vlkp6gh6e.fsf@assigned-by-dhcp.cox.net>
+	 <46a038f90608301329n14df4dd2tb1563cc48662cd14@mail.gmail.com>
+	 <20060831090333.GA28445@fiberbit.xs4all.nl>
+	 <46a038f90608311600p747c8a3anbe90dbac928e9923@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Waitz <tali@admingilde.org>
-X-From: git-owner@vger.kernel.org Fri Sep 01 02:06:16 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	aonghus <thecolourblue@gmail.com>, git@vger.kernel.org,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Sep 01 02:07:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GIwXx-00054i-Pk
-	for gcvg-git@gmane.org; Fri, 01 Sep 2006 02:06:10 +0200
+	id 1GIwZB-0005E4-Ab
+	for gcvg-git@gmane.org; Fri, 01 Sep 2006 02:07:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932494AbWIAAGE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 31 Aug 2006 20:06:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932499AbWIAAGE
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 20:06:04 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:40950 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S932494AbWIAAGB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Aug 2006 20:06:01 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060901000601.LTAZ6077.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 31 Aug 2006 20:06:01 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Go611V00R1kojtg0000000
-	Thu, 31 Aug 2006 20:06:01 -0400
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S964823AbWIAAHW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 31 Aug 2006 20:07:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964824AbWIAAHW
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Aug 2006 20:07:22 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:38561 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S964823AbWIAAHV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Aug 2006 20:07:21 -0400
+Received: by nf-out-0910.google.com with SMTP id x30so554446nfb
+        for <git@vger.kernel.org>; Thu, 31 Aug 2006 17:07:20 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=sNMokca0PlSFZ5+97PGol1aYB02UyfxlK/Z5A+Gr/ReF5fQBl7aHXsLByqBAbmr4VtK3+4pGLta80VDRm9uqO5l5yWnETsY1ir96aBvLnIW1cWgK2ey59wITNdEf9WprcJpUB1ElGnRq+nzJAsR15aHe3qsQVLYGGS1nT1xFyWE=
+Received: by 10.49.8.4 with SMTP id l4mr2288413nfi;
+        Thu, 31 Aug 2006 17:07:20 -0700 (PDT)
+Received: by 10.49.6.16 with HTTP; Thu, 31 Aug 2006 17:07:19 -0700 (PDT)
+To: "Marco Roeland" <marco.roeland@xs4all.nl>
+In-Reply-To: <46a038f90608311600p747c8a3anbe90dbac928e9923@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26293>
 
-The intention of the test seems to be to build a long chain of
-clones that locally borrow objects from their parents and see the
-system give up dereferencing long chains.  There were two problems:
+On 9/1/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> I have to say though: Ouch. Do you know if there's an upgrade path for
+> apps? Does v3 detect you've got a v2 file and do something smart
+> (upgrade in place / spit out a readable error)?
 
- (1) it did not test the right repository;
- (2) it did not build a chain long enough to trigger the limitation.
+Oh, grumble. See the comment at the bottom of
+http://www.sqlite.org/formatchng.html
 
-I do not think it is a good test to make sure the limitation the
-current implementation happens to have still exists, but that is
-a topic at a totally different level.
+We may need to add something in the doco pointing to this "technique",
+and perhaps the URL as later versions may do something different.
 
-At least this fixes the broken test.
+I do wonder what the debian packaging does, perhaps the v3 package
+forces an upgrade to the v2 package that renames the cli binary? I
+guess the drawback of having the DBs anywhere in the FS is that the
+packaging can't upgrade them for you as it does with Pg for instance
+:(
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
 
- * Spotted this after the fix to git-fsck-objects by Linus not
-   to require a valid HEAD.
 
- t/t5710-info-alternate.sh |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/t/t5710-info-alternate.sh b/t/t5710-info-alternate.sh
-index 2e1b48a..b9f6d96 100755
---- a/t/t5710-info-alternate.sh
-+++ b/t/t5710-info-alternate.sh
-@@ -58,6 +58,8 @@ test_expect_failure 'creating too deep n
- git clone -l -s D E &&
- git clone -l -s E F &&
- git clone -l -s F G &&
-+git clone -l -s G H &&
-+cd H &&
- test_valid_repo'
- 
- cd "$base_dir"
--- 
-1.4.2.g2782
+m
