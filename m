@@ -1,63 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Joining a fixed archive with its continuation
-Date: Fri, 1 Sep 2006 16:37:50 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0609011634370.28360@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <44F81FE5.1040509@arces.unibo.it>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: Mozilla .git tree
+Date: Fri, 01 Sep 2006 10:45:30 -0700
+Message-ID: <44F871BA.3070303@gmail.com>
+References: <20060829165811.GB21729@spearce.org>	<9e4733910608291037k2d9fb791v18abc19bdddf5e89@mail.gmail.com>	<20060829175819.GE21729@spearce.org>	<9e4733910608291155g782953bbv5df1b74878f4fcf1@mail.gmail.com>	<20060829190548.GK21729@spearce.org>	<9e4733910608291252q130fc723r945e6ab906ca6969@mail.gmail.com>	<20060829232007.GC22935@spearce.org>	<9e4733910608291807q9b896e4sdbfaa9e49de58c2b@mail.gmail.com>	<20060830015122.GE22935@spearce.org>	<9e4733910608291958l45c0257dla6e5ebd4176f7164@mail.gmail.com>	<20060830031029.GA23967@spearce.org>	<Pine.LNX.4.64.0608300124550.9796@xanadu.home> <7vzmdmh2lu.fsf@assigned-by-dhcp.cox.net>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 01 16:38:02 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Fri Sep 01 19:45:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GJA9c-0001ZF-Uw
-	for gcvg-git@gmane.org; Fri, 01 Sep 2006 16:37:57 +0200
+	id 1GJD5F-0004Ap-Dw
+	for gcvg-git@gmane.org; Fri, 01 Sep 2006 19:45:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932094AbWIAOhw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Sep 2006 10:37:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932097AbWIAOhw
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Sep 2006 10:37:52 -0400
-Received: from mail.gmx.de ([213.165.64.20]:29846 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932094AbWIAOhw (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Sep 2006 10:37:52 -0400
-Received: (qmail invoked by alias); 01 Sep 2006 14:37:50 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp037) with SMTP; 01 Sep 2006 16:37:50 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Sergio Callegari <scallegari@arces.unibo.it>
-In-Reply-To: <44F81FE5.1040509@arces.unibo.it>
-X-Y-GMX-Trusted: 0
+	id S1751289AbWIARpe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 1 Sep 2006 13:45:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751303AbWIARpe
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Sep 2006 13:45:34 -0400
+Received: from wx-out-0506.google.com ([66.249.82.237]:33577 "EHLO
+	wx-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1751289AbWIARpe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Sep 2006 13:45:34 -0400
+Received: by wx-out-0506.google.com with SMTP id s14so1071360wxc
+        for <git@vger.kernel.org>; Fri, 01 Sep 2006 10:45:33 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=eO4oUpYsgGcaFiQBQpuFdsn/FuibSQZ/V6eXRZtfP0wJTZNvEIf+c+VvaWGLLzX4fMxk/94dKkWHHMDT+5TWv7mS/ZGQKQPbd2RFAwwqOHyXPMoP6Qp2pZY6VzNYMWyBouPHtMWI6EWa9W1tXa7iFoTh+pdn92bRCXpeKiXlqro=
+Received: by 10.70.129.5 with SMTP id b5mr2873160wxd;
+        Fri, 01 Sep 2006 10:45:33 -0700 (PDT)
+Received: from ?10.0.0.6? ( [67.20.67.8])
+        by mx.gmail.com with ESMTP id g2sm2125241wra.2006.09.01.10.45.32;
+        Fri, 01 Sep 2006 10:45:32 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.5 (X11/20060725)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmdmh2lu.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26303>
 
-Hi,
-
-On Fri, 1 Sep 2006, Sergio Callegari wrote:
-
-> > P.S.: Of course, if you do not insist on a super clean history, you can fake
-> > a merge. Just put <40-hex-chars-old> into .git/MERGE_HEAD and commit. This
-> > will pretend that your new head and your old head were merged, and the
-> > result is the new head. This _should_ even work with git-bisect, but it is
-> > slightly ugly.
+Junio C Hamano wrote:
+> Nicolas Pitre <nico@cam.org> writes:
 > 
-> Before I try, can you better explain me what shall go on in this case?
-> The man page of commit actually does not say much about commit behavior
-> during a merge (i.e. with MERGE_HEAD set).
+>> And the zlib header contains a CRC which we're about to use for 
+>> validating the data when doing delta data reuse in order to prevent pack 
+>> corruption propagation like the one recently posted on the list.  
+> 
+> Ah, never thought of using the CRC directly.  I was thinking
+> about inflating into void and see if it succeeds, which as you
+> say is perhaps quite expensive.
 
-A merge commit is almost the same as a regulaar commit; the only 
-difference is that you provide multiple parents to a merge commit. The 
-first parent is always the current head. And the other parents are in 
-.git/MERGE_HEAD (one commit SHA1 per line).
+Unfortunately, the zlib CRC is of the _uncompressed_ data [1], so
+inflating the stream is still necessary to check for corruption.
 
-So, putting the fixed-master SHA1 into .git/MERGE_HEAD pretends that the 
-fixed-master merged with the current master is the current master.
-
->From a view point of correctness, this is _wrong_. _But_ it would work 
-correctly with pull/push/bisect.
-
-Ciao,
-Dscho
+[1] RFC 1950, "ZLIB Compressed Data Format Specification", May 1996.
+Pages 4-6.
