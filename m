@@ -1,76 +1,81 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Mozilla .git tree
-Date: Fri, 01 Sep 2006 12:56:31 -0700
-Message-ID: <7vfyfb5pjk.fsf@assigned-by-dhcp.cox.net>
-References: <20060829165811.GB21729@spearce.org>
-	<9e4733910608291037k2d9fb791v18abc19bdddf5e89@mail.gmail.com>
-	<20060829175819.GE21729@spearce.org>
-	<9e4733910608291155g782953bbv5df1b74878f4fcf1@mail.gmail.com>
-	<20060829190548.GK21729@spearce.org>
-	<9e4733910608291252q130fc723r945e6ab906ca6969@mail.gmail.com>
-	<20060829232007.GC22935@spearce.org>
-	<9e4733910608291807q9b896e4sdbfaa9e49de58c2b@mail.gmail.com>
-	<20060830015122.GE22935@spearce.org>
-	<9e4733910608291958l45c0257dla6e5ebd4176f7164@mail.gmail.com>
-	<20060830031029.GA23967@spearce.org>
-	<Pine.LNX.4.64.0608300124550.9796@xanadu.home>
-	<7vzmdmh2lu.fsf@assigned-by-dhcp.cox.net> <44F871BA.3070303@gmail.com>
-	<Pine.LNX.4.64.0609011129270.27779@g5.osdl.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: gitweb_check_feature always return list
+Date: Fri, 01 Sep 2006 22:12:29 +0200
+Organization: At home
+Message-ID: <eda475$ob7$1@sea.gmane.org>
+References: <ed8a90$pfn$1@sea.gmane.org> <11571390683018-git-send-email-jnareb@gmail.com> <7vk64n5qep.fsf@assigned-by-dhcp.cox.net> <eda2q0$la8$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 01 21:57:27 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Fri Sep 01 22:13:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GJF8e-0006Mz-6h
-	for gcvg-git@gmane.org; Fri, 01 Sep 2006 21:57:17 +0200
+	id 1GJFO5-0001Jy-8D
+	for gcvg-git@gmane.org; Fri, 01 Sep 2006 22:13:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751445AbWIAT40 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Sep 2006 15:56:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751460AbWIAT40
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Sep 2006 15:56:26 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:13516 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1751445AbWIAT40 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Sep 2006 15:56:26 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060901195625.EVDT12909.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 1 Sep 2006 15:56:25 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id H7wL1V00k1kojtg0000000
-	Fri, 01 Sep 2006 15:56:21 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0609011129270.27779@g5.osdl.org> (Linus Torvalds's
-	message of "Fri, 1 Sep 2006 11:35:23 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751125AbWIAUNJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 1 Sep 2006 16:13:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752136AbWIAUNJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Sep 2006 16:13:09 -0400
+Received: from main.gmane.org ([80.91.229.2]:50845 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751003AbWIAUNG (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Sep 2006 16:13:06 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GJFNh-0001Ej-6j
+	for git@vger.kernel.org; Fri, 01 Sep 2006 22:12:49 +0200
+Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 01 Sep 2006 22:12:49 +0200
+Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 01 Sep 2006 22:12:49 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26310>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+<opublikowany i wys=B3any>
 
-> On Fri, 1 Sep 2006, A Large Angry SCM wrote:
->> 
->> Unfortunately, the zlib CRC is of the _uncompressed_ data [1], so
->> inflating the stream is still necessary to check for corruption.
->
-> I don't think that is unfortunate.
->
-> We really should inflate the stream anyway, since not only inflating it, 
-> but also applying any deltas to the base object is really the only way to 
-> verify its correctness for a delta thing. Otherwise, the SHA1 of the base 
-> could be totally corrupt.
->
-> And once you inflate it and apply all deltas, you obviously also get the 
-> full SHA1 check, so you're _really_ safe.
->
-> So let's do the really safe thing first, and see if it actually results in 
-> any problems.
+Jakub Narebski wrote:
 
-I think this makes sense.
+> Junio C Hamano wrote:
+>=20
+>> Jakub Narebski <jnareb@gmail.com> writes:
+>>=20
+>>> Modified feature_blame so it returns one-element list and not scala=
+r,
+>>> thus making gitweb_check_feature always return list.  Updated comme=
+nt
+>>> to explain that part.
+>>=20
+>> I do not understand what you are fixing.
+>>=20
+>>       sub A { return (1); }
+>>       sub B { return 1; }
+>>=20
+>> Don't they quack the same way?
+>=20
+> Well, that is just nitpicking. gitweb_check_feature returns list if f=
+eature
+> is not overridable, so I made it that it always returns list.
+
+Then I'm not sure if Aneesh Kumar patch I replied to is really necessar=
+y.
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
+
+
+--=20
+VGER BF report: U 0.499824
