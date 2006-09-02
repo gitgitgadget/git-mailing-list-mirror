@@ -1,70 +1,80 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Mozilla version control requirements and git
-Date: Sun, 03 Sep 2006 11:17:13 +0200
-Organization: At home
-Message-ID: <ede6in$b9u$1@sea.gmane.org>
-References: <9e4733910609020731k25ce3a0aw7a84542f8cd516f6@mail.gmail.com> <46a038f90609021819v6d427f0eh69bc13b30ef6b692@mail.gmail.com> <9e4733910609022029q9cb9ba9m87cbc37e8d6f4ad7@mail.gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] pack-objects: re-validate data we copy from elsewhere.
+Date: Sat, 2 Sep 2006 13:54:08 -0400
+Message-ID: <20060902175408.GD27826@spearce.org>
+References: <20060830031029.GA23967@spearce.org> <Pine.LNX.4.64.0608300124550.9796@xanadu.home> <7vzmdmh2lu.fsf@assigned-by-dhcp.cox.net> <44F871BA.3070303@gmail.com> <Pine.LNX.4.64.0609011129270.27779@g5.osdl.org> <7vveo741tc.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0609011721390.27779@g5.osdl.org> <7vd5ae3ox2.fsf@assigned-by-dhcp.cox.net> <20060902045246.GB25146@spearce.org> <7vodty1swz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sun Sep 03 11:17:38 2006
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 03 11:19:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GJo6k-0003qm-BK
-	for gcvg-git@gmane.org; Sun, 03 Sep 2006 11:17:38 +0200
+	id 1GJo8W-0004Bx-C1
+	for gcvg-git@gmane.org; Sun, 03 Sep 2006 11:19:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750968AbWICJRT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 3 Sep 2006 05:17:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750986AbWICJRT
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Sep 2006 05:17:19 -0400
-Received: from main.gmane.org ([80.91.229.2]:55185 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750932AbWICJRS (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Sep 2006 05:17:18 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GJo6O-0003mu-Tv
-	for git@vger.kernel.org; Sun, 03 Sep 2006 11:17:16 +0200
-Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 03 Sep 2006 11:17:16 +0200
-Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 03 Sep 2006 11:17:16 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751086AbWICJS7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 3 Sep 2006 05:18:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751045AbWICJS7
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Sep 2006 05:18:59 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:46733 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751782AbWICALH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Sep 2006 20:11:07 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GJfZd-0003Zj-96; Sat, 02 Sep 2006 20:10:53 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 8F17520FB7F; Sat,  2 Sep 2006 13:54:08 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vodty1swz.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26366>
 
-Jon Smirl wrote:
-
->> Oh, and "partial tree pulls for localisers". Perhaps git-cvsserver can
->> help there? Localisers can just use TortoiseCVS and get a checkout of
->> the language pack subdir.
+Junio C Hamano <junkio@cox.net> wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
 > 
-> Partial repo pulls and an issue to. The mozilla repo has much more
-> than a browser in it, it also has a large mail/news program. A partial
-> repo pull may not be what is needed for git, instead git needs a
-> partial repo checkout.
+> > I think the better thing to do here is to not repack objects which
+> > are already contained in very large packs.  Just leave them be.
+> 
+> I've been thinking about updating rev-list so that repack
+> can be used to organize packs into zero or more "archive packs"
+> and one "active pack".
+> 
+> repack without -a essentially boils down to:
+> 
+> 	rev-list --objects --all --unpacked |
+>         pack-objects $new_pack
+> 
+> which picks up all live loose objects and create a new pack.
+> 
+> If rev-list had an extention that lets you say
+> 
+> 	rev-list --objects --all --unpacked=$active_pack |
+> 	pack-objects $new_pack
 
-Or better support for subprojects.
+Hmm.  Seems very reasonable actually.  :-)
 
-I think you can fake subproject support using separate repositories
-for subprojects, in the directory matching the one in the whole project,
-and the project repository, where we pull/push subprojects into.
+How do we pick the "active pack" in git-repack.sh?
+
+How about "--include-pack=$active_pack" instead of
+"--unpacked=$active_pack"?  The latter just reads really funny to me.
+
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
-
+Shawn.
 
 -- 
-VGER BF report: U 0.877495
+VGER BF report: S 0.9993
