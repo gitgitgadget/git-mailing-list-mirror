@@ -1,69 +1,69 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Mozilla .git tree
-Date: Sat, 02 Sep 2006 13:55:24 -0700
-Message-ID: <7vejuuyon7.fsf@assigned-by-dhcp.cox.net>
-References: <20060829232007.GC22935@spearce.org>
+Subject: Re: [PATCH] pack-objects: re-validate data we copy from elsewhere.
+Date: Sat, 02 Sep 2006 13:56:38 -0700
+Message-ID: <7vac5iyol5.fsf@assigned-by-dhcp.cox.net>
+References: <20060829165811.GB21729@spearce.org>
+	<9e4733910608291037k2d9fb791v18abc19bdddf5e89@mail.gmail.com>
+	<20060829175819.GE21729@spearce.org>
+	<9e4733910608291155g782953bbv5df1b74878f4fcf1@mail.gmail.com>
+	<20060829190548.GK21729@spearce.org>
+	<9e4733910608291252q130fc723r945e6ab906ca6969@mail.gmail.com>
+	<20060829232007.GC22935@spearce.org>
 	<9e4733910608291807q9b896e4sdbfaa9e49de58c2b@mail.gmail.com>
 	<20060830015122.GE22935@spearce.org>
 	<9e4733910608291958l45c0257dla6e5ebd4176f7164@mail.gmail.com>
 	<20060830031029.GA23967@spearce.org>
 	<Pine.LNX.4.64.0608300124550.9796@xanadu.home>
-	<7vzmdmh2lu.fsf@assigned-by-dhcp.cox.net>
-	<7vr6yw58xp.fsf@assigned-by-dhcp.cox.net>
-	<20060902020426.GF24234@spearce.org>
-	<7v3bba1qg5.fsf@assigned-by-dhcp.cox.net>
-	<20060902175125.GC27826@spearce.org>
+	<7vzmdmh2lu.fsf@assigned-by-dhcp.cox.net> <44F871BA.3070303@gmail.com>
+	<Pine.LNX.4.64.0609011129270.27779@g5.osdl.org>
+	<7vveo741tc.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0609011721390.27779@g5.osdl.org>
+	<7vd5ae3ox2.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0609021138500.27779@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 02 22:55:26 2006
+X-From: git-owner@vger.kernel.org Sat Sep 02 22:56:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GJcWR-0007pZ-4Q
-	for gcvg-git@gmane.org; Sat, 02 Sep 2006 22:55:23 +0200
+	id 1GJcXc-00083Z-5Z
+	for gcvg-git@gmane.org; Sat, 02 Sep 2006 22:56:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751572AbWIBUzU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Sep 2006 16:55:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751577AbWIBUzU
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Sep 2006 16:55:20 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:41643 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1751572AbWIBUzT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Sep 2006 16:55:19 -0400
+	id S1751581AbWIBU4d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Sep 2006 16:56:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751582AbWIBU4d
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Sep 2006 16:56:33 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:47766 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751580AbWIBU4c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Sep 2006 16:56:32 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao09.cox.net
+          by fed1rmmtao08.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060902205518.XDCG4015.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 2 Sep 2006 16:55:18 -0400
+          id <20060902205632.IURD27846.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 2 Sep 2006 16:56:32 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id HYvJ1V00v1kojtg0000000
-	Sat, 02 Sep 2006 16:55:19 -0400
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20060902175125.GC27826@spearce.org> (Shawn Pearce's message of
-	"Sat, 2 Sep 2006 13:51:25 -0400")
+	id HYwY1V00K1kojtg0000000
+	Sat, 02 Sep 2006 16:56:32 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0609021138500.27779@g5.osdl.org> (Linus Torvalds's
+	message of "Sat, 2 Sep 2006 11:43:07 -0700 (PDT)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26357>
 
-Shawn Pearce <spearce@spearce.org> writes:
+Linus Torvalds <torvalds@osdl.org> writes:
 
->> > Sure the scheme you outlined allows a 64 bit difference but
->> > uncompressed objects already can't be larger than 2**32-1...
->> 
->> Where do we have that limitation?
->
-> sha1_file.c uses "unsigned long" a lot to deal with size of an
-> object, deflated.  iirc unsigned long is only 32 bits even in many
-> 64 bit architectures.  Or am I wrong?
+> For me, performance has always been one of the primary goals, but being 
+> able to trust the end result has been even _more_ primary.
 
-Of course 4G .idx (\377tOc) patch would update them to u64.
-What is the problem?
+Agreed, violently ;-).
 
 
 -- 
-VGER BF report: U 0.905241
+VGER BF report: U 0.735423
