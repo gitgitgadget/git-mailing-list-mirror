@@ -1,65 +1,114 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] pack-objects: re-validate data we copy from elsewhere.
-Date: Fri, 1 Sep 2006 17:23:15 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609011721390.27779@g5.osdl.org>
-References: <20060829165811.GB21729@spearce.org>
- <9e4733910608291037k2d9fb791v18abc19bdddf5e89@mail.gmail.com>
- <20060829175819.GE21729@spearce.org> <9e4733910608291155g782953bbv5df1b74878f4fcf1@mail.gmail.com>
- <20060829190548.GK21729@spearce.org> <9e4733910608291252q130fc723r945e6ab906ca6969@mail.gmail.com>
- <20060829232007.GC22935@spearce.org> <9e4733910608291807q9b896e4sdbfaa9e49de58c2b@mail.gmail.com>
- <20060830015122.GE22935@spearce.org> <9e4733910608291958l45c0257dla6e5ebd4176f7164@mail.gmail.com>
- <20060830031029.GA23967@spearce.org> <Pine.LNX.4.64.0608300124550.9796@xanadu.home>
- <7vzmdmh2lu.fsf@assigned-by-dhcp.cox.net> <44F871BA.3070303@gmail.com>
- <Pine.LNX.4.64.0609011129270.27779@g5.osdl.org> <7vveo741tc.fsf_-_@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] Rewrite branch in C and make it a builtin.
+Date: Fri, 1 Sep 2006 21:08:06 -0400
+Message-ID: <20060902010806.GA24234@spearce.org>
+References: <1156562127979-git-send-email-krh@redhat.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 02 02:23:38 2006
+X-From: git-owner@vger.kernel.org Sat Sep 02 03:10:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GJJIL-0003Wm-6d
-	for gcvg-git@gmane.org; Sat, 02 Sep 2006 02:23:33 +0200
+	id 1GJK1r-00059t-83
+	for gcvg-git@gmane.org; Sat, 02 Sep 2006 03:10:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750742AbWIBAXW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Sep 2006 20:23:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750761AbWIBAXW
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Sep 2006 20:23:22 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:52899 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750742AbWIBAXV (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Sep 2006 20:23:21 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k820NGnW030574
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 1 Sep 2006 17:23:17 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k820NFma008238;
-	Fri, 1 Sep 2006 17:23:16 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vveo741tc.fsf_-_@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-2.452 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.146 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750772AbWIBBKb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 1 Sep 2006 21:10:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750780AbWIBBKb
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Sep 2006 21:10:31 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:22739 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1750774AbWIBBKa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Sep 2006 21:10:30 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GJK1N-0005VP-FJ; Fri, 01 Sep 2006 21:10:16 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 164B720FB7C; Fri,  1 Sep 2006 21:08:06 -0400 (EDT)
+To: krh@redhat.com, Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <1156562127979-git-send-email-krh@redhat.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26314>
+
+Kristian  H??gsberg <krh@redhat.com> wrote:
+> A more or less straight port to C of the shell script version.
+
+[snip]
+> +static void create_reflog(struct ref_lock *lock)
+
+I'm attaching a patch to the reflog code which introduces a new
+force_log option.  You can use set this after you lock the ref
+but before writing it, provided that the user supplied -l on
+the command line.
+
+This completely replaces the create_reflog function with common code.
+
+I apologize for taking so long to get around to this but I've been
+busy with other stuff lately.  :-)
 
 
+-- 8> --
+Add force_log flag to ref_lock to create logs when necessary.
 
-On Fri, 1 Sep 2006, Junio C Hamano wrote:
->
-> 	[...] Instead make sure they are not corrupt, but
-> do so only when we are not streaming to stdout, [...]
+Callers of lock_ref_sha1 or lock_any_ref_for_update may now set
+lck->force_log = 1 if they want to create the associated reflog
+during write_ref_sha1 if the log is missing.
 
-Hmm. I see you making pack_to_stdout available to those functions, but I 
-don't actually see you using it - looks like you revalidate regardless.
+If set this will override a false setting of the configuration
+parameter core.logAllRefUpdates and create a missing log, at which
+point future updates to the same ref would be logged as the log
+is present.
 
-Which is safe, of course, but it doesn't match your description ;)
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ refs.c |    2 +-
+ refs.h |    3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-		Linus
+diff --git a/refs.c b/refs.c
+index aab14fc..b29e2f4 100644
+--- a/refs.c
++++ b/refs.c
+@@ -361,7 +361,7 @@ static int log_ref_write(struct ref_lock
+ 	char *logrec;
+ 	const char *committer;
+ 
+-	if (log_all_ref_updates) {
++	if (log_all_ref_updates || lock->force_log) {
+ 		if (safe_create_leading_directories(lock->log_file) < 0)
+ 			return error("unable to create directory for %s",
+ 				lock->log_file);
+diff --git a/refs.h b/refs.h
+index 553155c..d4798c9 100644
+--- a/refs.h
++++ b/refs.h
+@@ -7,7 +7,8 @@ struct ref_lock {
+ 	struct lock_file *lk;
+ 	unsigned char old_sha1[20];
+ 	int lock_fd;
+-	int force_write;
++	int force_write; /* force creating ref if not present */
++	int force_log;   /* force creating log if not present */
+ };
+ 
+ /*
+-- 
+1.4.2.ga2654
+
 
 -- 
-VGER BF report: H 0.0110285
+VGER BF report: U 0.5
