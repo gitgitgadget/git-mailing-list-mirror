@@ -1,57 +1,77 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] gitweb wishlist and TODO list
-Date: Sat, 02 Sep 2006 21:29:03 +0200
-Organization: At home
-Message-ID: <edcm1v$24k$1@sea.gmane.org>
-References: <200609021817.09296.jnareb@gmail.com>
+From: "Franck Bui-Huu" <vagabon.xyz@gmail.com>
+Subject: Re: [PATCH 0/3] git-daemon: plug new upload-tar command
+Date: Sat, 2 Sep 2006 22:12:53 +0200
+Message-ID: <cda58cb80609021312y79456479w649dc078a68ff23c@mail.gmail.com>
+References: <11570277231100-git-send-email-vagabon.xyz@gmail.com>
+	 <44F72039.3040206@lsrfire.ath.cx>
+	 <cda58cb80609020114h1e1ee553saf5aa90df8bc3ba0@mail.gmail.com>
+	 <7vfyfa1rvf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Sat Sep 02 21:29:19 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Rene Scharfe" <rene.scharfe@lsrfire.ath.cx>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 02 22:13:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GJbB5-0003E9-6O
-	for gcvg-git@gmane.org; Sat, 02 Sep 2006 21:29:15 +0200
+	id 1GJbrf-0000lY-SS
+	for gcvg-git@gmane.org; Sat, 02 Sep 2006 22:13:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751434AbWIBT3M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 2 Sep 2006 15:29:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751435AbWIBT3M
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Sep 2006 15:29:12 -0400
-Received: from main.gmane.org ([80.91.229.2]:59608 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751434AbWIBT3K (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 2 Sep 2006 15:29:10 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GJbAy-0003Cm-AA
-	for git@vger.kernel.org; Sat, 02 Sep 2006 21:29:08 +0200
-Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 02 Sep 2006 21:29:08 +0200
-Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 02 Sep 2006 21:29:08 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751503AbWIBUM4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Sep 2006 16:12:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751506AbWIBUM4
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Sep 2006 16:12:56 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:609 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1751503AbWIBUMz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Sep 2006 16:12:55 -0400
+Received: by ug-out-1314.google.com with SMTP id m3so1221967ugc
+        for <git@vger.kernel.org>; Sat, 02 Sep 2006 13:12:53 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=cJjC8p0p1q/oIZ+KaUxs56N+HvIcXtCVpmtM3y5rgRsq9SR1QBa+EiaPk619K/4bh/N1Qol1WrCiTI9cu+AN2sEp96FxvguBWu3/W8sCSfu46hL9+HvdW+h/FnfL9ScQvIlbkTFFobOH7801CVR3bFE56Oqd7gfph4GLIHdfQrc=
+Received: by 10.67.101.8 with SMTP id d8mr1921851ugm;
+        Sat, 02 Sep 2006 13:12:53 -0700 (PDT)
+Received: by 10.67.95.4 with HTTP; Sat, 2 Sep 2006 13:12:53 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vfyfa1rvf.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26353>
 
-By the way, do the diff between arbitrary revisions (say, between two
-branches/two refs) and between arbitrary versions of the same file woul=
-d be
-useful to have in gitweb?
+2006/9/2, Junio C Hamano <junkio@cox.net>:
+> "Franck Bui-Huu" <vagabon.xyz@gmail.com> writes:
+>
+> >> So if you beat me to it, that would be great.  Or if you have a better
+> >> idea, that would be also great. :-)
+> >
+> > Well I'll try to start something, not sure to have a lot of time
+> > though. Please contact me before starting anything, I would be sad to
+> > write something for /dev/null again ;)
+>
+> I do not necessarily think your effort were for /dev/null; for
+> example, I was hoping you defend [PATCH 3/3].
+>
 
---=20
-Jakub Nar=EAbski
-Poland
+Well, with a new git-archive-tree command, I thought it would make
+sense to put the remote logic there and let the git-tar-tree be a
+local command. But Rene has a different approach, please see his new
+thread "Add git-archive-tree".
 
+> While it makes sense to make "tar-tree --remote" usable outside
+> a git managed repository, I think people expect the connection
+> to obey core.gitproxy if the command is run inside a repository
+> that has a configuration file.
+>
 
---=20
-VGER BF report: U 0.5
+Make sense.
+
+-- 
+               Franck
+
+-- 
+VGER BF report: U 0.799618
