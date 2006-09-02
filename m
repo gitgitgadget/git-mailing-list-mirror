@@ -1,92 +1,69 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Mozilla .git tree
-Date: Sat, 2 Sep 2006 13:39:22 -0400
-Message-ID: <20060902173922.GA27826@spearce.org>
-References: <9e4733910608291958l45c0257dla6e5ebd4176f7164@mail.gmail.com> <20060830031029.GA23967@spearce.org> <Pine.LNX.4.64.0608300124550.9796@xanadu.home> <7vzmdmh2lu.fsf@assigned-by-dhcp.cox.net> <7vr6yw58xp.fsf@assigned-by-dhcp.cox.net> <20060902011950.GB24234@spearce.org> <7v8xl23oia.fsf@assigned-by-dhcp.cox.net> <20060902043931.GA25146@spearce.org> <7vveo6zfx0.fsf@assigned-by-dhcp.cox.net> <9e4733910609020720w3633aa0cq5016fb1e223fc4cb@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] pack-objects: re-validate data we copy from elsewhere.
+Date: Sat, 2 Sep 2006 10:43:52 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0609021041170.27779@g5.osdl.org>
+References: <20060830015122.GE22935@spearce.org>
+ <9e4733910608291958l45c0257dla6e5ebd4176f7164@mail.gmail.com>
+ <20060830031029.GA23967@spearce.org> <Pine.LNX.4.64.0608300124550.9796@xanadu.home>
+ <7vzmdmh2lu.fsf@assigned-by-dhcp.cox.net> <44F871BA.3070303@gmail.com>
+ <Pine.LNX.4.64.0609011129270.27779@g5.osdl.org> <7vveo741tc.fsf_-_@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0609011721390.27779@g5.osdl.org> <7vd5ae3ox2.fsf@assigned-by-dhcp.cox.net>
+ <20060902045246.GB25146@spearce.org> <7vwt8m1u6b.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 02 19:41:37 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 02 19:44:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GJZUu-0004k1-5U
-	for gcvg-git@gmane.org; Sat, 02 Sep 2006 19:41:36 +0200
+	id 1GJZXH-00052T-NC
+	for gcvg-git@gmane.org; Sat, 02 Sep 2006 19:44:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751238AbWIBRlc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Sep 2006 13:41:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751240AbWIBRlc
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Sep 2006 13:41:32 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:21451 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751238AbWIBRlb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Sep 2006 13:41:31 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GJZUg-0001LH-K2; Sat, 02 Sep 2006 13:41:22 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id A294520FB7C; Sat,  2 Sep 2006 13:39:22 -0400 (EDT)
-To: Jon Smirl <jonsmirl@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <9e4733910609020720w3633aa0cq5016fb1e223fc4cb@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751219AbWIBRoA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Sep 2006 13:44:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751240AbWIBRoA
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Sep 2006 13:44:00 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:63657 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751219AbWIBRn7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 2 Sep 2006 13:43:59 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k82HhrnW006716
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 2 Sep 2006 10:43:53 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k82HhqoZ030260;
+	Sat, 2 Sep 2006 10:43:52 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vwt8m1u6b.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-2.46 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.146 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26347>
 
-Jon Smirl <jonsmirl@gmail.com> wrote:
-> If you're going to redo the pack formats another big win for the
-> Mozilla pack is to convert pack internal sha1 references into file
-> offsets.within the pack. Doing that will take around 30MB off from the
-> Mozilla pack size. sha1's are not compressible so this is a direct
-> savings.
 
-Right now Junio's working on the index to break the 4 GiB barrier.
-I think Junio and Nico have already agreed to change the base SHA1
-to be an offset instead; though this is an issue for the current
-way the base gets written out behind the delta as you need to know
-exactly how many bytes the delta is going to be so you can correctly
-compute the offset.
- 
-> This might reduce memory usage too. The index is only needed to get
-> the initial object from the pack. Since index use is lighter it could
-> just be open/closed when needed.
 
-True; however when you are walking a series of commits (to produce
-output for `git log` for example) every time you parse a commit you
-need to go back to the .idx to relookup the ancestor commit(s).
-So you don't want to open/close the .idx file on every object;
-instead put the .idx file into the LRU like the .pack files are
-(or into their own LRU chain) and maintain some threshold on how
-many bytes worth of .idx is kept live.
- 
-> You could also introduce a zlib dictionary object into the format and
-> just leave it empty for now.
+On Sat, 2 Sep 2006, Junio C Hamano wrote:
+> 
+> The Linus's theory goes like this:
+> 
+>  (1) A bit in an existing pack was damaged somehow.  It might have
+>      happened on the mothership machine when it was first created,
+>      or after it was read and copied to the notebook via rsync.
 
-No.  I'm not sure I'm ready to propose that as a solution for
-decreasing pack size.  Now that my exams are over I've started
-working on a true dictionary based compression implementation.
-I want to try to get Git itself repacked under it, then try the
-Mozilla pack after I get my new amd64 based system built.
+NOTE! With the new loose object format, this will be true even of 
+individually packed files (if you set "core.legacyheaders" to false). So 
+checking the SHA1 of the pack-files is insufficient - at least for those 
+loose objects.
 
-If that's as big of space saver as we're hoping it would be then
-the pack format would be radically different and need to change;
-if it doesn't gain us anything (or is worse!) then we can go back
-to the drawing board and consider other pack format changes such as
-a zlib dictionary.  But right now its measly 4% gain isn't very much.
+So revalidating the individual objects will catch that case too, while 
+revalidating the SHA1 of the old pack-files won't.
+
+		Linus
 
 -- 
-Shawn.
-
--- 
-VGER BF report: U 0.653439
+VGER BF report: U 0.5
