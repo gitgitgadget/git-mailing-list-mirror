@@ -1,110 +1,81 @@
-From: "Franck Bui-Huu" <vagabon.xyz@gmail.com>
-Subject: Re: [PATCH][RFC] Add git-archive-tree
-Date: Sat, 2 Sep 2006 22:13:14 +0200
-Message-ID: <cda58cb80609021313p5156a14du4895e53387dd24dc@mail.gmail.com>
-References: <44F977C0.4060901@lsrfire.ath.cx> <44F982BD.1050509@lsrfire.ath.cx>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Mozilla .git tree
+Date: Sat, 02 Sep 2006 13:53:54 -0700
+Message-ID: <7virk6yopp.fsf@assigned-by-dhcp.cox.net>
+References: <9e4733910608291958l45c0257dla6e5ebd4176f7164@mail.gmail.com>
+	<20060830031029.GA23967@spearce.org>
+	<Pine.LNX.4.64.0608300124550.9796@xanadu.home>
+	<7vzmdmh2lu.fsf@assigned-by-dhcp.cox.net>
+	<7vr6yw58xp.fsf@assigned-by-dhcp.cox.net>
+	<20060902011950.GB24234@spearce.org>
+	<7v8xl23oia.fsf@assigned-by-dhcp.cox.net>
+	<20060902043931.GA25146@spearce.org>
+	<7vveo6zfx0.fsf@assigned-by-dhcp.cox.net>
+	<9e4733910609020720w3633aa0cq5016fb1e223fc4cb@mail.gmail.com>
+	<20060902173922.GA27826@spearce.org>
+	<Pine.LNX.4.64.0609021151280.27779@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Sep 02 22:13:26 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Shawn Pearce <spearce@spearce.org>, Jon Smirl <jonsmirl@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 02 22:54:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GJbrn-0000mn-8y
-	for gcvg-git@gmane.org; Sat, 02 Sep 2006 22:13:24 +0200
+	id 1GJcVZ-0007e9-FA
+	for gcvg-git@gmane.org; Sat, 02 Sep 2006 22:54:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751505AbWIBUNS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Sep 2006 16:13:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751506AbWIBUNR
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Sep 2006 16:13:17 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:18786 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1751505AbWIBUNP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Sep 2006 16:13:15 -0400
-Received: by ug-out-1314.google.com with SMTP id s2so1435364uge
-        for <git@vger.kernel.org>; Sat, 02 Sep 2006 13:13:14 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=o9q6iXCcsjrnoWUfjd+vTsO/xlTh7ew0mQoXuEWWYOL2P2J88gPpESJXQQ3FO1OvMWWlT+AD/KJQD0qHUaFqxdryj3+134SqzULvWAmGD+jFyAJQseqOwbt1Dlptva/ADFrxaoeja4ci2B5tJ67+9ghWB7BImOjkBjNaSj/Na8Q=
-Received: by 10.66.216.20 with SMTP id o20mr1914118ugg;
-        Sat, 02 Sep 2006 13:13:14 -0700 (PDT)
-Received: by 10.67.95.4 with HTTP; Sat, 2 Sep 2006 13:13:14 -0700 (PDT)
-To: "Rene Scharfe" <rene.scharfe@lsrfire.ath.cx>
-In-Reply-To: <44F982BD.1050509@lsrfire.ath.cx>
-Content-Disposition: inline
+	id S1751573AbWIBUxu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Sep 2006 16:53:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751575AbWIBUxu
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Sep 2006 16:53:50 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:19414 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1751572AbWIBUxs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Sep 2006 16:53:48 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060902205348.FEXB2704.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 2 Sep 2006 16:53:48 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id HYto1V00P1kojtg0000000
+	Sat, 02 Sep 2006 16:53:49 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26355>
 
-2006/9/2, Rene Scharfe <rene.scharfe@lsrfire.ath.cx>:
-> The two patches I sent are what I have been able to come up with so far.
-> The next step would be to add archive-neutral upload and download support.
+Linus Torvalds <torvalds@osdl.org> writes:
+
+> On Sat, 2 Sep 2006, Shawn Pearce wrote:
 >
-> Having thought a bit about it I propose to keep git-archive-tree for
-> local operations, only.  It can be called by the uploader just like
+>> I think Junio and Nico have already agreed to change the base SHA1
+>> to be an offset instead;
 
-Well I don't see why putting the remote operations in an other file. I
-was more thinking on something like this:
+I am not in favor of that, at least not yet, especially I
+haven't thought about the implications of that on streaming
+unpacker.  I do not have much objections about changing
+base-delta order, though.
 
-git-archive --format=<fmt> [--remote=<repo>] <tree-ish> [path...]
+> Of course, if we change the pack/index-file format for other reasons, then 
+> we should obviously fix the 4G issue at the same time, but were there 
+> actually any real other reasons at this point?
 
-This main porcelain function would call directly functions provided by
-archivers lib. We will need to define an API which git-archive will
-use for local operations.
+Not really, from my point of view.  Probably 70% of motivation
+of the new \377tOc index format originally came from wanting to
+have "where is the end of this object" which turned out to be
+unneeded; and by making repack easier to use I think we do not
+have to solve 4G issue either.
 
-Symetrically, on the sever side we would have:
+There is only one case that might need a single pack that can be
+indexed with 4G offset: initial clone or repack of a huge
+repository.
 
-git-upload-archive --format=<fmt> <repo> [path...]
-
-used by git-daemon. It will deal with protocol, paths and use archiver's lib.
-
-Eventually, we would have 2 commands:
-
-git-archive
-git-upload-archive
-
-and get ride of
-
-git-tar-tree
-git-zip-tree
-git-upload-tar
-git-upload-zip
-
-> git-tar-tree is now called by git-upload-tar.  As Franck suggested, the
-> uploader should allow the list of archive formats it supports to be
-> restricted in a config file.  The range of allowed compression levels
-> should also be configurable.
->
-> Does it make sense to change the wire protocol to simply send the
-> command line options one by one?
-
-That would make sense if the number of options grow up. Currently the
-remote protocol had been written by Junio, I just pick up that part
-from git-tar-tree and put it into git-archive. But if we allow
-pathspec for remote operations, then  we need to send them to the
-uploader.
-
->
-> The interface could be something like this:
->
->    git-download-archive <repo> <git-archive-tree options...>
->    git-upload-archive <directory>
->
-> Or, if the big number of git command names is a concern:
->
-
-I think it is, IMHO. And that's why I think we could have only one
-command for building localy/remotely archive whatever the format.
-git-archive should be a main procelain command, and we should get rid
-of git-{tar,zip}-tree commands.
 
 -- 
-               Franck
-
--- 
-VGER BF report: U 0.742177
+VGER BF report: U 0.788936
