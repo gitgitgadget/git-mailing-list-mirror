@@ -1,69 +1,76 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] pack-objects: re-validate data we copy from elsewhere.
-Date: Sat, 02 Sep 2006 13:56:38 -0700
-Message-ID: <7vac5iyol5.fsf@assigned-by-dhcp.cox.net>
-References: <20060829165811.GB21729@spearce.org>
-	<9e4733910608291037k2d9fb791v18abc19bdddf5e89@mail.gmail.com>
-	<20060829175819.GE21729@spearce.org>
-	<9e4733910608291155g782953bbv5df1b74878f4fcf1@mail.gmail.com>
-	<20060829190548.GK21729@spearce.org>
-	<9e4733910608291252q130fc723r945e6ab906ca6969@mail.gmail.com>
-	<20060829232007.GC22935@spearce.org>
-	<9e4733910608291807q9b896e4sdbfaa9e49de58c2b@mail.gmail.com>
-	<20060830015122.GE22935@spearce.org>
-	<9e4733910608291958l45c0257dla6e5ebd4176f7164@mail.gmail.com>
-	<20060830031029.GA23967@spearce.org>
-	<Pine.LNX.4.64.0608300124550.9796@xanadu.home>
-	<7vzmdmh2lu.fsf@assigned-by-dhcp.cox.net> <44F871BA.3070303@gmail.com>
-	<Pine.LNX.4.64.0609011129270.27779@g5.osdl.org>
-	<7vveo741tc.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0609011721390.27779@g5.osdl.org>
-	<7vd5ae3ox2.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0609021138500.27779@g5.osdl.org>
+Subject: Re: [PATCH][RFC] Add git-archive-tree
+Date: Sat, 02 Sep 2006 14:19:26 -0700
+Message-ID: <7v1wquynj5.fsf@assigned-by-dhcp.cox.net>
+References: <44F977C0.4060901@lsrfire.ath.cx>
+	<44F982BD.1050509@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 02 22:56:43 2006
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Franck Bui-Huu <vagabon.xyz@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 02 23:19:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GJcXc-00083Z-5Z
-	for gcvg-git@gmane.org; Sat, 02 Sep 2006 22:56:36 +0200
+	id 1GJcti-0002zi-Hw
+	for gcvg-git@gmane.org; Sat, 02 Sep 2006 23:19:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751581AbWIBU4d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Sep 2006 16:56:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751582AbWIBU4d
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Sep 2006 16:56:33 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:47766 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751580AbWIBU4c (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Sep 2006 16:56:32 -0400
+	id S1751606AbWIBVTW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Sep 2006 17:19:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751607AbWIBVTW
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Sep 2006 17:19:22 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:3491 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1751604AbWIBVTV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Sep 2006 17:19:21 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao08.cox.net
+          by fed1rmmtao02.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060902205632.IURD27846.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 2 Sep 2006 16:56:32 -0400
+          id <20060902211920.FAFI12581.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 2 Sep 2006 17:19:20 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id HYwY1V00K1kojtg0000000
-	Sat, 02 Sep 2006 16:56:32 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0609021138500.27779@g5.osdl.org> (Linus Torvalds's
-	message of "Sat, 2 Sep 2006 11:43:07 -0700 (PDT)")
+	id HZKM1V0081kojtg0000000
+	Sat, 02 Sep 2006 17:19:21 -0400
+To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+In-Reply-To: <44F982BD.1050509@lsrfire.ath.cx> (Rene Scharfe's message of
+	"Sat, 02 Sep 2006 15:10:21 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26358>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Rene Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-> For me, performance has always been one of the primary goals, but being 
-> able to trust the end result has been even _more_ primary.
+> Does it make sense to change the wire protocol to simply send the
+> command line options one by one?
 
-Agreed, violently ;-).
+Which wire protocol are you talking about?  The one between
+upload-tar and local "tar-tree --remote"?  I think that one was
+a tar-tree specific hack and we do not want to mimic it.
+
+Your idea of making archiver neutral upload/download pair makes
+sense.  The daemon can invoke upload-archive with a single
+parameter (the repository, "."), just like upload_tar() in
+"pu:daemon.c" does [*1*], and upload-archive talks with the
+other end to know which archiver to run with what paramter.  We
+would probably want to use some sort of side-band mechanism so
+that we can do progress-bar as well.
+
+
+*1* Unrelated side note.  I find myself typing "git less" quite
+    often ;-)
+
+	git less pu:daemon.c
+
+    and get "no such command, dummy" response.  
+
+    Yes, I know I could alias it to "-p cat-file -p".  I am just
+    too lazy to do so.
+
 
 
 -- 
-VGER BF report: U 0.735423
+VGER BF report: U 0.709954
