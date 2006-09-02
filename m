@@ -1,114 +1,51 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] Rewrite branch in C and make it a builtin.
-Date: Fri, 1 Sep 2006 21:08:06 -0400
-Message-ID: <20060902010806.GA24234@spearce.org>
-References: <1156562127979-git-send-email-krh@redhat.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: VGER BF report?
+Date: Sat, 2 Sep 2006 03:39:30 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0609020338430.28360@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060829165811.GB21729@spearce.org>
+ <9e4733910608291037k2d9fb791v18abc19bdddf5e89@mail.gmail.com>
+ <20060829175819.GE21729@spearce.org> <9e4733910608291155g782953bbv5df1b74878f4fcf1@mail.gmail.com>
+ <20060829190548.GK21729@spearce.org> <9e4733910608291252q130fc723r945e6ab906ca6969@mail.gmail.com>
+ <20060829232007.GC22935@spearce.org> <9e4733910608291807q9b896e4sdbfaa9e49de58c2b@mail.gmail.com>
+ <20060830015122.GE22935@spearce.org> <9e4733910608291958l45c0257dla6e5ebd4176f7164@mail.gmail.com>
+ <20060830031029.GA23967@spearce.org> <Pine.LNX.4.64.0608300124550.9796@xanadu.home>
+ <7vzmdmh2lu.fsf@assigned-by-dhcp.cox.net> <44F871BA.3070303@gmail.com>
+ <Pine.LNX.4.64.0609011129270.27779@g5.osdl.org> <7vveo741tc.fsf_-_@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0609011721390.27779@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 02 03:10:42 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Sat Sep 02 03:39:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GJK1r-00059t-83
-	for gcvg-git@gmane.org; Sat, 02 Sep 2006 03:10:35 +0200
+	id 1GJKTx-000069-B7
+	for gcvg-git@gmane.org; Sat, 02 Sep 2006 03:39:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750772AbWIBBKb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Sep 2006 21:10:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750780AbWIBBKb
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Sep 2006 21:10:31 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:22739 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1750774AbWIBBKa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Sep 2006 21:10:30 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GJK1N-0005VP-FJ; Fri, 01 Sep 2006 21:10:16 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 164B720FB7C; Fri,  1 Sep 2006 21:08:06 -0400 (EDT)
-To: krh@redhat.com, Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <1156562127979-git-send-email-krh@redhat.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1750793AbWIBBjd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 1 Sep 2006 21:39:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750799AbWIBBjd
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Sep 2006 21:39:33 -0400
+Received: from mail.gmx.de ([213.165.64.20]:25822 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750793AbWIBBjd (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Sep 2006 21:39:33 -0400
+Received: (qmail invoked by alias); 02 Sep 2006 01:39:31 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp015) with SMTP; 02 Sep 2006 03:39:31 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.64.0609011721390.27779@g5.osdl.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26315>
 
-Kristian  H??gsberg <krh@redhat.com> wrote:
-> A more or less straight port to C of the shell script version.
+> VGER BF report: H 0.0110285
 
-[snip]
-> +static void create_reflog(struct ref_lock *lock)
-
-I'm attaching a patch to the reflog code which introduces a new
-force_log option.  You can use set this after you lock the ref
-but before writing it, provided that the user supplied -l on
-the command line.
-
-This completely replaces the create_reflog function with common code.
-
-I apologize for taking so long to get around to this but I've been
-busy with other stuff lately.  :-)
-
-
--- 8> --
-Add force_log flag to ref_lock to create logs when necessary.
-
-Callers of lock_ref_sha1 or lock_any_ref_for_update may now set
-lck->force_log = 1 if they want to create the associated reflog
-during write_ref_sha1 if the log is missing.
-
-If set this will override a false setting of the configuration
-parameter core.logAllRefUpdates and create a missing log, at which
-point future updates to the same ref would be logged as the log
-is present.
-
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- refs.c |    2 +-
- refs.h |    3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index aab14fc..b29e2f4 100644
---- a/refs.c
-+++ b/refs.c
-@@ -361,7 +361,7 @@ static int log_ref_write(struct ref_lock
- 	char *logrec;
- 	const char *committer;
- 
--	if (log_all_ref_updates) {
-+	if (log_all_ref_updates || lock->force_log) {
- 		if (safe_create_leading_directories(lock->log_file) < 0)
- 			return error("unable to create directory for %s",
- 				lock->log_file);
-diff --git a/refs.h b/refs.h
-index 553155c..d4798c9 100644
---- a/refs.h
-+++ b/refs.h
-@@ -7,7 +7,8 @@ struct ref_lock {
- 	struct lock_file *lk;
- 	unsigned char old_sha1[20];
- 	int lock_fd;
--	int force_write;
-+	int force_write; /* force creating ref if not present */
-+	int force_log;   /* force creating log if not present */
- };
- 
- /*
--- 
-1.4.2.ga2654
+What is this?
 
 
 -- 
-VGER BF report: U 0.5
+VGER BF report: H 0.00947004
