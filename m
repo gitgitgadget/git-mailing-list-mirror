@@ -1,77 +1,110 @@
 From: "Franck Bui-Huu" <vagabon.xyz@gmail.com>
-Subject: Re: [PATCH 0/3] git-daemon: plug new upload-tar command
-Date: Sat, 2 Sep 2006 22:12:53 +0200
-Message-ID: <cda58cb80609021312y79456479w649dc078a68ff23c@mail.gmail.com>
-References: <11570277231100-git-send-email-vagabon.xyz@gmail.com>
-	 <44F72039.3040206@lsrfire.ath.cx>
-	 <cda58cb80609020114h1e1ee553saf5aa90df8bc3ba0@mail.gmail.com>
-	 <7vfyfa1rvf.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH][RFC] Add git-archive-tree
+Date: Sat, 2 Sep 2006 22:13:14 +0200
+Message-ID: <cda58cb80609021313p5156a14du4895e53387dd24dc@mail.gmail.com>
+References: <44F977C0.4060901@lsrfire.ath.cx> <44F982BD.1050509@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Rene Scharfe" <rene.scharfe@lsrfire.ath.cx>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 02 22:13:18 2006
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Sep 02 22:13:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GJbrf-0000lY-SS
-	for gcvg-git@gmane.org; Sat, 02 Sep 2006 22:13:17 +0200
+	id 1GJbrn-0000mn-8y
+	for gcvg-git@gmane.org; Sat, 02 Sep 2006 22:13:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751503AbWIBUM4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Sep 2006 16:12:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751506AbWIBUM4
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Sep 2006 16:12:56 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:609 "EHLO
+	id S1751505AbWIBUNS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Sep 2006 16:13:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751506AbWIBUNR
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Sep 2006 16:13:17 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:18786 "EHLO
 	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1751503AbWIBUMz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Sep 2006 16:12:55 -0400
-Received: by ug-out-1314.google.com with SMTP id m3so1221967ugc
-        for <git@vger.kernel.org>; Sat, 02 Sep 2006 13:12:53 -0700 (PDT)
+	id S1751505AbWIBUNP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Sep 2006 16:13:15 -0400
+Received: by ug-out-1314.google.com with SMTP id s2so1435364uge
+        for <git@vger.kernel.org>; Sat, 02 Sep 2006 13:13:14 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=cJjC8p0p1q/oIZ+KaUxs56N+HvIcXtCVpmtM3y5rgRsq9SR1QBa+EiaPk619K/4bh/N1Qol1WrCiTI9cu+AN2sEp96FxvguBWu3/W8sCSfu46hL9+HvdW+h/FnfL9ScQvIlbkTFFobOH7801CVR3bFE56Oqd7gfph4GLIHdfQrc=
-Received: by 10.67.101.8 with SMTP id d8mr1921851ugm;
-        Sat, 02 Sep 2006 13:12:53 -0700 (PDT)
-Received: by 10.67.95.4 with HTTP; Sat, 2 Sep 2006 13:12:53 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vfyfa1rvf.fsf@assigned-by-dhcp.cox.net>
+        b=o9q6iXCcsjrnoWUfjd+vTsO/xlTh7ew0mQoXuEWWYOL2P2J88gPpESJXQQ3FO1OvMWWlT+AD/KJQD0qHUaFqxdryj3+134SqzULvWAmGD+jFyAJQseqOwbt1Dlptva/ADFrxaoeja4ci2B5tJ67+9ghWB7BImOjkBjNaSj/Na8Q=
+Received: by 10.66.216.20 with SMTP id o20mr1914118ugg;
+        Sat, 02 Sep 2006 13:13:14 -0700 (PDT)
+Received: by 10.67.95.4 with HTTP; Sat, 2 Sep 2006 13:13:14 -0700 (PDT)
+To: "Rene Scharfe" <rene.scharfe@lsrfire.ath.cx>
+In-Reply-To: <44F982BD.1050509@lsrfire.ath.cx>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26354>
 
-2006/9/2, Junio C Hamano <junkio@cox.net>:
-> "Franck Bui-Huu" <vagabon.xyz@gmail.com> writes:
+2006/9/2, Rene Scharfe <rene.scharfe@lsrfire.ath.cx>:
+> The two patches I sent are what I have been able to come up with so far.
+> The next step would be to add archive-neutral upload and download support.
 >
-> >> So if you beat me to it, that would be great.  Or if you have a better
-> >> idea, that would be also great. :-)
-> >
-> > Well I'll try to start something, not sure to have a lot of time
-> > though. Please contact me before starting anything, I would be sad to
-> > write something for /dev/null again ;)
+> Having thought a bit about it I propose to keep git-archive-tree for
+> local operations, only.  It can be called by the uploader just like
+
+Well I don't see why putting the remote operations in an other file. I
+was more thinking on something like this:
+
+git-archive --format=<fmt> [--remote=<repo>] <tree-ish> [path...]
+
+This main porcelain function would call directly functions provided by
+archivers lib. We will need to define an API which git-archive will
+use for local operations.
+
+Symetrically, on the sever side we would have:
+
+git-upload-archive --format=<fmt> <repo> [path...]
+
+used by git-daemon. It will deal with protocol, paths and use archiver's lib.
+
+Eventually, we would have 2 commands:
+
+git-archive
+git-upload-archive
+
+and get ride of
+
+git-tar-tree
+git-zip-tree
+git-upload-tar
+git-upload-zip
+
+> git-tar-tree is now called by git-upload-tar.  As Franck suggested, the
+> uploader should allow the list of archive formats it supports to be
+> restricted in a config file.  The range of allowed compression levels
+> should also be configurable.
 >
-> I do not necessarily think your effort were for /dev/null; for
-> example, I was hoping you defend [PATCH 3/3].
+> Does it make sense to change the wire protocol to simply send the
+> command line options one by one?
+
+That would make sense if the number of options grow up. Currently the
+remote protocol had been written by Junio, I just pick up that part
+from git-tar-tree and put it into git-archive. But if we allow
+pathspec for remote operations, then  we need to send them to the
+uploader.
+
+>
+> The interface could be something like this:
+>
+>    git-download-archive <repo> <git-archive-tree options...>
+>    git-upload-archive <directory>
+>
+> Or, if the big number of git command names is a concern:
 >
 
-Well, with a new git-archive-tree command, I thought it would make
-sense to put the remote logic there and let the git-tar-tree be a
-local command. But Rene has a different approach, please see his new
-thread "Add git-archive-tree".
-
-> While it makes sense to make "tar-tree --remote" usable outside
-> a git managed repository, I think people expect the connection
-> to obey core.gitproxy if the command is run inside a repository
-> that has a configuration file.
->
-
-Make sense.
+I think it is, IMHO. And that's why I think we could have only one
+command for building localy/remotely archive whatever the format.
+git-archive should be a main procelain command, and we should get rid
+of git-{tar,zip}-tree commands.
 
 -- 
                Franck
 
 -- 
-VGER BF report: U 0.799618
+VGER BF report: U 0.742177
