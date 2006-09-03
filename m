@@ -1,86 +1,63 @@
-From: Dennis Stosberg <dennis@stosberg.net>
-Subject: Re: Dropping Git.pm (at least Git.xs)?
-Date: Sun, 3 Sep 2006 17:03:05 +0200
-Message-ID: <20060903150305.G50c94aea@leonov.stosberg.net>
-References: <7vodtxuqt4.fsf@assigned-by-dhcp.cox.net>
+From: dwitch@nan92-1-81-57-214-146.fbx.proxad.net (Yann Dirson)
+Subject: Re: [PATCH 2/2] Look for a commit's parents in the standard way.
+Date: Sun, 3 Sep 2006 21:36:50 +0200
+Message-ID: <20060903193650.GA4914@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20060814165307.20350.63286.stgit@gandelf.nowhere.earth> <20060814165544.20350.41590.stgit@gandelf.nowhere.earth> <b0943d9e0608200343t517ec29dw2b6b49d9d69dbad5@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: pasky@suse.cz, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 03 17:03:26 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 03 21:37:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GJtVK-0005ON-Lr
-	for gcvg-git@gmane.org; Sun, 03 Sep 2006 17:03:23 +0200
+	id 1GJxmU-00009r-VO
+	for gcvg-git@gmane.org; Sun, 03 Sep 2006 21:37:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751150AbWICPDK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 3 Sep 2006 11:03:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751202AbWICPDJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Sep 2006 11:03:09 -0400
-Received: from kleekamp.stosberg.net ([85.116.201.130]:52610 "EHLO
-	kleekamp.stosberg.net") by vger.kernel.org with ESMTP
-	id S1751150AbWICPDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Sep 2006 11:03:08 -0400
-Received: by kleekamp.stosberg.net (Postfix, from userid 500)
-	id 7EA75FB061; Sun,  3 Sep 2006 17:03:05 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
+	id S932145AbWICThA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 3 Sep 2006 15:37:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932147AbWICThA
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Sep 2006 15:37:00 -0400
+Received: from smtp5-g19.free.fr ([212.27.42.35]:52448 "EHLO smtp5-g19.free.fr")
+	by vger.kernel.org with ESMTP id S932145AbWICTg7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 Sep 2006 15:36:59 -0400
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp5-g19.free.fr (Postfix) with ESMTP id D876327642;
+	Sun,  3 Sep 2006 21:36:57 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 0C7551F07D; Sun,  3 Sep 2006 21:36:50 +0200 (CEST)
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vodtxuqt4.fsf@assigned-by-dhcp.cox.net>
-OpenPGP: id=1B2F2863BA13A814C3B133DACC2811F494951CAB; url=http://stosberg.net/dennis.asc
-User-Agent: mutt-ng/devel-r802 (Debian)
+In-Reply-To: <b0943d9e0608200343t517ec29dw2b6b49d9d69dbad5@mail.gmail.com>
+User-Agent: Mutt/1.5.12-2006-07-14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26374>
 
-Junio C Hamano wrote:
-
-> In the ideal world in admittably not so immediate future, I
-> would rather have a honestly libified git that encapsulates
-[...]
->  - I think the clean-up promise of Git.pm is great (e.g.
->    safe_qx should be part of it not in git-svn alone).
+On Sun, Aug 20, 2006 at 11:43:22AM +0100, Catalin Marinas wrote:
+> On 14/08/06, Yann Dirson <ydirson@altern.org> wrote:
+> >This has the direct effect of taking info/grafts into account, since
+> >ignoring it only causes confusion.
 > 
->  - I think Git.xs was a bit premature and raised the hurdle of
->    cleaning up and consolidating various core-wrappers from
->    existing Perl scripts into Git.pm and have them use Git.pm.
->    It would be nice if we can drop this part for now, and do a
->    bit more Perl-level clean-up first.
+> I don't know the difference but is there any between parsing the
+> commit file and using git-rev-list --parents?
 
-Having perl bindings to git internals and sometime in the future to a
-libified git is a great thing.  It will allow people to do interesting
-things, quickly trying concepts without having to write any C code.
-And I expect that gitweb can be sped up remarkably by using Git.pm (no
-forking, parsing of command output often not necessary, easy caching of
-frequently cached data across calls, etc)
+Yes, git-rev-list at least takes info/grafts into account.
 
-So I think there are valid uses for Git.pm.
+> >+        self.__parents = split(_output_lines('git-rev-list --parents 
+> >--max-count=1 %s' % id_hash)[0])[1:]
+> 
+> Instead of using the split() method, you could call
+> _output_lines('git-rev-list --parents --max-count=1 %s' %
+> id_hash)[0].split()[1:]. Maybe that's why they might deprecate the
+> global split method.
 
-On the other hand there are the problems Junio mentioned.  And the
-portability issues wit Git.pm:
+Ah, OK.
 
- - Git has to be built with the same compiler perl was built with,
-   which is a problem on many Solaris machines.
- - We need to generate position-independent code on some archs, but
-   have no proper way to determine on which systems it is really
-   necessary. 
- - It completely breaks cross-compiling.
-
-And the gain is negligible at the moment: There are only two users
-left: git-annotate and git-send-email.  The first one has already
-been superseded by git-blame and the second one can easily be
-converted back.
-
-I think Git.pm would be a good candidate for the contrib section if
-there is someone who keeps it up-to-date through the coming changes.
-The only thing that would have to be kept in the main Makefile is the
-option to generate position-independent code, defaulting to off.
-
-Regards,
-Dennis
-
-
+Best regards,
+-- 
+Yann.
 
 -- 
-VGER BF report: U 0.957499
+VGER BF report: U 0.500235
