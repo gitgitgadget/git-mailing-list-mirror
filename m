@@ -1,96 +1,92 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Mozilla version control requirements and git
-Date: Sun, 3 Sep 2006 09:46:21 -0400
-Message-ID: <9e4733910609030646k6c722068m30f0e05fccc9c3c5@mail.gmail.com>
-References: <9e4733910609020731k25ce3a0aw7a84542f8cd516f6@mail.gmail.com>
-	 <46a038f90609021819v6d427f0eh69bc13b30ef6b692@mail.gmail.com>
-	 <9e4733910609022029q9cb9ba9m87cbc37e8d6f4ad7@mail.gmail.com>
-	 <ede6in$b9u$1@sea.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] gitweb wishlist and TODO list
+Date: Sun, 03 Sep 2006 13:24:36 +0200
+Organization: At home
+Message-ID: <edee1h$u4f$1@sea.gmane.org>
+References: <200609021817.09296.jnareb@gmail.com> <edcm1v$24k$1@sea.gmane.org> <e5bfff550609022126j1a79c750vb3aeea01cda10bac@mail.gmail.com> <ede765$b9u$2@sea.gmane.org> <e5bfff550609030410h11469715m88e0b5fba09f2440@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 03 23:26:00 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sun Sep 03 23:26:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GJzTF-000326-2m
-	for gcvg-git@gmane.org; Sun, 03 Sep 2006 23:25:38 +0200
+	id 1GJzTR-00035Y-HX
+	for gcvg-git@gmane.org; Sun, 03 Sep 2006 23:25:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751598AbWICVZY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 3 Sep 2006 17:25:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751597AbWICVZY
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Sep 2006 17:25:24 -0400
-Received: from py-out-1112.google.com ([64.233.166.180]:10446 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1751092AbWICNqz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Sep 2006 09:46:55 -0400
-Received: by py-out-1112.google.com with SMTP id n25so2175363pyg
-        for <git@vger.kernel.org>; Sun, 03 Sep 2006 06:46:21 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=MLMjvRPZ+DWeA+TdhCd6Of8zKVZFG0AK6EvRkgBQ122NL0pT9VNrSZ9DSHQl250W4qYYVLfuf3RtsGXDBiec4ZiNq6xy1pLqsRw1KgOjl0gFtcYiESOCeHHRWjPy6jRUUDAa1UzABKLJQZkn0tiAC9dQrrI+uNTRZwgKl/xKHCU=
-Received: by 10.35.129.1 with SMTP id g1mr5316366pyn;
-        Sun, 03 Sep 2006 06:46:21 -0700 (PDT)
-Received: by 10.35.60.14 with HTTP; Sun, 3 Sep 2006 06:46:20 -0700 (PDT)
-To: "Jakub Narebski" <jnareb@gmail.com>
-In-Reply-To: <ede6in$b9u$1@sea.gmane.org>
-Content-Disposition: inline
+	id S1751264AbWICVZq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 3 Sep 2006 17:25:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751597AbWICVZq
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Sep 2006 17:25:46 -0400
+Received: from main.gmane.org ([80.91.229.2]:60817 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751264AbWICLYm (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 Sep 2006 07:24:42 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GJq5h-00014r-5C
+	for git@vger.kernel.org; Sun, 03 Sep 2006 13:24:41 +0200
+Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 03 Sep 2006 13:24:41 +0200
+Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 03 Sep 2006 13:24:41 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26379>
 
-On 9/3/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> Jon Smirl wrote:
->
-> >> Oh, and "partial tree pulls for localisers". Perhaps git-cvsserver can
-> >> help there? Localisers can just use TortoiseCVS and get a checkout of
-> >> the language pack subdir.
-> >
-> > Partial repo pulls and an issue to. The mozilla repo has much more
-> > than a browser in it, it also has a large mail/news program. A partial
-> > repo pull may not be what is needed for git, instead git needs a
-> > partial repo checkout.
->
-> Or better support for subprojects.
->
-> I think you can fake subproject support using separate repositories
-> for subprojects, in the directory matching the one in the whole project,
-> and the project repository, where we pull/push subprojects into.
+Marco Costalba wrote:
 
-You can't really fake it. Many of the projects in Mozilla are
-dependent on each other. If you break them up into separate
-repositories you lose the ability to do a cross project commit. This
-is common when you are changing an interface between the subprojects.
+> On 9/3/06, Jakub Narebski <jnareb@gmail.com> wrote:
+>> Marco Costalba wrote:
+>>
+>>> On 9/2/06, Jakub Narebski <jnareb@gmail.com> wrote:
+>>>>
+>>>> By the way, do the diff between arbitrary revisions (say, between two
+>>>> branches/two refs) and between arbitrary versions of the same file
+>>>> would be useful to have in gitweb?
+>>>>
+>>>
+>>> A nice tool, lot of ideas to steal ;-)
+>>>
+>>>http://www.cenqua.com/fisheye/demo/viewrep/ant/src/main/org/apache/tools/ant/?FETOUR=A1
+>>
+>> FishEye? I haven't took the full tour, but the tool seems somewhat
+>> CVS centric, i.e. per file history, file description,...
+>>
+>> But for example "breadcrumbs" idea for the file path (each segment
+>> of path being link to given (sub)directory) is a nice one. Although 
+>> if I remember correctly the pathname (for files only) is currently
+>> hack to have somewhere link to "head" version of current file in
+>> plain format. 
+> 
+> Also the UI for diff between arbitrary revisions could be interesting.
 
-Would it make sense for git to treat a tree of projects like you
-describe as a single entity? So a commit would transparently commit to
-all of the subprojects. Maybe the commit entry's sha1 could be set up
-so that it would be identical in all subprojects. That would let you
-string them back together.
+There is problem with git encouraging multiple branches and nonlinear
+history. While it would be fairly easy either to add Wiki-like (e.g.
+http://git.or.cz/gitwiki/ or http://en.wikipedia.org) radio-boxes to mark
+revisions to compare, or add pull down menu to select revision (useless
+with longer history) of a given file (we have diff-to-current in file
+history, by the way), the true power of selecting revisions to compare
+would be when we would have graphical history visualizer built in, similar
+to gitk and qgit. 
 
-> --
-> Jakub Narebski
-> Warsaw, Poland
-> ShadeHawk on #git
->
->
->
-> --
-> VGER BF report: U 0.877495
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+By the way, do you known any common Perl modules for generating PNG
+(graphs)?
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
 
 
 -- 
-Jon Smirl
-jonsmirl@gmail.com
-
--- 
-VGER BF report: S 0.995201
+VGER BF report: S 0.995678
