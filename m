@@ -1,108 +1,99 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: PATCH 1/4] gitweb: Add GIT favicon, assuming image/png type
-Date: Mon, 4 Sep 2006 18:13:48 +0200
-Message-ID: <200609041813.49103.jnareb@gmail.com>
-References: <200609041810.09838.jnareb@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: New git commit tool
+Date: Mon, 4 Sep 2006 10:10:11 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0609040952550.27779@g5.osdl.org>
+References: <17660.4995.977221.767112@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Sep 04 18:41:35 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 04 19:10:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GKHVr-0003Qf-Pn
-	for gcvg-git@gmane.org; Mon, 04 Sep 2006 18:41:32 +0200
+	id 1GKHxk-0008TX-VJ
+	for gcvg-git@gmane.org; Mon, 04 Sep 2006 19:10:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964935AbWIDQl3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Sep 2006 12:41:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751416AbWIDQl3
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Sep 2006 12:41:29 -0400
-Received: from nz-out-0102.google.com ([64.233.162.193]:6629 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1751474AbWIDQg4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Sep 2006 12:36:56 -0400
-Received: by nz-out-0102.google.com with SMTP id n1so855128nzf
-        for <git@vger.kernel.org>; Mon, 04 Sep 2006 09:36:56 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=N3vq3Q3n7/+j8Z7xceitoVDF1JfOJeeeKxnZ8yyOgiHa7I0+41UeT00GZcPcqDgRAaW0lfeSyOTjhsiMq88qMDrMu55sI5ZmiBwq61j4k3fiPszb/owVBj8g+p2zGQUK3uQ2gLv5akOT0Mom2xOXikNCvyvJVKkHHFrG937em8c=
-Received: by 10.65.43.17 with SMTP id v17mr5782665qbj;
-        Mon, 04 Sep 2006 09:36:56 -0700 (PDT)
-Received: from host-81-190-21-28.torun.mm.pl ( [81.190.21.28])
-        by mx.gmail.com with ESMTP id c5sm3859928qbc.2006.09.04.09.36.55;
-        Mon, 04 Sep 2006 09:36:56 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-In-Reply-To: <200609041810.09838.jnareb@gmail.com>
-Content-Disposition: inline
+	id S964941AbWIDRKR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Sep 2006 13:10:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964944AbWIDRKR
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Sep 2006 13:10:17 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:19840 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964941AbWIDRKO (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Sep 2006 13:10:14 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k84HABnW003746
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 4 Sep 2006 10:10:12 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k84HABWB029574;
+	Mon, 4 Sep 2006 10:10:11 -0700
+To: Paul Mackerras <paulus@samba.org>
+In-Reply-To: <17660.4995.977221.767112@cargo.ozlabs.ibm.com>
+X-Spam-Status: No, hits=-0.487 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.146 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26426>
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This is my first post with binary patch. I'd rather not send file
-git-favicon.png as an attachement due to filtering.
 
-You can see (and download) the favicon istelf at
-  http://git.or.cz/gitwiki/GitRelatedLogos
-(the first favicon).
 
- Makefile               |    2 ++
- gitweb/git-favicon.png |  Bin
- gitweb/gitweb.perl     |    5 +++++
- 3 files changed, 7 insertions(+), 0 deletions(-)
+On Mon, 4 Sep 2006, Paul Mackerras wrote:
+> 
+> Files can also be partly checked in, for example, if changes were made
+> and checked in, and then further changes were made.  Clicking on such
+> a file will show a 3-way diff (HEAD vs. checked-in state vs. working
+> file), provided Junio applies my patch to diff-lib.c. :)
 
-diff --git a/Makefile b/Makefile
-index 199fbe8..f3b762d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -137,6 +137,7 @@ GITWEB_LIST =
- GITWEB_HOMETEXT = indextext.html
- GITWEB_CSS = gitweb.css
- GITWEB_LOGO = git-logo.png
-+GITWEB_FAVICON = git-favicon.png
- 
- export prefix bindir gitexecdir template_dir GIT_PYTHON_DIR
- 
-@@ -674,6 +675,7 @@ gitweb/gitweb.cgi: gitweb/gitweb.perl
- 	    -e 's|++GITWEB_HOMETEXT++|$(GITWEB_HOMETEXT)|g' \
- 	    -e 's|++GITWEB_CSS++|$(GITWEB_CSS)|g' \
- 	    -e 's|++GITWEB_LOGO++|$(GITWEB_LOGO)|g' \
-+	    -e 's|++GITWEB_FAVICON++|$(GITWEB_FAVICON)|g' \
- 	    $< >$@+
- 	chmod +x $@+
- 	mv $@+ $@
-diff --git a/gitweb/git-favicon.png b/gitweb/git-favicon.png
-new file mode 100644
-index 0000000..de637c0
-Binary files /dev/null and b/gitweb/git-favicon.png differ
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 7961945..bebaa0f 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -48,6 +48,8 @@ # URI of default stylesheet
- our $stylesheet = "++GITWEB_CSS++";
- # URI of GIT logo
- our $logo = "++GITWEB_LOGO++";
-+# URI of GIT favicon, assumed to be image/png type
-+our $favicon = "++GITWEB_FAVICON++";
- 
- # source of projects list
- our $projects_list = "++GITWEB_LIST++";
-@@ -1192,6 +1194,9 @@ EOF
- 		       'href="%s" type="application/rss+xml"/>'."\n",
- 		       esc_param($project), href(action=>"rss"));
- 	}
-+	if (defined $favicon) {
-+		print qq(<link rel="shortcut icon" href="$favicon" type="image/png"/>\n);
-+	}
- 
- 	print "</head>\n" .
- 	      "<body>\n" .
--- 
-1.4.1.1
+I like the feature, but not necessarily how it's been done. I see three 
+problems:
+
+a) the three-way diff makes it hard to see what you would _actually_ check 
+   in (if you use the index state), because it (by design, of course) 
+   mixes in not just the data you check in, but also the current state.
+
+b) if you ever click the icon to mark the whole file for checkin, you've 
+   now forever lost the old index state (ie it seems to do the equivalent 
+   of "git-update-index" into the main index). So you can't recover from 
+   mistakenly clicking on the icon.
+
+c) there's no way to exit gracefully without saving the changes you've 
+   done (related to (b), but also something you might want to do 
+   regardless of any half-way-updated index state).
+
+Now, the second and third problem are really one and the same, I guess. It 
+all boils down to the fact that I think one reasonable usage-case is that 
+you ran out of time and had to do something else, and you have two cases: 
+you _want_ to start up the next time with the half-way done thing (ie 
+you've marked certain files for committing), or you decide that you would 
+much prefer to restart from the beginning for next time around. Both are 
+entirely valid cases, and right now your git commit tool makes it 
+impossible to do the latter.
+
+So for problems (b)-(c), I _think_ the right answer is to do all the index 
+work in a new temporary copy of the index, and only on commit (or on "quit 
+and save current work") do you actually write back to the old index file. 
+That way, you can also always re-read the original index file to get the 
+previous state..
+
+As to (a) - I think it would in many ways be nicer if you could have some 
+way to in addition to the three-way diff also show the regular two-way 
+diffs for
+
+ (i) what would you actually commit
+ (ii) what are the _additional_ changes there in that file
+
+which is what you'd normally want to see, I think. The three-way diff 
+shows that, of course, but in a form that most people wouldn't understand, 
+methinks.
+
+I do have a fourth issue, which is that I hate "gitool" as a name. It 
+either parses as "gi"+"tool", which makes no sense, or "git"+"ool", which 
+also makes no sense. "gitk" was cute, "gitool" is just irritating ;)
+
+That said, it definitely has potential. 
+
+			Linus
