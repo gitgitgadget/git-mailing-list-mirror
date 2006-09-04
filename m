@@ -1,37 +1,37 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 3/5] autoconf: Preliminary check for working mmap
-Date: Tue, 05 Sep 2006 01:43:01 +0200
+Subject: Re: [PATCH 0/4] gitweb: Some improvements
+Date: Tue, 05 Sep 2006 01:53:57 +0200
 Organization: At home
-Message-ID: <edidlp$d3d$1@sea.gmane.org>
-References: <200609050054.24279.jnareb@gmail.com> <200609050056.52590.jnareb@gmail.com> <7vy7szjjal.fsf@assigned-by-dhcp.cox.net>
+Message-ID: <ediea9$d3d$2@sea.gmane.org>
+References: <200609041810.09838.jnareb@gmail.com> <7v8xkzkyie.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Sep 05 01:43:02 2006
+X-From: git-owner@vger.kernel.org Tue Sep 05 01:54:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GKO5l-00081v-K9
-	for gcvg-git@gmane.org; Tue, 05 Sep 2006 01:43:02 +0200
+	id 1GKOGg-0001d4-8v
+	for gcvg-git@gmane.org; Tue, 05 Sep 2006 01:54:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965049AbWIDXm7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Sep 2006 19:42:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965044AbWIDXm6
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Sep 2006 19:42:58 -0400
-Received: from main.gmane.org ([80.91.229.2]:56514 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S965049AbWIDXm6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Sep 2006 19:42:58 -0400
+	id S965063AbWIDXyQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Sep 2006 19:54:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965064AbWIDXyQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Sep 2006 19:54:16 -0400
+Received: from main.gmane.org ([80.91.229.2]:52193 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S965063AbWIDXyP (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Sep 2006 19:54:15 -0400
 Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GKO5e-00080T-Pv
-	for git@vger.kernel.org; Tue, 05 Sep 2006 01:42:54 +0200
+	id 1GKOGS-0001bI-Cz
+	for git@vger.kernel.org; Tue, 05 Sep 2006 01:54:04 +0200
 Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 05 Sep 2006 01:42:54 +0200
+        for <git@vger.kernel.org>; Tue, 05 Sep 2006 01:54:04 +0200
 Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 05 Sep 2006 01:42:54 +0200
+        for <git@vger.kernel.org>; Tue, 05 Sep 2006 01:54:04 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
 X-Complaints-To: usenet@sea.gmane.org
@@ -41,34 +41,43 @@ User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26457>
 
 Junio C Hamano wrote:
 
 > Jakub Narebski <jnareb@gmail.com> writes:
 > 
->> This patch sent earlier in other patch series and dropped,
->> as git uses private mapping, not private fixed. I think
->> that this check is better than no check at all...
+>> This is small series of patches, applicable both to 'master' and 'next',
+>> which adds simple improvements, or in the case of last patch
+>> fix bug/typo.
+>>
+>> First two patches were sent earlier, I don't know if they were dropped
+>> or forgotten. 
 > 
-> I think the next major change that is needed fairly soon is to
-> be able to mmap parts of a large pack file (even with 32-bit
-> offset).  I haven't loooked into it deeply enough but it may or
-> may not turn out to be beneficial if we map at fixed location so
-> the requirements of "working mmap()" might change.  I'd be
-> happier if you held onto this part of the patch before that
-> happens.
+> I think you were just expecting too quick turnaround ;-).
+> 
+> If I recall correctly it used to be that we could not use png
+> for favicon but it seems that things have improved.
+> 
+> It is a while since I tried gitweb on my machine the last time
+> but was it always this slow I wonder...  We probably would need
+> a good benchmark and automated test before going too much
+> further.
 
-Well, this patch perhaps not always would set NO_MMAP when it should 
-(some broken mmap that does private+fixed but not private), but I guess that
-if it would set NO_MMAP then mmap is broken (or doesn't exist at all).
+The problem is that before commit 5d043a3d856bd40d8b34b8836a561e438d23573b
+  gitweb: fill in gitweb configuration by Makefile
+by Martin Waitz one had to modify gitweb script to change the configuration
+from default.
 
-I have noticed AC_FUNC_MMAP test, and thought why not to use it?
-The simplest check if mmap exist would be to check libc for mmap function.
+But benchmarking is good. Simple time to run script from command line, with
+environment variables GATEWAY_INTERFACE="CGI/1.1", HTTP_ACCEPT="*/*",
+REQUEST_METHOD="GET" and of course QUERY_STRING set, and perhaps using
+ApacheBench.
 
 
-BTW the patch was reworked from previous version to reflect changes
-in the compilation variables management (ability to unset variable).
+>From my experience with gitweb, the longest it take to show summary and tags
+views (for a large number of tags, which grows linearly with history), and
+to show history (and of course blame).
 -- 
 Jakub Narebski
 Warsaw, Poland
