@@ -1,67 +1,66 @@
-From: Martin Langhoff <martin@catalyst.net.nz>
-Subject: [PATCH] git-repack: clear out tmp packfiles from $PACKDIR instead of cwd
-Date: Mon,  4 Sep 2006 17:42:16 +1200
-Message-ID: <11573485362686-git-send-email-martin@catalyst.net.nz>
-Cc: Martin Langhoff <martin@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Mon Sep 04 07:42:21 2006
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Bogofilter is my emails
+Date: Mon, 4 Sep 2006 17:46:22 +1200
+Message-ID: <46a038f90609032246h634cfa4amf5ebe4b41a0f6fb8@mail.gmail.com>
+References: <20060903040222.GB29756@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Sep 04 07:46:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GK7Dw-0000hf-BM
-	for gcvg-git@gmane.org; Mon, 04 Sep 2006 07:42:20 +0200
+	id 1GK7Hw-0001Qd-Fm
+	for gcvg-git@gmane.org; Mon, 04 Sep 2006 07:46:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932312AbWIDFmR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Sep 2006 01:42:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932315AbWIDFmR
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Sep 2006 01:42:17 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:23773 "EHLO
-	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
-	id S932312AbWIDFmQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Sep 2006 01:42:16 -0400
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=localhost.localdomain)
-	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
-	id 1GK7Dq-0005VE-8a; Mon, 04 Sep 2006 17:42:14 +1200
-To: git@vger.kernel.org, junkio@cox.net
-X-Mailer: git-send-email 1.4.2.gdfe7
+	id S932327AbWIDFqZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Sep 2006 01:46:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932328AbWIDFqZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Sep 2006 01:46:25 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:39035 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S932327AbWIDFqY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Sep 2006 01:46:24 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so978484nfa
+        for <git@vger.kernel.org>; Sun, 03 Sep 2006 22:46:23 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=OFEj8Mngm+PnDn92vKLWlstSCMgGnhNJc8wv8VivdQ2ZG5lFE6Y+l0Fafbw+twtjxFImIBD6pPifurq+7G5EuUJpoMhZspx7nFcOpBkGjvbYDtoCbwE7goZChW9YcJB0IwS81A0YNHEz1+S9jNh2Qles6vE0MS/pO63f+PDidMc=
+Received: by 10.48.163.19 with SMTP id l19mr6151521nfe;
+        Sun, 03 Sep 2006 22:46:22 -0700 (PDT)
+Received: by 10.49.6.16 with HTTP; Sun, 3 Sep 2006 22:46:22 -0700 (PDT)
+To: git@vger.kernel.org
+In-Reply-To: <20060903040222.GB29756@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26399>
 
-Temp packfiles should never be created in cwd anyway ;-)
+On 9/3/06, Shawn Pearce <spearce@spearce.org> wrote:
+> I'm not quite sure how to fix either message to get them to the list.
+> Neither email was a patch so I'm not going to try resending them
 
-Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
----
- git-repack.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+Well, it's just eaten 2 trivial patches of mine. Grumble.
 
-diff --git a/git-repack.sh b/git-repack.sh
-index ccc8e43..eee0d72 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -24,8 +24,9 @@ do
- 	shift
- done
- 
--rm -f .tmp-pack-*
- PACKDIR="$GIT_OBJECT_DIRECTORY/pack"
-+mkdir -p "$PACKDIR" || exit
-+rm -f "$PACKDIR/.tmp-pack-*"
- 
- # There will be more repacking strategies to come...
- case ",$all_into_one," in
-@@ -43,7 +44,6 @@ case ",$all_into_one," in
- 	;;
- esac
- 
--mkdir -p "$PACKDIR" || exit
- pack_objects="$pack_objects $local $quiet $no_reuse_delta$extra"
- name=$( { git-rev-list --objects --all $rev_list ||
- 	  echo "git-rev-list died with exit code $?"
--- 
-1.4.2.gdfe7
+I am resending them via a different smtp host with the assumption that
+the rules may be blocking emails sent via localhost on the initial hop
+or other smtp-routing-related rule.
 
+Discussion however seems to imply that bogofilter is only
+email-content based? The vger mta admins need to get a grip on 2006
+and use a combination of weighted rules to play the spam blocking game
+with at least some hope.
+
+Simple rulesets nowadays are triggered by ham way more often than spam.
+
+cheers,
+
+
+
+martin
 
 -- 
-VGER BF report: U 0.983488
+VGER BF report: U 0.550887
