@@ -1,118 +1,85 @@
-From: Junio C Hamano <junkio@cox.net>
+From: "Martin Langhoff (CatalystIT)" <martin@catalyst.net.nz>
 Subject: Re: [PATCH] git-repack: create new packs inside $PACKDIR, not cwd
-Date: Mon, 04 Sep 2006 02:50:28 -0700
-Message-ID: <7vr6ysneor.fsf@assigned-by-dhcp.cox.net>
-References: <11573485523752-git-send-email-martin@catalyst.net.nz>
-	<20060904090833.GF17042@admingilde.org>
-	<7vveo4nfbg.fsf@assigned-by-dhcp.cox.net>
+Date: Mon, 04 Sep 2006 22:03:12 +1200
+Message-ID: <44FBF9E0.9050800@catalyst.net.nz>
+References: <11573485523752-git-send-email-martin@catalyst.net.nz>	<20060904090833.GF17042@admingilde.org>	<7vveo4nfbg.fsf@assigned-by-dhcp.cox.net> <7vr6ysneor.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, Martin Waitz <tali@admingilde.org>
-X-From: git-owner@vger.kernel.org Mon Sep 04 11:50:20 2006
+X-From: git-owner@vger.kernel.org Mon Sep 04 12:03:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GKB5q-0001cf-FG
-	for gcvg-git@gmane.org; Mon, 04 Sep 2006 11:50:14 +0200
+	id 1GKBIV-0004Uu-Hd
+	for gcvg-git@gmane.org; Mon, 04 Sep 2006 12:03:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751294AbWIDJuL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Sep 2006 05:50:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751295AbWIDJuK
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Sep 2006 05:50:10 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:35327 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1751294AbWIDJuJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Sep 2006 05:50:09 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060904095008.PPKS4015.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 4 Sep 2006 05:50:08 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id J9q91V00B1kojtg0000000
-	Mon, 04 Sep 2006 05:50:09 -0400
-To: Martin Langhoff <martin@catalyst.net.nz>
-In-Reply-To: <7vveo4nfbg.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Mon, 04 Sep 2006 02:36:51 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751311AbWIDKDQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Sep 2006 06:03:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751327AbWIDKDQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Sep 2006 06:03:16 -0400
+Received: from godel.catalyst.net.nz ([202.78.240.40]:9626 "EHLO
+	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
+	id S1751311AbWIDKDP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Sep 2006 06:03:15 -0400
+Received: from 121-73-4-156.cable.telstraclear.net ([121.73.4.156] helo=[192.168.0.5])
+	by mail1.catalyst.net.nz with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1GKBIN-0003lN-Cq; Mon, 04 Sep 2006 22:03:11 +1200
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.7.12) Gecko/20050915
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vr6ysneor.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26412>
 
-Junio C Hamano <junkio@cox.net> writes:
+Junio C Hamano wrote:
 
-> Writing into $cwd was certainly a carelessness; we tend to use
-> $GIT_DIR/ for this kind of thing.
+> In other words...
 
-In other words...
+Can't be offline 2 hs to read a book... ;-) Actually, I had thought the 
+pack reading code would focus on filenames following pack-<id>.pack 
+pattern and corresponding idx files, and that .tmp-* was safe to have 
+there. My bad.
 
--- >8 --
-From: Martin Langhoff <martin@catalyst.net.nz>
-Date: Mon, 4 Sep 2006 17:42:32 +1200
-Subject: [PATCH] git-repack: create new packs inside $GIT_DIR, not cwd
+BTW, I think there's a small error.
 
-Avoid failing when cwd is !writable by writing the
-packfiles in $GIT_DIR, which is more in line with other commands.
+...
 
-Without this, git-repack was failing when run from crontab
-by non-root user accounts. For large repositories, this
-also makes the mv operation a lot cheaper, and avoids leaving
-temp packfiles around the fs upon failure.
+> --- a/git-repack.sh
+> +++ b/git-repack.sh
+> @@ -24,8 +24,10 @@ do
+>  	shift
+>  done
+>  
+> -rm -f .tmp-pack-*
+>  PACKDIR="$GIT_OBJECT_DIRECTORY/pack"
+> +PACKTMP="$GIT_DIR/.tmp-$$-pack"
+> +rm -f "$PACKTMP"-*
+> +trap 'rm -f "$PACKTMP"-*' 0 1 2 3 15
 
-Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- git-repack.sh |   11 +++++++----
- 1 files changed, 7 insertions(+), 4 deletions(-)
+Your packtmp includes $$ which means that rm -f "$PACKTMP" will only 
+clear out old packs only if the pid of the old-and-probably-dead process 
+matches ours... and then a hyphen.
 
-diff --git a/git-repack.sh b/git-repack.sh
-index 584a732..b525fc5 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -24,8 +24,10 @@ do
- 	shift
- done
- 
--rm -f .tmp-pack-*
- PACKDIR="$GIT_OBJECT_DIRECTORY/pack"
-+PACKTMP="$GIT_DIR/.tmp-$$-pack"
-+rm -f "$PACKTMP"-*
-+trap 'rm -f "$PACKTMP"-*' 0 1 2 3 15
- 
- # There will be more repacking strategies to come...
- case ",$all_into_one," in
-@@ -42,11 +44,12 @@ case ",$all_into_one," in
- 	    find . -type f \( -name '*.pack' -o -name '*.idx' \) -print`
- 	;;
- esac
-+
- pack_objects="$pack_objects $local $quiet $no_reuse_delta$extra"
- name=$( { git-rev-list --objects --all $rev_list ||
- 	  echo "git-rev-list died with exit code $?"
- 	} |
--	git-pack-objects --non-empty $pack_objects .tmp-pack) ||
-+	git-pack-objects --non-empty $pack_objects "$PACKTMP") ||
- 	exit 1
- if [ -z "$name" ]; then
- 	echo Nothing new to pack.
-@@ -64,8 +67,8 @@ else
- 				"$PACKDIR/old-pack-$name.$sfx"
- 		fi
- 	done &&
--	mv -f .tmp-pack-$name.pack "$PACKDIR/pack-$name.pack" &&
--	mv -f .tmp-pack-$name.idx  "$PACKDIR/pack-$name.idx" &&
-+	mv -f "$PACKTMP-$name.pack" "$PACKDIR/pack-$name.pack" &&
-+	mv -f "$PACKTMP-$name.idx"  "$PACKDIR/pack-$name.idx" &&
- 	test -f "$PACKDIR/pack-$name.pack" &&
- 	test -f "$PACKDIR/pack-$name.idx" || {
- 		echo >&2 "Couldn't replace the existing pack with updated one."
+so instead I propose...
+
++trap 'rm -f "$GIT_DIR/.tmp-*-pack"' 0 1 2 3 15
+
+cheers,
+
+
+martin
 -- 
-1.4.2.g99d7d
-
-
+-----------------------------------------------------------------------
+Martin @ Catalyst .Net .NZ  Ltd, PO Box 11-053, Manners St,  Wellington
+WEB: http://catalyst.net.nz/           PHYS: Level 2, 150-154 Willis St
+OFFICE: +64(4)916-7224                              MOB: +64(21)364-017
+       Make things as simple as possible, but no simpler - Einstein
+-----------------------------------------------------------------------
 
 -- 
-VGER BF report: U 0.870206
+VGER BF report: U 0.900798
