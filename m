@@ -1,94 +1,65 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 3/5] autoconf: Preliminary check for working mmap
-Date: Tue, 5 Sep 2006 00:56:52 +0200
-Message-ID: <200609050056.52590.jnareb@gmail.com>
-References: <200609050054.24279.jnareb@gmail.com>
+Subject: Re: [PATCH 1/4] gitweb: Add GIT favicon, assuming image/png type
+Date: Tue, 05 Sep 2006 01:00:04 +0200
+Organization: At home
+Message-ID: <edib58$61k$1@sea.gmane.org>
+References: <200609041810.09838.jnareb@gmail.com> <200609041813.49103.jnareb@gmail.com> <200609042032.13742.jnareb@gmail.com> <edhrij$l9j$1@sea.gmane.org> <7virk3l07a.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Sep 05 00:58:58 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue Sep 05 01:00:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GKNOw-0007fJ-Jf
-	for gcvg-git@gmane.org; Tue, 05 Sep 2006 00:58:46 +0200
+	id 1GKNQZ-000817-Qr
+	for gcvg-git@gmane.org; Tue, 05 Sep 2006 01:00:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751351AbWIDW6g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Sep 2006 18:58:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932231AbWIDW6f
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Sep 2006 18:58:35 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:12568 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751351AbWIDW6d (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Sep 2006 18:58:33 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so1112911nfa
-        for <git@vger.kernel.org>; Mon, 04 Sep 2006 15:58:32 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=WS3eXxTBj4wMOZc+Lsk6/LXYxb52/yH8lpofNz5HBna/aEXg6ET12yjbGAJHw95kFmMqxgWJDb3HKE1MaHomdULCK7rECBisTQZt/ebmsxMxlAuEAmOv+NNsHaTUTNxh+a17++n1qrYIFMT4nmpdr+KnAtPebwCR6O5DZilkzbc=
-Received: by 10.49.43.2 with SMTP id v2mr7116834nfj;
-        Mon, 04 Sep 2006 15:58:31 -0700 (PDT)
-Received: from host-81-190-21-28.torun.mm.pl ( [81.190.21.28])
-        by mx.gmail.com with ESMTP id l38sm10135925nfc.2006.09.04.15.58.31;
-        Mon, 04 Sep 2006 15:58:31 -0700 (PDT)
+	id S932228AbWIDXAZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Sep 2006 19:00:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932229AbWIDXAZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Sep 2006 19:00:25 -0400
+Received: from main.gmane.org ([80.91.229.2]:40598 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932228AbWIDXAY (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Sep 2006 19:00:24 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GKNQL-0007ye-FJ
+	for git@vger.kernel.org; Tue, 05 Sep 2006 01:00:13 +0200
+Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 05 Sep 2006 01:00:13 +0200
+Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 05 Sep 2006 01:00:13 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-In-Reply-To: <200609050054.24279.jnareb@gmail.com>
-Content-Disposition: inline
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26448>
 
-Use AC_FUNC_MMAP check to check if the `mmap' function exists and
-works correctly.  (It only checks private fixed mapping of
-already-mapped memory.)
+Junio C Hamano wrote:
 
-Still it is better than having no mmap check at all.
-Attention: uses implementation detail of AC_FUNC_MMAP!
-
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This patch sent earlier in other patch series and dropped,
-as git uses private mapping, not private fixed. I think
-that this check is better than no check at all...
-
- config.mak.in |    2 +-
- configure.ac  |    7 +++++++
- 2 files changed, 8 insertions(+), 1 deletions(-)
-
-diff --git a/config.mak.in b/config.mak.in
-index 2947560..2c8fd2c 100644
---- a/config.mak.in
-+++ b/config.mak.in
-@@ -37,6 +37,6 @@ NO_C99_FORMAT=@NO_C99_FORMAT@
- NO_STRCASESTR=@NO_STRCASESTR@
- NO_STRLCPY=@NO_STRLCPY@
- NO_SETENV=@NO_SETENV@
--#NO_MMAP=@NO_MMAP@
-+NO_MMAP=@NO_MMAP@
- #NO_ICONV=@NO_ICONV@
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> Jakub Narebski wrote:
+>>
+>>> index 199fbe87384cd3f4686916277dd124cefc751e8a..f3b762de92e579300eba3f53ee26b2a80b4e76c7 100644
+>>
+>> Hmmm... I do wonder why --binary implies --full-index option.
+> 
+> Patch safety.  Yours happened to be a creation patch so it might
+> not matter in this particular case, but we would want to be
+> reasonably sure there is no ambiguity in the preimage when you
+> are doing a modification patch.
  
-diff --git a/configure.ac b/configure.ac
-index fc5b813..799321e 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -249,6 +249,13 @@ AC_CHECK_FUNC(setenv,
- AC_SUBST(NO_SETENV)
- #
- # Define NO_MMAP if you want to avoid mmap.
-+AC_FUNC_MMAP
-+if test $ac_cv_func_mmap_fixed_mapped != yes; then
-+	NO_MMAP=YesPlease
-+else
-+	NO_MMAP=
-+fi
-+AC_SUBST(NO_MMAP)
- #
- # Define NO_ICONV if your libc does not properly support iconv.
- 
+Couldn't we do this (show full sha1) only for the binary part of patch?
 -- 
-1.4.1.1
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
