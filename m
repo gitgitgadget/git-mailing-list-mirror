@@ -1,84 +1,68 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Bogofilter is my emails
-Date: Sun, 3 Sep 2006 16:09:38 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609031550330.27779@g5.osdl.org>
+Date: Sun, 03 Sep 2006 18:23:51 -0700
+Message-ID: <7vy7t0s9ug.fsf@assigned-by-dhcp.cox.net>
 References: <20060903040222.GB29756@spearce.org>
+	<Pine.LNX.4.64.0609031550330.27779@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 04 01:09:50 2006
+X-From: git-owner@vger.kernel.org Mon Sep 04 03:24:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GK162-0005nI-Gl
-	for gcvg-git@gmane.org; Mon, 04 Sep 2006 01:09:46 +0200
+	id 1GK3CM-0007ID-HJ
+	for gcvg-git@gmane.org; Mon, 04 Sep 2006 03:24:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932101AbWICXJn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 3 Sep 2006 19:09:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932116AbWICXJn
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Sep 2006 19:09:43 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:19165 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932101AbWICXJm (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Sep 2006 19:09:42 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k83N9dnW022450
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 3 Sep 2006 16:09:39 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k83N9c5D001291;
-	Sun, 3 Sep 2006 16:09:38 -0700
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20060903040222.GB29756@spearce.org>
-X-Spam-Status: No, hits=-0.485 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.146 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932198AbWIDBXg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 3 Sep 2006 21:23:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932201AbWIDBXg
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Sep 2006 21:23:36 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:39111 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S932198AbWIDBXf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Sep 2006 21:23:35 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060904012335.DBZI6235.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 3 Sep 2006 21:23:35 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id J1Pb1V00g1kojtg0000000
+	Sun, 03 Sep 2006 21:23:36 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0609031550330.27779@g5.osdl.org> (Linus Torvalds's
+	message of "Sun, 3 Sep 2006 16:09:38 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26394>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> On Sun, 3 Sep 2006, Shawn Pearce wrote:
+>> 
+>> I'm not quite sure how to fix either message to get them to the list.
+>> Neither email was a patch so I'm not going to try resending them
+>> but I'm certainly a little curious as to how my email writing style
+>> twice tripped bogofilter's spam switch.
+>
+> I'm surprised and disgusted that vger started using bogofilter.
+>...
+> 		Linus
+>
+> -- 
+> VGER BF report: U 0.720981
 
-On Sun, 3 Sep 2006, Shawn Pearce wrote:
-> 
-> I'm not quite sure how to fix either message to get them to the list.
-> Neither email was a patch so I'm not going to try resending them
-> but I'm certainly a little curious as to how my email writing style
-> twice tripped bogofilter's spam switch.
+Hehe, and it still considers that your message is highly spammy
+(1.0 being definite spam, 0.0 being definite ham, if I am not
+mistaken).
 
-I'm surprised and disgusted that vger started using bogofilter.
+The filter at least should learn to recognize "^\t\tLinus$" ;-).
 
-Last I saw, the bogofilter approach was totally bogus, using purely 
-single-word frequencies (or, more strictly, a "does word X exist or not", 
-where X has often gone through what a linguist would probably call a 
-"lemmatizer", ie something that turns different forms of the same word 
-into its canonical word, aka "lemma") for its "bayesian" filtering.
-
-Maybe they've enhanced it enough since, but it certainly used to be not 
-only fairly easy to fool, since it at least originally didn't take any 
-account at all of any more complex structure. 
-
-There's even some papers about how the bayesian thing does not work well 
-(even when extended to do some phrases and with lemmatization) if the 
-cut-off is hard.
-
-I think the bogofilter is probably an acceptable input as _one_ of many 
-rules for a real spam-filter (ie as one of many spamassassin rules), but 
-not for what vger does.
-
-Hard rules at mail acceptance are much better if they use some really hard 
-datum. For example, checking that the sending site actually also receives 
-email, and that it resolves back to itself. That's one thing that OSDL 
-does, for example, and it means that you can only send me email if your 
-machine is actually designated as a MX gateway. That cuts down on a _lot_ 
-of spam.
-
-(I'd love to speak of the details, but I wouldn't know. Kees Cook set it 
-all up at osdl, and I can just say that it works beautifully.)
-
-		Linus
 
 -- 
-VGER BF report: U 0.720981
+VGER BF report: U 0.669453
