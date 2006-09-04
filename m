@@ -1,67 +1,62 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [PATCH] git-repack: clear out tmp packfiles from $PACKDIR instead of cwd
-Date: Tue, 5 Sep 2006 00:16:07 +1200
-Message-ID: <46a038f90609040516y42d0250an85eea3c66bee31b6@mail.gmail.com>
-References: <11573485362686-git-send-email-martin@catalyst.net.nz>
-	 <46a038f90609032248h5eda61dft4150e13e49f8e59e@mail.gmail.com>
-	 <edgndv$mtv$1@sea.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: New git commit tool
+Date: Mon, 04 Sep 2006 14:26:22 +0200
+Organization: At home
+Message-ID: <edh615$7iu$1@sea.gmane.org>
+References: <17660.4995.977221.767112@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 04 14:16:34 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Mon Sep 04 14:27:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GKDNF-00015y-3e
-	for gcvg-git@gmane.org; Mon, 04 Sep 2006 14:16:22 +0200
+	id 1GKDXY-0003Io-MB
+	for gcvg-git@gmane.org; Mon, 04 Sep 2006 14:27:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964818AbWIDMQO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Sep 2006 08:16:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964801AbWIDMQO
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Sep 2006 08:16:14 -0400
-Received: from nf-out-0910.google.com ([64.233.182.186]:40468 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S964818AbWIDMQJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Sep 2006 08:16:09 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so1023582nfa
-        for <git@vger.kernel.org>; Mon, 04 Sep 2006 05:16:08 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=RKRrSrRsBaOQGgpfzu9vPTB/7DPM/xjstfHko11JYEuQN2SibL1pwzKDTIrG6iWO7Mxn78Ih/F2bU7bUDpkSaEgxzkVQ4C2rk0Tvtvh3l6Ps1s3/lZQxDyoCHPLqde66qS42fmRuhkk56bCkifTe29C5KAaojynaCcdB3Q3aTlE=
-Received: by 10.49.94.20 with SMTP id w20mr6542991nfl;
-        Mon, 04 Sep 2006 05:16:08 -0700 (PDT)
-Received: by 10.49.6.16 with HTTP; Mon, 4 Sep 2006 05:16:07 -0700 (PDT)
-To: "Jakub Narebski" <jnareb@gmail.com>
-In-Reply-To: <edgndv$mtv$1@sea.gmane.org>
-Content-Disposition: inline
+	id S964848AbWIDM0t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Sep 2006 08:26:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964844AbWIDM0t
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Sep 2006 08:26:49 -0400
+Received: from main.gmane.org ([80.91.229.2]:29878 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964848AbWIDM0r (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Sep 2006 08:26:47 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GKDXE-0003GC-QP
+	for git@vger.kernel.org; Mon, 04 Sep 2006 14:26:40 +0200
+Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 04 Sep 2006 14:26:40 +0200
+Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 04 Sep 2006 14:26:40 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26418>
 
-On 9/4/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> Martin Langhoff wrote:
->
-> > On 9/4/06, Martin Langhoff <martin@catalyst.net.nz> wrote:
-> >> Temp packfiles should never be created in cwd anyway ;-)
-> >
-> > Note! Applies after "git-repack: create new packs inside $PACKDIR, not cwd"
-> >
-> >> VGER BF report: U 0.983488
-> >
-> > Hilarious!
->
-> Isn't 'U' for Undecided? (and 'H' for Ham)?
+Paul Mackerras wrote:
+[...]
 
-Maybe -- but the score is really high. This patch was part of a series
-of 2 actually. The other one had a score of 1.6 and got bounced. :-/
+Added preliminary entry to GitWiki
+  http://git.or.cz/gitwiki/InterfacesFrontendsAndTools#gitool
 
-
-
-martin
+Please, when adding new tool, announce it also in GitWiki...
 
 -- 
-VGER BF report: U 0.558927
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
+
+
+-- 
+VGER BF report: U 0.98878
