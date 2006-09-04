@@ -1,65 +1,63 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: New git commit tool
-Date: Mon, 4 Sep 2006 14:40:16 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609041435311.27779@g5.osdl.org>
-References: <17660.4995.977221.767112@cargo.ozlabs.ibm.com>
- <Pine.LNX.4.64.0609040952550.27779@g5.osdl.org> <17660.39046.767944.582869@cargo.ozlabs.ibm.com>
+From: "Chris Smith" <smitty1elkml@gmail.com>
+Subject: git fetch of 2.6.18-rc5-mm1
+Date: Mon, 4 Sep 2006 17:42:37 -0400
+Message-ID: <9b53a56d0609041442i2f9e56bao2e4b9f27a86f4d4c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 04 23:40:35 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Sep 04 23:42:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GKMB6-0000w1-FW
-	for gcvg-git@gmane.org; Mon, 04 Sep 2006 23:40:25 +0200
+	id 1GKMDK-0001RE-Iy
+	for gcvg-git@gmane.org; Mon, 04 Sep 2006 23:42:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964996AbWIDVkV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Sep 2006 17:40:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964997AbWIDVkU
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Sep 2006 17:40:20 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:29885 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964996AbWIDVkT (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Sep 2006 17:40:19 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k84LeGnW015268
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 4 Sep 2006 14:40:17 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k84LeGaC003394;
-	Mon, 4 Sep 2006 14:40:16 -0700
-To: Paul Mackerras <paulus@samba.org>
-In-Reply-To: <17660.39046.767944.582869@cargo.ozlabs.ibm.com>
-X-Spam-Status: No, hits=-0.487 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.146 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964997AbWIDVmk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Sep 2006 17:42:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964998AbWIDVmj
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Sep 2006 17:42:39 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:6720 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S964997AbWIDVmj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Sep 2006 17:42:39 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so1104294nfa
+        for <git@vger.kernel.org>; Mon, 04 Sep 2006 14:42:37 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=b2KuTPwa318sPKkHwwZAvjE7efQd287Vt+budipwXYEk7sWdgaHkEmm/XtVlz5B6DPeg6OlZhG54lOMMlx6YlH3qsITmJnBgCk2X2wllTdff4OTq09ZrRHCTDpAlqnOqHpKBbDg+EuPhUYHp0yQV4IdLjwoeITwoRVcGyNImhKU=
+Received: by 10.48.48.15 with SMTP id v15mr7133720nfv;
+        Mon, 04 Sep 2006 14:42:37 -0700 (PDT)
+Received: by 10.49.39.10 with HTTP; Mon, 4 Sep 2006 14:42:37 -0700 (PDT)
+To: git@vger.kernel.org, "Andrew Morton" <akpm@osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26436>
+
+n00b here.
+Per Andrew Morton's release announcement boilerplate, which is:
+git fetch git://git.kernel.org/pub/scm/linux/kernel/git/smurf/linux-trees.git
+v2.6.16-rc2-mm1
+
+I tried:
+git fetch git://git.kernel.org/pub/scm/linux/kernel/git/smurf/linux-trees.git
+v2.6.18-rc5-mm1
+When I dropped in my .config and did
+#make menuconfig
+the tree showed its version as v2.6.16-rc2-mm1 still.
+
+I can get a clean clone of the Linus tree, but not the -mm tree.
+Additionally, navigating to
+http://kernel.org/git/?o=age
+and searching on "smurf" reveals this information:
+linux/kernel/git/smurf/linux-trees.git  Tree imports. The main branch
+...     Matthias Urlichs        6 months ago    summary | shortlog | log
 
 
-
-On Tue, 5 Sep 2006, Paul Mackerras wrote:
-> 
-> I was calling it "gitt" for a long time, which is at least shorter and
-> easier to type.  I also thought of "tick" (anagram of tk + "ci" for
-> check in), but maybe all that shows I've been doing too many cryptic
-> crosswords lately. :)  The "gitool" was by analogy with the "citool"
-> of another system we've both used.  I'm happy to change it if someone
-> has a better idea...
-
-I had kind of expected more of an integration with gitk, and just using 
-"gitk" as the generic name for "git tk interface", it would perhaps make 
-more sense to just interface it that way, and thus one logical (?) thing 
-to do would be to just make the command be
-
-	gitk commit
-
-the same way we have "git commit". Hmm?
-
-But maybe I'm just strange.
-
-		Linus
+Request someone help me understand where I'm off track.
+-- 
+Christopher Smith
+Pursuer of knowledge
