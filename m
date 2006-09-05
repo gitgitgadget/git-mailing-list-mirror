@@ -1,35 +1,35 @@
 From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: [PATCH 3/5] autoconf: Preliminary check for working mmap
-Date: Mon, 4 Sep 2006 23:09:29 -0400
-Message-ID: <20060905030929.GA29865@spearce.org>
-References: <200609050054.24279.jnareb@gmail.com> <200609050056.52590.jnareb@gmail.com> <7vy7szjjal.fsf@assigned-by-dhcp.cox.net> <edidlp$d3d$1@sea.gmane.org>
+Date: Tue, 5 Sep 2006 02:25:31 -0400
+Message-ID: <20060905062531.GA30496@spearce.org>
+References: <200609050054.24279.jnareb@gmail.com> <200609050056.52590.jnareb@gmail.com> <7vy7szjjal.fsf@assigned-by-dhcp.cox.net> <edidlp$d3d$1@sea.gmane.org> <20060905030929.GA29865@spearce.org> <7vu03mkiei.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 05 09:25:33 2006
+X-From: git-owner@vger.kernel.org Tue Sep 05 09:28:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GKVJI-0003lN-G7
-	for gcvg-git@gmane.org; Tue, 05 Sep 2006 09:25:28 +0200
+	id 1GKVMI-0004HH-Sb
+	for gcvg-git@gmane.org; Tue, 05 Sep 2006 09:28:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751494AbWIEHZZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Sep 2006 03:25:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751449AbWIEHZZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Sep 2006 03:25:25 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:39345 "EHLO
+	id S1751449AbWIEH2c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Sep 2006 03:28:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751502AbWIEH2b
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Sep 2006 03:28:31 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:21955 "EHLO
 	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S965150AbWIEE1L (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Sep 2006 00:27:11 -0400
+	id S1751449AbWIEH2a (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Sep 2006 03:28:30 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GKSTw-00068f-Cp; Tue, 05 Sep 2006 00:27:09 -0400
+	id 1GKVMB-0007Kn-CH; Tue, 05 Sep 2006 03:28:27 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 41EBE212693; Mon,  4 Sep 2006 23:09:30 -0400 (EDT)
+	id D5E7020E42C; Tue,  5 Sep 2006 02:25:31 -0400 (EDT)
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <edidlp$d3d$1@sea.gmane.org>
+In-Reply-To: <7vu03mkiei.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -42,40 +42,36 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26462>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Junio C Hamano wrote:
+Junio C Hamano <junkio@cox.net> wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
 > 
-> > Jakub Narebski <jnareb@gmail.com> writes:
-> > 
-> >> This patch sent earlier in other patch series and dropped,
-> >> as git uses private mapping, not private fixed. I think
-> >> that this check is better than no check at all...
-> > 
-> > I think the next major change that is needed fairly soon is to
-> > be able to mmap parts of a large pack file (even with 32-bit
-> > offset).  I haven't loooked into it deeply enough but it may or
-> > may not turn out to be beneficial if we map at fixed location so
-> > the requirements of "working mmap()" might change.  I'd be
-> > happier if you held onto this part of the patch before that
-> > happens.
+> > I'm maybe only 1/3 of the way through the sliding window mmap
+> > implementation.  I've got a good chunk of sha1_file.c converted but I
+> > still have to deal with the copying in pack-objects.c and the verify
+> > code in verify-pack.c.  I'm hoping I can send a preliminary patch
+> > series tomorrow as I'm going to work on it more tonight and tomorrow.
 > 
-> Well, this patch perhaps not always would set NO_MMAP when it should 
-> (some broken mmap that does private+fixed but not private), but I guess that
-> if it would set NO_MMAP then mmap is broken (or doesn't exist at all).
-> 
-> I have noticed AC_FUNC_MMAP test, and thought why not to use it?
-> The simplest check if mmap exist would be to check libc for mmap function.
+> Thanks -- I was tempted to do this myself after finishing the
+> index_64 change in "pu" branch, but have resisted the temptation
+> myself so far.  Being lazy, the less I have to code the better,
+> naturally ;-).
 
-Are there really mmap implementations that will only do
-private+fixed?  Sick.
+I thought that might be the case.  I should be able to finish it
+up tomorrow.  :-)
 
-I'm maybe only 1/3 of the way through the sliding window mmap
-implementation.  I've got a good chunk of sha1_file.c converted but I
-still have to deal with the copying in pack-objects.c and the verify
-code in verify-pack.c.  I'm hoping I can send a preliminary patch
-series tomorrow as I'm going to work on it more tonight and tomorrow.
+I don't know if I've made this more complex than I really need to
+but I've permitted multiple windows per pack.  There is just one
+LRU of all windows across all packs and a maximum amount of address
+space to use for pack mappings.  Least recently used window gets
+tossed when we need a different window.  This permits us to keep
+say a window active on the front of a pack (near the commits) and
+another different active window closer to the back (near the blobs).
+
+That multiple window feature made it a slightly non-trivial copy
+and paste from fast-import but I think its worth it for tree walking
+type applications.
 
 -- 
 Shawn.
