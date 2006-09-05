@@ -1,81 +1,90 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Running gitweb under mod_perl
-Date: Tue, 05 Sep 2006 22:32:21 +0200
-Organization: At home
-Message-ID: <edkms4$mr9$1@sea.gmane.org>
-References: <eck6sq$agn$1@sea.gmane.org> <20060824140525.G638085b@leonov.stosberg.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-svnimport: Parse log message for Signed-off-by: lines
+Date: Tue, 05 Sep 2006 14:26:50 -0700
+Message-ID: <7v1wqqc8dh.fsf@assigned-by-dhcp.cox.net>
+References: <20060905184611.GB14732@sashak.voltaire.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Sep 05 22:32:35 2006
+Cc: Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 05 23:26:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GKhar-00088J-2g
-	for gcvg-git@gmane.org; Tue, 05 Sep 2006 22:32:25 +0200
+	id 1GKiR5-0002BN-03
+	for gcvg-git@gmane.org; Tue, 05 Sep 2006 23:26:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161049AbWIEUcW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Sep 2006 16:32:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161050AbWIEUcW
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Sep 2006 16:32:22 -0400
-Received: from main.gmane.org ([80.91.229.2]:5343 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1161049AbWIEUcU (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Sep 2006 16:32:20 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GKhal-000868-Ca
-	for git@vger.kernel.org; Tue, 05 Sep 2006 22:32:19 +0200
-Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 05 Sep 2006 22:32:19 +0200
-Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 05 Sep 2006 22:32:19 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751375AbWIEV0U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Sep 2006 17:26:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751397AbWIEV0U
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Sep 2006 17:26:20 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:5561 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1751375AbWIEV0S (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Sep 2006 17:26:18 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060905212617.NVTW6235.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 5 Sep 2006 17:26:17 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id JlSJ1V00G1kojtg0000000
+	Tue, 05 Sep 2006 17:26:18 -0400
+To: Sasha Khapyorsky <sashak@voltaire.com>
+In-Reply-To: <20060905184611.GB14732@sashak.voltaire.com> (Sasha Khapyorsky's
+	message of "Tue, 5 Sep 2006 21:46:11 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26487>
 
-Dennis Stosberg wrote:
+Sasha Khapyorsky <sashak@voltaire.com> writes:
 
-> Jakub Narebski wrote:
-> 
->> What should I put in Apache configuration (Apache 2.0.54 if this
->> matters, mod_perl 2.0.1) 
-> 
-> From my configuration:
-> 
->   <Directory /home/dennis/public_html/perl>
->     Options -Indexes +ExecCGI
->     AllowOverride None
->     PerlSendHeader On
->     SetHandler perl-script
->     PerlHandler ModPerl::Registry
->   </Directory>
+> Hi,
+>
+> This feature was useful with importing https://openib.org/svn/gen2 .
+>
+> Sasha
+>
+> This add '-S' option. When specified svn-import will try to parse
+> commit message for 'Signed-off-by: ...' line, and if found will use
+> the name and email address extracted at first occurrence as this commit
+> author name and author email address. Committer name and email are
+> extracted in usual way.
+>
+> Signed-off-by: Sasha Khapyorsky <sashak@voltaire.com>
 
-I use mod_perl 2.0 version
+Thanks.
 
-   Alias /perl /var/www/perl
-   <Directory /var/www/perl>
-       SetHandler perl-script
-       PerlResponseHandler ModPerl::Registry
-       PerlOptions +ParseHeaders
-       Options +ExecCGI
-   </Directory>
+I do not think the first signed-off-by is necessarily the author
+of the change, so we are risking miscrediting (or misblaming) a
+wrong person.  Having said that, using the committer information
+has the same miscredit problem, so this change might be Ok, but
+I am not sure if it adds much improvement.
 
-What is strange that ApacheBench is showing that mod_perl is _slower_ than
-CGI version: 3003.305 [ms] (mean) CGI vs 3500.589 [ms] (mean) mod_perl
-for summary page for git.git repository (my copy that is).
+I will wait for an ack/nack from somebody who use svnimport and
+know it well.
 
-I wonder if I misconfigured something...
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+BTW, I do not appreciate the first six lines of your message
+being _before_ the proposed commit log message.  Please have it
+between "---\n" (that comes immediately after your own
+"Signed-off-by:") and the diffstat, like this:
+
+        This add '-S' option. When specified svn-import will try to...
+        ... in usual way.
+
+        Signed-off-by: Sasha Khapyorsky <sashak@voltaire.com>
+        ---
+
+          Hi,
+
+          This feature was useful with importing https://openib.org/svn/gen2 .
+
+          Sasha
+
+         git-svnimport.perl |   31 ++++++++++++++++++++-----------
+         1 files changed, 20 insertions(+), 11 deletions(-)
+
+         diff --git a/...
