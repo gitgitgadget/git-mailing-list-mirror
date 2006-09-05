@@ -1,74 +1,104 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/2] rev list add option accepting revision constraints on standard input
-Date: Tue, 05 Sep 2006 15:10:54 -0700
-Message-ID: <7vpseaarrl.fsf@assigned-by-dhcp.cox.net>
-References: <44FDECD1.2090909@shadowen.org>
-	<20060905215157.GA29172@shadowen.org>
+From: Sasha Khapyorsky <sashak@voltaire.com>
+Subject: Re: [PATCH] git-svnimport: Parse log message for Signed-off-by: lines
+Date: Wed, 6 Sep 2006 01:17:54 +0300
+Message-ID: <20060905221754.GI14732@sashak.voltaire.com>
+References: <20060905184611.GB14732@sashak.voltaire.com> <7v1wqqc8dh.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 06 00:11:31 2006
+Cc: Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 06 00:12:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GKj8d-0004m9-7g
-	for gcvg-git@gmane.org; Wed, 06 Sep 2006 00:11:23 +0200
+	id 1GKj9x-00054G-G7
+	for gcvg-git@gmane.org; Wed, 06 Sep 2006 00:12:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965201AbWIEWK5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Sep 2006 18:10:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965203AbWIEWK5
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Sep 2006 18:10:57 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:17297 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S965201AbWIEWKz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Sep 2006 18:10:55 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060905221055.TRJC4015.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 5 Sep 2006 18:10:55 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id JmAv1V00x1kojtg0000000
-	Tue, 05 Sep 2006 18:10:56 -0400
-To: Andy Whitcroft <apw@shadowen.org>
-In-Reply-To: <20060905215157.GA29172@shadowen.org> (Andy Whitcroft's message
-	of "Tue, 5 Sep 2006 22:51:57 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965195AbWIEWMm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Sep 2006 18:12:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965203AbWIEWMm
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Sep 2006 18:12:42 -0400
+Received: from taurus.voltaire.com ([193.47.165.240]:13351 "EHLO
+	taurus.voltaire.com") by vger.kernel.org with ESMTP id S965195AbWIEWMm
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Sep 2006 18:12:42 -0400
+Received: from sashak ([172.25.5.107]) by taurus.voltaire.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 6 Sep 2006 01:12:40 +0300
+Received: by sashak (sSMTP sendmail emulation); Wed,  6 Sep 2006 01:17:54 +0300
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v1wqqc8dh.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-OriginalArrivalTime: 05 Sep 2006 22:12:40.0334 (UTC) FILETIME=[670432E0:01C6D138]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26495>
 
-Andy Whitcroft <apw@shadowen.org> writes:
+On 14:26 Tue 05 Sep     , Junio C Hamano wrote:
+> Sasha Khapyorsky <sashak@voltaire.com> writes:
+> 
+> > Hi,
+> >
+> > This feature was useful with importing https://openib.org/svn/gen2 .
+> >
+> > Sasha
+> >
+> > This add '-S' option. When specified svn-import will try to parse
+> > commit message for 'Signed-off-by: ...' line, and if found will use
+> > the name and email address extracted at first occurrence as this commit
+> > author name and author email address. Committer name and email are
+> > extracted in usual way.
+> >
+> > Signed-off-by: Sasha Khapyorsky <sashak@voltaire.com>
+> 
+> Thanks.
+> 
+> I do not think the first signed-off-by is necessarily the author
+> of the change, so we are risking miscrediting (or misblaming) a
+> wrong person. 
 
-> Add a --stdin flag which causes rev-list to additionally read
-> its stdin stream and parse that for revision constraints.
+Right, there is such risk, so this feature is optional and by default is
+"off".
 
-> +/*
-> + * Parse revision information, filling in the "rev_info" structure,
-> + * revisions are taken from stream.
-> + */
-> +static void setup_revisions_stream(FILE *stream, struct rev_info *revs)
-> +{
-> +	char line[1000];
-> +	const char *args[] = { 0, line, 0 };
-> +
-> +	while (fgets(line, sizeof(line), stream) != NULL) {
-> +		line[strlen(line) - 1] = 0;
-> +
-> +		if (line[0] == '-')
-> +			die("options not supported in --stdin mode");
-> +
-> +		(void)setup_revisions(2, args, revs, NULL);
-> +	}
-> +}
+> Having said that, using the committer information
+> has the same miscredit problem, so this change might be Ok, but
+> I am not sure if it adds much improvement.
+> 
+> I will wait for an ack/nack from somebody who use svnimport and
+> know it well.
 
-Is calling setup_revisions() on the same revs like this many
-times safe?  I do not think so, especially what is after the
-primary "for()" loop in the function.
+Sure.
 
-I was sort-of expecting that you would instead replace that
-primary for() loop in setup_revisions() with some sort of
-callback...
+BTW, what about to importing subdirectories, like this:
+
+ <trunk>/path/to/subdir
+ <branches>/path/to/subdir
+
+Is this could be improvement?
+
+> 
+> BTW, I do not appreciate the first six lines of your message
+> being _before_ the proposed commit log message.  Please have it
+> between "---\n" (that comes immediately after your own
+> "Signed-off-by:") and the diffstat, like this:
+> 
+>         This add '-S' option. When specified svn-import will try to...
+>         ... in usual way.
+> 
+>         Signed-off-by: Sasha Khapyorsky <sashak@voltaire.com>
+>         ---
+> 
+>           Hi,
+> 
+>           This feature was useful with importing https://openib.org/svn/gen2 .
+> 
+>           Sasha
+> 
+>          git-svnimport.perl |   31 ++++++++++++++++++++-----------
+>          1 files changed, 20 insertions(+), 11 deletions(-)
+> 
+>          diff --git a/...
+
+Ok.
+
+Sasha
