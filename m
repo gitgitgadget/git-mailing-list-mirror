@@ -1,75 +1,58 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Test names
-Date: Tue, 05 Sep 2006 02:10:59 +0200
-Organization: At home
-Message-ID: <edifa7$h29$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 3/5] autoconf: Preliminary check for working mmap
+Date: Mon, 04 Sep 2006 22:10:45 -0700
+Message-ID: <7vu03mkiei.fsf@assigned-by-dhcp.cox.net>
+References: <200609050054.24279.jnareb@gmail.com>
+	<200609050056.52590.jnareb@gmail.com>
+	<7vy7szjjal.fsf@assigned-by-dhcp.cox.net> <edidlp$d3d$1@sea.gmane.org>
+	<20060905030929.GA29865@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Sep 05 02:11:09 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 05 07:10:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GKOWx-0004eh-NX
-	for gcvg-git@gmane.org; Tue, 05 Sep 2006 02:11:08 +0200
+	id 1GKTCq-0004WW-Lt
+	for gcvg-git@gmane.org; Tue, 05 Sep 2006 07:10:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965056AbWIEAK7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Sep 2006 20:10:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965081AbWIEAK7
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Sep 2006 20:10:59 -0400
-Received: from main.gmane.org ([80.91.229.2]:55526 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S965056AbWIEAK6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Sep 2006 20:10:58 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GKOWj-0004d5-VB
-	for git@vger.kernel.org; Tue, 05 Sep 2006 02:10:53 +0200
-Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 05 Sep 2006 02:10:53 +0200
-Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 05 Sep 2006 02:10:53 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S965157AbWIEFKV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Sep 2006 01:10:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965154AbWIEFKV
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Sep 2006 01:10:21 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:31110 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S965158AbWIEFKT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Sep 2006 01:10:19 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060905051019.MVMR21457.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 5 Sep 2006 01:10:19 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id JVAK1V00U1kojtg0000000
+	Tue, 05 Sep 2006 01:10:20 -0400
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060905030929.GA29865@spearce.org> (Shawn Pearce's message of
+	"Mon, 4 Sep 2006 23:09:29 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26459>
 
-In t/README it is written:
+Shawn Pearce <spearce@spearce.org> writes:
 
-> The test files are named as:
->
->         tNNNN-commandname-details.sh
->
-> where N is a decimal digit.
->
-> First digit tells the family:
->
->         0 - the absolute basics and global stuff
-> [...]
->         7 - the porcelainish commands concerning the working tree
+> I'm maybe only 1/3 of the way through the sliding window mmap
+> implementation.  I've got a good chunk of sha1_file.c converted but I
+> still have to deal with the copying in pack-objects.c and the verify
+> code in verify-pack.c.  I'm hoping I can send a preliminary patch
+> series tomorrow as I'm going to work on it more tonight and tomorrow.
 
-There are now some test which have 8 or 9 as first digit (e.g.
-t8002-blame.sh, t9001-send-email.sh). What is the family for them?
-What number for example gitweb test should have?
-
-> Second digit tells the particular command we are testing.
-
-Is there any naming rule, or just increment it by one when adding new test
-in the same family?
-
-> Third digit (optionally) tells the particular switch or group of switches
->  we are testing.
-
-What tells the fourth digit?
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Thanks -- I was tempted to do this myself after finishing the
+index_64 change in "pu" branch, but have resisted the temptation
+myself so far.  Being lazy, the less I have to code the better,
+naturally ;-).
+ 
