@@ -1,388 +1,337 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 2/2] pack-object: run rev-list equivalent internally.
-Date: Tue, 05 Sep 2006 00:30:40 -0700
-Message-ID: <7v64g2kbxb.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH 1/2] Separate object listing routines out of rev-list
+Date: Tue, 05 Sep 2006 00:30:27 -0700
+Message-ID: <7vd5aakbxo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Sep 05 09:33:16 2006
+X-From: git-owner@vger.kernel.org Tue Sep 05 09:33:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GKVQl-00055F-3b
-	for gcvg-git@gmane.org; Tue, 05 Sep 2006 09:33:11 +0200
+	id 1GKVR7-00059r-3W
+	for gcvg-git@gmane.org; Tue, 05 Sep 2006 09:33:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751502AbWIEHdI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Sep 2006 03:33:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751496AbWIEHdH
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Sep 2006 03:33:07 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:15752 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1751502AbWIEHaM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Sep 2006 03:30:12 -0400
+	id S1751236AbWIEHda (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Sep 2006 03:33:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751511AbWIEHd3
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Sep 2006 03:33:29 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:35533 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1751236AbWIEHaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Sep 2006 03:30:00 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao12.cox.net
+          by fed1rmmtao10.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060905073012.JLXJ20060.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 5 Sep 2006 03:30:12 -0400
+          id <20060905073000.MDLD18458.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 5 Sep 2006 03:30:00 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id JXWD1V0021kojtg0000000
-	Tue, 05 Sep 2006 03:30:13 -0400
+	id JXW01V00b1kojtg0000000
+	Tue, 05 Sep 2006 03:30:01 -0400
 To: git@vger.kernel.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26464>
 
-Instead of piping the rev-list output from its standard input,
-you can say:
-
-	pack-object --revs pack --all
-
-I am not happy about the command line parameter handling of this
-patch, so the syntax is very likely to change by the final
-version.  Currently it understands the following:
-
-	pack-object [options including --stdout]
-	pack-object [options] pack-base-name
-	pack-object [options] --revs pack-base-name [list options] refs...
-	pack-object [options including --stdout] --revs [list options] refs...
-
-The first two are for traditional behaviour and the latter two
-are the new ones.
+Create a separate file, list-objects.c, and move object listing
+routines from rev-list to it.  The next round will use it in
+pack-objects directly.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
+ Makefile           |    4 +-
+ builtin-rev-list.c |  110 ++++++----------------------------------------------
+ list-objects.c     |  107 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ list-objects.h     |    8 ++++
+ 4 files changed, 130 insertions(+), 99 deletions(-)
 
- * This does not contain the "pretend that objects in these
-   packs are loose when handing --unpacked requests" I've sent
-   earlier.  I've also considered doing without --revs but the
-   parser can quickly get confused between pack-base-name and a
-   ref given to (internal) rev-list.  "pack-object foobla" might
-   be reading from standard input and creating foobla-*.pack, or
-   the user wanted to do a rev-list starting from foobla and
-   forgot to specify the base name, for example.
-
- builtin-pack-objects.c |  273 ++++++++++++++++++++++++++++++++++--------------
- 1 files changed, 192 insertions(+), 81 deletions(-)
-
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 149fa28..74daf37 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -9,10 +9,13 @@ #include "delta.h"
- #include "pack.h"
- #include "csum-file.h"
+diff --git a/Makefile b/Makefile
+index 7b3114f..18cd79e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -233,7 +233,7 @@ XDIFF_LIB=xdiff/lib.a
+ 
+ LIB_H = \
+ 	blob.h cache.h commit.h csum-file.h delta.h \
+-	diff.h object.h pack.h pkt-line.h quote.h refs.h \
++	diff.h object.h pack.h pkt-line.h quote.h refs.h list-objects.h \
+ 	run-command.h strbuf.h tag.h tree.h git-compat-util.h revision.h \
+ 	tree-walk.h log-tree.h dir.h path-list.h unpack-trees.h builtin.h
+ 
+@@ -250,7 +250,7 @@ LIB_OBJS = \
+ 	server-info.o setup.o sha1_file.o sha1_name.o strbuf.o \
+ 	tag.o tree.o usage.o config.o environment.o ctype.o copy.o \
+ 	fetch-clone.o revision.o pager.o tree-walk.o xdiff-interface.o \
+-	write_or_die.o trace.o \
++	write_or_die.o trace.o list-objects.o \
+ 	alloc.o merge-file.o path-list.o help.o unpack-trees.o $(DIFF_OBJS)
+ 
+ BUILTIN_OBJS = \
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index 8437454..d6dcba2 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -7,6 +7,7 @@ #include "blob.h"
  #include "tree-walk.h"
-+#include "diff.h"
-+#include "revision.h"
+ #include "diff.h"
+ #include "revision.h"
 +#include "list-objects.h"
- #include <sys/time.h>
- #include <signal.h>
+ #include "builtin.h"
  
--static const char pack_usage[] = "git-pack-objects [-q] [--no-reuse-delta] [--non-empty] [--local] [--incremental] [--window=N] [--depth=N] {--stdout | base-name} < object-list";
-+static const char pack_usage[] = "git-pack-objects [-q] [--no-reuse-delta] [--non-empty] [--local] [--incremental] [--window=N] [--depth=N] {--stdout | base-name} [ --revs [--unpacked | --all | --not | <ref>]* | <object-list]";
- 
- struct object_entry {
- 	unsigned char sha1[20];
-@@ -1326,13 +1329,109 @@ static int git_pack_config(const char *k
- 	return git_default_config(k, v);
+ /* bits #0-15 in revision.h */
+@@ -97,104 +98,19 @@ static void show_commit(struct commit *c
+ 	commit->buffer = NULL;
  }
  
-+static void read_object_list_from_stdin(void)
-+{
-+	int num_preferred_base = 0;
-+	char line[40 + 1 + PATH_MAX + 2];
-+	unsigned char sha1[20];
-+	unsigned hash;
-+
-+	for (;;) {
-+		if (!fgets(line, sizeof(line), stdin)) {
-+			if (feof(stdin))
-+				break;
-+			if (!ferror(stdin))
-+				die("fgets returned NULL, not EOF, not error!");
-+			if (errno != EINTR)
-+				die("fgets: %s", strerror(errno));
-+			clearerr(stdin);
-+			continue;
-+		}
-+		if (line[0] == '-') {
-+			if (get_sha1_hex(line+1, sha1))
-+				die("expected edge sha1, got garbage:\n %s",
-+				    line);
-+			if (num_preferred_base++ < window)
-+				add_preferred_base(sha1);
-+			continue;
-+		}
-+		if (get_sha1_hex(line, sha1))
-+			die("expected sha1, got garbage:\n %s", line);
-+
-+		hash = name_hash(line+41);
-+		add_preferred_base_object(line+41, hash);
-+		add_object_entry(sha1, hash, 0);
-+	}
-+}
-+
-+/* copied from rev-list but needs to do things slightly differently */
-+static void mark_edge_parents_uninteresting(struct commit *commit)
-+{
-+	struct commit_list *parents;
-+
-+	for (parents = commit->parents; parents; parents = parents->next) {
-+		struct commit *parent = parents->item;
-+		if (!(parent->object.flags & UNINTERESTING))
-+			continue;
-+		mark_tree_uninteresting(parent->tree);
-+	}
-+}
-+
-+static void mark_edges_uninteresting(struct commit_list *list)
-+{
-+	for ( ; list; list = list->next) {
-+		struct commit *commit = list->item;
-+
-+		if (commit->object.flags & UNINTERESTING) {
-+			mark_tree_uninteresting(commit->tree);
-+			continue;
-+		}
-+		mark_edge_parents_uninteresting(commit);
-+	}
-+}
-+
-+static void show_commit(struct commit *commit)
-+{
-+	unsigned hash = name_hash("");
-+	add_object_entry(commit->object.sha1, hash, 0);
-+}
-+
+-static void process_blob(struct blob *blob,
+-			 struct object_array *p,
+-			 struct name_path *path,
+-			 const char *name)
 +static void show_object(struct object_array_entry *p)
-+{
-+	unsigned hash = name_hash(p->name);
-+	add_object_entry(p->item->sha1, hash, 0);
-+}
-+
-+static void get_object_list(int ac, const char **av)
-+{
-+	struct rev_info revs;
-+	const char **revav = xcalloc(ac + 3, sizeof(*revav));
-+
-+	revav[0] = "pack-objects";
-+	revav[1] = "--objects";
-+	memcpy(revav + 2, av, sizeof(*av) * ac);
-+
-+	init_revisions(&revs, NULL);
-+	save_commit_buffer = 0;
-+	track_object_refs = 0;
-+	setup_revisions(ac + 2, revav, &revs, NULL);
-+
-+	/* make sure we did not get pathspecs */
-+	if (revs.prune_data)
-+		die("pathspec given");
-+
-+	prepare_revision_walk(&revs);
-+	mark_edges_uninteresting(revs.commits);
-+
-+	traverse_commit_list(&revs, show_commit, show_object);
-+}
-+
- int cmd_pack_objects(int argc, const char **argv, const char *prefix)
  {
- 	SHA_CTX ctx;
--	char line[40 + 1 + PATH_MAX + 2];
- 	int depth = 10;
- 	struct object_entry **list;
--	int num_preferred_base = 0;
-+	int read_from_stdin = 1;
- 	int i;
- 
- 	git_config(git_pack_config);
-@@ -1341,58 +1440,94 @@ int cmd_pack_objects(int argc, const cha
- 	for (i = 1; i < argc; i++) {
- 		const char *arg = argv[i];
- 
--		if (*arg == '-') {
--			if (!strcmp("--non-empty", arg)) {
--				non_empty = 1;
--				continue;
--			}
--			if (!strcmp("--local", arg)) {
--				local = 1;
--				continue;
--			}
--			if (!strcmp("--progress", arg)) {
--				progress = 1;
--				continue;
--			}
--			if (!strcmp("--incremental", arg)) {
--				incremental = 1;
--				continue;
--			}
--			if (!strncmp("--window=", arg, 9)) {
--				char *end;
--				window = strtoul(arg+9, &end, 0);
--				if (!arg[9] || *end)
--					usage(pack_usage);
--				continue;
--			}
--			if (!strncmp("--depth=", arg, 8)) {
--				char *end;
--				depth = strtoul(arg+8, &end, 0);
--				if (!arg[8] || *end)
--					usage(pack_usage);
--				continue;
--			}
--			if (!strcmp("--progress", arg)) {
--				progress = 1;
--				continue;
--			}
--			if (!strcmp("-q", arg)) {
--				progress = 0;
--				continue;
--			}
--			if (!strcmp("--no-reuse-delta", arg)) {
--				no_reuse_delta = 1;
--				continue;
--			}
--			if (!strcmp("--stdout", arg)) {
--				pack_to_stdout = 1;
-+		if (*arg != '-')
-+			break;
-+
-+		if (!strcmp("--non-empty", arg)) {
-+			non_empty = 1;
-+			continue;
-+		}
-+		if (!strcmp("--local", arg)) {
-+			local = 1;
-+			continue;
-+		}
-+		if (!strcmp("--progress", arg)) {
-+			progress = 1;
-+			continue;
-+		}
-+		if (!strcmp("--incremental", arg)) {
-+			incremental = 1;
-+			continue;
-+		}
-+		if (!strncmp("--window=", arg, 9)) {
-+			char *end;
-+			window = strtoul(arg+9, &end, 0);
-+			if (!arg[9] || *end)
-+				usage(pack_usage);
-+			continue;
-+		}
-+		if (!strncmp("--depth=", arg, 8)) {
-+			char *end;
-+			depth = strtoul(arg+8, &end, 0);
-+			if (!arg[8] || *end)
-+				usage(pack_usage);
-+			continue;
-+		}
-+		if (!strcmp("--progress", arg)) {
-+			progress = 1;
-+			continue;
-+		}
-+		if (!strcmp("-q", arg)) {
-+			progress = 0;
-+			continue;
-+		}
-+		if (!strcmp("--no-reuse-delta", arg)) {
-+			no_reuse_delta = 1;
-+			continue;
-+		}
-+		if (!strcmp("--stdout", arg)) {
-+			pack_to_stdout = 1;
-+			continue;
-+		}
-+		if (!strcmp("--revs", arg)) {
-+			read_from_stdin = 0;
-+			i++;
-+			break;
-+		}
-+		usage(pack_usage);
-+	}
-+
-+	/* Traditionally "pack-objects [options] base extra" failed;
-+	 * we would however want to take refs parameter that would
-+	 * have been given to upstream rev-list ourselves, which means
-+	 * we somehow want to say what the base name is.  So the
-+	 * syntax would be:
-+	 *
-+	 * pack-objects [options] base <refs...>
-+	 *
-+	 * in other words, we would treat the first non-option as the
-+	 * base_name and send everything else to the internal revision
-+	 * walker.
-+	 */
-+
-+	if (!pack_to_stdout)
-+		base_name = argv[i++];
-+
-+	if (!read_from_stdin) {
-+		int j;
-+		/* the rest are used as refs parameter to rev-list;
-+		 * we only allow refs (including a..b and a...b notation),
-+		 * --all, --not, and --unpacked.
-+		 */
-+		for (j = i; j < argc; j++) {
-+			const char *arg = argv[j];
-+			if ((arg[0] != '-') ||
-+			    !strcmp(arg, "--unpacked") ||
-+			    !strcmp(arg, "--all") ||
-+			    !strcmp(arg, "--not"))
- 				continue;
--			}
--			usage(pack_usage);
-+			die("cannot use --revs with %s", arg);
- 		}
--		if (base_name)
--			usage(pack_usage);
--		base_name = arg;
- 	}
- 
- 	if (pack_to_stdout != !base_name)
-@@ -1405,35 +1540,11 @@ int cmd_pack_objects(int argc, const cha
- 		setup_progress_signal();
- 	}
- 
--	for (;;) {
--		unsigned char sha1[20];
--		unsigned hash;
+-	struct object *obj = &blob->object;
 -
--		if (!fgets(line, sizeof(line), stdin)) {
--			if (feof(stdin))
--				break;
--			if (!ferror(stdin))
--				die("fgets returned NULL, not EOF, not error!");
--			if (errno != EINTR)
--				die("fgets: %s", strerror(errno));
--			clearerr(stdin);
--			continue;
--		}
-+	if (read_from_stdin)
-+		read_object_list_from_stdin();
-+	else
-+		get_object_list(argc - i, argv + i);
- 
--		if (line[0] == '-') {
--			if (get_sha1_hex(line+1, sha1))
--				die("expected edge sha1, got garbage:\n %s",
--				    line+1);
--			if (num_preferred_base++ < window)
--				add_preferred_base(sha1);
--			continue;
--		}
--		if (get_sha1_hex(line, sha1))
--			die("expected sha1, got garbage:\n %s", line);
--		hash = name_hash(line+41);
--		add_preferred_base_object(line+41, hash);
--		add_object_entry(sha1, hash, 0);
+-	if (!revs.blob_objects)
+-		return;
+-	if (obj->flags & (UNINTERESTING | SEEN))
+-		return;
+-	obj->flags |= SEEN;
+-	name = xstrdup(name);
+-	add_object(obj, p, path, name);
+-}
+-
+-static void process_tree(struct tree *tree,
+-			 struct object_array *p,
+-			 struct name_path *path,
+-			 const char *name)
+-{
+-	struct object *obj = &tree->object;
+-	struct tree_desc desc;
+-	struct name_entry entry;
+-	struct name_path me;
+-
+-	if (!revs.tree_objects)
+-		return;
+-	if (obj->flags & (UNINTERESTING | SEEN))
+-		return;
+-	if (parse_tree(tree) < 0)
+-		die("bad tree object %s", sha1_to_hex(obj->sha1));
+-	obj->flags |= SEEN;
+-	name = xstrdup(name);
+-	add_object(obj, p, path, name);
+-	me.up = path;
+-	me.elem = name;
+-	me.elem_len = strlen(name);
+-
+-	desc.buf = tree->buffer;
+-	desc.size = tree->size;
+-
+-	while (tree_entry(&desc, &entry)) {
+-		if (S_ISDIR(entry.mode))
+-			process_tree(lookup_tree(entry.sha1), p, &me, entry.path);
+-		else
+-			process_blob(lookup_blob(entry.sha1), p, &me, entry.path);
 -	}
- 	if (progress)
- 		fprintf(stderr, "Done counting %d objects.\n", nr_objects);
- 	sorted_by_sha = create_final_object_list();
+-	free(tree->buffer);
+-	tree->buffer = NULL;
+-}
+-
+-static void show_commit_list(struct rev_info *revs)
+-{
+-	int i;
+-	struct commit *commit;
+-	struct object_array objects = { 0, 0, NULL };
+-
+-	while ((commit = get_revision(revs)) != NULL) {
+-		process_tree(commit->tree, &objects, NULL, "");
+-		show_commit(commit);
+-	}
+-	for (i = 0; i < revs->pending.nr; i++) {
+-		struct object_array_entry *pending = revs->pending.objects + i;
+-		struct object *obj = pending->item;
+-		const char *name = pending->name;
+-		if (obj->flags & (UNINTERESTING | SEEN))
+-			continue;
+-		if (obj->type == OBJ_TAG) {
+-			obj->flags |= SEEN;
+-			add_object_array(obj, name, &objects);
+-			continue;
+-		}
+-		if (obj->type == OBJ_TREE) {
+-			process_tree((struct tree *)obj, &objects, NULL, name);
+-			continue;
+-		}
+-		if (obj->type == OBJ_BLOB) {
+-			process_blob((struct blob *)obj, &objects, NULL, name);
+-			continue;
+-		}
+-		die("unknown pending object %s (%s)", sha1_to_hex(obj->sha1), name);
+-	}
+-	for (i = 0; i < objects.nr; i++) {
+-		struct object_array_entry *p = objects.objects + i;
+-
+-		/* An object with name "foo\n0000000..." can be used to
+-		 * confuse downstream git-pack-objects very badly.
+-		 */
+-		const char *ep = strchr(p->name, '\n');
+-		if (ep) {
+-			printf("%s %.*s\n", sha1_to_hex(p->item->sha1),
+-			       (int) (ep - p->name),
+-			       p->name);
+-		}
+-		else
+-			printf("%s %s\n", sha1_to_hex(p->item->sha1), p->name);
++	/* An object with name "foo\n0000000..." can be used to
++	 * confuse downstream git-pack-objects very badly.
++	 */
++	const char *ep = strchr(p->name, '\n');
++	if (ep) {
++		printf("%s %.*s\n", sha1_to_hex(p->item->sha1),
++		       (int) (ep - p->name),
++		       p->name);
+ 	}
++	else
++		printf("%s %s\n", sha1_to_hex(p->item->sha1), p->name);
+ }
+ 
+ /*
+@@ -364,7 +280,7 @@ int cmd_rev_list(int argc, const char **
+ 	if (bisect_list)
+ 		revs.commits = find_bisection(revs.commits);
+ 
+-	show_commit_list(&revs);
++	traverse_commit_list(&revs, show_commit, show_object);
+ 
+ 	return 0;
+ }
+diff --git a/list-objects.c b/list-objects.c
+new file mode 100644
+index 0000000..adaf997
+--- /dev/null
++++ b/list-objects.c
+@@ -0,0 +1,107 @@
++#include "cache.h"
++#include "tag.h"
++#include "commit.h"
++#include "tree.h"
++#include "blob.h"
++#include "diff.h"
++#include "tree-walk.h"
++#include "revision.h"
++#include "list-objects.h"
++
++static void process_blob(struct rev_info *revs,
++			 struct blob *blob,
++			 struct object_array *p,
++			 struct name_path *path,
++			 const char *name)
++{
++	struct object *obj = &blob->object;
++
++	if (!revs->blob_objects)
++		return;
++	if (obj->flags & (UNINTERESTING | SEEN))
++		return;
++	obj->flags |= SEEN;
++	name = xstrdup(name);
++	add_object(obj, p, path, name);
++}
++
++static void process_tree(struct rev_info *revs,
++			 struct tree *tree,
++			 struct object_array *p,
++			 struct name_path *path,
++			 const char *name)
++{
++	struct object *obj = &tree->object;
++	struct tree_desc desc;
++	struct name_entry entry;
++	struct name_path me;
++
++	if (!revs->tree_objects)
++		return;
++	if (obj->flags & (UNINTERESTING | SEEN))
++		return;
++	if (parse_tree(tree) < 0)
++		die("bad tree object %s", sha1_to_hex(obj->sha1));
++	obj->flags |= SEEN;
++	name = xstrdup(name);
++	add_object(obj, p, path, name);
++	me.up = path;
++	me.elem = name;
++	me.elem_len = strlen(name);
++
++	desc.buf = tree->buffer;
++	desc.size = tree->size;
++
++	while (tree_entry(&desc, &entry)) {
++		if (S_ISDIR(entry.mode))
++			process_tree(revs,
++				     lookup_tree(entry.sha1),
++				     p, &me, entry.path);
++		else
++			process_blob(revs,
++				     lookup_blob(entry.sha1),
++				     p, &me, entry.path);
++	}
++	free(tree->buffer);
++	tree->buffer = NULL;
++}
++
++void traverse_commit_list(struct rev_info *revs,
++			  void (*show_commit)(struct commit *),
++			  void (*show_object)(struct object_array_entry *))
++{
++	int i;
++	struct commit *commit;
++	struct object_array objects = { 0, 0, NULL };
++
++	while ((commit = get_revision(revs)) != NULL) {
++		process_tree(revs, commit->tree, &objects, NULL, "");
++		show_commit(commit);
++	}
++	for (i = 0; i < revs->pending.nr; i++) {
++		struct object_array_entry *pending = revs->pending.objects + i;
++		struct object *obj = pending->item;
++		const char *name = pending->name;
++		if (obj->flags & (UNINTERESTING | SEEN))
++			continue;
++		if (obj->type == OBJ_TAG) {
++			obj->flags |= SEEN;
++			add_object_array(obj, name, &objects);
++			continue;
++		}
++		if (obj->type == OBJ_TREE) {
++			process_tree(revs, (struct tree *)obj, &objects,
++				     NULL, name);
++			continue;
++		}
++		if (obj->type == OBJ_BLOB) {
++			process_blob(revs, (struct blob *)obj, &objects,
++				     NULL, name);
++			continue;
++		}
++		die("unknown pending object %s (%s)",
++		    sha1_to_hex(obj->sha1), name);
++	}
++	for (i = 0; i < objects.nr; i++)
++		show_object(&objects.objects[i]);
++}
+diff --git a/list-objects.h b/list-objects.h
+new file mode 100644
+index 0000000..8a5fae6
+--- /dev/null
++++ b/list-objects.h
+@@ -0,0 +1,8 @@
++#ifndef LIST_OBJECTS_H
++#define LIST_OBJECTS_H
++
++void traverse_commit_list(struct rev_info *revs,
++			  void (*show_commit)(struct commit *),
++			  void (*show_object)(struct object_array_entry *));
++
++#endif
 -- 
 1.4.2.g552e5
