@@ -1,83 +1,138 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: New git commit tool
-Date: Tue, 5 Sep 2006 18:46:52 +0200
-Message-ID: <20060905164652.GB5547@diku.dk>
-References: <17660.4995.977221.767112@cargo.ozlabs.ibm.com> <20060904195736.GB2752@diku.dk> <17660.40934.605502.248266@cargo.ozlabs.ibm.com>
+From: Sasha Khapyorsky <sashak@voltaire.com>
+Subject: [PATCH] git-svnimport: Parse log message for Signed-off-by: lines
+Date: Tue, 5 Sep 2006 21:46:11 +0300
+Message-ID: <20060905184611.GB14732@sashak.voltaire.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Tue Sep 05 18:47:32 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 05 20:41:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GKe4n-0008J6-13
-	for gcvg-git@gmane.org; Tue, 05 Sep 2006 18:47:05 +0200
+	id 1GKfrE-0008Bl-3b
+	for gcvg-git@gmane.org; Tue, 05 Sep 2006 20:41:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030187AbWIEQq7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Sep 2006 12:46:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030188AbWIEQq7
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Sep 2006 12:46:59 -0400
-Received: from [130.225.96.91] ([130.225.96.91]:2433 "EHLO mgw1.diku.dk")
-	by vger.kernel.org with ESMTP id S1030187AbWIEQq6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Sep 2006 12:46:58 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id D13A977001D;
-	Tue,  5 Sep 2006 18:46:54 +0200 (CEST)
-Received: from mgw1.diku.dk ([127.0.0.1])
- by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 24633-02; Tue,  5 Sep 2006 18:46:53 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 962EC77001A;
-	Tue,  5 Sep 2006 18:46:53 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id B4FD46DF89F; Tue,  5 Sep 2006 18:45:20 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 2070462A09; Tue,  5 Sep 2006 18:46:53 +0200 (CEST)
-To: Paul Mackerras <paulus@samba.org>
+	id S932204AbWIESlG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Sep 2006 14:41:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932210AbWIESlG
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Sep 2006 14:41:06 -0400
+Received: from taurus.voltaire.com ([193.47.165.240]:26901 "EHLO
+	taurus.voltaire.com") by vger.kernel.org with ESMTP id S932204AbWIESlC
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Sep 2006 14:41:02 -0400
+Received: from sashak ([172.25.5.107]) by taurus.voltaire.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 5 Sep 2006 21:40:56 +0300
+Received: by sashak (sSMTP sendmail emulation); Tue,  5 Sep 2006 21:46:11 +0300
+To: Junio C Hamano <junkio@cox.net>,
+	Matthias Urlichs <smurf@smurf.noris.de>
 Content-Disposition: inline
-In-Reply-To: <17660.40934.605502.248266@cargo.ozlabs.ibm.com>
-User-Agent: Mutt/1.5.6i
-X-Virus-Scanned: amavisd-new at diku.dk
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-OriginalArrivalTime: 05 Sep 2006 18:40:56.0838 (UTC) FILETIME=[D3248A60:01C6D11A]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26481>
 
-Paul Mackerras <paulus@samba.org> wrote Tue, Sep 05, 2006:
-> Jonas Fonseca writes:
-> 
-> >     I am a Cogito user, so I am no used to running git-update-index and
-> >     this seems to be a problem in this case:
-> > 
-> > 	can't unset "indexpending(gitool)": no such element in array
-> 
-> Hmmm, I didn't think that could happen. :) It can only happen if some
-> file gets listed twice in the output from "git-diff-index HEAD".
-> Could you send me the output of "git-diff-index HEAD" and
-> "git-diff-index --cached HEAD" in that repository?
+Hi,
 
-~/gitool > git-diff-index HEAD
-fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
-Use '--' to separate paths from revisions
-~/gitool > git-diff-index --cached HEAD
-fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
-Use '--' to separate paths from revisions
-~/gitool > cat .git/HEAD
-ref: refs/heads/master
-~/gitool > ls .git/refs/heads/
-~/gitool >
+This feature was useful with importing https://openib.org/svn/gen2 .
 
-> And no, you don't need to run git-update-index, gitool does that for
-> you.
+Sasha
 
-Good to hear, but I swear the first time I ran gitool in a repo of mine
-it popped up the error dialog with the details saying:
+This add '-S' option. When specified svn-import will try to parse
+commit message for 'Signed-off-by: ...' line, and if found will use
+the name and email address extracted at first occurrence as this commit
+author name and author email address. Committer name and email are
+extracted in usual way.
 
-	fileX: needs update
+Signed-off-by: Sasha Khapyorsky <sashak@voltaire.com>
+---
+ git-svnimport.perl |   31 ++++++++++++++++++++-----------
+ 1 files changed, 20 insertions(+), 11 deletions(-)
 
-Now, of course, I cannot reproduce it.
-
+diff --git a/git-svnimport.perl b/git-svnimport.perl
+index 26dc454..7113cf5 100755
+--- a/git-svnimport.perl
++++ b/git-svnimport.perl
+@@ -31,7 +31,7 @@ die "Need SVN:Core 1.2.1 or better" if $
+ $ENV{'TZ'}="UTC";
+ 
+ our($opt_h,$opt_o,$opt_v,$opt_u,$opt_C,$opt_i,$opt_m,$opt_M,$opt_t,$opt_T,
+-    $opt_b,$opt_r,$opt_I,$opt_A,$opt_s,$opt_l,$opt_d,$opt_D);
++    $opt_b,$opt_r,$opt_I,$opt_A,$opt_s,$opt_l,$opt_d,$opt_D,$opt_S);
+ 
+ sub usage() {
+ 	print STDERR <<END;
+@@ -39,12 +39,12 @@ Usage: ${\basename $0}     # fetch/updat
+        [-o branch-for-HEAD] [-h] [-v] [-l max_rev]
+        [-C GIT_repository] [-t tagname] [-T trunkname] [-b branchname]
+        [-d|-D] [-i] [-u] [-r] [-I ignorefilename] [-s start_chg]
+-       [-m] [-M regex] [-A author_file] [SVN_URL]
++       [-m] [-M regex] [-A author_file] [-S] [SVN_URL]
+ END
+ 	exit(1);
+ }
+ 
+-getopts("A:b:C:dDhiI:l:mM:o:rs:t:T:uv") or usage();
++getopts("A:b:C:dDhiI:l:mM:o:rs:t:T:Suv") or usage();
+ usage if $opt_h;
+ 
+ my $tag_name = $opt_t || "tags";
+@@ -531,21 +531,30 @@ sub copy_path($$$$$$$$) {
+ 
+ sub commit {
+ 	my($branch, $changed_paths, $revision, $author, $date, $message) = @_;
+-	my($author_name,$author_email,$dest);
++	my($committer_name,$committer_email,$dest);
++	my($author_name,$author_email);
+ 	my(@old,@new,@parents);
+ 
+ 	if (not defined $author or $author eq "") {
+-		$author_name = $author_email = "unknown";
++		$committer_name = $committer_email = "unknown";
+ 	} elsif (defined $users_file) {
+ 		die "User $author is not listed in $users_file\n"
+ 		    unless exists $users{$author};
+-		($author_name,$author_email) = @{$users{$author}};
++		($committer_name,$committer_email) = @{$users{$author}};
+ 	} elsif ($author =~ /^(.*?)\s+<(.*)>$/) {
+-		($author_name, $author_email) = ($1, $2);
++		($committer_name, $committer_email) = ($1, $2);
+ 	} else {
+ 		$author =~ s/^<(.*)>$/$1/;
+-		$author_name = $author_email = $author;
++		$committer_name = $committer_email = $author;
+ 	}
++
++	if ($opt_S && $message =~ /Signed-off-by:\s+(.*?)\s+<(.*)>\s*\n/) {
++        	($author_name, $author_email) = ($1, $2);
++	} else {
++		$author_name = $committer_name;
++		$author_email = $committer_email;
++	}
++
+ 	$date = pdate($date);
+ 
+ 	my $tag;
+@@ -772,8 +781,8 @@ #	}
+ 				"GIT_AUTHOR_NAME=$author_name",
+ 				"GIT_AUTHOR_EMAIL=$author_email",
+ 				"GIT_AUTHOR_DATE=".strftime("+0000 %Y-%m-%d %H:%M:%S",gmtime($date)),
+-				"GIT_COMMITTER_NAME=$author_name",
+-				"GIT_COMMITTER_EMAIL=$author_email",
++				"GIT_COMMITTER_NAME=$committer_name",
++				"GIT_COMMITTER_EMAIL=$committer_email",
+ 				"GIT_COMMITTER_DATE=".strftime("+0000 %Y-%m-%d %H:%M:%S",gmtime($date)),
+ 				"git-commit-tree", $tree,@par);
+ 			die "Cannot exec git-commit-tree: $!\n";
+@@ -825,7 +834,7 @@ #	}
+ 		print $out ("object $cid\n".
+ 		    "type commit\n".
+ 		    "tag $dest\n".
+-		    "tagger $author_name <$author_email>\n") and
++		    "tagger $committer_name <$committer_email>\n") and
+ 		close($out)
+ 		    or die "Cannot create tag object $dest: $!\n";
+ 
 -- 
-Jonas Fonseca
+1.4.2
