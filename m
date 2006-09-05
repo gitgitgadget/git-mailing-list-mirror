@@ -1,75 +1,83 @@
 From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [PATCH 2/5] autoconf: Add -liconv to LIBS when NEEDS_LIBICONV
-Date: Tue, 5 Sep 2006 18:25:26 +0200
-Message-ID: <20060905162526.GA5547@diku.dk>
-References: <200609050054.24279.jnareb@gmail.com> <200609050055.52980.jnareb@gmail.com>
+Subject: Re: New git commit tool
+Date: Tue, 5 Sep 2006 18:46:52 +0200
+Message-ID: <20060905164652.GB5547@diku.dk>
+References: <17660.4995.977221.767112@cargo.ozlabs.ibm.com> <20060904195736.GB2752@diku.dk> <17660.40934.605502.248266@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 05 18:25:48 2006
+Cc: git@vger.kernel.org, torvalds@osdl.org
+X-From: git-owner@vger.kernel.org Tue Sep 05 18:47:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GKdk2-0003QN-1h
-	for gcvg-git@gmane.org; Tue, 05 Sep 2006 18:25:38 +0200
+	id 1GKe4n-0008J6-13
+	for gcvg-git@gmane.org; Tue, 05 Sep 2006 18:47:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965078AbWIEQZe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Sep 2006 12:25:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932194AbWIEQZe
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Sep 2006 12:25:34 -0400
-Received: from [130.225.96.91] ([130.225.96.91]:44253 "EHLO mgw1.diku.dk")
-	by vger.kernel.org with ESMTP id S932189AbWIEQZd (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Sep 2006 12:25:33 -0400
+	id S1030187AbWIEQq7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Sep 2006 12:46:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030188AbWIEQq7
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Sep 2006 12:46:59 -0400
+Received: from [130.225.96.91] ([130.225.96.91]:2433 "EHLO mgw1.diku.dk")
+	by vger.kernel.org with ESMTP id S1030187AbWIEQq6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Sep 2006 12:46:58 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id C08F577001D;
-	Tue,  5 Sep 2006 18:25:30 +0200 (CEST)
+	by mgw1.diku.dk (Postfix) with ESMTP id D13A977001D;
+	Tue,  5 Sep 2006 18:46:54 +0200 (CEST)
 Received: from mgw1.diku.dk ([127.0.0.1])
  by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 24267-07; Tue,  5 Sep 2006 18:25:26 +0200 (CEST)
+ id 24633-02; Tue,  5 Sep 2006 18:46:53 +0200 (CEST)
 Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 7E1FE77000F;
-	Tue,  5 Sep 2006 18:25:26 +0200 (CEST)
+	by mgw1.diku.dk (Postfix) with ESMTP id 962EC77001A;
+	Tue,  5 Sep 2006 18:46:53 +0200 (CEST)
 Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
 	by nhugin.diku.dk (Postfix) with ESMTP
-	id CE8016DF845; Tue,  5 Sep 2006 18:23:53 +0200 (CEST)
+	id B4FD46DF89F; Tue,  5 Sep 2006 18:45:20 +0200 (CEST)
 Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 6209A62A09; Tue,  5 Sep 2006 18:25:26 +0200 (CEST)
-To: Jakub Narebski <jnareb@gmail.com>
+	id 2070462A09; Tue,  5 Sep 2006 18:46:53 +0200 (CEST)
+To: Paul Mackerras <paulus@samba.org>
 Content-Disposition: inline
-In-Reply-To: <200609050055.52980.jnareb@gmail.com>
+In-Reply-To: <17660.40934.605502.248266@cargo.ozlabs.ibm.com>
 User-Agent: Mutt/1.5.6i
 X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26480>
 
-Jakub Narebski <jnareb@gmail.com> wrote Tue, Sep 05, 2006:
-> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-> ---
-> Just in case; it could matter for testing if iconv is properly
-> supported (NO_ICONV test).
+Paul Mackerras <paulus@samba.org> wrote Tue, Sep 05, 2006:
+> Jonas Fonseca writes:
 > 
->  configure.ac |    1 +
->  1 files changed, 1 insertions(+), 0 deletions(-)
+> >     I am a Cogito user, so I am no used to running git-update-index and
+> >     this seems to be a problem in this case:
+> > 
+> > 	can't unset "indexpending(gitool)": no such element in array
 > 
-> diff --git a/configure.ac b/configure.ac
-> index 36f9cd9..fc5b813 100644
-> --- a/configure.ac
-> +++ b/configure.ac
-> @@ -147,6 +147,7 @@ AC_CHECK_LIB([c], [iconv],
->  [NEEDS_LIBICONV=],
->  [NEEDS_LIBICONV=YesPlease])
->  AC_SUBST(NEEDS_LIBICONV)
-> +test -n "$NEEDS_SOCKET" && LIBS="$LIBS -liconv"
+> Hmmm, I didn't think that could happen. :) It can only happen if some
+> file gets listed twice in the output from "git-diff-index HEAD".
+> Could you send me the output of "git-diff-index HEAD" and
+> "git-diff-index --cached HEAD" in that repository?
 
-I see that this has entered already, but it looks like it needs a
-s/NEEDS_SOCKET/NEEDS_LIBICONV/
+~/gitool > git-diff-index HEAD
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions
+~/gitool > git-diff-index --cached HEAD
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions
+~/gitool > cat .git/HEAD
+ref: refs/heads/master
+~/gitool > ls .git/refs/heads/
+~/gitool >
 
->  #
->  # Define NEEDS_SOCKET if linking with libc is not enough (SunOS,
->  # Patrick Mauritz).
+> And no, you don't need to run git-update-index, gitool does that for
+> you.
+
+Good to hear, but I swear the first time I ran gitool in a repo of mine
+it popped up the error dialog with the details saying:
+
+	fileX: needs update
+
+Now, of course, I cannot reproduce it.
 
 -- 
 Jonas Fonseca
