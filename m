@@ -1,60 +1,48 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-svnimport: Parse log message for Signed-off-by: lines
-Date: Tue, 05 Sep 2006 16:26:40 -0700
-Message-ID: <7v8xkxc2tr.fsf@assigned-by-dhcp.cox.net>
-References: <20060905184611.GB14732@sashak.voltaire.com>
-	<7v1wqqc8dh.fsf@assigned-by-dhcp.cox.net>
-	<20060905221754.GI14732@sashak.voltaire.com>
+From: "Torgil Svensson" <torgil.svensson@gmail.com>
+Subject: stgit bisect feature request
+Date: Wed, 6 Sep 2006 01:49:15 +0200
+Message-ID: <e7bda7770609051649j56a92085i8d8a73ab12004c43@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 06 01:27:00 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Sep 06 01:49:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GKkJZ-0004kv-HC
-	for gcvg-git@gmane.org; Wed, 06 Sep 2006 01:26:46 +0200
+	id 1GKkfR-0000fV-Lw
+	for gcvg-git@gmane.org; Wed, 06 Sep 2006 01:49:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932137AbWIEX0m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Sep 2006 19:26:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932209AbWIEX0m
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Sep 2006 19:26:42 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:12987 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S932137AbWIEX0l (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Sep 2006 19:26:41 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060905232641.XDUG12581.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 5 Sep 2006 19:26:41 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id JnSh1V00X1kojtg0000000
-	Tue, 05 Sep 2006 19:26:42 -0400
-To: Sasha Khapyorsky <sashak@voltaire.com>
-In-Reply-To: <20060905221754.GI14732@sashak.voltaire.com> (Sasha Khapyorsky's
-	message of "Wed, 6 Sep 2006 01:17:54 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932247AbWIEXtS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Sep 2006 19:49:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932246AbWIEXtS
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Sep 2006 19:49:18 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:13152 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S932247AbWIEXtR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Sep 2006 19:49:17 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so90865nfa
+        for <git@vger.kernel.org>; Tue, 05 Sep 2006 16:49:15 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=V6XUm9J5LrhaR3CYJNeOnVlT75TwkvIMGz+cXbweHO7tDFqjACra7monmvqCVyMocBXKxpVF44LnwBTg8f2YrFIuJOUtl6wbbtTo1+aesVXDqCuQh/NwRfavwubJu446jpLYuu4dQAgSOK59UkyL3UO+1+WqyNb282tfgnVU22w=
+Received: by 10.49.75.2 with SMTP id c2mr102473nfl;
+        Tue, 05 Sep 2006 16:49:15 -0700 (PDT)
+Received: by 10.49.26.9 with HTTP; Tue, 5 Sep 2006 16:49:15 -0700 (PDT)
+To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26498>
 
-Sasha Khapyorsky <sashak@voltaire.com> writes:
+I think i'd be nice if stgit wraps bisect and you could write
+$ stg bisect start
+$ stg bisect bad
+$ stg bisect good ORIG_HEAD
 
-> BTW, what about to importing subdirectories, like this:
->
->  <trunk>/path/to/subdir
->  <branches>/path/to/subdir
->
-> Is this could be improvement?
+and after bisect checks out the files it pushes the current stack as
+if you had used stg pull at this point
 
-I somehow had an impression that svnimport dealt with the
-reversed layout already, although $project/{trunk,branches,tags}
-layout is assumed by default; maybe I was mistaken.
-
-If the tool can automatically detect the layout the remote
-project employs, and adjust the default accordingly, I would
-imagine that would be a useful addition.
+//Torgil
