@@ -1,66 +1,51 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Test names
-Date: Tue, 05 Sep 2006 01:28:13 -0700
-Message-ID: <7vd5aaiuoy.fsf@assigned-by-dhcp.cox.net>
-References: <edifa7$h29$1@sea.gmane.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: New git commit tool
+Date: Tue, 5 Sep 2006 10:45:46 +0200
+Message-ID: <20060905084546.GA30945@diana.vm.bytemark.co.uk>
+References: <17660.4995.977221.767112@cargo.ozlabs.ibm.com> <Pine.LNX.4.64.0609040952550.27779@g5.osdl.org> <17660.39046.767944.582869@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 05 10:28:31 2006
+X-From: git-owner@vger.kernel.org Tue Sep 05 10:46:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GKWHq-0007W6-Tc
-	for gcvg-git@gmane.org; Tue, 05 Sep 2006 10:28:03 +0200
+	id 1GKWZI-0002bu-LP
+	for gcvg-git@gmane.org; Tue, 05 Sep 2006 10:46:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964992AbWIEI1q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Sep 2006 04:27:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964993AbWIEI1q
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Sep 2006 04:27:46 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:42178 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S964992AbWIEI1p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Sep 2006 04:27:45 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060905082745.EMT12909.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 5 Sep 2006 04:27:45 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id JYTl1V00j1kojtg0000000
-	Tue, 05 Sep 2006 04:27:46 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <edifa7$h29$1@sea.gmane.org> (Jakub Narebski's message of "Tue,
-	05 Sep 2006 02:10:59 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S964882AbWIEIqA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 5 Sep 2006 04:46:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965023AbWIEIqA
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Sep 2006 04:46:00 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:56075 "EHLO
+	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
+	id S964882AbWIEIp7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Sep 2006 04:45:59 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1GKWZ0-00084a-00; Tue, 05 Sep 2006 09:45:46 +0100
+To: Paul Mackerras <paulus@samba.org>
+Content-Disposition: inline
+In-Reply-To: <17660.39046.767944.582869@cargo.ozlabs.ibm.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26468>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On 2006-09-05 07:20:06 +1000, Paul Mackerras wrote:
 
-> In t/README it is written:
->...
-> Is there any naming rule, or just increment it by one when adding new test
-> in the same family?
->
->> Third digit (optionally) tells the particular switch or group of switches
->>  we are testing.
->
-> What tells the fourth digit?
+> I was calling it "gitt" for a long time, which is at least shorter
+> and easier to type. I also thought of "tick" (anagram of tk + "ci"
+> for check in), but maybe all that shows I've been doing too many
+> cryptic crosswords lately. :) The "gitool" was by analogy with the
+> "citool" of another system we've both used. I'm happy to change it
+> if someone has a better idea...
 
-Nothing other than just to make them aline up and ordered
-nicely.
+gitci?
 
-The rule was outlined long time ago but not strictly followed
-(primarily because was done when git was mostly core, and it did
-not anticipate the proliferation of Porcelain-ish wrappers, so
-it was rather hard to follow).  I'd suggest you to declare that
-t92xx- series are for gitweb, and organize the tests in that
-namespace nicely.  Also you might want to see what Eric did for
-the subversion interface tests (60d02cc declares that t91xx-
-series are SVN tests and gives an easy way to skip heavier tests
-on git-svn).
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
