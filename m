@@ -1,70 +1,63 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Why is there a --binary option needed for git-apply?
-Date: Tue, 5 Sep 2006 23:38:03 -0400
-Message-ID: <20060906033803.GA30598@spearce.org>
-References: <874pvmxikq.wl%cworth@cworth.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: GitWiki lost ability to parse macros
+Date: Wed, 06 Sep 2006 12:22:47 +0200
+Organization: At home
+Message-ID: <edm7h3$nij$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 06 12:07:56 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed Sep 06 12:23:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GKuJw-0007n1-E4
-	for gcvg-git@gmane.org; Wed, 06 Sep 2006 12:07:48 +0200
+	id 1GKuYx-00039y-IR
+	for gcvg-git@gmane.org; Wed, 06 Sep 2006 12:23:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750755AbWIFKHp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Sep 2006 06:07:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750770AbWIFKHp
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 06:07:45 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:28621 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1750755AbWIFKHn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Sep 2006 06:07:43 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GKuJi-00062H-Vw; Wed, 06 Sep 2006 06:07:35 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5896E212693; Tue,  5 Sep 2006 23:38:03 -0400 (EDT)
-To: Carl Worth <cworth@cworth.org>
-Content-Disposition: inline
-In-Reply-To: <874pvmxikq.wl%cworth@cworth.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1750785AbWIFKXN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Sep 2006 06:23:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750787AbWIFKXM
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 06:23:12 -0400
+Received: from main.gmane.org ([80.91.229.2]:13731 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750785AbWIFKXK (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Sep 2006 06:23:10 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GKuYa-00034l-OX
+	for git@vger.kernel.org; Wed, 06 Sep 2006 12:22:56 +0200
+Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 06 Sep 2006 12:22:56 +0200
+Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 06 Sep 2006 12:22:56 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26513>
 
-Carl Worth <cworth@cworth.org> wrote:
-> Shawn Pearce was kind enough to direct me to the --binary option for
-> git-apply which solved my problem. But that left me wondering why
-> git-apply requires this extra command-line option to do its
-> job. Shouldn't git-apply simply apply the patch it is given?
-> 
-> If there is some reason for git-apply to only apply binary patches
-> when under the duress of --binary, then at the very least it could use
-> a better error message explaining the situation.
+Somehow, the GitWiki (which is MoinMoin wiki) lost the ability to parse
+macros. Macros are now output as is, instead of being substitutes with
+their expansion. It looks like MediaWiki-like syntax plugin got broken,
+because besides of {{macroname}} not being expanded, additionally pipe
+links [[target|label]] are not parsed.
 
-I see no reason why git-apply shouldn't always have --binary enabled.
-If the patch contains full pre-image/post-image blob IDs and we have
-an exact match against the pre-image and we have the post-image
-in our tree it should just apply even if the user didn't supply
---binary.  If the patch contains a binary delta and we have an
-exact match against the pre-image it should also just apply.
+See for example
+  http://git.or.cz/gitwiki/RecentChanges
+  http://git.or.cz/gitwiki/FindPage
+  http://git.or.cz/gitwiki/SystemInfo
 
-But if there's a binary hunk and we lack the full pre/post image blob
-IDs, we lack the post image and there's no detla, or the pre-image
-doesn't exactly match then we should obviously still abort with a
-reasonable error message as there's no sane course of action to take.
+  http://git.or.cz/gitwiki/InterfacesFrontendsAndTools 
+  (table of contents lost)
 
+So anyone has idea what has happened, and how to repair it?
 -- 
-Shawn.
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
