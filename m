@@ -1,51 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/7] gitweb: Trying to improve history view speed
-Date: Wed, 06 Sep 2006 15:01:13 -0700
-Message-ID: <7vu03k64eu.fsf@assigned-by-dhcp.cox.net>
-References: <200609061504.40725.jnareb@gmail.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: A look at some alternative PACK file encodings
+Date: Wed, 6 Sep 2006 19:23:16 -0400
+Message-ID: <9e4733910609061623k73086dbey4a600ecf2852c024@mail.gmail.com>
+References: <44FF41F4.1090906@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 07 00:01:12 2006
+X-From: git-owner@vger.kernel.org Thu Sep 07 01:23:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GL5SI-0007Kz-Jh
-	for gcvg-git@gmane.org; Thu, 07 Sep 2006 00:01:10 +0200
+	id 1GL6jr-0004OD-Aj
+	for gcvg-git@gmane.org; Thu, 07 Sep 2006 01:23:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751416AbWIFWBI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Sep 2006 18:01:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751461AbWIFWBI
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 18:01:08 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:51919 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1751416AbWIFWBG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Sep 2006 18:01:06 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060906220105.MWEH6711.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 6 Sep 2006 18:01:05 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id KA161V00C1kojtg0000000
-	Wed, 06 Sep 2006 18:01:06 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200609061504.40725.jnareb@gmail.com> (Jakub Narebski's message
-	of "Wed, 6 Sep 2006 15:04:40 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030201AbWIFXXT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Sep 2006 19:23:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030204AbWIFXXT
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 19:23:19 -0400
+Received: from py-out-1112.google.com ([64.233.166.182]:59335 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1030201AbWIFXXR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Sep 2006 19:23:17 -0400
+Received: by py-out-1112.google.com with SMTP id n25so15528pyg
+        for <git@vger.kernel.org>; Wed, 06 Sep 2006 16:23:16 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=rP61bZcXXDyPORycEXiB+TJXapGwMXyc+yKp/kPPITgbwly2x3RBgVUhr1SZalLG0V0K0/nGmRX5KbEQT8gtlvtj0OX9Xnm3sy6tr91i9Dcyp/1FBZDMr4dKXB43neybsUEjU1C80LPa5Jf035fQ/1+4tX7e1v/uRF9SbtBY3mg=
+Received: by 10.35.128.1 with SMTP id f1mr13104pyn;
+        Wed, 06 Sep 2006 16:23:16 -0700 (PDT)
+Received: by 10.35.60.14 with HTTP; Wed, 6 Sep 2006 16:23:16 -0700 (PDT)
+To: gitzilla@gmail.com
+In-Reply-To: <44FF41F4.1090906@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26569>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On 9/6/06, A Large Angry SCM <gitzilla@gmail.com> wrote:
+> TREE objects do not delta or deflate well.
 
-> gitweb/gitweb.perl |  180 +++++++++++++++++++++++++++++++++++++++++-----------
->  1 files changed, 141 insertions(+), 39 deletions(-)-
->
-> P.S. Is putting diffstat in such a series of patches actually usefull?
+I can understand why they don't deflate, the path names are pretty
+much unique and the sha1s are incompressible. By why don't they delta
+well? Does sorting them by size mess up the delta process?
 
-Very much -- it shows me that you are not damaging the core but
-only touching gitweb.
+Shawn is doing some prototype work on true dictionary based
+compression. I don't know how far along he is but it has potential for
+taking 30% off the Mozilla pack.
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
