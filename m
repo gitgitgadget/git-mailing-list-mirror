@@ -1,60 +1,64 @@
-From: Timo Hirvonen <tihirvon@gmail.com>
-Subject: Re: file rename causes history to disappear
-Date: Wed, 6 Sep 2006 18:05:14 +0300
-Message-ID: <20060906180514.698c9cba.tihirvon@gmail.com>
-References: <44FEE0BB.2060601@garzik.org>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: [PATCH] git-svnimport: Parse log message for Signed-off-by: lines
+Date: Wed, 6 Sep 2006 17:33:14 +0200
+Message-ID: <20060906153314.GE6999@kiste.smurf.noris.de>
+References: <20060905184611.GB14732@sashak.voltaire.com> <7v1wqqc8dh.fsf@assigned-by-dhcp.cox.net> <20060905221754.GI14732@sashak.voltaire.com> <7v8xkxc2tr.fsf@assigned-by-dhcp.cox.net> <20060906125317.GA21645@sashak.voltaire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 06 17:05:53 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 06 17:34:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GKyxO-0000kz-Sk
-	for gcvg-git@gmane.org; Wed, 06 Sep 2006 17:04:51 +0200
+	id 1GKzPw-0007h0-EH
+	for gcvg-git@gmane.org; Wed, 06 Sep 2006 17:34:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751289AbWIFPEr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Sep 2006 11:04:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751298AbWIFPEr
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 11:04:47 -0400
-Received: from nf-out-0910.google.com ([64.233.182.186]:9415 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751289AbWIFPEq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Sep 2006 11:04:46 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so234056nfa
-        for <git@vger.kernel.org>; Wed, 06 Sep 2006 08:04:44 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=MGqybngYiLWFlhLfFu1uF10KHwqE8OkZu6wYlFbXqZDN29vEazg6e2yXiFW+snH/uckYt6r46wu9KvSdFV59mJ6KeV4Mx2AkCoO0/wkGBrdHbl/DvwUwigoYQPbrGpZ2h3KfgPYkfABbM+Rk4bjXtEgNuKg358wgl6yjHePsY+M=
-Received: by 10.67.100.12 with SMTP id c12mr4463613ugm;
-        Wed, 06 Sep 2006 08:04:44 -0700 (PDT)
-Received: from garlic.home.net ( [82.128.229.21])
-        by mx.gmail.com with ESMTP id y1sm10099522uge.2006.09.06.08.04.39;
-        Wed, 06 Sep 2006 08:04:41 -0700 (PDT)
-To: Jeff Garzik <jeff@garzik.org>
-In-Reply-To: <44FEE0BB.2060601@garzik.org>
-X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.10.2; i686-pc-linux-gnu)
+	id S1750717AbWIFPeR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Sep 2006 11:34:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750818AbWIFPeR
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 11:34:17 -0400
+Received: from smurf.noris.de ([192.109.102.42]:62138 "EHLO smurf.noris.de")
+	by vger.kernel.org with ESMTP id S1750717AbWIFPeP (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Sep 2006 11:34:15 -0400
+Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
+	by smurf.noris.de with smtp (Exim 4.60)
+	(envelope-from <smurf@smurf.noris.de>)
+	id 1GKzOu-0001pB-1t; Wed, 06 Sep 2006 17:33:17 +0200
+Received: (nullmailer pid 9072 invoked by uid 501);
+	Wed, 06 Sep 2006 15:33:14 -0000
+To: Sasha Khapyorsky <sashak@voltaire.com>
+Content-Disposition: inline
+In-Reply-To: <20060906125317.GA21645@sashak.voltaire.com>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-Smurf-Spam-Score: -2.6 (--)
+X-Smurf-Whitelist: +relay_from_hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26534>
 
-Jeff Garzik <jeff@garzik.org> wrote:
+Hi,
 
-> I moved a bunch of SATA drivers in the Linux kernel from drivers/scsi to 
-> drivers/ata.
+Sasha Khapyorsky:
+> At least I didn't succeed with reversed layout. With option
+> -T <trunk>/$project import works but only for trunk branch, attempts
+> to specify branch as -b <branches> or -b <branches>/$project don't help,
+> the same is with tags.
 > 
-> When I tried to look at the past history of a file using 
-> git-whatchanged, post-rename, it only shows the history from HEAD to the 
-> point of rename.  Everything prior to the rename is lost.
-> 
-> I also tried git-whatchanged on the old path, but that produces an error.
+That's true. The problem is that it wants the tag or branch name as the
+last component of the path.
 
-Try "git log -- old/path/...".  Path limiting works without "--" only if
-the path exists.
+A more generic solution would be to use wildcards in the branch/tag
+specification, to allow more than one wildcard, and to be able to
+specify the exact form of the branch or tag name on the git side.
+
+All of this should be specified in the repository's git config file,
+not on the command line.
+
+
+Somebody who wants to implement that is certainly invited to do so.
+(I don't have time for that at the moment, unfortunately.)
 
 -- 
-http://onion.dynserv.net/~timo/
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
