@@ -1,78 +1,62 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/5] autoconf: Preliminary check for working mmap
-Date: Wed, 06 Sep 2006 00:17:38 -0700
-Message-ID: <7v1wqpa2gd.fsf@assigned-by-dhcp.cox.net>
-References: <200609050054.24279.jnareb@gmail.com>
-	<200609050056.52590.jnareb@gmail.com>
-	<7vy7szjjal.fsf@assigned-by-dhcp.cox.net> <edidlp$d3d$1@sea.gmane.org>
-	<20060905030929.GA29865@spearce.org>
-	<7vu03mkiei.fsf@assigned-by-dhcp.cox.net>
-	<20060905062531.GA30496@spearce.org>
-	<7v1wqqkbbv.fsf@assigned-by-dhcp.cox.net>
-	<20060906034054.GB30598@spearce.org>
+Subject: Re: [PATCH] Include local config before platform tweaks
+Date: Wed, 06 Sep 2006 00:18:32 -0700
+Message-ID: <7vwt8h8nuf.fsf@assigned-by-dhcp.cox.net>
+References: <9434EEBD-57BE-46D7-A2FF-069BB960AA44@silverinsanity.com>
+	<7vlkoyarnx.fsf@assigned-by-dhcp.cox.net>
+	<20060906033151.GB30540@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 06 09:17:41 2006
+Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Sep 06 09:18:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GKrfI-00073R-NZ
-	for gcvg-git@gmane.org; Wed, 06 Sep 2006 09:17:41 +0200
+	id 1GKrgC-0007Da-4p
+	for gcvg-git@gmane.org; Wed, 06 Sep 2006 09:18:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751591AbWIFHRh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Sep 2006 03:17:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751594AbWIFHRh
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 03:17:37 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:28606 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1751590AbWIFHRg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Sep 2006 03:17:36 -0400
+	id S1751597AbWIFHSd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Sep 2006 03:18:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751594AbWIFHSd
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 03:18:33 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:12464 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1751597AbWIFHSc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Sep 2006 03:18:32 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao11.cox.net
+          by fed1rmmtao12.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060906071735.YCTG13992.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 6 Sep 2006 03:17:35 -0400
+          id <20060906071830.JXW26416.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 6 Sep 2006 03:18:30 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id JvHU1V00F1kojtg0000000
-	Wed, 06 Sep 2006 03:17:28 -0400
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20060906034054.GB30598@spearce.org> (Shawn Pearce's message of
-	"Tue, 5 Sep 2006 23:40:54 -0400")
+	id JvJN1V0121kojtg0000000
+	Wed, 06 Sep 2006 03:18:23 -0400
+To: Brian Gernhardt <benji@silverinsanity.com>
+In-Reply-To: <20060906033151.GB30540@spearce.org> (Shawn Pearce's message of
+	"Tue, 5 Sep 2006 23:31:51 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26506>
 
 Shawn Pearce <spearce@spearce.org> writes:
 
 > Junio C Hamano <junkio@cox.net> wrote:
->> Shawn Pearce <spearce@spearce.org> writes:
+>> Brian Gernhardt <benji@silverinsanity.com> writes:
 >> 
->> > I don't know if I've made this more complex than I really need to
->> > but I've permitted multiple windows per pack.  There is just one
->> > LRU of all windows across all packs and a maximum amount of address
->> > space to use for pack mappings.  Least recently used window gets
->> > tossed when we need a different window.  This permits us to keep
->> > say a window active on the front of a pack (near the commits) and
->> > another different active window closer to the back (near the blobs).
+>> > Having config.mak included after the platform tweaks ignores NO_FINK
+>> > or NO_DARWIN_PORTS in that file.  Simply including the config earlier
+>> > fixes that.
 >> 
->> Sounds good. That is exactly what I was expecting it to be done.
+>> I vaguely recall that this was brought up before, and the
+>> conclusion was that the include location is correct but the way
+>> darwin bits were done was wrong.  I do not recall the details
+>> but does anybody on the list know?
 >
-> So I have this implemented but its against the 32 bit index.
-> It passes the full test suite and appears to be working as intended.
->
-> I am going to rebase the changes to the 64 bit index in `pu`
-> and clean up my history.  Its currently one massive commit with
-> lots of changes that should be broken down into slightly more
-> digestable chunks.
->
-> I'll try to do that tonight and get a patch series out.  My email
-> is currently proving to be unstable so you may not get the series
-> until later on Wed.
+> I think we just need to move the NO_FINK stuff below the include;
+> like this:
 
-Take your time.  My usual git day is Wednesday but this week it
-is shot and I won't be doing much gitting until later this week.
+Thanks Shawn.  Brian does Shawn's patch work for you?
