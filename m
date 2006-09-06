@@ -1,71 +1,96 @@
-From: Jeff Garzik <jeff@garzik.org>
-Subject: Re: file rename causes history to disappear
-Date: Wed, 06 Sep 2006 11:46:19 -0400
-Message-ID: <44FEED4B.30909@garzik.org>
-References: <44FEE0BB.2060601@garzik.org> <Pine.LNX.4.64.0609060834520.27779@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 0/7] gitweb: Trying to improve history view speed
+Date: Wed, 6 Sep 2006 08:57:24 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0609060847521.27779@g5.osdl.org>
+References: <200609061504.40725.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 06 17:46:57 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 06 17:57:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GKzbg-0001tO-IM
-	for gcvg-git@gmane.org; Wed, 06 Sep 2006 17:46:31 +0200
+	id 1GKzmO-0004GQ-AL
+	for gcvg-git@gmane.org; Wed, 06 Sep 2006 17:57:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751053AbWIFPqX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Sep 2006 11:46:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751056AbWIFPqX
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 11:46:23 -0400
-Received: from srv5.dvmed.net ([207.36.208.214]:19932 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S1751022AbWIFPqW (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Sep 2006 11:46:22 -0400
-Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75] helo=[10.10.10.99])
-	by mail.dvmed.net with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
-	id 1GKzbY-00025b-Q3; Wed, 06 Sep 2006 15:46:21 +0000
-User-Agent: Thunderbird 1.5.0.5 (X11/20060808)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0609060834520.27779@g5.osdl.org>
-X-Spam-Score: -4.3 (----)
-X-Spam-Report: SpamAssassin version 3.1.3 on srv5.dvmed.net summary:
-	Content analysis details:   (-4.3 points, 5.0 required)
+	id S1751165AbWIFP53 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Sep 2006 11:57:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751167AbWIFP53
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 11:57:29 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:7403 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751165AbWIFP52 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Sep 2006 11:57:28 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k86FvPnW006530
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 6 Sep 2006 08:57:26 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k86FvOmI014020;
+	Wed, 6 Sep 2006 08:57:24 -0700
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200609061504.40725.jnareb@gmail.com>
+X-Spam-Status: No, hits=-0.982 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.146 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26537>
 
-Linus Torvalds wrote:
-> 
-> On Wed, 6 Sep 2006, Jeff Garzik wrote:
->> I moved a bunch of SATA drivers in the Linux kernel from drivers/scsi to
->> drivers/ata.
->>
->> When I tried to look at the past history of a file using git-whatchanged,
->> post-rename, it only shows the history from HEAD to the point of rename.
->> Everything prior to the rename is lost.
->>
->> I also tried git-whatchanged on the old path, but that produces an error.
-> 
-> For filenames that don't exist right now, you need to clearly separate the 
-> revision name from the filename (ie you need to use "--").
-> 
-> There were patches to do "--follow-rename" which I don't think got applied 
-> yet, but in the meantime, just do
-> 
-> 	git whatchanged -M -- drivers/ata/filename.c drivers/scsi/filename.c
-> 
-> where the "-M" means "show diffs as renames if possible" (which is 
-> different from having the history actually _follow_ them), and the "--" is 
-> the filename separator to tell git that the nonexistent 
-> "drivers/ata/filename.c" file isn't a (currently) nonexistent revision 
-> name, it's a (currently) nonexistent _filename_.
 
-Since I'm just interested in the log (ATM), even the lack of "-M" seems 
-to produce useful results.  Thanks.
 
-IMO it is highly counter-intuitive that renames are -not- followed.  I 
-don't see the point of a "--follow-rename", it should Just Work(tm).
+On Wed, 6 Sep 2006, Jakub Narebski wrote:
+>
+> Unfortunately, git-rev-list is broken: 'git rev-list <commit> 
+> --full-history --parents -- <filename>' shows all merges in addition
+> to what 'git rev-list <commit> --parents -- <filename>' and 
+> 'git rev-list <commit> --full-history -- <filename>' shows, see
+> "git-rev-list --full-history --parents doesn't respect path limit 
+> and shows all merges" thread
 
-	Jeff
+If you ask for "--full-history" and "--parents", then pretty much by 
+_definition_ you need every single merge, because otherwise your history 
+wouldn't be fully connected.
+
+Without that, things like "gitk" and "qgit" wouldn't work.
+
+> So probably those patches should be dropped or put in freezer until
+> git-rev-list is corrected.
+
+git-rev-list _is_ correct, and if you want something else, you need to 
+either use a different set of flags (like _only_ using "--full-history") 
+or ask for a totally new flag (like "--most-history").
+
+So the rule is:
+
+ - using "--full-history" + "--parents" means that you want (surprise 
+   surprise) full history with parenthood, which means that you get all 
+   the connecting merges too. And since you asked for the _full_ history, 
+   that means EVERY SINGLE MERGE.
+
+ - using _just_ "--parents" means that you want a connected history with 
+   parenthood information, but since you didn't ask for the _full_ 
+   history, it will optimize away the merges that didn't change the file, 
+   and only follow the changed side. You still get merges, but now you get 
+   only those merges where both (all) sides actually mattered.
+
+ - using _just_ "--full-history" (without asking for parenthood) means 
+   that you're not asking for a connected history (since you're not asking 
+   for parents), and as such, it will only show individual _commits_ that 
+   change the file. That does potentially include merges, but again, it 
+   only includes merges that actually _changed_ something.
+
+In other words, "--parents" means a lot more than just "show what the 
+parents" were. In particular, it means (and always has meant, apart from 
+bugs) that we show the _rewritten_ parents after we've done history 
+munging, and that we always output enough commits to actually make sense 
+of that history from the result.
+
+So what you are asking for is pretty nonsensical. You ask for parenthood 
+info, but then you seem to not want to actually connect the dots. So why 
+do you ask for parents in the first place? If you don't want to connect 
+the commits to their parents, you shouldn't ask for it.
+
+		Linus
