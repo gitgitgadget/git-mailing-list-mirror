@@ -1,95 +1,69 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [PATCH 1/2] Add git-archive
-Date: Wed, 06 Sep 2006 22:17:53 +0200
-Message-ID: <44FF2CF1.9020201@lsrfire.ath.cx>
-References: <cda58cb80609050516v699338b9y57fd54f50c66e49e@mail.gmail.com>
+Date: Wed, 06 Sep 2006 22:29:19 +0200
+Organization: At home
+Message-ID: <ednb29$u0u$1@sea.gmane.org>
+References: <cda58cb80609050516v699338b9y57fd54f50c66e49e@mail.gmail.com> <7vfyf6ce29.fsf@assigned-by-dhcp.cox.net> <44FED12E.7010409@innova-card.com> <44FF2C37.2010400@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 06 22:18:12 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Wed Sep 06 22:29:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GL3qT-0005EZ-EV
-	for gcvg-git@gmane.org; Wed, 06 Sep 2006 22:18:01 +0200
+	id 1GL41X-0007TU-5M
+	for gcvg-git@gmane.org; Wed, 06 Sep 2006 22:29:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751570AbWIFUR6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Sep 2006 16:17:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751573AbWIFUR6
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 16:17:58 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:41965
-	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S1751569AbWIFUR5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Sep 2006 16:17:57 -0400
-Received: from [10.0.1.3] (p508E760A.dip.t-dialin.net [80.142.118.10])
-	by neapel230.server4you.de (Postfix) with ESMTP id 6BCB01400D;
-	Wed,  6 Sep 2006 22:17:56 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.5 (Windows/20060719)
-To: Franck Bui-Huu <vagabon.xyz@gmail.com>
-In-Reply-To: <cda58cb80609050516v699338b9y57fd54f50c66e49e@mail.gmail.com>
-X-Enigmail-Version: 0.94.0.0
+	id S1751626AbWIFU3Y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 6 Sep 2006 16:29:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751612AbWIFU3Y
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 16:29:24 -0400
+Received: from main.gmane.org ([80.91.229.2]:49093 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751537AbWIFU3X (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Sep 2006 16:29:23 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GL41O-0007RH-SZ
+	for git@vger.kernel.org; Wed, 06 Sep 2006 22:29:18 +0200
+Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 06 Sep 2006 22:29:18 +0200
+Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 06 Sep 2006 22:29:18 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26558>
 
-Franck Bui-Huu schrieb:
-> diff --git a/builtin-tar-tree.c b/builtin-tar-tree.c
-> index 61a4135..e0da01e 100644
-> --- a/builtin-tar-tree.c
-> +++ b/builtin-tar-tree.c
-> @@ -9,6 +9,7 @@ #include "strbuf.h"
-> #include "tar.h"
-> #include "builtin.h"
-> #include "pkt-line.h"
-> +#include "archive.h"
-> 
-> #define RECORDSIZE    (512)
-> #define BLOCKSIZE    (RECORDSIZE * 20)
-> @@ -338,6 +339,71 @@ static int generate_tar(int argc, const
->     return 0;
-> }
-> 
-> +static int write_tar_entry(const unsigned char *sha1,
-> +                           const char *base, int baselen,
-> +                           const char *filename, unsigned mode, int stage)
-> +{
-> +    static struct strbuf path;
-> +    int filenamelen = strlen(filename);
-> +    void *buffer;
-> +    char type[20];
-> +    unsigned long size;
-> +
-> +    if (!path.alloc) {
-> +        path.buf = xmalloc(PATH_MAX);
-> +        path.alloc = PATH_MAX;
-> +        path.len = path.eof = 0;
-> +    }
-> +    if (path.alloc < baselen + filenamelen) {
-> +        free(path.buf);
-> +        path.buf = xmalloc(baselen + filenamelen);
-> +        path.alloc = baselen + filenamelen;
-> +    }
-> +    memcpy(path.buf, base, baselen);
-> +    memcpy(path.buf + baselen, filename, filenamelen);
-> +    path.len = baselen + filenamelen;
-> +    if (S_ISDIR(mode)) {
-> +        strbuf_append_string(&path, "/");
-> +        buffer = NULL;
-> +        size = 0;
-> +    } else {
-> +        buffer = read_sha1_file(sha1, type, &size);
-> +        if (!buffer)
-> +            die("cannot read %s", sha1_to_hex(sha1));
-> +    }
-> +
-> +    write_entry(sha1, &path, mode, buffer, size);
+Rene Scharfe wrote:
 
-Here occurs the memory leak that I've been talking about.  buffer needs
-to be free'd.
+> IMHO should work like in the following example, and the code above
+> cuts off the Documentation part:
+>=20
+> =A0 =A0$ cd Documentation
+> =A0 =A0$ git-archive --format=3Dtar --prefix=3Dv1.0/ HEAD howto | tar=
+ tf -
+> =A0 =A0v1.0/howto/
+> =A0 =A0v1.0/howto/isolate-bugs-with-bisect.txt
+> =A0 =A0...
+>=20
+> I agree that simple subtree matching would be enough, at least for
+> now.
 
-> +
-> +    return READ_TREE_RECURSIVE;
-> +}
+What about
+
+     $ git-archive --format=3Dtar --prefix=3Dv1.0/ HEAD:Documentation/h=
+owto
+
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
