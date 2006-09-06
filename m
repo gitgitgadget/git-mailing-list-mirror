@@ -1,67 +1,60 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: file rename causes history to disappear
-Date: Wed, 6 Sep 2006 11:34:37 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609061131100.27779@g5.osdl.org>
-References: <44FEE0BB.2060601@garzik.org> <Pine.LNX.4.64.0609060834520.27779@g5.osdl.org>
- <44FEED4B.30909@garzik.org> <Pine.LNX.4.64.0609060858050.27779@g5.osdl.org>
- <edmvfv$lt7$2@sea.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 0/7] gitweb: Trying to improve history view speed
+Date: Wed, 06 Sep 2006 20:48:18 +0200
+Organization: At home
+Message-ID: <edn54s$c4s$1@sea.gmane.org>
+References: <200609061504.40725.jnareb@gmail.com> <Pine.LNX.4.64.0609060847521.27779@g5.osdl.org> <edmv57$lt7$1@sea.gmane.org> <Pine.LNX.4.64.0609061125000.27779@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 06 20:35:11 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed Sep 06 20:48:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GL2EZ-00026J-Py
-	for gcvg-git@gmane.org; Wed, 06 Sep 2006 20:34:48 +0200
+	id 1GL2S3-0004pJ-D3
+	for gcvg-git@gmane.org; Wed, 06 Sep 2006 20:48:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751134AbWIFSep (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Sep 2006 14:34:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751136AbWIFSep
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 14:34:45 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:9646 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751134AbWIFSen (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Sep 2006 14:34:43 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k86IYcnW015594
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 6 Sep 2006 11:34:39 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k86IYbHg019719;
-	Wed, 6 Sep 2006 11:34:37 -0700
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <edmvfv$lt7$2@sea.gmane.org>
-X-Spam-Status: No, hits=-0.495 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.146 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751133AbWIFSsj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Sep 2006 14:48:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751185AbWIFSsj
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 14:48:39 -0400
+Received: from main.gmane.org ([80.91.229.2]:24706 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751133AbWIFSsi (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Sep 2006 14:48:38 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GL2RX-0004iA-M7
+	for git@vger.kernel.org; Wed, 06 Sep 2006 20:48:12 +0200
+Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 06 Sep 2006 20:48:11 +0200
+Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 06 Sep 2006 20:48:11 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26549>
 
+Linus Torvalds wrote:
 
-
-On Wed, 6 Sep 2006, Jakub Narebski wrote:
+>> Every single merge is for parents to be connected, or what?
 > 
-> So if/when git would have --follow option to git-log and git-diff-*, it
-> would be rather --follow=<filename>, rather than --follow -- <paths>?
+> Well, "--parents" on its own means that we want a connected graph. It's 
+> just that if you don't ask for full history, then the connected graph 
+> result is obviously much smaller.
 
-That would probably be sensible, yes. Especially since "--follow" is 
-fundamentally different from the "<paths>" thing in that you really should 
-be able to only follow a single file.
+Well, I just didn't realize that --parents gives parents in _simplified_
+history, unless --full-history is used. Hence my confusion.
 
-(Following multiple files causes huge amounts of pain - it might be 
-possible, but I don't think it's worth it).
-
-> git-rev-list could then output hash with current set of <filenames>, which
-> were given <filename> at the beginning, i.e.
->   <hash> -- <filename> [<filename>...]
-
-I would argue that "--follow" would be incompatible with having other 
-<paths> listed. But maybe there is some sensible rule for what the 
-combination means (show the listed paths _and_ the file we're following?) 
-I dunno.
-
-		Linus
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
