@@ -1,83 +1,223 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Some issues with current qgit on exit
-Date: Wed, 6 Sep 2006 19:28:10 +0200
-Message-ID: <e5bfff550609061028y25aeb928i2c49d4a5d1be7a60@mail.gmail.com>
-References: <1157493650.2803.8.camel@dv>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH][RFC] Add git-archive-tree
+Date: Wed, 06 Sep 2006 20:05:18 +0200
+Message-ID: <44FF0DDE.7030700@lsrfire.ath.cx>
+References: <44F977C0.4060901@lsrfire.ath.cx> <7vwt8mx8lb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 06 19:28:44 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Franck Bui-Huu <vagabon.xyz@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 06 20:05:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GL1CL-0006xk-5u
-	for gcvg-git@gmane.org; Wed, 06 Sep 2006 19:28:25 +0200
+	id 1GL1mH-0004sh-J9
+	for gcvg-git@gmane.org; Wed, 06 Sep 2006 20:05:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751770AbWIFR2W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Sep 2006 13:28:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751773AbWIFR2W
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 13:28:22 -0400
-Received: from py-out-1112.google.com ([64.233.166.180]:58671 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1751770AbWIFR2V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Sep 2006 13:28:21 -0400
-Received: by py-out-1112.google.com with SMTP id n25so3751254pyg
-        for <git@vger.kernel.org>; Wed, 06 Sep 2006 10:28:20 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Ruf1lOdYtGkOTImPDdLRpUWnzXBNEdIESf0so83eOLS+6xEGAchombRcaRVNl8iZZYLJAuFcm9jKVtYYkCt9ZYNsqtGw1tWoGOtGONJpaSBuTfbdLyhIQkMm6OyiGH8Z3KSAXl6wRmXhbhudV+QdBaGkGeJ6Py6L3EGdws1SyAI=
-Received: by 10.35.127.7 with SMTP id e7mr15156737pyn;
-        Wed, 06 Sep 2006 10:28:20 -0700 (PDT)
-Received: by 10.35.95.9 with HTTP; Wed, 6 Sep 2006 10:28:10 -0700 (PDT)
-To: "Pavel Roskin" <proski@gnu.org>
-In-Reply-To: <1157493650.2803.8.camel@dv>
-Content-Disposition: inline
+	id S1751328AbWIFSFZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 6 Sep 2006 14:05:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751308AbWIFSFZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 14:05:25 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:49024
+	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S1751357AbWIFSFX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Sep 2006 14:05:23 -0400
+Received: from [10.0.1.3] (p508E760A.dip.t-dialin.net [80.142.118.10])
+	by neapel230.server4you.de (Postfix) with ESMTP id 2C4191B030;
+	Wed,  6 Sep 2006 20:05:21 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.5 (Windows/20060719)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vwt8mx8lb.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26545>
 
-On 9/6/06, Pavel Roskin <proski@gnu.org> wrote:
-> Hi, Marco!
->
-Hello Pavel,
+Junio C Hamano schrieb:
+> Rene Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+>=20
+>> Currently git-archive-tree -f tar is slower than git-tar-tree.  This=
+ is
+>> because it is welded to the side of the existing code to minimize pa=
+tch
+>> size, and I also suspect read_tree_recursive() to be quite a bit slo=
+wer
+>> than builtin-tar-tree.c::traverse_tree().
+>=20
+> Yes, I suspect "struct object" and friends are very inefficient
+> to use for things like this.  "struct tree_desc" based traverser
+> is much preferred.
 
-  nice to hear you again!
+Turns out the reason for git-archive-tree -f tar being 10% slower than
+git-tar-tree was a stupid memory leak in write_tar_entry(). *blush*
+It caused lots of brk() calls (i.e. system calls).
 
-> The current qgit reports assertion failure on exit:
-> ASSERT in tabWdg_currentChanged
->
-> That's how you can trigger it:
->
-> select one of the patches
-> double click on the entry to open the "patch" tab
-> double click on one of the modified files on the right
-> switch back to the "rev list" or "patch" tab
-> close qgit by Ctrl-Q
->
-> I've tried to debug the problem.  MainImpl::currentTabType() returns -1.
-> It's possible that the logic in that function is flawed, or maybe it
-> doesn't work properly on exit.
->
-> Another problem is segmentation fault when closing qgit with more that
-> one file tab and the "rev list" tab selected:
->
-> select one of the patches
-> select "view file" in the pop-up menu on one of the files
-> activate the "rev list" tab
-> select "view file in new tab" on the same file
-> activate the "rev list" tab
-> close qgit by Ctrl-Q
->
+In order to simplify measurement, I commented out the body of
+write_entry(), which both git-archive-tree and git-tar-tree are calling
+to write their output.  The rest left is basically two pure tree
+traversers, git-archive-tree using read_tree_recursive() and git-tar-tr=
+ee
+using its struct tree_desc based traverse_tree().
 
-Thanks for the very good bug reports. I have just  pushed the fix: it
-was a bogus delayed delete on exit the origin of this issues.
+I then let the two chew away on the kernel repository.  And as
+kcachegrind impressively shows, all we do with our trees and objects is
+dwarfed by inflate().  In both cases more than 96.6% of the cost lies
+within libz.  That's not too surprising, because archivers need to
+decompress _all_ objects, not only trees.
 
-I was planning (well, still I am) to release new version this week
-end, and your bug report is arrived just in time ;-)
+So for git-archive we can pretty much chose which traverser to use base=
+d
+on convenience.
 
-Thanks
-Marco
+As a second experiment I wrote a struct tree_desc based traverser plus =
+a
+matching read_tree_recursive() compatibility wrapper (included below fo=
+r
+reference, not for inclusion) and compared the performance of
+'git-ls-tree -r -t' on the kernel repository with and without it.  The
+result is that the relative cost of all functions from tree.c combined
+decreased from 0.93% to 0.66%.  Ugh.
+
+So while a struct tree_desc based traverser can be significantly faster
+than read_tree_recursive(), as soon as you actually start to do somethi=
+ng
+to the trees that difference pales to insignificance.
+
+Ren=E9
+
+
+
+diff --git a/tree.c b/tree.c
+index ea386e5..977a4aa 100644
+--- a/tree.c
++++ b/tree.c
+@@ -4,6 +4,7 @@ #include "blob.h"
+ #include "commit.h"
+ #include "tag.h"
+ #include "tree-walk.h"
++#include "strbuf.h"
+ #include <stdlib.h>
+=20
+ const char *tree_type =3D "tree";
+@@ -227,3 +228,99 @@ struct tree *parse_tree_indirect(const u
+ 			parse_object(obj->sha1);
+ 	} while (1);
+ }
++
++static int do_read_tree_recursive_light(struct tree_desc *desc,
++                                        struct strbuf *base,
++                                        const char **match, read_tree_=
+fn_t fn)
++{
++	struct name_entry entry;
++	int err =3D 0;
++	int baselen =3D base->len;
++
++	while (tree_entry(desc, &entry)) {
++		if (!match_tree_entry(base->buf, base->len, entry.path, entry.mode, =
+match))
++			continue;
++
++		err =3D fn(entry.sha1, base->buf, base->len, entry.path, entry.mode,=
+ 0);
++		switch (err) {
++		case 0:
++			continue;
++		case READ_TREE_RECURSIVE:
++			break;
++		default:
++			return -1;
++		}
++
++		if (S_ISDIR(entry.mode)) {
++			struct tree_desc subtree;
++			char type[20];
++			void *buf;
++			int newbaselen;
++
++			buf =3D read_sha1_file(entry.sha1, type, &subtree.size);
++			if (!buf)
++				return error("cannot read %s",
++				             sha1_to_hex(entry.sha1));
++			if (strcmp(type, tree_type)) {
++				free(buf);
++				return error("Object %s not a tree",
++				             sha1_to_hex(entry.sha1));
++			}
++			subtree.buf =3D buf;
++
++			newbaselen =3D baselen + entry.pathlen + 1;
++			if (newbaselen > base->alloc) {
++				base->buf =3D xrealloc(base->buf, newbaselen);
++				base->alloc =3D newbaselen;
++			}
++			memcpy(base->buf + baselen, entry.path, entry.pathlen);
++			base->buf[baselen + entry.pathlen] =3D '/';
++			base->len =3D newbaselen;
++
++			err =3D do_read_tree_recursive_light(&subtree,
++			                                   base,
++			                                   match, fn);
++			base->len =3D baselen;
++			free(buf);
++			if (err)
++				break;
++		}
++	}
++
++	return err;
++}
++
++int read_tree_recursive_light(struct tree *tree,
++                              const char *base, int baselen, int stage=
+,
++                              const char **match, read_tree_fn_t fn)
++{
++	unsigned char *sha1 =3D tree->object.sha1;
++	struct tree_desc desc;
++	char type[20];
++	void *buf;
++	int err;
++	struct strbuf sb;
++
++	sb.buf =3D xmalloc(PATH_MAX);
++	sb.alloc =3D PATH_MAX;
++	sb.len =3D 0;
++	if (baselen > sb.alloc) {
++		sb.buf =3D xrealloc(sb.buf, baselen);
++		sb.alloc =3D baselen;
++	}
++	memcpy(sb.buf, base, baselen);
++	sb.len =3D baselen;
++
++	desc.buf =3D buf =3D read_sha1_file(sha1, type, &desc.size);
++	if (!buf)
++		return error("Could not read %s", sha1_to_hex(sha1));
++	if (strcmp(type, tree_type)) {
++		free(buf);
++		return error("Object %s not a tree", sha1_to_hex(sha1));
++	}
++
++	err =3D do_read_tree_recursive_light(&desc, &sb, match, fn);
++	free(buf);
++
++	return err;
++}
+diff --git a/tree.h b/tree.h
+index dd25c53..2294bc2 100644
+--- a/tree.h
++++ b/tree.h
+@@ -30,4 +30,8 @@ extern int read_tree_recursive(struct tr
+=20
+ extern int read_tree(struct tree *tree, int stage, const char **paths)=
+;
+=20
++extern int read_tree_recursive_light(struct tree *tree,
++                                     const char *base, int baselen, in=
+t stage,
++                                     const char **match, read_tree_fn_=
+t fn);
++
+ #endif /* TREE_H */
