@@ -1,65 +1,65 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: A look at some alternative PACK file encodings
-Date: Wed, 06 Sep 2006 16:39:19 -0700
-Message-ID: <44FF5C27.2040300@gmail.com>
-References: <44FF41F4.1090906@gmail.com> <9e4733910609061623k73086dbey4a600ecf2852c024@mail.gmail.com>
-Reply-To: gitzilla@gmail.com
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: file rename causes history to disappear
+Date: Wed, 06 Sep 2006 16:54:44 -0700
+Message-ID: <7vpse85z5n.fsf@assigned-by-dhcp.cox.net>
+References: <44FEE0BB.2060601@garzik.org>
+	<Pine.LNX.4.64.0609060834520.27779@g5.osdl.org>
+	<44FEED4B.30909@garzik.org>
+	<Pine.LNX.4.64.0609060858050.27779@g5.osdl.org>
+	<edmvfv$lt7$2@sea.gmane.org>
+	<Pine.LNX.4.64.0609061131100.27779@g5.osdl.org>
+	<edn5dd$c4s$2@sea.gmane.org>
+	<Pine.LNX.4.64.0609061205100.27779@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 07 01:39:36 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 07 01:54:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GL6zQ-0007Dm-Pj
-	for gcvg-git@gmane.org; Thu, 07 Sep 2006 01:39:29 +0200
+	id 1GL7EJ-0000pp-Bb
+	for gcvg-git@gmane.org; Thu, 07 Sep 2006 01:54:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030231AbWIFXjY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Sep 2006 19:39:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030254AbWIFXjX
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 19:39:23 -0400
-Received: from nz-out-0102.google.com ([64.233.162.195]:36757 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1030251AbWIFXjW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Sep 2006 19:39:22 -0400
-Received: by nz-out-0102.google.com with SMTP id n1so7380nzf
-        for <git@vger.kernel.org>; Wed, 06 Sep 2006 16:39:21 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=Z0MzP2qzSuoHoynZjrtl8nAz35nOvItbOGiiRuqwfmEHwY1Q9aRxTk18JLk3SJ2xGaUW8sdgejcDz2M27RZw35a8ljPosoI4ErBOsK0B1EN62/1LLOVunK7IRSCKsznpaN04I8gNcE6gwGiy769LGEWQeWcz6lWwRknK2QKaCqY=
-Received: by 10.65.234.3 with SMTP id l3mr76112qbr;
-        Wed, 06 Sep 2006 16:39:21 -0700 (PDT)
-Received: from ?10.0.0.6? ( [24.55.157.69])
-        by mx.gmail.com with ESMTP id f16sm8658qba.2006.09.06.16.39.20;
-        Wed, 06 Sep 2006 16:39:21 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.5 (X11/20060725)
-To: Jon Smirl <jonsmirl@gmail.com>
-In-Reply-To: <9e4733910609061623k73086dbey4a600ecf2852c024@mail.gmail.com>
+	id S1030261AbWIFXyi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Sep 2006 19:54:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030262AbWIFXyh
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 19:54:37 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:8640 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1030261AbWIFXyg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Sep 2006 19:54:36 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060906235435.RSEK6711.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 6 Sep 2006 19:54:35 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id KBuc1V00K1kojtg0000000
+	Wed, 06 Sep 2006 19:54:36 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0609061205100.27779@g5.osdl.org> (Linus Torvalds's
+	message of "Wed, 6 Sep 2006 12:06:06 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26571>
 
-Jon Smirl wrote:
-> On 9/6/06, A Large Angry SCM <gitzilla@gmail.com> wrote:
->> TREE objects do not delta or deflate well.
-> 
-> I can understand why they don't deflate, the path names are pretty
-> much unique and the sha1s are incompressible. By why don't they delta
-> well? Does sorting them by size mess up the delta process?
+Linus Torvalds <torvalds@osdl.org> writes:
 
-My guess would be the TREEs would only delta well against other TREE
-versions for the same path.
+> On Wed, 6 Sep 2006, Jakub Narebski wrote:
+>> 
+>> But --follow=<filename> with <pathspec> can be useful, e.g. when <pathspec> 
+>> is a directory (or, perhaps in the future, glob), which would mean "follow
+>> the contents indicated in starting hash by <filename>, and stop following
+>> when it falls out outside given <pathspec>, in our case given directory".
+>
+> Yes, that would indeed make sense. The pathspec ends up being kept as a 
+> "limiter", and basically tells you what the "context" for following is 
+> allowed to be. 
+>
+> Color me convinced.
 
-> Shawn is doing some prototype work on true dictionary based
-> compression. I don't know how far along he is but it has potential for
-> taking 30% off the Mozilla pack.
-
-Just looking at the structures in non-BLOBS, I see a lot of potential
-for the use of a set dictionaries when deflating TREEs and another set
-of dictionaries when deflating COMMITs and TAGs. The low hanging fruit
-is to create dictionaries of the most referenced IDs across all TREE or
-COMMIT/TAG objects.
+Likewise.
