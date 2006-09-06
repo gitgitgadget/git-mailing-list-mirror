@@ -1,35 +1,35 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] Include local config before platform tweaks
-Date: Tue, 5 Sep 2006 23:31:51 -0400
-Message-ID: <20060906033151.GB30540@spearce.org>
-References: <9434EEBD-57BE-46D7-A2FF-069BB960AA44@silverinsanity.com> <7vlkoyarnx.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH 3/5] autoconf: Preliminary check for working mmap
+Date: Tue, 5 Sep 2006 23:40:54 -0400
+Message-ID: <20060906034054.GB30598@spearce.org>
+References: <200609050054.24279.jnareb@gmail.com> <200609050056.52590.jnareb@gmail.com> <7vy7szjjal.fsf@assigned-by-dhcp.cox.net> <edidlp$d3d$1@sea.gmane.org> <20060905030929.GA29865@spearce.org> <7vu03mkiei.fsf@assigned-by-dhcp.cox.net> <20060905062531.GA30496@spearce.org> <7v1wqqkbbv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Brian Gernhardt <benji@silverinsanity.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 06 09:04:32 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 06 09:04:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GKrSP-0004LM-JA
-	for gcvg-git@gmane.org; Wed, 06 Sep 2006 09:04:21 +0200
+	id 1GKrSQ-0004LM-4D
+	for gcvg-git@gmane.org; Wed, 06 Sep 2006 09:04:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751256AbWIFHES (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Sep 2006 03:04:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751227AbWIFHES
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 03:04:18 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:10682 "EHLO
+	id S1751197AbWIFHEN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Sep 2006 03:04:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751227AbWIFHEN
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 03:04:13 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:8890 "EHLO
 	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751256AbWIFHEQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Sep 2006 03:04:16 -0400
+	id S1751197AbWIFHEM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Sep 2006 03:04:12 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GKrS9-0002Pa-JI; Wed, 06 Sep 2006 03:04:06 -0400
+	id 1GKrSD-0002Pd-2T; Wed, 06 Sep 2006 03:04:09 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9C396212694; Tue,  5 Sep 2006 23:31:51 -0400 (EDT)
+	id C43E7212696; Tue,  5 Sep 2006 23:40:54 -0400 (EDT)
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <7vlkoyarnx.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7v1wqqkbbv.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -42,66 +42,32 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26504>
 
 Junio C Hamano <junkio@cox.net> wrote:
-> Brian Gernhardt <benji@silverinsanity.com> writes:
+> Shawn Pearce <spearce@spearce.org> writes:
 > 
-> > Having config.mak included after the platform tweaks ignores NO_FINK
-> > or NO_DARWIN_PORTS in that file.  Simply including the config earlier
-> > fixes that.
+> > I don't know if I've made this more complex than I really need to
+> > but I've permitted multiple windows per pack.  There is just one
+> > LRU of all windows across all packs and a maximum amount of address
+> > space to use for pack mappings.  Least recently used window gets
+> > tossed when we need a different window.  This permits us to keep
+> > say a window active on the front of a pack (near the commits) and
+> > another different active window closer to the back (near the blobs).
 > 
-> I vaguely recall that this was brought up before, and the
-> conclusion was that the include location is correct but the way
-> darwin bits were done was wrong.  I do not recall the details
-> but does anybody on the list know?
+> Sounds good. That is exactly what I was expecting it to be done.
 
-I think we just need to move the NO_FINK stuff below the include;
-like this:
+So I have this implemented but its against the 32 bit index.
+It passes the full test suite and appears to be working as intended.
 
+I am going to rebase the changes to the 64 bit index in `pu`
+and clean up my history.  Its currently one massive commit with
+lots of changes that should be broken down into slightly more
+digestable chunks.
 
-diff --git a/Makefile b/Makefile
-index 164dbcf..748907b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -328,18 +333,6 @@ ifeq ($(uname_S),Darwin)
- 	NEEDS_SSL_WITH_CRYPTO = YesPlease
- 	NEEDS_LIBICONV = YesPlease
- 	NO_STRLCPY = YesPlease
--	ifndef NO_FINK
--		ifeq ($(shell test -d /sw/lib && echo y),y)
--			BASIC_CFLAGS += -I/sw/include
--			BASIC_LDFLAGS += -L/sw/lib
--		endif
--	endif
--	ifndef NO_DARWIN_PORTS
--		ifeq ($(shell test -d /opt/local/lib && echo y),y)
--			BASIC_CFLAGS += -I/opt/local/include
--			BASIC_LDFLAGS += -L/opt/local/lib
--		endif
--	endif
- endif
- ifeq ($(uname_S),SunOS)
- 	NEEDS_SOCKET = YesPlease
-@@ -433,6 +426,21 @@ else
- 	endif
- endif
- 
-+ifeq ($(uname_S),Darwin)
-+	ifndef NO_FINK
-+		ifeq ($(shell test -d /sw/lib && echo y),y)
-+			BASIC_CFLAGS += -I/sw/include
-+			BASIC_LDFLAGS += -L/sw/lib
-+		endif
-+	endif
-+	ifndef NO_DARWIN_PORTS
-+		ifeq ($(shell test -d /opt/local/lib && echo y),y)
-+			BASIC_CFLAGS += -I/opt/local/include
-+			BASIC_LDFLAGS += -L/opt/local/lib
-+		endif
-+	endif
-+endif
-+
- ifndef NO_CURL
- 	ifdef CURLDIR
- 		# This is still problematic -- gcc does not always want -R.
+I'll try to do that tonight and get a patch series out.  My email
+is currently proving to be unstable so you may not get the series
+until later on Wed.
+
+-- 
+Shawn.
