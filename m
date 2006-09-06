@@ -1,82 +1,110 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 8/8] gitweb: Remove --parents from call to git-rev-list in parse_rev_list
-Date: Wed, 06 Sep 2006 23:18:26 +0200
-Organization: At home
-Message-ID: <edndud$csb$1@sea.gmane.org>
-References: <11575480921132-git-send-email-jnareb@gmail.com> <11575761821830-git-send-email-jnareb@gmail.com> <Pine.LNX.4.64.0609061404490.27779@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/2] Add git-archive
+Date: Wed, 06 Sep 2006 14:42:49 -0700
+Message-ID: <7vac5c7jty.fsf@assigned-by-dhcp.cox.net>
+References: <cda58cb80609050516v699338b9y57fd54f50c66e49e@mail.gmail.com>
+	<7vfyf6ce29.fsf@assigned-by-dhcp.cox.net>
+	<44FED12E.7010409@innova-card.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Wed Sep 06 23:18:57 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 06 23:43:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GL4nE-00085q-58
-	for gcvg-git@gmane.org; Wed, 06 Sep 2006 23:18:44 +0200
+	id 1GL5AU-00046F-Qj
+	for gcvg-git@gmane.org; Wed, 06 Sep 2006 23:42:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751556AbWIFVSl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Sep 2006 17:18:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751598AbWIFVSl
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 17:18:41 -0400
-Received: from main.gmane.org ([80.91.229.2]:11649 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751556AbWIFVSk (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Sep 2006 17:18:40 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GL4n0-00083O-4h
-	for git@vger.kernel.org; Wed, 06 Sep 2006 23:18:30 +0200
-Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 06 Sep 2006 23:18:30 +0200
-Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 06 Sep 2006 23:18:30 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S932087AbWIFVmn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Sep 2006 17:42:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751697AbWIFVmn
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 17:42:43 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:930 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1751687AbWIFVmm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Sep 2006 17:42:42 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060906214241.IUUY6235.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 6 Sep 2006 17:42:41 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id K9ii1V00b1kojtg0000000
+	Wed, 06 Sep 2006 17:42:42 -0400
+To: Franck <vagabon.xyz@gmail.com>
+In-Reply-To: <44FED12E.7010409@innova-card.com> (Franck Bui-Huu's message of
+	"Wed, 06 Sep 2006 15:46:22 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26562>
 
-Linus Torvalds wrote:
+Franck Bui-Huu <vagabon.xyz@gmail.com> writes:
 
-> On Wed, 6 Sep 2006, Jakub Narebski wrote:
->>
->> Benchmarks (7 means patch before, 8 means this patch):
-> 
-> Btw, you should possibly look at cold-cache numbers, and numbers for 
-> projects that aren't fully packed. They can often be _dramatically_ 
-> different.
+>>> +typedef int (*parse_extra_args_fn_t)(int argc,
+>>> +				     const char **argv,
+>>> +				     const char **reason);
+>>> +
+>> 
+>> I do not see a way for parse_extra to record the parameter it
+>> successfully parsed, other than in a source-file-global, static
+>> variable.  Not a very nice design for a library, if we are
+>> building one from scratch.
+>
+> Interesting, could you explain why static variables are not nice ?
 
-By the way I forgot that the case 8 is for the repository with 1 commit
-more, although that shouldn't matter much for paginated output. Still, it
-is one commit more unpacked. Benchmark for 7 was also for partially packed
-repository.
- 
-> That said, the dramatic change would probably be if there were some way to 
-> avoid using "--full-history" (rather than "--parents", which doesn't add 
-> _that_ much overhead), since that "follow all parents" behaviour of 
-> full-history is usually what really makes a big deal.
-> 
-> But I guess for gitweb, you do want to use --full-history in this case ;(
+Mostly taste and a little bit of re-entrancy worries.
 
-It is now easy with patch 3/7 "Use @hist_opts as git-rev-list parameters in
-git_history" to remove '--full-history' from git-rev-list parameters in
-git_history subroutine. Or add '--remove-empty' which matters only for the
-last page of file/directory history output.
+> You might have missed my second patch:
+>
+> 		"[PATCH 2/2] Add git-upload-archive"
+>
+> Basically the server can also use 'reason' to report a failure
+> description during NACK. I find it more useful than the simple
+> "server sent EOF" error message.
 
-I had some simple benchmark that shown that the earlier version with
-filtering via piping git-rev-list to git-diff-tree --stdin -- <filename>
-was slightly faster than git-rev-list --full-history -- <filename>
-(current version). If I remember correctly of course. And this version can
-be easily extended to include renames (but not file to directory changes).
+That's a good intention, but we would also need to convey the
+"server side found problem and died with these error() output"
+anyway, so it would be covered either way (see how error()/die()
+messages from git-upload-pack are given to git-fetch-pack over
+the wire).
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+> 'remote' case is not a generic argument that can be passed to
+> archiver backends. Remember, the archiver backends only do local
+> operation. They do not know about remote protocol which is part
+> of git-archive command. That's the reason why I think we shouldn't
+> make this field part of arguments structure.
+
+Ok.  Passing that as a separate paramter would make sense.
+
+>> After parse_archive_args finds the archiver specified with
+>> --format=*, it can call its parse_extra to retrieve a suitable
+>> struct that has struct archive_args embedded at the beginning,
+>> and then set remote and prefix on the returned structure.
+>
+> One bad side is that we need to malloc this embedded structure.
+
+Not at all, if you read the example I did you would notice that
+I changed parse_extra for each backend to return this structure
+allocated for that particular backend.
+
+>>> +static int run_remote_archiver(struct archiver_struct *ar, int argc,
+>>> +			       const char **argv)
+>>> +{
+>>> +	char *url, buf[1024];
+>>> +	pid_t pid;
+>>> +	int fd[2];
+>>> +	int len, rv;
+>>> +
+>>> +	sprintf(buf, "git-upload-%s", ar->name);
+>> 
+>> Are you calling git-upload-{tar,zip,rar,...} here?
+>
+> yes. Actually git-upload-{tar,zip,...} commands are going to be
+> removed, but git-daemon know them as a daemon service.
+
+That would break "git-archive --remove=ssh://site/repo treeish"
+wouldn't it?
