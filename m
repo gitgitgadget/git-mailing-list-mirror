@@ -1,58 +1,82 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 8/8] gitweb: Remove --parents from call to git-rev-list in parse_rev_list
-Date: Thu, 07 Sep 2006 10:39:02 +0200
-Organization: At home
-Message-ID: <edolqe$oql$2@sea.gmane.org>
-References: <11575480921132-git-send-email-jnareb@gmail.com> <11575761821830-git-send-email-jnareb@gmail.com> <edng0d$jng$1@sea.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Thu Sep 07 10:40:26 2006
+From: linux@horizon.com
+Subject: Re: A look at some alternative PACK file encodings
+Date: 7 Sep 2006 04:41:58 -0400
+Message-ID: <20060907084158.25725.qmail@science.horizon.com>
+Cc: git@vger.kernel.org, linux@horizon.com
+X-From: git-owner@vger.kernel.org Thu Sep 07 10:42:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLFQk-0002aN-67
-	for gcvg-git@gmane.org; Thu, 07 Sep 2006 10:40:14 +0200
+	id 1GLFSY-0002zP-6W
+	for gcvg-git@gmane.org; Thu, 07 Sep 2006 10:42:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750945AbWIGIkK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Sep 2006 04:40:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750947AbWIGIkK
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 04:40:10 -0400
-Received: from main.gmane.org ([80.91.229.2]:25546 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750945AbWIGIkH (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Sep 2006 04:40:07 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1GLFQY-0002WH-EZ
-	for git@vger.kernel.org; Thu, 07 Sep 2006 10:40:02 +0200
-Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 07 Sep 2006 10:40:02 +0200
-Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 07 Sep 2006 10:40:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751039AbWIGImB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Sep 2006 04:42:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751092AbWIGImB
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 04:42:01 -0400
+Received: from science.horizon.com ([192.35.100.1]:62258 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S1751039AbWIGImA
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Sep 2006 04:42:00 -0400
+Received: (qmail 25726 invoked by uid 1000); 7 Sep 2006 04:41:58 -0400
+To: gitzilla@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26617>
 
-By the way, I didn't do benchmarking for _later_ pages. Perhaps gain from
-using only one git-rev-list invocation are outweighted for the unnecessary
-output and parsing of skipped revisions.
+A few notes:
 
-So perhaps this part of series (patches 4, 5, 6, 8) should be skipped for
-now... at least until new benchmarks. Unless someone wants to use
-git-rev-list for generating list of revisions, and parse_rev_list onlky for
-revisions which would be on page; alternatively change the 'p' page
-parameter to 'j' jump_to (= <hash>). 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+
+Re: base-128 encodings, it's a pet peeve of mine that meny people, even
+while trying to save space, waste it by allowing redundant encodings.
+The optimal way, assming msbit=1 means "more", is
+
+	0x00 -> 0		0x01 -> 1
+	0x7f -> 127		0x80 0x00 -> 128
+	0x80 0x7f -> 255	0x81 0x00 -> 256
+	0xfe 0x7f -> 16383	0xff 0x00 -> 16384
+	0xff 0x7f -> 16511	0x80 0x00 0x00 -> 16512
+
+The decoding code can be written several ways, but try:
+
+	c = *p++;
+	x = c & 127;
+	while (c & 128) {
+		c = *p++;
+		x = ((x + 1) << 7) + (c & 127);
+	}
+
+encoding is most easily done in reverse:
+
+	char buf[9];
+	char *p = buf+8;
+
+	*p = x & 127;
+	while (x >>= 7)
+		*--p = 0x80 | (--x & 127);
+
+	write_out(p, buf + 9 - p);
+
+
+If you want to do signed offsets, the easiest way to write the code
+is to convert to an unsigned with the sign bit as lsbit:
+
+	u = (s << 1) ^ -(s < 0);
+
+And then feed the resulting unsigned number to the functions above.
+Handling the sign bit specially in the encoding is messier.
+
+
+And finally, regarding qsort(), stability is not guaranteed, but glibc
+actually uses a stable merge sort if it can allocate the memory.  See
+http://sourceware.org/cgi-bin/cvsweb.cgi/libc/stdlib/msort.c?rev=1.21&cvsroot=glibc
+
+This leads to the slightly annoying question of whether it's worth
+writing a stable sort just to make git work a little bit better
+on non-glibc platforms, when it doesn't affect most current users
+personally and it still works correctly with an unstable qsort.
+
+It might be simplest to simply lift the glibc mergesort implementation,
+possibly inlining the compares for efficiency.  If you touch the code,
+please (my eyes!  it hurts us!) consider fixing the brace style.
