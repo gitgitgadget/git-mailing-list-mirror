@@ -1,129 +1,154 @@
 From: Junio C Hamano <junkio@cox.net>
 Subject: Re: A look at some alternative PACK file encodings
-Date: Thu, 07 Sep 2006 10:40:02 -0700
-Message-ID: <7v4pvj1sp9.fsf@assigned-by-dhcp.cox.net>
-References: <9e4733910609070557jd8cfc57nd4f7a8973b69f6ed@mail.gmail.com>
-	<20060907133456.24226.qmail@science.horizon.com>
-	<loom.20060907T163036-849@post.gmane.org>
+Date: Thu, 07 Sep 2006 11:50:37 -0700
+Message-ID: <7virjzy0hu.fsf@assigned-by-dhcp.cox.net>
+References: <44FF41F4.1090906@gmail.com>
+	<9e4733910609061623k73086dbey4a600ecf2852c024@mail.gmail.com>
+	<Pine.LNX.4.64.0609062037560.18635@xanadu.home>
+	<20060907043300.GA31376@spearce.org>
+	<7vslj4455z.fsf@assigned-by-dhcp.cox.net>
+	<20060907054651.GD31580@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, linux@horizon.com
-X-From: git-owner@vger.kernel.org Thu Sep 07 19:40:27 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 07 20:54:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLNrI-0001sl-5A
-	for gcvg-git@gmane.org; Thu, 07 Sep 2006 19:40:13 +0200
+	id 1GLOxv-00050D-81
+	for gcvg-git@gmane.org; Thu, 07 Sep 2006 20:51:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422683AbWIGRkF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Sep 2006 13:40:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422679AbWIGRkF
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 13:40:05 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:27881 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1422683AbWIGRkC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Sep 2006 13:40:02 -0400
+	id S1750974AbWIGSu4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Sep 2006 14:50:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751046AbWIGSu4
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 14:50:56 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:16552 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1750924AbWIGSuv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Sep 2006 14:50:51 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao04.cox.net
+          by fed1rmmtao08.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060907174001.ZLHY6711.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 7 Sep 2006 13:40:01 -0400
+          id <20060907185051.SJJH27846.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 7 Sep 2006 14:50:51 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id KVfn1V00j1kojtg0000000
-	Thu, 07 Sep 2006 13:39:54 -0400
-To: Richard Curnow <rc@rc0.org.uk>
-In-Reply-To: <loom.20060907T163036-849@post.gmane.org> (Richard Curnow's
-	message of "Thu, 7 Sep 2006 14:39:39 +0000 (UTC)")
+	id KWqX1V0041kojtg0000000
+	Thu, 07 Sep 2006 14:50:43 -0400
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060907054651.GD31580@spearce.org> (Shawn Pearce's message of
+	"Thu, 7 Sep 2006 01:46:51 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26649>
 
-Richard Curnow <rc@rc0.org.uk> writes:
+Shawn Pearce <spearce@spearce.org> writes:
 
->  <linux <at> horizon.com> writes:
+> Junio C Hamano <junkio@cox.net> wrote:
+>> Shawn Pearce <spearce@spearce.org> writes:
+>> 
+>> > And I'm half-way done with the 64 bit mmap sliding window.  You,
+>> > Junio and I are all hacking on the same tiny bit of core code for
+>> > different reasons.  :-)
+>> 
+>> Which makes me quite nervous, actually.
 >
->> For regular packs, such objects wouldn't even be present, because
->> all base objects are in the pack itself.
+> What order do you want the patches in then?
 >
-> It would actually be useful if this restriction were lifted.
+> I'm willing to go before or after Nico's offset changes, and before
+> or after your 64 bit index changes.
+>
+> Either way two of us are going to have to redo our work on top of
+> the others.  I'm finding that I'm basically rewriting the sliding
+> window code onto your 64 bit version - there's no easy merge here.
+> And Nico's got the same problem, he's in unpack_delta_entry too.
 
-The primary reason why we require the base object to be present
-in the same pack is because our assumption has always been we
-mmap a pack as a whole, and we assumed that we can make sure
-that the address space of a process to be enough to mmap at
-least one pack (otherwise the user will be given a way to keep
-size of each pack down to a size that is a mmapable piece) but
-not necessarily more than one.  In other words, while unpacking
-one object that is deltified, we wanted to make sure everything
-that is necessary is availble in memory.  Otherwise, when
-multiple packs are needed to reconstitute a single object
-because the object is a delta in one pack and its base is in the
-other pack, we might not be able to mmap both of them into the
-address space at the same time.
+While 64-bit offset exercise was a good way for me to see where
+the <pack_base+offset> assumption lies in the current code, and
+while it would have been the right way to do so in the ideal
+world, I realize that it may not be the best way to do things in
+the real world for a few reasons:
 
-The "mmap only parts of a huge packfile into map windows" update
-Shawn Pearce is working on would lift that worry, so it would be
-less of a reason.
+ - Always doing u64 arithmetic would be expensive, especially on
+   32-bit architectures, and doing so conditionally is quite an
+   extra complexity.
 
-Having said that, people must realize that keeping thin packs on
-disk, indexed, is a major undertaking.  It can be made to work,
-but it will be painful.
+ - Not necessarily everybody has large file offsets, so asking
+   to mmap 8MB at file offset at 6GB may not be possible.  Even
+   on systems with large file offsets, truly huge single file is
+   cumbersome to manage than a handful files under 32-bit offset
+   (e.g. using a DVD-RW to back up your packs).
 
-People can grab a thin pack via rsync or http without realizing
-it is thin, try to use it and then later (possibly much later,
-when a delta that is against a missing object happens to be
-needed) discover some of the pack data is unusable.  To avoid
-this, the dumb transports need to walk the ancestry chains of
-commits and their associated objects while fetching as they do
-right now, but also need to walk the delta chains to make sure
-their base objects are available.
+ - Mozilla may not be the largest project in the world, but it
+   certainly is on the larger side than majority of our target
+   audience, and even its entire history, 450MB, comfortably
+   fits in 32-bit space.
 
-I like the proposal by Linus to have stub objects that records
-what the missing base object is in the thin pack stream.  It
-simplifies things for the offset representation of bases.  But
-if we were to do so, I suspect indexing such a thing would need
-more surgery to the .idx format.  The question is if we should
-record the stub object in the .idx file.
+So while I merged the 64-bit offset change in "next" branch, I
+am quite doubtful that it was a good change.  As long as we
+devise an easy way to keep each packfile under manageable size,
+the current 32-bit arrangement would be more beneficial and
+practical than doing everything internally in 64-bit.  Larger
+projects, if needed, can use multiple packs, and even a project
+that _could_ pack everything under 450MB would definitely want
+to use multiple packs anyway (i.e. one or more huge historical
+packs and one active pack) to avoid repacking and incremental
+update cost.  Your "mmap parts into windows" update is of a far
+more practical value than the idx with 64-bit offsets.  So I am
+very inclined to revert my 64-bit offset change from "next".
 
-Right now we record the beginning of data for each object
-(either base or delta) without storing anything to say about
-where it ends -- the pack is assumed to be dense, so the point
-where next object begins should be where the current one ends.
-This means that we need to build a reverse index to list the
-objects in the pack in offset order, when we want to find the
-end of each object efficiently.
+Before declaring it a failure, in order to keep the window open
+for the future, we would need to make sure that we can change
+things as needed to do everything we want with 32-bit offset
+packs.  The changes we would need I can think of are in the
+following areas:
 
-We work this around when using a pack by not doing the full
-verification.  We start decoding the header from the beginning
-and in either base or delta the deflated stream sits at the end.
-We inflate that deflated stream until zlib says it got enough,
-and we do not check if that "enough" point stepped into the
-location that is supposed to be inside the "next" object (if it
-did so then it is an error in the packfile we missed to detect).
-If things inflate well and delta applies cleanly, we are happy.
+ - "git repack" needs to be taught to limit the resulting packs
+   under 32-bit offset.  I think this is a given, and we would
+   need some updates to the command because it needs to be
+   taught not to touch "huge historical packs" anyway.
 
-But pack-objects, when reusing the data from an existing pack,
-wants to be careful, so it _does_ build a reverse index itself
-and makes sure that inflate() ends at the location we expect it
-to.  For that process to remain the correct way to determine
-where each object ends, the .idx file must record the presense
-of stub objects.
+ - "git send-pack" and "git fetch-pack" are Ok -- the receiving
+   end explodes the pack that comes over the wire using
+   unpack-objects into loose objects, and there is no offset
+   involved during the process.  Note that pack-objects may need
+   to keep the offset in the stream in u64 if we were to do the
+   offset encoding of the base object, but that is pretty much
+   an independent issue.
 
-However, if we write the names of stub objects in the .idx file,
-we have another problem.  Currently, the existence of an object
-name in the .idx means that such an object exists in the
-corresponding .pack; this will not hold true anymore.
+ - "git fetch-pack -k" has a problem.  The daemon or sending
+   side runs rev-list piped to pack-objects and there is no
+   limit in the size of the pack generated in the pipeline.
+   Worse yet, the protocol does not allow more than one packs to
+   be sent, so we would need a protocol update to say "the data
+   you asked would result in a pack that is more than 4GB, so
+   I'll send more than one packs -- here is one, here is
+   another, that's all folks".  The receiving end needs to be
+   taught to handle this.
 
-So if we were to do this, we need to give one extra bit to each
-of the .idx entries to mark which ones are stub and which ones
-are not.  This would allow the reverse index to properly notice
-where each object ends, and allow the dumb transports to walk
-the .idx for missing base objects efficiently.  The code that
-looks at .idx at runtime to determine which pack has needed
-object needs to notice this bit.
+Note: I am not proposing to do any of the above right now, until
+there is no need for this by any real project.  We just need to
+be sure that when need arises there is a way out.
 
-Again, all of this can be made to work, but it will be painful.
+The only case that can be problematic is when a single object is
+larger than 4GB deflated, and at that point we would hit a very
+hard wall of 32-bit offset.  But handling such a huge object
+would have other problems [*1*] anyway, so I think it is Ok to
+declare that there is a hard limit on deflated object size, at
+least for now.
+
+[*1*]
+
+For example, we tend to do everything in core, but doing diffs
+or anything on such a huge blob should probably be done by
+swapping in only parts of it at a time).
+
+Also we give the whole deflated size to zlib as avail_in, which
+is "uInt", so on architectures where int is shorter than 64-bit
+we lose (my 64-bit index patch does not deal with this).  This
+however is something your "mmap parts into windows" update would
+solve if it were updated to deal with the internal 64-bit
+offsets.
