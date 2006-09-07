@@ -1,58 +1,88 @@
-From: David Lang <dlang@digitalinsight.com>
+From: A Large Angry SCM <gitzilla@gmail.com>
 Subject: Re: A look at some alternative PACK file encodings
-Date: Wed, 6 Sep 2006 17:06:54 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0609061705160.4398@qynat.qvtvafvgr.pbz>
-References: <44FF41F4.1090906@gmail.com>  <9e4733910609061623k73086dbey4a600ecf2852c024@mail.gmail.com>
-  <44FF5C27.2040300@gmail.com>  <Pine.LNX.4.64.0609061651500.27779@g5.osdl.org>
- <9e4733910609061710x4fb48d86o58b9c5ec8e527135@mail.gmail.com>
+Date: Wed, 06 Sep 2006 17:19:18 -0700
+Message-ID: <44FF6586.8080206@gmail.com>
+References: <44FF41F4.1090906@gmail.com> <9e4733910609061623k73086dbey4a600ecf2852c024@mail.gmail.com> <44FF5C27.2040300@gmail.com> <Pine.LNX.4.64.0609061651500.27779@g5.osdl.org>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	A Large Angry SCM <gitzilla@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 07 02:14:38 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jon Smirl <jonsmirl@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 07 02:19:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GL7XO-0003aw-VA
-	for gcvg-git@gmane.org; Thu, 07 Sep 2006 02:14:35 +0200
+	id 1GL7c6-0004LJ-Ex
+	for gcvg-git@gmane.org; Thu, 07 Sep 2006 02:19:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161015AbWIGAOb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Sep 2006 20:14:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161016AbWIGAOb
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 20:14:31 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:43180 "HELO
-	warden.diginsite.com") by vger.kernel.org with SMTP
-	id S1161015AbWIGAOa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Sep 2006 20:14:30 -0400
-Received: from wlvims02.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Wed, 6 Sep 2006 17:14:30 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Wed, 06 Sep 2006 17:14:24 -0700
-X-X-Sender: dlang@dlang.diginsite.com
-To: Jon Smirl <jonsmirl@gmail.com>
-In-Reply-To: <9e4733910609061710x4fb48d86o58b9c5ec8e527135@mail.gmail.com>
+	id S964818AbWIGATX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Sep 2006 20:19:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964854AbWIGATX
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 20:19:23 -0400
+Received: from nz-out-0102.google.com ([64.233.162.198]:39024 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S964818AbWIGATW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Sep 2006 20:19:22 -0400
+Received: by nz-out-0102.google.com with SMTP id n1so11841nzf
+        for <git@vger.kernel.org>; Wed, 06 Sep 2006 17:19:21 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=Un+KxRwYALWRWabW2NpBTNUpvuz7GspITcKyp4jW6FUpkczZ4+BPEQXBXf6C0ndAP0cGISFb3P4G2NUZuGAhFj48m5lE6pZeOj7n4DtYGLiU4PtNfg1G6Up9mMi/mq45/ts2zNsb4WuL9OjwzIpy8fVuNmRBxE2n6vsphWIaXY8=
+Received: by 10.65.98.4 with SMTP id a4mr43415qbm;
+        Wed, 06 Sep 2006 17:19:21 -0700 (PDT)
+Received: from ?10.0.0.6? ( [24.55.157.69])
+        by mx.gmail.com with ESMTP id f14sm31493qba.2006.09.06.17.19.20;
+        Wed, 06 Sep 2006 17:19:21 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.5 (X11/20060725)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0609061651500.27779@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26576>
 
-On Wed, 6 Sep 2006, Jon Smirl wrote:
+Linus Torvalds wrote:
+> 
+> On Wed, 6 Sep 2006, A Large Angry SCM wrote:
+> 
+>> Jon Smirl wrote:
+>>> On 9/6/06, A Large Angry SCM <gitzilla@gmail.com> wrote:
+>>>> TREE objects do not delta or deflate well.
+>>> I can understand why they don't deflate, the path names are pretty
+>>> much unique and the sha1s are incompressible. By why don't they delta
+>>> well? Does sorting them by size mess up the delta process?
+>> My guess would be the TREEs would only delta well against other TREE
+>> versions for the same path.
+> 
+> That's what you'd normally have in a real project, though. I wonder if 
+> your "pack mashup" lost the normal behaviour: we very much sort trees 
+> together normally, thanks to the "sort-by-filename, then by size" 
+> behaviour that git-pack-objects should have (for trees, the size normally 
+> shouldn't change, so the sorting should basically boil down to "sort the 
+> same directory together, keeping the ordering it had from git-rev-list").
 
-> On 9/6/06, Linus Torvalds <torvalds@osdl.org> wrote:
->> Is there any way to get zlib to just generate a suggested dictionary from
->> a given set of input?
+The mashup is just all the projects in a single repository with a bushy
+refs tree so I can view the updates in a single gitk window.
+
+The sorting by name, then by path may be breaking the object version
+relationship for wide graphs.
+
+> Btw, that "keeping the ordering it had" part I'm not convinced we actually 
+> enforce. That would depend on the sort algorithm used by "qsort()", I 
+> think. So there might be room for improvement there in order to keep 
+> things in recency order.
+
+qsort() is not stable.
+
+>> Just looking at the structures in non-BLOBS, I see a lot of potential
+>> for the use of a set dictionaries when deflating TREEs and another set
+>> of dictionaries when deflating COMMITs and TAGs. The low hanging fruit
+>> is to create dictionaries of the most referenced IDs across all TREE or
+>> COMMIT/TAG objects.
 >
-> No, I asked the author. Apparently it is a hard problem, there have
-> been research papers written about it.
->
-> Shawn has a Perl script that makes a guess at a dictionary. That
-> scripts gets 4-7% improvement. The number one thing that ended up in
-> the Mozilla dictionary was the five different license versions that
-> had each been copied into 50,000 files over time.
+> Is there any way to get zlib to just generate a suggested dictionary from 
+> a given set of input?
 
-for the mozilla project it may make sense to feed all these license files from 
-all over as one string to git, as an exception to your normal process of going 
-file by file. if you can do this then the delta functionality should reduce 
-these files to practicaly nothing.
-
-David Lang
+The docs suggest "no".
