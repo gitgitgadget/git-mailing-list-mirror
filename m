@@ -1,82 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: file rename causes history to disappear
-Date: Wed, 06 Sep 2006 17:52:54 -0700
-Message-ID: <7vbqps5wgp.fsf@assigned-by-dhcp.cox.net>
-References: <44FEE0BB.2060601@garzik.org>
-	<Pine.LNX.4.64.0609060834520.27779@g5.osdl.org>
-	<44FEED4B.30909@garzik.org>
-	<Pine.LNX.4.64.0609060858050.27779@g5.osdl.org>
-	<Pine.LNX.4.64.0609060922110.27779@g5.osdl.org>
-	<7vmz9c7pzm.fsf@assigned-by-dhcp.cox.net>
-	<86bqpsvfd3.fsf@blue.stonehenge.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: A look at some alternative PACK file encodings
+Date: Wed, 6 Sep 2006 20:59:29 -0400
+Message-ID: <9e4733910609061759m2aae9e31ja146e309dc449628@mail.gmail.com>
+References: <44FF41F4.1090906@gmail.com>
+	 <9e4733910609061623k73086dbey4a600ecf2852c024@mail.gmail.com>
+	 <Pine.LNX.4.64.0609062037560.18635@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 07 02:52:59 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: gitzilla@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 07 02:59:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GL88P-0003In-Cn
-	for gcvg-git@gmane.org; Thu, 07 Sep 2006 02:52:49 +0200
+	id 1GL8Ev-0004Q4-7b
+	for gcvg-git@gmane.org; Thu, 07 Sep 2006 02:59:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161036AbWIGAwq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Sep 2006 20:52:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161037AbWIGAwq
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 20:52:46 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:33155 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1161036AbWIGAwp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Sep 2006 20:52:45 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060907005245.FMTB26416.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 6 Sep 2006 20:52:45 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id KCsl1V00p1kojtg0000000
-	Wed, 06 Sep 2006 20:52:46 -0400
-To: merlyn@stonehenge.com (Randal L. Schwartz)
-In-Reply-To: <86bqpsvfd3.fsf@blue.stonehenge.com> (Randal L. Schwartz's
-	message of "06 Sep 2006 14:45:28 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161044AbWIGA7a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Sep 2006 20:59:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161046AbWIGA7a
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 20:59:30 -0400
+Received: from py-out-1112.google.com ([64.233.166.180]:32266 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1161044AbWIGA73 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Sep 2006 20:59:29 -0400
+Received: by py-out-1112.google.com with SMTP id n25so49220pyg
+        for <git@vger.kernel.org>; Wed, 06 Sep 2006 17:59:29 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pW2WnqFaI2ooJJHfl86dcepeapk1+HBjXentCDp43EyKBv964AXlpD2zDi0iEuYnTZG8bmo4D6gaqAyNEUPoRwW1RlkGDn3I3k4CQXLvOD25AUkf3uCe7cDd27IKlqNfl9a0EhIoUrh9WqkjnQ0VjJXlxTuijQC7r29buvhyiKA=
+Received: by 10.35.45.1 with SMTP id x1mr219913pyj;
+        Wed, 06 Sep 2006 17:59:29 -0700 (PDT)
+Received: by 10.35.60.14 with HTTP; Wed, 6 Sep 2006 17:59:28 -0700 (PDT)
+To: "Nicolas Pitre" <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0609062037560.18635@xanadu.home>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26583>
 
-merlyn@stonehenge.com (Randal L. Schwartz) writes:
-
->>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
+On 9/6/06, Nicolas Pitre <nico@cam.org> wrote:
+> On Wed, 6 Sep 2006, Jon Smirl wrote:
 >
-> Junio> The only people who will get burnt by this change are the ones
-> Junio> with metacharacters in their pathnames, so it is relative safe
-> Junio> change.
+> > Shawn is doing some prototype work on true dictionary based
+> > compression. I don't know how far along he is but it has potential for
+> > taking 30% off the Mozilla pack.
 >
-> But does that mean you'll provide the equivalent to "fgrep" for "grep",
-> as in a switch that turns this off, or a seperate command?
->
-> I can think of times when I might be trying to track a file with a square
-> bracket in the name.
+> BTW I'm half-way done with support for deltas which base object is
+> referenced with an offset in the pack instead of a hash.  It is quite
+> messy though since it touches pretty core code all over the place when
+> it comes to fetching objects out of a pack.
 
-If your path is "foo.c[1]" then "foo.c[1]" as fnmatch() pattern
-would not obviously match it, which is sad.
+Would it help to change all of the references in the pack from sha1 to
+encoded relative offsets? Then collect all of the object fetch code
+into a single subroutine which would change it algorithm depending on
+which type of pack it is operating on. Now the pack wouldn't mix
+reference types, they would all be encoded relative or sha1.
 
-However, we do try to match the path literally before falling
-back to fnmatch() so in practice I do not think  it is so bad.
-
-$ git ls-files -s ;# everybody has "hello world".
-100644 3b18e512dba79e4c8300dd08aeb37f8e728b8dad 0	foo.c
-100644 3b18e512dba79e4c8300dd08aeb37f8e728b8dad 0	foo/bar[1]/baz/boa.c
-100644 3b18e512dba79e4c8300dd08aeb37f8e728b8dad 0	foo/bar[2].c
-$ git grep hello -- 'foo/bar[1]'
-foo/bar[1]/baz/boa.c:hello world
-$ git grep hello -- 'foo/bar[[]*[]]*'
-foo/bar[1]/baz/boa.c:hello world
-foo/bar[2].c:hello world
-$ git grep hello -- 'fo*'
-foo.c:hello world
-foo/bar[1]/baz/boa.c:hello world
-foo/bar[2].c:hello world
-$ exit
+-- 
+Jon Smirl
+jonsmirl@gmail.com
