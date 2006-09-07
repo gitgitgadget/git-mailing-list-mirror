@@ -1,75 +1,52 @@
-From: fork0@t-online.de (Alex Riesen)
-Subject: Re: Cygwin install howto
-Date: Thu, 7 Sep 2006 11:07:44 +0200
-Message-ID: <20060907090744.GA7840@steel.home>
-References: <46a038f90609062219g340a738fq3813f1c0e07916a0@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] git-commit.sh: convert run_status to a C builtin
+Date: Thu, 7 Sep 2006 05:10:29 -0400
+Message-ID: <20060907091028.GA22687@coredump.intra.peff.net>
+References: <64c62cc942e872b29d7225999e74a07be586674a.1157610743.git.peff@peff.net> <20060907063621.GC17083@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 07 11:08:03 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 07 11:10:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLFrZ-0007wt-7Z
-	for gcvg-git@gmane.org; Thu, 07 Sep 2006 11:07:57 +0200
+	id 1GLFu6-0008Pc-FQ
+	for gcvg-git@gmane.org; Thu, 07 Sep 2006 11:10:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751294AbWIGJHx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Sep 2006 05:07:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751322AbWIGJHx
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 05:07:53 -0400
-Received: from mailout02.sul.t-online.com ([194.25.134.17]:32652 "EHLO
-	mailout02.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S1751294AbWIGJHw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Sep 2006 05:07:52 -0400
-Received: from fwd34.aul.t-online.de 
-	by mailout02.sul.t-online.com with smtp 
-	id 1GLFrR-0005Zs-05; Thu, 07 Sep 2006 11:07:49 +0200
-Received: from tigra.home (Z4HMg0Z1weWJdNDzGsZ9KpM70CTyKalA7kAA+JQJq3Oe2+-g1Bgr6V@[84.160.126.71]) by fwd34.sul.t-online.de
-	with esmtp id 1GLFrO-0MeKlk0; Thu, 7 Sep 2006 11:07:46 +0200
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 8C291277AF;
-	Thu,  7 Sep 2006 11:07:45 +0200 (CEST)
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1GLFrM-00043k-Vf; Thu, 07 Sep 2006 11:07:44 +0200
-To: Martin Langhoff <martin.langhoff@gmail.com>
+	id S1751188AbWIGJKb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Sep 2006 05:10:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751323AbWIGJKb
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 05:10:31 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1258 "HELO
+	peff.net") by vger.kernel.org with SMTP id S1751188AbWIGJKb (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Sep 2006 05:10:31 -0400
+Received: (qmail 32268 invoked from network); 7 Sep 2006 05:09:55 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 7 Sep 2006 05:09:55 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu,  7 Sep 2006 05:10:29 -0400
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <46a038f90609062219g340a738fq3813f1c0e07916a0@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-ID: Z4HMg0Z1weWJdNDzGsZ9KpM70CTyKalA7kAA+JQJq3Oe2+-g1Bgr6V
-X-TOI-MSGID: 98bf442c-dc28-4f09-9230-271d0439443e
+In-Reply-To: <20060907063621.GC17083@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26624>
 
-Martin Langhoff, Thu, Sep 07, 2006 07:19:26 +0200:
-> - What cygwin packages are needed?
+On Thu, Sep 07, 2006 at 02:36:21AM -0400, Jeff King wrote:
 
-Perl, python, rcs (for merge), diff-utils, tcl/tk  for gitk (no, X
-support is not needed. Tcl/Tk is not fully cygwin, if at all).
+> +static void
+> +status_print_updated_cb(struct diff_queue_struct *q,
+> +                        struct diff_options *options,
+> +                        void *data)
+> [...]
+> +		if (!shown_header) {
+> +			status_print_header("Updated but not checked in",
+> +					"will commit");
+> +			s->commitable = 1;
+> +		}
 
-> - Makefile tweaks?
+Sorry, this should set shown_header=1. That's what I get for making a
+last minute change and not testing...
 
-I disabled installation of repository templates. You can't use them in
-Windows anyway (except under specific, rarely reached conditions).
-
-> - How do I install for personal use?
-> - How do I install in /usr/local?
-
-Installation works as usual, just remember using cygwin path in
-prefix. Cygpath (cygpath -w or cygpath -u) can be useful.
-
-> - Anything else I should know?
-
-Disable x-attribute in every repository. It never works.
-Case insensitivity of all Windows filesystems breaks things often.
-Restrict characters in filenames - no special symbols (like ?, : or *).
-It is painfully slow on large repos (many files).
-It is very slow on large files.
-Try to avoid interrupting (Ctrl-C) - it breaks cygwin.
-Ask me again if your friend has to use ActiveState Perl - it is a long
-story to make perl scripts in git work with that piece of sh.t.
-
-In general - use the OS very careful, it is not designed to be useful.
+-Peff
