@@ -1,415 +1,628 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/3] Move color option parsing out of diff.c and into color.[ch]
-Date: Thu, 7 Sep 2006 02:35:59 -0400
-Message-ID: <20060907063559.GB17083@coredump.intra.peff.net>
-References: <2ec783f6a8e8a901f7c30947e8c0eb50f71bc185.1157610743.git.peff@peff.net>
+Subject: [PATCH 3/3] git-commit.sh: convert run_status to a C builtin
+Date: Thu, 7 Sep 2006 02:36:21 -0400
+Message-ID: <20060907063621.GC17083@coredump.intra.peff.net>
+References: <64c62cc942e872b29d7225999e74a07be586674a.1157610743.git.peff@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 07 08:36:11 2006
+X-From: git-owner@vger.kernel.org Thu Sep 07 08:36:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLDUd-0005Qa-IU
-	for gcvg-git@gmane.org; Thu, 07 Sep 2006 08:36:08 +0200
+	id 1GLDUy-0005U2-7A
+	for gcvg-git@gmane.org; Thu, 07 Sep 2006 08:36:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750795AbWIGGgE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Sep 2006 02:36:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750801AbWIGGgE
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 02:36:04 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:18565 "HELO
-	peff.net") by vger.kernel.org with SMTP id S1750795AbWIGGgB (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Sep 2006 02:36:01 -0400
-Received: (qmail 25139 invoked from network); 7 Sep 2006 02:35:25 -0400
+	id S1750808AbWIGGgZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Sep 2006 02:36:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750819AbWIGGgZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 02:36:25 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:20101 "HELO
+	peff.net") by vger.kernel.org with SMTP id S1750808AbWIGGgY (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Sep 2006 02:36:24 -0400
+Received: (qmail 25171 invoked from network); 7 Sep 2006 02:35:47 -0400
 Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 7 Sep 2006 02:35:25 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu,  7 Sep 2006 02:35:59 -0400
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 7 Sep 2006 02:35:47 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu,  7 Sep 2006 02:36:21 -0400
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <2ec783f6a8e8a901f7c30947e8c0eb50f71bc185.1157610743.git.peff@peff.net>
+In-Reply-To: <64c62cc942e872b29d7225999e74a07be586674a.1157610743.git.peff@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26602>
 
-The intent is to lib-ify colorizing code so it can be reused.
+This creates a new git-runstatus which should do roughly the same thing
+as the run_status function from git-commit.sh. Except for color support,
+the main focus has been to keep the output identical, so that it can be
+verified as correct and then used as a C platform for other improvements to
+the status printing code.
 ---
- Makefile |    3 +
- color.c  |  158 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- color.h  |   11 ++++
- diff.c   |  136 ++---------------------------------------------------
- 4 files changed, 175 insertions(+), 133 deletions(-)
+ .gitignore          |    1 
+ Makefile            |    3 -
+ builtin-runstatus.c |   34 ++++++
+ builtin.h           |    1 
+ dir.c               |    7 +
+ dir.h               |    1 
+ git-commit.sh       |  106 +------------------
+ git.c               |    1 
+ status.c            |  283 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ status.h            |   31 ++++++
+ 10 files changed, 368 insertions(+), 100 deletions(-)
 
+diff --git a/.gitignore b/.gitignore
+index 78cb671..f014ad3 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -94,6 +94,7 @@ git-rev-list
+ git-rev-parse
+ git-revert
+ git-rm
++git-runstatus
+ git-send-email
+ git-send-pack
+ git-sh-setup
 diff --git a/Makefile b/Makefile
-index 7b3114f..78748cb 100644
+index 78748cb..d0ba3b5 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -251,7 +251,8 @@ LIB_OBJS = \
- 	tag.o tree.o usage.o config.o environment.o ctype.o copy.o \
+@@ -252,7 +252,7 @@ LIB_OBJS = \
  	fetch-clone.o revision.o pager.o tree-walk.o xdiff-interface.o \
  	write_or_die.o trace.o \
--	alloc.o merge-file.o path-list.o help.o unpack-trees.o $(DIFF_OBJS)
-+	alloc.o merge-file.o path-list.o help.o unpack-trees.o $(DIFF_OBJS) \
-+	color.o
+ 	alloc.o merge-file.o path-list.o help.o unpack-trees.o $(DIFF_OBJS) \
+-	color.o
++	color.o status.o
  
  BUILTIN_OBJS = \
  	builtin-add.o \
-diff --git a/color.c b/color.c
+@@ -286,6 +286,7 @@ BUILTIN_OBJS = \
+ 	builtin-rev-list.o \
+ 	builtin-rev-parse.o \
+ 	builtin-rm.o \
++	builtin-runstatus.o \
+ 	builtin-show-branch.o \
+ 	builtin-stripspace.o \
+ 	builtin-symbolic-ref.o \
+diff --git a/builtin-runstatus.c b/builtin-runstatus.c
 new file mode 100644
-index 0000000..563ef70
+index 0000000..f3e44de
 --- /dev/null
-+++ b/color.c
-@@ -0,0 +1,158 @@
++++ b/builtin-runstatus.c
+@@ -0,0 +1,34 @@
++#include "status.h"
++#include "cache.h"
++
++extern int status_use_color;
++
++static const char runstatus_usage[] =
++"git-runstatus [--color|--nocolor] [--amend] [--verbose]";
++
++int cmd_runstatus(int argc, const char **argv, const char *prefix)
++{
++	struct status s;
++	int i;
++
++	git_config(git_status_config);
++	status_prepare(&s);
++
++	for (i = 1; i < argc; i++) {
++		if (!strcmp(argv[i], "--color"))
++			status_use_color = 1;
++		else if (!strcmp(argv[i], "--nocolor"))
++			status_use_color = 0;
++    else if (!strcmp(argv[i], "--amend")) {
++      s.amend = 1;
++      s.reference = "HEAD^1";
++    }
++    else if (!strcmp(argv[i], "--verbose"))
++      s.verbose = 1;
++		else
++			usage(runstatus_usage);
++	}
++
++	status_print(&s);
++  return s.commitable ? 0 : 1;
++}
+diff --git a/builtin.h b/builtin.h
+index 25431d7..53a896c 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -47,6 +47,7 @@ extern int cmd_repo_config(int argc, con
+ extern int cmd_rev_list(int argc, const char **argv, const char *prefix);
+ extern int cmd_rev_parse(int argc, const char **argv, const char *prefix);
+ extern int cmd_rm(int argc, const char **argv, const char *prefix);
++extern int cmd_runstatus(int argc, const char **argv, const char *prefix);
+ extern int cmd_show_branch(int argc, const char **argv, const char *prefix);
+ extern int cmd_show(int argc, const char **argv, const char *prefix);
+ extern int cmd_stripspace(int argc, const char **argv, const char *prefix);
+diff --git a/dir.c b/dir.c
+index 5a40d8f..e2f472b 100644
+--- a/dir.c
++++ b/dir.c
+@@ -397,3 +397,10 @@ int read_directory(struct dir_struct *di
+ 	qsort(dir->entries, dir->nr, sizeof(struct dir_entry *), cmp_name);
+ 	return dir->nr;
+ }
++
++int
++file_exists(const char *f)
++{
++  struct stat sb;
++  return stat(f, &sb) == 0;
++}
+diff --git a/dir.h b/dir.h
+index 56a1b7f..313f8ab 100644
+--- a/dir.h
++++ b/dir.h
+@@ -47,5 +47,6 @@ extern int excluded(struct dir_struct *,
+ extern void add_excludes_from_file(struct dir_struct *, const char *fname);
+ extern void add_exclude(const char *string, const char *base,
+ 			int baselen, struct exclude_list *which);
++extern int file_exists(const char *);
+ 
+ #endif
+diff --git a/git-commit.sh b/git-commit.sh
+index 4cf3fab..10c269a 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -60,26 +60,6 @@ #
+ }
+ 
+ run_status () {
+-    (
+-	# We always show status for the whole tree.
+-	cd "$TOP"
+-
+-	IS_INITIAL="$initial_commit"
+-	REFERENCE=HEAD
+-	case "$amend" in
+-	t)
+-		# If we are amending the initial commit, there
+-		# is no HEAD^1.
+-		if git-rev-parse --verify "HEAD^1" >/dev/null 2>&1
+-		then
+-			REFERENCE="HEAD^1"
+-			IS_INITIAL=
+-		else
+-			IS_INITIAL=t
+-		fi
+-		;;
+-	esac
+-
+ 	# If TMP_INDEX is defined, that means we are doing
+ 	# "--only" partial commit, and that index file is used
+ 	# to build the tree for the commit.  Otherwise, if
+@@ -96,85 +76,13 @@ run_status () {
+ 	    export GIT_INDEX_FILE
+ 	fi
+ 
+-	case "$branch" in
+-	refs/heads/master) ;;
+-	*)  echo "# On branch $branch" ;;
+-	esac
+-
+-	if test -z "$IS_INITIAL"
+-	then
+-	    git-diff-index -M --cached --name-status \
+-		--diff-filter=MDTCRA $REFERENCE |
+-	    sed -e '
+-		    s/\\/\\\\/g
+-		    s/ /\\ /g
+-	    ' |
+-	    report "Updated but not checked in" "will commit"
+-	    committable="$?"
+-	else
+-	    echo '#
+-# Initial commit
+-#'
+-	    git-ls-files |
+-	    sed -e '
+-		    s/\\/\\\\/g
+-		    s/ /\\ /g
+-		    s/^/A /
+-	    ' |
+-	    report "Updated but not checked in" "will commit"
+-
+-	    committable="$?"
+-	fi
+-
+-	git-diff-files  --name-status |
+-	sed -e '
+-		s/\\/\\\\/g
+-		s/ /\\ /g
+-	' |
+-	report "Changed but not updated" \
+-	    "use git-update-index to mark for commit"
+-
+-        option=""
+-        if test -z "$untracked_files"; then
+-            option="--directory --no-empty-directory"
+-        fi
+-	hdr_shown=
+-	if test -f "$GIT_DIR/info/exclude"
+-	then
+-	    git-ls-files --others $option \
+-		--exclude-from="$GIT_DIR/info/exclude" \
+-		--exclude-per-directory=.gitignore
+-	else
+-	    git-ls-files --others $option \
+-		--exclude-per-directory=.gitignore
+-	fi |
+-	while read line; do
+-	    if [ -z "$hdr_shown" ]; then
+-		echo '#'
+-		echo '# Untracked files:'
+-		echo '#   (use "git add" to add to commit)'
+-		echo '#'
+-		hdr_shown=1
+-	    fi
+-	    echo "#	$line"
+-	done
+-
+-	if test -n "$verbose" -a -z "$IS_INITIAL"
+-	then
+-	    git-diff-index --cached -M -p --diff-filter=MDTCRA $REFERENCE
+-	fi
+-	case "$committable" in
+-	0)
+-		case "$amend" in
+-		t)
+-			echo "# No changes" ;;
+-		*)
+-			echo "nothing to commit" ;;
+-		esac
+-		exit 1 ;;
+-	esac
+-	exit 0
+-    )
++  case "$status_only" in
++    t) color= ;;
++    *) color=--nocolor ;;
++  esac
++  git-runstatus ${color} \
++                ${verbose:+--verbose} \
++                ${amend:+--amend}
+ }
+ 
+ trap '
+diff --git a/git.c b/git.c
+index 335f405..495b39a 100644
+--- a/git.c
++++ b/git.c
+@@ -252,6 +252,7 @@ static void handle_internal_command(int 
+ 		{ "rev-list", cmd_rev_list, RUN_SETUP },
+ 		{ "rev-parse", cmd_rev_parse, RUN_SETUP },
+ 		{ "rm", cmd_rm, RUN_SETUP },
++		{ "runstatus", cmd_runstatus, RUN_SETUP },
+ 		{ "show-branch", cmd_show_branch, RUN_SETUP },
+ 		{ "show", cmd_show, RUN_SETUP | USE_PAGER },
+ 		{ "stripspace", cmd_stripspace },
+diff --git a/status.c b/status.c
+new file mode 100644
+index 0000000..82aa881
+--- /dev/null
++++ b/status.c
+@@ -0,0 +1,283 @@
++#include "status.h"
 +#include "color.h"
 +#include "cache.h"
-+#include "git-compat-util.h"
++#include "object.h"
++#include "dir.h"
++#include "commit.h"
++#include "diff.h"
++#include "revision.h"
++#include "diffcore.h"
 +
-+#include <stdarg.h>
-+
-+#define COLOR_RESET "\033[m"
++int status_use_color = 0;
++static char status_colors[][COLOR_MAXLEN] = {
++	"",         /* STATUS_HEADER: normal */
++	"\033[32m", /* STATUS_UPDATED: green */
++	"\033[31m", /* STATUS_CHANGED: red */
++	"\033[31m", /* STATUS_UNTRACKED: red */
++};
 +
 +static int
-+parse_color(const char *name, int len)
-+{
-+	static const char * const color_names[] = {
-+		"normal", "black", "red", "green", "yellow",
-+		"blue", "magenta", "cyan", "white"
-+	};
-+	char *end;
-+	int i;
-+	for (i = 0; i < ARRAY_SIZE(color_names); i++) {
-+		const char *str = color_names[i];
-+		if (!strncasecmp(name, str, len) && !str[len])
-+			return i - 1;
-+	}
-+	i = strtol(name, &end, 10);
-+	if (*name && !*end && i >= -1 && i <= 255)
-+		return i;
-+	return -2;
++parse_status_slot(const char *var, int offset) {
++	if (!strcasecmp(var+offset, "header"))
++		return STATUS_HEADER;
++	if (!strcasecmp(var+offset, "updated"))
++		return STATUS_UPDATED;
++	if (!strcasecmp(var+offset, "changed"))
++		return STATUS_CHANGED;
++	if (!strcasecmp(var+offset, "untracked"))
++		return STATUS_UNTRACKED;
++	die("bad config variable '%s'", var);
 +}
 +
-+static int
-+parse_attr(const char *name, int len)
++static const char*
++color(int slot)
 +{
-+	static const int attr_values[] = { 1, 2, 4, 5, 7 };
-+	static const char * const attr_names[] = {
-+		"bold", "dim", "ul", "blink", "reverse"
-+	};
-+	int i;
-+	for (i = 0; i < ARRAY_SIZE(attr_names); i++) {
-+		const char *str = attr_names[i];
-+		if (!strncasecmp(name, str, len) && !str[len])
-+			return attr_values[i];
-+	}
-+	return -1;
++	return status_use_color ? status_colors[slot] : "";
 +}
 +
 +void
-+color_parse(const char *value, const char *var, char *dst)
++status_prepare(struct status *s)
 +{
-+	const char *ptr = value;
-+	int attr = -1;
-+	int fg = -2;
-+	int bg = -2;
++	unsigned char sha1[20];
++	const char *head;
 +
-+	if (!strcasecmp(value, "reset")) {
-+		strcpy(dst, "\033[m");
-+		return;
++	s->is_initial = get_sha1("HEAD", sha1) ? 1 : 0;
++
++	head = resolve_ref(git_path("HEAD"), sha1, 0);
++	s->branch = head ?
++		    strdup(head + strlen(get_git_dir()) + 1) :
++		    NULL;
++
++	s->reference = "HEAD";
++	s->amend = 0;
++	s->verbose = 0;
++	s->commitable = 0;
++}
++
++static void
++status_print_header(const char *main, const char *sub)
++{
++	const char *c = color(STATUS_HEADER);
++	color_printf(c, "# %s:\n", main);
++	color_printf(c, "#   (%s)\n", sub);
++	color_printf(c, "#\n");
++}
++
++static void
++status_print_trailer(void)
++{
++	color_printf(color(STATUS_HEADER), "#\n");
++}
++
++static void
++status_print_filepair(int t, struct diff_filepair *p)
++{
++	const char *c = color(t);
++	color_printf(color(STATUS_HEADER), "#\t");
++	switch (p->status) {
++	case DIFF_STATUS_ADDED:
++		color_printf(c, "new file: %s\n", p->one->path); break;
++	case DIFF_STATUS_COPIED:
++		color_printf(c, "copied: %s -> %s\n",
++				p->one->path, p->two->path);
++		break;
++	case DIFF_STATUS_DELETED:
++		color_printf(c, "deleted: %s\n", p->one->path); break;
++	case DIFF_STATUS_MODIFIED:
++		color_printf(c, "modified: %s\n", p->one->path); break;
++	case DIFF_STATUS_RENAMED:
++		color_printf(c, "renamed: %s -> %s\n",
++				p->one->path, p->two->path);
++		break;
++	case DIFF_STATUS_TYPE_CHANGED:
++		color_printf(c, "typechange: %s\n", p->one->path); break;
++	case DIFF_STATUS_UNKNOWN:
++		color_printf(c, "unknown: %s\n", p->one->path); break;
++	case DIFF_STATUS_UNMERGED:
++		color_printf(c, "unmerged: %s\n", p->one->path); break;
++	default:
++		die("bug: unhandled diff status %c", p->status);
 +	}
++}
 +
-+	/* [fg [bg]] [attr] */
-+	while (*ptr) {
-+		const char *word = ptr;
-+		int val, len = 0;
++static void
++status_print_updated_cb(struct diff_queue_struct *q,
++                        struct diff_options *options,
++                        void *data)
++{
++	struct status *s = data;
++	int shown_header = 0;
++	int i;
++	if (q->nr) {
++	}
++	for (i = 0; i < q->nr; i++) {
++		if (q->queue[i]->status == 'U')
++			continue;
++		if (!shown_header) {
++			status_print_header("Updated but not checked in",
++					"will commit");
++			s->commitable = 1;
++		}
++		status_print_filepair(STATUS_UPDATED, q->queue[i]);
++	}
++	if (shown_header)
++		status_print_trailer();
++}
 +
-+		while (word[len] && !isspace(word[len]))
-+			len++;
++static void
++status_print_changed_cb(struct diff_queue_struct *q,
++                        struct diff_options *options,
++                        void *data)
++{
++	int i;
++	if (q->nr)
++		status_print_header("Changed but not updated",
++				"use git-update-index to mark for commit");
++	for (i = 0; i < q->nr; i++)
++		status_print_filepair(STATUS_CHANGED, q->queue[i]);
++	if (q->nr)
++		status_print_trailer();
++}
 +
-+		ptr = word + len;
-+		while (*ptr && isspace(*ptr))
-+			ptr++;
++void
++status_print_initial(struct status *s)
++{
++	int i;
++	read_cache();
++	if (active_nr) {
++		s->commitable = 1;
++		status_print_header("Updated but not checked in",
++				"will commit");
++	}
++	for (i = 0; i < active_nr; i++) {
++		color_printf(color(STATUS_HEADER), "#\t");
++		color_printf(color(STATUS_UPDATED), "new file: %s\n",
++				active_cache[i]->name);
++	}
++	if (active_nr)
++		status_print_trailer();
++}
 +
-+		val = parse_color(word, len);
-+		if (val >= -1) {
-+			if (fg == -2) {
-+				fg = val;
++static void
++status_print_updated(struct status *s)
++{
++	struct rev_info rev;
++	const char *argv[] = { NULL, NULL, NULL };
++	argv[1] = s->reference;
++	init_revisions(&rev, NULL);
++	setup_revisions(2, argv, &rev, NULL);
++	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
++	rev.diffopt.format_callback = status_print_updated_cb;
++	rev.diffopt.format_callback_data = s;
++	rev.diffopt.detect_rename = 1;
++	run_diff_index(&rev, 1);
++}
++
++static void
++status_print_changed(struct status *s)
++{
++	struct rev_info rev;
++	const char *argv[] = { NULL, NULL };
++	init_revisions(&rev, "");
++	setup_revisions(1, argv, &rev, NULL);
++	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
++	rev.diffopt.format_callback = status_print_changed_cb;
++	rev.diffopt.format_callback_data = s;
++	run_diff_files(&rev, 0);
++}
++
++static void
++status_print_untracked(const struct status *s)
++{
++	struct dir_struct dir;
++	const char *x;
++	int i;
++	int shown_header = 0;
++
++	memset(&dir, 0, sizeof(dir));
++
++	dir.exclude_per_dir = ".gitignore";
++	x = git_path("info/exclude");
++	if (file_exists(x))
++		add_excludes_from_file(&dir, x);
++
++	read_directory(&dir, ".", "", 0);
++	for(i = 0; i < dir.nr; i++) {
++		/* check for matching entry, which is unmerged; lifted from
++		 * builtin-ls-files:show_other_files */
++		struct dir_entry *ent = dir.entries[i];
++		int pos = cache_name_pos(ent->name, ent->len);
++		struct cache_entry *ce;
++		if (0 <= pos)
++			die("bug in status_print_untracked");
++		pos = -pos - 1;
++		if (pos < active_nr) {
++			ce = active_cache[pos];
++			if (ce_namelen(ce) == ent->len &&
++			    !memcmp(ce->name, ent->name, ent->len))
 +				continue;
-+			}
-+			if (bg == -2) {
-+				bg = val;
-+				continue;
-+			}
-+			goto bad;
 +		}
-+		val = parse_attr(word, len);
-+		if (val < 0 || attr != -1)
-+			goto bad;
-+		attr = val;
++		if (!shown_header) {
++			status_print_header("Untracked files",
++				"use \"git add\" to add to commit");
++			shown_header = 1;
++		}
++		color_printf(color(STATUS_HEADER), "#\t");
++		color_printf(color(STATUS_UNTRACKED), "%.*s\n",
++				ent->len, ent->name);
++	}
++}
++
++static void
++status_print_verbose(struct status *s)
++{
++	struct rev_info rev;
++	const char *argv[] = { NULL, NULL, NULL };
++	argv[1] = s->reference;
++	init_revisions(&rev, NULL);
++	setup_revisions(2, argv, &rev, NULL);
++	rev.diffopt.output_format |= DIFF_FORMAT_PATCH;
++	rev.diffopt.detect_rename = 1;
++	run_diff_index(&rev, 1);
++}
++
++void
++status_print(struct status *s)
++{
++	if (s->branch && strcmp(s->branch, "refs/heads/master"))
++		color_printf(color(STATUS_HEADER),
++			"# On branch %s\n", s->branch);
++
++	if (s->is_initial) {
++		color_printf(color(STATUS_HEADER), "#\n");
++		color_printf(color(STATUS_HEADER), "# Initial commit\n");
++		color_printf(color(STATUS_HEADER), "#\n");
++		status_print_initial(s);
++	}
++	else {
++		status_print_updated(s);
++		discard_cache();
 +	}
 +
-+	if (attr >= 0 || fg >= 0 || bg >= 0) {
-+		int sep = 0;
++	status_print_changed(s);
++	status_print_untracked(s);
 +
-+		*dst++ = '\033';
-+		*dst++ = '[';
-+		if (attr >= 0) {
-+			*dst++ = '0' + attr;
-+			sep++;
-+		}
-+		if (fg >= 0) {
-+			if (sep++)
-+				*dst++ = ';';
-+			if (fg < 8) {
-+				*dst++ = '3';
-+				*dst++ = '0' + fg;
-+			} else {
-+				dst += sprintf(dst, "38;5;%d", fg);
-+			}
-+		}
-+		if (bg >= 0) {
-+			if (sep++)
-+				*dst++ = ';';
-+			if (bg < 8) {
-+				*dst++ = '4';
-+				*dst++ = '0' + bg;
-+			} else {
-+				dst += sprintf(dst, "48;5;%d", bg);
-+			}
-+		}
-+		*dst++ = 'm';
-+	}
-+	*dst = 0;
-+	return;
-+bad:
-+	die("bad config value '%s' for variable '%s'", value, var);
++	if (s->verbose && !s->is_initial)
++		status_print_verbose(s);
++	if (!s->commitable)
++		printf("%s\n", s->amend ? "# No changes" : "nothing to commit");
 +}
 +
 +int
-+git_config_colorbool(const char *var, const char *value)
++git_status_config(const char *k, const char *v)
 +{
-+	if (!value)
-+		return 1;
-+	if (!strcasecmp(value, "auto")) {
-+		if (isatty(1) || (pager_in_use && pager_use_color)) {
-+			char *term = getenv("TERM");
-+			if (term && strcmp(term, "dumb"))
-+				return 1;
-+		}
++	if (!strcmp(k, "status.color")) {
++		status_use_color = git_config_colorbool(k, v);
 +		return 0;
 +	}
-+	if (!strcasecmp(value, "never"))
-+		return 0;
-+	if (!strcasecmp(value, "always"))
-+		return 1;
-+	return git_config_bool(var, value);
++	if (!strncmp(k, "status.color.", 13)) {
++		int slot = parse_status_slot(k, 13);
++		color_parse(v, k, status_colors[slot]);
++	}
++	return git_default_config(k, v);
 +}
-+
-+int
-+color_printf(const char *color, const char *fmt, ...) {
-+	va_list args;
-+	int r;
-+
-+	if (*color)
-+		printf("%s", color);
-+	va_start(args, fmt);
-+	r = vprintf(fmt, args);
-+	va_end(args);
-+	if (*color)
-+		printf("%s", COLOR_RESET);
-+	return r;
-+}
-diff --git a/color.h b/color.h
+diff --git a/status.h b/status.h
 new file mode 100644
-index 0000000..37a737a
+index 0000000..3e60146
 --- /dev/null
-+++ b/color.h
-@@ -0,0 +1,11 @@
-+#ifndef COLOR_H
-+#define COLOR_H
++++ b/status.h
+@@ -0,0 +1,31 @@
++#ifndef STATUS_H
++#define STATUS_H
 +
-+/* "\033[1;38;5;2xx;48;5;2xxm\0" is 23 bytes */
-+#define COLOR_MAXLEN 24
++enum color_status {
++	STATUS_HEADER,
++	STATUS_UPDATED,
++	STATUS_CHANGED,
++	STATUS_UNTRACKED,
++};
 +
-+int git_config_colorbool(const char *var, const char *value);
-+void color_parse(const char *var, const char *value, char *dst);
-+int color_printf(const char *color, const char *fmt, ...);
++struct status {
++	int is_initial;
++	char *branch;
++	const char *reference;
++	int commitable;
++	int verbose;
++	int amend;
++};
 +
-+#endif /* COLOR_H */
-diff --git a/diff.c b/diff.c
-index a3ebc62..8178c11 100644
---- a/diff.c
-+++ b/diff.c
-@@ -10,6 +10,7 @@ #include "diff.h"
- #include "diffcore.h"
- #include "delta.h"
- #include "xdiff-interface.h"
-+#include "color.h"
- 
- static int use_size_cache;
- 
-@@ -17,8 +18,7 @@ static int diff_detect_rename_default;
- static int diff_rename_limit_default = -1;
- static int diff_use_color_default;
- 
--/* "\033[1;38;5;2xx;48;5;2xxm\0" is 23 bytes */
--static char diff_colors[][24] = {
-+static char diff_colors[][COLOR_MAXLEN] = {
- 	"\033[m",	/* reset */
- 	"",		/* normal */
- 	"\033[1m",	/* bold */
-@@ -45,119 +45,6 @@ static int parse_diff_color_slot(const c
- 	die("bad config variable '%s'", var);
- }
- 
--static int parse_color(const char *name, int len)
--{
--	static const char * const color_names[] = {
--		"normal", "black", "red", "green", "yellow",
--		"blue", "magenta", "cyan", "white"
--	};
--	char *end;
--	int i;
--	for (i = 0; i < ARRAY_SIZE(color_names); i++) {
--		const char *str = color_names[i];
--		if (!strncasecmp(name, str, len) && !str[len])
--			return i - 1;
--	}
--	i = strtol(name, &end, 10);
--	if (*name && !*end && i >= -1 && i <= 255)
--		return i;
--	return -2;
--}
--
--static int parse_attr(const char *name, int len)
--{
--	static const int attr_values[] = { 1, 2, 4, 5, 7 };
--	static const char * const attr_names[] = {
--		"bold", "dim", "ul", "blink", "reverse"
--	};
--	int i;
--	for (i = 0; i < ARRAY_SIZE(attr_names); i++) {
--		const char *str = attr_names[i];
--		if (!strncasecmp(name, str, len) && !str[len])
--			return attr_values[i];
--	}
--	return -1;
--}
--
--static void parse_diff_color_value(const char *value, const char *var, char *dst)
--{
--	const char *ptr = value;
--	int attr = -1;
--	int fg = -2;
--	int bg = -2;
--
--	if (!strcasecmp(value, "reset")) {
--		strcpy(dst, "\033[m");
--		return;
--	}
--
--	/* [fg [bg]] [attr] */
--	while (*ptr) {
--		const char *word = ptr;
--		int val, len = 0;
--
--		while (word[len] && !isspace(word[len]))
--			len++;
--
--		ptr = word + len;
--		while (*ptr && isspace(*ptr))
--			ptr++;
--
--		val = parse_color(word, len);
--		if (val >= -1) {
--			if (fg == -2) {
--				fg = val;
--				continue;
--			}
--			if (bg == -2) {
--				bg = val;
--				continue;
--			}
--			goto bad;
--		}
--		val = parse_attr(word, len);
--		if (val < 0 || attr != -1)
--			goto bad;
--		attr = val;
--	}
--
--	if (attr >= 0 || fg >= 0 || bg >= 0) {
--		int sep = 0;
--
--		*dst++ = '\033';
--		*dst++ = '[';
--		if (attr >= 0) {
--			*dst++ = '0' + attr;
--			sep++;
--		}
--		if (fg >= 0) {
--			if (sep++)
--				*dst++ = ';';
--			if (fg < 8) {
--				*dst++ = '3';
--				*dst++ = '0' + fg;
--			} else {
--				dst += sprintf(dst, "38;5;%d", fg);
--			}
--		}
--		if (bg >= 0) {
--			if (sep++)
--				*dst++ = ';';
--			if (bg < 8) {
--				*dst++ = '4';
--				*dst++ = '0' + bg;
--			} else {
--				dst += sprintf(dst, "48;5;%d", bg);
--			}
--		}
--		*dst++ = 'm';
--	}
--	*dst = 0;
--	return;
--bad:
--	die("bad config value '%s' for variable '%s'", value, var);
--}
--
- /*
-  * These are to give UI layer defaults.
-  * The core-level commands such as git-diff-files should
-@@ -171,22 +58,7 @@ int git_diff_ui_config(const char *var, 
- 		return 0;
- 	}
- 	if (!strcmp(var, "diff.color")) {
--		if (!value)
--			diff_use_color_default = 1; /* bool */
--		else if (!strcasecmp(value, "auto")) {
--			diff_use_color_default = 0;
--			if (isatty(1) || (pager_in_use && pager_use_color)) {
--				char *term = getenv("TERM");
--				if (term && strcmp(term, "dumb"))
--					diff_use_color_default = 1;
--			}
--		}
--		else if (!strcasecmp(value, "never"))
--			diff_use_color_default = 0;
--		else if (!strcasecmp(value, "always"))
--			diff_use_color_default = 1;
--		else
--			diff_use_color_default = git_config_bool(var, value);
-+		diff_use_color_default = git_config_colorbool(var, value);
- 		return 0;
- 	}
- 	if (!strcmp(var, "diff.renames")) {
-@@ -201,7 +73,7 @@ int git_diff_ui_config(const char *var, 
- 	}
- 	if (!strncmp(var, "diff.color.", 11)) {
- 		int slot = parse_diff_color_slot(var, 11);
--		parse_diff_color_value(value, var, diff_colors[slot]);
-+		color_parse(value, var, diff_colors[slot]);
- 		return 0;
- 	}
- 	return git_default_config(var, value);
++int git_status_config(const char *var, const char *value);
++void status_prepare(struct status *s);
++void status_print(struct status *s);
++
++struct cache_entry;
++typedef void (*status_cb)(struct cache_entry *);
++int status_foreach_cached(status_cb cb);
++int status_foreach_updated(status_cb cb);
++int status_foreach_changed(status_cb cb);
++int status_foreach_untracked(status_cb cb);
++
++#endif /* STATUS_H */
 -- 
 1.4.2.ge490e-dirty
