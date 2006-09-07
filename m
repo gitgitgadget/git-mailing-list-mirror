@@ -1,69 +1,67 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: A look at some alternative PACK file encodings
-Date: Wed, 06 Sep 2006 22:39:02 -0700
-Message-ID: <44FFB076.4020408@gmail.com>
-References: <44FF41F4.1090906@gmail.com> <9e4733910609061617m6783d6c4xaca2f9575e12d455@mail.gmail.com>
-Reply-To: gitzilla@gmail.com
+Date: Thu, 7 Sep 2006 01:46:51 -0400
+Message-ID: <20060907054651.GD31580@spearce.org>
+References: <44FF41F4.1090906@gmail.com> <9e4733910609061623k73086dbey4a600ecf2852c024@mail.gmail.com> <Pine.LNX.4.64.0609062037560.18635@xanadu.home> <20060907043300.GA31376@spearce.org> <7vslj4455z.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Sep 07 07:39:24 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 07 08:08:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLCbh-0005wz-Ru
-	for gcvg-git@gmane.org; Thu, 07 Sep 2006 07:39:22 +0200
+	id 1GLD3I-00018C-Mp
+	for gcvg-git@gmane.org; Thu, 07 Sep 2006 08:07:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161130AbWIGFjK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Sep 2006 01:39:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161131AbWIGFjK
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 01:39:10 -0400
-Received: from wx-out-0506.google.com ([66.249.82.236]:36366 "EHLO
-	wx-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1161130AbWIGFjH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Sep 2006 01:39:07 -0400
-Received: by wx-out-0506.google.com with SMTP id s14so114475wxc
-        for <git@vger.kernel.org>; Wed, 06 Sep 2006 22:39:06 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=bbmz5o5wWFo4ixgTdQpqN4ESFIzngTKdQ9Jll7KkFmszTKejpDqW4OeyJ9xgZExLmHOmZMxgpXhK5si3HJi2zPH42eFtotwhmB46jy1T4b79HUwbi6s1hTwbUcmB2UKnP9p4/5f70MKpggFUNRcoSw7KKAftYyFHrVsYQxmXvZk=
-Received: by 10.70.32.2 with SMTP id f2mr573349wxf;
-        Wed, 06 Sep 2006 22:39:06 -0700 (PDT)
-Received: from ?10.0.0.6? ( [24.55.157.69])
-        by mx.gmail.com with ESMTP id h37sm452904wxd.2006.09.06.22.39.05;
-        Wed, 06 Sep 2006 22:39:06 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.5 (X11/20060725)
-To: Jon Smirl <jonsmirl@gmail.com>, git@vger.kernel.org
-In-Reply-To: <9e4733910609061617m6783d6c4xaca2f9575e12d455@mail.gmail.com>
+	id S1751941AbWIGGHb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Sep 2006 02:07:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751942AbWIGGHb
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 02:07:31 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:16591 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751941AbWIGGH3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Sep 2006 02:07:29 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GLD2t-0001TJ-8Q; Thu, 07 Sep 2006 02:07:27 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id AEF3120E42C; Thu,  7 Sep 2006 01:46:51 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vslj4455z.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26595>
 
-Jon Smirl wrote:
-> If you need more data to play with you can download the Mozilla pack
-> file from here.
+Junio C Hamano <junkio@cox.net> wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
+> 
+> > And I'm half-way done with the 64 bit mmap sliding window.  You,
+> > Junio and I are all hacking on the same tiny bit of core code for
+> > different reasons.  :-)
+> 
+> Which makes me quite nervous, actually.
 
-Results are about the same as for the other pack files.
+What order do you want the patches in then?
 
+I'm willing to go before or after Nico's offset changes, and before
+or after your 64 bit index changes.
 
-pack-a80bec5339b6c50e9f3c8b0dce3e2175cd89b12f.pack
+Either way two of us are going to have to redo our work on top of
+the others.  I'm finding that I'm basically rewriting the sliding
+window code onto your 64 bit version - there's no easy merge here.
+And Nico's got the same problem, he's in unpack_delta_entry too.
 
-BLOB  :       49860
-COMMIT:      197613
-DELTA :     1560153
-TAG   :        1203
-TREE  :      154496
-======   ==========
-Total :     1963325
-
-Gitzilla_1:   443428349        32   443428317    -7775014   -3.9601
--4.9835
-Gitzilla_2:   442177053        32   442177021    -9026310   -4.5975
--5.7855
-Pack_2    :   451203363        32   451203331           0    0.0000
-0.0000
-Pack_3    :   451010859        32   451010827     -192504   -0.0980
--0.1234
+-- 
+Shawn.
