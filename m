@@ -1,115 +1,88 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Cygwin playbook?
-Date: Thu, 7 Sep 2006 19:18:10 +1200
-Message-ID: <46a038f90609070018k319b748cmae7a9b30da45b3b6@mail.gmail.com>
-References: <46a038f90609062159v3858a771t38355ed60867ccfc@mail.gmail.com>
-	 <7v7j0g40xh.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/2] Add git-archive
+Date: Thu, 07 Sep 2006 00:19:16 -0700
+Message-ID: <7v1wqo400b.fsf@assigned-by-dhcp.cox.net>
+References: <cda58cb80609050516v699338b9y57fd54f50c66e49e@mail.gmail.com>
+	<7vfyf6ce29.fsf@assigned-by-dhcp.cox.net>
+	<44FED12E.7010409@innova-card.com>
+	<7vac5c7jty.fsf@assigned-by-dhcp.cox.net>
+	<cda58cb80609062332p356bd26bw852e31211c43d1ac@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 07 09:18:26 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 07 09:19:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLE9P-0004RQ-T9
-	for gcvg-git@gmane.org; Thu, 07 Sep 2006 09:18:16 +0200
+	id 1GLEAK-0004c5-AG
+	for gcvg-git@gmane.org; Thu, 07 Sep 2006 09:19:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750919AbWIGHSN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Sep 2006 03:18:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750874AbWIGHSN
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 03:18:13 -0400
-Received: from nf-out-0910.google.com ([64.233.182.185]:49366 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1750791AbWIGHSL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Sep 2006 03:18:11 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so386102nfa
-        for <git@vger.kernel.org>; Thu, 07 Sep 2006 00:18:10 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=cGUgziGcB1yGDwnQtiwIVmGhq3l4YmUPaJuyA+dEXa7yxObstEuWsL+YMxOHygeOQZBEMTFWSdLauecjrqnc3vkOJVVqpV/Kg99GgijnuniBJ1ElkINrmEBJBUniJEml9WedpyyJuIj/55aYT0t2hCaxEo/YvWB7DyeqK55jvGg=
-Received: by 10.48.242.19 with SMTP id p19mr2148046nfh;
-        Thu, 07 Sep 2006 00:18:10 -0700 (PDT)
-Received: by 10.49.6.16 with HTTP; Thu, 7 Sep 2006 00:18:10 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7v7j0g40xh.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1750874AbWIGHTJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Sep 2006 03:19:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750907AbWIGHTJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 03:19:09 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:36274 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1750874AbWIGHTG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Sep 2006 03:19:06 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060907071905.LDJH2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 7 Sep 2006 03:19:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id KKJx1V0041kojtg0000000
+	Thu, 07 Sep 2006 03:18:58 -0400
+To: "Franck Bui-Huu" <vagabon.xyz@gmail.com>
+In-Reply-To: <cda58cb80609062332p356bd26bw852e31211c43d1ac@mail.gmail.com>
+	(Franck Bui-Huu's message of "Thu, 7 Sep 2006 08:32:02 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26609>
 
-On 9/7/06, Junio C Hamano <junkio@cox.net> wrote:
-> "Martin Langhoff" <martin.langhoff@gmail.com> writes:
+"Franck Bui-Huu" <vagabon.xyz@gmail.com> writes:
+
+> sorry I wasn't clear. My point was that the structure need to be
+> 'mallocated'. Which funtion allocate it doesn't matter, we will need
+> to free it later. That's what I tried to avoid with the alternative I
+> sent you in my previous email. Do you think we could use it ?
+
+I do not think allocation and free matter much, but if you want
+to do it that way, enumerating all the possible struct in one
+place is fine by me for this application.  After all we are not
+defining a plug-in architecture that lets others to write their
+archive backends and load them without recompiling git-archive
+binary.
+
+>> >>> +static int run_remote_archiver(struct archiver_struct *ar, int argc,
+>> >>> +                          const char **argv)
+>> >>> +{
+>> >>> +   char *url, buf[1024];
+>> >>> +   pid_t pid;
+>> >>> +   int fd[2];
+>> >>> +   int len, rv;
+>> >>> +
+>> >>> +   sprintf(buf, "git-upload-%s", ar->name);
+>> >>
+>> >> Are you calling git-upload-{tar,zip,rar,...} here?
+>> >
+>> > yes. Actually git-upload-{tar,zip,...} commands are going to be
+>> > removed, but git-daemon know them as a daemon service.
+>>
+>> That would break "git-archive --remove=ssh://site/repo treeish"
+>> wouldn't it?
 >
-> > - What cygwin packages are needed?
->
-> I am not in front of Windows machine so I need to check later if
-> nobody beats me to this, but essentially it is the same as on
-> sane Unix systems.  Cygwin folks did a good job providing
-> necessary libraries readily available from their Setup.exe.
+> Yes. But couldn't we make some alias like:
+>...
+> These alias would be internal to git (always defined)
 
-Sorry to ask this... Are you sure? Vanilla base setup with no extra
-packages getting gcc and various -dev packages? Perhaps there is a
-'developer' profile during install that gets you a reasonable kit?
+You _could_ work things around by building special cases into
+the system, but I would rather avoid doing that unless
+necessary.
 
-About 5 minutes ago I managed to get limited access (non-root, cannot
-install packages) to a cygwin env using rdesktop. It did have gcc and
-make, but make bombed out with a missing libcurl and openssl header
-files. IIRC, diff3/merge isn't in the base install either.
-
-In debian I can look at apt-cache show git-core to get a quick
-overview of dependencies but here I'm lost :(
-
-> > - Need to fudge makefile?
->
-> No; not even autoconf was needed and it installed out of the box
-> for me (w2k).
-
-That's great to know.
-
-> > - How do I install for personal use?
->
-> make install would install under whereever you call ~/bin in
-> Cygwin environment, and that is how I have mine.
-
-Kewl.
-
-> > - How do I install in /usr/local?
->
-> I do not think of a reason why "make prefix=/usr/local" would
-> not work but I haven't tried it myself so don't quote me on
-> this.
-
-Is cygwin still installable in 2 modes? (Used to be personal and
-system-wide or something like that.)
-
-If that's the case, then in a system-wide install you must be root to
-write to /usr/local (I'm guessing here) and there's no sudo or su -c
-'make prefix=/usr/local install' so you'd have to open an admin
-session. Can cygwin shell be invoked under RunAs?
-
-> > - Anything else I should know?
->
-> You would probably have great pain if on vfat.  It appears to
-> work Ok on NTFS.  It appears to be quite slow, judging from
-> the way it runs our standard test suite.
-
-Thanks! So no vfat. In terms of speed, this should be for a
-small/medium project. No linux kernel development on Windows just yet
-;-)
-
-Thanks! that's a starting point, though I'm intrigued about the
-packages required. Are there ways to query what packages you have
-installed (a la dpkg -l) and to install a list of packages from
-commandline?
-
-Oh, what an ignorant fop I am.
-
-cheers,
-
-
-
-martin
+Is there a reason that "git-upload-archive --format=tar" is not
+desirable at this point of the code?
