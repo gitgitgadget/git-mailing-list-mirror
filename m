@@ -1,52 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
+From: A Large Angry SCM <gitzilla@gmail.com>
 Subject: Re: A look at some alternative PACK file encodings
-Date: Wed, 06 Sep 2006 22:27:52 -0700
-Message-ID: <7vslj4455z.fsf@assigned-by-dhcp.cox.net>
-References: <44FF41F4.1090906@gmail.com>
-	<9e4733910609061623k73086dbey4a600ecf2852c024@mail.gmail.com>
-	<Pine.LNX.4.64.0609062037560.18635@xanadu.home>
-	<20060907043300.GA31376@spearce.org>
+Date: Wed, 06 Sep 2006 22:39:02 -0700
+Message-ID: <44FFB076.4020408@gmail.com>
+References: <44FF41F4.1090906@gmail.com> <9e4733910609061617m6783d6c4xaca2f9575e12d455@mail.gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 07 07:27:57 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Sep 07 07:39:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLCQU-0004YW-Cj
-	for gcvg-git@gmane.org; Thu, 07 Sep 2006 07:27:47 +0200
+	id 1GLCbh-0005wz-Ru
+	for gcvg-git@gmane.org; Thu, 07 Sep 2006 07:39:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751857AbWIGF1n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Sep 2006 01:27:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751858AbWIGF1n
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 01:27:43 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:56808 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1751857AbWIGF1m (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Sep 2006 01:27:42 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060907052742.CDWY21457.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 7 Sep 2006 01:27:42 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id KHTa1V00A1kojtg0000000
-	Thu, 07 Sep 2006 01:27:35 -0400
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20060907043300.GA31376@spearce.org> (Shawn Pearce's message of
-	"Thu, 7 Sep 2006 00:33:00 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161130AbWIGFjK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Sep 2006 01:39:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161131AbWIGFjK
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 01:39:10 -0400
+Received: from wx-out-0506.google.com ([66.249.82.236]:36366 "EHLO
+	wx-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1161130AbWIGFjH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Sep 2006 01:39:07 -0400
+Received: by wx-out-0506.google.com with SMTP id s14so114475wxc
+        for <git@vger.kernel.org>; Wed, 06 Sep 2006 22:39:06 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=bbmz5o5wWFo4ixgTdQpqN4ESFIzngTKdQ9Jll7KkFmszTKejpDqW4OeyJ9xgZExLmHOmZMxgpXhK5si3HJi2zPH42eFtotwhmB46jy1T4b79HUwbi6s1hTwbUcmB2UKnP9p4/5f70MKpggFUNRcoSw7KKAftYyFHrVsYQxmXvZk=
+Received: by 10.70.32.2 with SMTP id f2mr573349wxf;
+        Wed, 06 Sep 2006 22:39:06 -0700 (PDT)
+Received: from ?10.0.0.6? ( [24.55.157.69])
+        by mx.gmail.com with ESMTP id h37sm452904wxd.2006.09.06.22.39.05;
+        Wed, 06 Sep 2006 22:39:06 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.5 (X11/20060725)
+To: Jon Smirl <jonsmirl@gmail.com>, git@vger.kernel.org
+In-Reply-To: <9e4733910609061617m6783d6c4xaca2f9575e12d455@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26594>
 
-Shawn Pearce <spearce@spearce.org> writes:
+Jon Smirl wrote:
+> If you need more data to play with you can download the Mozilla pack
+> file from here.
 
-> And I'm half-way done with the 64 bit mmap sliding window.  You,
-> Junio and I are all hacking on the same tiny bit of core code for
-> different reasons.  :-)
+Results are about the same as for the other pack files.
 
-Which makes me quite nervous, actually.
+
+pack-a80bec5339b6c50e9f3c8b0dce3e2175cd89b12f.pack
+
+BLOB  :       49860
+COMMIT:      197613
+DELTA :     1560153
+TAG   :        1203
+TREE  :      154496
+======   ==========
+Total :     1963325
+
+Gitzilla_1:   443428349        32   443428317    -7775014   -3.9601
+-4.9835
+Gitzilla_2:   442177053        32   442177021    -9026310   -4.5975
+-5.7855
+Pack_2    :   451203363        32   451203331           0    0.0000
+0.0000
+Pack_3    :   451010859        32   451010827     -192504   -0.0980
+-0.1234
