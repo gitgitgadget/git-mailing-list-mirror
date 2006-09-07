@@ -1,75 +1,50 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: A look at some alternative PACK file encodings
-Date: Thu, 7 Sep 2006 01:34:24 -0400
-Message-ID: <20060907053424.GB31580@spearce.org>
-References: <44FF41F4.1090906@gmail.com> <9e4733910609061623k73086dbey4a600ecf2852c024@mail.gmail.com> <44FF5C27.2040300@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/3] Convert run_status to a builtin
+Date: Thu, 7 Sep 2006 02:29:18 -0400
+Message-ID: <20060907062917.GA16969@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jon Smirl <jonsmirl@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 07 08:08:03 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 07 08:29:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLD3J-00018C-8W
-	for gcvg-git@gmane.org; Thu, 07 Sep 2006 08:07:53 +0200
+	id 1GLDOM-0004Oc-IO
+	for gcvg-git@gmane.org; Thu, 07 Sep 2006 08:29:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751939AbWIGGHa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Sep 2006 02:07:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751943AbWIGGHa
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 02:07:30 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:16335 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751939AbWIGGH3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Sep 2006 02:07:29 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GLD2t-0001TH-6f; Thu, 07 Sep 2006 02:07:27 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 7CF8620FB33; Thu,  7 Sep 2006 01:34:25 -0400 (EDT)
-To: A Large Angry SCM <gitzilla@gmail.com>
+	id S1751891AbWIGG3V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Sep 2006 02:29:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751943AbWIGG3U
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 02:29:20 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:65504 "HELO
+	peff.net") by vger.kernel.org with SMTP id S1751891AbWIGG3U (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Sep 2006 02:29:20 -0400
+Received: (qmail 24790 invoked from network); 7 Sep 2006 02:28:44 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 7 Sep 2006 02:28:44 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu,  7 Sep 2006 02:29:18 -0400
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <44FF5C27.2040300@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26598>
 
-A Large Angry SCM <gitzilla@gmail.com> wrote:
-> Just looking at the structures in non-BLOBS, I see a lot of potential
-> for the use of a set dictionaries when deflating TREEs and another set
-> of dictionaries when deflating COMMITs and TAGs. The low hanging fruit
-> is to create dictionaries of the most referenced IDs across all TREE or
-> COMMIT/TAG objects.
+This series of patches converts the run_status function from
+git-commit.sh to a C builtin. Hopefully we can use this as a starting
+point for further improvements (the only feature I added was
+colorization).  I haven't had a chance to look closely at the
+simultaneous traversal code in pu, but that would be the nice next place
+to take this concept.
 
-The most referenced IDs should be getting reused through deltas.
-That is IDs which are highly referenced are probably referenced
-in the same tree over many versions of that tree.  Since the data
-isn't changing it should be getting copied by a delta copy command
-rather than appearing as a literal.
+Patch 1/3 adds the necessary diff callback infrastructure, which may be
+of value regardless of whether the final patch is accepted.
 
-The Mozilla pack appears to have the bulk of its storage taken up
-by blobs (both bases and deltas).  I suspect this is because the
-bases compress to approx. 50% of their original size but share a
-lot of common tokens.  Those common tokens are being repeated in
-every private zlib dictionary.  The same thing happens in a delta,
-except here we are probably copying a lot from the base so the
-average size is greatly reduced but we are still repeating tokens
-in the zlib dictionary for anything that is a literal in the delta
-(as it didn't appear in the base).
+Patch 2/3 lib-ifies the diff color support so it can be reused by
+run-status. Again, I think this is worth doing anyway from a code
+cleanup standpoint.
 
-A large dictionary containing all tokens for the project should
-greatly reduce the size of each blob, base and delta alike.  It also
-lends itself to creating an efficient full text index.
+Patch 3/3 does the actual conversion.
 
--- 
-Shawn.
+-Peff
