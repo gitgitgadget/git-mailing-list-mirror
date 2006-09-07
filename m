@@ -1,78 +1,82 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: A look at some alternative PACK file encodings
-Date: Wed, 6 Sep 2006 17:45:01 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609061737040.27779@g5.osdl.org>
-References: <44FF41F4.1090906@gmail.com> <9e4733910609061623k73086dbey4a600ecf2852c024@mail.gmail.com>
- <44FF5C27.2040300@gmail.com> <Pine.LNX.4.64.0609061651500.27779@g5.osdl.org>
- <44FF6586.8080206@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: file rename causes history to disappear
+Date: Wed, 06 Sep 2006 17:52:54 -0700
+Message-ID: <7vbqps5wgp.fsf@assigned-by-dhcp.cox.net>
+References: <44FEE0BB.2060601@garzik.org>
+	<Pine.LNX.4.64.0609060834520.27779@g5.osdl.org>
+	<44FEED4B.30909@garzik.org>
+	<Pine.LNX.4.64.0609060858050.27779@g5.osdl.org>
+	<Pine.LNX.4.64.0609060922110.27779@g5.osdl.org>
+	<7vmz9c7pzm.fsf@assigned-by-dhcp.cox.net>
+	<86bqpsvfd3.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jon Smirl <jonsmirl@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 07 02:45:19 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 07 02:52:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GL813-0002FN-G0
-	for gcvg-git@gmane.org; Thu, 07 Sep 2006 02:45:13 +0200
+	id 1GL88P-0003In-Cn
+	for gcvg-git@gmane.org; Thu, 07 Sep 2006 02:52:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161034AbWIGApK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Sep 2006 20:45:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161035AbWIGApJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 20:45:09 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:12706 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1161034AbWIGApI (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Sep 2006 20:45:08 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k870j2nW004759
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 6 Sep 2006 17:45:03 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k870j1ng001409;
-	Wed, 6 Sep 2006 17:45:02 -0700
-To: A Large Angry SCM <gitzilla@gmail.com>
-In-Reply-To: <44FF6586.8080206@gmail.com>
-X-Spam-Status: No, hits=-0.507 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.146 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1161036AbWIGAwq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Sep 2006 20:52:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161037AbWIGAwq
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 20:52:46 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:33155 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1161036AbWIGAwp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Sep 2006 20:52:45 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060907005245.FMTB26416.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 6 Sep 2006 20:52:45 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id KCsl1V00p1kojtg0000000
+	Wed, 06 Sep 2006 20:52:46 -0400
+To: merlyn@stonehenge.com (Randal L. Schwartz)
+In-Reply-To: <86bqpsvfd3.fsf@blue.stonehenge.com> (Randal L. Schwartz's
+	message of "06 Sep 2006 14:45:28 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26582>
 
+merlyn@stonehenge.com (Randal L. Schwartz) writes:
 
+>>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
+>
+> Junio> The only people who will get burnt by this change are the ones
+> Junio> with metacharacters in their pathnames, so it is relative safe
+> Junio> change.
+>
+> But does that mean you'll provide the equivalent to "fgrep" for "grep",
+> as in a switch that turns this off, or a seperate command?
+>
+> I can think of times when I might be trying to track a file with a square
+> bracket in the name.
 
-On Wed, 6 Sep 2006, A Large Angry SCM wrote:
-> 
-> > Btw, that "keeping the ordering it had" part I'm not convinced we actually 
-> > enforce. That would depend on the sort algorithm used by "qsort()", I 
-> > think. So there might be room for improvement there in order to keep 
-> > things in recency order.
-> 
-> qsort() is not stable.
+If your path is "foo.c[1]" then "foo.c[1]" as fnmatch() pattern
+would not obviously match it, which is sad.
 
-Well, quicksort isn't, but a lot of systems don't actually use quicksort 
-to implement qsort() - despite the name.
+However, we do try to match the path literally before falling
+back to fnmatch() so in practice I do not think  it is so bad.
 
-I think, for example, that glibc uses a merge-sort when there are lots of 
-entries (to avoid any potential bad behaviour with quicksort), and that 
-should be stable. But I didn't actually check..
-
-In fact, I didn't even think of this issue originally, but it might 
-actually be worthwhile doing our own sort, exactly because we'll otherwise 
-have different systems generating different pack-files due to issues like 
-this.
-
-So even if we don't actually _care_ whether the sorting is stable or not, 
-we might well care that we always get the same results, regardless of what 
-C library we have.
-
-> > Is there any way to get zlib to just generate a suggested dictionary from 
-> > a given set of input?
-> 
-> The docs suggest "no".
-
-Oh, well.
-
-			Linus
+$ git ls-files -s ;# everybody has "hello world".
+100644 3b18e512dba79e4c8300dd08aeb37f8e728b8dad 0	foo.c
+100644 3b18e512dba79e4c8300dd08aeb37f8e728b8dad 0	foo/bar[1]/baz/boa.c
+100644 3b18e512dba79e4c8300dd08aeb37f8e728b8dad 0	foo/bar[2].c
+$ git grep hello -- 'foo/bar[1]'
+foo/bar[1]/baz/boa.c:hello world
+$ git grep hello -- 'foo/bar[[]*[]]*'
+foo/bar[1]/baz/boa.c:hello world
+foo/bar[2].c:hello world
+$ git grep hello -- 'fo*'
+foo.c:hello world
+foo/bar[1]/baz/boa.c:hello world
+foo/bar[2].c:hello world
+$ exit
