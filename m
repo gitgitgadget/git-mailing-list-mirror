@@ -1,72 +1,69 @@
-From: Nicolas Pitre <nico@cam.org>
+From: A Large Angry SCM <gitzilla@gmail.com>
 Subject: Re: A look at some alternative PACK file encodings
-Date: Thu, 07 Sep 2006 13:20:21 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0609071228560.18635@xanadu.home>
-References: <20060907084158.25725.qmail@science.horizon.com>
+Date: Thu, 07 Sep 2006 10:22:54 -0700
+Message-ID: <4500556E.7070803@gmail.com>
+References: <20060907090756.30111.qmail@science.horizon.com> <9e4733910609070557jd8cfc57nd4f7a8973b69f6ed@mail.gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: gitzilla@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 07 19:20:48 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "linux@horizon.com" <linux@horizon.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 07 19:23:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLNYA-00066i-VP
-	for gcvg-git@gmane.org; Thu, 07 Sep 2006 19:20:27 +0200
+	id 1GLNao-0006iQ-CP
+	for gcvg-git@gmane.org; Thu, 07 Sep 2006 19:23:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422636AbWIGRUX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Sep 2006 13:20:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422637AbWIGRUX
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 13:20:23 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:32618 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1422636AbWIGRUW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Sep 2006 13:20:22 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J58007ZSG5XHXX0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 07 Sep 2006 13:20:21 -0400 (EDT)
-In-reply-to: <20060907084158.25725.qmail@science.horizon.com>
-X-X-Sender: nico@xanadu.home
-To: linux@horizon.com
+	id S1422637AbWIGRXE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Sep 2006 13:23:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422640AbWIGRXE
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 13:23:04 -0400
+Received: from nz-out-0102.google.com ([64.233.162.206]:15036 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1422637AbWIGRXC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Sep 2006 13:23:02 -0400
+Received: by nz-out-0102.google.com with SMTP id n1so154720nzf
+        for <git@vger.kernel.org>; Thu, 07 Sep 2006 10:23:01 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=DfGNHFlvl0OB2WqhJnc5iSCVhdPkJf+cK6UDbBewwIB5XoJSemJDyJKADb187zX6eDzn9uEz906f6tZyGT8CNy1S7ugAdCkfHVzSnVV8yFHA0IVuR94Z8j5E0VxhkYbHqP6ol40Ys7joYoc8U62wJcSAKAAXjQdZ89BD5vnVX7s=
+Received: by 10.65.116.7 with SMTP id t7mr987868qbm;
+        Thu, 07 Sep 2006 10:23:01 -0700 (PDT)
+Received: from ?10.0.0.6? ( [24.55.157.69])
+        by mx.gmail.com with ESMTP id d5sm920844qbd.2006.09.07.10.23.00;
+        Thu, 07 Sep 2006 10:23:01 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.5 (X11/20060725)
+To: Jon Smirl <jonsmirl@gmail.com>
+In-Reply-To: <9e4733910609070557jd8cfc57nd4f7a8973b69f6ed@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26645>
 
-On Thu, 7 Sep 2006, linux@horizon.com wrote:
-
-> A few notes:
+Jon Smirl wrote:
+> On 7 Sep 2006 05:07:56 -0400, linux@horizon.com <linux@horizon.com> wrote:
+>> > Support for 'thin' packs would pretty much require mixing IDs and
+>> > (relative) offsets in the same pack file.
+>>
+>> An alternative would be to create a small "placeholder" object that
+>> just gives an ID, then refer to it by offset.
+>>
+>> That would avoid the need for an id/offset bit with every offset,
+>> and possibly save more space if the same object was referenced
+>> multiple times.
+>>
+>> And it just seems simpler.
 > 
+> There are 2 million objects in the Mozilla pack. This table would take:
+> 2M *  (20b (sha)  + 10b(object index/overhead) = 60MB
+> This 60MB is pretty much incompressible and increases download time.
 > 
-> Re: base-128 encodings, it's a pet peeve of mine that meny people, even
-> while trying to save space, waste it by allowing redundant encodings.
-> The optimal way, assming msbit=1 means "more", is
+> Much better if storage of the sha1s can be totally eliminated and
+> replaced by something smaller. Alternatively this map could be
+> stripped for transmission and rebuilt locally.
 > 
-> 	0x00 -> 0		0x01 -> 1
-> 	0x7f -> 127		0x80 0x00 -> 128
-> 	0x80 0x7f -> 255	0x81 0x00 -> 256
-> 	0xfe 0x7f -> 16383	0xff 0x00 -> 16384
-> 	0xff 0x7f -> 16511	0x80 0x00 0x00 -> 16512
 
-Indeed.  But...
-
-Since we already use 3 bit of object type and that most objects are 
-larger than 15 bytes this means with 2 bytes we have 11 bits or up to 
-2047.  With your encoding that would mean 2175.  So a byte would be 
-saved only for objects whose size is between 2048 and 2175.  I don't 
-know what is the proportion of objects that fall into that range in the 
-average pack, but even for those objects that means a reduction of less 
-than 0.1% with an average deflate rate of 50%.
-
-And we can forget about cases where the size would require a fourth byte 
-or more since saving a byte in those cases is even less significant.
-
-So I don't think we would gain that much using that encoding 
-unless/until the pack format is made completely incompatible due to 
-other changes, and that's something we should try to avoid as much as 
-possible anyway.
-
-
-Nicolas
+You've lost me. What are you attempting to do again?
