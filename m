@@ -1,89 +1,101 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Change set based shallow clone
-Date: Thu, 7 Sep 2006 19:09:21 -0400
-Message-ID: <9e4733910609071609o50e5dacm53323e023e90358f@mail.gmail.com>
-References: <9e4733910609071252ree73effwb06358e9a22ba965@mail.gmail.com>
-	 <edpuut$dns$1@sea.gmane.org>
-	 <9e4733910609071341u7e430214j71ddcbefa26810ca@mail.gmail.com>
-	 <7vlkovtjd1.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/3] Move color option parsing out of diff.c and into color.[ch]
+Date: Thu, 07 Sep 2006 16:56:43 -0700
+Message-ID: <7vfyf3s01w.fsf@assigned-by-dhcp.cox.net>
+References: <2ec783f6a8e8a901f7c30947e8c0eb50f71bc185.1157610743.git.peff@peff.net>
+	<20060907063559.GB17083@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 08 01:09:29 2006
+X-From: git-owner@vger.kernel.org Fri Sep 08 01:56:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLSzu-0003uy-NT
-	for gcvg-git@gmane.org; Fri, 08 Sep 2006 01:09:27 +0200
+	id 1GLTjf-0003NB-If
+	for gcvg-git@gmane.org; Fri, 08 Sep 2006 01:56:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422687AbWIGXJX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Sep 2006 19:09:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422695AbWIGXJX
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 19:09:23 -0400
-Received: from py-out-1112.google.com ([64.233.166.181]:37354 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1422687AbWIGXJV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Sep 2006 19:09:21 -0400
-Received: by py-out-1112.google.com with SMTP id n25so532491pyg
-        for <git@vger.kernel.org>; Thu, 07 Sep 2006 16:09:21 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GfDeAYDwzMNF4iYXw+pDjfUrWYHTkayAtCIRFZr4g+XjUVov4M2HbSCDuOuXmKNciB3R/5i1KxTKoZledrNvAW2ZHwwm3qGch9XF4jA4kbJnhRziqilEd4Ctzmfc1cpC22jevH7vwWR8fW19hv+VzAni3G0R6aPP/LuTr0sZMm0=
-Received: by 10.35.96.11 with SMTP id y11mr2240205pyl;
-        Thu, 07 Sep 2006 16:09:21 -0700 (PDT)
-Received: by 10.35.60.14 with HTTP; Thu, 7 Sep 2006 16:09:21 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vlkovtjd1.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1751913AbWIGX41 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Sep 2006 19:56:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751916AbWIGX41
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 19:56:27 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:3813 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751913AbWIGX40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Sep 2006 19:56:26 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060907235626.WDYH12909.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 7 Sep 2006 19:56:26 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id KbwH1V00s1kojtg0000000
+	Thu, 07 Sep 2006 19:56:18 -0400
+To: Jeff King <peff@peff.net>
+In-Reply-To: <20060907063559.GB17083@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 7 Sep 2006 02:35:59 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26665>
 
-On 9/7/06, Junio C Hamano <junkio@cox.net> wrote:
-> "Jon Smirl" <jonsmirl@gmail.com> writes:
->
-> > Does an average user do these things? The shallow clone is there to
-> > address the casual user who gags at a five hour download to get an
-> > initial check out Mozilla when they want to make a five line change or
-> > just browse the source for a few minutes.
-> >...
-> > Maybe the answer is to build a shallow clone tool for casual use, and
-> > then if you try to run anything too complex on it git just tells you
-> > that you have to download the entire tree.
->
-> For that kind of thing, "git-tar-tree --remote" would suffice I
-> would imagine.  The five line change can be tracked locally by
-> creating an initial commit from the tar-tree extract; such a
-> casual user will not be pushing or asking to pull but sending in
-> patches to upstream, no?
+Jeff King <peff@peff.net> writes:
 
->From my observation the casual user does something like this:
+> +#include <stdarg.h>
+> +
+> +#define COLOR_RESET "\033[m"
+> +
+> +static int
+> +parse_color(const char *name, int len)
+> +{
 
-get a shallow clone
-look at it for a while
-pull once a day to keep it up to date
+Style (applies to all functions you moved to this new file).
 
-decide to make some changes
-start a local branch
-commit changes on local branch
+Some school of programming teach us to start the function name
+at the beginning of the line, separate from its type.  They say
+that would make "grep '^parse_color'" to work better.
 
-push these changes to someone else for review
-maybe pull changes on the branch back from the other person
+That happens to be the way I was taught (actually it was a bit
+more strange that return type was to be indented by one TAB, so
+it looked like this:
 
-keep pulling updates from the main repository
-merge these updates to the local branch
-browse around on the recent logs to see who changed what
+		static int
+	parse_color(const char *name, int len)
 
-finally push the branch to a maintainer
-pull it back down from the main repository after the maintainer puts it in
-abandon work on local branch
+).  But git style is the kernel style, and I refrain from doing
+that myself.
 
-Some people can't figure out the branch step and just copy the repository.
+	static int parse_color(const char *name, int len)
+	{
+        	...
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+> +int
+> +git_config_colorbool(const char *var, const char *value)
+> +{
+> +	if (!value)
+> +		return 1;
+> +	if (!strcasecmp(value, "auto")) {
+> +		if (isatty(1) || (pager_in_use && pager_use_color)) {
+> +			char *term = getenv("TERM");
+> +			if (term && strcmp(term, "dumb"))
+> +				return 1;
+> +		}
+> +		return 0;
+> +	}
+> +	if (!strcasecmp(value, "never"))
+> +		return 0;
+> +	if (!strcasecmp(value, "always"))
+> +		return 1;
+> +	return git_config_bool(var, value);
+> +}
+
+> +int
+> +color_printf(const char *color, const char *fmt, ...) {
+
+Style.
+
+	int color_printf(const char *color, const char *fmt, ...)
+	{
+		...
