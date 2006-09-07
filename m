@@ -1,88 +1,547 @@
 From: Franck Bui-Huu <vagabon.xyz@gmail.com>
-Subject: Add git-archive [take #2]
-Date: Thu, 07 Sep 2006 15:08:19 +0200
-Message-ID: <450019C3.4030001@innova-card.com>
-References: <cda58cb80609050516v699338b9y57fd54f50c66e49e@mail.gmail.com>	<7vfyf6ce29.fsf@assigned-by-dhcp.cox.net>	<44FED12E.7010409@innova-card.com>	<7vac5c7jty.fsf@assigned-by-dhcp.cox.net>	<cda58cb80609062332p356bd26bw852e31211c43d1ac@mail.gmail.com>	<7v1wqo400b.fsf@assigned-by-dhcp.cox.net>	<44FFD00E.5040305@innova-card.com> <7vr6yo2isu.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Franck <vagabon.xyz@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Franck <vagabon.xyz@gmail.com>, git@vger.kernel.org,
-	Rene Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 07 15:08:20 2006
+Subject: [PATCH 1/4] Add git-archive
+Date: Thu,  7 Sep 2006 15:12:02 +0200
+Message-ID: <11576347251776-git-send-email-vagabon.xyz@gmail.com>
+References: <450019C3.4030001@innova-card.com>
+Cc: rene.scharfe@lsrfire.ath.cx, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 07 15:12:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLJc6-0006Sj-5q
-	for gcvg-git@gmane.org; Thu, 07 Sep 2006 15:08:14 +0200
+	id 1GLJfn-0007SI-AF
+	for gcvg-git@gmane.org; Thu, 07 Sep 2006 15:12:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751792AbWIGNIK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Sep 2006 09:08:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751796AbWIGNIK
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 09:08:10 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:12841 "EHLO
+	id S1751801AbWIGNMA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Sep 2006 09:12:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751803AbWIGNMA
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 09:12:00 -0400
+Received: from nf-out-0910.google.com ([64.233.182.185]:18487 "EHLO
 	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751792AbWIGNII (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Sep 2006 09:08:08 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so434012nfa
-        for <git@vger.kernel.org>; Thu, 07 Sep 2006 06:08:07 -0700 (PDT)
+	id S1751801AbWIGNLz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Sep 2006 09:11:55 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so434642nfa
+        for <git@vger.kernel.org>; Thu, 07 Sep 2006 06:11:54 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        b=MSXAaJ3JArqzn/Nf9e7cqFUcedydXQO/pEcCIH04Qjn48MuGANqS6lV3FOpWLVdtS7LwUepN4N29T+lXIsIyqpcLWropgb0UOLwJSUGhV3S5RtdtQsVNHJRSOcs4VumHAStkpHupi0mf93NEGYMt2WyYGlOefAna4IY1E38XuAM=
-Received: by 10.49.8.10 with SMTP id l10mr2476416nfi;
-        Thu, 07 Sep 2006 06:08:06 -0700 (PDT)
-Received: from ?192.168.0.24? ( [81.252.61.1])
-        by mx.gmail.com with ESMTP id l38sm3377840nfc.2006.09.07.06.08.05;
-        Thu, 07 Sep 2006 06:08:06 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.4 (X11/20060614)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vr6yo2isu.fsf@assigned-by-dhcp.cox.net>
+        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=BsMcPFx5geSZPzvnx8y2sKEIUlbz+7MkY9fIhom6cT8QnN1i5cgCyTuudITR7ClcO7EKEWNexZECbJiuALfpCz2JEMHfKd4e3Gh7I5N7A02KKGmL31ea4LeiQ90bo5weKckZC+vhTJn9jumt5CY9OH6TiiIf+35x1TJol+tuWe8=
+Received: by 10.49.75.2 with SMTP id c2mr2484664nfl;
+        Thu, 07 Sep 2006 06:11:53 -0700 (PDT)
+Received: from spoutnik.innova-card.com ( [81.252.61.1])
+        by mx.gmail.com with ESMTP id x1sm3369535nfb.2006.09.07.06.11.52;
+        Thu, 07 Sep 2006 06:11:53 -0700 (PDT)
+Received: by spoutnik.innova-card.com (Postfix, from userid 500)
+	id A367C23F76A; Thu,  7 Sep 2006 15:12:05 +0200 (CEST)
+To: junkio@cox.net
+X-Mailer: git-send-email 1.4.2
+In-Reply-To: <450019C3.4030001@innova-card.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26634>
 
-I'm sending a new version of the patchset which allows 'git-archive'
-and 'git-upload-archive' command. I tried to take into account all
-feedbacks made by Junio and Rene, but there are still some open points.
+git-archive is a command to make TAR and ZIP archives of a git tree.
+It helps prevent a proliferation of git-{format}-tree commands.
 
-  1/ Allow 'git-upload-archive' command to enable/disable some
-     formats. This should be done by 'git-upload-archive'.
+Instead of directly calling git-{tar,zip}-tree command, it defines
+a very simple API, that archiver should implement and register in
+"git-archive.c". This API is made up by 2 functions whose prototype
+is defined in "archive.h" file.
 
-  2/ Can I remove 'git-upload-tar' command ? If so, the current
-     implementation of 'git-upload-archive' won't work with the old
-     'git-tar-tree --remote' command because the protocol needs a
-     "argument --format" to be passed to the server. Therefore we can
-     either modify 'git-tar-tree' or simply remove it.
+ - The first one is used to parse 'extra' parameters which have
+   signification only for the specific archiver. That would allow
+   different archive backends to have different kind of options.
 
-  3/ Should I kill 'git-zip-tree' command ? If so should I rename
-     builtin-zip-tree.c file into zip-tree.c or something else ?
+ - The second one is used to ask to an archive backend to build
+   the archive given some already resolved parameters.
 
-  4/ Progress indicator support. Junio wants to mimic upload-pack for
-     that. But it will lead in a lot of duplicated code if we don't
-     try to share code. Can we copy that code anyways and clean up
-     later ?
+The main reason for making this API is to avoid using
+git-{tar,zip}-tree commands, hence making them useless. Maybe it's
+time for them to die ?
 
-  5/ Should we use "struct tree_desc" based interface for tree parsing
-     ? According to Rene it doesn't worth it as soon as you actually
-     start to do something to the trees
+It also implements remote operations by defining a very simple
+protocol: it first sends the name of the specific uploader followed
+the repository name (git-upload-tar git://example.org/repo.git).
+Then it sends options. It's done by sending a sequence of one
+argument per packet, with prefix "argument ", followed by a flush.
 
-  6/ Simple subtree matching would be enough, at least for now.
+The remote protocol is implemented in "git-archive.c" for client
+side and is triggered by "--remote=<repo>" option. For example,
+to fetch a TAR archive in a remote repo, you can issue:
 
-Did I forgot something else ?
+$ git archive --format=tar --remote=git://xxx/yyy/zzz.git HEAD
 
-Point 1 seems to be important. As soons as we plug git-upload-archive,
-we need to control what kind of formats the server deal with.
+We choose to not make a new command "git-fetch-archive" for example,
+avoind one more GIT command which should be nice for users (less
+commands to remember, keeps existing --remote option).
 
-Point 2 and 3 are easy to achieve, just need a "go wild" authorization.
+Signed-off-by: Franck Bui-Huu <vagabon.xyz@gmail.com>
+---
+ .gitignore                    |    1 
+ Documentation/git-archive.txt |  100 ++++++++++++++++++
+ Makefile                      |    3 -
+ archive.h                     |   41 +++++++
+ builtin-archive.c             |  227 +++++++++++++++++++++++++++++++++++++++++
+ builtin.h                     |    1 
+ generate-cmdlist.sh           |    1 
+ git.c                         |    1 
+ 8 files changed, 374 insertions(+), 1 deletions(-)
 
-Point 4, seems to be high in priority since we don't want to deal with
-clients and servers interoperate issues.
-
-Points 5 and 6 can be done later. These improvements won't break if
-done after releasing.
-
-		Franck
+diff --git a/.gitignore b/.gitignore
+index 78cb671..a3e7ca1 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -8,6 +8,7 @@ git-apply
+ git-applymbox
+ git-applypatch
+ git-archimport
++git-archive
+ git-bisect
+ git-branch
+ git-cat-file
+diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
+new file mode 100644
+index 0000000..913528d
+--- /dev/null
++++ b/Documentation/git-archive.txt
+@@ -0,0 +1,100 @@
++git-archive(1)
++==============
++
++NAME
++----
++git-archive - Creates a archive of the files in the named tree
++
++
++SYNOPSIS
++--------
++'git-archive' --format=<fmt> [--list] [--prefix=<prefix>/] [<extra>]
++	      [--remote=<repo>] <tree-ish> [path...]
++
++DESCRIPTION
++-----------
++Creates an archive of the specified format containing the tree
++structure for the named tree.  If <prefix> is specified it is
++prepended to the filenames in the archive.
++
++'git-archive' behaves differently when given a tree ID versus when
++given a commit ID or tag ID.  In the first case the current time is
++used as modification time of each file in the archive.  In the latter
++case the commit time as recorded in the referenced commit object is
++used instead.  Additionally the commit ID is stored in a global
++extended pax header if the tar format is used; it can be extracted
++using 'git-get-tar-commit-id'. In ZIP files it is stored as a file
++comment.
++
++OPTIONS
++-------
++
++--format=<fmt>::
++	Format of the resulting archive: 'tar', 'zip'...
++
++--list::
++	Show all available formats.
++
++--prefix=<prefix>/::
++	Prepend <prefix>/ to each filename in the archive.
++
++<extra>::
++	This can be any options that the archiver backend understand.
++
++--remote=<repo>::
++	Instead of making a tar archive from local repository,
++	retrieve a tar archive from a remote repository.
++
++<tree-ish>::
++	The tree or commit to produce an archive for.
++
++path::
++	If one or more paths are specified, include only these in the
++	archive, otherwise include all files and subdirectories.
++
++CONFIGURATION
++-------------
++By default, file and directories modes are set to 0666 or 0777 in tar
++archives.  It is possible to change this by setting the "umask" variable
++in the repository configuration as follows :
++
++[tar]
++        umask = 002	;# group friendly
++
++The special umask value "user" indicates that the user's current umask
++will be used instead. The default value remains 0, which means world
++readable/writable files and directories.
++
++EXAMPLES
++--------
++git archive --format=tar --prefix=junk/ HEAD | (cd /var/tmp/ && tar xf -)::
++
++	Create a tar archive that contains the contents of the
++	latest commit on the current branch, and extracts it in
++	`/var/tmp/junk` directory.
++
++git archive --format=tar --prefix=git-1.4.0/ v1.4.0 | gzip >git-1.4.0.tar.gz::
++
++	Create a compressed tarball for v1.4.0 release.
++
++git archive --format=tar --prefix=git-1.4.0/ v1.4.0{caret}\{tree\} | gzip >git-1.4.0.tar.gz::
++
++	Create a compressed tarball for v1.4.0 release, but without a
++	global extended pax header.
++
++git archive --format=zip --prefix=git-docs/ HEAD:Documentation/ > git-1.4.0-docs.zip::
++
++	Put everything in the current head's Documentation/ directory
++	into 'git-1.4.0-docs.zip', with the prefix 'git-docs/'.
++
++Author
++------
++Written by Franck Bui-Huu and Rene Scharfe.
++
++Documentation
++--------------
++Documentation by David Greaves, Junio C Hamano and the git-list <git@vger.kernel.org>.
++
++GIT
++---
++Part of the gitlink:git[7] suite
+diff --git a/Makefile b/Makefile
+index 389daf7..51ed4dd 100644
+--- a/Makefile
++++ b/Makefile
+@@ -242,7 +242,7 @@ LIB_FILE=libgit.a
+ XDIFF_LIB=xdiff/lib.a
+ 
+ LIB_H = \
+-	blob.h cache.h commit.h csum-file.h delta.h \
++	archive.h blob.h cache.h commit.h csum-file.h delta.h \
+ 	diff.h object.h pack.h para-walk.h pkt-line.h quote.h refs.h \
+ 	run-command.h strbuf.h tag.h tree.h git-compat-util.h revision.h \
+ 	tree-walk.h log-tree.h dir.h path-list.h unpack-trees.h builtin.h
+@@ -267,6 +267,7 @@ LIB_OBJS = \
+ BUILTIN_OBJS = \
+ 	builtin-add.o \
+ 	builtin-apply.o \
++	builtin-archive.o \
+ 	builtin-cat-file.o \
+ 	builtin-checkout-index.o \
+ 	builtin-check-ref-format.o \
+diff --git a/archive.h b/archive.h
+new file mode 100644
+index 0000000..f33398e
+--- /dev/null
++++ b/archive.h
+@@ -0,0 +1,41 @@
++#ifndef ARCHIVE_H
++#define ARCHIVE_H
++
++#define MAX_EXTRA_ARGS	32
++#define MAX_ARGS	(MAX_EXTRA_ARGS + 32)
++
++struct archiver_args {
++	const char *base;
++	struct tree *tree;
++	const unsigned char *commit_sha1;
++	time_t time;
++	const char **pathspec;
++	void *extra;
++};
++
++typedef int (*write_archive_fn_t)(struct archiver_args *);
++
++typedef void *(*parse_extra_args_fn_t)(int argc, const char **argv);
++
++struct archiver {
++	const char *name;
++	const char *remote;
++	struct archiver_args args;
++	write_archive_fn_t write_archive;
++	parse_extra_args_fn_t parse_extra;
++};
++
++extern struct archiver archivers[];
++
++extern int parse_archive_args(int argc,
++			      const char **argv,
++			      struct archiver **ar);
++
++extern void parse_treeish_arg(const char **treeish,
++			      struct archiver_args *ar_args,
++			      const char *prefix);
++
++extern void parse_pathspec_arg(const char **pathspec,
++			       struct archiver_args *args);
++
++#endif	/* ARCHIVE_H */
+diff --git a/builtin-archive.c b/builtin-archive.c
+new file mode 100644
+index 0000000..6064358
+--- /dev/null
++++ b/builtin-archive.c
+@@ -0,0 +1,227 @@
++/*
++ * Copyright (c) 2006 Franck Bui-Huu
++ * Copyright (c) 2006 Rene Scharfe
++ */
++#include <time.h>
++#include "cache.h"
++#include "builtin.h"
++#include "archive.h"
++#include "commit.h"
++#include "tree-walk.h"
++#include "exec_cmd.h"
++#include "pkt-line.h"
++
++static const char archive_usage[] = \
++"git-archive --format=<fmt> [--prefix=<prefix>/] [<extra>] <tree-ish> [path...]";
++
++
++struct archiver archivers[] = { };
++
++
++static int run_remote_archiver(struct archiver *ar, int argc,
++			       const char **argv)
++{
++	char *url, buf[1024];
++	int fd[2], i, len, rv;
++	pid_t pid;
++
++	sprintf(buf, "git-upload-archive");
++
++	url = strdup(ar->remote);
++	pid = git_connect(fd, url, buf);
++	if (pid < 0)
++		return pid;
++
++	for (i = 1; i < argc; i++) {
++		if (!strncmp(argv[i], "--remote=", 9))
++			continue;
++		packet_write(fd[1], "argument %s\n", argv[i]);
++	}
++	packet_flush(fd[1]);
++
++	len = packet_read_line(fd[0], buf, sizeof(buf));
++	if (!len)
++		die("git-archive: expected ACK/NAK, got EOF");
++	if (buf[len-1] == '\n')
++		buf[--len] = 0;
++	if (strcmp(buf, "ACK")) {
++		if (len > 5 && !strncmp(buf, "NACK ", 5))
++			die("git-archive: NACK %s", buf + 5);
++		die("git-archive: protocol error");
++	}
++
++	len = packet_read_line(fd[0], buf, sizeof(buf));
++	if (len)
++		die("git-archive: expected a flush");
++
++	/* Now, start reading from fd[0] and spit it out to stdout */
++	rv = copy_fd(fd[0], 1);
++
++	close(fd[0]);
++	rv |= finish_connect(pid);
++
++	return !!rv;
++}
++
++static struct archiver *get_archiver(const char *name)
++{
++	struct archiver *ar = NULL;
++	int i;
++
++	for (i = 0; i < ARRAY_SIZE(archivers); i++) {
++		if (!strcmp(name, archivers[i].name)) {
++			ar = &archivers[i];
++			break;
++		}
++	}
++	return ar;
++}
++
++void parse_pathspec_arg(const char **pathspec, struct archiver_args *ar_args)
++{
++	ar_args->pathspec = get_pathspec(ar_args->base, pathspec);
++}
++
++void parse_treeish_arg(const char **argv, struct archiver_args *ar_args,
++		       const char *prefix)
++{
++	const char *name = argv[0];
++	const unsigned char *commit_sha1;
++	time_t archive_time;
++	struct tree *tree;
++	struct commit *commit;
++	unsigned char sha1[20];
++
++	if (get_sha1(name, sha1))
++		die("Not a valid object name");
++
++	commit = lookup_commit_reference_gently(sha1, 1);
++	if (commit) {
++		commit_sha1 = commit->object.sha1;
++		archive_time = commit->date;
++	} else {
++		archive_time = time(NULL);
++	}
++
++	tree = parse_tree_indirect(sha1);
++	if (tree == NULL)
++		die("not a tree object");
++
++	if (prefix) {
++		unsigned char tree_sha1[20];
++		unsigned int mode;
++		int err;
++
++		err = get_tree_entry(tree->object.sha1, prefix,
++				     tree_sha1, &mode);
++		if (err || !S_ISDIR(mode))
++			die("current working directory is untracked");
++
++		free(tree);
++		tree = parse_tree_indirect(tree_sha1);
++	}
++	//free(tree);
++	ar_args->tree = tree;
++	ar_args->commit_sha1 = commit_sha1;
++	ar_args->time = archive_time;
++}
++
++static const char *default_parse_extra(struct archiver *ar,
++				       const char **argv)
++{
++	static char msg[64];
++
++	snprintf(msg, sizeof(msg) - 4, "'%s' format does not handle %s",
++		 ar->name, *argv);
++
++	return strcat(msg, "...");
++}
++
++int parse_archive_args(int argc, const char **argv, struct archiver **ar)
++{
++	const char *extra_argv[MAX_EXTRA_ARGS];
++	int extra_argc = 0;
++	const char *format = NULL; /* some default values */
++	const char *remote = NULL;
++	const char *base = "";
++	int list = 0;
++	int i;
++
++	for (i = 1; i < argc; i++) {
++		const char *arg = argv[i];
++
++		if (!strcmp(arg, "--list") || !strcmp(arg, "-l")) {
++			list = 1;
++			continue;
++		}
++		if (!strncmp(arg, "--format=", 9)) {
++			format = arg + 9;
++			continue;
++		}
++		if (!strncmp(arg, "--prefix=", 9)) {
++			base = arg + 9;
++			continue;
++		}
++		if (!strncmp(arg, "--remote=", 9)) {
++			remote = arg + 9;
++			continue;
++		}
++		if (!strcmp(arg, "--")) {
++			i++;
++			break;
++		}
++		if (arg[0] == '-') {
++			extra_argv[extra_argc++] = arg;
++			continue;
++		}
++		break;
++	}
++	if (list) {
++		if (!remote) {
++			for (i = 0; i < ARRAY_SIZE(archivers); i++)
++				printf("%s\n", archivers[i].name);
++			exit(0);
++		}
++		die("--list and --remote are mutually exclusive");
++	}
++	if (argc - i < 1) {
++		die("%s", archive_usage);
++	}
++	if (!format){
++		die("You must specify an archive format");
++	}
++	*ar = get_archiver(format);
++	if (*ar == NULL) {
++		die("Unknown archive format '%s'", format);
++	}
++	if (extra_argc) {
++		if (!(*ar)->parse_extra) {
++			die("%s", default_parse_extra(*ar, extra_argv));
++		}
++		(*ar)->args.extra = (*ar)->parse_extra(extra_argc, extra_argv);
++	}
++	(*ar)->remote = remote;
++	(*ar)->args.base = base;
++
++	return i;
++}
++
++int cmd_archive(int argc, const char **argv, const char *prefix)
++{
++	struct archiver *ar;
++	int tree_idx;
++
++	tree_idx = parse_archive_args(argc, argv, &ar);
++
++	if (ar->remote)
++		return run_remote_archiver(ar, argc, argv);
++
++	if (prefix == NULL)
++		prefix = setup_git_directory();
++
++	argv += tree_idx;
++	parse_treeish_arg(argv, &ar->args, prefix);
++	parse_pathspec_arg(argv + 1, &ar->args);
++
++	return ar->write_archive(&ar->args);
++}
+diff --git a/builtin.h b/builtin.h
+index 8472c79..2391afb 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -15,6 +15,7 @@ extern int write_tree(unsigned char *sha
+ 
+ extern int cmd_add(int argc, const char **argv, const char *prefix);
+ extern int cmd_apply(int argc, const char **argv, const char *prefix);
++extern int cmd_archive(int argc, const char **argv, const char *prefix);
+ extern int cmd_cat_file(int argc, const char **argv, const char *prefix);
+ extern int cmd_checkout_index(int argc, const char **argv, const char *prefix);
+ extern int cmd_check_ref_format(int argc, const char **argv, const char *prefix);
+diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+index ec1eda2..5450918 100755
+--- a/generate-cmdlist.sh
++++ b/generate-cmdlist.sh
+@@ -12,6 +12,7 @@ struct cmdname_help common_cmds[] = {"
+ sort <<\EOF |
+ add
+ apply
++archive
+ bisect
+ branch
+ checkout
+diff --git a/git.c b/git.c
+index 82c8fee..c62c5cf 100644
+--- a/git.c
++++ b/git.c
+@@ -218,6 +218,7 @@ static void handle_internal_command(int 
+ 	} commands[] = {
+ 		{ "add", cmd_add, RUN_SETUP },
+ 		{ "apply", cmd_apply },
++		{ "archive", cmd_archive },
+ 		{ "cat-file", cmd_cat_file, RUN_SETUP },
+ 		{ "checkout-index", cmd_checkout_index, RUN_SETUP },
+ 		{ "check-ref-format", cmd_check_ref_format },
+-- 
+1.4.2
