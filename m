@@ -1,63 +1,75 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: GitWiki lost ability to parse macros
-Date: Thu, 7 Sep 2006 03:42:06 +0200
-Message-ID: <20060907014206.GN18896@pasky.or.cz>
-References: <edm7h3$nij$1@sea.gmane.org> <20060906113052.GC23891@pasky.or.cz> <edmcd6$9or$1@sea.gmane.org> <Pine.LNX.4.64.0609061712410.7168@reaper.quantumfyre.co.uk> <edmvsn$lt7$3@sea.gmane.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: A look at some alternative PACK file encodings
+Date: Wed, 06 Sep 2006 22:30:59 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0609062221490.18635@xanadu.home>
+References: <44FF41F4.1090906@gmail.com>
+ <9e4733910609061623k73086dbey4a600ecf2852c024@mail.gmail.com>
+ <Pine.LNX.4.64.0609062037560.18635@xanadu.home>
+ <9e4733910609061759m2aae9e31ja146e309dc449628@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 07 03:42:22 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: gitzilla@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 07 04:31:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GL8uD-0001R6-Kv
-	for gcvg-git@gmane.org; Thu, 07 Sep 2006 03:42:14 +0200
+	id 1GL9fj-0001ES-4V
+	for gcvg-git@gmane.org; Thu, 07 Sep 2006 04:31:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422629AbWIGBmK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Sep 2006 21:42:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422630AbWIGBmJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 21:42:09 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:3253 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1422629AbWIGBmI (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Sep 2006 21:42:08 -0400
-Received: (qmail 18128 invoked by uid 2001); 7 Sep 2006 03:42:06 +0200
-To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <edmvsn$lt7$3@sea.gmane.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.11
+	id S1422665AbWIGCbP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Sep 2006 22:31:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422668AbWIGCbP
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Sep 2006 22:31:15 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:34124 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1422665AbWIGCbO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Sep 2006 22:31:14 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J57002NLAZNTKQ3@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 06 Sep 2006 22:30:59 -0400 (EDT)
+In-reply-to: <9e4733910609061759m2aae9e31ja146e309dc449628@mail.gmail.com>
+X-X-Sender: nico@xanadu.home
+To: Jon Smirl <jonsmirl@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26586>
 
-Dear diary, on Wed, Sep 06, 2006 at 07:18:37PM CEST, I got a letter
-where Jakub Narebski <jnareb@gmail.com> said that...
-> Julian Phillips wrote:
+On Wed, 6 Sep 2006, Jon Smirl wrote:
+
+> On 9/6/06, Nicolas Pitre <nico@cam.org> wrote:
+> > On Wed, 6 Sep 2006, Jon Smirl wrote:
+> >
+> > > Shawn is doing some prototype work on true dictionary based
+> > > compression. I don't know how far along he is but it has potential for
+> > > taking 30% off the Mozilla pack.
+> >
+> > BTW I'm half-way done with support for deltas which base object is
+> > referenced with an offset in the pack instead of a hash.  It is quite
+> > messy though since it touches pretty core code all over the place when
+> > it comes to fetching objects out of a pack.
 > 
-> > On Wed, 6 Sep 2006, Jakub Narebski wrote:
-> > 
-> >> Hmm... I still get for http://git.or.cz/gitwiki/RecentChanges
-> >>
-> >> {{RandomQuote()}}
-> >>
-> >> {{RecentChanges}}
-> >>
-> >>
-> > 
-> > MoinMoin caches a copy of the generated html page, which is automatically 
-> > updated when you edit the page.  Since fixing the macros doesn't mean 
-> > updating the page you have to manually delete the cache - this can be done 
-> > from the "More Actions:" list.
-> 
-> Could admin of GitWiki then delete cache of all files?
+> Would it help to change all of the references in the pack from sha1 to
+> encoded relative offsets? Then collect all of the object fetch code
+> into a single subroutine which would change it algorithm depending on
+> which type of pack it is operating on. Now the pack wouldn't mix
+> reference types, they would all be encoded relative or sha1.
 
-I did that originally, but it looks like I've missed some bit. Hopefully
-now all is in order. :-)
+No.  The problem is more about sha1_file.c using a mix of sha1 refs 
+and/or pack,offset tuples to reference deltas.  I converted most of them 
+to pack,offset tuples.  This also has a mnice side effect of having less 
+stack usage when recursing down a delta chain.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Snow falling on Perl. White noise covering line noise.
-Hides all the bugs too. -- J. Putnam
+When a delta with sha1 reference is encountered the code turns that 
+reference into the appropriate offset with a binary search in the pack 
+index.  When a delta with offset reference is encountered then no search 
+in the index is needed.
+
+This is not really complicated but only spread all over so that the 
+diffstat is a bit scary.
+
+
+Nicolas
