@@ -1,73 +1,65 @@
-From: "Franck Bui-Huu" <vagabon.xyz@gmail.com>
-Subject: Re: Add git-archive [take #2]
-Date: Thu, 7 Sep 2006 19:26:13 +0200
-Message-ID: <cda58cb80609071026m216bcc19jcf43023381fd17e7@mail.gmail.com>
-References: <cda58cb80609050516v699338b9y57fd54f50c66e49e@mail.gmail.com>
-	 <7vfyf6ce29.fsf@assigned-by-dhcp.cox.net>
-	 <44FED12E.7010409@innova-card.com>
-	 <7vac5c7jty.fsf@assigned-by-dhcp.cox.net>
-	 <cda58cb80609062332p356bd26bw852e31211c43d1ac@mail.gmail.com>
-	 <7v1wqo400b.fsf@assigned-by-dhcp.cox.net>
-	 <44FFD00E.5040305@innova-card.com>
-	 <7vr6yo2isu.fsf@assigned-by-dhcp.cox.net>
-	 <450019C3.4030001@innova-card.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: A look at some alternative PACK file encodings
+Date: Thu, 07 Sep 2006 13:32:47 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0609071322010.18635@xanadu.home>
+References: <20060907090756.30111.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Franck <vagabon.xyz@gmail.com>, git@vger.kernel.org,
-	"Rene Scharfe" <rene.scharfe@lsrfire.ath.cx>,
-	"Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 07 19:26:34 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: gitzilla@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 07 19:32:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLNdr-0007PE-Ra
-	for gcvg-git@gmane.org; Thu, 07 Sep 2006 19:26:21 +0200
+	id 1GLNkF-0000E7-QW
+	for gcvg-git@gmane.org; Thu, 07 Sep 2006 19:32:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422661AbWIGR0R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Sep 2006 13:26:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422666AbWIGR0Q
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 13:26:16 -0400
-Received: from qb-out-0506.google.com ([72.14.204.233]:3051 "EHLO
-	qb-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1422661AbWIGR0P (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Sep 2006 13:26:15 -0400
-Received: by qb-out-0506.google.com with SMTP id p36so846763qba
-        for <git@vger.kernel.org>; Thu, 07 Sep 2006 10:26:14 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=oXlVJFaDiMijsIEgS7iGMcrDiYMFb25WwqWJrdroEl1Chyll29+tY1L7XrDSJQ71PK4Vb1RZIJdQ0irzNVa+vPJML0qCZoOx0T9OuKr2nwF/ygpDo9Myn0qPSD+ocXK5o8Zx1O7dFLSoylKTNUHkLmAAWtlVXxLmJOFRyegI6Ps=
-Received: by 10.70.87.11 with SMTP id k11mr1019753wxb;
-        Thu, 07 Sep 2006 10:26:14 -0700 (PDT)
-Received: by 10.70.72.5 with HTTP; Thu, 7 Sep 2006 10:26:13 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <450019C3.4030001@innova-card.com>
-Content-Disposition: inline
+	id S1751777AbWIGRct (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Sep 2006 13:32:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751779AbWIGRct
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 13:32:49 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:45721 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1751777AbWIGRcs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Sep 2006 13:32:48 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J5800GY6GQNWW20@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 07 Sep 2006 13:32:48 -0400 (EDT)
+In-reply-to: <20060907090756.30111.qmail@science.horizon.com>
+X-X-Sender: nico@xanadu.home
+To: linux@horizon.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26647>
 
-2006/9/7, Franck Bui-Huu <vagabon.xyz@gmail.com>:
->
->   4/ Progress indicator support. Junio wants to mimic upload-pack for
->      that. But it will lead in a lot of duplicated code if we don't
->      try to share code. Can we copy that code anyways and clean up
->      later ?
->
+On Thu, 7 Sep 2006, linux@horizon.com wrote:
 
-BTW, could we move the side-band code into git_connect() function and
-adding to it a new parameter like:
+> > Support for 'thin' packs would pretty much require mixing IDs and
+> > (relative) offsets in the same pack file.
+> 
+> An alternative would be to create a small "placeholder" object that
+> just gives an ID, then refer to it by offset.
+> 
+> That would avoid the need for an id/offset bit with every offset,
+> and possibly save more space if the same object was referenced
+> multiple times.
 
-int git_connect(int fd[2], char *url, const char *prog, int side_band)
-or
-int git_connect(int fd[2], char *url, const char *prog, flags)
+Well... I'm using object type 6 for deltas with offset reference 
+(instead of object type 7 that is delta with sha1 reference).  So 
+there is no extra bit needed and no backward compatibility breakage.
 
-Hence it automatically spawns a side-band process in the client side
-and it also sends an extended option for git-daemon to ask for using
-side band for server services.
+There could be of course a new object type which payload is only a sha1 
+that deltas type 6 reference. But that can be introduced at a later date 
+if it turns out to be worthwhile (i.e. the actual saving in real use 
+scenarios is worth the (small but still) added complexity).
 
--- 
-               Franck
+> And it just seems simpler.
+
+Well I would not say so.  Simply prefixing a delta with the sha1 of its 
+base object cannot be simpler when streaming out a pack.
+
+
+Nicolas
