@@ -1,69 +1,73 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: A look at some alternative PACK file encodings
-Date: Thu, 07 Sep 2006 10:22:54 -0700
-Message-ID: <4500556E.7070803@gmail.com>
-References: <20060907090756.30111.qmail@science.horizon.com> <9e4733910609070557jd8cfc57nd4f7a8973b69f6ed@mail.gmail.com>
-Reply-To: gitzilla@gmail.com
+From: "Franck Bui-Huu" <vagabon.xyz@gmail.com>
+Subject: Re: Add git-archive [take #2]
+Date: Thu, 7 Sep 2006 19:26:13 +0200
+Message-ID: <cda58cb80609071026m216bcc19jcf43023381fd17e7@mail.gmail.com>
+References: <cda58cb80609050516v699338b9y57fd54f50c66e49e@mail.gmail.com>
+	 <7vfyf6ce29.fsf@assigned-by-dhcp.cox.net>
+	 <44FED12E.7010409@innova-card.com>
+	 <7vac5c7jty.fsf@assigned-by-dhcp.cox.net>
+	 <cda58cb80609062332p356bd26bw852e31211c43d1ac@mail.gmail.com>
+	 <7v1wqo400b.fsf@assigned-by-dhcp.cox.net>
+	 <44FFD00E.5040305@innova-card.com>
+	 <7vr6yo2isu.fsf@assigned-by-dhcp.cox.net>
+	 <450019C3.4030001@innova-card.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "linux@horizon.com" <linux@horizon.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 07 19:23:19 2006
+Cc: Franck <vagabon.xyz@gmail.com>, git@vger.kernel.org,
+	"Rene Scharfe" <rene.scharfe@lsrfire.ath.cx>,
+	"Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 07 19:26:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLNao-0006iQ-CP
-	for gcvg-git@gmane.org; Thu, 07 Sep 2006 19:23:10 +0200
+	id 1GLNdr-0007PE-Ra
+	for gcvg-git@gmane.org; Thu, 07 Sep 2006 19:26:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422637AbWIGRXE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Sep 2006 13:23:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422640AbWIGRXE
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 13:23:04 -0400
-Received: from nz-out-0102.google.com ([64.233.162.206]:15036 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1422637AbWIGRXC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Sep 2006 13:23:02 -0400
-Received: by nz-out-0102.google.com with SMTP id n1so154720nzf
-        for <git@vger.kernel.org>; Thu, 07 Sep 2006 10:23:01 -0700 (PDT)
+	id S1422661AbWIGR0R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Sep 2006 13:26:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422666AbWIGR0Q
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 13:26:16 -0400
+Received: from qb-out-0506.google.com ([72.14.204.233]:3051 "EHLO
+	qb-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1422661AbWIGR0P (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Sep 2006 13:26:15 -0400
+Received: by qb-out-0506.google.com with SMTP id p36so846763qba
+        for <git@vger.kernel.org>; Thu, 07 Sep 2006 10:26:14 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=DfGNHFlvl0OB2WqhJnc5iSCVhdPkJf+cK6UDbBewwIB5XoJSemJDyJKADb187zX6eDzn9uEz906f6tZyGT8CNy1S7ugAdCkfHVzSnVV8yFHA0IVuR94Z8j5E0VxhkYbHqP6ol40Ys7joYoc8U62wJcSAKAAXjQdZ89BD5vnVX7s=
-Received: by 10.65.116.7 with SMTP id t7mr987868qbm;
-        Thu, 07 Sep 2006 10:23:01 -0700 (PDT)
-Received: from ?10.0.0.6? ( [24.55.157.69])
-        by mx.gmail.com with ESMTP id d5sm920844qbd.2006.09.07.10.23.00;
-        Thu, 07 Sep 2006 10:23:01 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.5 (X11/20060725)
-To: Jon Smirl <jonsmirl@gmail.com>
-In-Reply-To: <9e4733910609070557jd8cfc57nd4f7a8973b69f6ed@mail.gmail.com>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=oXlVJFaDiMijsIEgS7iGMcrDiYMFb25WwqWJrdroEl1Chyll29+tY1L7XrDSJQ71PK4Vb1RZIJdQ0irzNVa+vPJML0qCZoOx0T9OuKr2nwF/ygpDo9Myn0qPSD+ocXK5o8Zx1O7dFLSoylKTNUHkLmAAWtlVXxLmJOFRyegI6Ps=
+Received: by 10.70.87.11 with SMTP id k11mr1019753wxb;
+        Thu, 07 Sep 2006 10:26:14 -0700 (PDT)
+Received: by 10.70.72.5 with HTTP; Thu, 7 Sep 2006 10:26:13 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <450019C3.4030001@innova-card.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26646>
 
-Jon Smirl wrote:
-> On 7 Sep 2006 05:07:56 -0400, linux@horizon.com <linux@horizon.com> wrote:
->> > Support for 'thin' packs would pretty much require mixing IDs and
->> > (relative) offsets in the same pack file.
->>
->> An alternative would be to create a small "placeholder" object that
->> just gives an ID, then refer to it by offset.
->>
->> That would avoid the need for an id/offset bit with every offset,
->> and possibly save more space if the same object was referenced
->> multiple times.
->>
->> And it just seems simpler.
-> 
-> There are 2 million objects in the Mozilla pack. This table would take:
-> 2M *  (20b (sha)  + 10b(object index/overhead) = 60MB
-> This 60MB is pretty much incompressible and increases download time.
-> 
-> Much better if storage of the sha1s can be totally eliminated and
-> replaced by something smaller. Alternatively this map could be
-> stripped for transmission and rebuilt locally.
-> 
+2006/9/7, Franck Bui-Huu <vagabon.xyz@gmail.com>:
+>
+>   4/ Progress indicator support. Junio wants to mimic upload-pack for
+>      that. But it will lead in a lot of duplicated code if we don't
+>      try to share code. Can we copy that code anyways and clean up
+>      later ?
+>
 
-You've lost me. What are you attempting to do again?
+BTW, could we move the side-band code into git_connect() function and
+adding to it a new parameter like:
+
+int git_connect(int fd[2], char *url, const char *prog, int side_band)
+or
+int git_connect(int fd[2], char *url, const char *prog, flags)
+
+Hence it automatically spawns a side-band process in the client side
+and it also sends an extended option for git-daemon to ask for using
+side band for server services.
+
+-- 
+               Franck
