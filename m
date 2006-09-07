@@ -1,61 +1,72 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Cygwin playbook?
-Date: Thu, 7 Sep 2006 16:59:22 +1200
-Message-ID: <46a038f90609062159v3858a771t38355ed60867ccfc@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Cygwin playbook?
+Date: Wed, 06 Sep 2006 23:59:22 -0700
+Message-ID: <7v7j0g40xh.fsf@assigned-by-dhcp.cox.net>
+References: <46a038f90609062159v3858a771t38355ed60867ccfc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Sep 07 08:48:42 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 07 08:59:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLDgn-0007Fg-TQ
-	for gcvg-git@gmane.org; Thu, 07 Sep 2006 08:48:42 +0200
+	id 1GLDr2-0000iy-2W
+	for gcvg-git@gmane.org; Thu, 07 Sep 2006 08:59:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750839AbWIGGsj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Sep 2006 02:48:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750749AbWIGGsj
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 02:48:39 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:10057 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1161087AbWIGE7Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Sep 2006 00:59:24 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so369416nfa
-        for <git@vger.kernel.org>; Wed, 06 Sep 2006 21:59:22 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=mwKnC4CQ0FvMSvkWSixiNguhsWB/mh4zJ+JsbtkLjzhR2rKJduATAEwaQVw2/HePtXicfL9htZoeH8oHJcoMAgAE/Br1lFKnmoMlfRmeeg1vry7nHWc6wJ8gBEbXZoognqiOPYcfvYEx0+wkihpa2SyqNur7kHMQrrvDoaBgzOY=
-Received: by 10.49.41.18 with SMTP id t18mr2039913nfj;
-        Wed, 06 Sep 2006 21:59:22 -0700 (PDT)
-Received: by 10.49.6.16 with HTTP; Wed, 6 Sep 2006 21:59:22 -0700 (PDT)
-To: git <git@vger.kernel.org>
-Content-Disposition: inline
+	id S1750852AbWIGG7N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Sep 2006 02:59:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750874AbWIGG7N
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 02:59:13 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:5517 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1750851AbWIGG7L (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Sep 2006 02:59:11 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060907065911.FTTI6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 7 Sep 2006 02:59:11 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id KJz31V00C1kojtg0000000
+	Thu, 07 Sep 2006 02:59:03 -0400
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90609062159v3858a771t38355ed60867ccfc@mail.gmail.com>
+	(Martin Langhoff's message of "Thu, 7 Sep 2006 16:59:22 +1200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26605>
 
-A colleage wants to work with us on a git project but is Trapped In
-Windows (TM). He does have a cywgin install, and I was hoping to find
-a cygwin install howto. Alas, I couldn't find any (is there one and
-Google doesn't know about it?).
+"Martin Langhoff" <martin.langhoff@gmail.com> writes:
 
-Now, I am a bit at a loss, as I don't have access to windows. So for
-you cygwin knights in the woods, a few questions...
+> - What cygwin packages are needed?
 
- - What cygwin packages are needed?
- - Need to fudge makefile?
- - How do I install for personal use?
- - How do I install in /usr/local?
- - Anything else I should know?
+I am not in front of Windows machine so I need to check later if
+nobody beats me to this, but essentially it is the same as on
+sane Unix systems.  Cygwin folks did a good job providing
+necessary libraries readily available from their Setup.exe.
 
-I'll be more than happy to shape the replies in a nice wiki page...
-(Mercurial has one already
-http://www.selenic.com/mercurial/wiki/index.cgi/WindowsInstall )
+> - Need to fudge makefile?
 
-cheers,
+No; not even autoconf was needed and it installed out of the box
+for me (w2k).
 
+> - How do I install for personal use?
 
-martin
+make install would install under whereever you call ~/bin in
+Cygwin environment, and that is how I have mine.
+
+> - How do I install in /usr/local?
+
+I do not think of a reason why "make prefix=/usr/local" would
+not work but I haven't tried it myself so don't quote me on
+this.
+
+> - Anything else I should know?
+
+You would probably have great pain if on vfat.  It appears to
+work Ok on NTFS.  It appears to be quite slow, judging from
+the way it runs our standard test suite.
