@@ -1,628 +1,167 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] git-commit.sh: convert run_status to a C builtin
-Date: Thu, 7 Sep 2006 02:36:21 -0400
-Message-ID: <20060907063621.GC17083@coredump.intra.peff.net>
-References: <64c62cc942e872b29d7225999e74a07be586674a.1157610743.git.peff@peff.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Why is there a --binary option needed for git-apply?
+Date: Wed, 06 Sep 2006 23:45:43 -0700
+Message-ID: <7virk041k8.fsf@assigned-by-dhcp.cox.net>
+References: <874pvmxikq.wl%cworth@cworth.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 07 08:36:33 2006
+Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Sep 07 08:45:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLDUy-0005U2-7A
-	for gcvg-git@gmane.org; Thu, 07 Sep 2006 08:36:28 +0200
+	id 1GLDdp-0006oo-8M
+	for gcvg-git@gmane.org; Thu, 07 Sep 2006 08:45:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750808AbWIGGgZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Sep 2006 02:36:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750819AbWIGGgZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 02:36:25 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:20101 "HELO
-	peff.net") by vger.kernel.org with SMTP id S1750808AbWIGGgY (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Sep 2006 02:36:24 -0400
-Received: (qmail 25171 invoked from network); 7 Sep 2006 02:35:47 -0400
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 7 Sep 2006 02:35:47 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu,  7 Sep 2006 02:36:21 -0400
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <64c62cc942e872b29d7225999e74a07be586674a.1157610743.git.peff@peff.net>
+	id S1750838AbWIGGpe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Sep 2006 02:45:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750839AbWIGGpd
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 02:45:33 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:7838 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1750838AbWIGGpc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Sep 2006 02:45:32 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060907064532.UBFB26416.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 7 Sep 2006 02:45:32 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id KJlQ1V00M1kojtg0000000
+	Thu, 07 Sep 2006 02:45:25 -0400
+To: Carl Worth <cworth@cworth.org>
+In-Reply-To: <874pvmxikq.wl%cworth@cworth.org> (Carl Worth's message of "Tue,
+	05 Sep 2006 11:40:53 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26603>
 
-This creates a new git-runstatus which should do roughly the same thing
-as the run_status function from git-commit.sh. Except for color support,
-the main focus has been to keep the output identical, so that it can be
-verified as correct and then used as a C platform for other improvements to
-the status printing code.
+Carl Worth <cworth@cworth.org> writes:
+
+> Shawn Pearce was kind enough to direct me to the --binary option for
+> git-apply which solved my problem. But that left me wondering why
+> git-apply requires this extra command-line option to do its
+> job. Shouldn't git-apply simply apply the patch it is given?
+
+There is no reason it shouldn't.
+
+Initially it was done that way only because doing something
+unusual should be done under explicit user permission.  Binary
+patch is not "unusual" anymore, I guess ;-).
+
+-- >8 --
+[PATCH] Make apply --binary a no-op.
+
+Historically we did not allow binary patch applied without an
+explicit permission from the user, and this flag was the way to
+do so.  This makes the flag a no-op by always allowing binary
+patch application.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
- .gitignore          |    1 
- Makefile            |    3 -
- builtin-runstatus.c |   34 ++++++
- builtin.h           |    1 
- dir.c               |    7 +
- dir.h               |    1 
- git-commit.sh       |  106 +------------------
- git.c               |    1 
- status.c            |  283 +++++++++++++++++++++++++++++++++++++++++++++++++++
- status.h            |   31 ++++++
- 10 files changed, 368 insertions(+), 100 deletions(-)
+ Documentation/git-apply.txt |   13 ++++---------
+ builtin-apply.c             |   19 +++++--------------
+ t/t4103-apply-binary.sh     |    4 ++--
+ 3 files changed, 11 insertions(+), 25 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 78cb671..f014ad3 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -94,6 +94,7 @@ git-rev-list
- git-rev-parse
- git-revert
- git-rm
-+git-runstatus
- git-send-email
- git-send-pack
- git-sh-setup
-diff --git a/Makefile b/Makefile
-index 78748cb..d0ba3b5 100644
---- a/Makefile
-+++ b/Makefile
-@@ -252,7 +252,7 @@ LIB_OBJS = \
- 	fetch-clone.o revision.o pager.o tree-walk.o xdiff-interface.o \
- 	write_or_die.o trace.o \
- 	alloc.o merge-file.o path-list.o help.o unpack-trees.o $(DIFF_OBJS) \
--	color.o
-+	color.o status.o
+diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+index c76cfff..0a6f7b3 100644
+--- a/Documentation/git-apply.txt
++++ b/Documentation/git-apply.txt
+@@ -110,15 +110,10 @@ OPTIONS
+ 	deletion part but not addition part.
  
- BUILTIN_OBJS = \
- 	builtin-add.o \
-@@ -286,6 +286,7 @@ BUILTIN_OBJS = \
- 	builtin-rev-list.o \
- 	builtin-rev-parse.o \
- 	builtin-rm.o \
-+	builtin-runstatus.o \
- 	builtin-show-branch.o \
- 	builtin-stripspace.o \
- 	builtin-symbolic-ref.o \
-diff --git a/builtin-runstatus.c b/builtin-runstatus.c
-new file mode 100644
-index 0000000..f3e44de
---- /dev/null
-+++ b/builtin-runstatus.c
-@@ -0,0 +1,34 @@
-+#include "status.h"
-+#include "cache.h"
-+
-+extern int status_use_color;
-+
-+static const char runstatus_usage[] =
-+"git-runstatus [--color|--nocolor] [--amend] [--verbose]";
-+
-+int cmd_runstatus(int argc, const char **argv, const char *prefix)
-+{
-+	struct status s;
-+	int i;
-+
-+	git_config(git_status_config);
-+	status_prepare(&s);
-+
-+	for (i = 1; i < argc; i++) {
-+		if (!strcmp(argv[i], "--color"))
-+			status_use_color = 1;
-+		else if (!strcmp(argv[i], "--nocolor"))
-+			status_use_color = 0;
-+    else if (!strcmp(argv[i], "--amend")) {
-+      s.amend = 1;
-+      s.reference = "HEAD^1";
-+    }
-+    else if (!strcmp(argv[i], "--verbose"))
-+      s.verbose = 1;
-+		else
-+			usage(runstatus_usage);
-+	}
-+
-+	status_print(&s);
-+  return s.commitable ? 0 : 1;
-+}
-diff --git a/builtin.h b/builtin.h
-index 25431d7..53a896c 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -47,6 +47,7 @@ extern int cmd_repo_config(int argc, con
- extern int cmd_rev_list(int argc, const char **argv, const char *prefix);
- extern int cmd_rev_parse(int argc, const char **argv, const char *prefix);
- extern int cmd_rm(int argc, const char **argv, const char *prefix);
-+extern int cmd_runstatus(int argc, const char **argv, const char *prefix);
- extern int cmd_show_branch(int argc, const char **argv, const char *prefix);
- extern int cmd_show(int argc, const char **argv, const char *prefix);
- extern int cmd_stripspace(int argc, const char **argv, const char *prefix);
-diff --git a/dir.c b/dir.c
-index 5a40d8f..e2f472b 100644
---- a/dir.c
-+++ b/dir.c
-@@ -397,3 +397,10 @@ int read_directory(struct dir_struct *di
- 	qsort(dir->entries, dir->nr, sizeof(struct dir_entry *), cmp_name);
- 	return dir->nr;
- }
-+
-+int
-+file_exists(const char *f)
-+{
-+  struct stat sb;
-+  return stat(f, &sb) == 0;
-+}
-diff --git a/dir.h b/dir.h
-index 56a1b7f..313f8ab 100644
---- a/dir.h
-+++ b/dir.h
-@@ -47,5 +47,6 @@ extern int excluded(struct dir_struct *,
- extern void add_excludes_from_file(struct dir_struct *, const char *fname);
- extern void add_exclude(const char *string, const char *base,
- 			int baselen, struct exclude_list *which);
-+extern int file_exists(const char *);
+ --allow-binary-replacement, --binary::
+-	When applying a patch, which is a git-enhanced patch
+-	that was prepared to record the pre- and post-image object
+-	name in full, and the path being patched exactly matches
+-	the object the patch applies to (i.e. "index" line's
+-	pre-image object name is what is in the working tree),
+-	and the post-image object is available in the object
+-	database, use the post-image object as the patch
+-	result.  This allows binary files to be patched in a
+-	very limited way.
++	Historically we did not allow binary patch applied
++	without an explicit permission from the user, and this
++	flag was the way to do so.  Currently we always allow binary
++	patch application, so this is a no-op.
  
- #endif
-diff --git a/git-commit.sh b/git-commit.sh
-index 4cf3fab..10c269a 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -60,26 +60,6 @@ #
- }
+ --exclude=<path-pattern>::
+ 	Don't apply changes to files matching the given path pattern. This can
+diff --git a/builtin-apply.c b/builtin-apply.c
+index 872c800..6e0864c 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -28,7 +28,6 @@ static int prefix_length = -1;
+ static int newfd = -1;
  
- run_status () {
--    (
--	# We always show status for the whole tree.
--	cd "$TOP"
--
--	IS_INITIAL="$initial_commit"
--	REFERENCE=HEAD
--	case "$amend" in
--	t)
--		# If we are amending the initial commit, there
--		# is no HEAD^1.
--		if git-rev-parse --verify "HEAD^1" >/dev/null 2>&1
--		then
--			REFERENCE="HEAD^1"
--			IS_INITIAL=
--		else
--			IS_INITIAL=t
--		fi
--		;;
--	esac
--
- 	# If TMP_INDEX is defined, that means we are doing
- 	# "--only" partial commit, and that index file is used
- 	# to build the tree for the commit.  Otherwise, if
-@@ -96,85 +76,13 @@ run_status () {
- 	    export GIT_INDEX_FILE
- 	fi
+ static int p_value = 1;
+-static int allow_binary_replacement;
+ static int check_index;
+ static int write_index;
+ static int cached;
+@@ -1228,14 +1227,12 @@ static int parse_chunk(char *buffer, uns
+ 			}
+ 		}
  
--	case "$branch" in
--	refs/heads/master) ;;
--	*)  echo "# On branch $branch" ;;
--	esac
--
--	if test -z "$IS_INITIAL"
--	then
--	    git-diff-index -M --cached --name-status \
--		--diff-filter=MDTCRA $REFERENCE |
--	    sed -e '
--		    s/\\/\\\\/g
--		    s/ /\\ /g
--	    ' |
--	    report "Updated but not checked in" "will commit"
--	    committable="$?"
--	else
--	    echo '#
--# Initial commit
--#'
--	    git-ls-files |
--	    sed -e '
--		    s/\\/\\\\/g
--		    s/ /\\ /g
--		    s/^/A /
--	    ' |
--	    report "Updated but not checked in" "will commit"
--
--	    committable="$?"
--	fi
--
--	git-diff-files  --name-status |
--	sed -e '
--		s/\\/\\\\/g
--		s/ /\\ /g
--	' |
--	report "Changed but not updated" \
--	    "use git-update-index to mark for commit"
--
--        option=""
--        if test -z "$untracked_files"; then
--            option="--directory --no-empty-directory"
--        fi
--	hdr_shown=
--	if test -f "$GIT_DIR/info/exclude"
--	then
--	    git-ls-files --others $option \
--		--exclude-from="$GIT_DIR/info/exclude" \
--		--exclude-per-directory=.gitignore
--	else
--	    git-ls-files --others $option \
--		--exclude-per-directory=.gitignore
--	fi |
--	while read line; do
--	    if [ -z "$hdr_shown" ]; then
--		echo '#'
--		echo '# Untracked files:'
--		echo '#   (use "git add" to add to commit)'
--		echo '#'
--		hdr_shown=1
--	    fi
--	    echo "#	$line"
--	done
--
--	if test -n "$verbose" -a -z "$IS_INITIAL"
--	then
--	    git-diff-index --cached -M -p --diff-filter=MDTCRA $REFERENCE
--	fi
--	case "$committable" in
--	0)
--		case "$amend" in
--		t)
--			echo "# No changes" ;;
--		*)
--			echo "nothing to commit" ;;
--		esac
--		exit 1 ;;
--	esac
--	exit 0
--    )
-+  case "$status_only" in
-+    t) color= ;;
-+    *) color=--nocolor ;;
-+  esac
-+  git-runstatus ${color} \
-+                ${verbose:+--verbose} \
-+                ${amend:+--amend}
- }
+-		/* Empty patch cannot be applied if:
+-		 * - it is a binary patch and we do not do binary_replace, or
+-		 * - text patch without metadata change
++		/* Empty patch cannot be applied if it is a text patch
++		 * without metadata change.  A binary patch appears
++		 * empty to us here.
+ 		 */
+ 		if ((apply || check) &&
+-		    (patch->is_binary
+-		     ? !allow_binary_replacement
+-		     : !metadata_changes(patch)))
++		    (!patch->is_binary && !metadata_changes(patch)))
+ 			die("patch with only garbage at line %d", linenr);
+ 	}
  
- trap '
-diff --git a/git.c b/git.c
-index 335f405..495b39a 100644
---- a/git.c
-+++ b/git.c
-@@ -252,6 +252,7 @@ static void handle_internal_command(int 
- 		{ "rev-list", cmd_rev_list, RUN_SETUP },
- 		{ "rev-parse", cmd_rev_parse, RUN_SETUP },
- 		{ "rm", cmd_rm, RUN_SETUP },
-+		{ "runstatus", cmd_runstatus, RUN_SETUP },
- 		{ "show-branch", cmd_show_branch, RUN_SETUP },
- 		{ "show", cmd_show, RUN_SETUP | USE_PAGER },
- 		{ "stripspace", cmd_stripspace },
-diff --git a/status.c b/status.c
-new file mode 100644
-index 0000000..82aa881
---- /dev/null
-+++ b/status.c
-@@ -0,0 +1,283 @@
-+#include "status.h"
-+#include "color.h"
-+#include "cache.h"
-+#include "object.h"
-+#include "dir.h"
-+#include "commit.h"
-+#include "diff.h"
-+#include "revision.h"
-+#include "diffcore.h"
-+
-+int status_use_color = 0;
-+static char status_colors[][COLOR_MAXLEN] = {
-+	"",         /* STATUS_HEADER: normal */
-+	"\033[32m", /* STATUS_UPDATED: green */
-+	"\033[31m", /* STATUS_CHANGED: red */
-+	"\033[31m", /* STATUS_UNTRACKED: red */
-+};
-+
-+static int
-+parse_status_slot(const char *var, int offset) {
-+	if (!strcasecmp(var+offset, "header"))
-+		return STATUS_HEADER;
-+	if (!strcasecmp(var+offset, "updated"))
-+		return STATUS_UPDATED;
-+	if (!strcasecmp(var+offset, "changed"))
-+		return STATUS_CHANGED;
-+	if (!strcasecmp(var+offset, "untracked"))
-+		return STATUS_UNTRACKED;
-+	die("bad config variable '%s'", var);
-+}
-+
-+static const char*
-+color(int slot)
-+{
-+	return status_use_color ? status_colors[slot] : "";
-+}
-+
-+void
-+status_prepare(struct status *s)
-+{
-+	unsigned char sha1[20];
-+	const char *head;
-+
-+	s->is_initial = get_sha1("HEAD", sha1) ? 1 : 0;
-+
-+	head = resolve_ref(git_path("HEAD"), sha1, 0);
-+	s->branch = head ?
-+		    strdup(head + strlen(get_git_dir()) + 1) :
-+		    NULL;
-+
-+	s->reference = "HEAD";
-+	s->amend = 0;
-+	s->verbose = 0;
-+	s->commitable = 0;
-+}
-+
-+static void
-+status_print_header(const char *main, const char *sub)
-+{
-+	const char *c = color(STATUS_HEADER);
-+	color_printf(c, "# %s:\n", main);
-+	color_printf(c, "#   (%s)\n", sub);
-+	color_printf(c, "#\n");
-+}
-+
-+static void
-+status_print_trailer(void)
-+{
-+	color_printf(color(STATUS_HEADER), "#\n");
-+}
-+
-+static void
-+status_print_filepair(int t, struct diff_filepair *p)
-+{
-+	const char *c = color(t);
-+	color_printf(color(STATUS_HEADER), "#\t");
-+	switch (p->status) {
-+	case DIFF_STATUS_ADDED:
-+		color_printf(c, "new file: %s\n", p->one->path); break;
-+	case DIFF_STATUS_COPIED:
-+		color_printf(c, "copied: %s -> %s\n",
-+				p->one->path, p->two->path);
-+		break;
-+	case DIFF_STATUS_DELETED:
-+		color_printf(c, "deleted: %s\n", p->one->path); break;
-+	case DIFF_STATUS_MODIFIED:
-+		color_printf(c, "modified: %s\n", p->one->path); break;
-+	case DIFF_STATUS_RENAMED:
-+		color_printf(c, "renamed: %s -> %s\n",
-+				p->one->path, p->two->path);
-+		break;
-+	case DIFF_STATUS_TYPE_CHANGED:
-+		color_printf(c, "typechange: %s\n", p->one->path); break;
-+	case DIFF_STATUS_UNKNOWN:
-+		color_printf(c, "unknown: %s\n", p->one->path); break;
-+	case DIFF_STATUS_UNMERGED:
-+		color_printf(c, "unmerged: %s\n", p->one->path); break;
-+	default:
-+		die("bug: unhandled diff status %c", p->status);
-+	}
-+}
-+
-+static void
-+status_print_updated_cb(struct diff_queue_struct *q,
-+                        struct diff_options *options,
-+                        void *data)
-+{
-+	struct status *s = data;
-+	int shown_header = 0;
-+	int i;
-+	if (q->nr) {
-+	}
-+	for (i = 0; i < q->nr; i++) {
-+		if (q->queue[i]->status == 'U')
-+			continue;
-+		if (!shown_header) {
-+			status_print_header("Updated but not checked in",
-+					"will commit");
-+			s->commitable = 1;
-+		}
-+		status_print_filepair(STATUS_UPDATED, q->queue[i]);
-+	}
-+	if (shown_header)
-+		status_print_trailer();
-+}
-+
-+static void
-+status_print_changed_cb(struct diff_queue_struct *q,
-+                        struct diff_options *options,
-+                        void *data)
-+{
-+	int i;
-+	if (q->nr)
-+		status_print_header("Changed but not updated",
-+				"use git-update-index to mark for commit");
-+	for (i = 0; i < q->nr; i++)
-+		status_print_filepair(STATUS_CHANGED, q->queue[i]);
-+	if (q->nr)
-+		status_print_trailer();
-+}
-+
-+void
-+status_print_initial(struct status *s)
-+{
-+	int i;
-+	read_cache();
-+	if (active_nr) {
-+		s->commitable = 1;
-+		status_print_header("Updated but not checked in",
-+				"will commit");
-+	}
-+	for (i = 0; i < active_nr; i++) {
-+		color_printf(color(STATUS_HEADER), "#\t");
-+		color_printf(color(STATUS_UPDATED), "new file: %s\n",
-+				active_cache[i]->name);
-+	}
-+	if (active_nr)
-+		status_print_trailer();
-+}
-+
-+static void
-+status_print_updated(struct status *s)
-+{
-+	struct rev_info rev;
-+	const char *argv[] = { NULL, NULL, NULL };
-+	argv[1] = s->reference;
-+	init_revisions(&rev, NULL);
-+	setup_revisions(2, argv, &rev, NULL);
-+	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
-+	rev.diffopt.format_callback = status_print_updated_cb;
-+	rev.diffopt.format_callback_data = s;
-+	rev.diffopt.detect_rename = 1;
-+	run_diff_index(&rev, 1);
-+}
-+
-+static void
-+status_print_changed(struct status *s)
-+{
-+	struct rev_info rev;
-+	const char *argv[] = { NULL, NULL };
-+	init_revisions(&rev, "");
-+	setup_revisions(1, argv, &rev, NULL);
-+	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
-+	rev.diffopt.format_callback = status_print_changed_cb;
-+	rev.diffopt.format_callback_data = s;
-+	run_diff_files(&rev, 0);
-+}
-+
-+static void
-+status_print_untracked(const struct status *s)
-+{
-+	struct dir_struct dir;
-+	const char *x;
-+	int i;
-+	int shown_header = 0;
-+
-+	memset(&dir, 0, sizeof(dir));
-+
-+	dir.exclude_per_dir = ".gitignore";
-+	x = git_path("info/exclude");
-+	if (file_exists(x))
-+		add_excludes_from_file(&dir, x);
-+
-+	read_directory(&dir, ".", "", 0);
-+	for(i = 0; i < dir.nr; i++) {
-+		/* check for matching entry, which is unmerged; lifted from
-+		 * builtin-ls-files:show_other_files */
-+		struct dir_entry *ent = dir.entries[i];
-+		int pos = cache_name_pos(ent->name, ent->len);
-+		struct cache_entry *ce;
-+		if (0 <= pos)
-+			die("bug in status_print_untracked");
-+		pos = -pos - 1;
-+		if (pos < active_nr) {
-+			ce = active_cache[pos];
-+			if (ce_namelen(ce) == ent->len &&
-+			    !memcmp(ce->name, ent->name, ent->len))
-+				continue;
-+		}
-+		if (!shown_header) {
-+			status_print_header("Untracked files",
-+				"use \"git add\" to add to commit");
-+			shown_header = 1;
-+		}
-+		color_printf(color(STATUS_HEADER), "#\t");
-+		color_printf(color(STATUS_UNTRACKED), "%.*s\n",
-+				ent->len, ent->name);
-+	}
-+}
-+
-+static void
-+status_print_verbose(struct status *s)
-+{
-+	struct rev_info rev;
-+	const char *argv[] = { NULL, NULL, NULL };
-+	argv[1] = s->reference;
-+	init_revisions(&rev, NULL);
-+	setup_revisions(2, argv, &rev, NULL);
-+	rev.diffopt.output_format |= DIFF_FORMAT_PATCH;
-+	rev.diffopt.detect_rename = 1;
-+	run_diff_index(&rev, 1);
-+}
-+
-+void
-+status_print(struct status *s)
-+{
-+	if (s->branch && strcmp(s->branch, "refs/heads/master"))
-+		color_printf(color(STATUS_HEADER),
-+			"# On branch %s\n", s->branch);
-+
-+	if (s->is_initial) {
-+		color_printf(color(STATUS_HEADER), "#\n");
-+		color_printf(color(STATUS_HEADER), "# Initial commit\n");
-+		color_printf(color(STATUS_HEADER), "#\n");
-+		status_print_initial(s);
-+	}
-+	else {
-+		status_print_updated(s);
-+		discard_cache();
-+	}
-+
-+	status_print_changed(s);
-+	status_print_untracked(s);
-+
-+	if (s->verbose && !s->is_initial)
-+		status_print_verbose(s);
-+	if (!s->commitable)
-+		printf("%s\n", s->amend ? "# No changes" : "nothing to commit");
-+}
-+
-+int
-+git_status_config(const char *k, const char *v)
-+{
-+	if (!strcmp(k, "status.color")) {
-+		status_use_color = git_config_colorbool(k, v);
-+		return 0;
-+	}
-+	if (!strncmp(k, "status.color.", 13)) {
-+		int slot = parse_status_slot(k, 13);
-+		color_parse(v, k, status_colors[slot]);
-+	}
-+	return git_default_config(k, v);
-+}
-diff --git a/status.h b/status.h
-new file mode 100644
-index 0000000..3e60146
---- /dev/null
-+++ b/status.h
-@@ -0,0 +1,31 @@
-+#ifndef STATUS_H
-+#define STATUS_H
-+
-+enum color_status {
-+	STATUS_HEADER,
-+	STATUS_UPDATED,
-+	STATUS_CHANGED,
-+	STATUS_UNTRACKED,
-+};
-+
-+struct status {
-+	int is_initial;
-+	char *branch;
-+	const char *reference;
-+	int commitable;
-+	int verbose;
-+	int amend;
-+};
-+
-+int git_status_config(const char *var, const char *value);
-+void status_prepare(struct status *s);
-+void status_print(struct status *s);
-+
-+struct cache_entry;
-+typedef void (*status_cb)(struct cache_entry *);
-+int status_foreach_cached(status_cb cb);
-+int status_foreach_updated(status_cb cb);
-+int status_foreach_changed(status_cb cb);
-+int status_foreach_untracked(status_cb cb);
-+
-+#endif /* STATUS_H */
+@@ -1676,11 +1673,6 @@ static int apply_binary(struct buffer_de
+ 	unsigned char hdr[50];
+ 	int hdrlen;
+ 
+-	if (!allow_binary_replacement)
+-		return error("cannot apply binary patch to '%s' "
+-			     "without --allow-binary-replacement",
+-			     name);
+-
+ 	/* For safety, we require patch index line to contain
+ 	 * full 40-byte textual SHA1 for old and new, at least for now.
+ 	 */
+@@ -2497,8 +2489,7 @@ int cmd_apply(int argc, const char **arg
+ 		}
+ 		if (!strcmp(arg, "--allow-binary-replacement") ||
+ 		    !strcmp(arg, "--binary")) {
+-			allow_binary_replacement = 1;
+-			continue;
++			continue; /* now no-op */
+ 		}
+ 		if (!strcmp(arg, "--numstat")) {
+ 			apply = 0;
+diff --git a/t/t4103-apply-binary.sh b/t/t4103-apply-binary.sh
+index ff05269..e2b1124 100755
+--- a/t/t4103-apply-binary.sh
++++ b/t/t4103-apply-binary.sh
+@@ -94,11 +94,11 @@ test_expect_failure 'apply binary diff (
+ 	'do_reset
+ 	 git-apply --index C.diff'
+ 
+-test_expect_failure 'apply binary diff without replacement -- should fail.' \
++test_expect_success 'apply binary diff without replacement.' \
+ 	'do_reset
+ 	 git-apply BF.diff'
+ 
+-test_expect_failure 'apply binary diff without replacement (copy) -- should fail.' \
++test_expect_success 'apply binary diff without replacement (copy).' \
+ 	'do_reset
+ 	 git-apply CF.diff'
+ 
 -- 
-1.4.2.ge490e-dirty
+1.4.2.gfce41
