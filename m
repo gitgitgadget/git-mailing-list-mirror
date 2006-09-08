@@ -1,177 +1,101 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/3] git-commit.sh: convert run_status to a C builtin
-Date: Thu, 07 Sep 2006 17:20:20 -0700
-Message-ID: <7vzmdbqke3.fsf@assigned-by-dhcp.cox.net>
-References: <64c62cc942e872b29d7225999e74a07be586674a.1157610743.git.peff@peff.net>
-	<20060907063621.GC17083@coredump.intra.peff.net>
+Subject: Re: Add git-archive [take #2]
+Date: Thu, 07 Sep 2006 17:37:21 -0700
+Message-ID: <7v8xkvqjlq.fsf@assigned-by-dhcp.cox.net>
+References: <cda58cb80609050516v699338b9y57fd54f50c66e49e@mail.gmail.com>
+	<7vfyf6ce29.fsf@assigned-by-dhcp.cox.net>
+	<44FED12E.7010409@innova-card.com>
+	<7vac5c7jty.fsf@assigned-by-dhcp.cox.net>
+	<cda58cb80609062332p356bd26bw852e31211c43d1ac@mail.gmail.com>
+	<7v1wqo400b.fsf@assigned-by-dhcp.cox.net>
+	<44FFD00E.5040305@innova-card.com>
+	<7vr6yo2isu.fsf@assigned-by-dhcp.cox.net>
+	<450019C3.4030001@innova-card.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 08 02:20:14 2006
+X-From: git-owner@vger.kernel.org Fri Sep 08 02:37:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLU6M-0007Nc-T8
-	for gcvg-git@gmane.org; Fri, 08 Sep 2006 02:20:11 +0200
+	id 1GLUN0-0003L4-8D
+	for gcvg-git@gmane.org; Fri, 08 Sep 2006 02:37:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751934AbWIHAUG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Sep 2006 20:20:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751938AbWIHAUG
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 20:20:06 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:32646 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1751937AbWIHAUD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Sep 2006 20:20:03 -0400
+	id S1751953AbWIHAhH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Sep 2006 20:37:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751951AbWIHAhH
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 20:37:07 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:9349 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751953AbWIHAhE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Sep 2006 20:37:04 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao10.cox.net
+          by fed1rmmtao07.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060908002003.IIPL18458.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 7 Sep 2006 20:20:03 -0400
+          id <20060908003703.NJFD21457.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 7 Sep 2006 20:37:03 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id KcKu1V00f1kojtg0000000
-	Thu, 07 Sep 2006 20:19:55 -0400
-To: Jeff King <peff@peff.net>
-In-Reply-To: <20060907063621.GC17083@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 7 Sep 2006 02:36:21 -0400")
+	id Kccu1V00x1kojtg0000000
+	Thu, 07 Sep 2006 20:36:56 -0400
+To: Franck <vagabon.xyz@gmail.com>
+In-Reply-To: <450019C3.4030001@innova-card.com> (Franck Bui-Huu's message of
+	"Thu, 07 Sep 2006 15:08:19 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26668>
 
-Jeff King <peff@peff.net> writes:
+Franck Bui-Huu <vagabon.xyz@gmail.com> writes:
 
-> diff --git a/Makefile b/Makefile
-> index 78748cb..d0ba3b5 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -252,7 +252,7 @@ LIB_OBJS = \
->  	fetch-clone.o revision.o pager.o tree-walk.o xdiff-interface.o \
->  	write_or_die.o trace.o \
->  	alloc.o merge-file.o path-list.o help.o unpack-trees.o $(DIFF_OBJS) \
-> -	color.o
-> +	color.o status.o
->  
->  BUILTIN_OBJS = \
->  	builtin-add.o \
+> I'm sending a new version of the patchset which allows 'git-archive'
+> and 'git-upload-archive' command. I tried to take into account all
+> feedbacks made by Junio and Rene, but there are still some open points.
+>
+>   1/ Allow 'git-upload-archive' command to enable/disable some
+>      formats. This should be done by 'git-upload-archive'.
 
-At some point (this does not have to be part of this series), we
-should demote DIFF_OBJS to just ordinary LIB_OBJS.  They used to
-be special in that they are used only by handful special
-commands, but these days more and more things are integrated and
-it outlived its usefulness.
+Perhaps.  I was thinking about the way how a site administrator
+can configure such when upload-archive is spawned via git-daemon
+(for users coming from ssh and spawn an upload-archive on their
+own, it's their own process and upload-archive has no business
+deciding what is allowed and what is forbidden).  Not very many
+clean ways I can think of unfortunately.
 
-> +static const char runstatus_usage[] =
-> +"git-runstatus [--color|--nocolor] [--amend] [--verbose]";
-> +
-> +int cmd_runstatus(int argc, const char **argv, const char *prefix)
-> +{
-> +	struct status s;
-> +	int i;
-> +
-> +	git_config(git_status_config);
-> +	status_prepare(&s);
-> +
-> +	for (i = 1; i < argc; i++) {
-> +		if (!strcmp(argv[i], "--color"))
-> +			status_use_color = 1;
-> +		else if (!strcmp(argv[i], "--nocolor"))
-> +			status_use_color = 0;
-> +    else if (!strcmp(argv[i], "--amend")) {
-> +      s.amend = 1;
-> +      s.reference = "HEAD^1";
-> +    }
-> +    else if (!strcmp(argv[i], "--verbose"))
-> +      s.verbose = 1;
-> +		else
-> +			usage(runstatus_usage);
-> +	}
-> +
-> +	status_print(&s);
-> +  return s.commitable ? 0 : 1;
-> +}
+>   2/ Can I remove 'git-upload-tar' command ?
+>   3/ Should I kill 'git-zip-tree' command ?
 
-Quite funny indentation style your MUA likes ;-).
+We do not deprecate commands that easily.  Notice we have kept
+git-resolve for a long time (we should remove it and by now it
+should be safe)?
 
-> diff --git a/status.c b/status.c
-> new file mode 100644
-> index 0000000..82aa881
-> --- /dev/null
-> +++ b/status.c
-> @@ -0,0 +1,283 @@
-> +#include "status.h"
+Especially tar-tree --remote and upload-archive talks different
+protocols, so it is not like not removing it is making your life
+more difficult.  Perhaps after next release (1.4.3 or 1.5?  I
+dunno) in the new development cycle, we would start saying
+"don't use tar-tree --remote, use archive --fmt=tar --remote",
+and then the release after that (1.4.4 or 1.5.1?  Again I dunno)
+we might remove it.  The same thing for zip-tree, although that
+one has lived shorter so it might not be missed if we remove it
+earlier.
 
-"status.h" and "struct status" somehow sounds too broad.
-Granted, "object.h" is also broad, but in git context "object"
-has a specific meaning.
+In any case, don't make removal of them as part of the series
+please.  Let's make sure this new toy works well first, and then
+start talking about removing things that have become obsolete.
 
-Having said that I cannot come up with a good alternative name.
-It is not "project status" nor "repository status".  It is
-"working tree status", but that sounds very loooooooooooooooong.
+>   4/ Progress indicator support. Junio wants to mimic upload-pack for
+>      that. But it will lead in a lot of duplicated code if we don't
+>      try to share code. Can we copy that code anyways and clean up
+>      later ?
 
-> +	color_printf(color(STATUS_HEADER), "#\t");
-> +	switch (p->status) {
-> +	case DIFF_STATUS_ADDED:
-> +		color_printf(c, "new file: %s\n", p->one->path); break;
+Refactoring first is always preferred, since "later" tends to
+come very late (or worse, never) for clean-up tasks than feature
+enhancements.
 
-Very nicely done.  Especially I liked that you are careful not
-to paint leading '#\t' (which is noticeable when you use reverse
-as an attribute).
+>   5/ Should we use "struct tree_desc" based interface for tree parsing
+>      ? According to Rene it doesn't worth it as soon as you actually
+>      start to do something to the trees
 
-> +static void
-> +status_print_untracked(const struct status *s)
-> +{
-> +	struct dir_struct dir;
-> +	const char *x;
-> +	int i;
-> +	int shown_header = 0;
-> +
-> +	memset(&dir, 0, sizeof(dir));
-> +
-> +	dir.exclude_per_dir = ".gitignore";
-> +	x = git_path("info/exclude");
-> +	if (file_exists(x))
-> +		add_excludes_from_file(&dir, x);
-> +
-> +	read_directory(&dir, ".", "", 0);
-> +	for(i = 0; i < dir.nr; i++) {
-> +		/* check for matching entry, which is unmerged; lifted from
-> +		 * builtin-ls-files:show_other_files */
-> +		struct dir_entry *ent = dir.entries[i];
-> +		int pos = cache_name_pos(ent->name, ent->len);
-> +		struct cache_entry *ce;
-> +		if (0 <= pos)
-> +			die("bug in status_print_untracked");
-> +		pos = -pos - 1;
-> +		if (pos < active_nr) {
-> +			ce = active_cache[pos];
-> +			if (ce_namelen(ce) == ent->len &&
-> +			    !memcmp(ce->name, ent->name, ent->len))
-> +				continue;
-> +		}
-> +		if (!shown_header) {
-> +			status_print_header("Untracked files",
-> +				"use \"git add\" to add to commit");
-> +			shown_header = 1;
-> +		}
-> +		color_printf(color(STATUS_HEADER), "#\t");
-> +		color_printf(color(STATUS_UNTRACKED), "%.*s\n",
-> +				ent->len, ent->name);
-> +	}
-> +}
-
-Very nice code reuse.  I do not mean sarcasm -- the part copied
-and pasted from ls-files is almost trivial to bother factoring
-out.  What's nice is read_directory() does all what is needed to
-deal with .gitignore files, which I forgot almost all about.
-
-> +int status_foreach_cached(status_cb cb);
-> +int status_foreach_updated(status_cb cb);
-> +int status_foreach_changed(status_cb cb);
-> +int status_foreach_untracked(status_cb cb);
-
-I do not see them defined nor used...
-
-I'll take only [1/3] for now but I am interested in 2 and 3.
+That became a non-issue I agree.  Whichever is easier.
