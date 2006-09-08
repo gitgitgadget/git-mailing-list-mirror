@@ -1,99 +1,99 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: Change set based shallow clone
-Date: Fri, 08 Sep 2006 01:33:28 -0700
-Message-ID: <7v4pvikbaf.fsf@assigned-by-dhcp.cox.net>
-References: <9e4733910609071252ree73effwb06358e9a22ba965@mail.gmail.com>
-	<7vpse7tjp0.fsf@assigned-by-dhcp.cox.net>
-	<46a038f90609072054u5ec8bc46x9878a601953b2c5d@mail.gmail.com>
-	<7vac5ancvo.fsf@assigned-by-dhcp.cox.net>
-	<46a038f90609080015u56daae78u9d78584edae7fb72@mail.gmail.com>
+Date: Fri, 08 Sep 2006 10:36:13 +0200
+Organization: At home
+Message-ID: <edra0v$42a$1@sea.gmane.org>
+References: <9e4733910609071252ree73effwb06358e9a22ba965@mail.gmail.com> <20060908010112.6962.qmail@science.horizon.com> <9e4733910609071923tf1c49f6o70419e961e9eb66f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 08 10:33:18 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Fri Sep 08 10:37:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLbnV-00072h-OZ
-	for gcvg-git@gmane.org; Fri, 08 Sep 2006 10:33:14 +0200
+	id 1GLbrG-0008EJ-Um
+	for gcvg-git@gmane.org; Fri, 08 Sep 2006 10:37:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751029AbWIHIdK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Sep 2006 04:33:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751045AbWIHIdK
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 04:33:10 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:911 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1751029AbWIHIdI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Sep 2006 04:33:08 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060908083307.HXJE12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 8 Sep 2006 04:33:07 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id KkYz1V00S1kojtg0000000
-	Fri, 08 Sep 2006 04:33:00 -0400
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90609080015u56daae78u9d78584edae7fb72@mail.gmail.com>
-	(Martin Langhoff's message of "Fri, 8 Sep 2006 19:15:53 +1200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751055AbWIHIgz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 8 Sep 2006 04:36:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751058AbWIHIgz
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 04:36:55 -0400
+Received: from main.gmane.org ([80.91.229.2]:21124 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751061AbWIHIgy (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Sep 2006 04:36:54 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GLbqJ-0007yU-PM
+	for git@vger.kernel.org; Fri, 08 Sep 2006 10:36:07 +0200
+Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 08 Sep 2006 10:36:07 +0200
+Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 08 Sep 2006 10:36:07 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26685>
 
-"Martin Langhoff" <martin.langhoff@gmail.com> writes:
+Jon Smirl wrote:
 
-> As far as I can see, this would not need any change to the upload-pack
-> protocol.
+> Here is another way to look at the shallow clone problem. The only
+> public ids in a git tree are the head and tag pointers. Send these to
+> the client. Now let's modify the git tools to fault the full objects
+> in one by one from the server whenever a git operation needs the
+> object. =A0Dangling references would point to 'not-present' objects.
+>=20
+> For a typical user using a model like this, how much of the Mozilla
+> repository would end up being faulted into their machine? Mozilla has
+> 2M objects and 250K commits in a 450MB pack. My estimate is that a
+> typical user is going to touch less than 200K of the objects and mayb=
+e
+> less than 100K.
+>=20
+> Of course always faulting in full objects is wasteful. A smart scheme
+> would be to try and anticipate with some read ahead and figure out
+> ways to send deltas. Tools like gitk would need to only touch the
+> objects needed to draw the screen and not run the full commit chain a=
+t
+> startup.
 
-That I have to disagree.  Take your earlier example of "I have X
-and I learned you have A B C D".  Now the fetch that got X was a
-commit-only one (but you have full tree for X), but you got X
-from somebody else, not the uploader you are talking with right
-now.  There is a common ancestor Y somewhere behind X, but
-between Y and X you lack trees and blobs.
+Yes, that is also recurring _lazy_ clone idea (or remote alternatives[*=
+1*]
+idea). With it's own set of difficulties, like cache management, readah=
+ead
+and such, and of course differentiating between not present, and presen=
+t on
+the remote server. And what to do when network fails... wouldn't it be =
+just
+easier to use networking system like Coda or InterMezzo?
 
-How would the current protocol work (I am explaining that it
-won't be "not need any change")?  After you express interest for
-A, B, C, D with "want" messages, you start telling "have X",
-"have X~1", have "X~2",... to the uploader (X, X~1 etc. are
-object names not symbolic).  Eventually the uploader would
-recognize Y that is an ancestor of X that it has and will Ack
-it, you stop traversing the ancestor of an acked one and say
-"done".  So now we have a common ancestor and the upload side
-knows it can omit commits behind  that common commit Y, trees
-and blobs contained in Y.
 
-See an Oops here?  You do NOT have trees and blobs associated
-with commit Y.
+[*1*] From Documentation/repository-layout.txt or
+http://www.kernel.org/pub/software/scm/git/docs/repository-layout.html
 
-I am not saying we should not change the protocol.  I am just
-trying to explain that the problem is not something you can
-fudge without changing the protocol.
+You can be using `objects/info/alternates` mechanism, or
+`$GIT_ALTERNATE_OBJECT_DIRECTORIES` mechanism to 'borrow'
+objects from other object stores.  A repository with this kind
+of incomplete object store is not suitable to be published for
+use with dumb transports but otherwise is OK as long as
+`objects/info/alternates` points at the right object stores
+it borrows from.
 
-As a first level approximation, we could in addition to the
-commit object name have a bit that says "do I have trees and
-blobs associated with the commit" bit on each "have" message (by
-the way, this is _expensive_.  You have to traverse down the
-tree contained in each commit using has_sha1_file() recursively
-to see if you have anything missing from _each_ commit you send
-to the other).  Alternatively, you can say "I have this commit,
-but I do not have this tree and I do not even know if I have
-blobs needed to complete that tree because I do not know what
-that tree I am missing contains -- I may have them, I may not. I
-truly do not know" to convey the same information.
+[...]
 
-Think about it a bit -- saying "I know I am missing this tree"
-is one thing, but if we end up saying "I do not even know what I
-am missing", it is like saying "don't care what I say, just send
-everything to me".  Are we gaining much by having only commit
-objects on our end?
-
-Once you end up sending a full tree, it is like doing an initial
-checkout over CVS when you think you are incrementally fetching,
-and you are already lost.  For example, a recent kernel tarball
-compressed with gzip is around 50MB; the history for 34k commits
-since 2.6.12-rc2 fully packed is slightly less than 150MB.
+objects/info/alternates::
+        This file records absolute filesystem paths of alternate
+        object stores that this object store borrows objects
+        from, one pathname per line.
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
