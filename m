@@ -1,92 +1,135 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/3] git-commit.sh: convert run_status to a C builtin
-Date: Thu, 07 Sep 2006 22:56:11 -0700
-Message-ID: <7v64fynbpg.fsf@assigned-by-dhcp.cox.net>
-References: <64c62cc942e872b29d7225999e74a07be586674a.1157610743.git.peff@peff.net>
-	<20060907063621.GC17083@coredump.intra.peff.net>
-	<7vzmdbqke3.fsf@assigned-by-dhcp.cox.net>
-	<20060908054226.GA19537@coredump.intra.peff.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Change set based shallow clone
+Date: Fri, 8 Sep 2006 19:15:53 +1200
+Message-ID: <46a038f90609080015u56daae78u9d78584edae7fb72@mail.gmail.com>
+References: <9e4733910609071252ree73effwb06358e9a22ba965@mail.gmail.com>
+	 <7vpse7tjp0.fsf@assigned-by-dhcp.cox.net>
+	 <46a038f90609072054u5ec8bc46x9878a601953b2c5d@mail.gmail.com>
+	 <7vac5ancvo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 08 07:56:05 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Jon Smirl" <jonsmirl@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 08 09:16:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLZLJ-0000jA-4W
-	for gcvg-git@gmane.org; Fri, 08 Sep 2006 07:55:57 +0200
+	id 1GLaak-0008QH-Cx
+	for gcvg-git@gmane.org; Fri, 08 Sep 2006 09:15:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752221AbWIHFzy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Sep 2006 01:55:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752225AbWIHFzy
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 01:55:54 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:20130 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1752221AbWIHFzw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Sep 2006 01:55:52 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060908055551.HGIL2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 8 Sep 2006 01:55:51 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Khvj1V00H1kojtg0000000
-	Fri, 08 Sep 2006 01:55:44 -0400
-To: Jeff King <peff@peff.net>
-In-Reply-To: <20060908054226.GA19537@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 8 Sep 2006 01:42:26 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751897AbWIHHPz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Sep 2006 03:15:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751910AbWIHHPz
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 03:15:55 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:5140 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751897AbWIHHPy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Sep 2006 03:15:54 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so605799nfa
+        for <git@vger.kernel.org>; Fri, 08 Sep 2006 00:15:53 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=I2IgLj4Cebl6BrpFeaJae/wUA0zBLlskVWI5JIlBCWAbLnbLL2ofmY4Y+y47ctt3fWaAq6p9N+ErVCEEan8JURD1vfUaBX80Gpclk/iYJ/6O+M7D0yxdvnLcjumltQW4WloFEOQG5nM1t723Dd2R2Lls/Jh3X1lUJaG6g5NOYEk=
+Received: by 10.48.210.20 with SMTP id i20mr3729336nfg;
+        Fri, 08 Sep 2006 00:15:53 -0700 (PDT)
+Received: by 10.49.6.16 with HTTP; Fri, 8 Sep 2006 00:15:53 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vac5ancvo.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26679>
 
-Jeff King <peff@peff.net> writes:
-
-> On Thu, Sep 07, 2006 at 05:20:20PM -0700, Junio C Hamano wrote:
+On 9/8/06, Junio C Hamano <junkio@cox.net> wrote:
+> "Martin Langhoff" <martin.langhoff@gmail.com> writes:
+> > People who want shallow clones are actually asking for a "light"
+> > clone, in terms of "how much do I need to download". If everyone has
+> > the whole commit chain (but may be missing olden blobs, and even
+> > trees), the problem becomes a lot easier.
 >
->> "status.h" and "struct status" somehow sounds too broad.
->> Granted, "object.h" is also broad, but in git context "object"
->> has a specific meaning.
+> No, I do not think so.  You are just pushing the same problem to
+> another layer.
 >
-> I agree it is quite broad (as is git-runstatus). Conceptually it's
-> another type of diff format, but making it a diff argument doesn't
-> really makes much sense. We're at least not introducing any broadness,
-> since there is already git-status; are we interested in fixing that
-> name?
+> Reachability through commit ancestry chain is no more special
+> than reachability through commit-tree or tree-containment
+> relationships.  The grafts mechanism happen to treat commit
 
-The command name is a name exposed to the end user.  We do not
-currently have a command to give "repository status", and even
-if we had one such a specialized command for repository
-administrators would be called git-repository-status so
-git-status is definitely fine as is.
+Agreed that it is no more special. OTOH, if we focus on the fact that
+people want to avoid high-cost data transfers, transferring commit
+chains is cheap and allows the client to ask good questions when
+talking to the server.
 
-I just wanted to point it out because I felt the names to
-programmers are slightly different matter.
+So as far as tradeoffs go, it allows you to keep the protocol simple,
+and minimise complex guessing at either end of the wire.
 
-> wt_status? ucu_status (updated, changed, untracked)?
+> But let's touch a slightly different but related topic first.
+> People do not ask for shallow clones.  They just want faster
+> transfer of "everything they care about".  Shallow and lazy
 
-Yeah, something along those lines.
+I'd disagree a bit here. They care about the whole project, and in
+time they'll find that out and end up pulling it all if they use git
+much at all ;-)
 
->> Very nicely done.  Especially I liked that you are careful not
->> to paint leading '#\t' (which is noticeable when you use reverse
->> as an attribute).
->
-> Yes. I seem to recall some issues raised about color attributes
-> persisting over a newline, but I can't find any reference to it now.
-> Using color_printf makes sure every color is 'closed' but it sometimes
-> includes the newline in the colorized portion. Does anybody object to
-> that?
+They want fast, cheap initial checkouts.
 
-In a distant past I saw some terminals get confused near the
-edge if you do that, but these days everybody is on some sort of
-Xterm so it may not matter.  But that would probably be nice to
-fix.
+...
+> So they are all not that different.
 
-> OK. Besides the things you mentioned, what improvements would you like
-> to see?
+Earlier you were pointing out how hard it was for the client to even
+know what to ask for because it can't see the whole picture. Having
+the ancestry  complete means you always know what to ask for.
 
-Besides the things I mentioned?  I dunno offhand -- otherwise I
-would have mentioned them ;-).
+> Now, first and foremost, while I would love to have a system
+> that gracefully operates with a "sparse" repository that lacks
+> objects that should exist from tag/commit/tree/blob reachability
+> point of view, it is an absolute requirement that I can tell why
+> objects are missing from a repository when I find some are
+> missing by running fsck-objects [*3*].
+
+I agree -- and you can keep those objects you know are expected to be
+missing listed in an "packless" idx file somewhere.
+
+> If repository is a
+> shallow clone, not having some object may be expected, but I
+> want to be able to tell repository corruption locally even in
+> that case,
+
++1
+
+> I talked about the need of upload-pack protocol extension
+
+As far as I can see, this would not need any change to the upload-pack
+protocol.
+
+There are some hard problems in dealing with a sparse repo that need
+thinking through. My thinking is that by having the whole commit chain
+around the protocol can be kept sane, by virtue of the local repo
+always having a clear "overall" picture, including knowing what it's
+missing.
+
+> [*4*] In git, there is no inherent server vs client or upstream
+> vs downstream relationship between repositories.
+
+Here an importaant distiction must be made. A "publishing" repo cannot
+be sparse. A sparse repo probably cannot be cloned from.
+
+>  You may be
+> even fetching from many people and do not have a set upstream at
+> all.  Or you are _the_ upstream, and your notebook has the
+> latest devevelopment history, and after pushing that latest
+> history to your mothership repository, you may decide you do not
+> want ancient development history on a puny notebook, and locally
+> cauterize the history on your notebook repository and prune
+> ancient stuff.
+
+Well, that's easy again: "prune old blobs and list them in an idx"
+should work well.
+
+cheers,
+
+
+
+martin
