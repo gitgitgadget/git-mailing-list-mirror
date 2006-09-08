@@ -1,41 +1,41 @@
 From: Timur Tabi <timur@freescale.com>
 Subject: Problem with send-email
-Date: Fri, 08 Sep 2006 16:04:38 -0500
+Date: Fri, 08 Sep 2006 16:13:01 -0500
 Organization: Freescale
-Message-ID: <4501DAE6.8040905@freescale.com>
+Message-ID: <4501DCDD.4020403@freescale.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Sep 08 23:29:28 2006
+X-From: git-owner@vger.kernel.org Fri Sep 08 23:29:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLnuh-0006jm-2L
-	for gcvg-git@gmane.org; Fri, 08 Sep 2006 23:29:27 +0200
+	id 1GLnup-0006la-6E
+	for gcvg-git@gmane.org; Fri, 08 Sep 2006 23:29:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751179AbWIHV3A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Sep 2006 17:29:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751174AbWIHV3A
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 17:29:00 -0400
-Received: from de01egw01.freescale.net ([192.88.165.102]:54945 "EHLO
-	de01egw01.freescale.net") by vger.kernel.org with ESMTP
-	id S1751209AbWIHVEj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Sep 2006 17:04:39 -0400
+	id S1751173AbWIHV3c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Sep 2006 17:29:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751172AbWIHV3c
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 17:29:32 -0400
+Received: from de01egw02.freescale.net ([192.88.165.103]:3525 "EHLO
+	de01egw02.freescale.net") by vger.kernel.org with ESMTP
+	id S1751249AbWIHVNE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Sep 2006 17:13:04 -0400
 Received: from de01smr02.am.mot.com (de01smr02.freescale.net [10.208.0.151])
-	by de01egw01.freescale.net (8.12.11/de01egw01) with ESMTP id k88MNvgk015745
-	for <git@vger.kernel.org>; Fri, 8 Sep 2006 16:23:57 -0600 (MDT)
+	by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id k88LPYoU005853
+	for <git@vger.kernel.org>; Fri, 8 Sep 2006 14:25:34 -0700 (MST)
 Received: from [10.82.19.119] (ld0169-tx32.am.freescale.net [10.82.19.119])
-	by de01smr02.am.mot.com (8.13.1/8.13.0) with ESMTP id k88L4cEl027092
-	for <git@vger.kernel.org>; Fri, 8 Sep 2006 16:04:38 -0500 (CDT)
+	by de01smr02.am.mot.com (8.13.1/8.13.0) with ESMTP id k88LD2rN028652
+	for <git@vger.kernel.org>; Fri, 8 Sep 2006 16:13:02 -0500 (CDT)
 User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.8.0.5) Gecko/20060720 SeaMonkey/1.0.3
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26713>
 
-Does anyone actually use git-send-email?  It's been so broken for me for months that I can't help but think that.
+I'm having two problems with git-send-email.
 
 Problem #1:
 
@@ -83,8 +83,6 @@ I think that last line is a response from the SMTP server.  My guess is that the
 		print $sm "$header\n$message";
 
 Maybe my SMTP server sees the "From: Timur Tabi <timur@freescale.com>" that's at the top of $message and gets confused?
-
-
 
 -- 
 Timur Tabi
