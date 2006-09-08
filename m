@@ -1,99 +1,59 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Change set based shallow clone
-Date: Fri, 08 Sep 2006 10:36:13 +0200
-Organization: At home
-Message-ID: <edra0v$42a$1@sea.gmane.org>
-References: <9e4733910609071252ree73effwb06358e9a22ba965@mail.gmail.com> <20060908010112.6962.qmail@science.horizon.com> <9e4733910609071923tf1c49f6o70419e961e9eb66f@mail.gmail.com>
+Date: Fri, 08 Sep 2006 01:39:22 -0700
+Message-ID: <7vzmdaiwg5.fsf@assigned-by-dhcp.cox.net>
+References: <9e4733910609071252ree73effwb06358e9a22ba965@mail.gmail.com>
+	<20060908010112.6962.qmail@science.horizon.com>
+	<9e4733910609071923tf1c49f6o70419e961e9eb66f@mail.gmail.com>
+	<edra0v$42a$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Fri Sep 08 10:37:15 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 08 10:39:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLbrG-0008EJ-Um
-	for gcvg-git@gmane.org; Fri, 08 Sep 2006 10:37:07 +0200
+	id 1GLbtF-0000Jl-14
+	for gcvg-git@gmane.org; Fri, 08 Sep 2006 10:39:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751055AbWIHIgz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 8 Sep 2006 04:36:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751058AbWIHIgz
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 04:36:55 -0400
-Received: from main.gmane.org ([80.91.229.2]:21124 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751061AbWIHIgy (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Sep 2006 04:36:54 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GLbqJ-0007yU-PM
-	for git@vger.kernel.org; Fri, 08 Sep 2006 10:36:07 +0200
-Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 08 Sep 2006 10:36:07 +0200
-Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 08 Sep 2006 10:36:07 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751061AbWIHIjF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Sep 2006 04:39:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751063AbWIHIjF
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 04:39:05 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:53174 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751061AbWIHIjB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Sep 2006 04:39:01 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060908083901.WYIW27846.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 8 Sep 2006 04:39:01 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Kket1V0031kojtg0000000
+	Fri, 08 Sep 2006 04:38:53 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <edra0v$42a$1@sea.gmane.org> (Jakub Narebski's message of "Fri,
+	08 Sep 2006 10:36:13 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26686>
 
-Jon Smirl wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Here is another way to look at the shallow clone problem. The only
-> public ids in a git tree are the head and tag pointers. Send these to
-> the client. Now let's modify the git tools to fault the full objects
-> in one by one from the server whenever a git operation needs the
-> object. =A0Dangling references would point to 'not-present' objects.
->=20
-> For a typical user using a model like this, how much of the Mozilla
-> repository would end up being faulted into their machine? Mozilla has
-> 2M objects and 250K commits in a 450MB pack. My estimate is that a
-> typical user is going to touch less than 200K of the objects and mayb=
-e
-> less than 100K.
->=20
-> Of course always faulting in full objects is wasteful. A smart scheme
-> would be to try and anticipate with some read ahead and figure out
-> ways to send deltas. Tools like gitk would need to only touch the
-> objects needed to draw the screen and not run the full commit chain a=
-t
-> startup.
+> [*1*] From Documentation/repository-layout.txt or
+> http://www.kernel.org/pub/software/scm/git/docs/repository-layout.html
+>
+> You can be using `objects/info/alternates` mechanism, or
+> `$GIT_ALTERNATE_OBJECT_DIRECTORIES` mechanism to 'borrow'
+> objects from other object stores.  A repository with this kind
+> of incomplete object store is not suitable to be published for
+> use with dumb transports but otherwise is OK as long as
+> `objects/info/alternates` points at the right object stores
+> it borrows from.
 
-Yes, that is also recurring _lazy_ clone idea (or remote alternatives[*=
-1*]
-idea). With it's own set of difficulties, like cache management, readah=
-ead
-and such, and of course differentiating between not present, and presen=
-t on
-the remote server. And what to do when network fails... wouldn't it be =
-just
-easier to use networking system like Coda or InterMezzo?
-
-
-[*1*] From Documentation/repository-layout.txt or
-http://www.kernel.org/pub/software/scm/git/docs/repository-layout.html
-
-You can be using `objects/info/alternates` mechanism, or
-`$GIT_ALTERNATE_OBJECT_DIRECTORIES` mechanism to 'borrow'
-objects from other object stores.  A repository with this kind
-of incomplete object store is not suitable to be published for
-use with dumb transports but otherwise is OK as long as
-`objects/info/alternates` points at the right object stores
-it borrows from.
-
-[...]
-
-objects/info/alternates::
-        This file records absolute filesystem paths of alternate
-        object stores that this object store borrows objects
-        from, one pathname per line.
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Ah, you spotted an obsolete documentation again ;-).
