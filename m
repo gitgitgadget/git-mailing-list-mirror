@@ -1,72 +1,67 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Change set based shallow clone
-Date: Fri, 08 Sep 2006 17:50:40 +0200
-Organization: At home
-Message-ID: <eds3fg$u30$1@sea.gmane.org>
-References: <9e4733910609071252ree73effwb06358e9a22ba965@mail.gmail.com> <7vpse7tjp0.fsf@assigned-by-dhcp.cox.net> <46a038f90609072054u5ec8bc46x9878a601953b2c5d@mail.gmail.com> <7vac5ancvo.fsf@assigned-by-dhcp.cox.net> <9e4733910609080720s7a143d9bp5a1dd36869967c22@mail.gmail.com>
+From: Toralf =?iso-8859-1?q?F=F6rster?= <toralf.foerster@gmx.de>
+Subject: git -1.4.1.1 bisect enhancement:show steps too instead only the number of revisions
+Date: Fri, 8 Sep 2006 19:09:29 +0200
+Message-ID: <200609081909.33361.toralf.foerster@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri Sep 08 17:52:08 2006
+Content-Type: multipart/signed;
+  boundary="nextPart1294217.vYhfGcOcL2";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Sep 08 19:10:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLidm-0005aM-RH
-	for gcvg-git@gmane.org; Fri, 08 Sep 2006 17:51:41 +0200
+	id 1GLjrH-0008Qz-Vt
+	for gcvg-git@gmane.org; Fri, 08 Sep 2006 19:09:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750869AbWIHPvf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Sep 2006 11:51:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750858AbWIHPvf
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 11:51:35 -0400
-Received: from main.gmane.org ([80.91.229.2]:138 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750809AbWIHPve (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Sep 2006 11:51:34 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GLidH-0005QS-BK
-	for git@vger.kernel.org; Fri, 08 Sep 2006 17:51:07 +0200
-Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 08 Sep 2006 17:51:07 +0200
-Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 08 Sep 2006 17:51:07 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1750700AbWIHRJh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Sep 2006 13:09:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750743AbWIHRJh
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 13:09:37 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51632 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750700AbWIHRJg (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Sep 2006 13:09:36 -0400
+Received: (qmail invoked by alias); 08 Sep 2006 17:09:34 -0000
+Received: from c228023.adsl.hansenet.de (EHLO c228023.adsl.hansenet.de) [213.39.228.23]
+  by mail.gmx.net (mp045) with SMTP; 08 Sep 2006 19:09:34 +0200
+X-Authenticated: #5108953
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+User-Agent: KMail/1.9.1
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26701>
 
-My idea for lazy clone/fetch (lazy = on-demand) is via remote alternatives
-mechanism. We put URI for repository (repositories) that hosts the project,
-and we would need at start to download at least heads and tags, and only
-heads and tags.
+--nextPart1294217.vYhfGcOcL2
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-When there is request for an object (commit, tree, blob or tag) which we
-don't have locally, we ask remote repository if it have it, and download it
-(and perhaps some related objects); this needs extension I guess for the
-git downloader ('wantonly'), it should be fairly easy for dumb downloaders
-if you don't mind getting whole pack i.e. perhaps more than intended.
-Perhaps 'wantonly' for git protocol should work the same: one would get
-ready pack (perhaps with limit on pack size: otherwise one would get only
-the requested objects).
+What about telling the user/tester the number of (possible) reboots too and=
+ not only the amount of revisions, eg instead:
+"3308 revisions left to test after this"
+print a line like
+"3308 revisions (~ 12 steps) left to test after this"
 
-One thing that needs extending for lazy clone is git-fsck... otherwise you
-would get whole repository when calling git-fsck. Simplest would be
-fsck-ing only the local part, perhaps checking if the "missing" objects are
-present in remote repository, but not downloading them and not checking
-connectivity further... and of course notifying user that this is lazy
-clone. Unless we run git-fsck-objects on the remote side, then pass results
-to the local side.
+b/c ld 3308 =3D 12 steps until finish, isn't it ?
 
-There is probably bunch of problems with this idea...
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+=2D-=20
+MfG/Sincerely
+Toralf F=F6rster
+
+--nextPart1294217.vYhfGcOcL2
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQBFAaPNhyrlCH22naMRAjJsAJ9ehW7C8UViNbIs43foJ3yqXCbluACghmxJ
+TNBS7VF/zRZICO9n4iXkzTs=
+=m7X7
+-----END PGP SIGNATURE-----
+
+--nextPart1294217.vYhfGcOcL2--
