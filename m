@@ -1,96 +1,92 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH 3/3] git-commit.sh: convert run_status to a C builtin
-Date: Fri, 8 Sep 2006 01:42:26 -0400
-Message-ID: <20060908054226.GA19537@coredump.intra.peff.net>
-References: <64c62cc942e872b29d7225999e74a07be586674a.1157610743.git.peff@peff.net> <20060907063621.GC17083@coredump.intra.peff.net> <7vzmdbqke3.fsf@assigned-by-dhcp.cox.net>
+Date: Thu, 07 Sep 2006 22:56:11 -0700
+Message-ID: <7v64fynbpg.fsf@assigned-by-dhcp.cox.net>
+References: <64c62cc942e872b29d7225999e74a07be586674a.1157610743.git.peff@peff.net>
+	<20060907063621.GC17083@coredump.intra.peff.net>
+	<7vzmdbqke3.fsf@assigned-by-dhcp.cox.net>
+	<20060908054226.GA19537@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 08 07:42:49 2006
+X-From: git-owner@vger.kernel.org Fri Sep 08 07:56:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLZ8V-0006tE-Lq
-	for gcvg-git@gmane.org; Fri, 08 Sep 2006 07:42:44 +0200
+	id 1GLZLJ-0000jA-4W
+	for gcvg-git@gmane.org; Fri, 08 Sep 2006 07:55:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752200AbWIHFm3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Sep 2006 01:42:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752205AbWIHFm3
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 01:42:29 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:16063 "HELO
-	peff.net") by vger.kernel.org with SMTP id S1752200AbWIHFm2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Sep 2006 01:42:28 -0400
-Received: (qmail 29423 invoked from network); 8 Sep 2006 01:41:52 -0400
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 8 Sep 2006 01:41:52 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri,  8 Sep 2006 01:42:26 -0400
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vzmdbqke3.fsf@assigned-by-dhcp.cox.net>
+	id S1752221AbWIHFzy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Sep 2006 01:55:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752225AbWIHFzy
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 01:55:54 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:20130 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1752221AbWIHFzw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Sep 2006 01:55:52 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060908055551.HGIL2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 8 Sep 2006 01:55:51 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Khvj1V00H1kojtg0000000
+	Fri, 08 Sep 2006 01:55:44 -0400
+To: Jeff King <peff@peff.net>
+In-Reply-To: <20060908054226.GA19537@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 8 Sep 2006 01:42:26 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26678>
 
-On Thu, Sep 07, 2006 at 05:20:20PM -0700, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> "status.h" and "struct status" somehow sounds too broad.
-> Granted, "object.h" is also broad, but in git context "object"
-> has a specific meaning.
+> On Thu, Sep 07, 2006 at 05:20:20PM -0700, Junio C Hamano wrote:
+>
+>> "status.h" and "struct status" somehow sounds too broad.
+>> Granted, "object.h" is also broad, but in git context "object"
+>> has a specific meaning.
+>
+> I agree it is quite broad (as is git-runstatus). Conceptually it's
+> another type of diff format, but making it a diff argument doesn't
+> really makes much sense. We're at least not introducing any broadness,
+> since there is already git-status; are we interested in fixing that
+> name?
 
-I agree it is quite broad (as is git-runstatus). Conceptually it's
-another type of diff format, but making it a diff argument doesn't
-really makes much sense. We're at least not introducing any broadness,
-since there is already git-status; are we interested in fixing that
-name?
+The command name is a name exposed to the end user.  We do not
+currently have a command to give "repository status", and even
+if we had one such a specialized command for repository
+administrators would be called git-repository-status so
+git-status is definitely fine as is.
 
-Names for similar concepts from other systems: tree-lint (arch),
-inventory (arch), whatsnew (darcs, perhaps a little too close to
-whatchanged), status (svn, hg), update -n (cvs, ugh!).
+I just wanted to point it out because I felt the names to
+programmers are slightly different matter.
 
-> Having said that I cannot come up with a good alternative name.
-> It is not "project status" nor "repository status".  It is
-> "working tree status", but that sounds very loooooooooooooooong.
+> wt_status? ucu_status (updated, changed, untracked)?
 
-wt_status? ucu_status (updated, changed, untracked)?
+Yeah, something along those lines.
 
-> Very nicely done.  Especially I liked that you are careful not
-> to paint leading '#\t' (which is noticeable when you use reverse
-> as an attribute).
+>> Very nicely done.  Especially I liked that you are careful not
+>> to paint leading '#\t' (which is noticeable when you use reverse
+>> as an attribute).
+>
+> Yes. I seem to recall some issues raised about color attributes
+> persisting over a newline, but I can't find any reference to it now.
+> Using color_printf makes sure every color is 'closed' but it sometimes
+> includes the newline in the colorized portion. Does anybody object to
+> that?
 
-Yes. I seem to recall some issues raised about color attributes
-persisting over a newline, but I can't find any reference to it now.
-Using color_printf makes sure every color is 'closed' but it sometimes
-includes the newline in the colorized portion. Does anybody object to
-that?
+In a distant past I saw some terminals get confused near the
+edge if you do that, but these days everybody is on some sort of
+Xterm so it may not matter.  But that would probably be nice to
+fix.
 
+> OK. Besides the things you mentioned, what improvements would you like
+> to see?
 
-> Very nice code reuse.  I do not mean sarcasm -- the part copied
-> and pasted from ls-files is almost trivial to bother factoring
-
-Yes, I don't like cutting and pasting, but it seemed more confusing to
-try factoring it out. It's not a lot of *code*, it's just that
-remembering to pick out unmerged entries (and the weird -pos bit) is
-confusing.
-
-> out.  What's nice is read_directory() does all what is needed to
-> deal with .gitignore files, which I forgot almost all about.
-
-I just had to write a file_exists to check for .git/gitignore, which was
-a little clumsy.
-
-> > +int status_foreach_cached(status_cb cb);
-> > +int status_foreach_updated(status_cb cb);
-> > +int status_foreach_changed(status_cb cb);
-> > +int status_foreach_untracked(status_cb cb);
-> I do not see them defined nor used...
-
-My fault, they were left in from a previous iteration.
-
-> I'll take only [1/3] for now but I am interested in 2 and 3.
-
-OK. Besides the things you mentioned, what improvements would you like
-to see?
-
--Peff
+Besides the things I mentioned?  I dunno offhand -- otherwise I
+would have mentioned them ;-).
