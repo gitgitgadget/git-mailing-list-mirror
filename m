@@ -1,76 +1,127 @@
-From: Franck Bui-Huu <vagabon.xyz@gmail.com>
-Subject: Re: Add git-archive [take #2]
-Date: Fri, 08 Sep 2006 11:43:54 +0200
-Message-ID: <45013B5A.8000301@innova-card.com>
-References: <cda58cb80609050516v699338b9y57fd54f50c66e49e@mail.gmail.com>	<7vfyf6ce29.fsf@assigned-by-dhcp.cox.net>	<44FED12E.7010409@innova-card.com>	<7vac5c7jty.fsf@assigned-by-dhcp.cox.net>	<cda58cb80609062332p356bd26bw852e31211c43d1ac@mail.gmail.com>	<7v1wqo400b.fsf@assigned-by-dhcp.cox.net>	<44FFD00E.5040305@innova-card.com>	<7vr6yo2isu.fsf@assigned-by-dhcp.cox.net>	<450019C3.4030001@innova-card.com>	<7v8xkvqjlq.fsf@assigned-by-dhcp.cox.net>	<45012752.4070300@innova-card.com> <7v64fyivk0.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Franck <vagabon.xyz@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: gitweb: Add committags support
+Date: Fri, 8 Sep 2006 12:46:56 +0200
+Message-ID: <200609081246.56423.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: Franck <vagabon.xyz@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 08 11:44:02 2006
+X-From: git-owner@vger.kernel.org Fri Sep 08 12:46:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLctm-00058s-WE
-	for gcvg-git@gmane.org; Fri, 08 Sep 2006 11:43:47 +0200
+	id 1GLdse-0008MC-1b
+	for gcvg-git@gmane.org; Fri, 08 Sep 2006 12:46:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750752AbWIHJnn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Sep 2006 05:43:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750753AbWIHJnn
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 05:43:43 -0400
-Received: from nz-out-0102.google.com ([64.233.162.200]:56887 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1750752AbWIHJnm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Sep 2006 05:43:42 -0400
-Received: by nz-out-0102.google.com with SMTP id n1so260080nzf
-        for <git@vger.kernel.org>; Fri, 08 Sep 2006 02:43:41 -0700 (PDT)
+	id S1750787AbWIHKqb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Sep 2006 06:46:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750792AbWIHKqb
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 06:46:31 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:27062 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1750786AbWIHKq3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Sep 2006 06:46:29 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so634129nfa
+        for <git@vger.kernel.org>; Fri, 08 Sep 2006 03:46:28 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        b=C/O2wNONl1e6St+oQNGsXMNZGS5oON9AjSY36ftaQwKM+6n5W1XjThagPe8uSBdXOYF9ZB0PHxUNmG50+SxS0pOz/oGgv1+9d7kLlmVklueSKSsngZwLfnLGcYYj22RagA9/AsRpgzTgGdhGMBgTQyFMU0GgzucJSOg5Nb9bW+A=
-Received: by 10.65.251.1 with SMTP id d1mr1571147qbs;
-        Fri, 08 Sep 2006 02:43:41 -0700 (PDT)
-Received: from ?192.168.0.24? ( [81.252.61.1])
-        by mx.gmail.com with ESMTP id f18sm456934qba.2006.09.08.02.43.40;
-        Fri, 08 Sep 2006 02:43:40 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.4 (X11/20060614)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v64fyivk0.fsf@assigned-by-dhcp.cox.net>
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=FJsJFRChOuDyzsvEzvWA5ODOpwu2x8C/l8TOABpGJig0hp4kwF72VBl6RMzYCmmg/vIExbJrBvKo73aQgr84uPCOf8pSSiD0uVh8tzu9t0LhcTXw6zfwqq4FJ3rkw/p6gCVFIsWUmCvKECxHhd4RgGnuoNksuIX5wZ6XTj/6dqo=
+Received: by 10.49.8.1 with SMTP id l1mr3911489nfi;
+        Fri, 08 Sep 2006 03:46:28 -0700 (PDT)
+Received: from host-81-190-21-28.torun.mm.pl ( [81.190.21.28])
+        by mx.gmail.com with ESMTP id z73sm5508734nfb.2006.09.08.03.46.27;
+        Fri, 08 Sep 2006 03:46:27 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26695>
 
-Junio C Hamano wrote:
-> 
-> I do not think I removed upload-tar.  I removed it from daemon
-> service list and the documentation for daemon, because that part
-> is a new code.
-> 
-> 	git tar-tree --remote=../linux-2.6/.git HEAD
-> 	git tar-tree --remote=kernel.org:git next
-> 
-> should still work; the former is "from a directory next door"
-> and connect.c invokes local /bin/sh as the transport, and the
-> latter is "ssh login to kernel.org and use ./git directory".
-> 
+Below is very preliminary code (think early alpha) 
+to add committags support (a la gitweb-xmms2) to gitweb.
 
-Sorry I was speaking about the git protocol. It has been included
-in master branch. But
+One of the problems is having committags support 
+in the subject/title line, which is hyperlink itself 
+(with title and class attribute).
 
-	git tar-tree --remote=git://anything/repo.git
+-- >8 --
+our %committags = (
+	'commitsha' => {
+		'pattern' => qr/[0-9a-fA-F]{40}/,
+		'sub' => sub {
+			my $hash_text = shift;
+			if (git_get_type($hash_text) eq "commit") {
+				return
+					$cgi->a({-href => href(action=>"commit", hash=>$hash_text),
+					        -class => "text"}, $hash_text);
+			}
+			return undef;
+		},
+		'islink' => 1,
+	},
+	'mantis' => {
+		'pattern' => qr/(BUG|FEATURE)\(\d+\)/,
+		'options' => [ 'http://bugs.xmms2.xmms.se/view.php?id=' ],
+		'sub' => sub {
+			my $match = shift;
+			my $URL = shift;
+			my ($issue) = $match =~ /(\d+)/;
+			return
+				$cgi->a({-href => "$URL$issue"},
+				        $match);
+		},
+		'islink' => 1,
+	},
+);
 
-does not work anymore, does it ? Do you plan to make it work again
-with git-upload-archive (that would need some modifications in
-git-tar-tree --remote code) or just let the --remote option work
-for local and ssh transport (that would be one good reason for using
-for git-archive instead of git-tar-tree) ?
+sub format_log_line_html_generic {
+	my $line = shift;
+	my $a_attr = shift;
+	my @committags = @_;
+	my %subst;
 
-> I recall from earlier review of your code, "git archive" should
-> work well over these two transports in addition to git://
-> protocol that talks with git-daemon.
-> 
-yes
-		Franck
+	$line = esc_html($line);
+	$line =~ s/ /&nbsp;/g;
+	
+	for my $ctname (@committags) {
+		next unless exists $committags{$ctname};
+		my $wrap = ref($a_attr) eq "HASH" && %$a_attr &&
+			$committags{$ctname}{'islink'};
+		my @opts =
+			exists $committags{$ctname}{'options'} ?
+			@{$committags{$ctname}{'options'}} :
+			();
+
+		while ($line =~ m/($committags{$ctname}{'pattern'})/gc) {
+			my $match = $1;
+			my $repl = $committags{$ctname}{'sub'}->($match, @opts);
+			next unless $repl;
+
+			if ($wrap) {
+				$repl = $cgi->end_a() . $repl . $cgi->start_a($a_attr);
+			}
+
+			$subst{quotemeta $match} = $repl;
+		}
+	}
+
+	while (my ($from, $to) = each %subst) {
+		$line =~ s/$from/$to/g;
+	}
+	return $line;
+}
+
+
+
+foreach my $line (@log) {
+	print format_log_line_html_generic($line, undef, keys %committags) . "<br/>\n";
+#	print format_log_line_html_generic($line, {-href=>"href", -title => "TITEL"}, keys %committags) . "<br/>\n";
+}
+
+-- 
+Jakub Narebski
+Poland
