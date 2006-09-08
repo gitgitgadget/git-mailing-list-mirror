@@ -1,83 +1,53 @@
-From: Timur Tabi <timur@freescale.com>
-Subject: Re: Problem with send-email
-Date: Fri, 08 Sep 2006 17:57:27 -0500
-Organization: Freescale
-Message-ID: <4501F557.7050103@freescale.com>
-References: <4501DA6D.9020104@freescale.com> <edsqjo$gh3$1@sea.gmane.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: Some issues with current qgit on exit ( aka "Crash this!" )
+Date: Sat, 9 Sep 2006 01:03:52 +0200
+Message-ID: <e5bfff550609081603s2fb1be98gdafb91681a4aeaae@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Sep 09 00:58:19 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 09 01:04:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLpIS-0004K2-MX
-	for gcvg-git@gmane.org; Sat, 09 Sep 2006 00:58:05 +0200
+	id 1GLpO9-0005tH-Br
+	for gcvg-git@gmane.org; Sat, 09 Sep 2006 01:03:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751252AbWIHW5h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Sep 2006 18:57:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbWIHW5h
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 18:57:37 -0400
-Received: from de01egw01.freescale.net ([192.88.165.102]:53693 "EHLO
-	de01egw01.freescale.net") by vger.kernel.org with ESMTP
-	id S1751257AbWIHW53 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Sep 2006 18:57:29 -0400
-Received: from de01smr01.freescale.net (de01smr01.freescale.net [10.208.0.31])
-	by de01egw01.freescale.net (8.12.11/de01egw01) with ESMTP id k890GkiI004828
-	for <git@vger.kernel.org>; Fri, 8 Sep 2006 18:16:46 -0600 (MDT)
-Received: from [10.82.19.119] (ld0169-tx32.am.freescale.net [10.82.19.119])
-	by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id k88MvRcM020699
-	for <git@vger.kernel.org>; Fri, 8 Sep 2006 17:57:27 -0500 (CDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.8.0.5) Gecko/20060720 SeaMonkey/1.0.3
-To: git@vger.kernel.org
-In-Reply-To: <edsqjo$gh3$1@sea.gmane.org>
+	id S1751228AbWIHXDx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Sep 2006 19:03:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751242AbWIHXDx
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 19:03:53 -0400
+Received: from py-out-1112.google.com ([64.233.166.177]:42962 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1751228AbWIHXDw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Sep 2006 19:03:52 -0400
+Received: by py-out-1112.google.com with SMTP id n25so1009498pyg
+        for <git@vger.kernel.org>; Fri, 08 Sep 2006 16:03:52 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=gyOja4NaCb+RoQu79rpUW+9s5QAciMF3s9Z4wcCS8NLZqBBhgkH5OTofvQqiIeiolphdr3YQhVU77+U9Nxls2TenV+Att1u7rY2Oboz3Gy9l7LyKpOuKFGwIaIZVakCh2JXsx2onajhKUbBcUWC9Kbs076pm3N9mHOFxK9QxDlM=
+Received: by 10.35.46.11 with SMTP id y11mr3815002pyj;
+        Fri, 08 Sep 2006 16:03:52 -0700 (PDT)
+Received: by 10.35.95.9 with HTTP; Fri, 8 Sep 2006 16:03:52 -0700 (PDT)
+To: "Pavel Roskin" <proski@gnu.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26723>
 
-Jakub Narebski wrote:
-> Timur Tabi wrote:
-> 
->> Everything works.  However, if I do this:
->>
->> git-send-email --from timur@freescale.com --to  \
->>    --smtp-server remotesmtp.freescale.net patchfile 
->>
-> 
-> What do you expect when you specify _empty_ To: header?
+>
+> > I was planning (well, still I am) to release new version this week
+> > end, and your bug report is arrived just in time ;-)
+>
+> I tried to push qgit a bit harder, and it's still easy to crash:
+>
 
-Sorry, that was a bad cut-and-paste.  I don't know what happened.  That line is supposed to read:
+Thanks for reporting, bug (a subtle one this time) fixed and patch pushed.
 
-git-send-email --from timur@freescale.com --to timur@tabi.org --smtp-server remotesmtp.freescale.net patchfile
+I don't think you or someone else could crash qgit anymore ;-)
 
-The error message I get is the same:
-
-(mbox) Adding cc: Timur Tabi <timur@freescale.com> from line 'From: Timur Tabi <timur@freescale.com>'
-(sob) Adding cc: Timur Tabi <timur@freescale.com> from line 'Signed-off-by: Timur Tabi <timur@freescale.com>
-'
-5.0.0 <Timur Tabi <timur@freescale.com>... Unbalanced '<'
-
-I do have some news.  This problem goes away if I don't specify the --smtp-server parameter.
-
-> 
-> I use git-send-email from time to time; I always specify From:, 
-> either entering it when prompted, or using --from parameter.
-> The fact that it didn't fill default value from committer/author
-> core.author+core.email is I guess a bug...
-
-Like I said, I think the bug is in the call to readline().  Like I said, I don't know Perl, but from the documentation I have read, I don't think readline() takes two parameters.
-
-     do {
-         $_ = $term->readline("Who should the emails appear to be from? ",
-             $from);
-     } while (!defined $_);
-
-     $from = $_;
-
-$from does contain the correct value when readline() is called.  The problem is that $_ contains nothing, which causes $from to be erased.
-
--- 
-Timur Tabi
-Linux Kernel Developer @ Freescale
+Thanks
+Marco
