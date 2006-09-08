@@ -1,121 +1,78 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Change set based shallow clone
-Date: Fri, 08 Sep 2006 10:48:39 +0200
-Message-ID: <45012E67.6050406@op5.se>
-References: <9e4733910609071252ree73effwb06358e9a22ba965@mail.gmail.com>	 <edpuut$dns$1@sea.gmane.org> <9e4733910609071341u7e430214j71ddcbefa26810ca@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Move color option parsing out of diff.c and into color.[ch]
+Date: Fri, 08 Sep 2006 01:49:20 -0700
+Message-ID: <7vk64eivzj.fsf@assigned-by-dhcp.cox.net>
+References: <20060908073452.GA25343@coredump.intra.peff.net>
+	<20060908080318.GA3771@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 08 10:48:52 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 08 10:49:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLc2c-0002Nm-0J
-	for gcvg-git@gmane.org; Fri, 08 Sep 2006 10:48:50 +0200
+	id 1GLc2w-0002UE-81
+	for gcvg-git@gmane.org; Fri, 08 Sep 2006 10:49:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750708AbWIHIso (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Sep 2006 04:48:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750713AbWIHIso
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 04:48:44 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:62683 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750708AbWIHIso
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Sep 2006 04:48:44 -0400
-Received: by smtp-gw1.op5.se (Postfix, from userid 588)
-	id C38D16BD37; Fri,  8 Sep 2006 10:48:42 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
-	linux-server1.op5.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.1.4
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 41F6D6BD2F; Fri,  8 Sep 2006 10:48:40 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.5 (X11/20060808)
-To: Jon Smirl <jonsmirl@gmail.com>
-In-Reply-To: <9e4733910609071341u7e430214j71ddcbefa26810ca@mail.gmail.com>
+	id S1750714AbWIHItA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Sep 2006 04:49:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750715AbWIHItA
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 04:49:00 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:64975 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1750714AbWIHIs7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Sep 2006 04:48:59 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060908084859.NUFL12909.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 8 Sep 2006 04:48:59 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Kkor1V00A1kojtg0000000
+	Fri, 08 Sep 2006 04:48:51 -0400
+To: Jeff King <peff@peff.net>
+In-Reply-To: <20060908080318.GA3771@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 8 Sep 2006 04:03:18 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26689>
 
-Jon Smirl wrote:
-> On 9/7/06, Jakub Narebski <jnareb@gmail.com> wrote:
->> I don't understand. Git is _not_ patchset based (like GNU Arch, or
-> 
-> I meant change set to refer to a commit plus trees plus blobs that
-> make it up. These may be present in full or delta form.
-> 
->> Mercurial, or CVS). It is snapshot based. So if you want to download
->> "skip", you need only for the local part of doenloader to make 
->> appropriate
->> grafts, like below
->>
->>
->>  *--*--*--*--*--*--*--*--*--*--*--HEAD    (server)
->>
->>  *--*--*...........*--*--*--*--*--HEAD    (shallow/sparse clone)
->>
->> But the part you were talking about is _easy_ part; the hard part is
->> merges including merging branch which was split off the trunk before
->> cutoff-point, history rewriting (c.f. 'pu' branch, and rebases), etc.
-> 
-> Does an average user do these things? The shallow clone is there to
-> address the casual user who gags at a five hour download to get an
-> initial check out Mozilla when they want to make a five line change or
-> just browse the source for a few minutes.
-> 
+Jeff King <peff@peff.net> writes:
 
-A better idea would be to allow those users to download a gzipped 
-tarball of a pre-grafted repository. It shouldn't be terribly difficult 
-to set up an update-hook that creates the pre-grafted repository for you 
-whenever a tag (or some such) is created in the repo you host wherever 
-everybody does their initial clone from.
+> +static int color_vprintf(const char *color, const char *fmt,
+> +		va_list args, const char *trail)
+> +{
+> +	int r = 0;
+> +
+> +	if (*color)
+> +		r += printf("%s", color);
+> +	r += vprintf(fmt, args);
+> +	if (trail)
+> +		r += printf("%s", trail);
+> +	if (*color)
+> +		r += printf("%s", COLOR_RESET);
+> +	return r;
+> +}
 
-As I understand it (although I've admittedly followed the git 
-mailing-list sporadically the past three or so months), grafts already 
-work as intended, and the users can then fetch into their grafted repo 
-to get a bare minimum of objects.
+Hmm,... don't you mean RESET first and then trail (which is often "\n")?
 
-> 
-> There would also be a command to bring down all of the objects to
-> fully populate a sparse tree. You could do the shallow clone to begin
-> with and then do the full tree populate overnight or in the
-> background.
-> 
+> +int color_printf(const char *color, const char *fmt, ...)
+> +{
+> +	va_list args;
+> +	int r;
+> +	va_start(args, fmt);
+> +	r = color_vprintf(color, fmt, args, 0);
+> +	va_end(args);
+> +	return r;
+> +}
 
-With the pre-grafted history this would work as follow
-
-$ mkdir pregraft
-$ wget http://pre-grafts.mozilla.org/pregrafted.git.tgz
-$ cd pregraft
-$ tar xvzf ../pregrafted.git.tgz
-$ cd ..
-$ git clone mozilla-repo-url >& /dev/null &
-$ cd pregraft
-# work, work, work; full clone completes
-$ cd ../mozilla-repo
-$ git pull ../pregraft master
-
-or something similar.
-
-iow, you get the small repo quickly and can start hacking while the 
-full-history clone is downloading. If I understand grafts correctly, you 
-could then merge in your changes made in the grafted repo to the one 
-with full history.
-
-> Maybe the answer is to build a shallow clone tool for casual use, and
-> then if you try to run anything too complex on it git just tells you
-> that you have to download the entire tree.
-> 
-
-I believe all tools that work with history understand grafts already, 
-and if so they should provide sane messages when the user attempts to 
-access history beyond the grafts. I might have missed or misunderstood 
-something, but this seems to me like a simple solution to a complex problem.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Please spell NULL not 0 (please do not argue that writing a NULL
+pointer as integral constant 0 is perfectly valid C -- we all
+know that.  This is not the language-lawyers correctness issue,
+but ../linux-2.6/Documentation/CodingStyle thing).  Using
+pointer as boolean seems to be Ok style (e.g. "if (trail)" does
+not have to be written "if (trail == NULL)").
