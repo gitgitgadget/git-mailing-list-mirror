@@ -1,67 +1,57 @@
-From: Toralf =?iso-8859-1?q?F=F6rster?= <toralf.foerster@gmx.de>
-Subject: git -1.4.1.1 bisect enhancement:show steps too instead only the number of revisions
-Date: Fri, 8 Sep 2006 19:09:29 +0200
-Message-ID: <200609081909.33361.toralf.foerster@gmx.de>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: Change set based shallow clone
+Date: Fri, 08 Sep 2006 10:18:20 -0700
+Message-ID: <4501A5DC.609@gmail.com>
+References: <9e4733910609071252ree73effwb06358e9a22ba965@mail.gmail.com>	 <7vpse7tjp0.fsf@assigned-by-dhcp.cox.net>	 <46a038f90609072054u5ec8bc46x9878a601953b2c5d@mail.gmail.com>	 <7vac5ancvo.fsf@assigned-by-dhcp.cox.net> <46a038f90609080015u56daae78u9d78584edae7fb72@mail.gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1294217.vYhfGcOcL2";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Sep 08 19:10:00 2006
+Cc: Junio C Hamano <junkio@cox.net>, Jon Smirl <jonsmirl@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 08 19:18:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLjrH-0008Qz-Vt
-	for gcvg-git@gmane.org; Fri, 08 Sep 2006 19:09:40 +0200
+	id 1GLjzm-0002H1-Jr
+	for gcvg-git@gmane.org; Fri, 08 Sep 2006 19:18:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750700AbWIHRJh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Sep 2006 13:09:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750743AbWIHRJh
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 13:09:37 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51632 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1750700AbWIHRJg (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Sep 2006 13:09:36 -0400
-Received: (qmail invoked by alias); 08 Sep 2006 17:09:34 -0000
-Received: from c228023.adsl.hansenet.de (EHLO c228023.adsl.hansenet.de) [213.39.228.23]
-  by mail.gmx.net (mp045) with SMTP; 08 Sep 2006 19:09:34 +0200
-X-Authenticated: #5108953
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.1
-X-Y-GMX-Trusted: 0
+	id S1750881AbWIHRSY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Sep 2006 13:18:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750849AbWIHRSX
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 13:18:23 -0400
+Received: from py-out-1112.google.com ([64.233.166.180]:39874 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1750881AbWIHRSX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Sep 2006 13:18:23 -0400
+Received: by py-out-1112.google.com with SMTP id n25so904014pyg
+        for <git@vger.kernel.org>; Fri, 08 Sep 2006 10:18:22 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=jyP9xCTpqoc9eCRLHignyB4oLPmqkQ09cqXnesvTmpLQxsNz7KcSqosHn9IyViYJBMX2r8jpnbUFxDpp+gLN4LcFapw+vgRNCWEz1b0lAI1vSlgdqD2nXijnQaneI0H5tB/MH6r7j6Me8m46MhSGV/r0u8oZEPKUFI3J/mK/N/M=
+Received: by 10.35.15.11 with SMTP id s11mr3302916pyi;
+        Fri, 08 Sep 2006 10:18:22 -0700 (PDT)
+Received: from ?10.0.0.6? ( [24.55.157.69])
+        by mx.gmail.com with ESMTP id a75sm582454pyf.2006.09.08.10.18.21;
+        Fri, 08 Sep 2006 10:18:22 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.5 (X11/20060725)
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90609080015u56daae78u9d78584edae7fb72@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26702>
 
---nextPart1294217.vYhfGcOcL2
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Martin Langhoff wrote:
+> On 9/8/06, Junio C Hamano <junkio@cox.net> wrote:
+...
+>> [*4*] In git, there is no inherent server vs client or upstream
+>> vs downstream relationship between repositories.
+> 
+> Here an importaant distiction must be made. A "publishing" repo cannot
+> be sparse. A sparse repo probably cannot be cloned from.
 
-What about telling the user/tester the number of (possible) reboots too and=
- not only the amount of revisions, eg instead:
-"3308 revisions left to test after this"
-print a line like
-"3308 revisions (~ 12 steps) left to test after this"
-
-b/c ld 3308 =3D 12 steps until finish, isn't it ?
-
-=2D-=20
-MfG/Sincerely
-Toralf F=F6rster
-
---nextPart1294217.vYhfGcOcL2
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iD8DBQBFAaPNhyrlCH22naMRAjJsAJ9ehW7C8UViNbIs43foJ3yqXCbluACghmxJ
-TNBS7VF/zRZICO9n4iXkzTs=
-=m7X7
------END PGP SIGNATURE-----
-
---nextPart1294217.vYhfGcOcL2--
+With the use of "placeholder" objects; neither one of these assertions
+is true.
