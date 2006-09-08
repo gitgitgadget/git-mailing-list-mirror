@@ -1,90 +1,43 @@
 From: Timur Tabi <timur@freescale.com>
-Subject: Problem with send-email
-Date: Fri, 08 Sep 2006 16:02:37 -0500
+Subject: Re: Problem with send-email
+Date: Fri, 08 Sep 2006 16:35:39 -0500
 Organization: Freescale
-Message-ID: <4501DA6D.9020104@freescale.com>
+Message-ID: <4501E22B.6060501@freescale.com>
+References: <4501DCDD.4020403@freescale.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Sep 08 23:30:04 2006
+X-From: git-owner@vger.kernel.org Fri Sep 08 23:35:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLnvA-0006oI-HS
-	for gcvg-git@gmane.org; Fri, 08 Sep 2006 23:29:57 +0200
+	id 1GLo0o-0007jK-PF
+	for gcvg-git@gmane.org; Fri, 08 Sep 2006 23:35:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751174AbWIHV3y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Sep 2006 17:29:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751172AbWIHV3y
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 17:29:54 -0400
-Received: from de01egw01.freescale.net ([192.88.165.102]:20641 "EHLO
-	de01egw01.freescale.net") by vger.kernel.org with ESMTP
-	id S1751251AbWIHVCj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Sep 2006 17:02:39 -0400
+	id S1751085AbWIHVfm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Sep 2006 17:35:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751126AbWIHVfl
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 17:35:41 -0400
+Received: from de01egw02.freescale.net ([192.88.165.103]:53707 "EHLO
+	de01egw02.freescale.net") by vger.kernel.org with ESMTP
+	id S1751085AbWIHVfl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Sep 2006 17:35:41 -0400
 Received: from de01smr02.am.mot.com (de01smr02.freescale.net [10.208.0.151])
-	by de01egw01.freescale.net (8.12.11/de01egw01) with ESMTP id k88MLuAC015372
-	for <git@vger.kernel.org>; Fri, 8 Sep 2006 16:21:56 -0600 (MDT)
+	by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id k88LmBv2010154
+	for <git@vger.kernel.org>; Fri, 8 Sep 2006 14:48:11 -0700 (MST)
 Received: from [10.82.19.119] (ld0169-tx32.am.freescale.net [10.82.19.119])
-	by de01smr02.am.mot.com (8.13.1/8.13.0) with ESMTP id k88L2bAt026760
-	for <git@vger.kernel.org>; Fri, 8 Sep 2006 16:02:38 -0500 (CDT)
+	by de01smr02.am.mot.com (8.13.1/8.13.0) with ESMTP id k88LZdLM003736
+	for <git@vger.kernel.org>; Fri, 8 Sep 2006 16:35:40 -0500 (CDT)
 User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.8.0.5) Gecko/20060720 SeaMonkey/1.0.3
 To: git@vger.kernel.org
+In-Reply-To: <4501DCDD.4020403@freescale.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26715>
 
-Does anyone actually use git-send-email?  It's been so broken for me for months that I can't help but think that.
-
-Problem #1:
-
-I don't know Perl, but I think there's something wrong with this code:
-
-if (!defined $from) {
-	$from = $author || $committer;
-         print "$from\n";
-	do {
-		$_ = $term->readline("Who should the emails appear to be from? ",
-			$from);
-	} while (!defined $_);
-
-	$from = $_;
-	print "Emails will be sent from: ", $from, "\n";
-	$prompting++;
-}
-
-I don't think the call to readline() is working.  Specifically, the last parameter, $from, is being ignored.  When I call git-send-email without specifying a --from parameter, this code is executed.  But this is what I see:
-
-Timur Tabi <timur@freescale.com>
-Who should the emails appear to be from?
-Emails will be sent from:
-
-This happens when I press ENTER at the "Who should the emails appear to be from?" prompt.  I'm expecting it to assign the default value, which is displayed right above it.  But instead, $from is erased, and so my email doesn't have a From: line.
-
-Problem #2:
-
-I cannot use send-email to send a patch to anyone but myself.  If I do this:
-
-git-send-email --from timur@freescale.com --to timur@freescale.com --smtp-server remotesmtp.freescale.net patchfile
-
-Everything works.  However, if I do this:
-
-git-send-email --from timur@freescale.com --to  --smtp-server remotesmtp.freescale.net patchfile
-
-I get this:
-
-(mbox) Adding cc: Timur Tabi <timur@freescale.com> from line 'From: Timur Tabi <timur@freescale.com>'
-(sob) Adding cc: Timur Tabi <timur@freescale.com> from line 'Signed-off-by: Timur Tabi <timur@freescale.com>'
-5.0.0 <Timur Tabi <timur@freescale.com>... Unbalanced '<'
-
-I think that last line is a response from the SMTP server.  My guess is that there's something wrong with this line:
-
-		print $sm "$header\n$message";
-
-Maybe my SMTP server sees the "From: Timur Tabi <timur@freescale.com>" that's at the top of $message and gets confused?
-
-
+Sorry about the reposts, but my company's email server told me it rejected my posts because it thought they were spam.  I wasn't expecting the server to hold on to them and them send them out later.
 
 -- 
 Timur Tabi
