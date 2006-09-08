@@ -1,69 +1,114 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 1/2] Add git-archive
-Date: Fri, 08 Sep 2006 22:21:30 +0200
-Message-ID: <4501D0CA.7000206@lsrfire.ath.cx>
-References: <cda58cb80609050516v699338b9y57fd54f50c66e49e@mail.gmail.com> <7vfyf6ce29.fsf@assigned-by-dhcp.cox.net> <44FED12E.7010409@innova-card.com> <44FF2C37.2010400@lsrfire.ath.cx> <ednb29$u0u$1@sea.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb: Add committags support
+Date: Fri, 08 Sep 2006 22:57:59 +0200
+Organization: At home
+Message-ID: <edslfm$tb9$1@sea.gmane.org>
+References: <200609081246.56423.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
+Content-Type: text/plain; charset=iso-8859-2
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 08 22:21:46 2006
+X-From: git-owner@vger.kernel.org Fri Sep 08 22:58:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLmqy-0001eq-Tv
-	for gcvg-git@gmane.org; Fri, 08 Sep 2006 22:21:33 +0200
+	id 1GLnQD-0000ec-GL
+	for gcvg-git@gmane.org; Fri, 08 Sep 2006 22:57:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751201AbWIHUVb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 8 Sep 2006 16:21:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751202AbWIHUVb
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 16:21:31 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:35025
-	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S1751201AbWIHUVa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Sep 2006 16:21:30 -0400
-Received: from [10.0.1.3] (p508E5573.dip.t-dialin.net [80.142.85.115])
-	by neapel230.server4you.de (Postfix) with ESMTP id 7B44619055;
-	Fri,  8 Sep 2006 22:21:29 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.5 (Windows/20060719)
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <ednb29$u0u$1@sea.gmane.org>
-X-Enigmail-Version: 0.94.0.0
+	id S1751244AbWIHU5n convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 8 Sep 2006 16:57:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751245AbWIHU5n
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 16:57:43 -0400
+Received: from main.gmane.org ([80.91.229.2]:27089 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751244AbWIHU5n (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Sep 2006 16:57:43 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GLnPu-0000ay-RT
+	for git@vger.kernel.org; Fri, 08 Sep 2006 22:57:40 +0200
+Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 08 Sep 2006 22:57:38 +0200
+Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 08 Sep 2006 22:57:38 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26708>
 
-Jakub Narebski schrieb:
-> Rene Scharfe wrote:
->=20
->> IMHO should work like in the following example, and the code above=20
->> cuts off the Documentation part:
->>=20
->> $ cd Documentation $ git-archive --format=3Dtar --prefix=3Dv1.0/ HEA=
-D howto | tar tf -=20
->> v1.0/howto/=20
->> v1.0/howto/isolate-bugs-with-bisect.txt ...
->>=20
->> I agree that simple subtree matching would be enough, at least for=20
->> now.
->=20
-> What about
->=20
-> $ git-archive --format=3Dtar --prefix=3Dv1.0/ HEAD:Documentation/howt=
-o
+Jakub Narebski wrote:
 
-That is fine, too (cutting off Documentation/howto).
+> our %committags =3D (
+> =A0=A0=A0=A0=A0=A0=A0=A0'commitsha' =3D> {
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0'pattern' =3D> qr/[0-=
+9a-fA-F]{40}/,
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0'sub' =3D> sub {
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0my $hash_text =3D shift;
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0if (git_get_type($hash_text) eq "commit") {
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0=A0=A0return
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0$cgi->a({-href =3D> =
+href(action=3D>"commit", hash=3D>$hash_text),
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 =A0 =A0 =A0 =A0-cla=
+ss =3D> "text"}, $hash_text);
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0}
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0return undef;
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0},
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0'islink' =3D> 1,
+> =A0=A0=A0=A0=A0=A0=A0=A0},
+> =A0=A0=A0=A0=A0=A0=A0=A0'mantis' =3D> {
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0'pattern' =3D> qr/(BU=
+G|FEATURE)\(\d+\)/,
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0'options' =3D> [ 'htt=
+p://bugs.xmms2.xmms.se/view.php?id=3D' ],
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0'sub' =3D> sub {
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0my $match =3D shift;
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0my $URL =3D shift;
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0my ($issue) =3D $match =3D~ /(\d+)/;
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0return
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0=A0=A0$cgi->a({-href =3D> "$URL$issue"},
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0=A0=A0 =A0 =A0 =A0 =A0$match);
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0},
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0'islink' =3D> 1,
+> =A0=A0=A0=A0=A0=A0=A0=A0},
+> );
 
-My comment above was about the piece of code that handles cd'ing around=
- in
-the repository.  git-tar-tree ignores the current working directory -- =
-you
-always get the full tree put into your tar file, and you have to do the
-"trick" you mentioned if you want to archive only a subtree.  This is a=
- bit
-strange, so I think we should do it right from the start in git-archive=
-=2E
+Yet another committag:
 
-Ren=E9
+        'URL' =3D> { # simple URL, no query strings
+                   # because of the whole esc_html() + ' '->'&nbsp;' th=
+ing
+                'pattern' =3D> qr!(http|ftp)s?://[a-zA-Z0-9%./]+!,
+                'sub' =3D> sub {
+                        my $url =3D shift;
+                        return
+                                $cgi->a({-href =3D> $url},
+                                        $url); # should be perhaps shor=
+tened
+                },
+                'islink' =3D> 1,
+        },
+
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
