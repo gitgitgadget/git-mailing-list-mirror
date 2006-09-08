@@ -1,70 +1,83 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Change set based shallow clone
-Date: Sat, 09 Sep 2006 00:27:01 +0200
-Organization: At home
-Message-ID: <edsqmj$gh3$2@sea.gmane.org>
-References: <9e4733910609071923tf1c49f6o70419e961e9eb66f@mail.gmail.com> <20060908184215.31789.qmail@science.horizon.com> <9e4733910609081413p32456768g280bdc9b232d7902@mail.gmail.com>
+From: Timur Tabi <timur@freescale.com>
+Subject: Re: Problem with send-email
+Date: Fri, 08 Sep 2006 17:57:27 -0500
+Organization: Freescale
+Message-ID: <4501F557.7050103@freescale.com>
+References: <4501DA6D.9020104@freescale.com> <edsqjo$gh3$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sat Sep 09 00:30:31 2006
+Content-Type: text/plain; charset=ISO-8859-2; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Sep 09 00:58:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLord-0007s3-VX
-	for gcvg-git@gmane.org; Sat, 09 Sep 2006 00:30:23 +0200
+	id 1GLpIS-0004K2-MX
+	for gcvg-git@gmane.org; Sat, 09 Sep 2006 00:58:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751195AbWIHWaS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Sep 2006 18:30:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751211AbWIHWaR
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 18:30:17 -0400
-Received: from main.gmane.org ([80.91.229.2]:9091 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751195AbWIHWaQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Sep 2006 18:30:16 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1GLorL-0007ny-2o
-	for git@vger.kernel.org; Sat, 09 Sep 2006 00:30:03 +0200
-Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 09 Sep 2006 00:30:03 +0200
-Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 09 Sep 2006 00:30:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1751252AbWIHW5h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Sep 2006 18:57:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbWIHW5h
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 18:57:37 -0400
+Received: from de01egw01.freescale.net ([192.88.165.102]:53693 "EHLO
+	de01egw01.freescale.net") by vger.kernel.org with ESMTP
+	id S1751257AbWIHW53 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Sep 2006 18:57:29 -0400
+Received: from de01smr01.freescale.net (de01smr01.freescale.net [10.208.0.31])
+	by de01egw01.freescale.net (8.12.11/de01egw01) with ESMTP id k890GkiI004828
+	for <git@vger.kernel.org>; Fri, 8 Sep 2006 18:16:46 -0600 (MDT)
+Received: from [10.82.19.119] (ld0169-tx32.am.freescale.net [10.82.19.119])
+	by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id k88MvRcM020699
+	for <git@vger.kernel.org>; Fri, 8 Sep 2006 17:57:27 -0500 (CDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.8.0.5) Gecko/20060720 SeaMonkey/1.0.3
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <edsqjo$gh3$1@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26722>
 
-Jon Smirl wrote:
-
->> > Here is another way to look at the shallow clone problem. The only
->> > public ids in a git tree are the head and tag pointers. Send these to
->> > the client. Now let's modify the git tools to fault the full objects
->> > in one by one from the server whenever a git operation needs the
->> > object.  Dangling references would point to 'not-present' objects.
->>
->> Er... that would fault in a gigabyte the first time someone ran gitk,
->> or several other history-browsing commands.  Don't you need a way to say
->> "tell the user this isn't present and will take an hour to download"?
+Jakub Narebski wrote:
+> Timur Tabi wrote:
 > 
-> gitk would need to be modified to only run enough of the commit tree
-> to draw what is displayed in the window.  As you page down it would
-> retrive more commits if needed. There is no need for gitk to run 250K
-> commits when I'm usually never going to look at them all. Of course
-> this may mean some rework for gitk.
+>> Everything works.  However, if I do this:
+>>
+>> git-send-email --from timur@freescale.com --to  \
+>>    --smtp-server remotesmtp.freescale.net patchfile 
+>>
+> 
+> What do you expect when you specify _empty_ To: header?
 
-Or remembering to set --max-count or --max-age parameters to gitk (which are
-then passed to git-rev-list).
+Sorry, that was a bad cut-and-paste.  I don't know what happened.  That line is supposed to read:
+
+git-send-email --from timur@freescale.com --to timur@tabi.org --smtp-server remotesmtp.freescale.net patchfile
+
+The error message I get is the same:
+
+(mbox) Adding cc: Timur Tabi <timur@freescale.com> from line 'From: Timur Tabi <timur@freescale.com>'
+(sob) Adding cc: Timur Tabi <timur@freescale.com> from line 'Signed-off-by: Timur Tabi <timur@freescale.com>
+'
+5.0.0 <Timur Tabi <timur@freescale.com>... Unbalanced '<'
+
+I do have some news.  This problem goes away if I don't specify the --smtp-server parameter.
+
+> 
+> I use git-send-email from time to time; I always specify From:, 
+> either entering it when prompted, or using --from parameter.
+> The fact that it didn't fill default value from committer/author
+> core.author+core.email is I guess a bug...
+
+Like I said, I think the bug is in the call to readline().  Like I said, I don't know Perl, but from the documentation I have read, I don't think readline() takes two parameters.
+
+     do {
+         $_ = $term->readline("Who should the emails appear to be from? ",
+             $from);
+     } while (!defined $_);
+
+     $from = $_;
+
+$from does contain the correct value when readline() is called.  The problem is that $_ contains nothing, which causes $from to be erased.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Timur Tabi
+Linux Kernel Developer @ Freescale
