@@ -1,91 +1,70 @@
-From: linux@horizon.com
-Subject: Re: Change set based shallow clone
-Date: 8 Sep 2006 14:42:15 -0400
-Message-ID: <20060908184215.31789.qmail@science.horizon.com>
-References: <9e4733910609071923tf1c49f6o70419e961e9eb66f@mail.gmail.com>
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 08 20:42:56 2006
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: Add git-archive [take #2]
+Date: Fri, 08 Sep 2006 22:21:12 +0200
+Message-ID: <4501D0B8.8060103@lsrfire.ath.cx>
+References: <cda58cb80609050516v699338b9y57fd54f50c66e49e@mail.gmail.com>	<7vfyf6ce29.fsf@assigned-by-dhcp.cox.net>	<44FED12E.7010409@innova-card.com>	<7vac5c7jty.fsf@assigned-by-dhcp.cox.net>	<cda58cb80609062332p356bd26bw852e31211c43d1ac@mail.gmail.com>	<7v1wqo400b.fsf@assigned-by-dhcp.cox.net>	<44FFD00E.5040305@innova-card.com>	<7vr6yo2isu.fsf@assigned-by-dhcp.cox.net>	<450019C3.4030001@innova-card.com> <7v8xkvqjlq.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Franck <vagabon.xyz@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 08 22:21:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLlJ2-0005WI-St
-	for gcvg-git@gmane.org; Fri, 08 Sep 2006 20:42:25 +0200
+	id 1GLmqq-0001d2-5b
+	for gcvg-git@gmane.org; Fri, 08 Sep 2006 22:21:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750831AbWIHSmV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Sep 2006 14:42:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750829AbWIHSmV
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 14:42:21 -0400
-Received: from science.horizon.com ([192.35.100.1]:9800 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S1750726AbWIHSmT
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Sep 2006 14:42:19 -0400
-Received: (qmail 31790 invoked by uid 1000); 8 Sep 2006 14:42:15 -0400
-To: jonsmirl@gmail.com, linux@horizon.com
-In-Reply-To: <9e4733910609071923tf1c49f6o70419e961e9eb66f@mail.gmail.com>
+	id S1751199AbWIHUVU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 8 Sep 2006 16:21:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751200AbWIHUVU
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 16:21:20 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:31185
+	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S1751199AbWIHUVU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Sep 2006 16:21:20 -0400
+Received: from [10.0.1.3] (p508E5573.dip.t-dialin.net [80.142.85.115])
+	by neapel230.server4you.de (Postfix) with ESMTP id 4BB5F19023;
+	Fri,  8 Sep 2006 22:21:18 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.5 (Windows/20060719)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v8xkvqjlq.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26704>
 
-Thanks for making suggestions.  It's easier to knock straw men down
-than make them.  But forgive me if I have fun pointing out the holes...
+Junio C Hamano schrieb:
+> Franck Bui-Huu <vagabon.xyz@gmail.com> writes:
+>=20
+>> I'm sending a new version of the patchset which allows=20
+>> 'git-archive' and 'git-upload-archive' command. I tried to take=20
+>> into account all feedbacks made by Junio and Rene, but there are=20
+>> still some open points.
+>>=20
+>> 1/ Allow 'git-upload-archive' command to enable/disable some=20
+>> formats. This should be done by 'git-upload-archive'.
+>=20
+> Perhaps.  I was thinking about the way how a site administrator can=20
+> configure such when upload-archive is spawned via git-daemon (for=20
+> users coming from ssh and spawn an upload-archive on their own, it's=20
+> their own process and upload-archive has no business deciding what is
+>  allowed and what is forbidden).  Not very many clean ways I can
+> think of unfortunately.
 
->> Okay.  Now, the server hasn't heard of one or more of those commit
->> objects, because they're local changes.  What then?
->
-> Toss them, if they don't exist on the server the server is going to be
-> able to send any objects for them.
+Mmpf, ssh is (one of the things) in my blind spot.  Do you mean a
+ssh+git-shell connection?  One could argue that since this is a
+restricted connection anyway upload-archive _has_ a right to restrict
+archive format etc., too.  On a full, unrestricted ssh connection one
+can start git-archive directly.  I'd do that anyway because I'm used to
+do this with tar. ;-)
 
-Er... that makes "git pull git://git.other-hacker.personal/dir"
-impossible.  There's a reason that git can handle this as it presently
-exists: 
-                  a-b-c-d-e-f <-- HEAD
-                 /
-Hacker 1: o-o-o-o <-- origin
+Anyway, I think having config options for git-upload-archive for
+restricting formats and compression levels is as clean as we can get in
+the absence of a way for upload-archive to detect which protocol is
+used for the current connection.  Mmh, maybe an environment variable
+which is set by the daemon can be used?  This is no dirtier than what
+webservers do..
 
-Hacker 2: o-o-o-o-o-o <-- origin
-                     \
-                      v-w-x-y <-- HEAD
-
-Suppose hacker 2, who happened to sync with upstream more recently,
-wants to pull from hacker 1, in the hopes of building
-
-                  a-b-c-d-e-f
-                 /           \
-Hacker 2: o-o-o-o-o-o         z <-- HEAD
-                     \       /
-                      v-w-x-y
-
-This works now, and should continue to work.
-
-> Client would track this incrementally  and not recompute it each time.
-
-Yes, this is probably possible.  I haven't worked it out, but given a
-cache of precomputed (commit,depth) numbers, you can trace back from the
-new heads until you hit a cache entry.
-
-> If you follow the links in what looks to be a dangling object sooner
-> or latter you will run into the root object or a 'not present' object.
-> If you hit one of those the objects are not dangling and should be
-> preserved.
-
-I don't understand.  It seems like you're saying that any commit without an
-ancestor, and all objects recursively pointing to it, are not garbage.
-How would anything ever get declared garbage in this case?
-
-> Here is another way to look at the shallow clone problem. The only
-> public ids in a git tree are the head and tag pointers. Send these to
-> the client. Now let's modify the git tools to fault the full objects
-> in one by one from the server whenever a git operation needs the
-> object.  Dangling references would point to 'not-present' objects.
-
-Er... that would fault in a gigabyte the first time someone ran gitk,
-or several other history-browsing commands.  Don't you need a way to say
-"tell the user this isn't present and will take an hour to download"?
-
-
-Well, thinking, there are actually two shallow clone possibilities:
-1) Don't load the unwanted commit objects
-2) Clone the commit objects, but not their trees.
-
-The latter would let you browse the commit history, at least.
+Ren=E9
