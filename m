@@ -1,53 +1,89 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Move color option parsing out of diff.c and into color.[ch]
-Date: Fri, 08 Sep 2006 14:19:18 -0700
-Message-ID: <7vpse6gip5.fsf@assigned-by-dhcp.cox.net>
-References: <20060908073452.GA25343@coredump.intra.peff.net>
-	<20060908080318.GA3771@coredump.intra.peff.net>
-	<7vk64eivzj.fsf@assigned-by-dhcp.cox.net>
-	<20060908091206.GA5758@coredump.intra.peff.net>
+From: Timur Tabi <timur@freescale.com>
+Subject: Problem with send-email
+Date: Fri, 08 Sep 2006 16:11:25 -0500
+Organization: Freescale
+Message-ID: <4501DC7D.5000509@freescale.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 08 23:19:05 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Sep 08 23:28:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLnkX-0004wK-0n
-	for gcvg-git@gmane.org; Fri, 08 Sep 2006 23:18:57 +0200
+	id 1GLnta-0006X9-9I
+	for gcvg-git@gmane.org; Fri, 08 Sep 2006 23:28:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751261AbWIHVSx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Sep 2006 17:18:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751262AbWIHVSx
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 17:18:53 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:8119 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751261AbWIHVSx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Sep 2006 17:18:53 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060908211852.BDPQ6077.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 8 Sep 2006 17:18:52 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id KxJt1V0061kojtg0000000
-	Fri, 08 Sep 2006 17:18:53 -0400
-To: Jeff King <peff@peff.net>
-In-Reply-To: <20060908091206.GA5758@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 8 Sep 2006 05:12:06 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751166AbWIHV2P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Sep 2006 17:28:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751163AbWIHV2P
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 17:28:15 -0400
+Received: from de01egw02.freescale.net ([192.88.165.103]:37828 "EHLO
+	de01egw02.freescale.net") by vger.kernel.org with ESMTP
+	id S1751203AbWIHVL1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Sep 2006 17:11:27 -0400
+Received: from de01smr02.am.mot.com (de01smr02.freescale.net [10.208.0.151])
+	by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id k88LNvR7005549
+	for <git@vger.kernel.org>; Fri, 8 Sep 2006 14:23:57 -0700 (MST)
+Received: from [10.82.19.119] (ld0169-tx32.am.freescale.net [10.82.19.119])
+	by de01smr02.am.mot.com (8.13.1/8.13.0) with ESMTP id k88LBPM7028377
+	for <git@vger.kernel.org>; Fri, 8 Sep 2006 16:11:26 -0500 (CDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.8.0.5) Gecko/20060720 SeaMonkey/1.0.3
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26711>
 
-Jeff King <peff@peff.net> writes:
+I'm having two problems with git-send-email.
 
-> I'm assuming you can mark both of those up yourself rather than having
-> me resend?
+Problem #1:
 
-Sure, that's easy enough.
+I don't know Perl, but I think there's something wrong with this code:
 
-Thanks for the patch.
+if (!defined $from) {
+	$from = $author || $committer;
+         print "$from\n";
+	do {
+		$_ = $term->readline("Who should the emails appear to be from? ",
+			$from);
+	} while (!defined $_);
+
+	$from = $_;
+	print "Emails will be sent from: ", $from, "\n";
+	$prompting++;
+}
+
+I don't think the call to readline() is working.  Specifically, the last parameter, $from, is being ignored.  When I call git-send-email without specifying a --from parameter, this code is executed.  But this is what I see:
+
+Timur Tabi <timur@freescale.com>
+Who should the emails appear to be from?
+Emails will be sent from:
+
+This happens when I press ENTER at the "Who should the emails appear to be from?" prompt.  I'm expecting it to assign the default value, which is displayed right above it.  But instead, $from is erased, and so my email doesn't have a From: line.
+
+Problem #2:
+
+I cannot use send-email to send a patch to anyone but myself.  If I do this:
+
+git-send-email --from timur@freescale.com --to timur@freescale.com --smtp-server remotesmtp.freescale.net patchfile
+
+Everything works.  However, if I do this:
+
+git-send-email --from timur@freescale.com --to  --smtp-server remotesmtp.freescale.net patchfile
+
+I get this:
+
+(mbox) Adding cc: Timur Tabi <timur@freescale.com> from line 'From: Timur Tabi <timur@freescale.com>'
+(sob) Adding cc: Timur Tabi <timur@freescale.com> from line 'Signed-off-by: Timur Tabi <timur@freescale.com>'
+5.0.0 <Timur Tabi <timur@freescale.com>... Unbalanced '<'
+
+I think that last line is a response from the SMTP server.  My guess is that there's something wrong with this line:
+
+		print $sm "$header\n$message";
+
+Maybe my SMTP server sees the "From: Timur Tabi <timur@freescale.com>" that's at the top of $message and gets confused?
+
+-- 
+Timur Tabi
+Linux Kernel Developer @ Freescale
