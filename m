@@ -1,78 +1,99 @@
-From: Franck Bui-Huu <vagabon.xyz@gmail.com>
-Subject: Re: Add git-archive [take #2]
-Date: Fri, 08 Sep 2006 10:18:26 +0200
-Message-ID: <45012752.4070300@innova-card.com>
-References: <cda58cb80609050516v699338b9y57fd54f50c66e49e@mail.gmail.com>	<7vfyf6ce29.fsf@assigned-by-dhcp.cox.net>	<44FED12E.7010409@innova-card.com>	<7vac5c7jty.fsf@assigned-by-dhcp.cox.net>	<cda58cb80609062332p356bd26bw852e31211c43d1ac@mail.gmail.com>	<7v1wqo400b.fsf@assigned-by-dhcp.cox.net>	<44FFD00E.5040305@innova-card.com>	<7vr6yo2isu.fsf@assigned-by-dhcp.cox.net>	<450019C3.4030001@innova-card.com> <7v8xkvqjlq.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Franck <vagabon.xyz@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Change set based shallow clone
+Date: Fri, 08 Sep 2006 01:33:28 -0700
+Message-ID: <7v4pvikbaf.fsf@assigned-by-dhcp.cox.net>
+References: <9e4733910609071252ree73effwb06358e9a22ba965@mail.gmail.com>
+	<7vpse7tjp0.fsf@assigned-by-dhcp.cox.net>
+	<46a038f90609072054u5ec8bc46x9878a601953b2c5d@mail.gmail.com>
+	<7vac5ancvo.fsf@assigned-by-dhcp.cox.net>
+	<46a038f90609080015u56daae78u9d78584edae7fb72@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Franck <vagabon.xyz@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 08 10:18:31 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 08 10:33:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLbZ9-00040I-52
-	for gcvg-git@gmane.org; Fri, 08 Sep 2006 10:18:23 +0200
+	id 1GLbnV-00072h-OZ
+	for gcvg-git@gmane.org; Fri, 08 Sep 2006 10:33:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750997AbWIHISU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Sep 2006 04:18:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751001AbWIHISU
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 04:18:20 -0400
-Received: from nz-out-0102.google.com ([64.233.162.204]:64623 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1750995AbWIHIST (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Sep 2006 04:18:19 -0400
-Received: by nz-out-0102.google.com with SMTP id n1so251265nzf
-        for <git@vger.kernel.org>; Fri, 08 Sep 2006 01:18:18 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        b=nr5Iw9y+xaN+HfmvbKT3YBPstHZOSvnzkYCQ/XdCmhFmCdzNFCtKq0hYtIp6fosKkaxgLHi9A95VDUeyHxQZFp6t2972iUAeinDaqjZCacFk7GRHce4l6BGKYBoMW7iIyugX+Yohg6N3vPuIvRS4Sj/zzGD1UGbHlqRQUu22eqA=
-Received: by 10.65.237.19 with SMTP id o19mr1504687qbr;
-        Fri, 08 Sep 2006 01:18:18 -0700 (PDT)
-Received: from ?192.168.0.24? ( [81.252.61.1])
-        by mx.gmail.com with ESMTP id q16sm1663519qbq.2006.09.08.01.18.16;
-        Fri, 08 Sep 2006 01:18:18 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.4 (X11/20060614)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v8xkvqjlq.fsf@assigned-by-dhcp.cox.net>
+	id S1751029AbWIHIdK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Sep 2006 04:33:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751045AbWIHIdK
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Sep 2006 04:33:10 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:911 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1751029AbWIHIdI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Sep 2006 04:33:08 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060908083307.HXJE12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 8 Sep 2006 04:33:07 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id KkYz1V00S1kojtg0000000
+	Fri, 08 Sep 2006 04:33:00 -0400
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90609080015u56daae78u9d78584edae7fb72@mail.gmail.com>
+	(Martin Langhoff's message of "Fri, 8 Sep 2006 19:15:53 +1200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26684>
 
-Junio C Hamano wrote:
-> Franck Bui-Huu <vagabon.xyz@gmail.com> writes:
->>
->>   2/ Can I remove 'git-upload-tar' command ?
->>   3/ Should I kill 'git-zip-tree' command ?
-> 
-> We do not deprecate commands that easily.  Notice we have kept
-> git-resolve for a long time (we should remove it and by now it
-> should be safe)?
-> 
+"Martin Langhoff" <martin.langhoff@gmail.com> writes:
 
-heh ? I've just noticed that you removed 'git-upload-tar' from
-master branch (commit d9edcbd6061a392c1315ab6f3aedb9992a3c01b1).
+> As far as I can see, this would not need any change to the upload-pack
+> protocol.
 
-Futhermore I was thinking about 'git-zip-tree' removal because
-it's a very recent command. It shouldn't hurt to remove it now
-and make our life easier, not sure though...
+That I have to disagree.  Take your earlier example of "I have X
+and I learned you have A B C D".  Now the fetch that got X was a
+commit-only one (but you have full tree for X), but you got X
+from somebody else, not the uploader you are talking with right
+now.  There is a common ancestor Y somewhere behind X, but
+between Y and X you lack trees and blobs.
 
-> Especially tar-tree --remote and upload-archive talks different
-> protocols, so it is not like not removing it is making your life
-> more difficult.  Perhaps after next release (1.4.3 or 1.5?  I
+How would the current protocol work (I am explaining that it
+won't be "not need any change")?  After you express interest for
+A, B, C, D with "want" messages, you start telling "have X",
+"have X~1", have "X~2",... to the uploader (X, X~1 etc. are
+object names not symbolic).  Eventually the uploader would
+recognize Y that is an ancestor of X that it has and will Ack
+it, you stop traversing the ancestor of an acked one and say
+"done".  So now we have a common ancestor and the upload side
+knows it can omit commits behind  that common commit Y, trees
+and blobs contained in Y.
 
-since you removed 'git-upload-tar', it would be good to remove
-'--remote' option from 'git-tar-tree' command as well. 
+See an Oops here?  You do NOT have trees and blobs associated
+with commit Y.
 
-> In any case, don't make removal of them as part of the series
-> please.  Let's make sure this new toy works well first, and then
-> start talking about removing things that have become obsolete.
-> 
+I am not saying we should not change the protocol.  I am just
+trying to explain that the problem is not something you can
+fudge without changing the protocol.
 
-OK, I'll let you do that.
+As a first level approximation, we could in addition to the
+commit object name have a bit that says "do I have trees and
+blobs associated with the commit" bit on each "have" message (by
+the way, this is _expensive_.  You have to traverse down the
+tree contained in each commit using has_sha1_file() recursively
+to see if you have anything missing from _each_ commit you send
+to the other).  Alternatively, you can say "I have this commit,
+but I do not have this tree and I do not even know if I have
+blobs needed to complete that tree because I do not know what
+that tree I am missing contains -- I may have them, I may not. I
+truly do not know" to convey the same information.
 
-		Franck
+Think about it a bit -- saying "I know I am missing this tree"
+is one thing, but if we end up saying "I do not even know what I
+am missing", it is like saying "don't care what I say, just send
+everything to me".  Are we gaining much by having only commit
+objects on our end?
+
+Once you end up sending a full tree, it is like doing an initial
+checkout over CVS when you think you are incrementally fetching,
+and you are already lost.  For example, a recent kernel tarball
+compressed with gzip is around 50MB; the history for 34k commits
+since 2.6.12-rc2 fully packed is slightly less than 150MB.
