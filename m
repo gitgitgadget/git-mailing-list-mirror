@@ -1,151 +1,164 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Change set based shallow clone
-Date: Thu, 7 Sep 2006 22:23:18 -0400
-Message-ID: <9e4733910609071923tf1c49f6o70419e961e9eb66f@mail.gmail.com>
-References: <9e4733910609071252ree73effwb06358e9a22ba965@mail.gmail.com>
-	 <20060908010112.6962.qmail@science.horizon.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/4] Add git-archive
+Date: Thu, 07 Sep 2006 19:35:12 -0700
+Message-ID: <7vodtrnl0f.fsf@assigned-by-dhcp.cox.net>
+References: <450019C3.4030001@innova-card.com>
+	<11576347251776-git-send-email-vagabon.xyz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 08 04:23:45 2006
+X-From: git-owner@vger.kernel.org Fri Sep 08 04:35:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLW1k-0001BL-N0
-	for gcvg-git@gmane.org; Fri, 08 Sep 2006 04:23:33 +0200
+	id 1GLWCp-0002mK-TU
+	for gcvg-git@gmane.org; Fri, 08 Sep 2006 04:35:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752037AbWIHCXU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Sep 2006 22:23:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752038AbWIHCXU
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 22:23:20 -0400
-Received: from nz-out-0102.google.com ([64.233.162.201]:56995 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1752037AbWIHCXT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Sep 2006 22:23:19 -0400
-Received: by nz-out-0102.google.com with SMTP id n1so218941nzf
-        for <git@vger.kernel.org>; Thu, 07 Sep 2006 19:23:19 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bq3GwksBnpOmApG+T+hayz/zZPwmaN9HHm3YRv+G+QQrhGXi426WNPNQFxsKcsFd9USJNvc2AhdR5FqsrDMzXre9woZxph8FgP4TNAUyhpgqsygwJ+0zoe2rWUNZ/FAu1ZGssWfTWLDfqwuccQvBaWeIZCdPIziBtTLfNmAQGJg=
-Received: by 10.35.46.11 with SMTP id y11mr1830853pyj;
-        Thu, 07 Sep 2006 19:23:18 -0700 (PDT)
-Received: by 10.35.60.14 with HTTP; Thu, 7 Sep 2006 19:23:18 -0700 (PDT)
-To: "linux@horizon.com" <linux@horizon.com>
-In-Reply-To: <20060908010112.6962.qmail@science.horizon.com>
-Content-Disposition: inline
+	id S1752052AbWIHCe4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Sep 2006 22:34:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752054AbWIHCe4
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Sep 2006 22:34:56 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:63728 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1752052AbWIHCey (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Sep 2006 22:34:54 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060908023454.YSTX2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 7 Sep 2006 22:34:54 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Keam1V0091kojtg0000000
+	Thu, 07 Sep 2006 22:34:46 -0400
+To: Franck Bui-Huu <vagabon.xyz@gmail.com>
+In-Reply-To: <11576347251776-git-send-email-vagabon.xyz@gmail.com> (Franck
+	Bui-Huu's message of "Thu, 7 Sep 2006 15:12:02 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26673>
 
-On 7 Sep 2006 21:01:12 -0400, linux@horizon.com <linux@horizon.com> wrote:
-> > When the client wants a shallow clone it starts by telling the server
-> > all of the HEADs and how many change sets down each of those HEADs it
-> > has locally. That's a small amout of data to transmit and it can be
-> > easily tracked. Let's ignore merged branches for the moment.
->
-> When you say "change set", I'm going to assume you mean "commit object".
->
-> Okay.  Now, the server hasn't heard of one or more of those commit
-> objects, because they're local changes.  What then?
+Franck Bui-Huu <vagabon.xyz@gmail.com> writes:
 
-Toss them, if they don't exist on the server the server is going to be
-able to send any objects for them.
+> The main reason for making this API is to avoid using
+> git-{tar,zip}-tree commands, hence making them useless. Maybe it's
+> time for them to die ?
 
-> Another issue is that a client with a nearly-full copy has to do a full
-> walk of its history to determine the depth count that it has.  That can
-> be more than 2500 commits down in the git repository, and worse in the
-> mozilla one.  It's actually pretty quick (git-show-branch --more=99999
-> will do it), but git normally tries to avoid full traversals like the
-> plague
+The answer is "not yet" and the above paragraph, at least the
+last sentence and half, do not belong to the commit log message.
 
-Client would track this incrementally  and not recompute it each time.
+> It also implements remote operations by defining a very simple
+> protocol: it first sends the name of the specific uploader followed
+> the repository name (git-upload-tar git://example.org/repo.git).
+> Then it sends options. It's done by sending a sequence of one
+> argument per packet, with prefix "argument ", followed by a flush.
 
-> Oh, and was "for the moment" supposed to last past the end of your e-mail?
-> I don't see what to do if there's a merge in the history and the depth
-> on different sides is not equal.  E.g. the history looks like:
->
-> ...a---b---c---d---e---f
->                   /     \
->       ...w---x---y       HEAD
->                         /
->         ...p---q---r---s
->
-> Where "..." means that there are ancestors, but they're missing.
->
-> > If you haven't updated for six months when the server walks backwards
-> > for 10 change sets it's not going to find anything you have locally.
-> > When this situation is encountered the server needs to generate a
-> > delta just for you between one of the change sets it knows you have
-> > and one of the 10 change sets you want. By generating this one-off
-> > delta it lets you avoid the need to fetch all of the objects back to a
-> > common branch ancestor. The delta functions as a jump over the
-> > intervening space.
->
-> Your choice of words keeps giving me the impression that you believe
-> that a "change set" is a monolithic object that includes all the changes
-> made to all the files.  It's neither monolithic nor composed of changes.
-> A commit objects consists soley of metadata, and contains a pointer to
-> a tree object, which points recursively to the entire project state at
-> the time of the commit.
+I haven't looked the existing code closely recently, but my
+impression was that if you want to make the protocol operable
+with both git-daemon, ssh target, and local pipe, it is easier
+to make the request message exactly like you would invoke the
+remote command over the ssh connection in the target repository
+(see connect.c).  I am not sure how well the above
+"git-upload-tar reponame" would work.  I would have expected it
+to be "git-upload-archive reponame" with the first on-protocol
+parameter being "--fmt=tar".
 
-I was using change set to refer to snapshot.
+Does your code work well when you run the remote archive
+fetching locally, i.e. "git-archive --remote=../other.git",
+I wonder?
 
-> There is massive sharing of component objects between successive
-> commits, but they are NOT stored as deltas relative to one another.
+... goes on and reads the patch, notices that the protocol
+command is git-upload-archive with the archive location.  Which
+is GOOD.  It is just the above description is a tad stale.
 
-Yes, most of the sharing occurs via the tree structures.
+> diff --git a/archive.h b/archive.h
+> new file mode 100644
+> index 0000000..f33398e
+> --- /dev/null
+> +++ b/archive.h
+> @@ -0,0 +1,41 @@
+> +#ifndef ARCHIVE_H
+> +#define ARCHIVE_H
+> +
+> +#define MAX_EXTRA_ARGS	32
+> +#define MAX_ARGS	(MAX_EXTRA_ARGS + 32)
+> +
+> +struct archiver_args {
+> +	const char *base;
+> +	struct tree *tree;
+> +	const unsigned char *commit_sha1;
+> +	time_t time;
+> +	const char **pathspec;
+> +	void *extra;
+> +};
+> +
+> +typedef int (*write_archive_fn_t)(struct archiver_args *);
+> +
+> +typedef void *(*parse_extra_args_fn_t)(int argc, const char **argv);
+> +
+> +struct archiver {
+> +	const char *name;
+> +	const char *remote;
+> +	struct archiver_args args;
+> +	write_archive_fn_t write_archive;
+> +	parse_extra_args_fn_t parse_extra;
+> +};
+> +
+> +extern struct archiver archivers[];
 
-> The pack-forming heuristics tend to achieve that effect, but it is not
-> guaranteed or required by design.
->
-> Please understand that, deep in your bones: git is based on snapshots,
-> not deltas.
->
->
-> But okay, so we've sent the client the latest 10 commits, with a dangling
-> tail at the bottom.  (The files may have been sent as deltas against the
-> old state, or just fresh compressed copies, but that doesn't matter.)
-> Then the heads like "origin" have been advanced.
->
-> So the old commit history is now unreferenced garbage; nothing points
-> to it, and it will be deleted next time git-prune is run.  Is that
-> the intended behavior?  Or should updates to an existing clone always
-> complete the connections?
+I thought the reason for archiver_args (and archiver_args.extra)
+was because we wanted to avoid storing per invocation parameters
+in static variables, which would hamper reentrancy.  If one
+process is creating two archives, both format=tar, it might be
+reasonable for the code (future archiver enhancement, not your
+current implementation of git-archive driver) to parse two sets
+of parameters first (to get separate archiver instances) and
+call their write_archive, but if archivers[] list has the
+per-invocation parameter args then we are back to square one,
+aren't we?
 
-If you follow the links in what looks to be a dangling object sooner
-or latter you will run into the root object or a 'not present' object.
-If you hit one of those the objects are not dangling and should be
-preserved.
+Reentrancy may not matter, but in any case the above archiver_args
+is not helping enough to improve the situation, I think.
 
+Actually you may be able to get away by returning a copy of
+archivers[] element from get_archiver() when we need reentrancy
+in the future.  Of course the caller needs to free() it when it
+is done with it, since it is a per-invocation handle.
 
+> +void parse_treeish_arg(const char **argv, struct archiver_args *ar_args,
+> +		       const char *prefix)
+> +{
+> +...
+> +	//free(tree);
+> +	ar_args->tree = tree;
+> +	ar_args->commit_sha1 = commit_sha1;
+> +	ar_args->time = archive_time;
+> +}
 
-Here is another way to look at the shallow clone problem. The only
-public ids in a git tree are the head and tag pointers. Send these to
-the client. Now let's modify the git tools to fault the full objects
-in one by one from the server whenever a git operation needs the
-object.  Dangling references would point to 'not-present' objects.
+Stray comment...
 
-For a typical user using a model like this, how much of the Mozilla
-repository would end up being faulted into their machine? Mozilla has
-2M objects and 250K commits in a 450MB pack. My estimate is that a
-typical user is going to touch less than 200K of the objects and maybe
-less than 100K.
+Overall looks good, except you already know your issue #4 ;-).
 
-Of course always faulting in full objects is wasteful. A smart scheme
-would be to try and anticipate with some read ahead and figure out
-ways to send deltas. Tools like gitk would need to only touch the
-objects needed to draw the screen and not run the full commit chain at
-startup.
+I haven't had a chance to look at connect.c code but I have a
+mild suspicion that full reuse of upload-pack code by moving
+everything into connect.c is not possible; at least the initial
+handshake to determine if sideband is to be used is specific to
+upload-pack protocol which needed to bolt-it-on to an existing
+protocol to support older clients and servers, and I do not
+think we would want to carry that baggage for this new protocol.
 
-This experiment can be done fairly easily. Put all of the kernel
-source into a single pack file.  Modify the git tools to set a bit in
-the index file if an object is accessed. Use the pack for a few days
-and then dump out the results.
+The pipe setup code in upload-pack.c::create_pack_file() is
+quite specific to upload-pack.  I am not sure how much of it can
+be reused by refactoring, but it may be worth a try.
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+The part that reads from fd 1 and 2 and to multiplex into the
+stream on the uploader side (the main while() loop in the same
+create_pack_file() function, and send_client_data() function),
+and the code to setup and demultiplex the bands on the
+downloader side (setup_sideband() in fetch-clone.c) should be
+reusable as-is, I think.  They are defined as static so you
+would need to move the code around to make them available from
+elsewhere.
