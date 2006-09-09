@@ -1,72 +1,66 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: support perl 5.6
-Date: Sun, 10 Sep 2006 00:20:09 +0200
-Organization: At home
-Message-ID: <edveli$p2m$1@sea.gmane.org>
-References: <20060909145914.GA25289@liacs.nl>
+From: Jeff Garzik <jeff@garzik.org>
+Subject: Re: {RFC/PATCH] micro-optimize get_sha1_hex()
+Date: Sat, 09 Sep 2006 18:33:39 -0400
+Message-ID: <45034143.4050308@garzik.org>
+References: <7vzmd8vh6q.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Sun Sep 10 00:20:05 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 10 00:33:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GMBB7-000531-RS
-	for gcvg-git@gmane.org; Sun, 10 Sep 2006 00:19:58 +0200
+	id 1GMBOW-0007P9-IF
+	for gcvg-git@gmane.org; Sun, 10 Sep 2006 00:33:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964972AbWIIWTw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 9 Sep 2006 18:19:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964973AbWIIWTw
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Sep 2006 18:19:52 -0400
-Received: from main.gmane.org ([80.91.229.2]:62898 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S964972AbWIIWTu (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Sep 2006 18:19:50 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GMBAm-0004yE-CT
-	for git@vger.kernel.org; Sun, 10 Sep 2006 00:19:36 +0200
-Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 10 Sep 2006 00:19:36 +0200
-Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 10 Sep 2006 00:19:36 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S964984AbWIIWdp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Sep 2006 18:33:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964985AbWIIWdp
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Sep 2006 18:33:45 -0400
+Received: from srv5.dvmed.net ([207.36.208.214]:14977 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S964984AbWIIWdo (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Sep 2006 18:33:44 -0400
+Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75] helo=[10.10.10.99])
+	by mail.dvmed.net with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
+	id 1GMBOO-0005ng-GQ; Sat, 09 Sep 2006 22:33:41 +0000
+User-Agent: Thunderbird 1.5.0.5 (X11/20060808)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmd8vh6q.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Score: -4.3 (----)
+X-Spam-Report: SpamAssassin version 3.1.3 on srv5.dvmed.net summary:
+	Content analysis details:   (-4.3 points, 5.0 required)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26773>
 
-Sven Verdoolaege wrote:
+Junio C Hamano wrote:
+>  int get_sha1_hex(const char *hex, unsigned char *sha1)
+>  {
+>  	int i;
+>  	for (i = 0; i < 20; i++) {
+> -		unsigned int val = (hexval(hex[0]) << 4) | hexval(hex[1]);
+> -		if (val & ~0xff)
+> +		unsigned int v, w, val;
+> +		v = *hex++;
+> +		if ((v < '0') || ('f' < v) ||
+> +		    ((v = hexval[v-'0']) == 255))
+> +			return -1;
+> +		w = *hex++;
+> +		if ((w < '0') || ('f' < w) ||
+> +		    ((w = hexval[w-'0']) == 255))
+>  			return -1;
+> -		*sha1++ = val;
+> -		hex += 2;
+> +		*sha1++ = (v << 4) | w;
 
-> +# returns pipe reading from git command with given arguments
-> +sub git_pipe {
-> +=A0=A0=A0=A0=A0=A0=A0open my $fd, "-|", join(' ', git_cmd(), @_) or =
-return undef;
-> +=A0=A0=A0=A0=A0=A0=A0return $fd;
-> +}
-> +
+Why not just make the table include the range of all possible 
+characters?  That would eliminate some comparisons and subtractions 
+against '0'.
 
-I'm sorry, but this is not enough. For example the $file_name argument
-should be quoted in shell, i.e. in three argument magic open "-|". So
-either you return to your old patch, which changes each list form of op=
-en
-"-|" into old three argument form (which adds penalty of additional she=
-ll
-invocation, and is prone to shell interpretation of arguments), and
-sometimes add quotes (e.g. "... \'$file_name\' ..."), or (what would be
-better) to reimplement list form of open "-|" using two argument forkin=
-g
-open "-|", and doing exec in child, a la "Safe Pipe Opens" in perlipc(3=
-pm).
+The end result would look more like the current (unpatched) form, except 
+with a function replaced by the table.
 
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+	Jeff
