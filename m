@@ -1,60 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/7] gitweb: Trying to improve history view speed
-Date: Sat, 09 Sep 2006 02:54:46 -0700
-Message-ID: <7vr6ylwejd.fsf@assigned-by-dhcp.cox.net>
-References: <200609061504.40725.jnareb@gmail.com> <edtuot$p76$2@sea.gmane.org>
-	<7vvenxwglc.fsf@assigned-by-dhcp.cox.net> <edu180$vvs$1@sea.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 09 11:54:51 2006
+From: linux@horizon.com
+Subject: Re: Change set based shallow clone
+Date: 9 Sep 2006 06:31:57 -0400
+Message-ID: <20060909103157.23388.qmail@science.horizon.com>
+Cc: git@vger.kernel.org, linux@horizon.com
+X-From: git-owner@vger.kernel.org Sat Sep 09 12:32:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLzXo-0003hi-3G
-	for gcvg-git@gmane.org; Sat, 09 Sep 2006 11:54:36 +0200
+	id 1GM08B-0001fp-10
+	for gcvg-git@gmane.org; Sat, 09 Sep 2006 12:32:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750955AbWIIJyX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Sep 2006 05:54:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751032AbWIIJyX
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Sep 2006 05:54:23 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:17819 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1750890AbWIIJyX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Sep 2006 05:54:23 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060909095422.UZAG6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 9 Sep 2006 05:54:22 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id L9uC1V00J1kojtg0000000
-	Sat, 09 Sep 2006 05:54:14 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <edu180$vvs$1@sea.gmane.org> (Jakub Narebski's message of "Sat,
-	09 Sep 2006 11:24:53 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751217AbWIIKb7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Sep 2006 06:31:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751220AbWIIKb7
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Sep 2006 06:31:59 -0400
+Received: from science.horizon.com ([192.35.100.1]:36135 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S1751217AbWIIKb7
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Sep 2006 06:31:59 -0400
+Received: (qmail 23389 invoked by uid 1000); 9 Sep 2006 06:31:57 -0400
+To: mcostalba@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26743>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+> If the out of order revisions are a small amount of the total then
+> could be possible to have something like
+> 
+> git rev-list --topo-order --with-appended-fixups HEAD
+> 
+> Where, while git-rev-list is working _whithout sorting the whole tree
+> first_, when finds an out of order revision stores it in a fixup-list
+> buffer and *at the end* of normal git-rev-lsit the buffer is flushed
+> to receiver, so that the drawing logic does not change and the out of
+> order revisions arrive at the end, already packed, sorted and prepared
+> by git-rev-list.
 
-> By the way, what do you all do with the "failed experiments", to have them
-> saved somewhere, but to not make trouble for normal operations?
+I don't think I understand your proposal.  The problem arises when
+git-rev-list finds a commit that it should have listed before something
+that it has already output.
 
-I usually keep them under .git/refs/tags/hold/.  Yesterday (as I
-said in another thread) I dropped the 64-bit packfile index
-topic I had in jc/pack-toc topic from "pu" by:
+Just for example:
 
-	git tag hold/jc/pack-toc jc/pack-toc
-	git branch -D jc/pack-toc
+Commit D: Ancestor B
+Commit B: Ancestor A
+Commit C: Ancestor B
 
-to shelve it and kill it.
+Commit C is the problem, because if git-rev-list has already output B,
+there's no way to back up and insert it in the right place.
 
-In theory, I should occasionally come back to them and see if
-they are worth keeping, but in practice they just keep piling up
-X-<.  I should find time to clean them up.
+How is waiting to output the already-behind-schedule commit C going
+to help anything?  The idea in gitk is to rewind the layout algorithm
+to before B was added, insert C, and replay from there.  This is
+most efficient if C is encountered as soon after its correct place
+as possible.
