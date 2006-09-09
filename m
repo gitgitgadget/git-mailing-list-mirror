@@ -1,117 +1,97 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
 Subject: Re: Change set based shallow clone
-Date: Sat, 9 Sep 2006 10:33:03 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609091022360.27779@g5.osdl.org>
-References: <9e4733910609071923tf1c49f6o70419e961e9eb66f@mail.gmail.com> 
- <20060908184215.31789.qmail@science.horizon.com> 
- <9e4733910609081413p32456768g280bdc9b232d7902@mail.gmail.com> 
- <Pine.LNX.4.64.0609081600530.27779@g5.osdl.org>  <17666.4936.894588.825011@cargo.ozlabs.ibm.com>
-  <Pine.LNX.4.64.0609081944060.27779@g5.osdl.org>  <17666.13716.401727.601933@cargo.ozlabs.ibm.com>
-  <Pine.LNX.4.64.0609082054560.27779@g5.osdl.org>
- <e5bfff550609090147q37d61f37j9c3e8ae6d3a0cf35@mail.gmail.com>
+Date: Sat, 9 Sep 2006 20:04:29 +0200
+Message-ID: <e5bfff550609091104s3709b82fld3057a07a84ae857@mail.gmail.com>
+References: <9e4733910609071923tf1c49f6o70419e961e9eb66f@mail.gmail.com>
+	 <20060908184215.31789.qmail@science.horizon.com>
+	 <9e4733910609081413p32456768g280bdc9b232d7902@mail.gmail.com>
+	 <Pine.LNX.4.64.0609081600530.27779@g5.osdl.org>
+	 <17666.4936.894588.825011@cargo.ozlabs.ibm.com>
+	 <Pine.LNX.4.64.0609081944060.27779@g5.osdl.org>
+	 <17666.13716.401727.601933@cargo.ozlabs.ibm.com>
+	 <Pine.LNX.4.64.0609082054560.27779@g5.osdl.org>
+	 <e5bfff550609090147q37d61f37j9c3e8ae6d3a0cf35@mail.gmail.com>
+	 <Pine.LNX.4.64.0609091022360.27779@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Paul Mackerras <paulus@samba.org>, Jon Smirl <jonsmirl@gmail.com>,
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Paul Mackerras" <paulus@samba.org>,
+	"Jon Smirl" <jonsmirl@gmail.com>,
 	"linux@horizon.com" <linux@horizon.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 09 19:33:28 2006
+	"Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 09 20:05:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GM6hr-00005W-0E
-	for gcvg-git@gmane.org; Sat, 09 Sep 2006 19:33:27 +0200
+	id 1GM7CJ-0004eq-Nf
+	for gcvg-git@gmane.org; Sat, 09 Sep 2006 20:04:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751333AbWIIRdN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Sep 2006 13:33:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751334AbWIIRdN
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Sep 2006 13:33:13 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:46561 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751333AbWIIRdM (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Sep 2006 13:33:12 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k89HX4nW004865
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 9 Sep 2006 10:33:04 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k89HX36I015248;
-	Sat, 9 Sep 2006 10:33:03 -0700
-To: Marco Costalba <mcostalba@gmail.com>
-In-Reply-To: <e5bfff550609090147q37d61f37j9c3e8ae6d3a0cf35@mail.gmail.com>
-X-Spam-Status: No, hits=-0.526 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.146 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964788AbWIISEc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Sep 2006 14:04:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964793AbWIISEb
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Sep 2006 14:04:31 -0400
+Received: from py-out-1112.google.com ([64.233.166.177]:25797 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S964788AbWIISEa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Sep 2006 14:04:30 -0400
+Received: by py-out-1112.google.com with SMTP id n25so1395122pyg
+        for <git@vger.kernel.org>; Sat, 09 Sep 2006 11:04:29 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jr+DN3LPqscElX9TNptcUvUQJNuMWucV78wabGFvGPzKevMXvWmJ+MKdMZdYVukFQuHhBK9Jaqv7FMLSv14kfFCx4oJK9Q9wayBhuzvHpFPveT+ouSJrb9uH6klBVsLx42OdZQ78Rs66G4g5VziNbJeLzCRopXcohwzWQkR/Eeo=
+Received: by 10.35.66.12 with SMTP id t12mr5975517pyk;
+        Sat, 09 Sep 2006 11:04:29 -0700 (PDT)
+Received: by 10.35.95.9 with HTTP; Sat, 9 Sep 2006 11:04:29 -0700 (PDT)
+To: "Linus Torvalds" <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0609091022360.27779@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26759>
 
+On 9/9/06, Linus Torvalds <torvalds@osdl.org> wrote:
+>
+>
+>  - output all revisions in the normal non-topological ordering
+>
+>  - when git-rev-list notices a topological sort error, it outputs a
+>    "FIXME" line, and restarts the whole thing - printing out the commits
+>    in the newly fixed ordering - and does it right the next time around
+>
 
+Sorry, but I don't understand why  you should restart the whole thing
+instead of store away the FIXME commit  and continue.
 
-On Sat, 9 Sep 2006, Marco Costalba wrote:
-> 
-> Perhaps is total idiocy but why do not implement the fix-up logic
-> directly in git-rev-list?
+If you read my previous e-mail in this thread perhaps it is better
+explained the whole idea.
 
-It's possible in theory, but in practice it's not worth it.
+Anyhow the basic is:
 
-Why?
+-git-rev-list starts outputting the data early (order is not guaranteed)
 
-Because you really want the _asynchronous_ nature of having a separate 
-user, that only shows _partial_ results.
+-before to mark for output a revision check if it breaks --topo-order
 
-In other words, we could reasonably easily make git-rev-list do something 
-like
+-if the above is true store the revision away and *do not send*
 
- - output all revisions in the normal non-topological ordering
+- at the end you get an early started steram of topological corrects
+revisions without
+preordering, just because you filter away the (few?) revisions that
+are not in order.
+The list you get is guaranteed to be in topo order although my not be complete.
 
- - when git-rev-list notices a topological sort error, it outputs a 
-   "FIXME" line, and restarts the whole thing - printing out the commits 
-   in the newly fixed ordering - and does it right the next time around
+- _then_  you send the missing revisions that where previously
+filtered out. At this stage the receiver has already drwan the graph,
+indeed it has start drwaing as soon as the first revisons arrived and
+*very important* receiver used old and fast topo-order parsing code.
 
- - it then continues doing this until it's totally exhausted the whole 
-   commit list and has done one final output in the proper topological 
-   ordering.
+- finally the fixup routine at receiver's end updates the graph with
+the info from the small set of out of order revisions filtered out
+before and sent at the end (only this small set is sent at the end).
 
-Possible? Yes.
+Sorry if it is not still clear, in the previous my e-mail in this
+thread there is also a small example that could be useful.
 
-BUT:
-
- - as long as git-rev-list is entirely single-threaded (and trust me, it's 
-   going to be that, because otherwise we'd be better off doing it in a 
-   separate process - like gitk), this means that it will be _entirely_ 
-   unaware of what has actually been _shown_, so it will restart a LOT 
-   more than the external interactive process would do. So it would be 
-   much worse than doing it externally and knowing what you've actually 
-   shown to the user (if you haven't shown the bad thing yet, there's no 
-   reason to restart).
-
- - Again, as long as it's single-threaded, git-rev-list will block once it
-   has filled up the pipeline between the processes, so instead of parsing 
-   everything in parallel with the "show it all", if will synchronize with 
-   the showing process all the time, and especially so when it needs to 
-   re-show the stuff that it already sent once. So it's also fairly 
-   inefficient.
-
-However, what you seem to imply is something different:
-
-> Where, while git-rev-list is working _whithout sorting the whole tree
-> first_, when finds an out of order revision stores it in a fixup-list
-> buffer and *at the end* of normal git-rev-lsit the buffer is flushed
-> to receiver, so that the drawing logic does not change and the out of
-> order revisions arrive at the end, already packed, sorted and prepared
-> by git-rev-list.
-
-But this is exactly what we already do. We flush things *at the end* 
-because that's when we actually know the ordering. And that's exactly why 
-"git-rev-list --topo-ordering" has a latency ranging from a few seconds to 
-a few minutes for large projects (depending on whether they are packed or 
-not).
-
-The "wait for the end" is _not_ good, exactly because the end will take 
-some time to arrive. The whole point is to start outputting the data 
-early, and thet BY DEFINITION means that the order of revisions isn't 
-guaranteed to be in topological order.
-
-		Linus
+      Marco
