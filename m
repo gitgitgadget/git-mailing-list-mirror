@@ -1,60 +1,70 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Some issues with current qgit on exit ( aka "Crash this!" )
-Date: Sat, 9 Sep 2006 10:16:22 +0200
-Message-ID: <e5bfff550609090116waa5d4a1y7de1132fd82f08cf@mail.gmail.com>
-References: <e5bfff550609081603s2fb1be98gdafb91681a4aeaae@mail.gmail.com>
-	 <1157757903.9088.14.camel@dv>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Change set based shallow clone
+Date: Sat, 09 Sep 2006 10:39:37 +0200
+Organization: At home
+Message-ID: <edtuj5$p76$1@sea.gmane.org>
+References: <9e4733910609071252ree73effwb06358e9a22ba965@mail.gmail.com> <7vpse7tjp0.fsf@assigned-by-dhcp.cox.net> <46a038f90609072054u5ec8bc46x9878a601953b2c5d@mail.gmail.com> <7vac5ancvo.fsf@assigned-by-dhcp.cox.net> <9e4733910609080720s7a143d9bp5a1dd36869967c22@mail.gmail.com> <eds3fg$u30$1@sea.gmane.org> <20060909031307.GE23891@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 09 10:17:39 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sat Sep 09 10:39:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLy1s-0003cS-4r
-	for gcvg-git@gmane.org; Sat, 09 Sep 2006 10:17:32 +0200
+	id 1GLyNJ-0006tw-RP
+	for gcvg-git@gmane.org; Sat, 09 Sep 2006 10:39:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932348AbWIIIQX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Sep 2006 04:16:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932351AbWIIIQX
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Sep 2006 04:16:23 -0400
-Received: from py-out-1112.google.com ([64.233.166.183]:22278 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S932348AbWIIIQW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Sep 2006 04:16:22 -0400
-Received: by py-out-1112.google.com with SMTP id n25so1192150pyg
-        for <git@vger.kernel.org>; Sat, 09 Sep 2006 01:16:22 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=eYY5nFvefghPwQvXa+qiXULFIBDaE1/ElDqnGa4TIFTjvLIiUny9UYNTacfcJcBUKZKlyAf9qV8Cg+82R4roixee95UjOAKeuPoz4GCetU/HUhji6BV1aPhWalmc+dyHCK6p0k9GwhPPR1KIXsoaCxSkhwOOL6C4gImtIlCSNXc=
-Received: by 10.35.33.15 with SMTP id l15mr4501843pyj;
-        Sat, 09 Sep 2006 01:16:22 -0700 (PDT)
-Received: by 10.35.95.9 with HTTP; Sat, 9 Sep 2006 01:16:22 -0700 (PDT)
-To: "Pavel Roskin" <proski@gnu.org>
-In-Reply-To: <1157757903.9088.14.camel@dv>
-Content-Disposition: inline
+	id S932370AbWIIIj2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Sep 2006 04:39:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932371AbWIIIj1
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Sep 2006 04:39:27 -0400
+Received: from main.gmane.org ([80.91.229.2]:33194 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932370AbWIIIj0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Sep 2006 04:39:26 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GLyMt-0006qL-TV
+	for git@vger.kernel.org; Sat, 09 Sep 2006 10:39:16 +0200
+Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 09 Sep 2006 10:39:15 +0200
+Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 09 Sep 2006 10:39:15 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26737>
 
->
-> However, qgit has produced some output you may find interesting:
->
-> [proski@dv qgit]$ qgit
-> ASSERT in lookupAnnotation: no annotation for src/git_startup.cpp
-> ASSERT in lookupAnnotation: no annotation for src/fileview.cpp
-> ASSERT in lookupAnnotation: no annotation for src/git.cpp
-> ASSERT in lookupAnnotation: no annotation for src/mainbase.ui
-> [proski@dv qgit]$
->
+Petr Baudis wrote:
 
-It was a little regression from recent changes. Luckily much more easy
-then previous one.
-Logic fixed and patch pushed.
+> Dear diary, on Fri, Sep 08, 2006 at 05:50:40PM CEST, I got a letter
+> where Jakub Narebski <jnareb@gmail.com> said that...
+>> My idea for lazy clone/fetch (lazy = on-demand) is via remote alternatives
+>> mechanism. We put URI for repository (repositories) that hosts the project,
+>> and we would need at start to download at least heads and tags, and only
+>> heads and tags.
+> 
+>   One thing to note is that you won't last very long without getting
+> at least basically all the commits from the history. git log, git
+> merge-base and such would either just suck them all, get partially moved
+> to the server side, or would undergo quite a painful and slooooooooow
+> process "get me commit X... thank you, sir. hmm, it appears that its
+> parent is commit Y.  could you get me commit Y, please...? thank you,
+> sir. hmm, it appears...".
 
-Thanks
-Marco
+As I said there is load of troubles with lazy clone/fetch = remote 
+alternatives I didn't thought about.
+
+git log/git rev-list and git fsck-objects among them.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
