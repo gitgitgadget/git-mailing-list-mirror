@@ -1,89 +1,72 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Change set based shallow clone
-Date: Sat, 9 Sep 2006 10:47:49 +0200
-Message-ID: <e5bfff550609090147q37d61f37j9c3e8ae6d3a0cf35@mail.gmail.com>
-References: <9e4733910609071923tf1c49f6o70419e961e9eb66f@mail.gmail.com>
-	 <20060908184215.31789.qmail@science.horizon.com>
-	 <9e4733910609081413p32456768g280bdc9b232d7902@mail.gmail.com>
-	 <Pine.LNX.4.64.0609081600530.27779@g5.osdl.org>
-	 <17666.4936.894588.825011@cargo.ozlabs.ibm.com>
-	 <Pine.LNX.4.64.0609081944060.27779@g5.osdl.org>
-	 <17666.13716.401727.601933@cargo.ozlabs.ibm.com>
-	 <Pine.LNX.4.64.0609082054560.27779@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 0/7] gitweb: Trying to improve history view speed
+Date: Sat, 09 Sep 2006 02:10:23 -0700
+Message-ID: <7vvenxwglc.fsf@assigned-by-dhcp.cox.net>
+References: <200609061504.40725.jnareb@gmail.com> <edtuot$p76$2@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Paul Mackerras" <paulus@samba.org>,
-	"Jon Smirl" <jonsmirl@gmail.com>,
-	"linux@horizon.com" <linux@horizon.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 09 10:47:55 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 09 11:10:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GLyVF-0008BB-RI
-	for gcvg-git@gmane.org; Sat, 09 Sep 2006 10:47:54 +0200
+	id 1GLyqe-0003ib-0m
+	for gcvg-git@gmane.org; Sat, 09 Sep 2006 11:10:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932377AbWIIIrv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Sep 2006 04:47:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932378AbWIIIrv
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Sep 2006 04:47:51 -0400
-Received: from py-out-1112.google.com ([64.233.166.176]:33375 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S932377AbWIIIru (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Sep 2006 04:47:50 -0400
-Received: by py-out-1112.google.com with SMTP id n25so1203665pyg
-        for <git@vger.kernel.org>; Sat, 09 Sep 2006 01:47:49 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Prd8ty4E8Ir54YEGiml88B5TbWK0iZhbopm5b+ECTClI+FEmECEv/k0V+6chLS05TJQgesHJTAo5t6cHgf5ElCle//aAm+lAHTDDqRKpqoGMs2XqfZdE3n6q/yS9KN4SFeaSCMKPcLxzZcr7IaxDxKJmP2DTMrCXOQyFsbxjpAc=
-Received: by 10.35.33.15 with SMTP id l15mr4539435pyj;
-        Sat, 09 Sep 2006 01:47:49 -0700 (PDT)
-Received: by 10.35.95.9 with HTTP; Sat, 9 Sep 2006 01:47:49 -0700 (PDT)
-To: "Linus Torvalds" <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0609082054560.27779@g5.osdl.org>
-Content-Disposition: inline
+	id S1751400AbWIIJJ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Sep 2006 05:09:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751401AbWIIJJ5
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Sep 2006 05:09:57 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:64687 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1751400AbWIIJJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Sep 2006 05:09:56 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060909090956.KLSS26416.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 9 Sep 2006 05:09:56 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id L99l1V0031kojtg0000000
+	Sat, 09 Sep 2006 05:09:47 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <edtuot$p76$2@sea.gmane.org> (Jakub Narebski's message of "Sat,
+	09 Sep 2006 10:42:41 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26740>
 
-On 9/9/06, Linus Torvalds <torvalds@osdl.org> wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
+
+> Jakub Narebski wrote:
 >
+>> Shortlog:
+>>  [PATCH 1/7] gitweb: Make pickaxe search a feature
+>>  [PATCH 2/7] gitweb: Paginate history output
+>>  [PATCH 3/7] gitweb: Use @hist_opts as git-rev-list parameters
+>>              in git_history
+>>  [PATCH 4/7] gitweb: Add parse_rev_list for later use
+>>  [PATCH 5/7] gitweb: Use parse_rev_list in git_shortlog and git_history
+>>  [PATCH 6/7] gitweb: Assume parsed revision list in git_shortlog_body
+>>              and git_history_body
+>>  [PATCH 7/7] gitweb: Set page to 0 if it is not defined, in git_history
 >
->
-> In contrast, doing some of the same sorting that git-rev-list already does
-> in the consumer instead, is obviously duplicating the same basic notions,
-> but once you do it in the consumer, you can suddenly do things that simply
-> weren't possible in git-rev-list - do things incrementally, and then if
-> you notice half-way that you did something wrong, you can go back and fix
-> it up (which can be quite acceptable). That just isn't an option in a
-> linear environment like the git-rev-list output.
->
+> Should I resend corrected patch 1 (Make pickaxe search a feature; but
+> default to on), and patches 2 and 7 as one patch (Paginate history output)?
 
-Perhaps is total idiocy but why do not implement the fix-up logic
-directly in git-rev-list?
+I looked at and understood 1 and 2+7, although I cannot claim I
+looked at 2+7 deeply enough; cursory look told me they should be
+Ok.  So is 3, but I suspect gitweb without --full-history might
+surprise some users.
 
-If the out of order revisions are a small amount of the total then
-could be possible to have something like
+I do not know about 4, 5 and 6.  I didn't look at them at all
+the first time you sent them out, since I got an impression that
+you did not understand how git-rev-list was supposed to work
+when you did them.
 
-git rev-list --topo-order --with-appended-fixups HEAD
-
-Where, while git-rev-list is working _whithout sorting the whole tree
-first_, when finds an out of order revision stores it in a fixup-list
-buffer and *at the end* of normal git-rev-lsit the buffer is flushed
-to receiver, so that the drawing logic does not change and the out of
-order revisions arrive at the end, already packed, sorted and prepared
-by git-rev-list.
-
-Instead of changing drwing logic is  then enough to add a fixup
-routine that cycles through out of order commits and  updates the
-graph.
-
-This also avoids recursive reordering  where perhaps the same part of
-a graph should be redrawn more then one time due to differtent new
-parents to the same child arrives at different times.
-
-Marco
+Now Linus explained it to you, I suspect they would probably
+need to be rethought?
