@@ -1,123 +1,79 @@
 From: "Franck Bui-Huu" <vagabon.xyz@gmail.com>
-Subject: Re: [PATCH 1/4] Add git-archive
-Date: Sat, 9 Sep 2006 16:31:06 +0200
-Message-ID: <cda58cb80609090731w7c66dcfbrbababb6c38d29bf6@mail.gmail.com>
+Subject: Re: [PATCH 2/4] git-archive: wire up TAR format.
+Date: Sat, 9 Sep 2006 16:38:13 +0200
+Message-ID: <cda58cb80609090738p239c7359pfd0be092d93ed657@mail.gmail.com>
 References: <450019C3.4030001@innova-card.com>
-	 <11576347251776-git-send-email-vagabon.xyz@gmail.com>
-	 <7vodtrnl0f.fsf@assigned-by-dhcp.cox.net>
-	 <45013114.1070808@innova-card.com> <4501D0C5.702@lsrfire.ath.cx>
+	 <11576347252834-git-send-email-vagabon.xyz@gmail.com>
+	 <4501D0CF.70306@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 09 16:31:23 2006
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: junkio@cox.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 09 16:38:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GM3rZ-0000tP-JU
-	for gcvg-git@gmane.org; Sat, 09 Sep 2006 16:31:17 +0200
+	id 1GM3yS-0002Jc-FL
+	for gcvg-git@gmane.org; Sat, 09 Sep 2006 16:38:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932205AbWIIObK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Sep 2006 10:31:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932207AbWIIObK
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Sep 2006 10:31:10 -0400
-Received: from wx-out-0506.google.com ([66.249.82.235]:6744 "EHLO
+	id S932221AbWIIOiR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 9 Sep 2006 10:38:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932223AbWIIOiR
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Sep 2006 10:38:17 -0400
+Received: from wx-out-0506.google.com ([66.249.82.229]:62051 "EHLO
 	wx-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S932205AbWIIObI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Sep 2006 10:31:08 -0400
-Received: by wx-out-0506.google.com with SMTP id s14so972818wxc
-        for <git@vger.kernel.org>; Sat, 09 Sep 2006 07:31:07 -0700 (PDT)
+	id S932221AbWIIOiP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Sep 2006 10:38:15 -0400
+Received: by wx-out-0506.google.com with SMTP id s14so974369wxc
+        for <git@vger.kernel.org>; Sat, 09 Sep 2006 07:38:14 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=m591bkpnye8mudLu+U3MtMstjbqRvvelmlIL90oSmvfuy8wqtJBJqEf35qzHPYdsYfXwkl+eSwJuwsjJkRPqQZq1BGo5vkrALS6lj+oO+rldts6Ki27LB58fYnjHm7iRlnmUjF2xWt/jEmHw7RW48btQ1ZKHwhCCUYWdQEFFPec=
-Received: by 10.70.109.6 with SMTP id h6mr2282926wxc;
-        Sat, 09 Sep 2006 07:31:07 -0700 (PDT)
-Received: by 10.70.72.5 with HTTP; Sat, 9 Sep 2006 07:31:06 -0700 (PDT)
+        b=C6f9VV6CHS0GQKPpfJZB++yLS8cTgGX67LLWX1E9Zvlfrr5aseuKfbahJlgl67IA59wOFF5CbhqbaJ92yG4FI1kIgWEEcayOKaDIkO8vt9Wlj+V2tzML8q098iso/foOb8Q7RnzP+Eb2LaK44vKqp1WEiXwH7QD5/+d3WY4wU08=
+Received: by 10.70.96.3 with SMTP id t3mr2317376wxb;
+        Sat, 09 Sep 2006 07:38:14 -0700 (PDT)
+Received: by 10.70.72.5 with HTTP; Sat, 9 Sep 2006 07:38:13 -0700 (PDT)
 To: "Rene Scharfe" <rene.scharfe@lsrfire.ath.cx>
-In-Reply-To: <4501D0C5.702@lsrfire.ath.cx>
+In-Reply-To: <4501D0CF.70306@lsrfire.ath.cx>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26749>
 
 2006/9/8, Rene Scharfe <rene.scharfe@lsrfire.ath.cx>:
-> Only a few trivial comments, as I managed to catch a cold somehow and
-> can't think straight for longer than three seconds.
+> Franck Bui-Huu schrieb:
+> > From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+> >
+> > Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+> > Signed-off-by: Franck Bui-Huu <vagabon.xyz@gmail.com>
 >
-> >  .gitignore                    |    1
-> >  Documentation/git-archive.txt |  100 ++++++++++++++++++
-> >  Makefile                      |    3 -
-
-[snip]
-
-> > +
-> > +     url = strdup(ar->remote);
->
-> xstrdup()
->
-
-ok, but need to rebase...
-
-> > +     pid = git_connect(fd, url, buf);
-> > +     if (pid < 0)
-> > +             return pid;
-> > +
-
-[snip]
-
-> > +     int extra_argc = 0;
-> > +     const char *format = NULL; /* some default values */
->
-> This comment does not convey any information.
+> I did not sign off this exact patch.  I wrote and submitted the
+> builtin-tar-tree.c part, with memory leak and all, then sent a note
+> on where the leak needs to be plugged.  You put it together and
+> converted it to struct archiver_args.  I'd very much have liked to
+> see a comment stating this.  Or simply just say "based on code by
+> Rene" or something.  The same is true for patch 3/4.
 >
 
-OK, I'll remove it
+OK I'll change that....
 
-> > +     const char *remote = NULL;
-> > +     const char *base = "";
-
-[snip]
-
-> > +             }
-> > +             if (arg[0] == '-') {
-> > +                     extra_argv[extra_argc++] = arg;
+> > ---
+> >  extern void parse_pathspec_arg(const char **pathspec,
+> >                              struct archiver_args *args);
+> > +/*
+> > + *
+> > + */
 >
-> Overrun is not checked.
+> Especially I would not have signed off this invisible comment. ;)
 >
-
-Indeed, I'll fix it.
-
-> > +                     continue;
-> > +             }
-> > +             break;
-> > +     }
-> > +     if (list) {
-> > +             if (!remote) {
-> > +                     for (i = 0; i < ARRAY_SIZE(archivers); i++)
-> > +                             printf("%s\n", archivers[i].name);
-> > +                     exit(0);
-> > +             }
-> > +             die("--list and --remote are mutually exclusive");
-> > +     }
->
-> Not sure if we really need a list option.  I guess it only really
-> makes sense if we have more than five formats.  I have no _strong_
-> feelings against it, though. *shrug*
+> Ren=E9
 >
 
-well it's almost free to add it, and no need any maintenance if we add
-a new archiver backend, so I would say let it.
+and put something usefull here.
 
-> > +     if (argc - i < 1) {
-> > +             die("%s", archive_usage);
->
-> usage()
->
-
-ok
-
--- 
+Thanks
+--=20
                Franck
