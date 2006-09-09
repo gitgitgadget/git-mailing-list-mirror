@@ -1,50 +1,51 @@
 From: Sven Verdoolaege <skimo@liacs.nl>
 Subject: [PATCH] gitweb: support perl 5.6
-Date: Sat, 9 Sep 2006 16:42:09 +0200
-Message-ID: <20060909144209.GA25138@liacs.nl>
+Date: Sat, 9 Sep 2006 16:59:15 +0200
+Message-ID: <20060909145914.GA25289@liacs.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 09 16:42:31 2006
+X-From: git-owner@vger.kernel.org Sat Sep 09 16:59:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GM42G-00033n-CD
-	for gcvg-git@gmane.org; Sat, 09 Sep 2006 16:42:22 +0200
+	id 1GM4In-0006RJ-J6
+	for gcvg-git@gmane.org; Sat, 09 Sep 2006 16:59:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932216AbWIIOmR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Sep 2006 10:42:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932228AbWIIOmR
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Sep 2006 10:42:17 -0400
-Received: from rhodium.liacs.nl ([132.229.131.16]:7839 "EHLO rhodium.liacs.nl")
-	by vger.kernel.org with ESMTP id S932216AbWIIOmQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Sep 2006 10:42:16 -0400
+	id S1751321AbWIIO7W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Sep 2006 10:59:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751323AbWIIO7W
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Sep 2006 10:59:22 -0400
+Received: from rhodium.liacs.nl ([132.229.131.16]:31136 "EHLO rhodium.liacs.nl")
+	by vger.kernel.org with ESMTP id S1751321AbWIIO7W (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Sep 2006 10:59:22 -0400
 Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
-	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id k89Eg9QX030386;
-	Sat, 9 Sep 2006 16:42:15 +0200
+	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id k89ExF6P030862;
+	Sat, 9 Sep 2006 16:59:20 +0200
 Received: by pc117b.liacs.nl (Postfix, from userid 17122)
-	id C828F3C734; Sat,  9 Sep 2006 16:42:09 +0200 (CEST)
+	id 4E7CB3C734; Sat,  9 Sep 2006 16:59:15 +0200 (CEST)
 To: Jakub Narebski <jnareb@gmail.com>
 Content-Disposition: inline
 User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26751>
 
 Specifically, perl 5.6 doesn't have the Encode module and
 doesn't support the open "-|" list form.
 
 Signed-off-by: Sven Verdoolage <skimo@liacs.nl>
 ---
-This is take two, hopefully addressing Jakub's remark.
+This is take three.
+I had missed the other binmodes in the code.
 
- gitweb/gitweb.perl |   94 +++++++++++++++++++++++++++++-----------------------
- 1 files changed, 53 insertions(+), 41 deletions(-)
+ gitweb/gitweb.perl |  102 +++++++++++++++++++++++++++++-----------------------
+ 1 files changed, 57 insertions(+), 45 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index d89f709..9992046 100755
+index d89f709..7afdf33 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
 @@ -12,11 +12,12 @@ use warnings;
@@ -221,6 +222,18 @@ index d89f709..9992046 100755
  		or die_error(undef, "Couldn't cat $file_name, $hash");
  
  	$type ||= blob_mimetype($fd, $file_name);
+@@ -2491,9 +2504,9 @@ sub git_blob_plain {
+ 		-expires=>$expires,
+ 		-content_disposition => "inline; filename=\"$save_as\"");
+ 	undef $/;
+-	binmode STDOUT, ':raw';
++	binmode STDOUT, ':raw' if $have_encode;
+ 	print <$fd>;
+-	binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
++	binmode STDOUT, ':utf8' if $have_encode; # as set at the beginning of gitweb.cgi
+ 	$/ = "\n";
+ 	close $fd;
+ }
 @@ -2515,7 +2528,7 @@ sub git_blob {
  		}
  	}
@@ -239,6 +252,18 @@ index d89f709..9992046 100755
  		or die_error(undef, "Open git-ls-tree failed");
  	my @entries = map { chomp; $_ } <$fd>;
  	close $fd or die_error(undef, "Reading tree failed");
+@@ -2648,9 +2661,9 @@ sub git_snapshot {
+ 	my $git_command = git_cmd_str();
+ 	open my $fd, "-|", "$git_command tar-tree $hash \'$project\' | $command" or
+ 		die_error(undef, "Execute git-tar-tree failed.");
+-	binmode STDOUT, ':raw';
++	binmode STDOUT, ':raw' if $have_encode;
+ 	print <$fd>;
+-	binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
++	binmode STDOUT, ':utf8' if $have_encode; # as set at the beginning of gitweb.cgi
+ 	close $fd;
+ 
+ }
 @@ -2666,7 +2679,7 @@ sub git_log {
  	my $refs = git_get_references();
  
