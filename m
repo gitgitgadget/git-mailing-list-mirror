@@ -1,127 +1,102 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: {RFC/PATCH] micro-optimize get_sha1_hex()
-Date: Sat, 09 Sep 2006 14:55:09 -0700
-Message-ID: <7vzmd8vh6q.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: reset input record separator in parse_commit even on error
+Date: Sun, 10 Sep 2006 00:00:18 +0200
+Organization: At home
+Message-ID: <edvdgb$mtt$1@sea.gmane.org>
+References: <20060909151236.GA25518@liacs.nl> <20060909205159.GC16906@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 09 23:54:54 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sun Sep 10 00:00:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GMAmp-0000UP-R4
-	for gcvg-git@gmane.org; Sat, 09 Sep 2006 23:54:52 +0200
+	id 1GMAru-0001QG-4B
+	for gcvg-git@gmane.org; Sun, 10 Sep 2006 00:00:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964877AbWIIVyh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Sep 2006 17:54:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964878AbWIIVyh
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Sep 2006 17:54:37 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:11923 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S964877AbWIIVyg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Sep 2006 17:54:36 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060909215435.JFRH6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 9 Sep 2006 17:54:35 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id LMuR1V00H1kojtg0000000
-	Sat, 09 Sep 2006 17:54:27 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S964883AbWIIWAA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Sep 2006 18:00:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964882AbWIIWAA
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Sep 2006 18:00:00 -0400
+Received: from main.gmane.org ([80.91.229.2]:6867 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964883AbWIIV77 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Sep 2006 17:59:59 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GMAre-0001Ng-TT
+	for git@vger.kernel.org; Sat, 09 Sep 2006 23:59:50 +0200
+Received: from host-81-190-21-28.torun.mm.pl ([81.190.21.28])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 09 Sep 2006 23:59:50 +0200
+Received: from jnareb by host-81-190-21-28.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 09 Sep 2006 23:59:50 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-21-28.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26771>
 
-I was profiling 'git-rev-list v2.16.12..', because I suspected
-insert_by_date() might be expensive (the function inserts into
-singly-linked ordered list, so the data structure has to become
-array based to allow optimization).  But profiling showed it was
-not the bottleneck.  Probably because the kernel history is not
-that bushy and we do not have too many "active" heads during
-traversal.
+Jeff King wrote:
 
-But I noticed something else.
+> On Sat, Sep 09, 2006 at 05:12:36PM +0200, Sven Verdoolaege wrote:
+> 
+>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+>> index 7afdf33..60dd598 100755
+>> --- a/gitweb/gitweb.perl
+>> +++ b/gitweb/gitweb.perl
+>> @@ -897,8 +897,8 @@ sub parse_commit {
+>>              my $fd = git_pipe("rev-list", "--header", "--parents", "--max-count=1", $commit_id)
+>>                      or return;
+>>              @commit_lines = split '\n', <$fd>;
+>> -            close $fd or return;
+>>              $/ = "\n";
+>> +            close $fd or return;
+>>              pop @commit_lines;
+>>      }
+>>      my $header = shift @commit_lines;
+> 
+> You missed the other early return from git_pipe. However, I think the
+> approach is wrong; this is a great opportunity to use the dynamic
+> scoping offered by 'local':
+> 
+>   else {
+>     local $/ = "\0";
+>     # do stuff with $/ as "\0"
+>   }
+>   # $/ has automatically been reset at the end of the block
 
-Flat profile:
+And this should be done consistently, for all plain formats 
+(blob_plain, blobdiff_plain, commitdiff_plain), and some other
+ places.
 
-Each sample counts as 0.01 seconds.
-  %   cumulative   self              self     total           
- time   seconds   seconds    calls  ms/call  ms/call  name    
- 21.52      0.17     0.17  2800320     0.00     0.00  hexval
- 15.19      0.29     0.12    70008     0.00     0.00  get_sha1_hex
- 15.19      0.41     0.12    70008     0.00     0.00  lookup_object
- 15.19      0.53     0.12    68495     0.00     0.00  find_pack_entry_one
- 11.39      0.62     0.09   198667     0.00     0.00  insert_obj_hash
-  7.60      0.68     0.06    34675     0.00     0.00  unpack_object_header_gently
-  3.80      0.71     0.03    33819     0.00     0.02  parse_commit_buffer
-  1.27      0.72     0.01   103822     0.00     0.00  commit_list_insert
-  1.27      0.73     0.01    67640     0.00     0.00  prepare_packed_git
-  1.27      0.74     0.01    67611     0.00     0.00  created_object
-  1.27      0.75     0.01    33820     0.00     0.00  use_packed_git
-  1.27      0.76     0.01    33819     0.00     0.00  lookup_tree
-  1.27      0.77     0.01        1    10.00    10.00  prepare_packed_git_one
-  1.27      0.78     0.01                             parse_tree_indirect
-  1.27      0.79     0.01                             verify_filename
-  ...
+Sometimes it is
+  local $/ = "\0";
+more often
+  local $/ = undef;
+(or equivalently but slightly less human friendly, just 'local $/');
 
-The attached brings get_sha1_hex() down from 15.19% to 5.41%,
-but I feel we should be able to do better.
+> Looking further at this bit of code, it seems even more confusing,
+> though. We split the output of rev-list on NUL, grab presumably the
+> entire thing (since there shouldn't be any NULs in the output, right?)
+> and then split it on newline into a list. Why aren't we doing this:
+>   else {
+>     open my $fd, ...;
+>     @commit_lines = map { chomp; $_ } <$fd>;
+>     ...
 
-Is this barking up the wrong tree?  Or did I pick a good target
-but the shooter wasn't skilled enough?
+That is because by default git-rev-list separates output for different
+commits (when --header option is used) bu NULL... only because of 
+"--max-count=1" there is only _one_ record... nevertheless it ends with 
+"\0" (NULL) character.
 
-
-diff --git a/sha1_file.c b/sha1_file.c
-index 428d791..00aa364 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -26,26 +26,30 @@ const unsigned char null_sha1[20];
- 
- static unsigned int sha1_file_open_flag = O_NOATIME;
- 
--static unsigned hexval(char c)
--{
--	if (c >= '0' && c <= '9')
--		return c - '0';
--	if (c >= 'a' && c <= 'f')
--		return c - 'a' + 10;
--	if (c >= 'A' && c <= 'F')
--		return c - 'A' + 10;
--	return ~0;
--}
-+static const unsigned char hexval[] = {
-+	  0,   1,   2,   3,    4,   5,   6,   7, /* 30-37 */
-+	  8,   9, 255, 255,  255, 255, 255, 255, /* 38-3F */
-+	255,  10,  11,  12,   13,  14,  15, 255, /* 40-47 */
-+	255, 255, 255, 255,  255, 255, 255, 255, /* 48-4F */
-+	255, 255, 255, 255,  255, 255, 255, 255, /* 50-57 */
-+	255, 255, 255, 255,  255, 255, 255, 255, /* 58-5F */
-+	255,  10,  11,  12,   13,  14,  15, 255, /* 60-67 */
-+};
- 
- int get_sha1_hex(const char *hex, unsigned char *sha1)
- {
- 	int i;
- 	for (i = 0; i < 20; i++) {
--		unsigned int val = (hexval(hex[0]) << 4) | hexval(hex[1]);
--		if (val & ~0xff)
-+		unsigned int v, w, val;
-+		v = *hex++;
-+		if ((v < '0') || ('f' < v) ||
-+		    ((v = hexval[v-'0']) == 255))
-+			return -1;
-+		w = *hex++;
-+		if ((w < '0') || ('f' < w) ||
-+		    ((w = hexval[w-'0']) == 255))
- 			return -1;
--		*sha1++ = val;
--		hex += 2;
-+		*sha1++ = (v << 4) | w;
- 	}
- 	return 0;
- }
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
