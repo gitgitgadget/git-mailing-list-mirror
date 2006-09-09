@@ -1,133 +1,145 @@
 From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Change set based shallow clone
-Date: Sat, 9 Sep 2006 15:00:08 +0200
-Message-ID: <e5bfff550609090600k4e4b1ae0s1cbee5e3fa01cba@mail.gmail.com>
-References: <20060909103157.23388.qmail@science.horizon.com>
+Subject: [ANNOUNCE qgit-1.5]
+Date: Sat, 9 Sep 2006 15:23:49 +0200
+Message-ID: <e5bfff550609090623t6c51e23bh9101a5a78db9ef64@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 09 15:00:21 2006
+X-From: git-owner@vger.kernel.org Sat Sep 09 15:24:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GM2RW-0008Hj-0g
-	for gcvg-git@gmane.org; Sat, 09 Sep 2006 15:00:18 +0200
+	id 1GM2ob-0003Yj-Un
+	for gcvg-git@gmane.org; Sat, 09 Sep 2006 15:24:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932149AbWIINAN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Sep 2006 09:00:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932153AbWIINAM
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Sep 2006 09:00:12 -0400
-Received: from py-out-1112.google.com ([64.233.166.182]:50765 "EHLO
+	id S932173AbWIINXv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Sep 2006 09:23:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932171AbWIINXv
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Sep 2006 09:23:51 -0400
+Received: from py-out-1112.google.com ([64.233.166.182]:31891 "EHLO
 	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S932149AbWIINAJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Sep 2006 09:00:09 -0400
-Received: by py-out-1112.google.com with SMTP id n25so1293658pyg
-        for <git@vger.kernel.org>; Sat, 09 Sep 2006 06:00:08 -0700 (PDT)
+	id S932173AbWIINXu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Sep 2006 09:23:50 -0400
+Received: by py-out-1112.google.com with SMTP id n25so1301270pyg
+        for <git@vger.kernel.org>; Sat, 09 Sep 2006 06:23:49 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FPuLACtIpBGrziFu77qf8TMW0QDbqmT7OHsl5zXGYYOq/WuutTzU5xoxVLEAGI/ZBX7wA0iXpJD6lH71DuvpzY1qGCURpm3jU12GbBe/puCQP1S4GTDN9QtCWC7DCC2mECLxf+BiimfJX1vENiqqJb4++/G0zcwKno0XV88sC84=
-Received: by 10.35.10.17 with SMTP id n17mr4902646pyi;
-        Sat, 09 Sep 2006 06:00:08 -0700 (PDT)
-Received: by 10.35.95.9 with HTTP; Sat, 9 Sep 2006 06:00:08 -0700 (PDT)
-To: "linux@horizon.com" <linux@horizon.com>
-In-Reply-To: <20060909103157.23388.qmail@science.horizon.com>
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=mykSD3js1W3H/7HRWA0kDuB4zf6KFzSZIZYk6y/zc3/ad2u394vO/SB7x8KBxgCMoFp2a+PVoy2FbtWy8A/QWqLBWApWH1ZW9y2KpE6Qt6gI9aa0O90pGw5vPTS05/ulmOWoNtm2PvFi3Bh/nQqNJnioSvvqk6ZwREKqj4JDxVc=
+Received: by 10.35.115.18 with SMTP id s18mr4914712pym;
+        Sat, 09 Sep 2006 06:23:49 -0700 (PDT)
+Received: by 10.35.95.9 with HTTP; Sat, 9 Sep 2006 06:23:49 -0700 (PDT)
+To: "Git Mailing List" <git@vger.kernel.org>,
+	linux-kernel@vger.kernel.org
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26747>
 
-On 9 Sep 2006 06:31:57 -0400, linux@horizon.com <linux@horizon.com> wrote:
-> > If the out of order revisions are a small amount of the total then
-> > could be possible to have something like
-> >
-> > git rev-list --topo-order --with-appended-fixups HEAD
-> >
-> > Where, while git-rev-list is working _whithout sorting the whole tree
-> > first_, when finds an out of order revision stores it in a fixup-list
-> > buffer and *at the end* of normal git-rev-lsit the buffer is flushed
-> > to receiver, so that the drawing logic does not change and the out of
-> > order revisions arrive at the end, already packed, sorted and prepared
-> > by git-rev-list.
->
-> I don't think I understand your proposal.  The problem arises when
-> git-rev-list finds a commit that it should have listed before something
-> that it has already output.
->
-> Just for example:
->
-> Commit D: Ancestor B
-> Commit B: Ancestor A
-> Commit C: Ancestor B
->
-> Commit C is the problem, because if git-rev-list has already output B,
-> there's no way to back up and insert it in the right place.
->
-> How is waiting to output the already-behind-schedule commit C going
-> to help anything?
+This is qgit-1.5
 
-It helps in a number of ways from receiver point of view.
+With qgit you will be able to browse revision histories, view patch content
+and changed files, graphically following different development branches.
 
-- Receiver doesn't need to keep a sorted list of loaded revisions.
 
-- Receiver doesn't need to stop parsing input and redraw the graph in
-the middle of the loading.
+FEATURES
 
-- Receiver doesn't need to  check for possible out of order commits
-when loading data, but can be assured data that arrives is
---topo-order consistent (although my not be complete)
+ - View revisions, diffs, files history, files annotation, archive tree.
 
-- Split the in order parsing code (performance critical and common
-case) from fixup-code (run at the end and on a small set of commits).
+ - Commit changes visually cherry picking modified files.
 
-- Much faster implementation because the sorting is done only in
-git-rev-list and only once.
+ - Apply or format patch series from selected commits, drag and
+   drop commits between two instances of qgit.
 
-Following your example my suggestion was something like this:
+ - Associate commands sequences, scripts and anything else executable
+   to a custom action. Actions can be run from menu and corresponding
+   output is grabbed by a terminal window.
 
-Instead of:
+ - qgit implements a GUI for the most common StGIT commands like push/pop
+   and apply/format patches. You can also create new patches or refresh
+   current top one using the same semantics of git commit, i.e. cherry
+   picking single modified files.
 
-git-rev-list HEAD
 
-Commit D: Ancestor B
-Commit B: Ancestor A
-Commit C: Ancestor B
-Commit A: Ancestor E
-Commit E: Ancestor F
-Commit F: Ancestor G
-....
-Commit V: Ancestor Z
+NEW IN THIS RELEASE
 
-git-rev-list --topo-order ----with-appended-fixups HEAD
+Multi tab support and source highlighter are the cool new features.
 
-sends something like:
+Multi tab allows the user to open many patch or file view tabs, each
+linked on a different revision.
 
-Commit D: Ancestor B
-Commit B: Ancestor A
-Commit A: Ancestor E
-Commit E: Ancestor F
-Commit F: Ancestor G
-....
-Commit V: Ancestor Z
-(* end of correct sorted commits and start of out of order commits*)
-Commit C: Ancestor B
-......
-Commit  N: Ancestor M
+If GNU Source-highlight (http://www.gnu.org/software/src-highlite/) is
+installed and in PATH then it is possible to toggle source code highlight
+pressing the Color text tool button in file viewer. Please refer to
+Source-highlight site for the list of supported languages and additional
+documentation.
 
-So that receiver drawing code designed with working with --topo-order
-kind output could as usual draws the graph until Commit V: Ancestor Z
-(but without waiting for git-rev-list latency!!) and the new fixup
-code could *at the end* loop across *already sorted* fixup set:
+Some bugs squashed too. Not a lot though...qgit-1.4 has been a
+very stable release ;-)
 
-Commit C: Ancestor B
-......
-Commit  N: Ancestor M
+Finally, some performance tweaking.
 
-and update the graph in one go. Of course some flag/syntax should be
-introduced to trigger the end of sorted code and beginning of fixups
-in git-rev-list output stream.
 
-       Marco
+Please note that you will need git 1.4.0 or newer.
+
+
+DOWNLOAD
+
+Tarball is
+http://prdownloads.sourceforge.net/qgit/qgit-1.5.tar.bz2?download
+
+Git archive is
+git://git.kernel.org/pub/scm/qgit/qgit.git
+
+See http://digilander.libero.it/mcostalba/ for detailed download information.
+
+
+INSTALLATION
+
+git 1.4.0 or better is required.
+
+To install from tarball:
+
+./configure
+make
+make install-strip
+
+To install from git archive:
+
+autoreconf -i
+./configure
+make
+make install-strip
+
+Or check the shipped README for detailed information.
+
+
+CHANGELOG from 1.4
+
+- use GNU Source-highlight external tool with file viewer
+
+- show file rename/copy info on patch and file list views
+
+- show the currently checked-out head in bold font
+
+- show stat info at the beginning of patch view also for merges
+
+- added support for multi tab patch viewers aka 'view patch in a new tab'
+
+- added support for multi tab file viewers aka 'view file in a new tab'
+
+- improve size compression of revision's files saved data
+
+- disable 'close tab' button if current tab is the main view
+
+- replace "git-" commands with "git ". Most git commands are now built-in
+
+- other small fixes and some performance tweaks
+
+
+For a complete changelog see shipped ChangeLog file or git repository
+revision's history
+
+	Marco
