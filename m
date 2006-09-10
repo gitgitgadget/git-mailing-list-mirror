@@ -1,54 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/2] archive: allow remote to have more formats than we understand.
-Date: Sun, 10 Sep 2006 12:07:39 -0700
-Message-ID: <7vwt8br150.fsf@assigned-by-dhcp.cox.net>
+From: "Franck Bui-Huu" <vagabon.xyz@gmail.com>
+Subject: Re: [PATCH] git-upload-archive: add config option to allow only specified formats
+Date: Sun, 10 Sep 2006 21:07:36 +0200
+Message-ID: <cda58cb80609101207y420bd034n9a76b661374e1edf@mail.gmail.com>
 References: <7vpse4tcyc.fsf@assigned-by-dhcp.cox.net>
-	<cda58cb80609101202y2ee1a18dwf09d6e104740777@mail.gmail.com>
+	 <7vk64ctctv.fsf@assigned-by-dhcp.cox.net>
+	 <7v1wqkt2v4.fsf_-_@assigned-by-dhcp.cox.net>
+	 <20060910155837.GA15974@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org,
-	"Rene Scharfe" <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sun Sep 10 21:07:20 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 10 21:08:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GMUeF-0001Dp-Us
-	for gcvg-git@gmane.org; Sun, 10 Sep 2006 21:07:20 +0200
+	id 1GMUez-0001Nv-5B
+	for gcvg-git@gmane.org; Sun, 10 Sep 2006 21:08:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932510AbWIJTG6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Sep 2006 15:06:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932511AbWIJTG6
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Sep 2006 15:06:58 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:56522 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S932510AbWIJTG5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Sep 2006 15:06:57 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060910190657.HCSK12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 10 Sep 2006 15:06:57 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Lj6n1V00C1kojtg0000000
-	Sun, 10 Sep 2006 15:06:48 -0400
-To: "Franck Bui-Huu" <vagabon.xyz@gmail.com>
-In-Reply-To: <cda58cb80609101202y2ee1a18dwf09d6e104740777@mail.gmail.com>
-	(Franck Bui-Huu's message of "Sun, 10 Sep 2006 21:02:10 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932513AbWIJTHi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Sep 2006 15:07:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932515AbWIJTHi
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Sep 2006 15:07:38 -0400
+Received: from wx-out-0506.google.com ([66.249.82.231]:64100 "EHLO
+	wx-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S932513AbWIJTHh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Sep 2006 15:07:37 -0400
+Received: by wx-out-0506.google.com with SMTP id s14so1302634wxc
+        for <git@vger.kernel.org>; Sun, 10 Sep 2006 12:07:36 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Bgn4f5it4kx03tu2dMmg5qkVyajlihxW8g9NapNQRC+sHu1ICBziZvhZjjDA/Wfr4fjgFTEQF6kH64x5EebRYwSv38UFFWhIxV+oqrH/jEVEvDVqDhzSRx11UJ+HKA/1oEHE32Ta9KI4qa3FdnusLmoshKyMGc6vQHoF/kojgiw=
+Received: by 10.70.29.14 with SMTP id c14mr4532546wxc;
+        Sun, 10 Sep 2006 12:07:36 -0700 (PDT)
+Received: by 10.70.72.5 with HTTP; Sun, 10 Sep 2006 12:07:36 -0700 (PDT)
+To: "Rene Scharfe" <rene.scharfe@lsrfire.ath.cx>
+In-Reply-To: <20060910155837.GA15974@lsrfire.ath.cx>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26809>
 
-"Franck Bui-Huu" <vagabon.xyz@gmail.com> writes:
+2006/9/10, Rene Scharfe <rene.scharfe@lsrfire.ath.cx>:
+>  Documentation/config.txt |    5 +++++
+>  builtin-upload-archive.c |   39 +++++++++++++++++++++++++++++++++++++++
+>  daemon.c                 |    2 ++
+>  3 files changed, 46 insertions(+)
 
->> +static const char *remote_request(int *ac, const char **av)
->> +{
+[snip]
+
 >
-> just to be consistent with the rest of the file, I would have called
-> this function
-> "parse_remote_arg" or "extract_remote_arg"
+> +       if (!upload_format_allowed(ar.name)) {
+> +               free(daemon_formats);
+> +               die("upload of %s format forbidden\n", ar.name);
+> +       }
 
-I was thinking about calling this is_remote_request() actually.
+just out of curiousity, why "free(daemon_formats)" right before a "die()" ?
+
+-- 
+               Franck
