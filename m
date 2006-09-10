@@ -1,119 +1,134 @@
-From: linux@horizon.com
-Subject: Re: Change set based shallow clone
-Date: 10 Sep 2006 11:21:22 -0400
-Message-ID: <20060910152122.31694.qmail@science.horizon.com>
-References: <e5bfff550609092214t4f8e195eib28e302f4d284aa@mail.gmail.com>
-Cc: git@vger.kernel.org, jonsmirl@gmail.com, linux@horizon.com,
-	paulus@samba.org, torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Sun Sep 10 17:21:39 2006
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] git-upload-archive: add config option to allow only specified formats
+Date: Sun, 10 Sep 2006 17:58:38 +0200
+Message-ID: <20060910155837.GA15974@lsrfire.ath.cx>
+References: <7vpse4tcyc.fsf@assigned-by-dhcp.cox.net> <7vk64ctctv.fsf@assigned-by-dhcp.cox.net> <7v1wqkt2v4.fsf_-_@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 10 17:58:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GMR7h-0002m8-Lq
-	for gcvg-git@gmane.org; Sun, 10 Sep 2006 17:21:30 +0200
+	id 1GMRhk-0000Tj-Ku
+	for gcvg-git@gmane.org; Sun, 10 Sep 2006 17:58:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932226AbWIJPVZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Sep 2006 11:21:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932231AbWIJPVZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Sep 2006 11:21:25 -0400
-Received: from science.horizon.com ([192.35.100.1]:13359 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S932226AbWIJPVX
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Sep 2006 11:21:23 -0400
-Received: (qmail 31695 invoked by uid 1000); 10 Sep 2006 11:21:22 -0400
-To: junkio@cox.net, mcostalba@gmail.com
-In-Reply-To: <e5bfff550609092214t4f8e195eib28e302f4d284aa@mail.gmail.com>
+	id S932267AbWIJP6j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Sep 2006 11:58:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932259AbWIJP6j
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Sep 2006 11:58:39 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:5322
+	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S932267AbWIJP6j (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Sep 2006 11:58:39 -0400
+Received: by neapel230.server4you.de (Postfix, from userid 1000)
+	id 0B9A712279; Sun, 10 Sep 2006 17:58:38 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>,
+	Franck Bui-Huu <vagabon.xyz@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <7v1wqkt2v4.fsf_-_@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26798>
 
-This conversation is going in so many directions at once that it's
-getting annoying.
+ Documentation/config.txt |    5 +++++
+ builtin-upload-archive.c |   39 +++++++++++++++++++++++++++++++++++++++
+ daemon.c                 |    2 ++
+ 3 files changed, 46 insertions(+)
 
-The first level decision requires input from the point of view of gitk
-and qgit internals as to what's easy to implement.
-
-I'm trying to figure out the gitk code, but I'm not fluent in tcl, and
-it has 39 non-boilerplate comment lines in 229 functions and 6308 lines
-of source, so it requires fairly intensive grokking.
-
-Still, while it obviously doesn't render bitmaps until the data
-appears in the window, it appears as though at least part of the
-layout (the "layoutmore" function) code is performed eagerly as
-soon as new data arrives via the getcommitlines callback.
-
-(Indeed, it appears that Tk does not inform it of window scroll
-events, so it can't wait any longer to decide on the layout.)
-
-
-Case 1: The visualizer is NOT CAPABLE of accepting out-of-order
-	input.  Without very sophisticated cacheing in git-rev-list,
-	it must process all of the data before outputting any in
-	order to make an absolute guarantee of no out-of-order data
-	despite possibly messed-up timestamps.
-
-	It is possible to notice that the date-first traversal only
-	has one active chain and flush the queued data at that point,
-	but that situation is unlikely to arise in repositories of
-	non-trivial size, which are exactly the ones for which
-	the batch-sorting delay is annoying.
-
-Case 2: The visualizer IS CAPABLE of accepting out-of-order input.
-	Regardless of whether the layout is done eagerly or lazily,
-	this requires the visualizer to potentially undo part of
-	its layout and re-do it, so has a UI implementation cost.
-
-	The re-doing does not need to be highly efficient; any number
-	of heuristics and exception caches can reduce the occurrence of
-	this in git-rev-list output to very low levels.  It's just
-	absolutely excluding it, without losing incremental output,
-	that is difficult.
-
-	Heuristic: I suspect the most common wrong-timestamp case is
-	a time zone misconfiguration, so holding back output until the
-	tree traversal has advanced 24 hours will eliminate most of the
-	problems.  Atypically large time jumps (like more than a year)
-	could also trigger special "gross clock error" handling.
-
-	Cache: whenever a child timestamped older than an ancestor is
-	encountered, this can be entered in a persistent cache that can
-	be used to give the child a different sorting priority next time.
-	The simplest implementation would propagate this information up a
-	chain of bad timestamps by one commit per git-rev-list invocation,
-	but even that's probably okay.
-
-	(A study of timestamp ordering problems in existing repositories
-	would be helpful for tuning these.)
-
-In case 2, I utterly fail to see how delaying emitting the out-of-order
-commit is of the slightest help to the UI.  The simplest way to merge
-out-of-order data is with an insertion sort (a.k.a. roll back and
-reprocess forward), and the cost of that is minimized if the distance
-to back up is minimized.
-
-Some "oops!" annotation on the git-rev-list output may be helpful to
-tell the UI that it needs to search back, but it already has an internal
-index of commits, so perhaps even that isn't worth bothering with.
-Fancier output formats are also more work to process.
-
-With sufficient cacheing of exceptions in git-rev-list, it may be
-practical to just have a single "oops, I screwed up; let's start again"
-output line, which very rarely triggers.
-
-
-But can we stop designing git-rev-list output formats until we've figured
-out if and how to implement it in the visualizer?  Or, more to the point,
-visualizers plural.  That's the hard part.  Then we can see what sort
-of git-rev-list output would be most convenient.
-
-For example, is fixing a small number of out-of-place commits practical,
-or is it better to purge and restart?  The former avoids deleting
-already-existing objects, while the latter avoids moving them.
-
-The original problem is that the long delay between starting a git history
-browser and being able to browse them is annoying.  The visualizer UIs
-already support browsing while history is flowing in from git-rev-list,
-but git-rev-list is reading and sorting the entire history before
-outputting the first line.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index ce722a2..5c3c6c7 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -236,6 +236,11 @@ tar.umask::
+ 	the same permissions as gitlink:git-checkout[1] would use. The default
+ 	value remains 0, which means world read-write.
+ 
++uploadarchive.daemonformats::
++	A comma-separated list of the git-archive formats allowed for upload
++	via git-daemon.  If this parameter is missing all formats are allowed
++	for upload.
++
+ user.email::
+ 	Your email address to be recorded in any newly created commits.
+ 	Can be overridden by the 'GIT_AUTHOR_EMAIL' and 'GIT_COMMITTER_EMAIL'
+diff --git a/builtin-upload-archive.c b/builtin-upload-archive.c
+index 96f96bd..6a5245a 100644
+--- a/builtin-upload-archive.c
++++ b/builtin-upload-archive.c
+@@ -16,6 +16,37 @@ static const char upload_archive_usage[]
+ static const char deadchild[] =
+ "git-upload-archive: archiver died with error";
+ 
++static char *daemon_formats;
++
++static int upload_format_config(const char *var, const char *value)
++{
++	if (!strcmp(var, "uploadarchive.daemonformats"))
++		daemon_formats = xstrdup(value);
++	return 0;
++}
++
++static int is_in(const char *needle, const char *haystack, const char *delim)
++{
++	int len = strlen(needle);
++	const char *search = haystack;
++
++	for (;;) {
++		char *pos = strstr(search, needle);
++		if (!pos)
++			return 0;
++		search++;
++		if ((pos == haystack || strchr(delim, pos[-1])) &&
++		    (pos[len] == '\0' || strchr(delim, pos[len])))
++			return 1;
++	}
++}
++
++static int upload_format_allowed(const char *fmt)
++{
++	if (getenv("GIT_DAEMON"))
++		return daemon_formats ? is_in(fmt, daemon_formats, " \t,") : 1;
++	return 1;
++}
+ 
+ static int run_upload_archive(int argc, const char **argv, const char *prefix)
+ {
+@@ -38,6 +69,8 @@ static int run_upload_archive(int argc, 
+ 	if (!enter_repo(buf, 0))
+ 		die("not a git archive");
+ 
++	git_config(upload_format_config);
++
+ 	/* put received options in sent_argv[] */
+ 	sent_argc = 1;
+ 	sent_argv[0] = "git-upload-archive";
+@@ -67,6 +100,12 @@ static int run_upload_archive(int argc, 
+ 	/* parse all options sent by the client */
+ 	treeish_idx = parse_archive_args(sent_argc, sent_argv, &ar);
+ 
++	if (!upload_format_allowed(ar.name)) {
++		free(daemon_formats);
++		die("upload of %s format forbidden\n", ar.name);
++	}
++	free(daemon_formats);
++
+ 	parse_treeish_arg(sent_argv + treeish_idx, &ar.args, prefix);
+ 	parse_pathspec_arg(sent_argv + treeish_idx + 1, &ar.args);
+ 
+diff --git a/daemon.c b/daemon.c
+index a2954a0..2d58abe 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -304,6 +304,8 @@ static int run_service(char *dir, struct
+ 		return -1;
+ 	}
+ 
++	setenv("GIT_DAEMON", "I am your father.", 1);
++
+ 	/*
+ 	 * We'll ignore SIGTERM from now on, we have a
+ 	 * good client.
