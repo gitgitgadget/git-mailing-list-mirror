@@ -1,75 +1,119 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
+From: linux@horizon.com
 Subject: Re: Change set based shallow clone
-Date: Sun, 10 Sep 2006 10:56:25 -0400
-Message-ID: <9e4733910609100756r1ece1e22m38054536a2909dd4@mail.gmail.com>
-References: <9e4733910609071923tf1c49f6o70419e961e9eb66f@mail.gmail.com>
-	 <20060908184215.31789.qmail@science.horizon.com>
-	 <9e4733910609081413p32456768g280bdc9b232d7902@mail.gmail.com>
-	 <Pine.LNX.4.64.0609081600530.27779@g5.osdl.org>
-	 <9e4733910609081628w2a59551foc28c689d0538a984@mail.gmail.com>
-	 <17668.2019.732961.855446@cargo.ozlabs.ibm.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@osdl.org>,
-	"linux@horizon.com" <linux@horizon.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Sep 10 16:56:45 2006
+Date: 10 Sep 2006 11:21:22 -0400
+Message-ID: <20060910152122.31694.qmail@science.horizon.com>
+References: <e5bfff550609092214t4f8e195eib28e302f4d284aa@mail.gmail.com>
+Cc: git@vger.kernel.org, jonsmirl@gmail.com, linux@horizon.com,
+	paulus@samba.org, torvalds@osdl.org
+X-From: git-owner@vger.kernel.org Sun Sep 10 17:21:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GMQjj-0006h6-V6
-	for gcvg-git@gmane.org; Sun, 10 Sep 2006 16:56:44 +0200
+	id 1GMR7h-0002m8-Lq
+	for gcvg-git@gmane.org; Sun, 10 Sep 2006 17:21:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932191AbWIJO41 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Sep 2006 10:56:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932209AbWIJO41
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Sep 2006 10:56:27 -0400
-Received: from py-out-1112.google.com ([64.233.166.177]:24492 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S932191AbWIJO4Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Sep 2006 10:56:25 -0400
-Received: by py-out-1112.google.com with SMTP id 57so1583347pya
-        for <git@vger.kernel.org>; Sun, 10 Sep 2006 07:56:25 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Uq1e41crohw3ZNKMjF8vFvODyCQA5hvWPp5cPO3ZQ3C84oBZ01KLZjdDFP+aDUn3J6fUVcU81mi6OGUg52F2Z1y7M0AiQgqvdChH212KMrTc4UOgeo4ewlAAJmNkg5reaHxYDhpRdI9uneYD4hvFXzwvC7ssf+VINcxdj+JkpEk=
-Received: by 10.35.40.10 with SMTP id s10mr6937317pyj;
-        Sun, 10 Sep 2006 07:56:25 -0700 (PDT)
-Received: by 10.35.60.14 with HTTP; Sun, 10 Sep 2006 07:56:25 -0700 (PDT)
-To: "Paul Mackerras" <paulus@samba.org>
-In-Reply-To: <17668.2019.732961.855446@cargo.ozlabs.ibm.com>
-Content-Disposition: inline
+	id S932226AbWIJPVZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Sep 2006 11:21:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932231AbWIJPVZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Sep 2006 11:21:25 -0400
+Received: from science.horizon.com ([192.35.100.1]:13359 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S932226AbWIJPVX
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Sep 2006 11:21:23 -0400
+Received: (qmail 31695 invoked by uid 1000); 10 Sep 2006 11:21:22 -0400
+To: junkio@cox.net, mcostalba@gmail.com
+In-Reply-To: <e5bfff550609092214t4f8e195eib28e302f4d284aa@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26797>
 
-On 9/10/06, Paul Mackerras <paulus@samba.org> wrote:
-> Jon Smirl writes:
->
-> > gitk takes about a minute to come up on the Mozilla repo when
-> > everything is in cache. It  takes about twice as long when things are
-> > cold. It's enough of delay that I don't use the tool.
->
-> I've been doing some timing measurements with Jon's repo.  The results
-> are interesting.
+This conversation is going in so many directions at once that it's
+getting annoying.
 
-Using the Mozilla repo you downloaded is not a normal situation since
-it is 100% packed. Most people are going to have a few thousand loose
-objects floating around too. Loose objects really slow things down.
+The first level decision requires input from the point of view of gitk
+and qgit internals as to what's easy to implement.
 
-You noticed too that forks of small apps are relatively slow. The
-first pass of the import tools used fork for everything and took a
-week to run with 60% of the time spent in the kernel. There may be
-some work to do on fork in the kernel. Does mapping the kernel into
-the top 1G slow down fork of these small apps? Or are they dynamically
-linked to something that is bringing in millions of pages? When I was
-doing oprofile all of the time was in the actual fork call and page
-table copying.
+I'm trying to figure out the gitk code, but I'm not fluent in tcl, and
+it has 39 non-boilerplate comment lines in 229 functions and 6308 lines
+of source, so it requires fairly intensive grokking.
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+Still, while it obviously doesn't render bitmaps until the data
+appears in the window, it appears as though at least part of the
+layout (the "layoutmore" function) code is performed eagerly as
+soon as new data arrives via the getcommitlines callback.
+
+(Indeed, it appears that Tk does not inform it of window scroll
+events, so it can't wait any longer to decide on the layout.)
+
+
+Case 1: The visualizer is NOT CAPABLE of accepting out-of-order
+	input.  Without very sophisticated cacheing in git-rev-list,
+	it must process all of the data before outputting any in
+	order to make an absolute guarantee of no out-of-order data
+	despite possibly messed-up timestamps.
+
+	It is possible to notice that the date-first traversal only
+	has one active chain and flush the queued data at that point,
+	but that situation is unlikely to arise in repositories of
+	non-trivial size, which are exactly the ones for which
+	the batch-sorting delay is annoying.
+
+Case 2: The visualizer IS CAPABLE of accepting out-of-order input.
+	Regardless of whether the layout is done eagerly or lazily,
+	this requires the visualizer to potentially undo part of
+	its layout and re-do it, so has a UI implementation cost.
+
+	The re-doing does not need to be highly efficient; any number
+	of heuristics and exception caches can reduce the occurrence of
+	this in git-rev-list output to very low levels.  It's just
+	absolutely excluding it, without losing incremental output,
+	that is difficult.
+
+	Heuristic: I suspect the most common wrong-timestamp case is
+	a time zone misconfiguration, so holding back output until the
+	tree traversal has advanced 24 hours will eliminate most of the
+	problems.  Atypically large time jumps (like more than a year)
+	could also trigger special "gross clock error" handling.
+
+	Cache: whenever a child timestamped older than an ancestor is
+	encountered, this can be entered in a persistent cache that can
+	be used to give the child a different sorting priority next time.
+	The simplest implementation would propagate this information up a
+	chain of bad timestamps by one commit per git-rev-list invocation,
+	but even that's probably okay.
+
+	(A study of timestamp ordering problems in existing repositories
+	would be helpful for tuning these.)
+
+In case 2, I utterly fail to see how delaying emitting the out-of-order
+commit is of the slightest help to the UI.  The simplest way to merge
+out-of-order data is with an insertion sort (a.k.a. roll back and
+reprocess forward), and the cost of that is minimized if the distance
+to back up is minimized.
+
+Some "oops!" annotation on the git-rev-list output may be helpful to
+tell the UI that it needs to search back, but it already has an internal
+index of commits, so perhaps even that isn't worth bothering with.
+Fancier output formats are also more work to process.
+
+With sufficient cacheing of exceptions in git-rev-list, it may be
+practical to just have a single "oops, I screwed up; let's start again"
+output line, which very rarely triggers.
+
+
+But can we stop designing git-rev-list output formats until we've figured
+out if and how to implement it in the visualizer?  Or, more to the point,
+visualizers plural.  That's the hard part.  Then we can see what sort
+of git-rev-list output would be most convenient.
+
+For example, is fixing a small number of out-of-place commits practical,
+or is it better to purge and restart?  The former avoids deleting
+already-existing objects, while the latter avoids moving them.
+
+The original problem is that the long delay between starting a git history
+browser and being able to browse them is annoying.  The visualizer UIs
+already support browsing while history is flowing in from git-rev-list,
+but git-rev-list is reading and sorting the entire history before
+outputting the first line.
