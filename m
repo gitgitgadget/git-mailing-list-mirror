@@ -1,72 +1,63 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Change set based shallow clone
-Date: Sun, 10 Sep 2006 20:32:13 +0200
-Message-ID: <e5bfff550609101132x7e7ed336xa394b6220ab3643@mail.gmail.com>
-References: <e5bfff550609092214t4f8e195eib28e302f4d284aa@mail.gmail.com>
-	 <20060910152122.31694.qmail@science.horizon.com>
+Date: Sun, 10 Sep 2006 11:51:46 -0700
+Message-ID: <7v1wqjsgfx.fsf@assigned-by-dhcp.cox.net>
+References: <9e4733910609071923tf1c49f6o70419e961e9eb66f@mail.gmail.com>
+	<20060908184215.31789.qmail@science.horizon.com>
+	<9e4733910609081413p32456768g280bdc9b232d7902@mail.gmail.com>
+	<Pine.LNX.4.64.0609081600530.27779@g5.osdl.org>
+	<9e4733910609081628w2a59551foc28c689d0538a984@mail.gmail.com>
+	<17668.2019.732961.855446@cargo.ozlabs.ibm.com>
+	<9e4733910609100756r1ece1e22m38054536a2909dd4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: junkio@cox.net, git@vger.kernel.org, jonsmirl@gmail.com,
-	paulus@samba.org, torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Sun Sep 10 20:32:33 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Sep 10 20:51:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GMU6V-0003OL-HF
-	for gcvg-git@gmane.org; Sun, 10 Sep 2006 20:32:27 +0200
+	id 1GMUOn-0006ky-GJ
+	for gcvg-git@gmane.org; Sun, 10 Sep 2006 20:51:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932402AbWIJScP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Sep 2006 14:32:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932404AbWIJScP
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Sep 2006 14:32:15 -0400
-Received: from py-out-1112.google.com ([64.233.166.179]:55864 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S932402AbWIJScO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Sep 2006 14:32:14 -0400
-Received: by py-out-1112.google.com with SMTP id n25so1827511pyg
-        for <git@vger.kernel.org>; Sun, 10 Sep 2006 11:32:14 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=oQiJE5JzTIyCJ8gOm13Plmz8RNf+1S0Qbo6+p/WOeioeSSjy3taEl84ev4stqp0r0xlhzAWso2H90CXHXI2LOHwDGMuCm0QTxT5995O1mxn5IxhuFQUPtSEb0dCcRXiCScCBckl6dJ+q3LmUmyFM6WSd50aE9oWCXod8s6LHux8=
-Received: by 10.35.123.2 with SMTP id a2mr7229459pyn;
-        Sun, 10 Sep 2006 11:32:13 -0700 (PDT)
-Received: by 10.35.95.9 with HTTP; Sun, 10 Sep 2006 11:32:12 -0700 (PDT)
-To: "linux@horizon.com" <linux@horizon.com>
-In-Reply-To: <20060910152122.31694.qmail@science.horizon.com>
-Content-Disposition: inline
+	id S932464AbWIJSvH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Sep 2006 14:51:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932462AbWIJSvH
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Sep 2006 14:51:07 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:56560 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S932464AbWIJSvE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Sep 2006 14:51:04 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060910185103.TZJF26416.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 10 Sep 2006 14:51:03 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Liqu1V00H1kojtg0000000
+	Sun, 10 Sep 2006 14:50:55 -0400
+To: "Jon Smirl" <jonsmirl@gmail.com>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26806>
 
->
-> But can we stop designing git-rev-list output formats until we've figured
-> out if and how to implement it in the visualizer?  Or, more to the point,
-> visualizers plural.  That's the hard part.  Then we can see what sort
-> of git-rev-list output would be most convenient.
->
+"Jon Smirl" <jonsmirl@gmail.com> writes:
 
-Regarding qgit we have two cases:
+> Using the Mozilla repo you downloaded is not a normal situation since
+> it is 100% packed. Most people are going to have a few thousand loose
+> objects floating around too. Loose objects really slow things down.
 
--arrive of fixup set for out of order commits _not_ currently
-displayed on the screen
-This is by far the most common case expecially for big archives. In
-this case the fix speed depends on how far are the fixed commits from
-the last loaded commit (it's an insertion in a vector). In any case
-far more quick then redrawing the graph. No flickering side effect
-here. Implementation is easy.
+When you have a few thousand loose objects you definitely should
+consider repacking (not "repack -a" for Mozilla case, perhaps).
 
--arrive of fixup set for out of order commits currently displayed on the screen
-Here implementation _could_ be more difficult, but given the very low
-statistic of this case (a rare case among rare cases) we could accept
-the brutal approach of reset the complete graph, *but not the loaded
-revisions data*, and redraw the graph. With this approach
-implementation is almost as easy as before but flickering is involved.
+We could benefit from the suggested organization of one base
+archive pack plus a current active pack.  The core side code to
+help doing so was posted here which followed a discussion on how
+to have repack make use of it last week.
 
-I agree with you that we should have fixup information as soon as
-git-rev-list discovers out of order commits.
+    http://thread.gmane.org/gmane.comp.version-control.git/26218/focus=26326
 
-   Marco
+Any takers?
