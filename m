@@ -1,64 +1,47 @@
-From: "Franck Bui-Huu" <vagabon.xyz@gmail.com>
-Subject: Re: [PATCH 1/2] archive: allow remote to have more formats than we understand.
-Date: Sun, 10 Sep 2006 21:18:54 +0200
-Message-ID: <cda58cb80609101218m35e3ac97y5668017d2c03948f@mail.gmail.com>
-References: <7vpse4tcyc.fsf@assigned-by-dhcp.cox.net>
-	 <cda58cb80609101202y2ee1a18dwf09d6e104740777@mail.gmail.com>
-	 <7vwt8br150.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Rene Scharfe" <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sun Sep 10 21:19:12 2006
+From: linux@horizon.com
+Subject: Re: Change set based shallow clone
+Date: 10 Sep 2006 15:03:32 -0400
+Message-ID: <20060910190332.17667.qmail@science.horizon.com>
+References: <9e4733910609101100u515ae6e3seababd5780db715d@mail.gmail.com>
+Cc: git@vger.kernel.org, paulus@samba.org, torvalds@osdl.org
+X-From: git-owner@vger.kernel.org Sun Sep 10 21:34:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GMUpW-0003B5-Pi
-	for gcvg-git@gmane.org; Sun, 10 Sep 2006 21:18:59 +0200
+	id 1GMV4R-00066w-ES
+	for gcvg-git@gmane.org; Sun, 10 Sep 2006 21:34:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932536AbWIJTS4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Sep 2006 15:18:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932537AbWIJTS4
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Sep 2006 15:18:56 -0400
-Received: from wx-out-0506.google.com ([66.249.82.226]:26230 "EHLO
-	wx-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S932536AbWIJTSz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Sep 2006 15:18:55 -0400
-Received: by wx-out-0506.google.com with SMTP id s14so1305130wxc
-        for <git@vger.kernel.org>; Sun, 10 Sep 2006 12:18:54 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FBUNS3t27P1FOLnTKcYNqlxvKefaouHRWu+A0PTxuHRFfJsqz/qYESAfsH8VAv1x0jVxunusvkrOD1efLaAEdPpQfVe/FFmZXa/q6HieKYSeV8uFQrL707VswhOvjvTR1gic7kf9lu+jO9IQwzERyD4s9wQt3tuCrHhExvsQWF8=
-Received: by 10.70.19.16 with SMTP id 16mr2811661wxs;
-        Sun, 10 Sep 2006 12:18:54 -0700 (PDT)
-Received: by 10.70.72.5 with HTTP; Sun, 10 Sep 2006 12:18:54 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vwt8br150.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S932539AbWIJTeS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Sep 2006 15:34:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932555AbWIJTeS
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Sep 2006 15:34:18 -0400
+Received: from science.horizon.com ([192.35.100.1]:27704 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S932539AbWIJTeR
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Sep 2006 15:34:17 -0400
+Received: (qmail 17669 invoked by uid 1000); 10 Sep 2006 15:03:32 -0400
+To: jonsmirl@gmail.com, linux@horizon.com
+In-Reply-To: <9e4733910609101100u515ae6e3seababd5780db715d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26813>
 
-2006/9/10, Junio C Hamano <junkio@cox.net>:
-> "Franck Bui-Huu" <vagabon.xyz@gmail.com> writes:
->
-> >> +static const char *remote_request(int *ac, const char **av)
-> >> +{
-> >
-> > just to be consistent with the rest of the file, I would have called
-> > this function
-> > "parse_remote_arg" or "extract_remote_arg"
->
-> I was thinking about calling this is_remote_request() actually.
->
+> Maybe we are looking at the wrong thing, it may be fast to fork a
+> process, is it fast for the process to exit?
 
-that sounds like to return a boolean. You would need to pass remote as
-a parameter, no ?
-I think extract_remote_arg is nice because it tells you that it
-returns remote option valu _and_ remove it from argv.
+The lmbench benchmark figures I cited are for fork+exit.  The other is
+fork+exec+exit.
 
--- 
-               Franck
+> At the time this was measured parsecvs was executing millions of git
+> command using system(command). 40% of the CPU was in the kernel, it
+> stayed that way for hours.
+
+Ah!  You are aware, aren't you, that system(string) invokes
+/bin/sh to parse the string, right?  So you're starting bash
+several million times.  ("man system" explains.)
+
+A direct fork() (or even faster, vfork) and exec() is going to have a
+lot less overhead, although it's more work to code.  See Stevens for
+excellent examples.
