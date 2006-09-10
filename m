@@ -1,63 +1,84 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Change set based shallow clone
-Date: Sun, 10 Sep 2006 11:51:46 -0700
-Message-ID: <7v1wqjsgfx.fsf@assigned-by-dhcp.cox.net>
-References: <9e4733910609071923tf1c49f6o70419e961e9eb66f@mail.gmail.com>
-	<20060908184215.31789.qmail@science.horizon.com>
-	<9e4733910609081413p32456768g280bdc9b232d7902@mail.gmail.com>
-	<Pine.LNX.4.64.0609081600530.27779@g5.osdl.org>
-	<9e4733910609081628w2a59551foc28c689d0538a984@mail.gmail.com>
-	<17668.2019.732961.855446@cargo.ozlabs.ibm.com>
-	<9e4733910609100756r1ece1e22m38054536a2909dd4@mail.gmail.com>
+From: "Franck Bui-Huu" <vagabon.xyz@gmail.com>
+Subject: Re: [PATCH 1/2] archive: allow remote to have more formats than we understand.
+Date: Sun, 10 Sep 2006 21:02:10 +0200
+Message-ID: <cda58cb80609101202y2ee1a18dwf09d6e104740777@mail.gmail.com>
+References: <7vpse4tcyc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Sep 10 20:51:30 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Rene Scharfe" <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sun Sep 10 21:02:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GMUOn-0006ky-GJ
-	for gcvg-git@gmane.org; Sun, 10 Sep 2006 20:51:22 +0200
+	id 1GMUZa-0000M3-DZ
+	for gcvg-git@gmane.org; Sun, 10 Sep 2006 21:02:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932464AbWIJSvH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Sep 2006 14:51:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932462AbWIJSvH
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Sep 2006 14:51:07 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:56560 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S932464AbWIJSvE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Sep 2006 14:51:04 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060910185103.TZJF26416.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 10 Sep 2006 14:51:03 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Liqu1V00H1kojtg0000000
-	Sun, 10 Sep 2006 14:50:55 -0400
-To: "Jon Smirl" <jonsmirl@gmail.com>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932496AbWIJTCM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Sep 2006 15:02:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932497AbWIJTCM
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Sep 2006 15:02:12 -0400
+Received: from wx-out-0506.google.com ([66.249.82.236]:27484 "EHLO
+	wx-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S932496AbWIJTCL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Sep 2006 15:02:11 -0400
+Received: by wx-out-0506.google.com with SMTP id s14so1301462wxc
+        for <git@vger.kernel.org>; Sun, 10 Sep 2006 12:02:10 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=lbcDo3YMZj32j+lAvREtcjPRcehRNHHzMGhLFEFjF+ygI//YOI2Obu4Gjae20uj2H0F+pbVhmUoODvm4iyvI2+jIJCmeikgZ3SorkpdjiXTg3BIVJH+v/FyZEAgLWIGZof1b2YYQZvPsa90vsdLCBJFHxkWPD0qZqfZVivIShEQ=
+Received: by 10.70.21.4 with SMTP id 4mr4333047wxu;
+        Sun, 10 Sep 2006 12:02:10 -0700 (PDT)
+Received: by 10.70.72.5 with HTTP; Sun, 10 Sep 2006 12:02:10 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vpse4tcyc.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26807>
 
-"Jon Smirl" <jonsmirl@gmail.com> writes:
+2006/9/10, Junio C Hamano <junkio@cox.net>:
+> This fixes git-archive --remote not to parse archiver arguments;
+> otherwise if the remote end implements formats other than the
+> one known locally we will not be able to access that format.
+>
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+> ---
+>  * At first sight, this should not matter that much, but (1) we
+>    do not really parse and validate the arguments when dealing
+>    with remote site, and (2) we have no way validating them if
+>    we wanted to, given that the remote end might be running
+>    different version of git.
+>
+>    Having said that, you would realize that once we start
+>    refactoring things this way, "git archive --remote=foo" is
+>    not archive driver anymore.  There is nothing that prevents
+>    us saying "git archive --remote=foo --command=rev-list HEAD",
+>    other than that the remote archive protocol insists the
+>    command invoked at the remote end to be "git archive" itself.
+>
 
-> Using the Mozilla repo you downloaded is not a normal situation since
-> it is 100% packed. Most people are going to have a few thousand loose
-> objects floating around too. Loose objects really slow things down.
+good change.
 
-When you have a few thousand loose objects you definitely should
-consider repacking (not "repack -a" for Mozilla case, perhaps).
+>  archive.h         |    1 -
+>  builtin-archive.c |   79 ++++++++++++++++++++++++++++++++---------------------
+>  2 files changed, 47 insertions(+), 33 deletions(-)
+>
 
-We could benefit from the suggested organization of one base
-archive pack plus a current active pack.  The core side code to
-help doing so was posted here which followed a discussion on how
-to have repack make use of it last week.
+[snip]
 
-    http://thread.gmane.org/gmane.comp.version-control.git/26218/focus=26326
+>         return i;
+>  }
+>
+> +static const char *remote_request(int *ac, const char **av)
+> +{
 
-Any takers?
+just to be consistent with the rest of the file, I would have called
+this function
+"parse_remote_arg" or "extract_remote_arg"
+
+-- 
+               Franck
