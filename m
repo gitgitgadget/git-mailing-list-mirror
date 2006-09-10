@@ -1,134 +1,81 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] git-upload-archive: add config option to allow only specified formats
-Date: Sun, 10 Sep 2006 17:58:38 +0200
-Message-ID: <20060910155837.GA15974@lsrfire.ath.cx>
-References: <7vpse4tcyc.fsf@assigned-by-dhcp.cox.net> <7vk64ctctv.fsf@assigned-by-dhcp.cox.net> <7v1wqkt2v4.fsf_-_@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 10 17:58:49 2006
+From: linux@horizon.com
+Subject: Re: Change set based shallow clone
+Date: 10 Sep 2006 12:10:07 -0400
+Message-ID: <20060910161007.8846.qmail@science.horizon.com>
+References: <9e4733910609100756r1ece1e22m38054536a2909dd4@mail.gmail.com>
+Cc: git@vger.kernel.org, linux@horizon.com, paulus@samba.org,
+	torvalds@osdl.org
+X-From: git-owner@vger.kernel.org Sun Sep 10 18:10:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GMRhk-0000Tj-Ku
-	for gcvg-git@gmane.org; Sun, 10 Sep 2006 17:58:44 +0200
+	id 1GMRt1-0002cA-H9
+	for gcvg-git@gmane.org; Sun, 10 Sep 2006 18:10:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932267AbWIJP6j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Sep 2006 11:58:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932259AbWIJP6j
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Sep 2006 11:58:39 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:5322
-	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S932267AbWIJP6j (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Sep 2006 11:58:39 -0400
-Received: by neapel230.server4you.de (Postfix, from userid 1000)
-	id 0B9A712279; Sun, 10 Sep 2006 17:58:38 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>,
-	Franck Bui-Huu <vagabon.xyz@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <7v1wqkt2v4.fsf_-_@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932278AbWIJQKN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Sep 2006 12:10:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932277AbWIJQKM
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Sep 2006 12:10:12 -0400
+Received: from science.horizon.com ([192.35.100.1]:24371 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S932278AbWIJQKK
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Sep 2006 12:10:10 -0400
+Received: (qmail 8847 invoked by uid 1000); 10 Sep 2006 12:10:07 -0400
+To: jonsmirl@gmail.com
+In-Reply-To: <9e4733910609100756r1ece1e22m38054536a2909dd4@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26799>
 
- Documentation/config.txt |    5 +++++
- builtin-upload-archive.c |   39 +++++++++++++++++++++++++++++++++++++++
- daemon.c                 |    2 ++
- 3 files changed, 46 insertions(+)
+> You noticed too that forks of small apps are relatively slow. The
+> first pass of the import tools used fork for everything and took a
+> week to run with 60% of the time spent in the kernel. There may be
+> some work to do on fork in the kernel. Does mapping the kernel into
+> the top 1G slow down fork of these small apps? Or are they dynamically
+> linked to something that is bringing in millions of pages? When I was
+> doing oprofile all of the time was in the actual fork call and page
+> table copying.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ce722a2..5c3c6c7 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -236,6 +236,11 @@ tar.umask::
- 	the same permissions as gitlink:git-checkout[1] would use. The default
- 	value remains 0, which means world read-write.
- 
-+uploadarchive.daemonformats::
-+	A comma-separated list of the git-archive formats allowed for upload
-+	via git-daemon.  If this parameter is missing all formats are allowed
-+	for upload.
-+
- user.email::
- 	Your email address to be recorded in any newly created commits.
- 	Can be overridden by the 'GIT_AUTHOR_EMAIL' and 'GIT_COMMITTER_EMAIL'
-diff --git a/builtin-upload-archive.c b/builtin-upload-archive.c
-index 96f96bd..6a5245a 100644
---- a/builtin-upload-archive.c
-+++ b/builtin-upload-archive.c
-@@ -16,6 +16,37 @@ static const char upload_archive_usage[]
- static const char deadchild[] =
- "git-upload-archive: archiver died with error";
- 
-+static char *daemon_formats;
-+
-+static int upload_format_config(const char *var, const char *value)
-+{
-+	if (!strcmp(var, "uploadarchive.daemonformats"))
-+		daemon_formats = xstrdup(value);
-+	return 0;
-+}
-+
-+static int is_in(const char *needle, const char *haystack, const char *delim)
-+{
-+	int len = strlen(needle);
-+	const char *search = haystack;
-+
-+	for (;;) {
-+		char *pos = strstr(search, needle);
-+		if (!pos)
-+			return 0;
-+		search++;
-+		if ((pos == haystack || strchr(delim, pos[-1])) &&
-+		    (pos[len] == '\0' || strchr(delim, pos[len])))
-+			return 1;
-+	}
-+}
-+
-+static int upload_format_allowed(const char *fmt)
-+{
-+	if (getenv("GIT_DAEMON"))
-+		return daemon_formats ? is_in(fmt, daemon_formats, " \t,") : 1;
-+	return 1;
-+}
- 
- static int run_upload_archive(int argc, const char **argv, const char *prefix)
- {
-@@ -38,6 +69,8 @@ static int run_upload_archive(int argc, 
- 	if (!enter_repo(buf, 0))
- 		die("not a git archive");
- 
-+	git_config(upload_format_config);
-+
- 	/* put received options in sent_argv[] */
- 	sent_argc = 1;
- 	sent_argv[0] = "git-upload-archive";
-@@ -67,6 +100,12 @@ static int run_upload_archive(int argc, 
- 	/* parse all options sent by the client */
- 	treeish_idx = parse_archive_args(sent_argc, sent_argv, &ar);
- 
-+	if (!upload_format_allowed(ar.name)) {
-+		free(daemon_formats);
-+		die("upload of %s format forbidden\n", ar.name);
-+	}
-+	free(daemon_formats);
-+
- 	parse_treeish_arg(sent_argv + treeish_idx, &ar.args, prefix);
- 	parse_pathspec_arg(sent_argv + treeish_idx + 1, &ar.args);
- 
-diff --git a/daemon.c b/daemon.c
-index a2954a0..2d58abe 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -304,6 +304,8 @@ static int run_service(char *dir, struct
- 		return -1;
- 	}
- 
-+	setenv("GIT_DAEMON", "I am your father.", 1);
-+
- 	/*
- 	 * We'll ignore SIGTERM from now on, we have a
- 	 * good client.
+Actually, Linux has one of the fastest forks around, 100-200 us on
+modern x86.  For large executables, the shared page tables patch (is it
+merged yet?) might help.
+
+No, mapping the kernel does NOT slow anything down.  Those page tables are
+shared between all processes, and use the x86's global bit to avoid being
+forced out of the TLB during context switch.  Attempting to make the
+kernel mapping vary between processes would slow things down enormously!
+
+I'm not finding reasonably recent Linux/FreeBSD comparisons.  There are
+plenty of Max OS X comparisons, but it appears to particularly suck,
+so that's a bit of a straw man.  See, e.g.
+http://www.anandtech.com/mac/showdoc.aspx?i=2520&p=7
+or some figures from 2002:
+http://lists.apple.com/archives/darwin-kernel/2002/Oct/msg00009.html
+----------------------------------------------------------------
+Host      OS            Mhz  null null      open selct sig  sig  fork exec sh
+                             call I/O  stat clos TCP   inst hndl proc proc proc
+--------- ------------- ---- ---- ---- ---- ---- ----- ---- ---- ---- ---- ----
+g4           Darwin 1.4  799 2.21 3.19 12.6 16.4 30.4  3.78 9.88 1576 4095 13.K
+g4           Darwin 5.5  797 2.26 3.15 14.5 17.8 30.4  3.82 10.2 5685 12.K 40.K
+g4.local.    Darwin 6.0  797 1.47 2.73 17.2 20.7 27.2  3.00 10.5 7517 17.K 41.K
+g4.local.    Darwin 6.0  (after misconfiguration fixed)          1575
+g4        Linux 2.4.18-  799 0.42 0.69 2.52 3.79 33.6  1.23 3.08 659. 2642 12.K
+--------- ------------- ---- ---- ---- ---- ---- ----- ---- ---- ---- ---- ----
+jim          Darwin 1.4  448 2.85 4.23 9.53   17       4.83   14 2402 6817  19K
+jim.local    Darwin 6.1  448 1.89 3.71   21   29    43 3.85   15 2832 8955  19K
+
+For small processes such as lmbench uses, you can see from the above that
+exec is much more expensive than fork.  Also
+http://www.opersys.com/lrtbf/index.html
+http://marc.theaimsgroup.com/?l=linux-kernel&m=112086443319815
+http://www.opensourcetutorials.com/tutorials/Server-Side-Coding/Administration/hyper-threading-linux/page4.html
+
+As for small apps and dynamic linking, glibc isn't tiny (prelink can
+help), but that's post-exec.  If it's in the fork() call, then it's just
+a case that your app's memory space is big and even copying all of its
+page tables is expensive.
+
+If you're invoking one of the git programs that's a shell script, that
+adds its own startup overhead, of course.
