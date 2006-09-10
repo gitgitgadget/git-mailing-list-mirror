@@ -1,65 +1,72 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Change set based shallow clone
-Date: Sun, 10 Sep 2006 17:00:53 -0400
-Message-ID: <9e4733910609101400j2604ace1vdb2e363c1296418f@mail.gmail.com>
-References: <20060910190332.17667.qmail@science.horizon.com>
-	 <Pine.LNX.4.64.0609101254590.27779@g5.osdl.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Dropping Git.pm (at least Git.xs)?
+Date: Mon, 11 Sep 2006 00:13:01 +0200
+Organization: At home
+Message-ID: <ee22lb$uia$1@sea.gmane.org>
+References: <7vodtxuqt4.fsf@assigned-by-dhcp.cox.net> <20060903150305.G50c94aea@leonov.stosberg.net> <4504529A.70401@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: linux@horizon.com, git@vger.kernel.org, paulus@samba.org
-X-From: git-owner@vger.kernel.org Sun Sep 10 23:01:00 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Mon Sep 11 00:13:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GMWQF-000536-OK
-	for gcvg-git@gmane.org; Sun, 10 Sep 2006 23:01:00 +0200
+	id 1GMXYd-0007eg-Va
+	for gcvg-git@gmane.org; Mon, 11 Sep 2006 00:13:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964938AbWIJVA4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Sep 2006 17:00:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964939AbWIJVAz
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Sep 2006 17:00:55 -0400
-Received: from py-out-1112.google.com ([64.233.166.176]:39916 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S964938AbWIJVAy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Sep 2006 17:00:54 -0400
-Received: by py-out-1112.google.com with SMTP id n25so1867580pyg
-        for <git@vger.kernel.org>; Sun, 10 Sep 2006 14:00:53 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=hz5yolmMNe6voRugmjbTH/iLSezO40TU7AA1UttAJnh6EJZ9Z4nv6meMh4Oa++Iwv/zkDxTX1rOCAkoSjfh2aH59nR/SHjF3x4EdFxo/9hSIb/SvG4IlIJVvte3AzrkgacVJxdXAm04skB5RpDIZ9ugQlkD+NPcFlG6TgB3Wzx0=
-Received: by 10.35.61.17 with SMTP id o17mr7460747pyk;
-        Sun, 10 Sep 2006 14:00:53 -0700 (PDT)
-Received: by 10.35.60.14 with HTTP; Sun, 10 Sep 2006 14:00:53 -0700 (PDT)
-To: "Linus Torvalds" <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0609101254590.27779@g5.osdl.org>
-Content-Disposition: inline
+	id S932136AbWIJWN0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Sep 2006 18:13:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932166AbWIJWN0
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Sep 2006 18:13:26 -0400
+Received: from main.gmane.org ([80.91.229.2]:34730 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932136AbWIJWNZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Sep 2006 18:13:25 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GMXYG-0007bF-Oa
+	for git@vger.kernel.org; Mon, 11 Sep 2006 00:13:20 +0200
+Received: from host-81-190-17-209.torun.mm.pl ([81.190.17.209])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 11 Sep 2006 00:13:20 +0200
+Received: from jnareb by host-81-190-17-209.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 11 Sep 2006 00:13:20 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-17-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26817>
 
-On 9/10/06, Linus Torvalds <torvalds@osdl.org> wrote:
-> On Sun, 10 Sep 2006, linux@horizon.com wrote:
-> >
-> > A direct fork() (or even faster, vfork) and exec() is going to have a
-> > lot less overhead, although it's more work to code.  See Stevens for
-> > excellent examples.
->
-> Well, that said, the Linux fork/exec/exit is certainly fairly efficient,
-> but nothing can hide the fact that it _is_ a very expensive operation.
+Sam Vilain wrote:
 
-cvs2svn + fastimport can import the same Mozilla repo in about 2hrs
-that was taking parsecvs about five days to do. The algorithms are not
-that different, cvs2svn is probably slower than parsecvs for detecting
-changesets. The difference is mostly due to the removal of forks.
+> Dennis Stosberg wrote:
+>> Having perl bindings to git internals and sometime in the future to a
+>> libified git is a great thing.  It will allow people to do interesting
+>> things, quickly trying concepts without having to write any C code.
+>> And I expect that gitweb can be sped up remarkably by using Git.pm (no
+>> forking, parsing of command output often not necessary, easy caching of
+>> frequently cached data across calls, etc)
+> 
+> FWIW, I have been starting on a perl implementation.  It uses the
+> Git.pm, but not for anything *that* important.  It's still very young,
+> but once I have reading and writing files basically working, I'll
+> release it to CPAN separately - no reason it needs to be distributed
+> with Git itself.
+> 
+> See http://utsl.gen.nz/gitweb/?p=VCS-Git
 
-Is the kernel mapped into user processes using huge pages? That would
-reduce some of the pressure on TLBs. Another thing that should be
-mapped with huge pages is the video RAM.
+Could you please put appropriate information on GitWiki
+  http://git.or.cz/gitwiki/InterfacesFrontendsAndTools
+Perhaps it would be good time to start new section, Git Implementations,
+and put egit (Java GIT library and Eclipse plugin) there too.
 
 -- 
-Jon Smirl
-jonsmirl@gmail.com
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
