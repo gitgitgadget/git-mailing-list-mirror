@@ -1,96 +1,142 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: Change set based shallow clone
-Date: Mon, 11 Sep 2006 19:56:52 +1000
-Message-ID: <17669.13028.198886.947400@cargo.ozlabs.ibm.com>
-References: <e5bfff550609092214t4f8e195eib28e302f4d284aa@mail.gmail.com>
-	<20060910152122.31694.qmail@science.horizon.com>
+From: Franck Bui-Huu <vagabon.xyz@gmail.com>
+Subject: Re: [PATCH 3/3] Add sideband status report to git-archive protocol
+Date: Mon, 11 Sep 2006 12:34:10 +0200
+Message-ID: <45053BA2.6050502@innova-card.com>
+References: <7vpse4tcyc.fsf@assigned-by-dhcp.cox.net>	<7vk64ctctv.fsf@assigned-by-dhcp.cox.net> <7v1wqkt2v4.fsf_-_@assigned-by-dhcp.cox.net>
+Reply-To: Franck <vagabon.xyz@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: junkio@cox.net, mcostalba@gmail.com, git@vger.kernel.org,
-	jonsmirl@gmail.com, torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Mon Sep 11 11:57:22 2006
+Cc: Franck Bui-Huu <vagabon.xyz@gmail.com>, git@vger.kernel.org,
+	Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Mon Sep 11 12:34:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GMiXU-0005ro-Gv
-	for gcvg-git@gmane.org; Mon, 11 Sep 2006 11:57:16 +0200
+	id 1GMj7I-0006Yi-O4
+	for gcvg-git@gmane.org; Mon, 11 Sep 2006 12:34:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751320AbWIKJ5E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Sep 2006 05:57:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751322AbWIKJ5E
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Sep 2006 05:57:04 -0400
-Received: from ozlabs.org ([203.10.76.45]:51889 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S1751320AbWIKJ5C (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Sep 2006 05:57:02 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 2BDBA67B93; Mon, 11 Sep 2006 19:57:00 +1000 (EST)
-To: linux@horizon.com
-In-Reply-To: <20060910152122.31694.qmail@science.horizon.com>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1750708AbWIKKd6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Sep 2006 06:33:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750725AbWIKKd6
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Sep 2006 06:33:58 -0400
+Received: from nz-out-0102.google.com ([64.233.162.197]:15813 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1750708AbWIKKd5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Sep 2006 06:33:57 -0400
+Received: by nz-out-0102.google.com with SMTP id n1so479610nzf
+        for <git@vger.kernel.org>; Mon, 11 Sep 2006 03:33:56 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        b=Pz4AMTm1c71MundkUoHC0xYaNM37iOJuhB7LlNilWp2M4kUuMFEl9V0TwXkB1Ktf7RHMoedTdYtID/y7Qen1w9Tvf4Ym7atVn+U/KIpnvQY1EEaZInFXcI+g6kYvCrtGchBdt/pztQbTz6BY3LonhyBih0FcU/iTnaRTKMm6+Es=
+Received: by 10.64.143.4 with SMTP id q4mr4449416qbd;
+        Mon, 11 Sep 2006 03:33:56 -0700 (PDT)
+Received: from ?192.168.0.24? ( [81.252.61.1])
+        by mx.gmail.com with ESMTP id f18sm3479885qba.2006.09.11.03.33.54;
+        Mon, 11 Sep 2006 03:33:56 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.4 (X11/20060614)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v1wqkt2v4.fsf_-_@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26848>
 
-linux@horizon.com writes:
+Junio C Hamano wrote:
+> Using the refactored sideband code from existing upload-pack protocol,
+> this lets the error condition and status output sent from the remote
+> process to be shown locally.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+> ---
 
-> I'm trying to figure out the gitk code, but I'm not fluent in tcl, and
-> it has 39 non-boilerplate comment lines in 229 functions and 6308 lines
-> of source, so it requires fairly intensive grokking.
+[snip]
 
-Sorry :)
+> -}
+> +	while (1) {
+> +		struct pollfd pfd[2];
+> +		char buf[16384];
+> +		ssize_t sz;
+> +		pid_t pid;
+> +		int status;
+> +
+> +		pfd[0].fd = fd1[0];
+> +		pfd[0].events = POLLIN;
+> +		pfd[1].fd = fd2[0];
+> +		pfd[1].events = POLLIN;
+> +		if (poll(pfd, 2, -1) < 0) {
+> +			if (errno != EINTR) {
+> +				error("poll failed resuming: %s",
+> +				      strerror(errno));
+> +				sleep(1);
+> +			}
+> +			continue;
+> +		}
+> +		if (pfd[0].revents & (POLLIN|POLLHUP)) {
+> +			/* Data stream ready */
+> +			sz = read(pfd[0].fd, buf, sizeof(buf));
+> +			send_sideband(1, 1, buf, sz, DEFAULT_PACKET_MAX);
+> +		}
+> +		if (pfd[1].revents & (POLLIN|POLLHUP)) {
+> +			/* Status stream ready */
+> +			sz = read(pfd[1].fd, buf, sizeof(buf));
+> +			send_sideband(1, 2, buf, sz, DEFAULT_PACKET_MAX);
+> +		}
+>  
+> +		if (((pfd[0].revents | pfd[1].revents) & POLLHUP) == 0)
+> +			continue;
+> +		/* did it die? */
+> +		pid = waitpid(writer, &status, WNOHANG);
+> +		if (!pid) {
+> +			fprintf(stderr, "Hmph, HUP?\n");
+> +			continue;
+> +		}
 
-> Still, while it obviously doesn't render bitmaps until the data
-> appears in the window, it appears as though at least part of the
-> layout (the "layoutmore" function) code is performed eagerly as
-> soon as new data arrives via the getcommitlines callback.
+I get a lot of "Hmph, HUP?" messages when testing "git-archive
+--remote" command. One guess: this can be due to the fact that when
+the writer process exits, it first closes its fd but do not send a
+SIGCHLD signal right after to its parent.
 
-It doesn't render bitmaps as such at the Tcl level, what it does is
-create items on canvases, add text to text widgets, etc.  Tk takes
-care of turning it into bitmaps.
+Therefore poll() can return POLLHUP flag to the parent process but
+waitpid still returns 0 because the writer process has still not sent
+SIGCHLD signal to its parent.
 
-The work of drawing the graph is done in three stages - layout,
-optimization and drawing.  The layout and optimization stages are done
-when we have enough data because, at least for the layout stage,
-earlier rows can affect later rows arbitrarily far away.  For the
-optimization stage, I don't think the changes it makes can propagate
-arbitrarily far, so it would be possible to defer that stage, and I am
-looking into implementing that.  The drawing stage is done on demand,
-just for the part that's actually visible.
+How about this patch ? If poll() doesn't only return the single POLLIN
+flag, then either the pipe has been closed because the write process
+died or something wrong happened. In all these cases we can wait for
+the writer process to exit then die.
 
-> (Indeed, it appears that Tk does not inform it of window scroll
-> events, so it can't wait any longer to decide on the layout.)
+-- >8 --
 
-The Tcl code does get to know when the canvas has been scrolled - see
-the scrollcanv procedure.
-
-> In case 2, I utterly fail to see how delaying emitting the out-of-order
-> commit is of the slightest help to the UI.  The simplest way to merge
-
-Indeed.  I would want to see it as early as possible.
-
-> out-of-order data is with an insertion sort (a.k.a. roll back and
-> reprocess forward), and the cost of that is minimized if the distance
-> to back up is minimized.
-
-That part isn't too hard; I already have modifications to gitk to
-handle that much of it.  The harder part is backing up the graph
-drawing algorithm.
-
-> For example, is fixing a small number of out-of-place commits practical,
-> or is it better to purge and restart?  The former avoids deleting
-> already-existing objects, while the latter avoids moving them.
-
-For gitk, I'm thinking of a reorder buffer of say 10 entries at the
-front end to cope with minor misorderings; then if misordering occurs
-that is outside the scope of the reorder buffer to fix, freeze the
-layout algorithms at that point, read in the rest of the commits and
-reorder as necessary, then at the end restart the layout algorithm
-from scratch, probably with a popup to inform the user what happened.
-If the user could set the size of the reorder buffer then they could
-avoid having that happen in future, at the cost of it taking longer to
-show the first screenful of commits.
-
-Paul.
+diff --git a/builtin-upload-archive.c b/builtin-upload-archive.c
+index 42cb9f8..2ebe9a0 100644
+--- a/builtin-upload-archive.c
++++ b/builtin-upload-archive.c
+@@ -114,7 +114,6 @@ int cmd_upload_archive(int argc, const c
+ 		struct pollfd pfd[2];
+ 		char buf[16384];
+ 		ssize_t sz;
+-		pid_t pid;
+ 		int status;
+ 
+ 		pfd[0].fd = fd1[0];
+@@ -140,13 +139,11 @@ int cmd_upload_archive(int argc, const c
+ 			send_sideband(1, 2, buf, sz, LARGE_PACKET_MAX);
+ 		}
+ 
+-		if (((pfd[0].revents | pfd[1].revents) & POLLHUP) == 0)
+-			continue;
+-		/* did it die? */
+-		pid = waitpid(writer, &status, WNOHANG);
+-		if (!pid) {
+-			fprintf(stderr, "Hmph, HUP?\n");
++		if ((pfd[0].revents | pfd[1].revents) == POLLIN)
+ 			continue;
++
++		if (waitpid(writer, &status, 0) < 0) {
++			die("waitpid failed: %s", strerror(errno));
+ 		}
+ 		if (!WIFEXITED(status) || WEXITSTATUS(status) > 0)
+ 			send_sideband(1, 3, deadchild, strlen(deadchild),
