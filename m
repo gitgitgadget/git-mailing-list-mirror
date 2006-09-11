@@ -1,92 +1,81 @@
-From: "Anand Kumria" <wildfire@progsoc.org>
+From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: Change set based shallow clone
-Date: Sun, 10 Sep 2006 23:20:24 +0000 (UTC)
-Message-ID: <ee26jo$jqp$1@sea.gmane.org>
-References: <9e4733910609071252ree73effwb06358e9a22ba965@mail.gmail.com>
-	<edpuut$dns$1@sea.gmane.org>
-	<9e4733910609071341u7e430214j71ddcbefa26810ca@mail.gmail.com>
-	<7vlkovtjd1.fsf@assigned-by-dhcp.cox.net>
-	<9e4733910609071609o50e5dacm53323e023e90358f@mail.gmail.com>
+Date: Sun, 10 Sep 2006 20:03:06 -0400
+Message-ID: <20060911000306.GA28927@spearce.org>
+References: <9e4733910609071923tf1c49f6o70419e961e9eb66f@mail.gmail.com> <20060908184215.31789.qmail@science.horizon.com> <9e4733910609081413p32456768g280bdc9b232d7902@mail.gmail.com> <Pine.LNX.4.64.0609081600530.27779@g5.osdl.org> <9e4733910609081628w2a59551foc28c689d0538a984@mail.gmail.com> <17668.2019.732961.855446@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-From: git-owner@vger.kernel.org Mon Sep 11 01:20:57 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Jon Smirl <jonsmirl@gmail.com>, Linus Torvalds <torvalds@osdl.org>,
+	"linux@horizon.com" <linux@horizon.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 11 02:03:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GMYbX-0000aw-7U
-	for gcvg-git@gmane.org; Mon, 11 Sep 2006 01:20:48 +0200
+	id 1GMZGp-0007d1-RJ
+	for gcvg-git@gmane.org; Mon, 11 Sep 2006 02:03:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964813AbWIJXUi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Sep 2006 19:20:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964816AbWIJXUi
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Sep 2006 19:20:38 -0400
-Received: from main.gmane.org ([80.91.229.2]:54227 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S964813AbWIJXUh (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Sep 2006 19:20:37 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GMYbM-0000XN-PP
-	for git@vger.kernel.org; Mon, 11 Sep 2006 01:20:36 +0200
-Received: from 88-111-195-250.dynamic.dsl.as9105.com ([88.111.195.250])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 11 Sep 2006 01:20:36 +0200
-Received: from wildfire by 88-111-195-250.dynamic.dsl.as9105.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 11 Sep 2006 01:20:36 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 88-111-195-250.dynamic.dsl.as9105.com
-User-Agent: pan 0.106 (Dum Maro Dum)
+	id S964837AbWIKADU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Sep 2006 20:03:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964838AbWIKADU
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Sep 2006 20:03:20 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:22454 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S964837AbWIKADT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Sep 2006 20:03:19 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GMZGN-0004S5-HO; Sun, 10 Sep 2006 20:02:59 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id BB90920FB33; Sun, 10 Sep 2006 20:03:06 -0400 (EDT)
+To: Paul Mackerras <paulus@samba.org>
+Content-Disposition: inline
+In-Reply-To: <17668.2019.732961.855446@cargo.ozlabs.ibm.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26822>
 
-On Thu, 07 Sep 2006 19:09:21 -0400, Jon Smirl wrote:
+Paul Mackerras <paulus@samba.org> wrote:
+[snip]
+> The bottom line is that I can speed up the startup for the hot-cache
+> case quite a lot.  The cold-cache case is going to take about 20-30
+> seconds whatever I do unless Linus or Junio can come up with a way to
+> pack the heads and tags.  I could read the refs asynchronously but
+> there will still be a long delay in git rev-parse if you give
+> arguments such as --all.
 
-> On 9/7/06, Junio C Hamano <junkio@cox.net> wrote:
->> "Jon Smirl" <jonsmirl@gmail.com> writes:
->>
->> > Does an average user do these things? The shallow clone is there to
->> > address the casual user who gags at a five hour download to get an
->> > initial check out Mozilla when they want to make a five line change or
->> > just browse the source for a few minutes.
->> >...
->> > Maybe the answer is to build a shallow clone tool for casual use, and
->> > then if you try to run anything too complex on it git just tells you
->> > that you have to download the entire tree.
->>
->> For that kind of thing, "git-tar-tree --remote" would suffice I
->> would imagine.  The five line change can be tracked locally by
->> creating an initial commit from the tar-tree extract; such a
->> casual user will not be pushing or asking to pull but sending in
->> patches to upstream, no?
-> 
-> From my observation the casual user does something like this:
-> 
-> get a shallow clone
+I've been thinking about implementing ref storage within a Git tree
+object.  Just store the commit/tag/object IDs in a tree (or graph
+of trees) with a mode of '0'.  Anchor that under '.git/refs-tree'.
+Any edit of a ref would "lock" .git/refs-tree, create a new tree
+containing the update, then replace .git/refs-tree.
 
-This could basically be something which look at the remote HEAD and pulls
-down a copy of that commit/tree (and associated objects), right?
+But it would put additional stress on the objects directory by
+creating a lot of trees which would never get pulled into pack
+files and thus would need to be pruned away on a regular basis.
 
-> look at it for a while
-> pull once a day to keep it up to date
+It also would make parallel updates more difficult on the server
+side as everyone would need to wait for the lock to .git/refs-tree
+before they can change any ref; today users only need to wait for
+the ref they are trying to change.
 
-Same again.
+It also doesn't help looking up a ref quickly; although trees are
+sorted they are variable length entries which forces the application
+to read the entire tree to find its entry.
 
-> decide to make some changes
-> start a local branch
-> commit changes on local branch
-> 
-> push these changes to someone else for review
-> maybe pull changes on the branch back from the other person
 
-[...]
+Given those three downsides I haven't put anything to code yet.
 
-At what point, if any, do you envisage a casual user pulling down a full
-copy of the repository?
-
-Cheers,
-Anand
+-- 
+Shawn.
