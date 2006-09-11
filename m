@@ -1,87 +1,88 @@
 From: linux@horizon.com
 Subject: Re: Change set based shallow clone
-Date: 11 Sep 2006 08:39:37 -0400
-Message-ID: <20060911123937.6521.qmail@science.horizon.com>
-References: <17669.13028.198886.947400@cargo.ozlabs.ibm.com>
-Cc: git@vger.kernel.org, jonsmirl@gmail.com, junkio@cox.net,
-	mcostalba@gmail.com, torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Mon Sep 11 14:39:52 2006
+Date: 11 Sep 2006 10:26:44 -0400
+Message-ID: <20060911142644.32313.qmail@science.horizon.com>
+References: <17669.8191.778645.311304@cargo.ozlabs.ibm.com>
+Cc: git@vger.kernel.org, jonsmirl@gmail.com, linux@horizon.com
+X-From: git-owner@vger.kernel.org Mon Sep 11 16:27:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GMl4m-0001AF-F2
-	for gcvg-git@gmane.org; Mon, 11 Sep 2006 14:39:48 +0200
+	id 1GMmkk-0000ly-V1
+	for gcvg-git@gmane.org; Mon, 11 Sep 2006 16:27:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751440AbWIKMjk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Sep 2006 08:39:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751441AbWIKMjk
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Sep 2006 08:39:40 -0400
-Received: from science.horizon.com ([192.35.100.1]:38439 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S1751440AbWIKMjj
+	id S1751193AbWIKO0x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Sep 2006 10:26:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751247AbWIKO0x
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Sep 2006 10:26:53 -0400
+Received: from science.horizon.com ([192.35.100.1]:37197 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S1751193AbWIKO0w
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Sep 2006 08:39:39 -0400
-Received: (qmail 6522 invoked by uid 1000); 11 Sep 2006 08:39:38 -0400
-To: linux@horizon.com, paulus@samba.org
-In-Reply-To: <17669.13028.198886.947400@cargo.ozlabs.ibm.com>
+	Mon, 11 Sep 2006 10:26:52 -0400
+Received: (qmail 32314 invoked by uid 1000); 11 Sep 2006 10:26:44 -0400
+To: paulus@samba.org, torvalds@osdl.org
+In-Reply-To: <17669.8191.778645.311304@cargo.ozlabs.ibm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26851>
 
->> I'm trying to figure out the gitk code, but I'm not fluent in tcl, and
->> it has 39 non-boilerplate comment lines in 229 functions and 6308 lines
->> of source, so it requires fairly intensive grokking.
->
-> Sorry :)
+> Could we do a cache of the refs that stores the stat information for
+> each of the files under .git/refs plus the sha1 that the ref points
+> to?  In other words this cache would do for the refs what the index
+> does for the working directory.  Reading all the refs would mean we
+> still had to stat each of the files, but that's much quicker than
+> reading them in the cold-cache case.  In the common case when most of
+> the stat information matches, we don't have to read the file because
+> we have the sha1 that the file contains right there in the cache.
 
-I was more making excuses for my failure to understand its properties.
-Still, if you get the chance, a couple of paragraphs of comments on the
-primary data structures would be an immense help.
+Well, that could save one of two seeks, but that's not *much* quicker.
+(Indeed, a git ref would fit into the 60 bytes of block pointer space
+in an ext2/3 inode if regular files were stuffed there as well as symlinks.)
 
-Anyway, thanks for the summary.
+> Ideally we would have two sha1 values in the cache - the sha1 in the
+> file, and if that is the ID of a tag object, we would also put the
+> sha1 of the commit that the tag points to in the cache.
 
->> For example, is fixing a small number of out-of-place commits practical,
->> or is it better to purge and restart?  The former avoids deleting
->> already-existing objects, while the latter avoids moving them.
+Now that's not a bad idea.  Hacking it in to Linus's scheme, that's
 
-> For gitk, I'm thinking of a reorder buffer of say 10 entries at the
-> front end to cope with minor misorderings; then if misordering occurs
-> that is outside the scope of the reorder buffer to fix, freeze the
-> layout algorithms at that point, read in the rest of the commits and
-> reorder as necessary, then at the end restart the layout algorithm
-> from scratch, probably with a popup to inform the user what happened.
-> If the user could set the size of the reorder buffer then they could
-> avoid having that happen in future, at the cost of it taking longer to
-> show the first screenful of commits.
+<foo sha>\t<foo^{} sha>\tfoo
 
-My thoughts were that anything you could do, git-rev-list could do better,
-including the re-order buffer, so don't even bother.  (For example, I
-was thinking of a time- or depth-based one rather than a count-based one.)
 
-So I read your suggestion as a "purge and restart" preference, with
-git-rev-list keeping a cache of problems encountered so that on most
-runs, it doesn't have to do it.  Putting that logic in git-rev-list
-means that you don't have to detect ordering problems or do any sorting,
-just handle an "oops!" line in the output.
+A couple of thoughts:
+1) I bet Hans Reiser is enjoying this; he's been agitating for better
+   lots-of-small-files support for years.
 
-Basically, given the example graph (with letters indicating timestamps)
+2) Since I've written about two caches in a few minutes (here
+   and in git-rev-list), a standardized cache validation hook for
+   git-fsck-objects and git-prune's use might be useful.
 
-...G--D--C--B---A
-          \    /
-           F--E
+3) If we use Linus's idea of a flat "static refs" file overridden by loose
+   refs (presumably, refs would be stuffed in if their mod times got old
+   enough, and on initial import you'd use the timestamp of the commit
+   they point to), we'll have to do a bit of a dance to move refs to and
+   from it.
 
-You'd get something like
-A B E
-B C
-C D
-D G
-E F
-*** ERROR -  restarting - please wait
-A B E
-B C
-E F
-F C
-C D
-D G
-G ...
+   Basically, to move refs into the refs file, it's
+   - Read all the old refs and loose refs and write the new refs file.
+   - Rename the new refs file into place.
+   - For each loose ref moved in, lock it, verify it hasn'd changed,
+     and delete it.
+   with some more locking to prevent two people from doing this at once.
+
+   Folks looking up tags will do an FS search, then validate their refs
+   file cache, then if necessary, suck in the refs file.
+
+   Now, exploding a refs file into loose refs is tricky.  There's
+   the possible race condition with a reader:
+
+   A: Looks for loose ref "foo", doesn't find it.
+		B: Write out loose ref "foo"
+		B: Deletes now-unpacked refs file
+   A: Looks for refs file, doesn't find it.
+   A: Concludes that ref "foo" doesn't exist.
+
+   The only solution I can think of is to stat the refs file at the
+   start of the operation and restart from the beginning if it changes
+   by the time it actually opens and read it.
