@@ -1,48 +1,63 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] git-upload-archive: add config option to allow only specified
- formats
-Date: Mon, 11 Sep 2006 23:55:51 +0200
-Message-ID: <4505DB67.8060104@lsrfire.ath.cx>
-References: <7vpse4tcyc.fsf@assigned-by-dhcp.cox.net>	 <7vk64ctctv.fsf@assigned-by-dhcp.cox.net>	 <7v1wqkt2v4.fsf_-_@assigned-by-dhcp.cox.net>	 <20060910155837.GA15974@lsrfire.ath.cx> <cda58cb80609101207y420bd034n9a76b661374e1edf@mail.gmail.com>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: Change set based shallow clone
+Date: Tue, 12 Sep 2006 07:52:27 +1000
+Message-ID: <17669.55963.930152.564529@cargo.ozlabs.ibm.com>
+References: <17669.8191.778645.311304@cargo.ozlabs.ibm.com>
+	<20060911142644.32313.qmail@science.horizon.com>
+	<7vy7sqic4e.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 11 23:56:05 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: linux@horizon.com, git@vger.kernel.org, torvalds@osdl.org
+X-From: git-owner@vger.kernel.org Tue Sep 12 00:13:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GMtky-0004mz-8l
-	for gcvg-git@gmane.org; Mon, 11 Sep 2006 23:55:56 +0200
+	id 1GMu1h-0008Oc-Oy
+	for gcvg-git@gmane.org; Tue, 12 Sep 2006 00:13:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965022AbWIKVzx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 11 Sep 2006 17:55:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964999AbWIKVzw
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Sep 2006 17:55:52 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:39562
-	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S965022AbWIKVzw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Sep 2006 17:55:52 -0400
-Received: from [10.0.1.3] (p508E65FD.dip.t-dialin.net [80.142.101.253])
-	by neapel230.server4you.de (Postfix) with ESMTP id A51FB20049;
-	Mon, 11 Sep 2006 23:55:50 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.5 (Windows/20060719)
-To: Franck Bui-Huu <vagabon.xyz@gmail.com>
-In-Reply-To: <cda58cb80609101207y420bd034n9a76b661374e1edf@mail.gmail.com>
-X-Enigmail-Version: 0.94.0.0
+	id S965047AbWIKWNJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Sep 2006 18:13:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965046AbWIKWNI
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Sep 2006 18:13:08 -0400
+Received: from ozlabs.org ([203.10.76.45]:61828 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S965068AbWIKWNF (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Sep 2006 18:13:05 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 7B65B67B57; Tue, 12 Sep 2006 08:13:04 +1000 (EST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vy7sqic4e.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26862>
 
-=46ranck Bui-Huu schrieb:
-> just out of curiousity, why "free(daemon_formats)" right before a
-> "die()" ?
+Junio C Hamano writes:
 
-Hmm, do I show signs of a cleaning fetish? ;-)
+> That's a dubious idea.
+> 
+>  - Why assume a tag points directly at a commit, or if it is
+>    not, why assume "foo^{}" (dereferencing repeatedly until we
+>    get a non-tag) is special?
 
-A bit more seriously, it helps reduce the number of false positives
-emitted by automatic memory checkers.
+Umm, I'm not sure what you're getting at here - if one shouldn't make
+those assumptions, why does git ls-remote output both the tag and
+tag^{} lines?
 
-Ren=E9
+>  - Why assume the user wants access to only the object name of
+>    what the tag points at?  Perhaps most users would want to
+>    have its type, dates (committer and author), and probably the
+>    first line of the commit message if it is (and most likely it
+>    is) a commit?  -- at least gitweb and gitk would want these.
+
+There are two things here.  Gitk needs to know which IDs have tags
+when displaying the graph, and their names.  It doesn't need to know
+the other details until someone clicks on the commit or the tag.  Thus
+the information that needs to be collected for every tag at startup is
+just the name and the sha1 id of the commit it eventually points to
+(if it doesn't eventually point to a commit it's basically not
+interesting).
+
+Paul.
