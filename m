@@ -1,59 +1,63 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: Change set based shallow clone
-Date: Mon, 11 Sep 2006 18:36:15 +1000
-Message-ID: <17669.8191.778645.311304@cargo.ozlabs.ibm.com>
-References: <20060910190332.17667.qmail@science.horizon.com>
-	<Pine.LNX.4.64.0609101254590.27779@g5.osdl.org>
-	<17668.38032.20688.991295@cargo.ozlabs.ibm.com>
-	<Pine.LNX.4.64.0609101949580.27779@g5.osdl.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Dropping Git.pm (at least Git.xs)?
+Date: Mon, 11 Sep 2006 10:58:20 +0200
+Organization: At home
+Message-ID: <ee38f8$pp8$1@sea.gmane.org>
+References: <7vodtxuqt4.fsf@assigned-by-dhcp.cox.net> <ee22lb$uia$1@sea.gmane.org> <20060903150305.G50c94aea@leonov.stosberg.net> <4504529A.70401@vilain.net> <20060911032557.GF23891@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: linux@horizon.com, jonsmirl@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 11 10:37:36 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Mon Sep 11 10:59:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GMhI4-00069L-HX
-	for gcvg-git@gmane.org; Mon, 11 Sep 2006 10:37:16 +0200
+	id 1GMhdH-0001w2-3i
+	for gcvg-git@gmane.org; Mon, 11 Sep 2006 10:59:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751265AbWIKIg0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Sep 2006 04:36:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751269AbWIKIg0
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Sep 2006 04:36:26 -0400
-Received: from ozlabs.org ([203.10.76.45]:35239 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S1751265AbWIKIgZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Sep 2006 04:36:25 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 47A7D67B71; Mon, 11 Sep 2006 18:36:23 +1000 (EST)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0609101949580.27779@g5.osdl.org>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S932088AbWIKI6s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 11 Sep 2006 04:58:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751283AbWIKI6s
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Sep 2006 04:58:48 -0400
+Received: from main.gmane.org ([80.91.229.2]:36007 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751274AbWIKI6r (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Sep 2006 04:58:47 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GMhcj-0001oa-93
+	for git@vger.kernel.org; Mon, 11 Sep 2006 10:58:37 +0200
+Received: from host-81-190-17-209.torun.mm.pl ([81.190.17.209])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 11 Sep 2006 10:58:37 +0200
+Received: from jnareb by host-81-190-17-209.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 11 Sep 2006 10:58:37 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-17-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26843>
 
-Linus Torvalds writes:
+Petr Baudis wrote:
 
-> So we could generate a "pack of references", but then any modifications 
-> would be done with the current loose "file objects" approach, and just 
-> have the filesystem override the pack-files. The problem then actually 
-> becomes one of _deleting_ branches, because then we'd have to add a 
-> "negative branch" loose object. Ugly.
+> Dear diary, on Mon, Sep 11, 2006 at 12:13:01AM CEST, I got a letter
+> where Jakub Narebski <jnareb@gmail.com> said that...
+>> Could you please put appropriate information on GitWiki
+>> =A0 http://git.or.cz/gitwiki/InterfacesFrontendsAndTools
+>> Perhaps it would be good time to start new section, Git Implementati=
+ons,
+>> and put egit (Java GIT library and Eclipse plugin) there too.
+>=20
+> This really isn't a Git reimplementation (thankfully).
 
-Could we do a cache of the refs that stores the stat information for
-each of the files under .git/refs plus the sha1 that the ref points
-to?  In other words this cache would do for the refs what the index
-does for the working directory.  Reading all the refs would mean we
-still had to stat each of the files, but that's much quicker than
-reading them in the cold-cache case.  In the common case when most of
-the stat information matches, we don't have to read the file because
-we have the sha1 that the file contains right there in the cache.
+Perhaps "language binding" would be better name...
 
-Ideally we would have two sha1 values in the cache - the sha1 in the
-file, and if that is the ID of a tag object, we would also put the
-sha1 of the commit that the tag points to in the cache.
-
-Paul.
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
