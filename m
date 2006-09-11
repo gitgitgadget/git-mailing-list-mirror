@@ -1,68 +1,68 @@
-From: Toralf =?iso-8859-1?q?F=F6rster?= <toralf.foerster@gmx.de>
-Subject: git web view doesn't show short log in chronological order ?
-Date: Mon, 11 Sep 2006 11:00:59 +0200
-Message-ID: <200609111101.00801.toralf.foerster@gmx.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Change set based shallow clone
+Date: Mon, 11 Sep 2006 11:04:54 +0200
+Organization: At home
+Message-ID: <ee38ri$pp8$2@sea.gmane.org>
+References: <20060910190332.17667.qmail@science.horizon.com> <Pine.LNX.4.64.0609101254590.27779@g5.osdl.org> <17668.38032.20688.991295@cargo.ozlabs.ibm.com> <Pine.LNX.4.64.0609101949580.27779@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart6166787.tr6JmGANlk";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Sep 11 11:01:13 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Mon Sep 11 11:05:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GMhfB-0002MJ-JW
-	for gcvg-git@gmane.org; Mon, 11 Sep 2006 11:01:09 +0200
+	id 1GMhj6-0003Aj-9r
+	for gcvg-git@gmane.org; Mon, 11 Sep 2006 11:05:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751284AbWIKJBF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Sep 2006 05:01:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751286AbWIKJBF
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Sep 2006 05:01:05 -0400
-Received: from mail.gmx.net ([213.165.64.20]:15573 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751284AbWIKJBE (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Sep 2006 05:01:04 -0400
-Received: (qmail invoked by alias); 11 Sep 2006 09:01:02 -0000
-Received: from blueice2n1.de.ibm.com (EHLO dyn-9-155-138-50.hamburg.de.ibm.com) [195.212.29.171]
-  by mail.gmx.net (mp042) with SMTP; 11 Sep 2006 11:01:02 +0200
-X-Authenticated: #5108953
+	id S964788AbWIKJFH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Sep 2006 05:05:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751288AbWIKJFH
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Sep 2006 05:05:07 -0400
+Received: from main.gmane.org ([80.91.229.2]:12203 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751286AbWIKJFG (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Sep 2006 05:05:06 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GMhiu-00037L-Gk
+	for git@vger.kernel.org; Mon, 11 Sep 2006 11:05:00 +0200
+Received: from host-81-190-17-209.torun.mm.pl ([81.190.17.209])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 11 Sep 2006 11:05:00 +0200
+Received: from jnareb by host-81-190-17-209.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 11 Sep 2006 11:05:00 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-User-Agent: KMail/1.9.1
-X-Y-GMX-Trusted: 0
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-17-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26845>
 
---nextPart6166787.tr6JmGANlk
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Linus Torvalds wrote:
 
-http://www.kernel.org/git/?p=3Dlinux%2Fkernel%2Fgit%2Ftorvalds%2Flinux-2.6.=
-git;a=3Dsummary
-lists the entry from Kirill Korotaev at position 12 (all first 12 positions=
- are
-2 days old), but Kirill Korotaev did the latest commit (if I do a "$>git lo=
-g" at
-my local clone of Linus' tree) and therefore should be listed at position 1,
-isn't it ?
+> On Mon, 11 Sep 2006, Paul Mackerras wrote:
+>> 
+>> Do you think there is any way to speed up the cold-cache case for
+>> git-ls-remote and git-rev-parse with thousands of heads and tags?
+> 
+> Nothing obvious comes to mind.
+> 
+> If we did the same pack-file approach that we do for objects, the problem 
+> ends up being that _updating_ things is really hard. What we could do (and 
+> might work) is that a "git repack" would create a "packed representation 
+> of the heads too".
 
-=2D-=20
-MfG/Sincerely
-Toralf F=F6rster
-
---nextPart6166787.tr6JmGANlk
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iD8DBQBFBSXMhyrlCH22naMRAj7IAJ0fj5AZcTsI+CG21z98k6L8yeMNXgCgxOYb
-qvtWq2X0mnywqwpbriJNSfY=
-=CD7X
------END PGP SIGNATURE-----
-
---nextPart6166787.tr6JmGANlk--
+Because usually there is reasonable number of heads, and that is the tags
+that might be problem, because the number of tags likes to grow with the
+history, perhaps we could pack only tags heads into the pack? This has
+additional advantage that tags, especially annotated tags (i.e. true tags
+objects) changes rarely.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
