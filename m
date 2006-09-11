@@ -1,65 +1,59 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Change set based shallow clone
-Date: Mon, 11 Sep 2006 16:47:26 -0700
-Message-ID: <7v1wqige41.fsf@assigned-by-dhcp.cox.net>
-References: <17669.8191.778645.311304@cargo.ozlabs.ibm.com>
-	<20060911142644.32313.qmail@science.horizon.com>
-	<7vy7sqic4e.fsf@assigned-by-dhcp.cox.net>
-	<17669.55963.930152.564529@cargo.ozlabs.ibm.com>
+Subject: Re: What's in git.git
+Date: Mon, 11 Sep 2006 16:48:47 -0700
+Message-ID: <7vwt8aezhc.fsf@assigned-by-dhcp.cox.net>
+References: <7vk64bnnxl.fsf@assigned-by-dhcp.cox.net>
+	<ee3hac$n57$1@sea.gmane.org> <7v7j0ajrfh.fsf@assigned-by-dhcp.cox.net>
+	<ee4j3j$mli$1@sea.gmane.org> <20060911221411.GG23891@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: linux@horizon.com, git@vger.kernel.org, torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Tue Sep 12 01:46:45 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 12 01:48:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GMvU7-0006ef-6c
-	for gcvg-git@gmane.org; Tue, 12 Sep 2006 01:46:39 +0200
+	id 1GMvVP-0006qW-34
+	for gcvg-git@gmane.org; Tue, 12 Sep 2006 01:47:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965143AbWIKXqf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Sep 2006 19:46:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965146AbWIKXqf
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Sep 2006 19:46:35 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:12968 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S965143AbWIKXqe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Sep 2006 19:46:34 -0400
+	id S965160AbWIKXr4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Sep 2006 19:47:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965162AbWIKXr4
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Sep 2006 19:47:56 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:4497 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S965160AbWIKXrz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Sep 2006 19:47:55 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao04.cox.net
+          by fed1rmmtao02.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060911234633.GIGM6711.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 11 Sep 2006 19:46:33 -0400
+          id <20060911234755.GNUX12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 11 Sep 2006 19:47:55 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id MBmP1V00U1kojtg0000000
-	Mon, 11 Sep 2006 19:46:24 -0400
-To: Paul Mackerras <paulus@samba.org>
-In-Reply-To: <17669.55963.930152.564529@cargo.ozlabs.ibm.com> (Paul
-	Mackerras's message of "Tue, 12 Sep 2006 07:52:27 +1000")
+	id MBnl1V00B1kojtg0000000
+	Mon, 11 Sep 2006 19:47:45 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060911221411.GG23891@pasky.or.cz> (Petr Baudis's message of
+	"Tue, 12 Sep 2006 00:14:12 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26868>
 
-Paul Mackerras <paulus@samba.org> writes:
+Petr Baudis <pasky@suse.cz> writes:
 
-> Junio C Hamano writes:
+> Dear diary, on Mon, Sep 11, 2006 at 11:06:03PM CEST, I got a letter
+> where Jakub Narebski <jnareb@gmail.com> said that...
 >
->> That's a dubious idea.
->> 
->>  - Why assume a tag points directly at a commit, or if it is
->>    not, why assume "foo^{}" (dereferencing repeatedly until we
->>    get a non-tag) is special?
+>> I still think it is better, easier and faster for someone who makes a new
+>> feature to document it too.
 >
-> Umm, I'm not sure what you're getting at here - if one shouldn't make
-> those assumptions, why does git ls-remote output both the tag and
-> tag^{} lines?
+> Especially since we _DON'T_ have good track record in other people
+> quickly documenting newly introduced undocumented features.
 
-This was originally done to support Cogito's tag following which
-was in its infancy.  So in that sense it is already special (iow
-we know one user that can take advantage of it), but my point
-was that its usefulness for a commit chain fetching application
-(i.e. Cogito) does not automatically mean it is also useful for
-visualizers like gitk and gitweb.
+Well,...
+
+I miss the days the lead of this project had _me_ as a
+contributor ;-).
