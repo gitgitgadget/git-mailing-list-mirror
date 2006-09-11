@@ -1,83 +1,77 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: Change set based shallow clone
-Date: Mon, 11 Sep 2006 09:47:29 -0700
-Message-ID: <7vy7sqic4e.fsf@assigned-by-dhcp.cox.net>
-References: <17669.8191.778645.311304@cargo.ozlabs.ibm.com>
-	<20060911142644.32313.qmail@science.horizon.com>
+Date: Mon, 11 Sep 2006 13:52:30 -0400
+Message-ID: <20060911175230.GA7213@spearce.org>
+References: <Pine.LNX.4.64.0609081600530.27779@g5.osdl.org> <9e4733910609081628w2a59551foc28c689d0538a984@mail.gmail.com> <17668.2019.732961.855446@cargo.ozlabs.ibm.com> <20060911000306.GA28927@spearce.org> <7vfyezqlny.fsf@assigned-by-dhcp.cox.net> <ee2cms$o18$1@sea.gmane.org> <20060911024434.GA29368@spearce.org> <7vac57nfb5.fsf@assigned-by-dhcp.cox.net> <20060911060820.GB29368@spearce.org> <7vr6yikhdj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, paulus@samba.org, torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Mon Sep 11 18:46:59 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 11 19:52:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GMovk-00075H-9Y
-	for gcvg-git@gmane.org; Mon, 11 Sep 2006 18:46:45 +0200
+	id 1GMpxe-0004W4-Kc
+	for gcvg-git@gmane.org; Mon, 11 Sep 2006 19:52:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964923AbWIKQql (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Sep 2006 12:46:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964925AbWIKQql
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Sep 2006 12:46:41 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:18152 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S964923AbWIKQqk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Sep 2006 12:46:40 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060911164638.CRBZ26416.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 11 Sep 2006 12:46:38 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id M4mV1V0031kojtg0000000
-	Mon, 11 Sep 2006 12:46:29 -0400
-To: linux@horizon.com
-In-Reply-To: <20060911142644.32313.qmail@science.horizon.com>
-	(linux@horizon.com's message of "11 Sep 2006 10:26:44 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751314AbWIKRwf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Sep 2006 13:52:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751328AbWIKRwf
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Sep 2006 13:52:35 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:58839 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751314AbWIKRwe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Sep 2006 13:52:34 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GMpxJ-0003Re-5S; Mon, 11 Sep 2006 13:52:25 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id A4E4920E49A; Mon, 11 Sep 2006 13:52:30 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vr6yikhdj.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26855>
 
-linux@horizon.com writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> As you know I've shelved the 64-bit offset stuff.  My preference
+> is to base it on 106d710b but basing it on 'next' would be fine.
+> Between 106d710b and next there is only one unrelated change to
+> sha1_file.c, which is the hexval[] change that is in 'master'.
 
->> Ideally we would have two sha1 values in the cache - the sha1 in the
->> file, and if that is the ID of a tag object, we would also put the
->> sha1 of the commit that the tag points to in the cache.
->
-> Now that's not a bad idea.  Hacking it in to Linus's scheme, that's
->
-> <foo sha>\t<foo^{} sha>\tfoo
+OK.  I'll rebase on 106d710b and try to get the series out in a day
+or two.
+ 
+> So far I liked the per-object-type dictionary conjecture the
+> most, primarily because my gut feeling tells me that it would
+> involve the least amount of hassle in the interoperability area.
 
-That's a dubious idea.
+Agreed, except I don't think its going to save us very much (~4%)
+and its enough of a change still to make things a little ugly.
+If the "true" dictionary compression idea has any value it may
+save us even more and make it easier to implement fast full text
+searching across files.  But its definately more complex.  So I'm
+going to shut up now.
+ 
+> But honestly speaking I am not looking forward to a packfile
+> format update at this moment.  I'd like things to settle down a
+> bit now, after merging good bits from 'next' to 'master' and
+> declare 1.4.3 first, perhaps by the end of the month.
 
- - Why assume a tag points directly at a commit, or if it is
-   not, why assume "foo^{}" (dereferencing repeatedly until we
-   get a non-tag) is special?
+No worry there.  I won't have enough time between now and the end
+of this month to create a dictionary pack that's even ready for pu,
+let alone next.  I hope we see 1.4.3 before then.  :-)
 
- - Why assume the user wants access to only the object name of
-   what the tag points at?  Perhaps most users would want to
-   have its type, dates (committer and author), and probably the
-   first line of the commit message if it is (and most likely it
-   is) a commit?  -- at least gitweb and gitk would want these.
-
-You should separate the issue of the internal data structure
-implementation and programming interface for Porcelains.  From
-the internal data structure point-of-view, the second one is a
-redundant piece of information.  Caching it _would_ speed up the
-access to it, but then the issue becomes where we draw the line
-to stop.
-
-It is probably more useful to think about what kind of
-information formatted in what way is often wanted by Porcelains
-who want to grab many refs in one-go.  If you can come up with a
-set that can satisfy everybody using that as the cache file
-format would be fine, but I strongly doubt you can satisfy
-everybody.  In which case, thinking about the ways for the
-Porcelain to express flexibly what information is wanted and
-formatted in what way, and have a command to access that
-(git-show-refs, anybody?) would be more fruitful, and at that
-point, the internal representation of the cached data becomes
-the implementation detail.
+-- 
+Shawn.
