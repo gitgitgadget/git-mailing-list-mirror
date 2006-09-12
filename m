@@ -1,70 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Start handling references internally as a sorted in-memory list
-Date: Mon, 11 Sep 2006 16:57:37 -0700
-Message-ID: <7vsliyez2m.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0609111158390.3960@g5.osdl.org>
-	<Pine.LNX.4.64.0609111632050.27779@g5.osdl.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Change set based shallow clone
+Date: Tue, 12 Sep 2006 02:06:56 +0200
+Organization: At home
+Message-ID: <ee4tmo$mhm$1@sea.gmane.org>
+References: <17669.8191.778645.311304@cargo.ozlabs.ibm.com> <20060911142644.32313.qmail@science.horizon.com> <7vy7sqic4e.fsf@assigned-by-dhcp.cox.net> <17669.55963.930152.564529@cargo.ozlabs.ibm.com> <7v1wqige41.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 12 01:57:10 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue Sep 12 02:07:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GMve6-00085o-31
-	for gcvg-git@gmane.org; Tue, 12 Sep 2006 01:56:58 +0200
+	id 1GMvo5-00015p-KL
+	for gcvg-git@gmane.org; Tue, 12 Sep 2006 02:07:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965187AbWIKX4r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Sep 2006 19:56:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965191AbWIKX4q
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Sep 2006 19:56:46 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:32664 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S965187AbWIKX4p (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Sep 2006 19:56:45 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060911235644.GYHU12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 11 Sep 2006 19:56:44 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id MBwa1V00c1kojtg0000000
-	Mon, 11 Sep 2006 19:56:35 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0609111632050.27779@g5.osdl.org> (Linus Torvalds's
-	message of "Mon, 11 Sep 2006 16:37:32 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965197AbWILAHJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Sep 2006 20:07:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965198AbWILAHJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Sep 2006 20:07:09 -0400
+Received: from main.gmane.org ([80.91.229.2]:64477 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S965197AbWILAHH (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Sep 2006 20:07:07 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GMvnn-00014I-4S
+	for git@vger.kernel.org; Tue, 12 Sep 2006 02:06:59 +0200
+Received: from host-81-190-17-209.torun.mm.pl ([81.190.17.209])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 12 Sep 2006 02:06:59 +0200
+Received: from jnareb by host-81-190-17-209.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 12 Sep 2006 02:06:59 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-17-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26871>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Junio C Hamano wrote:
 
-> This also adds some very rudimentary support for the notion of packed
-> And yeah, I know that the "sorting" code is O(n**2) thanks to doing an 
-> insertion sort into a simple linked list. Tough. I didn't care enough to 
-> do it well. With "n" usually being a few hundred at most, we really don't 
-> care, and if we ever do, we _can_ fix it later on to use a heap or 
-> something.
+> Paul Mackerras <paulus@samba.org> writes:
+> 
+>> Junio C Hamano writes:
+>>
+>>> That's a dubious idea.
+>>> 
+>>>  - Why assume a tag points directly at a commit, or if it is
+>>>    not, why assume "foo^{}" (dereferencing repeatedly until we
+>>>    get a non-tag) is special?
+>>
+>> Umm, I'm not sure what you're getting at here - if one shouldn't make
+>> those assumptions, why does git ls-remote output both the tag and
+>> tag^{} lines?
+> 
+> This was originally done to support Cogito's tag following which
+> was in its infancy.  So in that sense it is already special (iow
+> we know one user that can take advantage of it), but my point
+> was that its usefulness for a commit chain fetching application
+> (i.e. Cogito) does not automatically mean it is also useful for
+> visualizers like gitk and gitweb.
 
-I thought what triggered the restructuring of this part was N
-actually being large enough to cause pain to some people, so I
-suspect later might need to be reasonably soon ;-).
+Actually 'git ls-remote .' _is_ useful for gitweb, see the new 
+git_get_references code. 
 
-> +static const char *parse_ref_line(char *line, unsigned char *sha1)
-> +{
-> +	/*
-> +	 * 42: the answer to everything.
-> +	 *
-> +	 * In this case, it happens to be the answer to
->...
-
-Rof,l.
-
-I've been wondering what happens if you pack "refs/heads/foo",
-delete it, and create "refs/heads/foo/bar" with your proposal.
-I'll find the answer (which is _not_ "42") in the updated
-do_for_each_ref(), I guess.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
