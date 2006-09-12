@@ -1,71 +1,77 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: qgit segfaults after b237b00
-Date: Tue, 12 Sep 2006 12:01:27 +0200
-Message-ID: <45068577.2020608@op5.se>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Make ref resolution saner
+Date: Tue, 12 Sep 2006 07:41:19 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0609120739310.27779@g5.osdl.org>
+References: <Pine.LNX.4.64.0609111158390.3960@g5.osdl.org>
+ <Pine.LNX.4.64.0609111632050.27779@g5.osdl.org> <Pine.LNX.4.64.0609112008500.27779@g5.osdl.org>
+ <Pine.LNX.4.64.0609112010340.27779@g5.osdl.org> <20060912053616.GA6706@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Sep 12 12:02:34 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 12 16:41:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GN55z-0003nF-3A
-	for gcvg-git@gmane.org; Tue, 12 Sep 2006 12:02:23 +0200
+	id 1GN9S5-0005V9-Q3
+	for gcvg-git@gmane.org; Tue, 12 Sep 2006 16:41:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965187AbWILKBb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Sep 2006 06:01:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965191AbWILKBb
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Sep 2006 06:01:31 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:53941 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S965187AbWILKBa
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Sep 2006 06:01:30 -0400
-Received: by smtp-gw1.op5.se (Postfix, from userid 588)
-	id 6650A6BD55; Tue, 12 Sep 2006 12:01:29 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
-	linux-server1.op5.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.1.4
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP id 56C896BCDE
-	for <git@vger.kernel.org>; Tue, 12 Sep 2006 12:01:28 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.5 (X11/20060808)
-To: Git Mailing List <git@vger.kernel.org>
+	id S965249AbWILOl1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Sep 2006 10:41:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965270AbWILOl1
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Sep 2006 10:41:27 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:65188 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S965249AbWILOl0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Sep 2006 10:41:26 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8CEfKnW009270
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 12 Sep 2006 07:41:20 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8CEfJu3023122;
+	Tue, 12 Sep 2006 07:41:19 -0700
+To: Jeff King <peff@peff.net>
+In-Reply-To: <20060912053616.GA6706@coredump.intra.peff.net>
+X-Spam-Status: No, hits=-0.519 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.148 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26888>
 
-What subject says, really. Tried cold cache, hot cache, with and without 
-qgit.dat, 3 different repos and 14 different repo-tips. Same result 
-every time. A segfault before anything is drawn.
 
-Backtrace isn't very helpful (to me anyways):
-#0  0x00000000 in ?? ()
-(gdb) bt
-#0  0x00000000 in ?? ()
-#1  0x458525d2 in QGVector::insert () from /usr/lib/qt-3.3/lib/libqt-mt.so.3
-#2  0x080aa19a in MainImpl::setupPixmaps (this=0x8191520, h=18)
-     at /usr/lib/qt-3.3/include/qptrvector.h:67
-#3  0x080b1ad1 in MainImpl::adjustFontSize (this=0x8191520, delta=0)
-     at mainimpl.cpp:981
-#4  0x080bae05 in MainImpl (this=0x8191520, cd=@0xbf92b094, p=0x0, name=0x0)
-     at mainimpl.cpp:142
-#5  0x080c4cdf in main (argc=0, argv=0x0) at qgit.cpp:14
-(gdb) quit
 
-c++ is a scary thing to me, and my familiarity with QT is akin to the 
-common cavemans grasp of piloting fighter-jets. I thus refrain from 
-guessing where the problem might be.
+On Tue, 12 Sep 2006, Jeff King wrote:
+> 
+> I assume your patch is against master;
 
-qgit-1.5.1 works wonderfully, so I've reset to that and am using it 
-meanwhile.
+Yeah. Well, master plus my previous patches.
 
-btw, kudos for a great tool.
+> it looks like there's exactly one call to resolve_ref that's in next but 
+> not master. One-liner fix below.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Not quite enough. It's the same thing: wt-status.c plays games with the 
+return value (which _used_ to be a path) in order to turn it back into a 
+ref. But now that it's all about refs, the games are unnecessary:
+
+> diff --git a/wt-status.c b/wt-status.c
+> index ec2c728..e2f49c7 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -41,7 +41,7 @@ void wt_status_prepare(struct wt_status 
+>  
+>  	s->is_initial = get_sha1("HEAD", sha1) ? 1 : 0;
+>  
+> -	head = resolve_ref(git_path("HEAD"), sha1, 0);
+> +	head = resolve_ref("HEAD", sha1, 0);
+>  	s->branch = head ?
+>  		    strdup(head + strlen(get_git_dir()) + 1) :
+>  		    NULL;
+
+So that "strdup(head + strlen(get_git_dir()) + 1)" should now be just 
+"strdup(head)".
+
+		Linus
