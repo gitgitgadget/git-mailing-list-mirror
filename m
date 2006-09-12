@@ -1,108 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Teach runstatus about --untracked
-Date: Tue, 12 Sep 2006 22:45:12 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0609122243360.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Paul Mackerras <paulus@samba.org>
+Subject: problem with http clone/pull
+Date: Wed, 13 Sep 2006 09:23:17 +1000
+Message-ID: <17671.16741.995661.664789@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Tue Sep 12 22:45:39 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 13 01:23:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GNF8E-0002cU-1q
-	for gcvg-git@gmane.org; Tue, 12 Sep 2006 22:45:23 +0200
+	id 1GNHbD-0006nD-IX
+	for gcvg-git@gmane.org; Wed, 13 Sep 2006 01:23:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030429AbWILUpR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Sep 2006 16:45:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030430AbWILUpR
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Sep 2006 16:45:17 -0400
-Received: from mail.gmx.de ([213.165.64.20]:11927 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1030429AbWILUpQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Sep 2006 16:45:16 -0400
-Received: (qmail invoked by alias); 12 Sep 2006 20:45:14 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp007) with SMTP; 12 Sep 2006 22:45:14 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org, junkio@cox.net, Jeff King <peff@peff.net>
-X-Y-GMX-Trusted: 0
+	id S932360AbWILXXZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Sep 2006 19:23:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932361AbWILXXZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Sep 2006 19:23:25 -0400
+Received: from ozlabs.org ([203.10.76.45]:64140 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S932360AbWILXXY (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Sep 2006 19:23:24 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 92DD767B56; Wed, 13 Sep 2006 09:23:23 +1000 (EST)
+To: Junio C Hamano <junkio@cox.net>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26893>
 
+Junio,
 
-Actually, teach runstatus what to do if it is not passed; it should not list
-the contents of completely untracked directories, but only the name of that
-directory (plus a trailing '/').
+Users are having problems doing clones or pulls of my powerpc.git tree
+on kernel.org with version 1.4.2 of git.  Apparently earlier versions
+work OK.
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
- builtin-runstatus.c |    2 ++
- git-commit.sh       |    3 ++-
- wt-status.c         |    3 +++
- wt-status.h         |    1 +
- 4 files changed, 8 insertions(+), 1 deletions(-)
+When I do:
 
-diff --git a/builtin-runstatus.c b/builtin-runstatus.c
-index 7979d61..303c556 100644
---- a/builtin-runstatus.c
-+++ b/builtin-runstatus.c
-@@ -25,6 +25,8 @@ int cmd_runstatus(int argc, const char *
- 		}
- 		else if (!strcmp(argv[i], "--verbose"))
- 			s.verbose = 1;
-+		else if (!strcmp(argv[i], "--untracked"))
-+			s.untracked = 1;
- 		else
- 			usage(runstatus_usage);
- 	}
-diff --git a/git-commit.sh b/git-commit.sh
-index 10c269a..5a4c659 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -82,7 +82,8 @@ run_status () {
-   esac
-   git-runstatus ${color} \
-                 ${verbose:+--verbose} \
--                ${amend:+--amend}
-+                ${amend:+--amend} \
-+		${untracked_files:+--untracked}
- }
- 
- trap '
-diff --git a/wt-status.c b/wt-status.c
-index ec2c728..4398f9b 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -50,6 +50,7 @@ void wt_status_prepare(struct wt_status 
- 	s->amend = 0;
- 	s->verbose = 0;
- 	s->commitable = 0;
-+	s->untracked = 0;
- }
- 
- static void wt_status_print_header(const char *main, const char *sub)
-@@ -188,6 +189,8 @@ static void wt_status_print_untracked(co
- 	memset(&dir, 0, sizeof(dir));
- 
- 	dir.exclude_per_dir = ".gitignore";
-+	if (!s->untracked)
-+		dir.show_other_directories = 1;
- 	x = git_path("info/exclude");
- 	if (file_exists(x))
- 		add_excludes_from_file(&dir, x);
-diff --git a/wt-status.h b/wt-status.h
-index 75d3cfe..0a5a5b7 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -15,6 +15,7 @@ struct wt_status {
- 	int commitable;
- 	int verbose;
- 	int amend;
-+	int untracked;
- };
- 
- int git_status_config(const char *var, const char *value);
--- 
-1.4.2.g1734-dirty
+git clone http://git.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc.git
+
+it produces the following output:
+
+Getting alternates list for http://git.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc.git/
+Also look at http://git.kernel.or
+error: Couldn't resolve host 'git.kernel.orobjects' (curl_result = 6, http_code = 0, sha1 = c336923b668fdcf0312efbec3b44895d713f4d81)
+Getting pack list for http://git.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc.git/
+Getting pack list for http://git.kernel.or
+error: Couldn't resolve host 'git.kernel.or'
+error: Unable to find c336923b668fdcf0312efbec3b44895d713f4d81 under http://git.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc.git/
+Cannot obtain needed none c336923b668fdcf0312efbec3b44895d713f4d81
+while processing commit 0000000000000000000000000000000000000000.
+
+Now, this repository has a objects/info/alternates file that contains
+the single line:
+
+/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/objects
+
+I also have a hooks/post-update with execute permission, that does
+exec git-update-server-info.
+
+Is there anything obviously wrong in how I have set this up, or is it
+a new bug in git 1.4.2?
+
+Thanks,
+Paul.
