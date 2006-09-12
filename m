@@ -1,75 +1,60 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Change set based shallow clone
-Date: Tue, 12 Sep 2006 02:06:56 +0200
-Organization: At home
-Message-ID: <ee4tmo$mhm$1@sea.gmane.org>
-References: <17669.8191.778645.311304@cargo.ozlabs.ibm.com> <20060911142644.32313.qmail@science.horizon.com> <7vy7sqic4e.fsf@assigned-by-dhcp.cox.net> <17669.55963.930152.564529@cargo.ozlabs.ibm.com> <7v1wqige41.fsf@assigned-by-dhcp.cox.net>
+Date: Mon, 11 Sep 2006 17:18:59 -0700
+Message-ID: <7vodtmey30.fsf@assigned-by-dhcp.cox.net>
+References: <17669.8191.778645.311304@cargo.ozlabs.ibm.com>
+	<20060911142644.32313.qmail@science.horizon.com>
+	<7vy7sqic4e.fsf@assigned-by-dhcp.cox.net>
+	<17669.55963.930152.564529@cargo.ozlabs.ibm.com>
+	<7v1wqige41.fsf@assigned-by-dhcp.cox.net> <ee4tmo$mhm$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Sep 12 02:07:18 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 12 02:18:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GMvo5-00015p-KL
-	for gcvg-git@gmane.org; Tue, 12 Sep 2006 02:07:18 +0200
+	id 1GMvyf-0002RH-58
+	for gcvg-git@gmane.org; Tue, 12 Sep 2006 02:18:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965197AbWILAHJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Sep 2006 20:07:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965198AbWILAHJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Sep 2006 20:07:09 -0400
-Received: from main.gmane.org ([80.91.229.2]:64477 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S965197AbWILAHH (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Sep 2006 20:07:07 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GMvnn-00014I-4S
-	for git@vger.kernel.org; Tue, 12 Sep 2006 02:06:59 +0200
-Received: from host-81-190-17-209.torun.mm.pl ([81.190.17.209])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 12 Sep 2006 02:06:59 +0200
-Received: from jnareb by host-81-190-17-209.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 12 Sep 2006 02:06:59 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-17-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S965195AbWILASJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Sep 2006 20:18:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965202AbWILASJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Sep 2006 20:18:09 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:61898 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S965195AbWILASH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Sep 2006 20:18:07 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060912001805.HSNB6711.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 11 Sep 2006 20:18:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id MCHw1V0041kojtg0000000
+	Mon, 11 Sep 2006 20:17:56 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <ee4tmo$mhm$1@sea.gmane.org> (Jakub Narebski's message of "Tue,
+	12 Sep 2006 02:06:56 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26872>
 
-Junio C Hamano wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Paul Mackerras <paulus@samba.org> writes:
-> 
->> Junio C Hamano writes:
->>
->>> That's a dubious idea.
->>> 
->>>  - Why assume a tag points directly at a commit, or if it is
->>>    not, why assume "foo^{}" (dereferencing repeatedly until we
->>>    get a non-tag) is special?
->>
->> Umm, I'm not sure what you're getting at here - if one shouldn't make
->> those assumptions, why does git ls-remote output both the tag and
->> tag^{} lines?
-> 
-> This was originally done to support Cogito's tag following which
-> was in its infancy.  So in that sense it is already special (iow
-> we know one user that can take advantage of it), but my point
-> was that its usefulness for a commit chain fetching application
-> (i.e. Cogito) does not automatically mean it is also useful for
-> visualizers like gitk and gitweb.
+> Actually 'git ls-remote .' _is_ useful for gitweb, see the new 
+> git_get_references code. 
 
-Actually 'git ls-remote .' _is_ useful for gitweb, see the new 
-git_get_references code. 
+You are missing the point.
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+We are not discussing if having foo^{} is useful.  There is no
+argument about it.  Without it the user is forced to ask
+rev-parse.
+
+The point is if it is Ok to assume foo and foo^{} (and nothing
+else) are enough to make Porcelains and visualizers happy, and I
+suspected the answer was no (remember show-ref discussion?).
