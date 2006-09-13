@@ -1,95 +1,62 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: qgit segfaults after b237b00
-Date: Wed, 13 Sep 2006 10:45:30 +0200
-Message-ID: <4507C52A.6040902@op5.se>
-References: <45068577.2020608@op5.se> <e5bfff550609121039h1ef25bc8y25186c321d555b8e@mail.gmail.com>
+From: Tim Shimmin <tes@sgi.com>
+Subject: git pull a subtree, embedded trees
+Date: Wed, 13 Sep 2006 23:05:19 +1000
+Organization: SGI
+Message-ID: <4508020F.2050604@sgi.com>
+Reply-To: tes@sgi.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 13 10:46:12 2006
+X-From: git-owner@vger.kernel.org Wed Sep 13 15:06:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GNQNW-0001Kr-Nu
-	for gcvg-git@gmane.org; Wed, 13 Sep 2006 10:45:55 +0200
+	id 1GNURl-0007Jl-8J
+	for gcvg-git@gmane.org; Wed, 13 Sep 2006 15:06:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750978AbWIMIpe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Sep 2006 04:45:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751005AbWIMIpe
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 04:45:34 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:65508 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750978AbWIMIpd
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Sep 2006 04:45:33 -0400
-Received: by smtp-gw1.op5.se (Postfix, from userid 588)
-	id C32BA6BD5C; Wed, 13 Sep 2006 10:45:31 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
-	linux-server1.op5.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=3.1.4
-Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 72B8D6BD5B; Wed, 13 Sep 2006 10:45:30 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.5 (X11/20060808)
-To: Marco Costalba <mcostalba@gmail.com>
-In-Reply-To: <e5bfff550609121039h1ef25bc8y25186c321d555b8e@mail.gmail.com>
+	id S1750770AbWIMNF2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Sep 2006 09:05:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750786AbWIMNF2
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 09:05:28 -0400
+Received: from omx2-ext.sgi.com ([192.48.171.19]:62155 "EHLO omx2.sgi.com")
+	by vger.kernel.org with ESMTP id S1750770AbWIMNF1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Sep 2006 09:05:27 -0400
+Received: from larry.melbourne.sgi.com (larry.melbourne.sgi.com [134.14.52.130])
+	by omx2.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with SMTP id k8DFeJ98032473
+	for <@external-mail-relay.sgi.com:git@vger.kernel.org>; Wed, 13 Sep 2006 08:40:20 -0700
+Received: from [134.14.52.207] (pmmelb207.melbourne.sgi.com [134.14.52.207]) by larry.melbourne.sgi.com (950413.SGI.8.6.12/950213.SGI.AUTOCF) via ESMTP id XAA05646 for <git@vger.kernel.org>; Wed, 13 Sep 2006 23:05:20 +1000
+User-Agent: Thunderbird 1.5.0.4 (Macintosh/20060530)
+To: git <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26910>
 
-Marco Costalba wrote:
-> Hi Andreas,
-> 
-> On 9/12/06, Andreas Ericsson <ae@op5.se> wrote:
->> What subject says, really. Tried cold cache, hot cache, with and without
->> qgit.dat, 3 different repos and 14 different repo-tips. Same result
->> every time. A segfault before anything is drawn.
->>
-> 
-> Sorry but I am not able to reproduce the bug here. Also from the trace I 
-> see
-> that the segfault happens in a part of code that has not been touched
-> by b237b00.
-> And that _should_  not segfault in any way.
-> 
-> The code there is the same of qgit-1.5.1 so perhaps could be some
-> platform related issue,
+Hi,
 
-Probably, yes. Some more digging indicates it comes from trying to fetch 
-the system default-font and setting it as the default application-font.
+I'm new to git and have a couple of novice questions.
 
-> please write me Qt and gcc versions and processor used and, in case,
-> do a complete rebuild with also reconfiguration (autoreconf -i).
-> 
+* Is it possible to only pull in a subtree from
+a repository.
+Moreover, is it possible to have a subtree based on another
+repository.
+For example, have a topdir directory with subdirs,
+s1, s2, s3 and s4. And then have say, s2 linked to
+a repository rs2 and s3 linked to rs3, so that
+one can update s2 and s3 from these other repositories but
+having the rest of the tree linked from a main repository.
 
-Naturally. Forgot it in the first mail *blush*. Mainly running Fedora 
-Core 5, except for the kernel which I compile myself.
+* Are there any tools for dumping out the contents of the
+git objects in the .git/objects directory.
+By dumping out, I mean an ascii representation of the data
+fields for the commit and tree objects in particular.
+I've written a simple small program to dump out the index
+entries (cache entries).
+I just want to see what is exactly stored in the .git
+binary files and how they change when I do various git
+operations.
 
-nox!exon:~/git/qgit$ gcc --version
-gcc (GCC) 4.1.1 20060525 (Red Hat 4.1.1-1)
-Copyright (C) 2006 Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Thanks a bunch.
 
-nox!exon:~/git/qgit$ rpm -q qt
-qt-3.3.6-0.4.fc5
-nox!exon:~/git/qgit$ uname -a
-Linux nox.op5.se 2.6.18-rc6 #1 Wed Sep 6 15:41:35 CEST 2006 i686 i686 
-i386 GNU/Linux
-nox!exon:~/git/qgit$
-
-
-Rebuilding with full autoreconf -i does indeed seem to solve the 
-problem. I'm guessing some yum update changed the qt-version and the 
-configure.cache kept the old settings so that it wasn't checked.
-
-Sorry for the noise.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+--Tim
