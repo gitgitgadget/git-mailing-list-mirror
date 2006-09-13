@@ -1,83 +1,77 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [ANNOUNCE] GIT 1.4.2.1
-Date: Wed, 13 Sep 2006 12:19:21 -0700
-Message-ID: <7vsliv8thi.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Marking abandoned branches
+Date: Wed, 13 Sep 2006 21:34:24 +0200
+Organization: At home
+Message-ID: <ee9mff$qd1$1@sea.gmane.org>
+References: <9e4733910609130817r39bbf8a8x2e05461816d9d2a1@mail.gmail.com> <20060913152451.GH23891@pasky.or.cz> <Pine.LNX.4.63.0609131729500.19042@wbgn013.biozentrum.uni-wuerzburg.de> <7vmz93a9v9.fsf@assigned-by-dhcp.cox.net> <ee9jv6$ga0$1@sea.gmane.org> <7vbqpja8wz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 13 21:19:56 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Wed Sep 13 21:35:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GNaGd-0002Cx-AW
-	for gcvg-git@gmane.org; Wed, 13 Sep 2006 21:19:27 +0200
+	id 1GNaVm-0004zb-W3
+	for gcvg-git@gmane.org; Wed, 13 Sep 2006 21:35:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751142AbWIMTTX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Sep 2006 15:19:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751141AbWIMTTX
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 15:19:23 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:54449 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751138AbWIMTTW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Sep 2006 15:19:22 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060913191922.BPKJ22977.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 13 Sep 2006 15:19:22 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id MvKB1V0091kojtg0000000
-	Wed, 13 Sep 2006 15:19:11 -0400
+	id S1751150AbWIMTex convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 13 Sep 2006 15:34:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbWIMTex
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 15:34:53 -0400
+Received: from main.gmane.org ([80.91.229.2]:31625 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751150AbWIMTew (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Sep 2006 15:34:52 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GNaVC-0004tO-Im
+	for git@vger.kernel.org; Wed, 13 Sep 2006 21:34:30 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 13 Sep 2006 21:34:30 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 13 Sep 2006 21:34:30 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26936>
 
-The latest maintenance release GIT 1.4.2.1 is available at the
-usual places:
+Junio C Hamano wrote:
 
-  http://www.kernel.org/pub/software/scm/git/
+> By the way, does gitweb still walk $GIT_DIR/refs hierarchy by
+> hand to find out the set of refs? =A0When Linus is done with his
+> refs/ work, that way would become unsupported. =A0You would need
+> to read from "ls-remote $GIT_DIR".
 
-  git-1.4.2.1.tar.{gz,bz2}			(tarball)
-  git-htmldocs-1.4.2.1.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.4.2.1.tar.{gz,bz2}		(preformatted docs)
-  RPMS/$arch/git-*-1.4.2.1-1.$arch.rpm	(RPM)
+Still, unfortunately. We could change git_get_references to use
+'git ls-remotes $GIT_DIR' (or 'git --git-dir=3D$GIT_DIR ls-remotes .'),
+and use git_get_references("refs/heads") in git_heads (and git_summary)=
+,=20
+and git_get_references("refs/tags") in git_tags. This _could_ be slower
+than current implementation. git-show-refs would help a bit, but I'd ra=
+ther
+have git-show-refs in released version of git before using it in gitweb=
+=2E
 
-This release is primarily for these two fixes:
+Moreover, git currently reads appropriate ref directly in
+git_get_hash_by_ref, not supporting even symrefs, not to mention packed
+refs. One solution would be to add support for symrefs and packed refs
+directly in gitweb (Git.pm can help here), another to use git core comm=
+and
+(git-rev-parse?) but that can make gitweb slower (additional fork).
 
- * git-mv was broken.  Notably, this did not work:
-
-	git-mv foo foo-renamed
-
- * git-http-fetch failed to follow objects/info/alternates on
-   the remote side.  This broke a fetch from Paul's powerpc.git
-   repository.
-
-I have built i386 and x86_64 RPM this time, since the machine I
-do the former has become available again.
-
-----------------------------------------------------------------
-
-Changes since v1.4.2 are as follows:
-
-Dennis Stosberg:
-      Solaris does not support C99 format strings before version 10
-
-Johannes Schindelin:
-      git-mv: succeed even if source is a prefix of destination
-      git-mv: add more path normalization
-      git-mv: special case destination "."
-      git-mv: fix off-by-one error
-      builtin-mv: readability patch
-
-Junio C Hamano:
-      finish_connect(): thinkofix
-      http-fetch: fix alternates handling.
-
-Luben Tuikov:
-      Fix regex pattern in commit-msg
-      sample commit-msg hook: no silent exit on duplicate Signed-off-by lines
+I hope that Linus work will be left to mature first in 'pu', then in 'n=
+ext'
+branch... wouldn't refs cache (similar to current index for files) be
+better idea?
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
