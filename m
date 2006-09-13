@@ -1,83 +1,64 @@
-From: Shawn Pearce <spearce@spearce.org>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: Marking abandoned branches
-Date: Wed, 13 Sep 2006 13:32:12 -0400
-Message-ID: <20060913173212.GD29933@spearce.org>
-References: <9e4733910609130817r39bbf8a8x2e05461816d9d2a1@mail.gmail.com> <20060913152451.GH23891@pasky.or.cz> <9e4733910609130859v347a7a9ew5c3ebc982bf9b07b@mail.gmail.com> <Pine.LNX.4.63.0609131804050.19042@wbgn013.biozentrum.uni-wuerzburg.de> <9e4733910609131022y19327efy541ac451bdf4b009@mail.gmail.com>
+Date: Wed, 13 Sep 2006 19:45:38 +0200
+Organization: At home
+Message-ID: <ee9g3g$vmg$1@sea.gmane.org>
+References: <9e4733910609130817r39bbf8a8x2e05461816d9d2a1@mail.gmail.com> <20060913152451.GH23891@pasky.or.cz> <9e4733910609130859v347a7a9ew5c3ebc982bf9b07b@mail.gmail.com> <ee9akc$d62$1@sea.gmane.org> <45083490.9020203@gmail.com> <ee9d5j$lhd$1@sea.gmane.org> <9e4733910609131024v28ccce5cx7dd427a55002bc4f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Petr Baudis <pasky@suse.cz>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 13 19:32:47 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed Sep 13 19:46:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GNYb0-0003Mx-5L
-	for gcvg-git@gmane.org; Wed, 13 Sep 2006 19:32:25 +0200
+	id 1GNYob-0006gT-Hy
+	for gcvg-git@gmane.org; Wed, 13 Sep 2006 19:46:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750832AbWIMRcT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Sep 2006 13:32:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750833AbWIMRcT
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 13:32:19 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:39361 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1750832AbWIMRcS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Sep 2006 13:32:18 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GNYam-0006SQ-9z; Wed, 13 Sep 2006 13:32:08 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 8ECC920E49A; Wed, 13 Sep 2006 13:32:12 -0400 (EDT)
-To: Jon Smirl <jonsmirl@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <9e4733910609131022y19327efy541ac451bdf4b009@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1750812AbWIMRpy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Sep 2006 13:45:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750838AbWIMRpy
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 13:45:54 -0400
+Received: from main.gmane.org ([80.91.229.2]:57065 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750812AbWIMRpx (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Sep 2006 13:45:53 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GNYnr-0006WL-Pi
+	for git@vger.kernel.org; Wed, 13 Sep 2006 19:45:39 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 13 Sep 2006 19:45:39 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 13 Sep 2006 19:45:39 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26927>
 
-Jon Smirl <jonsmirl@gmail.com> wrote:
-> On 9/13/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> >Hi,
-> >
-> >On Wed, 13 Sep 2006, Jon Smirl wrote:
-> >
-> >> Moving the refs into refs/abandoned would work too. We would need new
-> >> git commands to do this and flags on the visualization tools to
-> >> include the abandoned branches. On the other hand doing this is
-> >> recording state about the repository in the refs directory instead of
-> >> writing this state into the repo itself.
-> >
-> >Well, the refs directory is _part_ of the repository. Think about it, if
-> >you do not know which branches are in the object database, you lack a lot
-> >of information.
+Jon Smirl wrote:
+
+> On 9/13/06, Jakub Narebski <jnareb@gmail.com> wrote:
+
+>> Well, visualisers IIRC shows only requested branches. The only place where
+>> abandoned branches would show even when we probably don't want would be
+>> --all... one can try to use --all --not refs/abandoned/*
 > 
-> If you delete all of your heads you can recover them by following all
-> of the chains in the repo to find them. Doing this would recover the
-> abandoned branches too but it would mix them up with the active heads.
-> This is not a big deal but it is info that is getting stored outside
-> of the object db.
+> In order to make the tools easier to use I would turn this around and
+> make --all show all active branches and the use something like
+> --include refs/abandoned to include the abandoned ones.
 
-No.  Being able to get a ref back like that is like saying that I
-can get files back in ext2 by deleting them then running fsck and
-restoring the lost inodes to '/lost+found'.  Sure the data is there
-but there's no way to tell which file is which!
-
-The name of a ref, like the name of a file, is pretty important
-when it comes to describing it.  Just having the SHA1 ID of 100
-commits is pretty useless; it could take weeks to determine which
-branch head is which.  The refs database is an important part of
-the usability of a Git repository.
+Not that easy. Usually one have only refs/heads and refs/tags... unless
+one use --use-separate-remotes, and then one has refs/remotes/...
 
 -- 
-Shawn.
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
