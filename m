@@ -1,73 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
 Subject: Re: Marking abandoned branches
-Date: Wed, 13 Sep 2006 18:55:33 +0200
-Organization: At home
-Message-ID: <ee9d5j$lhd$1@sea.gmane.org>
-References: <9e4733910609130817r39bbf8a8x2e05461816d9d2a1@mail.gmail.com> <20060913152451.GH23891@pasky.or.cz> <9e4733910609130859v347a7a9ew5c3ebc982bf9b07b@mail.gmail.com> <ee9akc$d62$1@sea.gmane.org> <45083490.9020203@gmail.com>
+Date: Wed, 13 Sep 2006 13:22:09 -0400
+Message-ID: <9e4733910609131022y19327efy541ac451bdf4b009@mail.gmail.com>
+References: <9e4733910609130817r39bbf8a8x2e05461816d9d2a1@mail.gmail.com>
+	 <20060913152451.GH23891@pasky.or.cz>
+	 <9e4733910609130859v347a7a9ew5c3ebc982bf9b07b@mail.gmail.com>
+	 <Pine.LNX.4.63.0609131804050.19042@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Wed Sep 13 18:56:51 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Petr Baudis" <pasky@suse.cz>,
+	"Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 13 19:22:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GNY1r-0003Bo-9P
-	for gcvg-git@gmane.org; Wed, 13 Sep 2006 18:56:03 +0200
+	id 1GNYRC-0000yk-P3
+	for gcvg-git@gmane.org; Wed, 13 Sep 2006 19:22:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750712AbWIMQz7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Sep 2006 12:55:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750716AbWIMQz7
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 12:55:59 -0400
-Received: from main.gmane.org ([80.91.229.2]:55771 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750712AbWIMQz6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Sep 2006 12:55:58 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GNY1R-00035Y-TU
-	for git@vger.kernel.org; Wed, 13 Sep 2006 18:55:37 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 13 Sep 2006 18:55:37 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 13 Sep 2006 18:55:37 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1750815AbWIMRWL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Sep 2006 13:22:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750813AbWIMRWL
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 13:22:11 -0400
+Received: from py-out-1112.google.com ([64.233.166.180]:39885 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1750815AbWIMRWK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Sep 2006 13:22:10 -0400
+Received: by py-out-1112.google.com with SMTP id n25so3249978pyg
+        for <git@vger.kernel.org>; Wed, 13 Sep 2006 10:22:10 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ZaFc5Ke4eTld7wlkhFi4/yXwcHMn92nP2dZL9TMeUck4tX/KIwZzjV8aWb1hG78QUdA8c9Y1NBXETMSVIAtmAL/m5vzB1GyLAa37t1oW/ISumuWJsANLoovgqEZ/na/OjmPBLKH/0h6UqzHYMrAKAy09e0zbTJV5dQLcHPJ1DSg=
+Received: by 10.35.90.20 with SMTP id s20mr13346021pyl;
+        Wed, 13 Sep 2006 10:22:09 -0700 (PDT)
+Received: by 10.35.60.14 with HTTP; Wed, 13 Sep 2006 10:22:09 -0700 (PDT)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0609131804050.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26924>
 
-A Large Angry SCM wrote:
+On 9/13/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Wed, 13 Sep 2006, Jon Smirl wrote:
+>
+> > Moving the refs into refs/abandoned would work too. We would need new
+> > git commands to do this and flags on the visualization tools to
+> > include the abandoned branches. On the other hand doing this is
+> > recording state about the repository in the refs directory instead of
+> > writing this state into the repo itself.
+>
+> Well, the refs directory is _part_ of the repository. Think about it, if
+> you do not know which branches are in the object database, you lack a lot
+> of information.
 
-> Jakub Narebski wrote:
-> ...
->> As it was said somewhere in this thread, you can use tags (tag objects)
-for
->> that, i.e. tag each of the abandoned branches, explaining why branch wa
->> abandoned for example, remove head refs, and move tag refs to
->> refs/abandoned or refs/tags-abandoned/ or refs/Attic/ or in
-refs-abandoned/
->> (the last has the advantage to not be included by default in any command,
->> even when --all is given)
-> 
-> Using $GIT_DIR/refs-abandoned/ means changing a number of core parts;
-> think fsck and friends. Better to decide on a name in $GIT_DIR/refs/ and
-> teach the various visualizers to ignore that prefix by default. Maybe
-> even make the name a config item. *ducks*
+If you delete all of your heads you can recover them by following all
+of the chains in the repo to find them. Doing this would recover the
+abandoned branches too but it would mix them up with the active heads.
+This is not a big deal but it is info that is getting stored outside
+of the object db.
 
-Well, visualisers IIRC shows only requested branches. The only place where
-abandoned branches would show even when we probably don't want would be
---all... one can try to use --all --not refs/abandoned/*
-
-I wonder if using the "hidden" directory for abandoned branches 
-(i.e. refs/.abandoned) would work...
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Jon Smirl
+jonsmirl@gmail.com
