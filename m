@@ -1,84 +1,95 @@
-From: Franck Bui-Huu <vagabon.xyz@gmail.com>
-Subject: [PATCH] git_connect: change return type to pid_t
-Date: Wed, 13 Sep 2006 10:32:00 +0200
-Message-ID: <4507C200.1060104@innova-card.com>
-References: <7vpse4tcyc.fsf@assigned-by-dhcp.cox.net>	<7vk64ctctv.fsf@assigned-by-dhcp.cox.net>	<7v1wqkt2v4.fsf_-_@assigned-by-dhcp.cox.net>	<45053BA2.6050502@innova-card.com>	<7vzmd5eedk.fsf@assigned-by-dhcp.cox.net>	<45066CFD.5040202@innova-card.com> <450673B7.8050704@innova-card.com>	<4506771D.9040605@innova-card.com> <7vd5a0bcdf.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Franck <vagabon.xyz@gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: qgit segfaults after b237b00
+Date: Wed, 13 Sep 2006 10:45:30 +0200
+Message-ID: <4507C52A.6040902@op5.se>
+References: <45068577.2020608@op5.se> <e5bfff550609121039h1ef25bc8y25186c321d555b8e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Franck <vagabon.xyz@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 13 10:31:55 2006
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 13 10:46:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GNQ9r-0006hX-5e
-	for gcvg-git@gmane.org; Wed, 13 Sep 2006 10:31:47 +0200
+	id 1GNQNW-0001Kr-Nu
+	for gcvg-git@gmane.org; Wed, 13 Sep 2006 10:45:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751708AbWIMIbo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Sep 2006 04:31:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751711AbWIMIbn
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 04:31:43 -0400
-Received: from py-out-1112.google.com ([64.233.166.179]:21578 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1751700AbWIMIbn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Sep 2006 04:31:43 -0400
-Received: by py-out-1112.google.com with SMTP id n25so3063031pyg
-        for <git@vger.kernel.org>; Wed, 13 Sep 2006 01:31:39 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        b=qnlfly35Yc1FJ9g6IO+NLBoY1+iZ5MPl3OiFlJCOzazJkBzpXFF2MbApzWYRFfZMzma7dvvFC1lG1uI6vrtvovvkcM7ud1Nz8bmQRycs4OWZw++v/UhgNccPnstbvLRAo9qA8IUBQBm86LXE8OviYCePRXJjTVGiuPMq/q8UN4Q=
-Received: by 10.64.149.15 with SMTP id w15mr5145319qbd;
-        Wed, 13 Sep 2006 01:31:39 -0700 (PDT)
-Received: from ?192.168.0.24? ( [81.252.61.1])
-        by mx.gmail.com with ESMTP id q19sm7110303qbq.2006.09.13.01.31.37;
-        Wed, 13 Sep 2006 01:31:38 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.4 (X11/20060614)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd5a0bcdf.fsf@assigned-by-dhcp.cox.net>
+	id S1750978AbWIMIpe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Sep 2006 04:45:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751005AbWIMIpe
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 04:45:34 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:65508 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750978AbWIMIpd
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Sep 2006 04:45:33 -0400
+Received: by smtp-gw1.op5.se (Postfix, from userid 588)
+	id C32BA6BD5C; Wed, 13 Sep 2006 10:45:31 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
+	linux-server1.op5.se
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=3.1.4
+Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 72B8D6BD5B; Wed, 13 Sep 2006 10:45:30 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.5 (X11/20060808)
+To: Marco Costalba <mcostalba@gmail.com>
+In-Reply-To: <e5bfff550609121039h1ef25bc8y25186c321d555b8e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26909>
 
-Signed-off-by: Franck Bui-Huu <vagabon.xyz@gmail.com>
----
+Marco Costalba wrote:
+> Hi Andreas,
+> 
+> On 9/12/06, Andreas Ericsson <ae@op5.se> wrote:
+>> What subject says, really. Tried cold cache, hot cache, with and without
+>> qgit.dat, 3 different repos and 14 different repo-tips. Same result
+>> every time. A segfault before anything is drawn.
+>>
+> 
+> Sorry but I am not able to reproduce the bug here. Also from the trace I 
+> see
+> that the segfault happens in a part of code that has not been touched
+> by b237b00.
+> And that _should_  not segfault in any way.
+> 
+> The code there is the same of qgit-1.5.1 so perhaps could be some
+> platform related issue,
 
- For now I let this function die if an error has occured.
- Current users wouldn't do anything usefull with a negative
- value except exiting.
+Probably, yes. Some more digging indicates it comes from trying to fetch 
+the system default-font and setting it as the default application-font.
 
- cache.h   |    2 +-
- connect.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+> please write me Qt and gcc versions and processor used and, in case,
+> do a complete rebuild with also reconfiguration (autoreconf -i).
+> 
 
-diff --git a/cache.h b/cache.h
-index ac51ed1..57db7c9 100644
---- a/cache.h
-+++ b/cache.h
-@@ -359,7 +359,7 @@ #define REF_NORMAL	(1u << 0)
- #define REF_HEADS	(1u << 1)
- #define REF_TAGS	(1u << 2)
- 
--extern int git_connect(int fd[2], char *url, const char *prog);
-+extern pid_t git_connect(int fd[2], char *url, const char *prog);
- extern int finish_connect(pid_t pid);
- extern int path_match(const char *path, int nr, char **match);
- extern int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
-diff --git a/connect.c b/connect.c
-index e6efff9..4bf7914 100644
---- a/connect.c
-+++ b/connect.c
-@@ -602,7 +602,7 @@ static void git_proxy_connect(int fd[2],
- /*
-  * Yeah, yeah, fixme. Need to pass in the heads etc.
-  */
--int git_connect(int fd[2], char *url, const char *prog)
-+pid_t git_connect(int fd[2], char *url, const char *prog)
- {
- 	char command[1024];
- 	char *host, *path = url;
+Naturally. Forgot it in the first mail *blush*. Mainly running Fedora 
+Core 5, except for the kernel which I compile myself.
+
+nox!exon:~/git/qgit$ gcc --version
+gcc (GCC) 4.1.1 20060525 (Red Hat 4.1.1-1)
+Copyright (C) 2006 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+nox!exon:~/git/qgit$ rpm -q qt
+qt-3.3.6-0.4.fc5
+nox!exon:~/git/qgit$ uname -a
+Linux nox.op5.se 2.6.18-rc6 #1 Wed Sep 6 15:41:35 CEST 2006 i686 i686 
+i386 GNU/Linux
+nox!exon:~/git/qgit$
+
+
+Rebuilding with full autoreconf -i does indeed seem to solve the 
+problem. I'm guessing some yum update changed the qt-version and the 
+configure.cache kept the old settings so that it wasn't checked.
+
+Sorry for the noise.
+
 -- 
-1.4.2
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
