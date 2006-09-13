@@ -1,92 +1,83 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: Marking abandoned branches
-Date: Wed, 13 Sep 2006 13:24:41 -0400
-Message-ID: <9e4733910609131024v28ccce5cx7dd427a55002bc4f@mail.gmail.com>
-References: <9e4733910609130817r39bbf8a8x2e05461816d9d2a1@mail.gmail.com>
-	 <20060913152451.GH23891@pasky.or.cz>
-	 <9e4733910609130859v347a7a9ew5c3ebc982bf9b07b@mail.gmail.com>
-	 <ee9akc$d62$1@sea.gmane.org> <45083490.9020203@gmail.com>
-	 <ee9d5j$lhd$1@sea.gmane.org>
+Date: Wed, 13 Sep 2006 13:32:12 -0400
+Message-ID: <20060913173212.GD29933@spearce.org>
+References: <9e4733910609130817r39bbf8a8x2e05461816d9d2a1@mail.gmail.com> <20060913152451.GH23891@pasky.or.cz> <9e4733910609130859v347a7a9ew5c3ebc982bf9b07b@mail.gmail.com> <Pine.LNX.4.63.0609131804050.19042@wbgn013.biozentrum.uni-wuerzburg.de> <9e4733910609131022y19327efy541ac451bdf4b009@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 13 19:25:22 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Petr Baudis <pasky@suse.cz>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 13 19:32:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GNYTe-0001UT-LE
-	for gcvg-git@gmane.org; Wed, 13 Sep 2006 19:24:48 +0200
+	id 1GNYb0-0003Mx-5L
+	for gcvg-git@gmane.org; Wed, 13 Sep 2006 19:32:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750816AbWIMRYo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Sep 2006 13:24:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750819AbWIMRYo
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 13:24:44 -0400
-Received: from py-out-1112.google.com ([64.233.166.177]:53971 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1750816AbWIMRYn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Sep 2006 13:24:43 -0400
-Received: by py-out-1112.google.com with SMTP id n25so3250482pyg
-        for <git@vger.kernel.org>; Wed, 13 Sep 2006 10:24:43 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=alP/W+OMGP/oIsBxE/mZ1VY/WrrZhyzWpB3gJTO+CbwEDuJKrc+x5gE3ZMQQBpOgxzOOjOBMTnws/DQ71YGVztTMs2iv6fHJxa9JefbZwZbFT+F1POPlyLB1JHSweVQsQD+3t1An3NlpEi3geU5RKQU0HzUx1qjbCRN//tRDO7o=
-Received: by 10.35.102.1 with SMTP id e1mr13360110pym;
-        Wed, 13 Sep 2006 10:24:41 -0700 (PDT)
-Received: by 10.35.60.14 with HTTP; Wed, 13 Sep 2006 10:24:41 -0700 (PDT)
-To: "Jakub Narebski" <jnareb@gmail.com>
-In-Reply-To: <ee9d5j$lhd$1@sea.gmane.org>
+	id S1750832AbWIMRcT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Sep 2006 13:32:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750833AbWIMRcT
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 13:32:19 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:39361 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1750832AbWIMRcS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Sep 2006 13:32:18 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GNYam-0006SQ-9z; Wed, 13 Sep 2006 13:32:08 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 8ECC920E49A; Wed, 13 Sep 2006 13:32:12 -0400 (EDT)
+To: Jon Smirl <jonsmirl@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <9e4733910609131022y19327efy541ac451bdf4b009@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26926>
 
-On 9/13/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> A Large Angry SCM wrote:
->
-> > Jakub Narebski wrote:
-> > ...
-> >> As it was said somewhere in this thread, you can use tags (tag objects)
-> for
-> >> that, i.e. tag each of the abandoned branches, explaining why branch wa
-> >> abandoned for example, remove head refs, and move tag refs to
-> >> refs/abandoned or refs/tags-abandoned/ or refs/Attic/ or in
-> refs-abandoned/
-> >> (the last has the advantage to not be included by default in any command,
-> >> even when --all is given)
+Jon Smirl <jonsmirl@gmail.com> wrote:
+> On 9/13/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> >Hi,
 > >
-> > Using $GIT_DIR/refs-abandoned/ means changing a number of core parts;
-> > think fsck and friends. Better to decide on a name in $GIT_DIR/refs/ and
-> > teach the various visualizers to ignore that prefix by default. Maybe
-> > even make the name a config item. *ducks*
->
-> Well, visualisers IIRC shows only requested branches. The only place where
-> abandoned branches would show even when we probably don't want would be
-> --all... one can try to use --all --not refs/abandoned/*
+> >On Wed, 13 Sep 2006, Jon Smirl wrote:
+> >
+> >> Moving the refs into refs/abandoned would work too. We would need new
+> >> git commands to do this and flags on the visualization tools to
+> >> include the abandoned branches. On the other hand doing this is
+> >> recording state about the repository in the refs directory instead of
+> >> writing this state into the repo itself.
+> >
+> >Well, the refs directory is _part_ of the repository. Think about it, if
+> >you do not know which branches are in the object database, you lack a lot
+> >of information.
+> 
+> If you delete all of your heads you can recover them by following all
+> of the chains in the repo to find them. Doing this would recover the
+> abandoned branches too but it would mix them up with the active heads.
+> This is not a big deal but it is info that is getting stored outside
+> of the object db.
 
-In order to make the tools easier to use I would turn this around and
-make --all show all active branches and the use something like
---include /refs/abandoned to include the abandoned ones.
+No.  Being able to get a ref back like that is like saying that I
+can get files back in ext2 by deleting them then running fsck and
+restoring the lost inodes to '/lost+found'.  Sure the data is there
+but there's no way to tell which file is which!
 
->
-> I wonder if using the "hidden" directory for abandoned branches
-> (i.e. refs/.abandoned) would work...
-> --
-> Jakub Narebski
-> Warsaw, Poland
-> ShadeHawk on #git
->
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
-
+The name of a ref, like the name of a file, is pretty important
+when it comes to describing it.  Just having the SHA1 ID of 100
+commits is pretty useless; it could take weeks to determine which
+branch head is which.  The refs database is an important part of
+the usability of a Git repository.
 
 -- 
-Jon Smirl
-jonsmirl@gmail.com
+Shawn.
