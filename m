@@ -1,70 +1,68 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] git-archive: inline default_parse_extra()
-Date: Wed, 13 Sep 2006 22:55:04 +0200
-Message-ID: <45087028.2070006@lsrfire.ath.cx>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Marking abandoned branches
+Date: Wed, 13 Sep 2006 23:02:46 +0200
+Organization: At home
+Message-ID: <ee9rl3$c4o$1@sea.gmane.org>
+References: <9e4733910609130817r39bbf8a8x2e05461816d9d2a1@mail.gmail.com> <20060913152451.GH23891@pasky.or.cz> <Pine.LNX.4.63.0609131729500.19042@wbgn013.biozentrum.uni-wuerzburg.de> <7vmz93a9v9.fsf@assigned-by-dhcp.cox.net> <ee9jv6$ga0$1@sea.gmane.org> <7vbqpja8wz.fsf@assigned-by-dhcp.cox.net> <ee9mff$qd1$1@sea.gmane.org> <7vhczb7ay9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Franck Bui-Huu <vagabon.xyz@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 13 22:55:30 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Wed Sep 13 23:03:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GNblS-0004qn-PR
-	for gcvg-git@gmane.org; Wed, 13 Sep 2006 22:55:23 +0200
+	id 1GNbsy-0006NE-Lb
+	for gcvg-git@gmane.org; Wed, 13 Sep 2006 23:03:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751092AbWIMUzT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Sep 2006 16:55:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751192AbWIMUzS
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 16:55:18 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:3805
-	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S1751092AbWIMUzR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Sep 2006 16:55:17 -0400
-Received: from [10.0.1.3] (p508E4A15.dip.t-dialin.net [80.142.74.21])
-	by neapel230.server4you.de (Postfix) with ESMTP id 8F2B9805A;
-	Wed, 13 Sep 2006 22:55:15 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.5 (Windows/20060719)
-To: Junio C Hamano <junkio@cox.net>
-X-Enigmail-Version: 0.94.0.0
+	id S1751195AbWIMVDF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 13 Sep 2006 17:03:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751196AbWIMVDF
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 17:03:05 -0400
+Received: from main.gmane.org ([80.91.229.2]:46473 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751195AbWIMVDD (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Sep 2006 17:03:03 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GNbsY-0006IJ-Be
+	for git@vger.kernel.org; Wed, 13 Sep 2006 23:02:44 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 13 Sep 2006 23:02:42 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 13 Sep 2006 23:02:42 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26943>
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Junio C Hamano wrote:
 
-diff --git a/builtin-archive.c b/builtin-archive.c
-index da3f714..6dabdee 100644
---- a/builtin-archive.c
-+++ b/builtin-archive.c
-@@ -145,17 +145,6 @@ void parse_treeish_arg(const char **argv
- 	ar_args->time = archive_time;
- }
- 
--static const char *default_parse_extra(struct archiver *ar,
--				       const char **argv)
--{
--	static char msg[64];
--
--	snprintf(msg, sizeof(msg) - 4, "'%s' format does not handle %s",
--		 ar->name, *argv);
--
--	return strcat(msg, "...");
--}
--
- int parse_archive_args(int argc, const char **argv, struct archiver *ar)
- {
- 	const char *extra_argv[MAX_EXTRA_ARGS];
-@@ -208,7 +197,8 @@ int parse_archive_args(int argc, const c
- 
- 	if (extra_argc) {
- 		if (!ar->parse_extra)
--			die("%s", default_parse_extra(ar, extra_argv));
-+			die("'%s' format does not handle %s",
-+			    ar->name, extra_argv[0]);
- 		ar->args.extra = ar->parse_extra(extra_argc, extra_argv);
- 	}
- 	ar->args.verbose = verbose;
+>> ... wouldn't refs cache (similar to current index for files) be
+>> better idea?
+>=20
+> The ideal is to make a fast and easy way for Porcelains to
+> access what they want to know about the refs without knowing
+> their implementation. =A0We already provide ways to do so except
+> that they may not be fast nor easy. =A0And the "may not be fast"
+> part is what triggers 'cache would be better' reaction, but the
+> right thing to do is not to work it around with a clutch, but to
+> design what an appropriate core side support is and implement
+> it.
+
+The 'cache would be better' is because it is obviously backward
+compatibile (which helps the porcelains and history viewers),
+avoids some trouble with deleting (and renaming) branches, can
+be fast (when used), and we can use symlinks/symrefs with it I guess.=20
+
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
