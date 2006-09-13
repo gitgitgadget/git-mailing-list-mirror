@@ -1,61 +1,88 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Marking abandoned branches
-Date: Wed, 13 Sep 2006 23:32:24 +0200
-Organization: At home
-Message-ID: <ee9tcl$h98$2@sea.gmane.org>
-References: <9e4733910609130817r39bbf8a8x2e05461816d9d2a1@mail.gmail.com> <20060913152451.GH23891@pasky.or.cz> <Pine.LNX.4.63.0609131729500.19042@wbgn013.biozentrum.uni-wuerzburg.de> <7vmz93a9v9.fsf@assigned-by-dhcp.cox.net> <ee9jv6$ga0$1@sea.gmane.org> <7vbqpja8wz.fsf@assigned-by-dhcp.cox.net> <ee9mff$qd1$1@sea.gmane.org> <7vhczb7ay9.fsf@assigned-by-dhcp.cox.net>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: cvs import
+Date: Wed, 13 Sep 2006 17:38:11 -0400
+Message-ID: <9e4733910609131438n686b6d72u4d5799533c7473d7@mail.gmail.com>
+References: <45084400.1090906@bluegap.ch>
+	 <9e4733910609131201q7f583029r72dac66cd0dd098f@mail.gmail.com>
+	 <46a038f90609131341se42b2dcne73c017cf757d13a@mail.gmail.com>
+	 <450872AE.5050409@bluegap.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Wed Sep 13 23:32:53 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Martin Langhoff" <martin.langhoff@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	monotone-devel@nongnu.org, dev@cvs2svn.tigris.org
+X-From: git-owner@vger.kernel.org Wed Sep 13 23:38:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GNcLS-0004U5-SQ
-	for gcvg-git@gmane.org; Wed, 13 Sep 2006 23:32:36 +0200
+	id 1GNcQz-0005e0-S2
+	for gcvg-git@gmane.org; Wed, 13 Sep 2006 23:38:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751111AbWIMVcW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 13 Sep 2006 17:32:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751094AbWIMVcW
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 17:32:22 -0400
-Received: from main.gmane.org ([80.91.229.2]:17545 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751111AbWIMVcV (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Sep 2006 17:32:21 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GNcL6-0004Ny-8p
-	for git@vger.kernel.org; Wed, 13 Sep 2006 23:32:12 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 13 Sep 2006 23:32:12 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 13 Sep 2006 23:32:12 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751200AbWIMViN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Sep 2006 17:38:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751205AbWIMViN
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 17:38:13 -0400
+Received: from py-out-1112.google.com ([64.233.166.178]:56773 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1751200AbWIMViM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Sep 2006 17:38:12 -0400
+Received: by py-out-1112.google.com with SMTP id n25so3315013pyg
+        for <git@vger.kernel.org>; Wed, 13 Sep 2006 14:38:12 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=dpBwBaKshwPALUcKb+ZxsJi1KW2X2EJF0J4Tu4kTF/2V2tSJCruvaGUcw5ALkyp5sHjbk9lNWN2KTF9rPEl2UmO+5J4m3YelXVas/jBbv6zZo7pvJQGNhW7VoSsQ2vwMq+WIenZJSuRF8XDD9IMtK7FaJsa+kdK63T9ZxdRvBLI=
+Received: by 10.35.96.7 with SMTP id y7mr13792881pyl;
+        Wed, 13 Sep 2006 14:38:11 -0700 (PDT)
+Received: by 10.35.60.14 with HTTP; Wed, 13 Sep 2006 14:38:11 -0700 (PDT)
+To: "Markus Schiltknecht" <markus@bluegap.ch>
+In-Reply-To: <450872AE.5050409@bluegap.ch>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26953>
 
-Junio C Hamano wrote:
+On 9/13/06, Markus Schiltknecht <markus@bluegap.ch> wrote:
+> Martin Langhoff wrote:
+> > On 9/14/06, Jon Smirl <jonsmirl@gmail.com> wrote:
+> >> Let's copy the git list too and maybe we can come up with one importer
+> >> for everyone.
+> >
+> > It's a really good idea. cvsps has been for a while a (limited, buggy)
+> > attempt at that.
+>
+> BTW: good point, I always thought about cvsps. Does anybody know what
+> 'dump' format that uses?
 
-> What this suggests is that the core support we
-> will give needs a way to specify what subset of refs/* to
-> include. =A0peek-remote allows you to do this and it is fairly
-> efficient for local case (although it could be made more
-> efficient by not using the general git_connect() framework if we
-> want a faster local-only command), but it gives back only the
-> object names.
+cvsps has potential but the multiple missing branch labels in the
+Mozilla CVS confuse it and its throws away important data. It's
+algorithm would need reworking too. cvs2svn is the only CVS converter
+that imported Mozilla CVS on the first try and mostly got things
+right.
 
-What is the difference between peek-remote and ls-remotes in the
-local case, by the way?
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Patchset format for cvsps
+http://www.cobite.com/cvsps/README
+
+AFAIK none of the CVS converters are using the dependency algorithm.
+So the proposal on the table is to develop a new converter that uses
+the dependency data from CVS to form the change sets and then outputs
+this data in a form that all of the backends can consume. Of course
+each of the backends is going to have to write some code in order to
+consume this new import format.
+
+>
+> For sure it's algorithm isn't that strong. cvs2svn is better, IMHO. The
+> proposed dependency resolving algorithm will be even better /me thinks.
+>
+> Regards
+>
+> Markus
+>
+
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
