@@ -1,64 +1,58 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: Marking abandoned branches
-Date: Wed, 13 Sep 2006 19:45:38 +0200
-Organization: At home
-Message-ID: <ee9g3g$vmg$1@sea.gmane.org>
-References: <9e4733910609130817r39bbf8a8x2e05461816d9d2a1@mail.gmail.com> <20060913152451.GH23891@pasky.or.cz> <9e4733910609130859v347a7a9ew5c3ebc982bf9b07b@mail.gmail.com> <ee9akc$d62$1@sea.gmane.org> <45083490.9020203@gmail.com> <ee9d5j$lhd$1@sea.gmane.org> <9e4733910609131024v28ccce5cx7dd427a55002bc4f@mail.gmail.com>
+Date: Wed, 13 Sep 2006 13:46:41 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0609131344420.2627@xanadu.home>
+References: <9e4733910609130817r39bbf8a8x2e05461816d9d2a1@mail.gmail.com>
+ <20060913152451.GH23891@pasky.or.cz>
+ <9e4733910609130859v347a7a9ew5c3ebc982bf9b07b@mail.gmail.com>
+ <Pine.LNX.4.63.0609131804050.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+ <9e4733910609131022y19327efy541ac451bdf4b009@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Wed Sep 13 19:46:33 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Petr Baudis <pasky@suse.cz>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 13 19:48:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GNYob-0006gT-Hy
-	for gcvg-git@gmane.org; Wed, 13 Sep 2006 19:46:25 +0200
+	id 1GNYqC-00076d-HY
+	for gcvg-git@gmane.org; Wed, 13 Sep 2006 19:48:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750812AbWIMRpy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Sep 2006 13:45:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750838AbWIMRpy
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 13:45:54 -0400
-Received: from main.gmane.org ([80.91.229.2]:57065 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750812AbWIMRpx (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Sep 2006 13:45:53 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GNYnr-0006WL-Pi
-	for git@vger.kernel.org; Wed, 13 Sep 2006 19:45:39 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 13 Sep 2006 19:45:39 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 13 Sep 2006 19:45:39 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1750845AbWIMRqy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Sep 2006 13:46:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750843AbWIMRqx
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 13:46:53 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:48430 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1750841AbWIMRqm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Sep 2006 13:46:42 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J5J00F5RLDT8V40@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 13 Sep 2006 13:46:41 -0400 (EDT)
+In-reply-to: <9e4733910609131022y19327efy541ac451bdf4b009@mail.gmail.com>
+X-X-Sender: nico@xanadu.home
+To: Jon Smirl <jonsmirl@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26928>
 
-Jon Smirl wrote:
+On Wed, 13 Sep 2006, Jon Smirl wrote:
 
-> On 9/13/06, Jakub Narebski <jnareb@gmail.com> wrote:
+> If you delete all of your heads you can recover them by following all
+> of the chains in the repo to find them. Doing this would recover the
+> abandoned branches too but it would mix them up with the active heads.
 
->> Well, visualisers IIRC shows only requested branches. The only place where
->> abandoned branches would show even when we probably don't want would be
->> --all... one can try to use --all --not refs/abandoned/*
-> 
-> In order to make the tools easier to use I would turn this around and
-> make --all show all active branches and the use something like
-> --include refs/abandoned to include the abandoned ones.
+Well, just don't do that then.  ;-)
 
-Not that easy. Usually one have only refs/heads and refs/tags... unless
-one use --use-separate-remotes, and then one has refs/remotes/...
+> This is not a big deal but it is info that is getting stored outside
+> of the object db.
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Sure, but the object db is useless without them anyway.
+
+
+Nicolas
