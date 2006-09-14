@@ -1,91 +1,73 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: cvs import
-Date: Thu, 14 Sep 2006 12:27:40 -0400
-Message-ID: <9e4733910609140927y30ecaa42wae0ff0597b8c3842@mail.gmail.com>
-References: <45084400.1090906@bluegap.ch>
-	 <9e4733910609131201q7f583029r72dac66cd0dd098f@mail.gmail.com>
-	 <46a038f90609131341se42b2dcne73c017cf757d13a@mail.gmail.com>
-	 <450872AE.5050409@bluegap.ch>
-	 <9e4733910609131438n686b6d72u4d5799533c7473d7@mail.gmail.com>
-	 <4508EA78.5030001@alum.mit.edu> <20060914155003.GB9657@spearce.org>
-	 <eebuih$u32$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: open(2) vs fopen(3)
+Date: Thu, 14 Sep 2006 09:37:39 -0700
+Message-ID: <7vr6ye4d64.fsf@assigned-by-dhcp.cox.net>
+References: <20060914091513.19826.qmail@web25812.mail.ukl.yahoo.com>
+	<Pine.LNX.4.64.0609140835080.4388@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, monotone-devel@nongnu.org,
-	dev@rapidsvn.tigris.org
-X-From: git-owner@vger.kernel.org Thu Sep 14 18:27:45 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Thu Sep 14 18:37:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GNu40-0005DF-KN
-	for gcvg-git@gmane.org; Thu, 14 Sep 2006 18:27:44 +0200
+	id 1GNuDi-0007a4-OW
+	for gcvg-git@gmane.org; Thu, 14 Sep 2006 18:37:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750985AbWINQ1m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Sep 2006 12:27:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750987AbWINQ1m
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Sep 2006 12:27:42 -0400
-Received: from py-out-1112.google.com ([64.233.166.176]:8792 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1750880AbWINQ1l (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Sep 2006 12:27:41 -0400
-Received: by py-out-1112.google.com with SMTP id n25so3680610pyg
-        for <git@vger.kernel.org>; Thu, 14 Sep 2006 09:27:41 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=DKaxau/RmGlo3MRxEGbP85uBs4WbnP00cqeeywEQk05TwwNW+9dh6lkBemYDU5kaKen8ZIkCdkKKF9N6KrvL/WthFSwJqaH16oo8ew9azoVPx++bI4pTq6BzZEUIlSjG+BvhmlwIW3rOkOTwyeO3+pxh6MDEDldv2dw0b5iREVU=
-Received: by 10.35.95.1 with SMTP id x1mr15331897pyl;
-        Thu, 14 Sep 2006 09:27:40 -0700 (PDT)
-Received: by 10.35.60.14 with HTTP; Thu, 14 Sep 2006 09:27:40 -0700 (PDT)
-To: "Jakub Narebski" <jnareb@gmail.com>
-In-Reply-To: <eebuih$u32$1@sea.gmane.org>
-Content-Disposition: inline
+	id S1751001AbWINQhn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Sep 2006 12:37:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750996AbWINQhn
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Sep 2006 12:37:43 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:46781 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1750749AbWINQhn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Sep 2006 12:37:43 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060914163742.DAZK2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 14 Sep 2006 12:37:42 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id NGdU1V00Z1kojtg0000000
+	Thu, 14 Sep 2006 12:37:31 -0400
+To: moreau francis <francis_moreau2000@yahoo.fr>
+In-Reply-To: <Pine.LNX.4.64.0609140835080.4388@g5.osdl.org> (Linus Torvalds's
+	message of "Thu, 14 Sep 2006 08:46:13 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27010>
 
-On 9/14/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> Shawn Pearce wrote:
+Linus Torvalds <torvalds@osdl.org> writes:
+
+> On Thu, 14 Sep 2006, moreau francis wrote:
+>> 
+>> I'm reading git source code and falling on this stupid question:
+>> Why sometime open(2) is used and other time fopen(3) is
+>> prefered. I'm sorry for this dump question but I have no clue.
 >
-> > Originally I wanted Jon Smirl to modify the cvs2svn (...)
+> fopen() tends to result in easier usage, especially if the file in 
+> question is a line-based ASCII file, and you can just use "fgets()" to 
+> read it. So fopen is the simple alternative for simple problems.
 >
-> By the way, will cvs2git (modified cvs2svn) and git-fast-import publicly
-> available?
+> Using a direct open() means that you have to use the low-level IO 
+> functions (I'm ignoring the use of "fdopen()"), but if done right, it has 
+> a number of advantages:
+>...
+>  - error conditions are a lot more obvious and repeatable with the 
+>    low-level things, at least so I find personally. Error handling with 
+>    stdio routines is _possible_, but probably because almost nobody ever 
+>    does it, it's not something that people are conditioned to do, so it 
+>    ends up beign "strange".
 
-It has some unresolved problems so I wasn't spreading it around everywhere.
+Another issue related with this is that stdio implementations
+tend to have unintuitive interaction with signals, one fine
+example of it being the problem we fixed with commit fb7a653,
+where on Solaris fgets(3) did not restart the underlying read(2)
+upon SIGALRM.
 
-It is based on cvs2svn from August. There has been too much change to
-the current cvs2svn to merge it anymore. It is going to need
-significant rewrite. But cvs2svn will all change again if it converts
-to the dependency model. It is better to get a backend independent
-interface build into cvs2svn.
-
-It it not generating an accurate repo. cvs2svn is outputting tags
-based on multiple revisions, git can't do that. I'm just tossing some
-of the tag data that git can't handle. I base the tag on the fist
-revision which is not correct.
-
-If the repo is missing branch tags cvs2svn may turn a single missing
-branch into hundreds of branches. The Mozilla repo has about 1000
-extra branches because of this.
-
-Sometime cvs2svn will partial copy from another rev to generate a new
-rev. Git doesn't do this so I am tossing the copy requests. I need to
-figure out how to hook into the data before cvs2svn tries to copy
-things.
-
-cvs2svn makes no attempt to detect merges so gitk will show 1,700
-active branches when there are really only 10 currently active
-branches in Mozilla.
-
-That said 99.9% of Mozilla CVS is in the output git repo, but it isn't
-quite right.
-
-If you still want the code I'll send it to you.
-
--- 
-Jon Smirl
-jonsmirl@gmail.com
+Technically it was a bug on our part not Solaris, but that was
+something unexpected to see.
