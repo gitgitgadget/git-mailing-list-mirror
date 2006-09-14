@@ -1,129 +1,62 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Do not parse refs by hand, use git-peek-remote instead
-Date: Thu, 14 Sep 2006 23:27:22 +0200
-Message-ID: <200609142327.23059.jnareb@gmail.com>
+From: Thomas Gleixner <tglx@linutronix.de>
+Subject: Re: Historical kernel repository size
+Date: Thu, 14 Sep 2006 23:32:18 +0200
+Message-ID: <1158269538.5724.237.camel@localhost.localdomain>
+References: <20060914142249.GK23891@pasky.or.cz>
+	 <Pine.LNX.4.64.0609140824580.4388@g5.osdl.org>
+	 <Pine.LNX.4.64.0609141714010.2627@xanadu.home>
+Reply-To: tglx@linutronix.de
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Junio Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Sep 14 23:27:18 2006
+Cc: Linus Torvalds <torvalds@osdl.org>, Petr Baudis <pasky@suse.cz>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 14 23:31:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GNyjj-0005kP-4p
-	for gcvg-git@gmane.org; Thu, 14 Sep 2006 23:27:07 +0200
+	id 1GNyoL-0006YL-4S
+	for gcvg-git@gmane.org; Thu, 14 Sep 2006 23:31:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751202AbWINV1D (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Sep 2006 17:27:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751205AbWINV1D
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Sep 2006 17:27:03 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:5322 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1751202AbWINV1B (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Sep 2006 17:27:01 -0400
-Received: by ug-out-1314.google.com with SMTP id o38so101199ugd
-        for <git@vger.kernel.org>; Thu, 14 Sep 2006 14:27:00 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=kzEm4MSzgEUJ6CYw8jEzmoaaON07wjZhlcy6OOSIcxwReLTq8PI3Q2ICo4+tV30vT6w/0e33Nlwgy5vrIRtlY7qe1Ju5/bU4bES4AvAzbKhyF4M7ni9xxXIMa/fJXwNNd0bQVqMXPwPCRz+fORV6vkg1fTKFTbmbOFmQSPyJZj4=
-Received: by 10.66.252.4 with SMTP id z4mr5064900ugh;
-        Thu, 14 Sep 2006 14:26:59 -0700 (PDT)
-Received: from roke.d-201 ( [193.0.122.19])
-        by mx.gmail.com with ESMTP id k30sm861306ugc.2006.09.14.14.26.58;
-        Thu, 14 Sep 2006 14:26:59 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+	id S1751222AbWINVbg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Sep 2006 17:31:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751223AbWINVbg
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Sep 2006 17:31:36 -0400
+Received: from www.osadl.org ([213.239.205.134]:36564 "EHLO mail.tglx.de")
+	by vger.kernel.org with ESMTP id S1751222AbWINVbe (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Sep 2006 17:31:34 -0400
+Received: from hermes.tec.linutronix.de (unknown [192.168.0.1])
+	by mail.tglx.de (Postfix) with ESMTP id B9A1D65C003;
+	Thu, 14 Sep 2006 23:31:33 +0200 (CEST)
+Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
+	by hermes.tec.linutronix.de (Postfix) with ESMTP id 4E43067FA0;
+	Thu, 14 Sep 2006 23:31:32 +0200 (CEST)
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0609141714010.2627@xanadu.home>
+X-Mailer: Evolution 2.6.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27043>
 
-This is response to Linus work on packed refs. Additionally it
-makes gitweb work with symrefs, too.
+On Thu, 2006-09-14 at 17:23 -0400, Nicolas Pitre wrote:
+> On Thu, 14 Sep 2006, Linus Torvalds wrote:
+> 
+> > For better packing, I think I used a larger depth, ie try something like
+> > 
+> > 	git repack -a -f --depth=50
+> > 
+> > to get more improvement. For a historical archive that you don't much use, 
+> > doign the deeper depth is definitely worth it.
+> 
+> Using a larger window helps too.  It of course has a direct impact on 
+> the processing to perform a full repack, but it has no runtime costs 
+> when the pack is used.  So I'd suggest adding --window=50 to the above.
+> 
+> [ I made those suggestions in person to Thomas at OLS to which 
+>   he replied he'd do it when he'd get back home.   ;-) ]
 
-Do not parse refs by hand, using File::Find and reading individual
-heads to get hash of reference, but use git-peek-remote output
-instead. Assume that the hash for deref (with ^{}) always follows hash
-for ref, and that we hav derefs only for tags objects; this removes
-call to git_get_type (and git-cat-file -t invocation) for tags, which
-speeds "summary" and "tags" views generation, but might slow
-generation of "heads" view a bit. As of now we do not save and use the
-deref hash.
+Thanks for the reminder. I actually logged into kernel.org already :)
 
-Remove git_get_hash_by_ref while at it, as git_get_refs_list was the
-only place it was used.
-
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-By the way, the previous patch
-  "gitweb: Use File::Find::find in git_get_projects_list"
-was added during working on this feature.
-
- gitweb/gitweb.perl |   39 +++++++++++++++++----------------------
- 1 files changed, 17 insertions(+), 22 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 25383bc..4e58a6b 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -676,19 +676,6 @@ sub git_get_hash_by_path {
- ## ......................................................................
- ## git utility functions, directly accessing git repository
- 
--# assumes that PATH is not symref
--sub git_get_hash_by_ref {
--	my $path = shift;
--
--	open my $fd, "$projectroot/$path" or return undef;
--	my $head = <$fd>;
--	close $fd;
--	chomp $head;
--	if ($head =~ m/^[0-9a-fA-F]{40}$/) {
--		return $head;
--	}
--}
--
- sub git_get_project_description {
- 	my $path = shift;
- 
-@@ -1098,17 +1085,25 @@ sub git_get_refs_list {
- 	my @reflist;
- 
- 	my @refs;
--	my $pfxlen = length("$projectroot/$project/$ref_dir");
--	File::Find::find(sub {
--		return if (/^\./);
--		if (-f $_) {
--			push @refs, substr($File::Find::name, $pfxlen + 1);
-+	open my $fd, "-|", $GIT, "peek-remote", "$projectroot/$project/"
-+		or return;
-+	while (my $line = <$fd>) {
-+		chomp $line;
-+		if ($line =~ m/^([0-9a-fA-F]{40})\t$ref_dir\/?([^\^]+)$/) {
-+			push @refs, { hash => $1, name => $2 };
-+		} elsif ($line =~ m/^[0-9a-fA-F]{40}\t$ref_dir\/?.*\^\{\}$/) {
-+			# assume that "peeled" ref is always after ref,
-+			# and that you "peel" (deref) tags only
-+			$refs[$#refs]->{'type'} = "tag";
- 		}
--	}, "$projectroot/$project/$ref_dir");
-+	}
-+	close $fd;
-+
-+	foreach my $ref (@refs) {
-+		my $ref_file = $ref->{'name'};
-+		my $ref_id   = $ref->{'hash'};
- 
--	foreach my $ref_file (@refs) {
--		my $ref_id = git_get_hash_by_ref("$project/$ref_dir/$ref_file");
--		my $type = git_get_type($ref_id) || next;
-+		my $type = $ref->{'type'} || git_get_type($ref_id) || next;
- 		my %ref_item = parse_ref($ref_file, $ref_id, $type);
- 
- 		push @reflist, \%ref_item;
--- 
-1.4.2
+	tglx
