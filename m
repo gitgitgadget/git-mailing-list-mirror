@@ -1,99 +1,98 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: open(2) vs fopen(3)
-Date: Thu, 14 Sep 2006 10:31:27 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609141023130.4388@g5.osdl.org>
-References: <20060914091513.19826.qmail@web25812.mail.ukl.yahoo.com>
- <Pine.LNX.4.64.0609140835080.4388@g5.osdl.org> <7vr6ye4d64.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH (amend)] gitweb: Use File::Find::find in git_get_projects_list
+Date: Thu, 14 Sep 2006 19:39:39 +0200
+Message-ID: <200609141939.39406.jnareb@gmail.com>
+References: <200609140839.56181.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: moreau francis <francis_moreau2000@yahoo.fr>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 14 19:32:51 2006
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Junio Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Sep 14 19:39:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GNv4u-00023n-Ep
-	for gcvg-git@gmane.org; Thu, 14 Sep 2006 19:32:44 +0200
+	id 1GNvBL-0003Py-6H
+	for gcvg-git@gmane.org; Thu, 14 Sep 2006 19:39:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750747AbWINRbe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Sep 2006 13:31:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750759AbWINRbe
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Sep 2006 13:31:34 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:16007 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750747AbWINRbd (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Sep 2006 13:31:33 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8EHVSnW024022
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 14 Sep 2006 10:31:29 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8EHVRUT027170;
-	Thu, 14 Sep 2006 10:31:28 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vr6ye4d64.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.511 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.148 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750811AbWINRjU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Sep 2006 13:39:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750801AbWINRjU
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Sep 2006 13:39:20 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:28059 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1750811AbWINRjT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Sep 2006 13:39:19 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so82613ugd
+        for <git@vger.kernel.org>; Thu, 14 Sep 2006 10:39:17 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=QaKzS9C9lEnZ2ldMSjvAnDUUwNTGyWHAArFstnpPeQWzUTWPOkfQvaGgTZ5FSYIFmZjfum258mF2zgkwjxQAm0Se1wKDwMFOpX9QFHOpkqyBHtlIy/Oixqd7Ll25/Q0XhUDDoXz38s/q2vivDb0UjDsRvd8NeOjz12v/loo4LG4=
+Received: by 10.66.224.19 with SMTP id w19mr4948071ugg;
+        Thu, 14 Sep 2006 10:39:17 -0700 (PDT)
+Received: from roke.d-201 ( [193.0.122.19])
+        by mx.gmail.com with ESMTP id 27sm753698ugp.2006.09.14.10.39.16;
+        Thu, 14 Sep 2006 10:39:17 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.3
+In-Reply-To: <200609140839.56181.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27020>
 
+Earlier code to get list of projects when $projects_list is a
+directory (e.g. when it is equal to $projectroot) had a hardcoded flat
+(one level) list of directories.  Allow for projects to be in
+subdirectories also for $projects_list being a directory by using
+File::Find.
 
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |   26 ++++++++++++++++++--------
+ 1 files changed, 18 insertions(+), 8 deletions(-)
 
-On Thu, 14 Sep 2006, Junio C Hamano wrote:
->
-> Another issue related with this is that stdio implementations
-> tend to have unintuitive interaction with signals, one fine
-> example of it being the problem we fixed with commit fb7a653,
-> where on Solaris fgets(3) did not restart the underlying read(2)
-> upon SIGALRM.
-
-Yeah. However, I think it's worth just posting the code in question to 
-explain _why_ error handling with stdio sucks so badly, and why nobody 
-does it..
-
-Here's the snippet:
-
-                if (!fgets(line, sizeof(line), stdin)) {
-                        if (feof(stdin))
-                                break;
-                        if (!ferror(stdin))
-                                die("fgets returned NULL, not EOF, not error!");
-                        if (errno != EINTR)
-                                die("fgets: %s", strerror(errno));
-                        clearerr(stdin);
-
-so with the <stdio.h> functions, you have to check FOUR DIFFERENT THINGS 
-(1: return value, 2: feof() value, 3: ferror() value, and 4: errno) to get 
-things right, and to add insult to injury, you then have to do an explicit 
-clear.
-
-In other words, the fundamental reason nobody bothers checking errors with 
-stdio is that stdio just makes it a damn pain in the ass to do so - by 
-having a million different thing you have to do (and ordering actually 
-matters).
-
-In contrast, the <unistd.h> interfaces are a paragon of clarity: you check 
-just two things - the return value, and possibly "errno".
-
-Now, <unistd.h> isn't perfect either, and in the kernel we have simplified 
-things further, by getting rid of "errno", and just having the return 
-value contain errno too. Making things not only trivially thread-safe, but 
-also actually easier to code and understand, because you don't have 
-anything to be confused about: the return value is always the only thing 
-you need to look at in order to know what went wrong.
-
-But unistd.h sure is a lot better than stdio in this area. Of course, 
-stdio.h is just a lot easier to use when you don't actually care about the 
-errors, which is also partly the _reason_ why caring about errors is so 
-hard (the whole separate clearerr() and ferror() interfaces exist exactly 
-_because_ people don't care about errors in many cases, and you're 
-supposed to maybe have some way to test at the end whether an error 
-happened or not).
-
-So stdio.h is pretty much geared towards delayed error handling, which in 
-practice ends up often meaning "no error handling at all".
-
-			Linus
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index c3544dd..27641a6 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -715,16 +715,26 @@ sub git_get_projects_list {
+ 	if (-d $projects_list) {
+ 		# search in directory
+ 		my $dir = $projects_list;
+-		opendir my ($dh), $dir or return undef;
+-		while (my $dir = readdir($dh)) {
+-			if (-e "$projectroot/$dir/HEAD") {
+-				my $pr = {
+-					path => $dir,
+-				};
+-				push @list, $pr
++		my $pfxlen = length("$dir");
++
++		sub wanted {
++			# only directories can be git repositories
++			return unless (-d $_);
++
++			my $subdir = substr($File::Find::name, $pfxlen + 1);
++			# we check related file in $projectroot
++			if (-e "$projectroot/$subdir/HEAD") {
++				push @list, { path => $subdir };
++				$File::Find::prune = 1;
+ 			}
+ 		}
+-		closedir($dh);
++
++		File::Find::find({
++			follow_fast => 1, # follow symbolic links
++			dangling_symlinks => 0, # ignore dangling symlinks, silently
++			wanted => \&wanted,
++		}, "$dir");
++
+ 	} elsif (-f $projects_list) {
+ 		# read from file(url-encoded):
+ 		# 'git%2Fgit.git Linus+Torvalds'
+-- 
+1.4.2
