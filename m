@@ -1,61 +1,67 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [Monotone-devel] cvs import
-Date: Thu, 14 Sep 2006 18:04:43 -0400
-Message-ID: <20060914220443.GB11129@spearce.org>
-References: <45084400.1090906@bluegap.ch> <20060913225200.GA10186@frances.vorpus.org> <1158190921.29313.175.camel@neko.keithp.com> <20060914003242.GA19228@frances.vorpus.org> <9e4733910609131757l7ce4b637oae18b523b1b7f0a4@mail.gmail.com> <20060914015324.GX29625@bcd.geek.com.au> <20060914215728.GL23891@pasky.or.cz>
+From: Thomas Gleixner <tglx@linutronix.de>
+Subject: Re: Historical kernel repository size
+Date: Fri, 15 Sep 2006 00:24:11 +0200
+Message-ID: <1158272651.5724.251.camel@localhost.localdomain>
+References: <20060914142249.GK23891@pasky.or.cz>
+	 <Pine.LNX.4.64.0609140824580.4388@g5.osdl.org>
+	 <Pine.LNX.4.64.0609141714010.2627@xanadu.home>
+	 <1158269854.5724.240.camel@localhost.localdomain>
+	 <Pine.LNX.4.64.0609141742000.2627@xanadu.home>
+	 <1158270859.5724.244.camel@localhost.localdomain>
+Reply-To: tglx@linutronix.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jon Smirl <jonsmirl@gmail.com>, Keith Packard <keithp@keithp.com>,
-	dev@cvs2svn.tigris.org, monotone-devel@nongnu.org,
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>, Petr Baudis <pasky@suse.cz>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 15 00:05:02 2006
+X-From: git-owner@vger.kernel.org Fri Sep 15 00:23:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GNzKL-0003Qh-V9
-	for gcvg-git@gmane.org; Fri, 15 Sep 2006 00:04:58 +0200
+	id 1GNzcH-00065H-Ud
+	for gcvg-git@gmane.org; Fri, 15 Sep 2006 00:23:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751345AbWINWEy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Sep 2006 18:04:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751347AbWINWEy
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Sep 2006 18:04:54 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:22494 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751345AbWINWEx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Sep 2006 18:04:53 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GNzK0-0002Ds-V8; Thu, 14 Sep 2006 18:04:37 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 65D8B20FB1F; Thu, 14 Sep 2006 18:04:44 -0400 (EDT)
-To: Petr Baudis <pasky@suse.cz>
-Content-Disposition: inline
-In-Reply-To: <20060914215728.GL23891@pasky.or.cz>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751373AbWINWX1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Sep 2006 18:23:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751376AbWINWX1
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Sep 2006 18:23:27 -0400
+Received: from www.osadl.org ([213.239.205.134]:22741 "EHLO mail.tglx.de")
+	by vger.kernel.org with ESMTP id S1751373AbWINWX0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Sep 2006 18:23:26 -0400
+Received: from hermes.tec.linutronix.de (unknown [192.168.0.1])
+	by mail.tglx.de (Postfix) with ESMTP id 4982165C003;
+	Fri, 15 Sep 2006 00:23:25 +0200 (CEST)
+Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
+	by hermes.tec.linutronix.de (Postfix) with ESMTP id D63FC67FA0;
+	Fri, 15 Sep 2006 00:23:23 +0200 (CEST)
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <1158270859.5724.244.camel@localhost.localdomain>
+X-Mailer: Evolution 2.6.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27050>
 
-Petr Baudis <pasky@suse.cz> wrote:
->   Don't forget OpenOffice. It's just a shame that the OpenOffice CVS
-> tree is not available for cloning.
+On Thu, 2006-09-14 at 23:54 +0200, Thomas Gleixner wrote:
+> On Thu, 2006-09-14 at 17:42 -0400, Nicolas Pitre wrote:
+> > > git repack neither accepts --depth nor --window
+> > 
+> > Is the GIT version on kernel.org _that_ old?
+> > 
+> > What a shame...
 > 
-> 	http://wiki.services.openoffice.org/wiki/SVNMigration
+> [tglx@hera history.git]$ git --version
+> git version 1.4.2.1
 
-Hmm, the KDE repo is even larger than Mozilla: 19 GB in CVS and
-499,367 revisions.  Question is, are those distinct file revisions
-or SVN revisions?  And just what machine did they use that completed
-that conversion in 38 hours?
+I know I'm stupid
 
--- 
-Shawn.
+"git-repack --window=50 --depth=50 -a -f" works
+"git-repack -a -f --window=50 --depth=50" does not
+
+Intuitive user interfaces are my favorite pitfalls.
+
+-rw-rw-r-- 1 tglx ftpadmin  13600376 Sep 14 22:16 pack-4d27038611fe7755938efd4a2745d5d5d35de1c1.idx
+-rw-rw-r-- 1 tglx ftpadmin 158679705 Sep 14 22:16 pack-4d27038611fe7755938efd4a2745d5d5d35de1c1.pack
+
+	tglx
