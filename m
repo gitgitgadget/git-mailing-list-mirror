@@ -1,87 +1,47 @@
-From: "Dmitry V. Levin" <ldv@altlinux.org>
-Subject: [PATCH] Documentation: Fix broken links
-Date: Thu, 14 Sep 2006 05:04:33 +0400
-Message-ID: <20060914010433.GC20593@nomad.office.altlinux.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/2] Handle invalid argc gently
+Date: Wed, 13 Sep 2006 18:12:02 -0700
+Message-ID: <7vu03b5k0t.fsf@assigned-by-dhcp.cox.net>
+References: <20060914010409.GB20593@nomad.office.altlinux.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 14 03:04:52 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 14 03:12:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GNfeg-0004bP-EV
-	for gcvg-git@gmane.org; Thu, 14 Sep 2006 03:04:39 +0200
+	id 1GNfly-00073E-MR
+	for gcvg-git@gmane.org; Thu, 14 Sep 2006 03:12:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751301AbWINBEf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Sep 2006 21:04:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751302AbWINBEf
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 21:04:35 -0400
-Received: from mh.altlinux.org ([217.16.24.5]:27288 "EHLO mh.altlinux.org")
-	by vger.kernel.org with ESMTP id S1751301AbWINBEe (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Sep 2006 21:04:34 -0400
-Received: from nomad.office.altlinux.org (localhost.localdomain [127.0.0.1])
-	by mh.altlinux.org (Postfix) with ESMTP
-	id 46E302F3000D; Thu, 14 Sep 2006 05:04:33 +0400 (MSD)
-Received: by nomad.office.altlinux.org (Postfix, from userid 501)
-	id 5D18317103; Thu, 14 Sep 2006 05:04:33 +0400 (MSD)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
+	id S1751303AbWINBMH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Sep 2006 21:12:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751306AbWINBMH
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 21:12:07 -0400
+Received: from fed1rmmtai19.cox.net ([68.230.241.40]:18669 "EHLO
+	fed1rmmtai19.cox.net") by vger.kernel.org with ESMTP
+	id S1751303AbWINBME (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Sep 2006 21:12:04 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060914011203.KSDG12909.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 13 Sep 2006 21:12:03 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id N1Br1V00a1kojtg0000000
+	Wed, 13 Sep 2006 21:11:52 -0400
+To: "Dmitry V. Levin" <ldv@altlinux.org>
+In-Reply-To: <20060914010409.GB20593@nomad.office.altlinux.org> (Dmitry
+	V. Levin's message of "Thu, 14 Sep 2006 05:04:09 +0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26971>
 
-core-tutorial.txt, cvs-migration.txt, tutorial-2.txt:
-	Fix broken links.
+"Dmitry V. Levin" <ldv@altlinux.org> writes:
 
-Signed-off-by: Dmitry V. Levin <ldv@altlinux.org>
----
- Documentation/core-tutorial.txt |    2 +-
- Documentation/cvs-migration.txt |    2 +-
- Documentation/tutorial-2.txt    |    2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+> describe, git: Handle argc==0 case the same way as argc==1.
 
-diff --git a/Documentation/core-tutorial.txt b/Documentation/core-tutorial.txt
-index 1185897..47505aa 100644
---- a/Documentation/core-tutorial.txt
-+++ b/Documentation/core-tutorial.txt
-@@ -1620,7 +1620,7 @@ suggested in the previous section may be
- have to worry. git supports "shared public repository" style of
- cooperation you are probably more familiar with as well.
- 
--See link:cvs-migration.txt[git for CVS users] for the details.
-+See link:cvs-migration.html[git for CVS users] for the details.
- 
- Bundling your work together
- ---------------------------
-diff --git a/Documentation/cvs-migration.txt b/Documentation/cvs-migration.txt
-index d2b0bd3..6812683 100644
---- a/Documentation/cvs-migration.txt
-+++ b/Documentation/cvs-migration.txt
-@@ -172,7 +172,7 @@ Advanced Shared Repository Management
- 
- Git allows you to specify scripts called "hooks" to be run at certain
- points.  You can use these, for example, to send all commits to the shared
--repository to a mailing list.  See link:hooks.txt[Hooks used by git].
-+repository to a mailing list.  See link:hooks.html[Hooks used by git].
- 
- You can enforce finer grained permissions using update hooks.  See
- link:howto/update-hook-example.txt[Controlling access to branches using
-diff --git a/Documentation/tutorial-2.txt b/Documentation/tutorial-2.txt
-index 2f4fe12..42b6e7d 100644
---- a/Documentation/tutorial-2.txt
-+++ b/Documentation/tutorial-2.txt
-@@ -368,7 +368,7 @@ in the index file is identical to the on
- In addition to being the staging area for new commits, the index file
- is also populated from the object database when checking out a
- branch, and is used to hold the trees involved in a merge operation.
--See the link:core-tutorial.txt[core tutorial] and the relevant man
-+See the link:core-tutorial.html[core tutorial] and the relevant man
- pages for details.
- 
- What next?
-
-
--- 
-ldv
+When does one get (ac == 0)?
