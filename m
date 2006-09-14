@@ -1,94 +1,72 @@
-From: Sasha Khapyorsky <sashak@voltaire.com>
-Subject: [PATCH] Trivial support for cloning and fetching via ftp://.
-Date: Thu, 14 Sep 2006 05:24:04 +0300
-Message-ID: <20060914022404.GA900@sashak.voltaire.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [Monotone-devel] cvs import
+Date: Wed, 13 Sep 2006 22:30:17 -0400
+Message-ID: <20060914023017.GA31889@spearce.org>
+References: <45084400.1090906@bluegap.ch> <20060913225200.GA10186@frances.vorpus.org> <1158190921.29313.175.camel@neko.keithp.com> <20060914003242.GA19228@frances.vorpus.org> <9e4733910609131757l7ce4b637oae18b523b1b7f0a4@mail.gmail.com> <20060914015324.GX29625@bcd.geek.com.au>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 14 04:18:33 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GNgo5-0003Nb-UU
-	for gcvg-git@gmane.org; Thu, 14 Sep 2006 04:18:26 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750795AbWINCSW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Sep 2006 22:18:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750796AbWINCSW
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Sep 2006 22:18:22 -0400
-Received: from taurus.voltaire.com ([193.47.165.240]:39911 "EHLO
-	taurus.voltaire.com") by vger.kernel.org with ESMTP
-	id S1750795AbWINCSW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Sep 2006 22:18:22 -0400
-Received: from sashak ([172.25.5.107]) by taurus.voltaire.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 14 Sep 2006 05:18:20 +0300
-Received: by sashak (sSMTP sendmail emulation); Thu, 14 Sep 2006 05:24:04 +0300
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-OriginalArrivalTime: 14 Sep 2006 02:18:20.0360 (UTC) FILETIME=[0C0FAC80:01C6D7A4]
-Sender: git-owner@vger.kernel.org
+Cc: Jon Smirl <jonsmirl@gmail.com>, Keith Packard <keithp@keithp.com>,
+	dev@cvs2svn.tigris.org, monotone-devel@nongnu.org,
+	Git Mailing List <git@vger.kernel.org>
+X-From: dev-return-1632-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org Thu Sep 14 04:30:32 2006
+Return-path: <dev-return-1632-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org>
+Envelope-to: gcvscd-dev@gmane.org
+Received: from sc51.sjc.collab.net ([204.16.104.146] helo=tigris.org)
+	by ciao.gmane.org with smtp (Exim 4.43)
+	id 1GNgzn-0005Y0-4Z
+	for gcvscd-dev@gmane.org; Thu, 14 Sep 2006 04:30:31 +0200
+Received: (qmail 4314 invoked by uid 5000); 14 Sep 2006 02:30:28 -0000
+Mailing-List: contact dev-help@cvs2svn.tigris.org; run by ezmlm
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26974>
+list-help: <mailto:dev-help@cvs2svn.tigris.org>
+list-unsubscribe: <mailto:dev-unsubscribe@cvs2svn.tigris.org>
+list-post: <mailto:dev@cvs2svn.tigris.org>
+Delivered-To: mailing list dev@cvs2svn.tigris.org
+Received: (qmail 4304 invoked from network); 14 Sep 2006 02:30:28 -0000
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AY8CAEpbCEWBTooeAgkOKg
+X-IronPort-AV: i="4.09,161,1157353200"; 
+   d="scan'208"; a="26762718:sNHT18541222"
+X-IRONPORT: SCANNED
+To: Daniel Carosone <dan@geek.com.au>
+Content-Disposition: inline
+In-Reply-To: <20060914015324.GX29625@bcd.geek.com.au>
+Sender: spearce@spearce.org
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - cvs2svn.tigris.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/26975>
 
-This adds trivial support for cloning and fetching via ftp://.
+Daniel Carosone <dan@geek.com.au> wrote:
+> On Wed, Sep 13, 2006 at 08:57:33PM -0400, Jon Smirl wrote:
+> > Mozilla is 120,000 files. The complexity comes from 10 years worth of
+> > history. A few of the files have around 1,700 revisions. There are
+> > about 1,600 branches and 1,000 tags. The branch number is inflated
+> > because cvs2svn is generating extra branches, the real number is
+> > around 700. The CVS repo takes 4.2GB disk space. cvs2svn turns this
+> > into 250,000 commits over about 1M unique revisions.
+> 
+> Those numbers are pretty close to those in the NetBSD repository, and
+> between them these probably represent just about the most extensive
+> public CVS test data available. 
 
-Signed-off-by: Sasha Khapyorsky <sashak@voltaire.com>
----
- git-clone.sh     |    2 +-
- git-fetch.sh     |    4 ++--
- git-ls-remote.sh |    2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+I don't know exactly how big it is but the Gentoo CVS repository
+is also considered to be very large (about the size of the Mozilla
+repository) and just as difficult to import.  Its either crashed or
+taken about a month to process with the current Git CVS->Git tools.
 
-diff --git a/git-clone.sh b/git-clone.sh
-index 7060bda..e1b3bf3 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -298,7 +298,7 @@ yes,yes)
- 		fi
- 		git-ls-remote "$repo" >"$GIT_DIR/CLONE_HEAD" || exit 1
- 		;;
--	https://*|http://*)
-+	https://*|http://*|ftp://*)
- 		if test -z "@@NO_CURL@@"
- 		then
- 			clone_dumb_http "$repo" "$D"
-diff --git a/git-fetch.sh b/git-fetch.sh
-index c2eebee..09a5d6c 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -286,7 +286,7 @@ fetch_main () {
- 
-       # There are transports that can fetch only one head at a time...
-       case "$remote" in
--      http://* | https://*)
-+      http://* | https://* | ftp://*)
- 	  if [ -n "$GIT_SSL_NO_VERIFY" ]; then
- 	      curl_extra_args="-k"
- 	  fi
-@@ -350,7 +350,7 @@ fetch_main () {
-   done
- 
-   case "$remote" in
--  http://* | https://* | rsync://* )
-+  http://* | https://* | ftp://* | rsync://* )
-       ;; # we are already done.
-   *)
-     ( : subshell because we muck with IFS
-diff --git a/git-ls-remote.sh b/git-ls-remote.sh
-index 2fdcaf7..2c0b521 100755
---- a/git-ls-remote.sh
-+++ b/git-ls-remote.sh
-@@ -49,7 +49,7 @@ trap "rm -fr $tmp-*" 0 1 2 3 15
- tmpdir=$tmp-d
- 
- case "$peek_repo" in
--http://* | https://* )
-+http://* | https://* | ftp://* )
-         if [ -n "$GIT_SSL_NO_VERIFY" ]; then
-             curl_extra_args="-k"
-         fi
+Since I know that the bulk of the Gentoo CVS repository is the
+portage tree I did a quick find|wc -l in my /usr/portage; its about
+124,500 files.
+
+Its interesting that Gentoo has almost as large of a repository given
+that its such a young project, compared to NetBSD and Mozilla.  :-)
+
 -- 
-1.4.2.gffe87-dirty
+Shawn.
