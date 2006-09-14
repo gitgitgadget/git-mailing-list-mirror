@@ -1,57 +1,57 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH (take 4)] gitweb: Use File::Find::find in git_get_projects_list
-Date: Thu, 14 Sep 2006 22:24:07 +0200
-Organization: At home
-Message-ID: <eecdoe$n4k$1@sea.gmane.org>
-References: <200609140839.56181.jnareb@gmail.com> <200609142134.33725.jnareb@gmail.com> <7vejue2omq.fsf@assigned-by-dhcp.cox.net> <200609142218.59428.jnareb@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Historical kernel repository size
+Date: Thu, 14 Sep 2006 17:23:44 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0609141714010.2627@xanadu.home>
+References: <20060914142249.GK23891@pasky.or.cz>
+ <Pine.LNX.4.64.0609140824580.4388@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Thu Sep 14 22:24:28 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Petr Baudis <pasky@suse.cz>, Thomas Gleixner <tglx@linutronix.de>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 14 23:24:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GNxkv-0001fu-Er
-	for gcvg-git@gmane.org; Thu, 14 Sep 2006 22:24:17 +0200
+	id 1GNygi-0005DE-4y
+	for gcvg-git@gmane.org; Thu, 14 Sep 2006 23:24:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751130AbWINUYN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 14 Sep 2006 16:24:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751143AbWINUYN
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Sep 2006 16:24:13 -0400
-Received: from main.gmane.org ([80.91.229.2]:22739 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751130AbWINUYL (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Sep 2006 16:24:11 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GNxkd-0001bP-W3
-	for git@vger.kernel.org; Thu, 14 Sep 2006 22:24:00 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 14 Sep 2006 22:23:59 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 14 Sep 2006 22:23:59 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751191AbWINVX4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Sep 2006 17:23:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751189AbWINVX4
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Sep 2006 17:23:56 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:29091 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1751193AbWINVX4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Sep 2006 17:23:56 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J5L0013LQ3KX6K0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 14 Sep 2006 17:23:45 -0400 (EDT)
+In-reply-to: <Pine.LNX.4.64.0609140824580.4388@g5.osdl.org>
+X-X-Sender: nico@xanadu.home
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27041>
 
-Jakub Narebski wrote:
+On Thu, 14 Sep 2006, Linus Torvalds wrote:
 
-> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0# skip current directory
+> For better packing, I think I used a larger depth, ie try something like
+> 
+> 	git repack -a -f --depth=50
+> 
+> to get more improvement. For a historical archive that you don't much use, 
+> doign the deeper depth is definitely worth it.
 
-Perhaps it would be better to say "skip $projects_list (top) directory"=
-=2E
-I don't think it is important enough to resend a patch.
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Using a larger window helps too.  It of course has a direct impact on 
+the processing to perform a full repack, but it has no runtime costs 
+when the pack is used.  So I'd suggest adding --window=50 to the above.
+
+[ I made those suggestions in person to Thomas at OLS to which 
+  he replied he'd do it when he'd get back home.   ;-) ]
+
+
+Nicolas
