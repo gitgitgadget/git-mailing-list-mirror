@@ -1,84 +1,93 @@
-From: "Dmitry V. Levin" <ldv@altlinux.org>
-Subject: Re: [PATCH 2/2] Handle invalid argc gently
-Date: Thu, 14 Sep 2006 22:25:39 +0400
-Message-ID: <20060914182539.GA12109@basalt.office.altlinux.org>
-References: <20060914010409.GB20593@nomad.office.altlinux.org> <7vu03b5k0t.fsf@assigned-by-dhcp.cox.net> <20060914013146.GD7044@basalt.office.altlinux.org> <7vpsdz5542.fsf@assigned-by-dhcp.cox.net> <20060914131626.GE6709@basalt.office.altlinux.org> <7virjq4cfj.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: Use File::Find::find in git_get_projects_list
+Date: Thu, 14 Sep 2006 11:32:01 -0700
+Message-ID: <7vbqpi47vi.fsf@assigned-by-dhcp.cox.net>
+References: <200609140839.56181.jnareb@gmail.com>
+	<7v8xkm6gr6.fsf@assigned-by-dhcp.cox.net>
+	<200609140959.04061.jnareb@gmail.com>
+	<7v1wqe6buv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="lrZ03NoBR/3+SXJZ"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 14 20:26:25 2006
+X-From: git-owner@vger.kernel.org Thu Sep 14 20:32:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GNvuR-00036o-GE
-	for gcvg-git@gmane.org; Thu, 14 Sep 2006 20:25:59 +0200
+	id 1GNw0O-0004Fu-1m
+	for gcvg-git@gmane.org; Thu, 14 Sep 2006 20:32:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750919AbWINSZl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Sep 2006 14:25:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750946AbWINSZl
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Sep 2006 14:25:41 -0400
-Received: from mh.altlinux.org ([217.16.24.5]:58579 "EHLO mh.altlinux.org")
-	by vger.kernel.org with ESMTP id S1750919AbWINSZk (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Sep 2006 14:25:40 -0400
-Received: from basalt.office.altlinux.org (localhost.localdomain [127.0.0.1])
-	by mh.altlinux.org (Postfix) with ESMTP
-	id BBA09382CC44; Thu, 14 Sep 2006 22:25:39 +0400 (MSD)
-Received: by basalt.office.altlinux.org (Postfix, from userid 501)
-	id AA0E2B0D93; Thu, 14 Sep 2006 22:25:39 +0400 (MSD)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7virjq4cfj.fsf@assigned-by-dhcp.cox.net>
-X-fingerprint: FE4C 93AB E19A 2E4C CB5D  3E4E 7CAB E6AC 9E35 361E
+	id S1750995AbWINScF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Sep 2006 14:32:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751011AbWINScE
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Sep 2006 14:32:04 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:61431 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1750995AbWINScC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Sep 2006 14:32:02 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060914183201.PQFM18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 14 Sep 2006 14:32:01 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id NJXq1V00Q1kojtg0000000
+	Thu, 14 Sep 2006 14:31:51 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <7v1wqe6buv.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Thu, 14 Sep 2006 02:23:04 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27024>
 
+Junio C Hamano <junkio@cox.net> writes:
 
---lrZ03NoBR/3+SXJZ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Jakub Narebski <jnareb@gmail.com> writes:
+>
+>> Not true. Link to directory is both -d $_ and -l $_, so
+>>
+>> 	return unless (-d $_ || (-l $_ && -d readlink($_)));
+>>
+>> is not needed.
+>
+> I think you mis-read what I said.  I first wondered why you did
+> not say "return unless -d _" and wrote (seemingly more
+> inefficient) "return unless -d $_".  The comment is to clarify
+> why '$' is needed.
+>
+> In other words, after this setup:
+>
+>         $ rm -fr d dl
+>         $ mkdir d
+>         $ ln -s d dl
+>
+> you do not see an output from this:
+>
+>         $ perl -e 'lstat "dl"; print "is-dir\n" if -d _;'
+>
+> but you do from this:
+>
+>         $ perl -e 'lstat "dl"; print "is-dir\n" if -d "dl";'
 
-On Thu, Sep 14, 2006 at 09:53:36AM -0700, Junio C Hamano wrote:
-[...]
-> >> What is the valid reason to do execlp("git", NULL, NULL)?
-> >
-> > Personally I do not plan to execute git this way on regular basis, inde=
-ed. :)
-> >
-> > But argc =3D=3D 0 is allowed, so why should git crash?
->=20
-> Oh, no I was not arguing for making git crash.  I was just
-> trying to learn if there is a valid reason to choose to, or
-> common misconfiguration that causes it to, run with ac =3D=3D 0,
-> since I did not think of any.
+Side note:
 
-Well, the execlp example is somewhat dragged in.
-More common case is execvp:
+While
 
-char *argv[] =3D { NULL };
-execvp("git", argv);
+	return unless -d $_
 
-The argv array may be empty for various reasons, e.g. pointer arithmetic
-mistakes.
+there is definitely more correct than "return unless -d _" which
+is not, it is not the most efficient.  Because you use fast_xxx,
+you know the last stat was lstat so "-d _" would be true if the
+thing you are looking at is a real directory and will be a
+zero-cost operation.  The only case you want to be careful is a
+symlink pointing at a directory, so
 
+	return unless ((-d _) || (-l _ && -d $_))
 
---=20
-ldv
+would be more efficient.
 
---lrZ03NoBR/3+SXJZ
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iD8DBQFFCZ6jfKvmrJ41Nh4RAneBAJ9/PL4ev5lZJIcAu8+BOqzeSwoVzACdGGR6
-mIWlYo9nyZyFaikNbcRIkGk=
-=DVR+
------END PGP SIGNATURE-----
-
---lrZ03NoBR/3+SXJZ--
+I have a strange suspicion that Merlyn will soon join us with
+more expertise if we keep talking about Perl ;-)
