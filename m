@@ -1,105 +1,126 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH (take 3)] gitweb: Use File::Find::find in git_get_projects_list
-Date: Thu, 14 Sep 2006 21:34:33 +0200
-Message-ID: <200609142134.33725.jnareb@gmail.com>
-References: <200609140839.56181.jnareb@gmail.com>
+From: Dave Jones <davej@redhat.com>
+Subject: Re: nightly tarballs of git
+Date: Thu, 14 Sep 2006 15:36:16 -0400
+Message-ID: <20060914193616.GA32735@redhat.com>
+References: <20060914172754.GF8013@us.ibm.com> <20060914175116.GB22279@redhat.com> <7v1wqe45vs.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: Junio Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Sep 14 21:34:26 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Nishanth Aravamudan <nacc@us.ibm.com>
+X-From: git-owner@vger.kernel.org Thu Sep 14 21:36:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GNwye-0007xP-7j
-	for gcvg-git@gmane.org; Thu, 14 Sep 2006 21:34:24 +0200
+	id 1GNx0e-0008Rd-9Y
+	for gcvg-git@gmane.org; Thu, 14 Sep 2006 21:36:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751070AbWINTeN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Sep 2006 15:34:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751073AbWINTeN
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Sep 2006 15:34:13 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:37300 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1751070AbWINTeM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Sep 2006 15:34:12 -0400
-Received: by ug-out-1314.google.com with SMTP id o38so91765ugd
-        for <git@vger.kernel.org>; Thu, 14 Sep 2006 12:34:11 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=skWUosmrPhDUEk7ogrt2/lX2o1DZ5PyhBYIc5QjQxoNSs7P7KPcomj0wOHoEsRQvagGwds7aCNW1xqlbOmWOWhpHeF2ACxT1SePXYR+4785KbIAZ3pB0dt7nPb/qKC+YGSHEdN2GecspOKmtBSrOVA1hROJp4/t9tnXO3yGW+aM=
-Received: by 10.67.103.7 with SMTP id f7mr5010316ugm;
-        Thu, 14 Sep 2006 12:34:11 -0700 (PDT)
-Received: from roke.d-201 ( [193.0.122.19])
-        by mx.gmail.com with ESMTP id y7sm813374ugc.2006.09.14.12.34.10;
-        Thu, 14 Sep 2006 12:34:10 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-In-Reply-To: <200609140839.56181.jnareb@gmail.com>
+	id S1751074AbWINTgX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Sep 2006 15:36:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751073AbWINTgX
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Sep 2006 15:36:23 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:17382 "EHLO mx1.redhat.com")
+	by vger.kernel.org with ESMTP id S1750773AbWINTgW (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Sep 2006 15:36:22 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id k8EJaInR004760;
+	Thu, 14 Sep 2006 15:36:18 -0400
+Received: from pressure.kernelslacker.org (vpn-248-2.boston.redhat.com [10.13.248.2])
+	by int-mx1.corp.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id k8EJaHlD004800;
+	Thu, 14 Sep 2006 15:36:18 -0400
+Received: from pressure.kernelslacker.org (localhost.localdomain [127.0.0.1])
+	by pressure.kernelslacker.org (8.13.8/8.13.8) with ESMTP id k8EJaHKY002353;
+	Thu, 14 Sep 2006 15:36:17 -0400
+Received: (from davej@localhost)
+	by pressure.kernelslacker.org (8.13.8/8.13.8/Submit) id k8EJaGw3002352;
+	Thu, 14 Sep 2006 15:36:16 -0400
+X-Authentication-Warning: pressure.kernelslacker.org: davej set sender to davej@redhat.com using -f
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <7v1wqe45vs.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4.2.2i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27031>
 
-Earlier code to get list of projects when $projects_list is a
-directory (e.g. when it is equal to $projectroot) had a hardcoded flat
-(one level) list of directories.  Allow for projects to be in
-subdirectories also for $projects_list being a directory by using
-File::Find.
+On Thu, Sep 14, 2006 at 12:15:03PM -0700, Junio C Hamano wrote:
+ > Dave Jones <davej@redhat.com> writes:
+ 
+ > > The original clone of the repo was just a straight clone of git://git.kernel.org/pub/scm/git/git.git
+ > 
+ > When the build procesure assigns the version to the generated
+ > git binary, it does these checks and takes the first one:
+ > 
+ >  - Run "git describe" at the top of the source tree.  If it
+ >    returns some version (not an error message), use it.  This
+ >    case should not apply here since we are talking about a
+ >    tarball of a working tree, and it does not have a repository.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Use anonymous subroutine to avoid 
-  Variable "@list" will not stay shared at gitweb.perl line 727.
-warning. Check for the current directory to avoid substr outside 
-string warning.
+On the server this is running on, the returns v1.3.3-g7f7e6ea
 
- gitweb/gitweb.perl |   30 ++++++++++++++++++++----------
- 1 files changed, 20 insertions(+), 10 deletions(-)
+ >  - See if 'version' file exists at the top of the source tree,
+ >    and uses what is recorded there.  This file is placed in the
+ >    resulting tarball by the "make dist" target of the toplevel
+ >    Makefile.
+ >  - Otherwise use DEF_VER hardcoded in GIT-VERSION-GEN script.
+ >    The 1.4.2 series is shipped with DEF_VER set to v1.4.2.GIT,
+ >    so this does not explain why Nashanth sees "1.3.GIT" (or
+ >    "v1.3.GIT", if the original report did not copy it right).
+ > 
+ > I just snarfed your snapshot tarball from a few days ago, and I
+ > do not see any version file there (which indicates that it is
+ > not a product of "make dist").  Interestingly enough DEF_VER is
+ > set to v1.3.GIT in GIT-VERSION-GEN.  This line was changed from
+ > v1.3.GIT to v1.4.GIT with commit 41292dd on June 10th and then
+ > updated to v1.4.2.GIT with commit 5a71682 on August 3rd.
+ > 
+ > So a short conclusion is that the directory you are tarring up
+ > does not have snapshot of my tree.
+ > 
+ > I would like to understand why.  If an automated 'pull' is
+ > failing, that is somewhat worrysome, because I presume you do
+ > not do any development of your own in your snapshot directory
+ > and in that case everything should fast forward.  Even if 'pull'
+ > failed somehow, if it is not reporting its failure, it is even
+ > more worrysome.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index c3544dd..bea75d3 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -715,16 +715,26 @@ sub git_get_projects_list {
- 	if (-d $projects_list) {
- 		# search in directory
- 		my $dir = $projects_list;
--		opendir my ($dh), $dir or return undef;
--		while (my $dir = readdir($dh)) {
--			if (-e "$projectroot/$dir/HEAD") {
--				my $pr = {
--					path => $dir,
--				};
--				push @list, $pr
--			}
--		}
--		closedir($dh);
-+		my $pfxlen = length("$dir");
-+
-+		File::Find::find({
-+			follow_fast => 1, # follow symbolic links
-+			dangling_symlinks => 0, # ignore dangling symlinks, silently
-+			wanted => sub {
-+				# skip current directory
-+				return if (m!^/|.|..$!);
-+				# only directories can be git repositories
-+				return unless (-d $_);
-+
-+				my $subdir = substr($File::Find::name, $pfxlen + 1);
-+				# we check related file in $projectroot
-+				if (-e "$projectroot/$subdir/HEAD") {
-+					push @list, { path => $subdir };
-+					$File::Find::prune = 1;
-+				}
-+			},
-+		}, "$dir");
-+
- 	} elsif (-f $projects_list) {
- 		# read from file(url-encoded):
- 		# 'git%2Fgit.git Linus+Torvalds'
--- 
-1.4.2
+I don't recall ever having done anything at all in the dir that
+is being snapshotted. So the only thing that should be happening
+is the side-effects of the script.  Here it is in its entirity..
+
+DATE=`date +%Y-%m-%d`
+
+PROJ="git"
+cd ~/git-trees
+if [ -d $PROJ ]; then
+  cd $PROJ
+  git pull -n
+else
+  git clone -q git://git.kernel.org/pub/scm/git/git.git
+  cd $PROJ
+fi
+snap=git-snapshot-$(date +"%Y%m%d")
+git-tar-tree HEAD $snap | gzip -9 > $PROJ-$DATE.tar.gz
+mv $PROJ-$DATE.tar.gz ~/sites/www.codemonkey.org.uk/htdocs/projects/git-snapshots/$PROJ/
+rm -f ~/sites/www.codemonkey.org.uk/htdocs/projects/git-snapshots/$PROJ/$PROJ-`date +%Y-%m-%d --date="7 days ago"`.tar.gz
+ln -sf ~/sites/www.codemonkey.org.uk/htdocs/projects/git-snapshots/$PROJ/$PROJ-$DATE.tar.gz ~/sites/www.codemonkey.org.uk/htdocs/projects/git-snapshots/$PROJ/$PROJ-latest.tar.gz
+#git-fsck-objects --full
+
+
+I'll save that broken dir away somewhere, and rerun the script
+(which as you can see above will make it reclone from scratch).
+If you want a copy of the .git of the broken tree I can put that up somewhere too.
+
+Hmm, I just checked the mail cron sent out recently (sadly I don't
+have an archive of older mails).  It does look a bit strange..
+
+got 49be764e948668341034e121fad5cf07ab079bff
+got 415c09ba10a391cec60c939da1722c83df7cd906
+* refs/heads/origin: fast forward to branch 'master' of http://www.kernel.org/pub/scm/git/git
+  from 8a5dbef8ac24bc5a28409d646cf3ff6db0cccb3f to 38529e28a4f465ad5d5f2fa249ca17da680bac5f
+Failed to fetch refs/heads/gb/diffdelta from http://www.kernel.org/pub/scm/git/git.git
+
+Interesting. It looks like my original clone was over http.
+Another reason to reclone over git: I guess.
+
+	Dave
