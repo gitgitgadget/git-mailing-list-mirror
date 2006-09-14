@@ -1,97 +1,82 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: nightly tarballs of git
-Date: Thu, 14 Sep 2006 12:15:03 -0700
-Message-ID: <7v1wqe45vs.fsf@assigned-by-dhcp.cox.net>
-References: <20060914172754.GF8013@us.ibm.com>
-	<20060914175116.GB22279@redhat.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Notes on supporting Git operations in/on partial Working Directories
+Date: Thu, 14 Sep 2006 15:21:19 -0400
+Message-ID: <20060914192119.GC10556@spearce.org>
+References: <4509A7EC.9090805@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Nishanth Aravamudan <nacc@us.ibm.com>
-X-From: git-owner@vger.kernel.org Thu Sep 14 21:15:14 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 14 21:21:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GNwg1-0003vZ-T5
-	for gcvg-git@gmane.org; Thu, 14 Sep 2006 21:15:10 +0200
+	id 1GNwm7-0005Jw-0g
+	for gcvg-git@gmane.org; Thu, 14 Sep 2006 21:21:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750775AbWINTPG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Sep 2006 15:15:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751054AbWINTPF
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Sep 2006 15:15:05 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:25253 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1750775AbWINTPE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Sep 2006 15:15:04 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060914191503.EJZX6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 14 Sep 2006 15:15:03 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id NKEs1V00C1kojtg0000000
-	Thu, 14 Sep 2006 15:14:53 -0400
-To: Dave Jones <davej@redhat.com>
-In-Reply-To: <20060914175116.GB22279@redhat.com> (Dave Jones's message of
-	"Thu, 14 Sep 2006 13:51:16 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751062AbWINTVY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Sep 2006 15:21:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751063AbWINTVY
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Sep 2006 15:21:24 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:37053 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751061AbWINTVX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Sep 2006 15:21:23 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GNwlt-0002Rb-HD; Thu, 14 Sep 2006 15:21:13 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 9DA5F20FB1F; Thu, 14 Sep 2006 15:21:19 -0400 (EDT)
+To: A Large Angry SCM <gitzilla@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <4509A7EC.9090805@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27029>
 
-Dave Jones <davej@redhat.com> writes:
+A Large Angry SCM <gitzilla@gmail.com> wrote:
+> The contents of the index file still reflect the full tree but flag each
+> object (file or symlink) separately as part of the checkout or not. The
+> WD_Prefix string is so that a partial checkout consisting of only
+> objects somewhere in the a/b/c/d/ tree can be found in the working
+> directory without the a/b/c/d/ prefix to the path of the object.
 
-> On Thu, Sep 14, 2006 at 10:27:54AM -0700, Nishanth Aravamudan wrote:
->  > Hi Dave,
->  > 
->  > For simplicities sake when I was running Debian Sarge on a server here,
->  > I was using your nightly tarballs of git to build a fresh up-to-date
->  > version on a regular basis. I noticed though, that the tarballs result
->  > in gits with a version of 1.3.GIT, while the git repository is at
->  > 1.4.2.1. Is that expected?
->
-> No, it isn't. (at least by me).
-> What the snapshotting script does when cron runs it is just a 'git pull'
-> on a repo that was cloned a while back when I first set up the snapshotting
-> script.  I could change it to do a fresh clone each time it runs, but
-> that seems somewhat wasteful when most of the time there's nothing new to pull.
->
-> gitsters, any ideas what could be going wrong here ?
-> The original clone of the repo was just a straight clone of git://git.kernel.org/pub/scm/git/git.git
+Why not just load a partial index?
 
-When the build procesure assigns the version to the generated
-git binary, it does these checks and takes the first one:
+If we only want "a/b/c/d" subtree then only load that into the index.
+At git-write-tree time return the new root tree by loading the tree
+of the current `HEAD` commit and walking down to a/b/c/d, updating
+that with the tree from the index, then walking back updating each
+node you recursed down through.  Finally output the new root tree.
 
- - Run "git describe" at the top of the source tree.  If it
-   returns some version (not an error message), use it.  This
-   case should not apply here since we are talking about a
-   tarball of a working tree, and it does not have a repository.
+The advantage is that if you have a subtree checked out you aren't
+working with the entire massive index.
 
- - See if 'version' file exists at the top of the source tree,
-   and uses what is recorded there.  This file is placed in the
-   resulting tarball by the "make dist" target of the toplevel
-   Makefile.
+But how does this let the user checkout and work on the 10 top
+level directories at once and perform an atomic commit to all
+of them, but not checkout the other 100+ top level directories?
+As I recall this was desired in the Mozilla project for example.
+ 
+> [*3*] Possibly split the index up by directory and store the parts in
+> the working directory. An index "distributed" in this way would have
+> a "natural" cache-tree built in and (finally) be able support empty
+> directories.
 
- - Otherwise use DEF_VER hardcoded in GIT-VERSION-GEN script.
-   The 1.4.2 series is shipped with DEF_VER set to v1.4.2.GIT,
-   so this does not explain why Nashanth sees "1.3.GIT" (or
-   "v1.3.GIT", if the original report did not copy it right).
+Please, no.  On a project with a large number of directories
+operations like git-write-tree would take a longer time to scan the
+index and generate the new trees.  I unfortunately work on such
+projects as its common for Java applications to be very deeply
+nested and large projects have a *lot* of directories.
 
-I just snarfed your snapshot tarball from a few days ago, and I
-do not see any version file there (which indicates that it is
-not a product of "make dist").  Interestingly enough DEF_VER is
-set to v1.3.GIT in GIT-VERSION-GEN.  This line was changed from
-v1.3.GIT to v1.4.GIT with commit 41292dd on June 10th and then
-updated to v1.4.2.GIT with commit 5a71682 on August 3rd.
-
-So a short conclusion is that the directory you are tarring up
-does not have snapshot of my tree.
-
-I would like to understand why.  If an automated 'pull' is
-failing, that is somewhat worrysome, because I presume you do
-not do any development of your own in your snapshot directory
-and in that case everything should fast forward.  Even if 'pull'
-failed somehow, if it is not reporting its failure, it is even
-more worrysome.
+-- 
+Shawn.
