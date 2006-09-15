@@ -1,76 +1,73 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Teach "git checkout" to use git-show-ref
-Date: Fri, 15 Sep 2006 14:56:55 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609151455150.4388@g5.osdl.org>
-References: <Pine.LNX.4.64.0609151108560.4388@g5.osdl.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Teach "git checkout" to use git-show-ref
+Date: Sat, 16 Sep 2006 00:11:38 +0200
+Organization: At home
+Message-ID: <eef8dq$nbc$1@sea.gmane.org>
+References: <Pine.LNX.4.64.0609151108560.4388@g5.osdl.org> <Pine.LNX.4.64.0609151455150.4388@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Fri Sep 15 23:57:12 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Sat Sep 16 00:11:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOLgL-0000et-TU
-	for gcvg-git@gmane.org; Fri, 15 Sep 2006 23:57:10 +0200
+	id 1GOLuM-0003MM-N8
+	for gcvg-git@gmane.org; Sat, 16 Sep 2006 00:11:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932303AbWIOV5E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Sep 2006 17:57:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932304AbWIOV5E
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 17:57:04 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:37274 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932303AbWIOV5B (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Sep 2006 17:57:01 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8FLuunW012570
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 15 Sep 2006 14:56:56 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8FLuuXs018050;
-	Fri, 15 Sep 2006 14:56:56 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.64.0609151108560.4388@g5.osdl.org>
-X-Spam-Status: No, hits=-0.51 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.148 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932315AbWIOWLf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 15 Sep 2006 18:11:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932314AbWIOWLf
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 18:11:35 -0400
+Received: from main.gmane.org ([80.91.229.2]:63198 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932313AbWIOWLf (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Sep 2006 18:11:35 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GOLuC-0003JA-Vx
+	for git@vger.kernel.org; Sat, 16 Sep 2006 00:11:29 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 16 Sep 2006 00:11:28 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 16 Sep 2006 00:11:28 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27104>
 
+Linus Torvalds wrote:
 
-That way, it doesn't care how the refs are stored any more
+> @@ -51,7 +51,7 @@ while [ "$#" !=3D "0" ]; do
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0fi
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0new=3D"$rev"
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0new_name=3D"$arg^0"
+> -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+if [ -f "$GIT_DIR/refs/heads/$arg" ]; then
+> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+if git-show-ref --verify --quiet -- "refs/heads/$arg" ]; then
+  +                       if git-show-ref --verify --quiet -- "refs/hea=
+ds/$arg"; then
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0=A0=A0branch=3D"$arg"
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0fi
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0elif rev=3D$(git-rev-=
+parse --verify "$arg^{tree}" 2>/dev/null)
 
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
+There is leftover ] before ; in if.
 
-Just as an example of how to use git-show-ref rather than knowing about 
-"$GIT_DIR/refs/..." paths.
-
-This basically replaces my much hackier version that is in the "lt/refs" 
-branch, but can go into the master branch independently of the 
-refs-packing work.
-
-diff --git a/git-checkout.sh b/git-checkout.sh
-index 580a9e8..6e4c535 100755
---- a/git-checkout.sh
-+++ b/git-checkout.sh
-@@ -22,7 +22,7 @@ while [ "$#" != "0" ]; do
- 		shift
- 		[ -z "$newbranch" ] &&
- 			die "git checkout: -b needs a branch name"
--		[ -e "$GIT_DIR/refs/heads/$newbranch" ] &&
-+		git-show-ref --verify --quiet -- "refs/heads/$newbranch" &&
- 			die "git checkout: branch $newbranch already exists"
- 		git-check-ref-format "heads/$newbranch" ||
- 			die "git checkout: we do not like '$newbranch' as a branch name."
-@@ -51,7 +51,7 @@ while [ "$#" != "0" ]; do
- 			fi
- 			new="$rev"
- 			new_name="$arg^0"
--			if [ -f "$GIT_DIR/refs/heads/$arg" ]; then
-+			if git-show-ref --verify --quiet -- "refs/heads/$arg" ]; then
- 				branch="$arg"
- 			fi
- 		elif rev=$(git-rev-parse --verify "$arg^{tree}" 2>/dev/null)
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
