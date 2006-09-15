@@ -1,76 +1,84 @@
-From: Auke Kok <auke-jan.h.kok@intel.com>
-Subject: stgit: cannot push a patch - Python trace dump
-Date: Thu, 14 Sep 2006 22:07:48 -0700
-Message-ID: <450A3524.5040403@intel.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH (take 2)] gitweb: Do not parse refs by hand, use git-peek-remote instead
+Date: Thu, 14 Sep 2006 23:15:31 -0700
+Message-ID: <7v4pv91wqk.fsf@assigned-by-dhcp.cox.net>
+References: <200609142327.23059.jnareb@gmail.com>
+	<7v8xkm2gfs.fsf@assigned-by-dhcp.cox.net>
+	<200609150343.28334.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Sep 15 07:10:54 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 15 08:15:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GO5yT-00065v-8V
-	for gcvg-git@gmane.org; Fri, 15 Sep 2006 07:10:49 +0200
+	id 1GO6zI-0007dF-3I
+	for gcvg-git@gmane.org; Fri, 15 Sep 2006 08:15:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750706AbWIOFKa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Sep 2006 01:10:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750707AbWIOFK3
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 01:10:29 -0400
-Received: from mga03.intel.com ([143.182.124.21]:14754 "EHLO mga03.intel.com")
-	by vger.kernel.org with ESMTP id S1750706AbWIOFK2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Sep 2006 01:10:28 -0400
-Received: from azsmga001.ch.intel.com ([10.2.17.19])
-  by mga03.intel.com with ESMTP; 14 Sep 2006 22:10:27 -0700
-Received: from saspjf01.jf.intel.com (HELO ahkok-mobl.jf.intel.com) ([10.24.220.9])
-  by azsmga001.ch.intel.com with ESMTP; 14 Sep 2006 22:09:28 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: i="4.09,167,1157353200"; 
-   d="scan'208"; a="116843186:sNHT639716000"
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by ahkok-mobl.jf.intel.com (Postfix) with ESMTP id 5170A3FF45
-	for <git@vger.kernel.org>; Thu, 14 Sep 2006 22:07:48 -0700 (PDT)
-User-Agent: Mail/News 1.5.0.5 (X11/20060728)
-To: git@vger.kernel.org
+	id S1750805AbWIOGPd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Sep 2006 02:15:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750803AbWIOGPd
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 02:15:33 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:20456 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1750805AbWIOGPc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Sep 2006 02:15:32 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060915061531.CJBN21457.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 15 Sep 2006 02:15:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id NWFY1V00i1kojtg0000000
+	Fri, 15 Sep 2006 02:15:33 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200609150343.28334.jnareb@gmail.com> (Jakub Narebski's message
+	of "Fri, 15 Sep 2006 03:43:28 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27061>
 
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Hi all,
+> This is in response to Linus work on packed refs. Additionally it
+> makes gitweb work with symrefs, too.
+>
+> Do not parse refs by hand, using File::Find and reading individual
+> heads to get hash of reference, but use git-peek-remote output
+> instead.
 
-I'm preparing patches for upstream and am haunted by an apparent patch breaking
-stg. The problem appears to be one or more of my patches breaking a push:
+Looks nicer.  Will apply.
 
-$ stg push
-Traceback (most recent call last):
-   File "/usr/bin/stg", line 43, in ?
-     main()
-   File "/usr/lib/python2.4/site-packages/stgit/main.py", line 255, in main
-     command.func(parser, options, args)
-   File "/usr/lib/python2.4/site-packages/stgit/commands/push.py", line 101, in
-func
-     push_patches(patches, options.merged)
-   File "/usr/lib/python2.4/site-packages/stgit/commands/common.py", line 160,
-in push_patches
-     forwarded = crt_series.forward_patches(patches)
-   File "/usr/lib/python2.4/site-packages/stgit/stack.py", line 789, in
-forward_patches
-     committer_email = committer_email)
-   File "/usr/lib/python2.4/site-packages/stgit/git.py", line 439, in commit
-     if message[-1:] != '\n':
-TypeError: unsubscriptable object
+Now, once we start doing this, it may make sense to rethink how
+this function and git_get_references functions are used.  I
+think
 
+	git grep -n -e '^sub ' \
+        	-e git_get_references \
+                -e git_get_refs_list gitweb/gitweb.perl
 
-I've been abusing stg by leaving the commit messages empty so I assume that
-that's the cause here, or related to the problem.
+would be instructive how wasteful the current code is.
 
-This happens with today's stg as well as stg-0.10
+get_refs_list is called _TWICE_ in git_summary and worse yet
+very late in the function, after calling git_get_references that
+could already have done what the function does (by the way,
+git_get_references already knows how to use peek-remote output
+but for some reason it uses ls-remote -- I think you can safely
+rewrite it to use peek-remote).  So you end up doing peek-remote
+three times to draw the summary page.
 
-After scraping all my patches out manually and adding meaningfull (non-empty) 
-commit messages I seem to be able to push and pop them all again.
+git_get_references are called from almost everywhere that shows
+the list of commits, which is understandable because we would
+want to see those markers in the list.
 
-Cheers,
+I very much suspect that you can use git_get_refs_list to return
+a hash and a sorted list at the same time from the same input
+and make git_summary to do with just a single call to it, and
+get rid of git_get_references with a little bit of restructuring
+of the caller.
 
-Auke
+Hmm?
