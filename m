@@ -1,71 +1,79 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/3] gitweb: Allow for href() to be used for projectless links
-Date: Thu, 14 Sep 2006 23:17:20 -0700
-Message-ID: <7vzmd1zma7.fsf@assigned-by-dhcp.cox.net>
-References: <200609150453.42231.jnareb@gmail.com>
-	<200609150457.16924.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH (take 2)] gitweb: Do not parse refs by hand, use git-peek-remote instead
+Date: Fri, 15 Sep 2006 09:14:23 +0200
+Organization: At home
+Message-ID: <eedjrj$tja$1@sea.gmane.org>
+References: <200609142327.23059.jnareb@gmail.com> <7v8xkm2gfs.fsf@assigned-by-dhcp.cox.net> <200609150343.28334.jnareb@gmail.com> <7v4pv91wqk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 15 08:17:29 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Fri Sep 15 09:14:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GO70u-0007tG-SO
-	for gcvg-git@gmane.org; Fri, 15 Sep 2006 08:17:25 +0200
+	id 1GO7uF-0000h6-80
+	for gcvg-git@gmane.org; Fri, 15 Sep 2006 09:14:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750803AbWIOGRW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Sep 2006 02:17:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750808AbWIOGRW
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 02:17:22 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:11676 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1750803AbWIOGRV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Sep 2006 02:17:21 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060915061720.PRWP13992.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 15 Sep 2006 02:17:20 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id NWHN1V0061kojtg0000000
-	Fri, 15 Sep 2006 02:17:22 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200609150457.16924.jnareb@gmail.com> (Jakub Narebski's message
-	of "Fri, 15 Sep 2006 04:57:16 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750961AbWIOHOc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Sep 2006 03:14:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750964AbWIOHOc
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 03:14:32 -0400
+Received: from main.gmane.org ([80.91.229.2]:28133 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750960AbWIOHOb (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Sep 2006 03:14:31 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GO7u6-0000f1-2j
+	for git@vger.kernel.org; Fri, 15 Sep 2006 09:14:26 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 15 Sep 2006 09:14:26 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 15 Sep 2006 09:14:26 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27063>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Junio C Hamano wrote:
 
-> Change adding project to params if $params{"project"} is false
-> to adding project to params if it not exist. It allows for href()
-> to be used for projectless links by using "project=>undef" as
-> argument, while still adding project to params by default
-> in the most common case.
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> This is in response to Linus work on packed refs. Additionally it
+>> makes gitweb work with symrefs, too.
+>>
+>> Do not parse refs by hand, using File::Find and reading individual
+>> heads to get hash of reference, but use git-peek-remote output
+>> instead.
+> 
+> Looks nicer.  Will apply.
+> 
+> Now, once we start doing this, it may make sense to rethink how
+> this function and git_get_references functions are used.
+[...]
+> I very much suspect that you can use git_get_refs_list to return
+> a hash and a sorted list at the same time from the same input
+> and make git_summary to do with just a single call to it, and
+> get rid of git_get_references with a little bit of restructuring
+> of the caller.
 
-This did not parse very well, at least for me.
+It can be done. Well, we could also collapse git_get_references and
+git_get_refs_list into one subroutine, but it would be slightly slower
+than git_get_references.
 
-> @@ -1304,9 +1305,11 @@ sub git_footer_html {
->  		if (defined $descr) {
->  			print "<div class=\"page_footer_text\">" . esc_html($descr) . "</div>\n";
->  		}
-> -		print $cgi->a({-href => href(action=>"rss"), -class => "rss_logo"}, "RSS") . "\n";
-> +		print $cgi->a({-href => href(action=>"rss"),
-> +		              -class => "rss_logo"}, "RSS") . "\n";
->  	} else {
-> -		print $cgi->a({-href => href(action=>"opml"), -class => "rss_logo"}, "OPML") . "\n";
-> +		print $cgi->a({-href => href(project=>undef, action=>"opml"),
-> +		              -class => "rss_logo"}, "OPML") . "\n";
->  	}
->  	print "</div>\n" .
->  	      "</body>\n" .
-
-Argh.  While I very much welcome folding of the long lines, I'd
-rather see a separate patch to clean up other loooooooong lines
-the current gitweb code has.
+But, if we change git_get_refs_list to do also work of git_get_references,
+we should also change git_get_references to not use info/refs file at all
+(it can, and usually for unknown reasons is stale) but always use
+git-peek-remote, for consistency.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
