@@ -1,55 +1,97 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH (take 2)] gitweb: Do not parse refs by hand, use git-peek-remote instead
-Date: Fri, 15 Sep 2006 00:48:58 -0700
-Message-ID: <7vvenpzi1h.fsf@assigned-by-dhcp.cox.net>
-References: <200609142327.23059.jnareb@gmail.com>
-	<7v8xkm2gfs.fsf@assigned-by-dhcp.cox.net>
-	<200609150343.28334.jnareb@gmail.com>
-	<7v4pv91wqk.fsf@assigned-by-dhcp.cox.net> <eedjrj$tja$1@sea.gmane.org>
+From: "Rajkumar S" <rajkumars+git@gmail.com>
+Subject: Tracking a branch using StGIT
+Date: Fri, 15 Sep 2006 13:50:45 +0530
+Message-ID: <64de5c8b0609150120h3aeee6dcv976da13134396654@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 15 09:49:09 2006
+X-From: git-owner@vger.kernel.org Fri Sep 15 10:20:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GO8Rb-0007po-QF
-	for gcvg-git@gmane.org; Fri, 15 Sep 2006 09:49:04 +0200
+	id 1GO8wN-0005wL-TP
+	for gcvg-git@gmane.org; Fri, 15 Sep 2006 10:20:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751391AbWIOHtB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Sep 2006 03:49:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751392AbWIOHtA
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 03:49:00 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:45281 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751391AbWIOHtA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Sep 2006 03:49:00 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060915074859.WWBQ22977.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 15 Sep 2006 03:48:59 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id NXp01V00S1kojtg0000000
-	Fri, 15 Sep 2006 03:49:01 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <eedjrj$tja$1@sea.gmane.org> (Jakub Narebski's message of "Fri,
-	15 Sep 2006 09:14:23 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750734AbWIOIUr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Sep 2006 04:20:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750736AbWIOIUr
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 04:20:47 -0400
+Received: from nz-out-0102.google.com ([64.233.162.192]:43349 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1750733AbWIOIUq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Sep 2006 04:20:46 -0400
+Received: by nz-out-0102.google.com with SMTP id n1so1323456nzf
+        for <git@vger.kernel.org>; Fri, 15 Sep 2006 01:20:46 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:sender:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=cWM712H25F8g6RD+Nnpv3MXld3M3zdAmyrFA5f4QppQjq0YLA58t4nwJ3BqUfucahbDPNj6wXxg3FJDsDwH9DNeUlPIX0jFF0UJfi62ca4RMbyVx99DfcDEuIBBBKsqgLT/P2syYshRGmUhwKAEdYeCQ5jeVceL4KVzI0qijGLQ=
+Received: by 10.65.59.17 with SMTP id m17mr11450498qbk;
+        Fri, 15 Sep 2006 01:20:46 -0700 (PDT)
+Received: by 10.65.248.1 with HTTP; Fri, 15 Sep 2006 01:20:45 -0700 (PDT)
+To: catalin.marinas@gmail.com
+Content-Disposition: inline
+X-Google-Sender-Auth: 5b5b5750d6b2b080
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27067>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Hi,
 
-> But, if we change git_get_refs_list to do also work of git_get_references,
-> we should also change git_get_references to not use info/refs file at all
-> (it can, and usually for unknown reasons is stale) but always use
-> git-peek-remote, for consistency.
+I am using StGIT to track a branch of a remote git repository
+(actually a remote cvs repository, which I am tracking cvsimport)
 
-Yes that would make sense.  A repository served by gitweb does
-not necessarily has to serve objects over http transport, so it
-is nicer not to require info/refs to even exist or up to date.
+The remote repository git branch show:
+  Package-Reorg-2005
+  RELENG_1
+  avendor
+* master
+  origin
+
+My local repository has:
+
+root@beastie:# stg branch -l
+Available branches:
+> s     MyBranch            | clone of "RELENG_1"
+        Package-Reorg-2005  |
+  s     RELENG_1            |
+        avendor             |
+        master              |
+        origin              |
+
+The .git/remotes/origin is
+URL: /usr/local/pfSense/upstream/pfSense/.git
+Pull: refs/heads/master:refs/heads/origin
+Pull: refs/heads/avendor:refs/heads/avendor
+Pull: refs/heads/Package-Reorg-2005:refs/heads/Package-Reorg-2005
+Pull: refs/heads/RELENG_1:refs/heads/RELENG_1
+
+My requirement is to track RELENG_1 branch with StGIT while
+maintaining my own patches. but when I do a stg pull the messages are:
+
+Popping all applied patches... done
+Pulling from "origin"...
+Trying really trivial in-index merge... fatal: Merge requires
+file-level merging Nope. Merging HEAD with
+c0a06b86b8431293214f5eb18e49fcb8117c6070 Merging:
+997e28966d7b7964562232628cc4f64dccbead9e Execute after commands via sh
+&
+c0a06b86b8431293214f5eb18e49fcb8117c6070 Execute after commands via sh &
+found 1 common ancestor(s):
+1b08ecedad1e6a7199f12d1fad97373587c85454 Minor nitpick.  <br> after
+firmware branch select box
+CONFLICT (add/add): File usr/local/www/status_filter_reload.php added
+non-identically in both branches. Adding as
+usr/local/www/status_filter_reload.php~HEAD and
+usr/local/www/status_filter_reload.php~c0a06b86b8431293214f5eb18e49fcb8117c6070
+instead.
+<snip>
+
+It seems StGIT is trying to merge the origin branch from remote to
+RELENG_1 of local. Is there a way to get RELENG_1 of remote to merge
+with MyBranch (clone of "RELENG_1") of local?
+
+raj
