@@ -1,66 +1,55 @@
-From: Markus Schiltknecht <markus@bluegap.ch>
-Subject: Re: cvs import
-Date: Fri, 15 Sep 2006 09:37:02 +0200
-Message-ID: <450A581E.2050509@bluegap.ch>
-References: <45084400.1090906@bluegap.ch> <9e4733910609131201q7f583029r72dac66cd0dd098f@mail.gmail.com> <46a038f90609131341se42b2dcne73c017cf757d13a@mail.gmail.com> <450872AE.5050409@bluegap.ch> <9e4733910609131438n686b6d72u4d5799533c7473d7@mail.gmail.com> <4508EA78.5030001@alum.mit.edu> <20060914155003.GB9657@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH (take 2)] gitweb: Do not parse refs by hand, use git-peek-remote instead
+Date: Fri, 15 Sep 2006 00:48:58 -0700
+Message-ID: <7vvenpzi1h.fsf@assigned-by-dhcp.cox.net>
+References: <200609142327.23059.jnareb@gmail.com>
+	<7v8xkm2gfs.fsf@assigned-by-dhcp.cox.net>
+	<200609150343.28334.jnareb@gmail.com>
+	<7v4pv91wqk.fsf@assigned-by-dhcp.cox.net> <eedjrj$tja$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Jon Smirl <jonsmirl@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	monotone-devel@nongnu.org, dev@cvs2svn.tigris.org
-X-From: git-owner@vger.kernel.org Fri Sep 15 09:37:17 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 15 09:49:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GO8GB-00059I-AG
-	for gcvg-git@gmane.org; Fri, 15 Sep 2006 09:37:15 +0200
+	id 1GO8Rb-0007po-QF
+	for gcvg-git@gmane.org; Fri, 15 Sep 2006 09:49:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751203AbWIOHhL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Sep 2006 03:37:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751260AbWIOHhK
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 03:37:10 -0400
-Received: from ns1.bugaboo.mu ([213.133.111.57]:60308 "EHLO bugaboo.mu")
-	by vger.kernel.org with ESMTP id S1751203AbWIOHhJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Sep 2006 03:37:09 -0400
-Received: from [192.168.0.242] (berlin.programmfabrik.de [::ffff:213.221.101.147])
-  (AUTH: CRAM-MD5 markus@bluegap.ch)
-  by bugaboo.mu with esmtp; Fri, 15 Sep 2006 09:37:07 +0200
-  id 02804676.450A5823.00004D48
-User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20060914155003.GB9657@spearce.org>
+	id S1751391AbWIOHtB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Sep 2006 03:49:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751392AbWIOHtA
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 03:49:00 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:45281 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751391AbWIOHtA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Sep 2006 03:49:00 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060915074859.WWBQ22977.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 15 Sep 2006 03:48:59 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id NXp01V00S1kojtg0000000
+	Fri, 15 Sep 2006 03:49:01 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <eedjrj$tja$1@sea.gmane.org> (Jakub Narebski's message of "Fri,
+	15 Sep 2006 09:14:23 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27066>
 
-Hi,
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Shawn Pearce wrote:
-> I don't know how the Monotone guys feel about it but I think Git
-> is happy with the data in any order, just so long as the dependency
-> chains aren't fed out of order.  Which I think nearly all changeset
-> based SCMs would have an issue with.  So we should be just fine
-> with the current chronological order produced by cvs2svn.
+> But, if we change git_get_refs_list to do also work of git_get_references,
+> we should also change git_get_references to not use info/refs file at all
+> (it can, and usually for unknown reasons is stale) but always use
+> git-peek-remote, for consistency.
 
-I'd vote for splitting into file data (and delta / patches) import and 
-metadata import (author, changelog, DAG).
-
-Monotone would be happiest if the file data were sent one file after 
-another and (inside each file) in the order of each file's single 
-history. That guarantees good import performance for monotone. I imagine 
-it's about the same for git. And if you have to somehow cache the files 
-anyway, subversion will benefit, too. (Well, at least the cache will 
-thank us with good performance).
-
-After all file data has been delivered, the metadata can be delivered. 
-As neigther monotone nor git care much if they are chronological across 
-branches, I'd vote for doing it that way.
-
-Regards
-
-Markus
+Yes that would make sense.  A repository served by gitweb does
+not necessarily has to serve objects over http transport, so it
+is nicer not to require info/refs to even exist or up to date.
