@@ -1,69 +1,57 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Add "git show-ref" builtin command
-Date: Fri, 15 Sep 2006 23:24:56 +0200
-Organization: At home
-Message-ID: <eef5m8$euj$1@sea.gmane.org>
-References: <Pine.LNX.4.64.0609151108560.4388@g5.osdl.org> <7vmz90g80m.fsf@assigned-by-dhcp.cox.net>
+From: Catalin Marinas <catalin.marinas@arm.com>
+Subject: Re: stg pop/push -a nitpick: not handling deleted files
+Date: Fri, 15 Sep 2006 22:41:09 +0100
+Message-ID: <tnxzmd03j0q.fsf@arm.com>
+References: <450AE0AC.7060806@intel.com>
+Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Fri Sep 15 23:25:13 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 15 23:41:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOLBB-0003Da-R5
-	for gcvg-git@gmane.org; Fri, 15 Sep 2006 23:24:58 +0200
+	id 1GOLR9-0006Cn-T8
+	for gcvg-git@gmane.org; Fri, 15 Sep 2006 23:41:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932277AbWIOVYo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 15 Sep 2006 17:24:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932278AbWIOVYn
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 17:24:43 -0400
-Received: from main.gmane.org ([80.91.229.2]:60318 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932277AbWIOVYm (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Sep 2006 17:24:42 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GOLAl-00039f-LD
-	for git@vger.kernel.org; Fri, 15 Sep 2006 23:24:31 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 15 Sep 2006 23:24:31 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 15 Sep 2006 23:24:31 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S932294AbWIOVlW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Sep 2006 17:41:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932295AbWIOVlW
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 17:41:22 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:26868 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S932294AbWIOVlV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Sep 2006 17:41:21 -0400
+Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.255.63])
+	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id k8FLfFvs003326;
+	Fri, 15 Sep 2006 22:41:15 +0100 (BST)
+Received: from localhost.localdomain ([10.1.255.211]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
+	 Fri, 15 Sep 2006 22:41:14 +0100
+To: Auke Kok <auke-jan.h.kok@intel.com>
+In-Reply-To: <450AE0AC.7060806@intel.com> (Auke Kok's message of "Fri, 15
+ Sep 2006 10:19:40 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 15 Sep 2006 21:41:14.0539 (UTC) FILETIME=[AB2037B0:01C6D90F]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27102>
 
-Junio C Hamano wrote:
+Auke Kok <auke-jan.h.kok@intel.com> wrote:
+> minor nitpick when working with a patch that deletes a file: stg does
+> not handle the 'abandoned' file when popping all patches off -
+> essentially it would have to put the file back over an abandoned file.
+[...]
+> $ stg pop -a
+> Popping "all_git_versions.patch" - "all_copyright_update.patch"
+> patches...fatal: Untracked working tree file
+> 'drivers/net/e1000/LICENSE' would be overwritten by merge.
+> stg pop: git-read-tree failed (local changes maybe?)
 
-> +<format>::
-> +=A0=A0=A0=A0=A0=A0=A0A string that interpolates `%(fieldname)` from =
-the
-> +=A0=A0=A0=A0=A0=A0=A0object pointed at by a ref being shown. =A0If `=
-fieldname`
-> +=A0=A0=A0=A0=A0=A0=A0is prefixed with an asterisk (`*`) and the ref =
-points
-> +=A0=A0=A0=A0=A0=A0=A0at a tag object, the value for the field in the=
- object
-> +=A0=A0=A0=A0=A0=A0=A0tag refers is used. =A0When unspecified, defaul=
-ts to
-> +=A0=A0=A0=A0=A0=A0=A0`%(refname)`.
+I don't think it's an StGIT-specific issue, git-read-tree failed to
+switch the working tree from one commit to another because a file
+would be overwritten. It is probably safer to fail in this situation.
 
-Wouldn't it be better to be able to use (or be able to enable, like ech=
-o -e
-option) interpretation of the  backslash-escaped characters, like=20
-\t, \n, \0?
-
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+-- 
+Catalin
