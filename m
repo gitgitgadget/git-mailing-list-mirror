@@ -1,39 +1,39 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 1/3] gitweb: Add git_project_index for generating index.aux
-Date: Fri, 15 Sep 2006 04:56:03 +0200
-Message-ID: <200609150456.03972.jnareb@gmail.com>
+Subject: [PATCH 3/3] gitweb: Add link to "project_index" view to "project_list" page
+Date: Fri, 15 Sep 2006 04:59:27 +0200
+Message-ID: <200609150459.27708.jnareb@gmail.com>
 References: <200609150453.42231.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Sep 15 04:59:54 2006
+X-From: git-owner@vger.kernel.org Fri Sep 15 04:59:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GO3vi-0007mF-T5
-	for gcvg-git@gmane.org; Fri, 15 Sep 2006 04:59:51 +0200
+	id 1GO3vk-0007mF-II
+	for gcvg-git@gmane.org; Fri, 15 Sep 2006 04:59:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932178AbWIOC7P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Sep 2006 22:59:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751469AbWIOC7P
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Sep 2006 22:59:15 -0400
+	id S1751468AbWIOC7S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Sep 2006 22:59:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932180AbWIOC7R
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Sep 2006 22:59:17 -0400
 Received: from ug-out-1314.google.com ([66.249.92.175]:28540 "EHLO
 	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1751467AbWIOC7O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Sep 2006 22:59:14 -0400
+	id S1751470AbWIOC7P (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Sep 2006 22:59:15 -0400
 Received: by ug-out-1314.google.com with SMTP id o38so121425ugd
-        for <git@vger.kernel.org>; Thu, 14 Sep 2006 19:59:13 -0700 (PDT)
+        for <git@vger.kernel.org>; Thu, 14 Sep 2006 19:59:15 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=nfSaiAMb6k/gQIpcLUyRvauwKEva1kHRChqh4+V0tblhEWCNKUyBzg9RasBdzvYRvbau14Ag2IavlZPLn5kvQZ183yFS+8TLPaIQqzLDKygJ+HU8BfUrwlgImNY7KreTroTpMnDkGnk+JzOTXwu4JksyQYMXF1mBHrRvL5pOTX0=
-Received: by 10.67.103.7 with SMTP id f7mr5196564ugm;
-        Thu, 14 Sep 2006 19:59:13 -0700 (PDT)
+        b=S1vavpdEbLd6LU3Ngv5J7ERd3BXBWqPaBaFxDA7wCKw8UteVh+6aNvTf4bLHJnno1DN482rLJM8hIgNj26fatfkabhkQYGtpnTDnB0Q8o3E7CQKqpPSyuxePLzyGtC43AIbZ7/DTaopI1WYNXEBQfjLhEdb593kOZAEZ21s0isk=
+Received: by 10.66.220.17 with SMTP id s17mr5197924ugg;
+        Thu, 14 Sep 2006 19:59:14 -0700 (PDT)
 Received: from roke.d-201 ( [193.0.122.19])
-        by mx.gmail.com with ESMTP id b23sm1017606ugd.2006.09.14.19.59.12;
-        Thu, 14 Sep 2006 19:59:13 -0700 (PDT)
+        by mx.gmail.com with ESMTP id b23sm1017606ugd.2006.09.14.19.59.14;
+        Thu, 14 Sep 2006 19:59:14 -0700 (PDT)
 To: git@vger.kernel.org
 User-Agent: KMail/1.9.3
 In-Reply-To: <200609150453.42231.jnareb@gmail.com>
@@ -41,64 +41,51 @@ Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27057>
 
-Add git_project_index, which generates index.aux file that can be used
-as a source of projects list, instead of generating projects list from
-a directory.  Using file as a source of projects list allows for some
-projects to be not present in gitweb main (project_list) page, and/or
-correct project owner info. And is probably faster.
+Add link to "project_index" view as [TXT] beside link to "opml" view,
+(which is marked by [OPML]) to "project_list" page.
 
-Additionally it can be used to get the list of all available repositories
-for scripts (in easily parseable form).
+While at it add alternate links for "opml" and "project_list" to HTML
+header for "project_list" view.
 
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
- gitweb/gitweb.perl |   25 +++++++++++++++++++++++++
- 1 files changed, 25 insertions(+), 0 deletions(-)
+In the future we might want to change appereance of [TXT] link
+to "project_index" view (e.g. green background instead of orange,
+smaller width).
+
+ gitweb/gitweb.perl |   11 ++++++++++-
+ 1 files changed, 10 insertions(+), 1 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index b4a890b..7dbcb88 100755
+index e900713..1f26365 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -296,6 +296,7 @@ my %actions = (
- 	# those below don't need $project
- 	"opml" => \&git_opml,
- 	"project_list" => \&git_project_list,
-+	"project_index" => \&git_project_index,
- );
- 
- if (defined $project) {
-@@ -2210,6 +2211,30 @@ sub git_project_list {
- 	git_footer_html();
- }
- 
-+sub git_project_index {
-+	my @projects = git_get_projects_list();
-+
-+	print $cgi->header(
-+		-type => 'text/plain',
-+		-charset => 'utf-8',
-+		-content_disposition => qq(inline; filename="index.aux"));
-+
-+	foreach my $pr (@projects) {
-+		if (!exists $pr->{'owner'}) {
-+			$pr->{'owner'} = get_file_owner("$projectroot/$project");
-+		}
-+
-+		my ($path, $owner) = ($pr->{'path'}, $pr->{'owner'});
-+		# quote as in CGI::Util::encode, but keep the slash, and use '+' for ' '
-+		$path  =~ s/([^a-zA-Z0-9_.\-\/ ])/sprintf("%%%02X", ord($1))/eg;
-+		$owner =~ s/([^a-zA-Z0-9_.\-\/ ])/sprintf("%%%02X", ord($1))/eg;
-+		$path  =~ s/ /\+/g;
-+		$owner =~ s/ /\+/g;
-+
-+		print "$path $owner\n";
-+	}
-+}
-+
- sub git_summary {
- 	my $descr = git_get_project_description($project) || "none";
- 	my $head = git_get_head_hash($project);
+@@ -1255,6 +1255,13 @@ EOF
+ 		printf('<link rel="alternate" title="%s log" '.
+ 		       'href="%s" type="application/rss+xml"/>'."\n",
+ 		       esc_param($project), href(action=>"rss"));
++	} else {
++		printf('<link rel="alternate" title="%s" '.
++		       'href="%s" type="text/plain; charset=utf-8"/>'."\n",
++		       esc_param($project), href(project=>undef, action=>"project_index"));
++		printf('<link rel="alternate" title="%s" '.
++		       'href="%s" type="text/x-opml"/>'."\n",
++		       esc_param($project), href(project=>undef, action=>"opml"));
+ 	}
+ 	if (defined $favicon) {
+ 		print qq(<link rel="shortcut icon" href="$favicon" type="image/png"/>\n);
+@@ -1309,7 +1316,9 @@ sub git_footer_html {
+ 		              -class => "rss_logo"}, "RSS") . "\n";
+ 	} else {
+ 		print $cgi->a({-href => href(project=>undef, action=>"opml"),
+-		              -class => "rss_logo"}, "OPML") . "\n";
++		              -class => "rss_logo"}, "OPML") . " ";
++		print $cgi->a({-href => href(project=>undef, action=>"project_index"),
++		              -class => "rss_logo"}, "TXT") . "\n";
+ 	}
+ 	print "</div>\n" .
+ 	      "</body>\n" .
 -- 
 1.4.2
