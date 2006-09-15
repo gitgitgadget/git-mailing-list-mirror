@@ -1,64 +1,89 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH (take 2)] gitweb: Do not parse refs by hand, use git-peek-remote instead
-Date: Fri, 15 Sep 2006 02:05:43 -0700
-Message-ID: <7vr6ydzehk.fsf@assigned-by-dhcp.cox.net>
-References: <200609142327.23059.jnareb@gmail.com> <eedjrj$tja$1@sea.gmane.org>
-	<7vvenpzi1h.fsf@assigned-by-dhcp.cox.net>
-	<200609151043.20681.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 3/3 (take 2)] gitweb: Add link to "project_index" view to "project_list" page
+Date: Fri, 15 Sep 2006 11:11:33 +0200
+Message-ID: <200609151111.33942.jnareb@gmail.com>
+References: <200609150453.42231.jnareb@gmail.com> <200609150459.27708.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 15 11:05:57 2006
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Sep 15 11:11:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GO9ds-0005qk-9H
-	for gcvg-git@gmane.org; Fri, 15 Sep 2006 11:05:48 +0200
+	id 1GO9j7-0006uR-3W
+	for gcvg-git@gmane.org; Fri, 15 Sep 2006 11:11:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750809AbWIOJFp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Sep 2006 05:05:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750817AbWIOJFp
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 05:05:45 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:28884 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1750809AbWIOJFo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Sep 2006 05:05:44 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060915090544.RLDQ13992.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 15 Sep 2006 05:05:44 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id NZ5l1V00B1kojtg0000000
-	Fri, 15 Sep 2006 05:05:45 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200609151043.20681.jnareb@gmail.com> (Jakub Narebski's message
-	of "Fri, 15 Sep 2006 10:43:20 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750825AbWIOJLK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Sep 2006 05:11:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750842AbWIOJLJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 05:11:09 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:50551 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1750825AbWIOJLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Sep 2006 05:11:08 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so141875ugd
+        for <git@vger.kernel.org>; Fri, 15 Sep 2006 02:11:07 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=UWgAqykWd2ku5J1mpUherracUYsjplrUs3Xf5OaG1DHV8HDT/3zsPJu+CFbQxN2w6RHT05OKd/kkL+rlKZp9/e5bKC3SVPRW5/kgfgV8QuPTuN/+y5N8FpP0X4kNX2geaocuuecUvgbeswQukyAvQS3tDy1Ac3ofYnBkMWK+emU=
+Received: by 10.67.97.18 with SMTP id z18mr5330171ugl;
+        Fri, 15 Sep 2006 02:11:07 -0700 (PDT)
+Received: from roke.d-201 ( [193.0.122.19])
+        by mx.gmail.com with ESMTP id e33sm204732ugd.2006.09.15.02.11.06;
+        Fri, 15 Sep 2006 02:11:07 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.3
+In-Reply-To: <200609150459.27708.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27072>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Add link to "project_index" view as [TXT] beside link to "opml" view,
+(which is marked by [OPML]) to "project_list" page.
 
-> Junio C Hamano wrote:
->> Jakub Narebski <jnareb@gmail.com> writes:
->> 
->> > But, if we change git_get_refs_list to do also work of git_get_references,
->> > we should also change git_get_references to not use info/refs file at all
->> > (it can, and usually for unknown reasons is stale) but always use
->> > git-peek-remote, for consistency.
->> 
->> Yes that would make sense.  A repository served by gitweb does
->> not necessarily has to serve objects over http transport, so it
->> is nicer not to require info/refs to even exist or up to date.
->
-> We do not require info/refs, as currently git_get_references falls
-> back to git-ls-remotes (should be git-peek-remote as it is faster)
-> if info/refs does not exist. But info/refs is usually stale; I guess
-> it is updated on pull/fetch/push, but not on commit.
+While at it add alternate links for "opml" and "project_list" to HTML
+header for "project_list" view.
 
-Yes, we are in agreement and are saying the same thing.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Corrected alternate links (dumb error while copy'n'paste).
+
+ gitweb/gitweb.perl |   11 ++++++++++-
+ 1 files changed, 10 insertions(+), 1 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index e900713..3079531 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1255,6 +1255,13 @@ EOF
+ 		printf('<link rel="alternate" title="%s log" '.
+ 		       'href="%s" type="application/rss+xml"/>'."\n",
+ 		       esc_param($project), href(action=>"rss"));
++	} else {
++		printf('<link rel="alternate" title="%s projects list" '.
++		       'href="%s" type="text/plain; charset=utf-8"/>'."\n",
++		       $site_name, href(project=>undef, action=>"project_index"));
++		printf('<link rel="alternate" title="%s projects logs" '.
++		       'href="%s" type="text/x-opml"/>'."\n",
++		       $site_name, href(project=>undef, action=>"opml"));
+ 	}
+ 	if (defined $favicon) {
+ 		print qq(<link rel="shortcut icon" href="$favicon" type="image/png"/>\n);
+@@ -1309,7 +1316,9 @@ sub git_footer_html {
+ 		              -class => "rss_logo"}, "RSS") . "\n";
+ 	} else {
+ 		print $cgi->a({-href => href(project=>undef, action=>"opml"),
+-		              -class => "rss_logo"}, "OPML") . "\n";
++		              -class => "rss_logo"}, "OPML") . " ";
++		print $cgi->a({-href => href(project=>undef, action=>"project_index"),
++		              -class => "rss_logo"}, "TXT") . "\n";
+ 	}
+ 	print "</div>\n" .
+ 	      "</body>\n" .
+-- 
+1.4.2
