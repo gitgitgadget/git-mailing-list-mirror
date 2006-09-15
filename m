@@ -1,71 +1,74 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH] Build on Debian GNU/Hurd
-Date: Fri, 15 Sep 2006 17:47:42 +0200
-Message-ID: <20060915154742.GT17042@admingilde.org>
-References: <20060915125846.10469.qmail@ccc765dd61a02d.315fe32.mid.smarden.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Historical kernel repository size
+Date: Fri, 15 Sep 2006 12:45:53 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0609151232370.2627@xanadu.home>
+References: <20060914142249.GK23891@pasky.or.cz>
+ <Pine.LNX.4.64.0609140824580.4388@g5.osdl.org>
+ <Pine.LNX.4.64.0609141714010.2627@xanadu.home>
+ <1158269854.5724.240.camel@localhost.localdomain>
+ <Pine.LNX.4.64.0609141742000.2627@xanadu.home>
+ <1158270859.5724.244.camel@localhost.localdomain>
+ <1158272651.5724.251.camel@localhost.localdomain>
+ <Pine.LNX.4.64.0609142115560.2627@xanadu.home>
+ <20060915090305.GC75256@dspnet.fr.eu.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Hw0FrjWlp+qkNlJP"
-X-From: git-owner@vger.kernel.org Fri Sep 15 17:48:12 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Thomas Gleixner <tglx@linutronix.de>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Petr Baudis <pasky@suse.cz>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 15 18:47:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOFuu-0000fw-BM
-	for gcvg-git@gmane.org; Fri, 15 Sep 2006 17:47:48 +0200
+	id 1GOGpD-0006uc-5V
+	for gcvg-git@gmane.org; Fri, 15 Sep 2006 18:46:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932098AbWIOPro (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Sep 2006 11:47:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932101AbWIOPro
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 11:47:44 -0400
-Received: from agent.admingilde.org ([213.95.21.5]:48352 "EHLO
-	mail.admingilde.org") by vger.kernel.org with ESMTP id S932098AbWIOPro
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Sep 2006 11:47:44 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1GOFuo-00065Q-Sq
-	for git@vger.kernel.org; Fri, 15 Sep 2006 17:47:42 +0200
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060915125846.10469.qmail@ccc765dd61a02d.315fe32.mid.smarden.org>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S1750741AbWIOQpz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Sep 2006 12:45:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750754AbWIOQpz
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 12:45:55 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:55502 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1750741AbWIOQpy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Sep 2006 12:45:54 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J5N001UJ7WHZZX0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 15 Sep 2006 12:45:53 -0400 (EDT)
+In-reply-to: <20060915090305.GC75256@dspnet.fr.eu.org>
+X-X-Sender: nico@xanadu.home
+To: Olivier Galibert <galibert@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27091>
+
+On Fri, 15 Sep 2006, Olivier Galibert wrote:
+
+> On Thu, Sep 14, 2006 at 09:19:04PM -0400, Nicolas Pitre wrote:
+> > Erm... Both incantations work fine fine here.
+> > 
+> > > -rw-rw-r-- 1 tglx ftpadmin  13600376 Sep 14 22:16 pack-4d27038611fe7755938efd4a2745d5d5d35de1c1.idx
+> > > -rw-rw-r-- 1 tglx ftpadmin 158679705 Sep 14 22:16 pack-4d27038611fe7755938efd4a2745d5d5d35de1c1.pack
+> > 
+> > And I get the same result as well.
+> 
+> For the curious, a 100/100 parameter gives a size of 154261771.
+
+Right.   And then the runtime cost of extracting objects out of such a 
+pack increases due to the deeper delta chain.
+
+The average runtime cost is probably linear with the delta depth, 
+something like f(x) = a*x + k.
+
+But the size reduction follows f(x) = a/x + k.
+
+So to say that infinite delta length does not provide infinite packing 
+size reduction. Anything larger than 50 is probably not worth the 
+small reduction gain.
 
 
---Hw0FrjWlp+qkNlJP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-hoi :)
-
-On Fri, Sep 15, 2006 at 12:58:46PM +0000, Gerrit Pape wrote:
-> +ifeq ($(uname_S),GNU)
-> +       # GNU stands for GNU/Hurd
-> +       NO_STRLCPY =3D YesPlease
-> +       ALL_CFLAGS +=3D -DPATH_MAX=3D4096
-> +endif
-
-I guess this arbitrary limit will upset all the Hurd enthusiasts... ;-)
-
---=20
-Martin Waitz
-
---Hw0FrjWlp+qkNlJP
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFCssej/Eaxd/oD7IRAr26AJ9drdoRCnS+Wvev7kXKk2CAjv7bsQCcDisN
-9GH2qke6furgy8rWDTpJhCM=
-=vXYq
------END PGP SIGNATURE-----
-
---Hw0FrjWlp+qkNlJP--
+Nicolas
