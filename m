@@ -1,54 +1,49 @@
-From: Catalin Marinas <catalin.marinas@arm.com>
-Subject: Re: stgit: cannot push a patch - Python trace dump
-Date: Fri, 15 Sep 2006 09:58:48 +0100
-Message-ID: <tnxwt855wvr.fsf@arm.com>
-References: <450A3524.5040403@intel.com>
-Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
+From: Olivier Galibert <galibert@pobox.com>
+Subject: Re: Historical kernel repository size
+Date: Fri, 15 Sep 2006 11:03:05 +0200
+Message-ID: <20060915090305.GC75256@dspnet.fr.eu.org>
+References: <20060914142249.GK23891@pasky.or.cz> <Pine.LNX.4.64.0609140824580.4388@g5.osdl.org> <Pine.LNX.4.64.0609141714010.2627@xanadu.home> <1158269854.5724.240.camel@localhost.localdomain> <Pine.LNX.4.64.0609141742000.2627@xanadu.home> <1158270859.5724.244.camel@localhost.localdomain> <1158272651.5724.251.camel@localhost.localdomain> <Pine.LNX.4.64.0609142115560.2627@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 15 10:59:04 2006
+Cc: Thomas Gleixner <tglx@linutronix.de>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Petr Baudis <pasky@suse.cz>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 15 11:03:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GO9XH-0004XS-Ei
-	for gcvg-git@gmane.org; Fri, 15 Sep 2006 10:58:59 +0200
+	id 1GO9bM-0005ML-NN
+	for gcvg-git@gmane.org; Fri, 15 Sep 2006 11:03:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750705AbWIOI64 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Sep 2006 04:58:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750713AbWIOI64
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 04:58:56 -0400
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:37864 "EHLO
-	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
-	id S1750705AbWIOI6z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Sep 2006 04:58:55 -0400
-Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.255.63])
-	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id k8F8wovs027103;
-	Fri, 15 Sep 2006 09:58:50 +0100 (BST)
-Received: from localhost.localdomain ([10.1.255.211]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
-	 Fri, 15 Sep 2006 09:58:49 +0100
-To: Auke Kok <auke-jan.h.kok@intel.com>
-In-Reply-To: <450A3524.5040403@intel.com> (Auke Kok's message of "Thu, 14
- Sep 2006 22:07:48 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 15 Sep 2006 08:58:49.0973 (UTC) FILETIME=[293D6250:01C6D8A5]
+	id S1750720AbWIOJDJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Sep 2006 05:03:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750794AbWIOJDJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 05:03:09 -0400
+Received: from dspnet.fr.eu.org ([213.186.44.138]:47115 "EHLO dspnet.fr.eu.org")
+	by vger.kernel.org with ESMTP id S1750720AbWIOJDG (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Sep 2006 05:03:06 -0400
+Received: by dspnet.fr.eu.org (Postfix, from userid 1007)
+	id 71805A35DF; Fri, 15 Sep 2006 11:03:05 +0200 (CEST)
+To: Nicolas Pitre <nico@cam.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0609142115560.2627@xanadu.home>
+User-Agent: Mutt/1.4.2.2i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27070>
 
-Auke Kok <auke-jan.h.kok@intel.com> wrote:
-> I'm preparing patches for upstream and am haunted by an apparent
-> patch breaking stg. The problem appears to be one or more of my
-> patches breaking a push:
-[...]
-> I've been abusing stg by leaving the commit messages empty so I
-> assume that that's the cause here, or related to the problem.
+On Thu, Sep 14, 2006 at 09:19:04PM -0400, Nicolas Pitre wrote:
+> Erm... Both incantations work fine fine here.
+> 
+> > -rw-rw-r-- 1 tglx ftpadmin  13600376 Sep 14 22:16 pack-4d27038611fe7755938efd4a2745d5d5d35de1c1.idx
+> > -rw-rw-r-- 1 tglx ftpadmin 158679705 Sep 14 22:16 pack-4d27038611fe7755938efd4a2745d5d5d35de1c1.pack
+> 
+> And I get the same result as well.
 
-Thanks, I fixed StGIT to cope with this and I'll update the repository
-and snapshot tonight (which, BTW, will contain the initial support for
-patch history tracking).
+For the curious, a 100/100 parameter gives a size of 154261771.
+Disminishing returns, here I come.
 
--- 
-Catalin
+  OG.
