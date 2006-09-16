@@ -1,118 +1,90 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Skip t3403 selftests if stdin is not a terminal
-Date: Fri, 15 Sep 2006 23:19:02 -0700
-Message-ID: <7v3base3l5.fsf@assigned-by-dhcp.cox.net>
-References: <20060915125910.10514.qmail@26499ea44f2ee3.315fe32.mid.smarden.org>
-	<7vk644e5f5.fsf@assigned-by-dhcp.cox.net>
+From: Nathaniel Smith <njs@pobox.com>
+Subject: Re: Re: cvs import
+Date: Fri, 15 Sep 2006 23:21:09 -0700
+Message-ID: <20060916062109.GB1779@frances.vorpus.org>
+References: <45084400.1090906@bluegap.ch>
+	<9e4733910609131201q7f583029r72dac66cd0dd098f@mail.gmail.com>
+	<46a038f90609131341se42b2dcne73c017cf757d13a@mail.gmail.com>
+	<450872AE.5050409@bluegap.ch>
+	<9e4733910609131438n686b6d72u4d5799533c7473d7@mail.gmail.com>
+	<4508EA78.5030001@alum.mit.edu> <20060914155003.GB9657@spearce.org>
+	<450A581E.2050509@bluegap.ch> <20060916033917.GA24269@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Lukas =?iso-8859-1?Q?Sandstr=F6m?= <lukass@etek.chalmers.se>
-X-From: git-owner@vger.kernel.org Sat Sep 16 08:19:54 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: Martin Langhoff <martin.langhoff@gmail.com>, monotone-devel@nongnu.org,
+	Jon Smirl <jonsmirl@gmail.com>, dev@cvs2svn.tigris.org,
+	Git Mailing List <git@vger.kernel.org>
+X-From: monotone-devel-bounces+gcvmd-monotone-devel=m.gmane.org@nongnu.org Sat Sep 16 08:21:22 2006
+Return-path: <monotone-devel-bounces+gcvmd-monotone-devel=m.gmane.org@nongnu.org>
+Envelope-to: gcvmd-monotone-devel@m.gmane.org
+Received: from lists.gnu.org ([199.232.76.165])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOTWr-0007Yq-IJ
-	for gcvg-git@gmane.org; Sat, 16 Sep 2006 08:19:53 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932199AbWIPGTG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Sep 2006 02:19:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932204AbWIPGTG
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 02:19:06 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:32137 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S932199AbWIPGTD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Sep 2006 02:19:03 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060916061903.DUZL26416.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 16 Sep 2006 02:19:03 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id NuK41V0071kojtg0000000
-	Sat, 16 Sep 2006 02:19:04 -0400
-To: Gerrit Pape <pape@smarden.org>
-In-Reply-To: <7vk644e5f5.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Fri, 15 Sep 2006 22:39:26 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27111>
+	id 1GOTYE-0007ly-To
+	for gcvmd-monotone-devel@m.gmane.org; Sat, 16 Sep 2006 08:21:19 +0200
+Received: from localhost ([127.0.0.1] helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43)
+	id 1GOTYE-0008MY-9U
+	for gcvmd-monotone-devel@m.gmane.org; Sat, 16 Sep 2006 02:21:18 -0400
+Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
+	id 1GOTYA-0008K8-0h
+	for monotone-devel@nongnu.org; Sat, 16 Sep 2006 02:21:14 -0400
+Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
+	id 1GOTY9-0008Jt-C4
+	for monotone-devel@nongnu.org; Sat, 16 Sep 2006 02:21:13 -0400
+Received: from [199.232.76.173] (helo=monty-python.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43) id 1GOTY9-0008Jq-4Y
+	for monotone-devel@nongnu.org; Sat, 16 Sep 2006 02:21:13 -0400
+Received: from [208.210.124.79] (helo=rune.pobox.com)
+	by monty-python.gnu.org with esmtp (Exim 4.52) id 1GOTaT-0003sR-TN
+	for monotone-devel@nongnu.org; Sat, 16 Sep 2006 02:23:37 -0400
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id 75C1680291;
+	Sat, 16 Sep 2006 02:21:34 -0400 (EDT)
+Received: from frances.frop.org (adsl-66-159-194-130.dslextreme.com
+	[66.159.194.130]) (using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 6C6EC8021B;
+	Sat, 16 Sep 2006 02:21:27 -0400 (EDT)
+Received: from njs by frances.frop.org with local (Exim 4.63)
+	(envelope-from <njs@pobox.com>)
+	id 1GOTY5-0000oC-EK; Fri, 15 Sep 2006 23:21:09 -0700
+To: Shawn Pearce <spearce@spearce.org>
+Mail-Followup-To: Shawn Pearce <spearce@spearce.org>,
+	Markus Schiltknecht <markus@bluegap.ch>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	monotone-devel@nongnu.org, Jon Smirl <jonsmirl@gmail.com>,
+	dev@cvs2svn.tigris.org, Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20060916033917.GA24269@spearce.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-BeenThere: monotone-devel@nongnu.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: developer discussion for monotone <monotone-devel.nongnu.org>
+List-Unsubscribe: <http://lists.nongnu.org/mailman/listinfo/monotone-devel>,
+	<mailto:monotone-devel-request@nongnu.org?subject=unsubscribe>
+List-Archive: <http://lists.gnu.org/pipermail/monotone-devel>
+List-Post: <mailto:monotone-devel@nongnu.org>
+List-Help: <mailto:monotone-devel-request@nongnu.org?subject=help>
+List-Subscribe: <http://lists.nongnu.org/mailman/listinfo/monotone-devel>,
+	<mailto:monotone-devel-request@nongnu.org?subject=subscribe>
+Sender: monotone-devel-bounces+gcvmd-monotone-devel=m.gmane.org@nongnu.org
+Errors-To: monotone-devel-bounces+gcvmd-monotone-devel=m.gmane.org@nongnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27112>
 
-Junio C Hamano <junkio@cox.net> writes:
+On Fri, Sep 15, 2006 at 11:39:18PM -0400, Shawn Pearce wrote:
+> On the other hand from what I understand of Monotone it needs
+> the revisions in oldest->newest order, as does SVN.
 
-> Gerrit Pape <pape@smarden.org> writes:
->
->> sh t3403-rebase-skip.sh </dev/null fails because stdin is not connected
->> to a terminal, as in the Debian autobuild environment.  This disbales
->> the test 3 and 7 in this case.
->
-> Disabling these tests somehow feels as if you are shooting the
-> messenger who reports breakage of the commands they try to test.
->
-> Is it expected that the git Porcelainish commands involved in
-> these particular tests not to work without terminal?  If not
-> maybe we should fix them, not the test.
+Monotone stores file deltas new->old, similar to git.  It should be
+reasonably efficient at turning them around if it has to, though -- so
+long as you give all the versions of a single file at a time, so
+there's some reasonable locality, instead of jumping all around the
+tree.
 
-How about this instead?
+-- Nathaniel
 
--- >8 --
-Fix git-am safety checks
-
-An earlier commit cbd64af added a check that prevents "git-am"
-to run without its standard input connected to a terminal while
-resuming operation.  This was to catch a user error to try
-feeding a new patch from its standard input while recovery.
-
-The assumption of the check was that it is an indication that a
-new patch is being fed if the standard input is not connected to
-a terminal.  It is however not quite correct (the standard input
-can be /dev/null if the user knows the operation does not need
-any input, for example).  This broke t3403 when the test was run
-with its standard input connected to /dev/null.
-
-When git-am is given an explicit command such as --skip, there
-is no reason to insist that the standard input is a terminal; we
-are not going to read a new patch anyway.
-
-Credit goes to Gerrit Pape for noticing and reporting the
-problem with t3403-rebase-skip test.
-
----
-diff --git a/git-am.sh b/git-am.sh
-index d0af786..66a8e3d 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -166,10 +166,25 @@ fi
- 
- if test -d "$dotest"
- then
--	if test ",$#," != ",0," || ! tty -s
--	then
--		die "previous dotest directory $dotest still exists but mbox given."
--	fi
-+	case "$#,$skip$resolved" in    
-+	0,*t*)
-+		# Explicit resume command and we do not have file, so
-+		# we are happy.
-+		: ;;
-+	0,)
-+		# No file input but without resume parameters; catch
-+		# user error to feed us a patch from standard input
-+		# when there is already .dotest.  This is somewhat
-+		# unreliable -- stdin could be /dev/null for example
-+		# and the caller did not intend to feed us a patch but
-+		# wanted to continue unattended.
-+		tty -s
-+		;;
-+	*)
-+		false
-+		;;
-+	esac ||
-+	die "previous dotest directory $dotest still exists but mbox given."
- 	resume=yes
- else
- 	# Make sure we are not given --skip nor --resolved
+-- 
+"...All of this suggests that if we wished to find a modern-day model
+for British and American speech of the late eighteenth century, we could
+probably do no better than Yosemite Sam."
