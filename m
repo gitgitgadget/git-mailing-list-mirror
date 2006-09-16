@@ -1,70 +1,63 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: more support for PATH_INFO based URLs
-Date: Sat, 16 Sep 2006 23:46:28 +0200
-Organization: At home
-Message-ID: <eehrad$5i0$2@sea.gmane.org>
-References: <20060916210832.GV17042@admingilde.org>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH/current master] gitweb: do not use 'No such directory' error message
+Date: Sun, 17 Sep 2006 00:30:27 +0200
+Message-ID: <20060916223027.GA32679@moooo.ath.cx>
+References: <20060916192750.GA27008@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Sat Sep 16 23:50:31 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun Sep 17 00:30:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOi3L-0000w2-62
-	for gcvg-git@gmane.org; Sat, 16 Sep 2006 23:50:23 +0200
+	id 1GOigC-0001Fa-Sm
+	for gcvg-git@gmane.org; Sun, 17 Sep 2006 00:30:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751813AbWIPVuR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 16 Sep 2006 17:50:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751826AbWIPVuR
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 17:50:17 -0400
-Received: from main.gmane.org ([80.91.229.2]:31952 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751813AbWIPVuP (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Sep 2006 17:50:15 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1GOi30-0000rP-Jp
-	for git@vger.kernel.org; Sat, 16 Sep 2006 23:50:02 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 16 Sep 2006 23:50:02 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 16 Sep 2006 23:50:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S964788AbWIPWaa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Sep 2006 18:30:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964796AbWIPWaa
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 18:30:30 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:5299 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S964788AbWIPWa3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Sep 2006 18:30:29 -0400
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20060916192750.GA27008@moooo.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27139>
 
-Martin Waitz wrote:
+undef $project; to prevent a file named description to be read.
+---
+Sorry, I patched an old version.  Here is the patch for the current
+master/next.
+---
+ gitweb/gitweb.perl |   11 ++++-------
+ 1 files changed, 4 insertions(+), 7 deletions(-)
 
-> Now three types of path based URLs are supported:
-> =A0=A0=A0=A0=A0=A0=A0=A0gitweb.cgi/project.git
-> =A0=A0=A0=A0=A0=A0=A0=A0gitweb.cgi/project.git/branch
-> =A0=A0=A0=A0=A0=A0=A0=A0gitweb.cgi/project.git/branch/filename
->=20
-> The first one (show project summary) was already supported for a long=
- time
-> now. =A0The other two are new: they show the shortlog of a branch or
-> the plain file contents of some file contained in the repository.
->=20
-> This is especially useful to support project web pages for small
-> projects: just create an html branch and then use an URL like
-> gitweb.cgi/project.git/html/index.html.
-
-Very nice.
-
-Acked-by: Jakub Narebski <jnareb@gmail.com>
-
-(if it matters)
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index a81c8d4..07ea1ea 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -203,13 +203,10 @@ if (defined $project) {
+ 	$project = undef unless $project;
+ }
+ if (defined $project) {
+-	if (!validate_input($project)) {
+-		die_error(undef, "Invalid project parameter");
+-	}
+-	if (!(-d "$projectroot/$project")) {
+-		die_error(undef, "No such directory");
+-	}
+-	if (!(-e "$projectroot/$project/HEAD")) {
++	if (!validate_input($project) ||
++	    !(-d "$projectroot/$project") ||
++	    !(-e "$projectroot/$project/HEAD")) {
++		undef $project;
+ 		die_error(undef, "No such project");
+ 	}
+ 	$git_dir = "$projectroot/$project";
+-- 
+1.4.2.g0ea2
