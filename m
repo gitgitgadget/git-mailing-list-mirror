@@ -1,123 +1,97 @@
-From: Sasha Khapyorsky <sashak@voltaire.com>
-Subject: Re: [PATCH] Trivial support for cloning and fetching via ftp://.
-Date: Sat, 16 Sep 2006 05:37:17 +0300
-Message-ID: <20060916023717.GA13570@sashak.voltaire.com>
-References: <20060914022404.GA900@sashak.voltaire.com> <7vk6475408.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: cvs import
+Date: Fri, 15 Sep 2006 23:39:18 -0400
+Message-ID: <20060916033917.GA24269@spearce.org>
+References: <45084400.1090906@bluegap.ch> <9e4733910609131201q7f583029r72dac66cd0dd098f@mail.gmail.com> <46a038f90609131341se42b2dcne73c017cf757d13a@mail.gmail.com> <450872AE.5050409@bluegap.ch> <9e4733910609131438n686b6d72u4d5799533c7473d7@mail.gmail.com> <4508EA78.5030001@alum.mit.edu> <20060914155003.GB9657@spearce.org> <450A581E.2050509@bluegap.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 16 04:32:00 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOPyF-0002l8-3A
-	for gcvg-git@gmane.org; Sat, 16 Sep 2006 04:31:55 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932384AbWIPCb2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Sep 2006 22:31:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932385AbWIPCb2
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 22:31:28 -0400
-Received: from taurus.voltaire.com ([193.47.165.240]:19979 "EHLO
-	taurus.voltaire.com") by vger.kernel.org with ESMTP id S932384AbWIPCb1
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Sep 2006 22:31:27 -0400
-Received: from sashak ([172.25.5.107]) by taurus.voltaire.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sat, 16 Sep 2006 05:31:25 +0300
-Received: by sashak (sSMTP sendmail emulation); Sat, 16 Sep 2006 05:37:17 +0300
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vk6475408.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-OriginalArrivalTime: 16 Sep 2006 02:31:25.0994 (UTC) FILETIME=[352968A0:01C6D938]
-Sender: git-owner@vger.kernel.org
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, Jon Smirl <jonsmirl@gmail.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>, monotone-devel@nongnu.org,
+	dev@cvs2svn.tigris.org
+X-From: dev-return-1661-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org Sat Sep 16 05:39:31 2006
+Return-path: <dev-return-1661-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org>
+Envelope-to: gcvscd-dev@gmane.org
+Received: from sc51.sjc.collab.net ([204.16.104.146] helo=tigris.org)
+	by ciao.gmane.org with smtp (Exim 4.43)
+	id 1GOR1e-0007L5-KU
+	for gcvscd-dev@gmane.org; Sat, 16 Sep 2006 05:39:30 +0200
+Received: (qmail 9709 invoked by uid 5000); 16 Sep 2006 03:39:28 -0000
+Mailing-List: contact dev-help@cvs2svn.tigris.org; run by ezmlm
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27106>
+list-help: <mailto:dev-help@cvs2svn.tigris.org>
+list-unsubscribe: <mailto:dev-unsubscribe@cvs2svn.tigris.org>
+list-post: <mailto:dev@cvs2svn.tigris.org>
+Delivered-To: mailing list dev@cvs2svn.tigris.org
+Received: (qmail 9699 invoked from network); 16 Sep 2006 03:39:28 -0000
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AY8CAHYOC0WBToofAQgOKg
+X-IronPort-AV: i="4.09,173,1157353200"; 
+   d="scan'208"; a="26981016:sNHT18302823"
+X-IRONPORT: SCANNED
+To: Markus Schiltknecht <markus@bluegap.ch>
+Content-Disposition: inline
+In-Reply-To: <450A581E.2050509@bluegap.ch>
+Sender: spearce@spearce.org
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - cvs2svn.tigris.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27107>
 
-On 23:57 Wed 13 Sep     , Junio C Hamano wrote:
-> Sasha Khapyorsky <sashak@voltaire.com> writes:
+Markus Schiltknecht <markus@bluegap.ch> wrote:
+> Shawn Pearce wrote:
+> >I don't know how the Monotone guys feel about it but I think Git
+> >is happy with the data in any order, just so long as the dependency
+> >chains aren't fed out of order.  Which I think nearly all changeset
+> >based SCMs would have an issue with.  So we should be just fine
+> >with the current chronological order produced by cvs2svn.
 > 
-> > This adds trivial support for cloning and fetching via ftp://.
+> I'd vote for splitting into file data (and delta / patches) import and 
+> metadata import (author, changelog, DAG).
 > 
-> Interesting.
-> 
-> I was wondering myself if our use of curl libraries in
-> http-fetch allows us to do this when I was looking at the
-> alternates breakage yesterday.
-> 
-> At a few places we do look at http error code that is returned
-> from the curl library, and change our behaviour based on that.
-> But it appears the difference between error code from ftp and
-> http has no bad effect on us.  In an empty repository, we can
-> run this:
-> 
-> 	$ git-http-fetch -a -v heads/merge \
-> 	  ftp://ftp.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc.git
-> 
-> (of course, this should normally be with http://www.kernel.org).
-> We notice that we get an error from a request for one object,
-> and switch to pack & alternates transfer.  The only difference
-> between http://www and ftp://ftp is that for the former we know
-> error code 404 and supress the error message but for the latter
-> we do not treat error 550 from RETR response any specially and
-> show an error message.  We still fall back to retrieve packs,
-> hoping that the missing object is in a pack.
-> 
-> I'd take this patch as is, but we might want to add some error
-> message supression logic just like we do for http.
+> Monotone would be happiest if the file data were sent one file after 
+> another and (inside each file) in the order of each file's single 
+> history. That guarantees good import performance for monotone. I imagine 
+> it's about the same for git. And if you have to somehow cache the files 
+> anyway, subversion will benefit, too. (Well, at least the cache will 
+> thank us with good performance).
+>
+> After all file data has been delivered, the metadata can be delivered. 
+> As neigther monotone nor git care much if they are chronological across 
+> branches, I'd vote for doing it that way.
 
-Something like this?
+Right.  I think that one of the cvs2svn guys had the right idea
+here.  Provide two hooks: one early during the RCS file parse which
+supplies a backend each full text file revision and another during
+the very last stage which includes the "file" in the metadata stream
+for commit.
 
-With this change I'm able to clone
-ftp://ftp.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc.git
+This would give Git and Monotone a way to grab the full text for each
+file and stream them out up front, then include only a "token" in the
+metadata stream which identifies the specific revision.  Meanwhile
+SVN can either cache the file revision during the early part or
+ignore it, then dump out the full content during the metadata.
 
 
-diff --git a/http-fetch.c b/http-fetch.c
-index a113bb8..46d6029 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -324,7 +324,9 @@ static void process_object_response(void
- 
- 	/* Use alternates if necessary */
- 	if (obj_req->http_code == 404 ||
--	    obj_req->curl_result == CURLE_FILE_COULDNT_READ_FILE) {
-+	    obj_req->curl_result == CURLE_FILE_COULDNT_READ_FILE ||
-+	    (obj_req->http_code == 550 &&
-+	     obj_req->curl_result == CURLE_FTP_COULDNT_RETR_FILE)) {
- 		fetch_alternates(alt->base);
- 		if (obj_req->repo->next != NULL) {
- 			obj_req->repo =
-@@ -538,7 +540,9 @@ static void process_alternates_response(
- 		}
- 	} else if (slot->curl_result != CURLE_OK) {
- 		if (slot->http_code != 404 &&
--		    slot->curl_result != CURLE_FILE_COULDNT_READ_FILE) {
-+		    slot->curl_result != CURLE_FILE_COULDNT_READ_FILE &&
-+		    (slot->http_code != 550 &&
-+		     slot->curl_result != CURLE_FTP_COULDNT_RETR_FILE)) {
- 			got_alternates = -1;
- 			return;
- 		}
-@@ -942,7 +946,9 @@ #endif
- 		run_active_slot(slot);
- 		if (results.curl_result != CURLE_OK) {
- 			if (results.http_code == 404 ||
--			    results.curl_result == CURLE_FILE_COULDNT_READ_FILE) {
-+			    results.curl_result == CURLE_FILE_COULDNT_READ_FILE ||
-+			    (results.http_code == 550 &&
-+			     results.curl_result == CURLE_FTP_COULDNT_RETR_FILE)) {
- 				repo->got_indices = 1;
- 				free(buffer.buffer);
- 				return 0;
-@@ -1124,7 +1130,9 @@ #endif
- 	} else if (obj_req->curl_result != CURLE_OK &&
- 		   obj_req->http_code != 416) {
- 		if (obj_req->http_code == 404 ||
--		    obj_req->curl_result == CURLE_FILE_COULDNT_READ_FILE)
-+		    obj_req->curl_result == CURLE_FILE_COULDNT_READ_FILE ||
-+		    (obj_req->http_code == 550 &&
-+		     obj_req->curl_result == CURLE_FTP_COULDNT_RETR_FILE))
- 			ret = -1; /* Be silent, it is probably in a pack. */
- 		else
- 			ret = error("%s (curl_result = %d, http_code = %ld, sha1 = %s)",
+As it happens Git doesn't care what order the file revisions come in.
+If we don't repack the imported data we would prefer to get the
+revisions in newest->oldest order so we can delta the older versions
+against the newer versions (like RCS).  This is also happens to be
+the fastest way to extract the revision data from RCS.
+
+On the other hand from what I understand of Monotone it needs
+the revisions in oldest->newest order, as does SVN.
+
+Doing both orderings in cvs2noncvs is probably ugly.  Doing just
+oldest->newest (since 2/3 backends want that) would be acceptable
+but would slow down Git imports as the RCS parsing overhead would
+be much higher.
+
+-- 
+Shawn.
