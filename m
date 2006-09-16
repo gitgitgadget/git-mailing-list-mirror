@@ -1,107 +1,79 @@
-From: Sasha Khapyorsky <sashak@voltaire.com>
-Subject: Re: [PATCH] Trivial support for cloning and fetching via ftp://.
-Date: Sat, 16 Sep 2006 13:51:31 +0300
-Message-ID: <20060916105131.GC17504@sashak.voltaire.com>
-References: <20060914022404.GA900@sashak.voltaire.com> <7vk6475408.fsf@assigned-by-dhcp.cox.net> <20060916023717.GA13570@sashak.voltaire.com> <7vwt849nv6.fsf@assigned-by-dhcp.cox.net> <20060916100147.GA17504@sashak.voltaire.com>
+From: Jim Meyering <jim@meyering.net>
+Subject: Re: [PATCH] cg-commit: prefix the relative path to the message file
+Date: Sat, 16 Sep 2006 17:07:06 +0200
+Message-ID: <87fyerq291.fsf@rho.meyering.net>
+References: <87d5aru4px.fsf@rho.meyering.net> <20060825000614.GF2817@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 16 12:45:55 2006
+X-From: git-owner@vger.kernel.org Sat Sep 16 17:08:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOXgE-0005VI-8P
-	for gcvg-git@gmane.org; Sat, 16 Sep 2006 12:45:50 +0200
+	id 1GObmG-000151-Bc
+	for gcvg-git@gmane.org; Sat, 16 Sep 2006 17:08:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751133AbWIPKpl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Sep 2006 06:45:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751321AbWIPKpl
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 06:45:41 -0400
-Received: from taurus.voltaire.com ([193.47.165.240]:65067 "EHLO
-	taurus.voltaire.com") by vger.kernel.org with ESMTP
-	id S1751133AbWIPKpk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Sep 2006 06:45:40 -0400
-Received: from sashak ([172.25.5.107]) by taurus.voltaire.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sat, 16 Sep 2006 13:45:38 +0300
-Received: by sashak (sSMTP sendmail emulation); Sat, 16 Sep 2006 13:51:31 +0300
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <20060916100147.GA17504@sashak.voltaire.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-OriginalArrivalTime: 16 Sep 2006 10:45:38.0771 (UTC) FILETIME=[3F981A30:01C6D97D]
+	id S1751757AbWIPPHy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Sep 2006 11:07:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751760AbWIPPHy
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 11:07:54 -0400
+Received: from zeus1.kernel.org ([204.152.191.4]:64444 "EHLO zeus1.kernel.org")
+	by vger.kernel.org with ESMTP id S1751757AbWIPPHx (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Sep 2006 11:07:53 -0400
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by zeus1.kernel.org (8.13.7/8.13.1) with ESMTP id k8GF7eKB012532
+	for <git@vger.kernel.org>; Sat, 16 Sep 2006 15:07:52 GMT
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id A48A01686; Sat, 16 Sep 2006 17:07:06 +0200 (CEST)
+To: Jonas Fonseca <fonseca@diku.dk>
+In-Reply-To: <20060825000614.GF2817@diku.dk> (Jonas Fonseca's message of "Fri,
+	25 Aug 2006 02:06:14 +0200")
+X-Virus-Scanned: ClamAV 0.88.4/1886/Sat Sep 16 10:39:23 2006 on zeus1.kernel.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27117>
 
-On 13:01 Sat 16 Sep     , Sasha Khapyorsky wrote:
-> On 02:12 Sat 16 Sep     , Junio C Hamano wrote:
-> > Sasha Khapyorsky <sashak@voltaire.com> writes:
-> > 
-> > > Something like this?
-> > >
-> > > With this change I'm able to clone
-> > > ftp://ftp.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc.git
-> > 
-> > I think without you would have, just with extra error messages
-> > that http codepath filters out.
-> 
-> No, not really, without change it fails later:
-> 
-> $ git-clone ftp://ftp.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc.git
-> error: RETR response: 550 (curl_result = 19, http_code = 550, sha1 = 63b98080daa35f0d682db04f4fb7ada010888752)
-> Getting pack list for ftp://ftp.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc.git/
-> Getting alternates list for ftp://ftp.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc.git/
-> Also look at ftp://ftp.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
-> Getting pack list for ftp://ftp.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
-> Getting index for pack 477061883bee3d10bece6e3432355b61ba02e594
-> error: Unable to find 63b98080daa35f0d682db04f4fb7ada010888752 under ftp://ftp.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc.git/
-> Cannot obtain needed none 63b98080daa35f0d682db04f4fb7ada010888752
-> while processing commit 0000000000000000000000000000000000000000.
-> 
-> > 
-> > > diff --git a/http-fetch.c b/http-fetch.c
-> > > index a113bb8..46d6029 100644
-> > > --- a/http-fetch.c
-> > > +++ b/http-fetch.c
-> > > @@ -324,7 +324,9 @@ static void process_object_response(void
-> > >  
-> > >  	/* Use alternates if necessary */
-> > >  	if (obj_req->http_code == 404 ||
-> > > -	    obj_req->curl_result == CURLE_FILE_COULDNT_READ_FILE) {
-> > > +	    obj_req->curl_result == CURLE_FILE_COULDNT_READ_FILE ||
-> > > +	    (obj_req->http_code == 550 &&
-> > > +	     obj_req->curl_result == CURLE_FTP_COULDNT_RETR_FILE)) {
-> > 
-> > Here you do the same as the code would for HTTP 404 when you get
-> > 550 _and_ RETR failure...
-> > 
-> > > @@ -538,7 +540,9 @@ static void process_alternates_response(
-> > >  		}
-> > >  	} else if (slot->curl_result != CURLE_OK) {
-> > >  		if (slot->http_code != 404 &&
-> > > -		    slot->curl_result != CURLE_FILE_COULDNT_READ_FILE) {
-> > > +		    slot->curl_result != CURLE_FILE_COULDNT_READ_FILE &&
-> > > +		    (slot->http_code != 550 &&
-> > > +		     slot->curl_result != CURLE_FTP_COULDNT_RETR_FILE)) {
-> > >  			got_alternates = -1;
-> > 
-> > ... but you say, while the original code says "declare error if
-> > it is not HTTP 404", "oh by the way, if it is 550 _or_ if it
-> > is RETR failure then do not trigger this if()".  I suspect you
-> > meant to say this?
-> > 
-> > 	    (slot->http_code != 550 ||
-> > 	     slot->curl_result != CURLE_FTP_COULDNT_RETR_FILE)) {
-> 
-> I think with less strict checking this could be done so, but with _and_
-> this also ensures that we are really in FTP mode.
+Jonas Fonseca <fonseca@diku.dk> wrote:
+> Makes the -M switch work from a subdirectory.
+>
+> Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+>
+> ---
+>
+> Jim Meyering <jim@meyering.net> wrote Wed, Aug 23, 2006:
+>> Hello,
+>
+> Hi,
+>
+>> I discovered that "cg-commit -M MSG-FILE ..." fails when run from
+>> a subdirectory, and when MSG-FILE is a relative file name.
+>> This is using cogito-0.17.3-2 from Debian/unstable, but the problem
+>> remains when using the latest cogito sources, pulled minutes ago.
+>
+> The attached patch should fix this problem.
+>
+> ---
+>
+>  cg-commit |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/cg-commit b/cg-commit
+> index 0cec58f..5cebd81 100755
+> --- a/cg-commit
+> +++ b/cg-commit
+> @@ -398,7 +398,7 @@ fi
+>
+>  if [ "$msgfile" ]; then
+>  	[ "$written" ] && echo >>"$LOGMSG"
+> -	cat "$msgfile" >>"$LOGMSG" || exit 1
+> +	cat "$_git_relpath$msgfile" >>"$LOGMSG" || exit 1
+>  	written=1
+>  fi
+>
+>
 
-Hmm, saying this I see that original code doesn't do it for specific
-case. So for this case we could do:
-
- 	    !(slot->http_code == 550 &&
- 	     slot->curl_result == CURLE_FTP_COULDNT_RETR_FILE)) {
-
-Sasha
+Thank you!
+That solved the problem for me.
