@@ -1,119 +1,56 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: [PATCH] gitweb: export-ok option
-Date: Sat, 16 Sep 2006 21:27:50 +0200
-Message-ID: <20060916192750.GA27008@moooo.ath.cx>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: export-ok option
+Date: Sat, 16 Sep 2006 21:40:12 +0200
+Organization: At home
+Message-ID: <eehjtn$ipm$1@sea.gmane.org>
+References: <20060916192750.GA27008@moooo.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Sep 16 21:28:00 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sat Sep 16 21:40:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOfpX-00079U-2e
-	for gcvg-git@gmane.org; Sat, 16 Sep 2006 21:27:59 +0200
+	id 1GOg1G-0000i5-RI
+	for gcvg-git@gmane.org; Sat, 16 Sep 2006 21:40:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751015AbWIPT1y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Sep 2006 15:27:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751167AbWIPT1y
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 15:27:54 -0400
-Received: from moooo.ath.cx ([85.116.203.178]:16863 "EHLO moooo.ath.cx")
-	by vger.kernel.org with ESMTP id S1751015AbWIPT1x (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Sep 2006 15:27:53 -0400
+	id S1751455AbWIPTj7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Sep 2006 15:39:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751459AbWIPTj6
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 15:39:58 -0400
+Received: from main.gmane.org ([80.91.229.2]:56247 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751455AbWIPTj6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Sep 2006 15:39:58 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GOg0u-0000fV-C7
+	for git@vger.kernel.org; Sat, 16 Sep 2006 21:39:44 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 16 Sep 2006 21:39:44 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 16 Sep 2006 21:39:44 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27128>
 
-Similar to git-daemon checking for git-daemon-export-ok this
-introduces an optional check before showing a repository in gitweb.
+Matthias Lederhofer wrote:
 
-I also changed the 'No such directory' error message to 'No such
-project' because the user visiting my gitweb should not know what
-directories I have in the project root directory.
+> Perhaps there should be another option which allows only those
+> repositories to be shown which are in $projects_list.
 
-undef $project; is used to prevent displaying the description.
----
-Perhaps there should be another option which allows only those
-repositories to be shown which are in $projects_list.
----
- Makefile           |    2 ++
- gitweb/gitweb.perl |   18 ++++++++++++------
- 2 files changed, 14 insertions(+), 6 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 7b3114f..63df24c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -132,6 +132,7 @@ GITWEB_HOMETEXT = indextext.html
- GITWEB_CSS = gitweb.css
- GITWEB_LOGO = git-logo.png
- GITWEB_FAVICON = git-favicon.png
-+GITWEB_EXPORT_OK =
- 
- export prefix bindir gitexecdir template_dir GIT_PYTHON_DIR
- 
-@@ -637,6 +638,7 @@ gitweb/gitweb.cgi: gitweb/gitweb.perl
- 	    -e 's|++GITWEB_CSS++|$(GITWEB_CSS)|g' \
- 	    -e 's|++GITWEB_LOGO++|$(GITWEB_LOGO)|g' \
- 	    -e 's|++GITWEB_FAVICON++|$(GITWEB_FAVICON)|g' \
-+	    -e 's|++GITWEB_EXPORT_OK++|$(GITWEB_EXPORT_OK)|g' \
- 	    $< >$@+
- 	chmod +x $@+
- 	mv $@+ $@
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index d89f709..3944d13 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -54,6 +54,9 @@ our $favicon = "++GITWEB_FAVICON++";
- # source of projects list
- our $projects_list = "++GITWEB_LIST++";
- 
-+# show repository only if this file exists
-+our $export_ok = "++GITWEB_EXPORT_OK++";
-+
- # list of git base URLs used for URL to where fetch project from,
- # i.e. full URL is "$git_base_url/$project"
- our @git_base_url_list = ("++GITWEB_BASE_URL++");
-@@ -181,12 +184,13 @@ if (defined $project) {
- }
- if (defined $project) {
- 	if (!validate_input($project)) {
-+		undef $project;
- 		die_error(undef, "Invalid project parameter");
- 	}
--	if (!(-d "$projectroot/$project")) {
--		die_error(undef, "No such directory");
--	}
--	if (!(-e "$projectroot/$project/HEAD")) {
-+	if (!(-d "$projectroot/$project") ||
-+	    !(-e "$projectroot/$project/HEAD") ||
-+	    ($export_ok && !(-e "$projectroot/$project/$export_ok"))) {
-+		undef $project;
- 		die_error(undef, "No such project");
- 	}
- 	$git_dir = "$projectroot/$project";
-@@ -694,7 +698,8 @@ sub git_get_projects_list {
- 		my $dir = $projects_list;
- 		opendir my ($dh), $dir or return undef;
- 		while (my $dir = readdir($dh)) {
--			if (-e "$projectroot/$dir/HEAD") {
-+			if (-e "$projectroot/$dir/HEAD" && (!$export_ok ||
-+			    -e "$projectroot/$dir/$export_ok")) {
- 				my $pr = {
- 					path => $dir,
- 				};
-@@ -716,7 +721,8 @@ sub git_get_projects_list {
- 			if (!defined $path) {
- 				next;
- 			}
--			if (-e "$projectroot/$path/HEAD") {
-+			if (-e "$projectroot/$path/HEAD" && (!$export_ok ||
-+			    -e "$projectroot/$path/$export_ok")) {
- 				my $pr = {
- 					path => $path,
- 					owner => decode("utf8", $owner, Encode::FB_DEFAULT),
+If $projects_list is a file (and not directory), only repositories
+specified there are shown.
 -- 
-1.4.2.g0ea2
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
