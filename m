@@ -1,89 +1,101 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: Re: [PATCH] cg-commit: Fix a typo that would inhibit running of post-commit script:
-Date: Sat, 16 Sep 2006 17:10:36 +0200
-Message-ID: <87ac4zq237.fsf@rho.meyering.net>
-References: <8764giro6t.fsf@rho.meyering.net> <20060825002013.GG2817@diku.dk>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Trivial support for cloning and fetching via ftp://.
+Date: Sat, 16 Sep 2006 10:29:28 -0700
+Message-ID: <7virjnafev.fsf@assigned-by-dhcp.cox.net>
+References: <20060914022404.GA900@sashak.voltaire.com>
+	<7vk6475408.fsf@assigned-by-dhcp.cox.net>
+	<20060916023717.GA13570@sashak.voltaire.com>
+	<7vwt849nv6.fsf@assigned-by-dhcp.cox.net>
+	<20060916100147.GA17504@sashak.voltaire.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 16 17:12:03 2006
+X-From: git-owner@vger.kernel.org Sat Sep 16 19:30:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GObph-0001ms-77
-	for gcvg-git@gmane.org; Sat, 16 Sep 2006 17:11:53 +0200
+	id 1GOdz7-0002KU-Bj
+	for gcvg-git@gmane.org; Sat, 16 Sep 2006 19:29:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932334AbWIPPLu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Sep 2006 11:11:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932390AbWIPPLu
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 11:11:50 -0400
-Received: from zeus1.kernel.org ([204.152.191.4]:21437 "EHLO zeus1.kernel.org")
-	by vger.kernel.org with ESMTP id S932334AbWIPPLt (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Sep 2006 11:11:49 -0400
-Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
-	by zeus1.kernel.org (8.13.7/8.13.1) with ESMTP id k8GFBa86014168
-	for <git@vger.kernel.org>; Sat, 16 Sep 2006 15:11:49 GMT
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id 2980E17F0; Sat, 16 Sep 2006 17:10:36 +0200 (CEST)
-To: Jonas Fonseca <fonseca@diku.dk>
-In-Reply-To: <20060825002013.GG2817@diku.dk> (Jonas Fonseca's message of "Fri,
-	25 Aug 2006 02:20:13 +0200")
-X-Virus-Scanned: ClamAV 0.88.4/1886/Sat Sep 16 10:39:23 2006 on zeus1.kernel.org
-X-Virus-Status: Clean
+	id S964853AbWIPR3b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Sep 2006 13:29:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964852AbWIPR3a
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 13:29:30 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:55236 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S964851AbWIPR33 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Sep 2006 13:29:29 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060916172929.LUJC26416.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 16 Sep 2006 13:29:29 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id P5VW1V00R1kojtg0000000
+	Sat, 16 Sep 2006 13:29:30 -0400
+To: Sasha Khapyorsky <sashak@voltaire.com>
+In-Reply-To: <20060916100147.GA17504@sashak.voltaire.com> (Sasha Khapyorsky's
+	message of "Sat, 16 Sep 2006 13:01:47 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27119>
 
-Jonas Fonseca <fonseca@diku.dk> wrote:
-> Jim Meyering <jim@meyering.net> wrote Thu, Aug 24, 2006:
->> I tried cg-commit with a commit hook, but the hook never ran.
->> The problem was a typo:
->>
->> Fix a typo that would inhibit running the post-commit script:
->> s/commit-post/post-commit/.
+Sasha Khapyorsky <sashak@voltaire.com> writes:
+
+>> > diff --git a/http-fetch.c b/http-fetch.c
+>> > index a113bb8..46d6029 100644
+>> > --- a/http-fetch.c
+>> > +++ b/http-fetch.c
+>> > @@ -324,7 +324,9 @@ static void process_object_response(void
+>> >  
+>> >  	/* Use alternates if necessary */
+>> >  	if (obj_req->http_code == 404 ||
+>> > -	    obj_req->curl_result == CURLE_FILE_COULDNT_READ_FILE) {
+>> > +	    obj_req->curl_result == CURLE_FILE_COULDNT_READ_FILE ||
+>> > +	    (obj_req->http_code == 550 &&
+>> > +	     obj_req->curl_result == CURLE_FTP_COULDNT_RETR_FILE)) {
+>> 
+>> Here you do the same as the code would for HTTP 404 when you get
+>> 550 _and_ RETR failure...
+>> 
+>> > @@ -538,7 +540,9 @@ static void process_alternates_response(
+>> >  		}
+>> >  	} else if (slot->curl_result != CURLE_OK) {
+>> >  		if (slot->http_code != 404 &&
+>> > -		    slot->curl_result != CURLE_FILE_COULDNT_READ_FILE) {
+>> > +		    slot->curl_result != CURLE_FILE_COULDNT_READ_FILE &&
+>> > +		    (slot->http_code != 550 &&
+>> > +		     slot->curl_result != CURLE_FTP_COULDNT_RETR_FILE)) {
+>> >  			got_alternates = -1;
+>> 
+>> ... but you say, while the original code says "declare error if
+>> it is not HTTP 404", "oh by the way, if it is 550 _or_ if it
+>> is RETR failure then do not trigger this if()".  I suspect you
+>> meant to say this?
+>> 
+>> 	    (slot->http_code != 550 ||
+>> 	     slot->curl_result != CURLE_FTP_COULDNT_RETR_FILE)) {
 >
-> If I remember correctly, historically, the commit-post existed before
-> the post-commit appeared. You can see that it is documented in the man
-> page so it is not a typo.
->
-> However, this should certainly be updated, but I think a better fix
-> would be to transitionally warn the user about the existence of the
-> commit-post hook before using it in favour of post-commit.
+> I think with less strict checking this could be done so, but with _and_
+> this also ensures that we are really in FTP mode.
 
-How about this?
-Check for both and if there's exactly one, use that.
-If it's the old one, give a diagnostic suggesting to rename it.
-If both exist, execute neither, give a diagnostic and fail.
+I was merely pointing out that in one place you have:
 
-If you like this, I'll prepare a patch.
+	(http_code == 550 && result == ERETR)
 
->> diff --git a/cg-commit b/cg-commit
->> index 9d3b1a1..82eea60 100755
->> --- a/cg-commit
->> +++ b/cg-commit
->> @@ -604,15 +604,16 @@ if [ "$newhead" ]; then
->>  		branchname="$(cat "$_git/branch-name")"
->>  	fi
->>  	[ -z "$branchname" ] && [ "$_git_head" != "master" ] && branchname="$_git_head"
->> -	if [ -x "$_git/hooks/post-commit" -a ! "$no_hooks" ]; then
->> +	post_commit="$_git/hooks/post-commit"
->> +	if [ -x "$post_commit" -a ! "$no_hooks" ]; then
->>  		if [ "$(git-repo-config --bool cogito.hooks.commit.post.allmerged)" = "true" ]; then
->>  			# We just hope that for the initial commit, the user didn't
->>  			# manage to install the hook yet.
->>  			for merged in $(git-rev-list $newhead ^$oldhead | tac); do
->> -				"$_git/hooks/post-commit" "$merged" "$branchname"
->> +				"$post_commit" "$merged" "$branchname"
->>  			done
->>  		else
->> -			"$_git/hooks/post-commit" "$newhead" "$branchname"
->> +			"$post_commit" "$newhead" "$branchname"
->>  		fi
->>  	fi
->
-> The patch looks more like a refactoring of a previous commit that did
-> the commit-post -> post-commit replacement.
+and another place that tries to say the opposite you have:
 
-Exactly :)
+	(http_code != 550 && result != ERETR)
+
+which is not the same thing as
+
+	!(http_code == 550 && result == ERETR)
+
+I understood, from the former "Use alternates if necessary"
+part, that you wanted to make sure that 550 is really from
+FTP_RETR and not other random HTTP error message, and I think
+that is a reasonable thing to do.
