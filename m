@@ -1,66 +1,71 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: nightly tarballs of git
-Date: Sat, 16 Sep 2006 20:04:13 +0200
-Organization: At home
-Message-ID: <eehe9n$v1b$1@sea.gmane.org>
-References: <20060914172754.GF8013@us.ibm.com> <20060914175116.GB22279@redhat.com> <7v1wqe45vs.fsf@assigned-by-dhcp.cox.net> <20060914193616.GA32735@redhat.com> <7virjq2oyc.fsf@assigned-by-dhcp.cox.net> <20060916175853.GA24124@redhat.com>
+Date: Sat, 16 Sep 2006 11:09:24 -0700
+Message-ID: <7v3baradkb.fsf@assigned-by-dhcp.cox.net>
+References: <20060914172754.GF8013@us.ibm.com>
+	<20060914175116.GB22279@redhat.com>
+	<7v1wqe45vs.fsf@assigned-by-dhcp.cox.net>
+	<20060914193616.GA32735@redhat.com>
+	<7virjq2oyc.fsf@assigned-by-dhcp.cox.net>
+	<20060916175853.GA24124@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Sat Sep 16 20:03:55 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 16 20:09:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOeWA-0001v3-Q5
-	for gcvg-git@gmane.org; Sat, 16 Sep 2006 20:03:55 +0200
+	id 1GOebk-0002kF-U4
+	for gcvg-git@gmane.org; Sat, 16 Sep 2006 20:09:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750896AbWIPSDw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 16 Sep 2006 14:03:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750875AbWIPSDw
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 14:03:52 -0400
-Received: from main.gmane.org ([80.91.229.2]:64161 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750829AbWIPSDv (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Sep 2006 14:03:51 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GOeW2-0001th-4C
-	for git@vger.kernel.org; Sat, 16 Sep 2006 20:03:46 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 16 Sep 2006 20:03:46 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 16 Sep 2006 20:03:46 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1750954AbWIPSJ0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Sep 2006 14:09:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750948AbWIPSJ0
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 14:09:26 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:57521 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1750875AbWIPSJZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Sep 2006 14:09:25 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060916180925.ZIWZ2704.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 16 Sep 2006 14:09:25 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id P69S1V00R1kojtg0000000
+	Sat, 16 Sep 2006 14:09:26 -0400
+To: Dave Jones <davej@redhat.com>
+In-Reply-To: <20060916175853.GA24124@redhat.com> (Dave Jones's message of
+	"Sat, 16 Sep 2006 13:58:53 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27125>
 
-Dave Jones wrote:
+Dave Jones <davej@redhat.com> writes:
 
-> * refs/heads/pu: does not fast forward to branch 'pu' of
->   git://git.kernel.org/pub/scm/git/git;=20
-> =A0 not updating.
+> This went well, right up until you checked something in :-)
+>
+> Generating pack...
+> Done counting 155 objects.
+> Result has 126 objects.
+> Deltifying 126 objects.
+>    0% (1/126) done
+> ...
+> Unpacking 126 objects
+> Total 126, written 126 (delta 93), reused 0 (delta 0)
+> * refs/heads/origin: fast forward to branch 'master' of git://git.kernel.org/pub/scm/git/git
+>   from 38529e28a4f465ad5d5f2fa249ca17da680bac5f to fc2b2be031f44aef0106cf7f872b750cd90b2253
+> * refs/heads/pu: does not fast forward to branch 'pu' of git://git.kernel.org/pub/scm/git/git;
+>   not updating.
 > Something wicked happend.
-=20
-Did you put '+' before 'pu' line in 'origin' file in remotes?
-It should read
 
-        Pull:+refs/heads/pu:refs/heads/pu
+You care only about 'master' in that repository anyway, so I
+would suggest removing other lines from remotes/origin and have
+only these two lines:
 
-Alternatively you can give --force option to git-fetch.
-
-See
-http://git.or.cz/gitwiki/GitFaq#head-a1f9a3e511e0b866d788d7cb600637a9b9=
-76a994
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+	URL:  git://git.kernel.org/pub/scm/git/git
+        Pull: refs/heads/master:refs/heads/origin
