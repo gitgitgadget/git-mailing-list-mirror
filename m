@@ -1,182 +1,119 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] git-tar-tree: devolve git-tar-tree into a wrapper for git-archive
-Date: Sat, 16 Sep 2006 21:20:36 +0200
-Message-ID: <450C4E84.3000803@lsrfire.ath.cx>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH] gitweb: export-ok option
+Date: Sat, 16 Sep 2006 21:27:50 +0200
+Message-ID: <20060916192750.GA27008@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Franck Bui-Huu <vagabon.xyz@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 16 21:21:53 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sat Sep 16 21:28:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOfjI-00064B-VA
-	for gcvg-git@gmane.org; Sat, 16 Sep 2006 21:21:33 +0200
+	id 1GOfpX-00079U-2e
+	for gcvg-git@gmane.org; Sat, 16 Sep 2006 21:27:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751164AbWIPTUq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Sep 2006 15:20:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751015AbWIPTUp
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 15:20:45 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:28062
-	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S1750737AbWIPTUo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Sep 2006 15:20:44 -0400
-Received: from [10.0.1.3] (p508E4E70.dip.t-dialin.net [80.142.78.112])
-	by neapel230.server4you.de (Postfix) with ESMTP id 1EDEF3B0FA;
-	Sat, 16 Sep 2006 21:20:43 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.7 (Windows/20060909)
-To: Junio C Hamano <junkio@cox.net>
-X-Enigmail-Version: 0.94.0.0
+	id S1751015AbWIPT1y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Sep 2006 15:27:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751167AbWIPT1y
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 15:27:54 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:16863 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S1751015AbWIPT1x (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Sep 2006 15:27:53 -0400
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27127>
 
-This patch removes the custom tree walker tree_traverse(), and makes
-generate_tar() use write_tar_archive() and the infrastructure provided
-by git-archive instead.
+Similar to git-daemon checking for git-daemon-export-ok this
+introduces an optional check before showing a repository in gitweb.
 
-As a kind of side effect, make write_tar_archive() able to handle NULL
-as base directory, as this is what the new and simple generate_tar()
-uses to indicate the absence of a base directory.  This was simpler
-and cleaner than playing tricks with empty strings.
+I also changed the 'No such directory' error message to 'No such
+project' because the user visiting my gitweb should not know what
+directories I have in the project root directory.
 
-The behaviour of git-tar-tree should be unchanged (quick tests didn't
-indicate otherwise) except for the text of some error messages.
-
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+undef $project; is used to prevent displaying the description.
 ---
+Perhaps there should be another option which allows only those
+repositories to be shown which are in $projects_list.
+---
+ Makefile           |    2 ++
+ gitweb/gitweb.perl |   18 ++++++++++++------
+ 2 files changed, 14 insertions(+), 6 deletions(-)
 
- builtin-tar-tree.c |   90 ++++++++++-------------------------------------------
- 1 file changed, 18 insertions(+), 72 deletions(-)
-
-diff --git a/builtin-tar-tree.c b/builtin-tar-tree.c
-index f2679a8..437eb72 100644
---- a/builtin-tar-tree.c
-+++ b/builtin-tar-tree.c
-@@ -3,7 +3,6 @@
-  */
- #include <time.h>
- #include "cache.h"
--#include "tree-walk.h"
- #include "commit.h"
- #include "strbuf.h"
- #include "tar.h"
-@@ -248,37 +247,6 @@ static void write_global_extended_header
- 	free(ext_header.buf);
- }
+diff --git a/Makefile b/Makefile
+index 7b3114f..63df24c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -132,6 +132,7 @@ GITWEB_HOMETEXT = indextext.html
+ GITWEB_CSS = gitweb.css
+ GITWEB_LOGO = git-logo.png
+ GITWEB_FAVICON = git-favicon.png
++GITWEB_EXPORT_OK =
  
--static void traverse_tree(struct tree_desc *tree, struct strbuf *path)
--{
--	int pathlen = path->len;
--	struct name_entry entry;
--
--	while (tree_entry(tree, &entry)) {
--		void *eltbuf;
--		char elttype[20];
--		unsigned long eltsize;
--
--		eltbuf = read_sha1_file(entry.sha1, elttype, &eltsize);
--		if (!eltbuf)
--			die("cannot read %s", sha1_to_hex(entry.sha1));
--
--		path->len = pathlen;
--		strbuf_append_string(path, entry.path);
--		if (S_ISDIR(entry.mode))
--			strbuf_append_string(path, "/");
--
--		write_entry(entry.sha1, path, entry.mode, eltbuf, eltsize);
--
--		if (S_ISDIR(entry.mode)) {
--			struct tree_desc subtree;
--			subtree.buf = eltbuf;
--			subtree.size = eltsize;
--			traverse_tree(&subtree, path);
--		}
--		free(eltbuf);
--	}
--}
--
- static int git_tar_config(const char *var, const char *value)
- {
- 	if (!strcmp(var, "tar.umask")) {
-@@ -295,51 +263,29 @@ static int git_tar_config(const char *va
+ export prefix bindir gitexecdir template_dir GIT_PYTHON_DIR
  
- static int generate_tar(int argc, const char **argv, const char *prefix)
- {
--	unsigned char sha1[20], tree_sha1[20];
--	struct commit *commit;
--	struct tree_desc tree;
--	struct strbuf current_path;
--	void *buffer;
--
--	current_path.buf = xmalloc(PATH_MAX);
--	current_path.alloc = PATH_MAX;
--	current_path.len = current_path.eof = 0;
-+	struct archiver_args args;
-+	int result;
-+	char *base = NULL;
+@@ -637,6 +638,7 @@ gitweb/gitweb.cgi: gitweb/gitweb.perl
+ 	    -e 's|++GITWEB_CSS++|$(GITWEB_CSS)|g' \
+ 	    -e 's|++GITWEB_LOGO++|$(GITWEB_LOGO)|g' \
+ 	    -e 's|++GITWEB_FAVICON++|$(GITWEB_FAVICON)|g' \
++	    -e 's|++GITWEB_EXPORT_OK++|$(GITWEB_EXPORT_OK)|g' \
+ 	    $< >$@+
+ 	chmod +x $@+
+ 	mv $@+ $@
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index d89f709..3944d13 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -54,6 +54,9 @@ our $favicon = "++GITWEB_FAVICON++";
+ # source of projects list
+ our $projects_list = "++GITWEB_LIST++";
  
- 	git_config(git_tar_config);
- 
--	switch (argc) {
--	case 3:
--		strbuf_append_string(&current_path, argv[2]);
--		strbuf_append_string(&current_path, "/");
--		/* FALLTHROUGH */
--	case 2:
--		if (get_sha1(argv[1], sha1))
--			die("Not a valid object name %s", argv[1]);
--		break;
--	default:
-+	memset(&args, 0, sizeof(args));
-+	if (argc != 2 && argc != 3)
- 		usage(tar_tree_usage);
-+	if (argc == 3) {
-+		int baselen = strlen(argv[2]);
-+		base = xmalloc(baselen + 2);
-+		memcpy(base, argv[2], baselen);
-+		base[baselen] = '/';
-+		base[baselen + 1] = '\0';
- 	}
-+	args.base = base;
-+	parse_treeish_arg(argv + 1, &args, NULL);
- 
--	commit = lookup_commit_reference_gently(sha1, 1);
--	if (commit) {
--		write_global_extended_header(commit->object.sha1);
--		archive_time = commit->date;
--	} else
--		archive_time = time(NULL);
--
--	tree.buf = buffer = read_object_with_reference(sha1, tree_type,
--	                                               &tree.size, tree_sha1);
--	if (!tree.buf)
--		die("not a reference to a tag, commit or tree object: %s",
--		    sha1_to_hex(sha1));
--
--	if (current_path.len > 0)
--		write_entry(tree_sha1, &current_path, 040777, NULL, 0);
--	traverse_tree(&tree, &current_path);
--	write_trailer();
--	free(buffer);
--	free(current_path.buf);
--	return 0;
-+	result = write_tar_archive(&args);
-+	free(base);
++# show repository only if this file exists
++our $export_ok = "++GITWEB_EXPORT_OK++";
 +
-+	return result;
+ # list of git base URLs used for URL to where fetch project from,
+ # i.e. full URL is "$git_base_url/$project"
+ our @git_base_url_list = ("++GITWEB_BASE_URL++");
+@@ -181,12 +184,13 @@ if (defined $project) {
  }
- 
- static int write_tar_entry(const unsigned char *sha1,
-@@ -383,7 +329,7 @@ static int write_tar_entry(const unsigne
- 
- int write_tar_archive(struct archiver_args *args)
- {
--	int plen = strlen(args->base);
-+	int plen = args->base ? strlen(args->base) : 0;
- 
- 	git_config(git_tar_config);
- 
+ if (defined $project) {
+ 	if (!validate_input($project)) {
++		undef $project;
+ 		die_error(undef, "Invalid project parameter");
+ 	}
+-	if (!(-d "$projectroot/$project")) {
+-		die_error(undef, "No such directory");
+-	}
+-	if (!(-e "$projectroot/$project/HEAD")) {
++	if (!(-d "$projectroot/$project") ||
++	    !(-e "$projectroot/$project/HEAD") ||
++	    ($export_ok && !(-e "$projectroot/$project/$export_ok"))) {
++		undef $project;
+ 		die_error(undef, "No such project");
+ 	}
+ 	$git_dir = "$projectroot/$project";
+@@ -694,7 +698,8 @@ sub git_get_projects_list {
+ 		my $dir = $projects_list;
+ 		opendir my ($dh), $dir or return undef;
+ 		while (my $dir = readdir($dh)) {
+-			if (-e "$projectroot/$dir/HEAD") {
++			if (-e "$projectroot/$dir/HEAD" && (!$export_ok ||
++			    -e "$projectroot/$dir/$export_ok")) {
+ 				my $pr = {
+ 					path => $dir,
+ 				};
+@@ -716,7 +721,8 @@ sub git_get_projects_list {
+ 			if (!defined $path) {
+ 				next;
+ 			}
+-			if (-e "$projectroot/$path/HEAD") {
++			if (-e "$projectroot/$path/HEAD" && (!$export_ok ||
++			    -e "$projectroot/$path/$export_ok")) {
+ 				my $pr = {
+ 					path => $path,
+ 					owner => decode("utf8", $owner, Encode::FB_DEFAULT),
+-- 
+1.4.2.g0ea2
