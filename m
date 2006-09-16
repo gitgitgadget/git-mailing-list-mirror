@@ -1,73 +1,57 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: export-ok option
-Date: Sat, 16 Sep 2006 21:44:30 +0200
-Organization: At home
-Message-ID: <eehk5p$ipm$2@sea.gmane.org>
-References: <20060916192750.GA27008@moooo.ath.cx>
+From: Sasha Khapyorsky <sashak@voltaire.com>
+Subject: Re: [PATCH] Trivial support for cloning and fetching via ftp://.
+Date: Sat, 16 Sep 2006 22:54:51 +0300
+Message-ID: <20060916195451.GF17504@sashak.voltaire.com>
+References: <20060914022404.GA900@sashak.voltaire.com> <7vk6475408.fsf@assigned-by-dhcp.cox.net> <20060916023717.GA13570@sashak.voltaire.com> <7vwt849nv6.fsf@assigned-by-dhcp.cox.net> <20060916100147.GA17504@sashak.voltaire.com> <7virjnafev.fsf@assigned-by-dhcp.cox.net> <20060916174134.GE17504@sashak.voltaire.com> <7vd59vae2r.fsf@assigned-by-dhcp.cox.net> <7v8xkjadzv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sat Sep 16 21:45:28 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 16 21:49:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOg6H-0001aY-A1
-	for gcvg-git@gmane.org; Sat, 16 Sep 2006 21:45:17 +0200
+	id 1GOg9w-0002Ml-Ph
+	for gcvg-git@gmane.org; Sat, 16 Sep 2006 21:49:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751459AbWIPTpI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Sep 2006 15:45:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751465AbWIPTpI
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 15:45:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:50394 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751459AbWIPTpG (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Sep 2006 15:45:06 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1GOg62-0001YH-VH
-	for git@vger.kernel.org; Sat, 16 Sep 2006 21:45:02 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 16 Sep 2006 21:45:02 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 16 Sep 2006 21:45:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751470AbWIPTtA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Sep 2006 15:49:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751473AbWIPTtA
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 15:49:00 -0400
+Received: from taurus.voltaire.com ([193.47.165.240]:51786 "EHLO
+	taurus.voltaire.com") by vger.kernel.org with ESMTP
+	id S1751470AbWIPTs7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Sep 2006 15:48:59 -0400
+Received: from sashak ([172.25.5.107]) by taurus.voltaire.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sat, 16 Sep 2006 22:48:57 +0300
+Received: by sashak (sSMTP sendmail emulation); Sat, 16 Sep 2006 22:54:51 +0300
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v8xkjadzv.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-OriginalArrivalTime: 16 Sep 2006 19:48:57.0100 (UTC) FILETIME=[25B65CC0:01C6D9C9]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27130>
 
-Matthias Lederhofer wrote:
-
-> Similar to git-daemon checking for git-daemon-export-ok this
-> introduces an optional check before showing a repository in gitweb.
+On 11:00 Sat 16 Sep     , Junio C Hamano wrote:
+> Junio C Hamano <junkio@cox.net> writes:
 > 
-> I also changed the 'No such directory' error message to 'No such
-> project' because the user visiting my gitweb should not know what
-> directories I have in the project root directory.
+> > Sasha Khapyorsky <sashak@voltaire.com> writes:
+> >
+> >> Good. Am I need to send the patch or you will integrate it?
+> >
+> > Actually, I am thinking of doing this in two steps.
+> >
+> > The attached is the first "clean-up" step, which should be
+> > obvious enough.
+> >
+> > And you already know what the second one that would come on top
+> > of this should look like ;-).
 > 
-> undef $project; is used to prevent displaying the description.
-> ---
-> Perhaps there should be another option which allows only those
-> repositories to be shown which are in $projects_list.
+> Oops, thinko.  I sent a rolled-up one out.
 
-I don't know what this is for (well, except replacing 'No such directory'
-error message by 'No such project'). If you want only some of repositories
-to be present in gitweb, you simply use $projects_list _file_ (e.g. using
-new "project_index" action to generate it) and edit it to contain only the
-repositories you want to be shown in gitweb.
+Yes, and it looks good. Thanks :)
 
-Unless of course the person who hosts gitweb, and the person who owns
-repository are uncommunicado, and you want the power of deciding if
-repository is present in gitweb or not to be placed in the hands of
-repository owner. Still, gitweb must be configured for this.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Sasha
