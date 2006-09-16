@@ -1,144 +1,123 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Add "git show-ref" builtin command
-Date: Fri, 15 Sep 2006 15:54:36 -0700
-Message-ID: <7vy7skeo5v.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0609151108560.4388@g5.osdl.org>
-	<7vmz90g80m.fsf@assigned-by-dhcp.cox.net> <eef5m8$euj$1@sea.gmane.org>
+From: Sasha Khapyorsky <sashak@voltaire.com>
+Subject: Re: [PATCH] Trivial support for cloning and fetching via ftp://.
+Date: Sat, 16 Sep 2006 05:37:17 +0300
+Message-ID: <20060916023717.GA13570@sashak.voltaire.com>
+References: <20060914022404.GA900@sashak.voltaire.com> <7vk6475408.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 16 00:54:49 2006
+X-From: git-owner@vger.kernel.org Sat Sep 16 04:32:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOMa4-0003SF-Na
-	for gcvg-git@gmane.org; Sat, 16 Sep 2006 00:54:45 +0200
+	id 1GOPyF-0002l8-3A
+	for gcvg-git@gmane.org; Sat, 16 Sep 2006 04:31:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932348AbWIOWyj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Sep 2006 18:54:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932350AbWIOWyj
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 18:54:39 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:7078 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S932348AbWIOWyi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Sep 2006 18:54:38 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060915225437.BATC6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 15 Sep 2006 18:54:37 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id NmuR1V00b1kojtg0000000
-	Fri, 15 Sep 2006 18:54:26 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <eef5m8$euj$1@sea.gmane.org> (Jakub Narebski's message of "Fri,
-	15 Sep 2006 23:24:56 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932384AbWIPCb2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Sep 2006 22:31:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932385AbWIPCb2
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Sep 2006 22:31:28 -0400
+Received: from taurus.voltaire.com ([193.47.165.240]:19979 "EHLO
+	taurus.voltaire.com") by vger.kernel.org with ESMTP id S932384AbWIPCb1
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Sep 2006 22:31:27 -0400
+Received: from sashak ([172.25.5.107]) by taurus.voltaire.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sat, 16 Sep 2006 05:31:25 +0300
+Received: by sashak (sSMTP sendmail emulation); Sat, 16 Sep 2006 05:37:17 +0300
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vk6475408.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-OriginalArrivalTime: 16 Sep 2006 02:31:25.0994 (UTC) FILETIME=[352968A0:01C6D938]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27106>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On 23:57 Wed 13 Sep     , Junio C Hamano wrote:
+> Sasha Khapyorsky <sashak@voltaire.com> writes:
+> 
+> > This adds trivial support for cloning and fetching via ftp://.
+> 
+> Interesting.
+> 
+> I was wondering myself if our use of curl libraries in
+> http-fetch allows us to do this when I was looking at the
+> alternates breakage yesterday.
+> 
+> At a few places we do look at http error code that is returned
+> from the curl library, and change our behaviour based on that.
+> But it appears the difference between error code from ftp and
+> http has no bad effect on us.  In an empty repository, we can
+> run this:
+> 
+> 	$ git-http-fetch -a -v heads/merge \
+> 	  ftp://ftp.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc.git
+> 
+> (of course, this should normally be with http://www.kernel.org).
+> We notice that we get an error from a request for one object,
+> and switch to pack & alternates transfer.  The only difference
+> between http://www and ftp://ftp is that for the former we know
+> error code 404 and supress the error message but for the latter
+> we do not treat error 550 from RETR response any specially and
+> show an error message.  We still fall back to retrieve packs,
+> hoping that the missing object is in a pack.
+> 
+> I'd take this patch as is, but we might want to add some error
+> message supression logic just like we do for http.
 
-> Wouldn't it be better to be able to use (or be able to enable, like echo -e
-> option) interpretation of the  backslash-escaped characters, like 
-> \t, \n, \0?
+Something like this?
 
-I've been thinking about letting the --format to specify
-embedding arbitrary byte value in the output.
+With this change I'm able to clone
+ftp://ftp.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc.git
 
-This option however is mostly to help Porcelain written in
-languages other than C (and that is where the language specific
-quoting styles come in) to allow a template of a scriptlet to be
-specified, as you have probably seen in the examples in the
-documentation page, so I think it is more user friendly to leave
-backslash as just a literal character.
 
-My current thinking is to allow you to say %XX (a per-cent
-followed by exactly two hexadecimal digits) to do embed a
-literal byte value.  Then a Porcelain written in Perl that does
-not want to eval output can do something like this:
-
-	my $fmt = 'r%(refname)%00o%(objectname)%00%00';
-	open R, '-|', 'git-for-each-ref', "--format=$fmt";
-	my $all = join('', <R>);
-	close R;        	        
-        for (split(/\0\0/, $all)) {
-		/r(.*?)\0o(.*)/ &&
-                print "ref = $1, obj = $2\n";
-        }
-
-Another thing is that originally I picked %(name) syntax because
-I thought we might want to do fancier "%20(column)d" like Python
-does with its string formatting operator.  But I now think it
-makes more sense to output whatever is asked as string literals
-and have host language worry about formatting.  So in that
-sense, using %() as our formatting specifier will get in the way
-for people who writes in Python.  Maybe I should change it to
-something like %{name} instead (not ${name} -- that would
-interfere with the shell and Perl).
-
-Anyhow, on top of the previous one, this will let you say %00 to
-embed a NUL in your string.
-
-diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
-index f064e7e..698618b 100644
---- a/builtin-for-each-ref.c
-+++ b/builtin-for-each-ref.c
-@@ -710,12 +710,39 @@ static void print_value(struct refinfo *
- 	}
- }
+diff --git a/http-fetch.c b/http-fetch.c
+index a113bb8..46d6029 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -324,7 +324,9 @@ static void process_object_response(void
  
-+static int hex1(char ch)
-+{
-+	if ('0' <= ch && ch <= '9')
-+		return ch - '0';
-+	else if ('a' <= ch && ch <= 'f')
-+		return ch - 'a' + 10;
-+	else if ('A' <= ch && ch <= 'F')
-+		return ch - 'A' + 10;
-+	return -1;
-+}
-+static int hex2(const char *cp)
-+{
-+	if (cp[0] && cp[1])
-+		return (hex1(cp[0]) << 4) | hex1(cp[1]);
-+	else
-+		return -1;
-+}
-+
- static void emit(const char *cp, const char *ep)
- {
- 	while (*cp && (!ep || cp < ep)) {
--		if (*cp == '%')
-+		if (*cp == '%') {
- 			if (cp[1] == '%')
- 				cp++;
-+			else {
-+				int ch = hex2(cp + 1);
-+				if (0 <= ch) {
-+					putchar(ch);
-+					cp += 3;
-+					continue;
-+				}
-+			}
-+		}
- 		putchar(*cp);
- 		cp++;
- 	}
-@@ -731,8 +758,10 @@ static void show_ref(struct refinfo *inf
- 			emit(cp, sp);
- 		print_value(info, parse_atom(sp + 2, ep), quote_style);
- 	}
--	if (*cp)
--		fputs(cp, stdout);
-+	if (*cp) {
-+		sp = cp + strlen(cp);
-+		emit(cp, sp);
-+	}
- 	putchar('\n');
- }
- 
+ 	/* Use alternates if necessary */
+ 	if (obj_req->http_code == 404 ||
+-	    obj_req->curl_result == CURLE_FILE_COULDNT_READ_FILE) {
++	    obj_req->curl_result == CURLE_FILE_COULDNT_READ_FILE ||
++	    (obj_req->http_code == 550 &&
++	     obj_req->curl_result == CURLE_FTP_COULDNT_RETR_FILE)) {
+ 		fetch_alternates(alt->base);
+ 		if (obj_req->repo->next != NULL) {
+ 			obj_req->repo =
+@@ -538,7 +540,9 @@ static void process_alternates_response(
+ 		}
+ 	} else if (slot->curl_result != CURLE_OK) {
+ 		if (slot->http_code != 404 &&
+-		    slot->curl_result != CURLE_FILE_COULDNT_READ_FILE) {
++		    slot->curl_result != CURLE_FILE_COULDNT_READ_FILE &&
++		    (slot->http_code != 550 &&
++		     slot->curl_result != CURLE_FTP_COULDNT_RETR_FILE)) {
+ 			got_alternates = -1;
+ 			return;
+ 		}
+@@ -942,7 +946,9 @@ #endif
+ 		run_active_slot(slot);
+ 		if (results.curl_result != CURLE_OK) {
+ 			if (results.http_code == 404 ||
+-			    results.curl_result == CURLE_FILE_COULDNT_READ_FILE) {
++			    results.curl_result == CURLE_FILE_COULDNT_READ_FILE ||
++			    (results.http_code == 550 &&
++			     results.curl_result == CURLE_FTP_COULDNT_RETR_FILE)) {
+ 				repo->got_indices = 1;
+ 				free(buffer.buffer);
+ 				return 0;
+@@ -1124,7 +1130,9 @@ #endif
+ 	} else if (obj_req->curl_result != CURLE_OK &&
+ 		   obj_req->http_code != 416) {
+ 		if (obj_req->http_code == 404 ||
+-		    obj_req->curl_result == CURLE_FILE_COULDNT_READ_FILE)
++		    obj_req->curl_result == CURLE_FILE_COULDNT_READ_FILE ||
++		    (obj_req->http_code == 550 &&
++		     obj_req->curl_result == CURLE_FTP_COULDNT_RETR_FILE))
+ 			ret = -1; /* Be silent, it is probably in a pack. */
+ 		else
+ 			ret = error("%s (curl_result = %d, http_code = %ld, sha1 = %s)",
