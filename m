@@ -1,87 +1,78 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Trivial support for cloning and fetching via ftp://.
-Date: Sat, 16 Sep 2006 02:12:13 -0700
-Message-ID: <7vwt849nv6.fsf@assigned-by-dhcp.cox.net>
-References: <20060914022404.GA900@sashak.voltaire.com>
-	<7vk6475408.fsf@assigned-by-dhcp.cox.net>
-	<20060916023717.GA13570@sashak.voltaire.com>
+Subject: Re: Teach "git checkout" to use git-show-ref
+Date: Sat, 16 Sep 2006 02:33:39 -0700
+Message-ID: <7vpsdw9mvg.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0609151108560.4388@g5.osdl.org>
+	<Pine.LNX.4.64.0609151455150.4388@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 16 11:12:47 2006
+X-From: git-owner@vger.kernel.org Sat Sep 16 11:33:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOWE0-0003v5-Dg
-	for gcvg-git@gmane.org; Sat, 16 Sep 2006 11:12:36 +0200
+	id 1GOWYV-0007wW-5T
+	for gcvg-git@gmane.org; Sat, 16 Sep 2006 11:33:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964827AbWIPJMQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Sep 2006 05:12:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964828AbWIPJMQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 05:12:16 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:34763 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S964827AbWIPJMO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Sep 2006 05:12:14 -0400
+	id S964836AbWIPJdm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Sep 2006 05:33:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964837AbWIPJdm
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 05:33:42 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:56201 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S964836AbWIPJdl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Sep 2006 05:33:41 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao01.cox.net
+          by fed1rmmtao05.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060916091214.LXSN6077.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 16 Sep 2006 05:12:14 -0400
+          id <20060916093341.ZLYN12909.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 16 Sep 2006 05:33:41 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id NxCF1V00L1kojtg0000000
-	Sat, 16 Sep 2006 05:12:15 -0400
-To: Sasha Khapyorsky <sashak@voltaire.com>
-In-Reply-To: <20060916023717.GA13570@sashak.voltaire.com> (Sasha Khapyorsky's
-	message of "Sat, 16 Sep 2006 05:37:17 +0300")
+	id NxZh1V00i1kojtg0000000
+	Sat, 16 Sep 2006 05:33:42 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0609151455150.4388@g5.osdl.org> (Linus Torvalds's
+	message of "Fri, 15 Sep 2006 14:56:55 -0700 (PDT)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27114>
 
-Sasha Khapyorsky <sashak@voltaire.com> writes:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> Something like this?
+> That way, it doesn't care how the refs are stored any more
 >
-> With this change I'm able to clone
-> ftp://ftp.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc.git
+> Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+> ---
+>
+> Just as an example of how to use git-show-ref rather than knowing about 
+> "$GIT_DIR/refs/..." paths.
+>
+> This basically replaces my much hackier version that is in the "lt/refs" 
+> branch, but can go into the master branch independently of the 
+> refs-packing work.
 
-I think without you would have, just with extra error messages
-that http codepath filters out.
+I kind of liked the rev-parse one better for this particular
+command, but only slightly (by using --verify on "$arg^0", you
+were also making sure what's in refs/heads/ was a commit object,
+but that check is gone with this patch.  It is not a loss,
+because the original code did not check it, and nobody should be
+placing anything but commits under refs/heads anyway).
 
-> diff --git a/http-fetch.c b/http-fetch.c
-> index a113bb8..46d6029 100644
-> --- a/http-fetch.c
-> +++ b/http-fetch.c
-> @@ -324,7 +324,9 @@ static void process_object_response(void
->  
->  	/* Use alternates if necessary */
->  	if (obj_req->http_code == 404 ||
-> -	    obj_req->curl_result == CURLE_FILE_COULDNT_READ_FILE) {
-> +	    obj_req->curl_result == CURLE_FILE_COULDNT_READ_FILE ||
-> +	    (obj_req->http_code == 550 &&
-> +	     obj_req->curl_result == CURLE_FTP_COULDNT_RETR_FILE)) {
-
-Here you do the same as the code would for HTTP 404 when you get
-550 _and_ RETR failure...
-
-> @@ -538,7 +540,9 @@ static void process_alternates_response(
->  		}
->  	} else if (slot->curl_result != CURLE_OK) {
->  		if (slot->http_code != 404 &&
-> -		    slot->curl_result != CURLE_FILE_COULDNT_READ_FILE) {
-> +		    slot->curl_result != CURLE_FILE_COULDNT_READ_FILE &&
-> +		    (slot->http_code != 550 &&
-> +		     slot->curl_result != CURLE_FTP_COULDNT_RETR_FILE)) {
->  			got_alternates = -1;
-
-... but you say, while the original code says "declare error if
-it is not HTTP 404", "oh by the way, if it is 550 _or_ if it
-is RETR failure then do not trigger this if()".  I suspect you
-meant to say this?
-
-	    (slot->http_code != 550 ||
-	     slot->curl_result != CURLE_FTP_COULDNT_RETR_FILE)) {
+> diff --git a/git-checkout.sh b/git-checkout.sh
+> index 580a9e8..6e4c535 100755
+> --- a/git-checkout.sh
+> +++ b/git-checkout.sh
+>...
+> @@ -51,7 +51,7 @@ while [ "$#" != "0" ]; do
+>  			fi
+>  			new="$rev"
+>  			new_name="$arg^0"
+> -			if [ -f "$GIT_DIR/refs/heads/$arg" ]; then
+> +			if git-show-ref --verify --quiet -- "refs/heads/$arg" ]; then
+>  				branch="$arg"
+>  			fi
+>  		elif rev=$(git-rev-parse --verify "$arg^{tree}" 2>/dev/null)
