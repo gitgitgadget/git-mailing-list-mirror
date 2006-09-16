@@ -1,97 +1,105 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: cvs import
-Date: Fri, 15 Sep 2006 23:39:18 -0400
-Message-ID: <20060916033917.GA24269@spearce.org>
-References: <45084400.1090906@bluegap.ch> <9e4733910609131201q7f583029r72dac66cd0dd098f@mail.gmail.com> <46a038f90609131341se42b2dcne73c017cf757d13a@mail.gmail.com> <450872AE.5050409@bluegap.ch> <9e4733910609131438n686b6d72u4d5799533c7473d7@mail.gmail.com> <4508EA78.5030001@alum.mit.edu> <20060914155003.GB9657@spearce.org> <450A581E.2050509@bluegap.ch>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Build on Debian GNU/Hurd
+Date: Fri, 15 Sep 2006 22:35:57 -0700
+Message-ID: <7vr6yce5ky.fsf@assigned-by-dhcp.cox.net>
+References: <20060915125846.10469.qmail@ccc765dd61a02d.315fe32.mid.smarden.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, Jon Smirl <jonsmirl@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>, monotone-devel@nongnu.org,
-	dev@cvs2svn.tigris.org
-X-From: dev-return-1661-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org Sat Sep 16 05:39:31 2006
-Return-path: <dev-return-1661-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org>
-Envelope-to: gcvscd-dev@gmane.org
-Received: from sc51.sjc.collab.net ([204.16.104.146] helo=tigris.org)
-	by ciao.gmane.org with smtp (Exim 4.43)
-	id 1GOR1e-0007L5-KU
-	for gcvscd-dev@gmane.org; Sat, 16 Sep 2006 05:39:30 +0200
-Received: (qmail 9709 invoked by uid 5000); 16 Sep 2006 03:39:28 -0000
-Mailing-List: contact dev-help@cvs2svn.tigris.org; run by ezmlm
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 16 07:36:24 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by ciao.gmane.org with esmtp (Exim 4.43)
+	id 1GOSqj-000806-ST
+	for gcvg-git@gmane.org; Sat, 16 Sep 2006 07:36:22 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932179AbWIPFf7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Sep 2006 01:35:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932181AbWIPFf7
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 01:35:59 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:62656 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S932179AbWIPFf6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Sep 2006 01:35:58 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060916053558.PURQ2704.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 16 Sep 2006 01:35:58 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Ntbz1V00A1kojtg0000000
+	Sat, 16 Sep 2006 01:35:59 -0400
+To: Gerrit Pape <pape@smarden.org>
+In-Reply-To: <20060915125846.10469.qmail@ccc765dd61a02d.315fe32.mid.smarden.org>
+	(Gerrit Pape's message of "Fri, 15 Sep 2006 12:58:46 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-list-help: <mailto:dev-help@cvs2svn.tigris.org>
-list-unsubscribe: <mailto:dev-unsubscribe@cvs2svn.tigris.org>
-list-post: <mailto:dev@cvs2svn.tigris.org>
-Delivered-To: mailing list dev@cvs2svn.tigris.org
-Received: (qmail 9699 invoked from network); 16 Sep 2006 03:39:28 -0000
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AY8CAHYOC0WBToofAQgOKg
-X-IronPort-AV: i="4.09,173,1157353200"; 
-   d="scan'208"; a="26981016:sNHT18302823"
-X-IRONPORT: SCANNED
-To: Markus Schiltknecht <markus@bluegap.ch>
-Content-Disposition: inline
-In-Reply-To: <450A581E.2050509@bluegap.ch>
-Sender: spearce@spearce.org
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - cvs2svn.tigris.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27107>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27108>
 
-Markus Schiltknecht <markus@bluegap.ch> wrote:
-> Shawn Pearce wrote:
-> >I don't know how the Monotone guys feel about it but I think Git
-> >is happy with the data in any order, just so long as the dependency
-> >chains aren't fed out of order.  Which I think nearly all changeset
-> >based SCMs would have an issue with.  So we should be just fine
-> >with the current chronological order produced by cvs2svn.
-> 
-> I'd vote for splitting into file data (and delta / patches) import and 
-> metadata import (author, changelog, DAG).
-> 
-> Monotone would be happiest if the file data were sent one file after 
-> another and (inside each file) in the order of each file's single 
-> history. That guarantees good import performance for monotone. I imagine 
-> it's about the same for git. And if you have to somehow cache the files 
-> anyway, subversion will benefit, too. (Well, at least the cache will 
-> thank us with good performance).
+Gerrit Pape <pape@smarden.org> writes:
+
+> Patch from Cyril Brulebois to make the build process detect and support the
+> Debian GNU/Hurd architecture, see
+>  http://bugs.debian.org/379841
 >
-> After all file data has been delivered, the metadata can be delivered. 
-> As neigther monotone nor git care much if they are chronological across 
-> branches, I'd vote for doing it that way.
+> Signed-off-by: Gerrit Pape <pape@smarden.org>
+>
+> +ifeq ($(uname_S),GNU)
+> +       # GNU stands for GNU/Hurd
+> +       NO_STRLCPY = YesPlease
+> +       ALL_CFLAGS += -DPATH_MAX=4096
+> +endif
 
-Right.  I think that one of the cvs2svn guys had the right idea
-here.  Provide two hooks: one early during the RCS file parse which
-supplies a backend each full text file revision and another during
-the very last stage which includes the "file" in the metadata stream
-for commit.
+Two questions come to mind. (1) Does GNU stand for GNU/Hurd and
+nobody else? (2) Does everybody else have PATH_MAX?
 
-This would give Git and Monotone a way to grab the full text for each
-file and stream them out up front, then include only a "token" in the
-metadata stream which identifies the specific revision.  Meanwhile
-SVN can either cache the file revision during the early part or
-ignore it, then dump out the full content during the metadata.
+Adding NO_STRLCPY I do not have much problems with, but
+something like the attached may be cleaner to deal with PATH_MAX;
+of course now there is an issue of what the appropriate value
+for that symbol should be.
 
+Would including git-compat-util.h in builtin.h break somebody?
 
-As it happens Git doesn't care what order the file revisions come in.
-If we don't repack the imported data we would prefer to get the
-revisions in newest->oldest order so we can delta the older versions
-against the newer versions (like RCS).  This is also happens to be
-the fastest way to extract the revision data from RCS.
+-- >8 --
+Define fallback PATH_MAX on systems that do not define one in <limits.h>
 
-On the other hand from what I understand of Monotone it needs
-the revisions in oldest->newest order, as does SVN.
+Notably GNU/Hurd, as reported by Gerrit Pape.
 
-Doing both orderings in cvs2noncvs is probably ugly.  Doing just
-oldest->newest (since 2/3 backends want that) would be acceptable
-but would slow down Git imports as the RCS parsing overhead would
-be much higher.
-
--- 
-Shawn.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 552b8ec..0272d04 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -26,6 +26,13 @@ #include <netinet/in.h>
+ #include <sys/types.h>
+ #include <dirent.h>
+ 
++/* On most systems <limits.h> would have given us this, but
++ * not on some systems (e.g. GNU/Hurd).
++ */
++#ifndef PATH_MAX
++#define PATH_MAX 4096
++#endif
++
+ #ifdef __GNUC__
+ #define NORETURN __attribute__((__noreturn__))
+ #else
+diff --git a/builtin.h b/builtin.h
+index 34ed7b9..1d41f83 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -1,8 +1,7 @@
+ #ifndef BUILTIN_H
+ #define BUILTIN_H
+ 
+-#include <stdio.h>
+-#include <limits.h>
++#include "git-compat-util.h"
+ 
+ extern const char git_version_string[];
+ extern const char git_usage_string[];
