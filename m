@@ -1,51 +1,108 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: Setting up Password protected repositories?
-Date: Sun, 17 Sep 2006 12:43:47 -0400
-Message-ID: <20060917164347.GA21710@fieldses.org>
-References: <E1GOktx-0005JY-ER@jdl.com> <7virjn8eua.fsf@assigned-by-dhcp.cox.net> <E1GOm3h-0005jq-5u@jdl.com> <20060917022013.GA7512@spearce.org> <E1GOzP9-0001Fn-G8@jdl.com>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: Notes on supporting Git operations in/on partial Working Directories
+Date: Sun, 17 Sep 2006 11:47:35 -0700
+Message-ID: <450D9847.4080308@gmail.com>
+References: <4509A7EC.9090805@gmail.com>	<7vu03a2po8.fsf@assigned-by-dhcp.cox.net> <4509B954.60101@gmail.com>	<7v8xkl26kb.fsf@assigned-by-dhcp.cox.net> <450AEDBF.9050307@gmail.com> <7vvenm3h9f.fsf@assigned-by-dhcp.cox.net>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 17 18:44:14 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 17 20:48:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOzkX-0003OM-1b
-	for gcvg-git@gmane.org; Sun, 17 Sep 2006 18:44:09 +0200
+	id 1GP1gs-0004ft-SW
+	for gcvg-git@gmane.org; Sun, 17 Sep 2006 20:48:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965006AbWIQQny (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Sep 2006 12:43:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965007AbWIQQny
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Sep 2006 12:43:54 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:50371 "EHLO
-	pickle.fieldses.org") by vger.kernel.org with ESMTP id S965006AbWIQQny
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Sep 2006 12:43:54 -0400
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
-	(envelope-from <bfields@fieldses.org>)
-	id 1GOzkB-0006sw-7P; Sun, 17 Sep 2006 12:43:47 -0400
-To: Jon Loeliger <jdl@jdl.com>
-Content-Disposition: inline
-In-Reply-To: <E1GOzP9-0001Fn-G8@jdl.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932349AbWIQSrj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Sep 2006 14:47:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932305AbWIQSrj
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Sep 2006 14:47:39 -0400
+Received: from py-out-1112.google.com ([64.233.166.180]:61134 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S932349AbWIQSri (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Sep 2006 14:47:38 -0400
+Received: by py-out-1112.google.com with SMTP id x66so6320198pye
+        for <git@vger.kernel.org>; Sun, 17 Sep 2006 11:47:38 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=f/k7CT3LHoGhF792tiWMzr7usvivkrv0SEZGrvG4uUpHRV6r1Cbt3WK5AgU/qKgXo5YgAXf7DQm00j00I8Gu43VpNutc32TW72DAyXxad/+vfGt/RgBpxD0kzmDxT2vxUvd/tE18bsCuJicv+zQ90s9beofbVglcwGU+0OYLOtM=
+Received: by 10.65.119.14 with SMTP id w14mr14565043qbm;
+        Sun, 17 Sep 2006 11:47:38 -0700 (PDT)
+Received: from ?10.0.0.6? ( [67.20.86.89])
+        by mx.gmail.com with ESMTP id e13sm11516068qbe.2006.09.17.11.47.37;
+        Sun, 17 Sep 2006 11:47:37 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.5 (X11/20060725)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vvenm3h9f.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27199>
 
-On Sun, Sep 17, 2006 at 11:22:03AM -0500, Jon Loeliger wrote:
-> So, like, the other day Shawn Pearce mumbled:
-> > Access is controlled by standard UNIX user/group read/write access
-> > and ACLs if your OS/filesystem support them.  You can also control
-> > pushing with an update hook.
+Junio C Hamano wrote:
+> A Large Angry SCM <gitzilla@gmail.com> writes:
 > 
-> OK.  I seem to recall a recipe down this line somwhere...  Is there
-> a current "Best Practices" write up somewhere with these details
-> outlined in it?
+>> Junio C Hamano wrote:
+>> ...
+>>> Having said that, I do not necessarily agree that highly modular
+>>> projects would want to put everything in one git repository and
+>>> track everything as a whole unit.
+>> And yet that's exactly how a lot of developers use CVS. You can argue
+>> that some other way is better but when they move from CVS they're
+>> looking for continuity of productivity which often means not radically
+>> changing how they work. At least in the short term.
+> 
+[...]
 
-There's a few sentences in Documentation/cvs-migration.txt, and a little
-more in Documentation/howto/update-hook-example.txt
+> I suspect that everything-under-one-roof approach is coming from
+> an observation that:
+> 
+>  - with CVS, projects that share the same cvsroot can be updated
+>    with single 'cvs update' command in a directory close to the
+>    root.
+> 
+>  - with git, if you use multiple repositories checked out at
+>    right places in the working tree hierarchy, you need to run
+>    around and say "git checkout" or "git commit" everywhere.
+> 
+> and the latter looks very inconvenient.
+> 
+> But of course the latter is very inconvenient.  The current "git
+> checkout" nor "git commit" are not such subprojects-aware
+> Porcelain commands.  But that does not mean you have to house
+> everything in the same repository and make partial check-in to
+> work.  You will be enhancing or replacing the same "git checkout"
+> and "git commit" commands to do so anyway.
 
---b.
+I used CVS as an example but I've seen the "everything-under-one-roof" 
+approach, as you put it, used in other VCS' that do work with 
+changesets. One instance, in particular, has all the source and config 
+files in a single tree that (I'm told) would take several Gigs of 
+filesystem space to checkout fully. The codebase is modular to a great 
+extent but any particular project in it usually required files from a 
+large number of other projects. There is a lot of automation to find the 
+required parts for builds and other actions on a project's codebase.
+
+Could this be done with multiple repositories? Yes, but we're talking 
+hundreds (no exaggeration) and many of those would likely end-up 
+including a large percentage of the other repositories the way the Git 
+repository includes the Gitk repository. It could work but their 
+existing approach already works and is likely better suited for their 
+codebase. Git can not, currently, do all the things that this 
+organization wants a VCS to do, working with partial checkouts is a key one.
+
+There is no fundamental reason Git can not support partial 
+checkouts/working directories. In fact, there is no fundamental reason 
+Git can not support operations on partial (sparse?) repositories in both 
+space (working content/state, etc.) and time (history); it's just a 
+matter of record keeping[*1*]. That isn't how the Linux kernel 
+developers want to use their VCS but it _is_ how others want to use theirs.
+
+
+Notes:
+[*1*] I'm currently working on determining the minimum requirements 
+needed to support repositories with partial or sparse history.
