@@ -1,86 +1,114 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: more support for PATH_INFO based URLs
-Date: Sun, 17 Sep 2006 15:18:29 +0200
-Organization: At home
-Message-ID: <eejhtr$paa$1@sea.gmane.org>
-References: <20060916210832.GV17042@admingilde.org>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH] gitweb: fix warnings in PATH_INFO code and add export_ok/strict_export
+Date: Sun, 17 Sep 2006 15:29:48 +0200
+Message-ID: <20060917132948.GA976@moooo.ath.cx>
+References: <20060916192750.GA27008@moooo.ath.cx> <20060916223027.GA32679@moooo.ath.cx> <20060916223101.GB32679@moooo.ath.cx> <7v64fm7u2q.fsf@assigned-by-dhcp.cox.net> <20060917090710.GA18153@moooo.ath.cx> <7vodte4w9w.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sun Sep 17 15:18:28 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 17 15:30:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOwXU-0005Ho-1C
-	for gcvg-git@gmane.org; Sun, 17 Sep 2006 15:18:28 +0200
+	id 1GOwij-0000DR-MW
+	for gcvg-git@gmane.org; Sun, 17 Sep 2006 15:30:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932427AbWIQNSN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Sep 2006 09:18:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932428AbWIQNSN
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Sep 2006 09:18:13 -0400
-Received: from main.gmane.org ([80.91.229.2]:53708 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932427AbWIQNSM (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Sep 2006 09:18:12 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GOwX0-0005Al-0h
-	for git@vger.kernel.org; Sun, 17 Sep 2006 15:17:58 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 17 Sep 2006 15:17:58 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 17 Sep 2006 15:17:58 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S964970AbWIQN3w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Sep 2006 09:29:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964971AbWIQN3w
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Sep 2006 09:29:52 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:54943 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S964970AbWIQN3w (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Sep 2006 09:29:52 -0400
+To: Junio C Hamano <junkio@cox.net>
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vodte4w9w.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27192>
 
-Martin Waitz wrote:
+---
+Junio C Hamano <junkio@cox.net> wrote:
+> Matthias Lederhofer <matled@gmx.net> writes:
+> The PATHINFO stuff Martin Waitz did mucks with $project somewhat
+> later than this part of the patch, possibly bypassing your
+> checks.  Could you check what's in 'master' to see if it is
+> reasonable and if not fix it up please?
+This patch replaces the other two warning fixes by Jakub and me.  I've
+put the whole thing in a sub-routine to keep the indentation level
+low.
+---
+ gitweb/gitweb.perl |   34 +++++++++++++++++++++-------------
+ 1 files changed, 21 insertions(+), 13 deletions(-)
 
-> Now three types of path based URLs are supported:
->       gitweb.cgi/project.git
->       gitweb.cgi/project.git/branch
->       gitweb.cgi/project.git/branch/filename
-> 
-> The first one (show project summary) was already supported for a long time
-> now.  The other two are new: they show the shortlog of a branch or
-> the plain file contents of some file contained in the repository.
-
-> +     if ($path_info =~ m,^$project/([^/]+)/(.+)$,) {
-> +             # we got "project.git/branch/filename"
-> +             $action    ||= "blob_plain";
-> +             $hash_base ||= $1;
-> +             $file_name ||= $2;
-> +     } elsif ($path_info =~ m,^$project/([^/]+)$,) {
-> +             # we got "project.git/branch"
-> +             $action ||= "shortlog";
-> +             $hash   ||= $1;
-> +     }
-
-I'm sorry, but I realized that I didn't think and check this patch through.
-
-First, this patch spews a bunch of warnings: when PATH_INFO is empty, when
-we undefine $project etc. The patches by me and by matled try to address
-and remove those warnings, but I'm sure we missed some.
-
-Second, the whole concept of third type of path (path_info) based URL is
-flawed: branches can also be hierarchical (for example Junio uses
-<initals>/<topic> topic branches, although they are not published).
-Therefore it is much harder to distinguish where branchname ends and
-filename begins. The patch assumes that branches are flat. So for example
-for branch with the name like "gitweb/xmms2" the types 2 and 3 wouldn't
-work; and type 1 worked before this patch.
-
-Therefore I rescind my Ack.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 497129a..0fb8638 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -189,9 +189,6 @@ do $GITWEB_CONFIG if -e $GITWEB_CONFIG;
+ # version of the core git binary
+ our $git_version = qx($GIT --version) =~ m/git version (.*)$/ ? $1 : "unknown";
+ 
+-# path to the current git repository
+-our $git_dir;
+-
+ $projects_list ||= $projectroot;
+ 
+ # ======================================================================
+@@ -273,30 +270,41 @@ if (defined $searchtext) {
+ }
+ 
+ # now read PATH_INFO and use it as alternative to parameters
+-our $path_info = $ENV{"PATH_INFO"};
+-$path_info =~ s|^/||;
+-$path_info =~ s|/$||;
+-if (validate_input($path_info) && !defined $project) {
++sub evaluate_path_info {
++	return if defined $project;
++	my $path_info = $ENV{"PATH_INFO"};
++	return if !$path_info;
++	$path_info =~ s,(^/|/$),,gs;
++	$path_info = validate_input($path_info);
++	return if !$path_info;
+ 	$project = $path_info;
+ 	while ($project && !-e "$projectroot/$project/HEAD") {
+ 		$project =~ s,/*[^/]*$,,;
+ 	}
+-	if (defined $project) {
+-		$project = undef unless $project;
++	if (!$project ||
++	    ($export_ok && !-e "$projectroot/$project/$export_ok") ||
++	    ($strict_export && !project_in_list($project))) {
++		undef $project;
++		return;
+ 	}
++	# do not change any parameters if an action is given using the query string
++	return if $action;
+ 	if ($path_info =~ m,^$project/([^/]+)/(.+)$,) {
+ 		# we got "project.git/branch/filename"
+ 		$action    ||= "blob_plain";
+-		$hash_base ||= $1;
+-		$file_name ||= $2;
++		$hash_base ||= validate_input($1);
++		$file_name ||= validate_input($2);
+ 	} elsif ($path_info =~ m,^$project/([^/]+)$,) {
+ 		# we got "project.git/branch"
+ 		$action ||= "shortlog";
+-		$hash   ||= $1;
++		$hash   ||= validate_input($1);
+ 	}
+ }
++evaluate_path_info();
+ 
+-$git_dir = "$projectroot/$project";
++# path to the current git repository
++our $git_dir;
++$git_dir = "$projectroot/$project" if $project;
+ 
+ # dispatch
+ my %actions = (
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+1.4.2.1.ge767
