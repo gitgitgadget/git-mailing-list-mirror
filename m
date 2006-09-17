@@ -1,83 +1,82 @@
-From: Dongsheng Song <dongsheng.song@gmail.com>
-Subject: git-repack: Outof memory
-Date: Sun, 17 Sep 2006 09:31:13 +0800
-Message-ID: <450CA561.9030602@gmail.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: [PATCH] gitweb:  Make git_get_refs_list do work of  git_get_references
+Date: 16 Sep 2006 18:40:22 -0700
+Message-ID: <864pv7tgmx.fsf@blue.stonehenge.com>
+References: <200609170226.39330.jnareb@gmail.com>
+	<7vodtf8eym.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Sep 17 03:32:50 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 17 03:40:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOlWT-00054K-1g
-	for gcvg-git@gmane.org; Sun, 17 Sep 2006 03:32:41 +0200
+	id 1GOle0-0006X5-IP
+	for gcvg-git@gmane.org; Sun, 17 Sep 2006 03:40:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964895AbWIQBbZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Sep 2006 21:31:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964902AbWIQBbZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 21:31:25 -0400
-Received: from py-out-1112.google.com ([64.233.166.183]:42825 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S964895AbWIQBbY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Sep 2006 21:31:24 -0400
-Received: by py-out-1112.google.com with SMTP id n25so4719989pyg
-        for <git@vger.kernel.org>; Sat, 16 Sep 2006 18:31:24 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:x-enigmail-version:openpgp:content-type:content-transfer-encoding;
-        b=eBq2jU9/ybkTFabOK9NS/uAczrbJx4AbHixZ57lI1Z6xhETkWliCjXb3DQjsmJfUtBAS2eaG9wzpivHJ2F8QeAoaFuuNeBwFb+lB5YWqMOl83Fu3+gKYw4EXOgMPOKC+tw9ZxPkXIyC6BD9sOf1oS/MpUapMlzww9XYzwJSB124=
-Received: by 10.35.53.18 with SMTP id f18mr20519121pyk;
-        Sat, 16 Sep 2006 18:31:23 -0700 (PDT)
-Received: from ?202.96.180.210? ( [202.96.180.210])
-        by mx.gmail.com with ESMTP id r1sm4292796nzd.2006.09.16.18.31.22;
-        Sat, 16 Sep 2006 18:31:23 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.7 (Windows/20060909)
-To: git@vger.kernel.org
-X-Enigmail-Version: 0.94.0.0
-OpenPGP: id=90A06C7A
+	id S932091AbWIQBkZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Sep 2006 21:40:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932120AbWIQBkZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 21:40:25 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:62275 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP id S932091AbWIQBkY
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Sep 2006 21:40:24 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 52BEE8F332;
+	Sat, 16 Sep 2006 18:40:24 -0700 (PDT)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 22789-01-25; Sat, 16 Sep 2006 18:40:23 -0700 (PDT)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id A865A8F396; Sat, 16 Sep 2006 18:40:23 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+x-mayan-date: Long count = 12.19.13.11.12; tzolkin = 4 Eb; haab = 5 Chen
+In-Reply-To: <7vodtf8eym.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27149>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
 
-Hi all:
+Junio> Jakub Narebski <jnareb@gmail.com> writes:
+>> Make git_get_refs_list do also work of git_get_references, to avoid
+>> calling git-peek-remote twice. It now returns either list of refs as
+>> before in scalar context, or references hash and list of refs in list
+>> context.
 
+Junio> I do not think we want to have too many functions that return
+Junio> different things depending on contexts.  Forcing callers to
+Junio> remember what the function does in which context is bad.
 
-I'm import from subversion. The problem appears to be git-repack phase using too many memory:
+That's even an inaccurate description, so an expert in Perl (I've
+known a few) would just scratch his head.
 
-$ git-repack -a -f -d --window=64 --depth=64
-Generating pack...
-Done counting 123497 objects.
-Deltifying 123497 objects.
-  24% (29677/123497) done
+You cannot ever ever return a list in a scalar context.  Ever.  Never ever.
 
-$ top
+You can return an array ref that *contains* a list of references, sure.
+Perhaps that's what you mean, as in:
 
-  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
- 3572 www-data  18   0 2591m 1.9g  528 R   13 94.8  81:48.98 git-pack-object
+  return [$ref1, $ref2, $ref3, $ref4]; # scalar return
 
+But to be sloppy about the terminology confuses me.  For example,
+I can't tell from your description if you mean the list-value return is:
 
-$ free
-             total       used       free     shared    buffers     cached
-Mem:       2076308    2029824      46484          0       2760       6800
-- -/+ buffers/cache:    2020264      56044
-Swap:      1028152     684032     344120
+  return \%some_hash, $ref1, $ref2, $ref3, $ref4; # list return: N items
 
+Or, reverse engineering your sloppiness on the other description, you
+*MIGHT* mean:
 
-How to compute memory usage of git-repack ?
+  return \%some_hash, [$ref1, $ref2, $ref3, $ref4]; # list return: 2 items
 
-Thanks and regards,
+Perl5 does *no* implicit referencing/dereferencing (just like C).  So yes,
+being precise with your language is necessary.
 
-Dongsheng
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (MingW32)
-
-iD8DBQFFDKVh90pbDJCgbHoRAlweAJ45DhTXI+bb+nb2Y+JlbIBoFusK8wCgk0U2
-XcUc9K/chYiUYq3ZLychzcU=
-=NzXf
------END PGP SIGNATURE-----
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
