@@ -1,78 +1,67 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: git-repack: Outof memory
-Date: Sat, 16 Sep 2006 22:25:35 -0400
-Message-ID: <20060917022534.GB7512@spearce.org>
-References: <450CA561.9030602@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb:  Make git_get_refs_list do work of  git_get_references
+Date: Sat, 16 Sep 2006 19:29:50 -0700
+Message-ID: <7v4pv78btt.fsf@assigned-by-dhcp.cox.net>
+References: <200609170226.39330.jnareb@gmail.com>
+	<7vodtf8eym.fsf@assigned-by-dhcp.cox.net>
+	<864pv7tgmx.fsf@blue.stonehenge.com>
+	<7vejub8cms.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 17 04:25:44 2006
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 17 04:30:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOmLl-0008AP-NR
-	for gcvg-git@gmane.org; Sun, 17 Sep 2006 04:25:42 +0200
+	id 1GOmPr-0000bk-LZ
+	for gcvg-git@gmane.org; Sun, 17 Sep 2006 04:29:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964926AbWIQCZj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Sep 2006 22:25:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964928AbWIQCZj
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 22:25:39 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:50117 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S964926AbWIQCZi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Sep 2006 22:25:38 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GOmLU-0007ic-O3; Sat, 16 Sep 2006 22:25:24 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 283B720FB1F; Sat, 16 Sep 2006 22:25:35 -0400 (EDT)
-To: Dongsheng Song <dongsheng.song@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <450CA561.9030602@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S964931AbWIQC3w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Sep 2006 22:29:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964932AbWIQC3w
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 22:29:52 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:41682 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S964931AbWIQC3w (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Sep 2006 22:29:52 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060917022951.RRJF18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 16 Sep 2006 22:29:51 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id PEVf1V0021kojtg0000000
+	Sat, 16 Sep 2006 22:29:39 -0400
+To: merlyn@stonehenge.com (Randal L. Schwartz)
+In-Reply-To: <7vejub8cms.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sat, 16 Sep 2006 19:12:27 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27156>
 
-Dongsheng Song <dongsheng.song@gmail.com> wrote:
-> I'm import from subversion. The problem appears to be git-repack phase using too many memory:
-> 
-> $ git-repack -a -f -d --window=64 --depth=64
-> Generating pack...
-> Done counting 123497 objects.
-> Deltifying 123497 objects.
->   24% (29677/123497) done
-> 
-> $ top
-> 
->   PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
->  3572 www-data  18   0 2591m 1.9g  528 R   13 94.8  81:48.98 git-pack-object
+Junio C Hamano <junkio@cox.net> writes:
 
-*ouch* You are probably running out of address space if you are on
-a 32 bit architecture.  A 2.5 GiB virtual address space is pretty
-close to the maximum allowed on most OSes.
+> The code I was complaining about tries to do something like
+> this:
+>
+> 	sub that_sub {
+>         	...
+>                 return wantarray ? (\@bar, \%foo) : \@bar;
+> 	}
+>
+> and it is not done for optimization purposes (i.e. "if the
+> caller only wants one and we are returning \@bar then we do not
+> have to compute \%foo which is a big win" is not why it does
+> this wantarray business).
 
-The code that I'm sitting on but haven't yet completed rebasing
-onto current Git would probably help here.
+Note.  I did not mean to imply conditional return should be done
+for performance reasons.
 
-Do you have any existing .pack files in .git/objects/pack?  How big
-are they and their corresponding .idx files?
-
-git-repack will need to mmap every .pack and .idx in
-.git/objects/pack, plus it needs working memory for each object
-(123,497 of 'em) but as I recall its pretty frugal on its per-object
-allocation.  It can easily work with as many as 2 million objects on
-a 32 bit system, assuming the .pack and .idx files aren't too large.
- 
--- 
-Shawn.
+And I do not think the way this conditional return is done
+serves better DWIMmery, which was my primary complaint.  So I
+should probably have said "It's not for better DWIM, it is not
+even for better performance, and I do not see a point".
