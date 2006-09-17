@@ -1,66 +1,107 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH][RFC] Add git-archive-tree
-Date: Sun, 17 Sep 2006 13:54:13 +0200
-Message-ID: <450D3765.9090303@lsrfire.ath.cx>
-References: <44F977C0.4060901@lsrfire.ath.cx>	<7vwt8mx8lb.fsf@assigned-by-dhcp.cox.net>	<44FF0DDE.7030700@lsrfire.ath.cx> <7v4pvk7jmn.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: PATCH] gitweb: Fix warnings when PATH_INFO is empty
+Date: Sun, 17 Sep 2006 14:09:44 +0200
+Message-ID: <200609171409.44958.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Franck Bui-Huu <vagabon.xyz@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 17 13:54:27 2006
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Sep 17 14:09:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOvE4-0002Ro-C2
-	for gcvg-git@gmane.org; Sun, 17 Sep 2006 13:54:20 +0200
+	id 1GOvSa-0006QJ-Vy
+	for gcvg-git@gmane.org; Sun, 17 Sep 2006 14:09:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964947AbWIQLyO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 17 Sep 2006 07:54:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964960AbWIQLyO
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Sep 2006 07:54:14 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:59604
-	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S964947AbWIQLyN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Sep 2006 07:54:13 -0400
-Received: from [10.0.1.3] (p508E4E70.dip.t-dialin.net [80.142.78.112])
-	by neapel230.server4you.de (Postfix) with ESMTP id BFF813601E;
-	Sun, 17 Sep 2006 13:54:11 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.7 (Windows/20060909)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v4pvk7jmn.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.94.0.0
+	id S964949AbWIQMJH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Sep 2006 08:09:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964960AbWIQMJH
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Sep 2006 08:09:07 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:26995 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S964949AbWIQMJG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Sep 2006 08:09:06 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so284732ugd
+        for <git@vger.kernel.org>; Sun, 17 Sep 2006 05:09:05 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=dSQyIgWW03HVs3jJWOo/88aWYDeX6BjIoPv1gmb3IX5zv87+DeeFykizF84irvNzBVXOGP1jHTP+msNaJl5nOgsFOLqP+8HQcZCt9G4gLqAUHIeyiRLJOrAGDj2cBRZ/8hIf0asij+ovQr4oVF/ZbvGvQYYrvoBEfhNu21oziVk=
+Received: by 10.66.244.11 with SMTP id r11mr6546506ugh;
+        Sun, 17 Sep 2006 05:09:04 -0700 (PDT)
+Received: from roke.d-201 ( [193.0.122.19])
+        by mx.gmail.com with ESMTP id k30sm2355307ugc.2006.09.17.05.09.04;
+        Sun, 17 Sep 2006 05:09:04 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27189>
 
-Junio C Hamano schrieb:
-> Rene Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
->=20
->> I then let the two chew away on the kernel repository.  And as=20
->> kcachegrind impressively shows, all we do with our trees and=20
->> objects is dwarfed by inflate().
->=20
-> The diff output codepath has a logic that says "if the blob we are=20
-> dealing with has the same object name as the corresponding blob in=20
-> the index, and if the index entry is clean (i.e. it is known that the
->  file sitting in the working tree matches the blob), then do not=20
-> inflate() but use data from that file instead".
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |   44 +++++++++++++++++++++++---------------------
+ 1 files changed, 23 insertions(+), 21 deletions(-)
 
-Nice idea.  The tree traverser would need to provide the filenames
-relative to the current working directory in addition to the
-filenames as they are written to the archive.  I guess your para-walk
-tree walker could be useful here.  I sadly haven't found the time to
-look at it, yet, and now it even vanished from the pu branch.
-
-A read is an order of magnitude faster than a deflate of the same data,
-at least that's what I guess from comparing the runtimes of git-tar-tre=
-e
-and tar.  _However_, this doesn't account for I/O costs (in my tests th=
-e
-repo and all checked-out files were cache hot) and for any compression
-that would certainly be applied to the resulting archive.  So the full
-runtime of archive creation wouldn't be that much shorter.
-
-Ren=E9
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 1549f5f..689528e 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -274,29 +274,31 @@ if (defined $searchtext) {
+ 
+ # now read PATH_INFO and use it as alternative to parameters
+ our $path_info = $ENV{"PATH_INFO"};
+-$path_info =~ s|^/||;
+-$path_info =~ s|/$||;
+-if (validate_input($path_info) && !defined $project) {
+-	$project = $path_info;
+-	while ($project && !-e "$projectroot/$project/HEAD") {
+-		$project =~ s,/*[^/]*$,,;
+-	}
+-	if (defined $project) {
+-		$project = undef unless $project;
+-	}
+-	if ($path_info =~ m,^$project/([^/]+)/(.+)$,) {
+-		# we got "project.git/branch/filename"
+-		$action    ||= "blob_plain";
+-		$hash_base ||= $1;
+-		$file_name ||= $2;
+-	} elsif ($path_info =~ m,^$project/([^/]+)$,) {
+-		# we got "project.git/branch"
+-		$action ||= "shortlog";
+-		$hash   ||= $1;
++if ($path_info) {
++	$path_info =~ s|^/||;
++	$path_info =~ s|/$||;
++	if (validate_input($path_info) && !defined $project) {
++		$project = $path_info;
++		while ($project && !-e "$projectroot/$project/HEAD") {
++			$project =~ s,/*[^/]*$,,;
++		}
++		if (defined $project) {
++			$project = undef unless $project;
++		}
++		if ($path_info =~ m,^$project/([^/]+)/(.+)$,) {
++			# we got "project.git/branch/filename"
++			$action    ||= "blob_plain";
++			$hash_base ||= $1;
++			$file_name ||= $2;
++		} elsif ($path_info =~ m,^$project/([^/]+)$,) {
++			# we got "project.git/branch"
++			$action ||= "shortlog";
++			$hash   ||= $1;
++		}
+ 	}
+-}
+ 
+-$git_dir = "$projectroot/$project";
++	$git_dir = "$projectroot/$project";
++}
+ 
+ # dispatch
+ my %actions = (
+-- 
+1.4.2.1
