@@ -1,107 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: PATCH] gitweb: Fix warnings when PATH_INFO is empty
-Date: Sun, 17 Sep 2006 14:09:44 +0200
-Message-ID: <200609171409.44958.jnareb@gmail.com>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH] gitweb: fix warnings from dd70235f5a81e (PATH_INFO)
+Date: Sun, 17 Sep 2006 14:14:08 +0200
+Message-ID: <20060917121408.GA19860@moooo.ath.cx>
+References: <20060916210832.GV17042@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Sep 17 14:09:21 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 17 14:14:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOvSa-0006QJ-Vy
-	for gcvg-git@gmane.org; Sun, 17 Sep 2006 14:09:21 +0200
+	id 1GOvXL-0007gS-Pc
+	for gcvg-git@gmane.org; Sun, 17 Sep 2006 14:14:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964949AbWIQMJH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Sep 2006 08:09:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964960AbWIQMJH
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Sep 2006 08:09:07 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:26995 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S964949AbWIQMJG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Sep 2006 08:09:06 -0400
-Received: by ug-out-1314.google.com with SMTP id o38so284732ugd
-        for <git@vger.kernel.org>; Sun, 17 Sep 2006 05:09:05 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=dSQyIgWW03HVs3jJWOo/88aWYDeX6BjIoPv1gmb3IX5zv87+DeeFykizF84irvNzBVXOGP1jHTP+msNaJl5nOgsFOLqP+8HQcZCt9G4gLqAUHIeyiRLJOrAGDj2cBRZ/8hIf0asij+ovQr4oVF/ZbvGvQYYrvoBEfhNu21oziVk=
-Received: by 10.66.244.11 with SMTP id r11mr6546506ugh;
-        Sun, 17 Sep 2006 05:09:04 -0700 (PDT)
-Received: from roke.d-201 ( [193.0.122.19])
-        by mx.gmail.com with ESMTP id k30sm2355307ugc.2006.09.17.05.09.04;
-        Sun, 17 Sep 2006 05:09:04 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
+	id S964966AbWIQMON (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Sep 2006 08:14:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964967AbWIQMON
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Sep 2006 08:14:13 -0400
+Received: from moooo.ath.cx ([85.116.203.178]:37541 "EHLO moooo.ath.cx")
+	by vger.kernel.org with ESMTP id S964966AbWIQMOM (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Sep 2006 08:14:12 -0400
+To: Martin Waitz <tali@admingilde.org>
+Mail-Followup-To: Martin Waitz <tali@admingilde.org>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <20060916210832.GV17042@admingilde.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27190>
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+And removed if in if where one if is enough.
 ---
- gitweb/gitweb.perl |   44 +++++++++++++++++++++++---------------------
- 1 files changed, 23 insertions(+), 21 deletions(-)
+Martin Waitz <tali@admingilde.org> wrote:
+> +	if (defined $project) {
+> +		$project = undef unless $project;
+> +	}
+This is an if in an if, one if is enough.
+
+> +	if ($path_info =~ m,^$project/([^/]+)/(.+)$,) {
+Warning if $project is undef.
+> +	} elsif ($path_info =~ m,^$project/([^/]+)$,) {
+The same.
+> +$git_dir = "$projectroot/$project";
+The same.
+
+We really need a gitweb test target.
+
+Something else I noted:
+> +	while ($project && !-e "$projectroot/$project/HEAD") {
+Evaluating $project boolean value leads to problems if a repository is
+named "0" (I dunno if there are other strings than "" and "0" which
+evaluate to false in perl).  There are multiple places where this is
+used so I did not change it in this patch (even added one more).
+Should this be changed?
+---
+ gitweb/gitweb.perl |   10 ++++------
+ 1 files changed, 4 insertions(+), 6 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 1549f5f..689528e 100755
+index 346c15c..4d39525 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -274,29 +274,31 @@ if (defined $searchtext) {
- 
- # now read PATH_INFO and use it as alternative to parameters
- our $path_info = $ENV{"PATH_INFO"};
--$path_info =~ s|^/||;
--$path_info =~ s|/$||;
--if (validate_input($path_info) && !defined $project) {
--	$project = $path_info;
--	while ($project && !-e "$projectroot/$project/HEAD") {
--		$project =~ s,/*[^/]*$,,;
--	}
+@@ -281,22 +281,20 @@ if (validate_input($path_info) && !defin
+ 	while ($project && !-e "$projectroot/$project/HEAD") {
+ 		$project =~ s,/*[^/]*$,,;
+ 	}
 -	if (defined $project) {
 -		$project = undef unless $project;
 -	}
 -	if ($path_info =~ m,^$project/([^/]+)/(.+)$,) {
--		# we got "project.git/branch/filename"
--		$action    ||= "blob_plain";
--		$hash_base ||= $1;
--		$file_name ||= $2;
++	$project = undef if !$project;
++	if ($project && $path_info =~ m,^$project/([^/]+)/(.+)$,) {
+ 		# we got "project.git/branch/filename"
+ 		$action    ||= "blob_plain";
+ 		$hash_base ||= $1;
+ 		$file_name ||= $2;
 -	} elsif ($path_info =~ m,^$project/([^/]+)$,) {
--		# we got "project.git/branch"
--		$action ||= "shortlog";
--		$hash   ||= $1;
-+if ($path_info) {
-+	$path_info =~ s|^/||;
-+	$path_info =~ s|/$||;
-+	if (validate_input($path_info) && !defined $project) {
-+		$project = $path_info;
-+		while ($project && !-e "$projectroot/$project/HEAD") {
-+			$project =~ s,/*[^/]*$,,;
-+		}
-+		if (defined $project) {
-+			$project = undef unless $project;
-+		}
-+		if ($path_info =~ m,^$project/([^/]+)/(.+)$,) {
-+			# we got "project.git/branch/filename"
-+			$action    ||= "blob_plain";
-+			$hash_base ||= $1;
-+			$file_name ||= $2;
-+		} elsif ($path_info =~ m,^$project/([^/]+)$,) {
-+			# we got "project.git/branch"
-+			$action ||= "shortlog";
-+			$hash   ||= $1;
-+		}
++	} elsif ($project && $path_info =~ m,^$project/([^/]+)$,) {
+ 		# we got "project.git/branch"
+ 		$action ||= "shortlog";
+ 		$hash   ||= $1;
  	}
--}
+ }
  
 -$git_dir = "$projectroot/$project";
-+	$git_dir = "$projectroot/$project";
-+}
++$git_dir = "$projectroot/$project" if $project;
  
  # dispatch
  my %actions = (
 -- 
-1.4.2.1
+1.4.2.1.ge767
