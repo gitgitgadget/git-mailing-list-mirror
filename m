@@ -1,93 +1,86 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: [PATCH] gitweb: fix warnings from dd70235f5a81e (PATH_INFO)
-Date: Sun, 17 Sep 2006 14:14:08 +0200
-Message-ID: <20060917121408.GA19860@moooo.ath.cx>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: more support for PATH_INFO based URLs
+Date: Sun, 17 Sep 2006 15:18:29 +0200
+Organization: At home
+Message-ID: <eejhtr$paa$1@sea.gmane.org>
 References: <20060916210832.GV17042@admingilde.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 17 14:14:27 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sun Sep 17 15:18:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOvXL-0007gS-Pc
-	for gcvg-git@gmane.org; Sun, 17 Sep 2006 14:14:16 +0200
+	id 1GOwXU-0005Ho-1C
+	for gcvg-git@gmane.org; Sun, 17 Sep 2006 15:18:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964966AbWIQMON (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Sep 2006 08:14:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964967AbWIQMON
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Sep 2006 08:14:13 -0400
-Received: from moooo.ath.cx ([85.116.203.178]:37541 "EHLO moooo.ath.cx")
-	by vger.kernel.org with ESMTP id S964966AbWIQMOM (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Sep 2006 08:14:12 -0400
-To: Martin Waitz <tali@admingilde.org>
-Mail-Followup-To: Martin Waitz <tali@admingilde.org>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060916210832.GV17042@admingilde.org>
+	id S932427AbWIQNSN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Sep 2006 09:18:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932428AbWIQNSN
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Sep 2006 09:18:13 -0400
+Received: from main.gmane.org ([80.91.229.2]:53708 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932427AbWIQNSM (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Sep 2006 09:18:12 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GOwX0-0005Al-0h
+	for git@vger.kernel.org; Sun, 17 Sep 2006 15:17:58 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 17 Sep 2006 15:17:58 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 17 Sep 2006 15:17:58 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27191>
 
-And removed if in if where one if is enough.
----
-Martin Waitz <tali@admingilde.org> wrote:
-> +	if (defined $project) {
-> +		$project = undef unless $project;
-> +	}
-This is an if in an if, one if is enough.
+Martin Waitz wrote:
 
-> +	if ($path_info =~ m,^$project/([^/]+)/(.+)$,) {
-Warning if $project is undef.
-> +	} elsif ($path_info =~ m,^$project/([^/]+)$,) {
-The same.
-> +$git_dir = "$projectroot/$project";
-The same.
+> Now three types of path based URLs are supported:
+>       gitweb.cgi/project.git
+>       gitweb.cgi/project.git/branch
+>       gitweb.cgi/project.git/branch/filename
+> 
+> The first one (show project summary) was already supported for a long time
+> now.  The other two are new: they show the shortlog of a branch or
+> the plain file contents of some file contained in the repository.
 
-We really need a gitweb test target.
+> +     if ($path_info =~ m,^$project/([^/]+)/(.+)$,) {
+> +             # we got "project.git/branch/filename"
+> +             $action    ||= "blob_plain";
+> +             $hash_base ||= $1;
+> +             $file_name ||= $2;
+> +     } elsif ($path_info =~ m,^$project/([^/]+)$,) {
+> +             # we got "project.git/branch"
+> +             $action ||= "shortlog";
+> +             $hash   ||= $1;
+> +     }
 
-Something else I noted:
-> +	while ($project && !-e "$projectroot/$project/HEAD") {
-Evaluating $project boolean value leads to problems if a repository is
-named "0" (I dunno if there are other strings than "" and "0" which
-evaluate to false in perl).  There are multiple places where this is
-used so I did not change it in this patch (even added one more).
-Should this be changed?
----
- gitweb/gitweb.perl |   10 ++++------
- 1 files changed, 4 insertions(+), 6 deletions(-)
+I'm sorry, but I realized that I didn't think and check this patch through.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 346c15c..4d39525 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -281,22 +281,20 @@ if (validate_input($path_info) && !defin
- 	while ($project && !-e "$projectroot/$project/HEAD") {
- 		$project =~ s,/*[^/]*$,,;
- 	}
--	if (defined $project) {
--		$project = undef unless $project;
--	}
--	if ($path_info =~ m,^$project/([^/]+)/(.+)$,) {
-+	$project = undef if !$project;
-+	if ($project && $path_info =~ m,^$project/([^/]+)/(.+)$,) {
- 		# we got "project.git/branch/filename"
- 		$action    ||= "blob_plain";
- 		$hash_base ||= $1;
- 		$file_name ||= $2;
--	} elsif ($path_info =~ m,^$project/([^/]+)$,) {
-+	} elsif ($project && $path_info =~ m,^$project/([^/]+)$,) {
- 		# we got "project.git/branch"
- 		$action ||= "shortlog";
- 		$hash   ||= $1;
- 	}
- }
- 
--$git_dir = "$projectroot/$project";
-+$git_dir = "$projectroot/$project" if $project;
- 
- # dispatch
- my %actions = (
+First, this patch spews a bunch of warnings: when PATH_INFO is empty, when
+we undefine $project etc. The patches by me and by matled try to address
+and remove those warnings, but I'm sure we missed some.
+
+Second, the whole concept of third type of path (path_info) based URL is
+flawed: branches can also be hierarchical (for example Junio uses
+<initals>/<topic> topic branches, although they are not published).
+Therefore it is much harder to distinguish where branchname ends and
+filename begins. The patch assumes that branches are flat. So for example
+for branch with the name like "gitweb/xmms2" the types 2 and 3 wouldn't
+work; and type 1 worked before this patch.
+
+Therefore I rescind my Ack.
 -- 
-1.4.2.1.ge767
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
