@@ -1,64 +1,73 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 2/2] Use Linus' show ref in "git-branch.sh".
-Date: Sun, 17 Sep 2006 06:32:24 +0200
-Message-ID: <20060917063224.0dc298ae.chriscool@tuxfamily.org>
-References: <20060917062024.c476e07d.chriscool@tuxfamily.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-apply fails to apply some patches
+Date: Sat, 16 Sep 2006 23:16:25 -0700
+Message-ID: <7vzmcz6mrq.fsf@assigned-by-dhcp.cox.net>
+References: <20060915132225.12040.qmail@a0896f98af57b2.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 17 06:26:57 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: 386495@bugs.debian.org
+X-From: git-owner@vger.kernel.org Sun Sep 17 08:16:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOoF6-0000xT-Aq
-	for gcvg-git@gmane.org; Sun, 17 Sep 2006 06:26:57 +0200
+	id 1GOpxK-0001Lq-27
+	for gcvg-git@gmane.org; Sun, 17 Sep 2006 08:16:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750723AbWIQE0V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Sep 2006 00:26:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750826AbWIQE0V
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Sep 2006 00:26:21 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:39054 "EHLO smtp3-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1750723AbWIQE0V (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Sep 2006 00:26:21 -0400
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g19.free.fr (Postfix) with SMTP id 0EB60481BC;
-	Sun, 17 Sep 2006 06:26:20 +0200 (CEST)
-To: Junio Hamano <junkio@cox.net>
-In-Reply-To: <20060917062024.c476e07d.chriscool@tuxfamily.org>
-X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.8.20; i486-pc-linux-gnu)
+	id S932217AbWIQGQ1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Sep 2006 02:16:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932218AbWIQGQ1
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Sep 2006 02:16:27 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:36764 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S932217AbWIQGQ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Sep 2006 02:16:26 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060917061625.OPCI2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 17 Sep 2006 02:16:25 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id PJGD1V00J1kojtg0000000
+	Sun, 17 Sep 2006 02:16:13 -0400
+To: Gerrit Pape <pape@smarden.org>
+cc: git@vger.kernel.org
+In-Reply-To: <20060915132225.12040.qmail@a0896f98af57b2.315fe32.mid.smarden.org>
+	(Gerrit Pape's message of "Fri, 15 Sep 2006 13:22:25 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27159>
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- git-branch.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+Gerrit Pape <pape@smarden.org> writes:
 
-diff --git a/git-branch.sh b/git-branch.sh
-index e0501ec..2600e9c 100755
---- a/git-branch.sh
-+++ b/git-branch.sh
-@@ -21,7 +21,7 @@ delete_branch () {
- 	,,)
- 	    die "What branch are you on anyway?" ;;
- 	esac
--	branch=$(cat "$GIT_DIR/refs/heads/$branch_name") &&
-+	branch=$(git-show-ref --verify --hash -- "refs/heads/$branch_name") &&
- 	    branch=$(git-rev-parse --verify "$branch^0") ||
- 		die "Seriously, what branch are you talking about?"
- 	case "$option" in
-@@ -112,7 +112,7 @@ rev=$(git-rev-parse --verify "$head") ||
- git-check-ref-format "heads/$branchname" ||
- 	die "we do not like '$branchname' as a branch name."
- 
--if [ -e "$GIT_DIR/refs/heads/$branchname" ]
-+if git-show-ref --verify --quiet -- "refs/heads/$branchname"
- then
- 	if test '' = "$force"
- 	then
--- 
-1.4.2.1.gea00f-dirty
+>...
+> On top of that, I try to apply this interdiff generated patch:
+>
+> diff -u pciutils-2.1.11/debian/dirs pciutils-2.1.11/debian/dirs
+> --- pciutils-2.1.11/debian/dirs
+> +++ pciutils-2.1.11/debian/dirs
+> @@ -6,0 +7 @@
+> +var/lib/pciutils
+>
+> and git-apply says:
+>
+> error: debian/dirs: already exists in working directory
+>
+> I suspect it's confused by the '-x,0' thinking that means "file does not
+> exist" rather than "we have 0 context for this diff".
+
+There are a few safety checks we perform assuming that the patch
+has a few lines of context, and this is falsely triggering one
+of them.  It incorrectly thinks that seeing _no_ context nor old
+lines in the patch means this is a file creation patch, and
+complains because it knows the file being patched already
+exists.
+
+I am looking into a way to handle a context-less patch line the
+one quoted, without breaking the sanity check we have.
+
+In the meantime you should be able to work things around by not
+feeding --unified=0 diff output.
