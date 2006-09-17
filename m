@@ -1,76 +1,71 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: "Andrew Pamment" <andrew@mort-os.com>
 Subject: Re: gitweb on OpenBSD (-T not supported on filesystems...)
-Date: Sun, 17 Sep 2006 11:12:12 +0200
-Organization: At home
-Message-ID: <eej3g3$d9j$1@sea.gmane.org>
-References: <op.tf0k9fdvqpav6l@crystal.sienna.ath.cx>
+Date: Sun, 17 Sep 2006 19:16:13 +0930
+Message-ID: <op.tf0n3bjjqpav6l@crystal.sienna.ath.cx>
+References: <op.tf0k9fdvqpav6l@crystal.sienna.ath.cx> <eej3g3$d9j$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sun Sep 17 11:12:01 2006
+Content-Type: text/plain; format=flowed; delsp=yes; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 17 11:45:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOsgr-00083v-Et
-	for gcvg-git@gmane.org; Sun, 17 Sep 2006 11:11:53 +0200
+	id 1GOtDA-0006Kt-ON
+	for gcvg-git@gmane.org; Sun, 17 Sep 2006 11:45:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932405AbWIQJLv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Sep 2006 05:11:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932406AbWIQJLu
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Sep 2006 05:11:50 -0400
-Received: from main.gmane.org ([80.91.229.2]:1972 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932405AbWIQJLu (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Sep 2006 05:11:50 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GOsgf-00080m-Do
-	for git@vger.kernel.org; Sun, 17 Sep 2006 11:11:41 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 17 Sep 2006 11:11:41 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 17 Sep 2006 11:11:41 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S964801AbWIQJow (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Sep 2006 05:44:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964803AbWIQJow
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Sep 2006 05:44:52 -0400
+Received: from vscan02.westnet.com.au ([203.10.1.132]:44495 "EHLO
+	vscan02.westnet.com.au") by vger.kernel.org with ESMTP
+	id S964801AbWIQJov (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Sep 2006 05:44:51 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by localhost (Postfix) with ESMTP id 2347311F1AE;
+	Sun, 17 Sep 2006 17:44:49 +0800 (WST)
+Received: from vscan02.westnet.com.au ([127.0.0.1])
+ by localhost (vscan02.westnet.com.au [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 09651-12; Sun, 17 Sep 2006 17:44:49 +0800 (WST)
+Received: from crystal.sienna.ath.cx (dsl-202-173-138-168.sa.westnet.com.au [202.173.138.168])
+	by vscan02.westnet.com.au (Postfix) with ESMTP id 7F94A11F278;
+	Sun, 17 Sep 2006 17:44:47 +0800 (WST)
+To: "Jakub Narebski" <jnareb@gmail.com>
+In-Reply-To: <eej3g3$d9j$1@sea.gmane.org>
+User-Agent: Opera Mail/9.01 (FreeBSD)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27175>
 
-Andrew Pamment wrote:
+On Sun, 17 Sep 2006 18:42:12 +0930, Jakub Narebski <jnareb@gmail.com>  
+wrote:
 
-> I'm not sure if this is useful but I thought I would post it anyway,
-> 
-> in gitweb.cgi on line 1560 where you have -T testing a file descripter, it  
-> doesn't work on OpenBSD 3.9, which makes viewing blobs not work.
-> 
-> I solved this (or I think I have) by replacing $fd with $filename.
+> What Perl version do you use? Does 'perldoc -f -X' has the following  
+> lines?
+>
+>         -X FILEHANDLE
+>
+>         (...) If "-T" or "-B" is used on a filehandle, the current IO  
+> buffer
+>         is examined rather than the first block. (...)
 
-This doesn't work. $filename is file name relative to the git repository,
-i.e. full path would be $projectroot/$project/../$file_name _if_ the
-repository is full repository and not bare repository, and when projects
-are symlinked .. goes up linked directory.
+The version of perl is the one that comes with OpenBSD 3.9, it is v5.8.6.
 
-We need '-T $fd', where $fd is open pipe from git-cat-file, to avoid
-creating temporary files (we just removed need for $tmp_dir and temporary
-files for creating diffs).
+I do get the above text when I run 'perldoc -f -X', does this mean it  
+should work? When I try the original -T $fd I get:
 
+Software error:
+-T and -B not implemented on filehandles at /var/www/htdocs/git/gitweb.cgi  
+line 1598.
 
-What Perl version do you use? Does 'perldoc -f -X' has the following lines?
+> The solution for you would be to skip -T test.
 
-        -X FILEHANDLE
+That works fine. Thanks.
 
-        (...) If "-T" or "-B" is used on a filehandle, the current IO buffer
-        is examined rather than the first block. (...)
+Andrew
 
-The solution for you would be to skip -T test.
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Mort - http://www.mort-os.com/
