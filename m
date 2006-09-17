@@ -1,35 +1,35 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Setting up Password protected repositories?
-Date: Sat, 16 Sep 2006 22:20:14 -0400
-Message-ID: <20060917022013.GA7512@spearce.org>
-References: <E1GOktx-0005JY-ER@jdl.com> <7virjn8eua.fsf@assigned-by-dhcp.cox.net> <E1GOm3h-0005jq-5u@jdl.com>
+Subject: Re: git-repack: Outof memory
+Date: Sat, 16 Sep 2006 22:25:35 -0400
+Message-ID: <20060917022534.GB7512@spearce.org>
+References: <450CA561.9030602@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 17 04:20:45 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 17 04:25:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOmGe-00070A-Mj
-	for gcvg-git@gmane.org; Sun, 17 Sep 2006 04:20:25 +0200
+	id 1GOmLl-0008AP-NR
+	for gcvg-git@gmane.org; Sun, 17 Sep 2006 04:25:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964919AbWIQCUW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Sep 2006 22:20:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964918AbWIQCUW
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 22:20:22 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:12741 "EHLO
+	id S964926AbWIQCZj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Sep 2006 22:25:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964928AbWIQCZj
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 22:25:39 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:50117 "EHLO
 	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S964917AbWIQCUV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Sep 2006 22:20:21 -0400
+	id S964926AbWIQCZi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Sep 2006 22:25:38 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GOmGK-0007RL-DC; Sat, 16 Sep 2006 22:20:04 -0400
+	id 1GOmLU-0007ic-O3; Sat, 16 Sep 2006 22:25:24 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 4A85020FB1F; Sat, 16 Sep 2006 22:20:14 -0400 (EDT)
-To: Jon Loeliger <jdl@jdl.com>
+	id 283B720FB1F; Sat, 16 Sep 2006 22:25:35 -0400 (EDT)
+To: Dongsheng Song <dongsheng.song@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <E1GOm3h-0005jq-5u@jdl.com>
+In-Reply-To: <450CA561.9030602@gmail.com>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -42,33 +42,37 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27155>
 
-Jon Loeliger <jdl@jdl.com> wrote:
-> So, like, the other day Junio C Hamano mumbled:
-> > 
-> > It all depends on how you start git-daemon, but the last
-> > parameters to git-daemon are path whitelist so presumably
-> > placing the private repository outside of it should be enough.
-> > 
-> > Or am I missing something deeper?
+Dongsheng Song <dongsheng.song@gmail.com> wrote:
+> I'm import from subversion. The problem appears to be git-repack phase using too many memory:
 > 
-> I want git-daemon to serve up the repository.
-> I just want to have it served to people who can
-> supply a password or have an ssh key in place.
+> $ git-repack -a -f -d --window=64 --depth=64
+> Generating pack...
+> Done counting 123497 objects.
+> Deltifying 123497 objects.
+>   24% (29677/123497) done
+> 
+> $ top
+> 
+>   PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
+>  3572 www-data  18   0 2591m 1.9g  528 R   13 94.8  81:48.98 git-pack-object
 
-Don't use git-daemon.
+*ouch* You are probably running out of address space if you are on
+a 32 bit architecture.  A 2.5 GiB virtual address space is pretty
+close to the maximum allowed on most OSes.
 
-Instead create UNIX accounts for the people who need access and if
-you don't want them to actually be able to login set their shell
-to be `git-sh`.  This is a special shell-like thing that only lets
-the user push or fetch to any repository they have access to.
+The code that I'm sitting on but haven't yet completed rebasing
+onto current Git would probably help here.
 
-The URL is a 'git+ssh' style URL and they will use SSH to connect.
+Do you have any existing .pack files in .git/objects/pack?  How big
+are they and their corresponding .idx files?
 
-Access is controlled by standard UNIX user/group read/write access
-and ACLs if your OS/filesystem support them.  You can also control
-pushing with an update hook.
-
+git-repack will need to mmap every .pack and .idx in
+.git/objects/pack, plus it needs working memory for each object
+(123,497 of 'em) but as I recall its pretty frugal on its per-object
+allocation.  It can easily work with as many as 2 million objects on
+a 32 bit system, assuming the .pack and .idx files aren't too large.
+ 
 -- 
 Shawn.
