@@ -1,54 +1,83 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Setting up Password protected repositories?
-Date: Sat, 16 Sep 2006 18:24:45 -0700
-Message-ID: <7virjn8eua.fsf@assigned-by-dhcp.cox.net>
-References: <E1GOktx-0005JY-ER@jdl.com>
+From: Dongsheng Song <dongsheng.song@gmail.com>
+Subject: git-repack: Outof memory
+Date: Sun, 17 Sep 2006 09:31:13 +0800
+Message-ID: <450CA561.9030602@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 17 03:24:54 2006
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Sep 17 03:32:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GOlOr-0003hi-NN
-	for gcvg-git@gmane.org; Sun, 17 Sep 2006 03:24:50 +0200
+	id 1GOlWT-00054K-1g
+	for gcvg-git@gmane.org; Sun, 17 Sep 2006 03:32:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964891AbWIQBYr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Sep 2006 21:24:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964900AbWIQBYr
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 21:24:47 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:40610 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S964891AbWIQBYq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Sep 2006 21:24:46 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060917012445.DOQH21457.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 16 Sep 2006 21:24:45 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id PDQZ1V00S1kojtg0000000
-	Sat, 16 Sep 2006 21:24:34 -0400
-To: Jon Loeliger <jdl@jdl.com>
-In-Reply-To: <E1GOktx-0005JY-ER@jdl.com> (Jon Loeliger's message of "Sat, 16
-	Sep 2006 19:52:53 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S964895AbWIQBbZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Sep 2006 21:31:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964902AbWIQBbZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Sep 2006 21:31:25 -0400
+Received: from py-out-1112.google.com ([64.233.166.183]:42825 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S964895AbWIQBbY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Sep 2006 21:31:24 -0400
+Received: by py-out-1112.google.com with SMTP id n25so4719989pyg
+        for <git@vger.kernel.org>; Sat, 16 Sep 2006 18:31:24 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:x-enigmail-version:openpgp:content-type:content-transfer-encoding;
+        b=eBq2jU9/ybkTFabOK9NS/uAczrbJx4AbHixZ57lI1Z6xhETkWliCjXb3DQjsmJfUtBAS2eaG9wzpivHJ2F8QeAoaFuuNeBwFb+lB5YWqMOl83Fu3+gKYw4EXOgMPOKC+tw9ZxPkXIyC6BD9sOf1oS/MpUapMlzww9XYzwJSB124=
+Received: by 10.35.53.18 with SMTP id f18mr20519121pyk;
+        Sat, 16 Sep 2006 18:31:23 -0700 (PDT)
+Received: from ?202.96.180.210? ( [202.96.180.210])
+        by mx.gmail.com with ESMTP id r1sm4292796nzd.2006.09.16.18.31.22;
+        Sat, 16 Sep 2006 18:31:23 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.7 (Windows/20060909)
+To: git@vger.kernel.org
+X-Enigmail-Version: 0.94.0.0
+OpenPGP: id=90A06C7A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27148>
 
-Jon Loeliger <jdl@jdl.com> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> git-daemon has to know where to server out the files from,
-> but how do we get it to enforce a ssh-based access?  It's
-> easy to prevent http: from serving out the repository --
-> just place it outside of the webroot directory structure.
+Hi all:
 
-It all depends on how you start git-daemon, but the last
-parameters to git-daemon are path whitelist so presumably
-placing the private repository outside of it should be enough.
 
-Or am I missing something deeper?
+I'm import from subversion. The problem appears to be git-repack phase using too many memory:
+
+$ git-repack -a -f -d --window=64 --depth=64
+Generating pack...
+Done counting 123497 objects.
+Deltifying 123497 objects.
+  24% (29677/123497) done
+
+$ top
+
+  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
+ 3572 www-data  18   0 2591m 1.9g  528 R   13 94.8  81:48.98 git-pack-object
+
+
+$ free
+             total       used       free     shared    buffers     cached
+Mem:       2076308    2029824      46484          0       2760       6800
+- -/+ buffers/cache:    2020264      56044
+Swap:      1028152     684032     344120
+
+
+How to compute memory usage of git-repack ?
+
+Thanks and regards,
+
+Dongsheng
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (MingW32)
+
+iD8DBQFFDKVh90pbDJCgbHoRAlweAJ45DhTXI+bb+nb2Y+JlbIBoFusK8wCgk0U2
+XcUc9K/chYiUYq3ZLychzcU=
+=NzXf
+-----END PGP SIGNATURE-----
