@@ -1,78 +1,89 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git pull a subtree, embedded trees
-Date: Mon, 18 Sep 2006 07:58:20 +0200
-Organization: At home
-Message-ID: <eelcgd$830$1@sea.gmane.org>
-References: <4508020F.2050604@sgi.com> <ee945j$h3u$1@sea.gmane.org> <450E3399.5070601@sgi.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] revision traversal: --author, --committer, and --grep.
+Date: Mon, 18 Sep 2006 02:05:52 -0400
+Message-ID: <20060918060552.GA2833@coredump.intra.peff.net>
+References: <7v4pv6yphp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Mon Sep 18 07:57:48 2006
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
+	Kai Blin <kai.blin@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 18 08:06:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPC8Y-00083g-PE
-	for gcvg-git@gmane.org; Mon, 18 Sep 2006 07:57:47 +0200
+	id 1GPCGc-0000dW-6k
+	for gcvg-git@gmane.org; Mon, 18 Sep 2006 08:06:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965441AbWIRF5n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Sep 2006 01:57:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965442AbWIRF5n
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 01:57:43 -0400
-Received: from main.gmane.org ([80.91.229.2]:45292 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S965441AbWIRF5m (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Sep 2006 01:57:42 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GPC8S-00082h-Jn
-	for git@vger.kernel.org; Mon, 18 Sep 2006 07:57:40 +0200
-Received: from 193.0.122.19 ([193.0.122.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 18 Sep 2006 07:57:40 +0200
-Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 18 Sep 2006 07:57:40 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.0.122.19
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S965445AbWIRGFz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Sep 2006 02:05:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965446AbWIRGFz
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 02:05:55 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:62094 "HELO
+	peff.net") by vger.kernel.org with SMTP id S965445AbWIRGFy (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Sep 2006 02:05:54 -0400
+Received: (qmail 24923 invoked from network); 18 Sep 2006 02:05:06 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 18 Sep 2006 02:05:06 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Sep 2006 02:05:52 -0400
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v4pv6yphp.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27231>
 
-Timothy Shimmin wrote:
+On Sun, Sep 17, 2006 at 05:42:26PM -0700, Junio C Hamano wrote:
 
->>> * Are there any tools for dumping out the contents of the
->>> git objects in the .git/objects directory.
->>> By dumping out, I mean an ascii representation of the data
->>> fields for the commit and tree objects in particular.
->>> I've written a simple small program to dump out the index
->>> entries (cache entries).
->> 
->> git-cat-file -p
->> 
-> Excellent, thanks. (looks like the option is undocumented - secret option:)
+> This adds three options to setup_revisions(), which lets you
+> filter resulting commits by the author name, the committer name
+> and the log message with regexp.
 
-It looks not:
+First of all, thanks for implementing this; I tried to use it the other
+day (remembering the discussion and patches a few weeks ago) and was
+disappointed to find it absent.
 
-usage: git-cat-file [-t|-s|-e|-p|<type>] <sha1>
+That being said, I find the matching style completely unintuitive. :)
 
-       -p     Pretty-print the contents of <object> based on its type.
+To find --author=foo, your strategy is to stringify the header and grep
+for "^author foo". As a user, my expectation was that you would
+stringify the author field and grep for "foo".
 
-> So I added this to a script which walks over the objects directory,
-> to work out what all the object ids are so I can apply git-cat-file
-> to all the objects on my test directory.
-> I guess this will fall down if the objects are stored in a pack :)
-> I'll have to look and see how to extract all the object ids using
-> some command.
+The important difference is that your approach means that the user's
+regex is implicitly anchored at the beginning of the field. Thus,
+searching by email address does not work with --author=junkio, but
+rather requires --author='.*junkio'.
 
-git-rev-parse and/or git-rev-list (the latter with --objects option) is your
-friend. And there is git-ls-tree command which list sha1 of blobs (files)
-and trees (subdirectories) for specific revision (specified tree).
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Possible fixes:
+  1. Match against "^<field>.*<regex>" (I haven't looked closely at the
+     builtin grep implementation, but presumably '.' as usual does not
+     include newline).
+  2. Find <field>, and then feed grep_buffer only the contents of that
+     line.
+The second is what I feel that users will expect (at least what I
+expected!), but is probably slightly less efficient (two greps instead
+of one, but I doubt the difference would be significant). However, I
+don't think there is a way with the first approach to explicitly request
+a beginning-of-string anchor (i.e., "^Junio" in the second approach).
+
+A few other thoughts:
+  1. Case sensitivity? For convenience sake, it seems reasonable to
+     match these fields without case sensitivity (what was the
+     capitalization of A Large Angry SCM again? von Brand or Von Brand?
+     etc). Should it be optional, and if so, how to specify it (a global
+     command line option is probably not desired, as you might want
+     case-sensitive --grep but case-insensitive --author). So we either
+     need a "-i means the rest of the arguments are insensitive, +i
+     means they are sensitive" option, or some syntax to specify it in
+     the regex (perl uses (?i)).
+  2. Is there any use to exposing the "header_grep" functionality with
+     --grep-header? Is there anything worth grepping for besides
+     author/committer? The general consensus on non-core headers in
+     commit objects seemed to be "don't do it".
+  3. An alias (--who=foo?) for --author=foo --committer=foo. I believe
+     this doesn't require boolean magic, since we default to OR.
+
+I'm happy to work on implementing any of the above if there's interest.
+
+-Peff
