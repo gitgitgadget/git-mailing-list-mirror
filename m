@@ -1,111 +1,71 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] Contributed bash completion support for core Git tools.
-Date: Mon, 18 Sep 2006 13:55:09 -0400
-Message-ID: <20060918175509.GD31140@spearce.org>
-References: <20060918004831.GA19851@spearce.org> <20060918083114.GQ20913@albany.tokkee.org>
+From: Alex Bennee <kernel-hacker@bennee.com>
+Subject: Can the git exclude files mask out whole directories?
+Date: Mon, 18 Sep 2006 19:28:07 +0100
+Organization: Insert Joke Here
+Message-ID: <1158604087.28026.160.camel@okra.transitives.com>
+Reply-To: kernel-hacker@bennee.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 18 19:56:04 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Sep 18 20:28:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPNLD-0007yJ-Ls
-	for gcvg-git@gmane.org; Mon, 18 Sep 2006 19:55:36 +0200
+	id 1GPNr7-000100-1N
+	for gcvg-git@gmane.org; Mon, 18 Sep 2006 20:28:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751868AbWIRRzR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Sep 2006 13:55:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751869AbWIRRzR
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 13:55:17 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:49618 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751868AbWIRRzP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Sep 2006 13:55:15 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GPNKj-0001qI-KE; Mon, 18 Sep 2006 13:55:05 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id CD7ED20E48E; Mon, 18 Sep 2006 13:55:09 -0400 (EDT)
-To: Sebastian Harl <sh@tokkee.org>
-Content-Disposition: inline
-In-Reply-To: <20060918083114.GQ20913@albany.tokkee.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1750833AbWIRS2K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Sep 2006 14:28:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750861AbWIRS2K
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 14:28:10 -0400
+Received: from mx.transitive.com ([217.207.128.220]:48810 "EHLO
+	pennyblack.transitives.com") by vger.kernel.org with ESMTP
+	id S1750833AbWIRS2J (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Sep 2006 14:28:09 -0400
+Received: from [192.168.1.82] (helo=okra.transitives.com)
+	by pennyblack.transitives.com with esmtp (Exim 4.50)
+	id 1GPNXJ-0004b8-Sh
+	for git@vger.kernel.org; Mon, 18 Sep 2006 19:08:06 +0100
+To: git@vger.kernel.org
+X-Mailer: Evolution 2.6.0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27255>
 
-Sebastian Harl <sh@tokkee.org> wrote:
-> Hi,
-> 
-> > This is a set of bash completion routines for many of the
-> > popular core Git tools.  I wrote these routines from scratch
-> > after reading the git-compl and git-compl-lib routines available
-> > from the gitcompletion package at http://gitweb.hawaga.org.uk/
-> > and found those to be lacking in functionality for some commands.
-> 
-> Did you talk to Ben Clifford (the maintainer of these scripts) before?
+Hi,
 
-No.  I found his scripts yesterday, played around with them for
-about 15 minutes and found them to be missing some features.
-In particular they don't actually list all branch names as they
-only list only those contained directly in refs/heads.  This is
-certainly very annoying when your topic branch policy uses "sp/",
-"jh/", "lt/" as branch name prefixes.  It also won't work with Linus'
-new packed ref format...
+I may be being a bit dim but according to the man page I should be able
+to specify paths with /'s in them. I want to exclude all CVS directories
+so I can commit stuff. I have tried:
 
-Ben's scripts also don't always complete tags at points where Git
-accepts a tag, nor can they complete through a path with git diff
-or git cat-file to yank a file out of another branch which doesn't
-exist in the current working directory.  They also can't complete
-branch names in a remote repository when you are fetching or pushing.
+#
+# Ignore CVS files
+#
+*/CVS/*
 
-So I set out to write my own, finished it in less than an hour,
-used it for 4 hours while doing some merging, and sent an email to
-put the script into contrib.  :-)
+Amongst many variants and:
 
-> His scripts seem to be in pretty wide-spread use already, so it might
-> make sense to join efforts and improve his scripts (and get them
-> into git-core).
+ git-ls-files --others --exclude-from=.git/info/exclude
 
-Agreed.  There may be a few things my script is lacking but I
-think the one I sent yesterday is already more powerful than Ben's.
-But I'd like to see it be smarter about completion context and do
-even more.  But right now I'm happy as it can complete my topic
-branch names and tag names.
+And all my CVS directories still get listed. I can get what I want with
+adding:
 
-I'd like to see core Git at least carry the completion for core Git.
-I know Ben has support for StGit and Cogito as well; two packages
-that my script doesn't support.  In my humble opnion the completion
-scripts should migrate into the packages they support.  I don't
-think its unreasonable to expect bash completion support to be part
-of a popular package which is heavily dependent on the shell for
-its user interface[*1*].
+# Ignore CVS files
+#
+Entries
+Entries.Log
+Repository
+Root
+Tag
 
-> > Consequently there may be some similarities but many differences.
-> 
-> Do you know of any (incompatible) differences?
+to my exclude file but that seems suboptimal. Besides I'll also want to
+be ignoring whole build directories later. Have I subtly misunderstood
+the man page?
 
-None that I can think of.  I believe that my script will complete
-anything Ben's does with the exception of a stray single character
-option here or there.
-
-You can't load both into your shell at the same time as bash will
-only accept one completion function for any given command and both
-packages use the same function names to implement the completion
-logic.
-
-
-[*1*] So long as there is someone to maintain it anyway.  :-)
+Confused,
 
 -- 
-Shawn.
+Alex, homepage: http://www.bennee.com/~alex/
+Majority, n.: That quality that distinguishes a crime from a law.
