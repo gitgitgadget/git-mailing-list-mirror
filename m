@@ -1,79 +1,72 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Remove branch by putting a null sha1 into the ref file.
-Date: Mon, 18 Sep 2006 11:43:44 -0700
-Message-ID: <7vodtdow0v.fsf@assigned-by-dhcp.cox.net>
-References: <20060918065429.6f4de06e.chriscool@tuxfamily.org>
-	<Pine.LNX.4.64.0609180926590.4388@g5.osdl.org>
+Subject: [PATCH] fsck-objects: adjust to resolve_ref() clean-up.
+Date: Mon, 18 Sep 2006 11:44:25 -0700
+Message-ID: <7vac4xovzq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Sep 18 20:44:11 2006
+Cc: Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Mon Sep 18 20:44:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPO5u-0005k3-EO
-	for gcvg-git@gmane.org; Mon, 18 Sep 2006 20:43:50 +0200
+	id 1GPO6Y-0005vB-Bt
+	for gcvg-git@gmane.org; Mon, 18 Sep 2006 20:44:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750927AbWIRSnq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Sep 2006 14:43:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751138AbWIRSnq
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 14:43:46 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:39157 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1750927AbWIRSnp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Sep 2006 14:43:45 -0400
+	id S1751138AbWIRSo1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Sep 2006 14:44:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751472AbWIRSo1
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 14:44:27 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:27089 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1751138AbWIRSo0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Sep 2006 14:44:26 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao01.cox.net
+          by fed1rmmtao02.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060918184344.UJVS6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 18 Sep 2006 14:43:44 -0400
+          id <20060918184425.YIEQ12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 18 Sep 2006 14:44:25 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id PujX1V00S1kojtg0000000
-	Mon, 18 Sep 2006 14:43:32 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0609180926590.4388@g5.osdl.org> (Linus Torvalds's
-	message of "Mon, 18 Sep 2006 09:31:21 -0700 (PDT)")
+	id PukC1V00R1kojtg0000000
+	Mon, 18 Sep 2006 14:44:13 -0400
+To: git@vger.kernel.org
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27258>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Clean-up the same "ref to path and then back to ref" confusion.
 
-> On Mon, 18 Sep 2006, Christian Couder wrote:
->>
->> With the new packed ref file format from Linus, this should be
->> the new way to remove a branch.
->
-> Well, it's not really sufficient.
->
-> Somebody should add this test-case
->
-> 	git branch test
-> 	git branch -d test
-> 	git branch test/first
->
-> which should work.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+ fsck-objects.c |   10 ++++------
+ 1 files changed, 4 insertions(+), 6 deletions(-)
 
-Also this test-case needs to be added
-
-	git branch test
-        git pack-refs
-        rm .git/refs/heads/test
-        git branch test/second
-
-which should barf.  Otherwise it would allow both test and
-test/second branches to exist, and trying to clone from such a
-repository would fail, at least by the existing tools (it might
-have been even nicer if we from day one allowed both test and
-test/second to exist, though, but it is too late now, or too
-early before we upgrade everybody).
-
-> It's entirely possible that the proper way to do branch deletion with 
-> packed branches is to simply re-pack without the old branch, rather than 
-> the negative branch model. I couldn't really decide.
-
-Or mkdir there ,-).
+diff --git a/fsck-objects.c b/fsck-objects.c
+index 4d994f3..456c17e 100644
+--- a/fsck-objects.c
++++ b/fsck-objects.c
+@@ -458,15 +458,13 @@ static void fsck_object_dir(const char *
+ static int fsck_head_link(void)
+ {
+ 	unsigned char sha1[20];
+-	const char *git_HEAD = xstrdup(git_path("HEAD"));
+-	const char *git_refs_heads_master = resolve_ref(git_HEAD, sha1, 1);
+-	int pfxlen = strlen(git_HEAD) - 4; /* strip .../.git/ part */
++	const char *head_points_at = resolve_ref("HEAD", sha1, 1);
+ 
+-	if (!git_refs_heads_master)
++	if (!head_points_at)
+ 		return error("HEAD is not a symbolic ref");
+-	if (strncmp(git_refs_heads_master + pfxlen, "refs/heads/", 11))
++	if (strncmp(head_points_at, "refs/heads/", 11))
+ 		return error("HEAD points to something strange (%s)",
+-			     git_refs_heads_master + pfxlen);
++			     head_points_at);
+ 	if (is_null_sha1(sha1))
+ 		return error("HEAD: not a valid git pointer");
+ 	return 0;
+-- 
+1.4.2.1.g01ff
