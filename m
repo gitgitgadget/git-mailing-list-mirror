@@ -1,103 +1,146 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] Remove branch by putting a null sha1 into the ref file.
-Date: Mon, 18 Sep 2006 06:54:29 +0200
-Message-ID: <20060918065429.6f4de06e.chriscool@tuxfamily.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's in git.git
+Date: Sun, 17 Sep 2006 22:33:00 -0700
+Message-ID: <7vu035u4c3.fsf@assigned-by-dhcp.cox.net>
+References: <7vk64bnnxl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 18 06:48:32 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Sep 18 07:33:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPB3U-000529-JG
-	for gcvg-git@gmane.org; Mon, 18 Sep 2006 06:48:28 +0200
+	id 1GPBkh-0004UF-QO
+	for gcvg-git@gmane.org; Mon, 18 Sep 2006 07:33:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965382AbWIREsZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Sep 2006 00:48:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965383AbWIREsZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 00:48:25 -0400
-Received: from smtp4-g19.free.fr ([212.27.42.30]:8938 "EHLO smtp4-g19.free.fr")
-	by vger.kernel.org with ESMTP id S965382AbWIREsZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Sep 2006 00:48:25 -0400
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp4-g19.free.fr (Postfix) with SMTP id 565982CA94;
-	Mon, 18 Sep 2006 06:48:23 +0200 (CEST)
-To: Junio Hamano <junkio@cox.net>
-X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.8.20; i486-pc-linux-gnu)
+	id S965400AbWIRFdE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Sep 2006 01:33:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965402AbWIRFdE
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 01:33:04 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:38398 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S965400AbWIRFdB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Sep 2006 01:33:01 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060918053301.LRCO2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 18 Sep 2006 01:33:01 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id PhYo1V00V1kojtg0000000
+	Mon, 18 Sep 2006 01:32:48 -0400
+To: git@vger.kernel.org
+X-maint-at: 883653babd8ee7ea23e6a5c392bb739348b1eb61
+X-master-at: 808239a7db1b4c04c5a9edcf9ee33ff33217fad2
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27223>
 
-With the new packed ref file format from Linus, this should be
-the new way to remove a branch.
+* The 'maint' branch has this since the last announcement (v1.4.2.1).
 
-"refs.c" is fixed so that a null sha1 for a deleted branch does
-not result in "refs/head/deleted does not point to a valid
-commit object!" messages.
+   - Liu Yubao fixed duplicate xmalloc in builtin-add.
 
-"t/t3200-branch.sh" is fixed so that it uses git-show-ref
-instead of checking that the ref does not exist when a branch
-is deleted.
+   - "git-am --skip" incorrectly insisted that its standard
+     input to be connected to a tty.  Fixed.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- git-branch.sh     |    6 +++++-
- refs.c            |    2 ++
- t/t3200-branch.sh |    2 +-
- 3 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/git-branch.sh b/git-branch.sh
-index 2600e9c..cb55880 100755
---- a/git-branch.sh
-+++ b/git-branch.sh
-@@ -10,6 +10,9 @@ SUBDIRECTORY_OK='Yes'
- 
- headref=$(git-symbolic-ref HEAD | sed -e 's|^refs/heads/||')
- 
-+# Fourty 0s.
-+NULL_SHA1="0000000000000000000000000000000000000000" 
-+
- delete_branch () {
-     option="$1"
-     shift
-@@ -43,7 +46,8 @@ If you are sure you want to delete it, r
- 	    ;;
- 	esac
- 	rm -f "$GIT_DIR/logs/refs/heads/$branch_name"
--	rm -f "$GIT_DIR/refs/heads/$branch_name"
-+	echo $NULL_SHA1 > "$GIT_DIR/refs/heads/$branch_name" || \
-+	    die "Failed to delete branch '$branch_name' !"
- 	echo "Deleted branch $branch_name."
-     done
-     exit 0
-diff --git a/refs.c b/refs.c
-index 5e65314..76d8d0e 100644
---- a/refs.c
-+++ b/refs.c
-@@ -162,6 +162,8 @@ static int do_for_each_ref(const char *b
- 				error("%s points nowhere!", path);
- 				continue;
- 			}
-+			if (is_null_sha1(sha1))
-+				continue; /* Ignore deleted refs. */
- 			if (!has_sha1_file(sha1)) {
- 				error("%s does not point to a valid "
- 				      "commit object!", path);
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 5b04efc..150dfdc 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -47,7 +47,7 @@ test_expect_success \
- test_expect_success \
-     'git branch -d d/e/f should delete a branch and a log' \
- 	'git-branch -d d/e/f &&
--	 test ! -f .git/refs/heads/d/e/f &&
-+	 ! git-show-ref --verify --quiet -- "refs/heads/d/e/f" &&
- 	 test ! -f .git/logs/refs/heads/d/e/f'
- 
- cat >expect <<EOF
--- 
-1.4.2.1.g4251-dirty
+* The 'master' branch has these since the last announcement.
+
+  - http-fetch from a repository that uses alternates to borrow
+    from neighbouring repositories were quite broken for some
+    time now.  This has been fixed (this fix is also in
+    v1.4.2.1).
+
+  - Andy Whitcroft taught send-pack to use git-rev-list --stdin
+    so that we can deal with repositories with massive number
+    of refs more efficiently.
+
+  - A handful clean-ups, fixes and documentation updates by
+    Christian Couder, Dmitry V. Levin, Jonas Fonseca and Linus.
+
+  - Franck Bui-Huu and Rene Scharfe added 'git-archive' command,
+    that will eventually supersede 'git-tar-tree' and
+    'git-zip-tree'.
+
+    I think zip-tree can be deprecated without hurting too many
+    users, judging from its short existence, but I suspect that
+    deprecating tar-tree needs to be done very carefully.
+    Perhaps we should drop "tar-tree --remote" and "upload-tar",
+    but keep tar-tree but make it internally a synonym for
+    "archive --format=tar".  We should also update our toplevel
+    Makefile to use git-archive.
+
+  - Jakub Narebski continues improving gitweb with help from 
+    Martin Waitz, and Matthias Lederhofer.
+
+    We really need some test suites for gitweb.
+
+  - Jeff King rewrote run_status() shell function used in
+    git-commit and git-status in C, and made it colorful while
+    he was at it.  Johannes Schindelin taught it --untracked.
+
+  - unpack-objects with "-r" now makes the best effort to
+    recover objects from a corrupt packfile.
+
+  - apply does not need --binary anymore to take a binary patch.
+
+  - diff --binary does not produce full 40-byte index lines
+    unless necessary.
+
+  - pack-objects learned --revs option, which lets it not to
+    rely on rev-list.  Instead of taking the list of objects to
+    pack from the standard input, it can read the list of rev
+    parameters and run rev-list logic internally.
+
+  - rev-list learned --unpacked=<existing pack> option.
+
+  - Linus taught git-grep "-h" option to suppress filename
+    output.
+
+  - "git-am --skip" incorrectly insisted that its standard
+    input to be connected to a tty.  Fixed.
+
+  - "git-apply" learned to handle --unified=0 patches more
+    gracefully by allowing some sanity checks that cannot be
+    done with such patches to be disabled.
+
+  - Sasha Khapyorsky noticed that http-fetch commit walker can
+    almost deal with ftp:// transport already, and added
+    minimum updates to support it.
+
+
+* The 'next' branch, in addition, has these.
+
+  - Git.pm is on hold, waiting for stripping out Git.xs part before
+    going forward.
+
+  - Linus introduced packed refs and taught the core about
+    them.  Christian Couder taught git-branch about them and
+    Jeff King taught wt-status about it.
+
+    There are still some things that are broken which need to
+    be addressed before this series is pushed out to "master".
+    I offhand know of these two but there probably are others:
+
+    - "git branch -d" does not work.
+    - "git ls-remote rsync://" does not work.
+
+  - An experimental git-for-each-ref command to help language
+    bindings to get information on many refs at once.  Hopefully
+    Jakub can teach gitweb to use it to speed things up.
+
+
+* The 'pu' branch, in addition, has these.
+
+  - Jon Loeliger's git-daemon virtual hosting patch; this will be
+    dropped and replaced with his updated version.
+
+  - "git log --author=foo", "git log --grep=pattern" support.
+
+  - I haven't started cleaning up the para-walk changes yet; they
+    are still in the form of a messy 10-series patchset.  When I
+    find time I'd like to rewrite diff-index with it and see how
+    well it performs.
