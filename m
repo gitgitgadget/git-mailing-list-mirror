@@ -1,69 +1,78 @@
-From: Timothy Shimmin <tes@sgi.com>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: git pull a subtree, embedded trees
-Date: Mon, 18 Sep 2006 15:57:12 +1000
-Message-ID: <450E3538.4010209@sgi.com>
-References: <4508020F.2050604@sgi.com> <20060913150028.GB29608@spearce.org>
+Date: Mon, 18 Sep 2006 07:58:20 +0200
+Organization: At home
+Message-ID: <eelcgd$830$1@sea.gmane.org>
+References: <4508020F.2050604@sgi.com> <ee945j$h3u$1@sea.gmane.org> <450E3399.5070601@sgi.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 18 07:56:46 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Mon Sep 18 07:57:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPC7Z-0007vr-Dd
-	for gcvg-git@gmane.org; Mon, 18 Sep 2006 07:56:45 +0200
+	id 1GPC8Y-00083g-PE
+	for gcvg-git@gmane.org; Mon, 18 Sep 2006 07:57:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965437AbWIRF4j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Sep 2006 01:56:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965438AbWIRF4i
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 01:56:38 -0400
-Received: from omx2-ext.sgi.com ([192.48.171.19]:167 "EHLO omx2.sgi.com")
-	by vger.kernel.org with ESMTP id S965437AbWIRF4i (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Sep 2006 01:56:38 -0400
-Received: from larry.melbourne.sgi.com (larry.melbourne.sgi.com [134.14.52.130])
-	by omx2.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with SMTP id k8I8W9Xx021060;
-	Mon, 18 Sep 2006 01:32:11 -0700
-Received: from [134.14.55.141] (boing.melbourne.sgi.com [134.14.55.141]) by larry.melbourne.sgi.com (950413.SGI.8.6.12/950213.SGI.AUTOCF) via ESMTP id PAA04844; Mon, 18 Sep 2006 15:56:30 +1000
-User-Agent: Thunderbird 1.5.0.7 (Macintosh/20060909)
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20060913150028.GB29608@spearce.org>
+	id S965441AbWIRF5n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Sep 2006 01:57:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965442AbWIRF5n
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 01:57:43 -0400
+Received: from main.gmane.org ([80.91.229.2]:45292 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S965441AbWIRF5m (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Sep 2006 01:57:42 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GPC8S-00082h-Jn
+	for git@vger.kernel.org; Mon, 18 Sep 2006 07:57:40 +0200
+Received: from 193.0.122.19 ([193.0.122.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 18 Sep 2006 07:57:40 +0200
+Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 18 Sep 2006 07:57:40 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.0.122.19
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27230>
 
-Hi Shawn,
+Timothy Shimmin wrote:
 
-Shawn Pearce wrote:
-> Tim Shimmin <tes@sgi.com> wrote:
->> I've written a simple small program to dump out the index
->> entries (cache entries).
-> 
-> `git-ls-files --stage` also dumps a number of those details, though
-> it doesn't dump every available field.
-> 
-Thanks, that's handy.
-However, when going through the core-tutorial (copying repository section)
-and populating the index from the .git objects using git-read-tree,
-it was nice to see all the stat fields using my program.
-These fields were empty at that stage, of course, (it was nice to see it)
-until I had populated the workarea using git-checkout-index.
-But generally, git-ls-files --stage would be fine.
+>>> * Are there any tools for dumping out the contents of the
+>>> git objects in the .git/objects directory.
+>>> By dumping out, I mean an ascii representation of the data
+>>> fields for the commit and tree objects in particular.
+>>> I've written a simple small program to dump out the index
+>>> entries (cache entries).
+>> 
+>> git-cat-file -p
+>> 
+> Excellent, thanks. (looks like the option is undocumented - secret option:)
 
->> I just want to see what is exactly stored in the .git
->> binary files and how they change when I do various git
->> operations.
-> 
-> You may want to review some of the material in
-> Documentation/core-tutorial.txt and Documentation/technical.
-> These documents try to describe some of the formats but reviewing
-> them now it looks like there's still some additional information
-> that could be written down.
-> 
-Thanks. I've been going through the core-tutorial.
-It's great.
+It looks not:
 
-Cheers,
-Tim.
+usage: git-cat-file [-t|-s|-e|-p|<type>] <sha1>
+
+       -p     Pretty-print the contents of <object> based on its type.
+
+> So I added this to a script which walks over the objects directory,
+> to work out what all the object ids are so I can apply git-cat-file
+> to all the objects on my test directory.
+> I guess this will fall down if the objects are stored in a pack :)
+> I'll have to look and see how to extract all the object ids using
+> some command.
+
+git-rev-parse and/or git-rev-list (the latter with --objects option) is your
+friend. And there is git-ls-tree command which list sha1 of blobs (files)
+and trees (subdirectories) for specific revision (specified tree).
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
