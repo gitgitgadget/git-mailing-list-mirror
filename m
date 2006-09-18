@@ -1,35 +1,35 @@
 From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: [PATCH] Contributed bash completion support for core Git tools.
-Date: Mon, 18 Sep 2006 13:42:25 -0400
-Message-ID: <20060918174225.GC31140@spearce.org>
-References: <20060918004831.GA19851@spearce.org> <7virjlr3am.fsf@assigned-by-dhcp.cox.net>
+Date: Mon, 18 Sep 2006 13:55:09 -0400
+Message-ID: <20060918175509.GD31140@spearce.org>
+References: <20060918004831.GA19851@spearce.org> <20060918083114.GQ20913@albany.tokkee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 18 19:42:50 2006
+X-From: git-owner@vger.kernel.org Mon Sep 18 19:56:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPN8l-0004fW-OS
-	for gcvg-git@gmane.org; Mon, 18 Sep 2006 19:42:44 +0200
+	id 1GPNLD-0007yJ-Ls
+	for gcvg-git@gmane.org; Mon, 18 Sep 2006 19:55:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751862AbWIRRma (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Sep 2006 13:42:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751863AbWIRRma
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 13:42:30 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:48591 "EHLO
+	id S1751868AbWIRRzR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Sep 2006 13:55:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751869AbWIRRzR
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 13:55:17 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:49618 "EHLO
 	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751862AbWIRRm3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Sep 2006 13:42:29 -0400
+	id S1751868AbWIRRzP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Sep 2006 13:55:15 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GPN8P-0008QE-Dk; Mon, 18 Sep 2006 13:42:21 -0400
+	id 1GPNKj-0001qI-KE; Mon, 18 Sep 2006 13:55:05 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B4D4E20E48E; Mon, 18 Sep 2006 13:42:25 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
+	id CD7ED20E48E; Mon, 18 Sep 2006 13:55:09 -0400 (EDT)
+To: Sebastian Harl <sh@tokkee.org>
 Content-Disposition: inline
-In-Reply-To: <7virjlr3am.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <20060918083114.GQ20913@albany.tokkee.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -42,101 +42,70 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27254>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Shawn Pearce <spearce@spearce.org> writes:
+Sebastian Harl <sh@tokkee.org> wrote:
+> Hi,
 > 
-> > +_git_log ()
-> > +{
-> > +...
-> > +}
-> > +...
-> > +_git_whatchanged ()
-> > +{
-> > +...
-> > +}
+> > This is a set of bash completion routines for many of the
+> > popular core Git tools.  I wrote these routines from scratch
+> > after reading the git-compl and git-compl-lib routines available
+> > from the gitcompletion package at http://gitweb.hawaga.org.uk/
+> > and found those to be lacking in functionality for some commands.
 > 
-> These two look the same.  Probably not very easy to maintain in
-> the long run.
+> Did you talk to Ben Clifford (the maintainer of these scripts) before?
 
-They are the same.
- 
-> It would be nice to have git-show as well but it usually does
-> not take ranges unlike these two. It is more like "git branch"
-> from completion purposes.
+No.  I found his scripts yesterday, played around with them for
+about 15 minutes and found them to be missing some features.
+In particular they don't actually list all branch names as they
+only list only those contained directly in refs/heads.  This is
+certainly very annoying when your topic branch policy uses "sp/",
+"jh/", "lt/" as branch name prefixes.  It also won't work with Linus'
+new packed ref format...
 
-Like this?  :-)
+Ben's scripts also don't always complete tags at points where Git
+accepts a tag, nor can they complete through a path with git diff
+or git cat-file to yank a file out of another branch which doesn't
+exist in the current working directory.  They also can't complete
+branch names in a remote repository when you are fetching or pushing.
 
--- >8 --
-Consolidated git_log and git_whatchanged; added git_show.
+So I set out to write my own, finished it in less than an hour,
+used it for 4 hours while doing some merging, and sent an email to
+put the script into contrib.  :-)
 
-Minor requests from Junio: Consolidate the identical implementations of
-git_log and git_whatchanged, especially since these two commands take
-pretty much identical arguments.  This should make the completion package
-a little easier to maintain.
+> His scripts seem to be in pretty wide-spread use already, so it might
+> make sense to join efforts and improve his scripts (and get them
+> into git-core).
 
-Also added branch name completion for git-show.  I tried to implement
---pretty=oneline (etc.) but am apparently missing something as bash did
-not want to complete it through the registered completion routine, so that's
-still unsupported.
+Agreed.  There may be a few things my script is lacking but I
+think the one I sent yesterday is already more powerful than Ben's.
+But I'd like to see it be smarter about completion context and do
+even more.  But right now I'm happy as it can complete my topic
+branch names and tag names.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- contrib/bash-git-completion.sh |   21 +++++++--------------
- 1 files changed, 7 insertions(+), 14 deletions(-)
+I'd like to see core Git at least carry the completion for core Git.
+I know Ben has support for StGit and Cogito as well; two packages
+that my script doesn't support.  In my humble opnion the completion
+scripts should migrate into the packages they support.  I don't
+think its unreasonable to expect bash completion support to be part
+of a popular package which is heavily dependent on the shell for
+its user interface[*1*].
 
-diff --git a/contrib/bash-git-completion.sh b/contrib/bash-git-completion.sh
-index 4800185..e8cf6bb 100644
---- a/contrib/bash-git-completion.sh
-+++ b/contrib/bash-git-completion.sh
-@@ -254,19 +254,10 @@ _git_push ()
- 	esac
- }
- 
--_git_whatchanged ()
-+_git_show ()
- {
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
--	case "$cur" in
--	*..*)
--		local pfx=$(echo "$cur" | sed 's/\.\..*$/../')
--		cur=$(echo "$cur" | sed 's/^.*\.\.//')
--		COMPREPLY=($(compgen -P "$pfx" -W "$(__git_refs .)" -- "$cur"))
--		;;
--	*)
--		COMPREPLY=($(compgen -W "$(__git_refs .)" -- "$cur"))
--		;;
--	esac
-+	COMPREPLY=($(compgen -W "$(__git_refs .)" -- "$cur"))
- }
- 
- _git ()
-@@ -288,7 +279,8 @@ _git ()
- 		ls-tree)     _git_ls_tree ;;
- 		pull)        _git_pull ;;
- 		push)        _git_push ;;
--		whatchanged) _git_whatchanged ;;
-+		show)        _git_show ;;
-+		whatchanged) _git_log ;;
- 		*)           COMPREPLY=() ;;
- 		esac
- 	fi
-@@ -314,7 +306,8 @@ complete -o default -o nospace -F _git_l
- complete -o default            -F _git_merge_base git-merge-base
- complete -o default -o nospace -F _git_pull git-pull
- complete -o default -o nospace -F _git_push git-push
--complete -o default -o nospace -F _git_whatchanged git-whatchanged
-+complete -o default            -F _git_show git-show
-+complete -o default -o nospace -F _git_log git-whatchanged
- 
- # The following are necessary only for Cygwin, and only are needed
- # when the user has tab-completed the executable name and consequently
-@@ -327,4 +320,4 @@ complete -o default -o nospace -F _git_l
- complete -o default -o nospace -F _git_ls_tree git-ls-tree.exe
- complete -o default            -F _git_merge_base git-merge-base.exe
- complete -o default -o nospace -F _git_push git-push.exe
--complete -o default -o nospace -F _git_whatchanged git-whatchanged.exe
-+complete -o default -o nospace -F _git_log git-whatchanged.exe
+> > Consequently there may be some similarities but many differences.
+> 
+> Do you know of any (incompatible) differences?
+
+None that I can think of.  I believe that my script will complete
+anything Ben's does with the exception of a stray single character
+option here or there.
+
+You can't load both into your shell at the same time as bash will
+only accept one completion function for any given command and both
+packages use the same function names to implement the completion
+logic.
+
+
+[*1*] So long as there is someone to maintain it anyway.  :-)
+
 -- 
-1.4.2.1.ga817
+Shawn.
