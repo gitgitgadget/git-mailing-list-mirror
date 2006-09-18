@@ -1,37 +1,37 @@
 From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: What's in git.git
-Date: Mon, 18 Sep 2006 07:39:29 +0200
+Date: Mon, 18 Sep 2006 07:48:29 +0200
 Organization: At home
-Message-ID: <eelbd2$56s$1@sea.gmane.org>
+Message-ID: <eelbtu$56s$2@sea.gmane.org>
 References: <7vk64bnnxl.fsf@assigned-by-dhcp.cox.net> <7vu035u4c3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-2
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Mon Sep 18 07:39:18 2006
+X-From: git-owner@vger.kernel.org Mon Sep 18 07:48:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPBqV-0005Q7-2w
-	for gcvg-git@gmane.org; Mon, 18 Sep 2006 07:39:07 +0200
+	id 1GPBz6-0006lG-Jg
+	for gcvg-git@gmane.org; Mon, 18 Sep 2006 07:48:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965403AbWIRFjE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 18 Sep 2006 01:39:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965404AbWIRFjD
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 01:39:03 -0400
-Received: from main.gmane.org ([80.91.229.2]:51126 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S965403AbWIRFjB (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Sep 2006 01:39:01 -0400
+	id S965397AbWIRFr6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 18 Sep 2006 01:47:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965411AbWIRFr6
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 01:47:58 -0400
+Received: from main.gmane.org ([80.91.229.2]:52191 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S965397AbWIRFr5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Sep 2006 01:47:57 -0400
 Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GPBqH-0005Md-JY
-	for git@vger.kernel.org; Mon, 18 Sep 2006 07:38:53 +0200
+	id 1GPByu-0006jJ-Jt
+	for git@vger.kernel.org; Mon, 18 Sep 2006 07:47:48 +0200
 Received: from 193.0.122.19 ([193.0.122.19])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 18 Sep 2006 07:38:53 +0200
+        for <git@vger.kernel.org>; Mon, 18 Sep 2006 07:47:48 +0200
 Received: from jnareb by 193.0.122.19 with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 18 Sep 2006 07:38:53 +0200
+        for <git@vger.kernel.org>; Mon, 18 Sep 2006 07:47:48 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
 X-Complaints-To: usenet@sea.gmane.org
@@ -41,19 +41,24 @@ User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27225>
 
 Junio C Hamano wrote:
 
-> =A0 - An experimental git-for-each-ref command to help language
-> =A0 =A0 bindings to get information on many refs at once. =A0Hopefull=
-y
-> =A0 =A0 Jakub can teach gitweb to use it to speed things up.
+> =A0 =A0 We really need some test suites for gitweb.
 
-I use 'origin' (or 'next') version of gitweb, while using _released_
-version of git (git-core-1.4.2.1-1.i386.rpm). So at least for now=20
-I wouldn't be able to _test_ the git-for-each-ref.
+Could we use the git.git repository itself for testing gitweb?
+At least checking if there are any errors or warnings?
 
+The problem with test suite is that you really need _two_ tests;
+first if there are any errors or warnings, then if page looks like
+it should. The first can be done by simply running gitweb with
+at least the following enviromental variables set:
+  export GATEWAY_INTERFACE=3D"CGI/1.1"
+  export HTTP_ACCEPT=3D"*/*"
+  export REQUEST_METHOD=3D"GET"
+  export QUERY_STRING=3D""$1""
+The second should be done by looking at gitweb output.
 --=20
 Jakub Narebski
 Warsaw, Poland
