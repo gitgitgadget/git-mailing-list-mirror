@@ -1,58 +1,77 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: git and Solaris 8
-Date: Mon, 18 Sep 2006 15:41:00 +0200
-Message-ID: <20060918134100.GL1221MdfPADPa@greensroom.kotnet.org>
-Reply-To: skimo@liacs.nl
+From: Paul Jakma <paul@clubi.ie>
+Subject: Re: git and Solaris 8
+Date: Mon, 18 Sep 2006 15:05:45 +0100 (IST)
+Message-ID: <Pine.LNX.4.64.0609181452140.12833@sheen.jakma.org>
+References: <20060918134100.GL1221MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Peter Eriksen <s022018@student.dtu.dk>,
+	Junio C Hamano <junkio@cox.net>,
+	Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 18 15:41:47 2006
+X-From: git-owner@vger.kernel.org Mon Sep 18 16:08:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPJMy-0003tE-PZ
-	for gcvg-git@gmane.org; Mon, 18 Sep 2006 15:41:09 +0200
+	id 1GPJmz-00034i-0J
+	for gcvg-git@gmane.org; Mon, 18 Sep 2006 16:08:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751541AbWIRNlF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Sep 2006 09:41:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751550AbWIRNlF
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 09:41:05 -0400
-Received: from smtp16.wxs.nl ([195.121.247.7]:5533 "EHLO smtp16.wxs.nl")
-	by vger.kernel.org with ESMTP id S1751541AbWIRNlC (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Sep 2006 09:41:02 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp16.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built Jul 14 2004))
- with SMTP id <0J5S00D1SJCCYT@smtp16.wxs.nl> for git@vger.kernel.org; Mon,
- 18 Sep 2006 15:41:01 +0200 (CEST)
-Received: (qmail 12294 invoked by uid 500); Mon, 18 Sep 2006 13:41:00 +0000
-To: Peter Eriksen <s022018@student.dtu.dk>, Paul Jakma <paul@clubi.ie>,
-	Junio C Hamano <junkio@cox.net>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S965245AbWIROHj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Sep 2006 10:07:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965246AbWIROHj
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 10:07:39 -0400
+Received: from hibernia.jakma.org ([212.17.55.49]:58773 "EHLO
+	hibernia.jakma.org") by vger.kernel.org with ESMTP id S965245AbWIROHi
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Sep 2006 10:07:38 -0400
+Received: from sheen.jakma.org (IDENT:U2FsdGVkX19n/pUxlxpknlw6BAo65v1B1z8sUGioQfc@sheen.jakma.org [212.17.55.53])
+	(authenticated bits=0)
+	by hibernia.jakma.org (8.13.7/8.13.6) with ESMTP id k8IE5jAW023584
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 18 Sep 2006 15:05:58 +0100
+X-X-Sender: paul@sheen.jakma.org
+To: skimo@liacs.nl
+In-Reply-To: <20060918134100.GL1221MdfPADPa@greensroom.kotnet.org>
+Mail-Copies-To: paul@jakma.org
+Mail-Followup-To: paul@jakma.org
+X-NSA: al aqsar fluffy jihad cute musharef kittens jet-A1 ear avgas wax ammonium bad qran dog inshallah allah al-akbar martyr iraq hammas hisballah rabin ayatollah korea revolt pelvix mustard gas x-ray british airways washington peroxide cool
+X-Virus-Scanned: ClamAV 0.88.3/1891/Sun Sep 17 22:16:53 2006 on hibernia.jakma.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27247>
 
-Commits 2fd955cc0b49de9e64b2f073ce76033975f0be24 and
-e15f545155bb4b2cad4475a25cad8fb576d37dee seem to contradict each other.
-The first claims that NEEDS_LIBICONV is needed on Solaris 10,
-while the second claims that it is not needed on Solaris 9 and up.
+On Mon, 18 Sep 2006, Sven Verdoolaege wrote:
 
-All I know is that I have a Solaris *8* machine here and that I _don't_
-need NEEDS_LIBICONV.  There is no -liconv on this machine.
-(I'm CC'ing Uwe, because he apparently also has access to a Solaris 8
-machine).
+> All I know is that I have a Solaris *8* machine here and that I 
+> _don't_ need NEEDS_LIBICONV.  There is no -liconv on this machine. 
+> (I'm CC'ing Uwe, because he apparently also has access to a Solaris 
+> 8 machine).
 
-So is the current setting correct on some versions of Solaris 8
-and if so, is there some way to change this setting from the command
-line ?
+I tested on S10, SNV (probably somewhere around SNV_14, can't quite 
+remember) and S9 (whichever the latest update was). None need 
+-liconv, it's a build error on S10 (which was the one I cared about).
 
-Btw, like Uwe, I also don't have a "gtar" and "ginstall" on this machine.
+I can dig into the Iconv situation further later in the week, or 
+next. I am away from home at moment.
 
-SunOS billie 5.8 Generic_117350-39 sun4u sparc
+> So is the current setting correct on some versions of Solaris 8 and 
+> if so, is there some way to change this setting from the command 
+> line ?
 
-skimo
+I couldn't find an S8 machine to test on, so I left S8 alone - 
+existing behaviour, I had no basis to judge it incorrect. S8 is 
+/really/ old now btw. ;)
+
+> Btw, like Uwe, I also don't have a "gtar" and "ginstall" on this machine.
+
+S10, maybe S9 too (not sure), install these to /usr/sfw/bin, if you 
+installed everything.
+
+regards,
+-- 
+Paul Jakma	paul@clubi.ie	paul@jakma.org	Key ID: 64A2FF6A
+Fortune:
+Interference from lunar radiation
