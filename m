@@ -1,36 +1,38 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC] git-pack-refs --prune
-Date: Mon, 18 Sep 2006 09:47:33 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609180934360.4388@g5.osdl.org>
-References: <Pine.LNX.4.64.0609111158390.3960@g5.osdl.org>
- <Pine.LNX.4.64.0609111632050.27779@g5.osdl.org> <7vy7shr5zw.fsf_-_@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH 3/3] revision traversal: --author, --committer, and
+ --grep.
+Date: Mon, 18 Sep 2006 10:07:51 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0609181001361.4388@g5.osdl.org>
+References: <7v4pv6yphp.fsf@assigned-by-dhcp.cox.net>
+ <20060918060552.GA2833@coredump.intra.peff.net> <7vslipsm4x.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 18 18:47:46 2006
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Kai Blin <kai.blin@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 18 19:08:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPMHX-0006F5-Mr
-	for gcvg-git@gmane.org; Mon, 18 Sep 2006 18:47:44 +0200
+	id 1GPMbF-0003Se-SP
+	for gcvg-git@gmane.org; Mon, 18 Sep 2006 19:08:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751838AbWIRQrj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Sep 2006 12:47:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751843AbWIRQrj
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 12:47:39 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:11192 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751838AbWIRQrj (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Sep 2006 12:47:39 -0400
+	id S965287AbWIRRIB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Sep 2006 13:08:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965289AbWIRRIB
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 13:08:01 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:49341 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S965287AbWIRRIA (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Sep 2006 13:08:00 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8IGlYnW032750
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8IH7qnW001648
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 18 Sep 2006 09:47:34 -0700
+	Mon, 18 Sep 2006 10:07:53 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8IGlX5D013284;
-	Mon, 18 Sep 2006 09:47:33 -0700
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8IH7puQ013936;
+	Mon, 18 Sep 2006 10:07:52 -0700
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy7shr5zw.fsf_-_@assigned-by-dhcp.cox.net>
+In-Reply-To: <7vslipsm4x.fsf@assigned-by-dhcp.cox.net>
 X-Spam-Status: No, hits=-1.007 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
 X-MIMEDefang-Filter: osdl$Revision: 1.148 $
@@ -38,42 +40,54 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27251>
 
 
 
-On Mon, 18 Sep 2006, Junio C Hamano wrote:
+On Sun, 17 Sep 2006, Junio C Hamano wrote:
 > 
-> I am not sure I got the locking right, hence this RFC.
+> I wanted to default it to left anchored, so this was somewhat
+> deliberate, but this is probably subject to taste.
 
-It looks correct (the important part to check is that the SHA1 of the ref 
-you remove still matches the SHA1 of the object you packed).
+I know that I'd prefer a rule where
 
-That said, we should fix it up a bit, notably
+ "--author=^Junio"
 
- - we should _not_ prune refs that are indirect.
+would result in the grep-pattern being "^author Junio", but without the 
+initial '^' it would be "^author .*Junio".
 
-   Right now, if we have a symbolic link, we _incorrectly_ pack it as 
-   unlinked. The packed format doesn't have any "link" format.
-
-   This isn't a problem in practice, because the only link we ever use is 
-   the HEAD link, but it's incorrect. As long as we don't prune, it wasn't 
-   an issue - a unpacked head will always override a packed one, so 
-   packing the thing didn't really matter.
-
- - we should probably avoid even trying to prune stuff that was already 
-   packed.
-
-The way to fix both these problems at once would be to add a flag to the 
-"for_each_ref()", which says whether it followed a link, or whether it was 
-already packed, so that we wouldn't pack symlinks at all, and we wouldn't 
-add already-packed refs to the "keeprefs" list.
-
-But that requires a sligh semantic extension to "do_for_each_ref()" (and 
-"struct ref_list" needs a flag to say whether it was looked up through a 
-symlink).
-
-I was thinking that the easy way to solve it is to just _pack_ everything 
-(the way we do now - incorrectly for symrefs), but never prune a symref.
+So something like this, perhaps? It allows the regular left anchoring 
+syntax ('^' at the start of a pattern), but defaults to the default grep 
+behaviour ("anywhere in the line").
 
 		Linus
+
+---
+diff --git a/revision.c b/revision.c
+index 26dd418..bca1229 100644
+--- a/revision.c
++++ b/revision.c
+@@ -677,6 +677,7 @@ int handle_revision_arg(const char *arg,
+ static void add_header_grep(struct rev_info *revs, const char *field, const char *pattern)
+ {
+ 	char *pat;
++	const char *prefix;
+ 	int patlen, fldlen;
+ 
+ 	if (!revs->header_filter) {
+@@ -689,8 +690,13 @@ static void add_header_grep(struct rev_i
+ 
+ 	fldlen = strlen(field);
+ 	patlen = strlen(pattern);
+-	pat = xmalloc(patlen + fldlen + 3);
+-	sprintf(pat, "^%s %s", field, pattern);
++	pat = xmalloc(patlen + fldlen + 10);
++	prefix = ".*";
++	if (*pattern == '^') {
++		prefix = "";
++		pattern++;
++	}
++	sprintf(pat, "^%s %s%s", field, prefix, pattern);
+ 	append_grep_pattern(revs->header_filter, pat,
+ 			    "command line", 0, GREP_PATTERN);
+ }
