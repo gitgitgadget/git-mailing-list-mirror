@@ -1,93 +1,78 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 3/3] revision traversal: --author, --committer, and
- --grep.
-Date: Mon, 18 Sep 2006 10:07:51 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609181001361.4388@g5.osdl.org>
-References: <7v4pv6yphp.fsf@assigned-by-dhcp.cox.net>
- <20060918060552.GA2833@coredump.intra.peff.net> <7vslipsm4x.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] Contributed bash completion support for core Git tools.
+Date: Mon, 18 Sep 2006 13:29:58 -0400
+Message-ID: <20060918172958.GB31140@spearce.org>
+References: <20060918004831.GA19851@spearce.org> <Pine.LNX.4.63.0609181012180.19042@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Kai Blin <kai.blin@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 18 19:08:24 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 18 19:30:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPMbF-0003Se-SP
-	for gcvg-git@gmane.org; Mon, 18 Sep 2006 19:08:06 +0200
+	id 1GPMwb-0000yq-Ut
+	for gcvg-git@gmane.org; Mon, 18 Sep 2006 19:30:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965287AbWIRRIB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Sep 2006 13:08:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965289AbWIRRIB
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 13:08:01 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:49341 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965287AbWIRRIA (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Sep 2006 13:08:00 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8IH7qnW001648
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 18 Sep 2006 10:07:53 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8IH7puQ013936;
-	Mon, 18 Sep 2006 10:07:52 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vslipsm4x.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-1.007 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.148 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750815AbWIRRaF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Sep 2006 13:30:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751855AbWIRRaF
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 13:30:05 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:22477 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1750815AbWIRRaC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Sep 2006 13:30:02 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GPMwM-00078l-Gw; Mon, 18 Sep 2006 13:29:54 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id DDADA20E48E; Mon, 18 Sep 2006 13:29:58 -0400 (EDT)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0609181012180.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27252>
 
-
-
-On Sun, 17 Sep 2006, Junio C Hamano wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> the only gripe I have with it: whenever some options are added, or 
+> removed, or renamed, you have to adapt the completion script. That is why 
+> I started (ages ago) to auto-generate the completion script from the 
+> documentation (of course, this means that the options have to be described 
+> consistently in the documentation, which is good in its own).
 > 
-> I wanted to default it to left anchored, so this was somewhat
-> deliberate, but this is probably subject to taste.
+> Unfortunately, I never got around to finish it, but a preliminary version 
+> is in the mailing list archives.
 
-I know that I'd prefer a rule where
+I was torn about putting options into the completion list.  Right now
+"-l -b -f" are available for 'git checkout' but I think that was
+a bad idea.  There's little point in offering completion for an
+option which is a single character.  But that's my opinion and I'm
+sure someone else might actually find it useful.
 
- "--author=^Junio"
-
-would result in the grep-pattern being "^author Junio", but without the 
-initial '^' it would be "^author .*Junio".
-
-So something like this, perhaps? It allows the regular left anchoring 
-syntax ('^' at the start of a pattern), but defaults to the default grep 
-behaviour ("anywhere in the line").
-
-		Linus
-
----
-diff --git a/revision.c b/revision.c
-index 26dd418..bca1229 100644
---- a/revision.c
-+++ b/revision.c
-@@ -677,6 +677,7 @@ int handle_revision_arg(const char *arg,
- static void add_header_grep(struct rev_info *revs, const char *field, const char *pattern)
- {
- 	char *pat;
-+	const char *prefix;
- 	int patlen, fldlen;
+Longer options however such as "--since" or "--pretty=" with its
+associated format options, or the merge strategy argument to "-s"
+would all be nice to have completion support for.  However I did
+not implement these.
  
- 	if (!revs->header_filter) {
-@@ -689,8 +690,13 @@ static void add_header_grep(struct rev_i
- 
- 	fldlen = strlen(field);
- 	patlen = strlen(pattern);
--	pat = xmalloc(patlen + fldlen + 3);
--	sprintf(pat, "^%s %s", field, pattern);
-+	pat = xmalloc(patlen + fldlen + 10);
-+	prefix = ".*";
-+	if (*pattern == '^') {
-+		prefix = "";
-+		pattern++;
-+	}
-+	sprintf(pat, "^%s %s%s", field, prefix, pattern);
- 	append_grep_pattern(revs->header_filter, pat,
- 			    "command line", 0, GREP_PATTERN);
- }
+> However, since your script works well, and I do not have a working script, 
+> you clearly won! So, unless some kind soul actually implements my 
+> proposal, I am happy with your script.
+
+I was mainly getting tired of copying and pasting or retyping
+branch names and remote names.  So that's what I implemented.
+(And remote names aren't quite right as they don't tab complete
+the ones available in .git/config.)
+
+-- 
+Shawn.
