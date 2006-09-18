@@ -1,96 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] git-pack-refs --prune
-Date: Mon, 18 Sep 2006 11:44:05 -0700
-Message-ID: <7vhcz5ow0a.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0609111158390.3960@g5.osdl.org>
-	<Pine.LNX.4.64.0609111632050.27779@g5.osdl.org>
-	<7vy7shr5zw.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0609180934360.4388@g5.osdl.org>
+From: "Art Haas" <ahaas@airmail.net>
+Subject: Patch for http-fetch.c and older curl releases
+Date: Mon, 18 Sep 2006 17:54:45 -0500
+Message-ID: <20060918225445.GF1261@artsapartment.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 18 20:44:43 2006
+X-From: git-owner@vger.kernel.org Tue Sep 19 00:55:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPO6F-0005po-Mq
-	for gcvg-git@gmane.org; Mon, 18 Sep 2006 20:44:12 +0200
+	id 1GPS18-0000xw-1v
+	for gcvg-git@gmane.org; Tue, 19 Sep 2006 00:55:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751612AbWIRSoI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Sep 2006 14:44:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751472AbWIRSoI
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 14:44:08 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:26067 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1751138AbWIRSoG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Sep 2006 14:44:06 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060918184406.HHDK18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 18 Sep 2006 14:44:06 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Pujt1V0021kojtg0000000
-	Mon, 18 Sep 2006 14:43:53 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030244AbWIRWyw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Sep 2006 18:54:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030246AbWIRWyw
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Sep 2006 18:54:52 -0400
+Received: from wmail-1.airmail.net ([209.196.70.86]:62461 "EHLO
+	wmail-1.airmail.net") by vger.kernel.org with ESMTP
+	id S1030244AbWIRWyv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Sep 2006 18:54:51 -0400
+Received: from cpe-24-28-121-3.houston.res.rr.com ([24.28.121.3] helo=pcdebian)
+	by wmail-1.airmail.net with esmtp (Exim 4.60)
+	(envelope-from <ahaas@airmail.net>)
+	id 1GPS0o-000KaE-Df
+	for git@vger.kernel.org; Mon, 18 Sep 2006 17:54:50 -0500
+Received: (qmail 8661 invoked by uid 1000); 18 Sep 2006 22:54:46 -0000
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27260>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Hi.
 
-> The way to fix both these problems at once would be to add a flag to the 
-> "for_each_ref()", which says whether it followed a link, or whether it was 
-> already packed, so that we wouldn't pack symlinks at all, and we wouldn't 
-> add already-packed refs to the "keeprefs" list.
->
-> But that requires a sligh semantic extension to "do_for_each_ref()" (and 
-> "struct ref_list" needs a flag to say whether it was looked up through a 
-> symlink).
->
-> I was thinking that the easy way to solve it is to just _pack_ everything 
-> (the way we do now - incorrectly for symrefs), but never prune a symref.
+Older curl releases do not define CURLE_HTTP_RETURNED_ERROR, they
+use CURLE_HTTP_NOT_FOUND instead. The trivial patch below fixes
+the build error. Newer curl releases keep the CURLE_HTTP_NOT_FOUND
+definition but using a -DCURL_NO_OLDIES preprocessor flag
+the old name will not be present in the 'curl.h' header. The
+comments in 'curl.h' have more info about the name change.
 
-I see.  Thanks for pointing out the issue with symrefs.  I think
-clone with --use-separate-remote creates remote/$that_repo/HEAD
-that points at the branch the remote side's HEAD points at (to
-be precise, the one it guessed the remote side's HEAD points
-at), so this is a real issue already.
+Signed-off-by:  Art Haas <ahaas@airmail.net>
 
-I wanted to update for_each_ref() anyway for other reasons (it
-really should take callback data -- the way the current users
-use global variables to work this around is eyesore), so
-hopefully I'll find time to take a look at it.
+diff --git a/http-fetch.c b/http-fetch.c
+index bc74f30..76fcdc7 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -149,7 +149,7 @@ static int missing__target(int code, int
+ 	return	/* file:// URL -- do we ever use one??? */
+ 		(result == CURLE_FILE_COULDNT_READ_FILE) ||
+ 		/* http:// and https:// URL */
+-		(code == 404 && result == CURLE_HTTP_RETURNED_ERROR) ||
++		(code == 404 && result == CURLE_HTTP_NOT_FOUND) ||
+ 		/* ftp:// URL */
+ 		(code == 550 && result == CURLE_FTP_COULDNT_RETR_FILE)
+ 		;
 
-Rough outline:
+-- 
+Man once surrendering his reason, has no remaining guard against absurdities
+the most monstrous, and like a ship without rudder, is the sport of every wind.
 
- - for_each_ref() and friends become:
-
-   typedef int each_ref_fn(const char *refname,
-			   const unsigned char *sha1,
-   #define REF_IS_SYMREF 01
-   #define REF_IS_PACKED 02
-                           int flags, /* above bits or'ed */ 
-                           void *cb_data);
-   int for_each_ref(each_ref_fn fn, void *cb_data);
-
- - handle_one_ref notices a symref and ignores it; it remembers
-   refs that are not symref and are still loose for later
-   pruning under --prune.
-
-We might want to update the initial handshake of upload-pack
-protocol so that peek-remote and fetch-pack can tell which one
-is a symref pointing at what.  Do the usual server_capabilities
-discovery in connect.c::get_remote_heads(), and if an extension
-"symref" is supported than ask for symref information (typically
-we would only get "HEAD points at refs/heads/foo" and nothing
-else).  Then git-clone.sh does not have to make a guess.  But
-that is a separate topic.
-
-
-
- 
+-Thomas Jefferson to James Smith, 1822
