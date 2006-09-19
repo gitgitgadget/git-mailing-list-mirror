@@ -1,80 +1,62 @@
-From: Joel Dice <dicej@mailsnare.net>
-Subject: Re: Subversion-style incrementing revision numbers
-Date: Tue, 19 Sep 2006 17:07:59 -0600 (MDT)
-Message-ID: <Pine.LNX.4.62.0609191659350.9752@joeldicepc.ecovate.com>
-References: <Pine.LNX.4.62.0609191309140.9752@joeldicepc.ecovate.com>
- <eeppkl$rm9$2@sea.gmane.org> <eepq7l$dc$1@sea.gmane.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] gitweb: Support for custom per-project owner string
+Date: Wed, 20 Sep 2006 01:09:25 +0200
+Message-ID: <20060919230925.GG8259@pasky.or.cz>
+References: <20060919225522.GB13132@pasky.or.cz> <eept0r$5d0$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 20 01:08:13 2006
+X-From: git-owner@vger.kernel.org Wed Sep 20 01:09:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPohA-0006XG-Ho
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 01:08:05 +0200
+	id 1GPoiY-0006nQ-DQ
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 01:09:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751345AbWISXIA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Sep 2006 19:08:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752102AbWISXIA
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 19:08:00 -0400
-Received: from v187.mailsnare.net ([206.246.200.187]:4999 "EHLO
-	mail.mailsnare.net") by vger.kernel.org with ESMTP id S1751345AbWISXIA
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Sep 2006 19:08:00 -0400
-Received: from joeldicepc.ecovate.com (unknown [208.50.222.162])
-	by mail.mailsnare.net (Postfix) with ESMTP id 66F092C0D0;
-	Tue, 19 Sep 2006 23:07:58 +0000 (UTC)
+	id S1752103AbWISXJ2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Sep 2006 19:09:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752104AbWISXJ1
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 19:09:27 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:63928 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1752103AbWISXJ1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Sep 2006 19:09:27 -0400
+Received: (qmail 28746 invoked by uid 2001); 20 Sep 2006 01:09:25 +0200
 To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <eepq7l$dc$1@sea.gmane.org>
-X-Virus-Scanned: by ClamAV at mailsnare.net
+Content-Disposition: inline
+In-Reply-To: <eept0r$5d0$1@sea.gmane.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27313>
 
-On Wed, 20 Sep 2006, Jakub Narebski wrote:
+Dear diary, on Wed, Sep 20, 2006 at 01:04:50AM CEST, I got a letter
+where Jakub Narebski <jnareb@gmail.com> said that...
+> Petr Baudis wrote:
+> 
+> > This adds very simple support for per-project setting of the owner string
+> > (in an environment where the actual owners won't have access to the
+> > repositories accessed by gitweb, so faking identity is not an issue).
+> 
+> Is it really needed? If $projects_list is a _file_, you can set correct
+> ownership information there.
+> 
+> Now $projects_list being a directory (usually $projectroot) support
+> hierarchy of repositories; generating appropriate projects' index file
+> is as easy as unsetting $projects_list (so it is by default set to
+> $projectroot), going to summary view, clicking [TXT] link on the left of
+> [OPML] link at the bottom, copy the result to projects' index file, correct
+> ownership information (and perhaps remove some projects), and set
+> $projects_list to this file.
 
-> Jakub Narebski wrote:
->
->> Joel Dice wrote:
->>
->>> I'm considering adopting Git for a medium-sized project which is currently
->>> managed using Subversion.  I've used Git for a few smaller projects
->>> already, and the thing I've missed most from Subversion is the convenience
->>> of incrementing revision numbers.  The following is a proposal to add this
->>> feature to Git.
->>>
->>>
->>> Rationale:
->>>
->>> Incrementing revision numbers (IRNs - an acronym I just made up) are
->>> useful in that they can be treated as auto-generated tags which are easier
->>> to remember and communicate than SHA hashes, yet do not require extra
->>> effort to create like real tags.  Also, they have the advantage of being
->>> chronologically ordered, so if I assert that a bug was fixed in revision
->>> 42 of a shared repository, everyone may assume that revision 45 has that
->>> fix as well.
->>
->> That is true _only_ if you have linear history. If you have multiple
->> concurrent branches, revision 42 can be in branch 'next', revision '45' in
->> topic branch 'xx/topic' which forked before revision 42, and do not have
->> the fix.
->
-> Additionally, what does _chronological_ mean? Time the commit is recorded?
+Which is not really easy at all. I would have to do some ugly script to
+autogenerate the text file while this way I can just throw the data to
+the hierarchy and having everything still working magically.
 
-Yes.
-
-> Remember that in distributed development commits can be fetched from other
-> repository, or arrive via email and applied using git-am. In git you can
-> also rebase branch. Git records merges, and said merges are sometimes
-> just fast-forward. All those difficulties have to be solved for IRNs.
-
-All of these boil down to pointing the head of a branch to a new commit 
-object, right?  I'm simply proposing that every time this happens, that 
-new commit object (which may not really be *new*), should be appended to 
-the IRN history file, along with any commits attached to it (as in the 
-cases of fetch, etc.).
-
-  - Joel
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Snow falling on Perl. White noise covering line noise.
+Hides all the bugs too. -- J. Putnam
