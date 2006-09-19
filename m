@@ -1,64 +1,61 @@
 From: Petr Baudis <pasky@suse.cz>
 Subject: Re: Subversion-style incrementing revision numbers
-Date: Wed, 20 Sep 2006 00:00:11 +0200
-Message-ID: <20060919220011.GD8259@pasky.or.cz>
-References: <Pine.LNX.4.62.0609191309140.9752@joeldicepc.ecovate.com> <20060919211844.GB8259@pasky.or.cz> <Pine.LNX.4.62.0609191525490.9752@joeldicepc.ecovate.com>
+Date: Wed, 20 Sep 2006 00:06:04 +0200
+Message-ID: <20060919220604.GE8259@pasky.or.cz>
+References: <Pine.LNX.4.62.0609191309140.9752@joeldicepc.ecovate.com> <Pine.LNX.4.64.0609191416500.4388@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 20 00:00:31 2006
+Cc: Joel Dice <dicej@mailsnare.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 20 00:06:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPnda-00019M-Oj
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 00:00:19 +0200
+	id 1GPnjI-0002Lq-Pv
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 00:06:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751149AbWISWAP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Sep 2006 18:00:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbWISWAO
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 18:00:14 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:21915 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751149AbWISWAN (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Sep 2006 18:00:13 -0400
-Received: (qmail 23950 invoked by uid 2001); 20 Sep 2006 00:00:11 +0200
-To: Joel Dice <dicej@mailsnare.net>
+	id S1751166AbWISWGI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Sep 2006 18:06:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751198AbWISWGI
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 18:06:08 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:64930 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751188AbWISWGG (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Sep 2006 18:06:06 -0400
+Received: (qmail 24457 invoked by uid 2001); 20 Sep 2006 00:06:04 +0200
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.62.0609191525490.9752@joeldicepc.ecovate.com>
+In-Reply-To: <Pine.LNX.4.64.0609191416500.4388@g5.osdl.org>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27294>
 
-Dear diary, on Tue, Sep 19, 2006 at 11:42:20PM CEST, I got a letter
-where Joel Dice <dicej@mailsnare.net> said that...
-> On Tue, 19 Sep 2006, Petr Baudis wrote:
-> >Also, multiple IRNs could refer to a single real commit if you do e.g.
-> >cg-admin-uncommit, since revlog logs revision updates, not new revisions
-> >created. This may or may not be considered a good thing. If you rather
-> >want to just create a new IRN at commit object creation time, also note
-> >that some tools _might_ validly create commit objects and then throw
-> >them away, which would generate non-sensical (and after prune, invalid)
-> >IRNs.
+Dear diary, on Tue, Sep 19, 2006 at 11:51:49PM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> said that...
+> Another thing you CAN do, is to just number them in time in a single repo. 
+> Every time you do a commit, you can create a "r1.<n+1>" revision, and that 
+> would work. It wouldn't look like the SVN numbers do, and it would only 
+> work _within_ that repository, but it would work.
 > 
-> I'm not too worried about cg-admin-uncommit or git-reset, since the IRN 
-> feature is intended mainly for shared repositories.  I would suggest that 
-> such commands simply be disallowed for such repositories.
+> But it would mean that "r1.57" is _not_ necessarily the child of "r1.56". 
+> It might be that "r1.56" was done on another branch, and is totally 
+> unrelated to "r1.57" (other than they sharing some common ancestor far 
+> back).
 
-  What kind of shared repositories? You yourself said that IRNs are
-local to a repository, thus they are not preserved over cloning/fetching
-from a repository, if you mean that.
+This is actually exactly how SVN revision numbering works. There's just
+a single number (no '1.') and it indeed jumps randomly if you have
+several concurrent branches in your (ok, Linus does not have any, just
+someone's) repository.
 
-> The problem of temporary commits certainly needs to be addressed.  In this 
-> case, may I assume nothing under $GIT_DIR/refs is ever modified?  If so, 
-> perhaps I could somehow hook into the git-update-ref step.  Is that what 
-> the revlog code does?
+> You're going to hit a few confusing issues if you really want to call 
+> things "r1.x.y.z"
 
-  Yes. But not every commit is always recorded to something in refs/.
-The simplest case is if you fetch from a remote repository (or push to
-your repository), only the latest commit is recorded.
+Noone does, that indeed would be horrible. But having the commits
+numbered inside a repository would indeed make for simple usage if you
+need to type in commit ids frequently, and could make Git a bit
+friendlier to newcomers.
 
 -- 
 				Petr "Pasky" Baudis
