@@ -1,57 +1,67 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
 Subject: Re: Subversion-style incrementing revision numbers
-Date: Tue, 19 Sep 2006 23:58:42 +0200
-Organization: At home
-Message-ID: <eepp4s$rm9$1@sea.gmane.org>
-References: <Pine.LNX.4.62.0609191309140.9752@joeldicepc.ecovate.com> <20060919211844.GB8259@pasky.or.cz>
+Date: Wed, 20 Sep 2006 00:00:11 +0200
+Message-ID: <20060919220011.GD8259@pasky.or.cz>
+References: <Pine.LNX.4.62.0609191309140.9752@joeldicepc.ecovate.com> <20060919211844.GB8259@pasky.or.cz> <Pine.LNX.4.62.0609191525490.9752@joeldicepc.ecovate.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Sep 19 23:58:52 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 20 00:00:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPnbv-0000hL-Un
-	for gcvg-git@gmane.org; Tue, 19 Sep 2006 23:58:36 +0200
+	id 1GPnda-00019M-Oj
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 00:00:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751131AbWISV6c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Sep 2006 17:58:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751143AbWISV6c
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 17:58:32 -0400
-Received: from main.gmane.org ([80.91.229.2]:63905 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751131AbWISV6b (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Sep 2006 17:58:31 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GPnbT-0000b0-6g
-	for git@vger.kernel.org; Tue, 19 Sep 2006 23:58:07 +0200
-Received: from host-81-190-31-133.torun.mm.pl ([81.190.31.133])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 19 Sep 2006 23:58:07 +0200
-Received: from jnareb by host-81-190-31-133.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 19 Sep 2006 23:58:07 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-31-133.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751149AbWISWAP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Sep 2006 18:00:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbWISWAO
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 18:00:14 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:21915 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751149AbWISWAN (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Sep 2006 18:00:13 -0400
+Received: (qmail 23950 invoked by uid 2001); 20 Sep 2006 00:00:11 +0200
+To: Joel Dice <dicej@mailsnare.net>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.62.0609191525490.9752@joeldicepc.ecovate.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27293>
 
-Petr Baudis wrote:
- 
-> We already have support for recording something similar, it's called a
-> revlog. You would just need to modify it to aggregate all the branches
-> in a single file.
+Dear diary, on Tue, Sep 19, 2006 at 11:42:20PM CEST, I got a letter
+where Joel Dice <dicej@mailsnare.net> said that...
+> On Tue, 19 Sep 2006, Petr Baudis wrote:
+> >Also, multiple IRNs could refer to a single real commit if you do e.g.
+> >cg-admin-uncommit, since revlog logs revision updates, not new revisions
+> >created. This may or may not be considered a good thing. If you rather
+> >want to just create a new IRN at commit object creation time, also note
+> >that some tools _might_ validly create commit objects and then throw
+> >them away, which would generate non-sensical (and after prune, invalid)
+> >IRNs.
+> 
+> I'm not too worried about cg-admin-uncommit or git-reset, since the IRN 
+> feature is intended mainly for shared repositories.  I would suggest that 
+> such commands simply be disallowed for such repositories.
 
-_reflog_, not revlog.
+  What kind of shared repositories? You yourself said that IRNs are
+local to a repository, thus they are not preserved over cloning/fetching
+from a repository, if you mean that.
+
+> The problem of temporary commits certainly needs to be addressed.  In this 
+> case, may I assume nothing under $GIT_DIR/refs is ever modified?  If so, 
+> perhaps I could somehow hook into the git-update-ref step.  Is that what 
+> the revlog code does?
+
+  Yes. But not every commit is always recorded to something in refs/.
+The simplest case is if you fetch from a remote repository (or push to
+your repository), only the latest commit is recorded.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Snow falling on Perl. White noise covering line noise.
+Hides all the bugs too. -- J. Putnam
