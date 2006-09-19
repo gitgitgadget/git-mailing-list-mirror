@@ -1,68 +1,52 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH (amend)] gitweb: Require project for almost all actions
-Date: Tue, 19 Sep 2006 21:53:22 +0200
-Message-ID: <200609192153.22618.jnareb@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Enable the packed refs file format
+Date: Tue, 19 Sep 2006 22:55:54 +0200
+Message-ID: <20060919205554.GA8259@pasky.or.cz>
+References: <Pine.LNX.4.64.0609141005440.4388@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Sep 19 21:52:47 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 19 22:58:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPle0-0005bx-BZ
-	for gcvg-git@gmane.org; Tue, 19 Sep 2006 21:52:36 +0200
+	id 1GPmdL-0003Ig-Ok
+	for gcvg-git@gmane.org; Tue, 19 Sep 2006 22:56:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752022AbWISTwd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Sep 2006 15:52:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752023AbWISTwd
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 15:52:33 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:39984 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1752022AbWISTwd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Sep 2006 15:52:33 -0400
-Received: by ug-out-1314.google.com with SMTP id o38so499625ugd
-        for <git@vger.kernel.org>; Tue, 19 Sep 2006 12:52:31 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:user-agent:mime-version:content-disposition:date:content-type:content-transfer-encoding:message-id;
-        b=lBMwEk0CpyOm85KBipmsUySwMHtESe2cHPEe4fFwNwoVqm2ceCeoZ3Y2YyfIaNht0AYvnTCsgKB1v8CV8o4h+OntnRPj99pOIai8KsM/uUmRp3iAJumc91LL1lRJOVN2Vcr4EUI6snHly56Sa9/iuspSCl97enzEUcpP3rjfpCk=
-Received: by 10.78.196.10 with SMTP id t10mr4108971huf;
-        Tue, 19 Sep 2006 12:52:31 -0700 (PDT)
-Received: from host-81-190-31-133.torun.mm.pl ( [81.190.31.133])
-        by mx.gmail.com with ESMTP id 36sm13688844huc.2006.09.19.12.52.30;
-        Tue, 19 Sep 2006 12:52:30 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
+	id S1751799AbWISUz5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Sep 2006 16:55:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752070AbWISUz5
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 16:55:57 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:9629 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751799AbWISUz4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Sep 2006 16:55:56 -0400
+Received: (qmail 18347 invoked by uid 2001); 19 Sep 2006 22:55:54 +0200
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0609141005440.4388@g5.osdl.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27282>
 
-Require that project (repository) is given for all actions except
-project_list, project_index and opml.
+Dear diary, on Thu, Sep 14, 2006 at 07:14:47PM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> said that...
+> +	ref_file = git_path(ref);
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/gitweb.perl |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+You slip...
+You fall...
+*BLAMMMM!!!*
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 034cdf1..34311ee 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -341,6 +341,10 @@ if (defined $project) {
- if (!defined($actions{$action})) {
- 	die_error(undef, "Unknown action");
- }
-+if ($action !~ m/^(opml|project_list|project_index)$/ &&
-+    !$project) {
-+	die_error(undef, "Project needed");
-+}
- $actions{$action}->();
- exit;
- 
+Cloning a repository with '%s' tag over HTTP now dumps core nicely, and
+I guess this kind of bugs tends to be exploitable.
+
 -- 
-1.4.2.1
+				Petr "Pasky Yay for Obscure ADOM
+					References" Baudis
+Stuff: http://pasky.or.cz/
+Snow falling on Perl. White noise covering line noise.
+Hides all the bugs too. -- J. Putnam
