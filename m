@@ -1,79 +1,74 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH] gitweb: use correct mime type even if filename has multiple dots.
-Date: Tue, 19 Sep 2006 11:23:24 +0200
-Message-ID: <20060919092324.GD31940@admingilde.org>
-References: <20060916210933.GX17042@admingilde.org> <eehr7e$5i0$1@sea.gmane.org> <20060917075157.GY17042@admingilde.org> <7vejua7um3.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: more support for PATH_INFO based URLs
+Date: Tue, 19 Sep 2006 11:49:53 +0200
+Organization: At home
+Message-ID: <eeoeee$q4u$1@sea.gmane.org>
+References: <20060916210832.GV17042@admingilde.org> <eejhtr$paa$1@sea.gmane.org> <eejlht$870$1@sea.gmane.org> <20060919081933.GB31940@admingilde.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ylS2wUBXLOxYXZFQ"
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 19 11:23:42 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue Sep 19 11:50:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPbpH-0004n0-LY
-	for gcvg-git@gmane.org; Tue, 19 Sep 2006 11:23:36 +0200
+	id 1GPcEc-0003Ws-UZ
+	for gcvg-git@gmane.org; Tue, 19 Sep 2006 11:49:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751714AbWISJX0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Sep 2006 05:23:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751717AbWISJX0
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 05:23:26 -0400
-Received: from agent.admingilde.org ([213.95.21.5]:12732 "EHLO
-	mail.admingilde.org") by vger.kernel.org with ESMTP
-	id S1751707AbWISJXZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Sep 2006 05:23:25 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1GPbp6-0001Qo-Cc; Tue, 19 Sep 2006 11:23:24 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vejua7um3.fsf@assigned-by-dhcp.cox.net>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S964918AbWISJto (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Sep 2006 05:49:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964954AbWISJto
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 05:49:44 -0400
+Received: from main.gmane.org ([80.91.229.2]:44501 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964918AbWISJtn (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Sep 2006 05:49:43 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GPcEN-0003S9-AU
+	for git@vger.kernel.org; Tue, 19 Sep 2006 11:49:31 +0200
+Received: from host-81-190-25-93.torun.mm.pl ([81.190.25.93])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 19 Sep 2006 11:49:31 +0200
+Received: from jnareb by host-81-190-25-93.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 19 Sep 2006 11:49:31 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-93.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27270>
 
+Martin Waitz wrote:
 
---ylS2wUBXLOxYXZFQ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Sun, Sep 17, 2006 at 04:20:23PM +0200, Jakub Narebski wrote:
+>> matled (Matthias Lederhofer) on #git proposed to use ':' as a separator
+>> between branch and filename (as branch doesn't need to be flat, 
+>> e.g. "jc/diff" like branch name), because valid branch name cannot contain
+>> ':' (and this limit is only for branch name).
+> 
+> you are right, my patch doesn't work with hierarchical branch names.
+> However using ":" alone does not work eighter.
+> My main motivation for this patch was to be able to export .html files
+> and to have working links between them.
+> However a <a href="main.html"> link inside "branch:index.html" would
+> try to get "main.html" and not "branch:main.html".
+> 
+> Perhaps use ":/" as separator?
 
-hoi :)
+That would be _very_ easy to add. Just strip leading "/" from pathname,
+and we can have
 
-On Sun, Sep 17, 2006 at 01:41:40AM -0700, Junio C Hamano wrote:
->  - read in mime.types, sort the entries with length of the
->    suffixes (longer first);
->=20
->  - try matching the suffixes from longer to shorter and pick the
->    first match.
->=20
-> Without that, you would not be able to cope with a /etc/mime.types
-> that looks like this, no?
->=20
->         application/a	a
->         application/b	b.a
->=20
-> Perhaps something like the attached.
+        path/to/project.git/hierarchical/branch:/path/to/filename
 
-works perfectly, thanks.
-
---=20
-Martin Waitz
-
---ylS2wUBXLOxYXZFQ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFD7cMj/Eaxd/oD7IRAo4pAJ9NFsJxE8Si3sbf6pMe4l7GaSzf0gCeLTmn
-sqARYtjf3KKlmGblzg4YDlA=
-=R8CM
------END PGP SIGNATURE-----
-
---ylS2wUBXLOxYXZFQ--
+By the way, besides hierarchical branches, we might need this if
+the repository (project) has the branch (head) and tag with the same name,
+and we want to select one or the other.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
