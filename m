@@ -1,62 +1,67 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Subversion-style incrementing revision numbers
-Date: Tue, 19 Sep 2006 23:18:44 +0200
-Message-ID: <20060919211844.GB8259@pasky.or.cz>
-References: <Pine.LNX.4.62.0609191309140.9752@joeldicepc.ecovate.com>
+Subject: Re: [PATCH] Fix broken sha1 locking
+Date: Tue, 19 Sep 2006 23:23:40 +0200
+Message-ID: <20060919212340.GC8259@pasky.or.cz>
+References: <20060919205823.18579.59604.stgit@machine.or.cz> <Pine.LNX.4.64.0609191411460.4388@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 19 23:19:20 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 19 23:24:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPmzX-0000XI-5I
-	for gcvg-git@gmane.org; Tue, 19 Sep 2006 23:18:56 +0200
+	id 1GPn4D-0001Vt-Kc
+	for gcvg-git@gmane.org; Tue, 19 Sep 2006 23:23:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751119AbWISVSr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Sep 2006 17:18:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751155AbWISVSr
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 17:18:47 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:15800 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750975AbWISVSp (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Sep 2006 17:18:45 -0400
-Received: (qmail 20701 invoked by uid 2001); 19 Sep 2006 23:18:44 +0200
-To: Joel Dice <dicej@mailsnare.net>
+	id S1751148AbWISVXn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Sep 2006 17:23:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751184AbWISVXn
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 17:23:43 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:40065 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751148AbWISVXm (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Sep 2006 17:23:42 -0400
+Received: (qmail 21071 invoked by uid 2001); 19 Sep 2006 23:23:40 +0200
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.62.0609191309140.9752@joeldicepc.ecovate.com>
+In-Reply-To: <Pine.LNX.4.64.0609191411460.4388@g5.osdl.org>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27288>
 
-Dear diary, on Tue, Sep 19, 2006 at 11:07:45PM CEST, I got a letter
-where Joel Dice <dicej@mailsnare.net> said that...
-> Implementation:
+Dear diary, on Tue, Sep 19, 2006 at 11:16:04PM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> said that...
+> On Tue, 19 Sep 2006, Petr Baudis wrote:
+> >
+> > Current git#next is totally broken wrt. cloning over HTTP, generating refs
+> > at random directories. Of course it's caused by the static get_pathname()
+> > buffer. lock_ref_sha1() stores return value of mkpath()'s get_pathname()
+> > call, then calls lock_ref_sha1_basic() which calls git_path(ref) which
+> > calls get_pathname() at that point returning pointer to the same buffer.
 > 
-> A simple, efficient implementation of this feature would be based on a 
-> single file, $GIT_DIR/history, which would contain a newline-delimited 
-> list of SHA commit IDs in chronological order, oldest first.  The current 
-> repository IRN would be calculated as the size of that file divided by the 
-> SHA+newline length, and the commit ID of any IRN could be determined by 
-> seeking to the correct offset in that file.  Every commit would cause a 
-> new line to be appended to the history file with that commit's ID. 
-> Finally, a history file could be generated for an existing repository by 
-> serializing the commit history based on chronological order.
+> Hmm. This was exactly the schenario why I did commit
+> e7676d2f6454c9c99e600ee2ce3c7205a9fcfb5f - allowing a couple of 
+> overlapping paths
+> 
+> Isn't that in the "next" branch too?
 
-We already have support for recording something similar, it's called a
-revlog. You would just need to modify it to aggregate all the branches
-in a single file.
+Yes, and between the mkpath() and git_path() calls exactly three other
+get_pathname() calls happen.
 
-Also, multiple IRNs could refer to a single real commit if you do e.g.
-cg-admin-uncommit, since revlog logs revision updates, not new revisions
-created. This may or may not be considered a good thing. If you rather
-want to just create a new IRN at commit object creation time, also note
-that some tools _might_ validly create commit objects and then throw
-them away, which would generate non-sensical (and after prune, invalid)
-IRNs.
+Of course you could just enlarge the cache, but that will merely make
+the bugs even harder to spot, let alone track down. I argue that having
+this cache at all is harmful and will result in bugs over time as new
+get_pathname() calls are added in the middle of currently safe
+"concurrent" calls.
+
+> Of course, that still assumes that you strdup() the result at _some_ time, 
+> and can't just save it away, but lock_ref_sha1_basic() should do that.
+
+lock_ref_sha1_basic() never strdup()s ref (at least the reference used
+for git_path() later).
 
 -- 
 				Petr "Pasky" Baudis
