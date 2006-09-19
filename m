@@ -1,75 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Fix mimetype_guess_file for files with multiple extensions
-Date: Tue, 19 Sep 2006 13:57:03 +0200
-Message-ID: <200609191357.03796.jnareb@gmail.com>
-References: <20060916210933.GX17042@admingilde.org> <eej0l8$36t$1@sea.gmane.org> <20060919082925.GC31940@admingilde.org>
+From: "Art Haas" <ahaas@airmail.net>
+Subject: Re: Patch for http-fetch.c and older curl releases
+Date: Tue, 19 Sep 2006 07:20:19 -0500
+Message-ID: <20060919122019.GA14835@artsapartment.org>
+References: <20060918225445.GF1261@artsapartment.org> <7v4pv4pyey.fsf@assigned-by-dhcp.cox.net> <20060918235753.GG1261@artsapartment.org> <Pine.LNX.4.63.0609191027020.19042@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 19 13:57:09 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Sep 19 14:20:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPeDL-0002tA-1l
-	for gcvg-git@gmane.org; Tue, 19 Sep 2006 13:56:35 +0200
+	id 1GPeae-0000Pa-RD
+	for gcvg-git@gmane.org; Tue, 19 Sep 2006 14:20:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751921AbWISL4S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Sep 2006 07:56:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751924AbWISL4S
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 07:56:18 -0400
-Received: from nf-out-0910.google.com ([64.233.182.186]:30725 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751921AbWISL4R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Sep 2006 07:56:17 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so129369nfa
-        for <git@vger.kernel.org>; Tue, 19 Sep 2006 04:56:16 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=R4F5fijDZxwWv+haY50Bn24T5QVWfTbqI7eMj3vUblNhD6RyUi0+mN9qVK980ETsRbLLA+2CQ96+Tip1wFBvTXgF/Rktl2Si7i/lBzOrEECMtYcrZK3iyJNENgn+XhzjkISqBqmfuZmH817NffbGuZgD6c88U+82uDpkQOtoeU0=
-Received: by 10.78.123.5 with SMTP id v5mr3871272huc;
-        Tue, 19 Sep 2006 04:56:15 -0700 (PDT)
-Received: from host-81-190-25-93.torun.mm.pl ( [81.190.25.93])
-        by mx.gmail.com with ESMTP id 32sm5121868hui.2006.09.19.04.56.13;
-        Tue, 19 Sep 2006 04:56:14 -0700 (PDT)
-To: Martin Waitz <tali@admingilde.org>
-User-Agent: KMail/1.9.3
-In-Reply-To: <20060919082925.GC31940@admingilde.org>
+	id S1030196AbWISMUZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Sep 2006 08:20:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751955AbWISMUZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 08:20:25 -0400
+Received: from wmail-2.airmail.net ([209.196.70.85]:47558 "EHLO
+	wmail-2.airmail.net") by vger.kernel.org with ESMTP
+	id S1751952AbWISMUY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Sep 2006 08:20:24 -0400
+Received: from cpe-24-28-121-3.houston.res.rr.com ([24.28.121.3] helo=pcdebian)
+	by wmail-2.airmail.net with esmtp (Exim 4.60)
+	(envelope-from <ahaas@airmail.net>)
+	id 1GPeaN-00068P-VE
+	for git@vger.kernel.org; Tue, 19 Sep 2006 07:20:24 -0500
+Received: (qmail 17446 invoked by uid 1000); 19 Sep 2006 12:20:19 -0000
+To: git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0609191027020.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27272>
 
-Fix getting correct mimetype for "blob_plain" view for files which have
-multiple extensions, e.g. foo.1.html; now only the last extension
-is used to find mimetype.
+On Tue, Sep 19, 2006 at 10:31:12AM +0200, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Mon, 18 Sep 2006, Art Haas wrote:
+> 
+> > +#if LIBCURL_VERSION_NUM < 0x070f05
+> > +#define CURLE_HTTP_RETURNED_ERROR CURLE_HTTP_NOT_FOUND
+> > +#endif
+> 
+> If you go to 
+> 
+> http://cool.haxx.se/cvs.cgi/curl/include/curl/curl.h?annotate=1.308
+> 
+> and search for HTTP_RETURNED_ERROR, it shows that revision "badger_1.180" 
+> introduced it, which you can verify by clicking on the link to the diff. 
+> This diff also says that the LIBCURL_VERSION_NUM (which is changed just 
+> after a release in the curl project) is 0x70a03. Thus, you should check 
+> for 0x70a03 instead of 0x70f05.
 
-Noticed by Martin Waitz.
+Hi.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This is much simpler (and faster!) correction to the mentioned problem.
-I just don't grok regular expressions, not completly.
+Here's a patch that checks for that version of libcurl.
 
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Signed-off-by: Art Haas <ahaas@airmail.net>
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 01fae94..034cdf1 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1199,7 +1199,7 @@ sub mimetype_guess_file {
- 	}
- 	close(MIME);
+diff --git a/http.h b/http.h
+index 9ca16ac..6e12e41 100644
+--- a/http.h
++++ b/http.h
+@@ -22,6 +22,10 @@ #if LIBCURL_VERSION_NUM < 0x070c04
+ #define NO_CURL_EASY_DUPHANDLE
+ #endif
  
--	$filename =~ /\.(.*?)$/;
-+	$filename =~ /\.([^.]*)$/;
- 	return $mimemap{$1};
- }
- 
++#if LIBCURL_VERSION_NUM < 0x070a03
++#define CURLE_HTTP_RETURNED_ERROR CURLE_HTTP_NOT_FOUND
++#endif
++
+ struct slot_results
+ {
+ 	CURLcode curl_result;
+
 -- 
-1.4.2.1
+Man once surrendering his reason, has no remaining guard against absurdities
+the most monstrous, and like a ship without rudder, is the sport of every wind.
+
+-Thomas Jefferson to James Smith, 1822
