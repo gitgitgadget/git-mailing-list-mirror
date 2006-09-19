@@ -1,88 +1,63 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: Subversion-style incrementing revision numbers
-Date: Wed, 20 Sep 2006 00:17:15 +0200
-Organization: At home
-Message-ID: <eepq7l$dc$1@sea.gmane.org>
+Date: Tue, 19 Sep 2006 18:18:57 -0400
+Message-ID: <20060919221857.GB11601@spearce.org>
 References: <Pine.LNX.4.62.0609191309140.9752@joeldicepc.ecovate.com> <eeppkl$rm9$2@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Wed Sep 20 00:17:23 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 20 00:19:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPntl-0004PM-0j
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 00:17:01 +0200
+	id 1GPnwB-0004ug-4c
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 00:19:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751222AbWISWQ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Sep 2006 18:16:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751225AbWISWQ5
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 18:16:57 -0400
-Received: from main.gmane.org ([80.91.229.2]:51344 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751222AbWISWQ5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Sep 2006 18:16:57 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GPntH-0004JR-D1
-	for git@vger.kernel.org; Wed, 20 Sep 2006 00:16:34 +0200
-Received: from host-81-190-31-133.torun.mm.pl ([81.190.31.133])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 20 Sep 2006 00:16:31 +0200
-Received: from jnareb by host-81-190-31-133.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 20 Sep 2006 00:16:31 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-31-133.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1750972AbWISWTE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Sep 2006 18:19:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751135AbWISWTD
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 18:19:03 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:48581 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751233AbWISWTB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Sep 2006 18:19:01 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GPnvW-0007OI-N2; Tue, 19 Sep 2006 18:18:50 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id EE22920E48E; Tue, 19 Sep 2006 18:18:57 -0400 (EDT)
+To: Jakub Narebski <jnareb@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <eeppkl$rm9$2@sea.gmane.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27300>
 
-Jakub Narebski wrote:
+Jakub Narebski <jnareb@gmail.com> wrote:
+> Unfortunately, one cannot (as of now) use result of git-describe as
+> <commit-ish>. I'd rather have it fixed, than port idea from _centralized_
+> SCM do distributed SCM.
 
-> Joel Dice wrote:
-> 
->> I'm considering adopting Git for a medium-sized project which is currently 
->> managed using Subversion.  I've used Git for a few smaller projects 
->> already, and the thing I've missed most from Subversion is the convenience 
->> of incrementing revision numbers.  The following is a proposal to add this 
->> feature to Git.
->> 
->> 
->> Rationale:
->> 
->> Incrementing revision numbers (IRNs - an acronym I just made up) are 
->> useful in that they can be treated as auto-generated tags which are easier 
->> to remember and communicate than SHA hashes, yet do not require extra 
->> effort to create like real tags.  Also, they have the advantage of being 
->> chronologically ordered, so if I assert that a bug was fixed in revision 
->> 42 of a shared repository, everyone may assume that revision 45 has that 
->> fix as well.
-> 
-> That is true _only_ if you have linear history. If you have multiple
-> concurrent branches, revision 42 can be in branch 'next', revision '45' in
-> topic branch 'xx/topic' which forked before revision 42, and do not have
-> the fix.
+This doesn't work?
 
-Additionally, what does _chronological_ mean? Time the commit is recorded?
-Remember that in distributed development commits can be fetched from other
-repository, or arrive via email and applied using git-am. In git you can
-also rebase branch. Git records merges, and said merges are sometimes
-just fast-forward. All those difficulties have to be solved for IRNs.
+	git log $(git describe | cut -d- -f2 | sed 's/^g//')
 
-By the way, there was similar proposal to add either hidden field ('note'
-like) to commit object denoting _generation_ of commit, or add cache of
-commits' generation numbers. Generation number of root (parentless) commit
-is 0, generation number of a commit is maximum of generation numbers of its
-parents plus 1. But this proposal was for easier and faster generation of
-topological order.
+Its obviously so clear and easy to type!  :-)
+
+That should be pretty easy to teach sha1_name.c:get_sha1_basic to
+look for the pattern commonly used by git-describe, break on "-g",
+verify the tag, then unabbreviate the ID.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Shawn.
