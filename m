@@ -1,64 +1,92 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: Subversion-style incrementing revision numbers
-Date: Wed, 20 Sep 2006 00:06:04 +0200
-Message-ID: <20060919220604.GE8259@pasky.or.cz>
-References: <Pine.LNX.4.62.0609191309140.9752@joeldicepc.ecovate.com> <Pine.LNX.4.64.0609191416500.4388@g5.osdl.org>
+Date: Wed, 20 Sep 2006 00:07:08 +0200
+Organization: At home
+Message-ID: <eeppkl$rm9$2@sea.gmane.org>
+References: <Pine.LNX.4.62.0609191309140.9752@joeldicepc.ecovate.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Joel Dice <dicej@mailsnare.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 20 00:06:28 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed Sep 20 00:07:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPnjI-0002Lq-Pv
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 00:06:15 +0200
+	id 1GPnjz-0002U5-LJ
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 00:06:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751166AbWISWGI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Sep 2006 18:06:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751198AbWISWGI
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 18:06:08 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:64930 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751188AbWISWGG (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Sep 2006 18:06:06 -0400
-Received: (qmail 24457 invoked by uid 2001); 20 Sep 2006 00:06:04 +0200
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0609191416500.4388@g5.osdl.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751108AbWISWGy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Sep 2006 18:06:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751198AbWISWGy
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 18:06:54 -0400
+Received: from main.gmane.org ([80.91.229.2]:972 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751108AbWISWGw (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Sep 2006 18:06:52 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GPnjf-0002PT-VH
+	for git@vger.kernel.org; Wed, 20 Sep 2006 00:06:35 +0200
+Received: from host-81-190-31-133.torun.mm.pl ([81.190.31.133])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 20 Sep 2006 00:06:35 +0200
+Received: from jnareb by host-81-190-31-133.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 20 Sep 2006 00:06:35 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-31-133.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27295>
 
-Dear diary, on Tue, Sep 19, 2006 at 11:51:49PM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> said that...
-> Another thing you CAN do, is to just number them in time in a single repo. 
-> Every time you do a commit, you can create a "r1.<n+1>" revision, and that 
-> would work. It wouldn't look like the SVN numbers do, and it would only 
-> work _within_ that repository, but it would work.
+Joel Dice wrote:
+
+> I'm considering adopting Git for a medium-sized project which is currently 
+> managed using Subversion.  I've used Git for a few smaller projects 
+> already, and the thing I've missed most from Subversion is the convenience 
+> of incrementing revision numbers.  The following is a proposal to add this 
+> feature to Git.
 > 
-> But it would mean that "r1.57" is _not_ necessarily the child of "r1.56". 
-> It might be that "r1.56" was done on another branch, and is totally 
-> unrelated to "r1.57" (other than they sharing some common ancestor far 
-> back).
+> 
+> Rationale:
+> 
+> Incrementing revision numbers (IRNs - an acronym I just made up) are 
+> useful in that they can be treated as auto-generated tags which are easier 
+> to remember and communicate than SHA hashes, yet do not require extra 
+> effort to create like real tags.  Also, they have the advantage of being 
+> chronologically ordered, so if I assert that a bug was fixed in revision 
+> 42 of a shared repository, everyone may assume that revision 45 has that 
+> fix as well.
 
-This is actually exactly how SVN revision numbering works. There's just
-a single number (no '1.') and it indeed jumps randomly if you have
-several concurrent branches in your (ok, Linus does not have any, just
-someone's) repository.
+That is true _only_ if you have linear history. If you have multiple
+concurrent branches, revision 42 can be in branch 'next', revision '45' in
+topic branch 'xx/topic' which forked before revision 42, and do not have
+the fix.
 
-> You're going to hit a few confusing issues if you really want to call 
-> things "r1.x.y.z"
+Unfortunately, one cannot (as of now) use result of git-describe as
+<commit-ish>. I'd rather have it fixed, than port idea from _centralized_
+SCM do distributed SCM.
 
-Noone does, that indeed would be horrible. But having the commits
-numbered inside a repository would indeed make for simple usage if you
-need to type in commit ids frequently, and could make Git a bit
-friendlier to newcomers.
+> Proposal:
+> 
+> As with Subversion, the IRN state in Git would be specific to a given 
+> repository and have no significance beyond that repository.  Also like 
+> Subversion, IRN state would be global across a repository, so that a 
+> commit to any branch would increment the current IRN value.  Every Git 
+> command taking a revision parameter would accept an IRN using a syntax 
+> such as "r$IRN".  Every commit would report the IRN to the user as well as 
+> the SHA ID.  The IRN feature could be enabled or disabled via a 
+> configuration option.
+
+This of course limits IRN much. Tags are valid across repositories.
+I'm not sure if many repositories are managed using shared repositories
+(centralized approach).
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Snow falling on Perl. White noise covering line noise.
-Hides all the bugs too. -- J. Putnam
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
