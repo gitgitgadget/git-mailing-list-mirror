@@ -1,52 +1,76 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [RFC][PATCH] gitweb: Make the Git logo link target to point to the homepage
-Date: Tue, 19 Sep 2006 23:27:25 +0200
-Message-ID: <20060919212725.GA13132@pasky.or.cz>
+From: Joel Dice <dicej@mailsnare.net>
+Subject: Re: Subversion-style incrementing revision numbers
+Date: Tue, 19 Sep 2006 15:42:20 -0600 (MDT)
+Message-ID: <Pine.LNX.4.62.0609191525490.9752@joeldicepc.ecovate.com>
+References: <Pine.LNX.4.62.0609191309140.9752@joeldicepc.ecovate.com>
+ <20060919211844.GB8259@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=fixed
-X-From: git-owner@vger.kernel.org Tue Sep 19 23:28:14 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 19 23:42:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPn7t-0002PZ-LE
-	for gcvg-git@gmane.org; Tue, 19 Sep 2006 23:27:34 +0200
+	id 1GPnMI-0005d3-7T
+	for gcvg-git@gmane.org; Tue, 19 Sep 2006 23:42:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751184AbWISV11 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Sep 2006 17:27:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752081AbWISV11
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 17:27:27 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:46465 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751184AbWISV10 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Sep 2006 17:27:26 -0400
-Received: (qmail 21536 invoked by uid 2001); 19 Sep 2006 23:27:25 +0200
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751220AbWISVmX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Sep 2006 17:42:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752086AbWISVmX
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 17:42:23 -0400
+Received: from v187.mailsnare.net ([206.246.200.187]:11142 "EHLO
+	mail.mailsnare.net") by vger.kernel.org with ESMTP id S1751220AbWISVmW
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Sep 2006 17:42:22 -0400
+Received: from joeldicepc.ecovate.com (unknown [208.50.222.162])
+	by mail.mailsnare.net (Postfix) with ESMTP id E4E4B2BFD0;
+	Tue, 19 Sep 2006 21:42:20 +0000 (UTC)
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060919211844.GB8259@pasky.or.cz>
+X-Virus-Scanned: by ClamAV at mailsnare.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27290>
 
-It provides more useful information for causual Git users than the Git docs
-(especially about where to get Git and such).
+On Tue, 19 Sep 2006, Petr Baudis wrote:
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+> Dear diary, on Tue, Sep 19, 2006 at 11:07:45PM CEST, I got a letter
+> where Joel Dice <dicej@mailsnare.net> said that...
+>> Implementation:
+>>
+>> A simple, efficient implementation of this feature would be based on a
+>> single file, $GIT_DIR/history, which would contain a newline-delimited
+>> list of SHA commit IDs in chronological order, oldest first.  The current
+>> repository IRN would be calculated as the size of that file divided by the
+>> SHA+newline length, and the commit ID of any IRN could be determined by
+>> seeking to the correct offset in that file.  Every commit would cause a
+>> new line to be appended to the history file with that commit's ID.
+>> Finally, a history file could be generated for an existing repository by
+>> serializing the commit history based on chronological order.
+>
+> We already have support for recording something similar, it's called a
+> revlog. You would just need to modify it to aggregate all the branches
+> in a single file.
 
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Thanks - I'll look at that.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index c77270c..7ecd7df 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1312,7 +1312,7 @@ EOF
- 	print "</head>\n" .
- 	      "<body>\n" .
- 	      "<div class=\"page_header\">\n" .
--	      "<a href=\"http://www.kernel.org/pub/software/scm/git/docs/\" title=\"git documentation\">" .
-+	      "<a href=\"http://git.or.cz/\" title=\"Git homepage\">" .
- 	      "<img src=\"$logo\" width=\"72\" height=\"27\" alt=\"git\" style=\"float:right; border-width:0px;\"/>" .
- 	      "</a>\n";
- 	print $cgi->a({-href => esc_param($home_link)}, $home_link_str) . " / ";
+> Also, multiple IRNs could refer to a single real commit if you do e.g.
+> cg-admin-uncommit, since revlog logs revision updates, not new revisions
+> created. This may or may not be considered a good thing. If you rather
+> want to just create a new IRN at commit object creation time, also note
+> that some tools _might_ validly create commit objects and then throw
+> them away, which would generate non-sensical (and after prune, invalid)
+> IRNs.
+
+I'm not too worried about cg-admin-uncommit or git-reset, since the IRN 
+feature is intended mainly for shared repositories.  I would suggest that 
+such commands simply be disallowed for such repositories.
+
+The problem of temporary commits certainly needs to be addressed.  In this 
+case, may I assume nothing under $GIT_DIR/refs is ever modified?  If so, 
+perhaps I could somehow hook into the git-update-ref step.  Is that what 
+the revlog code does?
+
+  - Joel
