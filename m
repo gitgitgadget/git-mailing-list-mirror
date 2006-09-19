@@ -1,88 +1,83 @@
-From: Shawn Pearce <spearce@spearce.org>
+From: Joel Dice <dicej@mailsnare.net>
 Subject: Re: Subversion-style incrementing revision numbers
-Date: Tue, 19 Sep 2006 18:23:52 -0400
-Message-ID: <20060919222352.GC11601@spearce.org>
-References: <Pine.LNX.4.62.0609191309140.9752@joeldicepc.ecovate.com> <eeppkl$rm9$2@sea.gmane.org>
+Date: Tue, 19 Sep 2006 16:24:31 -0600 (MDT)
+Message-ID: <Pine.LNX.4.62.0609191609090.9752@joeldicepc.ecovate.com>
+References: <Pine.LNX.4.62.0609191309140.9752@joeldicepc.ecovate.com>
+ <20060919211844.GB8259@pasky.or.cz> <Pine.LNX.4.62.0609191525490.9752@joeldicepc.ecovate.com>
+ <20060919220011.GD8259@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 20 00:24:17 2006
+X-From: git-owner@vger.kernel.org Wed Sep 20 00:24:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPo0Y-0005ff-T2
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 00:24:04 +0200
+	id 1GPo16-0005mf-DL
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 00:24:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751003AbWISWX5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Sep 2006 18:23:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751238AbWISWX5
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 18:23:57 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:32710 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751003AbWISWX4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Sep 2006 18:23:56 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GPo0H-0007kH-Fu; Tue, 19 Sep 2006 18:23:45 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id C5DF820E48E; Tue, 19 Sep 2006 18:23:52 -0400 (EDT)
-To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <eeppkl$rm9$2@sea.gmane.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751238AbWISWYd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Sep 2006 18:24:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbWISWYd
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 18:24:33 -0400
+Received: from v187.mailsnare.net ([206.246.200.187]:7045 "EHLO
+	mail.mailsnare.net") by vger.kernel.org with ESMTP id S1751238AbWISWYd
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Sep 2006 18:24:33 -0400
+Received: from joeldicepc.ecovate.com (unknown [208.50.222.162])
+	by mail.mailsnare.net (Postfix) with ESMTP id C52A62C07D;
+	Tue, 19 Sep 2006 22:24:30 +0000 (UTC)
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060919220011.GD8259@pasky.or.cz>
+X-Virus-Scanned: by ClamAV at mailsnare.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27303>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Joel Dice wrote:
-> > Proposal:
-> > 
-> > As with Subversion, the IRN state in Git would be specific to a given 
-> > repository and have no significance beyond that repository.  Also like 
-> > Subversion, IRN state would be global across a repository, so that a 
-> > commit to any branch would increment the current IRN value.  Every Git 
-> > command taking a revision parameter would accept an IRN using a syntax 
-> > such as "r$IRN".  Every commit would report the IRN to the user as well as 
-> > the SHA ID.  The IRN feature could be enabled or disabled via a 
-> > configuration option.
-> 
-> This of course limits IRN much. Tags are valid across repositories.
-> I'm not sure if many repositories are managed using shared repositories
-> (centralized approach).
+On Wed, 20 Sep 2006, Petr Baudis wrote:
 
-Not only that but its somewhat difficult to execute
-`git log v1.4.0..v1.4.1` on a central repository; if IRNs are only
-valid within that repository then that's the only way they could
-even be used.
+> Dear diary, on Tue, Sep 19, 2006 at 11:42:20PM CEST, I got a letter
+> where Joel Dice <dicej@mailsnare.net> said that...
+>> On Tue, 19 Sep 2006, Petr Baudis wrote:
+>>> Also, multiple IRNs could refer to a single real commit if you do e.g.
+>>> cg-admin-uncommit, since revlog logs revision updates, not new revisions
+>>> created. This may or may not be considered a good thing. If you rather
+>>> want to just create a new IRN at commit object creation time, also note
+>>> that some tools _might_ validly create commit objects and then throw
+>>> them away, which would generate non-sensical (and after prune, invalid)
+>>> IRNs.
+>>
+>> I'm not too worried about cg-admin-uncommit or git-reset, since the IRN
+>> feature is intended mainly for shared repositories.  I would suggest that
+>> such commands simply be disallowed for such repositories.
+>
+>  What kind of shared repositories? You yourself said that IRNs are
+> local to a repository, thus they are not preserved over cloning/fetching
+> from a repository, if you mean that.
 
-Note that somewhat difficult here means you need to:
+The scenario I envision is several developers, each with a clone of a 
+shared repository.  The clones would not have IRNs turned on, only the 
+shared repository.  So, when I do a "git push", I get an IRN back, and I 
+am not confused, because I know that IRN only applies to the shared 
+repository.  Then, when I mark a Bugzilla bug as fixed and attach the IRN 
+to it, everybody knows that IRN refers to the shared repository.  After 
+all, I wouldn't mark the bug fixed if I had only committed it to my own 
+private repository.
 
-	- gain direct read-only access to the repository's files (not
-	  all systems may be able to offer this to all users);
+I could also turn on IRNs on my clone if I really wanted, but not if I 
+thought it would confuse myself or others.
 
-	- set GIT_DIR environment variable OR pass --git-dir before
-	  the subcommand;
+>> The problem of temporary commits certainly needs to be addressed.  In this
+>> case, may I assume nothing under $GIT_DIR/refs is ever modified?  If so,
+>> perhaps I could somehow hook into the git-update-ref step.  Is that what
+>> the revlog code does?
+>
+>  Yes. But not every commit is always recorded to something in refs/.
+> The simplest case is if you fetch from a remote repository (or push to
+> your repository), only the latest commit is recorded.
 
-	- do all of that without doing something stupid in the
-	  repository directory such as `rm *` without realizing
-	  where you are;
+That's what I figured.  I should be able to walk the commit chain to get 
+at all the commits in a push or fetch, right?
 
-	- but still maintain write access so you can push.
-
-and that latter GIT_DIR/--git-dir part users are bound to forgot as
-its not as natural as just assuming the repository is the directory
-you are in.  Of course that could be probably fixed...
-
--- 
-Shawn.
+  - Joel
