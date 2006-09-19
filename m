@@ -1,74 +1,75 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: more support for PATH_INFO based URLs
-Date: Tue, 19 Sep 2006 11:49:53 +0200
-Organization: At home
-Message-ID: <eeoeee$q4u$1@sea.gmane.org>
-References: <20060916210832.GV17042@admingilde.org> <eejhtr$paa$1@sea.gmane.org> <eejlht$870$1@sea.gmane.org> <20060919081933.GB31940@admingilde.org>
+Subject: [PATCH] gitweb: Fix mimetype_guess_file for files with multiple extensions
+Date: Tue, 19 Sep 2006 13:57:03 +0200
+Message-ID: <200609191357.03796.jnareb@gmail.com>
+References: <20060916210933.GX17042@admingilde.org> <eej0l8$36t$1@sea.gmane.org> <20060919082925.GC31940@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Sep 19 11:50:12 2006
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 19 13:57:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPcEc-0003Ws-UZ
-	for gcvg-git@gmane.org; Tue, 19 Sep 2006 11:49:47 +0200
+	id 1GPeDL-0002tA-1l
+	for gcvg-git@gmane.org; Tue, 19 Sep 2006 13:56:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964918AbWISJto (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Sep 2006 05:49:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964954AbWISJto
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 05:49:44 -0400
-Received: from main.gmane.org ([80.91.229.2]:44501 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S964918AbWISJtn (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Sep 2006 05:49:43 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GPcEN-0003S9-AU
-	for git@vger.kernel.org; Tue, 19 Sep 2006 11:49:31 +0200
-Received: from host-81-190-25-93.torun.mm.pl ([81.190.25.93])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 19 Sep 2006 11:49:31 +0200
-Received: from jnareb by host-81-190-25-93.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 19 Sep 2006 11:49:31 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-93.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751921AbWISL4S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Sep 2006 07:56:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751924AbWISL4S
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 07:56:18 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:30725 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751921AbWISL4R (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Sep 2006 07:56:17 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so129369nfa
+        for <git@vger.kernel.org>; Tue, 19 Sep 2006 04:56:16 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=R4F5fijDZxwWv+haY50Bn24T5QVWfTbqI7eMj3vUblNhD6RyUi0+mN9qVK980ETsRbLLA+2CQ96+Tip1wFBvTXgF/Rktl2Si7i/lBzOrEECMtYcrZK3iyJNENgn+XhzjkISqBqmfuZmH817NffbGuZgD6c88U+82uDpkQOtoeU0=
+Received: by 10.78.123.5 with SMTP id v5mr3871272huc;
+        Tue, 19 Sep 2006 04:56:15 -0700 (PDT)
+Received: from host-81-190-25-93.torun.mm.pl ( [81.190.25.93])
+        by mx.gmail.com with ESMTP id 32sm5121868hui.2006.09.19.04.56.13;
+        Tue, 19 Sep 2006 04:56:14 -0700 (PDT)
+To: Martin Waitz <tali@admingilde.org>
+User-Agent: KMail/1.9.3
+In-Reply-To: <20060919082925.GC31940@admingilde.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27271>
 
-Martin Waitz wrote:
+Fix getting correct mimetype for "blob_plain" view for files which have
+multiple extensions, e.g. foo.1.html; now only the last extension
+is used to find mimetype.
 
-> On Sun, Sep 17, 2006 at 04:20:23PM +0200, Jakub Narebski wrote:
->> matled (Matthias Lederhofer) on #git proposed to use ':' as a separator
->> between branch and filename (as branch doesn't need to be flat, 
->> e.g. "jc/diff" like branch name), because valid branch name cannot contain
->> ':' (and this limit is only for branch name).
-> 
-> you are right, my patch doesn't work with hierarchical branch names.
-> However using ":" alone does not work eighter.
-> My main motivation for this patch was to be able to export .html files
-> and to have working links between them.
-> However a <a href="main.html"> link inside "branch:index.html" would
-> try to get "main.html" and not "branch:main.html".
-> 
-> Perhaps use ":/" as separator?
+Noticed by Martin Waitz.
 
-That would be _very_ easy to add. Just strip leading "/" from pathname,
-and we can have
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+This is much simpler (and faster!) correction to the mentioned problem.
+I just don't grok regular expressions, not completly.
 
-        path/to/project.git/hierarchical/branch:/path/to/filename
+ gitweb/gitweb.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-By the way, besides hierarchical branches, we might need this if
-the repository (project) has the branch (head) and tag with the same name,
-and we want to select one or the other.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 01fae94..034cdf1 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1199,7 +1199,7 @@ sub mimetype_guess_file {
+ 	}
+ 	close(MIME);
+ 
+-	$filename =~ /\.(.*?)$/;
++	$filename =~ /\.([^.]*)$/;
+ 	return $mimemap{$1};
+ }
+ 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+1.4.2.1
