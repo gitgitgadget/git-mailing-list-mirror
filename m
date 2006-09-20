@@ -1,116 +1,70 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [PATCH] Added --mirror-all to git-fetch.
-Date: Wed, 20 Sep 2006 11:42:30 -0700
-Message-ID: <45118B96.1080207@gmail.com>
-References: <20060919232851.GA12195@spearce.org>	<7vac4ujzf0.fsf@assigned-by-dhcp.cox.net>	<20060920161407.GQ8259@pasky.or.cz>	<20060920162145.GA23260@spearce.org>	<7v1wq6jy3q.fsf@assigned-by-dhcp.cox.net>	<20060920164912.GD23260@spearce.org>	<7vac4uihr3.fsf@assigned-by-dhcp.cox.net>	<20060920173126.GG23260@spearce.org> <7vu032h1g1.fsf@assigned-by-dhcp.cox.net>
-Reply-To: gitzilla@gmail.com
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Support for custom per-project owner string
+Date: Wed, 20 Sep 2006 21:01:05 +0200
+Organization: At home
+Message-ID: <ees35e$4vh$1@sea.gmane.org>
+References: <20060919225522.GB13132@pasky.or.cz> <7veju6lgxu.fsf@assigned-by-dhcp.cox.net> <20060920154208.GN8259@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------080502040603030700090503"
-Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org,
-	Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Sep 20 20:43:17 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed Sep 20 21:02:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQ71z-0007g4-Jj
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 20:42:47 +0200
+	id 1GQ7Ks-00049T-C5
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 21:02:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932233AbWITSmo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 14:42:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932235AbWITSmo
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 14:42:44 -0400
-Received: from wx-out-0506.google.com ([66.249.82.232]:24589 "EHLO
-	wx-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S932233AbWITSmn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Sep 2006 14:42:43 -0400
-Received: by wx-out-0506.google.com with SMTP id s14so371475wxc
-        for <git@vger.kernel.org>; Wed, 20 Sep 2006 11:42:42 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type;
-        b=p0ZJVYKRHYban9/GUV/Fvomf+xPPD4sMSpG8YXoklhB7gFSZ7WoBEK+4jSU0chdsJtL2t/HAseMz6R613XWmdDq6pN6lt7olc1GOSyq2kgmsB8laq9Jcl/GUC8HNUfEW40O0WuoI/87oou/wiu3Q8MOJscdLl8COsmNRr0Tj0RA=
-Received: by 10.70.108.18 with SMTP id g18mr25263780wxc;
-        Wed, 20 Sep 2006 11:42:42 -0700 (PDT)
-Received: from ?10.0.0.6? ( [67.20.86.89])
-        by mx.gmail.com with ESMTP id i36sm1741182wxd.2006.09.20.11.42.41;
-        Wed, 20 Sep 2006 11:42:41 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.5 (X11/20060725)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vu032h1g1.fsf@assigned-by-dhcp.cox.net>
+	id S932258AbWITTCN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 15:02:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932264AbWITTCN
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 15:02:13 -0400
+Received: from main.gmane.org ([80.91.229.2]:42433 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932258AbWITTCL (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 15:02:11 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GQ7Jv-0003so-CD
+	for git@vger.kernel.org; Wed, 20 Sep 2006 21:01:19 +0200
+Received: from host-81-190-26-109.torun.mm.pl ([81.190.26.109])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 20 Sep 2006 21:01:19 +0200
+Received: from jnareb by host-81-190-26-109.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 20 Sep 2006 21:01:19 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-26-109.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27393>
 
-This is a multi-part message in MIME format.
---------------080502040603030700090503
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Petr Baudis wrote:
 
-Junio C Hamano wrote:
-[...]
+> Dear diary, on Wed, Sep 20, 2006 at 05:02:21PM CEST, I got a letter
+> where Junio C Hamano <junkio@cox.net> said that...
+>> Petr Baudis <pasky@suse.cz> writes:
+>> 
+>>> Also, ideally this would be in the configfile but calling repoconfig for
+>>> each repository in the index would slow things down way too much.
+>> 
+>> Hmph.  I wonder why.  We do read description already from a file
+>> so maybe we would want a faster way to access the config file to
+>> grab gitweb.* variables in a single call?
 > 
-> Another possibility.  The mirror might want to do something
-> like:
-> 
->         .git/refs/remotes/davem/sparc-2.6.git/...
-> 	.git/refs/remotes/torvalds/linux-2.6.git/...
-> 	.git/refs/remotes/jgarzik/netdev-2.6.git/...
-> 
-> to be a super-mirror of related projects.  This would give a
-> convenient way for the visitors to browse them all at one place,
-> and would save object store.  There are minor details such as
-> gitweb may not allow browsing refs/remotes and git-fetch may not
-> let you fetch from refs/remotes (I haven't checked), but they
-> are fixable as needed.
-> 
+> Still, opening files is _much_ faster than executing a tool, I'd say.
 
-This is what I do with the 2 attached, poorly named, scripts. Very 
-convenient for watching some of my favorite projects. ;-)
+Perhaps we should just parse $GIT_DIR/config ourself in gitweb
+(this is thing that I certainly would want to see in Git.pm).
+There are many modules which parse ini-like config files, but it
+shouldn't be that difficult to write parser which _reads_ and parses
+config file (without support for setting variables).
 
---------------080502040603030700090503
-Content-Type: application/x-shellscript;
- name="fred.sh"
-Content-Transfer-Encoding: base64
-Content-Disposition: inline;
- filename="fred.sh"
-
-IyEvYmluL3NoCgpyZXA9JDEKd2hvPSQyCgojZ2l0LWZldGNoIC0tbm8tdGFncyAkcmVwICQo
-Z2l0LWxzLXJlbW90ZSAkcmVwCQkJCQlcCiMJCXwgc2VkCS1lICdzL14uKgkvLycJCQkJCVwK
-IwkJCS1lICcvXF4vZCcJCQkJCQlcCiMJCQktZSAnczteXChcKHJlZnMvW14vXSovXClcKC4q
-XClcKSQ7KyY6XDInIiR3aG8iJy9cMzsnCVwKIwkJCS1lICcvXityZWZzXC8vcCcJCQkJCVwK
-IwkJCS1lIGQKIwkJKQoKZ2l0LWZldGNoIC1mIC11IC0tbm8tdGFncyAkcmVwICQoZ2l0LWxz
-LXJlbW90ZSAkcmVwCQkJCVwKCQl8IHNlZAktZSAncy9eLioJLy8nCQkJCQlcCgkJCS1lICcv
-XF4vZCcJCQkJCQlcCgkJCS1lICdzO15cKFwocmVmcy9bXi9dKi9cKVwoLipcKVwpJDsmOlwy
-JyIkd2hvIicvXDM7JwlcCgkJCS1lICcvXnJlZnNcLy9wJwkJCQkJCVwKCQkJLWUgZAoJCSkK
-
---------------080502040603030700090503
-Content-Type: text/plain;
- name="fred_history"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="fred_history"
-
-export GIT_COMMITTER_NAME="@"
-export GIT_AUTHOR_NAME="@"
-
-./fred.sh git://www.kernel.org/pub/scm/git/git.git git/git
-
-./fred.sh git://www.kernel.org/pub/scm/gitk/gitk.git gitk/gitk
-
-./fred.sh git://www.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.11.y.git stable/linux-2.6.11.y
-./fred.sh git://www.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.12.y.git stable/linux-2.6.12.y
-./fred.sh git://www.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.13.y.git stable/linux-2.6.13.y
-./fred.sh git://www.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.14.y.git stable/linux-2.6.14.y
-./fred.sh git://www.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.15.y.git stable/linux-2.6.15.y
-./fred.sh git://www.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.16.y.git stable/linux-2.6.16.y
-./fred.sh git://www.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.17.y.git stable/linux-2.6.17.y
-
-./fred.sh git://www.kernel.org/pub/scm/linux/kernel/git/tglx/history.git tglx/history
-
-./fred.sh git://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git torvalds/linux-2.6
-./fred.sh git://www.kernel.org/pub/scm/linux/kernel/git/torvalds/sparse.git torvalds/sparse
-
---------------080502040603030700090503--
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
