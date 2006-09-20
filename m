@@ -1,67 +1,60 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: git pull for update of netdev fails.
-Date: Wed, 20 Sep 2006 18:07:56 +0200
-Message-ID: <20060920160756.GP8259@pasky.or.cz>
-References: <20060920080308.673a1e93@localhost.localdomain> <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org> <20060920155431.GO8259@pasky.or.cz> <Pine.LNX.4.63.0609201801110.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/2] gitweb: Always use git-peek-remote in git_get_references
+Date: Wed, 20 Sep 2006 09:09:47 -0700
+Message-ID: <7v64fijz90.fsf@assigned-by-dhcp.cox.net>
+References: <200609191430.51252.jnareb@gmail.com>
+	<200609191431.49641.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 20 18:08:59 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 20 18:10:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQ4cD-0000QM-DK
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 18:08:01 +0200
+	id 1GQ4e0-0000uE-Iq
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 18:09:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751715AbWITQH6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 12:07:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751718AbWITQH6
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 12:07:58 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:49868 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751715AbWITQH6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 12:07:58 -0400
-Received: (qmail 3830 invoked by uid 2001); 20 Sep 2006 18:07:56 +0200
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0609201801110.19042@wbgn013.biozentrum.uni-wuerzburg.de>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751640AbWITQJt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 12:09:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751655AbWITQJt
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 12:09:49 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:54477 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751640AbWITQJt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Sep 2006 12:09:49 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060920160948.OOOL22977.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 20 Sep 2006 12:09:48 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Qg9a1V0051kojtg0000000
+	Wed, 20 Sep 2006 12:09:34 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200609191431.49641.jnareb@gmail.com> (Jakub Narebski's message
+	of "Tue, 19 Sep 2006 14:31:49 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27359>
 
-  Hi,
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Dear diary, on Wed, Sep 20, 2006 at 06:02:43PM CEST, I got a letter
-where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
-> On Wed, 20 Sep 2006, Petr Baudis wrote:
-> 
-> > Dear diary, on Wed, Sep 20, 2006 at 05:28:08PM CEST, I got a letter
-> > where Linus Torvalds <torvalds@osdl.org> said that...
-> > > However, you can tell git that Jeff is being difficult by marking such 
-> > > branches individually as being rebased.
-> > 
-> > This is really a wrong way of describing the problem - I'd say that Git
-> > is being difficult here. The point is, the subsystem maintainers need to
-> > maintain stacks of patches and rebase against the main kernel branch
-> > regularily, and they want to still publish their current state. So it's
-> > not really any of them being strange or difficult, but Git being so
-> > because it has no seamless support for tracking those branches.
-> 
-> So, what exactly do you propose? I do not see any way to help this 
-> problem, since you really throw away history. So, the 
-> git-is-being-difficult has to be taken with a pound of salt here.
+> Instead of trying to read info/refs file, which might not be present
+> (we did fallback to git-ls-remote), always use git-peek-remote in
+> git_get_references.
+>
+> It is preparation for git_get_refs_info to also return references
+> info. We cannot use info/refs for git_get_refs_info as the information
+> contained therein is usually stale.
 
-  I personally don't think "throwing away" history is an issue. You can
-print the old sha1 and it is still in the database so you can recover
-it. And if you are really paranoid about it (in what scenario do you
-actually care?), enable reflog and you will have the old sha1s recorded
-there.
+What the patch does is sane, but I think the last sentence of
+the proposed log message is not.  If info/refs is "usually
+stale", it is a bug in the repository to have such a stale file.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Snow falling on Perl. White noise covering line noise.
-Hides all the bugs too. -- J. Putnam
+The real reason for this patch is that a repository served by
+gitweb is not necessarily meant to be fetched over HTTP and
+info/refs does not have to be there.
