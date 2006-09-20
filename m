@@ -1,103 +1,115 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: git pull for update of netdev fails.
-Date: Wed, 20 Sep 2006 13:10:12 -0400
-Message-ID: <20060920171012.GF23260@spearce.org>
-References: <20060920080308.673a1e93@localhost.localdomain> <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org> <20060920155431.GO8259@pasky.or.cz> <Pine.LNX.4.63.0609201801110.19042@wbgn013.biozentrum.uni-wuerzburg.de> <20060920160756.GP8259@pasky.or.cz> <Pine.LNX.4.64.0609200915550.4388@g5.osdl.org> <Pine.LNX.4.64.0609200920290.4388@g5.osdl.org> <20060920163437.GC23260@spearce.org> <Pine.LNX.4.64.0609200942550.4388@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Added --mirror-all to git-fetch.
+Date: Wed, 20 Sep 2006 10:13:04 -0700
+Message-ID: <7vac4uihr3.fsf@assigned-by-dhcp.cox.net>
+References: <20060919232851.GA12195@spearce.org>
+	<7vac4ujzf0.fsf@assigned-by-dhcp.cox.net>
+	<20060920161407.GQ8259@pasky.or.cz>
+	<20060920162145.GA23260@spearce.org>
+	<7v1wq6jy3q.fsf@assigned-by-dhcp.cox.net>
+	<20060920164912.GD23260@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 20 19:11:41 2006
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Wed Sep 20 19:14:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQ5af-0000HE-Jc
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 19:10:29 +0200
+	id 1GQ5dZ-0000z0-60
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 19:13:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751968AbWITRK0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 13:10:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751976AbWITRK0
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 13:10:26 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:6048 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751968AbWITRKZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Sep 2006 13:10:25 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GQ5aJ-0007kr-5N; Wed, 20 Sep 2006 13:10:07 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 0FFF920E48E; Wed, 20 Sep 2006 13:10:12 -0400 (EDT)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0609200942550.4388@g5.osdl.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932070AbWITRNI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 13:13:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932071AbWITRNI
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 13:13:08 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:61158 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S932068AbWITRNG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Sep 2006 13:13:06 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060920171305.MPOB12909.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 20 Sep 2006 13:13:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id QhCr1V0031kojtg0000000
+	Wed, 20 Sep 2006 13:12:51 -0400
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060920164912.GD23260@spearce.org> (Shawn Pearce's message of
+	"Wed, 20 Sep 2006 12:49:12 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27382>
 
-Linus Torvalds <torvalds@osdl.org> wrote:
-> On Wed, 20 Sep 2006, Shawn Pearce wrote:
-> > I worked on a project not to long ago in which a user tried `git
-> > push`, received a "not a fast-forward" error, didn't know what it
-> > meant, tried `git push --force`, found that worked, and proceeded
-> > to force every push he did from then on.  To much gnashing of teeth
-> > from everyone else.
-> 
-> Ouch. That implies that we made it a bit too easy to force things, or that 
-> we have an insufficiently clear error message.
+Shawn Pearce <spearce@spearce.org> writes:
 
-I've been lucky that I've only run into two people in my life that
-when faced with an error message they don't understand immediately
-try adding "-f" and "--force" to the command line until something
-happens.  Its entertaining to read their terminal scrollback and
-see what they did in response to errors; its less so when they've
-done mildy destructive things that you now must cleanup.
+> I started this change with '--all' and realized that ideally you
+> want '--all' to copy all available refs/heads/* from the remote to
+> refs/remotes/<name>/* here.  You want to create any new branches
+> which the remote has introduced since your last fetch.
+>
+> You probably don't want to force a non-fast forward unless there's a
+> '+' in the corresponding Pull line of remotes/<name> or if --force is
+> used.  However you probably also want to delete any removed branches.
 
-Sometimes I wonder if they've managed to reformat their root
-filesystem while they had it mounted.  Never asked.  Not sure I
-want to hear the answer.
- 
-> I think the current error message is fairly good: it says
-> 
-> 	"remote '%s' is not a strict subset of local ref '%s'. maybe you 
-> 	 are not up-to-date and need to pull first?"
-> 
-> which should be clear enough, but I'm hoping this was a long time ago when 
-> we weren't as clear (we added the "maybe you're not up-to-date .." 
-> language later)
+I think we are in agreement here.
 
-Yes; this problem was back with Git 1.2 so the newer language is
-much better and should help new users better.
- 
-> > Of course an update hook finally took care of the problem, but having
-> > non fast-forward pushs be permitted on a shared, bare repository
-> > by default is interesting to say the least.  :-)
-> 
-> Yeah, well, it's not permitted "by default", but obviously "--force" ends 
-> up being a client-side decision, so with clueless clients, the default 
-> behaviour may not be enough to save you.
+> Which I think is quite different from a mirror.  A mirror wants to
+> replace the entire ref namespace with what's on the remote as it
+> has no need for a local namespace of its own.
 
-I'm wondering if maybe git-receive-pack should deny forcing an
-update in a shared repository unless there's either an update hook
-that its going to run (which would get to vote yea or neigh) or
-there's a configuration setting enabled which isn't set by default.
+If you have remotes/origin that does not use the refs/remotes
+hierarchy, does not copy master->origin (iow, the assumption
+that "origin" branch is to be merged into local "master") but
+copies remote master to local master, and forces all refs by
+default, then your local ref namespace is effectively a mirror
+of the remote, so it is very tempting to think --mirror is a
+logical extension of "fetch --all".
 
-I'd think most users of a shared repository wouldn't want to allow
-forcing an update except in some very special cases.  For those
-they could install an update hook or just push a new temporary
-branch name and then use git-update-ref or git-branch directly on
-the remote repository.
+Except that new refs are not created and old refs are not
+deleted.  And these two are rather big exceptions.
 
--- 
-Shawn.
+If we are to have another command (git-mirror which is a thin
+wrapper around git-fetch as you propose later), these two
+exceptions would be cleanly handled there.  Otherwise, we would
+need to give the command a hint (git-mirror.permitted) to allow
+them to be done in addition to the usual "fetch --all", but then
+we would end up doing the equivalent of your one-liner anyway,
+so there is not much point having it in git-fetch.  So I am in
+favor of your thin-wrapper idea.
+
+> Originally I gave Pasky a one-liner on #git:
+>
+>   git fetch --force origin $(git ls-remote origin \
+>       | awk '{if(!/\^{}$/){print $2":"$2}}')
+
+Which sounds a very sane thing to do, especially given git is
+designed to be scripted this way.
+
+> And I think this mirror thing may make more sense as a small wrapper
+> around git-fetch.  A wrapper that checks for:
+>
+> 	- its running in a bare repository;
+
+Ok.
+
+> 	- it has a single remote named origin;
+
+Do you mean ".git/remotes must have only one file 'origin' and
+nothing else", or do you mean "There must be .git/remotes/foobla
+for 'git-mirror foobla' to work"?
+
+> 	- HEAD isn't a symlink or a symref (its a normal ref in its
+> 	  own right);
+
+Why?  Usually HEAD is a pointer to the active branch.  I
+consider it is a bug in the upload-pack protocol not to convey
+that information (but that is a separate topic).
+
+> 	- git-mirror.permitted is true in the config file.
+
+Ok.
