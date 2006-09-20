@@ -1,70 +1,63 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Support for custom per-project owner string
-Date: Wed, 20 Sep 2006 21:01:05 +0200
-Organization: At home
-Message-ID: <ees35e$4vh$1@sea.gmane.org>
-References: <20060919225522.GB13132@pasky.or.cz> <7veju6lgxu.fsf@assigned-by-dhcp.cox.net> <20060920154208.GN8259@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Subversion-style incrementing revision numbers
+Date: Wed, 20 Sep 2006 12:07:42 -0700
+Message-ID: <7vac4ugxvl.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.62.0609191309140.9752@joeldicepc.ecovate.com>
+	<Pine.LNX.4.64.0609191416500.4388@g5.osdl.org>
+	<20060919220604.GE8259@pasky.or.cz>
+	<200609201928.46024.robin.rosenberg.lists@dewire.com>
+	<20060920182203.GS8259@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Wed Sep 20 21:02:30 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 20 21:08:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQ7Ks-00049T-C5
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 21:02:18 +0200
+	id 1GQ7QC-0005Vl-OX
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 21:07:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932258AbWITTCN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 15:02:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932264AbWITTCN
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 15:02:13 -0400
-Received: from main.gmane.org ([80.91.229.2]:42433 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932258AbWITTCL (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 15:02:11 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GQ7Jv-0003so-CD
-	for git@vger.kernel.org; Wed, 20 Sep 2006 21:01:19 +0200
-Received: from host-81-190-26-109.torun.mm.pl ([81.190.26.109])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 20 Sep 2006 21:01:19 +0200
-Received: from jnareb by host-81-190-26-109.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 20 Sep 2006 21:01:19 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-26-109.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S932269AbWITTHp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 15:07:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932278AbWITTHp
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 15:07:45 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:60627 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932269AbWITTHo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Sep 2006 15:07:44 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060920190743.CWGX6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 20 Sep 2006 15:07:43 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Qj7V1V00S1kojtg0000000
+	Wed, 20 Sep 2006 15:07:29 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060920182203.GS8259@pasky.or.cz> (Petr Baudis's message of
+	"Wed, 20 Sep 2006 20:22:03 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27394>
 
-Petr Baudis wrote:
+Petr Baudis <pasky@suse.cz> writes:
 
-> Dear diary, on Wed, Sep 20, 2006 at 05:02:21PM CEST, I got a letter
-> where Junio C Hamano <junkio@cox.net> said that...
->> Petr Baudis <pasky@suse.cz> writes:
->> 
->>> Also, ideally this would be in the configfile but calling repoconfig for
->>> each repository in the index would slow things down way too much.
->> 
->> Hmph.  I wonder why.  We do read description already from a file
->> so maybe we would want a faster way to access the config file to
->> grab gitweb.* variables in a single call?
-> 
-> Still, opening files is _much_ faster than executing a tool, I'd say.
+> Dear diary, on Wed, Sep 20, 2006 at 07:28:45PM CEST, I got a letter
+> where Robin Rosenberg <robin.rosenberg.lists@dewire.com> said that...
+>> Typing those numbers is really insane, so the idea never occurred to me. Most 
+>> environments have simple methods to copy and paste strings using a clipboard,
+>> even in a console. So typically you can left-doubleclick on a string and paste 
+>> with the middle button in *nix like systems (right button in cygwin/windows 
+>> command line).
+>
+>   ...which is certainly appealing for the Plan9 fans, but I'm not so
+> excited from having to grab my mouse all the time. :-)
 
-Perhaps we should just parse $GIT_DIR/config ourself in gitweb
-(this is thing that I certainly would want to see in Git.pm).
-There are many modules which parse ini-like config files, but it
-shouldn't be that difficult to write parser which _reads_ and parses
-config file (without support for setting variables).
+I am so used to live always in "screen" so that is not much of a
+problem for me.
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Sorry for the noise ;-).
