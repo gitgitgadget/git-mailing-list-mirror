@@ -1,69 +1,86 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] cvsimport move over to using git for each ref to read refs V3
-Date: Wed, 20 Sep 2006 09:55:50 -0700
-Message-ID: <7vodtaiijt.fsf@assigned-by-dhcp.cox.net>
-References: <45116888.4050806@shadowen.org>
-	<20060920163704.GA27407@shadowen.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: git pull for update of netdev fails.
+Date: Wed, 20 Sep 2006 12:59:31 -0400
+Message-ID: <20060920165931.GE23260@spearce.org>
+References: <20060920080308.673a1e93@localhost.localdomain> <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org> <20060920155431.GO8259@pasky.or.cz> <Pine.LNX.4.64.0609200902190.4388@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 20 18:57:35 2006
+Cc: Petr Baudis <pasky@suse.cz>,
+	Stephen Hemminger <shemminger@osdl.org>,
+	Jeff Garzik <jgarzik@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 20 19:01:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQ5MY-0004m9-Tt
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 18:55:55 +0200
+	id 1GQ5QQ-00060D-8I
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 18:59:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751810AbWITQzx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 12:55:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751910AbWITQzx
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 12:55:53 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:6357 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1751810AbWITQzw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Sep 2006 12:55:52 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060920165551.JSPE13992.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 20 Sep 2006 12:55:51 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Qgvd1V00N1kojtg0000000
-	Wed, 20 Sep 2006 12:55:37 -0400
-To: Andy Whitcroft <apw@shadowen.org>
-In-Reply-To: <20060920163704.GA27407@shadowen.org> (Andy Whitcroft's message
-	of "Wed, 20 Sep 2006 17:37:04 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751930AbWITQ7n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 12:59:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751924AbWITQ7n
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 12:59:43 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:52381 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751930AbWITQ7m (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Sep 2006 12:59:42 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GQ5Py-0006AI-ER; Wed, 20 Sep 2006 12:59:26 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 3A4CD20E48E; Wed, 20 Sep 2006 12:59:31 -0400 (EDT)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0609200902190.4388@g5.osdl.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27379>
 
-Andy Whitcroft <apw@shadowen.org> writes:
+Linus Torvalds <torvalds@osdl.org> wrote:
+> The thing is, if you don't understand how rebasing etc destroys history, 
+> you may do things like do a "git pull" or a "git merge" of a branch that 
+> the other side WILL THROW AWAY! That will later result in major pain, 
+> because when you then try to merge it later, you will get all kinds of 
+> nasty behaviour, because the history you merged earlier no longer matches 
+> the history you're now trying to merge again, and the work you merged 
+> earlier is simply not there any more.
 
-> +	my $fmt = '($ref, $author) = (%(refname), %(author));';
-> +	open(H, "git-for-each-ref --perl --format='$fmt'|") or
-> +		die "Cannot run git-for-each-ref: $!\n";
-> +	while(defined(my $entry = <H>)) {
-> +		my ($ref, $author);
-> +		eval($entry) || die "cannot eval refs list: $@";
-> +
-> +		next if ($ref !~ m@^refs/heads/(.*)$@);
-> +		my ($head) = ($1);
-> +		$author =~ /^.*\s(\d+)\s[-+]\d{4}$/;
-> +		$branch_date{$head} = $1;
->  	}
-> -	closedir(D);
-> +	close(H);
->  }
+Yet people (typically those new to Git) will still pull or merge
+the wrong branch in, work on top of that merge, publish it, others
+will build on that... and wham; that topic branch head which you
+wanted to rebase prior to merging is now wedged 50 commits deep in
+your history.
 
-for-each-ref let's you limit the refs by leading path, so I do
-not think "next if" inside the loop is needed if you say
+Just yesterday I found such a case in a shared repository.  Now I
+have a branch wedged in our shared mainline that I can't get out
+and shouldn't have been there in the first place.
 
-	for-each-ref --perl --format=$fmt refs/heads
 
-Any reason you did not like my version that allows you to get
-rid of the while() loop altogether?  (hint: replace eval in my
-example with "print" and see what you are evaling)
+If only the shared repository had a way of advising clients that
+commits stored in ref 'BAAAD' may not survive and thus shouldn't
+be merged.  So that git-merge wouldn't let you merge them in.
+Unfortunately there isn't a way to do this that's sane so I'm not
+even going to try.
+
+
+Probably what I should have done (now that I think about it) was to
+put a check into our update hook on the shared repository to look for
+a rebaseable branch (which are listed in some info file) being pushed
+into a non-rebaseable one.  If that happens then abort the update.
+
+Unfortunately our current Git client (1.4.2)/Git server version(1.3.1)
+combinations means we get no output from our update hook when it
+fails, so I can't tell the newbie what they did wrong.
+
+-- 
+Shawn.
