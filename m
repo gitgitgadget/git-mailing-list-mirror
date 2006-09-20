@@ -1,63 +1,54 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Subversion-style incrementing revision numbers
-Date: Wed, 20 Sep 2006 12:07:42 -0700
-Message-ID: <7vac4ugxvl.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.62.0609191309140.9752@joeldicepc.ecovate.com>
-	<Pine.LNX.4.64.0609191416500.4388@g5.osdl.org>
-	<20060919220604.GE8259@pasky.or.cz>
-	<200609201928.46024.robin.rosenberg.lists@dewire.com>
-	<20060920182203.GS8259@pasky.or.cz>
+From: Jeff Garzik <jgarzik@pobox.com>
+Subject: Re: git pull for update of netdev fails.
+Date: Wed, 20 Sep 2006 15:24:16 -0400
+Message-ID: <45119560.7060102@pobox.com>
+References: <20060920080308.673a1e93@localhost.localdomain> <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 20 21:08:09 2006
+X-From: git-owner@vger.kernel.org Wed Sep 20 21:26:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQ7QC-0005Vl-OX
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 21:07:49 +0200
+	id 1GQ7gt-0001w9-9j
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 21:25:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932269AbWITTHp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 15:07:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932278AbWITTHp
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 15:07:45 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:60627 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S932269AbWITTHo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Sep 2006 15:07:44 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060920190743.CWGX6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 20 Sep 2006 15:07:43 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Qj7V1V00S1kojtg0000000
-	Wed, 20 Sep 2006 15:07:29 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060920182203.GS8259@pasky.or.cz> (Petr Baudis's message of
-	"Wed, 20 Sep 2006 20:22:03 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932302AbWITTYw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 15:24:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932305AbWITTYw
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 15:24:52 -0400
+Received: from srv5.dvmed.net ([207.36.208.214]:19432 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S932303AbWITTYv (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 15:24:51 -0400
+Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75] helo=[10.10.10.99])
+	by mail.dvmed.net with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
+	id 1GQ7g9-0004wO-86; Wed, 20 Sep 2006 19:24:50 +0000
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+To: Linus Torvalds <torvalds@osdl.org>,
+	Stephen Hemminger <shemminger@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org>
+X-Spam-Score: -4.2 (----)
+X-Spam-Report: SpamAssassin version 3.1.3 on srv5.dvmed.net summary:
+	Content analysis details:   (-4.2 points, 5.0 required)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27395>
 
-Petr Baudis <pasky@suse.cz> writes:
+Linus Torvalds wrote:
+> So you could either mark _all_ the remote branches with the extra "+" (to 
+> say that you always want to fetch that exact state for whatever branch 
+> you're tracking), or you can ask Jeff which branches he expects to do 
+> strange things and just mark those individual ones.
 
-> Dear diary, on Wed, Sep 20, 2006 at 07:28:45PM CEST, I got a letter
-> where Robin Rosenberg <robin.rosenberg.lists@dewire.com> said that...
->> Typing those numbers is really insane, so the idea never occurred to me. Most 
->> environments have simple methods to copy and paste strings using a clipboard,
->> even in a console. So typically you can left-doubleclick on a string and paste 
->> with the middle button in *nix like systems (right button in cygwin/windows 
->> command line).
->
->   ...which is certainly appealing for the Plan9 fans, but I'm not so
-> excited from having to grab my mouse all the time. :-)
 
-I am so used to live always in "screen" so that is not much of a
-problem for me.
+Actually, I only rebase rarely, because it's a pain for downstream people.
 
-Sorry for the noise ;-).
+Stephen just caught one of the rare occasions where I rebased 
+'e100-sbit'.  Note that other branches did not get rebased.
+
+Sorry about that Stephen, I should have posted to netdev.
+
+	Jeff
