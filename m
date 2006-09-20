@@ -1,53 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitweb: Support for custom per-project owner string
-Date: Wed, 20 Sep 2006 08:02:21 -0700
-Message-ID: <7veju6lgxu.fsf@assigned-by-dhcp.cox.net>
-References: <20060919225522.GB13132@pasky.or.cz>
+From: Stephen Hemminger <shemminger@osdl.org>
+Subject: git pull for update of netdev fails.
+Date: Wed, 20 Sep 2006 08:03:08 -0700
+Message-ID: <20060920080308.673a1e93@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 20 17:03:51 2006
+X-From: git-owner@vger.kernel.org Wed Sep 20 17:05:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQ3ak-0007Yt-Da
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 17:02:27 +0200
+	id 1GQ3bx-0007wP-VQ
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 17:03:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751587AbWITPCX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 11:02:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751584AbWITPCX
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 11:02:23 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:61828 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751418AbWITPCX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Sep 2006 11:02:23 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060920150221.VWOW6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 20 Sep 2006 11:02:21 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Qf281V00M1kojtg0000000
-	Wed, 20 Sep 2006 11:02:08 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060919225522.GB13132@pasky.or.cz> (Petr Baudis's message of
-	"Wed, 20 Sep 2006 00:55:22 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751584AbWITPDi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 11:03:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751597AbWITPDi
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 11:03:38 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:60104 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751584AbWITPDh (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 11:03:37 -0400
+Received: from localhost.localdomain (069-064-229-129.pdx.net [69.64.229.129])
+	(authenticated bits=0)
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8KF3CnW017248
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 20 Sep 2006 08:03:15 -0700
+To: Jeff Garzik <jgarzik@pobox.com>
+X-Mailer: Sylpheed-Claws 2.4.0 (GTK+ 2.8.20; x86_64-redhat-linux-gnu)
+X-Spam-Status: No, hits=-0.616 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.150 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27348>
 
-Petr Baudis <pasky@suse.cz> writes:
+Jeff, you use branches on the netdev tree, but GIT doesn't seem to like
+to sync these up properly. My normal method is to keep a clone'd version
+of the netdev tree and use pull to resync it. I don't do any changes
+to that tree.
 
-> Also, ideally this would be in the configfile but calling repoconfig for
-> each repository in the index would slow things down way too much.
+This doesn't work with all the branches for some reason. Is this a git
+bug?
 
-Hmph.  I wonder why.  We do read description already from a file
-so maybe we would want a faster way to access the config file to
-grab gitweb.* variables in a single call?
 
-In any case, I like where this patch is going and agree that
-file owner should be overridable with something like this.
+$ git pull
+Generating pack...
+Done counting 666 objects.
+Result has 400 objects.
+Deltifying 400 objects.
+ 100% (400/400) done
+Unpacking 400 objects
+Total 400, written 400 (delta 324), reused 0 (delta 0)
+ 100% (400/400) done
+* refs/heads/origin: fast forward to branch 'master' of git://git.kernel.org/pub/scm/linux/kernel/git/jgarzik/netdev-2.6
+  from f04b92e97d21b1921c91ec1d6d5e8bbf8606b77a to e478bec0ba0a83a48a0f6982934b6de079e7e6b3
+* refs/heads/e100-sbit: does not fast forward to branch 'e100-sbit' of git://git.kernel.org/pub/scm/linux/kernel/git/jgarzik/netdev-2.6;
+  not updating.
+
+A temporary workaround is to prune the offending branches locally
+first, but that seems like a hack.
