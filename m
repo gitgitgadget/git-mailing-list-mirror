@@ -1,91 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Added --mirror-all to git-fetch.
-Date: Wed, 20 Sep 2006 09:06:11 -0700
-Message-ID: <7vac4ujzf0.fsf@assigned-by-dhcp.cox.net>
-References: <20060919232851.GA12195@spearce.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: git pull for update of netdev fails.
+Date: Wed, 20 Sep 2006 18:07:56 +0200
+Message-ID: <20060920160756.GP8259@pasky.or.cz>
+References: <20060920080308.673a1e93@localhost.localdomain> <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org> <20060920155431.GO8259@pasky.or.cz> <Pine.LNX.4.63.0609201801110.19042@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 20 18:07:05 2006
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 20 18:08:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQ4aW-0008Ow-Bv
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 18:06:16 +0200
+	id 1GQ4cD-0000QM-DK
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 18:08:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751713AbWITQGN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 12:06:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751718AbWITQGN
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 12:06:13 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:8090 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751705AbWITQGM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Sep 2006 12:06:12 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060920160612.VCMJ6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 20 Sep 2006 12:06:12 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Qg5y1V0011kojtg0000000
-	Wed, 20 Sep 2006 12:05:58 -0400
-To: Shawn Pearce <spearce@spearce.org>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751715AbWITQH6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 12:07:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751718AbWITQH6
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 12:07:58 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:49868 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751715AbWITQH6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 12:07:58 -0400
+Received: (qmail 3830 invoked by uid 2001); 20 Sep 2006 18:07:56 +0200
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0609201801110.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27358>
 
-Shawn Pearce <spearce@spearce.org> writes:
+  Hi,
 
-> The --mirror-all option to git-fetch can be used to obtain a copy of
-> every available remote ref into the current repository.  This can be
-> a rather destructive update as the local repository will have its
-> HEAD ref overwritten, as well as any ref which it shares in common
-> with the remote repository.
+Dear diary, on Wed, Sep 20, 2006 at 06:02:43PM CEST, I got a letter
+where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
+> On Wed, 20 Sep 2006, Petr Baudis wrote:
+> 
+> > Dear diary, on Wed, Sep 20, 2006 at 05:28:08PM CEST, I got a letter
+> > where Linus Torvalds <torvalds@osdl.org> said that...
+> > > However, you can tell git that Jeff is being difficult by marking such 
+> > > branches individually as being rebased.
+> > 
+> > This is really a wrong way of describing the problem - I'd say that Git
+> > is being difficult here. The point is, the subsystem maintainers need to
+> > maintain stacks of patches and rebase against the main kernel branch
+> > regularily, and they want to still publish their current state. So it's
+> > not really any of them being strange or difficult, but Git being so
+> > because it has no seamless support for tracking those branches.
+> 
+> So, what exactly do you propose? I do not see any way to help this 
+> problem, since you really throw away history. So, the 
+> git-is-being-difficult has to be taken with a pound of salt here.
 
-I can sort of see where something like this is very much useful,
-but it sounds like a tool quite different from git-fetch.
+  I personally don't think "throwing away" history is an issue. You can
+print the old sha1 and it is still in the database so you can recover
+it. And if you are really paranoid about it (in what scenario do you
+actually care?), enable reflog and you will have the old sha1s recorded
+there.
 
- (1) I really do not like rolling this kind of speciale purpose
-     command into git-fetch, which is frequently used by end
-     users, to avoid mistakes.
-
-     If there is reluctance against adding yet another new
-     command (and there certainly is), this feels more like a
-     cousin of "git-clone --bare".
-
- (2) Although there is no inherent reason not allowing a working
-     tree associated with the repository that is kept updated
-     this way, the user will be utterly confused in a working
-     tree whose current branch head is updated like this, until
-     the working tree and the index is matched to the updated
-     HEAD.  It might be reasonable to run checkout -f HEAD when
-     a working tree is associated with the repository (the
-     command is screwing over even the current branch HEAD, so
-     losing what happened to be in the working tree is really
-     not an issue), but as a much easier safety measure we might
-     want to allow this mode of updating only on a bare
-     repository (that is, .git/index should not exist).
-
- (3) This feels primarily meant for something like Pasky is
-     trying to run --- mirrored distribution point of git
-     repositories perhaps displayed with gitweb.  When updating
-     such a repository, you would want to do things like running
-     update-server-info and automatically repacking the object
-     store.  Especially the latter would be an interesting topic
-     (the archive vs active repacking strategy we talked about,
-     combined with set of packs with staggered spans to help
-     commit walkers Pasky talked about quite a while ago).
-
-
-> ... 
-> such as if you are providing Git repository hosting and mirroring
-> source repositories on other systems.
->
-> Currently local refs are not deleted even if they do not exist in the
-> remote repository.  This may be taken as either a feature or a bug.
-
-For that purpose I would say that is definitely a bug.
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Snow falling on Perl. White noise covering line noise.
+Hides all the bugs too. -- J. Putnam
