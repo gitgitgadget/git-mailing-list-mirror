@@ -1,61 +1,85 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [ANNOUNCE] Public Gitweb Hosting Service
-Date: Tue, 19 Sep 2006 20:35:02 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609192033050.4388@g5.osdl.org>
-References: <20060920004828.GI8259@pasky.or.cz>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] Document git-show-ref [-s|--hash] option.
+Date: Wed, 20 Sep 2006 06:14:54 +0200
+Message-ID: <20060920061454.8fc28c1f.chriscool@tuxfamily.org>
+References: <20060918123241.GA8238@diku.dk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 20 05:35:28 2006
+X-From: git-owner@vger.kernel.org Wed Sep 20 06:09:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPsrw-0002BW-7l
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 05:35:28 +0200
+	id 1GPtOT-0000iS-7h
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 06:09:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750994AbWITDfK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Sep 2006 23:35:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750999AbWITDfK
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 23:35:10 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:8122 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750994AbWITDfI (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Sep 2006 23:35:08 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8K3Z3nW014118
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 19 Sep 2006 20:35:03 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8K3Z247015834;
-	Tue, 19 Sep 2006 20:35:02 -0700
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060920004828.GI8259@pasky.or.cz>
-X-Spam-Status: No, hits=-0.929 required=5 tests=AWL,HTML_MESSAGE,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.150 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751111AbWITEIs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 00:08:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751112AbWITEIs
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 00:08:48 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:62399 "EHLO smtp2-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1751111AbWITEIr (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 00:08:47 -0400
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp2-g19.free.fr (Postfix) with SMTP id C970675BA5;
+	Wed, 20 Sep 2006 06:08:45 +0200 (CEST)
+To: Junio Hamano <junkio@cox.net>
+In-Reply-To: <20060918123241.GA8238@diku.dk>
+X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.8.20; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27327>
 
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ Documentation/git-show-ref.txt |   18 +++++++++++++++++-
+ 1 files changed, 17 insertions(+), 1 deletions(-)
 
-
-On Wed, 20 Sep 2006, Petr Baudis wrote:
-> 
->   It's running at
-> 
-> 	http://repo.or.cz/
-
-Well, "running" may be putting it a bit strongly.
-
-When I click "summary" for the glibc-cvs.git tree, I get just a
-
-	<div class="title">&nbsp;</div>
-	-------------------^
-
-thing back.
-
-Broken gitweb?
-
-		Linus
+diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-ref.txt
+index 529ea17..b724d83 100644
+--- a/Documentation/git-show-ref.txt
++++ b/Documentation/git-show-ref.txt
+@@ -9,7 +9,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git-show-ref' [-q|--quiet] [--verify] [-h|--head] [-d|--dereference]
+-	     [--tags] [--heads] [--] <pattern>...
++	     [-s|--hash] [--tags] [--heads] [--] <pattern>...
+ 
+ DESCRIPTION
+ -----------
+@@ -40,6 +40,12 @@ OPTIONS
+ 	Dereference tags into object IDs. They will be shown with "^{}"
+ 	appended.
+ 
++-s, --hash::
++
++	Only show the SHA1 hash, not the reference name. When also using
++	--dereference the dereferenced tag will still be shown after the SHA1,
++	this maybe a bug.
++
+ --verify::
+ 
+ 	Enable stricter reference checking by requiring an exact ref path.
+@@ -72,6 +78,16 @@ The output is in the format: '<SHA-1 ID>
+ ...
+ -----------------------------------------------------------------------------
+ 
++When using --hash (and not --dereference) the output format is: '<SHA-1 ID>'
++
++-----------------------------------------------------------------------------
++$ git show-ref --heads --hash
++2e3ba0114a1f52b47df29743d6915d056be13278
++185008ae97960c8d551adcd9e23565194651b5d1
++03adf42c988195b50e1a1935ba5fcbc39b2b029b
++...
++-----------------------------------------------------------------------------
++
+ EXAMPLE
+ -------
+ 
+-- 
+1.4.2.1.g4251-dirty
