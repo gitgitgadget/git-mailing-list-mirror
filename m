@@ -1,79 +1,80 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH] gitweb: Even more support for PATH_INFO based URLs
-Date: Wed, 20 Sep 2006 23:04:11 +0200
-Message-ID: <20060920210411.GF31940@admingilde.org>
-References: <200609200049.52036.jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git pull for update of netdev fails.
+Date: Wed, 20 Sep 2006 23:14:25 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0609202304270.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060920080308.673a1e93@localhost.localdomain>
+ <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org> <20060920155431.GO8259@pasky.or.cz>
+ <Pine.LNX.4.63.0609201801110.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060920160756.GP8259@pasky.or.cz> <Pine.LNX.4.64.0609200915550.4388@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="lIrNkN/7tmsD/ALM"
-Cc: git@vger.kernel.org, Matthias Lederhofer <matled@gmx.net>
-X-From: git-owner@vger.kernel.org Wed Sep 20 23:04:42 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 20 23:15:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQ9Eu-0001mN-JK
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 23:04:18 +0200
+	id 1GQ9Op-00045H-AQ
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 23:14:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932080AbWITVEO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 17:04:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932084AbWITVEN
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 17:04:13 -0400
-Received: from agent.admingilde.org ([213.95.21.5]:8417 "EHLO
-	mail.admingilde.org") by vger.kernel.org with ESMTP id S932080AbWITVEM
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Sep 2006 17:04:12 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1GQ9Ep-0003kN-H0; Wed, 20 Sep 2006 23:04:11 +0200
-To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <200609200049.52036.jnareb@gmail.com>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S932092AbWITVO2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 17:14:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932103AbWITVO2
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 17:14:28 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54962 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932092AbWITVO1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 17:14:27 -0400
+Received: (qmail invoked by alias); 20 Sep 2006 21:14:25 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp030) with SMTP; 20 Sep 2006 23:14:25 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0609200915550.4388@g5.osdl.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27401>
 
+Hi,
 
---lIrNkN/7tmsD/ALM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Wed, 20 Sep 2006, Linus Torvalds wrote:
 
-hoi :)
+> On Wed, 20 Sep 2006, Petr Baudis wrote:
+> > 
+> >   I personally don't think "throwing away" history is an issue. You can
+> > print the old sha1 and it is still in the database so you can recover
+> > it.
+> 
+> No it isn't. Once you've lost the reference, you can't really depend on it 
+> any more in the long run.
 
-On Wed, Sep 20, 2006 at 12:49:51AM +0200, Jakub Narebski wrote:
-> Now the following types of path based URLs are supported:
->=20
-> * project              overview (summary) page of project
-> * project/branch       shortlog of branch
-> * project/branch:file  file in branch, blob_plain view
-> * project/branch:dir/  directory listing of dir in branch, tree view
->=20
-> The following shortcuts works (see explanation below):
->=20
-> * project/branch:      directory listing of branch, main tree view
-> * project/:file        file in HEAD (raw)
-> * project/:dir/        directory listing of dir in HEAD
-> * project/:            directory listing of project's HEAD
+Exactly. And to add to that: you can lose the reference just by being not 
+fast enough. Example:
 
-very nice! thanks a lot!
+Some time ago, Junio was playing with colour in the output of git. He was 
+doing so in some branch he pulled into 'pu'. A few days later, he dropped 
+it. Now, I was lucky enough to have fetched pu within the short time span 
+where colour was part of 'pu', and some days (or weeks, don't remember) 
+later, I found some more time to play with the thing again, and 
+eventually submitted a patch reintroducing the colour thing.
 
---=20
-Martin Waitz
+So, you can lose things you actually never had!
 
---lIrNkN/7tmsD/ALM
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+Another, even more serious problems with rebasing: You can introduce a bug 
+by rebasing. Meaning: git-rebase can succeed, even compilation is fine, 
+but the sum of your patches, and the patches you are rebasing on, is 
+buggy. And there is _no_ way to bisect this, since the "good" version can 
+be gone for good.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+These two problems, combined with my love of history, make me never use 
+rebased branches myself, especially since I basically use git for projects 
+which I work on alone, just to synchronise between different sites.
 
-iD8DBQFFEazLj/Eaxd/oD7IRAnRiAJ4o1SvVI3uUF8HDnYwLTuyrpgS4AQCdGvGD
-WG0lo4Jr5uepZ5hPHr+bWEs=
-=P4Xk
------END PGP SIGNATURE-----
+As for the problem git-rebase tries to solve: you can get a clean branch 
+by cherry-picking what you have into a temporary branch, for the sole 
+purpose of being history clean.
 
---lIrNkN/7tmsD/ALM--
+Ciao,
+Dscho
