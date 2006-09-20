@@ -1,66 +1,68 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git pull for update of netdev fails.
-Date: Wed, 20 Sep 2006 22:01:48 +0200
-Organization: At home
-Message-ID: <ees6n9$jdv$2@sea.gmane.org>
-References: <20060920080308.673a1e93@localhost.localdomain> <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org> <20060920155431.GO8259@pasky.or.cz> <7vhcz2jzfd.fsf@assigned-by-dhcp.cox.net> <20060920161825.GR8259@pasky.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Wed Sep 20 22:05:42 2006
+From: Phil Richards <news@derived-software.ltd.uk>
+Subject: Re: Enable the packed refs file format
+Date: Wed, 20 Sep 2006 21:19:30 +0100 (BST)
+Organization: Derived Software Ltd
+Message-ID: <20060920201930.9E48F487D@derisoft.derived-software.demon.co.uk>
+References: <Pine.LNX.4.64.0609141005440.4388@g5.osdl.org> <20060919205554.GA8259@pasky.or.cz> <Pine.LNX.4.64.0609191407340.4388@g5.osdl.org>
+Reply-To: spams@derived-software.demon.co.uk
+X-From: git-owner@vger.kernel.org Wed Sep 20 22:20:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQ8Jq-0004ur-0j
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 22:05:19 +0200
+	id 1GQ8Xj-0008U0-6C
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 22:19:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750703AbWITUFL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 20 Sep 2006 16:05:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750702AbWITUFL
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 16:05:11 -0400
-Received: from main.gmane.org ([80.91.229.2]:44941 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750703AbWITUFJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 16:05:09 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1GQ8Ja-0004qz-IW
-	for git@vger.kernel.org; Wed, 20 Sep 2006 22:05:02 +0200
-Received: from host-81-190-26-109.torun.mm.pl ([81.190.26.109])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 20 Sep 2006 22:05:02 +0200
-Received: from jnareb by host-81-190-26-109.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 20 Sep 2006 22:05:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1750726AbWITUTd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 16:19:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750722AbWITUTd
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 16:19:33 -0400
+Received: from anchor-post-33.mail.demon.net ([194.217.242.91]:41742 "EHLO
+	anchor-post-33.mail.demon.net") by vger.kernel.org with ESMTP
+	id S1750726AbWITUTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Sep 2006 16:19:32 -0400
+Received: from derived-software.demon.co.uk ([83.104.60.195] helo=derisoft.derived-software.demon.co.uk)
+	by anchor-post-33.mail.demon.net with esmtp (Exim 4.42)
+	id 1GQ8Xb-0009r2-Aw
+	for git@vger.kernel.org; Wed, 20 Sep 2006 20:19:31 +0000
+Received: by derisoft.derived-software.demon.co.uk (Postfix, from userid 9)
+	id 9E48F487D; Wed, 20 Sep 2006 21:19:30 +0100 (BST)
+Received: from 127.0.0.1 by 127.0.0.1 with nntp; 20 Sep 2006 21:19:30 BST
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-26-109.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <Pine.LNX.4.64.0609191407340.4388@g5.osdl.org>
+X-Newsreader: slrn/0.9.8.1 (Linux)
+NNTP-Posting-Host: 127.0.0.1
+NNTP-Posting-Date: Wed, 20 Sep 2006 20:19:30 -0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27398>
 
-Petr Baudis wrote:
-=20
->> Seamless support is there and Linus described how without
->> breaking the usual "if not fast forward you may lose some
->> patches so be extra careful" safety valve.
->=20
-> =A0 I argue that this safety valve is useless for most people (and
-> actually I have hard time imagining a plausible scenario in which it
-> actually _is_ useful). The support is not really seamless since you h=
-ave
-> to make manual changes to refspecs, while most people probably don't
-> understand them (and shouldn't be required to if they are just tracki=
-ng
-> someone else anyway).
+On 2006-09-19, Linus Torvalds <torvalds@osdl.org> wrote:
+>  Too bad that we can't get gcc to warn on these things. We do mark it as 
+>  "format(printf)", but I don't know of any way to tell gcc that it _has_ to 
+>  have that initial constant string.
 
-Or you can always pull with the --force option...
+Not sure if it just a gcc 4.x-ism, but -Wformat-nonliteral or -Wformat-security
+might be what you are looking for.
 
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+`-Wformat-nonliteral'
+     If `-Wformat' is specified, also warn if the format string is not a
+     string literal and so cannot be checked, unless the format function
+     takes its format arguments as a `va_list'.
+
+`-Wformat-security'
+     If `-Wformat' is specified, also warn about uses of format
+     functions that represent possible security problems.  At present,
+     this warns about calls to `printf' and `scanf' functions where the
+     format string is not a string literal and there are no format
+     arguments, as in `printf (foo);'.  This may be a security hole if
+     the format string came from untrusted input and contains `%n'.
+     (This is currently a subset of what `-Wformat-nonliteral' warns
+     about, but in future warnings may be added to `-Wformat-security'
+     that are not included in `-Wformat-nonliteral'.)
+
+
+phil
+-- 
+change name before "@" to "phil" for email
