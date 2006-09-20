@@ -1,83 +1,77 @@
-From: Shawn Pearce <spearce@spearce.org>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: git pull for update of netdev fails.
-Date: Wed, 20 Sep 2006 12:34:37 -0400
-Message-ID: <20060920163437.GC23260@spearce.org>
-References: <20060920080308.673a1e93@localhost.localdomain> <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org> <20060920155431.GO8259@pasky.or.cz> <Pine.LNX.4.63.0609201801110.19042@wbgn013.biozentrum.uni-wuerzburg.de> <20060920160756.GP8259@pasky.or.cz> <Pine.LNX.4.64.0609200915550.4388@g5.osdl.org> <Pine.LNX.4.64.0609200920290.4388@g5.osdl.org>
+Date: Wed, 20 Sep 2006 09:33:42 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0609200927260.4388@g5.osdl.org>
+References: <20060920080308.673a1e93@localhost.localdomain>
+ <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org> <20060920155431.GO8259@pasky.or.cz>
+ <7vhcz2jzfd.fsf@assigned-by-dhcp.cox.net> <20060920161825.GR8259@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 20 18:35:13 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Stephen Hemminger <shemminger@osdl.org>,
+	Jeff Garzik <jgarzik@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 20 18:35:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQ529-0007dc-7N
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 18:34:49 +0200
+	id 1GQ52F-0007fn-OO
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 18:34:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751791AbWITQeq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 12:34:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751818AbWITQeq
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 12:34:46 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:50839 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751791AbWITQep (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Sep 2006 12:34:45 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GQ51t-0003Ig-0n; Wed, 20 Sep 2006 12:34:33 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 90BDE20E48E; Wed, 20 Sep 2006 12:34:37 -0400 (EDT)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0609200920290.4388@g5.osdl.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751827AbWITQeu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 12:34:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751828AbWITQet
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 12:34:49 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:42220 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751827AbWITQet (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 12:34:49 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8KGXhnW021966
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 20 Sep 2006 09:33:45 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8KGXgDF003293;
+	Wed, 20 Sep 2006 09:33:43 -0700
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060920161825.GR8259@pasky.or.cz>
+X-Spam-Status: No, hits=-0.505 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.150 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27371>
 
-Linus Torvalds <torvalds@osdl.org> wrote:
-> On Wed, 20 Sep 2006, Linus Torvalds wrote:
-> > 
-> > That's a really important point. You can trivially say "I don't care". 
-> > It's literally one extra character. But it should be the _user_ that says 
-> > so, not the SCM.
-> > 
-> > The whole point of the SCM is to care.
-> 
-> Btw, the "+" also protects you from local errors.
-> 
-> Let's say that you've committed some work of your own onto a branch that 
-> you happen to follow. Guess what? By default, git refuses to throw your 
-> hard work away.
-> 
-> This is not just a random thing. It is in fact one of the very core issues 
-> of having multiple people work together on the same remote repo. We don't 
-> do it very much (because it's often easier for everybody to have their 
-> own), but the "CVS workflow" with one common repository is another example 
-> why WE MUST NOT JUST RESET THE HEADS!
 
-BTW `git push --force` works just great to reset the remote head.
 
-I worked on a project not to long ago in which a user tried `git
-push`, received a "not a fast-forward" error, didn't know what it
-meant, tried `git push --force`, found that worked, and proceeded
-to force every push he did from then on.  To much gnashing of teeth
-from everyone else.
+On Wed, 20 Sep 2006, Petr Baudis wrote:
+>
+>   I argue that this safety valve is useless for most people (and
+> actually I have hard time imagining a plausible scenario in which it
+> actually _is_ useful).
 
-Of course an update hook finally took care of the problem, but having
-non fast-forward pushs be permitted on a shared, bare repository
-by default is interesting to say the least.  :-)
- 
--- 
-Shawn.
+It is only useless for people who use git ass a read-only "anonymous CVS" 
+kind of thing.
+
+And yes, that may be "most people", but dammit, it's not the group git has 
+been designed for. 
+
+I would be ok with a "anonymous read-only" approach IF GIT ACTUALLY 
+ENFORCED IT. In other words, we could easily have a read-only clone that 
+added the "+" to all branches, but then we should also make sure that 
+nobody ever commits _anything_ in such a repo.
+
+No merges (because you can not rely on the merge result being meaningful: 
+the sources of the merge may be "ephemeral"), no local commits (because 
+you can never "pull" any more after that, since that now becomes a merge 
+with something you can't trust any more).
+
+In other words, if you default to the "+" behaviour, you basically can do 
+_nothing_ in that repository except just track the other end.
+
+Is that useful? Potentially. But it's so clearly inferior to what we have 
+now that you should definitely realize that we're not talking about a full 
+git repository any more, we're really talking about just a "git tracker".
+
+		Linus
