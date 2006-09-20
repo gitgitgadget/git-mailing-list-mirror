@@ -1,73 +1,110 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Subversion-style incrementing revision numbers
-Date: Wed, 20 Sep 2006 02:15:00 +0200
-Organization: At home
-Message-ID: <eeq14e$isu$1@sea.gmane.org>
-References: <Pine.LNX.4.62.0609191309140.9752@joeldicepc.ecovate.com> <Pine.LNX.4.64.0609191416500.4388@g5.osdl.org> <20060919220604.GE8259@pasky.or.cz> <Pine.LNX.4.64.0609191519090.4388@g5.osdl.org> <Pine.LNX.4.62.0609191709160.9752@joeldicepc.ecovate.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: Fix @git_base_url_list usage
+Date: Tue, 19 Sep 2006 17:28:28 -0700
+Message-ID: <7v64fjnzyr.fsf@assigned-by-dhcp.cox.net>
+References: <20060920000946.GC13132@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Wed Sep 20 02:15:07 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 20 02:28:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPpjq-0002tT-F2
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 02:14:55 +0200
+	id 1GPpx4-0006Fq-Nn
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 02:28:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750717AbWITAOv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Sep 2006 20:14:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750719AbWITAOv
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 20:14:51 -0400
-Received: from main.gmane.org ([80.91.229.2]:9389 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750717AbWITAOu (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Sep 2006 20:14:50 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GPpjb-0002ps-OY
-	for git@vger.kernel.org; Wed, 20 Sep 2006 02:14:39 +0200
-Received: from host-81-190-31-133.torun.mm.pl ([81.190.31.133])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 20 Sep 2006 02:14:39 +0200
-Received: from jnareb by host-81-190-31-133.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 20 Sep 2006 02:14:39 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-31-133.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1750753AbWITA2c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Sep 2006 20:28:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750754AbWITA2c
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Sep 2006 20:28:32 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:52945 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1750753AbWITA2b (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Sep 2006 20:28:31 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060920002828.DVWB12581.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 19 Sep 2006 20:28:28 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id QQUW1V00d1kojtg0000000
+	Tue, 19 Sep 2006 20:28:31 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060920000946.GC13132@pasky.or.cz> (Petr Baudis's message of
+	"Wed, 20 Sep 2006 02:09:46 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27319>
 
-Joel Dice wrote:
+Petr Baudis <pasky@suse.cz> writes:
 
-> On Tue, 19 Sep 2006, Linus Torvalds wrote:
->> On Wed, 20 Sep 2006, Petr Baudis wrote:
->>> This is actually exactly how SVN revision numbering works. There's just
->>> a single number (no '1.') and it indeed jumps randomly if you have
->>> several concurrent branches in your (ok, Linus does not have any, just
->>> someone's) repository.
->>
->> Oh, ok, if it's just a single numbering, then that's easy to do. It won't
->> _mean_ anything, and you're seriously screwed if you ever merge anything
->> else (or use a git that doesn't update the refcache or whatever), but it
->> is simple and stable within a single repo.
-> 
-> Well, what it means is "this is the order in which commits were applied to 
-> this repository".  I suggest that this information is useful for the most 
-> common development style - the kind which relies on a central repository 
-> as the canonical source for a project's code.  "gcc-trunk-r117064" means a 
-> lot more to me than "39282037d7cc39829f1d56bf8307b8e5430d585f", and is no 
-> less precise.
+> As it is now, that array was never used because the customurl accessor was
+> broken and ''unless @url_list'' never happenned.
+>
+> Signed-off-by: Petr Baudis <pasky@suse.cz>
+> ---
+>...
+>  sub git_get_project_url_list {
+>  	my $path = shift;
+>  
+> -	open my $fd, "$projectroot/$path/cloneurl" or return undef;
+> +	open my $fd, "$projectroot/$path/cloneurl" or return wantarray ? () : undef;
+>  	my @git_project_url_list = map { chomp; $_ } <$fd>;
+>  	close $fd;
 
-What about "v1.4.2.1-gf7f93e7", or "tags/v1.4.2-rc4^0~19", or just
-"39282037"? Or "next@{2006-09-19 22:44:33 +0000}"?
+Why on earth do you want to use wantarray for something like
+this?
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+It's not like you are implementinging any fancy DWIM magic.
+
+Isn't
+
+	open my $fd, "foobar" or return;
+
+much easier to read?
+
+#!/usr/bin/perl
+
+sub return_undef {
+	open my $fd, "no-such-file"
+	    or return wantarray ? () : undef;
+}
+sub return_broken {
+	open my $fd, "no-such-file"
+	    or return undef;
+}
+
+sub return_empty {
+	open my $fd, "no-such-file"
+	    or return;
+}
+
+my $returned_undef_1 = return_undef();
+my ($returned_undef_2) = return_undef();
+my @returned_undef = return_undef();
+
+my $returned_broken_1 = return_broken();
+my ($returned_broken_2) = return_broken();
+my @returned_broken = return_broken();
+
+my $returned_empty_1 = return_empty();
+my ($returned_empty_2) = return_empty();
+my @returned_empty = return_empty();
+
+printf "U %d B %d E %d\n",
+    scalar(@returned_undef),
+    scalar(@returned_broken),
+    scalar(@returned_empty);
+
+for ($returned_undef_1,
+     $returned_undef_2,
+     $returned_broken_1,
+     $returned_broken_2,
+     $returned_empty_1,
+     $returned_empty_2) {
+	print "What I said was bogus.\n" if (defined $_);
+}
