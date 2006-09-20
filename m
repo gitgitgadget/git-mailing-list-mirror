@@ -1,78 +1,91 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: git pull for update of netdev fails.
-Date: Wed, 20 Sep 2006 23:37:12 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0609202333320.19042@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20060920080308.673a1e93@localhost.localdomain>
- <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org> <20060920155431.GO8259@pasky.or.cz>
- <Pine.LNX.4.63.0609201801110.19042@wbgn013.biozentrum.uni-wuerzburg.de>
- <20060920160756.GP8259@pasky.or.cz> <Pine.LNX.4.64.0609200915550.4388@g5.osdl.org>
- <Pine.LNX.4.64.0609200920290.4388@g5.osdl.org> <20060920163437.GC23260@spearce.org>
- <Pine.LNX.4.63.0609202321390.19042@wbgn013.biozentrum.uni-wuerzburg.de>
- <20060920212747.GB24415@spearce.org>
+Date: Wed, 20 Sep 2006 17:40:01 -0400
+Message-ID: <20060920214001.GD24415@spearce.org>
+References: <20060920080308.673a1e93@localhost.localdomain> <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org> <20060920155431.GO8259@pasky.or.cz> <Pine.LNX.4.63.0609201801110.19042@wbgn013.biozentrum.uni-wuerzburg.de> <20060920160756.GP8259@pasky.or.cz> <Pine.LNX.4.64.0609200915550.4388@g5.osdl.org> <Pine.LNX.4.63.0609202304270.19042@wbgn013.biozentrum.uni-wuerzburg.de> <20060920212101.GA24415@spearce.org> <Pine.LNX.4.63.0609202325510.19042@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 20 23:37:23 2006
+X-From: git-owner@vger.kernel.org Wed Sep 20 23:40:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQ9kt-0001if-08
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 23:37:19 +0200
+	id 1GQ9nf-0002EX-VM
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 23:40:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932142AbWITVhP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 17:37:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932144AbWITVhP
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 17:37:15 -0400
-Received: from mail.gmx.de ([213.165.64.20]:28808 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932142AbWITVhN (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 17:37:13 -0400
-Received: (qmail invoked by alias); 20 Sep 2006 21:37:12 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp034) with SMTP; 20 Sep 2006 23:37:12 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20060920212747.GB24415@spearce.org>
-X-Y-GMX-Trusted: 0
+	id S932148AbWITVkI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 17:40:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932151AbWITVkH
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 17:40:07 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:44247 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S932148AbWITVkG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Sep 2006 17:40:06 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GQ9nO-0007IF-J2; Wed, 20 Sep 2006 17:39:55 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id B7B2C20E48E; Wed, 20 Sep 2006 17:40:01 -0400 (EDT)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0609202325510.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27412>
 
-Hi,
-
-On Wed, 20 Sep 2006, Shawn Pearce wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > On Wed, 20 Sep 2006, Shawn Pearce wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Wed, 20 Sep 2006, Shawn Pearce wrote:
+> 
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > > Another, even more serious problems with rebasing: You can introduce a bug 
+> > > by rebasing. Meaning: git-rebase can succeed, even compilation is fine, 
+> > > but the sum of your patches, and the patches you are rebasing on, is 
+> > > buggy. And there is _no_ way to bisect this, since the "good" version can 
+> > > be gone for good.
 > > 
-> > > Of course an update hook finally took care of the problem, but having
-> > > non fast-forward pushs be permitted on a shared, bare repository
-> > > by default is interesting to say the least.  :-)
-> > 
-> > Unfortunately, it is send-pack making the decision on the client side, not 
-> > receive-pack on the server side, the latter of which knows if the server 
-> > side is shared or not.
+> > True, however one would hope that you tested the commit before you
+> > rebased it and found it to working.  And bisect should point at the
+> > new version of that commit as the break.  And then you can debug
+> > it there.
 > 
-> Huh?
-> 
-> The server side update hook is given the old and new value of
-> the ref by receive-pack; if it exists with a non-zero status the
-> update fails.
-> 
-> The server side could also check if the current value in the ref
-> (if it exists) is contained within the new value of the ref.  Yes,
-> I know it doesn't today, but the point is it could.  And I was
-> saying maybe it should when there is no update hook present.
+> You misunderstood me. You can _introduce_ a bug by rebasing. _After_ 
+> testing that everything is fine. You can even test the rebased branch and 
+> miss the bug, since your original tests were more thorough.
 
-The point being that this check is not necessarily inexpensive. But you 
-are right, we could introduce this as a security measure. But is it really 
-intuitive to skip this test when an update hook is added?
+Why were your original tests more thorough and your rebased testing
+was less so?  Hmm?  Perhaps the test suite needs to be extended as
+part of the rebased commit(s).
 
-I'd rather set another config variable with --shared, which tells git to 
-refuse receiving non-fast-forwards. This could be a sensible setting in 
-other setups than shared ones after all. Thoughts?
+Of course a rebase-introduced bug could also be in the test suite,
+such that you miss the true bug.  I've had bugs in the test suite
+mask real bug, but never a bug both in the feature and in the test
+due to a rebase or mad merge.  I guess I've just been lucky there.
 
-Ciao,
-Dscho
+
+When rebasing and even when doing a non-fast forward merge one
+needs to keep in mind that your code is being edited on your behalf.
+Not much different then if you open it in your favorite editor and
+whack away at a keyboard for a while.  Sure these auto-edits work
+most of the time, on their own and without user intervention, but
+every once in while things get messed up.  Heck, I've seen editors
+mess up source files such that they won't compile anymore.
+
+So moral of the story is you probably should be testing even after
+rebasing or cherry picking, and the testing shouldn't be any less
+extensive than before you did the rebase/cherry-pick.  Which is one
+reason why automated test suites can be useful, despite the risks
+they also bring...
+
+-- 
+Shawn.
