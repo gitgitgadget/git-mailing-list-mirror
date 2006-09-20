@@ -1,68 +1,71 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: git pull for update of netdev fails.
-Date: Wed, 20 Sep 2006 18:18:25 +0200
-Message-ID: <20060920161825.GR8259@pasky.or.cz>
-References: <20060920080308.673a1e93@localhost.localdomain> <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org> <20060920155431.GO8259@pasky.or.cz> <7vhcz2jzfd.fsf@assigned-by-dhcp.cox.net>
+Date: Wed, 20 Sep 2006 09:19:39 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0609200915550.4388@g5.osdl.org>
+References: <20060920080308.673a1e93@localhost.localdomain>
+ <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org> <20060920155431.GO8259@pasky.or.cz>
+ <Pine.LNX.4.63.0609201801110.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060920160756.GP8259@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stephen Hemminger <shemminger@osdl.org>,
-	Jeff Garzik <jgarzik@pobox.com>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed Sep 20 18:19:43 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 20 18:20:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQ4mM-0003CV-Ik
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 18:18:31 +0200
+	id 1GQ4nk-0003cG-VX
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 18:19:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751731AbWITQS2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 12:18:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751732AbWITQS1
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 12:18:27 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:44161 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751730AbWITQS1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 12:18:27 -0400
-Received: (qmail 4625 invoked by uid 2001); 20 Sep 2006 18:18:25 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vhcz2jzfd.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751691AbWITQTy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 12:19:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751696AbWITQTy
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 12:19:54 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:53990 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751686AbWITQTx (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 12:19:53 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8KGJenW021249
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 20 Sep 2006 09:19:40 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8KGJdYf002816;
+	Wed, 20 Sep 2006 09:19:40 -0700
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060920160756.GP8259@pasky.or.cz>
+X-Spam-Status: No, hits=-0.507 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.150 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27364>
 
-Dear diary, on Wed, Sep 20, 2006 at 06:05:58PM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> Petr Baudis <pasky@suse.cz> writes:
+
+
+On Wed, 20 Sep 2006, Petr Baudis wrote:
 > 
-> > Dear diary, on Wed, Sep 20, 2006 at 05:28:08PM CEST, I got a letter
-> > where Linus Torvalds <torvalds@osdl.org> said that...
-> >> However, you can tell git that Jeff is being difficult by marking such 
-> >> branches individually as being rebased.
-> >
-> > This is really a wrong way of describing the problem - I'd say that Git
-> > is being difficult here. The point is, the subsystem maintainers need to
-> > maintain stacks of patches and rebase against the main kernel branch
-> > regularily, and they want to still publish their current state. So it's
-> > not really any of them being strange or difficult, but Git being so
-> > because it has no seamless support for tracking those branches.
-> 
-> Seamless support is there and Linus described how without
-> breaking the usual "if not fast forward you may lose some
-> patches so be extra careful" safety valve.
+>   I personally don't think "throwing away" history is an issue. You can
+> print the old sha1 and it is still in the database so you can recover
+> it.
 
-  I argue that this safety valve is useless for most people (and
-actually I have hard time imagining a plausible scenario in which it
-actually _is_ useful). The support is not really seamless since you have
-to make manual changes to refspecs, while most people probably don't
-understand them (and shouldn't be required to if they are just tracking
-someone else anyway).
+No it isn't. Once you've lost the reference, you can't really depend on it 
+any more in the long run.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Snow falling on Perl. White noise covering line noise.
-Hides all the bugs too. -- J. Putnam
+A lot of people do things like "git repack -a -d" by hand, and we've tried 
+to encourage people to do so in cron-jobs etc. We've even had patches 
+floating around that do it automatically after a pull.
+
+In other words, once a ref is gone, you are easily going to loose the 
+history to it too. Also, regardless, you should be told about it, UNLESS 
+YOU HAVE EXPLICITLY STATED THAT YOU DON'T CARE ABOUT HISTORY!
+
+That's a really important point. You can trivially say "I don't care". 
+It's literally one extra character. But it should be the _user_ that says 
+so, not the SCM.
+
+The whole point of the SCM is to care.
+
+		Linus
