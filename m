@@ -1,89 +1,69 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git pull for update of netdev fails.
-Date: Wed, 20 Sep 2006 09:49:52 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609200942550.4388@g5.osdl.org>
-References: <20060920080308.673a1e93@localhost.localdomain>
- <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org> <20060920155431.GO8259@pasky.or.cz>
- <Pine.LNX.4.63.0609201801110.19042@wbgn013.biozentrum.uni-wuerzburg.de>
- <20060920160756.GP8259@pasky.or.cz> <Pine.LNX.4.64.0609200915550.4388@g5.osdl.org>
- <Pine.LNX.4.64.0609200920290.4388@g5.osdl.org> <20060920163437.GC23260@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] cvsimport move over to using git for each ref to read refs V3
+Date: Wed, 20 Sep 2006 09:55:50 -0700
+Message-ID: <7vodtaiijt.fsf@assigned-by-dhcp.cox.net>
+References: <45116888.4050806@shadowen.org>
+	<20060920163704.GA27407@shadowen.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@suse.cz>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 20 18:55:18 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 20 18:57:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQ5Km-0004Hw-0M
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 18:54:04 +0200
+	id 1GQ5MY-0004m9-Tt
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 18:55:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751925AbWITQvW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 12:51:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751926AbWITQuw
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 12:50:52 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:43909 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751910AbWITQuG (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 12:50:06 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8KGnrnW022888
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 20 Sep 2006 09:49:54 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8KGnqrp003928;
-	Wed, 20 Sep 2006 09:49:53 -0700
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20060920163437.GC23260@spearce.org>
-X-Spam-Status: No, hits=-0.504 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.150 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751810AbWITQzx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 12:55:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751910AbWITQzx
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 12:55:53 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:6357 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1751810AbWITQzw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Sep 2006 12:55:52 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060920165551.JSPE13992.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 20 Sep 2006 12:55:51 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Qgvd1V00N1kojtg0000000
+	Wed, 20 Sep 2006 12:55:37 -0400
+To: Andy Whitcroft <apw@shadowen.org>
+In-Reply-To: <20060920163704.GA27407@shadowen.org> (Andy Whitcroft's message
+	of "Wed, 20 Sep 2006 17:37:04 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27378>
 
+Andy Whitcroft <apw@shadowen.org> writes:
 
+> +	my $fmt = '($ref, $author) = (%(refname), %(author));';
+> +	open(H, "git-for-each-ref --perl --format='$fmt'|") or
+> +		die "Cannot run git-for-each-ref: $!\n";
+> +	while(defined(my $entry = <H>)) {
+> +		my ($ref, $author);
+> +		eval($entry) || die "cannot eval refs list: $@";
+> +
+> +		next if ($ref !~ m@^refs/heads/(.*)$@);
+> +		my ($head) = ($1);
+> +		$author =~ /^.*\s(\d+)\s[-+]\d{4}$/;
+> +		$branch_date{$head} = $1;
+>  	}
+> -	closedir(D);
+> +	close(H);
+>  }
 
-On Wed, 20 Sep 2006, Shawn Pearce wrote:
-> > 
-> > This is not just a random thing. It is in fact one of the very core issues 
-> > of having multiple people work together on the same remote repo. We don't 
-> > do it very much (because it's often easier for everybody to have their 
-> > own), but the "CVS workflow" with one common repository is another example 
-> > why WE MUST NOT JUST RESET THE HEADS!
-> 
-> BTW `git push --force` works just great to reset the remote head.
+for-each-ref let's you limit the refs by leading path, so I do
+not think "next if" inside the loop is needed if you say
 
-Yes. That's why "--force" exists - it's a way of saying "the other end is 
-wrong, and I really do want to force this update".
+	for-each-ref --perl --format=$fmt refs/heads
 
-> I worked on a project not to long ago in which a user tried `git
-> push`, received a "not a fast-forward" error, didn't know what it
-> meant, tried `git push --force`, found that worked, and proceeded
-> to force every push he did from then on.  To much gnashing of teeth
-> from everyone else.
-
-Ouch. That implies that we made it a bit too easy to force things, or that 
-we have an insufficiently clear error message.
-
-I think the current error message is fairly good: it says
-
-	"remote '%s' is not a strict subset of local ref '%s'. maybe you 
-	 are not up-to-date and need to pull first?"
-
-which should be clear enough, but I'm hoping this was a long time ago when 
-we weren't as clear (we added the "maybe you're not up-to-date .." 
-language later)
-
-> Of course an update hook finally took care of the problem, but having
-> non fast-forward pushs be permitted on a shared, bare repository
-> by default is interesting to say the least.  :-)
-
-Yeah, well, it's not permitted "by default", but obviously "--force" ends 
-up being a client-side decision, so with clueless clients, the default 
-behaviour may not be enough to save you.
-
-			Linus
+Any reason you did not like my version that allows you to get
+rid of the while() loop altogether?  (hint: replace eval in my
+example with "print" and see what you are evaling)
