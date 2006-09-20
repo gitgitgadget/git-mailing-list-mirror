@@ -1,92 +1,83 @@
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: [PATCH] cvsimport move over to using git for each ref to read refs V3
-Date: Wed, 20 Sep 2006 17:37:04 +0100
-Message-ID: <20060920163704.GA27407@shadowen.org>
-References: <45116888.4050806@shadowen.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git pull for update of netdev fails.
+Date: Wed, 20 Sep 2006 09:38:25 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0609200934140.4388@g5.osdl.org>
+References: <20060920080308.673a1e93@localhost.localdomain>
+ <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org> <20060920155431.GO8259@pasky.or.cz>
+ <Pine.LNX.4.63.0609201801110.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060920160756.GP8259@pasky.or.cz> <Pine.LNX.4.64.0609200915550.4388@g5.osdl.org>
+ <20060920162810.GB23260@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Sep 20 18:38:01 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 20 18:39:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQ54k-0008Lv-Pr
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 18:37:31 +0200
+	id 1GQ56C-0000Hs-Dw
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 18:39:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751816AbWITQh1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 12:37:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751818AbWITQh1
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 12:37:27 -0400
-Received: from 85-210-218-110.dsl.pipex.com ([85.210.218.110]:40923 "EHLO
-	localhost.localdomain") by vger.kernel.org with ESMTP
-	id S1751816AbWITQh1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Sep 2006 12:37:27 -0400
-Received: from apw by localhost.localdomain with local (Exim 4.63)
-	(envelope-from <apw@shadowen.org>)
-	id 1GQ54K-000788-BV; Wed, 20 Sep 2006 17:37:04 +0100
-To: git@vger.kernel.org
-Content-Disposition: inline
-InReply-To: <45116888.4050806@shadowen.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751673AbWITQik (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 12:38:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751828AbWITQik
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 12:38:40 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:16878 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751673AbWITQij (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 12:38:39 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8KGcRnW022206
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 20 Sep 2006 09:38:28 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8KGcPfP003435;
+	Wed, 20 Sep 2006 09:38:26 -0700
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060920162810.GB23260@spearce.org>
+X-Spam-Status: No, hits=-0.505 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.150 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27373>
 
-cvsimport: move over to using git-for-each-ref to read refs V3
 
-cvsimport opens all of the files in $GIT_DIR/refs/heads and reads
-out the sha1's in order to work out what time the last commit on
-that branch was made (in CVS) thus allowing incremental updates.
-However, this takes no account of hierachical refs naming producing
-the following error for each directory in $GIT_DIR/refs:
 
-  Use of uninitialized value in chomp at /usr/bin/git-cvsimport line 503.
-  Use of uninitialized value in concatenation (.) or string at
-					/usr/bin/git-cvsimport line 505.
-  usage: git-cat-file [-t|-s|-e|-p|<type>] <sha1>
+On Wed, 20 Sep 2006, Shawn Pearce wrote:
+> > 
+> > A lot of people do things like "git repack -a -d" by hand, and we've tried 
+> > to encourage people to do so in cron-jobs etc. We've even had patches 
+> > floating around that do it automatically after a pull.
+> 
+> Ouch.  That's really bad.
 
-Take advantage of the new packed refs work to use the new
-for-each-ref iterator to get this information.
+Well, what did you think the "-d" stood for?
 
-Signed-off-by: Andy Whitcroft <apw@shadowen.org>
----
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index e5a00a1..92d14c3 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -495,22 +495,19 @@ unless(-d $git_dir) {
- 	$tip_at_start = `git-rev-parse --verify HEAD`;
- 
- 	# Get the last import timestamps
--	opendir(D,"$git_dir/refs/heads");
--	while(defined(my $head = readdir(D))) {
--		next if $head =~ /^\./;
--		open(F,"$git_dir/refs/heads/$head")
--			or die "Bad head branch: $head: $!\n";
--		chomp(my $ftag = <F>);
--		close(F);
--		open(F,"git-cat-file commit $ftag |");
--		while(<F>) {
--			next unless /^author\s.*\s(\d+)\s[-+]\d{4}$/;
--			$branch_date{$head} = $1;
--			last;
--		}
--		close(F);
-+	my $fmt = '($ref, $author) = (%(refname), %(author));';
-+	open(H, "git-for-each-ref --perl --format='$fmt'|") or
-+		die "Cannot run git-for-each-ref: $!\n";
-+	while(defined(my $entry = <H>)) {
-+		my ($ref, $author);
-+		eval($entry) || die "cannot eval refs list: $@";
-+
-+		next if ($ref !~ m@^refs/heads/(.*)$@);
-+		my ($head) = ($1);
-+		$author =~ /^.*\s(\d+)\s[-+]\d{4}$/;
-+		$branch_date{$head} = $1;
- 	}
--	closedir(D);
-+	close(H);
- }
- 
- -d $git_dir
+It stands for "delete old packs".
+
+There are exactly two operations that delete git objects: "git prune" and 
+"git repack -d". Nothing else should ever do it, but those two definitely 
+do. They're designed to.
+
+I wouldn't call it "really bad" - it's part of the design. It's only bad 
+if you didn't realize what "-d" means.
+
+> I knew it but didn't realize it until just now.
+> 
+> 	git repack -a -d
+> 	git branch -D foo
+> 	git repack -a -d
+> 
+> and *poof* no foo.
+
+Exactly. 
+
+I thought people realized this, but apparently sometimes it's just an 
+intellectual understanding of what something does, without realizing what 
+that thing actually _means_ in a deeper way.
+
+			Linus
