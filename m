@@ -1,84 +1,60 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] gitk(1): mention --all
-Date: Wed, 20 Sep 2006 12:23:41 +0200
-Message-ID: <20060920102341.GB26173@diku.dk>
+From: Andy Whitcroft <apw@shadowen.org>
+Subject: Re: [PATCH] cvsimport move over to using git for each ref to read
+ refs
+Date: Wed, 20 Sep 2006 11:26:05 +0100
+Message-ID: <4511173D.7020702@shadowen.org>
+References: <20060920085200.GA21865@shadowen.org> <eer19l$6hm$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Sep 20 12:23:55 2006
+Content-Type: text/plain; charset=ISO-8859-2
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 20 12:26:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPzF8-0004fx-1t
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 12:23:52 +0200
+	id 1GPzHj-0005BN-TF
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 12:26:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751015AbWITKXr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 06:23:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751020AbWITKXr
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 06:23:47 -0400
-Received: from [130.225.96.91] ([130.225.96.91]:61637 "EHLO mgw1.diku.dk")
-	by vger.kernel.org with ESMTP id S1751014AbWITKXq (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 06:23:46 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 68C9F7700A5
-	for <git@vger.kernel.org>; Wed, 20 Sep 2006 12:23:43 +0200 (CEST)
-Received: from mgw1.diku.dk ([127.0.0.1])
- by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 19068-01 for <git@vger.kernel.org>; Wed, 20 Sep 2006 12:23:42 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 3CA7277009E
-	for <git@vger.kernel.org>; Wed, 20 Sep 2006 12:23:42 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP id 3818C6DF845
-	for <git@vger.kernel.org>; Wed, 20 Sep 2006 12:21:51 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 2306362A34; Wed, 20 Sep 2006 12:23:42 +0200 (CEST)
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-Virus-Scanned: amavisd-new at diku.dk
+	id S1751020AbWITK03 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 06:26:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751024AbWITK03
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 06:26:29 -0400
+Received: from hellhawk.shadowen.org ([80.68.90.175]:19982 "EHLO
+	hellhawk.shadowen.org") by vger.kernel.org with ESMTP
+	id S1751014AbWITK02 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Sep 2006 06:26:28 -0400
+Received: from localhost ([127.0.0.1])
+	by hellhawk.shadowen.org with esmtp (Exim 4.50)
+	id 1GPzHF-0006zE-20; Wed, 20 Sep 2006 11:26:01 +0100
+User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <eer19l$6hm$1@sea.gmane.org>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27337>
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
----
- Documentation/gitk.txt |    9 +++++++++
- 1 files changed, 9 insertions(+), 0 deletions(-)
+Jakub Narebski wrote:
+> Andy Whitcroft wrote:
+> 
+>> +       open(H, "git-for-each-ref --format='%(objectname) %(refname)'|") or
+> 
+> By the way, this is equivalent to using "git-show-ref" introduced by Linus.
+> But if you want commit timestamp
+> 
+>> cvsimport opens all of the files in $GIT_DIR/refs/heads and reads
+>> out the sha1's in order to work out what time the last commit on
+>> that branch was made (in CVS) thus allowing incremental updates.
+> 
+> you can use it in --format as well.
 
-Someone on #git asked for --all and it probably deserves to be mentioned
-in gitk(1).
+Unfortuantly, for-each-ref only offers us the textual version of this
+information not the numeric offset from the epoch which is what
+cvsimport is after.
 
-diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
-index 23be005..f1aeb07 100644
---- a/Documentation/gitk.txt
-+++ b/Documentation/gitk.txt
-@@ -37,6 +37,10 @@ frequently used options.
- 
- 	Show commits older than a specific date.
- 
-+--all::
-+
-+	Show all branches.
-+
- <revs>::
- 
- 	Limit the revisions to show. This can be either a single revision
-@@ -63,6 +67,11 @@ gitk --since="2 weeks ago" \-- gitk::
- 	The "--" is necessary to avoid confusion with the *branch* named
- 	'gitk'
- 
-+gitk --max-count=100 --all -- Makefile::
-+
-+	Show at most 100 changes made to the file 'Makefile'. Instead of only
-+	looking for changes in the current branch look in all branches.
-+
- See Also
- --------
- 'qgit(1)'::
--- 
-1.4.2.1.gca4e
+I guess we could teach for-each-ref to output this as well?  Perhaps
+something like authorstamp?
 
--- 
-Jonas Fonseca
+-apw
