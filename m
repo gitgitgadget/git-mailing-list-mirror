@@ -1,60 +1,53 @@
-From: Matthias Kestenholz <lists@spinlock.ch>
-Subject: Re: pseudo initial empty commit and tag for git-log and
-	git-describe?
-Date: Wed, 20 Sep 2006 16:10:00 +0200
-Message-ID: <1158761400.6516.25.camel@localhost.localdomain>
-References: <fcaeb9bf0609200658p3f04df7oe91ddb971787bd70@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: Support for custom per-project owner string
+Date: Wed, 20 Sep 2006 08:02:21 -0700
+Message-ID: <7veju6lgxu.fsf@assigned-by-dhcp.cox.net>
+References: <20060919225522.GB13132@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 20 16:10:32 2006
+X-From: git-owner@vger.kernel.org Wed Sep 20 17:03:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQ2mI-0001O2-Ec
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 16:10:19 +0200
+	id 1GQ3ak-0007Yt-Da
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 17:02:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751536AbWITOKN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 20 Sep 2006 10:10:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751539AbWITOKM
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 10:10:12 -0400
-Received: from elephant.oekohosting.ch ([80.74.144.79]:2688 "EHLO
-	elephant.oekohosting.ch") by vger.kernel.org with ESMTP
-	id S1751535AbWITOKL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Sep 2006 10:10:11 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by elephant.oekohosting.ch (Postfix) with ESMTP id 8751B62C186;
-	Wed, 20 Sep 2006 16:10:09 +0200 (CEST)
-Received: from elephant.oekohosting.ch ([127.0.0.1])
-	by localhost (elephant.oekohosting.ch [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 32453-01; Wed, 20 Sep 2006 16:10:09 +0200 (CEST)
-Received: from [192.168.1.7] (18.51.203.62.cust.bluewin.ch [62.203.51.18])
-	by elephant.oekohosting.ch (Postfix) with ESMTP id E180D62C183;
-	Wed, 20 Sep 2006 16:10:00 +0200 (CEST)
-To: =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
-	<pclouds@gmail.com>
-In-Reply-To: <fcaeb9bf0609200658p3f04df7oe91ddb971787bd70@mail.gmail.com>
-X-Mailer: Evolution 2.6.3 
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1751587AbWITPCX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 11:02:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751584AbWITPCX
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 11:02:23 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:61828 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1751418AbWITPCX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Sep 2006 11:02:23 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060920150221.VWOW6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 20 Sep 2006 11:02:21 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Qf281V00M1kojtg0000000
+	Wed, 20 Sep 2006 11:02:08 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060919225522.GB13132@pasky.or.cz> (Petr Baudis's message of
+	"Wed, 20 Sep 2006 00:55:22 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27347>
 
-hello
+Petr Baudis <pasky@suse.cz> writes:
 
-On Wed, 2006-09-20 at 20:58 +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8D=
-c Duy wrote:
-> I'm still uncomfortable with git-log -p unable to show the first
-> commit (git-whatchanged too). Also git-describe refuses to work
-> without any tag. I'm thinking about adding a pseudo empty commit
-> together with a tag so that these commands work. The commit and tag
-> will be created at runtime. They do not actually exist in the object
-> database. I haven't thought about how to implement it yet.
-> Any other ideas?
+> Also, ideally this would be in the configfile but calling repoconfig for
+> each repository in the index would slow things down way too much.
 
-you can use git log -p --root  to also display the root commit.
+Hmph.  I wonder why.  We do read description already from a file
+so maybe we would want a faster way to access the config file to
+grab gitweb.* variables in a single call?
 
-	Matthias
+In any case, I like where this patch is going and agree that
+file owner should be overridable with something like this.
