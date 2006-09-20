@@ -1,93 +1,64 @@
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: [PATCH] cvsimport move over to using git for each ref to read refs
-Date: Wed, 20 Sep 2006 09:52:00 +0100
-Message-ID: <20060920085200.GA21865@shadowen.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] cvsimport move over to using git for each ref to read refs
+Date: Wed, 20 Sep 2006 11:23:02 +0200
+Organization: At home
+Message-ID: <eer19l$6hm$1@sea.gmane.org>
+References: <20060920085200.GA21865@shadowen.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Sep 20 10:52:41 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Wed Sep 20 11:23:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPxor-0008KO-NW
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 10:52:38 +0200
+	id 1GPyIx-0007hI-Jx
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 11:23:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750742AbWITIwY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 04:52:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750744AbWITIwY
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 04:52:24 -0400
-Received: from 85-210-218-110.dsl.pipex.com ([85.210.218.110]:17568 "EHLO
-	localhost.localdomain") by vger.kernel.org with ESMTP
-	id S1750742AbWITIwX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Sep 2006 04:52:23 -0400
-Received: from apw by localhost.localdomain with local (Exim 4.63)
-	(envelope-from <apw@shadowen.org>)
-	id 1GPxoG-0005gw-G3; Wed, 20 Sep 2006 09:52:00 +0100
+	id S1750745AbWITJXV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 20 Sep 2006 05:23:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750813AbWITJXV
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 05:23:21 -0400
+Received: from main.gmane.org ([80.91.229.2]:56214 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750745AbWITJXU (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 05:23:20 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GPyIO-0007YL-Qu
+	for git@vger.kernel.org; Wed, 20 Sep 2006 11:23:08 +0200
+Received: from host-81-190-26-22.torun.mm.pl ([81.190.26.22])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 20 Sep 2006 11:23:08 +0200
+Received: from jnareb by host-81-190-26-22.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 20 Sep 2006 11:23:08 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-26-22.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27334>
 
-cvsimport: move over to using git-for-each-ref to read refs
+Andy Whitcroft wrote:
 
-cvsimport opens all of the files in $GIT_DIR/refs/heads and reads
-out the sha1's in order to work out what time the last commit on
-that branch was made (in CVS) thus allowing incremental updates.
-However, this takes no account of hierachical refs naming producing
-the following error for each directory in $GIT_DIR/refs:
+> +=A0=A0=A0=A0=A0=A0=A0open(H, "git-for-each-ref --format=3D'%(objectn=
+ame) %(refname)'|") or
 
-  Use of uninitialized value in chomp at /usr/bin/git-cvsimport line 503.
-  Use of uninitialized value in concatenation (.) or string at
-					/usr/bin/git-cvsimport line 505.
-  usage: git-cat-file [-t|-s|-e|-p|<type>] <sha1>
+By the way, this is equivalent to using "git-show-ref" introduced by Li=
+nus.
+But if you want commit timestamp
 
-Take advantage of the new packed refs work to use the new
-for-each-ref iterator to get this information.  Use the format
-specifier to ensure we are neutral to changes in default.
+> cvsimport opens all of the files in $GIT_DIR/refs/heads and reads
+> out the sha1's in order to work out what time the last commit on
+> that branch was made (in CVS) thus allowing incremental updates.
 
-[Junio: although although for-each-ref offers a --perl quoting mode
-this patch does not use it as it seems only to make parsing the
-output harder in perl.  If there is a neat trick for handling this
-'perl' form please educate me.  Here, rely on sha1's to contain
-no spaces.]
+you can use it in --format as well.
 
-Signed-off-by: Andy Whitcroft <apw@shadowen.org>
----
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index e5a00a1..1a62afa 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -495,13 +495,14 @@ unless(-d $git_dir) {
- 	$tip_at_start = `git-rev-parse --verify HEAD`;
- 
- 	# Get the last import timestamps
--	opendir(D,"$git_dir/refs/heads");
--	while(defined(my $head = readdir(D))) {
--		next if $head =~ /^\./;
--		open(F,"$git_dir/refs/heads/$head")
--			or die "Bad head branch: $head: $!\n";
--		chomp(my $ftag = <F>);
--		close(F);
-+	open(H, "git-for-each-ref --format='%(objectname) %(refname)'|") or
-+		die "Cannot run git-for-each-ref: $!\n";
-+	while(defined(my $entry = <H>)) {
-+		chomp($entry);
-+		my ($ftag, $name) = split(' ', $entry, 2);
-+		next if ($name !~ m@^refs/heads/(.*)$@);
-+		my ($head) = ($1);
-+
- 		open(F,"git-cat-file commit $ftag |");
- 		while(<F>) {
- 			next unless /^author\s.*\s(\d+)\s[-+]\d{4}$/;
-@@ -510,7 +511,7 @@ unless(-d $git_dir) {
- 		}
- 		close(F);
- 	}
--	closedir(D);
-+	close(H);
- }
- 
- -d $git_dir
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
