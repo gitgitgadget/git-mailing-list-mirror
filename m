@@ -1,57 +1,147 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] describe: fall back to 'HEAD' if no appropriate tag
- exists
-Date: Thu, 21 Sep 2006 00:53:16 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0609210051570.19042@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0609202324210.19042@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v8xkef97b.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] add receive.denyNonFastforwards config variable
+Date: Thu, 21 Sep 2006 01:07:54 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0609210107140.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0609210027430.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vfyemf9ah.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 21 00:53:31 2006
+Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Sep 21 01:08:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQAwT-0007AT-Mz
-	for gcvg-git@gmane.org; Thu, 21 Sep 2006 00:53:22 +0200
+	id 1GQBAf-0001Jb-RS
+	for gcvg-git@gmane.org; Thu, 21 Sep 2006 01:08:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932433AbWITWxS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 18:53:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932442AbWITWxS
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 18:53:18 -0400
-Received: from mail.gmx.net ([213.165.64.20]:8926 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932433AbWITWxS (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 18:53:18 -0400
-Received: (qmail invoked by alias); 20 Sep 2006 22:53:16 -0000
+	id S1750717AbWITXH5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 19:07:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750744AbWITXH5
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 19:07:57 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47313 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750717AbWITXH4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 19:07:56 -0400
+Received: (qmail invoked by alias); 20 Sep 2006 23:07:54 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp001) with SMTP; 21 Sep 2006 00:53:16 +0200
+  by mail.gmx.net (mp036) with SMTP; 21 Sep 2006 01:07:54 +0200
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v8xkef97b.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7vfyemf9ah.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27425>
 
-Hi,
 
-On Wed, 20 Sep 2006, Junio C Hamano wrote:
+If receive.denyNonFastforwards is set to true, git-receive-pack will deny
+non fast-forwards, i.e. forced updates. Most notably, a push to a repository
+which has that flag set will fail.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Now, if no tag exists to say something like '<tag>-gfffffff', say
-> > 'HEAD-gfffffff' instead of erroring out.
-> 
-> Another possibility is just to do
-> 
->         puts(sha1_to_hex(cmit->object.sha1))
-> 
-> in this case.
+As a first user, 'git-init-db --shared' sets this flag, since in a shared
+setup, you are most unlikely to want forced pushes to succeed.
 
-Okay. Could we have the abbreviated sha1, at least?
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
+	2nd try.
 
-Ciao,
-Dscho
+	No longer barfs on new refs, and tries all merge bases (even if I
+	cannot come up with any scenario where there is more than one merge
+	base in the case of a fast forward).
+
+	Also is C99.
+
+ builtin-init-db.c |    1 +
+ cache.h           |    1 +
+ environment.c     |    1 +
+ receive-pack.c    |   16 ++++++++++++++++
+ setup.c           |    2 ++
+ 5 files changed, 21 insertions(+), 0 deletions(-)
+
+diff --git a/builtin-init-db.c b/builtin-init-db.c
+index 36c3088..e6a2d7d 100644
+--- a/builtin-init-db.c
++++ b/builtin-init-db.c
+@@ -310,6 +310,7 @@ int cmd_init_db(int argc, const char **a
+ 		 */
+ 		sprintf(buf, "%d", shared_repository);
+ 		git_config_set("core.sharedrepository", buf);
++		git_config_set("receive.denyNonFastforwards", "true");
+ 	}
+ 
+ 	return 0;
+diff --git a/cache.h b/cache.h
+index f2fdc00..2224c83 100644
+--- a/cache.h
++++ b/cache.h
+@@ -188,6 +188,7 @@ extern int prefer_symlink_refs;
+ extern int log_all_ref_updates;
+ extern int warn_ambiguous_refs;
+ extern int shared_repository;
++extern int deny_non_fast_forwards;
+ extern const char *apply_default_whitespace;
+ extern int zlib_compression_level;
+ 
+diff --git a/environment.c b/environment.c
+index 84d870c..63b1d15 100644
+--- a/environment.c
++++ b/environment.c
+@@ -20,6 +20,7 @@ int warn_ambiguous_refs = 1;
+ int repository_format_version;
+ char git_commit_encoding[MAX_ENCODING_LENGTH] = "utf-8";
+ int shared_repository = PERM_UMASK;
++int deny_non_fast_forwards = 0;
+ const char *apply_default_whitespace;
+ int zlib_compression_level = Z_DEFAULT_COMPRESSION;
+ int pager_in_use;
+diff --git a/receive-pack.c b/receive-pack.c
+index 78f75da..a6ec9f9 100644
+--- a/receive-pack.c
++++ b/receive-pack.c
+@@ -2,6 +2,8 @@ #include "cache.h"
+ #include "refs.h"
+ #include "pkt-line.h"
+ #include "run-command.h"
++#include "commit.h"
++#include "object.h"
+ 
+ static const char receive_pack_usage[] = "git-receive-pack <git-dir>";
+ 
+@@ -127,6 +129,20 @@ static int update(struct command *cmd)
+ 		return error("unpack should have generated %s, "
+ 			     "but I can't find it!", new_hex);
+ 	}
++	if (deny_non_fast_forwards && !is_null_sha1(old_sha1)) {
++		struct commit *old_commit, *new_commit;
++		struct commit_list *bases;
++
++		old_commit = (struct commit *)parse_object(old_sha1);
++		new_commit = (struct commit *)parse_object(new_sha1);
++		for (bases = get_merge_bases(old_commit, new_commit, 1);
++				bases; bases = bases->next)
++			if (!hashcmp(old_sha1, bases->item->object.sha1))
++				break;
++		if (!bases)
++			return error("denying non-fast forward;"
++					" you should pull first");
++	}
+ 	safe_create_leading_directories(lock_name);
+ 
+ 	newfd = open(lock_name, O_CREAT | O_EXCL | O_WRONLY, 0666);
+diff --git a/setup.c b/setup.c
+index 2afdba4..9a46a58 100644
+--- a/setup.c
++++ b/setup.c
+@@ -244,6 +244,8 @@ int check_repository_format_version(cons
+                repository_format_version = git_config_int(var, value);
+ 	else if (strcmp(var, "core.sharedrepository") == 0)
+ 		shared_repository = git_config_perm(var, value);
++	else if (strcmp(var, "receive.denynonfastforwards") == 0)
++		deny_non_fast_forwards = git_config_bool(var, value);
+        return 0;
+ }
+ 
+-- 
+1.4.2.1.g25e3-dirty
