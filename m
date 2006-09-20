@@ -1,87 +1,87 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: git pull for update of netdev fails.
-Date: Wed, 20 Sep 2006 09:26:32 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609200920290.4388@g5.osdl.org>
-References: <20060920080308.673a1e93@localhost.localdomain>
- <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org> <20060920155431.GO8259@pasky.or.cz>
- <Pine.LNX.4.63.0609201801110.19042@wbgn013.biozentrum.uni-wuerzburg.de>
- <20060920160756.GP8259@pasky.or.cz> <Pine.LNX.4.64.0609200915550.4388@g5.osdl.org>
+Date: Wed, 20 Sep 2006 12:28:10 -0400
+Message-ID: <20060920162810.GB23260@spearce.org>
+References: <20060920080308.673a1e93@localhost.localdomain> <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org> <20060920155431.GO8259@pasky.or.cz> <Pine.LNX.4.63.0609201801110.19042@wbgn013.biozentrum.uni-wuerzburg.de> <20060920160756.GP8259@pasky.or.cz> <Pine.LNX.4.64.0609200915550.4388@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@suse.cz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 20 18:27:17 2006
+X-From: git-owner@vger.kernel.org Wed Sep 20 18:29:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQ4uK-0005Pj-7R
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 18:26:44 +0200
+	id 1GQ4w7-0005yF-I5
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 18:28:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751738AbWITQ0l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 12:26:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751740AbWITQ0l
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 12:26:41 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:7146 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751738AbWITQ0k (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 12:26:40 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8KGQXnW021585
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 20 Sep 2006 09:26:33 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8KGQWsE003024;
-	Wed, 20 Sep 2006 09:26:33 -0700
-To: Petr Baudis <pasky@suse.cz>
+	id S1751756AbWITQ2W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 12:28:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751751AbWITQ2W
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 12:28:22 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:27542 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751756AbWITQ2V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Sep 2006 12:28:21 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GQ4vd-0002bh-PB; Wed, 20 Sep 2006 12:28:05 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 279FC20E48E; Wed, 20 Sep 2006 12:28:10 -0400 (EDT)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
 In-Reply-To: <Pine.LNX.4.64.0609200915550.4388@g5.osdl.org>
-X-Spam-Status: No, hits=-0.506 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.150 $
-X-Scanned-By: MIMEDefang 2.36
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27368>
 
-
-
-On Wed, 20 Sep 2006, Linus Torvalds wrote:
+Linus Torvalds <torvalds@osdl.org> wrote:
+> On Wed, 20 Sep 2006, Petr Baudis wrote:
+> > 
+> >   I personally don't think "throwing away" history is an issue. You can
+> > print the old sha1 and it is still in the database so you can recover
+> > it.
 > 
-> That's a really important point. You can trivially say "I don't care". 
-> It's literally one extra character. But it should be the _user_ that says 
-> so, not the SCM.
+> No it isn't. Once you've lost the reference, you can't really depend on it 
+> any more in the long run.
 > 
-> The whole point of the SCM is to care.
+> A lot of people do things like "git repack -a -d" by hand, and we've tried 
+> to encourage people to do so in cron-jobs etc. We've even had patches 
+> floating around that do it automatically after a pull.
 
-Btw, the "+" also protects you from local errors.
+Ouch.  That's really bad.
 
-Let's say that you've committed some work of your own onto a branch that 
-you happen to follow. Guess what? By default, git refuses to throw your 
-hard work away.
+I knew it but didn't realize it until just now.
 
-This is not just a random thing. It is in fact one of the very core issues 
-of having multiple people work together on the same remote repo. We don't 
-do it very much (because it's often easier for everybody to have their 
-own), but the "CVS workflow" with one common repository is another example 
-why WE MUST NOT JUST RESET THE HEADS!
+	git repack -a -d
+	git branch -D foo
+	git repack -a -d
 
-Think about it. You and somebody else works on a common branch, using a 
-common source repo. When you "fetch", you want to get all the work that 
-the other person has done. But you sure as hell don't want that work to 
-overwrite your own work.
+and *poof* no foo.  Even if you somehow have its SHA1 and haven't
+used `git prune` you still have just pruned the thing away and
+can't look it up anymore.
 
-So what does git do? It notices if you have a local commit on that shared 
-branch (because it no longer fast-forwards to the other end), and it tells 
-you exactly that: it says that branch so-and-so doesn't fast-forward, and 
-refuses to overwrite it.
+git branch -D is just the obvious way of doing it.  git rebase is
+slightly less obvious for some people (perhaps more so for others).
+git fetch with a '+' in a Pull: line is even less obvious, especially
+if you have reflog enabled for exactly that reason.
 
-What would you do? You should in that case switch to the offending branch, 
-AND DO A MERGE of your work and the work you shared with another person, 
-and then push out the result. 
 
-So the _last_ thing you want to happen is for your work to be silently 
-just overwritten.
+So we've managed to encourage people to run prune without actually
+running prune.  Should we just integrate prune and repack -a -d with
+the 'rm -rf /' command?  Perhaps a kernel module at the VFS layer
+would do the trick?  I hear we have some kernel folks nearby.  :-)
 
-Trust me, git does the right thing here. No ifs, buts or maybes about it.
-
-			Linus
+-- 
+Shawn.
