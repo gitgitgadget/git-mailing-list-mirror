@@ -1,93 +1,89 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] Added --mirror-all to git-fetch.
-Date: Wed, 20 Sep 2006 12:49:12 -0400
-Message-ID: <20060920164912.GD23260@spearce.org>
-References: <20060919232851.GA12195@spearce.org> <7vac4ujzf0.fsf@assigned-by-dhcp.cox.net> <20060920161407.GQ8259@pasky.or.cz> <20060920162145.GA23260@spearce.org> <7v1wq6jy3q.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git pull for update of netdev fails.
+Date: Wed, 20 Sep 2006 09:49:52 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0609200942550.4388@g5.osdl.org>
+References: <20060920080308.673a1e93@localhost.localdomain>
+ <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org> <20060920155431.GO8259@pasky.or.cz>
+ <Pine.LNX.4.63.0609201801110.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060920160756.GP8259@pasky.or.cz> <Pine.LNX.4.64.0609200915550.4388@g5.osdl.org>
+ <Pine.LNX.4.64.0609200920290.4388@g5.osdl.org> <20060920163437.GC23260@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Sep 20 18:52:43 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 20 18:55:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQ5I2-0003XU-St
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 18:51:15 +0200
+	id 1GQ5Km-0004Hw-0M
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 18:54:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751943AbWITQtc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 12:49:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751935AbWITQtc
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 12:49:32 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:45211 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751943AbWITQtT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Sep 2006 12:49:19 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GQ5G0-00052r-0H; Wed, 20 Sep 2006 12:49:08 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9A29320E48E; Wed, 20 Sep 2006 12:49:12 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v1wq6jy3q.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751925AbWITQvW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 12:51:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751926AbWITQuw
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 12:50:52 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:43909 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751910AbWITQuG (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 12:50:06 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8KGnrnW022888
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 20 Sep 2006 09:49:54 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8KGnqrp003928;
+	Wed, 20 Sep 2006 09:49:53 -0700
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060920163437.GC23260@spearce.org>
+X-Spam-Status: No, hits=-0.504 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.150 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27376>
-
-Junio C Hamano <junkio@cox.net> wrote:
-> I realize I am going around in circles, but Pasky's "remotes/"
-> argument made me realize that this mirroring is not much more
-> than "fetch --force --all".  I initially had an impression that
-> this was for only strict mirroring where you do not even want
-> your own "origin", but if you arrange the .git/remotes/origin
-> file the right way, "fetch --force --all" (if you remembered to
-> put '+' in front of the refspecs, even without --force) would
-> what --mirror-all would do wouldn't it?
-
-I started this change with '--all' and realized that ideally you
-want '--all' to copy all available refs/heads/* from the remote to
-refs/remotes/<name>/* here.  You want to create any new branches
-which the remote has introduced since your last fetch.
-
-You probably don't want to force a non-fast forward unless there's a
-'+' in the corresponding Pull line of remotes/<name> or if --force is
-used.  However you probably also want to delete any removed branches.
-
-Which I think is quite different from a mirror.  A mirror wants to
-replace the entire ref namespace with what's on the remote as it
-has no need for a local namespace of its own.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27377>
 
 
-Originally I gave Pasky a one-liner on #git:
 
-  git fetch --force origin $(git ls-remote origin \
-      | awk '{if(!/\^{}$/){print $2":"$2}}')
+On Wed, 20 Sep 2006, Shawn Pearce wrote:
+> > 
+> > This is not just a random thing. It is in fact one of the very core issues 
+> > of having multiple people work together on the same remote repo. We don't 
+> > do it very much (because it's often easier for everybody to have their 
+> > own), but the "CVS workflow" with one common repository is another example 
+> > why WE MUST NOT JUST RESET THE HEADS!
+> 
+> BTW `git push --force` works just great to reset the remote head.
 
-but he expressed interest in it being a native feature of the
-core-Git fetch Porcelain.  To be honest I disagreed with him but
-submitted the patch anyway.
+Yes. That's why "--force" exists - it's a way of saying "the other end is 
+wrong, and I really do want to force this update".
 
-I think --all copying into .git/refs/remotes/<name>/* makes perfect
-sense.
+> I worked on a project not to long ago in which a user tried `git
+> push`, received a "not a fast-forward" error, didn't know what it
+> meant, tried `git push --force`, found that worked, and proceeded
+> to force every push he did from then on.  To much gnashing of teeth
+> from everyone else.
 
-And I think this mirror thing may make more sense as a small wrapper
-around git-fetch.  A wrapper that checks for:
+Ouch. That implies that we made it a bit too easy to force things, or that 
+we have an insufficiently clear error message.
 
-	- its running in a bare repository;
-	- it has a single remote named origin;
-	- HEAD isn't a symlink or a symref (its a normal ref in its
-	  own right);
-	- git-mirror.permitted is true in the config file.
- 
--- 
-Shawn.
+I think the current error message is fairly good: it says
+
+	"remote '%s' is not a strict subset of local ref '%s'. maybe you 
+	 are not up-to-date and need to pull first?"
+
+which should be clear enough, but I'm hoping this was a long time ago when 
+we weren't as clear (we added the "maybe you're not up-to-date .." 
+language later)
+
+> Of course an update hook finally took care of the problem, but having
+> non fast-forward pushs be permitted on a shared, bare repository
+> by default is interesting to say the least.  :-)
+
+Yeah, well, it's not permitted "by default", but obviously "--force" ends 
+up being a client-side decision, so with clueless clients, the default 
+behaviour may not be enough to save you.
+
+			Linus
