@@ -1,77 +1,92 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git pull for update of netdev fails.
-Date: Wed, 20 Sep 2006 09:33:42 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609200927260.4388@g5.osdl.org>
-References: <20060920080308.673a1e93@localhost.localdomain>
- <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org> <20060920155431.GO8259@pasky.or.cz>
- <7vhcz2jzfd.fsf@assigned-by-dhcp.cox.net> <20060920161825.GR8259@pasky.or.cz>
+From: Andy Whitcroft <apw@shadowen.org>
+Subject: [PATCH] cvsimport move over to using git for each ref to read refs V3
+Date: Wed, 20 Sep 2006 17:37:04 +0100
+Message-ID: <20060920163704.GA27407@shadowen.org>
+References: <45116888.4050806@shadowen.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Stephen Hemminger <shemminger@osdl.org>,
-	Jeff Garzik <jgarzik@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 20 18:35:20 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Sep 20 18:38:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQ52F-0007fn-OO
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 18:34:56 +0200
+	id 1GQ54k-0008Lv-Pr
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 18:37:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751827AbWITQeu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 12:34:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751828AbWITQet
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 12:34:49 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:42220 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751827AbWITQet (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 12:34:49 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8KGXhnW021966
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 20 Sep 2006 09:33:45 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8KGXgDF003293;
-	Wed, 20 Sep 2006 09:33:43 -0700
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060920161825.GR8259@pasky.or.cz>
-X-Spam-Status: No, hits=-0.505 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.150 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751816AbWITQh1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 12:37:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751818AbWITQh1
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 12:37:27 -0400
+Received: from 85-210-218-110.dsl.pipex.com ([85.210.218.110]:40923 "EHLO
+	localhost.localdomain") by vger.kernel.org with ESMTP
+	id S1751816AbWITQh1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Sep 2006 12:37:27 -0400
+Received: from apw by localhost.localdomain with local (Exim 4.63)
+	(envelope-from <apw@shadowen.org>)
+	id 1GQ54K-000788-BV; Wed, 20 Sep 2006 17:37:04 +0100
+To: git@vger.kernel.org
+Content-Disposition: inline
+InReply-To: <45116888.4050806@shadowen.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27372>
 
+cvsimport: move over to using git-for-each-ref to read refs V3
 
+cvsimport opens all of the files in $GIT_DIR/refs/heads and reads
+out the sha1's in order to work out what time the last commit on
+that branch was made (in CVS) thus allowing incremental updates.
+However, this takes no account of hierachical refs naming producing
+the following error for each directory in $GIT_DIR/refs:
 
-On Wed, 20 Sep 2006, Petr Baudis wrote:
->
->   I argue that this safety valve is useless for most people (and
-> actually I have hard time imagining a plausible scenario in which it
-> actually _is_ useful).
+  Use of uninitialized value in chomp at /usr/bin/git-cvsimport line 503.
+  Use of uninitialized value in concatenation (.) or string at
+					/usr/bin/git-cvsimport line 505.
+  usage: git-cat-file [-t|-s|-e|-p|<type>] <sha1>
 
-It is only useless for people who use git ass a read-only "anonymous CVS" 
-kind of thing.
+Take advantage of the new packed refs work to use the new
+for-each-ref iterator to get this information.
 
-And yes, that may be "most people", but dammit, it's not the group git has 
-been designed for. 
-
-I would be ok with a "anonymous read-only" approach IF GIT ACTUALLY 
-ENFORCED IT. In other words, we could easily have a read-only clone that 
-added the "+" to all branches, but then we should also make sure that 
-nobody ever commits _anything_ in such a repo.
-
-No merges (because you can not rely on the merge result being meaningful: 
-the sources of the merge may be "ephemeral"), no local commits (because 
-you can never "pull" any more after that, since that now becomes a merge 
-with something you can't trust any more).
-
-In other words, if you default to the "+" behaviour, you basically can do 
-_nothing_ in that repository except just track the other end.
-
-Is that useful? Potentially. But it's so clearly inferior to what we have 
-now that you should definitely realize that we're not talking about a full 
-git repository any more, we're really talking about just a "git tracker".
-
-		Linus
+Signed-off-by: Andy Whitcroft <apw@shadowen.org>
+---
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index e5a00a1..92d14c3 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -495,22 +495,19 @@ unless(-d $git_dir) {
+ 	$tip_at_start = `git-rev-parse --verify HEAD`;
+ 
+ 	# Get the last import timestamps
+-	opendir(D,"$git_dir/refs/heads");
+-	while(defined(my $head = readdir(D))) {
+-		next if $head =~ /^\./;
+-		open(F,"$git_dir/refs/heads/$head")
+-			or die "Bad head branch: $head: $!\n";
+-		chomp(my $ftag = <F>);
+-		close(F);
+-		open(F,"git-cat-file commit $ftag |");
+-		while(<F>) {
+-			next unless /^author\s.*\s(\d+)\s[-+]\d{4}$/;
+-			$branch_date{$head} = $1;
+-			last;
+-		}
+-		close(F);
++	my $fmt = '($ref, $author) = (%(refname), %(author));';
++	open(H, "git-for-each-ref --perl --format='$fmt'|") or
++		die "Cannot run git-for-each-ref: $!\n";
++	while(defined(my $entry = <H>)) {
++		my ($ref, $author);
++		eval($entry) || die "cannot eval refs list: $@";
++
++		next if ($ref !~ m@^refs/heads/(.*)$@);
++		my ($head) = ($1);
++		$author =~ /^.*\s(\d+)\s[-+]\d{4}$/;
++		$branch_date{$head} = $1;
+ 	}
+-	closedir(D);
++	close(H);
+ }
+ 
+ -d $git_dir
