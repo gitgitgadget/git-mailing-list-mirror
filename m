@@ -1,65 +1,61 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Fix showing of path in tree view
-Date: Thu, 21 Sep 2006 01:35:36 +0200
-Organization: At home
-Message-ID: <eesj84$qku$1@sea.gmane.org>
-References: <20060920231224.GN13132@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] add receive.denyNonFastforwards config variable
+Date: Wed, 20 Sep 2006 16:38:05 -0700
+Message-ID: <7vlkoeds82.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0609210027430.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vfyemf9ah.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0609210107140.19042@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Thu Sep 21 01:36:21 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 21 01:38:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQBbu-0006QX-Ae
-	for gcvg-git@gmane.org; Thu, 21 Sep 2006 01:36:10 +0200
+	id 1GQBdz-0006oe-T5
+	for gcvg-git@gmane.org; Thu, 21 Sep 2006 01:38:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750716AbWITXgH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 19:36:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750728AbWITXgG
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 19:36:06 -0400
-Received: from main.gmane.org ([80.91.229.2]:22190 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750716AbWITXgD (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 19:36:03 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GQBba-0006NO-6D
-	for git@vger.kernel.org; Thu, 21 Sep 2006 01:35:50 +0200
-Received: from host-81-190-26-109.torun.mm.pl ([81.190.26.109])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 21 Sep 2006 01:35:50 +0200
-Received: from jnareb by host-81-190-26-109.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 21 Sep 2006 01:35:50 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-26-109.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1750706AbWITXiJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 19:38:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750723AbWITXiJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 19:38:09 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:43749 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1750706AbWITXiH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Sep 2006 19:38:07 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060920233806.BWNB18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 20 Sep 2006 19:38:06 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Qnds1V00C1kojtg0000000
+	Wed, 20 Sep 2006 19:37:53 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0609210107140.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Thu, 21 Sep 2006 01:07:54 +0200
+	(CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27432>
 
-Petr Baudis wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> This patch fixes two things - links to all path elements except the last
-> one were broken since gitweb does not like the trailing slash in them, and
-> the root tree was not reachable from the subdirectory view.
-> 
-> To compensate for the one more slash in the front, the trailing slash is
-> not there anymore. ;-) I don't care if it stays there though.
+> 	No longer barfs on new refs, and tries all merge bases (even if I
+> 	cannot come up with any scenario where there is more than one merge
+> 	base in the case of a fast forward).
 
-Originally '/' was used as separator between directories making the path.
-I'd rather use ' / ' to separate parts of pathname more, and not incorporate
-it in the link.
+Hmm.  If that is the case (and I think it is although I haven't
+come up with a proof), the test can be written like this:
 
-Trailing (final) slash is present (and I think should be present) only
-for path in "tree" view. From the path alone you can see if it is "tree"
-or "blob" view.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+	if (bases && !bases->next &&
+            hashcmp(old_sha1, bases->item->object.sha1))
+        	; /* happy */
+	else
+        	return error("not a fast forward");
+
+perhaps?
