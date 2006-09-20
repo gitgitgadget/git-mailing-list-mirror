@@ -1,60 +1,115 @@
 From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: [PATCH] cvsimport move over to using git for each ref to read
- refs
-Date: Wed, 20 Sep 2006 11:26:05 +0100
-Message-ID: <4511173D.7020702@shadowen.org>
-References: <20060920085200.GA21865@shadowen.org> <eer19l$6hm$1@sea.gmane.org>
+Subject: [PATCH 1/2] for each ref add a raw timestamp field type
+Date: Wed, 20 Sep 2006 11:31:19 +0100
+Message-ID: <20060920103119.GA30145@shadowen.org>
+References: <4511173D.7020702@shadowen.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 20 12:26:39 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Sep 20 12:32:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GPzHj-0005BN-TF
-	for gcvg-git@gmane.org; Wed, 20 Sep 2006 12:26:32 +0200
+	id 1GPzMs-00069i-Hz
+	for gcvg-git@gmane.org; Wed, 20 Sep 2006 12:31:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751020AbWITK03 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 06:26:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751024AbWITK03
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 06:26:29 -0400
-Received: from hellhawk.shadowen.org ([80.68.90.175]:19982 "EHLO
-	hellhawk.shadowen.org") by vger.kernel.org with ESMTP
-	id S1751014AbWITK02 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Sep 2006 06:26:28 -0400
-Received: from localhost ([127.0.0.1])
-	by hellhawk.shadowen.org with esmtp (Exim 4.50)
-	id 1GPzHF-0006zE-20; Wed, 20 Sep 2006 11:26:01 +0100
-User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <eer19l$6hm$1@sea.gmane.org>
-X-Enigmail-Version: 0.94.0.0
+	id S1751036AbWITKbn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 06:31:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751043AbWITKbm
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 06:31:42 -0400
+Received: from 85-210-218-110.dsl.pipex.com ([85.210.218.110]:939 "EHLO
+	localhost.localdomain") by vger.kernel.org with ESMTP
+	id S1751036AbWITKbm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Sep 2006 06:31:42 -0400
+Received: from apw by localhost.localdomain with local (Exim 4.63)
+	(envelope-from <apw@shadowen.org>)
+	id 1GPzMN-0007qI-F0; Wed, 20 Sep 2006 11:31:19 +0100
+To: git@vger.kernel.org
+Content-Disposition: inline
+InReply-To: <4511173D.7020702@shadowen.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27338>
 
-Jakub Narebski wrote:
-> Andy Whitcroft wrote:
-> 
->> +       open(H, "git-for-each-ref --format='%(objectname) %(refname)'|") or
-> 
-> By the way, this is equivalent to using "git-show-ref" introduced by Linus.
-> But if you want commit timestamp
-> 
->> cvsimport opens all of the files in $GIT_DIR/refs/heads and reads
->> out the sha1's in order to work out what time the last commit on
->> that branch was made (in CVS) thus allowing incremental updates.
-> 
-> you can use it in --format as well.
+for-each-ref: add a raw timestamp field type
 
-Unfortuantly, for-each-ref only offers us the textual version of this
-information not the numeric offset from the epoch which is what
-cvsimport is after.
+cvsimport is interested in the raw time stamps (in seconds since
+the epoch) to do its time comparisons.  Export the raw timestamp under
+{author,committer,tagger}stamp.
 
-I guess we could teach for-each-ref to output this as well?  Perhaps
-something like authorstamp?
-
--apw
+Signed-off-by: Andy Whitcroft <apw@shadowen.org>
+---
+diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
+index 698618b..9d6c4f0 100644
+--- a/builtin-for-each-ref.c
++++ b/builtin-for-each-ref.c
+@@ -51,14 +51,17 @@ static struct {
+ 	{ "authorname" },
+ 	{ "authoremail" },
+ 	{ "authordate", FIELD_TIME },
++	{ "authorstamp", FIELD_TIME },
+ 	{ "committer" },
+ 	{ "committername" },
+ 	{ "committeremail" },
+ 	{ "committerdate", FIELD_TIME },
++	{ "committerstamp", FIELD_TIME },
+ 	{ "tagger" },
+ 	{ "taggername" },
+ 	{ "taggeremail" },
+ 	{ "taggerdate", FIELD_TIME },
++	{ "taggerstamp", FIELD_TIME },
+ 	{ "subject" },
+ 	{ "body" },
+ 	{ "contents" },
+@@ -344,9 +347,10 @@ static char *copy_email(const char *buf)
+ 	return line;
+ }
+ 
+-static void grab_date(const char *buf, struct atom_value *v)
++static void grab_date(const char *buf, struct atom_value *v, int raw)
+ {
+ 	const char *eoemail = strstr(buf, "> ");
++	const char *eol = strchr(buf, '\n');
+ 	char *zone;
+ 	unsigned long timestamp;
+ 	long tz;
+@@ -359,7 +363,15 @@ static void grab_date(const char *buf, s
+ 	tz = strtol(zone, NULL, 10);
+ 	if ((tz == LONG_MIN || tz == LONG_MAX) && errno == ERANGE)
+ 		goto bad;
+-	v->s = xstrdup(show_date(timestamp, tz, 0));
++	if (raw) {
++		int len = (eol - eoemail - 2);
++		char *stamp = xmalloc(len + 1);
++
++		memcpy(stamp, eoemail + 2, len);
++		stamp[len] = 0;
++		v->s = stamp;
++	} else
++		v->s = xstrdup(show_date(timestamp, tz, 0));
+ 	v->ul = timestamp;
+ 	return;
+  bad:
+@@ -386,7 +398,8 @@ static void grab_person(const char *who,
+ 		if (name[wholen] != 0 &&
+ 		    strcmp(name + wholen, "name") &&
+ 		    strcmp(name + wholen, "email") &&
+-		    strcmp(name + wholen, "date"))
++		    strcmp(name + wholen, "date") &&
++		    strcmp(name + wholen, "stamp"))
+ 			continue;
+ 		if (!wholine)
+ 			wholine = find_wholine(who, wholen, buf, sz);
+@@ -399,7 +412,9 @@ static void grab_person(const char *who,
+ 		else if (!strcmp(name + wholen, "email"))
+ 			v->s = copy_email(wholine);
+ 		else if (!strcmp(name + wholen, "date"))
+-			grab_date(wholine, v);
++			grab_date(wholine, v, 0);
++		else if (!strcmp(name + wholen, "stamp"))
++			grab_date(wholine, v, 1);
+ 	}
+ }
+ 
