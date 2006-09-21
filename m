@@ -1,78 +1,82 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: Git Survey summary
-Date: Thu, 21 Sep 2006 23:49:52 +0700
-Message-ID: <fcaeb9bf0609210949l3d7e6e1ch825d2ef31caae89a@mail.gmail.com>
-References: <fcaeb9bf0609120205m38a44571we21e05864c04a731@mail.gmail.com>
-	 <fcaeb9bf0609210712i125822c4gf8af3ecccdbd3d13@mail.gmail.com>
-	 <eeuapj$mgn$1@sea.gmane.org>
+Date: Thu, 21 Sep 2006 12:48:18 -0400
+Message-ID: <20060921164818.GF3934@spearce.org>
+References: <fcaeb9bf0609120205m38a44571we21e05864c04a731@mail.gmail.com> <fcaeb9bf0609210712i125822c4gf8af3ecccdbd3d13@mail.gmail.com> <eeuapj$mgn$1@sea.gmane.org> <20060921155617.GB3934@spearce.org> <20060921163732.GX8259@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Sep 21 18:53:36 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 21 18:54:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQRkK-0001hQ-Ui
-	for gcvg-git@gmane.org; Thu, 21 Sep 2006 18:49:57 +0200
+	id 1GQRiv-0001BZ-L3
+	for gcvg-git@gmane.org; Thu, 21 Sep 2006 18:48:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751336AbWIUQty (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Sep 2006 12:49:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751337AbWIUQty
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 12:49:54 -0400
-Received: from wx-out-0506.google.com ([66.249.82.235]:23910 "EHLO
-	wx-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1751336AbWIUQtx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Sep 2006 12:49:53 -0400
-Received: by wx-out-0506.google.com with SMTP id s14so722558wxc
-        for <git@vger.kernel.org>; Thu, 21 Sep 2006 09:49:52 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=AhfGKevUxkakbptwARXf8hNW+BXHPlb6QsaAqZUYf1x9vzM/8OO1uyNRCXaCqQ1fYezkyB2Sr+IE9+wyQDzjeLtlHy58fedUOGVEMQhAg6X9Ewc3Yj964CHeDBAs6m1F8toouVcwnbmbsi20EJSKI7cFGJQH2+WXGv4GN74eoZY=
-Received: by 10.70.8.20 with SMTP id 20mr27321552wxh;
-        Thu, 21 Sep 2006 09:49:52 -0700 (PDT)
-Received: by 10.70.45.19 with HTTP; Thu, 21 Sep 2006 09:49:52 -0700 (PDT)
-To: git@vger.kernel.org
-In-Reply-To: <eeuapj$mgn$1@sea.gmane.org>
+	id S1751330AbWIUQs0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Sep 2006 12:48:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751333AbWIUQs0
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 12:48:26 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:4774 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751330AbWIUQsZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Sep 2006 12:48:25 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GQRig-0007bk-VP; Thu, 21 Sep 2006 12:48:15 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id A6CCC20FB16; Thu, 21 Sep 2006 12:48:18 -0400 (EDT)
+To: Petr Baudis <pasky@suse.cz>
 Content-Disposition: inline
+In-Reply-To: <20060921163732.GX8259@pasky.or.cz>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27491>
 
-On 9/21/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> Nguyen Thai Ngoc Duy wrote:
->
-> > - A place to post bugs and feature requests (if bugzilla is too big,
-> > maybe mantis?)
->
-> Isn't this mailing list the place to post bugreports and feature requests
-> (and of course patches)?
+Petr Baudis <pasky@suse.cz> wrote:
+> Dear diary, on Thu, Sep 21, 2006 at 05:56:17PM CEST, I got a letter
+> where Shawn Pearce <spearce@spearce.org> said that...
+> > I'm all for hyperlink integration of gitweb and bug tracking systems
+> 
+> Actually, Trac might be interesting if you want tight VCS web interface
+> and bugtracking web interface integration, although Trac is not very
+> powerful. I think the OLPC people did some work on integrating Trac and
+> Git.
+> 
+> People will think I'm weird, but I have to admit that I rather do like
+> Bugzilla.
 
-Because it's harder to keep track of a long-living bug/request which
-spans many threads. I think git mailing list is for git development
-and helping users. It's not clear it should be a place to request
-features. I'm still wondering why people requested a lot in the survey
-while more than half subscribed to the mailing list. I personally feel
-the mailing list is a place for _contributing_ features (thoughtful
-ideas or patches) not just requesting features (desires without no
-clear idea how to implement it).
-Anyway it's still good to clearly state the git mailing list is for
-discussion, bug reports and feature requests in git.7 man page
-(together with git homepage maybe)
+Your not weird.  I also like Bugzilla for some projects; its rather
+simple and somewhat easy to use...  I also know a lot of people
+who hate it.
 
->  Any bugtracker has to be tied to mailing list, and
-> perhaps also two-way to gitweb (gitweb making links to bugtracker issues,
-> bugtracker having links to gitweb; perhaps incrementing revision
-> numbers...).
-Ruby (or YARV, I don't remember exactly) uses a bug tracking system
-that depends heavily on mailing lists (open bug with a mail, close bug
-with a mail ...). The benefit is that we have at least bug numbers :-)
+> I think we are doing fine as it is for now, though.
 
-> --
-> Jakub Narebski
-> Warsaw, Poland
-> ShadeHawk on #git
---
-Duy
+Oh I agree completely.  But that's the Git project.
+
+However I think it would be nice if we had native hooks shipped
+with core Git to connect to some popular bug tracking systems such
+as Bugzilla and Trac.  Nothing incredibly fancy, but like how we
+currently ship some default example hooks (and even install them into
+every repo with `git init-db`!) we should at least ship some basic
+examples and documentation for integrating to some popular systems.
+Integrate with at least 2 and it should be easy for users to add
+others...
+
+Eh, its just more stuff for an ever growing wishlist.  :-)
+I probably won't do it as its not high on my wish list for Git.
+I don't currently use any bug tracking systems.
+
+-- 
+Shawn.
