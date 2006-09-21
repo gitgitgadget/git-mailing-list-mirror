@@ -1,41 +1,41 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] add receive.denyNonFastforwards config variable
-Date: Thu, 21 Sep 2006 02:10:30 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0609210208350.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Thu, 21 Sep 2006 02:17:22 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0609210211570.19042@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <Pine.LNX.4.63.0609210027430.19042@wbgn013.biozentrum.uni-wuerzburg.de>
  <7vfyemf9ah.fsf@assigned-by-dhcp.cox.net>
  <Pine.LNX.4.63.0609210107140.19042@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vzmcudt3t.fsf@assigned-by-dhcp.cox.net>
+ <7vlkoeds82.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 21 02:10:38 2006
+X-From: git-owner@vger.kernel.org Thu Sep 21 02:17:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQC9D-0004b1-V1
-	for gcvg-git@gmane.org; Thu, 21 Sep 2006 02:10:36 +0200
+	id 1GQCFs-0005hd-Of
+	for gcvg-git@gmane.org; Thu, 21 Sep 2006 02:17:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750801AbWIUAKd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Sep 2006 20:10:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750806AbWIUAKd
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 20:10:33 -0400
-Received: from mail.gmx.net ([213.165.64.20]:32479 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1750801AbWIUAKc (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 20:10:32 -0400
-Received: (qmail invoked by alias); 21 Sep 2006 00:10:30 -0000
+	id S1750811AbWIUARZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Sep 2006 20:17:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750813AbWIUARZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Sep 2006 20:17:25 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48023 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750811AbWIUARY (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Sep 2006 20:17:24 -0400
+Received: (qmail invoked by alias); 21 Sep 2006 00:17:22 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp032) with SMTP; 21 Sep 2006 02:10:30 +0200
+  by mail.gmx.net (mp027) with SMTP; 21 Sep 2006 02:17:22 +0200
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzmcudt3t.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7vlkoeds82.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27440>
 
 Hi,
 
@@ -43,96 +43,57 @@ On Wed, 20 Sep 2006, Junio C Hamano wrote:
 
 > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > If receive.denyNonFastforwards is set to true, git-receive-pack will deny
-> > non fast-forwards, i.e. forced updates. Most notably, a push to a repository
-> > which has that flag set will fail.
-> >
-> > As a first user, 'git-init-db --shared' sets this flag, since in a shared
-> > setup, you are most unlikely to want forced pushes to succeed.
-> >
-> > Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> > 	No longer barfs on new refs, and tries all merge bases (even if I
+> > 	cannot come up with any scenario where there is more than one merge
+> > 	base in the case of a fast forward).
 > 
-> Looks good.  Care to do a handful more tasks before we forget?
+> Hmm.  If that is the case (and I think it is although I haven't
+> come up with a proof),
+
+>From git-fetch.sh:
+
+            # Require fast-forward.
+            mb=$(git-merge-base "$local" "$2") &&
+            case "$2,$mb" in
+            $local,*)
+                if test -n "$verbose"
+                then
+                        echo >&2 "* $1: same as $3"
+                fi
+                ;;
+            *,$local)
+                echo >&2 "* $1: fast forward to $3"
+                echo >&2 "  from $local to $2"
+                git-update-ref -m "$rloga: fast-forward" "$1" "$2" "$local"
+                ;;
+
+So we indeed assumed that git-merge-base returns the old commit in the 
+case of a fast-forward (git-merge-base returns just the first item of the 
+result of get_merge_bases()).
+
+Note that I have no proof that this assumption is true. It might be wrong 
+in this case:
+
+    X - a - b - c - Y
+  /           /
+o - d - e - f
+
+where X is the old commit, and Y is the new commit. But I am too tired to 
+test it right now.
+
+>... the test can be written like this:
 > 
->  Documentation/git-init-db.txt
->  Documentation/config.txt
->  Documentation/git-receive-pack.txt
->  t/t5400-send-pack.sh or a new test t/t5401-push-into-shared-repo.sh
+> 	if (bases && !bases->next &&
+>             hashcmp(old_sha1, bases->item->object.sha1))
+>         	; /* happy */
+> 	else
+>         	return error("not a fast forward");
 
-I expected Jakub to ask for it ;-)
+Plus
 
--- snip --
-[PATCH] Document receive.denyNonFastforwards
+	free_commit_list(bases);
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
- Documentation/config.txt           |    7 +++++++
- Documentation/git-init-db.txt      |    4 ++++
- Documentation/git-receive-pack.txt |    2 ++
- t/t5400-send-pack.sh               |   10 ++++++++++
- 4 files changed, 23 insertions(+), 0 deletions(-)
+as Jeff pointed out.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 844cae4..6802d30 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -267,3 +267,10 @@ whatchanged.difftree::
- imap::
- 	The configuration variables in the 'imap' section are described
- 	in gitlink:git-imap-send[1].
-+
-+receive.denyNonFastforwads::
-+	If set to true, git-receive-pack will deny a ref update which is
-+	not a fast forward. Use this to prevent such an update via a push,
-+	even if that push is forced. This configuration variable is
-+	set when initializing a shared repository.
-+	
-diff --git a/Documentation/git-init-db.txt b/Documentation/git-init-db.txt
-index 63cd5da..ca7d09d 100644
---- a/Documentation/git-init-db.txt
-+++ b/Documentation/git-init-db.txt
-@@ -48,6 +48,10 @@ is given:
-  - 'all' (or 'world' or 'everybody'): Same as 'group', but make the repository
-    readable by all users.
- 
-+By default, the configuration flag receive.denyNonFastforward is enabled
-+in shared repositories, so that you cannot force a non fast-forwarding push
-+into it.
-+
- --
- 
- 
-diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-receive-pack.txt
-index f9457d4..0dfadc2 100644
---- a/Documentation/git-receive-pack.txt
-+++ b/Documentation/git-receive-pack.txt
-@@ -73,6 +73,8 @@ packed and is served via a dumb transpor
- There are other real-world examples of using update and
- post-update hooks found in the Documentation/howto directory.
- 
-+git-receive-pack honours the receive.denyNonFastforwards flag, which
-+tells it if updates to a ref should be denied if they are not fast-forwards.
- 
- OPTIONS
- -------
-diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
-index f3694ac..6be3c80 100755
---- a/t/t5400-send-pack.sh
-+++ b/t/t5400-send-pack.sh
-@@ -64,4 +64,14 @@ test_expect_success \
- 	cmp victim/.git/refs/heads/master .git/refs/heads/master
- '
- 
-+test_expect_success \
-+        'pushing with --force should be denied with denyNonFastforwards' '
-+	cd victim &&
-+	git-repo-config receive.denyNonFastforwards true &&
-+	cd .. &&
-+	git-update-ref refs/heads/master master^ &&
-+	git-send-pack --force ./victim/.git/ master &&
-+	! diff -u .git/refs/heads/master victim/.git/refs/heads/master
-+'
-+
- test_done
--- 
-1.4.2.1.g6ad2-dirty
+Ciao,
+Dscho
