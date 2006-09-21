@@ -1,59 +1,62 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: fix display of trees via PATH_INFO.
-Date: Thu, 21 Sep 2006 10:56:37 +0200
-Organization: At home
-Message-ID: <eetk3v$22n$2@sea.gmane.org>
-References: <20060921074821.GG31940@admingilde.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 1/2] gitweb: Always use git-peek-remote in git_get_references
+Date: Thu, 21 Sep 2006 11:07:35 +0200
+Message-ID: <45125657.4010001@op5.se>
+References: <200609191430.51252.jnareb@gmail.com> <200609191431.49641.jnareb@gmail.com> <7v64fijz90.fsf@assigned-by-dhcp.cox.net> <200609202013.38457.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Thu Sep 21 10:57:26 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 21 11:08:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQKMv-0006JC-HZ
-	for gcvg-git@gmane.org; Thu, 21 Sep 2006 10:57:18 +0200
+	id 1GQKXD-0000Di-BS
+	for gcvg-git@gmane.org; Thu, 21 Sep 2006 11:07:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750991AbWIUI5P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Sep 2006 04:57:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750997AbWIUI5O
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 04:57:14 -0400
-Received: from main.gmane.org ([80.91.229.2]:6374 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750983AbWIUI5O (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Sep 2006 04:57:14 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GQKMN-00069H-Ua
-	for git@vger.kernel.org; Thu, 21 Sep 2006 10:56:44 +0200
-Received: from host-81-190-26-109.torun.mm.pl ([81.190.26.109])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 21 Sep 2006 10:56:43 +0200
-Received: from jnareb by host-81-190-26-109.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 21 Sep 2006 10:56:43 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-26-109.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751054AbWIUJHj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Sep 2006 05:07:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751078AbWIUJHj
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 05:07:39 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:58591 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751077AbWIUJHh
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Sep 2006 05:07:37 -0400
+Received: by smtp-gw1.op5.se (Postfix, from userid 588)
+	id 42C636BD3F; Thu, 21 Sep 2006 11:07:36 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
+	linux-server1.op5.se
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=3.1.4
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 4D4196BCF1; Thu, 21 Sep 2006 11:07:35 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200609202013.38457.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27467>
 
-Martin Waitz wrote:
+Jakub Narebski wrote:
+> 
+> If there were post-commit hook, and it's contents was the default 
+> post-update hook, info/refs would be never stale. And we could read
+> from into/refs, and fallback to git-peek-remote if it doesn't exist...
+> but we don't know if info/refs has current info.
 
-> When adding a / to the URL, git should display the corresponding
-> tree object, but it has to remove the / first.
+ls -l .git/hooks/post-commit
+-rw-r----- 1 exon exon 152 Sep 21 10:54 .git/hooks/post-commit
 
-Hmm... I thought that gitweb works just fine with file_name ('f') parameter
-with trailing '/'... I guessed wrong.
 
-By the way, we should fix error when we try to "tree" display blob, or
-"blob" display tree.
+My post-update hook doesn't maintain info/refs for me. I'm sure that if 
+someone set it up to do so they would also set the post-commit hook up 
+to do the same.
+
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
