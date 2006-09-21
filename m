@@ -1,67 +1,69 @@
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: [PATCH] cvsimport move over to using git for each ref to read
- refs
-Date: Thu, 21 Sep 2006 13:06:36 +0100
-Message-ID: <4512804C.8060807@shadowen.org>
-References: <20060920085200.GA21865@shadowen.org> <eer19l$6hm$1@sea.gmane.org>	<4511173D.7020702@shadowen.org>	<7vodtak00n.fsf@assigned-by-dhcp.cox.net>	<45116888.4050806@shadowen.org> <7vwt7yij12.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Strip trailing slashes from $path in git_get_hash_by_path
+Date: Thu, 21 Sep 2006 14:23:29 +0200
+Message-ID: <200609211423.29729.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 21 14:07:44 2006
+X-From: git-owner@vger.kernel.org Thu Sep 21 14:37:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQNKn-0002RD-Au
-	for gcvg-git@gmane.org; Thu, 21 Sep 2006 14:07:17 +0200
+	id 1GQNnl-0001sS-A7
+	for gcvg-git@gmane.org; Thu, 21 Sep 2006 14:37:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751053AbWIUMHA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Sep 2006 08:07:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751142AbWIUMHA
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 08:07:00 -0400
-Received: from hellhawk.shadowen.org ([80.68.90.175]:54546 "EHLO
-	hellhawk.shadowen.org") by vger.kernel.org with ESMTP
-	id S1751053AbWIUMG7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Sep 2006 08:06:59 -0400
-Received: from localhost ([127.0.0.1])
-	by hellhawk.shadowen.org with esmtp (Exim 4.50)
-	id 1GQNK3-0001dr-0O; Thu, 21 Sep 2006 13:06:31 +0100
-User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vwt7yij12.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.94.0.0
+	id S1750853AbWIUMhJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Sep 2006 08:37:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbWIUMhJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 08:37:09 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:33736 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1750853AbWIUMhG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Sep 2006 08:37:06 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so117900ugd
+        for <git@vger.kernel.org>; Thu, 21 Sep 2006 05:37:04 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=hodco606insLlYJFAWGLar70S6WnkrQUtJA7oqCNzBPSf/DhI3M370ivyOnx699qQmj5hEw6RH5AwTh8joJXbVZab07J6wnrvsukUYzibitG3x3fk5bW93PUg/9i4/TFUNCTYzIMO42a/qQ4MN2OWePSuLukLFvdPhMyqHHAbXg=
+Received: by 10.67.103.7 with SMTP id f7mr9176093ugm;
+        Thu, 21 Sep 2006 05:37:04 -0700 (PDT)
+Received: from host-81-190-26-109.torun.mm.pl ( [81.190.26.109])
+        by mx.gmail.com with ESMTP id e33sm904654ugd.2006.09.21.05.37.03;
+        Thu, 21 Sep 2006 05:37:04 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27476>
 
-Junio C Hamano wrote:
-> Andy Whitcroft <apw@shadowen.org> writes:
-> 
->>> About the quoting and parsing, language specific quoting mode is
->>> meant for git-for-each-ref to produce a string that can be eval'ed
->>> in the host language.  Think of the command as a tool to write a
->>> short program for you.
->> Thanks for the education.  Very simple, and very powerful.  I knew there
->> was a reason for it out there.  Will respin a V3 patch in a bit.
-> 
-> This probably showed that my initial description and example for
-> the feature found in Documentation/git-for-each-ref was lacking.
-> 
-> I would appreciate a separate patch to enhance it if you are so
-> inclined.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+While
+        git ls-tree $base -- dirname
+shows dirname entry (that's what we want)
+        git ls-tree $base -- dirname/
+shows directory _contents_.
 
-Actually the description in that manual page is pretty good.  But I
-thought it was undocumented as the standard install does not install the
-manual pages and I was getting the ones from my stable install to fool
-me into thinking they were installed.  New developer error, doh.
+ gitweb/gitweb.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-That said I've taken the liberty of updating and clarifying the language
-to make it very obvious from the outset that the language specific
-output formats are for generating eval'able snippets and added a simple
-example of it to complement your complex one.
-
-Patch to follow.
-
--apw
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index fb8d37e..403bba1 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -719,7 +719,7 @@ sub git_get_hash_by_path {
+ 	my $base = shift;
+ 	my $path = shift || return undef;
+ 
+-	my $tree = $base;
++	$path =~ s,/+$,,;
+ 
+ 	open my $fd, "-|", git_cmd(), "ls-tree", $base, "--", $path
+ 		or die_error(undef, "Open git-ls-tree failed");
+-- 
+1.4.2.1
