@@ -1,48 +1,62 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Git Survey summary
-Date: Thu, 21 Sep 2006 19:00:43 +0200
-Message-ID: <20060921170043.GZ8259@pasky.or.cz>
-References: <fcaeb9bf0609120205m38a44571we21e05864c04a731@mail.gmail.com> <fcaeb9bf0609210712i125822c4gf8af3ecccdbd3d13@mail.gmail.com> <eeuapj$mgn$1@sea.gmane.org> <fcaeb9bf0609210949l3d7e6e1ch825d2ef31caae89a@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Git user survey and `git pull`
+Date: Thu, 21 Sep 2006 13:02:12 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0609211259340.2627@xanadu.home>
+References: <20060921162401.GD3934@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 21 19:07:47 2006
+X-From: git-owner@vger.kernel.org Thu Sep 21 19:10:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQRur-0004yZ-U2
-	for gcvg-git@gmane.org; Thu, 21 Sep 2006 19:00:51 +0200
+	id 1GQRwM-0005QH-8D
+	for gcvg-git@gmane.org; Thu, 21 Sep 2006 19:02:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751346AbWIURAr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Sep 2006 13:00:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751348AbWIURAq
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 13:00:46 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:16348 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751346AbWIURAq (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Sep 2006 13:00:46 -0400
-Received: (qmail 6885 invoked by uid 2001); 21 Sep 2006 19:00:43 +0200
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <fcaeb9bf0609210949l3d7e6e1ch825d2ef31caae89a@mail.gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751348AbWIURCP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Sep 2006 13:02:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751351AbWIURCO
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 13:02:14 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:40771 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1751348AbWIURCO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Sep 2006 13:02:14 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J5Y00D3DCNPGXR0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 21 Sep 2006 13:02:13 -0400 (EDT)
+In-reply-to: <20060921162401.GD3934@spearce.org>
+X-X-Sender: nico@xanadu.home
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27493>
 
-Dear diary, on Thu, Sep 21, 2006 at 06:49:52PM CEST, I got a letter
-where Nguyen Thai Ngoc Duy <pclouds@gmail.com> said that...
-> Anyway it's still good to clearly state the git mailing list is for
-> discussion, bug reports and feature requests in git.7 man page
-> (together with git homepage maybe)
+On Thu, 21 Sep 2006, Shawn Pearce wrote:
 
-Ok, I tried to clarify that.
+> I think its probably too late to change the UI[*1*] but I think
+> it is definately an issue for folks learning Git.  Calling push
+> push, fetch fetch and fetch+merge pull is probably a design flaw.
+> IMHO it probably should have been something like:
+> 
+>   Current            Shoulda Been
+>   ---------------    ----------------
+>   git-push           git-push
+>   git-fetch          git-pull
+>   git-pull . foo     git-merge foo
+>   git-pull           git-pull --merge
+>   git-merge          git-merge-driver
+> 
+> in other words pull does the download and doesn't automatically
+> start a merge unless --merge was also given and git-merge is a
+> cleaner wrapper around the Grand Unified Merge Driver that makes
+> it easier to start a merge.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+I must say that I second this.  Although I'm rather familiar with GIT I 
+still feel unconfortable with the current naming and behavior.
+
+
+Nicolas
