@@ -1,62 +1,88 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 1/2] gitweb: Always use git-peek-remote in git_get_references
-Date: Thu, 21 Sep 2006 11:07:35 +0200
-Message-ID: <45125657.4010001@op5.se>
-References: <200609191430.51252.jnareb@gmail.com> <200609191431.49641.jnareb@gmail.com> <7v64fijz90.fsf@assigned-by-dhcp.cox.net> <200609202013.38457.jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] add receive.denyNonFastforwards config variable
+Date: Thu, 21 Sep 2006 11:08:02 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0609211103130.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0609210027430.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vfyemf9ah.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0609210107140.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vlkoeds82.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0609210211570.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060921055252.GA29479@coredump.intra.peff.net> <7vbqp9d8j2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 21 11:08:10 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 21 11:08:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQKXD-0000Di-BS
-	for gcvg-git@gmane.org; Thu, 21 Sep 2006 11:07:55 +0200
+	id 1GQKXl-0000MB-Fc
+	for gcvg-git@gmane.org; Thu, 21 Sep 2006 11:08:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751054AbWIUJHj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Sep 2006 05:07:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751078AbWIUJHj
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 05:07:39 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:58591 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751077AbWIUJHh
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Sep 2006 05:07:37 -0400
-Received: by smtp-gw1.op5.se (Postfix, from userid 588)
-	id 42C636BD3F; Thu, 21 Sep 2006 11:07:36 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
-	linux-server1.op5.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=3.1.4
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 4D4196BCF1; Thu, 21 Sep 2006 11:07:35 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200609202013.38457.jnareb@gmail.com>
+	id S1751064AbWIUJIG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Sep 2006 05:08:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751078AbWIUJIG
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 05:08:06 -0400
+Received: from mail.gmx.de ([213.165.64.20]:9917 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751064AbWIUJIF (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Sep 2006 05:08:05 -0400
+Received: (qmail invoked by alias); 21 Sep 2006 09:08:03 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp020) with SMTP; 21 Sep 2006 11:08:03 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vbqp9d8j2.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27468>
 
-Jakub Narebski wrote:
+Hi,
+
+On Wed, 20 Sep 2006, Junio C Hamano wrote:
+
+> Jeff King <peff@peff.net> writes:
 > 
-> If there were post-commit hook, and it's contents was the default 
-> post-update hook, info/refs would be never stale. And we could read
-> from into/refs, and fallback to git-peek-remote if it doesn't exist...
-> but we don't know if info/refs has current info.
+> >>     X - a - b - c - Y
+> >>   /           /
+> >> o - d - e - f
+> >
+> > In your example, git-merge-base X Y returns X. In fact, I could only get
+> > one merge base out of git-merge-base --all. I tried looking in the tests
+> > to find a case that produced multiple merge bases, but I was unable to
+> > find one. Is there an example floating around somewhere?
+> 
+> There are quite a few in git.git itself.  In the recent history,
+> this counts 42, the answer to everything.
+> 
+> #!/bin/sh
+> LF='
+> '
+> git rev-list --parents master..next |
+> while read it p1 p2 octo
+> do
+> 	case "$p2" in '') continue ;; esac
+>         mb=`git merge-base --all "$p1" "$p2"`
 
-ls -l .git/hooks/post-commit
--rw-r----- 1 exon exon 152 Sep 21 10:54 .git/hooks/post-commit
+At this point you should also check if $p2 is in $mb.
 
+> 	case "$mb" in ?*"$LF"?*) echo "$p1 $p2" : $mb ;;
+>         esac
+> done
 
-My post-update hook doesn't maintain info/refs for me. I'm sure that if 
-someone set it up to do so they would also set the post-commit hook up 
-to do the same.
+The question was, if there is a fast-forward with more than one merge 
+base, i.e. if the loop we jump^H^H^H^Hdo over bases is necessary.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+And no, I am not aware of any such example.
+
+Probably because X would mark all ancestors (_including_ all other 
+possible merge bases) as uninteresting.
+
+Therefore, I am convinced that there is no fast-forward returning more 
+than one merge base. It is technically impossible. And thus, our loop is 
+not necessary, but what the heck.
+
+Ciao,
+Dscho
