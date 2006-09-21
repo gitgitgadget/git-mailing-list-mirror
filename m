@@ -1,60 +1,50 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Git user survey and `git pull`
-Date: Thu, 21 Sep 2006 14:05:11 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0609211357450.2627@xanadu.home>
-References: <20060921162401.GD3934@spearce.org>
- <20060921164048.GY8259@pasky.or.cz>
- <Pine.LNX.4.64.0609211027440.4388@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [NOTE] minor breakages here and there in "next"
+Date: Thu, 21 Sep 2006 13:00:39 -0700
+Message-ID: <7vfyel7zx4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Petr Baudis <pasky@suse.cz>, Shawn Pearce <spearce@spearce.org>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 21 20:07:10 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Sep 21 22:02:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQSvG-00082W-Rv
-	for gcvg-git@gmane.org; Thu, 21 Sep 2006 20:05:19 +0200
+	id 1GQUiy-0006cB-28
+	for gcvg-git@gmane.org; Thu, 21 Sep 2006 22:00:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751422AbWIUSFO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Sep 2006 14:05:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751424AbWIUSFO
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 14:05:14 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:34197 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1751422AbWIUSFN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Sep 2006 14:05:13 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J5Y00FNBFKO5CD0@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 21 Sep 2006 14:05:12 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.64.0609211027440.4388@g5.osdl.org>
-X-X-Sender: nico@xanadu.home
-To: Linus Torvalds <torvalds@osdl.org>
+	id S1751500AbWIUUAl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Sep 2006 16:00:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751503AbWIUUAk
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 16:00:40 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:16373 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1751500AbWIUUAk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Sep 2006 16:00:40 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060921200039.DSPU6711.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 21 Sep 2006 16:00:39 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id R80f1V0041kojtg0000000
+	Thu, 21 Sep 2006 16:00:39 -0400
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27502>
 
-On Thu, 21 Sep 2006, Linus Torvalds wrote:
+I am at day-job today but have noticed a couple more minor
+breakages coming from the resolve_ref() clean-up done recently
+in "next".  Nothing serious or major, but would be nice to fix.
 
-> Right now, a plain "git pull" means "fetch all branches and merge the 
-> first one", and the thing is, that's generally the right thing _only_ if 
-> you pull into "master".
-> 
-> It's usually exactly the _wrong_ thing to do for any other branch. In 
-> particular, if you work with a project that has lots of branches, and 
-> you're working in another branch (that is directly tracking a remote, for 
-> example), doing a "git pull" definitely should _not_ merge the first head. 
-> It should fetch everything, and possibly merge the _matching_ head.
-> 
-> Which it doesn't do right now.
+ - git-show-branch does not use '*' for the column for the
+   current branch anymore.
 
-I think you're summarizing my grip about git pull quite well.  This is 
-really counter-intuitive and I've been bitten by that behavior on many 
-occasions.
+ - "git update-index -g" updates everything, not just things
+   already different from HEAD.
 
-
-Nicolas
+The latter I think is probably read_ref() around l.446 in
+builtin-update-index.c
