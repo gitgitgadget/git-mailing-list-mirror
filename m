@@ -1,90 +1,59 @@
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: [PATCH] describe: fall back to 'HEAD' if no appropriate tag exists
-Date: Thu, 21 Sep 2006 08:43:46 +0100
-Message-ID: <451242B2.7090508@shadowen.org>
-References: <Pine.LNX.4.63.0609202324210.19042@wbgn013.biozentrum.uni-wuerzburg.de> <7v8xkef97b.fsf@assigned-by-dhcp.cox.net>
+From: Martin Waitz <tali@admingilde.org>
+Subject: [PATCH] gitweb: fix display of trees via PATH_INFO.
+Date: Thu, 21 Sep 2006 09:48:21 +0200
+Message-ID: <20060921074821.GG31940@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 21 09:44:30 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Sep 21 09:48:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQJEM-0003tt-Cf
-	for gcvg-git@gmane.org; Thu, 21 Sep 2006 09:44:22 +0200
+	id 1GQJIH-0004tx-O9
+	for gcvg-git@gmane.org; Thu, 21 Sep 2006 09:48:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750919AbWIUHoM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Sep 2006 03:44:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750928AbWIUHoM
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 03:44:12 -0400
-Received: from hellhawk.shadowen.org ([80.68.90.175]:4114 "EHLO
-	hellhawk.shadowen.org") by vger.kernel.org with ESMTP
-	id S1750919AbWIUHoK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Sep 2006 03:44:10 -0400
-Received: from localhost ([127.0.0.1])
-	by hellhawk.shadowen.org with esmtp (Exim 4.50)
-	id 1GQJDi-0001Bv-0D; Thu, 21 Sep 2006 08:43:42 +0100
-User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v8xkef97b.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.94.0.0
+	id S1751008AbWIUHsW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Sep 2006 03:48:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751009AbWIUHsW
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 03:48:22 -0400
+Received: from agent.admingilde.org ([213.95.21.5]:8426 "EHLO
+	mail.admingilde.org") by vger.kernel.org with ESMTP
+	id S1751006AbWIUHsW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Sep 2006 03:48:22 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1GQJID-0001mz-8U
+	for git@vger.kernel.org; Thu, 21 Sep 2006 09:48:21 +0200
+To: git@vger.kernel.org
+Content-Disposition: inline
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27464>
 
-Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
->> Now, if no tag exists to say something like '<tag>-gfffffff', say
->> 'HEAD-gfffffff' instead of erroring out.
->>
->> Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
->> ---
->>  describe.c |    2 +-
->>  1 files changed, 1 insertions(+), 1 deletions(-)
->>
->> diff --git a/describe.c b/describe.c
->> index ab192f8..8b08a3f 100644
->> --- a/describe.c
->> +++ b/describe.c
->> @@ -136,7 +136,7 @@ static void describe(const char *arg, in
->>  			return;
->>  		}
->>  	}
->> -	die("cannot describe '%s'", sha1_to_hex(cmit->object.sha1));
->> +	printf("HEAD-g%s\n", find_unique_abbrev(cmit->object.sha1, abbrev));
->>  }
-> 
-> Hmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm.
-> 
-> At least with tags, the user can assume NAME-gREV means commit
-> whose abbrev is REV that is descendant of NAME.  HEAD is not
-> necessarily so.
-> 
-> Having said that, in order to avoid barfing, we have to have
-> something there, and HEAD is already special in many aspects
-> anyway (e.g. by only saying HEAD you cannot tell which branch's
-> tip you are talking about), it might be good enough.
-> 
-> I am just wondering if there is some other obvious substitute
-> that is better than HEAD.  "GIT-g%s" is not it ("g" already
-> stands for GIT).
-> 
-> Another possibility is just to do
-> 
->         puts(sha1_to_hex(cmit->object.sha1))
-> 
-> in this case.  I tend to like that better somehow; it makes
-> things more explicit.
+When adding a / to the URL, git should display the corresponding
+tree object, but it has to remove the / first.
 
-Heh, we've just been putting together 'versioner' for some software and
-when git-describe fails we substitute in the complete sha1 at that
-point.  Based mostly on the "who'd release something versioned without
-tagging anyhow".  I think either the full sha1 or _just_ the gNNNNN
-without prefix would be fine.
+Signed-off-by: Martin Waitz <tali@admingilde.org>
+---
+ gitweb/gitweb.perl |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
--apw
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index baadbe7..ea57717 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -300,6 +300,7 @@ sub evaluate_path_info {
+ 		$pathname =~ s,^/+,,;
+ 		if (!$pathname || substr($pathname, -1) eq "/") {
+ 			$action  ||= "tree";
++			$pathname =~ s,/$,,;
+ 		} else {
+ 			$action  ||= "blob_plain";
+ 		}
+-- 
+1.4.2.gb8b6b
+
+-- 
+Martin Waitz
