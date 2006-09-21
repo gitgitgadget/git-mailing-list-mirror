@@ -1,285 +1,168 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 5/6] teach git-index-pack about deltas with offset to base
-Date: Thu, 21 Sep 2006 00:08:33 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0609210007430.2627@xanadu.home>
+Subject: [PATCH 6/6] make git-pack-objects able to create deltas with offset to
+ base
+Date: Thu, 21 Sep 2006 00:09:44 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0609210008360.2627@xanadu.home>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 21 06:08:39 2006
+X-From: git-owner@vger.kernel.org Thu Sep 21 06:10:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQFra-0006xO-PF
-	for gcvg-git@gmane.org; Thu, 21 Sep 2006 06:08:39 +0200
+	id 1GQFsj-0007BP-71
+	for gcvg-git@gmane.org; Thu, 21 Sep 2006 06:09:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751198AbWIUEIg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Sep 2006 00:08:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751209AbWIUEIf
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 00:08:35 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:50153 "EHLO
+	id S1750855AbWIUEJr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Sep 2006 00:09:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751205AbWIUEJq
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 00:09:46 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:1260 "EHLO
 	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1751198AbWIUEIe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Sep 2006 00:08:34 -0400
+	id S1750855AbWIUEJp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Sep 2006 00:09:45 -0400
 Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J5X007XNCU9T700@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 21 Sep 2006 00:08:34 -0400 (EDT)
+ with ESMTP id <0J5X0071ACW8T710@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 21 Sep 2006 00:09:45 -0400 (EDT)
 X-X-Sender: nico@xanadu.home
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27448>
 
+
+This is enabled with --delta-base-offset only, and doesn't work with
+pack data reuse yet.
+
+The idea is to allow for the fetch protocol to use an extension flag
+to notify the remote end that --delta-base-offset can be used with
+git-pack-objects. Eventually git-repack will always provide this flag.
+
+With this, all delta base objects are now pushed before deltas that depend
+on them.  This is a requirements for OBJ_OFS_DELTA.  This is not a
+requirement for OBJ_REF_DELTA but always doing so makes the code simpler.
 
 Signed-off-by: Nicolas Pitre <nico@cam.org>
 
-diff --git a/index-pack.c b/index-pack.c
-index aef7f0a..fffddd2 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -18,10 +18,15 @@ struct object_entry
- 	unsigned char sha1[20];
- };
- 
-+union delta_base {
-+	unsigned char sha1[20];
-+	unsigned long offset;
-+};
+---
+
+Delta data reuse is possible, of course, but that will come through a
+separate patch.  I need to think about it some more in order to implement
+it as efficiently as possible.  The issue is to get back to the
+corresponding object entry given an object offset in an existing pack.
+
+I guess I could use the pack offset to find the corresponding sha1 in the pack
+index, and then use locate_object_entry_hash(), but that would require a pack
+index sorted by offset to be efficient... which means yet more memory usage.
+Well, I need to look at that revindex more closely I guess...
+
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index c62734a..ec57536 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -60,6 +60,8 @@ static int non_empty;
+ static int no_reuse_delta;
+ static int local;
+ static int incremental;
++static int allow_ofs_delta;
 +
- struct delta_entry
- {
- 	struct object_entry *obj;
--	unsigned char base_sha1[20];
-+	union delta_base base;
- };
+ static struct object_entry **sorted_by_sha, **sorted_by_type;
+ static struct object_entry *objects;
+ static int nr_objects, nr_alloc, nr_result;
+@@ -334,9 +336,6 @@ static unsigned long write_object(struct
+ 	enum object_type obj_type;
+ 	int to_reuse = 0;
  
- static const char *pack_name;
-@@ -134,13 +139,13 @@ static void *unpack_entry_data(unsigned 
- static void *unpack_raw_entry(unsigned long offset,
- 			      enum object_type *obj_type,
- 			      unsigned long *obj_size,
--			      unsigned char *delta_base,
-+			      union delta_base *delta_base,
- 			      unsigned long *next_obj_offset)
+-	if (entry->preferred_base)
+-		return 0;
+-
+ 	obj_type = entry->type;
+ 	if (! entry->in_pack)
+ 		to_reuse = 0;	/* can't reuse what we don't have */
+@@ -380,18 +379,35 @@ static unsigned long write_object(struct
+ 		if (entry->delta) {
+ 			buf = delta_against(buf, size, entry);
+ 			size = entry->delta_size;
+-			obj_type = OBJ_REF_DELTA;
++			obj_type = (allow_ofs_delta && entry->delta->offset) ?
++				OBJ_OFS_DELTA : OBJ_REF_DELTA;
+ 		}
+ 		/*
+ 		 * The object header is a byte of 'type' followed by zero or
+-		 * more bytes of length.  For deltas, the 20 bytes of delta
+-		 * sha1 follows that.
++		 * more bytes of length.
+ 		 */
+ 		hdrlen = encode_header(obj_type, size, header);
+ 		sha1write(f, header, hdrlen);
+ 
+-		if (entry->delta) {
+-			sha1write(f, entry->delta, 20);
++		if (obj_type == OBJ_OFS_DELTA) {
++			/*
++			 * Deltas with relative base contain an additional
++			 * encoding of the relative offset for the delta
++			 * base from this object's position in the pack.
++			 */
++			unsigned long ofs = entry->offset - entry->delta->offset;
++			unsigned pos = sizeof(header) - 1;
++			header[pos] = ofs & 127;
++			while (ofs >>= 7)
++				header[--pos] = 128 | (--ofs & 127);
++			sha1write(f, header + pos, sizeof(header) - pos);
++			hdrlen += sizeof(header) - pos;
++		} else if (obj_type == OBJ_REF_DELTA) {
++			/*
++			 * Deltas with a base reference contain
++			 * an additional 20 bytes for the base sha1.
++			 */
++			sha1write(f, entry->delta->sha1, 20);
+ 			hdrlen += 20;
+ 		}
+ 		datalen = sha1write_compressed(f, buf, size);
+@@ -413,7 +429,7 @@ static unsigned long write_object(struct
+ 			reused_delta++;
+ 		reused++;
+ 	}
+-	if (obj_type == OBJ_REF_DELTA)
++	if (entry->delta)
+ 		written_delta++;
+ 	written++;
+ 	return hdrlen + datalen;
+@@ -423,17 +439,16 @@ static unsigned long write_one(struct sh
+ 			       struct object_entry *e,
+ 			       unsigned long offset)
  {
- 	unsigned long pack_limit = pack_size - 20;
- 	unsigned long pos = offset;
- 	unsigned char c;
--	unsigned long size;
-+	unsigned long size, base_offset;
- 	unsigned shift;
- 	enum object_type type;
- 	void *data;
-@@ -161,26 +166,43 @@ static void *unpack_raw_entry(unsigned l
- 	case OBJ_REF_DELTA:
- 		if (pos + 20 >= pack_limit)
- 			bad_object(offset, "object extends past end of pack");
--		hashcpy(delta_base, pack_base + pos);
-+		hashcpy(delta_base->sha1, pack_base + pos);
- 		pos += 20;
--		/* fallthru */
-+		break;
-+	case OBJ_OFS_DELTA:
-+		memset(delta_base, 0, sizeof(*delta_base));
-+		c = pack_base[pos++];
-+		base_offset = c & 127;
-+		while (c & 128) {
-+			base_offset += 1;
-+			if (!base_offset || base_offset & ~(~0UL >> 7))
-+				bad_object(offset, "offset value overflow for delta base object");
-+			if (pos >= pack_limit)
-+				bad_object(offset, "object extends past end of pack");
-+			c = pack_base[pos++];
-+			base_offset = (base_offset << 7) + (c & 127);
+-	if (e->offset)
++	if (e->offset || e->preferred_base)
+ 		/* offset starts from header size and cannot be zero
+ 		 * if it is written already.
+ 		 */
+ 		return offset;
+-	e->offset = offset;
+-	offset += write_object(f, e);
+-	/* if we are deltified, write out its base object. */
++	/* if we are deltified, write out its base object first. */
+ 	if (e->delta)
+ 		offset = write_one(f, e->delta, offset);
+-	return offset;
++	e->offset = offset;
++	return offset + write_object(f, e);
+ }
+ 
+ static void write_pack_file(void)
+@@ -1484,6 +1499,10 @@ int cmd_pack_objects(int argc, const cha
+ 			no_reuse_delta = 1;
+ 			continue;
+ 		}
++		if (!strcmp("--delta-base-offset", arg)) {
++			allow_ofs_delta = no_reuse_delta = 1;
++			continue;
 +		}
-+		delta_base->offset = offset - base_offset;
-+		if (delta_base->offset >= offset)
-+			bad_object(offset, "delta base offset is out of bound");
-+		break;
- 	case OBJ_COMMIT:
- 	case OBJ_TREE:
- 	case OBJ_BLOB:
- 	case OBJ_TAG:
--		data = unpack_entry_data(offset, &pos, size);
- 		break;
- 	default:
- 		bad_object(offset, "bad object type %d", type);
- 	}
- 
-+	data = unpack_entry_data(offset, &pos, size);
- 	*obj_type = type;
- 	*obj_size = size;
- 	*next_obj_offset = pos;
- 	return data;
- }
- 
--static int find_delta(const unsigned char *base_sha1)
-+static int find_delta(const union delta_base *base)
- {
- 	int first = 0, last = nr_deltas;
- 
-@@ -189,7 +211,7 @@ static int find_delta(const unsigned cha
-                 struct delta_entry *delta = &deltas[next];
-                 int cmp;
- 
--                cmp = hashcmp(base_sha1, delta->base_sha1);
-+                cmp = memcmp(base, &delta->base, sizeof(*base));
-                 if (!cmp)
-                         return next;
-                 if (cmp < 0) {
-@@ -201,18 +223,18 @@ static int find_delta(const unsigned cha
-         return -first-1;
- }
- 
--static int find_deltas_based_on_sha1(const unsigned char *base_sha1,
--				     int *first_index, int *last_index)
-+static int find_delta_childs(const union delta_base *base,
-+			     int *first_index, int *last_index)
- {
--	int first = find_delta(base_sha1);
-+	int first = find_delta(base);
- 	int last = first;
- 	int end = nr_deltas - 1;
- 
- 	if (first < 0)
- 		return -1;
--	while (first > 0 && !hashcmp(deltas[first - 1].base_sha1, base_sha1))
-+	while (first > 0 && !memcmp(&deltas[first - 1].base, base, sizeof(*base)))
- 		--first;
--	while (last < end && !hashcmp(deltas[last + 1].base_sha1, base_sha1))
-+	while (last < end && !memcmp(&deltas[last + 1].base, base, sizeof(*base)))
- 		++last;
- 	*first_index = first;
- 	*last_index = last;
-@@ -253,13 +275,13 @@ static void resolve_delta(struct delta_e
- 	void *result;
- 	unsigned long result_size;
- 	enum object_type delta_type;
--	unsigned char base_sha1[20];
-+	union delta_base delta_base;
- 	unsigned long next_obj_offset;
- 	int j, first, last;
- 
- 	obj->real_type = type;
- 	delta_data = unpack_raw_entry(obj->offset, &delta_type,
--				      &delta_size, base_sha1,
-+				      &delta_size, &delta_base,
- 				      &next_obj_offset);
- 	result = patch_delta(base_data, base_size, delta_data, delta_size,
- 			     &result_size);
-@@ -267,10 +289,22 @@ static void resolve_delta(struct delta_e
- 	if (!result)
- 		bad_object(obj->offset, "failed to apply delta");
- 	sha1_object(result, result_size, type, obj->sha1);
--	if (!find_deltas_based_on_sha1(obj->sha1, &first, &last)) {
-+
-+	hashcpy(delta_base.sha1, obj->sha1);
-+	if (!find_delta_childs(&delta_base, &first, &last)) {
- 		for (j = first; j <= last; j++)
--			resolve_delta(&deltas[j], result, result_size, type);
-+			if (deltas[j].obj->type == OBJ_REF_DELTA)
-+				resolve_delta(&deltas[j], result, result_size, type);
- 	}
-+
-+	memset(&delta_base, 0, sizeof(delta_base));
-+	delta_base.offset = obj->offset;
-+	if (!find_delta_childs(&delta_base, &first, &last)) {
-+		for (j = first; j <= last; j++)
-+			if (deltas[j].obj->type == OBJ_OFS_DELTA)
-+				resolve_delta(&deltas[j], result, result_size, type);
-+	}
-+
- 	free(result);
- }
- 
-@@ -278,14 +312,14 @@ static int compare_delta_entry(const voi
- {
- 	const struct delta_entry *delta_a = a;
- 	const struct delta_entry *delta_b = b;
--	return hashcmp(delta_a->base_sha1, delta_b->base_sha1);
-+	return memcmp(&delta_a->base, &delta_b->base, sizeof(union delta_base));
- }
- 
- static void parse_pack_objects(void)
- {
- 	int i;
- 	unsigned long offset = sizeof(struct pack_header);
--	unsigned char base_sha1[20];
-+	struct delta_entry *delta = deltas;
- 	void *data;
- 	unsigned long data_size;
- 
-@@ -299,12 +333,12 @@ static void parse_pack_objects(void)
- 		struct object_entry *obj = &objects[i];
- 		obj->offset = offset;
- 		data = unpack_raw_entry(offset, &obj->type, &data_size,
--					base_sha1, &offset);
-+					&delta->base, &offset);
- 		obj->real_type = obj->type;
--		if (obj->type == OBJ_REF_DELTA) {
--			struct delta_entry *delta = &deltas[nr_deltas++];
-+		if (obj->type == OBJ_REF_DELTA || obj->type == OBJ_OFS_DELTA) {
-+			nr_deltas++;
- 			delta->obj = obj;
--			hashcpy(delta->base_sha1, base_sha1);
-+			delta++;
- 		} else
- 			sha1_object(data, data_size, obj->type, obj->sha1);
- 		free(data);
-@@ -312,7 +346,7 @@ static void parse_pack_objects(void)
- 	if (offset != pack_size - 20)
- 		die("packfile '%s' has junk at the end", pack_name);
- 
--	/* Sort deltas by base SHA1 for fast searching */
-+	/* Sort deltas by base SHA1/offset for fast searching */
- 	qsort(deltas, nr_deltas, sizeof(struct delta_entry),
- 	      compare_delta_entry);
- 
-@@ -326,22 +360,37 @@ static void parse_pack_objects(void)
- 	 */
- 	for (i = 0; i < nr_objects; i++) {
- 		struct object_entry *obj = &objects[i];
--		int j, first, last;
-+		union delta_base base;
-+		int j, ref, ref_first, ref_last, ofs, ofs_first, ofs_last;
- 
--		if (obj->type == OBJ_REF_DELTA)
-+		if (obj->type == OBJ_REF_DELTA || obj->type == OBJ_OFS_DELTA)
+ 		if (!strcmp("--stdout", arg)) {
+ 			pack_to_stdout = 1;
  			continue;
--		if (find_deltas_based_on_sha1(obj->sha1, &first, &last))
-+		hashcpy(base.sha1, obj->sha1);
-+		ref = !find_delta_childs(&base, &ref_first, &ref_last);
-+		memset(&base, 0, sizeof(base));
-+		base.offset = obj->offset;
-+		ofs = !find_delta_childs(&base, &ofs_first, &ofs_last);
-+		if (!ref && !ofs)
- 			continue;
- 		data = unpack_raw_entry(obj->offset, &obj->type, &data_size,
--					base_sha1, &offset);
--		for (j = first; j <= last; j++)
--			resolve_delta(&deltas[j], data, data_size, obj->type);
-+					&base, &offset);
-+		if (ref)
-+			for (j = ref_first; j <= ref_last; j++)
-+				if (deltas[j].obj->type == OBJ_REF_DELTA)
-+					resolve_delta(&deltas[j], data,
-+						      data_size, obj->type);
-+		if (ofs)
-+			for (j = ofs_first; j <= ofs_last; j++)
-+				if (deltas[j].obj->type == OBJ_OFS_DELTA)
-+					resolve_delta(&deltas[j], data,
-+						      data_size, obj->type);
- 		free(data);
- 	}
- 
- 	/* Check for unresolved deltas */
- 	for (i = 0; i < nr_deltas; i++) {
--		if (deltas[i].obj->real_type == OBJ_REF_DELTA)
-+		if (deltas[i].obj->real_type == OBJ_REF_DELTA ||
-+		    deltas[i].obj->real_type == OBJ_OFS_DELTA)
- 			die("packfile '%s' has unresolved deltas",  pack_name);
- 	}
- }
