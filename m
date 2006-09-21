@@ -1,86 +1,87 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 1/6] move pack creation to version 3
-Date: Thu, 21 Sep 2006 00:11:59 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0609210011300.2627@xanadu.home>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] add receive.denyNonFastforwards config variable
+Date: Wed, 20 Sep 2006 22:08:28 -0700
+Message-ID: <7v8xkderhv.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0609210027430.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vfyemf9ah.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0609210107140.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vlkoeds82.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0609210211570.19042@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 21 06:12:16 2006
+X-From: git-owner@vger.kernel.org Thu Sep 21 07:09:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQFv4-0007gV-FE
-	for gcvg-git@gmane.org; Thu, 21 Sep 2006 06:12:14 +0200
+	id 1GQGoF-0007DL-NI
+	for gcvg-git@gmane.org; Thu, 21 Sep 2006 07:09:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750706AbWIUEMB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Sep 2006 00:12:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751212AbWIUEMB
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 00:12:01 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:20717 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1750706AbWIUEMA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Sep 2006 00:12:00 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J5X00753CZZT710@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 21 Sep 2006 00:12:00 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-To: Junio C Hamano <junkio@cox.net>
+	id S1751227AbWIUFIa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 21 Sep 2006 01:08:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751228AbWIUFIa
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 01:08:30 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:7360 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1751227AbWIUFI3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Sep 2006 01:08:29 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060921050828.FJIL6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 21 Sep 2006 01:08:28 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Qt8E1V00V1kojtg0000000
+	Thu, 21 Sep 2006 01:08:15 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0609210211570.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Thu, 21 Sep 2006 02:17:22 +0200
+	(CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27450>
 
-It's been quite a while now that GIT is able to read version 3 packs.
-Let's create them at last.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
+> On Wed, 20 Sep 2006, Junio C Hamano wrote:
+>
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>=20
+>> > 	No longer barfs on new refs, and tries all merge bases (even if I
+>> > 	cannot come up with any scenario where there is more than one mer=
+ge
+>> > 	base in the case of a fast forward).
+>>=20
+>> Hmm.  If that is the case (and I think it is although I haven't
+>> come up with a proof),
+>
+> From git-fetch.sh:
+>
+>             # Require fast-forward.
+>             mb=3D$(git-merge-base "$local" "$2") &&
+>...
+> So we indeed assumed that git-merge-base returns the old commit in th=
+e=20
+> case of a fast-forward (git-merge-base returns just the first item of=
+ the=20
+> result of get_merge_bases()).
 
-diff --git a/diff-delta.c b/diff-delta.c
-index fa16d06..51df460 100644
---- a/diff-delta.c
-+++ b/diff-delta.c
-@@ -308,8 +308,8 @@ create_delta(const struct delta_index *i
- 				continue;
- 			if (ref_size > top - src)
- 				ref_size = top - src;
--			if (ref_size > 0x10000)
--				ref_size = 0x10000;
-+			if (ref_size > 0xffffff)
-+				ref_size = 0xffffff;
- 			if (ref_size <= msize)
- 				break;
- 			while (ref_size-- && *src++ == *ref)
-@@ -318,6 +318,8 @@ create_delta(const struct delta_index *i
- 				/* this is our best match so far */
- 				msize = ref - entry->ptr;
- 				moff = entry->ptr - ref_data;
-+				if (msize >= 0x10000)
-+					break;  /* this is good enough */
- 			}
- 		}
- 
-@@ -381,6 +383,8 @@ create_delta(const struct delta_index *i
- 			if (msize & 0xff) { out[outpos++] = msize; i |= 0x10; }
- 			msize >>= 8;
- 			if (msize & 0xff) { out[outpos++] = msize; i |= 0x20; }
-+			msize >>= 8;
-+			if (msize & 0xff) { out[outpos++] = msize; i |= 0x40; }
- 
- 			*op = i;
- 		}
-diff --git a/pack.h b/pack.h
-index eb07b03..05557da 100644
---- a/pack.h
-+++ b/pack.h
-@@ -7,7 +7,7 @@ #include "object.h"
-  * Packed object header
-  */
- #define PACK_SIGNATURE 0x5041434b	/* "PACK" */
--#define PACK_VERSION 2
-+#define PACK_VERSION 3
- #define pack_version_ok(v) ((v) == htonl(2) || (v) == htonl(3))
- struct pack_header {
- 	unsigned int hdr_signature;
+I think this was leftover from the days we na=EFvely assumed that
+multiple bases does not matter, and probably needs updating.
+
+> Note that I have no proof that this assumption is true. It might be w=
+rong=20
+> in this case:
+>
+>     X - a - b - c - Y
+>   /           /
+> o - d - e - f
+>
+> where X is the old commit, and Y is the new commit. But I am too tire=
+d to=20
+> test it right now.
