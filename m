@@ -1,33 +1,35 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: Git user survey and `git pull`
-Date: Thu, 21 Sep 2006 12:24:01 -0400
-Message-ID: <20060921162401.GD3934@spearce.org>
+Subject: Re: Git Survey summary
+Date: Thu, 21 Sep 2006 12:27:24 -0400
+Message-ID: <20060921162724.GE3934@spearce.org>
+References: <fcaeb9bf0609120205m38a44571we21e05864c04a731@mail.gmail.com> <fcaeb9bf0609210712i125822c4gf8af3ecccdbd3d13@mail.gmail.com> <eeuapj$mgn$1@sea.gmane.org> <20060921155617.GB3934@spearce.org> <eeudn6$400$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Sep 21 18:25:58 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 21 18:29:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQRLP-0001vq-U9
-	for gcvg-git@gmane.org; Thu, 21 Sep 2006 18:24:12 +0200
+	id 1GQROd-0002xf-Bq
+	for gcvg-git@gmane.org; Thu, 21 Sep 2006 18:27:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751307AbWIUQYI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Sep 2006 12:24:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751305AbWIUQYI
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 12:24:08 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:2465 "EHLO
+	id S1751295AbWIUQ12 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Sep 2006 12:27:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751310AbWIUQ12
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 12:27:28 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:52641 "EHLO
 	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751308AbWIUQYF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Sep 2006 12:24:05 -0400
+	id S1751295AbWIUQ11 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Sep 2006 12:27:27 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GQRLB-0004RY-Q7
-	for git@vger.kernel.org; Thu, 21 Sep 2006 12:23:57 -0400
+	id 1GQROS-00056J-5Q; Thu, 21 Sep 2006 12:27:20 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 7ADE020FB16; Thu, 21 Sep 2006 12:24:01 -0400 (EDT)
-To: git@vger.kernel.org
+	id 6565C20FB16; Thu, 21 Sep 2006 12:27:24 -0400 (EDT)
+To: Jakub Narebski <jnareb@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <eeudn6$400$1@sea.gmane.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -40,51 +42,26 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27485>
 
-I just saw this comment under question 20:
+Jakub Narebski <jnareb@gmail.com> wrote:
+> Shawn Pearce wrote:
+> 
+> > Since Git uses a mailing list model it would be nice if the gitweb
+> > hyperlinks were into the marc and GMane archives by Message-ID;
+> 
+> Planned (as an example committag support).
+> 
+> Would it be better ti use MARC or GMane interface:
+>  http://marc.theaimsgroup.com/?i=200609200739.48732.alan%20()%20chandlerfamily%20!%20org%20!%20uk
+>  http://news.gmane.org/find-root.php?message_id=<200609200739.48732.alan@chandlerfamily.org.uk> 
 
-    git-pull's behavior of merging in the first refspec to the
-    current branch is very bad and has caused us serious repository
-    issues in xorg.
+Well, the GMane link worked and displayed the thread; the MARC
+one didn't.  The GMane link is also less mangled.
 
-Most of the folks I've been teaching Git to recently have found `git
-fetch` to be a very counterintuitive command for fetching things.
-Especially since `git push` is what's used to send changes to
-the remote repository.  They also find `git pull . foo` as a
-counterintuitive way to merge changes.
-
-Basically I'm seeing users run `git pull` when they probably
-should have run just `git fetch`; the pull obviously also merges
-the first refspec in .git/remotes/origin to the current branch
-and that's usually not what the user wanted, especially when the
-upstream remote has several branches that the user may be tracking
-(e.g. stable, dev, experimental).
-
-
-I think its probably too late to change the UI[*1*] but I think
-it is definately an issue for folks learning Git.  Calling push
-push, fetch fetch and fetch+merge pull is probably a design flaw.
-IMHO it probably should have been something like:
-
-  Current            Shoulda Been
-  ---------------    ----------------
-  git-push           git-push
-  git-fetch          git-pull
-  git-pull . foo     git-merge foo
-  git-pull           git-pull --merge
-  git-merge          git-merge-driver
-
-in other words pull does the download and doesn't automatically
-start a merge unless --merge was also given and git-merge is a
-cleaner wrapper around the Grand Unified Merge Driver that makes
-it easier to start a merge.
-
-
-[*1*] I bet a lot of scripts are currently based on the core
-      Git Poreclain level functions.  I try to avoid them myself
-      in scripts and go right to the plumbing but not everyone
-      does that.
+When reading the mailing list via the web I do tend to read through
+GMane more than MARC but I can't state why I have that preference.
+It just happens.  Maybe I prefer white backgrounds over black ones?
 
 -- 
 Shawn.
