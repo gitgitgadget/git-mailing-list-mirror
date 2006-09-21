@@ -1,59 +1,76 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] add receive.denyNonFastforwards config variable
-Date: Thu, 21 Sep 2006 11:10:33 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0609211108140.19042@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0609210027430.19042@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vfyemf9ah.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0609210107140.19042@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vzmcudt3t.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0609210208350.19042@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vfyeld9c2.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: git pull for update of netdev fails.
+Date: Thu, 21 Sep 2006 11:14:28 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0609211111540.19042@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060920080308.673a1e93@localhost.localdomain>
+ <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org> <20060920155431.GO8259@pasky.or.cz>
+ <ees6hl$jdv$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 21 11:10:59 2006
+X-From: git-owner@vger.kernel.org Thu Sep 21 11:15:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQKa8-0000vJ-Ir
-	for gcvg-git@gmane.org; Thu, 21 Sep 2006 11:10:56 +0200
+	id 1GQKdf-0001tt-8Q
+	for gcvg-git@gmane.org; Thu, 21 Sep 2006 11:14:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751078AbWIUJKg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Sep 2006 05:10:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751071AbWIUJKg
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 05:10:36 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48534 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751078AbWIUJKf (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Sep 2006 05:10:35 -0400
-Received: (qmail invoked by alias); 21 Sep 2006 09:10:33 -0000
+	id S1751066AbWIUJOb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Sep 2006 05:14:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751071AbWIUJOb
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 05:14:31 -0400
+Received: from mail.gmx.de ([213.165.64.20]:9446 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751066AbWIUJOa (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Sep 2006 05:14:30 -0400
+Received: (qmail invoked by alias); 21 Sep 2006 09:14:28 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp023) with SMTP; 21 Sep 2006 11:10:33 +0200
+  by mail.gmx.net (mp035) with SMTP; 21 Sep 2006 11:14:28 +0200
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vfyeld9c2.fsf@assigned-by-dhcp.cox.net>
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <ees6hl$jdv$1@sea.gmane.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27470>
 
 Hi,
 
-On Wed, 20 Sep 2006, Junio C Hamano wrote:
+On Wed, 20 Sep 2006, Jakub Narebski wrote:
 
-> I think the change to t/Makefile from 9c3796fc needs to be
-> rethought.
+> Petr Baudis wrote:
+> 
+> > Dear diary, on Wed, Sep 20, 2006 at 05:28:08PM CEST, I got a letter
+> > where Linus Torvalds <torvalds@osdl.org> said that...
+> 
+> >> However, you can tell git that Jeff is being difficult by marking such 
+> >> branches individually as being rebased.
+> > 
+> > This is really a wrong way of describing the problem - I'd say that Git
+> > is being difficult here. The point is, the subsystem maintainers need to
+> > maintain stacks of patches and rebase against the main kernel branch
+> > regularily, and they want to still publish their current state. So it's
+> > not really any of them being strange or difficult, but Git being so
+> > because it has no seamless support for tracking those branches.
+> 
+> There was idea around moving remotes configuration to config file to have
+> some per branch configureation, including readonly for protecting tracking
+> branches, marking default branch for merge with (and which tracking
+> branch(es) to merge)...
 
-I looked into 9c3796fc, and the change to t/Makefile is UTTER CRAP! What 
-IDIOT has made that change? Oh wait, was me...
+If you want it, go ahead, propose something.
 
-What about removing that creepy change to t/Makefile, and move your hack 
-into test-lib.sh? It _should_ be safe, as _nothing_ in $HOME should affect 
-the tests anyway.
+> ...and that included marking branch _on the server side_ as being rebased,
+> i.e. without preserved history. Unfortunately, the discussion petered out
+> without changes to git.
 
-Thoughts?
+Not true. We have the [branch "StrangeCase Sensitive/Name"] syntax as a 
+consequence.
+
+But I agree, nothing came out of the discussion about per-branch settings, 
+maybe because nobody cared enough?
 
 Ciao,
 Dscho
