@@ -1,122 +1,75 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-push of new, tiny branch doing more work than necessary?
-Date: Thu, 21 Sep 2006 19:31:52 -0700
-Message-ID: <7vveng7ht3.fsf@assigned-by-dhcp.cox.net>
-References: <87fyekkg5r.wl%cworth@cworth.org>
+Subject: Re: [PATCH 4/6] gitweb: Link to associated tree from a particular log item in full log view
+Date: Thu, 21 Sep 2006 21:18:09 -0700
+Message-ID: <7vmz8s7cvy.fsf@assigned-by-dhcp.cox.net>
+References: <20060922011941.15909.32671.stgit@rover>
+	<20060922011948.15909.59511.stgit@rover>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 22 04:31:59 2006
+X-From: git-owner@vger.kernel.org Fri Sep 22 06:18:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQapa-0002qM-74
-	for gcvg-git@gmane.org; Fri, 22 Sep 2006 04:31:58 +0200
+	id 1GQcUT-0005Ki-Vq
+	for gcvg-git@gmane.org; Fri, 22 Sep 2006 06:18:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932218AbWIVCby (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Sep 2006 22:31:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932220AbWIVCby
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Sep 2006 22:31:54 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:31406 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932218AbWIVCbx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Sep 2006 22:31:53 -0400
+	id S1751403AbWIVESL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Sep 2006 00:18:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751599AbWIVESL
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Sep 2006 00:18:11 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:62080 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1751403AbWIVESL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Sep 2006 00:18:11 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao03.cox.net
+          by fed1rmmtao12.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060922023152.WGKD2704.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 21 Sep 2006 22:31:52 -0400
+          id <20060922041810.NHWF26416.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 22 Sep 2006 00:18:10 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id REXu1V00E1kojtg0000000
-	Thu, 21 Sep 2006 22:31:54 -0400
-To: Carl Worth <cworth@cworth.org>
-In-Reply-To: <87fyekkg5r.wl%cworth@cworth.org> (Carl Worth's message of "Thu,
-	21 Sep 2006 15:29:04 -0700")
+	id RGJC1V0041kojtg0000000
+	Fri, 22 Sep 2006 00:18:12 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060922011948.15909.59511.stgit@rover> (Petr Baudis's message
+	of "Fri, 22 Sep 2006 03:19:48 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27517>
 
-Carl Worth <cworth@cworth.org> writes:
+I presume you are running this version at repo.or.cz, but
 
-> I've run through something quite like the following scenario a few
-> times lately:
->
-> 	git pull origin
-> 	git checkout -b experiment
-> 	# hack a file or two
-> 	git commit -a -m "new experiment"
-> 	git push origin experiment
->
-> What I expect at this point is for git to push the few newly created
-> objects out to the repository. Instead it talks about generating,
-> deltifying, transferring, and unpacking thousands of objects (see
-> below).
->
-> Shouldn't the same WANT/HAVE hand shaking that makes git-fetch
-> efficient be doing something similar here? Or am I just doing
-> something wrong?
+(1) go to http://repo.or.cz/?p=stgit.git;a=log
+(2) pick "tree" of one of the commits
+(3) go browser-back, then pick "tree" from the top navbar
 
-Depending on the version of git you are running, there are two
-possibilities.
+The resulting tree view of (2) lacks navbar while (3) looks much
+saner.
 
-There has been a change to send-pack last week pushed out to
-"master", in which Andy Whitcroft fixed a problem when there are
-tons of refs on either end.  Earlier we were limiting ourselves
-to use 900 or so refs when generating the pack, but the new code
-uses all refs it knows about (so it excludes commits pointed by
-all remote refs, not just the ones that fits in the arbitrary
-900 limit).
+You do not have the tree object name available in git_log to
+generate an URL with both h and hb, and getting to it is an
+extra work.
 
-If you are seeing problem in a pair of repository with tons of
-refs, it may be the problem Andy fixed with the above change, so
-using the recent "master" version would help you.
+This would fix this particular breakage.
 
-If you are on the other han seeing the problem to start after
-installing the recent "master", it could be that the above
-change broke things for you.  If you do not see the problem with
-v1.4.2.1 but do see the problem with the current "master" that
-would be an indication this is the case.
-
-Another thing to watch out for is that send-pack/receive-pack
-protocol does NOT do the full "want/have" conversation like
-fetch-pack/upload-pack protocol does.  It merely say "receiving
-end has these at tips of branches and tags", "sending side has
-these at tips of branches and tags", and does not ask about
-what's befind the tips.  So if you are in this situation, with
-or without Andy's fix I can imagine you would see some redundant
-sending of things.
-
- - The origin repository has an ancient tag and the master
-   branch.  Nothing else.
-
- - Clone origin to victim repository. The victim repository
-   would now have origin and master (the same), and the tag.
-
- - Somebody creates a commit in the "origin" repository on the
-   master branch.
-
- - You create a commit on the "master" in the victim
-   repository.
-
- - You run send-pack in the victim repository and try to push
-   your master to the master in the origin repository.
-
-In this case, the update is not a fast forward, so you may need
-to force it.  When you do force, send-pack running on your end
-learns from the other end about the ancient tag and its
-"master", the latter of which it does not know about at all
-(because you haven't pulled from the origin).  So all it has to
-work with as the common commit is the ancient tag -- which means
-you would end up sending everything since that ancient tag til
-your tip of "master".
-
-I do not know if that is what is happening to you in this case,
-though.  While I think not doing the discovery harder like
-upload-pack is a bug in send-pack, it is not an issue when you
-are not forcing a non-fast forward, so it probably is a lower
-priority bug than other things.  To fix it properly I think we
-would need a minor protocol update.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 34ef3fc..8c0fdf3 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2732,9 +2732,9 @@ sub git_tree {
+ 			my $base = $hash_base || $hash;
+ 			$hash = git_get_hash_by_path($base, $file_name, "tree");
+ 		}
+-		if (!defined $hash_base) {
+-			$hash_base = $hash;
+-		}
++	}
++	if (!defined $hash_base) {
++		$hash_base = $hash;
+ 	}
+ 	$/ = "\0";
+ 	open my $fd, "-|", git_cmd(), "ls-tree", '-z', $hash
