@@ -1,72 +1,58 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH] gitweb: Add committags support
-Date: Fri, 22 Sep 2006 19:55:27 +0200
-Organization: At home
-Message-ID: <ef182j$88e$1@sea.gmane.org>
-References: <200609212356.31806.jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Git user survey and `git pull`
+Date: Fri, 22 Sep 2006 12:08:16 -0700
+Message-ID: <7v4puz4t3z.fsf@assigned-by-dhcp.cox.net>
+References: <20060921162401.GD3934@spearce.org>
+	<20060921164048.GY8259@pasky.or.cz>
+	<Pine.LNX.4.64.0609211027440.4388@g5.osdl.org>
+	<7vu0305wh8.fsf@assigned-by-dhcp.cox.net>
+	<8aa486160609220334w39a7d455s66f815f00ef6b6f6@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri Sep 22 19:57:15 2006
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Linus Torvalds" <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 22 21:08:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQpGW-0003LM-JV
-	for gcvg-git@gmane.org; Fri, 22 Sep 2006 19:56:45 +0200
+	id 1GQqNr-0005FR-4K
+	for gcvg-git@gmane.org; Fri, 22 Sep 2006 21:08:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964841AbWIVR4l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Sep 2006 13:56:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964842AbWIVR4l
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Sep 2006 13:56:41 -0400
-Received: from main.gmane.org ([80.91.229.2]:4759 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S964841AbWIVR4k (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Sep 2006 13:56:40 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GQpG9-0003FW-OT
-	for git@vger.kernel.org; Fri, 22 Sep 2006 19:56:21 +0200
-Received: from host-81-190-26-109.torun.mm.pl ([81.190.26.109])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 22 Sep 2006 19:56:21 +0200
-Received: from jnareb by host-81-190-26-109.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 22 Sep 2006 19:56:21 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-26-109.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S932163AbWIVTIT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Sep 2006 15:08:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932167AbWIVTIT
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Sep 2006 15:08:19 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:5802 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932163AbWIVTIS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Sep 2006 15:08:18 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060922190817.IBSH22977.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 22 Sep 2006 15:08:17 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id RX8G1V0021kojtg0000000
+	Fri, 22 Sep 2006 15:08:16 -0400
+To: Santi <sbejar@gmail.com>
+In-Reply-To: <8aa486160609220334w39a7d455s66f815f00ef6b6f6@mail.gmail.com>
+	(sbejar@gmail.com's message of "Fri, 22 Sep 2006 12:34:43 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27533>
 
-Jakub Narebski wrote:
+Santi <sbejar@gmail.com> writes:
 
-> Below there is preliminary (hence RFC) committag support for gitweb,
-> based on the idea introduced by Sham Chukoury to gitweb-xmms2.
-> 
-> The code has all the possible committags I could think of enabled;
-> not all are tested, though. This includes existing commitsha tag
-> support (full sha links to commit view, is sha is sha of commit),
-> mantis bug and feature tags from gitweb-xmms2 (there is no release
-> committag of gitweb-xmms2, but it should be fairly easy to add it),
-> bugzilla committag for the Linux kernel, plain text URL committag
-> (probably doesn't work that well, marking as links examples, and
-> sometimes protocol specification), and Message-Id committag via
-> GMane git mailing list (and not only) archive -- not tested.
-> 
-> Comments? Discussion?
+> Something like
+> http://marc.theaimsgroup.com/?l=git&m=115398815111209&w=2
+> ?
 
-For example: is the committags code overengineered, too complex?
-Or is it not generic enough? Should all committags code be put into
-format_log_line_html, or should we add another subroutine, 
-format_committags (or similar)?
-
-What other committags would you like to have?
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+I do not have access to marc at the moment but I have saved a
+patch from you back from July in one of my freezer mbox.  IIRC
+your message was not for inclusion but more as a firestarter for
+discussions, and the discussion never came to conclusion with 
+appliable set of patches.
