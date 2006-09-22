@@ -1,83 +1,93 @@
-From: "Thomas Kolejka" <Thomas.Kolejka@gmx.at>
-Subject: Re: git commands that only work correctly at top directory
-Date: Fri, 22 Sep 2006 19:08:59 +0200
-Message-ID: <20060922170859.119780@gmx.net>
-References: <fcaeb9bf0609220221w3a65af24u9db1da4e1be0d1eb@mail.gmail.com>
+From: "Ramsay Jones" <ramsay@ramsay1.demon.co.uk>
+Subject: RE: [PATCH] Build on Debian GNU/Hurd
+Date: Fri, 22 Sep 2006 18:22:21 +0100
+Message-ID: <000001c6de6b$a9994920$c47eedc1@ramsay1.demon.co.uk>
+References: <Pine.LNX.4.64.0609211050390.4388@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain;
+	charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 22 19:09:22 2006
+Cc: "Gerrit Pape" <pape@smarden.org>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 22 19:23:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQoWW-0005yA-NH
-	for gcvg-git@gmane.org; Fri, 22 Sep 2006 19:09:13 +0200
+	id 1GQojj-0001Ap-7W
+	for gcvg-git@gmane.org; Fri, 22 Sep 2006 19:22:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932597AbWIVRJD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Sep 2006 13:09:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932599AbWIVRJD
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Sep 2006 13:09:03 -0400
-Received: from mail.gmx.de ([213.165.64.20]:61075 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932597AbWIVRJB (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Sep 2006 13:09:01 -0400
-Received: (qmail 23195 invoked by uid 0); 22 Sep 2006 17:08:59 -0000
-Received: from 141.130.250.71 by www063.gmx.net with HTTP;
- Fri, 22 Sep 2006 19:08:59 +0200 (CEST)
-In-Reply-To: <fcaeb9bf0609220221w3a65af24u9db1da4e1be0d1eb@mail.gmail.com>
-To: git@vger.kernel.org
-X-Authenticated: #20307258
-X-Flags: 0001
-X-Mailer: WWW-Mail 6100 (Global Message Exchange)
-X-Priority: 3
+	id S964800AbWIVRWr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Sep 2006 13:22:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964803AbWIVRWr
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Sep 2006 13:22:47 -0400
+Received: from anchor-post-30.mail.demon.net ([194.217.242.88]:48397 "EHLO
+	anchor-post-30.mail.demon.net") by vger.kernel.org with ESMTP
+	id S964800AbWIVRWq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Sep 2006 13:22:46 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-30.mail.demon.net with smtp (Exim 4.42)
+	id 1GQojZ-000Dhg-2U; Fri, 22 Sep 2006 17:22:42 +0000
+To: "Linus Torvalds" <torvalds@osdl.org>
+X-Priority: 3 (Normal)
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook 8.5, Build 4.71.2173.0
+Importance: Normal
+In-Reply-To: <Pine.LNX.4.64.0609211050390.4388@g5.osdl.org>
+X-MimeOLE: Produced By Microsoft MimeOLE V4.72.2106.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27531>
 
 
--------- Original-Nachricht --------
-Datum: Fri, 22 Sep 2006 16:21:09 +0700
-Von: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-An: git@vger.kernel.org
-Betreff: git commands that only work correctly at top directory
+On Thurs Sept 21 at 18:54, Linus Torvalds wrote:
+> On Thu, 21 Sep 2006, Ramsay Jones wrote:
+> >
+> > IMHO, setting the value in the Makefile, for systems that don't define
+> > PATH_MAX, is a much better solution. In fact, that is what I thought was
+> > already being done.
+>
+> Well, considering that we _can_ test defines, why not just do it
+> automatically.
+>
+> In other words, instead of this patch:
+>
+> > >  -
+> > >  -#ifndef PATH_MAX
+> > >  -# define PATH_MAX 4096
+> > >  -#endif
+> > >  +#include <limits.h>
+>
+> Just make the code read
+>
+> 	#include <limits.h>
+>
+> 	/*
+> 	 * Insane systems don't have a fixed PATH_MAX, it's POSIX
+> 	 * compliant but not worth worrying about, so if we didn't
+> 	 * get PATH_MAX from <limits.h>, just make up our own
+> 	 */
+> 	#ifndef PATH_MAX
+> 	# define PATH_MAX 4096
+> 	#endif
+>
+> and after that we can just ignore the issue forever more.
 
-Did you set $GIT_DIR? ... to an absolute path or "./.git" ?
+Yes, that would certainly be a solution. (Of course, setting the value in
+the Makefile would still be a better solution ;-)
+However, ...
 
-> Here is the list (checks are done in with 1.4.2.rc4):
-> count-objects (always 0 objects, 0 kilobytes)
+>
+> The thing is, it's not like we even really _care_ what PATH_MAX is all
+> that deeply. We just want to get some random value that is reasonable.
+>
+> 		Linus
+>
 
-Works for me in every directory with GIT_DIR abolute or ./.git
+... given the above, a better solution is: don't use PATH_MAX.
+Simply #define a new symbol in a suitable git header file and globally
+replace uses of PATH_MAX with the new symbol. Job done.
 
-> bisect (fatal: Not a git repository: '.git'. Bad HEAD - I need a symbolic
-> ref)
+All the best,
 
-with an absolute GIT_DIR works from every directory - at least bisect start
-
-> describe (fatal: Not a valid object name HEAD)
-
-with an absolute GIT_DIR works from every directory.
-v1.4.1-gcddb939
-
-
-> repack (line 42: cd: .git/objects/pack: No such file or directory. And
-> it creates a new .git directory in current directory)
-> git format-patch in subdir generates files in topdir instead of
-> current dir as documented in its man page
-> 
-> BTW, either git blame or git annotate should be available in git help's
-> listing.
-> git format-patch with no argument shows nothing. It should show help
-> usage instead.
-> I might miss some commands because I only tested commands I'm familiar
-> with.
-> -- 
-> Duy
-
-
-Thomas
-
--- 
-NEU: GMX DSL Sofort-Start-Set - blitzschnell ins Internet!
-Echte DSL-Flatrate ab 0,- Euro* http://www.gmx.net/de/go/dsl
+Ramsay
