@@ -1,75 +1,82 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] Make path in tree view look nicer
-Date: Sat, 23 Sep 2006 01:00:12 +0200
-Message-ID: <20060922230011.31500.86485.stgit@rover>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 23 01:01:13 2006
+Subject: [PATCH] Fix buggy ref recording
+Date: Sat, 23 Sep 2006 01:08:45 +0200
+Message-ID: <20060922230845.GB8259@pasky.or.cz>
+References: <Pine.LNX.4.64.0609141005440.4388@g5.osdl.org> <20060919205554.GA8259@pasky.or.cz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 23 01:09:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQu0U-0008D2-Rb
-	for gcvg-git@gmane.org; Sat, 23 Sep 2006 01:00:31 +0200
+	id 1GQu8a-0001VQ-SN
+	for gcvg-git@gmane.org; Sat, 23 Sep 2006 01:08:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965332AbWIVXAQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Sep 2006 19:00:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965317AbWIVXAQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Sep 2006 19:00:16 -0400
-Received: from rover.dkm.cz ([62.24.64.27]:13771 "EHLO rover.dkm.cz")
-	by vger.kernel.org with ESMTP id S965330AbWIVXAN (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Sep 2006 19:00:13 -0400
-Received: from [127.0.0.1] (rover [127.0.0.1])
-	by rover.dkm.cz (Postfix) with ESMTP id 15F708B49C;
-	Sat, 23 Sep 2006 01:00:12 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: StGIT/0.10
+	id S964901AbWIVXIt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Sep 2006 19:08:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964846AbWIVXIt
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Sep 2006 19:08:49 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:60324 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S964901AbWIVXIs (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Sep 2006 19:08:48 -0400
+Received: (qmail 5047 invoked by uid 2001); 23 Sep 2006 01:08:45 +0200
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <20060919205554.GA8259@pasky.or.cz>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27539>
 
-Based on talk on the IRC with Junio some evenings ago, I've updated the
-path showing in tree view to look better and sent updated patches
-privately, but it seems the old version ended up being used, so here's
-the new one again.
+Dear diary, on Tue, Sep 19, 2006 at 10:55:54PM CEST, I got a letter
+where Petr Baudis <pasky@suse.cz> said that...
+> Dear diary, on Thu, Sep 14, 2006 at 07:14:47PM CEST, I got a letter
+> where Linus Torvalds <torvalds@osdl.org> said that...
+> > +	ref_file = git_path(ref);
+> 
+> You slip...
+> You fall...
+> *BLAMMMM!!!*
+> 
+> Cloning a repository with '%s' tag over HTTP now dumps core nicely, and
+> I guess this kind of bugs tends to be exploitable.
+
+And since just reporting it did not magically result in a fix... ;-)
+
+-8<-
+
+There is a format string vulnerability introduced with the packed refs
+file format.
 
 Signed-off-by: Petr Baudis <pasky@suse.cz>
 ---
 
- gitweb/gitweb.perl |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
+ refs.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index a357604..d2366c7 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1527,14 +1527,14 @@ sub git_print_page_path {
- 
- 		print "<div class=\"page_path\">";
- 		print $cgi->a({-href => href(action=>"tree", hash_base=>$hb),
--			      -title => '/'}, '/');
--		print " ";
-+			      -title => 'tree root'}, "[$project]");
-+		print " / ";
- 		foreach my $dir (@dirname) {
- 			$fullname .= ($fullname ? '/' : '') . $dir;
- 			print $cgi->a({-href => href(action=>"tree", file_name=>$fullname,
- 			                             hash_base=>$hb),
--			              -title => $fullname}, esc_html($dir . '/'));
--			print " ";
-+			              -title => $fullname}, esc_html($dir));
-+			print " / ";
- 		}
- 		if (defined $type && $type eq 'blob') {
- 			print $cgi->a({-href => href(action=>"blob_plain", file_name=>$file_name,
-@@ -1543,7 +1543,7 @@ sub git_print_page_path {
- 		} elsif (defined $type && $type eq 'tree') {
- 			print $cgi->a({-href => href(action=>"tree", file_name=>$file_name,
- 			                             hash_base=>$hb),
--			              -title => $name}, esc_html($basename . '/'));
-+			              -title => $name}, esc_html($basename));
- 		} else {
- 			print esc_html($basename);
- 		}
+diff --git a/refs.c b/refs.c
+index 40f16af..5fdf9c4 100644
+--- a/refs.c
++++ b/refs.c
+@@ -472,7 +472,7 @@ static struct ref_lock *lock_ref_sha1_ba
+
+ 	lock->ref_name = xstrdup(ref);
+ 	lock->log_file = xstrdup(git_path("logs/%s", ref));
+-	ref_file = git_path(ref);
++	ref_file = git_path("%s", ref);
+ 	lock->force_write = lstat(ref_file, &st) && errno == ENOENT;
+
+ 	if (safe_create_leading_directories(ref_file))
+
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
