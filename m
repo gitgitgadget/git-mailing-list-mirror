@@ -1,75 +1,58 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 4/6] gitweb: Link to associated tree from a particular log item in full log view
-Date: Thu, 21 Sep 2006 21:18:09 -0700
-Message-ID: <7vmz8s7cvy.fsf@assigned-by-dhcp.cox.net>
-References: <20060922011941.15909.32671.stgit@rover>
-	<20060922011948.15909.59511.stgit@rover>
+Subject: Re: [PATCH 0/6] packed deltas with offset to base instead of sha1
+Date: Thu, 21 Sep 2006 21:57:53 -0700
+Message-ID: <7v64fg7b1q.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0609202350450.2627@xanadu.home>
+	<7v4pv1eqgl.fsf@assigned-by-dhcp.cox.net>
+	<20060921160227.GC3934@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 22 06:18:21 2006
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 22 06:58:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQcUT-0005Ki-Vq
-	for gcvg-git@gmane.org; Fri, 22 Sep 2006 06:18:18 +0200
+	id 1GQd7F-0003J2-5g
+	for gcvg-git@gmane.org; Fri, 22 Sep 2006 06:58:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751403AbWIVESL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Sep 2006 00:18:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751599AbWIVESL
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Sep 2006 00:18:11 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:62080 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1751403AbWIVESL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Sep 2006 00:18:11 -0400
+	id S932269AbWIVE55 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Sep 2006 00:57:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932272AbWIVE54
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Sep 2006 00:57:56 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:63651 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S932269AbWIVE5z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Sep 2006 00:57:55 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao12.cox.net
+          by fed1rmmtao10.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060922041810.NHWF26416.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 22 Sep 2006 00:18:10 -0400
+          id <20060922045754.IDVF18985.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 22 Sep 2006 00:57:54 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id RGJC1V0041kojtg0000000
-	Fri, 22 Sep 2006 00:18:12 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060922011948.15909.59511.stgit@rover> (Petr Baudis's message
-	of "Fri, 22 Sep 2006 03:19:48 +0200")
+	id RGxw1V0051kojtg0000000
+	Fri, 22 Sep 2006 00:57:56 -0400
+To: Shawn Pearce <spearce@spearce.org>
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27518>
 
-I presume you are running this version at repo.or.cz, but
+Shawn Pearce <spearce@spearce.org> writes:
 
-(1) go to http://repo.or.cz/?p=stgit.git;a=log
-(2) pick "tree" of one of the commits
-(3) go browser-back, then pick "tree" from the top navbar
+>> Nice, although I suspect this would make it a bit more involved
+>> to merge a few outstanding stuff.
+>
+> If you are talking about my mmap window code merge in Nico's
+> work first...
+> However I have looked at the merge and I more or less need to
+> rewrite a good chunk of it just to get it onto 106d7; rewriting it
+> onto Nico's work here is probably going to be about the same amount
+> of effort.
 
-The resulting tree view of (2) lacks navbar while (3) looks much
-saner.
+I had the same impression, although without seeing your code.
+Will see to it to have delta-offset code in "next" soonish.
 
-You do not have the tree object name available in git_log to
-generate an URL with both h and hb, and getting to it is an
-extra work.
-
-This would fix this particular breakage.
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 34ef3fc..8c0fdf3 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2732,9 +2732,9 @@ sub git_tree {
- 			my $base = $hash_base || $hash;
- 			$hash = git_get_hash_by_path($base, $file_name, "tree");
- 		}
--		if (!defined $hash_base) {
--			$hash_base = $hash;
--		}
-+	}
-+	if (!defined $hash_base) {
-+		$hash_base = $hash;
- 	}
- 	$/ = "\0";
- 	open my $fd, "-|", git_cmd(), "ls-tree", '-z', $hash
+Thanks.
