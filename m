@@ -1,57 +1,62 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Consolidate escaping/validation of query string
-Date: Sun, 24 Sep 2006 00:41:43 +0200
-Organization: At home
-Message-ID: <ef4d6v$7vk$3@sea.gmane.org>
-References: <20060923221841.18063.56589.stgit@rover> <ef4csl$7vk$1@sea.gmane.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Random Git Issues/Wishlist
+Date: Sun, 24 Sep 2006 01:18:25 +0200
+Message-ID: <20060923231825.GG20017@pasky.or.cz>
+References: <20060722195502.GS13776@pasky.or.cz> <20060723042725.GA12306@spearce.org> <tnxirln5mqy.fsf@arm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sun Sep 24 00:45:20 2006
+Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 24 01:18:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRGFL-00045N-GO
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 00:45:19 +0200
+	id 1GRGlf-0001Wv-Ri
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 01:18:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750855AbWIWWpJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Sep 2006 18:45:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750860AbWIWWpJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 18:45:09 -0400
-Received: from main.gmane.org ([80.91.229.2]:19367 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750849AbWIWWpG (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Sep 2006 18:45:06 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1GRGF3-00041e-Tk
-	for git@vger.kernel.org; Sun, 24 Sep 2006 00:45:01 +0200
-Received: from host-81-190-26-109.torun.mm.pl ([81.190.26.109])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 24 Sep 2006 00:45:01 +0200
-Received: from jnareb by host-81-190-26-109.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 24 Sep 2006 00:45:01 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-26-109.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1750895AbWIWXS1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Sep 2006 19:18:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750905AbWIWXS1
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 19:18:27 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:3999 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750893AbWIWXS1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Sep 2006 19:18:27 -0400
+Received: (qmail 22533 invoked by uid 2001); 24 Sep 2006 01:18:25 +0200
+To: Catalin Marinas <catalin.marinas@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <tnxirln5mqy.fsf@arm.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27639>
 
-Jakub Narebski wrote:
+  Mailcromancy for fun'n'profit.
 
-> I'd rather have new esc_param() or esc_param_value() quote like escape
-> subroutine from CGI::Util, with the esception of _not_ escaping '/'
-> (it makes funny bookmark, and lot less readable query string), and rename
-> current esc_param() to esc_query_string() or esc_params().
+Dear diary, on Mon, Jul 24, 2006 at 12:19:01PM CEST, I got a letter
+where Catalin Marinas <catalin.marinas@arm.com> said that...
+> The StGIT feature wish-list after the OLS is:
+> 
+> - patch history (I'll probably use reflogs as you suggested)
+> - configurable pull command (currently uses git-pull only)
+> - commit directly to a patch which is not top
+> - patch synchronisation between between branches (as some people,
+>   including me have the same patches based on different branches and
+>   they have scripts for moving the changes in one to the others)
+> - document the workflow on the StGIT wiki
+> - maybe a separate undo command rather than passing a --undo option to
+>   push and refresh
 
-Or just esc_url()
+  After talking with some more random and less random people, another
+_big_ wishlist item is having something like a series file (not
+necessarily used for storing stuff but just as a user interface), so
+that you can easily _reorder_ your patches - that's an onerous task with
+StGIT currently, involving a lot of involved popping and pushing.
+
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
