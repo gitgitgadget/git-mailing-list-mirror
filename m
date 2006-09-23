@@ -1,114 +1,69 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: git pull for update of netdev fails.
-Date: Sat, 23 Sep 2006 06:18:42 +0200
-Message-ID: <20060923041842.GH8259@pasky.or.cz>
-References: <7vhcz2jzfd.fsf@assigned-by-dhcp.cox.net> <20060920161825.GR8259@pasky.or.cz> <Pine.LNX.4.64.0609200927260.4388@g5.osdl.org> <20060920080308.673a1e93@localhost.localdomain> <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org> <20060920155431.GO8259@pasky.or.cz> <Pine.LNX.4.63.0609201801110.19042@wbgn013.biozentrum.uni-wuerzburg.de> <20060920160756.GP8259@pasky.or.cz> <Pine.LNX.4.64.0609200915550.4388@g5.osdl.org> <Pine.LNX.4.64.0609200920290.4388@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] pack-refs: fix git_path() usage.
+Date: Fri, 22 Sep 2006 21:34:48 -0700
+Message-ID: <7vmz8rw68n.fsf_-_@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0609141005440.4388@g5.osdl.org>
+	<20060919205554.GA8259@pasky.or.cz>
+	<20060922230845.GB8259@pasky.or.cz>
+	<7vzmcrxvgw.fsf@assigned-by-dhcp.cox.net>
+	<20060923011634.GL13132@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	Stephen Hemminger <shemminger@osdl.org>,
-	Jeff Garzik <jgarzik@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 23 06:18:51 2006
+X-From: git-owner@vger.kernel.org Sat Sep 23 06:34:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQyyY-0002g5-Gt
-	for gcvg-git@gmane.org; Sat, 23 Sep 2006 06:18:50 +0200
+	id 1GQzE5-0005Fh-AW
+	for gcvg-git@gmane.org; Sat, 23 Sep 2006 06:34:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750802AbWIWESp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Sep 2006 00:18:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750800AbWIWESp
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 00:18:45 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:24506 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750802AbWIWESo (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Sep 2006 00:18:44 -0400
-Received: (qmail 12018 invoked by uid 2001); 23 Sep 2006 06:18:42 +0200
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0609200902190.4388@g5.osdl.org> <Pine.LNX.4.64.0609200927260.4388@g5.osdl.org> <Pine.LNX.4.64.0609200920290.4388@g5.osdl.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1750818AbWIWEeu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Sep 2006 00:34:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750819AbWIWEeu
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 00:34:50 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:36248 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1750818AbWIWEet (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Sep 2006 00:34:49 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060923043449.WKPI13992.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 23 Sep 2006 00:34:49 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Rgao1V00B1kojtg0000000
+	Sat, 23 Sep 2006 00:34:48 -0400
+To: git@vger.kernel.org
+In-Reply-To: <20060923011634.GL13132@pasky.or.cz> (Petr Baudis's message of
+	"Sat, 23 Sep 2006 03:16:34 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27561>
-
-I'm joining several fibres of the thread since we are talking about the
-same thing per partes and that's rather confusing.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27562>
 
 
-Dear diary, on Wed, Sep 20, 2006 at 06:26:32PM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> said that...
-> Think about it. You and somebody else works on a common branch, using a 
-> common source repo. When you "fetch", you want to get all the work that 
-> the other person has done. But you sure as hell don't want that work to 
-> overwrite your own work.
-> 
-> So what does git do? It notices if you have a local commit on that shared 
-> branch (because it no longer fast-forwards to the other end), and it tells 
-> you exactly that: it says that branch so-and-so doesn't fast-forward, and 
-> refuses to overwrite it.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-I'd bite here that if you commit to a branch that you also simultanously
-fetch from somewhere else, you're asking for it - but I've never really
-used [plain Git]'s branches so perhaps it is a blessed workflow there.
-(Cogito won't let you do it.)
+ * A valid ref name can contain %.
 
+ builtin-pack-refs.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Dear diary, on Wed, Sep 20, 2006 at 06:33:42PM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> said that...
-> I would be ok with a "anonymous read-only" approach IF GIT ACTUALLY 
-> ENFORCED IT. In other words, we could easily have a read-only clone that 
-> added the "+" to all branches, but then we should also make sure that 
-> nobody ever commits _anything_ in such a repo.
-> 
-> No merges (because you can not rely on the merge result being meaningful: 
-> the sources of the merge may be "ephemeral"), no local commits (because 
-> you can never "pull" any more after that, since that now becomes a merge 
-> with something you can't trust any more).
-
-Well, yes, it gets bad if you just prepend + to all branches:
-
-Dear diary, on Wed, Sep 20, 2006 at 06:15:04PM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> said that...
-> The thing is, if you don't understand how rebasing etc destroys history, 
-> you may do things like do a "git pull" or a "git merge" of a branch that 
-> the other side WILL THROW AWAY! That will later result in major pain, 
-> because when you then try to merge it later, you will get all kinds of 
-> nasty behaviour, because the history you merged earlier no longer matches 
-> the history you're now trying to merge again, and the work you merged 
-> earlier is simply not there any more.
-
-This is a very good point.
-
-But this just means that, as others in the thread noted, there needs to
-be a reliable way for marking floating branches in the public
-repositories and enforcing the implications of that locally (not letting
-the user to merge with those).
-
-When I've said "seamless support for floating branches", generally what
-I've had on my mind was that it's seamless for the user, that his the
-one who pulls them - the developer can be required to do something small
-extra to mark those as such.
-
-
-When you have that, you can just:
-
-  (i) Disallow three-way merges with +branches
-
-  (ii) Fast-forward of +branches makes you follow the branch' rebase if
-the original commit in the branch before fetching equaled your HEAD
-commit, and taints your branch against committing unless you switch to
-a non-+ branch (or manually untaint your branch)
-
-  (iii) Of course enforce the fast-forward restriction for non-+
-branches
-
+diff --git a/builtin-pack-refs.c b/builtin-pack-refs.c
+index 246dd63..db57fee 100644
+--- a/builtin-pack-refs.c
++++ b/builtin-pack-refs.c
+@@ -56,7 +56,7 @@ static void prune_ref(struct ref_to_prun
+ 	struct ref_lock *lock = lock_ref_sha1(r->name + 5, r->sha1, 1);
+ 
+ 	if (lock) {
+-		unlink(git_path(r->name));
++		unlink(git_path("%s", r->name));
+ 		unlock_ref(lock);
+ 	}
+ }
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+1.4.2.1.gf2bba
