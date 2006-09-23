@@ -1,54 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/2] Fetch: get the remote branches to merge from the branch properties
-Date: Sat, 23 Sep 2006 03:43:35 -0700
-Message-ID: <7vfyeiualk.fsf@assigned-by-dhcp.cox.net>
-References: <87venex5je.fsf@gmail.com> <877izux5d2.fsf@gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] Remove branch by putting a null sha1 into the ref file.
+Date: Sat, 23 Sep 2006 13:22:30 +0200
+Message-ID: <200609231322.30214.chriscool@tuxfamily.org>
+References: <20060918065429.6f4de06e.chriscool@tuxfamily.org> <200609230645.37773.chriscool@tuxfamily.org> <7vu02zuhya.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 23 12:43:48 2006
+X-From: git-owner@vger.kernel.org Sat Sep 23 13:16:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GR4yy-0002HY-ML
-	for gcvg-git@gmane.org; Sat, 23 Sep 2006 12:43:41 +0200
+	id 1GR5Uc-0008R3-GB
+	for gcvg-git@gmane.org; Sat, 23 Sep 2006 13:16:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750733AbWIWKng convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 23 Sep 2006 06:43:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751486AbWIWKng
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 06:43:36 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:16787 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1750733AbWIWKng convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Sep 2006 06:43:36 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060923104335.ROBQ6711.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 23 Sep 2006 06:43:35 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Rmjd1V00A1kojtg0000000
-	Sat, 23 Sep 2006 06:43:37 -0400
-To: Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750888AbWIWLQT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Sep 2006 07:16:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750910AbWIWLQT
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 07:16:19 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:50560 "EHLO smtp2-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1750881AbWIWLQS (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Sep 2006 07:16:18 -0400
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id D382075C12;
+	Sat, 23 Sep 2006 13:16:16 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.9.4
+In-Reply-To: <7vu02zuhya.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27581>
 
-Santi B=E9jar <sbejar@gmail.com> writes:
+Junio C Hamano wrote:
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > If we move ".git/refs/heads/frotz/nitfol"
+> > to ".git/deleted-refs/heads/frotz/nitfol" when we remove this ref, we
+> > only need to try to rmdir all subdirectories under
+> > ".git/refs/heads/frotz/" and then ".git/refs/heads/frotz/" to see if we
+> > can
+> > create ".git/refs/heads/frotz", and if we can, we won't
+> > resurect "frotz/nitfol" because ".git/deleted-refs/heads/frotz/nitfol"
+> > still exists.
+>
+> I am not sure if that would be workable.  I suspect that you
+> would need to do quite an involved sequence in "git branch" to
+> make this sequence to work with .git/deleted-refs/ scheme:
+>
+> 	git branch frotz/nitfol
+>         git pack-refs --prune
+>         git branch -d frotz/nitfol
+>         git branch frotz
+>         git pack-refs
+>         git branch -d frotz
+>
+> After deleting frotz/nitfol you would create frotz/nitfol in
+> deleted hierarchy.  Then when you delete frotz you would need to
+> create frotz in deleted hierarchy, but you cannot, without
+> losing frotz/nitfol.
 
-> If in branch "foo" and this in config:
->
-> [branch "foo"]
->       merge=3Dbar
->
-> "git fetch": fetch from the default repository and program the "bar"
->              branch to be merged with pull.
->
-> Signed-off-by: Santi B=E9jar <sbejar@gmail.com>
+You are right, so what about moving ".git/refs/heads/frotz" 
+to ".git/deleted-refs/heads/frotz.ref" 
+or ".git/deleted-refs/heads/frotz~ref" (because "~" is forbidden in ref 
+names).
 
-This still breaks t5700 test the same way as the earlier one.
+Christian. 
