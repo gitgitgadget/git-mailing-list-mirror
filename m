@@ -1,43 +1,46 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Santi <sbejar@gmail.com>
 Subject: Re: [PATCH] Fetch: get the remote branches to merge from the branch properties.
-Date: Fri, 22 Sep 2006 17:45:50 -0700
-Message-ID: <7vac4rxvep.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 23 Sep 2006 02:47:01 +0200
+Message-ID: <8aa486160609221747s7859c6b6jb7164abe72b74e80@mail.gmail.com>
 References: <874puza2qq.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 23 02:45:58 2006
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Sat Sep 23 02:47:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GQveU-0005dC-Qz
-	for gcvg-git@gmane.org; Sat, 23 Sep 2006 02:45:55 +0200
+	id 1GQvff-0005w8-RY
+	for gcvg-git@gmane.org; Sat, 23 Sep 2006 02:47:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964979AbWIWApw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Sep 2006 20:45:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964982AbWIWApw
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Sep 2006 20:45:52 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:14038 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S964979AbWIWApv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Sep 2006 20:45:51 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060923004551.XBFT12909.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 22 Sep 2006 20:45:51 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Rclt1V0041kojtg0000000
-	Fri, 22 Sep 2006 20:45:53 -0400
-To: Santi <sbejar@gmail.com>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S964982AbWIWArF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 22 Sep 2006 20:47:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964988AbWIWArE
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Sep 2006 20:47:04 -0400
+Received: from wx-out-0506.google.com ([66.249.82.233]:32499 "EHLO
+	wx-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S964982AbWIWArC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Sep 2006 20:47:02 -0400
+Received: by wx-out-0506.google.com with SMTP id s14so1190609wxc
+        for <git@vger.kernel.org>; Fri, 22 Sep 2006 17:47:01 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Eb9QUFLr0jRSREmHGGppveC89iOezTfYCFdG0YUr99oBGS+dhqGNhDf4sV+Jln9j4kHKqsOqVrDFJlsjLy6SS5XfoLcYbu2ndGh06CGxQk17QBwMq0eIhfvRZAkF0ibUkCisMb5j0y9nXycLxaQ3ydIetth0mNE80hotRqu1U1s=
+Received: by 10.70.59.9 with SMTP id h9mr2125185wxa;
+        Fri, 22 Sep 2006 17:47:01 -0700 (PDT)
+Received: by 10.70.19.6 with HTTP; Fri, 22 Sep 2006 17:47:01 -0700 (PDT)
+To: git <git@vger.kernel.org>
+In-Reply-To: <874puza2qq.fsf@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27552>
 
+2006/9/23, Santi B=E9jar <sbejar@gmail.com>:
 > If in branch "foo" and this in config:
 >
 > [branch "foo"]
@@ -46,35 +49,15 @@ Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27551>
 > "git fetch": fetch from the default repository and program the "bar"
 >              branch to be merged with pull.
 >
+> Signed-off-by: Santi B=E9jar <sbejar@gmail.com>
 
-Your patch has a very strange whitespace damage in it, and I am
-not talking about quoted-printable encoding.
+Just to comments (it's late here):
 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index fa20e28..b4de243 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -122,6 +122,10 @@ apply.whitespace::
->  branch.<name>.remote::
->         When in branch <name>, it tells `git pull` which remote to fetc=
-> h.
->
+=2E- the branch.foo.merge must be the same as specified in the remotes/=
+$remote.
 
-A tab in context before "When" is expanded into spaces, and the
-empty line in the context does not have the leading SP.
+=2E- I've already found a bug (it's late and I need to sleep, sorry).
+This must only be done for the default repository (origin, or in
+branch.foo.remote).
 
-> +branch.<name>.merge::
-> +       When in branch <name>, it tells `git fetch` the remote branch t=
-> o be
-> +       merged.
-> +
-
-I suspect you wanted to start the new line with a leading tab
-before "When" but it is expanded into spaces here.
-
-However, the diff for the other file in the same patch does not
-have this problem.
-
-No need to resend, as I hand-applied it to a new topic, but I am
-a bit curious why one diff is broken when the other one is not
-in the same e-mail message.
+Santi
