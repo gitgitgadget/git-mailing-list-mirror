@@ -1,243 +1,132 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] Kill git-resolve.sh
-Date: Sat, 23 Sep 2006 21:55:30 +0200
-Message-ID: <20060923195530.5570.23774.stgit@machine.or.cz>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 23 21:55:58 2006
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC/PATCH] gitweb: Add committags support
+Date: Sat, 23 Sep 2006 12:58:57 -0700
+Message-ID: <7veju2s6bi.fsf@assigned-by-dhcp.cox.net>
+References: <200609212356.31806.jnareb@gmail.com>
+	<20060923032948.GE8259@pasky.or.cz>
+	<200609231034.49545.jnareb@gmail.com>
+	<20060923121134.GM13132@pasky.or.cz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 23 21:59:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRDb7-0004lH-Cx
-	for gcvg-git@gmane.org; Sat, 23 Sep 2006 21:55:37 +0200
+	id 1GRDeR-0005T8-KI
+	for gcvg-git@gmane.org; Sat, 23 Sep 2006 21:59:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751510AbWIWTzc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Sep 2006 15:55:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751511AbWIWTzc
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 15:55:32 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:58336 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751510AbWIWTzc (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Sep 2006 15:55:32 -0400
-Received: (qmail 5580 invoked from network); 23 Sep 2006 21:55:30 +0200
-Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1)
-  by localhost with SMTP; 23 Sep 2006 21:55:30 +0200
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: StGIT/0.9
+	id S1751502AbWIWT7A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Sep 2006 15:59:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751515AbWIWT7A
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 15:59:00 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:5275 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1751502AbWIWT66 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Sep 2006 15:58:58 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060923195858.BQWV6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 23 Sep 2006 15:58:58 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Rvyw1V00D1kojtg0000000
+	Sat, 23 Sep 2006 15:58:57 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060923121134.GM13132@pasky.or.cz> (Petr Baudis's message of
+	"Sat, 23 Sep 2006 14:11:34 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27623>
 
-Seriously, is anyone still using this thing? It's collecting dust and
-blocking the name for something potentially useful like a tool for
-user-friendly marking of resolved conflicts or resolving index conflicts.
+Petr Baudis <pasky@suse.cz> writes:
 
-We've loved you when Git was young, now thank you and please go away. ;-)
+> Also, there is a fundamental limitation for the multi-word patterns that
+> they won't work if the line wraps at that point in the log message. This
+> will likely be a problem especially for the msgids, because those are
+> very long and are very likely to cause a linewrap immediately before.
+>
+> By the way, I don't think taking just 40-digits sha1s is very useful,
+> since that's insanely long and besides the linewrap issue, a lot of
+> people just shorten that to some 8 to 12 digits now - I'd use {8-40}
+> instead (the enforced minimum is 4 in the Git autocompletion code but we
+> shouldn't encourage people to write so ambiguous sha1s to persistent
+> records).
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+True.  Without looking at Jakub's code under discussion, off the
+top of my head, I wonder if we can do something like this:
 
- .gitignore                    |    1 
- Documentation/git-resolve.txt |   36 --------------
- Documentation/git.txt         |    3 -
- Makefile                      |    2 -
- git-resolve.sh                |  108 -----------------------------------------
- 5 files changed, 1 insertions(+), 149 deletions(-)
+ (1) take the whole commit log message, not line by line, into a
+     Perl variable, say $log.  Note that this is _before_ HTML
+     escaping.
 
-diff --git a/.gitignore b/.gitignore
-index 0ffe14a..f89bbc6 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -92,7 +92,6 @@ git-repo-config
- git-request-pull
- git-rerere
- git-reset
--git-resolve
- git-rev-list
- git-rev-parse
- git-revert
-diff --git a/Documentation/git-resolve.txt b/Documentation/git-resolve.txt
-deleted file mode 100644
-index 4e57c2b..0000000
---- a/Documentation/git-resolve.txt
-+++ /dev/null
-@@ -1,36 +0,0 @@
--git-resolve(1)
--==============
--
--NAME
------
--git-resolve - Merge two commits
--
--
--SYNOPSIS
----------
--'git-resolve' <current> <merged> <message>
--
--DESCRIPTION
-------------
--Given two commits and a merge message, merge the <merged> commit
--into <current> commit, with the commit log message <message>.
--
--When <current> is a descendant of <merged>, or <current> is an
--ancestor of <merged>, no new commit is created and the <message>
--is ignored.  The former is informally called "already up to
--date", and the latter is often called "fast forward".
--
--
--Author
--------
--Written by Linus Torvalds <torvalds@osdl.org> and
--Dan Holmsand <holmsand@gmail.com>.
--
--Documentation
----------------
--Documentation by David Greaves, Junio C Hamano and the git-list <git@vger.kernel.org>.
--
--GIT
-----
--Part of the gitlink:git[7] suite
--
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 744c38d..a2efd17 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -336,9 +336,6 @@ gitlink:git-rerere[1]::
- gitlink:git-reset[1]::
- 	Reset current HEAD to the specified state.
- 
--gitlink:git-resolve[1]::
--	Merge two commits.
--
- gitlink:git-revert[1]::
- 	Revert an existing commit.
- 
-diff --git a/Makefile b/Makefile
-index 58848e4..6a7c408 100644
---- a/Makefile
-+++ b/Makefile
-@@ -169,7 +169,7 @@ SCRIPT_SH = \
- 	git-merge-one-file.sh git-parse-remote.sh \
- 	git-pull.sh git-rebase.sh \
- 	git-repack.sh git-request-pull.sh git-reset.sh \
--	git-resolve.sh git-revert.sh git-sh-setup.sh \
-+	git-revert.sh git-sh-setup.sh \
- 	git-tag.sh git-verify-tag.sh \
- 	git-applymbox.sh git-applypatch.sh git-am.sh \
- 	git-merge.sh git-merge-stupid.sh git-merge-octopus.sh \
-diff --git a/git-resolve.sh b/git-resolve.sh
-deleted file mode 100755
-index a7bc680..0000000
---- a/git-resolve.sh
-+++ /dev/null
-@@ -1,108 +0,0 @@
--#!/bin/sh
--#
--# Copyright (c) 2005 Linus Torvalds
--#
--# Resolve two trees.
--#
--
--USAGE='<head> <remote> <merge-message>'
--. git-sh-setup
--
--dropheads() {
--	rm -f -- "$GIT_DIR/MERGE_HEAD" \
--		"$GIT_DIR/LAST_MERGE" || exit 1
--}
--
--head=$(git-rev-parse --verify "$1"^0) &&
--merge=$(git-rev-parse --verify "$2"^0) &&
--merge_name="$2" &&
--merge_msg="$3" || usage
--
--#
--# The remote name is just used for the message,
--# but we do want it.
--#
--if [ -z "$head" -o -z "$merge" -o -z "$merge_msg" ]; then
--	usage
--fi
--
--dropheads
--echo $head > "$GIT_DIR"/ORIG_HEAD
--echo $merge > "$GIT_DIR"/LAST_MERGE
--
--common=$(git-merge-base $head $merge)
--if [ -z "$common" ]; then
--	die "Unable to find common commit between" $merge $head
--fi
--
--case "$common" in
--"$merge")
--	echo "Already up-to-date. Yeeah!"
--	dropheads
--	exit 0
--	;;
--"$head")
--	echo "Updating from $head to $merge"
--	git-read-tree -u -m $head $merge || exit 1
--	git-update-ref -m "resolve $merge_name: Fast forward" \
--		HEAD "$merge" "$head"
--	git-diff-tree -p $head $merge | git-apply --stat
--	dropheads
--	exit 0
--	;;
--esac
--
--# We are going to make a new commit.
--git var GIT_COMMITTER_IDENT >/dev/null || exit
--
--# Find an optimum merge base if there are more than one candidates.
--LF='
--'
--common=$(git-merge-base -a $head $merge)
--case "$common" in
--?*"$LF"?*)
--	echo "Trying to find the optimum merge base."
--	G=.tmp-index$$
--	best=
--	best_cnt=-1
--	for c in $common
--	do
--		rm -f $G
--		GIT_INDEX_FILE=$G git-read-tree -m $c $head $merge \
--			2>/dev/null || continue
--		# Count the paths that are unmerged.
--		cnt=`GIT_INDEX_FILE=$G git-ls-files --unmerged | wc -l`
--		if test $best_cnt -le 0 -o $cnt -le $best_cnt
--		then
--			best=$c
--			best_cnt=$cnt
--			if test "$best_cnt" -eq 0
--			then
--				# Cannot do any better than all trivial merge.
--				break
--			fi
--		fi
--	done
--	rm -f $G
--	common="$best"
--esac
--
--echo "Trying to merge $merge into $head using $common."
--git-update-index --refresh 2>/dev/null
--git-read-tree -u -m $common $head $merge || exit 1
--result_tree=$(git-write-tree  2> /dev/null)
--if [ $? -ne 0 ]; then
--	echo "Simple merge failed, trying Automatic merge"
--	git-merge-index -o git-merge-one-file -a
--	if [ $? -ne 0 ]; then
--		echo $merge > "$GIT_DIR"/MERGE_HEAD
--		die "Automatic merge failed, fix up by hand"
--	fi
--	result_tree=$(git-write-tree) || exit 1
--fi
--result_commit=$(echo "$merge_msg" | git-commit-tree $result_tree -p $head -p $merge)
--echo "Committed merge $result_commit"
--git-update-ref -m "resolve $merge_name: In-index merge" \
--	HEAD "$result_commit" "$head"
--git-diff-tree -p $head $result_commit | git-apply --stat
--dropheads
+ (2) each enabled tag-marking sub are expected to take a list of
+     string or ref as its parameter.  The first one in the chain
+     takes a single parameter which is ($log).  You call all the
+     enabled ones, in some order, and feed the return value from
+     the previous one as the input to the next one.
+
+ (3) a tag-marking sub are expected to inspect the list it
+     received as its input parameter, and build its return value
+     by looking at each element in the list:
+
+	(3-1) if the element is not a string, pass it down as-is
+	in the output list.
+
+	(3-2) if the element is a string, do the pattern match,
+	and output one or more elements in the output list.
+	Literal string you did not care about are placed as
+	string for later taggers to be processed, the links you
+	generate are placed as a ref to string.
+
+    For example, commit_id tag-marker might look like this:
+
+        sub tag_marker_commit_id {
+                my @input = (@_);
+                my @output;
+                for (@input) {
+                        if (!ref $_) {
+                                push @output, $_;
+                                next;
+                        }
+                        while ($_ ne '' && m/(.*?)\b([0-9a-fA-F]{6,})\b(.*)/s) {
+                                my ($pre, $sha1, $post) = ($1, $2, $3);
+                                if (!is_a_commit_id($sha1)) {
+                                        push @output, "$pre$sha1";
+                                }
+                                else {
+					my $subst =
+                                          href(action => 'commit', hash => $2);
+                                        push @output, $1;
+                                        push @output, \$subst;
+                                }
+                                $_ = $post;
+                        }
+                }
+                return @output;
+        }
+
+ (4) when you finished calling the chain, you would have a list
+     of string and ref.  You html quote the strings and pass
+     the ref's (which are supposed to be already HTML) as is,
+     and concatenate the result:
+
+	sub markup_all {
+        	my ($log) = @_;
+                my @current = $log;
+                for my $tag_marker (@tag_markers) {
+			@current = $tag_marker->(@current);
+		}
+                return join('',
+                	map {
+                        	(ref $_) ? $$_ : esc_html($_)
+			} @current);
+	}
+
+Hmm?
+
+     
