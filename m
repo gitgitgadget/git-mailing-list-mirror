@@ -1,71 +1,163 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: git pull for update of netdev fails.
-Date: Sat, 23 Sep 2006 14:15:01 +0100
-Message-ID: <b0943d9e0609230615t60e6d573r4abe043c079a2367@mail.gmail.com>
-References: <20060920080308.673a1e93@localhost.localdomain>
-	 <Pine.LNX.4.64.0609200816400.4388@g5.osdl.org>
-	 <20060920155431.GO8259@pasky.or.cz>
-	 <Pine.LNX.4.63.0609201801110.19042@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <20060920160756.GP8259@pasky.or.cz>
-	 <Pine.LNX.4.64.0609200915550.4388@g5.osdl.org>
-	 <Pine.LNX.4.63.0609202304270.19042@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <20060923034407.GF8259@pasky.or.cz>
-	 <20060923040035.GB18105@spearce.org>
-	 <20060923040942.GG8259@pasky.or.cz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH] gitweb: Add committags support
+Date: Sat, 23 Sep 2006 15:33:01 +0200
+Message-ID: <200609231533.02455.jnareb@gmail.com>
+References: <200609212356.31806.jnareb@gmail.com> <200609231034.49545.jnareb@gmail.com> <20060923121134.GM13132@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn Pearce" <spearce@spearce.org>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Linus Torvalds" <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 23 15:15:17 2006
+X-From: git-owner@vger.kernel.org Sat Sep 23 15:33:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GR7LY-0006ae-HJ
-	for gcvg-git@gmane.org; Sat, 23 Sep 2006 15:15:08 +0200
+	id 1GR7d2-0001rV-WF
+	for gcvg-git@gmane.org; Sat, 23 Sep 2006 15:33:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751098AbWIWNPF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Sep 2006 09:15:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751100AbWIWNPE
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 09:15:04 -0400
-Received: from py-out-1112.google.com ([64.233.166.180]:60716 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1751098AbWIWNPB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Sep 2006 09:15:01 -0400
-Received: by py-out-1112.google.com with SMTP id n25so1672257pyg
-        for <git@vger.kernel.org>; Sat, 23 Sep 2006 06:15:01 -0700 (PDT)
+	id S1751172AbWIWNdH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Sep 2006 09:33:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751174AbWIWNdH
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 09:33:07 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:25004 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1751172AbWIWNdG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Sep 2006 09:33:06 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so336923ugd
+        for <git@vger.kernel.org>; Sat, 23 Sep 2006 06:33:04 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=EmFx5OSiVfEEAwDQS5CVY/LTAzzuPltr1xEltN8lIJyPhyhzwXy02iek4nbGmZXaWT/SisG1Sk7lolOdM4AWUqa32sITXqLz3uEDLvE4o9ovsjLRcCW0lfo36eWjEILq0ieBhI5EU53zpUq5/6TDBP1NSnL76lY9bS62D3g6QMU=
-Received: by 10.35.125.16 with SMTP id c16mr3689932pyn;
-        Sat, 23 Sep 2006 06:15:01 -0700 (PDT)
-Received: by 10.35.77.5 with HTTP; Sat, 23 Sep 2006 06:15:00 -0700 (PDT)
-To: "Petr Baudis" <pasky@suse.cz>
-In-Reply-To: <20060923040942.GG8259@pasky.or.cz>
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=phV6r+Qe3WUG/4gs4ecPeVzQZ+Gazur+b38lLg+n7v9jluWwTNwG4WKcsh7oi8ZdMdPTTNThM92M2THUhhgKJHgDmFkrYfotfxW91jm1ZRr73rHr7K9U5ZOlbl7u1cugMwnq16PikMWyTzscmagQicAoaDSVrP0FVKHzE4wBcmM=
+Received: by 10.66.240.12 with SMTP id n12mr1571129ugh;
+        Sat, 23 Sep 2006 06:33:04 -0700 (PDT)
+Received: from host-81-190-26-109.torun.mm.pl ( [81.190.26.109])
+        by mx.gmail.com with ESMTP id o24sm292349ugd.2006.09.23.06.33.03;
+        Sat, 23 Sep 2006 06:33:04 -0700 (PDT)
+To: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+User-Agent: KMail/1.9.3
+In-Reply-To: <20060923121134.GM13132@pasky.or.cz>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27589>
 
-On 23/09/06, Petr Baudis <pasky@suse.cz> wrote:
-> Dear diary, on Sat, Sep 23, 2006 at 06:00:35AM CEST, I got a letter
-> where Shawn Pearce <spearce@spearce.org> said that...
-> > I can see the same concept of ref history being useful even for
-> > core git-rebase and doing it this way would also give it to StGIT
-> > without Catalin needing to change code.
->
-> In my StGIT tree, I don't want to have arbitrary N-days cutoff point,
-> I want all the patches history preserved at least as long as I carry
-> the patch, because it's just as valuable as the "regular" project
-> history to me.
+Petr Baudis wrote:
 
-That's how it currently works (the top of the log is in
-refs/patches/<branch>/<patch>.log). I gave up the idea of using
-reflogs for patch history.
+> Dear diary, on Sat, Sep 23, 2006 at 10:34:49AM CEST, I got a letter
+> where Jakub Narebski <jnareb@gmail.com> said that...
+
+> Also, there is a fundamental limitation for the multi-word patterns that
+> they won't work if the line wraps at that point in the log message. This
+> will likely be a problem especially for the msgids, because those are
+> very long and are very likely to cause a linewrap immediately before.
+
+We do not wrap log messages in gitweb. So the problem is only when
+commit message is wrongly wrapped itself (pre imples nowrap).
+
+>> > > +);
+>> > ..snip..
+>> > > +sub quote_msgid_gmane {
+>> > > +	my $msgid = shift || return;
+>> > > +
+>> > > +	return '<'.(quotemeta $msgid).'>';
+>> > > +}
+>> > 
+>> > <> should be HTML-escaped (unless CGI::a() does that).
+>> 
+>> CGI::a() probably does that. But true, "<" and ">" should be "params quoted":
+>> 
+>> 	return '%3c' . (quotemeta $msgid) . '%3e';
+> 
+> Ah, silly me, I didn't notice that it goes into the URL.
+
+Should it be "params quoted" or not? What are valid characters
+in message-id? (And in which RFC it is defined?)
+
+>> (Quotemeta is because Message-Id contains '@').
+> 
+> Hmm, and at which point would that be eaten?
+
+In the substitution phase... but perhaps I was to defensive.
+s/$from/$to/g where $to can have '@'. 
+
+>> > > @@ -626,12 +767,13 @@ sub format_subject_html {
+>> > >  	$extra = '' unless defined($extra);
+>> > >  
+>> > >  	if (length($short) < length($long)) {
+>> > > -		return $cgi->a({-href => $href, -class => "list subject",
+>> > > -		                -title => $long},
+>> > > -		       esc_html($short) . $extra);
+>> > > +		my $a_attr = {-href => $href, -class => "list subject", -title => $long};
+>> > > +		return $cgi->a($a_attr,
+>> > > +		       format_log_line_html($short, $a_attr, @subjecttags) . $extra);
+>> > >  	} else {
+>> > > -		return $cgi->a({-href => $href, -class => "list subject"},
+>> > > -		       esc_html($long)  . $extra);
+>> > > +		my $a_attr = {-href => $href, -class => "list subject"};
+>> > > +		return $cgi->a($a_attr,
+>> > > +		       format_log_line_html($long,  $a_attr, @subjecttags) . $extra);
+>> > >  	}
+>> > >  }
+>> > >  
+>> > 
+>> > Subjects are often clickable and we don't want links in those.
+>> 
+>> The extra code with $a_attr is to have links within links. It works
+>> quite well, I'd say. The subject link is broken, and the committag
+>> link is inserted in the break (gitweb-xmms2 committag code did the same,
+>> but did not preserved all the subject link attributes, like title or class,
+>> only the target of the link).
+>> 
+>> The result is somethink like:
+>> 
+>>   <a href="..." class="subject" ...>Fix </a><a href="...=137">BUG(137)</a><a href="..." class="subject" ...>: ...</a> 
+> 
+> I don't think this is good idea though - if I'm clicking at links, I
+> don't want to have to carefully watch where that bit of the link leads.
+> IMHO this would be just annoying.
+
+The committag links within subject link are clearly visually distinguished:
+first they have default link color (blue for not visited, dark red for
+visited links), second they are not bold width (as opposed to gitweb-xmms2,
+where bold font was due to <b>...</b> element and not CSS styling 
+of a.subject).
+
+I have just noticed that somehow git_log ("log" view) doesn't use
+format_subject_line (perhaps because it is not shortened) and that
+committags are not used there. And that is not only place where
+subjecttags (committags in clickable subject line) are not used.
+
+By the way, you can easily disable some committags in subject, either
+removing 'insubject' field, or setting it to false.
+
+>> > > @@ -1585,7 +1727,7 @@ sub git_print_log ($;%) {
+>> > >  			$empty = 0;
+>> > >  		}
+>> > >  
+>> > > -		print format_log_line_html($line) . "<br/>\n";
+>> > > +		print format_log_line_html($line, @committags) . "<br/>\n";
+>> > >  	}
+>> > >  
+>> > >  	if ($opts{'-final_empty_line'}) {
+>> > 
+>> > What about the tags? Or perhaps even blobs, for that matter?
+>> 
+>> What about? In commit messages you usually reference other commits
+>> (as: this correct some commit, this finishes what was started in commit,
+>> this reverts commit (!), cherry-picked commit).
+> 
+> I meant that we should consider substituting the committags in those as
+> well.
+
+Ahh... For tags I guess it is a good idea (especially that I think that
+fixes for bugtracker tracked bugs and feature request should be marked by tags,
+e.g. b/<bugid>, to be used to link to commit/change/patch from bugtracker. 
+
+By the way, should we use some color for PGP signature block in signed tags?
 
 -- 
-Catalin
+Jakub Narebski
+ShadeHawk on #git
+Torun, Poland
