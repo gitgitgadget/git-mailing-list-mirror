@@ -1,83 +1,119 @@
-From: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
-Subject: [PATCH 4/4 (take 4)] Add test for the default merges in fetch.
-Date: Sat, 23 Sep 2006 22:55:35 +0200
-Message-ID: <87sliie20o.fsf@gmail.com>
-References: <87ac4qfgvc.fsf@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Remove branch by putting a null sha1 into the ref file.
+Date: Sat, 23 Sep 2006 14:49:42 -0700
+Message-ID: <7veju2nthl.fsf@assigned-by-dhcp.cox.net>
+References: <20060918065429.6f4de06e.chriscool@tuxfamily.org>
+	<200609230645.37773.chriscool@tuxfamily.org>
+	<7vu02zuhya.fsf@assigned-by-dhcp.cox.net>
+	<200609231322.30214.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Sat Sep 23 22:55:50 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 23 23:50:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GREXM-0007F5-K1
-	for gcvg-git@gmane.org; Sat, 23 Sep 2006 22:55:49 +0200
+	id 1GRFNe-0001DE-ND
+	for gcvg-git@gmane.org; Sat, 23 Sep 2006 23:49:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964915AbWIWUzq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 23 Sep 2006 16:55:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964918AbWIWUzp
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 16:55:45 -0400
-Received: from ifae-s0.ifae.es ([192.101.162.68]:63925 "EHLO ifae-s0.ifae.es")
-	by vger.kernel.org with ESMTP id S964915AbWIWUzp (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Sep 2006 16:55:45 -0400
-Received: from bela (caronte.ifae.es [192.101.162.199])
-	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id k8NKtbQ04418
-	for <git@vger.kernel.org>; Sat, 23 Sep 2006 22:55:37 +0200
-To: git <git@vger.kernel.org>
-In-Reply-To: <87ac4qfgvc.fsf@gmail.com> (Santi =?utf-8?Q?B=C3=A9jar's?=
- message of "Sat, 23 Sep
-	2006 22:49:27 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.50 (gnu/linux)
+	id S1750764AbWIWVtn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Sep 2006 17:49:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750766AbWIWVtn
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 17:49:43 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:43698 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1750764AbWIWVtn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Sep 2006 17:49:43 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060923214942.LNHG13992.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 23 Sep 2006 17:49:42 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Rxph1V0021kojtg0000000
+	Sat, 23 Sep 2006 17:49:41 -0400
+To: Christian Couder <chriscool@tuxfamily.org>
+In-Reply-To: <200609231322.30214.chriscool@tuxfamily.org> (Christian Couder's
+	message of "Sat, 23 Sep 2006 13:22:30 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27632>
 
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
----
- t/t5510-fetch.sh |   23 +++++++++++++++++++++++
- 1 files changed, 23 insertions(+), 0 deletions(-)
+> You are right, so what about moving ".git/refs/heads/frotz" 
+> to ".git/deleted-refs/heads/frotz.ref" 
+> or ".git/deleted-refs/heads/frotz~ref" (because "~" is forbidden in ref 
+> names).
 
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index e71581a..c7faffe
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -27,6 +27,16 @@ test_expect_success "clone and setup chi
- 		echo "URL: ../one/.git/"
- 		echo "Pull: refs/heads/master:refs/heads/one"
- 	} >.git/remotes/one
-+	cd .. &&
-+	git clone . three &&
-+	cd three &&
-+	git repo-config branch.master.remote two
-+	git repo-config branch.master.merge refs/heads/one
-+	{
-+		echo "URL: ../two/.git/"
-+		echo "Pull: refs/heads/master:refs/heads/two"
-+		echo "Pull: refs/heads/one:refs/heads/one"
-+	} >.git/remotes/two
- '
-=20
- test_expect_success "fetch test" '
-@@ -41,4 +51,17 @@ test_expect_success "fetch test" '
- 	test "z$mine" =3D "z$his"
- '
-=20
-+test_expect_success "fetch test for-merge" '
-+	cd "$D" &&
-+	cd three &&
-+	git fetch &&
-+	test -f .git/refs/heads/two &&
-+	test -f .git/refs/heads/one &&
-+	{
-+		echo -e "not-for-merge	branch \047master\047 of ../two/"
-+		echo -e "	branch \047one\047 of ../two/"
-+	} > expected &&
-+	cut -f 2- .git/FETCH_HEAD > actual &&
-+	diff expected actual'
-+
- test_done
---=20
-1.4.2.1.g279b
+But wouldn't it bring up the issue of locking among deleters,
+updaters/creators, and traversers?
+
+If we choose to use packed-refs.lock as the "set of all refs"
+lock, the whole sequence would become something like this.  Note
+that this tries to make readers lockless but I am sure there are
+nasty race condition issues.  I am not sure what we would want
+to do about them.
+
+= Looking up a ref $frotz.
+
+ - check if .git/$frotz exists, and use it if it does.
+
+ - check if .git/deleted-refs/$frotz~ref exists, and return "no
+   such ref" if it does.
+
+ - find $frotz in .git/packed-refs.
+
+= Looping over refs.
+
+ - grab all .git/refs/ and subtract all .git/deleted-refs/
+
+ - walk .git/packed-refs and the result from the above in
+   parallel as in the current code.
+
+= Storing a new value in ref $frotz.
+
+ - acquire .git/packed-refs.lock
+
+ - lock .git/$frotz.lock.
+
+ - write into .git/$frotz.lock.
+
+ - create or update .git/logs/$frotz as needed.
+
+ - if .git/deleted-refs/$frotz~ref exists, unlink it.
+
+ - rename .git/$frotz.lock to .git/$frotz to unlock it.
+
+ - unlink .git/packed-refs.lock
+
+= Deleting a ref $frotz.
+
+ - acquire .git/packed-refs.lock
+
+ - look up $frotz; if it does not exist either barf or return
+   silent (haven't thought it through yet).
+
+ - create .git/deleted-refs/$frotz~ref.
+
+ - remove .git/logs/$frotz
+
+ - unlink .git/packed-refs.lock
+
+= Packing refs, with optional pruning.
+
+ - lock .git/packed-refs.lock
+
+ - loop over refs:
+   - write it out to .git/packed-refs.lock unless a symref.
+   - if it is a loose one (not a symref), remember it for pruning.
+
+ - if pruning:
+   - remove the entire .git/deleted-refs/ hierarchy
+   - remove the remembered ones
+
+ - rename .git/packed-refs.lock to .git/packed-refs
