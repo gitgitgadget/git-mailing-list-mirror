@@ -1,61 +1,68 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC][RESEND][PATCH] Allow fetching from multiple repositories at once
-Date: Sat, 23 Sep 2006 20:45:01 +0200
-Organization: At home
-Message-ID: <ef3vb6$69d$1@sea.gmane.org>
-References: <20060923164308.16334.49252.stgit@machine.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Make cvsexportcommit work with filenames containing spaces.
+Date: Sat, 23 Sep 2006 12:03:07 -0700
+Message-ID: <7v4puytnh0.fsf@assigned-by-dhcp.cox.net>
+References: <20060922223506.3377.34859.stgit@lathund.dewire.com>
+	<7vvenfw727.fsf@assigned-by-dhcp.cox.net>
+	<200609231427.55721.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sat Sep 23 20:45:47 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 23 21:03:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRCVL-0008VG-Ts
-	for gcvg-git@gmane.org; Sat, 23 Sep 2006 20:45:36 +0200
+	id 1GRCmV-0003RL-BA
+	for gcvg-git@gmane.org; Sat, 23 Sep 2006 21:03:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751416AbWIWSpV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Sep 2006 14:45:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751418AbWIWSpV
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 14:45:21 -0400
-Received: from main.gmane.org ([80.91.229.2]:57817 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751416AbWIWSpU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Sep 2006 14:45:20 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GRCUw-0008RA-8b
-	for git@vger.kernel.org; Sat, 23 Sep 2006 20:45:10 +0200
-Received: from host-81-190-26-109.torun.mm.pl ([81.190.26.109])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 23 Sep 2006 20:45:10 +0200
-Received: from jnareb by host-81-190-26-109.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 23 Sep 2006 20:45:10 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-26-109.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751431AbWIWTDK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Sep 2006 15:03:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751430AbWIWTDK
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 15:03:10 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:8331 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1751431AbWIWTDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Sep 2006 15:03:08 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060923190308.CLHK2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 23 Sep 2006 15:03:08 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Rv361V00h1kojtg0000000
+	Sat, 23 Sep 2006 15:03:07 -0400
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+In-Reply-To: <200609231427.55721.robin.rosenberg@dewire.com> (Robin
+	Rosenberg's message of "Sat, 23 Sep 2006 14:27:55 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27614>
 
-Petr Baudis wrote:
+Robin Rosenberg <robin.rosenberg@dewire.com> writes:
 
-> This patch enables fetching multiple repositories at once over the Git
-> protocol (and SSH, and locally if git-fetch-pack is your cup of coffee
-> there). This is done especially for the xorg people who have tons of
-> repositories and dislike pulls much slower than they were used to with CVS.
-> I'm eager to hear how this affects the situation.
-[...]
+> Why patch? Well this patch works around (i.e. not perfect) a mismatch between 
+> what patch eats and git submits. They are not totally, compatible, and I'm 
+> not sure who to blame yet.  git emits diff's without timestamps, and what 
+> matters to patch, without a TAB before the file timestamp. When patch sees a 
+> header like "+++ filename with spaces.txt" it patches "filename". When it 
+> sees "+++ filename with spaces.txt<TAB>" if patches "filename with 
+> spaces.txt". The real fix would ofcourse be in git diff or patch sometime in 
+> the future.
 
-I see that objects got to the one shared object database. Where the heads
-(refs) go to? Separate projects have separate ref spaces, even if they share
-object database...
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Ah, it might be because our diff output do not have trailing TAB
+(and timestamp) and if CVS uses GNU patch that would be confused
+and not detect the file being patched.
+
+Interestingly, I did a two-patch series to address that issue
+separately.  But that is not even in "next" yet.
+
+More interestingly, the version of "GNU patch" that cannot grok
+our patch (without trailing TAB) for a file that has SP in its
+name is on my home machine where your patched cvsexportcommit
+works.  I do not know if GNU patch on the other machine does.
+
+Will collect necessary info and follow up.
