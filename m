@@ -1,68 +1,106 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [RFC][PATCH] for_each_ref() returning heads in wrong order
-Date: Sat, 23 Sep 2006 19:42:35 +0200
-Message-ID: <20060923174235.GB20017@pasky.or.cz>
-References: <20060923160712.5890.73139.stgit@machine.or.cz> <20060923164759.GP8259@pasky.or.cz> <Pine.LNX.4.63.0609231919510.25853@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC][RESEND][PATCH] Allow fetching from multiple repositories
+ at once
+Date: Sat, 23 Sep 2006 19:54:10 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0609231947340.25853@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060923164308.16334.49252.stgit@machine.or.cz> <45156780.6070801@gmail.com>
+ <20060923170439.GQ8259@pasky.or.cz> <Pine.LNX.4.63.0609231921110.25853@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20060923173943.GA20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, torvalds@osdl.org,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 23 19:42:52 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: A Large Angry SCM <gitzilla@gmail.com>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 23 19:54:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRBWS-0004Kj-FR
-	for gcvg-git@gmane.org; Sat, 23 Sep 2006 19:42:40 +0200
+	id 1GRBhg-0006zy-4E
+	for gcvg-git@gmane.org; Sat, 23 Sep 2006 19:54:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751374AbWIWRmi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Sep 2006 13:42:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751376AbWIWRmh
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 13:42:37 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:31452 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751374AbWIWRmh (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Sep 2006 13:42:37 -0400
-Received: (qmail 22520 invoked by uid 2001); 23 Sep 2006 19:42:35 +0200
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0609231919510.25853@wbgn013.biozentrum.uni-wuerzburg.de>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751366AbWIWRyN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Sep 2006 13:54:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751370AbWIWRyN
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 13:54:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58539 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751366AbWIWRyM (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Sep 2006 13:54:12 -0400
+Received: (qmail invoked by alias); 23 Sep 2006 17:54:10 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp020) with SMTP; 23 Sep 2006 19:54:10 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060923173943.GA20017@pasky.or.cz>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27608>
 
-  Hi,
+Hi,
 
-Dear diary, on Sat, Sep 23, 2006 at 07:20:42PM CEST, I got a letter
-where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
-> On Sat, 23 Sep 2006, Petr Baudis wrote:
+On Sat, 23 Sep 2006, Petr Baudis wrote:
+
+> Dear diary, on Sat, Sep 23, 2006 at 07:23:01PM CEST, I got a letter
+> where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
+> > On Sat, 23 Sep 2006, Petr Baudis wrote:
+> > 
+> > > Dear diary, on Sat, Sep 23, 2006 at 06:57:36PM CEST, I got a letter
+> > > where A Large Angry SCM <gitzilla@gmail.com> said that...
+> > > > Petr Baudis wrote:
+> > > > >You still need to pass git-fetch-pack some URL in addition to the
+> > > > >repositories - it is used only for git_connect(), the purpose is that
+> > > > >repositories must be local directories so if you want to talk remote, you
+> > > > >need to do something like
+> > > > >
+> > > > >	git-fetch-pack git://kernel.org/pub/scm/git/git.git 
+> > > > >	--repo=/pub/scm/git/git.git master next 
+> > > > >	--repo=/pub/scm/cogito/cogito.git master
+> > > > >
+> > > > 
+> > > > Can't this be done with a simple wrapper around git-fetch* ?
+> > > 
+> > > The point is that that is too slow (the difference is noticeable
+> > > especiall in the case there is no new stuff ready), you need to create a
+> > > connection and do whole lot of work for each of the repositories.
+> > 
+> > I still firmly believe that it would be way more efficient to fetch all 
+> > those branches into _one_ proxy repository. Especially since you can reuse 
+> > the objects with an alternate, which has an additional benefit over your 
+> > approach.
 > 
-> > Dear diary, on Sat, Sep 23, 2006 at 06:36:21PM CEST, I got a letter
-> > where Petr Baudis <pasky@suse.cz> said that...
-> > > Using the #next branch I've now hit a problem with git-fetch-pack
-> > > master choosing refs/bases/master (I geuss created by StGIT) instead
-> > > of refs/heads/master. The old upload-pack returned the refs in the order
-> > > heads-tags-everything_else but the new one just goes for whatever order
-> > > readdir() returns them in (modulo merging with packed refs). I actually
-> > > can't see the difference that caused this right now, though.
+>   Huh? You can reuse the objects with my approach as well. Actually, it
+> is automagically done so.
 > 
-> Why don't you just specify (or match) "heads/refs/master", so that 
-> git-fetch-pack cannot choose anything wrong to begin with?
+>   With proxy repository, you would still need a server-side setup to
+> maintain that repository, and specialized client-side porcelain to fetch
+> from it. My approach initially requires some core changes (which aren't
+> very pretty as it is but are not very fundamental or logically intrusive
+> either) but in the longer run it pays off since you don't need a
+> convoluted server-side setup for that.
 
-  hmm, does git-fetch prepend refs/heads/ to the refspecs or does it
-pass them as is to git-fetch-pack?
+No, you do not need _any_ server-side setup. And you do not need any 
+specialized client-side porcelain other than a script, which just does 
+the job.
 
-  If the former, then we could as well do that, but in that case I'd
-rather just require that for any refs passed to git-fetch-pack since
-passing the "short form" just serves for buggy scripts to get confused
-when someone adds some refs directory that sorts before heads/ to the
-repository.
+The point is, your changes are not only intrusive, they are unnecessary.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+You can even declare the first repository as the proxy. Sketch of script:
+
+	- find which branches are wanted at all,
+
+	- do the fetch (of all wanted branches) in the first repository,
+	  storing the refs under refs/multi/,
+
+	- for each repository
+
+		- ensure that the first repo is given as alternative
+
+		- store the branches this repo wants (you only need to 
+		  update the refs, since you have all the objects)
+
+This is not particularly complicated, is it?
+
+Ciao,
+Dscho
