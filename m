@@ -1,128 +1,130 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [RFC][RESEND][PATCH] Allow fetching from multiple repositories at once
-Date: Sat, 23 Sep 2006 19:06:21 +0200
-Message-ID: <20060923170621.GR8259@pasky.or.cz>
-References: <20060923164308.16334.49252.stgit@machine.or.cz>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFC][PATCH] for_each_ref() returning heads in wrong order
+Date: Sat, 23 Sep 2006 10:12:40 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0609231004210.4388@g5.osdl.org>
+References: <20060923160712.5890.73139.stgit@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="JgQwtEuHJzHdouWu"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 23 19:06:38 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 23 19:13:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRAxQ-0005by-Hl
-	for gcvg-git@gmane.org; Sat, 23 Sep 2006 19:06:28 +0200
+	id 1GRB3i-000720-BD
+	for gcvg-git@gmane.org; Sat, 23 Sep 2006 19:12:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751329AbWIWRGZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Sep 2006 13:06:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751330AbWIWRGZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 13:06:25 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:16774 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751329AbWIWRGY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Sep 2006 13:06:24 -0400
-Received: (qmail 18878 invoked by uid 2001); 23 Sep 2006 19:06:21 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <20060923164308.16334.49252.stgit@machine.or.cz>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751330AbWIWRMu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Sep 2006 13:12:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751331AbWIWRMu
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 13:12:50 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:24497 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751330AbWIWRMu (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Sep 2006 13:12:50 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8NHCenW021982
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 23 Sep 2006 10:12:41 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8NHCeTS020017;
+	Sat, 23 Sep 2006 10:12:40 -0700
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060923160712.5890.73139.stgit@machine.or.cz>
+X-Spam-Status: No, hits=-2.476 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.152 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27603>
 
 
---JgQwtEuHJzHdouWu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-Dear diary, on Sat, Sep 23, 2006 at 06:45:09PM CEST, I got a letter
-where Petr Baudis <pasky@suse.cz> said that...
-> You still need to pass git-fetch-pack some URL in addition to the
-> repositories - it is used only for git_connect(), the purpose is that
-> repositories must be local directories so if you want to talk remote, you
-> need to do something like
-> 
-> 	git-fetch-pack git://kernel.org/pub/scm/git/git.git --repo=/pub/scm/git/git.git master next --repo=/pub/scm/cogito/cogito.git master
-..snip..
-> The main target of this are the Xorg people who have plenty of small repos
-> and frequently want to update many of them. It would be nice if someone
-> from Xorg reading this and concerned with this could measure the
-> difference.
+On Sat, 23 Sep 2006, Petr Baudis wrote:
+>
+> Using the #next branch I've now hit a problem with git-fetch-pack
+> master choosing refs/bases/master (I geuss created by StGIT) instead
+> of refs/heads/master. The old upload-pack returned the refs in the order
+> heads-tags-everything_else but the new one just goes for whatever order
+> readdir() returns them in (modulo merging with packed refs). I actually
+> can't see the difference that caused this right now, though.
 
-Attached is a simple porcelain script for this.
+Actually, I think it's exactly the other way around.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+The _old_ "for_each_refs()" returned things in a totally random order, 
+depending on the readdir(). On many (but not all) filesystems, that ends 
+up being somewhat decided by the order the entries were created in, so for 
+example, you'd generally get "refs/heads/" and "refs/tags/" early 
+(discounting HEAD, which is always a special case and comes first).
 
---JgQwtEuHJzHdouWu
-Content-Type: text/x-perl; charset=us-ascii
-Content-Disposition: attachment; filename="multifetch.pl"
+The _new_ thing is totally reliable. It returns things sorted 
+alphabetically according to "strcmp". It doesn't matter what ordering 
+readdir() gives.
 
-#!/usr/bin/perl
-use warnings;
-use strict;
+Now, we could change the sorting order artificially, but I think your 
+patch is actually incorrect. Because you no longer sort the list 
+appropriately, the merge-sort done by "do_show_each_ref()" is no longer 
+guaranteed to work, I think.
 
-# Remember that you must ensure the obj database is shared - either symlink it
-# or setup alternates!
-#my $remoteurl = 'git://git.kernel.org/pub/scm/git/git.git';
-#my %config = (
-#	'/pub/scm/git/git.git' => {
-#		'next' => {
-#			'/home/xpasky/q/gg' => 'origin'
-#		},
-#		'master' => {
-#			'/home/xpasky/q/gg' => 'origin2',
-#			'/home/xpasky/q/gg2' => 'origin'
-#		}
-#	},
-#	'/pub/scm/cogito/cogito-doc.git' => {
-#		master => {
-#			'/home/xpasky/q/gg2' => 'origin2'
-#		}
-#	}
-#);
-my $remoteurl = 'puturlofremotehosthere';
-my %config = (
-	'remoterepo1' => {
-		branch1 => {
-			'localrepo1' => 'origin'
-		},
-		branch2 => {
-			'localrepo1' => 'origin2',
-			'localrepo2' => 'origin'
-		}
-	},
-	'remoterepo2' => {
-		master => {
-			'localrepo2' => 'origin2'
-		}
-	}
-);
+Ugly.
 
-my @args = ($remoteurl);
-foreach my $repo (keys %config) {
-	push (@args, '--repo='.$repo);
-	foreach my $branch (keys %{$config{$repo}}) {
-		push (@args, $branch);
-	}
-}
+The proper way to fix it (if you want to do this at all) is to just define 
+the sort-order to be something else than a plain "strcmp()", and change 
+the things that compare ordering to just use the new ordering instead.
 
-open (F, '-|', 'git-fetch-pack', @args) or die "$!";
-while (<F>) {
-	chomp;
-	split / /, $_;
-	my ($sha, $ref, $repo) = @_;
-	$ref =~ s#^refs/heads/##;
-	foreach my $lrepo (keys %{$config{$repo}->{$ref}}) {
-		system("GIT_DIR=$lrepo git-update-ref $config{$repo}->{$ref}->{$lrepo} $sha");
-	}
-}
-close (F);
+In other words, start from something like THIS, and just change 
+"ref_name_compare()" to taste. Make sure it's a complete ordering, though.
 
---JgQwtEuHJzHdouWu--
+		Linus
+
+---
+diff --git a/refs.c b/refs.c
+index 2cef2b4..05b7006 100644
+--- a/refs.c
++++ b/refs.c
+@@ -37,6 +37,17 @@ static const char *parse_ref_line(char *
+ 	return line;
+ }
+ 
++/*
++ * This is the ordering function for refnames. It has the
++ * same semantics as "strcmp()", but you can define it to
++ * order "refs/heads/" and "refs/tags/" before other names,
++ * for example.
++ */
++static int ref_name_compare(const char *a, const char *b)
++{
++	return strcmp(a,b);
++}
++
+ static struct ref_list *add_ref(const char *name, const unsigned char *sha1,
+ 				int flag, struct ref_list *list)
+ {
+@@ -45,7 +56,7 @@ static struct ref_list *add_ref(const ch
+ 
+ 	/* Find the place to insert the ref into.. */
+ 	while ((entry = *p) != NULL) {
+-		int cmp = strcmp(entry->name, name);
++		int cmp = ref_name_compare(entry->name, name);
+ 		if (cmp > 0)
+ 			break;
+ 
+@@ -179,7 +190,7 @@ const char *resolve_ref(const char *ref,
+ 		if (lstat(path, &st) < 0) {
+ 			struct ref_list *list = get_packed_refs();
+ 			while (list) {
+-				if (!strcmp(ref, list->name)) {
++				if (!ref_name_compare(ref, list->name)) {
+ 					hashcpy(sha1, list->sha1);
+ 					if (flag)
+ 						*flag |= REF_ISPACKED;
+@@ -297,7 +308,7 @@ static int do_for_each_ref(const char *b
+ 
+ 	while (packed && loose) {
+ 		struct ref_list *entry;
+-		int cmp = strcmp(packed->name, loose->name);
++		int cmp = ref_name_compare(packed->name, loose->name);
+ 		if (!cmp) {
+ 			packed = packed->next;
+ 			continue;
