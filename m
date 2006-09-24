@@ -1,62 +1,54 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: A Large Angry SCM <gitzilla@gmail.com>
 Subject: Re: What will happen to git.git in the near future
-Date: Sun, 24 Sep 2006 20:33:26 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0609242031410.25371@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v7iztbldm.fsf@assigned-by-dhcp.cox.net> <4516B8A7.6010007@lsrfire.ath.cx>
+Date: Sun, 24 Sep 2006 11:42:24 -0700
+Message-ID: <4516D190.3020608@gmail.com>
+References: <7v7iztbldm.fsf@assigned-by-dhcp.cox.net> <4516B8A7.6010007@lsrfire.ath.cx> <Pine.LNX.4.63.0609242031410.25371@wbgn013.biozentrum.uni-wuerzburg.de>
+Reply-To: git@vger.kernel.org
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 24 20:33:54 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 24 20:42:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRYnJ-00017m-KL
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 20:33:41 +0200
+	id 1GRYvv-0002VV-LN
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 20:42:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752134AbWIXSdf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Sep 2006 14:33:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752133AbWIXSdf
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 14:33:35 -0400
-Received: from mail.gmx.de ([213.165.64.20]:7903 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1752134AbWIXSde (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 14:33:34 -0400
-Received: (qmail invoked by alias); 24 Sep 2006 18:33:32 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp044) with SMTP; 24 Sep 2006 20:33:32 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-In-Reply-To: <4516B8A7.6010007@lsrfire.ath.cx>
-X-Y-GMX-Trusted: 0
+	id S1752129AbWIXSm2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Sep 2006 14:42:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752137AbWIXSm2
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 14:42:28 -0400
+Received: from py-out-1112.google.com ([64.233.166.182]:30140 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1752129AbWIXSm1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Sep 2006 14:42:27 -0400
+Received: by py-out-1112.google.com with SMTP id n25so2167847pyg
+        for <git@vger.kernel.org>; Sun, 24 Sep 2006 11:42:26 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=OR+J/4FW9WoCXmV8JP6Ytvtu07ozvC73VSlN7fAEVgybjSXz16rBAR/hjJph6gksXgbZ8iBeWYKdpAD1HmH344b/LEuqbTg9RY0fjHCaZ8BxRaRiv6Vu290FC4SSKdMOlxtKVRWrc2uvnoWdskzFPi0rO4AHTckWfkuVFH/Krl8=
+Received: by 10.35.66.12 with SMTP id t12mr6543636pyk;
+        Sun, 24 Sep 2006 11:42:26 -0700 (PDT)
+Received: from ?10.0.0.6? ( [68.70.66.154])
+        by mx.gmail.com with ESMTP id k62sm1896413pyk.2006.09.24.11.42.25;
+        Sun, 24 Sep 2006 11:42:26 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060911)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0609242031410.25371@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27688>
 
-Hi,
+Johannes Schindelin wrote:
+[...]
+> I think that this could be done very efficiently (both in terms of time 
+> and size) as a "pure" builtin, i.e. something with works as
+> "git tar-tree", but not as "git-tar-tree". Of course, this would break 
+> scripts using the latter instead of the former. Just my 2 yinyangs.
 
-On Sun, 24 Sep 2006, Rene Scharfe wrote:
-
-> Junio C Hamano schrieb:
-> >  - We should deprecate git-tar-tree.  However, it has been
-> >    around and advertised for quite some time, so we need to make
-> >    sure people would not get burned too badly.  It might be
-> >    worthwhile to rewrite git-tar-tree as a thin wrapper to
-> >    "git-archive --format=tar" and remove git-upload-tar now (in
-> >    other words, "git-tar-tree --remote" will continue to work,
-> >    but it will talk with "git-upload-archive", not with
-> >    "git-upload-tar" on the other end), release 1.4.3 with it
-> >    with a deprecation warning, and then remove it in 1.4.5.
-> 
-> Hmm.  The local case in git-tar-tree is already a thin wrapper.
-> How about something like this shell script as a replacement for
-> the entire command?
-
-I think that this could be done very efficiently (both in terms of time 
-and size) as a "pure" builtin, i.e. something with works as
-"git tar-tree", but not as "git-tar-tree". Of course, this would break 
-scripts using the latter instead of the former. Just my 2 yinyangs.
-
-Ciao,
-Dscho
+That would be a bug. If "git foo" works, then "git-foo" should also work.
