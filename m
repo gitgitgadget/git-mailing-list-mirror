@@ -1,84 +1,74 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: 2.6.18-mm1
-Date: Sun, 24 Sep 2006 18:55:15 +0200
-Message-ID: <20060924165515.GX13132@pasky.or.cz>
-References: <20060924040215.8e6e7f1a.akpm@osdl.org> <20060924124647.GB25666@flint.arm.linux.org.uk> <20060924132213.GE11916@pasky.or.cz> <20060924142005.GF25666@flint.arm.linux.org.uk> <20060924142958.GU13132@pasky.or.cz> <20060924144710.GG25666@flint.arm.linux.org.uk>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: What will happen to git.git in the near future
+Date: Sun, 24 Sep 2006 18:56:07 +0200
+Message-ID: <4516B8A7.6010007@lsrfire.ath.cx>
+References: <7v7iztbldm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 24 18:55:32 2006
+X-From: git-owner@vger.kernel.org Sun Sep 24 18:56:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRXGF-0007rW-6g
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 18:55:23 +0200
+	id 1GRXH6-00084h-Ce
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 18:56:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751134AbWIXQzT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Sep 2006 12:55:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751156AbWIXQzT
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 12:55:19 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:14740 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751104AbWIXQzR (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 12:55:17 -0400
-Received: (qmail 3595 invoked by uid 2001); 24 Sep 2006 18:55:15 +0200
-To: linux-kernel@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20060924144710.GG25666@flint.arm.linux.org.uk>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751146AbWIXQ4M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 24 Sep 2006 12:56:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751159AbWIXQ4M
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 12:56:12 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:34693
+	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S1751146AbWIXQ4L (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Sep 2006 12:56:11 -0400
+Received: from [10.0.1.3] (p508E7663.dip.t-dialin.net [80.142.118.99])
+	by neapel230.server4you.de (Postfix) with ESMTP id 2A8DD36082;
+	Sun, 24 Sep 2006 18:56:10 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.7 (Windows/20060909)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v7iztbldm.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27676>
 
-Dear diary, on Sun, Sep 24, 2006 at 04:47:10PM CEST, I got a letter
-where Russell King <rmk+lkml@arm.linux.org.uk> said that...
-> On Sun, Sep 24, 2006 at 04:29:58PM +0200, Petr Baudis wrote:
-> > Dear diary, on Sun, Sep 24, 2006 at 04:20:06PM CEST, I got a letter
-> > where Russell King <rmk+lkml@arm.linux.org.uk> said that...
-> > > I'm now told that the resulting tree after all the commits is correct.
-> > > The problem is that all the files which were supposed to be deleted by
-> > > previous patches ended up actually being deleted by the final patch in
-> > > the series.
-> > > 
-> > > So the resulting tree is fine, it's just that the history is rather
-> > > broken.
-> > 
-> > Well, that rewritehist batch should work fine even in this case.
-> > 
-> > (Of course that's assuming that no change was supposed to happen to
-> > those files in the last four days.)
-> > 
-> > > I think a solution to this might be to use git-apply, but there's one
-> > > draw back - I currently have the facility to unpatch at a later date,
-> > > but git-apply doesn't support -R.
-> > 
-> > Yes, if there's not too many patches perhaps using git-apply -R would be
-> > simpler. git-apply in git-1.4.2.1 does support -R.
-> 
-> I'm just experimenting with git-apply for the forward case, and I'm
-> hitting a small problem.  I can do:
-> 
-> 	cat patch | git-apply --stat
-> 
-> then I come to commit it:
-> 
-> 	git commit -F -
-> 
-> but if I just use that, _all_ changes which happen to be in the tree
-> get committed, not just those which are in the index file.  Manually
-> doing each step of the commit is far too much work in perl...
+Junio C Hamano schrieb:
+>  - We should deprecate git-tar-tree.  However, it has been
+>    around and advertised for quite some time, so we need to make
+>    sure people would not get burned too badly.  It might be
+>    worthwhile to rewrite git-tar-tree as a thin wrapper to
+>    "git-archive --format=3Dtar" and remove git-upload-tar now (in
+>    other words, "git-tar-tree --remote" will continue to work,
+>    but it will talk with "git-upload-archive", not with
+>    "git-upload-tar" on the other end), release 1.4.3 with it
+>    with a deprecation warning, and then remove it in 1.4.5.
 
-Hmm, I'm sorry but I'm not all that well-versed in git commit inner
-workings. The best way to get help is to cc' git@vger.kernel.org.
+Hmm.  The local case in git-tar-tree is already a thin wrapper.
+How about something like this shell script as a replacement for
+the entire command?
 
-According to git-commit documentation, when you do what you wrote you
-use, it _should_ commit just the index file...
+Ren=E9
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+--- snip! --
+#!/bin/sh
+#
+# Copyright (C) 2006 Rene Scharfe
+
+USAGE=3D'[--remote=3D<repo>] <tree-ish> [basedir]'
+=2E git-sh-setup
+
+case "$1" in
+--remote=3D*)	remote=3D1;;
+*)		remote=3D0;;
+esac
+
+case "$#,$remote" in
+1,0)	exec git-archive --format=3Dtar                     "$1";;
+2,0)	exec git-archive --format=3Dtar --prefix=3D"$2"/      "$1";;
+2,1)	exec git-archive --format=3Dtar                "$1" "$2";;
+3,1)	exec git-archive --format=3Dtar --prefix=3D"$3"/ "$1" "$2";;
+*)	usage;;
+esac
