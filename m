@@ -1,88 +1,68 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH] gitweb: Add committags support
-Date: Sun, 24 Sep 2006 18:35:26 +0200
-Organization: At home
-Message-ID: <ef6c42$h1b$1@sea.gmane.org>
-References: <200609212356.31806.jnareb@gmail.com> <20060923032948.GE8259@pasky.or.cz> <200609231034.49545.jnareb@gmail.com> <20060923121134.GM13132@pasky.or.cz> <7veju2s6bi.fsf@assigned-by-dhcp.cox.net> <ef44r4$km0$1@sea.gmane.org> <7v4puys3ye.fsf@assigned-by-dhcp.cox.net> <ef5jkv$gep$1@sea.gmane.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Introducing cg-xxdiff for conflict resolution
+Date: Sun, 24 Sep 2006 18:50:37 +0200
+Message-ID: <20060924165037.GS20017@pasky.or.cz>
+References: <11546624471356-git-send-email-martin@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Sun Sep 24 18:36:00 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 24 18:50:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRWxK-0003sH-93
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 18:35:51 +0200
+	id 1GRXBm-0006sk-Vz
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 18:50:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751209AbWIXQfo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 24 Sep 2006 12:35:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751217AbWIXQfo
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 12:35:44 -0400
-Received: from main.gmane.org ([80.91.229.2]:21485 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751209AbWIXQfn (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 12:35:43 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GRWx2-0003or-UZ
-	for git@vger.kernel.org; Sun, 24 Sep 2006 18:35:32 +0200
-Received: from host-81-190-26-109.torun.mm.pl ([81.190.26.109])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 24 Sep 2006 18:35:32 +0200
-Received: from jnareb by host-81-190-26-109.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 24 Sep 2006 18:35:32 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-26-109.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1750756AbWIXQuk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Sep 2006 12:50:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750987AbWIXQuk
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 12:50:40 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:60855 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750756AbWIXQuj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 12:50:39 -0400
+Received: (qmail 3210 invoked by uid 2001); 24 Sep 2006 18:50:37 +0200
+To: Martin Langhoff <martin@catalyst.net.nz>
+Content-Disposition: inline
+In-Reply-To: <11546624471356-git-send-email-martin@catalyst.net.nz>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27674>
 
-Jakub Narebski wrote:
+Dear diary, on Fri, Aug 04, 2006 at 05:34:07AM CEST, I got a letter
+where Martin Langhoff <martin@catalyst.net.nz> said that...
+> This is a bit of a crude but really useful shortcut for conflict resolution.
+> The name is bad, but matches git-xxdiff which has been around for like... ages
 
-> Junio C Hamano wrote:
->=20
->> Jakub Narebski <jnareb@gmail.com> writes:
->>=20
->>> The idea of doing committag parsing, and preserving replacements
->>> from matching committag and being subject to HTML escaping by using
->>> reference to string has it's merits.
->>>
->>> I'd have to think about it.
->>=20
->> Good. =A0My obviously buggy illustration would be easier to read
->> with this patch ;-).
->=20
-> Don't forget about final s,\n,<br/>\n,gm if we parse it as a whole,
-> and not line by line.=20
->=20
-> By the way, I think that only the driver (i.e. format_log_line_html) =
-has to
-> be changed...
+Yes, the name is horrible. :-)
 
-Yet another question is how to deal with commit message specific
-"syntax highlighting". Currently, parsing commit message line by line,
-we treat specially signoff lines (syntax highlighting, and removing
-trailing empty lines after signoff), empty lines (we collapse consecuti=
-ve
-empty lines); the rest goes through format_log_line_html... and committ=
-ags.
+> As Cogito doesn't make use of the index during merges/applies, cg-xxdiff
+> is somewhat more brittle and cannot not help during conflict resolution when
+> using cg-patch.
+> 
+> Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
 
-Tag messages have another specific syntax highlighting, namely PGP/GPG
-signature part, which should be syntax highlighted I think (and not=20
-subject to committags replacements).
+Hmm, I think this would be generally more useful during the actual merge
+phase - if merge returns error, you fire up
+git-magic-conflict-resolution-driver and have fun.
 
+Which reminds me that I should make some more effort to unify
+cg-Xmergeonefile and git-merge-one-file...
 
-Some of the problems of marking replacements as not to be committags=20
-searched and not to be HTML escaped can be dealt with by changing the
-order of committags. For example having 'URL' tag as first tag to check
-we avoid invoking it on committag replacements links.
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+> +. git-sh-setup
+
+Uh-oh. :-)
+
+> +git cat-file blob `git rev-parse FETCH_HEAD`:$FILE > $FILE~branch
+
+Cogito does not use FETCH_HEAD.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
