@@ -1,74 +1,75 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: What will happen to git.git in the near future
-Date: Sun, 24 Sep 2006 18:56:07 +0200
-Message-ID: <4516B8A7.6010007@lsrfire.ath.cx>
-References: <7v7iztbldm.fsf@assigned-by-dhcp.cox.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: [PATCH] Introducing cg-xxdiff for conflict resolution
+Date: Sun, 24 Sep 2006 18:02:28 +0100
+Message-ID: <46a038f90609241002i1db98ed6n118077089c9e417f@mail.gmail.com>
+References: <11546624471356-git-send-email-martin@catalyst.net.nz>
+	 <20060924165037.GS20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 24 18:56:28 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Martin Langhoff" <martin@catalyst.net.nz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 24 19:02:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRXH6-00084h-Ce
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 18:56:16 +0200
+	id 1GRXNB-00011C-Ke
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 19:02:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751146AbWIXQ4M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 24 Sep 2006 12:56:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751159AbWIXQ4M
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 12:56:12 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:34693
-	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S1751146AbWIXQ4L (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Sep 2006 12:56:11 -0400
-Received: from [10.0.1.3] (p508E7663.dip.t-dialin.net [80.142.118.99])
-	by neapel230.server4you.de (Postfix) with ESMTP id 2A8DD36082;
-	Sun, 24 Sep 2006 18:56:10 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.7 (Windows/20060909)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v7iztbldm.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.94.0.0
+	id S1750762AbWIXRCa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Sep 2006 13:02:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751165AbWIXRCa
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 13:02:30 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:16375 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1750762AbWIXRC3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Sep 2006 13:02:29 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so1348559nfa
+        for <git@vger.kernel.org>; Sun, 24 Sep 2006 10:02:28 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=LxFDwH0Oy8MpTbgaqZNd7l4l60IGJBcK6FTL2bgiB0fhs6vRVkCtZWHXWUhagomUmLJuXdgeFKDdJKJjjHBvWzQPX5HVDGoadoTvPAZ1s3MWzU8l8tC7gQi7lOT8fYbWpigJRF9PlLKQnqCJRSATdXacMMHKX+qHN9HbpO2mUaA=
+Received: by 10.49.41.18 with SMTP id t18mr485051nfj;
+        Sun, 24 Sep 2006 10:02:28 -0700 (PDT)
+Received: by 10.49.11.5 with HTTP; Sun, 24 Sep 2006 10:02:28 -0700 (PDT)
+To: "Petr Baudis" <pasky@suse.cz>
+In-Reply-To: <20060924165037.GS20017@pasky.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27677>
 
-Junio C Hamano schrieb:
->  - We should deprecate git-tar-tree.  However, it has been
->    around and advertised for quite some time, so we need to make
->    sure people would not get burned too badly.  It might be
->    worthwhile to rewrite git-tar-tree as a thin wrapper to
->    "git-archive --format=3Dtar" and remove git-upload-tar now (in
->    other words, "git-tar-tree --remote" will continue to work,
->    but it will talk with "git-upload-archive", not with
->    "git-upload-tar" on the other end), release 1.4.3 with it
->    with a deprecation warning, and then remove it in 1.4.5.
+On 9/24/06, Petr Baudis <pasky@suse.cz> wrote:
+> Hmm, I think this would be generally more useful during the actual merge
+> phase - if merge returns error, you fire up
+> git-magic-conflict-resolution-driver and have fun.
 
-Hmm.  The local case in git-tar-tree is already a thin wrapper.
-How about something like this shell script as a replacement for
-the entire command?
+Well, in many cases the conflict markers are just ok and exactly what
+I want. If the two sides of the conflict are clear, the resolution is
+usually clear as well. OTOH, it may be a big mess where xxdiff gives
+more visual cues as to WTF is going on...
 
-Ren=E9
+IOW I don't want it to be part of the merge automagically...
 
---- snip! --
-#!/bin/sh
-#
-# Copyright (C) 2006 Rene Scharfe
+> > +. git-sh-setup
+>
+> Uh-oh. :-)
 
-USAGE=3D'[--remote=3D<repo>] <tree-ish> [basedir]'
-=2E git-sh-setup
+Is that bad? <blush> I am not doing anything too cogito-specific, and
+I just don't know what cg-Xlib will do for me...
 
-case "$1" in
---remote=3D*)	remote=3D1;;
-*)		remote=3D0;;
-esac
+> > +git cat-file blob `git rev-parse FETCH_HEAD`:$FILE > $FILE~branch
+>
+> Cogito does not use FETCH_HEAD.
 
-case "$#,$remote" in
-1,0)	exec git-archive --format=3Dtar                     "$1";;
-2,0)	exec git-archive --format=3Dtar --prefix=3D"$2"/      "$1";;
-2,1)	exec git-archive --format=3Dtar                "$1" "$2";;
-3,1)	exec git-archive --format=3Dtar --prefix=3D"$3"/ "$1" "$2";;
-*)	usage;;
-esac
+eeek. you ar right. I mix and match git and cogito as you can see. Not
+so smart. I see cg-merge uses merging, merge-base and merging-sym --
+I'll rework it using those...
+
+cheers,
+
+
+
+martin
