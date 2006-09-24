@@ -1,74 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fixes git-cherry algorithmic flaws
-Date: Sun, 24 Sep 2006 10:47:29 -0700
-Message-ID: <7vodt59mxa.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0608071328200.22971@kivilampi-30.cs.helsinki.fi>
-	<20060924000051.GI20017@pasky.or.cz>
-	<7virjem3tp.fsf@assigned-by-dhcp.cox.net>
-	<20060924111737.GL20017@pasky.or.cz>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: cg-commit -p -m ignores -p
+Date: Sun, 24 Sep 2006 19:48:37 +0200
+Message-ID: <20060924174837.GX20017@pasky.or.cz>
+References: <20060915132319.12117.qmail@7d60384c102e6d.315fe32.mid.smarden.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@helsinki.fi>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 24 19:47:44 2006
+X-From: git-owner@vger.kernel.org Sun Sep 24 19:48:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRY4s-0001FS-IE
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 19:47:42 +0200
+	id 1GRY5q-0001Oi-Ui
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 19:48:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751344AbWIXRrc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Sep 2006 13:47:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751339AbWIXRrc
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 13:47:32 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:12981 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1751334AbWIXRra (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Sep 2006 13:47:30 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060924174730.MEUO26416.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 24 Sep 2006 13:47:30 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id SHnX1V00j1kojtg0000000
-	Sun, 24 Sep 2006 13:47:32 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060924111737.GL20017@pasky.or.cz> (Petr Baudis's message of
-	"Sun, 24 Sep 2006 13:17:38 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751316AbWIXRsj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Sep 2006 13:48:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751339AbWIXRsj
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 13:48:39 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:61869 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751316AbWIXRsj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 13:48:39 -0400
+Received: (qmail 11288 invoked by uid 2001); 24 Sep 2006 19:48:37 +0200
+To: git@vger.kernel.org, 387515@bugs.debian.org
+Content-Disposition: inline
+In-Reply-To: <20060915132319.12117.qmail@7d60384c102e6d.315fe32.mid.smarden.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27685>
 
-Petr Baudis <pasky@suse.cz> writes:
+Dear diary, on Fri, Sep 15, 2006 at 03:23:19PM CEST, I got a letter
+where Gerrit Pape <pape@smarden.org> said that...
+> Hi, please see http:/bugs.debian.org/387515 or below.  I agree that
+> ideally cg-commit should behave differently.
+> 
+> Thanks, Gerrit.
+> 
+> ----- Forwarded message from Andrew Suffield <asuffield@suffields.me.uk> -----
+> 
+> cg-commit -p -m ignores the -p argument and silently commits. Yes,
+> this is documented, but it's still stupid behaviour; if the user had
+> meant that, they would have just used -m alone.
+> 
+> At the very least, it should abort with an error (on the basis that
+> the command makes no sense); more sensibly, it should create a log
+> message with the given string and then spawn an editor (and then since
+> the user will probably exit without changing the file, the "Abort or
+> commit?" message would appear as per usual, which seems to me to be
+> appropriate behaviour).
+> 
+> 
+> ----- End forwarded message -----
 
-> Hmm, well, what's curious is that the documentation says
->
-> 	Every commit with a changeset that doesn't exist in the other branch
-> 	has its id (sha1) reported, prefixed by a symbol.  Those existing only
-> 	in the <upstream> branch are prefixed with a minus (-) sign, and those
-> 	that only exist in the <head> branch are prefixed with a plus (+)
-> 	symbol.
->
-> which is in contradiction of Ilpo's description of the old algorithm
-> (and also your description of it). It would seem he just wants to fix it
-> according to the documented behaviour.
->
-> I guess the documentation is what's broken then?
+Thanks, fixed by making cg-commit -p imply -e.
 
-Ah I did not realize that, but yes the documentation is
-incorrect.
-
-I wonder if we can kill it by introducing a new rev notation and
-using regular rev-list family of commands instead.
-
-What we want here is a way to say "give me commits that are in B
-but not in A, but before returning a commit see if there is an
-equivalent change in the set of commits that are in A but not in
-B, and filter it out".
-
-Time for "rev-list A....B"? ;-)
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
