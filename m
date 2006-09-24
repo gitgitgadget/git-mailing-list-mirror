@@ -1,72 +1,79 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [ANNOUNCE] tig 0.5
-Date: Mon, 25 Sep 2006 01:31:12 +0200
-Message-ID: <20060924233112.GB695@diku.dk>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [CFH] Remotes conversion script
+Date: Mon, 25 Sep 2006 01:40:26 +0200
+Organization: At home
+Message-ID: <ef750s$jg4$1@sea.gmane.org>
+References: <20060924212142.GB20017@pasky.or.cz> <8aa486160609241457u40fffdd8h298e44351749bb29@mail.gmail.com> <20060924221644.GE13132@pasky.or.cz> <8aa486160609241534yc78b194g64038fe22048c443@mail.gmail.com> <20060924224017.GC20017@pasky.or.cz> <ef72ts$dk9$2@sea.gmane.org> <20060924231108.GE20017@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Sep 25 01:31:29 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Mon Sep 25 01:40:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRdRS-0003bj-SV
-	for gcvg-git@gmane.org; Mon, 25 Sep 2006 01:31:23 +0200
+	id 1GRdaG-00058J-Hv
+	for gcvg-git@gmane.org; Mon, 25 Sep 2006 01:40:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751360AbWIXXbT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Sep 2006 19:31:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751365AbWIXXbT
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 19:31:19 -0400
-Received: from [130.225.96.91] ([130.225.96.91]:60859 "EHLO mgw1.diku.dk")
-	by vger.kernel.org with ESMTP id S1751360AbWIXXbS (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 19:31:18 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 829CE770072
-	for <git@vger.kernel.org>; Mon, 25 Sep 2006 01:31:15 +0200 (CEST)
-Received: from mgw1.diku.dk ([127.0.0.1])
- by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 18754-14 for <git@vger.kernel.org>; Mon, 25 Sep 2006 01:31:12 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id E920977006C
-	for <git@vger.kernel.org>; Mon, 25 Sep 2006 01:31:12 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP id 4749B6DF84F
-	for <git@vger.kernel.org>; Mon, 25 Sep 2006 01:29:16 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id CDD9162A3D; Mon, 25 Sep 2006 01:31:12 +0200 (CEST)
+	id S1751381AbWIXXkY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Sep 2006 19:40:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751389AbWIXXkY
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 19:40:24 -0400
+Received: from main.gmane.org ([80.91.229.2]:30904 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751381AbWIXXkX (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 19:40:23 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GRda6-00056n-5o
+	for git@vger.kernel.org; Mon, 25 Sep 2006 01:40:18 +0200
+Received: from host-81-190-26-109.torun.mm.pl ([81.190.26.109])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 25 Sep 2006 01:40:18 +0200
+Received: from jnareb by host-81-190-26-109.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 25 Sep 2006 01:40:18 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-Virus-Scanned: amavisd-new at diku.dk
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-26-109.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27718>
 
-Hello,
+Petr Baudis wrote:
 
-After a long break a few changes have started to accumulate so here is
-version 0.5 of tig. It adds some basic features like searching and
-support for keybindings (see tigrc(5)). Additionally, It fixes most of
-the things I would have hoped to include in this release. I tried to fix
-the problems reported with terminal encoding by using iconv, but earlier
-tonight I found that it needs some more work.
+> Dear diary, on Mon, Sep 25, 2006 at 01:04:41AM CEST, I got a letter
+> where Jakub Narebski <jnareb@gmail.com> said that...
+>> Petr Baudis wrote:
+>> 
+>> > Dear diary, on Mon, Sep 25, 2006 at 12:34:24AM CEST, I got a letter
+>> > where Santi <sbejar@gmail.com> said that...
+>> >> It could be I'm wrong (for sure, I miss something), but I see the
+>> >> branches/ files like [remote] sections files with just one fetch:
+>> >> 
+>> >> .git/branches/git:
+>> >> git://...../git.gi
+>> >> 
+>> >> would be:
+>> >> 
+>> >> [remote "git"]
+>> >> url=git://...../git.git
+>> >> fetch=refs/heads/master:refs/heads/git
+>> > 
+>> > That's basically right, the point is that with moving to remotes
+>> > support, we will make each remote live in its own separate namespace,
+>> 
+>> Which is overkill if we fetch only from one directory.
+> 
+> Why?
 
-Looking forward, better input support is much desired, plus I'd like to
-review the drawing code to see if it can be optimized to do fewer
-updates. Also, a blame view is in the pipeline and I have a proof of
-concept implementation of revision graph rendering (it is available in
-the new/rev-graph branch).
-
-A list of tig resources:
-
- - Homepage: http://jonas.nitro.dk/tig/
- - Releases: http://jonas.nitro.dk/tig/releases/
- - Git URL:  http://jonas.nitro.dk/tig/tig.git or
-             git://repo.or.cz/tig.git
- - Gitweb:   http://repo.or.cz/?p=tig.git;a=summary
-
-Tarballs contain all the generated documentation, as do the #release
-branch of the git repository.
-
+s/directory/repository/ of course. And as of why: I'd rather have 'next',
+'maint, 'html', 'man' in main namespace (with 'origin' substituting
+'master') instead of remotes/origin/next etc.
 -- 
-Jonas Fonseca
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
