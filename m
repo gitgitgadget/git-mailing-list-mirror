@@ -1,100 +1,128 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fixes git-cherry algorithmic flaws
-Date: Sat, 23 Sep 2006 18:49:22 -0700
-Message-ID: <7virjem3tp.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0608071328200.22971@kivilampi-30.cs.helsinki.fi>
-	<20060924000051.GI20017@pasky.or.cz>
+Subject: Re: [PATCH 4/4 (take 4)] Add test for the default merges in fetch.
+Date: Sat, 23 Sep 2006 18:49:41 -0700
+Message-ID: <7vbqp6m3t6.fsf@assigned-by-dhcp.cox.net>
+References: <87ac4qfgvc.fsf@gmail.com> <87sliie20o.fsf@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: junkio@cox.net,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@helsinki.fi>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 24 03:49:42 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 24 03:49:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRJ7l-0005ci-4N
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 03:49:41 +0200
+	id 1GRJ7s-0005e1-Ls
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 03:49:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752053AbWIXBtY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 23 Sep 2006 21:49:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752052AbWIXBtY
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 21:49:24 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:30931 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1752053AbWIXBtX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Sep 2006 21:49:23 -0400
+	id S1752052AbWIXBtn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 23 Sep 2006 21:49:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752054AbWIXBtn
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 21:49:43 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:14211 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1752052AbWIXBtn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Sep 2006 21:49:43 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao06.cox.net
+          by fed1rmmtao02.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060924014923.IVYG6235.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 23 Sep 2006 21:49:23 -0400
+          id <20060924014942.IHRW12581.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 23 Sep 2006 21:49:42 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id S1pR1V0011kojtg0000000
-	Sat, 23 Sep 2006 21:49:25 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060924000051.GI20017@pasky.or.cz> (Petr Baudis's message of
-	"Sun, 24 Sep 2006 02:00:51 +0200")
+	id S1pk1V0041kojtg0000000
+	Sat, 23 Sep 2006 21:49:44 -0400
+To: Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27644>
 
-Petr Baudis <pasky@suse.cz> writes:
+Santi B=E9jar <sbejar@gmail.com> writes:
 
-> Dear diary, on Mon, Aug 07, 2006 at 12:30:13PM CEST, I got a letter
-> where Ilpo J=E4rvinen <ilpo.jarvinen@helsinki.fi> said that...
->> Old algorithm:
->>         - printed IDs of identical patches with minus (-) sign; they
->> 	  should not be printed at all
->>         - did not print anything from the changes in the upstream
->>=20
->> Signed-off-by: Ilpo J=E4rvinen <ilpo.jarvinen@helsinki.fi>
->
-> Ping? Is this patch bogus or was it just forgotten?
+> +	cd .. &&
+> +	git clone . three &&
+> +	cd three &&
+> +	git repo-config branch.master.remote two
+> +	git repo-config branch.master.merge refs/heads/one
+> +	{
+> +		echo "URL: ../two/.git/"
+> +		echo "Pull: refs/heads/master:refs/heads/two"
+> +		echo "Pull: refs/heads/one:refs/heads/one"
+> +	} >.git/remotes/two
+>  '
 
-These are not fixes to "algorithmic flaws".  It's more like that
-Ilpo is writing a different program to fill different needs, and
-I did not see what workflow wanted to have the list of changes
-that were in the upstream and our changes.  Maybe what Ilpo
-wanted to see was something like "git log upstream...mine"
-(three-dots not two to mean symmetric difference).  I dunno.
-That operation certainly did not exist when we did git-cherry
-originally.
+Please string them with && unless there is a compelling reason
+not to.
 
-The original purpose of git-cherry (which probably is different
-from what Ilpo wanted to have, and that is why Ilpo modified it
-into a different program) is for a developer in the contributor
-role to see which ones of local patches have been accepted
-upstream and which ones still remain unapplied -- the intent is
-to help rebase only the latter and keep trying to convince
-upstream that these remaining ones are also worth applying.
+That would catch a potential error exit from repo-config,
+although it is not a focus of this test.  We have caught
+breakage of parts of the system by tests meant for unrelated
+parts of the system number of times.
 
-So minus (-) lines are very much needed to if you want to see
-which ones have been accepted.  Plus lines are used to pick
-which ones to rebase by older version of git-rebase, but I do
-not think we do that anymore.  And in any case we are _not_
-interested in whatever happened in the upstream that did not
-come from the branch we are looking at.
+> +test_expect_success "fetch test for-merge" '
+> +	cd "$D" &&
+> +	cd three &&
+> +	git fetch &&
+> +	test -f .git/refs/heads/two &&
+> +	test -f .git/refs/heads/one &&
+> +	{
+> +		echo -e "not-for-merge	branch \047master\047 of ../two/"
+> +		echo -e "	branch \047one\047 of ../two/"
+> +	} > expected &&
+> +	cut -f 2- .git/FETCH_HEAD > actual &&
+> +	diff expected actual'
 
-I suspect we do not use it anywhere anymore.  Maybe we can
-remove it?
+Testing for the explicit implementation detail (namely, the
+human readable part of the merge log message per branch) makes
+me feel uneasy.  Also I've stayed away from "echo -e" for some
+inexplicable fear of portability issues and I do not see a
+reason to use it here.  Time to learn to use '\'' perhaps?
 
-	... goes and looks ...
-	git grep -e git.cherry --and --not -e git.cherry-pick
+I would have:
 
-Nah, no such luck.  One of the documentation suggests that you
-drive cvsexportcommit using its output, like this:
+ - arranged branch tips of all the repos that are potentially
+   involved to have different object names;
 
-	git cherry cvs mine | sed -n -e 's/^\+ //p' |
-        xargs -L 1 git-cvsexportcommit -c -p -v
+ - checked for the commit object names at the beginning of the
+   resulting FETCH_HEAD and not-for-merge markers;
 
-and I can see why cherry is (perhaps slightly) more desirable
-than "git rev-list cvs..mine"
+ - ignored the "branch 'foo' of repo" log message pieces;.
 
-So unless we come up with an alternative way to do this, we
-cannot change it or drop it.  Not yet.
+In other words, this on top of yours, which I am going to
+commit.
+
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 2d8da59..df0ae48 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -30,8 +30,8 @@ test_expect_success "clone and setup chi
+ 	cd .. &&
+ 	git clone . three &&
+ 	cd three &&
+-	git repo-config branch.master.remote two
+-	git repo-config branch.master.merge refs/heads/one
++	git repo-config branch.master.remote two &&
++	git repo-config branch.master.merge refs/heads/one &&
+ 	{
+ 		echo "URL: ../two/.git/"
+ 		echo "Pull: refs/heads/master:refs/heads/two"
+@@ -57,11 +57,13 @@ test_expect_success "fetch test for-merg
+ 	git fetch &&
+ 	test -f .git/refs/heads/two &&
+ 	test -f .git/refs/heads/one &&
++	master_in_two=3D`cd ../two && git rev-parse master` &&
++	one_in_two=3D`cd ../two && git rev-parse one` &&
+ 	{
+-		echo -e "not-for-merge	branch \047master\047 of ../two/"
+-		echo -e "	branch \047one\047 of ../two/"
+-	} > expected &&
+-	cut -f 2- .git/FETCH_HEAD > actual &&
++		echo "$master_in_two	not-for-merge"
++		echo "$one_in_two	"
++	} >expected &&
++	cut -f -2 .git/FETCH_HEAD >actual &&
+ 	diff expected actual'
+=20
+ test_done
