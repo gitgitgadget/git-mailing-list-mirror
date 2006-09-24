@@ -1,109 +1,64 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: What will happen to git.git in the near future
-Date: Sun, 24 Sep 2006 13:04:29 +0200
-Message-ID: <20060924110429.GJ20017@pasky.or.cz>
-References: <7v7iztbldm.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] Git.pm: Kill Git.xs for now
+Date: Sun, 24 Sep 2006 13:08:16 +0200
+Message-ID: <20060924110816.GK20017@pasky.or.cz>
+References: <20060923181849.28753.56984.stgit@machine.or.cz> <7vwt7ta6sh.fsf@assigned-by-dhcp.cox.net> <20060924105016.GA5732@steel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 24 13:06:09 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 24 13:08:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRRoH-0001WS-Dh
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 13:06:09 +0200
+	id 1GRRqQ-0001vn-0N
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 13:08:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751978AbWIXLEc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Sep 2006 07:04:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752005AbWIXLEc
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 07:04:32 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:20899 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751978AbWIXLEb (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 07:04:31 -0400
-Received: (qmail 3827 invoked by uid 2001); 24 Sep 2006 13:04:29 +0200
-To: Junio C Hamano <junkio@cox.net>
+	id S1751983AbWIXLIT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Sep 2006 07:08:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751996AbWIXLIS
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 07:08:18 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:31148 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751983AbWIXLIS (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 07:08:18 -0400
+Received: (qmail 4080 invoked by uid 2001); 24 Sep 2006 13:08:16 +0200
+To: Alex Riesen <fork0@users.sourceforge.net>
 Content-Disposition: inline
-In-Reply-To: <7v7iztbldm.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <20060924105016.GA5732@steel.home>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27656>
 
-Dear diary, on Sun, Sep 24, 2006 at 12:37:57PM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
->  - git-resolve is deprecated on "master" and will continue to be
->    so until 1.4.3.  We will remove it before 1.4.4 happens.
-
-Woo-hoo!
-
->  - We should deprecate git-tar-tree.  However, it has been
->    around and advertised for quite some time, so we need to make
->    sure people would not get burned too badly.  It might be
->    worthwhile to rewrite git-tar-tree as a thin wrapper to
->    "git-archive --format=tar" and remove git-upload-tar now (in
->    other words, "git-tar-tree --remote" will continue to work,
->    but it will talk with "git-upload-archive", not with
->    "git-upload-tar" on the other end), release 1.4.3 with it
->    with a deprecation warning, and then remove it in 1.4.5.
-
-I believe this is way too rushed, please consider keeping git-tar-tree
-as the thin wrapper _much_ longer.
-
-We still have ssh-pull and ssh-push around after more than a year of
-their deprecation. (BTW, we might as well consider removing those. ;)
-
->  - packed-refs still has a few issues before it can hit
->    "master". 
+Dear diary, on Sun, Sep 24, 2006 at 12:50:16PM CEST, I got a letter
+where Alex Riesen <fork0@t-online.de> said that...
+> Junio C Hamano, Sun, Sep 24, 2006 12:38:22 +0200:
+> > Petr Baudis <pasky@suse.cz> writes:
+> > 
+> > > This patch removes Git.xs from the repository for the time being. This
+> > > should hopefully enable Git.pm to finally make its way to master.
+> > 
+> > It's a bit sad, but I think this is a sane thing to do.
+> > 
+> > I suspect Alex still has problem with Makefile.PL due to issues
+> > around ActiveState (slash vs bs and CRLF line ending if I recall
+> > correctly)?
+> > 
 > 
->    - deleting branches does not really work yet, as there have
->      been some discussions on the list.
-> 
->    - dumb transports are unaware of it.  Trying to fetch a
->      ref that is packed would not work.
+> Absolutely.
 
-This is a big problem.
+I'm sorry but I don't even have a Windows installation on my machine and
+I don't intend to personally work on Windows support. If you need to
+keep ActiveState working seamlessly, please post patches. I hate to say
+it, but that's just how it should work - if someone cares about Git
+working on a non-mainstream (for Git audience) platform, he needs to
+maintain it, not ask the "core" developers do it. It's like if you
+withheld random kernel features because they break m68k and noone is
+around to fix it.
 
->    I feel this series to be a significant enough change that
->    deserve a bit careful handling.  Perhaps in 1.4.4 release.
-
-I agree, there are some subtle changes there (like the heads ordering)
-that could cause unforeseen problems, better be careful about it.
-
->  - Git.pm lost Git.xs which hopefully would make it a bit easier
->    to work for wider audiences.  Hopefully we can push it out to
->    "master" soon and see if anybody screams.  Depending on what
->    happens, it may be in 1.4.3 release.
-
-Woo-hoo!
-
->  - git-show-ref and git-for-each-ref serve similar purpose (when
->    viewed in a bigger picture) but with different interface and
->    different set of features.  We should consolidate them into
->    one command before they hit in any released version.
-
-Do I understand it correctly that those are the only interfaces for
-scripts to access packed refs?
-
-Ideally there would be some transition period provided so that I can
-teach Cogito about them without having it broken for repositories with
-packed refs for some time. But since packing refs is optional and
-explicit action, perhaps it's not so critical.
-
-Still, I looked forward for having those tools in the next release so
-that Cogito can use them. Oh well. :)
-
->    Implementing "buffer-wide AND" will involve updating git-grep
->    but as a side effect we will also be able to say "find files
->    that have word A and B in them", which would be a useful
->    thing.  I'd push the current implementation out to "master"
->    soon and release 1.4.3 with it, and defer implementation of
->    the buffer-wide AND to a later version.
-
-Yes. Those options are cool as they are and they can speed up gitweb's
-search as well as cg-log -u.
+If someone cares, we'll get patches.
 
 -- 
 				Petr "Pasky" Baudis
