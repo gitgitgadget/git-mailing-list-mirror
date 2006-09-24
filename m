@@ -1,52 +1,59 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Kill git-resolve.sh
-Date: Sun, 24 Sep 2006 15:00:54 +0200
-Message-ID: <20060924130054.GQ20017@pasky.or.cz>
-References: <20060923195530.5570.23774.stgit@machine.or.cz> <7v64fensge.fsf@assigned-by-dhcp.cox.net>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH 1/2] git-tar-tree: Remove duplicate git_config() call
+Date: Sun, 24 Sep 2006 17:30:44 +0200
+Message-ID: <4516A4A4.6040200@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 24 15:01:23 2006
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Franck Bui-Huu <vagabon.xyz@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 24 17:30:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRTbc-0004li-3a
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 15:01:13 +0200
+	id 1GRVwP-0000iA-16
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 17:30:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750715AbWIXNA4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Sep 2006 09:00:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750748AbWIXNA4
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 09:00:56 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:29915 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750715AbWIXNAz (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 09:00:55 -0400
-Received: (qmail 12586 invoked by uid 2001); 24 Sep 2006 15:00:54 +0200
+	id S1751186AbWIXPao (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Sep 2006 11:30:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751189AbWIXPao
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 11:30:44 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:39819
+	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S1751186AbWIXPao (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Sep 2006 11:30:44 -0400
+Received: from [10.0.1.3] (p508E7663.dip.t-dialin.net [80.142.118.99])
+	by neapel230.server4you.de (Postfix) with ESMTP id 03FAA1B02F;
+	Sun, 24 Sep 2006 17:30:42 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.7 (Windows/20060909)
 To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v64fensge.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27669>
 
-Dear diary, on Sun, Sep 24, 2006 at 12:12:01AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> On a very related note, we should prepare plan to deprecate
-> merge-recursive.py.
+generate_tar() eventually calls write_tar_archive() which does all the
+"real" work and which also calls git_config(git_tar_config).  We only
+need to do this once.
 
-While we are busy deprecating and removing stuff, we should also:
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
 
-* probably finally get rid of git-ssh-upload and git-ssh-pull
-  (mentioned in another thread already)
-* make git-annotate alias to git-blame -c? (and probably print
-  a deprecation warning)
+ builtin-tar-tree.c |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+diff --git a/builtin-tar-tree.c b/builtin-tar-tree.c
+index 437eb72..82b4951 100644
+--- a/builtin-tar-tree.c
++++ b/builtin-tar-tree.c
+@@ -267,8 +267,6 @@ static int generate_tar(int argc, const 
+ 	int result;
+ 	char *base = NULL;
+ 
+-	git_config(git_tar_config);
+-
+ 	memset(&args, 0, sizeof(args));
+ 	if (argc != 2 && argc != 3)
+ 		usage(tar_tree_usage);
