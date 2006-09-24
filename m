@@ -1,86 +1,93 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC/PATCH] gitweb: Add committags support
-Date: Sun, 24 Sep 2006 12:17:49 -0700
-Message-ID: <7vac4p846a.fsf@assigned-by-dhcp.cox.net>
-References: <200609212356.31806.jnareb@gmail.com>
-	<20060923032948.GE8259@pasky.or.cz>
-	<200609231034.49545.jnareb@gmail.com>
-	<20060923121134.GM13132@pasky.or.cz>
-	<7veju2s6bi.fsf@assigned-by-dhcp.cox.net> <ef44r4$km0$1@sea.gmane.org>
-	<7v4puys3ye.fsf@assigned-by-dhcp.cox.net> <ef5jkv$gep$1@sea.gmane.org>
-	<ef6c42$h1b$1@sea.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Fixes git-cherry algorithmic flaws
+Date: Sun, 24 Sep 2006 21:25:17 +0200
+Organization: At home
+Message-ID: <ef6m2g$cnk$1@sea.gmane.org>
+References: <Pine.LNX.4.58.0608071328200.22971@kivilampi-30.cs.helsinki.fi> <20060924000051.GI20017@pasky.or.cz> <7virjem3tp.fsf@assigned-by-dhcp.cox.net> <20060924111737.GL20017@pasky.or.cz> <7vodt59mxa.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0609242104080.32175@kivilampi-30.cs.helsinki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 24 21:17:57 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Sun Sep 24 21:25:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRZUA-0007tG-Ke
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 21:17:54 +0200
+	id 1GRZbb-0000eY-KU
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 21:25:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752148AbWIXTRv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Sep 2006 15:17:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752150AbWIXTRv
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 15:17:51 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:666 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1752148AbWIXTRu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Sep 2006 15:17:50 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060924191750.FNIX13992.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 24 Sep 2006 15:17:50 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id SKHr1V00g1kojtg0000000
-	Sun, 24 Sep 2006 15:17:52 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <ef6c42$h1b$1@sea.gmane.org> (Jakub Narebski's message of "Sun,
-	24 Sep 2006 18:35:26 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750994AbWIXTZd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 24 Sep 2006 15:25:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751169AbWIXTZd
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 15:25:33 -0400
+Received: from main.gmane.org ([80.91.229.2]:39907 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750994AbWIXTZc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 15:25:32 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GRZbL-0000cY-Vx
+	for git@vger.kernel.org; Sun, 24 Sep 2006 21:25:20 +0200
+Received: from host-81-190-26-109.torun.mm.pl ([81.190.26.109])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 24 Sep 2006 21:25:19 +0200
+Received: from jnareb by host-81-190-26-109.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 24 Sep 2006 21:25:19 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-26-109.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27691>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Ilpo J=E4rvinen wrote:
 
-> Yet another question is how to deal with commit message specific
-> "syntax highlighting". Currently, parsing commit message line by line,
-> we treat specially signoff lines (syntax highlighting, and removing
-> trailing empty lines after signoff), empty lines (we collapse consecutive
-> empty lines); the rest goes through format_log_line_html... and committags.
+> On Sun, 24 Sep 2006, Junio C Hamano wrote:
 
-Actually I was hoping that my bright idea(tm) of passing the
-whole message to a chain of tag markers would solve that
-automatically.  You define a std marker whose purpose is _not_ 
-to add anchor elements leading to other URLs but mark up
-sign-off lines and stuff.  Put that at the beginning or at the
-end of the chain as you see fit and it would do its work just
-like other real tag markers would do.
+>> I wonder if we can kill it by introducing a new rev notation and
+>> using regular rev-list family of commands instead.
+>>=20
+>> What we want here is a way to say "give me commits that are in B
+>> but not in A, but before returning a commit see if there is an
+>> equivalent change in the set of commits that are in A but not in
+>> B, and filter it out".
+>=20
+> I think that your formalization is very close to what I was expecting=
+ to=20
+> get (sort of one-way definition)... However, my git-cherry way produc=
+es=20
+> "difference" but on a higher level (than git-diff) since it includes =
+both=20
+> + and - "changes". Of course, when I have then modified one of the=20
+> changesets slightly, I have different patch id, and thus + and - with=
+ same=20
+> log message (with verbose), which IMHO is a good thing to notice,=20
+> especially if I return to the work after 2 weeks or so :-). =20
+>=20
+> A real life example: In a branch, I have changed tcp_packets_in_fligh=
+t=20
+> (~10 callers) to input sk instead of tp in a single changeset and >10=
+=20
+> minor changesets. I would love to see tcp_packets_in_fligth change=20
+> information just once when doing diffing topic-old topic-new during c=
+herry=20
+> picking, instead of a lengthy diff full of search-and-replace "noise"=
+,=20
+> which increases possiblity of an human error...
+>=20
+> But anyway, I'm not claiming that your approach is less useful...
 
-For example, one of the things it would do is to unhighlight
-the Signed-off-by: lines.  It would match and split with
-
-	/(.*?)^(Signed-off-by: .*?)$(.*)/ms
-
-then add:
-
-	( $1, # pass as literal we did not touch
-          \'<span class="signoff">', # unhighlight
-          $2, # give chance to muck with e-mail address to downstream
-	      # markers
-          \'</span>'
-        )
-
-to its output buffer and process the rest ($3).  A downstream
-tag maker may match e-mail address the above left and might mark
-it up with mailto: URL.
-
-
-          
-
-	
++1 on an idea that git-cherry is "diff of logs". Perhaps to add some he=
+ader.
+Of course use patch_ids _and_ the commit message to compare (we can hav=
+e
+both match, patch id match only, commit message match only, and commit
+title (first line) match only), but that can be selected using options.=
+=20
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
