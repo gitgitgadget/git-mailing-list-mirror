@@ -1,136 +1,87 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] Remove branch by putting a null sha1 into the ref file.
-Date: Sun, 24 Sep 2006 06:45:53 +0200
-Message-ID: <200609240645.54467.chriscool@tuxfamily.org>
-References: <20060918065429.6f4de06e.chriscool@tuxfamily.org> <200609231322.30214.chriscool@tuxfamily.org> <7veju2nthl.fsf@assigned-by-dhcp.cox.net>
+From: Jan Engelhardt <jengelh@linux01.gwdg.de>
+Subject: Re: The GPL: No shelter for the Linux kernel?
+Date: Sun, 24 Sep 2006 09:53:35 +0200 (MEST)
+Message-ID: <Pine.LNX.4.61.0609240952240.28459@yvahk01.tjqt.qr>
+References: <MDEHLPKNGKAHNMBLJOLKIEJNOJAB.davids@webmaster.com>
+ <Pine.LNX.4.61.0609231004330.9543@yvahk01.tjqt.qr> <Pine.LNX.4.64.0609231051570.4388@g5.osdl.org>
+ <20060923181406.GC11916@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 24 06:39:56 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	David Schwartz <davids@webmaster.com>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 24 09:56:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRLmV-0003uU-UI
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 06:39:56 +0200
+	id 1GROqu-0001WN-G7
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 09:56:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752119AbWIXEjm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Sep 2006 00:39:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752120AbWIXEjm
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 00:39:42 -0400
-Received: from smtp5-g19.free.fr ([212.27.42.35]:1669 "EHLO smtp5-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1752119AbWIXEjm (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 00:39:42 -0400
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id 4546219242;
-	Sun, 24 Sep 2006 06:39:40 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.9.4
-In-Reply-To: <7veju2nthl.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1751362AbWIXH4g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Sep 2006 03:56:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751427AbWIXH4g
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 03:56:36 -0400
+Received: from emailer.gwdg.de ([134.76.10.24]:27595 "EHLO emailer.gwdg.de")
+	by vger.kernel.org with ESMTP id S1751362AbWIXH4f (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 03:56:35 -0400
+Received: from linux01.gwdg.de ([134.76.13.21])
+	by mailer.gwdg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.60)
+	(envelope-from <jengelh@linux01.gwdg.de>)
+	id 1GROqa-0007ka-HK; Sun, 24 Sep 2006 09:56:23 +0200
+Received: from linux01.gwdg.de (localhost [127.0.0.1])
+	by linux01.gwdg.de (8.13.3/8.13.3/SuSE Linux 0.7) with ESMTP id k8O7raqC028944;
+	Sun, 24 Sep 2006 09:53:38 +0200
+Received: from localhost (jengelh@localhost)
+	by linux01.gwdg.de (8.13.3/8.13.3/Submit) with ESMTP id k8O7rZ4D028938;
+	Sun, 24 Sep 2006 09:53:35 +0200
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060923181406.GC11916@pasky.or.cz>
+X-Spam-Level: /
+X-Spam-Report: Content analysis: 0.0 points, 6.0 required
+	_SUMMARY_
+X-Virus-Scanned: (clean) by exiscan+sophie
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27648>
 
-Junio C Hamano wrote:
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> > You are right, so what about moving ".git/refs/heads/frotz"
-> > to ".git/deleted-refs/heads/frotz.ref"
-> > or ".git/deleted-refs/heads/frotz~ref" (because "~" is forbidden in ref
-> > names).
+>> Side note: in "git", we kind of discussed this. And because the project 
+>> was started when the whole GPL version discussion was already in bloom, 
+>> the git project has a note at top of the COPYING file that says:
+>> 
+>>  Note that the only valid version of the GPL as far as this project
+>>  is concerned is _this_ particular version of the license (ie v2, not
+>>  v2.2 or v3.x or whatever), unless explicitly otherwise stated.
+>> 
+>>  HOWEVER, in order to allow a migration to GPLv3 if that seems like
+>>  a good idea, I also ask that people involved with the project make
+>>  their preferences known. In particular, if you trust me to make that
+>>  decision, you might note so in your copyright message, ie something
+>>  like
+>> 
+>>         This file is licensed under the GPL v2, or a later version
+>>         at the discretion of Linus.
+>> 
 >
-> But wouldn't it bring up the issue of locking among deleters,
-> updaters/creators, and traversers?
+>  Actually, this didn't catch on very well anyway, I guess because most
+>people just know it's GPLv2 and don't even bother to peek at COPYING, we
+>are a bit sloppy about copyright notices and most of them don't mention
+>licence at all (if there are any in the file at all), and adding
+>explicit copyright notices to mails isn't too popular either.
 
-Yes, it will get worse. 
+Would every file that does not contain an explicit license (this 
+excludes MODULE_LICENSE) falls under COPYING?
 
-> If we choose to use packed-refs.lock as the "set of all refs"
-> lock, the whole sequence would become something like this.  Note
-> that this tries to make readers lockless but I am sure there are
-> nasty race condition issues.  I am not sure what we would want
-> to do about them.
+>	$ git grep 'discretion'
+>	COPYING:        at the discretion of Linus.
+>	git-annotate.perl:# at the discretion of Linus Torvalds.
+>	git-relink.perl:# Later versions of the GPL at the discretion of Linus Torvalds
+>	git-request-pull.sh:# at the discretion of Linus Torvalds.
 >
-> = Looking up a ref $frotz.
+>and I've found no patches with such special assignment.
 
-We could acquire .git/$frotz.lock here if we want to be sure that nothing 
-will happen to it while we read it, but anyway something could happen to it 
-just after we read it and before we use it. So the right thing to do is 
-perhaps to let the caller acquire the lock if it needs to. We should just 
-check in the other cases below that nothing can happen to the ref if 
-someone acquired .git/$frotz.lock.
 
->  - check if .git/$frotz exists, and use it if it does.
->
->  - check if .git/deleted-refs/$frotz~ref exists, and return "no
->    such ref" if it does.
->
->  - find $frotz in .git/packed-refs.
->
-> = Looping over refs.
-
-Same as above. Depending on what the caller wants to do, it could 
-acquire .git/packed-refs.lock or some .git/$frotz.lock to make sure nothing 
-happens to all or only some refs.
-
->  - grab all .git/refs/ and subtract all .git/deleted-refs/
->
->  - walk .git/packed-refs and the result from the above in
->    parallel as in the current code.
->
-> = Storing a new value in ref $frotz.
->
->  - acquire .git/packed-refs.lock
->
->  - lock .git/$frotz.lock.
->
->  - write into .git/$frotz.lock.
->
->  - create or update .git/logs/$frotz as needed.
->
->  - if .git/deleted-refs/$frotz~ref exists, unlink it.
->
->  - rename .git/$frotz.lock to .git/$frotz to unlock it.
->
->  - unlink .git/packed-refs.lock
->
-> = Deleting a ref $frotz.
->
->  - acquire .git/packed-refs.lock
-
-- acquire .git/$frotz.lock seems needed too
-
->  - look up $frotz; if it does not exist either barf or return
->    silent (haven't thought it through yet).
->
->  - create .git/deleted-refs/$frotz~ref
-
-or move .git/$frotz to .git/deleted-refs/$frotz~ref if .git/$frotz exists
-
->  - remove .git/logs/$frotz
-
-- unlink .git/$frotz.lock 
-
->  - unlink .git/packed-refs.lock
->
-> = Packing refs, with optional pruning.
->
->  - lock .git/packed-refs.lock
->
->  - loop over refs:
->    - write it out to .git/packed-refs.lock unless a symref.
->    - if it is a loose one (not a symref), remember it for pruning.
->
->  - if pruning:
->    - remove the entire .git/deleted-refs/ hierarchy
->    - remove the remembered ones
-
-Perhaps we should acquire .git/$frotz.lock for each $frotz that we remove 
-when pruning.
-
->  - rename .git/packed-refs.lock to .git/packed-refs
-
-Thanks,
-Christian.
+Jan Engelhardt
+-- 
