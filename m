@@ -1,75 +1,78 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
 Subject: Re: [CFH] Remotes conversion script
-Date: Mon, 25 Sep 2006 01:06:19 +0200
-Organization: At home
-Message-ID: <ef730t$dk9$3@sea.gmane.org>
-References: <20060924212142.GB20017@pasky.or.cz> <ef6tt8$2un$1@sea.gmane.org> <Pine.LNX.4.63.0609242347090.25371@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Mon, 25 Sep 2006 01:11:08 +0200
+Message-ID: <20060924231108.GE20017@pasky.or.cz>
+References: <20060924212142.GB20017@pasky.or.cz> <8aa486160609241457u40fffdd8h298e44351749bb29@mail.gmail.com> <20060924221644.GE13132@pasky.or.cz> <8aa486160609241534yc78b194g64038fe22048c443@mail.gmail.com> <20060924224017.GC20017@pasky.or.cz> <ef72ts$dk9$2@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Mon Sep 25 01:10:16 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 25 01:11:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRd6w-0008MT-Cc
-	for gcvg-git@gmane.org; Mon, 25 Sep 2006 01:10:10 +0200
+	id 1GRd7y-00007N-QK
+	for gcvg-git@gmane.org; Mon, 25 Sep 2006 01:11:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751326AbWIXXKG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Sep 2006 19:10:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751348AbWIXXKG
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 19:10:06 -0400
-Received: from main.gmane.org ([80.91.229.2]:33715 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751326AbWIXXKF (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 19:10:05 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1GRd6o-0008La-Gt
-	for git@vger.kernel.org; Mon, 25 Sep 2006 01:10:02 +0200
-Received: from host-81-190-26-109.torun.mm.pl ([81.190.26.109])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 25 Sep 2006 01:10:02 +0200
-Received: from jnareb by host-81-190-26-109.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 25 Sep 2006 01:10:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-26-109.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751348AbWIXXLL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Sep 2006 19:11:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751350AbWIXXLL
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 19:11:11 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:15061 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751348AbWIXXLK (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 19:11:10 -0400
+Received: (qmail 4137 invoked by uid 2001); 25 Sep 2006 01:11:08 +0200
+To: Jakub Narebski <jnareb@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <ef72ts$dk9$2@sea.gmane.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27714>
 
-Johannes Schindelin wrote:
-
-> On Sun, 24 Sep 2006, Jakub Narebski wrote:
+Dear diary, on Mon, Sep 25, 2006 at 01:04:41AM CEST, I got a letter
+where Jakub Narebski <jnareb@gmail.com> said that...
+> Petr Baudis wrote:
 > 
->> If I remember correctly currently only some functionality provided by
->> remotes file can be provided by [remote] and [branch] sections of git
->> config.
+> > Dear diary, on Mon, Sep 25, 2006 at 12:34:24AM CEST, I got a letter
+> > where Santi <sbejar@gmail.com> said that...
+> >> It could be I'm wrong (for sure, I miss something), but I see the
+> >> branches/ files like [remote] sections files with just one fetch:
+> >> 
+> >> .git/branches/git:
+> >> git://...../git.gi
+> >> 
+> >> would be:
+> >> 
+> >> [remote "git"]
+> >> url=git://...../git.git
+> >> fetch=refs/heads/master:refs/heads/git
+> > 
+> > That's basically right, the point is that with moving to remotes
+> > support, we will make each remote live in its own separate namespace,
 > 
-> ... and what might the lacking functionality be?
+> Which is overkill if we fetch only from one directory.
 
-What about
-        Pull: +refs/heads/pu:refs/heads/pu
-functionality, i.e. allowing force-update (non fast-forward) fetches?
+Why?
 
-> .git/remotes/<name>    config
-> 
-> URL:                   remote.<name>.url
-> Pull:                  remote.<name>.fetch
-> Push:                  remote.<name>.push
-> 
-> You can even have multiple entries in the config, and it behaves as if you 
-> had multiple lines in .git/remotes/<name>.
+> Besides using separate remotes (hmmm, we should add support for
+> refs/remotes/ in gitweb) is a policy decision.
 
-And first pull line is default branch to merge, all the rest is marked
-as not-for-merge?
+Cogito's designed so that users don't have to _care_ about the policy at
+this level and it will just magically work for them, sensibly. If you
+care enough, you can just modify the config file manually.
+
+> On somewhat unrelated issue: should git-clone create [remote] section
+> (and perhaps [branch] sections) instead of remotes file?
+
+Ideally, I would hope for .git/remotes/ to be officially deprecated...
+(perhaps after the next release?)
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
