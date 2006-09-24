@@ -1,99 +1,92 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Fixes git-cherry algorithmic flaws
-Date: Sun, 24 Sep 2006 13:17:38 +0200
-Message-ID: <20060924111737.GL20017@pasky.or.cz>
-References: <Pine.LNX.4.58.0608071328200.22971@kivilampi-30.cs.helsinki.fi> <20060924000051.GI20017@pasky.or.cz> <7virjem3tp.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] gitweb: Consolidate escaping/validation of query string
+Date: Sun, 24 Sep 2006 13:36:13 +0200
+Message-ID: <20060924113613.GM20017@pasky.or.cz>
+References: <20060923221841.18063.56589.stgit@rover> <ef4csl$7vk$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@helsinki.fi>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 24 13:18:03 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 24 13:36:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRRzd-0003cO-5I
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 13:17:53 +0200
+	id 1GRSHT-0006pa-8X
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 13:36:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750826AbWIXLRk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 24 Sep 2006 07:17:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750900AbWIXLRk
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 07:17:40 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:2740 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750826AbWIXLRj (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 07:17:39 -0400
-Received: (qmail 5182 invoked by uid 2001); 24 Sep 2006 13:17:38 +0200
-To: Junio C Hamano <junkio@cox.net>
+	id S1752007AbWIXLgQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Sep 2006 07:36:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752015AbWIXLgQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 07:36:16 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:20164 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1752007AbWIXLgP (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 07:36:15 -0400
+Received: (qmail 6482 invoked by uid 2001); 24 Sep 2006 13:36:13 +0200
+To: Jakub Narebski <jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7virjem3tp.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <ef4csl$7vk$1@sea.gmane.org>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27658>
 
-Dear diary, on Sun, Sep 24, 2006 at 03:49:22AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> Petr Baudis <pasky@suse.cz> writes:
->=20
-> > Dear diary, on Mon, Aug 07, 2006 at 12:30:13PM CEST, I got a letter
-> > where Ilpo J=E4rvinen <ilpo.jarvinen@helsinki.fi> said that...
-> >> Old algorithm:
-> >>         - printed IDs of identical patches with minus (-) sign; th=
-ey
-> >> 	  should not be printed at all
-> >>         - did not print anything from the changes in the upstream
-> >>=20
-> >> Signed-off-by: Ilpo J=E4rvinen <ilpo.jarvinen@helsinki.fi>
-> >
-> > Ping? Is this patch bogus or was it just forgotten?
->=20
-> These are not fixes to "algorithmic flaws".  It's more like that
-> Ilpo is writing a different program to fill different needs, and
-> I did not see what workflow wanted to have the list of changes
-> that were in the upstream and our changes.  Maybe what Ilpo
-> wanted to see was something like "git log upstream...mine"
-> (three-dots not two to mean symmetric difference).  I dunno.
-> That operation certainly did not exist when we did git-cherry
-> originally.
->=20
-> The original purpose of git-cherry (which probably is different
-> from what Ilpo wanted to have, and that is why Ilpo modified it
-> into a different program) is for a developer in the contributor
-> role to see which ones of local patches have been accepted
-> upstream and which ones still remain unapplied -- the intent is
-> to help rebase only the latter and keep trying to convince
-> upstream that these remaining ones are also worth applying.
->=20
-> So minus (-) lines are very much needed to if you want to see
-> which ones have been accepted.  Plus lines are used to pick
-> which ones to rebase by older version of git-rebase, but I do
-> not think we do that anymore.  And in any case we are _not_
-> interested in whatever happened in the upstream that did not
-> come from the branch we are looking at.
+Dear diary, on Sun, Sep 24, 2006 at 12:36:13AM CEST, I got a letter
+where Jakub Narebski <jnareb@gmail.com> said that...
+> Petr Baudis wrote:
+> > (click on the funny =__ify file)
+> 
+> Aaargh? Why this name?
 
-Hmm, well, what's curious is that the documentation says
+You tell me... ;-)
 
-	Every commit with a changeset that doesn't exist in the other branch
-	has its id (sha1) reported, prefixed by a symbol.  Those existing only
-	in the <upstream> branch are prefixed with a minus (-) sign, and those
-	that only exist in the <head> branch are prefixed with a plus (+)
-	symbol.
+> > I have also made esc_param() escape [?=&;]. Not escaping [&;] was downright
+> > buggy and [?=] just feels better escaped. ;-) YMMV.
+..snip..
+> I'd rather have new esc_param() or esc_param_value() quote like escape
+> subroutine from CGI::Util, with the esception of _not_ escaping '/'
+> (it makes funny bookmark, and lot less readable query string), and rename
+> current esc_param() to esc_query_string() or esc_params().
 
-which is in contradiction of Ilpo's description of the old algorithm
-(and also your description of it). It would seem he just wants to fix i=
-t
-according to the documented behaviour.
+Huh, well, what's the point with the rename and why not keep it as it is
+with just removing the four characters above? Escaped stuff looks ugly
+in a URL. ;-)
 
-I guess the documentation is what's broken then?
+BTW, looking at CGI::Util innards, what sick mind serves CGIs from an
+EBCDIC machine?
 
---=20
-				Petr "Pasky the Let's See How Long I Can
-					Manage Arguing Without Actually
-					Looking at the Code" Baudis
+> Perhaps we should have also esc_arg() for things like title attribute
+> of <a> (link) element (or other element)
+
+Yes. I wanted to implement your few months old wish to have full string
+of abbreviated column contents in title attributes but delayed it for
+now because we have no such function yet.
+
+> and filename="..." part of Content-disposition: HTTP header.
+
+This is not HTML-ish so you need quotemeta() here, using entities makes
+no sense in this case.
+
+> By the way, the validate_input() should be split into separate subroutines:
+> validate_ref() for validating hash, hash_base, hash_parent, hash_parent_base,
+> and validate_path() for validating project,
+
+Yes, that would be nice.
+
+> file_name and file_parent parameters.
+
+What's the point in validating those?
+
+> We should _never_ use esc_html except during the output, or just before output.
+> It certainly shouldn't take place in parse_* subroutine (or in the fake parse
+> like in git_blobdiff)!
+
+Yes, I agree. Will send a fixed patch.
+
+-- 
+				Petr "Pasky" Baudis
 Stuff: http://pasky.or.cz/
 #!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=3Dunpack('H*',$_);$_=3D`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=3Dpack('H*',/((..)*)$/)
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
