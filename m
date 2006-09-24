@@ -1,87 +1,68 @@
-From: Jan Engelhardt <jengelh@linux01.gwdg.de>
-Subject: Re: The GPL: No shelter for the Linux kernel?
-Date: Sun, 24 Sep 2006 09:53:35 +0200 (MEST)
-Message-ID: <Pine.LNX.4.61.0609240952240.28459@yvahk01.tjqt.qr>
-References: <MDEHLPKNGKAHNMBLJOLKIEJNOJAB.davids@webmaster.com>
- <Pine.LNX.4.61.0609231004330.9543@yvahk01.tjqt.qr> <Pine.LNX.4.64.0609231051570.4388@g5.osdl.org>
- <20060923181406.GC11916@pasky.or.cz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH] gitweb: Add committags support
+Date: Sun, 24 Sep 2006 11:37:45 +0200
+Organization: At home
+Message-ID: <ef5jkv$gep$1@sea.gmane.org>
+References: <200609212356.31806.jnareb@gmail.com> <20060923032948.GE8259@pasky.or.cz> <200609231034.49545.jnareb@gmail.com> <20060923121134.GM13132@pasky.or.cz> <7veju2s6bi.fsf@assigned-by-dhcp.cox.net> <ef44r4$km0$1@sea.gmane.org> <7v4puys3ye.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	David Schwartz <davids@webmaster.com>,
-	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 24 09:56:44 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Sun Sep 24 11:38:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GROqu-0001WN-G7
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 09:56:40 +0200
+	id 1GRQR7-0002SV-FB
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 11:38:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751362AbWIXH4g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Sep 2006 03:56:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751427AbWIXH4g
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 03:56:36 -0400
-Received: from emailer.gwdg.de ([134.76.10.24]:27595 "EHLO emailer.gwdg.de")
-	by vger.kernel.org with ESMTP id S1751362AbWIXH4f (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 03:56:35 -0400
-Received: from linux01.gwdg.de ([134.76.13.21])
-	by mailer.gwdg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.60)
-	(envelope-from <jengelh@linux01.gwdg.de>)
-	id 1GROqa-0007ka-HK; Sun, 24 Sep 2006 09:56:23 +0200
-Received: from linux01.gwdg.de (localhost [127.0.0.1])
-	by linux01.gwdg.de (8.13.3/8.13.3/SuSE Linux 0.7) with ESMTP id k8O7raqC028944;
-	Sun, 24 Sep 2006 09:53:38 +0200
-Received: from localhost (jengelh@localhost)
-	by linux01.gwdg.de (8.13.3/8.13.3/Submit) with ESMTP id k8O7rZ4D028938;
-	Sun, 24 Sep 2006 09:53:35 +0200
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060923181406.GC11916@pasky.or.cz>
-X-Spam-Level: /
-X-Spam-Report: Content analysis: 0.0 points, 6.0 required
-	_SUMMARY_
-X-Virus-Scanned: (clean) by exiscan+sophie
+	id S1751854AbWIXJhz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 24 Sep 2006 05:37:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751831AbWIXJhz
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 05:37:55 -0400
+Received: from main.gmane.org ([80.91.229.2]:2286 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751854AbWIXJhy (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 05:37:54 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GRQQj-0002NG-9B
+	for git@vger.kernel.org; Sun, 24 Sep 2006 11:37:45 +0200
+Received: from host-81-190-26-109.torun.mm.pl ([81.190.26.109])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 24 Sep 2006 11:37:45 +0200
+Received: from jnareb by host-81-190-26-109.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 24 Sep 2006 11:37:45 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-26-109.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27649>
 
->> Side note: in "git", we kind of discussed this. And because the project 
->> was started when the whole GPL version discussion was already in bloom, 
->> the git project has a note at top of the COPYING file that says:
->> 
->>  Note that the only valid version of the GPL as far as this project
->>  is concerned is _this_ particular version of the license (ie v2, not
->>  v2.2 or v3.x or whatever), unless explicitly otherwise stated.
->> 
->>  HOWEVER, in order to allow a migration to GPLv3 if that seems like
->>  a good idea, I also ask that people involved with the project make
->>  their preferences known. In particular, if you trust me to make that
->>  decision, you might note so in your copyright message, ie something
->>  like
->> 
->>         This file is licensed under the GPL v2, or a later version
->>         at the discretion of Linus.
->> 
->
->  Actually, this didn't catch on very well anyway, I guess because most
->people just know it's GPLv2 and don't even bother to peek at COPYING, we
->are a bit sloppy about copyright notices and most of them don't mention
->licence at all (if there are any in the file at all), and adding
->explicit copyright notices to mails isn't too popular either.
+Junio C Hamano wrote:
 
-Would every file that does not contain an explicit license (this 
-excludes MODULE_LICENSE) falls under COPYING?
+> Jakub Narebski <jnareb@gmail.com> writes:
+>=20
+>> The idea of doing committag parsing, and preserving replacements
+>> from matching committag and being subject to HTML escaping by using
+>> reference to string has it's merits.
+>>
+>> I'd have to think about it.
+>=20
+> Good. =A0My obviously buggy illustration would be easier to read
+> with this patch ;-).
 
->	$ git grep 'discretion'
->	COPYING:        at the discretion of Linus.
->	git-annotate.perl:# at the discretion of Linus Torvalds.
->	git-relink.perl:# Later versions of the GPL at the discretion of Linus Torvalds
->	git-request-pull.sh:# at the discretion of Linus Torvalds.
->
->and I've found no patches with such special assignment.
+Don't forget about final s,\n,<br/>\n,gm if we parse it as a whole,
+and not line by line.=20
 
-
-Jan Engelhardt
--- 
+By the way, I think that only the driver (i.e. format_log_line_html) ha=
+s to
+be changed...
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
