@@ -1,98 +1,54 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] Remove empty ref directories that prevent creating a ref.
-Date: Sun, 24 Sep 2006 22:33:17 +0200
-Message-ID: <20060924223317.caf467a3.chriscool@tuxfamily.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [ANNOUNCE] Cogito-0.17.4
+Date: Sun, 24 Sep 2006 22:34:15 +0200
+Message-ID: <20060924203415.GZ20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 24 22:27:21 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 24 22:34:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRaZA-0001tg-Ly
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 22:27:09 +0200
+	id 1GRag9-0002wm-76
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 22:34:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932069AbWIXU1F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Sep 2006 16:27:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932071AbWIXU1F
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 16:27:05 -0400
-Received: from smtp4-g19.free.fr ([212.27.42.30]:4510 "EHLO smtp4-g19.free.fr")
-	by vger.kernel.org with ESMTP id S932069AbWIXU1C (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 16:27:02 -0400
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp4-g19.free.fr (Postfix) with SMTP id 30C2954A6F;
-	Sun, 24 Sep 2006 22:27:01 +0200 (CEST)
-To: Junio Hamano <junkio@cox.net>
-X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.8.20; i486-pc-linux-gnu)
+	id S932067AbWIXUeR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Sep 2006 16:34:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932073AbWIXUeR
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 16:34:17 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:18318 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932067AbWIXUeQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 16:34:16 -0400
+Received: (qmail 21489 invoked by uid 2001); 24 Sep 2006 22:34:15 +0200
+To: git@vger.kernel.org
+Content-Disposition: inline
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27694>
 
-Junio wrote:
-"BTW, the second issue exists without packed ref; currently we
-cannot do
+  Hello,
 
-    git branch foo/bar
-    git branch -d foo/bar
-    git branch foo"
+  cogito-0.17.4 was just released - bugfixes release on the latest
+stable line of the Cogito user-friendly Git user interface.
 
-This patch also add some test cases from Linus and Junio.
+  Just a few tiny bugfixes.  So, what's new?
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
+  * Make cg-commit -p imply -e
+  * Fix cg-commit -M with relative path called from a subdirectory
+  * Be way more paranoid when failing to apply patches w/ cg-commit -p
+  * Do not use type -P (bash31ism)
+  * Make documentation build with `make` not being GNU make
+  * When fetching, autofollow lightweight tags as well
 
-This patch applies to master, that's why it doesn't contain
-test cases using "git pack-refs". I will send a separate patch
-for them latter. 
+  Happy hacking,
 
- git-branch.sh     |   10 ++++++++++
- t/t3200-branch.sh |   12 ++++++++++++
- 2 files changed, 22 insertions(+), 0 deletions(-)
-
-diff --git a/git-branch.sh b/git-branch.sh
-index e0501ec..9f7ff80 100755
---- a/git-branch.sh
-+++ b/git-branch.sh
-@@ -112,6 +112,16 @@ rev=$(git-rev-parse --verify "$head") ||
- git-check-ref-format "heads/$branchname" ||
- 	die "we do not like '$branchname' as a branch name."
- 
-+if [ -d "$GIT_DIR/refs/heads/$branchname" ]
-+then
-+	for refdir in `find "$GIT_DIR/refs/heads/$branchname" -type d | sort -r`
-+	do
-+		rmdir "$refdir" || \
-+		    die "Could not delete '$refdir', " \
-+		    "there may still be a ref there."
-+	done
-+fi
-+
- if [ -e "$GIT_DIR/refs/heads/$branchname" ]
- then
- 	if test '' = "$force"
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 5b04efc..6907cbc 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -61,4 +61,16 @@ test_expect_success \
- 	 test -f .git/logs/refs/heads/g/h/i &&
- 	 diff expect .git/logs/refs/heads/g/h/i'
- 
-+test_expect_success \
-+    'git branch j/k should work after branch j has been deleted' \
-+       'git-branch j &&
-+        git-branch -d j &&
-+        git-branch j/k'
-+
-+test_expect_success \
-+    'git branch l should work after branch l/m has been deleted' \
-+       'git-branch l/m &&
-+        git-branch -d l/m &&
-+        git-branch l'
-+
- test_done
 -- 
-1.4.2.1.g80823-dirty
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
