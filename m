@@ -1,64 +1,94 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: cg-commit -p -m ignores -p
-Date: Sun, 24 Sep 2006 19:48:37 +0200
-Message-ID: <20060924174837.GX20017@pasky.or.cz>
-References: <20060915132319.12117.qmail@7d60384c102e6d.315fe32.mid.smarden.org>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [PATCH] cg-commit: fix signed off handling
+Date: Sun, 24 Sep 2006 20:32:46 +0200
+Message-ID: <20060924183246.GA695@diku.dk>
+References: <20060825002740.GH2817@diku.dk> <20060924174519.GW20017@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Sep 24 19:48:47 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 24 20:33:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRY5q-0001Oi-Ui
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 19:48:43 +0200
+	id 1GRYmh-00012h-10
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 20:32:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751316AbWIXRsj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Sep 2006 13:48:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751339AbWIXRsj
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 13:48:39 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:61869 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751316AbWIXRsj (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 13:48:39 -0400
-Received: (qmail 11288 invoked by uid 2001); 24 Sep 2006 19:48:37 +0200
-To: git@vger.kernel.org, 387515@bugs.debian.org
+	id S1752116AbWIXSc4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Sep 2006 14:32:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752133AbWIXSc4
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 14:32:56 -0400
+Received: from [130.225.96.91] ([130.225.96.91]:65451 "EHLO mgw1.diku.dk")
+	by vger.kernel.org with ESMTP id S1752116AbWIXScz (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 14:32:55 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id C8D0F77003B;
+	Sun, 24 Sep 2006 20:32:47 +0200 (CEST)
+Received: from mgw1.diku.dk ([127.0.0.1])
+ by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 05828-07; Sun, 24 Sep 2006 20:32:46 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id 8D4AA770035;
+	Sun, 24 Sep 2006 20:32:46 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 2785A6DF88D; Sun, 24 Sep 2006 20:30:50 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 71DD662A3D; Sun, 24 Sep 2006 20:32:46 +0200 (CEST)
+To: Petr Baudis <pasky@suse.cz>
 Content-Disposition: inline
-In-Reply-To: <20060915132319.12117.qmail@7d60384c102e6d.315fe32.mid.smarden.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20060924174519.GW20017@pasky.or.cz>
+User-Agent: Mutt/1.5.6i
+X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27686>
 
-Dear diary, on Fri, Sep 15, 2006 at 03:23:19PM CEST, I got a letter
-where Gerrit Pape <pape@smarden.org> said that...
-> Hi, please see http:/bugs.debian.org/387515 or below.  I agree that
-> ideally cg-commit should behave differently.
+Petr Baudis <pasky@suse.cz> wrote Sun, Sep 24, 2006:
+> Dear diary, on Fri, Aug 25, 2006 at 02:27:40AM CEST, I got a letter
+> where Jonas Fonseca <fonseca@diku.dk> said that...
+> > Handle the sign off insertion before starting the CG: comment lines. Also,
+> > fix typo in grepping for existing sign off lines.
+> > 
+> > Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+> > ---
+> > 
+> > The late calling of the add_signoff function has multiple problems,
+> > since at that point comment lines has already been added and the sign
+> > off line will end up in only one of the log message files.
 > 
-> Thanks, Gerrit.
+> Well, the commit that moved this was
 > 
-> ----- Forwarded message from Andrew Suffield <asuffield@suffields.me.uk> -----
+> Commit: 4cf220db10c0b937f9852513effc5565fcbb4f86
+> Author: Petr Baudis <pasky@pixie.suse.cz> Thu, 20 Jul 2006 11:37:31 -0400
 > 
-> cg-commit -p -m ignores the -p argument and silently commits. Yes,
-> this is documented, but it's still stupid behaviour; if the user had
-> meant that, they would have just used -m alone.
+>     * cg-commit:
 > 
-> At the very least, it should abort with an error (on the basis that
-> the command makes no sense); more sensibly, it should create a log
-> message with the given string and then spawn an editor (and then since
-> the user will probably exit without changing the file, the "Abort or
-> commit?" message would appear as per usual, which seems to me to be
-> appropriate behaviour).
+>     Add signoff past the message if getting it from stdin
 > 
-> 
-> ----- End forwarded message -----
+> What about this?
 
-Thanks, fixed by making cg-commit -p imply -e.
+The thing you committed seems to work, so I am happy again. :) 
+
+> diff --git a/cg-commit b/cg-commit
+> index 43e6c6c..beedb6f 100755
+> --- a/cg-commit
+> +++ b/cg-commit
+> @@ -402,10 +402,6 @@ if [ "$msgfile" ]; then
+>  	written=1
+>  fi
+>  
+> -# Always have at least one blank line, to ease the editing for
+> -# the poor people whose text editor has no 'O' command.
+> -[ "$written" ] || { tty -s && echo >>"$LOGMSG"; }
+> -
+>  add_signoff() {
+>  	if [ "$signoff" ] && ! grep -q -i "signed-off-by: $signoff" $LOGMSG; then
+>  		grep -q -i sign-off-by $LOGMSG || echo
+			   ^^^^^^^^^^^
+
+My patch also fixed this to grep for "signed-off-by".
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+Jonas Fonseca
