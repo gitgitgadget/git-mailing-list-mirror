@@ -1,65 +1,100 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] cg-commit: Fix a typo that would inhibit running of post-commit script:
-Date: Sun, 24 Sep 2006 19:39:58 +0200
-Message-ID: <20060924173958.GV20017@pasky.or.cz>
-References: <8764giro6t.fsf@rho.meyering.net> <20060825002013.GG2817@diku.dk> <87ac4zq237.fsf@rho.meyering.net>
+Subject: Re: [PATCH] cg-commit: fix signed off handling
+Date: Sun, 24 Sep 2006 19:45:19 +0200
+Message-ID: <20060924174519.GW20017@pasky.or.cz>
+References: <20060825002740.GH2817@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 24 19:40:24 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 24 19:45:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRXxi-0008MJ-4d
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 19:40:18 +0200
+	id 1GRY2d-0000pR-L4
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 19:45:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751300AbWIXRkB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Sep 2006 13:40:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751313AbWIXRkB
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 13:40:01 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:28308 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751300AbWIXRkA (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 13:40:00 -0400
-Received: (qmail 9859 invoked by uid 2001); 24 Sep 2006 19:39:58 +0200
-To: Jim Meyering <jim@meyering.net>
+	id S1751302AbWIXRpV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Sep 2006 13:45:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751315AbWIXRpV
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 13:45:21 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:35530 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751302AbWIXRpU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 13:45:20 -0400
+Received: (qmail 10641 invoked by uid 2001); 24 Sep 2006 19:45:19 +0200
+To: Jonas Fonseca <fonseca@diku.dk>
 Content-Disposition: inline
-In-Reply-To: <87ac4zq237.fsf@rho.meyering.net>
+In-Reply-To: <20060825002740.GH2817@diku.dk>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27683>
 
-Dear diary, on Sat, Sep 16, 2006 at 05:10:36PM CEST, I got a letter
-where Jim Meyering <jim@meyering.net> said that...
-> Jonas Fonseca <fonseca@diku.dk> wrote:
-> > Jim Meyering <jim@meyering.net> wrote Thu, Aug 24, 2006:
-> >> I tried cg-commit with a commit hook, but the hook never ran.
-> >> The problem was a typo:
-> >>
-> >> Fix a typo that would inhibit running the post-commit script:
-> >> s/commit-post/post-commit/.
-> >
-> > If I remember correctly, historically, the commit-post existed before
-> > the post-commit appeared. You can see that it is documented in the man
-> > page so it is not a typo.
-> >
-> > However, this should certainly be updated, but I think a better fix
-> > would be to transitionally warn the user about the existence of the
-> > commit-post hook before using it in favour of post-commit.
+Dear diary, on Fri, Aug 25, 2006 at 02:27:40AM CEST, I got a letter
+where Jonas Fonseca <fonseca@diku.dk> said that...
+> Handle the sign off insertion before starting the CG: comment lines. Also,
+> fix typo in grepping for existing sign off lines.
 > 
-> How about this?
-> Check for both and if there's exactly one, use that.
-> If it's the old one, give a diagnostic suggesting to rename it.
-> If both exist, execute neither, give a diagnostic and fail.
+> Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+> ---
 > 
-> If you like this, I'll prepare a patch.
+> The late calling of the add_signoff function has multiple problems,
+> since at that point comment lines has already been added and the sign
+> off line will end up in only one of the log message files.
 
-That would be awesome. :-)
+Well, the commit that moved this was
 
-Thanks in advance,
+Commit: 4cf220db10c0b937f9852513effc5565fcbb4f86
+Author: Petr Baudis <pasky@pixie.suse.cz> Thu, 20 Jul 2006 11:37:31 -0400
+
+    * cg-commit:
+
+    Add signoff past the message if getting it from stdin
+
+What about this?
+
+diff --git a/cg-commit b/cg-commit
+index 43e6c6c..beedb6f 100755
+--- a/cg-commit
++++ b/cg-commit
+@@ -402,10 +402,6 @@ if [ "$msgfile" ]; then
+ 	written=1
+ fi
+ 
+-# Always have at least one blank line, to ease the editing for
+-# the poor people whose text editor has no 'O' command.
+-[ "$written" ] || { tty -s && echo >>"$LOGMSG"; }
+-
+ add_signoff() {
+ 	if [ "$signoff" ] && ! grep -q -i "signed-off-by: $signoff" $LOGMSG; then
+ 		grep -q -i sign-off-by $LOGMSG || echo
+@@ -413,6 +409,16 @@ add_signoff() {
+ 	fi >> $LOGMSG
+ }
+ 
++if tty -s; then
++	# Always have at least one blank line, to ease the editing for
++	# the poor people whose text editor has no 'O' command.
++	[ "$written" ] || echo >>"$LOGMSG"
++	# Also, add the signoff line _now_ before spewing out CG: lines.
++	# (In case of non-tty input we do it later after taking the actual
++	# log message from stdin.)
++	add_signoff
++fi
++
+ # CG: -----------------------------------------------------------------------
+ editor_comment_start commit
+ 
+@@ -472,7 +478,6 @@ editor_msg_end
+ 
+ cp "$LOGMSG" "$LOGMSG2"
+ if tty -s; then
+-	add_signoff
+ 	if [ "$editor" ] && ! editor $commitalways commit c; then
+ 		rm "$LOGMSG" "$LOGMSG2"
+ 		[ "$review" ] && rm "$PATCH"
 
 -- 
 				Petr "Pasky" Baudis
