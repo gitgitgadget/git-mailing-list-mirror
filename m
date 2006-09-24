@@ -1,112 +1,136 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 2/6] many cleanups to sha1_file.c
-Date: Sun, 24 Sep 2006 00:17:16 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0609240006001.9349@xanadu.home>
-References: <Pine.LNX.4.64.0609210004550.2627@xanadu.home>
- <7v7izvug3b.fsf@assigned-by-dhcp.cox.net>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] Remove branch by putting a null sha1 into the ref file.
+Date: Sun, 24 Sep 2006 06:45:53 +0200
+Message-ID: <200609240645.54467.chriscool@tuxfamily.org>
+References: <20060918065429.6f4de06e.chriscool@tuxfamily.org> <200609231322.30214.chriscool@tuxfamily.org> <7veju2nthl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 24 06:17:41 2006
+X-From: git-owner@vger.kernel.org Sun Sep 24 06:39:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRLQu-0008Pu-OR
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 06:17:37 +0200
+	id 1GRLmV-0003uU-UI
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 06:39:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751003AbWIXERS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Sep 2006 00:17:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751937AbWIXERS
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 00:17:18 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:235 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1751003AbWIXERS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Sep 2006 00:17:18 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J6200LRIX8S6CC0@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 24 Sep 2006 00:17:17 -0400 (EDT)
-In-reply-to: <7v7izvug3b.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+	id S1752119AbWIXEjm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Sep 2006 00:39:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752120AbWIXEjm
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 00:39:42 -0400
+Received: from smtp5-g19.free.fr ([212.27.42.35]:1669 "EHLO smtp5-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1752119AbWIXEjm (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 00:39:42 -0400
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp5-g19.free.fr (Postfix) with ESMTP id 4546219242;
+	Sun, 24 Sep 2006 06:39:40 +0200 (CEST)
 To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.9.4
+In-Reply-To: <7veju2nthl.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27647>
 
-On Sat, 23 Sep 2006, Junio C Hamano wrote:
+Junio C Hamano wrote:
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > You are right, so what about moving ".git/refs/heads/frotz"
+> > to ".git/deleted-refs/heads/frotz.ref"
+> > or ".git/deleted-refs/heads/frotz~ref" (because "~" is forbidden in ref
+> > names).
+>
+> But wouldn't it bring up the issue of locking among deleters,
+> updaters/creators, and traversers?
 
-> Nicolas Pitre <nico@cam.org> writes:
-> 
-> > Those cleanups are mainly to set the table for the support of deltas
-> > with base objects referenced by offsets instead of sha1.  This means
-> > that many pack lookup functions are converted to take a pack/offset
-> > tuple instead of a sha1.
-> 
-> There still remains some "struct pack_entry" and I wonder if it
-> would make sense to get rid of them if only for consistency's
-> sake.
+Yes, it will get worse. 
 
-Maybe.  But since those are the minimum needed for base offset support 
-I'd prefer if the extra cleanup is made separate not to mix too many 
-issues at once.
+> If we choose to use packed-refs.lock as the "set of all refs"
+> lock, the whole sequence would become something like this.  Note
+> that this tries to make readers lockless but I am sure there are
+> nasty race condition issues.  I am not sure what we would want
+> to do about them.
+>
+> = Looking up a ref $frotz.
 
-> > diff --git a/sha1_file.c b/sha1_file.c
-> > index b89edb9..6fae766 100644
-> > --- a/sha1_file.c
-> > +++ b/sha1_file.c
-> > @@ -926,8 +925,8 @@ static int packed_delta_info(unsigned ch
-> >  
-> >  		memset(&stream, 0, sizeof(stream));
-> >  
-> > -		data = stream.next_in = base_sha1 + 20;
-> > -		stream.avail_in = left - 20;
-> > +		data = stream.next_in = (unsigned char *) p->pack_base + offset;;
-> > +		stream.avail_in = p->pack_size - offset;
-> >  		stream.next_out = delta_head;
-> >  		stream.avail_out = sizeof(delta_head);
-> >  
-> 
-> ";;"?
+We could acquire .git/$frotz.lock here if we want to be sure that nothing 
+will happen to it while we read it, but anyway something could happen to it 
+just after we read it and before we use it. So the right thing to do is 
+perhaps to let the caller acquire the lock if it needs to. We should just 
+check in the other cases below that nothing can happen to the ref if 
+someone acquired .git/$frotz.lock.
 
-Typo.
+>  - check if .git/$frotz exists, and use it if it does.
+>
+>  - check if .git/deleted-refs/$frotz~ref exists, and return "no
+>    such ref" if it does.
+>
+>  - find $frotz in .git/packed-refs.
+>
+> = Looping over refs.
 
-> > @@ -989,75 +988,60 @@ int check_reuse_pack_delta(struct packed
-> >  ...
-> > +static int packed_object_info(struct packed_git *p, unsigned long offset,
-> >  			      char *type, unsigned long *sizep)
-> >  {
-> > +	unsigned long size;
-> >  	enum object_type kind;
-> >  
-> > -	if (use_packed_git(p))
-> > -		die("cannot map packed file");
-> > +	offset = unpack_object_header(p, offset, &kind, &size);
-> >  
-> 
-> Do all callers of packed_object_info() call use_packed_git to
-> make sure p is mapped?
+Same as above. Depending on what the caller wants to do, it could 
+acquire .git/packed-refs.lock or some .git/$frotz.lock to make sure nothing 
+happens to all or only some refs.
 
-Easy since the function is static.
+>  - grab all .git/refs/ and subtract all .git/deleted-refs/
+>
+>  - walk .git/packed-refs and the result from the above in
+>    parallel as in the current code.
+>
+> = Storing a new value in ref $frotz.
+>
+>  - acquire .git/packed-refs.lock
+>
+>  - lock .git/$frotz.lock.
+>
+>  - write into .git/$frotz.lock.
+>
+>  - create or update .git/logs/$frotz as needed.
+>
+>  - if .git/deleted-refs/$frotz~ref exists, unlink it.
+>
+>  - rename .git/$frotz.lock to .git/$frotz to unlock it.
+>
+>  - unlink .git/packed-refs.lock
+>
+> = Deleting a ref $frotz.
+>
+>  - acquire .git/packed-refs.lock
 
-> Ah sha1_object_info() is the only one
-> except packed_delta_info() that calls itself and it protects it
-> with use_packed_git(), so you are safe.
+- acquire .git/$frotz.lock seems needed too
 
-Right.  The only entry point to those functions is sha1_object_info() 
-where I moved the use/unuse and all the other call instances are due to 
-recursion. >  It seemed to me a bit wasteful to call use() so many times 
-to unuse() the same amount afterwards while only once is needed.
+>  - look up $frotz; if it does not exist either barf or return
+>    silent (haven't thought it through yet).
+>
+>  - create .git/deleted-refs/$frotz~ref
 
-> We would need to revamp use/unuse code when we implement the
-> partial mapping anyway, but we still need to get this right for
-> now.
+or move .git/$frotz to .git/deleted-refs/$frotz~ref if .git/$frotz exists
 
-Probably moving them near the actual pack content access.
+>  - remove .git/logs/$frotz
 
-May I assume you'll take care of the extra ; typo?
+- unlink .git/$frotz.lock 
 
+>  - unlink .git/packed-refs.lock
+>
+> = Packing refs, with optional pruning.
+>
+>  - lock .git/packed-refs.lock
+>
+>  - loop over refs:
+>    - write it out to .git/packed-refs.lock unless a symref.
+>    - if it is a loose one (not a symref), remember it for pruning.
+>
+>  - if pruning:
+>    - remove the entire .git/deleted-refs/ hierarchy
+>    - remove the remembered ones
 
-Nicolas
+Perhaps we should acquire .git/$frotz.lock for each $frotz that we remove 
+when pruning.
+
+>  - rename .git/packed-refs.lock to .git/packed-refs
+
+Thanks,
+Christian.
