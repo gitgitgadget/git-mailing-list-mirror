@@ -1,50 +1,60 @@
-From: Junio C Hamano <junkio@cox.net>
+From: fork0@t-online.de (Alex Riesen)
 Subject: Re: [PATCH] Git.pm: Kill Git.xs for now
-Date: Sun, 24 Sep 2006 03:38:22 -0700
-Message-ID: <7vwt7ta6sh.fsf@assigned-by-dhcp.cox.net>
-References: <20060923181849.28753.56984.stgit@machine.or.cz>
+Date: Sun, 24 Sep 2006 12:50:16 +0200
+Message-ID: <20060924105016.GA5732@steel.home>
+References: <20060923181849.28753.56984.stgit@machine.or.cz> <7vwt7ta6sh.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Alex Riesen <fork0@users.sourceforge.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, fork0@t-online.de (Alex Riesen)
-X-From: git-owner@vger.kernel.org Sun Sep 24 12:38:29 2006
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 24 12:50:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRRNT-000531-JE
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 12:38:28 +0200
+	id 1GRRZP-0007Nw-Eg
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 12:50:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751947AbWIXKiY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Sep 2006 06:38:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751957AbWIXKiY
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 06:38:24 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:40657 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1751947AbWIXKiX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Sep 2006 06:38:23 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060924103823.XQQP13992.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 24 Sep 2006 06:38:23 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id SAeQ1V00S1kojtg0000000
-	Sun, 24 Sep 2006 06:38:25 -0400
-To: Petr Baudis <pasky@suse.cz>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751968AbWIXKuf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Sep 2006 06:50:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751965AbWIXKuf
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 06:50:35 -0400
+Received: from mailout07.sul.t-online.com ([194.25.134.83]:22465 "EHLO
+	mailout07.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S1751968AbWIXKue (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Sep 2006 06:50:34 -0400
+Received: from fwd29.aul.t-online.de 
+	by mailout07.sul.t-online.com with smtp 
+	id 1GRRZ6-0003KM-03; Sun, 24 Sep 2006 12:50:28 +0200
+Received: from tigra.home (S8Sp2rZH8e-71-Q1kZ1Gv7bypt3SG5XB1yNbn3H0H7GYfBILkEUKwo@[84.160.110.72]) by fwd29.sul.t-online.de
+	with esmtp id 1GRRYw-16rNKq0; Sun, 24 Sep 2006 12:50:18 +0200
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 42BC7277AF;
+	Sun, 24 Sep 2006 12:50:17 +0200 (CEST)
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1GRRYu-0001Ul-LM; Sun, 24 Sep 2006 12:50:16 +0200
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vwt7ta6sh.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-ID: S8Sp2rZH8e-71-Q1kZ1Gv7bypt3SG5XB1yNbn3H0H7GYfBILkEUKwo
+X-TOI-MSGID: 4f17a77c-94cc-43bf-8241-7006683dc933
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27654>
 
-Petr Baudis <pasky@suse.cz> writes:
+Junio C Hamano, Sun, Sep 24, 2006 12:38:22 +0200:
+> Petr Baudis <pasky@suse.cz> writes:
+> 
+> > This patch removes Git.xs from the repository for the time being. This
+> > should hopefully enable Git.pm to finally make its way to master.
+> 
+> It's a bit sad, but I think this is a sane thing to do.
+> 
+> I suspect Alex still has problem with Makefile.PL due to issues
+> around ActiveState (slash vs bs and CRLF line ending if I recall
+> correctly)?
+> 
 
-> This patch removes Git.xs from the repository for the time being. This
-> should hopefully enable Git.pm to finally make its way to master.
-
-It's a bit sad, but I think this is a sane thing to do.
-
-I suspect Alex still has problem with Makefile.PL due to issues
-around ActiveState (slash vs bs and CRLF line ending if I recall
-correctly)?
+Absolutely.
