@@ -1,64 +1,98 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] cg-commit: fix signed off handling
-Date: Sun, 24 Sep 2006 22:05:05 +0200
-Message-ID: <20060924200505.GY20017@pasky.or.cz>
-References: <20060825002740.GH2817@diku.dk> <20060924174519.GW20017@pasky.or.cz> <20060924183246.GA695@diku.dk>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] Remove empty ref directories that prevent creating a ref.
+Date: Sun, 24 Sep 2006 22:33:17 +0200
+Message-ID: <20060924223317.caf467a3.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 24 22:05:38 2006
+X-From: git-owner@vger.kernel.org Sun Sep 24 22:27:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRaDu-0006dB-Na
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 22:05:11 +0200
+	id 1GRaZA-0001tg-Ly
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 22:27:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751361AbWIXUFI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Sep 2006 16:05:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751355AbWIXUFH
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 16:05:07 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:63115 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751373AbWIXUFG (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 16:05:06 -0400
-Received: (qmail 15567 invoked by uid 2001); 24 Sep 2006 22:05:05 +0200
-To: Jonas Fonseca <fonseca@diku.dk>
-Content-Disposition: inline
-In-Reply-To: <20060924183246.GA695@diku.dk>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932069AbWIXU1F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Sep 2006 16:27:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932071AbWIXU1F
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 16:27:05 -0400
+Received: from smtp4-g19.free.fr ([212.27.42.30]:4510 "EHLO smtp4-g19.free.fr")
+	by vger.kernel.org with ESMTP id S932069AbWIXU1C (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 16:27:02 -0400
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp4-g19.free.fr (Postfix) with SMTP id 30C2954A6F;
+	Sun, 24 Sep 2006 22:27:01 +0200 (CEST)
+To: Junio Hamano <junkio@cox.net>
+X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.8.20; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27693>
 
-Dear diary, on Sun, Sep 24, 2006 at 08:32:46PM CEST, I got a letter
-where Jonas Fonseca <fonseca@diku.dk> said that...
-> Petr Baudis <pasky@suse.cz> wrote Sun, Sep 24, 2006:
-> > diff --git a/cg-commit b/cg-commit
-> > index 43e6c6c..beedb6f 100755
-> > --- a/cg-commit
-> > +++ b/cg-commit
-> > @@ -402,10 +402,6 @@ if [ "$msgfile" ]; then
-> >  	written=1
-> >  fi
-> >  
-> > -# Always have at least one blank line, to ease the editing for
-> > -# the poor people whose text editor has no 'O' command.
-> > -[ "$written" ] || { tty -s && echo >>"$LOGMSG"; }
-> > -
-> >  add_signoff() {
-> >  	if [ "$signoff" ] && ! grep -q -i "signed-off-by: $signoff" $LOGMSG; then
-> >  		grep -q -i sign-off-by $LOGMSG || echo
-> 			   ^^^^^^^^^^^
-> 
-> My patch also fixed this to grep for "signed-off-by".
+Junio wrote:
+"BTW, the second issue exists without packed ref; currently we
+cannot do
 
-Oh, thanks - fixed.
+    git branch foo/bar
+    git branch -d foo/bar
+    git branch foo"
 
+This patch also add some test cases from Linus and Junio.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+
+This patch applies to master, that's why it doesn't contain
+test cases using "git pack-refs". I will send a separate patch
+for them latter. 
+
+ git-branch.sh     |   10 ++++++++++
+ t/t3200-branch.sh |   12 ++++++++++++
+ 2 files changed, 22 insertions(+), 0 deletions(-)
+
+diff --git a/git-branch.sh b/git-branch.sh
+index e0501ec..9f7ff80 100755
+--- a/git-branch.sh
++++ b/git-branch.sh
+@@ -112,6 +112,16 @@ rev=$(git-rev-parse --verify "$head") ||
+ git-check-ref-format "heads/$branchname" ||
+ 	die "we do not like '$branchname' as a branch name."
+ 
++if [ -d "$GIT_DIR/refs/heads/$branchname" ]
++then
++	for refdir in `find "$GIT_DIR/refs/heads/$branchname" -type d | sort -r`
++	do
++		rmdir "$refdir" || \
++		    die "Could not delete '$refdir', " \
++		    "there may still be a ref there."
++	done
++fi
++
+ if [ -e "$GIT_DIR/refs/heads/$branchname" ]
+ then
+ 	if test '' = "$force"
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 5b04efc..6907cbc 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -61,4 +61,16 @@ test_expect_success \
+ 	 test -f .git/logs/refs/heads/g/h/i &&
+ 	 diff expect .git/logs/refs/heads/g/h/i'
+ 
++test_expect_success \
++    'git branch j/k should work after branch j has been deleted' \
++       'git-branch j &&
++        git-branch -d j &&
++        git-branch j/k'
++
++test_expect_success \
++    'git branch l should work after branch l/m has been deleted' \
++       'git-branch l/m &&
++        git-branch -d l/m &&
++        git-branch l'
++
+ test_done
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+1.4.2.1.g80823-dirty
