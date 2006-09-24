@@ -1,92 +1,60 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] gitweb: Consolidate escaping/validation of query string
-Date: Sun, 24 Sep 2006 13:36:13 +0200
-Message-ID: <20060924113613.GM20017@pasky.or.cz>
-References: <20060923221841.18063.56589.stgit@rover> <ef4csl$7vk$1@sea.gmane.org>
+From: Santi <sbejar@gmail.com>
+Subject: Re: [PATCH] git-project-version
+Date: Sun, 24 Sep 2006 13:37:43 +0200
+Message-ID: <8aa486160609240437v44fc3f20ucf664f99af37f1c0@mail.gmail.com>
+References: <87bqr0tbo6.fsf@gmail.com> <20060923235153.GH20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 24 13:36:22 2006
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 24 13:37:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRSHT-0006pa-8X
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 13:36:19 +0200
+	id 1GRSIt-000778-6t
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 13:37:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752007AbWIXLgQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Sep 2006 07:36:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752015AbWIXLgQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 07:36:16 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:20164 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1752007AbWIXLgP (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 07:36:15 -0400
-Received: (qmail 6482 invoked by uid 2001); 24 Sep 2006 13:36:13 +0200
-To: Jakub Narebski <jnareb@gmail.com>
+	id S1752013AbWIXLho convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 24 Sep 2006 07:37:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752015AbWIXLho
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 07:37:44 -0400
+Received: from wx-out-0506.google.com ([66.249.82.227]:20485 "EHLO
+	wx-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1752013AbWIXLho convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 07:37:44 -0400
+Received: by wx-out-0506.google.com with SMTP id s14so1505857wxc
+        for <git@vger.kernel.org>; Sun, 24 Sep 2006 04:37:43 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=IPPGS5I83VJJjggKaYtlXKURJH/fIh+uqP62Z62t38N75h0tOQ39EsNIK4IwNOtUyZHvPqfIzlL1dpFZ9B2gyMSHTUfk/ozu9x2gmC0DZrdUvpHUIz008WlDKoAIgP6hhKOBhb4gybJ1q3iQQevuFmrx430A9vui5FI0PMwJcv8=
+Received: by 10.70.125.2 with SMTP id x2mr4921923wxc;
+        Sun, 24 Sep 2006 04:37:43 -0700 (PDT)
+Received: by 10.70.19.6 with HTTP; Sun, 24 Sep 2006 04:37:43 -0700 (PDT)
+To: "Petr Baudis" <pasky@suse.cz>
+In-Reply-To: <20060923235153.GH20017@pasky.or.cz>
 Content-Disposition: inline
-In-Reply-To: <ef4csl$7vk$1@sea.gmane.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27659>
 
-Dear diary, on Sun, Sep 24, 2006 at 12:36:13AM CEST, I got a letter
-where Jakub Narebski <jnareb@gmail.com> said that...
-> Petr Baudis wrote:
-> > (click on the funny =__ify file)
-> 
-> Aaargh? Why this name?
+2006/9/24, Petr Baudis <pasky@suse.cz>:
+> Dear diary, on Fri, Aug 04, 2006 at 11:48:25PM CEST, I got a letter
+> where Santi B=E9jar <sbejar@gmail.com> said that...
+> > Introduce an easy way for projects to get its git version. This is
+> > something that other projects using git would like to do, and we do=
+n't
+> > want them all reinventing the wheel.
+> >
+> > Signed-off-by: Santi B=E9jar <sbejar@gmail.com>
+>
+> Perhaps it would be more useful to have a flag for git-describe to
+> describe not the (HEAD) commit but your working copy (thus HEAD + che=
+ck
+> for the dirtyness).
+>
 
-You tell me... ;-)
-
-> > I have also made esc_param() escape [?=&;]. Not escaping [&;] was downright
-> > buggy and [?=] just feels better escaped. ;-) YMMV.
-..snip..
-> I'd rather have new esc_param() or esc_param_value() quote like escape
-> subroutine from CGI::Util, with the esception of _not_ escaping '/'
-> (it makes funny bookmark, and lot less readable query string), and rename
-> current esc_param() to esc_query_string() or esc_params().
-
-Huh, well, what's the point with the rename and why not keep it as it is
-with just removing the four characters above? Escaped stuff looks ugly
-in a URL. ;-)
-
-BTW, looking at CGI::Util innards, what sick mind serves CGIs from an
-EBCDIC machine?
-
-> Perhaps we should have also esc_arg() for things like title attribute
-> of <a> (link) element (or other element)
-
-Yes. I wanted to implement your few months old wish to have full string
-of abbreviated column contents in title attributes but delayed it for
-now because we have no such function yet.
-
-> and filename="..." part of Content-disposition: HTTP header.
-
-This is not HTML-ish so you need quotemeta() here, using entities makes
-no sense in this case.
-
-> By the way, the validate_input() should be split into separate subroutines:
-> validate_ref() for validating hash, hash_base, hash_parent, hash_parent_base,
-> and validate_path() for validating project,
-
-Yes, that would be nice.
-
-> file_name and file_parent parameters.
-
-What's the point in validating those?
-
-> We should _never_ use esc_html except during the output, or just before output.
-> It certainly shouldn't take place in parse_* subroutine (or in the fake parse
-> like in git_blobdiff)!
-
-Yes, I agree. Will send a fixed patch.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+Sure.
