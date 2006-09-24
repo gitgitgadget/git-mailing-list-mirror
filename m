@@ -1,104 +1,74 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] cg-commit: fix signed off handling
-Date: Sun, 24 Sep 2006 19:45:19 +0200
-Message-ID: <20060924174519.GW20017@pasky.or.cz>
-References: <20060825002740.GH2817@diku.dk>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Fixes git-cherry algorithmic flaws
+Date: Sun, 24 Sep 2006 10:47:29 -0700
+Message-ID: <7vodt59mxa.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0608071328200.22971@kivilampi-30.cs.helsinki.fi>
+	<20060924000051.GI20017@pasky.or.cz>
+	<7virjem3tp.fsf@assigned-by-dhcp.cox.net>
+	<20060924111737.GL20017@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 24 19:45:29 2006
+Cc: Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@helsinki.fi>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 24 19:47:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRY2d-0000pR-L4
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 19:45:24 +0200
+	id 1GRY4s-0001FS-IE
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 19:47:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751302AbWIXRpV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Sep 2006 13:45:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751315AbWIXRpV
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 13:45:21 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:35530 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751302AbWIXRpU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Sep 2006 13:45:20 -0400
-Received: (qmail 10641 invoked by uid 2001); 24 Sep 2006 19:45:19 +0200
-To: Jonas Fonseca <fonseca@diku.dk>
-Content-Disposition: inline
-In-Reply-To: <20060825002740.GH2817@diku.dk>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751344AbWIXRrc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Sep 2006 13:47:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751339AbWIXRrc
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Sep 2006 13:47:32 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:12981 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1751334AbWIXRra (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Sep 2006 13:47:30 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060924174730.MEUO26416.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 24 Sep 2006 13:47:30 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id SHnX1V00j1kojtg0000000
+	Sun, 24 Sep 2006 13:47:32 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060924111737.GL20017@pasky.or.cz> (Petr Baudis's message of
+	"Sun, 24 Sep 2006 13:17:38 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27684>
 
-Dear diary, on Fri, Aug 25, 2006 at 02:27:40AM CEST, I got a letter
-where Jonas Fonseca <fonseca@diku.dk> said that...
-> Handle the sign off insertion before starting the CG: comment lines. Also,
-> fix typo in grepping for existing sign off lines.
-> 
-> Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
-> ---
-> 
-> The late calling of the add_signoff function has multiple problems,
-> since at that point comment lines has already been added and the sign
-> off line will end up in only one of the log message files.
+Petr Baudis <pasky@suse.cz> writes:
 
-Well, the commit that moved this was
+> Hmm, well, what's curious is that the documentation says
+>
+> 	Every commit with a changeset that doesn't exist in the other branch
+> 	has its id (sha1) reported, prefixed by a symbol.  Those existing only
+> 	in the <upstream> branch are prefixed with a minus (-) sign, and those
+> 	that only exist in the <head> branch are prefixed with a plus (+)
+> 	symbol.
+>
+> which is in contradiction of Ilpo's description of the old algorithm
+> (and also your description of it). It would seem he just wants to fix it
+> according to the documented behaviour.
+>
+> I guess the documentation is what's broken then?
 
-Commit: 4cf220db10c0b937f9852513effc5565fcbb4f86
-Author: Petr Baudis <pasky@pixie.suse.cz> Thu, 20 Jul 2006 11:37:31 -0400
+Ah I did not realize that, but yes the documentation is
+incorrect.
 
-    * cg-commit:
+I wonder if we can kill it by introducing a new rev notation and
+using regular rev-list family of commands instead.
 
-    Add signoff past the message if getting it from stdin
+What we want here is a way to say "give me commits that are in B
+but not in A, but before returning a commit see if there is an
+equivalent change in the set of commits that are in A but not in
+B, and filter it out".
 
-What about this?
-
-diff --git a/cg-commit b/cg-commit
-index 43e6c6c..beedb6f 100755
---- a/cg-commit
-+++ b/cg-commit
-@@ -402,10 +402,6 @@ if [ "$msgfile" ]; then
- 	written=1
- fi
- 
--# Always have at least one blank line, to ease the editing for
--# the poor people whose text editor has no 'O' command.
--[ "$written" ] || { tty -s && echo >>"$LOGMSG"; }
--
- add_signoff() {
- 	if [ "$signoff" ] && ! grep -q -i "signed-off-by: $signoff" $LOGMSG; then
- 		grep -q -i sign-off-by $LOGMSG || echo
-@@ -413,6 +409,16 @@ add_signoff() {
- 	fi >> $LOGMSG
- }
- 
-+if tty -s; then
-+	# Always have at least one blank line, to ease the editing for
-+	# the poor people whose text editor has no 'O' command.
-+	[ "$written" ] || echo >>"$LOGMSG"
-+	# Also, add the signoff line _now_ before spewing out CG: lines.
-+	# (In case of non-tty input we do it later after taking the actual
-+	# log message from stdin.)
-+	add_signoff
-+fi
-+
- # CG: -----------------------------------------------------------------------
- editor_comment_start commit
- 
-@@ -472,7 +478,6 @@ editor_msg_end
- 
- cp "$LOGMSG" "$LOGMSG2"
- if tty -s; then
--	add_signoff
- 	if [ "$editor" ] && ! editor $commitalways commit c; then
- 		rm "$LOGMSG" "$LOGMSG2"
- 		[ "$review" ] && rm "$PATCH"
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+Time for "rev-list A....B"? ;-)
