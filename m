@@ -1,104 +1,100 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: builtin-upload-archive.c broken on openbsd
-Date: 23 Sep 2006 17:20:45 -0700
-Message-ID: <864puyglnm.fsf@blue.stonehenge.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Fixes git-cherry algorithmic flaws
+Date: Sat, 23 Sep 2006 18:49:22 -0700
+Message-ID: <7virjem3tp.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0608071328200.22971@kivilampi-30.cs.helsinki.fi>
+	<20060924000051.GI20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Sep 24 02:21:00 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: junkio@cox.net,
+	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@helsinki.fi>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 24 03:49:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRHjo-0003KI-Sz
-	for gcvg-git@gmane.org; Sun, 24 Sep 2006 02:20:53 +0200
+	id 1GRJ7l-0005ci-4N
+	for gcvg-git@gmane.org; Sun, 24 Sep 2006 03:49:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751296AbWIXAUt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Sep 2006 20:20:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751298AbWIXAUt
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 20:20:49 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:64589 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP
-	id S1751296AbWIXAUs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Sep 2006 20:20:48 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 230AC8F9AC
-	for <git@vger.kernel.org>; Sat, 23 Sep 2006 17:20:48 -0700 (PDT)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 27406-02-9 for <git@vger.kernel.org>;
- Sat, 23 Sep 2006 17:20:45 -0700 (PDT)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id C6B908F9AD; Sat, 23 Sep 2006 17:20:45 -0700 (PDT)
-To: git@vger.kernel.org
-x-mayan-date: Long count = 12.19.13.11.19; tzolkin = 11 Cauac; haab = 12 Chen
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752053AbWIXBtY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 23 Sep 2006 21:49:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752052AbWIXBtY
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Sep 2006 21:49:24 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:30931 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1752053AbWIXBtX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Sep 2006 21:49:23 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060924014923.IVYG6235.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 23 Sep 2006 21:49:23 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id S1pR1V0011kojtg0000000
+	Sat, 23 Sep 2006 21:49:25 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060924000051.GI20017@pasky.or.cz> (Petr Baudis's message of
+	"Sun, 24 Sep 2006 02:00:51 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27643>
 
+Petr Baudis <pasky@suse.cz> writes:
 
-Looks like ctype again. Gotta be careful with that on BSD releases:
+> Dear diary, on Mon, Aug 07, 2006 at 12:30:13PM CEST, I got a letter
+> where Ilpo J=E4rvinen <ilpo.jarvinen@helsinki.fi> said that...
+>> Old algorithm:
+>>         - printed IDs of identical patches with minus (-) sign; they
+>> 	  should not be printed at all
+>>         - did not print anything from the changes in the upstream
+>>=20
+>> Signed-off-by: Ilpo J=E4rvinen <ilpo.jarvinen@helsinki.fi>
+>
+> Ping? Is this patch bogus or was it just forgotten?
 
-    $ gmake prefix=/opt/git all
-    GIT_VERSION = 1.4.2.GIT
-    gcc -o builtin-upload-archive.o -c -g -O2 -Wall -I/usr/local/include -DSHA1_HEADER='<openssl/sha.h>' -DNO_STRCASESTR builtin-upload-archive.c
-    In file included from /usr/include/sys/poll.h:54,
-                     from builtin-upload-archive.c:11:
-    /usr/include/ctype.h:68: error: syntax error before ']' token
-    /usr/include/ctype.h:69: error: syntax error before ']' token
-    /usr/include/ctype.h:71: error: syntax error before ']' token
-    /usr/include/ctype.h:76: error: syntax error before ']' token
-    /usr/include/ctype.h:79: error: syntax error before '(' token
-    /usr/include/ctype.h:80: error: syntax error before '(' token
-    /usr/include/ctype.h:98: error: syntax error before "c"
-    In file included from /usr/include/sys/poll.h:54,
-                     from builtin-upload-archive.c:11:
-    /usr/include/ctype.h:96:1: unterminated #if  
-    /usr/include/ctype.h:40:1: unterminated #ifndef
-    In file included from builtin-upload-archive.c:11:
-    /usr/include/sys/poll.h:53:1: unterminated #ifndef
-    /usr/include/sys/poll.h:28:1: unterminated #ifndef
-    gmake: *** [builtin-upload-archive.o] Error 1
+These are not fixes to "algorithmic flaws".  It's more like that
+Ilpo is writing a different program to fill different needs, and
+I did not see what workflow wanted to have the list of changes
+that were in the upstream and our changes.  Maybe what Ilpo
+wanted to see was something like "git log upstream...mine"
+(three-dots not two to mean symmetric difference).  I dunno.
+That operation certainly did not exist when we did git-cherry
+originally.
 
-This fixes it:
+The original purpose of git-cherry (which probably is different
+from what Ilpo wanted to have, and that is why Ilpo modified it
+into a different program) is for a developer in the contributor
+role to see which ones of local patches have been accepted
+upstream and which ones still remain unapplied -- the intent is
+to help rebase only the latter and keep trying to convince
+upstream that these remaining ones are also worth applying.
 
->From 5a7951c5294fc05e2754a1b6f503e36cd7b2a2f0 Mon Sep 17 00:00:00 2001
-From: Charlie <root@blue.stonehenge.com>
-Date: Sat, 23 Sep 2006 17:19:53 -0700
-Subject: [PATCH] local patch for openbsd
+So minus (-) lines are very much needed to if you want to see
+which ones have been accepted.  Plus lines are used to pick
+which ones to rebase by older version of git-rebase, but I do
+not think we do that anymore.  And in any case we are _not_
+interested in whatever happened in the upstream that did not
+come from the branch we are looking at.
 
----
- builtin-upload-archive.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+I suspect we do not use it anywhere anymore.  Maybe we can
+remove it?
 
-diff --git a/builtin-upload-archive.c b/builtin-upload-archive.c
-index 0596865..45c92e1 100644
---- a/builtin-upload-archive.c
-+++ b/builtin-upload-archive.c
-@@ -2,13 +2,13 @@
-  * Copyright (c) 2006 Franck Bui-Huu
-  */
- #include <time.h>
-+#include <sys/wait.h>
-+#include <sys/poll.h>
- #include "cache.h"
- #include "builtin.h"
- #include "archive.h"
- #include "pkt-line.h"
- #include "sideband.h"
--#include <sys/wait.h>
--#include <sys/poll.h>
+	... goes and looks ...
+	git grep -e git.cherry --and --not -e git.cherry-pick
 
- static const char upload_archive_usage[] =
-        "git-upload-archive <repo>";
---
-1.4.2.1.g3d5c-dirty
+Nah, no such luck.  One of the documentation suggests that you
+drive cvsexportcommit using its output, like this:
 
+	git cherry cvs mine | sed -n -e 's/^\+ //p' |
+        xargs -L 1 git-cvsexportcommit -c -p -v
 
+and I can see why cherry is (perhaps slightly) more desirable
+than "git rev-list cvs..mine"
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+So unless we come up with an alternative way to do this, we
+cannot change it or drop it.  Not yet.
