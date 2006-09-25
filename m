@@ -1,49 +1,95 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: fsck objects and timestamp ordering
-Date: Mon, 25 Sep 2006 12:32:47 -0400
-Message-ID: <9e4733910609250932r146fea7alaaf858a18a8b50b0@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [laroche@redhat.com: gitweb.cgi]
+Date: Mon, 25 Sep 2006 18:32:22 +0200
+Organization: At home
+Message-ID: <ef90an$4ua$1@sea.gmane.org>
+References: <20060925161934.GA18951@dudweiler.stuttgart.redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Sep 25 18:33:24 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Mon Sep 25 18:34:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRtO4-00032t-Sz
-	for gcvg-git@gmane.org; Mon, 25 Sep 2006 18:32:57 +0200
+	id 1GRtOe-0003Be-Ro
+	for gcvg-git@gmane.org; Mon, 25 Sep 2006 18:33:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751247AbWIYQct (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Sep 2006 12:32:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751248AbWIYQct
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Sep 2006 12:32:49 -0400
-Received: from py-out-1112.google.com ([64.233.166.181]:28524 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1751247AbWIYQcs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Sep 2006 12:32:48 -0400
-Received: by py-out-1112.google.com with SMTP id n25so2596378pyg
-        for <git@vger.kernel.org>; Mon, 25 Sep 2006 09:32:48 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=kA0bYus6z2oU/4Vm2sdFc9/QrOY5DhnnUVwvP7Ysq/LngKqBis6mk7TAUndZaGXTKTyPgGhWmPNPHnWR93b5ZPpn97qbwZjQga9h60X8nylndovZGierMn9T3iJx/NhzEt4y6WMn8sxo2s+ZNnfOUswe2M1AlX9akx2u2JJqFRI=
-Received: by 10.35.18.3 with SMTP id v3mr8651650pyi;
-        Mon, 25 Sep 2006 09:32:47 -0700 (PDT)
-Received: by 10.35.60.14 with HTTP; Mon, 25 Sep 2006 09:32:47 -0700 (PDT)
-To: "Git Mailing List" <git@vger.kernel.org>
-Content-Disposition: inline
+	id S1751248AbWIYQd2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Sep 2006 12:33:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751249AbWIYQd2
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Sep 2006 12:33:28 -0400
+Received: from main.gmane.org ([80.91.229.2]:42413 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751248AbWIYQd1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Sep 2006 12:33:27 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GRtON-000378-FN
+	for git@vger.kernel.org; Mon, 25 Sep 2006 18:33:15 +0200
+Received: from host-81-190-26-109.torun.mm.pl ([81.190.26.109])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 25 Sep 2006 18:33:15 +0200
+Received: from jnareb by host-81-190-26-109.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 25 Sep 2006 18:33:15 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-26-109.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27742>
 
-When running fsck objects, does it verify that timestamps are ordered
-in the same order as the dependency chains?
+Florian La Roche wrote:
 
-I am having trouble with a CVS repository where the timestamp ordering
-and dependency order are in conflict. It would be best if git didn't
-experience the same problem.
+> Hello git crew,
+> 
+> I'm not a big perl prorammer, but the following removes perl
+> warnings about accessing undefined vars.
+[...] 
+> --- gitweb/gitweb.perl
+> +++ gitweb/gitweb.perl
+> @@ -427,7 +427,9 @@ sub esc_html {
+>       my $str = shift;
+>       $str = decode("utf8", $str, Encode::FB_DEFAULT);
+>       $str = escapeHTML($str);
+> -     $str =~ s/\014/^L/g; # escape FORM FEED (FF) character (e.g. in COPYING file)
+> +     if (defined $str) {
+> +             $str =~ s/\014/^L/g; # escape FORM FEED (FF) character (e.g. in COPYING file)
+> +     }
+>       return $str;
+>  }
+> 
+It would be better to just use
+
+        my $str = shift;
+        return '' unless defined $str;
+
+and neither your change in esc_html, nor the change below should be needed. 
+By the way, commit without title? But it would be better if correct it, to
+set $co{'title'} to an empty string, either in git_log or in parse_commit.
+ 
+> @@ -2860,10 +2819,14 @@ sub git_log {
+>               my $ref = format_ref_marker($refs, $commit);
+>               my %co = parse_commit($commit);
+>               next if !%co;
+> +             my $esc_title = $co{'title'};
+> +             if (defined $esc_title) {
+> +                     $esc_title = esc_html($esc_title);
+> +             }
+>               my %ad = parse_date($co{'author_epoch'});
+>               git_print_header_div('commit',
+>                              "<span class=\"age\">$co{'age_string'}</span>" .
+> -                            esc_html($co{'title'}) . $ref,
+> +                            $esc_title . $ref,
+>                              $commit);
+>               print "<div class=\"title_text\">\n" .
+>                     "<div class=\"log_link\">\n" .
 
 -- 
-Jon Smirl
-jonsmirl@gmail.com
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
