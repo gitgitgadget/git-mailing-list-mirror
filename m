@@ -1,95 +1,57 @@
 From: Andy Whitcroft <apw@shadowen.org>
-Subject: [PATCH] svnimport add support for parsing From lines for author
-Date: Mon, 25 Sep 2006 12:08:13 +0100
-Message-ID: <20060925110813.GA4419@shadowen.org>
+Subject: Re: [PATCH] perl bindings fix compilation errors
+Date: Mon, 25 Sep 2006 12:34:20 +0100
+Message-ID: <4517BEBC.4000002@shadowen.org>
+References: <20060925100319.GA1655@shadowen.org> <Pine.LNX.4.63.0609251223590.25371@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Sep 25 13:09:02 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 25 13:34:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRoKH-0000o0-Mx
-	for gcvg-git@gmane.org; Mon, 25 Sep 2006 13:08:42 +0200
+	id 1GRojW-0008MW-QR
+	for gcvg-git@gmane.org; Mon, 25 Sep 2006 13:34:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751133AbWIYLIh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Sep 2006 07:08:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751147AbWIYLIh
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Sep 2006 07:08:37 -0400
-Received: from 41.150.104.212.access.eclipse.net.uk ([212.104.150.41]:37001
-	"EHLO localhost.localdomain") by vger.kernel.org with ESMTP
-	id S1751133AbWIYLIg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Sep 2006 07:08:36 -0400
-Received: from apw by localhost.localdomain with local (Exim 4.63)
-	(envelope-from <apw@shadowen.org>)
-	id 1GRoJp-00019M-JB; Mon, 25 Sep 2006 12:08:13 +0100
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751368AbWIYLeo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Sep 2006 07:34:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751427AbWIYLeo
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Sep 2006 07:34:44 -0400
+Received: from hellhawk.shadowen.org ([80.68.90.175]:15119 "EHLO
+	hellhawk.shadowen.org") by vger.kernel.org with ESMTP
+	id S1751368AbWIYLen (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Sep 2006 07:34:43 -0400
+Received: from localhost ([127.0.0.1])
+	by hellhawk.shadowen.org with esmtp (Exim 4.50)
+	id 1GRoiz-00032n-Gw; Mon, 25 Sep 2006 12:34:13 +0100
+User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0609251223590.25371@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27734>
 
-svnimport: add support for parsing From: lines for author
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Mon, 25 Sep 2006, Andy Whitcroft wrote:
+> 
+>> With the introduction of Makefile.PL to the perl bindings we no
+>> longer seem to pass in either the definition of SHA1_HEADER or
+>> GIT_VERSION.  It seems we no longer pass over the BASIC_FLAGS into
+>> the compilation.
+> 
+> You probably got bitten by the fact that earlier runs left Git.c in the 
+> perl/ directory. Go to perl/, "make distclean", and make git again.
 
-When commiting a non-signed off contribution you cannot just add
-a Signed-off-by: from the author as they did not sign it off.
-But if you then commit it, and necessarily sign it off yourself,
-the change appears to be yours.  In this case it is common to use
-the following form:
+Hmmm that sucks.  Yes, I had to make distclean more than once, but it
+seems to fix things.
 
-	Commentry
+I am somewhat unhappy that a make clean at the top level and remake was
+not sufficient to get a working tree.
 
-	From: originator <email>
-	Signed-of-by: me <my email>
-
-Now that we have support for parsing Signed-off-by: for author
-information it makes sense to handle From: as well.  This patch
-adds a new -F which will handle From: lines in the comments.  It
-may be used in combination with -S.
-
-Signed-off-by: Andy Whitcroft <apw@shadowen.org>
----
-diff --git a/git-svnimport.perl b/git-svnimport.perl
-index ed62897..988514e 100755
---- a/git-svnimport.perl
-+++ b/git-svnimport.perl
-@@ -31,7 +31,7 @@ die "Need SVN:Core 1.2.1 or better" if $
- $ENV{'TZ'}="UTC";
- 
- our($opt_h,$opt_o,$opt_v,$opt_u,$opt_C,$opt_i,$opt_m,$opt_M,$opt_t,$opt_T,
--    $opt_b,$opt_r,$opt_I,$opt_A,$opt_s,$opt_l,$opt_d,$opt_D,$opt_S);
-+    $opt_b,$opt_r,$opt_I,$opt_A,$opt_s,$opt_l,$opt_d,$opt_D,$opt_S,$opt_F);
- 
- sub usage() {
- 	print STDERR <<END;
-@@ -39,12 +39,12 @@ Usage: ${\basename $0}     # fetch/updat
-        [-o branch-for-HEAD] [-h] [-v] [-l max_rev]
-        [-C GIT_repository] [-t tagname] [-T trunkname] [-b branchname]
-        [-d|-D] [-i] [-u] [-r] [-I ignorefilename] [-s start_chg]
--       [-m] [-M regex] [-A author_file] [-S] [SVN_URL]
-+       [-m] [-M regex] [-A author_file] [-S] [-F] [SVN_URL]
- END
- 	exit(1);
- }
- 
--getopts("A:b:C:dDhiI:l:mM:o:rs:t:T:Suv") or usage();
-+getopts("A:b:C:dDFhiI:l:mM:o:rs:t:T:Suv") or usage();
- usage if $opt_h;
- 
- my $tag_name = $opt_t || "tags";
-@@ -548,8 +548,12 @@ sub commit {
- 		$committer_name = $committer_email = $author;
- 	}
- 
--	if ($opt_S && $message =~ /Signed-off-by:\s+(.*?)\s+<(.*)>\s*\n/) {
-+	if ($opt_F && $message =~ /From:\s+(.*?)\s+<(.*)>\s*\n/) {
- 		($author_name, $author_email) = ($1, $2);
-+		print "Author from From: $1 <$2>\n" if ($opt_v);;
-+	} elsif ($opt_S && $message =~ /Signed-off-by:\s+(.*?)\s+<(.*)>\s*\n/) {
-+		($author_name, $author_email) = ($1, $2);
-+		print "Author from Signed-off-by: $1 <$2>\n" if ($opt_v);;
- 	} else {
- 		$author_name = $committer_name;
- 		$author_email = $committer_email;
+-apw
