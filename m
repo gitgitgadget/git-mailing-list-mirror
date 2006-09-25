@@ -1,111 +1,73 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: [PATCH] Allow git-checkout when on a non-existant branch.
-Date: Mon, 25 Sep 2006 01:24:38 -0400
-Message-ID: <20060925052438.GA16023@spearce.org>
+From: Jan Engelhardt <jengelh@linux01.gwdg.de>
+Subject: Re: The GPL: No shelter for the Linux kernel?
+Date: Mon, 25 Sep 2006 07:59:47 +0200 (MEST)
+Message-ID: <Pine.LNX.4.61.0609250757070.18552@yvahk01.tjqt.qr>
+References: <MDEHLPKNGKAHNMBLJOLKIEJNOJAB.davids@webmaster.com>
+ <Pine.LNX.4.61.0609231004330.9543@yvahk01.tjqt.qr> <Pine.LNX.4.64.0609231051570.4388@g5.osdl.org>
+ <20060923181406.GC11916@pasky.or.cz> <Pine.LNX.4.61.0609240952240.28459@yvahk01.tjqt.qr>
+ <Pine.LNX.4.64.0609240923331.4388@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Sep 25 07:25:20 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, David Schwartz <davids@webmaster.com>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 25 08:02:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRixp-0006cu-Aw
-	for gcvg-git@gmane.org; Mon, 25 Sep 2006 07:25:10 +0200
+	id 1GRjYH-0004Z9-3a
+	for gcvg-git@gmane.org; Mon, 25 Sep 2006 08:02:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751392AbWIYFYo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Sep 2006 01:24:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751477AbWIYFYo
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Sep 2006 01:24:44 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:24245 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751392AbWIYFYn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Sep 2006 01:24:43 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GRixM-0007dv-TG
-	for git@vger.kernel.org; Mon, 25 Sep 2006 01:24:41 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 10D8320FB16; Mon, 25 Sep 2006 01:24:38 -0400 (EDT)
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751375AbWIYGCi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Sep 2006 02:02:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751194AbWIYGCi
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Sep 2006 02:02:38 -0400
+Received: from emailer.gwdg.de ([134.76.10.24]:31632 "EHLO emailer.gwdg.de")
+	by vger.kernel.org with ESMTP id S932202AbWIYGCh (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Sep 2006 02:02:37 -0400
+Received: from linux01.gwdg.de ([134.76.13.21])
+	by mailer.gwdg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.60)
+	(envelope-from <jengelh@linux01.gwdg.de>)
+	id 1GRjXn-0000Kc-Kn; Mon, 25 Sep 2006 08:02:20 +0200
+Received: from linux01.gwdg.de (localhost [127.0.0.1])
+	by linux01.gwdg.de (8.13.3/8.13.3/SuSE Linux 0.7) with ESMTP id k8P5xmlU018703;
+	Mon, 25 Sep 2006 07:59:50 +0200
+Received: from localhost (jengelh@localhost)
+	by linux01.gwdg.de (8.13.3/8.13.3/Submit) with ESMTP id k8P5xlxK018697;
+	Mon, 25 Sep 2006 07:59:47 +0200
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0609240923331.4388@g5.osdl.org>
+X-Spam-Level: /
+X-Spam-Report: Content analysis: 0.0 points, 6.0 required
+	_SUMMARY_
+X-Virus-Scanned: (clean) by exiscan+sophie
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27728>
 
-I've seen some users get into situtations where their HEAD
-symbolic-ref is pointing at a non-existant ref.  (Sometimes this
-happens during clone when the remote repository lacks a 'master'
-branch.)  If this happens the user is unable to use git-checkout
-to switch branches as there is no prior commit to merge from.
+>> Would every file that does not contain an explicit license (this 
+>> excludes MODULE_LICENSE) falls under COPYING?
+>
+>[...]
+>If a file doesn't have a license mentioned, it doesn't mean that it's 
+>"free for all" or not copyrighted, it just means that you need to find out 
+>what the license is some other way (and if you can't find out, you 
+>shouldn't be copying that file ;)
+>
+>Of course, for clarity, a lot of projects end up adding at least a minimal 
+>copyright header license everywhere, just to cover their *sses. It's not 
+>required, but maybe it avoids some confusion, especially if that file is 
+>later copied into some other project with other basic rules (but if you 
+>do that, you really _should_ have added the information at that point!).
+>[...]
 
-So instead of giving the user low-level errors about how HEAD
-can't be resolved and how not a single revision was given change
-the type of checkout to be a force and go through with the user's
-request anyway.
+Though I strongly agree with you, some GNU folks (such as 
+savannah.nongnu.org) seem to explicitly require it, even for files 
+that do not make up a single program (i.e. like coreutils/ls.c).
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- git-checkout.sh |    9 ++++++++-
- t/t7201-co.sh   |    9 +++++++++
- 2 files changed, 17 insertions(+), 1 deletions(-)
 
-diff --git a/git-checkout.sh b/git-checkout.sh
-index f03620b..119bca1 100755
---- a/git-checkout.sh
-+++ b/git-checkout.sh
-@@ -4,8 +4,8 @@ USAGE='[-f] [-b <new_branch>] [-m] [<bra
- SUBDIRECTORY_OK=Sometimes
- . git-sh-setup
- 
--old=$(git-rev-parse HEAD)
- old_name=HEAD
-+old=$(git-rev-parse --verify $old_name 2>/dev/null)
- new=
- new_name=
- force=
-@@ -140,6 +140,13 @@ # what we already had
- 	die "git checkout: to checkout the requested commit you need to specify 
-               a name for a new branch which is created and switched to"
- 
-+if [ "X$old" = X ]
-+then
-+	echo "warning: You do not appear to currently be on a branch." >&2
-+	echo "warning: Forcing checkout of $new_name." >&2
-+	force=1
-+fi
-+
- if [ "$force" ]
- then
-     git-read-tree --reset -u $new
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index b64e8b7..085d4a0 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -31,6 +31,15 @@ test_expect_success setup '
- 	git checkout master
- '
- 
-+test_expect_success "checkout from non-existing branch" '
-+
-+	git checkout -b delete-me master &&
-+	rm .git/refs/heads/delete-me &&
-+	test refs/heads/delete-me = "$(git symbolic-ref HEAD)" &&
-+	git checkout master &&
-+	test refs/heads/master = "$(git symbolic-ref HEAD)"
-+'
-+
- test_expect_success "checkout with dirty tree without -m" '
- 
- 	fill 0 1 2 3 4 5 >one &&
+
+Jan Engelhardt
 -- 
-1.4.2.1.g7a39b
