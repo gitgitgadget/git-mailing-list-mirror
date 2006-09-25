@@ -1,102 +1,70 @@
-From: fork0@t-online.de (Alex Riesen)
-Subject: [PATCH] Use const for interpolate arguments
-Date: Mon, 25 Sep 2006 23:19:00 +0200
-Message-ID: <20060925211900.GB6125@steel.home>
-References: <E1GPqwJ-0002xt-Bt@jdl.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Sam Ravnborg <sam@ravnborg.org>
+Subject: Re: git send-email woes
+Date: Mon, 25 Sep 2006 23:51:27 +0200
+Message-ID: <20060925215127.GA3965@uranus.ravnborg.org>
+References: <20060924224316.GA28051@uranus.ravnborg.org> <20060925183221.GE2490@uranus.ravnborg.org> <7v7izrzpk2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jon Loeliger <jdl@jdl.com>
-X-From: git-owner@vger.kernel.org Mon Sep 25 23:19:48 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 25 23:51:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRxrH-0007Z3-El
-	for gcvg-git@gmane.org; Mon, 25 Sep 2006 23:19:23 +0200
+	id 1GRyMP-0007al-1B
+	for gcvg-git@gmane.org; Mon, 25 Sep 2006 23:51:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751006AbWIYVTV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Sep 2006 17:19:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751069AbWIYVTV
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Sep 2006 17:19:21 -0400
-Received: from mailout02.sul.t-online.com ([194.25.134.17]:14981 "EHLO
-	mailout02.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S1751006AbWIYVTU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Sep 2006 17:19:20 -0400
-Received: from fwd33.aul.t-online.de 
-	by mailout02.sul.t-online.com with smtp 
-	id 1GRxr8-0000FB-02; Mon, 25 Sep 2006 23:19:14 +0200
-Received: from tigra.home (SmJQbsZ6reH-Rw0Up1TLhn7DuXLP39m9kt0VkV-FtyQVbKkckLX7cF@[84.160.85.62]) by fwd33.sul.t-online.de
-	with esmtp id 1GRxqu-1KVDm40; Mon, 25 Sep 2006 23:19:00 +0200
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 39F76277AF;
-	Mon, 25 Sep 2006 23:19:00 +0200 (CEST)
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
-	id 1GRxqu-00076D-4C; Mon, 25 Sep 2006 23:19:00 +0200
+	id S1750851AbWIYVva (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Sep 2006 17:51:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751190AbWIYVva
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Sep 2006 17:51:30 -0400
+Received: from pasmtpb.tele.dk ([80.160.77.98]:35537 "EHLO pasmtpB.tele.dk")
+	by vger.kernel.org with ESMTP id S1750851AbWIYVv3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Sep 2006 17:51:29 -0400
+Received: from ravnborg.org (0x535d98d8.vgnxx8.adsl-dhcp.tele.dk [83.93.152.216])
+	by pasmtpB.tele.dk (Postfix) with ESMTP id DB534E309E8;
+	Mon, 25 Sep 2006 23:51:27 +0200 (CEST)
+Received: by ravnborg.org (Postfix, from userid 500)
+	id CB6A8580D2; Mon, 25 Sep 2006 23:51:27 +0200 (CEST)
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <E1GPqwJ-0002xt-Bt@jdl.com>
-User-Agent: Mutt/1.5.11
-X-ID: SmJQbsZ6reH-Rw0Up1TLhn7DuXLP39m9kt0VkV-FtyQVbKkckLX7cF
-X-TOI-MSGID: fb627653-c1c9-42bc-af50-0ed07e233786
+In-Reply-To: <7v7izrzpk2.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27756>
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+On Mon, Sep 25, 2006 at 12:58:21PM -0700, Junio C Hamano wrote:
+> Sam Ravnborg <sam@ravnborg.org> writes:
+> 
+> > The patches in quistion did not have a "Signed-off-by: tag so
+> > that mail address has been from the author instead.
+> > And this mail address was still invalid as per RFC2822.
+> 
+> I do not think it takes Signed-off-by: as author in any case
+> (and I do not think it should -- if it did so it is a bug).
+> 
+> Maybe something like this?
+> 
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 746c525..b4a34f4 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -431,6 +431,11 @@ sub send_message
+>  	    $gitversion =~ s/^.* //;
+>  	}
+>  
+> +	my ($author_name) = ($from =~ /^(.*?)\s+</);
+> +	if ($author_name =~ /\./ && $author_name !~ /^".*"$/) {
+> +		my ($name, $addr) = ($from =~ /^(.*?)(\s+<.*)/);
+> +		$from = "\"$name\"$addr";
+> +	}
+>  	my $header = "From: $from
+>  To: $to
+>  Cc: $cc
+> 
+I would assume we had to do the same for all mail addresses?
+In this case also for $to and $cc and $reply_to.
 
----
-
-Resending. jdl.com blacklisted my IP, for whatever it has done to him.
-
- interpolate.c |    6 +++---
- interpolate.h |    9 +++++++--
- 2 files changed, 10 insertions(+), 5 deletions(-)
-
-diff --git a/interpolate.c b/interpolate.c
-index d82f1b5..4570c12 100644
---- a/interpolate.c
-+++ b/interpolate.c
-@@ -25,10 +25,10 @@ #include "interpolate.h"
-  */
- 
- int interpolate(char *result, int reslen,
--		char *orig,
--		struct interp *interps, int ninterps)
-+		const char *orig,
-+		const struct interp *interps, int ninterps)
- {
--	char *src = orig;
-+	const char *src = orig;
- 	char *dest = result;
- 	int newlen = 0;
- 	char *name, *value;
-diff --git a/interpolate.h b/interpolate.h
-index 00c63a5..d16f924 100644
---- a/interpolate.h
-+++ b/interpolate.h
-@@ -5,6 +5,11 @@
- #ifndef INTERPOLATE_H
- #define INTERPOLATE_H
- 
-+/*
-+ * Convert a NUL-terminated string in buffer orig,
-+ * performing substitutions on %-named sub-strings from
-+ * the interpretation table.
-+ */
- 
- struct interp {
- 	char *name;
-@@ -12,7 +17,7 @@ struct interp {
- };
- 
- extern int interpolate(char *result, int reslen,
--		       char *orig,
--		       struct interp *interps, int ninterps);
-+		       const char *orig,
-+		       const struct interp *interps, int ninterps);
- 
- #endif /* INTERPOLATE_H */
--- 
-1.4.2.1.g6b47-dirty
+	Sam
