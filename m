@@ -1,72 +1,84 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: The GPL: No shelter for the Linux kernel?
-Date: Mon, 25 Sep 2006 08:14:05 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609250807090.3952@g5.osdl.org>
-References: <MDEHLPKNGKAHNMBLJOLKIEJNOJAB.davids@webmaster.com>
- <Pine.LNX.4.61.0609231004330.9543@yvahk01.tjqt.qr> <Pine.LNX.4.64.0609231051570.4388@g5.osdl.org>
- <20060923181406.GC11916@pasky.or.cz> <Pine.LNX.4.61.0609240952240.28459@yvahk01.tjqt.qr>
- <Pine.LNX.4.64.0609240923331.4388@g5.osdl.org> <Pine.LNX.4.61.0609250757070.18552@yvahk01.tjqt.qr>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: [PATCH] Clarified documentation of --exclude-per-directory.
+Date: Mon, 25 Sep 2006 11:58:21 -0400
+Message-ID: <20060925155821.GC26844@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@suse.cz>, David Schwartz <davids@webmaster.com>,
-	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 25 17:17:01 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Sep 25 18:00:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRsA6-0004Xs-NF
-	for gcvg-git@gmane.org; Mon, 25 Sep 2006 17:14:27 +0200
+	id 1GRsql-0001kq-5Q
+	for gcvg-git@gmane.org; Mon, 25 Sep 2006 17:58:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750913AbWIYPOW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Sep 2006 11:14:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750918AbWIYPOW
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Sep 2006 11:14:22 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:35039 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750913AbWIYPOV (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Sep 2006 11:14:21 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8PFE6nW026906
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 25 Sep 2006 08:14:07 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8PFE5lb018937;
-	Mon, 25 Sep 2006 08:14:05 -0700
-To: Jan Engelhardt <jengelh@linux01.gwdg.de>
-In-Reply-To: <Pine.LNX.4.61.0609250757070.18552@yvahk01.tjqt.qr>
-X-Spam-Status: No, hits=-0.481 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.152 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751053AbWIYP61 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Sep 2006 11:58:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751035AbWIYP60
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Sep 2006 11:58:26 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:8345 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751051AbWIYP60 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Sep 2006 11:58:26 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GRsqX-0007XN-S1
+	for git@vger.kernel.org; Mon, 25 Sep 2006 11:58:17 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 1029820FB28; Mon, 25 Sep 2006 11:58:22 -0400 (EDT)
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27739>
 
+Tommi Virtanen noted on #git today that
 
+  git ls-files --exclude-per-directory
 
-On Mon, 25 Sep 2006, Jan Engelhardt wrote:
-> 
-> Though I strongly agree with you, some GNU folks (such as 
-> savannah.nongnu.org) seem to explicitly require it, even for files 
-> that do not make up a single program (i.e. like coreutils/ls.c).
+doesn't appear to work as advertised by the documentation unless
+--others is also used.  According to the current source code this
+is the case as the --exclude-per-directory file isn't read unless
+we are iterating over the working directory, which only happens
+with --others.
 
-Each project obviously has its own rules. The kernel, in many ways, these 
-days does something even stronger, in the sense that we now ask not that 
-every file be marked, but each and every change be signed-off-on. It's 
-more than a copyright issue, of course (it started out motivated by the 
-worries of tracking codeflow, but I think one reason it has worked so well 
-is that it's become useful for so many other things).
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ Documentation/git-ls-files.txt |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
 
-So lots of projects have their specific rules. I don't think the "add 
-notice to every file" is wrong per se, I just think it's impractical: not 
-only does it get unwieldly with all those messages at the top, usually an 
-open source project ends up being a mix of lots of different people that 
-own rights in it, and in many ways it's thus better to track at a change 
-level rather than a file level if you do tracking.
-
-But exactly because it doesn't have any real legal rules, the rules are 
-from other sources, and boil down mainly to just per-project "coding 
-style" issues.
-
-		Linus
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+index 8520b97..2a0b9f8 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -75,7 +75,8 @@ OPTIONS
+ 
+ --exclude-per-directory=<file>::
+ 	read additional exclude patterns that apply only to the
+-	directory and its subdirectories in <file>.
++	directory and its subdirectories in <file>.  This option
++	only takes effect if -o or --others is also used.
+ 
+ --error-unmatch::
+ 	If any <file> does not appear in the index, treat this as an
+@@ -167,7 +168,7 @@ time.  They are built and ordered in the
+  * lines read from --exclude-from=<file>; patterns are ordered
+    in the same order as they appear in the file.
+ 
+- * When --exclude-per-directory=<name> is specified, upon
++ * When --exclude-per-directory=<name> and --others is specified, upon
+    entering a directory that has such a file, its contents are
+    appended at the end of the current "list of patterns".  They
+    are popped off when leaving the directory.
+-- 
+1.4.2.1.g7a39b
