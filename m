@@ -1,54 +1,99 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [RFC/PATCH] gitweb: Add committags support
-Date: Mon, 25 Sep 2006 22:15:00 +0200
-Message-ID: <20060925201500.GG20017@pasky.or.cz>
-References: <200609212356.31806.jnareb@gmail.com> <200609231034.49545.jnareb@gmail.com> <20060923121134.GM13132@pasky.or.cz> <200609231533.02455.jnareb@gmail.com> <20060923140535.GK8259@pasky.or.cz> <ef95rk$o4q$1@sea.gmane.org>
+From: fork0@t-online.de (Alex Riesen)
+Subject: [PATCH] Use const for interpolate arguments
+Date: Mon, 25 Sep 2006 23:02:22 +0200
+Message-ID: <20060925210222.GA6125@steel.home>
+References: <E1GPqwJ-0002xt-Bt@jdl.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 25 22:16:02 2006
+X-From: git-owner@vger.kernel.org Mon Sep 25 23:03:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRwra-0002RX-Id
-	for gcvg-git@gmane.org; Mon, 25 Sep 2006 22:15:38 +0200
+	id 1GRxbT-0003oC-Ce
+	for gcvg-git@gmane.org; Mon, 25 Sep 2006 23:03:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751135AbWIYUPf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Sep 2006 16:15:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751068AbWIYUPe
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Sep 2006 16:15:34 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:62356 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751013AbWIYUPC (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Sep 2006 16:15:02 -0400
-Received: (qmail 17331 invoked by uid 2001); 25 Sep 2006 22:15:00 +0200
-To: Jakub Narebski <jnareb@gmail.com>
+	id S1751232AbWIYVCs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Sep 2006 17:02:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751235AbWIYVCs
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Sep 2006 17:02:48 -0400
+Received: from mailout01.sul.t-online.com ([194.25.134.80]:40169 "EHLO
+	mailout01.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S1751232AbWIYVCr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Sep 2006 17:02:47 -0400
+Received: from fwd34.aul.t-online.de 
+	by mailout01.sul.t-online.com with smtp 
+	id 1GRxb2-0000NH-03; Mon, 25 Sep 2006 23:02:36 +0200
+Received: from tigra.home (S9WrFGZfrev4Ip9dVchGrLxtCh7QDyElVuNCiGf-iT-csKE0UY-NEK@[84.160.85.62]) by fwd34.sul.t-online.de
+	with esmtp id 1GRxar-197LEG0; Mon, 25 Sep 2006 23:02:25 +0200
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 5C5C6277AF;
+	Mon, 25 Sep 2006 23:02:24 +0200 (CEST)
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1GRxap-0001au-Ei; Mon, 25 Sep 2006 23:02:23 +0200
+To: Jon Loeliger <jdl@jdl.com>
 Content-Disposition: inline
-In-Reply-To: <ef95rk$o4q$1@sea.gmane.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <E1GPqwJ-0002xt-Bt@jdl.com>
+User-Agent: Mutt/1.5.11
+X-ID: S9WrFGZfrev4Ip9dVchGrLxtCh7QDyElVuNCiGf-iT-csKE0UY-NEK
+X-TOI-MSGID: ea5bd348-4428-446c-9eaf-37a084175eb2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27753>
 
-Dear diary, on Mon, Sep 25, 2006 at 08:06:44PM CEST, I got a letter
-where Jakub Narebski <jnareb@gmail.com> said that...
-> So when putting message if into commit message, just put the commit
-> message in separate line, perhaps even with some indentation, like
-> below:
->   Msg-Id: <200609231533.02455.jnareb@gmail.com>
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 
-Oh please. :-) The tool should bend, not the user.
+---
+ interpolate.c |    6 +++---
+ interpolate.h |    9 +++++++--
+ 2 files changed, 10 insertions(+), 5 deletions(-)
 
-Are you going to mandate that for bug references as well? Or should I
-proofread all of my commits (if they aren't actually just autoformatted
-by fmt without my further review) to verify that they don't actually end
-up wrapped, and manually reformat the whole paragraph?
-
+diff --git a/interpolate.c b/interpolate.c
+index d82f1b5..4570c12 100644
+--- a/interpolate.c
++++ b/interpolate.c
+@@ -25,10 +25,10 @@ #include "interpolate.h"
+  */
+ 
+ int interpolate(char *result, int reslen,
+-		char *orig,
+-		struct interp *interps, int ninterps)
++		const char *orig,
++		const struct interp *interps, int ninterps)
+ {
+-	char *src = orig;
++	const char *src = orig;
+ 	char *dest = result;
+ 	int newlen = 0;
+ 	char *name, *value;
+diff --git a/interpolate.h b/interpolate.h
+index 00c63a5..d16f924 100644
+--- a/interpolate.h
++++ b/interpolate.h
+@@ -5,6 +5,11 @@
+ #ifndef INTERPOLATE_H
+ #define INTERPOLATE_H
+ 
++/*
++ * Convert a NUL-terminated string in buffer orig,
++ * performing substitutions on %-named sub-strings from
++ * the interpretation table.
++ */
+ 
+ struct interp {
+ 	char *name;
+@@ -12,7 +17,7 @@ struct interp {
+ };
+ 
+ extern int interpolate(char *result, int reslen,
+-		       char *orig,
+-		       struct interp *interps, int ninterps);
++		       const char *orig,
++		       const struct interp *interps, int ninterps);
+ 
+ #endif /* INTERPOLATE_H */
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+1.4.2.1.g6b47-dirty
