@@ -1,123 +1,72 @@
-From: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-Subject: [PATCH] gitk: Fix nextfile() and more
-Date: Mon, 25 Sep 2006 22:46:52 +0900
-Message-ID: <873bag12k3.fsf@duaron.myhome.or.jp>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: The GPL: No shelter for the Linux kernel?
+Date: Mon, 25 Sep 2006 08:14:05 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0609250807090.3952@g5.osdl.org>
+References: <MDEHLPKNGKAHNMBLJOLKIEJNOJAB.davids@webmaster.com>
+ <Pine.LNX.4.61.0609231004330.9543@yvahk01.tjqt.qr> <Pine.LNX.4.64.0609231051570.4388@g5.osdl.org>
+ <20060923181406.GC11916@pasky.or.cz> <Pine.LNX.4.61.0609240952240.28459@yvahk01.tjqt.qr>
+ <Pine.LNX.4.64.0609240923331.4388@g5.osdl.org> <Pine.LNX.4.61.0609250757070.18552@yvahk01.tjqt.qr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Sep 25 15:49:15 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, David Schwartz <davids@webmaster.com>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 25 17:17:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRqnj-00057d-BR
-	for gcvg-git@gmane.org; Mon, 25 Sep 2006 15:47:16 +0200
+	id 1GRsA6-0004Xs-NF
+	for gcvg-git@gmane.org; Mon, 25 Sep 2006 17:14:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751171AbWIYNrF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Sep 2006 09:47:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751190AbWIYNrF
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Sep 2006 09:47:05 -0400
-Received: from mail.parknet.jp ([210.171.160.80]:19721 "EHLO parknet.jp")
-	by vger.kernel.org with ESMTP id S1751171AbWIYNrC (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Sep 2006 09:47:02 -0400
-X-AuthUser: hirofumi@parknet.jp
-Received: from ibmpc.myhome.or.jp ([210.171.168.39]:3734)
-	by parknet.jp with [XMail 1.21 ESMTP Server]
-	id <SAC09> for <git@vger.kernel.org> from <hirofumi@mail.parknet.co.jp>;
-	Mon, 25 Sep 2006 22:46:57 +0900
-Received: from duaron.myhome.or.jp (duaron.myhome.or.jp [192.168.0.2])
-	by ibmpc.myhome.or.jp (8.13.8/8.13.8/Debian-2) with ESMTP id k8PDkr0M032357
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Mon, 25 Sep 2006 22:46:55 +0900
-Received: from duaron.myhome.or.jp (localhost [127.0.0.1])
-	by duaron.myhome.or.jp (8.13.8/8.13.8/Debian-2) with ESMTP id k8PDkruF032324
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Mon, 25 Sep 2006 22:46:53 +0900
-Received: (from hirofumi@localhost)
-	by duaron.myhome.or.jp (8.13.8/8.13.8/Submit) id k8PDkqqQ032323;
-	Mon, 25 Sep 2006 22:46:52 +0900
-To: git@vger.kernel.org
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
+	id S1750913AbWIYPOW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Sep 2006 11:14:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750918AbWIYPOW
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Sep 2006 11:14:22 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:35039 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750913AbWIYPOV (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Sep 2006 11:14:21 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8PFE6nW026906
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 25 Sep 2006 08:14:07 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8PFE5lb018937;
+	Mon, 25 Sep 2006 08:14:05 -0700
+To: Jan Engelhardt <jengelh@linux01.gwdg.de>
+In-Reply-To: <Pine.LNX.4.61.0609250757070.18552@yvahk01.tjqt.qr>
+X-Spam-Status: No, hits=-0.481 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.152 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27737>
-
-Hi,
-
-The current nextfile() jumps to last hunk, but I think this is not
-intention, probably, it's forgetting to add "break;". Right?  And this
-patch also adds prevfile(), it jumps to previous hunk.
-
-The following part is just my favorite the key-binds, it doesn't matter.
-
-+    bind . <Control-p> "$ctext yview scroll -1 units"
-+    bind . <Control-n> "$ctext yview scroll 1 units"
-+    bind . <Alt-v> "$ctext yview scroll -1 pages"
-+    bind . <Control-v> "$ctext yview scroll 1 pages"
-+    bindkey P prevfile
-+    bindkey N nextfile
-
-What do you think of this?
-
-Thanks.
--- 
-OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27738>
 
 
-Signed-off-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
----
 
- gitk |   20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+On Mon, 25 Sep 2006, Jan Engelhardt wrote:
+> 
+> Though I strongly agree with you, some GNU folks (such as 
+> savannah.nongnu.org) seem to explicitly require it, even for files 
+> that do not make up a single program (i.e. like coreutils/ls.c).
 
-diff -puN gitk~gitk-key-emacs gitk
---- git/gitk~gitk-key-emacs	2006-09-25 22:31:51.000000000 +0900
-+++ git-hirofumi/gitk	2006-09-25 22:31:51.000000000 +0900
-@@ -672,6 +672,10 @@ proc makewindow {} {
-     bind . <Control-Key-Down> "allcanvs yview scroll 1 units"
-     bind . <Control-Key-Prior> "allcanvs yview scroll -1 pages"
-     bind . <Control-Key-Next> "allcanvs yview scroll 1 pages"
-+    bind . <Control-p> "$ctext yview scroll -1 units"
-+    bind . <Control-n> "$ctext yview scroll 1 units"
-+    bind . <Alt-v> "$ctext yview scroll -1 pages"
-+    bind . <Control-v> "$ctext yview scroll 1 pages"
-     bindkey <Key-Delete> "$ctext yview scroll -1 pages"
-     bindkey <Key-BackSpace> "$ctext yview scroll -1 pages"
-     bindkey <Key-space> "$ctext yview scroll 1 pages"
-@@ -690,6 +694,8 @@ proc makewindow {} {
-     bindkey <Key-Return> {findnext 0}
-     bindkey ? findprev
-     bindkey f nextfile
-+    bindkey P prevfile
-+    bindkey N nextfile
-     bind . <Control-q> doquit
-     bind . <Control-f> dofind
-     bind . <Control-g> {findnext 0}
-@@ -4440,12 +4446,26 @@ proc getblobdiffline {bdf ids} {
-     }
- }
- 
-+proc prevfile {} {
-+    global difffilestart ctext
-+    set prev [lindex $difffilestart 0]
-+    set here [$ctext index @0,0]
-+    foreach loc $difffilestart {
-+	if {[$ctext compare $loc >= $here]} {
-+	    $ctext yview $prev
-+	    break
-+	}
-+	set prev $loc
-+    }
-+}
-+
- proc nextfile {} {
-     global difffilestart ctext
-     set here [$ctext index @0,0]
-     foreach loc $difffilestart {
- 	if {[$ctext compare $loc > $here]} {
- 	    $ctext yview $loc
-+	    break
- 	}
-     }
- }
-_
+Each project obviously has its own rules. The kernel, in many ways, these 
+days does something even stronger, in the sense that we now ask not that 
+every file be marked, but each and every change be signed-off-on. It's 
+more than a copyright issue, of course (it started out motivated by the 
+worries of tracking codeflow, but I think one reason it has worked so well 
+is that it's become useful for so many other things).
+
+So lots of projects have their specific rules. I don't think the "add 
+notice to every file" is wrong per se, I just think it's impractical: not 
+only does it get unwieldly with all those messages at the top, usually an 
+open source project ends up being a mix of lots of different people that 
+own rights in it, and in many ways it's thus better to track at a change 
+level rather than a file level if you do tracking.
+
+But exactly because it doesn't have any real legal rules, the rules are 
+from other sources, and boil down mainly to just per-project "coding 
+style" issues.
+
+		Linus
