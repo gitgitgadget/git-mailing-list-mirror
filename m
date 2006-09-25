@@ -1,90 +1,51 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: On ref locking
-Date: Mon, 25 Sep 2006 13:05:42 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0609251140550.9789@iabervon.org>
-References: <20060918065429.6f4de06e.chriscool@tuxfamily.org>
- <200609231322.30214.chriscool@tuxfamily.org> <7veju2nthl.fsf@assigned-by-dhcp.cox.net>
- <200609240645.54467.chriscool@tuxfamily.org> <7vmz8o1em0.fsf_-_@assigned-by-dhcp.cox.net>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: fsck objects and timestamp ordering
+Date: Mon, 25 Sep 2006 13:39:54 -0400
+Message-ID: <9e4733910609251039o1a9df1aelf948a68e4f6fb42f@mail.gmail.com>
+References: <9e4733910609250932r146fea7alaaf858a18a8b50b0@mail.gmail.com>
+	 <Pine.LNX.4.64.0609250951220.3952@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@osdl.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Sep 25 19:06:23 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 25 19:40:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRttv-0003vR-6j
-	for gcvg-git@gmane.org; Mon, 25 Sep 2006 19:05:51 +0200
+	id 1GRuR5-0005zj-Sm
+	for gcvg-git@gmane.org; Mon, 25 Sep 2006 19:40:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751266AbWIYRFq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Sep 2006 13:05:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751280AbWIYRFq
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Sep 2006 13:05:46 -0400
-Received: from iabervon.org ([66.92.72.58]:11012 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1751266AbWIYRFp (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Sep 2006 13:05:45 -0400
-Received: (qmail 22972 invoked by uid 1000); 25 Sep 2006 13:05:43 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 25 Sep 2006 13:05:43 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vmz8o1em0.fsf_-_@assigned-by-dhcp.cox.net>
+	id S1751343AbWIYRkF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Sep 2006 13:40:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751338AbWIYRkF
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Sep 2006 13:40:05 -0400
+Received: from py-out-1112.google.com ([64.233.166.177]:37427 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1751343AbWIYRkC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Sep 2006 13:40:02 -0400
+Received: by py-out-1112.google.com with SMTP id n25so2616571pyg
+        for <git@vger.kernel.org>; Mon, 25 Sep 2006 10:40:01 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HanU6QhPi/xZ1aOZxY2zE3czTvKnc82gP3NsWi//SJZmUNmZnKBGZs9EJ1jNuQJwovQyLikf0oXZIcuHedPP/YXkeFLfpkYDwx0URdqTes/XqRA1BQ1/ia94nh7FGRzZP5YFrGEO8c6yyU4Q+tLjt/lSS0TnVV29sTyiEob68fY=
+Received: by 10.35.66.12 with SMTP id t12mr8768159pyk;
+        Mon, 25 Sep 2006 10:40:00 -0700 (PDT)
+Received: by 10.35.60.14 with HTTP; Mon, 25 Sep 2006 10:39:54 -0700 (PDT)
+To: "Linus Torvalds" <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0609250951220.3952@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27747>
 
-On Mon, 25 Sep 2006, Junio C Hamano wrote:
+It might be worthwhile to print out a warning on commit if the commit
+timestamp is earlier than the previous commit. That might weed out
+some people with their clocks set wrong.
 
-> The comments you added to the strawman I sent suggested use of
-> rather heavyweight locks, which made me feel we were somehow
-> going in a wrong direction.  Before going into the details of
-> branch removing, let's first see if we can summarize what kind
-> of guarantee we would want from ref updates.  The current
-> locking scheme is very carefully and nicely done by Linus and
-> Daniel Barkalow around June last year, and I do not want to lose
-> good property of it.
-> 
->  - When reading and/or listing refs you do not need to acquire
->    any lock.
-> 
->  - When you are going to update an existing $ref, you create
->    $ref.lock, and do a compare-and-swap.
-> 
-> What the latter means is that an updater:
-> 
->  (1) first learns the current value of the $ref, without
->      locking;
-> 
->  (2) decides based on the knowledge from (1) what the next value
->      should be;
-> 
->  (3) gets $ref.lock, makes sure $ref still is the value it
->      learned in (1), updates it to the desired value and
->      releases the lock.
-> 
-> The above 3-step sequence prevents updater-updater races with an
-> extremely short critical section.  We only need to hold the lock
-> while we do compare and swap.
 
-I remember having a certain amount of disagreement over whether it's 
-better to actually take the lock in (1), and hold it through (2), or only 
-verify that it didn't change in (3) after taking the lock for real. If 
-there's nothing substantial going on in (2), it doesn't matter. If users 
-are producing content (e.g., git tag), they may want to make sure that 
-nobody else is in the middle of writing something that would conflict.
-
-I think I'd advocated getting the lock early if you're going to want it, 
-and I don't remember what the convincing argument on the other side was 
-for the cases under consideration at the time, beyond it not mattering 
-significantly.
-
-Note that we make sure to remove the lock when aborting due to signals 
-(assuming we get a chance), so the size of the critical section doesn't 
-matter too much to the chance of it getting left locked inappropriately. 
-Of course, this is harder to do with the core code for a shell script than 
-for C code.
-
-	-Daniel
-*This .sig left intentionally blank*
+-- 
+Jon Smirl
+jonsmirl@gmail.com
