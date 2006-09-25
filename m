@@ -1,87 +1,90 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: fsck objects and timestamp ordering
-Date: Mon, 25 Sep 2006 10:03:24 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609250951220.3952@g5.osdl.org>
-References: <9e4733910609250932r146fea7alaaf858a18a8b50b0@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: On ref locking
+Date: Mon, 25 Sep 2006 13:05:42 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0609251140550.9789@iabervon.org>
+References: <20060918065429.6f4de06e.chriscool@tuxfamily.org>
+ <200609231322.30214.chriscool@tuxfamily.org> <7veju2nthl.fsf@assigned-by-dhcp.cox.net>
+ <200609240645.54467.chriscool@tuxfamily.org> <7vmz8o1em0.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 25 19:04:40 2006
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@osdl.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Sep 25 19:06:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRtrz-0003KZ-PJ
-	for gcvg-git@gmane.org; Mon, 25 Sep 2006 19:03:52 +0200
+	id 1GRttv-0003vR-6j
+	for gcvg-git@gmane.org; Mon, 25 Sep 2006 19:05:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751263AbWIYRDk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Sep 2006 13:03:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751264AbWIYRDk
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Sep 2006 13:03:40 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:59545 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751263AbWIYRDj (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Sep 2006 13:03:39 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8PH3RnW000327
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 25 Sep 2006 10:03:27 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8PH3OAr022491;
-	Mon, 25 Sep 2006 10:03:25 -0700
-To: Jon Smirl <jonsmirl@gmail.com>
-In-Reply-To: <9e4733910609250932r146fea7alaaf858a18a8b50b0@mail.gmail.com>
-X-Spam-Status: No, hits=-0.48 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.152 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751266AbWIYRFq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Sep 2006 13:05:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751280AbWIYRFq
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Sep 2006 13:05:46 -0400
+Received: from iabervon.org ([66.92.72.58]:11012 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751266AbWIYRFp (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Sep 2006 13:05:45 -0400
+Received: (qmail 22972 invoked by uid 1000); 25 Sep 2006 13:05:43 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 25 Sep 2006 13:05:43 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vmz8o1em0.fsf_-_@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27746>
 
+On Mon, 25 Sep 2006, Junio C Hamano wrote:
 
+> The comments you added to the strawman I sent suggested use of
+> rather heavyweight locks, which made me feel we were somehow
+> going in a wrong direction.  Before going into the details of
+> branch removing, let's first see if we can summarize what kind
+> of guarantee we would want from ref updates.  The current
+> locking scheme is very carefully and nicely done by Linus and
+> Daniel Barkalow around June last year, and I do not want to lose
+> good property of it.
+> 
+>  - When reading and/or listing refs you do not need to acquire
+>    any lock.
+> 
+>  - When you are going to update an existing $ref, you create
+>    $ref.lock, and do a compare-and-swap.
+> 
+> What the latter means is that an updater:
+> 
+>  (1) first learns the current value of the $ref, without
+>      locking;
+> 
+>  (2) decides based on the knowledge from (1) what the next value
+>      should be;
+> 
+>  (3) gets $ref.lock, makes sure $ref still is the value it
+>      learned in (1), updates it to the desired value and
+>      releases the lock.
+> 
+> The above 3-step sequence prevents updater-updater races with an
+> extremely short critical section.  We only need to hold the lock
+> while we do compare and swap.
 
-On Mon, 25 Sep 2006, Jon Smirl wrote:
->
-> When running fsck objects, does it verify that timestamps are ordered
-> in the same order as the dependency chains?
+I remember having a certain amount of disagreement over whether it's 
+better to actually take the lock in (1), and hold it through (2), or only 
+verify that it didn't change in (3) after taking the lock for real. If 
+there's nothing substantial going on in (2), it doesn't matter. If users 
+are producing content (e.g., git tag), they may want to make sure that 
+nobody else is in the middle of writing something that would conflict.
 
-No. In fact, it's perfectly normal that they aren't.
+I think I'd advocated getting the lock early if you're going to want it, 
+and I don't remember what the convincing argument on the other side was 
+for the cases under consideration at the time, beyond it not mattering 
+significantly.
 
-Two machines with different timestamps will think time is different, and 
-then one side doing a merge may have it's parents "in the future" from 
-itself.
+Note that we make sure to remove the lock when aborting due to signals 
+(assuming we get a chance), so the size of the critical section doesn't 
+matter too much to the chance of it getting left locked inappropriately. 
+Of course, this is harder to do with the core code for a shell script than 
+for C code.
 
-You can't even solve it sanely: you can't change the other sides 
-time-stamps after the fact, and correcting the _merge_ timestamp to be 
-later than both parents is a fix worse than the problem, since it would 
-tend to just perpetuate a buggy timestamp further down the line.
-
-So this is very fundamental. The first rule of distributed computing is: 
-"There is no common time". Any distributed project that thinks such a 
-thing exists is just fundamentally flawed, so I'd have been personally 
-embarrassed by such a design decision.
-
-So the only thing that matters is always the dependency chain. We've 
-occasionally discussed having "sequence numbers" or other things to make 
-it easier to decide on partial ordering between commits without having to 
-actually follow the whole dependency chain, but times and dates is _never_ 
-a valid thing to use for that.
-
-> I am having trouble with a CVS repository where the timestamp ordering
-> and dependency order are in conflict. It would be best if git didn't
-> experience the same problem.
-
-It's not really a problem. The timestamps don't "matter". The only thing 
-git really cares about is the dependency order.
-
-If commit timestamps aren't ordered, some of our programs may look at 
-unnecessarily many commits because the heuristics use the (committer) 
-timestamp as a way to guess which leg of a parenthood chain to take, but 
-that's just a guess.
-
-And the authorship timestamp is never used at all, except purely for 
-output. So they show up in the log messages, but you can think of them as 
-nothing more than the commit commentary. 
-
-			Linus
+	-Daniel
+*This .sig left intentionally blank*
