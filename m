@@ -1,95 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [laroche@redhat.com: gitweb.cgi]
-Date: Mon, 25 Sep 2006 18:32:22 +0200
-Organization: At home
-Message-ID: <ef90an$4ua$1@sea.gmane.org>
-References: <20060925161934.GA18951@dudweiler.stuttgart.redhat.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: fsck objects and timestamp ordering
+Date: Mon, 25 Sep 2006 12:40:04 -0400
+Message-ID: <20060925164004.GB27043@spearce.org>
+References: <9e4733910609250932r146fea7alaaf858a18a8b50b0@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Mon Sep 25 18:34:09 2006
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 25 18:40:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GRtOe-0003Be-Ro
-	for gcvg-git@gmane.org; Mon, 25 Sep 2006 18:33:33 +0200
+	id 1GRtVB-00051b-AA
+	for gcvg-git@gmane.org; Mon, 25 Sep 2006 18:40:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751248AbWIYQd2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Sep 2006 12:33:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751249AbWIYQd2
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Sep 2006 12:33:28 -0400
-Received: from main.gmane.org ([80.91.229.2]:42413 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751248AbWIYQd1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Sep 2006 12:33:27 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GRtON-000378-FN
-	for git@vger.kernel.org; Mon, 25 Sep 2006 18:33:15 +0200
-Received: from host-81-190-26-109.torun.mm.pl ([81.190.26.109])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 25 Sep 2006 18:33:15 +0200
-Received: from jnareb by host-81-190-26-109.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 25 Sep 2006 18:33:15 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-26-109.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751250AbWIYQkK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Sep 2006 12:40:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751252AbWIYQkK
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Sep 2006 12:40:10 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:27297 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1751250AbWIYQkJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Sep 2006 12:40:09 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GRtUu-0003SJ-8v; Mon, 25 Sep 2006 12:40:00 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id AAD8E20FB28; Mon, 25 Sep 2006 12:40:04 -0400 (EDT)
+To: Jon Smirl <jonsmirl@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <9e4733910609250932r146fea7alaaf858a18a8b50b0@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27743>
 
-Florian La Roche wrote:
+Jon Smirl <jonsmirl@gmail.com> wrote:
+> When running fsck objects, does it verify that timestamps are ordered
+> in the same order as the dependency chains?
 
-> Hello git crew,
-> 
-> I'm not a big perl prorammer, but the following removes perl
-> warnings about accessing undefined vars.
-[...] 
-> --- gitweb/gitweb.perl
-> +++ gitweb/gitweb.perl
-> @@ -427,7 +427,9 @@ sub esc_html {
->       my $str = shift;
->       $str = decode("utf8", $str, Encode::FB_DEFAULT);
->       $str = escapeHTML($str);
-> -     $str =~ s/\014/^L/g; # escape FORM FEED (FF) character (e.g. in COPYING file)
-> +     if (defined $str) {
-> +             $str =~ s/\014/^L/g; # escape FORM FEED (FF) character (e.g. in COPYING file)
-> +     }
->       return $str;
->  }
-> 
-It would be better to just use
+No and it can't.  Clock skew between systems could be several
+minutes to several hours which means you may have earlier commits
+building onto later commits.
 
-        my $str = shift;
-        return '' unless defined $str;
+The better place to check this (although we don't today) is in
+git-commit-tree.  If the new commit's committer timestamp is older
+than any of its parent's committer timestamps git-commit-tree
+should probably at least issue a warning that there's a possible
+timestamp problem on either this system or the system that created
+one of those parent commits.
 
-and neither your change in esc_html, nor the change below should be needed. 
-By the way, commit without title? But it would be better if correct it, to
-set $co{'title'} to an empty string, either in git_log or in parse_commit.
+If the committer has a problem with that timestamp issue they could
+address it and ammend the commit before the error propagates.
  
-> @@ -2860,10 +2819,14 @@ sub git_log {
->               my $ref = format_ref_marker($refs, $commit);
->               my %co = parse_commit($commit);
->               next if !%co;
-> +             my $esc_title = $co{'title'};
-> +             if (defined $esc_title) {
-> +                     $esc_title = esc_html($esc_title);
-> +             }
->               my %ad = parse_date($co{'author_epoch'});
->               git_print_header_div('commit',
->                              "<span class=\"age\">$co{'age_string'}</span>" .
-> -                            esc_html($co{'title'}) . $ref,
-> +                            $esc_title . $ref,
->                              $commit);
->               print "<div class=\"title_text\">\n" .
->                     "<div class=\"log_link\">\n" .
+> I am having trouble with a CVS repository where the timestamp ordering
+> and dependency order are in conflict. It would be best if git didn't
+> experience the same problem.
+
+It would be best if Git didn't experience a lot of the weird stuff
+people were able to do to their CVS repositories.  Fortunately the
+friendly folks on this mailing list have put the better part of a
+year and a half into doing just that.  :)
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Shawn.
