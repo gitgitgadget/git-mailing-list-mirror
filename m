@@ -1,74 +1,90 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] gitweb: tree view: eliminate redundant "blob"
-Date: Tue, 26 Sep 2006 14:32:36 -0700 (PDT)
-Message-ID: <20060926213236.79160.qmail@web31815.mail.mud.yahoo.com>
-References: <efc2no$eti$2@sea.gmane.org>
-Reply-To: ltuikov@yahoo.com
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] Clarified documentation of --exclude-per-directory.
+Date: Tue, 26 Sep 2006 17:41:50 -0400
+Message-ID: <20060926214150.GB8177@spearce.org>
+References: <20060925155821.GC26844@spearce.org> <7v3baftdp0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Tue Sep 26 23:33:02 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 26 23:42:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSKXp-00079t-0X
-	for gcvg-git@gmane.org; Tue, 26 Sep 2006 23:32:49 +0200
+	id 1GSKgg-0000Lf-1w
+	for gcvg-git@gmane.org; Tue, 26 Sep 2006 23:41:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964824AbWIZVch (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Sep 2006 17:32:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964823AbWIZVch
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 17:32:37 -0400
-Received: from web31815.mail.mud.yahoo.com ([68.142.206.168]:22194 "HELO
-	web31815.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S964824AbWIZVcg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Sep 2006 17:32:36 -0400
-Received: (qmail 79162 invoked by uid 60001); 26 Sep 2006 21:32:36 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=6BhmQwx61c08YbBtje127n9v7R2/qV5EGXlxp8QuHjmYQoMIUysEclPODoCeL8DkUWh3Ad9oqtS/+KB+4NjluV+Sd+f7meHOkTbZw8boS96/RBbuXwjQVE2taK6Um2exa7VvPSEILPaOQybG4PcBn6BGIqqqHwhCt5ZajRbuKDg=  ;
-Received: from [64.215.88.90] by web31815.mail.mud.yahoo.com via HTTP; Tue, 26 Sep 2006 14:32:36 PDT
-To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-In-Reply-To: <efc2no$eti$2@sea.gmane.org>
+	id S964827AbWIZVly (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Sep 2006 17:41:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964843AbWIZVly
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 17:41:54 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:60622 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S964827AbWIZVly (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Sep 2006 17:41:54 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GSKgQ-0002zg-TG; Tue, 26 Sep 2006 17:41:43 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 9A63620FB28; Tue, 26 Sep 2006 17:41:50 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v3baftdp0.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27826>
 
---- Jakub Narebski <jnareb@gmail.com> wrote:
-> This is example of where forefront has it wrong. I'm all for "list" entry
-> to be link to default view, but I'm all against removing clearly marked
-> link to "plain"/"tree" view.
+Junio C Hamano <junkio@cox.net> wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
 > 
-> And "invisible links" _especially_ if the link is not convenience only
-> (i.e. it is not provided clearly as link somewhere else) is so called
-> "mystery meat navigation" and is one of the most common mistakes in
-> web development.
+> > Tommi Virtanen noted on #git today that
+> >
+> >   git ls-files --exclude-per-directory
+> >
+> > doesn't appear to work as advertised by the documentation unless
+> > --others is also used.  According to the current source code this
+> > is the case as the --exclude-per-directory file isn't read unless
+> > we are iterating over the working directory, which only happens
+> > with --others.
 > 
-> And is not as if "plain |" takes much space...
+> I am puzzled by this problem description.
+> 
+> If we _were_ to read --exclude-per-directory file when we are
+> not doing --others, what better behaviour would we get out of
+> the command?
+ 
+From what I was able to gather on #git Tommi was trying to do:
 
-I think you would agree that gitweb is quite different than what is
-commonly defined as "mystery meat navigation".
+	mkdir foo ; cd foo ; git init-db
+	echo foo >foo
+	echo foo >ignore
+	git add foo ignore
+	git commit -a -m create
+	rm *
+	git ls-files --exclude-per-directory=ignore \
+		| git checkout-index
 
-Gitweb is very well thought out interface, and self-contained.
-There isn't much pondering about what and where to click, have newbies
-too.
+and not see "foo" come back into the working directory.  I don't
+know what circumstances lead him to want to create an exclude file
+pattern on a per-directory basis for use with checkout-index but
+that seems to be what he was trying to do.
 
-Think about the removal of the redundant "blob" and "tree" as database
-schema normalization if you will.  The redundancy is so well defined that
-even applying a simple algorithm to gitweb.perl will discover it.
 
-Either that or you can think of it as "shortening" the line.
-Wlg, suppose that I have a file called "blob" and a directory
-called "tree":
-    mode blob    blob | blame | history | raw
-    mode tree    tree | history
-Is equivalent to
-    mode blob    blame | history | raw
-    mode tree    history
-For any name "blob" and any name "tree".
+I don't really see a problem with applying --exclude-per-directory
+all of time (like we apply --exclude=.git/info/exclude all of
+time), its just not what the code does today.  I just personally
+don't need that and don't have the time to fix ls-files to do so.
+So I took the shorter approach and updated the documentation. :)
 
-Plus the code (gitweb.perl) has less redundancy and overhead.
-
-     Luben
+-- 
+Shawn.
