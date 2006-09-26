@@ -1,54 +1,55 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] gitweb: tree view: hash_base and hash are now context sensitive
-Date: Tue, 26 Sep 2006 14:17:20 -0700 (PDT)
-Message-ID: <20060926211720.21355.qmail@web31808.mail.mud.yahoo.com>
-References: <efc2t8$eti$3@sea.gmane.org>
-Reply-To: ltuikov@yahoo.com
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Notes on Using Git with Subprojects
+Date: Tue, 26 Sep 2006 17:23:15 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0609261629160.9789@iabervon.org>
+References: <45196628.9010107@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Tue Sep 26 23:17:28 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 26 23:23:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSKIu-0004F0-Uq
-	for gcvg-git@gmane.org; Tue, 26 Sep 2006 23:17:25 +0200
+	id 1GSKOf-0005P0-Gy
+	for gcvg-git@gmane.org; Tue, 26 Sep 2006 23:23:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932416AbWIZVRV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Sep 2006 17:17:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932417AbWIZVRV
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 17:17:21 -0400
-Received: from web31808.mail.mud.yahoo.com ([68.142.207.71]:21412 "HELO
-	web31808.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S932416AbWIZVRU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Sep 2006 17:17:20 -0400
-Received: (qmail 21357 invoked by uid 60001); 26 Sep 2006 21:17:20 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=oLvlFS/F7Mli6y76Zx+Gk5lQYBxFy9bEVQ7EIUXIZuoW1VV6ZpnyWyfVXn+/jX57e9zi2/B9sd5b0ScY9UQ/Dnh542t3EGIHfICYs3r8vNDyqGZ/nmCb9z7PO7QZH2ymH+p+E4MRlvGg/346ffmDDTx67G2D4cCO3fAIEYAvkXw=  ;
-Received: from [64.215.88.90] by web31808.mail.mud.yahoo.com via HTTP; Tue, 26 Sep 2006 14:17:20 PDT
-To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-In-Reply-To: <efc2t8$eti$3@sea.gmane.org>
+	id S932426AbWIZVXR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Sep 2006 17:23:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932428AbWIZVXR
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 17:23:17 -0400
+Received: from iabervon.org ([66.92.72.58]:16653 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S932426AbWIZVXQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Sep 2006 17:23:16 -0400
+Received: (qmail 1254 invoked by uid 1000); 26 Sep 2006 17:23:15 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 26 Sep 2006 17:23:15 -0400
+To: A Large Angry SCM <gitzilla@gmail.com>
+In-Reply-To: <45196628.9010107@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27823>
 
---- Jakub Narebski <jnareb@gmail.com> wrote:
-> I think that this need some thinking over. For blob we have two
-> "base" objects: tree which have specified blob, and commit which
-> have tree which have specified blob. We might want to specify
-> that all hash*base are to the commit-ish.
+On Tue, 26 Sep 2006, A Large Angry SCM wrote:
 
-Agreed, we should always refer to the commit-ish, for obvious
-reasons.
+> Git, unfortunately, does not make it easy. What is wanted is to put all
+> of the subprojects in one repository and be able to checkout the various
+> parts from a local copy of the repository. The problem is, with Git, a
+> repository can have at most one working directory associated with it at
+> a time. This is because Git stores a lot of information about the
+> contents of the working directory in the repository. In fact, the usual
+> situation is that the repository, itself, is in the working directory.
 
-This patch doesn't make this decision though.  It simply
-sets hash_base to HEAD if not defined.
+There are a bunch of use cases which people see as subprojects, with 
+slightly different desires. For example, I personally don't think there's 
+any point to subprojects if a commit of the parent project doesn't specify 
+the embedded commits of each subproject (so, for example, you can use 
+bisect on the parent project to figure out which act of updating a 
+subproject broke the resulting system). AFAICT, your design doesn't handle 
+that, but uses the most recently fetched versions of all subprojects, with 
+the revision control of the parent only handling revisions in the 
+arrangement and membership of subprojects in the parent.
 
-Now, since "git-ls-tree" works on both commit-ish and
-tree-ish, we are ok.
-
-    Luben
+	-Daniel
+*This .sig left intentionally blank*
