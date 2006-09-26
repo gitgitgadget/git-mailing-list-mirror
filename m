@@ -1,100 +1,54 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Luben Tuikov <ltuikov@yahoo.com>
 Subject: Re: [PATCH] gitweb: tree view: eliminate redundant "blob"
-Date: Tue, 26 Sep 2006 18:24:50 +0200
-Organization: At home
-Message-ID: <efbk8d$mdj$1@sea.gmane.org>
-References: <20060926053816.54951.qmail@web31815.mail.mud.yahoo.com> <efapsl$e65$1@sea.gmane.org> <20060926160729.GH20017@pasky.or.cz>
+Date: Tue, 26 Sep 2006 10:04:32 -0700 (PDT)
+Message-ID: <20060926170432.820.qmail@web31812.mail.mud.yahoo.com>
+References: <7vhcyvrvab.fsf@assigned-by-dhcp.cox.net>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Sep 26 18:34:48 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 26 19:04:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSFsp-00060u-Gi
-	for gcvg-git@gmane.org; Tue, 26 Sep 2006 18:34:14 +0200
+	id 1GSGMG-0005aL-Oz
+	for gcvg-git@gmane.org; Tue, 26 Sep 2006 19:04:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750830AbWIZQd7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Sep 2006 12:33:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751542AbWIZQd7
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 12:33:59 -0400
-Received: from main.gmane.org ([80.91.229.2]:64223 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750830AbWIZQd6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Sep 2006 12:33:58 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GSFnL-0004bK-T1
-	for git@vger.kernel.org; Tue, 26 Sep 2006 18:28:31 +0200
-Received: from host-81-190-26-109.torun.mm.pl ([81.190.26.109])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 26 Sep 2006 18:28:31 +0200
-Received: from jnareb by host-81-190-26-109.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 26 Sep 2006 18:28:31 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-26-109.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S932147AbWIZREd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Sep 2006 13:04:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932149AbWIZREd
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 13:04:33 -0400
+Received: from web31812.mail.mud.yahoo.com ([68.142.207.75]:13474 "HELO
+	web31812.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S932147AbWIZREd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Sep 2006 13:04:33 -0400
+Received: (qmail 822 invoked by uid 60001); 26 Sep 2006 17:04:32 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=O/Ce9Bo0DtluTARuHI+XRGmElFQBcZfVPBPLAaXlqzMbEkq/2XkUECDXZRu6bR3RK5Qf2IBSi8MSj5YSRpqx6v/U59pYSXZuF+sK8KOHc/pVoU5XoVYW0nRNCgWpFHYwrPWmXDUsEQPVMtHriYQ2jq+BYOIbbiXuZPCzc6wS7lI=  ;
+Received: from [71.80.233.118] by web31812.mail.mud.yahoo.com via HTTP; Tue, 26 Sep 2006 10:04:32 PDT
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vhcyvrvab.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27802>
 
-Petr Baudis wrote:
-
-> Dear diary, on Tue, Sep 26, 2006 at 10:54:49AM CEST, I got a letter
-> where Jakub Narebski <jnareb@gmail.com> said that...
->> I'd rather not. The fact that the file name and tree name is link,
->> and the fact that commit title and tag title is link is a _convenience_.
->> Not always it is visible (without mouseover) that it is link.
->> And it is _not_ visible in the case of files!
+--- Junio C Hamano <junkio@cox.net> wrote:
+> Luben Tuikov <ltuikov@yahoo.com> writes:
 > 
-> Then that should be fixed.
+> > Binary and non-binary blobs:
+> >
+> > The "list" table element of tree view is identical
+> > to the "blob" link part of the link table element.
+> > I.e. clicking on "blob" is identical to clicking on
+> > the entry itself.
 > 
-> And directories should have trailing slash in their name in the tree
-> listing, for people with non-UNIX background who don't understand the
-> ls -l like output.
+> Then perhaps we can lose tree link for the same reasoning?
 
-Something like ls -lF format? Currently directories differs visibly
-from file entries, because directory entries are visibly links. One
-single slash at the end is much less visible than change of color and
-underline.
+Indeed, I think so too.
 
-Besides "blob" link for files and "tree" link for directories states
-explicitely the kind of view. List entry link states this implicitely.
-I'd rather like the redundancy.
-
->> And for example for commits and heads there are two possible
->> views, commit and commitdiff for commit, shortlog and log for head,
->> of which we arbitrary chose one for the subject link. So in that
->> case the additional self link is needed. I'd rather have both.
-> 
-> For commits and heads, I agree. But that's not what this patch does.
-
-What this patch does is introduce inconsistency. Even if you agree
-to treat commits and heads specially, it treats directory entries
-differently from file entries; and differently from tag entries
-(where tag objects have the same duplication) in tags view. In tags
-view on one hand it clearly distiguish lightweight from "heavyweight"
-tags (even heavyweight tags without tag message), on the other
-"tag | tag ..." for tag pointing to tag is quite strange.
- 
->> And for consistency I'd rather always have visible form default
->> self link/
-> 
-> A parse error kicked me off here, sorry.
- 
-I'd rather always have the link which is in "list" entry stated
-also explicitely.
- 
-> (I'm personally kind of ambivalent to the change.)
-
-There are many other changes which should be rather done, like for
-example remotes/ support.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+    Luben
