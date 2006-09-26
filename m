@@ -1,106 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Notes on Using Git with Subprojects
-Date: Tue, 26 Sep 2006 22:25:19 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0609262203510.25371@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <45196628.9010107@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Remove redundant "tree" link
+Date: Tue, 26 Sep 2006 22:27:24 +0200
+Organization: At home
+Message-ID: <efc2f5$eti$1@sea.gmane.org>
+References: <20060926194538.46031.qmail@web31809.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 26 22:26:35 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue Sep 26 22:29:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSJUe-0008S9-0V
-	for gcvg-git@gmane.org; Tue, 26 Sep 2006 22:25:28 +0200
+	id 1GSJY2-0000th-RO
+	for gcvg-git@gmane.org; Tue, 26 Sep 2006 22:28:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964784AbWIZUZX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Sep 2006 16:25:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964786AbWIZUZX
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 16:25:23 -0400
-Received: from mail.gmx.de ([213.165.64.20]:9153 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S964784AbWIZUZW (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Sep 2006 16:25:22 -0400
-Received: (qmail invoked by alias); 26 Sep 2006 20:25:20 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp018) with SMTP; 26 Sep 2006 22:25:20 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: A Large Angry SCM <gitzilla@gmail.com>
-In-Reply-To: <45196628.9010107@gmail.com>
-X-Y-GMX-Trusted: 0
+	id S964785AbWIZU2z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Sep 2006 16:28:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964791AbWIZU2z
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 16:28:55 -0400
+Received: from main.gmane.org ([80.91.229.2]:64935 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964785AbWIZU2z (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Sep 2006 16:28:55 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GSJXD-0000gc-1M
+	for git@vger.kernel.org; Tue, 26 Sep 2006 22:28:07 +0200
+Received: from host-81-190-26-96.torun.mm.pl ([81.190.26.96])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 26 Sep 2006 22:28:07 +0200
+Received: from jnareb by host-81-190-26-96.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 26 Sep 2006 22:28:07 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-26-96.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27818>
 
-Hi,
+Luben Tuikov wrote:
 
-On Tue, 26 Sep 2006, A Large Angry SCM wrote:
+> In "tree" view, remove redundant "tree" link in the tree
+> listing.  It is identical to simply clicking on the tree
+> entry itself.
 
-> 							20060926.1715
+I'd rather have this redundancy.
 
-You forgot the time zone ;-)
-
-> Notes on Using Git with Subprojects
-> ===================================
-> Copyright (C) 2006 by Raymond S Brand
-> 
-> 
-> Git does not have native support for subprojects and this is a good
-> thing because managing subprojects is better handled by the project
-> build machinery. Managing subprojects with the project build machinery
-> is more flexible than the native support from an SCM and allows the use
-> of different SCMs by different subprojects. However, there is a lot of
-> interest in using Git for the SCM of a project with subprojects.
-> 
-> Git, unfortunately, does not make it easy.
-
-After skimming your text, I imagine that it should be possible (read: 
-easy) to write a really simple script which does what you describe, 
-storing the relevant information about root or sub projects in the config.
-
-However, you left out one of the most important aspects of subprojects: 
-the ability to manage the state of the root project: you can add, update 
-and remove subprojects.
-
-A while ago, Junio started playing with a new object type for subprojects 
-so that you could have tree objects containing subprojects in addition 
-to tree objects and blobs.
-
-Of course, the difficult thing about this is to teach all tools to behave 
-sensibly with the new object type.
-
-Now, your approach of having multiple clones (sharing the object pool) is 
-more simple than Junio's approach: no need to introduce a new object type, 
-or adapt existing tools.
-
-Taking this a step further, how about managing the root project in this 
-manner:
-
-A root project is a branch containing just one special file, 
-"root-project". This file consists of lines like these:
-
--- snip --
-f80a17bf3da1e24ac904f9078f68c3bf935ff250 next
-03adf42c988195b50e1a1935ba5fcbc39b2b029b todo
--- snap --
-
-The meaning: subdirectory "next" contains subproject "next" which is also 
-tracked in the branch "next" of the root project. Likewise for "todo". The 
-root project could even contain some administrative files like a Makefile, 
-a license, README, etc.
-
-You could even handle the update of root-project with each commit in a 
-subproject by a hook in that subproject's .git/hooks/post-commit, so that 
-you'd only need a script "git-checkout-root-project.sh" to initialize them 
-all, and probably a script "git-update-root-project.sh".
-
-Thoughts?
-
-Ciao,
-Dscho
-
-P.S.: Is it just me, or do other people also find it confusing that 
---shared means different things for git-init-db and git-clone? (I know I 
-am the sinner...)
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
