@@ -1,60 +1,50 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git packing leaves unpacked files
-Date: Tue, 26 Sep 2006 20:10:25 +0200
-Organization: At home
-Message-ID: <efbqeb$guv$1@sea.gmane.org>
-References: <45196BC8.8060608@shadowen.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: Fix fetch --no-ignore-externals with GIT_SVN_NO_LIB=1
+Date: Tue, 26 Sep 2006 11:14:02 -0700
+Message-ID: <20060926181401.GA1479@hand.yhbt.net>
+References: <1159263775639-git-send-email-vsu@altlinux.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Sep 26 20:10:42 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 26 20:14:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSHOE-0003UI-Ax
-	for gcvg-git@gmane.org; Tue, 26 Sep 2006 20:10:42 +0200
+	id 1GSHRZ-000478-Sn
+	for gcvg-git@gmane.org; Tue, 26 Sep 2006 20:14:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932393AbWIZSKj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Sep 2006 14:10:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932378AbWIZSKj
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 14:10:39 -0400
-Received: from main.gmane.org ([80.91.229.2]:13277 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932393AbWIZSKi (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Sep 2006 14:10:38 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GSHO7-0003TM-6y
-	for git@vger.kernel.org; Tue, 26 Sep 2006 20:10:35 +0200
-Received: from host-81-190-26-109.torun.mm.pl ([81.190.26.109])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 26 Sep 2006 20:10:35 +0200
-Received: from jnareb by host-81-190-26-109.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 26 Sep 2006 20:10:35 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-26-109.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S932405AbWIZSOG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Sep 2006 14:14:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932407AbWIZSOG
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 14:14:06 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:47296 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S932405AbWIZSOD (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Sep 2006 14:14:03 -0400
+Received: by hand.yhbt.net (Postfix, from userid 500)
+	id 286387DC02F; Tue, 26 Sep 2006 11:14:02 -0700 (PDT)
+To: Sergey Vlasov <vsu@altlinux.ru>
+Content-Disposition: inline
+In-Reply-To: <1159263775639-git-send-email-vsu@altlinux.ru>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27808>
 
-Andy Whitcroft wrote:
-
-> I was just looking at my kernel repository and noticed that even after a
-> git repack -a -d I have some loose files.  A quick look at repack
-> doesn't seem to explain why some are either not packed or are kept unpacked.
+Sergey Vlasov <vsu@altlinux.ru> wrote:
+> When using Subversion 1.3.1 without Perl bindings (GIT_SVN_NO_LIB=1),
+> "git-svn fetch --no-ignore-externals" fails with errors like:
 > 
-> Is this something I should be expecting?
+>   Tree (.../.git/svn/git-svn/tree) is not clean:
+>   X      directory_with_external
+> 
+> In this case the 'X' lines in the "svn status" output are not a sign
+> of unclean tree, and therefore should be ignored.
+> 
+> Signed-off-by: Sergey Vlasov <vsu@altlinux.ru>
 
-Try git-fsck-objects. Perhaps those loose files are the ones which will
-be pruned.
+Acked-by: Eric Wong <normalperson@yhbt.net>
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Eric Wong
