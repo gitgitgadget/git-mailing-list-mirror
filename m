@@ -1,110 +1,72 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git packing leaves unpacked files
-Date: Tue, 26 Sep 2006 11:28:39 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609261116170.3952@g5.osdl.org>
-References: <45196BC8.8060608@shadowen.org>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH] gitweb: "raw" links to blobs at HEAD
+Date: Tue, 26 Sep 2006 11:53:26 -0700 (PDT)
+Message-ID: <20060926185326.10590.qmail@web31810.mail.mud.yahoo.com>
+References: <7v8xk7rup3.fsf@assigned-by-dhcp.cox.net>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 26 20:29:40 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 26 20:53:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSHfi-0007G5-Ux
-	for gcvg-git@gmane.org; Tue, 26 Sep 2006 20:28:47 +0200
+	id 1GSI3n-00046r-R2
+	for gcvg-git@gmane.org; Tue, 26 Sep 2006 20:53:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751568AbWIZS2o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Sep 2006 14:28:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751574AbWIZS2o
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 14:28:44 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:26548 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751562AbWIZS2n (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Sep 2006 14:28:43 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8QISdnW009191
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 26 Sep 2006 11:28:40 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8QISdi8028823;
-	Tue, 26 Sep 2006 11:28:39 -0700
-To: Andy Whitcroft <apw@shadowen.org>
-In-Reply-To: <45196BC8.8060608@shadowen.org>
-X-Spam-Status: No, hits=-0.479 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.152 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932168AbWIZSx2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Sep 2006 14:53:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932172AbWIZSx2
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 14:53:28 -0400
+Received: from web31810.mail.mud.yahoo.com ([68.142.207.73]:4958 "HELO
+	web31810.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S932168AbWIZSx1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Sep 2006 14:53:27 -0400
+Received: (qmail 10592 invoked by uid 60001); 26 Sep 2006 18:53:26 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=pqC2mXYjGEtVuKR2MBnXn35vbqfhP1BUiwHaPfEDvjlYLopxc+VNebdm167RJToUk+lSqbRbSlftEGKhEKQsEC8Rd2qXBcVPp0XtcmaCiRngaZLYiEAghDQIytAHv8OlPDBeD6zxGa4a5LCy7IUFUBWclEqwTMCY9lyL+XfnlC0=  ;
+Received: from [64.215.88.90] by web31810.mail.mud.yahoo.com via HTTP; Tue, 26 Sep 2006 11:53:26 PDT
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v8xk7rup3.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27810>
 
+--- Junio C Hamano <junkio@cox.net> wrote:
+> This does not feel right.  Go to summary view, pick the tree
+> link of a non-head commit from the shortlog list, and the raw
+> links on the resulting page all say hb=HEAD.
 
+I see your point.
 
-On Tue, 26 Sep 2006, Andy Whitcroft wrote:
->
-> I was just looking at my kernel repository and noticed that even after a
-> git repack -a -d I have some loose files.  A quick look at repack
-> doesn't seem to explain why some are either not packed or are kept unpacked.
-> 
-> Is this something I should be expecting?
+> Doesn't this make clicking the entry itself (blob view) and
+> clicking on the raw link (blob-plain view) inconsistent?
 
-Depending on what you're doing, yes.
+It this exactly this consistency which the patch used to de-couple
+it and use the "raw" to point to HEAD.
 
-You can often get a hint of what is going on by just running 
-"git-fsck-objects" and seeing the "dangling" objects - objects that exist, 
-but are not reachable.
+> The former goes to the blob from that revision while the latter
+> always goes to the HEAD.
 
-There are a few things that cause dangling objects quite normally:
+Yes, I completely understand the conundrum.
 
- - If you use "git update-index" to update the index half-way, and then do 
-   more work, and use "git update-index" again (or commit), then the 
-   half-way work will visible be in the form of dangling blobs. You can 
-   just do a "git cat-file -p <blobname>" and see it, and maybe you'll 
-   recognize that it was something you were about to commit, but never 
-   did, because you did further development.
+Ideally, hb would equal HEAD from the _context_, but
+  1) hb and h != HEAD for any "raw" link,
+  2) one can set hb=HEAD in the context only when the "blob page"
+     can be loaded, which is impossible for binary blobs.
 
- - if you ever rebase any branch in the project, or do "git reset" to set 
-   it to some old point, or delete a branch, dangling commits are very 
-   much to be expected.
+So the fix would be that, unless the user had selected a hb/h
+explicitly, set "raw" to HEAD (i.e. by default), but leave the entry
+with hb/h in SHA.  This way, one can take a reference to HEAD or
+SHA of the head depending on what is needed.  And if they had
+selected a hb/h explicitly then both the entry and the "raw"
+would point to the SHA.
 
- - Even if _you_ didn't rebase anything, if the project you track rebases 
-   itself, you'll get dangling objects because you had commits that became 
-   unreachable when they were replaced by new history.
+Such a patch can go on top of those two.
 
-   My kernel tree doesn't do that, but some other ones occasionally do, 
-   and git itself (in the "pu" branch) obviously does all the time.
-
-   This is often the most common reason, especially if you follow 
-   Junio's git tree.
-
-   The most common sign of this is that there's a few dangling commits, 
-   and when you use gitk to examine them, you see old valid commits that 
-   just aren't reachable any more.
-
- - if you do any merges at all, and they've conflicted or they have had 
-   more than one parent and the recursive merger has generated an 
-   intermediate version of the tree, you'll have the merge process leave 
-   the objects of those intermediate merges around as dangling left-overs 
-   that aren't actually reachable from the end result of the merge.
-
-   The most common form of this is that you see a few pending "blob"s, and 
-   when you do "git cat-file -p <sha1> | less -S" on the blob-file, you'll 
-   generally find a conflict marker in it (ie the "<<<<" "====" ">>>>" 
-   things that a three-way merge leaves behind). You might also have a 
-   whole dangling tree due to this.
-
- - if you use the rsync:// protocol, you'll often end up getting objects 
-   that aren't reachable from the heads _you_ have, because you got the 
-   whole object database from somebody else that had other heads (or, you 
-   might get the dangling objects that they had due to any of the reasons 
-   above).
-
-   The rsync:// protocol simply doesn't do any git-level reachability 
-   analysis, so it just gets everything, regardless.
-
-Hmm. Those are tha main reasons I can think of. There may be other cases, 
-but I think these are the main ones, and I think any other cases end up 
-being just variations on the same kind of theme.
-
-			Linus
+    Luben
