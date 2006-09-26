@@ -1,59 +1,104 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Clarified documentation of --exclude-per-directory.
-Date: Mon, 25 Sep 2006 22:11:07 -0700
-Message-ID: <7v3baftdp0.fsf@assigned-by-dhcp.cox.net>
-References: <20060925155821.GC26844@spearce.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] Remove empty ref directories that prevent creating a ref.
+Date: Tue, 26 Sep 2006 07:23:37 +0200
+Message-ID: <20060926072337.39dbb9f4.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 26 07:11:32 2006
+X-From: git-owner@vger.kernel.org Tue Sep 26 07:17:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GS5E9-0007yr-9U
-	for gcvg-git@gmane.org; Tue, 26 Sep 2006 07:11:29 +0200
+	id 1GS5K5-0000bU-QR
+	for gcvg-git@gmane.org; Tue, 26 Sep 2006 07:17:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751027AbWIZFLL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Sep 2006 01:11:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751037AbWIZFLK
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 01:11:10 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:32231 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751027AbWIZFLI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Sep 2006 01:11:08 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060926051107.ZGVA6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 26 Sep 2006 01:11:07 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id StB41V00a1kojtg0000000
-	Tue, 26 Sep 2006 01:11:05 -0400
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20060925155821.GC26844@spearce.org> (Shawn Pearce's message of
-	"Mon, 25 Sep 2006 11:58:21 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751090AbWIZFRf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Sep 2006 01:17:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751085AbWIZFRe
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 01:17:34 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:14752 "EHLO smtp2-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1751090AbWIZFRe (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Sep 2006 01:17:34 -0400
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp2-g19.free.fr (Postfix) with SMTP id E0E68758E7;
+	Tue, 26 Sep 2006 07:17:32 +0200 (CEST)
+To: Junio Hamano <junkio@cox.net>
+X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.8.20; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27774>
 
-Shawn Pearce <spearce@spearce.org> writes:
+Junio wrote:
+"BTW, the second issue exists without packed ref; currently we
+cannot do
 
-> Tommi Virtanen noted on #git today that
->
->   git ls-files --exclude-per-directory
->
-> doesn't appear to work as advertised by the documentation unless
-> --others is also used.  According to the current source code this
-> is the case as the --exclude-per-directory file isn't read unless
-> we are iterating over the working directory, which only happens
-> with --others.
+    git branch foo/bar
+    git branch -d foo/bar
+    git branch foo"
 
-I am puzzled by this problem description.
+This patch also add Linus and Junio test cases.
 
-If we _were_ to read --exclude-per-directory file when we are
-not doing --others, what better behaviour would we get out of
-the command?
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+
+This fixed patch also applies to master, that's why it doesn't
+contain test cases using "git pack-refs". I will send a separate
+patch for them latter.
+
+ git-branch.sh     |   16 ++++++++++++++++
+ t/t3200-branch.sh |   12 ++++++++++++
+ 2 files changed, 28 insertions(+), 0 deletions(-)
+
+diff --git a/git-branch.sh b/git-branch.sh
+index e0501ec..834888d 100755
+--- a/git-branch.sh
++++ b/git-branch.sh
+@@ -112,6 +112,22 @@ rev=$(git-rev-parse --verify "$head") ||
+ git-check-ref-format "heads/$branchname" ||
+ 	die "we do not like '$branchname' as a branch name."
+ 
++LF='
++'
++
++if [ -d "$GIT_DIR/refs/heads/$branchname" ]
++then
++	OLD_IFS="$IFS"
++	IFS="$LF"
++	for refdir in `find "$GIT_DIR/refs/heads/$branchname" -type d | sort -r`
++	do
++		rmdir "$refdir" || \
++		    die "Could not delete '$refdir'," \
++		    "there may still be a ref there."
++	done
++	IFS="$OLD_IFS"
++fi
++
+ if [ -e "$GIT_DIR/refs/heads/$branchname" ]
+ then
+ 	if test '' = "$force"
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 5b04efc..6907cbc 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -61,4 +61,16 @@ test_expect_success \
+ 	 test -f .git/logs/refs/heads/g/h/i &&
+ 	 diff expect .git/logs/refs/heads/g/h/i'
+ 
++test_expect_success \
++    'git branch j/k should work after branch j has been deleted' \
++       'git-branch j &&
++        git-branch -d j &&
++        git-branch j/k'
++
++test_expect_success \
++    'git branch l should work after branch l/m has been deleted' \
++       'git-branch l/m &&
++        git-branch -d l/m &&
++        git-branch l'
++
+ test_done
+-- 
+1.4.2.1.ged17-dirty
