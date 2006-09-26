@@ -1,95 +1,77 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: [PATCH] gitweb: tree view: hash_base and hash are now context sensitive
-Date: Tue, 26 Sep 2006 12:47:05 -0700 (PDT)
-Message-ID: <20060926194706.32255.qmail@web31804.mail.mud.yahoo.com>
-Reply-To: ltuikov@yahoo.com
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: your mail
+Date: Tue, 26 Sep 2006 12:56:38 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0609261249310.3952@g5.osdl.org>
+References: <C8DBC54F2A9BAD4FA7F445CC7ADD963B0232474F@sslmexchange1.paymentech.us>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="0-701104349-1159300025=:31982"
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Tue Sep 26 21:47:30 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andy Whitcroft <apw@shadowen.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 26 21:57:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSItc-0007ac-Rx
-	for gcvg-git@gmane.org; Tue, 26 Sep 2006 21:47:13 +0200
+	id 1GSJ2u-0001SC-8T
+	for gcvg-git@gmane.org; Tue, 26 Sep 2006 21:56:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932502AbWIZTrJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Sep 2006 15:47:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932504AbWIZTrJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 15:47:09 -0400
-Received: from web31804.mail.mud.yahoo.com ([68.142.207.67]:60334 "HELO
-	web31804.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S932502AbWIZTrG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Sep 2006 15:47:06 -0400
-Received: (qmail 32257 invoked by uid 60001); 26 Sep 2006 19:47:06 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=KumLC9zhglUYYrt+MjaNodH+q6ez/6p5Xb/tfTvbsHjM9w5cs947uXEKirUYRlnKG3YUHBkUNN5UfgpNIrRRx+/f7hU1Iz2nLl5Gva7atJ030avPYOqK6qyG4jQFzU11CxuhvA0q/zmK7lKau7+1QcYuHnDnkihfzm38ogFYb08=  ;
-Received: from [64.215.88.90] by web31804.mail.mud.yahoo.com via HTTP; Tue, 26 Sep 2006 12:47:05 PDT
-To: git@vger.kernel.org
+	id S932258AbWIZT4p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Sep 2006 15:56:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932257AbWIZT4p
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 15:56:45 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:51922 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932258AbWIZT4o (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Sep 2006 15:56:44 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8QJudnW013383
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 26 Sep 2006 12:56:40 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8QJucCM031250;
+	Tue, 26 Sep 2006 12:56:39 -0700
+To: "Zhao, Jing" <Jing.Zhao@chasepaymentech.com>
+In-Reply-To: <C8DBC54F2A9BAD4FA7F445CC7ADD963B0232474F@sslmexchange1.paymentech.us>
+X-Spam-Status: No, hits=-0.478 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.152 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27814>
 
---0-701104349-1159300025=:31982
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 8bit
-Content-Id: 
-Content-Disposition: inline
 
-In tree view, by default, hash_base is HEAD and hash is the
-entry equivalent.  Else the user had selected a hash_base or
-hash, say by clicking on a revision or commit, in which case
-those values are used.
 
-Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
----
- gitweb/gitweb.perl |   14 +++++++-------
- 1 files changed, 7 insertions(+), 7 deletions(-)
+On Tue, 26 Sep 2006, Zhao, Jing wrote:
+> 
+>  I subscribed git emailing list (git@vger.kernel.org). I don't know for 
+> what reason, my post emails all have been rejected. Could you post this 
+> for me and shed some light on this issue? thanks,
 
---0-701104349-1159300025=:31982
-Content-Type: text/plain; name="p2.txt"
-Content-Description: 1908141687-p2.txt
-Content-Disposition: inline; filename="p2.txt"
+The vger.kernel.org lists have various spam detectors, and I suspect a 
+combination of your email address and the signature you use just triggers 
+that system to believe that you are trying to sell us house payment plans 
+or something..
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 8e9c827..56638f2 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1625,7 +1625,7 @@ sub git_print_tree_entry {
- 			              "history");
- 		}
- 		print " | " .
--			$cgi->a({-href => href(action=>"blob_plain", hash_base=>"HEAD",
-+			$cgi->a({-href => href(action=>"blob_plain", hash_base=>$hash_base,
- 					       file_name=>"$basedir$t->{'name'}")},
- 				"raw");
- 		print "</td>\n";
-@@ -2713,14 +2713,14 @@ sub git_tree {
- 	my ($ctype, $suffix, $command) = gitweb_check_feature('snapshot');
- 	my $have_snapshot = (defined $ctype && defined $suffix);
- 
-+	if (!defined $hash_base) {
-+		$hash_base = "HEAD";
-+	}
- 	if (!defined $hash) {
--		$hash = git_get_head_hash($project);
- 		if (defined $file_name) {
--			my $base = $hash_base || $hash;
--			$hash = git_get_hash_by_path($base, $file_name, "tree");
--		}
--		if (!defined $hash_base) {
--			$hash_base = $hash;
-+			$hash = git_get_hash_by_path($hash_base, $file_name, "tree");
-+		} else {
-+			$hash = $hash_base;
- 		}
- 	}
- 	$/ = "\0";
--- 
-1.4.2.1.g893b0
+So I would suggest removing your signature in particular, that points to a 
+web-site that is associated with an industry that has over-used the email 
+medium for selling their services...
 
---0-701104349-1159300025=:31982--
+> I tried to port git to VOS system (Stratus). When i compiled it, i 
+> found it did not have 'regex.h' and its library. Do you know any 
+> workaround for this problem? Or which package contains these code i can 
+> port at first?
+
+I do not know if stratus has regex libraries anywhere, but googling for 
+"VOS Stratus regex" seems to be saying that this isn't the first time that 
+platform has had problems compiling various programs.
+
+I suspect you'd just have to compile one of the regex libraries that are 
+out there as source. I think Henry Spencer's libraries are likely the 
+canonical ones, but there's a "GNU regex" too, and that's probably the 
+basis for the ones that are used in glibc. Dunno.
+
+Google for either of those, you'll find them. It's not new code, but I 
+doubt it needs to be ;)
+
+			Linus
