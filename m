@@ -1,58 +1,89 @@
-From: "Sharon Mccracken" <praiseworthyjo@alle.net>
-Subject: Regarding MSN
-Date: Wed, 27 Sep 2006 03:14:31 -0300
-Message-ID: <LDR3D4$E6LAK8595MOMCYZCPG4573WT3AJPUVA8@alle.net>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: [PATCH] gitweb: Remove redundant "tree" link
+Date: Tue, 26 Sep 2006 12:45:37 -0700 (PDT)
+Message-ID: <20060926194538.46031.qmail@web31809.mail.mud.yahoo.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain
-X-From: git-owner@vger.kernel.org Tue Sep 26 21:15:36 2006
+Content-Type: multipart/mixed; boundary="0-427046414-1159299937=:44912"
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Tue Sep 26 21:46:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSIOR-0000YL-Gs
-	for gcvg-git@gmane.org; Tue, 26 Sep 2006 21:15:00 +0200
+	id 1GSIsF-0007Ff-Pd
+	for gcvg-git@gmane.org; Tue, 26 Sep 2006 21:45:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932479AbWIZTOm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Sep 2006 15:14:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932481AbWIZTOl
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 15:14:41 -0400
-Received: from sym.gdsz.cncnet.net ([210.22.15.66]:20487 "HELO 2458BC")
-	by vger.kernel.org with SMTP id S932479AbWIZTOl (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Sep 2006 15:14:41 -0400
-Received: from yqysmtp4.alle.net (unknown [10.253.44.66]) by gkxirelay0.alle.net (Postfix) with ESMTP id O3M009K35HK; Wed, 27 Sep 2006 03:14:31 -0300 (EDT) 
-X-Terra-Karma: 0% 
-X-Terra-Hash: 2g4f19j2b07e58ehtom9t2j0o3kd234z
-Received: from alle.net (rgkwebmail8.terra.com [66.231.02.23]) (authenticated user gulpta@alle.net) by ccqsmtp7.alle.net (Postfix) with ESMTP id Q17K9G81BD3; Wed, 27 Sep 2006 03:14:31 -0300 (EDT) 
-To: git@vger.kernel.org, ddissettqldf@vger.kernel.org
-X-Sensitivity: 3 
-X-XaM3-API-Version: 4.15 (B109)
-X-SenderIP: 
+	id S932500AbWIZTpk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Sep 2006 15:45:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932499AbWIZTpj
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 15:45:39 -0400
+Received: from web31809.mail.mud.yahoo.com ([68.142.207.72]:55480 "HELO
+	web31809.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S932496AbWIZTpi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Sep 2006 15:45:38 -0400
+Received: (qmail 46033 invoked by uid 60001); 26 Sep 2006 19:45:38 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=anHb4yWwdC5V0LWxicZvP7BQdNoLUAcb+DJzXkeIdUSYGVwrJ0BaHLVnUdyiKxyerfkHo/8IGCRGWSA1qgiKlnZb45bBGoDI01eqyLCq2Cb821lfof8gmkWsdgZ6kGNovo2twY15jGG971/2R9TPcPw9wSY06zkNTdJ4B2UxksY=  ;
+Received: from [64.215.88.90] by web31809.mail.mud.yahoo.com via HTTP; Tue, 26 Sep 2006 12:45:37 PDT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 8.4 points;
- * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
- *      [score: 0.0000]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?210.22.15.66>]
- *  4.0 RCVD_IN_XBL RBL: Received via a relay in Spamhaus XBL
- *      [210.22.15.66 listed in sbl-xbl.spamhaus.org]
- *  4.0 RCVD_IN_SBL RBL: Received via a relay in Spamhaus SBL
- *      [210.22.15.66 listed in sbl-xbl.spamhaus.org]
- *  0.0 RCVD_IN_SORBS_WEB RBL: SORBS: sender is a abuseable web server
- *      [66.231.02.23 listed in dnsbl.sorbs.net]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27812>
 
-Fill out the form to recieve the money we have prepared for you.
-YOUR NAME 3.5% Int. $300,000.00 to $1 million.
+--0-427046414-1159299937=:44912
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 8bit
+Content-Id: 
+Content-Disposition: inline
 
-You can cash out or home eq. to buy anything
-you may need or want with our company only.
+In "tree" view, remove redundant "tree" link in the tree
+listing.  It is identical to simply clicking on the tree
+entry itself.
+
+Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
+---
+ gitweb/gitweb.perl |   16 ++++++----------
+ 1 files changed, 6 insertions(+), 10 deletions(-)
+
+--0-427046414-1159299937=:44912
+Content-Type: text/plain; name="p1.txt"
+Content-Description: 1207600725-p1.txt
+Content-Disposition: inline; filename="p1.txt"
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 959e3f9..8e9c827 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1631,18 +1631,14 @@ sub git_print_tree_entry {
+ 		print "</td>\n";
  
--boat
--car
--yacht
--remodel your house
--pay off other loans
+ 	} elsif ($t->{'type'} eq "tree") {
+-		print "<td class=\"list\">" .
+-		      $cgi->a({-href => href(action=>"tree", hash=>$t->{'hash'},
+-		                             file_name=>"$basedir$t->{'name'}", %base_key)},
+-		              esc_html($t->{'name'})) .
+-		      "</td>\n" .
+-		      "<td class=\"link\">" .
+-		      $cgi->a({-href => href(action=>"tree", hash=>$t->{'hash'},
++		print "<td class=\"list\">";
++		print $cgi->a({-href => href(action=>"tree", hash=>$t->{'hash'},
+ 		                             file_name=>"$basedir$t->{'name'}", %base_key)},
+-		              "tree");
++		              esc_html($t->{'name'}));
++		print "</td>\n";
++		print "<td class=\"link\">";
+ 		if (defined $hash_base) {
+-			print " | " .
+-			      $cgi->a({-href => href(action=>"history", hash_base=>$hash_base,
++			print $cgi->a({-href => href(action=>"history", hash_base=>$hash_base,
+ 			                             file_name=>"$basedir$t->{'name'}")},
+ 			              "history");
+ 		}
+-- 
+1.4.2.1.g893b0
 
-http://geocities.yahoo.com.br/candice48_p927/
+--0-427046414-1159299937=:44912--
