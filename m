@@ -1,77 +1,92 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: your mail
-Date: Tue, 26 Sep 2006 12:56:38 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609261249310.3952@g5.osdl.org>
-References: <C8DBC54F2A9BAD4FA7F445CC7ADD963B0232474F@sslmexchange1.paymentech.us>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH] gitweb: tree view: eliminate redundant "blob"
+Date: Tue, 26 Sep 2006 13:14:33 -0700 (PDT)
+Message-ID: <20060926201433.46979.qmail@web31810.mail.mud.yahoo.com>
+References: <efapsl$e65$1@sea.gmane.org>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andy Whitcroft <apw@shadowen.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 26 21:57:59 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Tue Sep 26 22:16:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSJ2u-0001SC-8T
-	for gcvg-git@gmane.org; Tue, 26 Sep 2006 21:56:48 +0200
+	id 1GSJKA-000672-BG
+	for gcvg-git@gmane.org; Tue, 26 Sep 2006 22:14:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932258AbWIZT4p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Sep 2006 15:56:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932257AbWIZT4p
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 15:56:45 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:51922 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932258AbWIZT4o (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Sep 2006 15:56:44 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8QJudnW013383
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 26 Sep 2006 12:56:40 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8QJucCM031250;
-	Tue, 26 Sep 2006 12:56:39 -0700
-To: "Zhao, Jing" <Jing.Zhao@chasepaymentech.com>
-In-Reply-To: <C8DBC54F2A9BAD4FA7F445CC7ADD963B0232474F@sslmexchange1.paymentech.us>
-X-Spam-Status: No, hits=-0.478 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.152 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964776AbWIZUOf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Sep 2006 16:14:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964778AbWIZUOf
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 16:14:35 -0400
+Received: from web31810.mail.mud.yahoo.com ([68.142.207.73]:15285 "HELO
+	web31810.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S964776AbWIZUOe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Sep 2006 16:14:34 -0400
+Received: (qmail 46981 invoked by uid 60001); 26 Sep 2006 20:14:33 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=RBqjy7tY1lT6ifcvKGINNTxwOtJCCI2AjzaZVQlwkmHKVB7/rx9NBmDQLA+GSbXvKLGQbSA27Ccz9VinqZ89WP35u10kri4a7/FnCcvRD8m/qoOPubFrItA+8Kh99C/aoTPj9kFjjMO/5dlxnmv+0SR/EPT6ShBN7pcyzbpn0Lw=  ;
+Received: from [64.215.88.90] by web31810.mail.mud.yahoo.com via HTTP; Tue, 26 Sep 2006 13:14:33 PDT
+To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+In-Reply-To: <efapsl$e65$1@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27815>
 
-
-
-On Tue, 26 Sep 2006, Zhao, Jing wrote:
+--- Jakub Narebski <jnareb@gmail.com> wrote:
+> I'd rather not. The fact that the file name and tree name is link,
+> and the fact that commit title and tag title is link is a _convenience_.
+> Not always it is visible (without mouseover) that it is link.
+> And it is _not_ visible in the case of files!
 > 
->  I subscribed git emailing list (git@vger.kernel.org). I don't know for 
-> what reason, my post emails all have been rejected. Could you post this 
-> for me and shed some light on this issue? thanks,
+> And for example for commits and heads there are two possible
+> views, commit and commitdiff for commit, shortlog and log for head,
+> of which we arbitrary chose one for the subject link. So in that
+> case the additional self link is needed. I'd rather have both.
+> And for consistency I'd rather always have visible form default
+> self link/
+> 
+> I'd rather have additional link, than cause confusion to the users.
+> Perhaps we could separate the self link ("blob" for files, "tree"
+> for directories) into separate column?
+> 
+> Besides, you have to mouse over the name of file, or name of
+> directory to see to what view it would lead on.
 
-The vger.kernel.org lists have various spam detectors, and I suspect a 
-combination of your email address and the signature you use just triggers 
-that system to believe that you are trying to sell us house payment plans 
-or something..
+Jakub,
 
-So I would suggest removing your signature in particular, that points to a 
-web-site that is associated with an industry that has over-used the email 
-medium for selling their services...
+I understand your argument completely.  Underlining/coloring/etc
+entities which are "links" themselves was very cool circa 1993 when
+I took an HTML course (NSA Mosaic or rather...), transitioning from
+"gopher" to the WWW.
 
-> I tried to port git to VOS system (Stratus). When i compiled it, i 
-> found it did not have 'regex.h' and its library. Do you know any 
-> workaround for this problem? Or which package contains these code i can 
-> port at first?
+Over the years I've seen a transition where web content is more and
+more context sensitive, i.e. everything you can see is in some way
+"clickable".  Be it letters, words, sentences, graphical objects of
+some sort, etc.  If you could imagine: any web content being a "wiki
+on steroids".
 
-I do not know if stratus has regex libraries anywhere, but googling for 
-"VOS Stratus regex" seems to be saying that this isn't the first time that 
-platform has had problems compiling various programs.
+Generally, this WEB Development argument goes as follows:
+    "There is no reason for anything to not be clickable."
 
-I suspect you'd just have to compile one of the regex libraries that are 
-out there as source. I think Henry Spencer's libraries are likely the 
-canonical ones, but there's a "GNU regex" too, and that's probably the 
-basis for the ones that are used in glibc. Dunno.
+Thus, I like the fact that gitweb is on the forefront of WEB development.
+We should keep it like that.
 
-Google for either of those, you'll find them. It's not new code, but I 
-doubt it needs to be ;)
+    Luben
 
-			Linus
+> 
+> Nak.
+> -- 
+> Jakub Narebski
+> Warsaw, Poland
+> ShadeHawk on #git
+> 
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
