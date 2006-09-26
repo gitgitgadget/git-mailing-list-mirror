@@ -1,82 +1,106 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] gitweb: "raw" links to blobs at HEAD
-Date: Tue, 26 Sep 2006 13:20:13 -0700 (PDT)
-Message-ID: <20060926202013.10579.qmail@web31811.mail.mud.yahoo.com>
-References: <efaq3h$e65$2@sea.gmane.org>
-Reply-To: ltuikov@yahoo.com
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Notes on Using Git with Subprojects
+Date: Tue, 26 Sep 2006 22:25:19 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0609262203510.25371@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <45196628.9010107@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Tue Sep 26 22:21:47 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 26 22:26:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSJPv-0007LZ-1w
-	for gcvg-git@gmane.org; Tue, 26 Sep 2006 22:20:35 +0200
+	id 1GSJUe-0008S9-0V
+	for gcvg-git@gmane.org; Tue, 26 Sep 2006 22:25:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932296AbWIZUUU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Sep 2006 16:20:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932288AbWIZUUU
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 16:20:20 -0400
-Received: from web31811.mail.mud.yahoo.com ([68.142.207.74]:64341 "HELO
-	web31811.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S932285AbWIZUUS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Sep 2006 16:20:18 -0400
-Received: (qmail 10581 invoked by uid 60001); 26 Sep 2006 20:20:14 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=s66FIBy6Z9AkjXj+gDhayJrOC289YGnA43IT1B5aAZgNwVVXl8ijt+J0H9lhb1uC+gdFb+fqJYdJSHmg6kWuxlhwE64ojAAbqF1JSyhqkxyQPaKl6pSvVrCZjnGf/Snt20ZiOu/oHzYquRDfTnD5dqGwO4uG9iqIz0dJGs1ofDU=  ;
-Received: from [64.215.88.90] by web31811.mail.mud.yahoo.com via HTTP; Tue, 26 Sep 2006 13:20:13 PDT
-To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-In-Reply-To: <efaq3h$e65$2@sea.gmane.org>
+	id S964784AbWIZUZX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Sep 2006 16:25:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964786AbWIZUZX
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 16:25:23 -0400
+Received: from mail.gmx.de ([213.165.64.20]:9153 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S964784AbWIZUZW (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Sep 2006 16:25:22 -0400
+Received: (qmail invoked by alias); 26 Sep 2006 20:25:20 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp018) with SMTP; 26 Sep 2006 22:25:20 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: A Large Angry SCM <gitzilla@gmail.com>
+In-Reply-To: <45196628.9010107@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27817>
 
---- Jakub Narebski <jnareb@gmail.com> wrote:
-> Luben Tuikov wrote:
-> 
-> > Currently there is no HTML interface which references (or
-> > can be externally referenced) to yield a _binary_ blob at
-> > HEAD.  There is one for non-binary blobs, but none for
-> > binary ones.
-> 
-> You can in the same number of steps. First go to _tree_
-> at head, then click on "raw" link.
+Hi,
 
-Jakub,
+On Tue, 26 Sep 2006, A Large Angry SCM wrote:
 
-For binary only files, there is no HTML interface to refer
-to, such that, hb=HEAD for _binary_ only files.  Unless of course
-one types that on the URL line manually.
+> 							20060926.1715
 
-That is, I'd like to externally reference binary only blobs
-at "HEAD", s.t. no matter _when_ the reference is used, it would
-refer to the latest "version" of that file.
+You forgot the time zone ;-)
 
-E.g. a PDF spec file.
-
-My recent patches on the subject enable this capability.
-
-    Luben
-
-> It's true that decision that binary files are automatically
-> redirected to "plain" ("raw") format, so they don't have "html"
-> output caused that there is no link for binary blob at head.
-> But I don't think that changing "raw" link to link to HEAD
-> version, while all other links are to current version is
-> a good idea...
-> -- 
-> Jakub Narebski
-> Warsaw, Poland
-> ShadeHawk on #git
+> Notes on Using Git with Subprojects
+> ===================================
+> Copyright (C) 2006 by Raymond S Brand
 > 
 > 
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Git does not have native support for subprojects and this is a good
+> thing because managing subprojects is better handled by the project
+> build machinery. Managing subprojects with the project build machinery
+> is more flexible than the native support from an SCM and allows the use
+> of different SCMs by different subprojects. However, there is a lot of
+> interest in using Git for the SCM of a project with subprojects.
 > 
+> Git, unfortunately, does not make it easy.
+
+After skimming your text, I imagine that it should be possible (read: 
+easy) to write a really simple script which does what you describe, 
+storing the relevant information about root or sub projects in the config.
+
+However, you left out one of the most important aspects of subprojects: 
+the ability to manage the state of the root project: you can add, update 
+and remove subprojects.
+
+A while ago, Junio started playing with a new object type for subprojects 
+so that you could have tree objects containing subprojects in addition 
+to tree objects and blobs.
+
+Of course, the difficult thing about this is to teach all tools to behave 
+sensibly with the new object type.
+
+Now, your approach of having multiple clones (sharing the object pool) is 
+more simple than Junio's approach: no need to introduce a new object type, 
+or adapt existing tools.
+
+Taking this a step further, how about managing the root project in this 
+manner:
+
+A root project is a branch containing just one special file, 
+"root-project". This file consists of lines like these:
+
+-- snip --
+f80a17bf3da1e24ac904f9078f68c3bf935ff250 next
+03adf42c988195b50e1a1935ba5fcbc39b2b029b todo
+-- snap --
+
+The meaning: subdirectory "next" contains subproject "next" which is also 
+tracked in the branch "next" of the root project. Likewise for "todo". The 
+root project could even contain some administrative files like a Makefile, 
+a license, README, etc.
+
+You could even handle the update of root-project with each commit in a 
+subproject by a hook in that subproject's .git/hooks/post-commit, so that 
+you'd only need a script "git-checkout-root-project.sh" to initialize them 
+all, and probably a script "git-update-root-project.sh".
+
+Thoughts?
+
+Ciao,
+Dscho
+
+P.S.: Is it just me, or do other people also find it confusing that 
+--shared means different things for git-init-db and git-clone? (I know I 
+am the sinner...)
