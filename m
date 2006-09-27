@@ -1,68 +1,68 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 3/3] diff --stat: sometimes use non-linear scaling.
-Date: Wed, 27 Sep 2006 08:12:49 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609270810470.3952@g5.osdl.org>
-References: <7vfyeejakq.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: [PATCH] Corrected copy-and-paste thinko in ignore executable bit test case.
+Date: Wed, 27 Sep 2006 11:18:49 -0400
+Message-ID: <20060927151849.GF20705@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Jan Engelhardt <jengelh@linux01.gwdg.de>,
-	Adrian Bunk <bunk@stusta.de>
-X-From: git-owner@vger.kernel.org Wed Sep 27 17:16:40 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Sep 27 17:19:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSb8y-0003dZ-KR
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 17:16:17 +0200
+	id 1GSbBX-0004MF-OY
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 17:18:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964921AbWI0PQO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 11:16:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964926AbWI0PQO
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 11:16:14 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:6881 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964921AbWI0PQN (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Sep 2006 11:16:13 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8RFCpnW005297
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 27 Sep 2006 08:12:51 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8RFCnlv028880;
-	Wed, 27 Sep 2006 08:12:50 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vfyeejakq.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.968 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.154 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964919AbWI0PSx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 11:18:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964926AbWI0PSx
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 11:18:53 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:38886 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S964919AbWI0PSw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Sep 2006 11:18:52 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GSbBN-0004qe-Fj
+	for git@vger.kernel.org; Wed, 27 Sep 2006 11:18:45 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 1773420FB28; Wed, 27 Sep 2006 11:18:49 -0400 (EDT)
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27909>
 
+This test should be testing update-index --add, not git-add as these
+are two completely different implementations of what is essentially
+the same task.
 
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ t/t3700-add.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-On Tue, 26 Sep 2006, Junio C Hamano wrote:
->
-> When some files have big changes and others are touched only
-> slightly, diffstat graph did not show differences among smaller
-> changes that well.  This changes the graph scaling to non-linear
-> algorithm in such a case.
-
-Ok, this is just _strange_.
-
-> while with this, it shows:
-> 
->  .gitignore                       |    1
->  Documentation/git-tar-tree.txt   |    3 +++++++++
-
-No _way_ is it correct to show more than three characters if there were 
-three lines of changes.
-
-I think "nonlinear" is fine, but this is something that is "superlinear" 
-in small changes, and then sublinear in bigger ones (and then apparently 
-totally wrong for one-line changes).
-
-It should at least never be superlinear, I believe.
-
-		Linus
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index d36f22d..c20e4c2 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -35,7 +35,7 @@ test_expect_success \
+ 	'git repo-config core.filemode 0 &&
+ 	 echo foo >xfoo2 &&
+ 	 chmod 755 xfoo2 &&
+-	 git-add xfoo2 &&
++	 git-update-index --add xfoo2 &&
+ 	 case "`git-ls-files --stage xfoo2`" in
+ 	 100644" "*xfoo2) echo ok;;
+ 	 *) echo fail; git-ls-files --stage xfoo2; exit 1;;
+-- 
+1.4.2.1.g1e40
