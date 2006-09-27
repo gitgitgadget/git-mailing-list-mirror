@@ -1,70 +1,68 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: Notes on Using Git with Subprojects
-Date: Wed, 27 Sep 2006 10:13:06 -0700
-Message-ID: <451AB122.9020600@gmail.com>
-References: <45196628.9010107@gmail.com> <Pine.LNX.4.64.0609261629160.9789@iabervon.org> <20060926213003.GA8177@spearce.org> <4519AACD.7020508@gmail.com> <20060927080652.GA8056@admingilde.org> <Pine.LNX.4.63.0609271152270.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-Reply-To: gitzilla@gmail.com
+Date: Wed, 27 Sep 2006 13:33:35 -0400
+Message-ID: <20060927173335.GC2807@coredump.intra.peff.net>
+References: <45196628.9010107@gmail.com> <Pine.LNX.4.64.0609261629160.9789@iabervon.org> <20060926213003.GA8177@spearce.org> <4519AACD.7020508@gmail.com> <20060927080652.GA8056@admingilde.org> <451AADC3.40201@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Martin Waitz <tali@admingilde.org>,
 	Shawn Pearce <spearce@spearce.org>,
 	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 27 19:19:48 2006
+X-From: git-owner@vger.kernel.org Wed Sep 27 19:37:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GScyE-00038N-6e
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 19:13:18 +0200
+	id 1GSdI5-00006S-Rn
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 19:33:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030459AbWI0RNM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 13:13:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030466AbWI0RNM
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 13:13:12 -0400
-Received: from nz-out-0102.google.com ([64.233.162.196]:46372 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1030459AbWI0RNK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 13:13:10 -0400
-Received: by nz-out-0102.google.com with SMTP id n1so116932nzf
-        for <git@vger.kernel.org>; Wed, 27 Sep 2006 10:13:10 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=CAsyNzSFhYAlkLcGK0xc3O26XxOusY+HFPcrUdDBjGc+5BHEBLxh5xb1ELSEQa1TSOB/lu117Rctx5G752fN682WPyWCkiQ88POovL2dDZBJ2P/n2dDJ+rGA2H+g8smSwDWUMmb1QZa/XnvkpE0mI2Us2uu0lY5YhPxtFa0Ikp8=
-Received: by 10.65.112.5 with SMTP id p5mr295862qbm;
-        Wed, 27 Sep 2006 10:13:09 -0700 (PDT)
-Received: from ?10.0.0.6? ( [67.20.67.46])
-        by mx.gmail.com with ESMTP id q15sm1034044qbq.2006.09.27.10.13.08;
-        Wed, 27 Sep 2006 10:13:09 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060911)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0609271152270.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S1030472AbWI0Rdi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 13:33:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030473AbWI0Rdi
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 13:33:38 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:58040 "HELO
+	peff.net") by vger.kernel.org with SMTP id S1030472AbWI0Rdh (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Sep 2006 13:33:37 -0400
+Received: (qmail 21740 invoked from network); 27 Sep 2006 13:33:35 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 27 Sep 2006 13:33:35 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Sep 2006 13:33:35 -0400
+To: A Large Angry SCM <gitzilla@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <451AADC3.40201@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27915>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Wed, 27 Sep 2006, Martin Waitz wrote:
-> 
->> On Tue, Sep 26, 2006 at 03:33:49PM -0700, A Large Angry SCM wrote:
->>> So, for each subproject of a parent project, you want to record branch, 
->>> version (commit ID), and directory location. Not quite as easy to do in 
->>> a makefile but do-able.
->> I've been playing with this kind of subprojects a little bit.
->>
->> My current approach is like this:
->>
->>  * create a .gitmodules file which lists all the directories
->>    which contain a submodule.
->>  * the .git/refs/heads directory of the submodule gets stored in
->>    .gitmodule/<modulename> inside the parent project
-> 
-> Taking this a step further, you could make subproject/.git/refs/heads a 
-> symbolic link to .git/refs/heads/subproject, with the benefit that fsck 
-> Just Works.
+On Wed, Sep 27, 2006 at 09:58:43AM -0700, A Large Angry SCM wrote:
 
-Wouldn't an fsck in the parent complain about missing objects?
+> This means that modules are not separate, stand alone projects but, 
+> rather, just a sub part of your bigger project. Very useful and 
+> applicable in some situations but other situations want/need separate, 
+> stand alone subprojects.
+
+One thing that I believe some people have requested for subprojects is
+to avoid downloading files/history for subprojects you're not interested
+in.  I think this could be faciliated in this scheme by only cloning the
+heads of the subprojects you're interested in (there would need to be
+special machinery to handle this at the root level if we want to allow
+making root commits without necessarily having all of the subprojects).
+
+A first step to this would be an argument to git-clone to allow cloning
+only a subset of refs.
+
+> The problem I'm working on is how to deal with the sub parts of a larger 
+> project when those sub parts are controlled by different entity. Silly 
+> example: the kernel is controlled by Linus; glibc is controlled by the 
+> GNU folks, gcc is controlled by some other GNU folks, the web server is 
+> controlled by the Apache Foundation, the X server is controlled by Xorg, 
+> etc.
+
+The nice thing about this approach is that I believe the two systems
+need only differ at clone time. Instead of creating a remotes file with
+all of the subproject branches, you would just create multiple remotes
+files. The root fetching porcelain needs to be smart enough to fetch all
+remotes.
+
+-Peff
