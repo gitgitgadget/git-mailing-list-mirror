@@ -1,47 +1,65 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH] gitk: Fix nextfile() and add prevfile()
-Date: Wed, 27 Sep 2006 10:15:45 +1000
-Message-ID: <17689.49841.913304.878599@cargo.ozlabs.ibm.com>
-References: <873bag12k3.fsf@duaron.myhome.or.jp>
-	<7vpsdjryj2.fsf@assigned-by-dhcp.cox.net>
-	<873bae3b5x.fsf_-_@duaron.myhome.or.jp>
+From: Matthew L Foster <mfoster167@yahoo.com>
+Subject: Re: git and time
+Date: Tue, 26 Sep 2006 17:27:45 -0700 (PDT)
+Message-ID: <20060927002745.15344.qmail@web51005.mail.yahoo.com>
+References: <20060926233321.GA17084@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Sep 27 02:16:11 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 27 02:28:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSN5j-0000dy-Tr
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 02:16:00 +0200
+	id 1GSNHF-0002DM-MN
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 02:27:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750778AbWI0APz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Sep 2006 20:15:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750780AbWI0APz
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 20:15:55 -0400
-Received: from ozlabs.org ([203.10.76.45]:60867 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S1750778AbWI0APy (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Sep 2006 20:15:54 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 2A47267B6D; Wed, 27 Sep 2006 10:15:53 +1000 (EST)
-To: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-In-Reply-To: <873bae3b5x.fsf_-_@duaron.myhome.or.jp>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1750808AbWI0A1u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Sep 2006 20:27:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750809AbWI0A1u
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 20:27:50 -0400
+Received: from web51005.mail.yahoo.com ([206.190.38.136]:58260 "HELO
+	web51005.mail.yahoo.com") by vger.kernel.org with SMTP
+	id S1750808AbWI0A1t (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Sep 2006 20:27:49 -0400
+Received: (qmail 15346 invoked by uid 60001); 27 Sep 2006 00:27:45 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=ztg+li+XOi3/1Iqs8E8jrdPI+sZ+pEiXe36OHQgdZB2seOZOPcmRaKm3aEqVD1G4fkE5I/1Bf0E8/pNsGDaBWhqiNxMPd706TL8d6pEtyW6M6kbefMjO6lvIsf7FhAsSisVDKxEa96I73hoOPMDFSSQpgS7TIqYKHVQkqZzSyfM=  ;
+Received: from [207.172.80.85] by web51005.mail.yahoo.com via HTTP; Tue, 26 Sep 2006 17:27:45 PDT
+To: Jeff King <peff@peff.net>
+In-Reply-To: <20060926233321.GA17084@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27841>
 
-OGAWA Hirofumi writes:
+> Keep in mind that git doesn't really CARE about timestamps to do most
+> operations; it operates on the graph created by parentage. Think of the
+> timestamps more as comments; when a commit is created, we comment who
+> did it and when, both accordinging to their local information.
+> 
+> -Peff
+> 
+> PS Nit: Git doesn't work with changesets, it works with snapshots,
+> building a directed graph of snapshots. Maybe that is the source of your
+> confusion
 
-> The current nextfile() jumps to last hunk, but I think this is not
-> intention, probably, it's forgetting to add "break;". And this
-> patch also adds prevfile(), it jumps to previous hunk.
+It's true I don't know much about git, what is the difference between a changeset and a snapshot?
+Are you saying timestamps should be tracked separately or tracked by an scm system built on top of
+git? Does/should git care about the when of a snapshot?
 
-I think your prevfile isn't quite right - I don't think it will do the
-right thing if $loc is past the last entry in $difffilestart.  Don't
-you want the "$ctext yview $prev" after the loop?
+Perhaps my question is directed more toward gitweb.cgi, it seems to me the timestamp of when a
+snapshot was merged into this repository should somehow be tracked and that is what gitweb.cgi
+should default to display. For example, if someone wants to know if security bugfix X was merged
+into linus' kernel tree they also want to know when that happened, don't they? 
 
-Paul.
+-Matt
+
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
