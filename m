@@ -1,49 +1,81 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: [PATCH] Corrected copy-and-paste thinko in ignore executable bit test case.
-Date: Wed, 27 Sep 2006 12:43:45 -0700
-Message-ID: <7vr6xx9jta.fsf@assigned-by-dhcp.cox.net>
-References: <20060927151849.GF20705@spearce.org>
+Date: Wed, 27 Sep 2006 15:51:13 -0400
+Message-ID: <20060927195113.GA21668@spearce.org>
+References: <20060927151849.GF20705@spearce.org> <7vr6xx9jta.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 27 21:44:18 2006
+X-From: git-owner@vger.kernel.org Wed Sep 27 21:51:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSfJv-0006hh-1p
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 21:43:52 +0200
+	id 1GSfRA-0008MB-5Y
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 21:51:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030677AbWI0Tnr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 15:43:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030718AbWI0Tnr
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 15:43:47 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:46263 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1030677AbWI0Tnq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 15:43:46 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060927194346.RIPV6077.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 27 Sep 2006 15:43:46 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id TXjo1V0011kojtg0000000
-	Wed, 27 Sep 2006 15:43:48 -0400
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20060927151849.GF20705@spearce.org> (Shawn Pearce's message of
-	"Wed, 27 Sep 2006 11:18:49 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030723AbWI0TvS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 15:51:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030727AbWI0TvS
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 15:51:18 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:52134 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1030723AbWI0TvR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Sep 2006 15:51:17 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GSfQx-0006md-OH; Wed, 27 Sep 2006 15:51:07 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 5AF8320FB28; Wed, 27 Sep 2006 15:51:13 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vr6xx9jta.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27927>
 
-Shawn Pearce <spearce@spearce.org> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
+> 
+> > This test should be testing update-index --add, not git-add as these
+> > are two completely different implementations of what is essentially
+> > the same task.
+> 
+> Thanks -- I'd rephrase the last sentence, though.
 
-> This test should be testing update-index --add, not git-add as these
-> are two completely different implementations of what is essentially
-> the same task.
+-- >8 --
+Corrected copy-and-paste thinko in ignore executable bit test case.
 
-Thanks -- I'd rephrase the last sentence, though.
+This test should be testing update-index --add, not git-add to
+ensure all possible interfaces behave the same way.
+
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ t/t3700-add.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index d36f22d..c20e4c2 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -35,7 +35,7 @@ test_expect_success \
+ 	'git repo-config core.filemode 0 &&
+ 	 echo foo >xfoo2 &&
+ 	 chmod 755 xfoo2 &&
+-	 git-add xfoo2 &&
++	 git-update-index --add xfoo2 &&
+ 	 case "`git-ls-files --stage xfoo2`" in
+ 	 100644" "*xfoo2) echo ok;;
+ 	 *) echo fail; git-ls-files --stage xfoo2; exit 1;;
+-- 
+1.4.2.1.g1e40
