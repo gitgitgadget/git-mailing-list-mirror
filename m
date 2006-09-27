@@ -1,77 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: PATCH/RFC] allow delta data reuse even if base object is a preferred base
-Date: Wed, 27 Sep 2006 12:53:37 -0700
-Message-ID: <7vlko59jcu.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0609271536470.9349@xanadu.home>
+From: Matthew L Foster <mfoster167@yahoo.com>
+Subject: Re: git and time
+Date: Wed, 27 Sep 2006 13:44:28 -0700 (PDT)
+Message-ID: <20060927204428.39120.qmail@web51014.mail.yahoo.com>
+References: <Pine.LNX.4.64.0609271109510.3952@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 27 21:53:45 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Andreas Ericsson <ae@op5.se>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 27 22:45:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSfTT-0000S0-3g
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 21:53:43 +0200
+	id 1GSgGi-000532-8P
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 22:44:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030727AbWI0Txj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 15:53:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030728AbWI0Txj
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 15:53:39 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:34276 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1030727AbWI0Txi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 15:53:38 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060927195337.UXGG21457.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 27 Sep 2006 15:53:37 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id TXtf1V01G1kojtg0000000
-	Wed, 27 Sep 2006 15:53:40 -0400
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0609271536470.9349@xanadu.home> (Nicolas Pitre's
-	message of "Wed, 27 Sep 2006 15:42:16 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030810AbWI0Uoc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 16:44:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030809AbWI0Uoc
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 16:44:32 -0400
+Received: from web51014.mail.yahoo.com ([206.190.39.79]:17769 "HELO
+	web51014.mail.yahoo.com") by vger.kernel.org with SMTP
+	id S1030807AbWI0Uoa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Sep 2006 16:44:30 -0400
+Received: (qmail 39122 invoked by uid 60001); 27 Sep 2006 20:44:29 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=ZbUxrRJCxZLiTIY9maounkDa6XxuXID6dU53EAGsWfDbqIDtHtRkPmeLV42Mrqn25v7eCCYxz8IwMcgN2YQVDrbOmR5hcTW3W/4H31hVWLFUmcLiQIpgKqJglIzj6eBqJrfQ4hhXvRD2pIZYgfvg92V4/uArzEBQG54EleOQL4I=  ;
+Received: from [207.172.80.85] by web51014.mail.yahoo.com via HTTP; Wed, 27 Sep 2006 13:44:28 PDT
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0609271109510.3952@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27929>
 
-Nicolas Pitre <nico@cam.org> writes:
+--- Linus Torvalds <torvalds@osdl.org> wrote:
 
-> Signed-off-by: Nicolas Pitre <nico@cam.org>
->
-> ---
->
-> Any reason why this couldn't be done?
->
-> When I reworked that code I preserved the existing logic wrt preferred 
-> base.  However I could not find a reason why it was that way.  Hence 
-> this patch.
->
-> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-> index 6db97b6..ee5f031 100644
-> --- a/builtin-pack-objects.c
-> +++ b/builtin-pack-objects.c
-> @@ -989,7 +988,7 @@ static void check_object(struct object_e
->  		unuse_packed_git(p);
->  		entry->in_pack_header_size = used;
->  
-> -		if (base_entry && !base_entry->preferred_base) {
-> +		if (base_entry) {
->  
->  			/* Depth value does not matter - find_deltas()
->  			 * will never consider reused delta as the
+> > Ok, the word "history" in the context of git primarily means the order of changes not the
+> when?
+> > Would it be a conceptual or technical issue for git to directly track the local time of
+> > merges/changesets?
+> 
+> True merges _get_ tracked - they are commits too (they just have multiple 
+> parents).
+> 
+> But it's only the time the merge was done that gets tracked, not the time 
+> the merge was then pushed out to somebody else.
 
-I was wondering about it myself the other day because I do not
-remember the reasoning why I thought we do not want to reuse the
-delta when the base object is not part of the resulting pack.
-We would recompute and create the delta ourselves anyway if we
-do not take this branch, so it is not about avoiding to delta
-it.
+What is the difference between a merge and a "merge then pushed out"? There are at least some
+situations where a repo would prefer to know its local time of a merge or pulled in merge and
+anyway a local repo probably should not in any way be dependent on nor _trust_ all remote repos
+timestamps...?
 
-I really do not see the reason now; I think it is safe and
-reasonable to remove the check.
+-Matt
+
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
