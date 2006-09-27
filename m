@@ -1,58 +1,64 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Andy Whitcroft <apw@shadowen.org>
 Subject: Re: git and time
-Date: Wed, 27 Sep 2006 11:10:33 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609271109510.3952@g5.osdl.org>
+Date: Wed, 27 Sep 2006 19:53:02 +0100
+Message-ID: <451AC88E.1060104@shadowen.org>
 References: <20060927180147.33024.qmail@web51009.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: Andreas Ericsson <ae@op5.se>, Junio C Hamano <junkio@cox.net>,
 	git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 27 20:11:18 2006
+X-From: git-owner@vger.kernel.org Wed Sep 27 20:54:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSdrr-0001eY-P8
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 20:10:48 +0200
+	id 1GSeXL-0003fr-VX
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 20:53:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030523AbWI0SKo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 14:10:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030512AbWI0SKo
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 14:10:44 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:54194 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1030523AbWI0SKn (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Sep 2006 14:10:43 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8RIAYnW017269
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 27 Sep 2006 11:10:35 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8RIAXIV002416;
-	Wed, 27 Sep 2006 11:10:33 -0700
+	id S965156AbWI0Sxh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 14:53:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965158AbWI0Sxg
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 14:53:36 -0400
+Received: from hellhawk.shadowen.org ([80.68.90.175]:5640 "EHLO
+	hellhawk.shadowen.org") by vger.kernel.org with ESMTP
+	id S965156AbWI0Sxf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Sep 2006 14:53:35 -0400
+Received: from localhost ([127.0.0.1])
+	by hellhawk.shadowen.org with esmtp (Exim 4.50)
+	id 1GSeWg-0000uY-SB; Wed, 27 Sep 2006 19:52:59 +0100
+User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
 To: Matthew L Foster <mfoster167@yahoo.com>
 In-Reply-To: <20060927180147.33024.qmail@web51009.mail.yahoo.com>
-X-Spam-Status: No, hits=-0.469 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.154 $
-X-Scanned-By: MIMEDefang 2.36
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27920>
 
-
-
-On Wed, 27 Sep 2006, Matthew L Foster wrote:
+Matthew L Foster wrote:
+>> Because git doesn't care about timestamps. It stores them as comments 
+>> (albeit auto-formatted comments) and relies on the dependency chain to 
+>> provide history.
 > 
 > Ok, the word "history" in the context of git primarily means the order of changes not the when?
 > Would it be a conceptual or technical issue for git to directly track the local time of
 > merges/changesets?
 
-True merges _get_ tracked - they are commits too (they just have multiple 
-parents).
+It is tracking the local times of each change as it is added to the
+dependancy chain.  This chain then moves about between repositories
+carrying its stamp with it.  When we merge a set of changes into a trunk
+such as Linus does that merge will be stamped by him saying when he
+merged it.  So there is plenty of time stuff in there.
 
-But it's only the time the merge was done that gets tracked, not the time 
-the merge was then pushed out to somebody else.
+Of course none of it tells you when the kernel you are running has it
+in.  The only way to know that is to know when the thing was released,
+under what version#, and what version you are running.
 
-		Linus
+Now when we make a signed tag, doen't that make a new object too and I
+assume that has a tagged date in it.  That time might really actually
+mean something and a fix's relation ship to those tags might also mean
+something.
+
+-apw
