@@ -1,96 +1,131 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/3] diff --stat: sometimes use non-linear scaling.
-Date: Tue, 26 Sep 2006 22:09:10 -0700
-Message-ID: <7vmz8lj3pl.fsf@assigned-by-dhcp.cox.net>
-References: <7vfyeejakq.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64N.0609262005150.520@attu4.cs.washington.edu>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: [PATCH] Ignore executable bit when adding files if filemode=0.
+Date: Wed, 27 Sep 2006 01:21:19 -0400
+Message-ID: <20060927052119.GA9614@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 27 07:09:23 2006
+X-From: git-owner@vger.kernel.org Wed Sep 27 07:21:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSRfX-0003Lx-4P
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 07:09:15 +0200
+	id 1GSRrN-00055z-DE
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 07:21:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965324AbWI0FJM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 01:09:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965325AbWI0FJM
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 01:09:12 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:7159 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S965324AbWI0FJL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 01:09:11 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060927050911.WQVS2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 27 Sep 2006 01:09:11 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id TH971V00a1kojtg0000000
-	Wed, 27 Sep 2006 01:09:08 -0400
-To: David Rientjes <rientjes@cs.washington.edu>
-In-Reply-To: <Pine.LNX.4.64N.0609262005150.520@attu4.cs.washington.edu> (David
-	Rientjes's message of "Tue, 26 Sep 2006 20:11:32 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965132AbWI0FV0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 01:21:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965172AbWI0FV0
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 01:21:26 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:27549 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S965132AbWI0FVZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Sep 2006 01:21:25 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GSRrG-0004I9-NO
+	for git@vger.kernel.org; Wed, 27 Sep 2006 01:21:23 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 9726920FB28; Wed, 27 Sep 2006 01:21:19 -0400 (EDT)
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27874>
 
-David Rientjes <rientjes@cs.washington.edu> writes:
+If the user has configured core.filemode=0 then we shouldn't set
+the execute bit in the index when adding a new file as the user
+has indicated that the local filesystem can't be trusted.
 
-> Again with the constant placement in a comparison expression.
+This means that when adding files that should be marked executable
+in a repository with core.filemode=0 the user must perform a
+'git update-index --chmod=+x' on the file before committing the
+addition.
 
-I won't comment on this one.  See list archives ;-).
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ builtin-update-index.c |    4 +++-
+ read-cache.c           |    4 +++-
+ t/t3700-add.sh         |   22 ++++++++++++++++++++++
+ 3 files changed, 28 insertions(+), 2 deletions(-)
 
->>  		if (max_change < width)
->>  			;
->> +		else if (non_linear_scale) {
->> +			total = scale_non_linear(total, width, max_change);
->> +			add = scale_linear(add, total, add + del);
->> +			del = total - add;
->> +		}
->>  		else {
->>  			total = scale_linear(total, width, max_change);
->>  			add = scale_linear(add, width, max_change);
->> 
->
-> if (...)
-> 	;
-> else if {
-> 	...
-> }
->
-> is _never_ necessary.
-
-What's happening here in this particular case is:
-
-	if the changes fits within the alloted width
-		; /* we do not have to do anything */
-	else if we are using non-linear scale {
-               	scale it like this
-	}
-	else {
-               	scale it like that
-	}
-
-so the code actually matches the flow of thought perfectly well.
-
-I first tried to write it without "if () ;/*empty*/ else" chain
-like this:
-
-	if given width is narrower than changes we have {
-        	if we are doing non-linear scale {
-                	scale it like this
-                }
-                else {
-                	scale it like that
-		}
-	}
-
-
-It made the indentation unnecessarily deep.
+diff --git a/builtin-update-index.c b/builtin-update-index.c
+index 0620e77..a3c0a45 100644
+--- a/builtin-update-index.c
++++ b/builtin-update-index.c
+@@ -112,11 +112,13 @@ static int add_file_to_cache(const char 
+ 	ce->ce_mode = create_ce_mode(st.st_mode);
+ 	if (!trust_executable_bit) {
+ 		/* If there is an existing entry, pick the mode bits
+-		 * from it.
++		 * from it, otherwise force to 644.
+ 		 */
+ 		int pos = cache_name_pos(path, namelen);
+ 		if (0 <= pos)
+ 			ce->ce_mode = active_cache[pos]->ce_mode;
++		else
++			ce->ce_mode = create_ce_mode(S_IFREG | 0644);
+ 	}
+ 
+ 	if (index_path(ce->sha1, path, &st, !info_only))
+diff --git a/read-cache.c b/read-cache.c
+index 20c9d49..97c3867 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -347,11 +347,13 @@ int add_file_to_index(const char *path, 
+ 	ce->ce_mode = create_ce_mode(st.st_mode);
+ 	if (!trust_executable_bit) {
+ 		/* If there is an existing entry, pick the mode bits
+-		 * from it.
++		 * from it, otherwise force to 644.
+ 		 */
+ 		int pos = cache_name_pos(path, namelen);
+ 		if (pos >= 0)
+ 			ce->ce_mode = active_cache[pos]->ce_mode;
++		else
++			ce->ce_mode = create_ce_mode(S_IFREG | 0644);
+ 	}
+ 
+ 	if (index_path(ce->sha1, path, &st, 1))
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index 6cd05c3..d36f22d 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -19,4 +19,26 @@ test_expect_success \
+     'Test that "git-add -- -q" works' \
+     'touch -- -q && git-add -- -q'
+ 
++test_expect_success \
++	'git-add: Test that executable bit is not used if core.filemode=0' \
++	'git repo-config core.filemode 0 &&
++	 echo foo >xfoo1 &&
++	 chmod 755 xfoo1 &&
++	 git-add xfoo1 &&
++	 case "`git-ls-files --stage xfoo1`" in
++	 100644" "*xfoo1) echo ok;;
++	 *) echo fail; git-ls-files --stage xfoo1; exit 1;;
++	 esac'
++
++test_expect_success \
++	'git-update-index --add: Test that executable bit is not used...' \
++	'git repo-config core.filemode 0 &&
++	 echo foo >xfoo2 &&
++	 chmod 755 xfoo2 &&
++	 git-add xfoo2 &&
++	 case "`git-ls-files --stage xfoo2`" in
++	 100644" "*xfoo2) echo ok;;
++	 *) echo fail; git-ls-files --stage xfoo2; exit 1;;
++	 esac'
++
+ test_done
+-- 
+1.4.2.1.g7a39b
