@@ -1,86 +1,68 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: git and time
-Date: Wed, 27 Sep 2006 11:11:02 -0400
-Message-ID: <20060927151102.GC20705@spearce.org>
-References: <20060926233321.GA17084@coredump.intra.peff.net> <20060927002745.15344.qmail@web51005.mail.yahoo.com> <20060927033459.GA27622@coredump.intra.peff.net> <20060926234309.b16aa44e.seanlkml@sympatico.ca> <20060927042850.GB9460@spearce.org> <7vfyedd3bw.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 3/3] diff --stat: sometimes use non-linear scaling.
+Date: Wed, 27 Sep 2006 08:12:49 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0609270810470.3952@g5.osdl.org>
+References: <7vfyeejakq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 27 17:12:04 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Jan Engelhardt <jengelh@linux01.gwdg.de>,
+	Adrian Bunk <bunk@stusta.de>
+X-From: git-owner@vger.kernel.org Wed Sep 27 17:16:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSb4i-0002Yy-Qw
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 17:11:54 +0200
+	id 1GSb8y-0003dZ-KR
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 17:16:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964899AbWI0PLJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 11:11:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964895AbWI0PLI
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 11:11:08 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:21733 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S964901AbWI0PLF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 11:11:05 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GSb3q-0003wt-Jl; Wed, 27 Sep 2006 11:10:58 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 251DC20FB28; Wed, 27 Sep 2006 11:11:02 -0400 (EDT)
+	id S964921AbWI0PQO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 11:16:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964926AbWI0PQO
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 11:16:14 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:6881 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964921AbWI0PQN (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Sep 2006 11:16:13 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8RFCpnW005297
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 27 Sep 2006 08:12:51 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8RFCnlv028880;
+	Wed, 27 Sep 2006 08:12:50 -0700
 To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vfyedd3bw.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <7vfyeejakq.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.968 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.154 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27908>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> One thing that makes "the common library code" less useful is
-> that lock_ref_sha1() and its cousin lock_any_ref_for_update() do
-> not let the caller to tell why a ref could not be locked ("did
-> it not exist?  did the old_sha1 not match?"  and in
-> lock_ref_sha1()'s case "did the ref have funny characters?").
 
-Yes.  But I thought that in all such cases we use error or die so
-the message is sent to STDERR before the process either terminates
-or the function returns NULL.  So although the caller doesn't know
-why the lock failed the end user does.
 
-Git hasn't exactly structured its error messages in the past.
-If we are talking about going down the path of having functions
-return why they failed to the caller so the caller can react to
-the failure as they see fit then we've got some work to do.  :)
+On Tue, 26 Sep 2006, Junio C Hamano wrote:
+>
+> When some files have big changes and others are touched only
+> slightly, diffstat graph did not show differences among smaller
+> changes that well.  This changes the graph scaling to non-linear
+> algorithm in such a case.
 
-> diff --git a/receive-pack.c b/receive-pack.c
-> @@ -318,9 +258,11 @@ int main(int argc, char **argv)
->  	if (!dir)
->  		usage(receive_pack_usage);
->  
-> -	if(!enter_repo(dir, 0))
-> +	if (!enter_repo(dir, 0))
->  		die("'%s': unable to chdir or not a git archive", dir);
->  
+Ok, this is just _strange_.
 
-You are missing:
-+	setup_ident();
+> while with this, it shows:
+> 
+>  .gitignore                       |    1
+>  Documentation/git-tar-tree.txt   |    3 +++++++++
 
-Without that reflog can't get the proper committer data from the
-host's gecos information.  This is probably what is desired for
-most pushes over SSH.
+No _way_ is it correct to show more than three characters if there were 
+three lines of changes.
 
-> +	git_config(git_default_config);
-> +
->  	write_head_info();
+I think "nonlinear" is fine, but this is something that is "superlinear" 
+in small changes, and then sublinear in bigger ones (and then apparently 
+totally wrong for one-line changes).
 
--- 
-Shawn.
+It should at least never be superlinear, I believe.
+
+		Linus
