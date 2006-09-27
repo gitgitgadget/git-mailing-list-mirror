@@ -1,68 +1,62 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: [PATCH] Corrected copy-and-paste thinko in ignore executable bit test case.
-Date: Wed, 27 Sep 2006 11:18:49 -0400
-Message-ID: <20060927151849.GF20705@spearce.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git and time
+Date: Wed, 27 Sep 2006 11:28:47 -0400
+Message-ID: <20060927152847.GA2807@coredump.intra.peff.net>
+References: <20060926233321.GA17084@coredump.intra.peff.net> <20060927002745.15344.qmail@web51005.mail.yahoo.com> <7vodt2nmft.fsf@assigned-by-dhcp.cox.net> <451A398C.3060800@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Sep 27 17:19:13 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 27 17:29:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSbBX-0004MF-OY
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 17:18:56 +0200
+	id 1GSbLB-00073D-9S
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 17:28:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964919AbWI0PSx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 11:18:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964926AbWI0PSx
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 11:18:53 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:38886 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S964919AbWI0PSw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 11:18:52 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GSbBN-0004qe-Fj
-	for git@vger.kernel.org; Wed, 27 Sep 2006 11:18:45 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 1773420FB28; Wed, 27 Sep 2006 11:18:49 -0400 (EDT)
-To: git@vger.kernel.org
+	id S964931AbWI0P2u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 11:28:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964932AbWI0P2u
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 11:28:50 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:60334 "HELO
+	peff.net") by vger.kernel.org with SMTP id S964931AbWI0P2u (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Sep 2006 11:28:50 -0400
+Received: (qmail 14695 invoked from network); 27 Sep 2006 11:28:47 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 27 Sep 2006 11:28:47 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Sep 2006 11:28:47 -0400
+To: Andreas Ericsson <ae@op5.se>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <451A398C.3060800@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27910>
 
-This test should be testing update-index --add, not git-add as these
-are two completely different implementations of what is essentially
-the same task.
+On Wed, Sep 27, 2006 at 10:42:52AM +0200, Andreas Ericsson wrote:
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- t/t3700-add.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> >>It's true I don't know much about git, what is the difference
+> >>between a changeset and a snapshot?  Are you saying timestamps
+> >
+> >I do not know what Jeff meant by snapshot vs changeset, so I
+> >would not comment on this part.
+>
+> Me neither, but I've seen this distinction before on the mailing-list.
+> 
+> To my mind, a changeset is the patch that brings some form of data from 
+> one state (snapshot) to another. In this respect, git is certainly both 
+> snapshot- and changeset-based.
 
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index d36f22d..c20e4c2 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -35,7 +35,7 @@ test_expect_success \
- 	'git repo-config core.filemode 0 &&
- 	 echo foo >xfoo2 &&
- 	 chmod 755 xfoo2 &&
--	 git-add xfoo2 &&
-+	 git-update-index --add xfoo2 &&
- 	 case "`git-ls-files --stage xfoo2`" in
- 	 100644" "*xfoo2) echo ok;;
- 	 *) echo fail; git-ls-files --stage xfoo2; exit 1;;
--- 
-1.4.2.1.g1e40
+I was talking specifically about the core data structure of git. The
+commit object doesn't say "I'm based on commit X, and the deltas are Y."
+It says "Here are the complete contents of the tree at this point, and
+the previous complete contents were X."
+
+Of course, git often shows changesets (patches, git-whatchanged, etc)
+because that's what's useful to users. But the context of the discussion
+was fetching commits to a repository. In that case it's important to
+note that you're just grabbing the new state (albeit optimizing the
+process by skipping things you have) and not "re-committing" changesets
+(which is what the OP seemed to think was happening).
+
+-Peff
