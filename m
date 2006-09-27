@@ -1,83 +1,96 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: git and time
-Date: Wed, 27 Sep 2006 01:04:37 -0400
-Message-ID: <BAYC1-PASMTP07B3618F64E47E873F2379AE1A0@CEZ.ICE>
-References: <20060926233321.GA17084@coredump.intra.peff.net>
-	<20060927002745.15344.qmail@web51005.mail.yahoo.com>
-	<20060927033459.GA27622@coredump.intra.peff.net>
-	<BAYC1-PASMTP0819E6B1CBE028BD171598AE1A0@CEZ.ICE>
-	<7v3badkj4k.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 3/3] diff --stat: sometimes use non-linear scaling.
+Date: Tue, 26 Sep 2006 22:09:10 -0700
+Message-ID: <7vmz8lj3pl.fsf@assigned-by-dhcp.cox.net>
+References: <7vfyeejakq.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64N.0609262005150.520@attu4.cs.washington.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Matthew L Foster <mfoster167@yahoo.com>,
-	Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 27 07:05:14 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 27 07:09:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSRba-0002n5-50
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 07:05:10 +0200
+	id 1GSRfX-0003Lx-4P
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 07:09:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965264AbWI0FEv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 01:04:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965295AbWI0FEv
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 01:04:51 -0400
-Received: from bayc1-pasmtp07.bayc1.hotmail.com ([65.54.191.167]:65491 "EHLO
-	BAYC1-PASMTP07.CEZ.ICE") by vger.kernel.org with ESMTP
-	id S965275AbWI0FEk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 01:04:40 -0400
-X-Originating-IP: [65.94.249.130]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.94.249.130]) by BAYC1-PASMTP07.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 26 Sep 2006 22:10:03 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GSRb4-0004Zd-4y; Wed, 27 Sep 2006 01:04:38 -0400
-To: Junio C Hamano <junkio@cox.net>
-Message-Id: <20060927010437.5fa57ed0.seanlkml@sympatico.ca>
-In-Reply-To: <7v3badkj4k.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.10.3; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 27 Sep 2006 05:10:04.0109 (UTC) FILETIME=[30F1BFD0:01C6E1F3]
+	id S965324AbWI0FJM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 01:09:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965325AbWI0FJM
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 01:09:12 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:7159 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S965324AbWI0FJL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Sep 2006 01:09:11 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060927050911.WQVS2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 27 Sep 2006 01:09:11 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id TH971V00a1kojtg0000000
+	Wed, 27 Sep 2006 01:09:08 -0400
+To: David Rientjes <rientjes@cs.washington.edu>
+In-Reply-To: <Pine.LNX.4.64N.0609262005150.520@attu4.cs.washington.edu> (David
+	Rientjes's message of "Tue, 26 Sep 2006 20:11:32 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27873>
 
-On Tue, 26 Sep 2006 21:50:51 -0700
-Junio C Hamano <junkio@cox.net> wrote:
+David Rientjes <rientjes@cs.washington.edu> writes:
 
-> For somebody who is tracking my "master" branch, it does not
-> matter when some critical fix appeared on my "next" branch.  The
-> user will be vulnerable until that fix makes its way to the
-> "master" branch.  The user _can_ switch to track my "next"
-> branch, but that is like arguing that the user can apply the
-> same patch to his local copy that tracks my "master".
-> 
-> I may try-pull from Paul to get updates from gitk, but usually I
-> do that with "git fetch", not "git pull".  So my repository may
-> contain commits and blobs for the latest and greatest gitk, but
-> until I merge it and push the result out nobody would benefit
-> from it through my repository.
-> 
-> See?  Having a commit somewhere in the repository does not make
-> any difference unless that commit is on some branches you care
-> about.
+> Again with the constant placement in a comparison expression.
 
-Well, yes.  And all of my examples have assumed the example of
-Linus' repository where there is only one branch.  So yes, in the
-case where there are more than one branch, you want to be able
-to ask the more specific question, when did this commit arrive
-into this repo-branch.
+I won't comment on this one.  See list archives ;-).
 
-But that is really the minutia of the issue.  First we have to
-agree that users _do_ want to know the date of commits beyond
-just those recorded inside the commit itself.
+>>  		if (max_change < width)
+>>  			;
+>> +		else if (non_linear_scale) {
+>> +			total = scale_non_linear(total, width, max_change);
+>> +			add = scale_linear(add, total, add + del);
+>> +			del = total - add;
+>> +		}
+>>  		else {
+>>  			total = scale_linear(total, width, max_change);
+>>  			add = scale_linear(add, width, max_change);
+>> 
+>
+> if (...)
+> 	;
+> else if {
+> 	...
+> }
+>
+> is _never_ necessary.
 
-If we do agree on that point, then the rest is just the details
-of how plausible it is to provide those answers.   Shawn has made
-it clear that the reflog doesn't really have all the information
-we need yet.  On top of which it would be expensive to compute
-etc.
+What's happening here in this particular case is:
 
-Sean
+	if the changes fits within the alloted width
+		; /* we do not have to do anything */
+	else if we are using non-linear scale {
+               	scale it like this
+	}
+	else {
+               	scale it like that
+	}
+
+so the code actually matches the flow of thought perfectly well.
+
+I first tried to write it without "if () ;/*empty*/ else" chain
+like this:
+
+	if given width is narrower than changes we have {
+        	if we are doing non-linear scale {
+                	scale it like this
+                }
+                else {
+                	scale it like that
+		}
+	}
+
+
+It made the indentation unnecessarily deep.
