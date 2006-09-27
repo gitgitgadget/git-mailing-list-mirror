@@ -1,64 +1,69 @@
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: git and time
-Date: Wed, 27 Sep 2006 19:53:02 +0100
-Message-ID: <451AC88E.1060104@shadowen.org>
-References: <20060927180147.33024.qmail@web51009.mail.yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] git-split: Split the history of a git repository by subdirectories and ranges
+Date: Wed, 27 Sep 2006 12:08:25 -0700
+Message-ID: <7vr6xxb00m.fsf@assigned-by-dhcp.cox.net>
+References: <451A30E4.50801@freedesktop.org>
+	<7vlko5d3bx.fsf@assigned-by-dhcp.cox.net>
+	<451A6788.5030808@shadowen.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 27 20:54:19 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Josh Triplett <josh@freedesktop.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 27 21:08:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSeXL-0003fr-VX
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 20:53:40 +0200
+	id 1GSeli-0007F2-8i
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 21:08:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965156AbWI0Sxh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 14:53:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965158AbWI0Sxg
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 14:53:36 -0400
-Received: from hellhawk.shadowen.org ([80.68.90.175]:5640 "EHLO
-	hellhawk.shadowen.org") by vger.kernel.org with ESMTP
-	id S965156AbWI0Sxf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 14:53:35 -0400
-Received: from localhost ([127.0.0.1])
-	by hellhawk.shadowen.org with esmtp (Exim 4.50)
-	id 1GSeWg-0000uY-SB; Wed, 27 Sep 2006 19:52:59 +0100
-User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
-To: Matthew L Foster <mfoster167@yahoo.com>
-In-Reply-To: <20060927180147.33024.qmail@web51009.mail.yahoo.com>
-X-Enigmail-Version: 0.94.0.0
+	id S1030648AbWI0TI1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 15:08:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030649AbWI0TI1
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 15:08:27 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:52401 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1030648AbWI0TI1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Sep 2006 15:08:27 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060927190826.LWAD22977.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 27 Sep 2006 15:08:26 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id TX8U1V00P1kojtg0000000
+	Wed, 27 Sep 2006 15:08:28 -0400
+To: Andy Whitcroft <apw@shadowen.org>
+In-Reply-To: <451A6788.5030808@shadowen.org> (Andy Whitcroft's message of
+	"Wed, 27 Sep 2006 12:59:04 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27921>
 
-Matthew L Foster wrote:
->> Because git doesn't care about timestamps. It stores them as comments 
->> (albeit auto-formatted comments) and relies on the dependency chain to 
->> provide history.
-> 
-> Ok, the word "history" in the context of git primarily means the order of changes not the when?
-> Would it be a conceptual or technical issue for git to directly track the local time of
-> merges/changesets?
+Andy Whitcroft <apw@shadowen.org> writes:
 
-It is tracking the local times of each change as it is added to the
-dependancy chain.  This chain then moves about between repositories
-carrying its stamp with it.  When we merge a set of changes into a trunk
-such as Linus does that merge will be stamped by him saying when he
-merged it.  So there is plenty of time stuff in there.
+>> You are handling grafts by hand because --pretty=raw is special
+>> in that it displays the real parents (although traversal does
+>> use grafts).  Maybe it would have helped if we had a --pretty
+>> format that is similar to raw but rewrites the parents?
+>
+> I have wondered recently why grafts are hidden in this way.  I feel they
+> are something I want to know is occuring in my history as this history
+> is being manipulated.
 
-Of course none of it tells you when the kernel you are running has it
-in.  The only way to know that is to know when the thing was released,
-under what version#, and what version you are running.
+Just to make sure we are on the same page, only "raw" format
+output is special and it is special only on output.  Ancestry
+traversal always honors what you have in grafts.
 
-Now when we make a signed tag, doen't that make a new object too and I
-assume that has a tagged date in it.  That time might really actually
-mean something and a fix's relation ship to those tags might also mean
-something.
+However, you can do:
 
--apw
+$ git rev-list --parents --pretty=raw
+
+which would give you "commit $this_commit $its $parents" lines
+and "parent $true_parent" lines at the same time.
+
+And they will be inconsistent when you have grafts or path
+limiter.  The former honor grafts and path limiter, and the
+latter show the true set of parents.
