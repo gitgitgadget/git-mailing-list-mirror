@@ -1,81 +1,52 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH 3/3] diff --stat: sometimes use non-linear scaling.
-Date: Wed, 27 Sep 2006 11:16:20 +0200
-Message-ID: <20060927091620.GB8056@admingilde.org>
-References: <7vfyeejakq.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] perl bindings fix compilation errors
+Date: Wed, 27 Sep 2006 11:42:04 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0609271141210.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20060925100319.GA1655@shadowen.org>
+ <Pine.LNX.4.63.0609251223590.25371@wbgn013.biozentrum.uni-wuerzburg.de>
+ <4517BEBC.4000002@shadowen.org> <7vfyeftehf.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0609261031430.25371@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vwt7qjal5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="/WwmFnJnmDyWGHa4"
-Cc: git@vger.kernel.org, Jan Engelhardt <jengelh@linux01.gwdg.de>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Adrian Bunk <bunk@stusta.de>
-X-From: git-owner@vger.kernel.org Wed Sep 27 11:16:39 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andy Whitcroft <apw@shadowen.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 27 11:42:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSVWj-0008UC-M9
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 11:16:26 +0200
+	id 1GSVvg-0004YY-Hv
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 11:42:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965464AbWI0JQW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 05:16:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965465AbWI0JQW
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 05:16:22 -0400
-Received: from agent.admingilde.org ([213.95.21.5]:52100 "EHLO
-	mail.admingilde.org") by vger.kernel.org with ESMTP id S965464AbWI0JQV
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 05:16:21 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1GSVWe-0003GV-4G; Wed, 27 Sep 2006 11:16:20 +0200
+	id S965481AbWI0JmJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 05:42:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965482AbWI0JmJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 05:42:09 -0400
+Received: from mail.gmx.net ([213.165.64.20]:29345 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S965481AbWI0JmG (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Sep 2006 05:42:06 -0400
+Received: (qmail invoked by alias); 27 Sep 2006 09:42:05 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp008) with SMTP; 27 Sep 2006 11:42:05 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vfyeejakq.fsf@assigned-by-dhcp.cox.net>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <7vwt7qjal5.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27894>
 
+Hi,
 
---/WwmFnJnmDyWGHa4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Tue, 26 Sep 2006, Junio C Hamano wrote:
 
-hoi :)
+> The worst part is that the version bisect suggests that does not
+> have Git.xs may be a version in the past -- which we obviously
+> cannot apply your patch to.
 
-On Tue, Sep 26, 2006 at 07:40:53PM -0700, Junio C Hamano wrote:
->  .gitignore                       |    1
->  Documentation/git-tar-tree.txt   |    3 +++++++++
->  Documentation/git-upload-tar.txt |   39 -----------------------------
->  Documentation/git.txt            |    4 -----------
->  Makefile                         |    1
->  builtin-tar-tree.c               |  130 +++++++++++++++-----------------=
-------
->  builtin-upload-tar.c             |   74 --------------------------------=
---
->  git.c                            |    1
->  8 files changed, 53 insertions(+), 200 deletions(-)
+Okay, just forget about my patch.
 
-hmm, the small changes (1 line) are still not shown :-(.
-I like the idea of non-linear display, but we have to fine-tune the
-algorithm a little bit more.
-
---=20
-Martin Waitz
-
---/WwmFnJnmDyWGHa4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFGkFkj/Eaxd/oD7IRAiXBAJ91Un0KzvOtK21LG+2PKeVGMGYLcACfcv/T
-X2NS1sb/SefeptgLO9cvrNE=
-=Byt3
------END PGP SIGNATURE-----
-
---/WwmFnJnmDyWGHa4--
+Ciao,
+Dscho
