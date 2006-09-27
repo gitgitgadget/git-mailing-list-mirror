@@ -1,70 +1,80 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: git and time
-Date: Wed, 27 Sep 2006 13:46:35 -0700
-Message-ID: <7v1wpx9gwk.fsf@assigned-by-dhcp.cox.net>
-References: <20060926233321.GA17084@coredump.intra.peff.net>
-	<20060927002745.15344.qmail@web51005.mail.yahoo.com>
-	<20060927033459.GA27622@coredump.intra.peff.net>
-	<20060926234309.b16aa44e.seanlkml@sympatico.ca>
-	<20060927042850.GB9460@spearce.org>
-	<7vfyedd3bw.fsf@assigned-by-dhcp.cox.net>
-	<20060927151102.GC20705@spearce.org>
+Date: Wed, 27 Sep 2006 13:51:39 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0609271347060.3952@g5.osdl.org>
+References: <20060927204428.39120.qmail@web51014.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 27 22:47:28 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andreas Ericsson <ae@op5.se>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 27 22:52:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSgIi-0005br-9O
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 22:46:40 +0200
+	id 1GSgNm-0006yR-E8
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 22:51:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030821AbWI0Uqh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 16:46:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030823AbWI0Uqh
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 16:46:37 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:16075 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1030821AbWI0Uqg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 16:46:36 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060927204636.OJGA12909.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 27 Sep 2006 16:46:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id TYmd1V00x1kojtg0000000
-	Wed, 27 Sep 2006 16:46:38 -0400
-To: Shawn Pearce <spearce@spearce.org>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030822AbWI0Uvv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 16:51:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030825AbWI0Uvv
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 16:51:51 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:46828 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030822AbWI0Uvv (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Sep 2006 16:51:51 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8RKpfnW026240
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 27 Sep 2006 13:51:42 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8RKpd7K016324;
+	Wed, 27 Sep 2006 13:51:40 -0700
+To: Matthew L Foster <mfoster167@yahoo.com>
+In-Reply-To: <20060927204428.39120.qmail@web51014.mail.yahoo.com>
+X-Spam-Status: No, hits=-0.469 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.154 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27931>
 
-Shawn Pearce <spearce@spearce.org> writes:
 
-> You are missing:
-> +	setup_ident();
->
-> Without that reflog can't get the proper committer data from the
-> host's gecos information.  This is probably what is desired for
-> most pushes over SSH.
 
-What's even more interesting is when there is .git/config file
-and you do not override it with environment variables; the log
-entry will be made under the name of the repository user.name in
-such a case.
+On Wed, 27 Sep 2006, Matthew L Foster wrote:
+> 
+> What is the difference between a merge and a "merge then pushed out"? There are at least some
+> situations where a repo would prefer to know its local time of a merge or pulled in merge and
+> anyway a local repo probably should not in any way be dependent on nor _trust_ all remote repos
+> timestamps...?
 
->> +	git_config(git_default_config);
->> +
->>  	write_head_info();
+Look into the ref-logging. It's exactly what you ask for.
 
-Often setup_ident() needs to go together with git_config(), and
-you need to remember that setup must come before config.  These
-rules are a bit cumbersome to follow and I often forget.
+The fact is, in a distributed system, you can _never_ make sense of 
+"time". Just live with it. That's basic "distributed programming 101", and 
+it's the one thing every such course should start with on the very first 
+day.
 
-I wonder if we can have a simpler start-up sequence perhaps to
-avoid future mistakes like this?
+So in short, you _cannot_ depend on time in a distributed environment. 
+Really. Stop even asking. Please.
+
+You can ask when some local reference was changed, and we support that 
+already, and I pointed you to how to enable it in a repository you care 
+about. But it's _always_ going to be just about your local repository, the 
+whole question doesn't make sense any other way.
+
+And no, it's _never_ going to tag individual merges or commits, since the 
+same merge or commit can show up at DIFFERENT times in different branches, 
+even within the same local repository.
+
+So as long as you continue to ask for "commit times", you cannot get what 
+you ask for. The _only_ commit time that makes sense is the time ON THE 
+MACHINE that the commit was made. That's the time that git already saves 
+in the commit itself. And if you don't trust that timeframe, then tough 
+luck.
+
+Git itself doesn't trust it, because git knows better. But it's there.
+
+		Linus
