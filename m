@@ -1,187 +1,292 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 3/3] diff --stat: sometimes use non-linear scaling.
-Date: Tue, 26 Sep 2006 19:40:53 -0700
-Message-ID: <7vfyeejakq.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH 1/3] diff --stat: allow custom diffstat output width.
+Date: Tue, 26 Sep 2006 19:40:43 -0700
+Message-ID: <7vr6xyjal0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jan Engelhardt <jengelh@linux01.gwdg.de>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Adrian Bunk <bunk@stusta.de>
-X-From: git-owner@vger.kernel.org Wed Sep 27 04:41:01 2006
+Cc: Adrian Bunk <bunk@stusta.de>, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Wed Sep 27 04:41:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSPM3-0002Y1-MK
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 04:41:00 +0200
+	id 1GSPLv-0002X1-EB
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 04:40:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932271AbWI0Ck4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Sep 2006 22:40:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932274AbWI0Ck4
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 22:40:56 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:48622 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932271AbWI0Ckz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Sep 2006 22:40:55 -0400
+	id S932262AbWI0Ckr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Sep 2006 22:40:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932271AbWI0Ckq
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 22:40:46 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:13773 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932262AbWI0Ckp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Sep 2006 22:40:45 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao03.cox.net
+          by fed1rmmtao01.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060927024054.QUDK2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 26 Sep 2006 22:40:54 -0400
+          id <20060927024045.JVDT6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 26 Sep 2006 22:40:45 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id TEgr1V0091kojtg0000000
-	Tue, 26 Sep 2006 22:40:52 -0400
+	id TEgi1V00G1kojtg0000000
+	Tue, 26 Sep 2006 22:40:42 -0400
 To: git@vger.kernel.org
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27855>
 
-When some files have big changes and others are touched only
-slightly, diffstat graph did not show differences among smaller
-changes that well.  This changes the graph scaling to non-linear
-algorithm in such a case.
+This adds two parameters to "diff --stat".
 
-Without this, "git show --stat fd88d9c" gives:
+ . --stat-width=72 tells that the page should fit on 72-column output.
 
- .gitignore                       |    1
- Documentation/git-tar-tree.txt   |    3 +
- Documentation/git-upload-tar.txt |   39 -----------
- Documentation/git.txt            |    4 -
- Makefile                         |    1
- builtin-tar-tree.c               |  130 +++++++++++++++-----------------------
- builtin-upload-tar.c             |   74 ----------------------
- git.c                            |    1
- 8 files changed, 53 insertions(+), 200 deletions(-)
+ . --stat-name-width=30 tells that the filename part is limited
+   to 30 columns.
 
-while with this, it shows:
-
- .gitignore                       |    1
- Documentation/git-tar-tree.txt   |    3 +++++++++
- Documentation/git-upload-tar.txt |   39 -----------------------------
- Documentation/git.txt            |    4 -----------
- Makefile                         |    1
- builtin-tar-tree.c               |  130 +++++++++++++++-----------------------
- builtin-upload-tar.c             |   74 ----------------------------------
- git.c                            |    1
- 8 files changed, 53 insertions(+), 200 deletions(-)
+Without these flags, they default to 80 and 50 as before.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
- * Jan Engelhardt wondered about doing non-linear scaling on the
-   kernel list and this is an experimental patch to do so.  I do
-   not seriously consider this for inclusion but it is more of a
-   "see if people like it" patch.
+ * Adrian Bunk on the kernel list wanted ot have "diffstat
+   -w72", so here it is.
 
- Makefile |    2 +-
- diff.c   |   29 +++++++++++++++++++++++++++--
- 2 files changed, 28 insertions(+), 3 deletions(-)
+ diff.c |  132 ++++++++++++++++++++++++++++++++++++++++++++++------------------
+ diff.h |    3 +
+ 2 files changed, 97 insertions(+), 38 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 28091d6..0fc59c4 100644
---- a/Makefile
-+++ b/Makefile
-@@ -304,7 +304,7 @@ BUILTIN_OBJS = \
- 	builtin-write-tree.o
- 
- GITLIBS = $(LIB_FILE) $(XDIFF_LIB)
--LIBS = $(GITLIBS) -lz
-+LIBS = $(GITLIBS) -lz -lm
- 
- #
- # Platform specific tweaks
 diff --git a/diff.c b/diff.c
-index 13aac2d..163ef48 100644
+index 443e248..6101365 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -4,6 +4,7 @@
- #include <sys/types.h>
- #include <sys/wait.h>
- #include <signal.h>
-+#include <math.h>
- #include "cache.h"
- #include "quote.h"
- #include "diff.h"
-@@ -555,6 +556,16 @@ static int scale_linear(int it, int widt
- 	return (it * width * 2 + max_change) / (max_change * 2);
+@@ -545,21 +545,63 @@ static void diffstat_consume(void *priv,
+ 		x->deleted++;
  }
  
-+static int scale_non_linear(int it, int width, int max_change)
+-static const char pluses[] = "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++";
+-static const char minuses[]= "----------------------------------------------------------------------";
+ const char mime_boundary_leader[] = "------------";
+ 
+-static void show_stats(struct diffstat_t* data)
++static int scale_linear(int it, int width, int max_change)
 +{
 +	/*
-+	 * round(width * log(it)/log(max_change))
++	 * round(width * it / max_change);
 +	 */
-+	if (!it || !max_change)
-+		return 0;
-+	return (int)(0.5 + width * log(it) / log(max_change));
++	return (it * width * 2 + max_change) / (max_change * 2);
 +}
 +
- static void show_name(const char *prefix, const char *name, int len,
- 		      const char *reset, const char *set)
- {
-@@ -574,10 +585,11 @@ static void show_graph(char ch, int cnt,
- static void show_stats(struct diffstat_t* data, struct diff_options *options)
++static void show_name(const char *prefix, const char *name, int len)
++{
++	printf(" %s%-*s |", prefix, len, name);
++}
++
++static void show_graph(char ch, int cnt)
++{
++	if (!cnt)
++		return;
++	while (cnt--)
++		putchar(ch);
++}
++
++static void show_stats(struct diffstat_t* data, struct diff_options *options)
  {
  	int i, len, add, del, total, adds = 0, dels = 0;
--	int max_change = 0, max_len = 0;
-+	int max_change = 0, max_len = 0, min_change = 0;
+-	int max, max_change = 0, max_len = 0;
++	int max_change = 0, max_len = 0;
  	int total_files = data->nr;
- 	int width, name_width;
- 	const char *reset, *set, *add_c, *del_c;
-+	int non_linear_scale = 0;
++	int width, name_width;
  
  	if (data->nr == 0)
  		return;
-@@ -595,12 +607,12 @@ static void show_stats(struct diffstat_t
- 			width = name_width + 15;
- 	}
  
--	/* Find the longest filename and max number of changes */
- 	reset = diff_get_color(options->color_diff, DIFF_RESET);
- 	set = diff_get_color(options->color_diff, DIFF_PLAIN);
- 	add_c = diff_get_color(options->color_diff, DIFF_FILE_NEW);
- 	del_c = diff_get_color(options->color_diff, DIFF_FILE_OLD);
- 
-+	/* Find the longest filename and max/min number of changes */
++	width = options->stat_width ? options->stat_width : 80;
++	name_width = options->stat_name_width ? options->stat_name_width : 50;
++
++	/* Sanity: give at least 5 columns to the graph,
++	 * but leave at least 10 columns for the name.
++	 */
++	if (width < name_width + 15) {
++		if (25 < name_width)
++			name_width = width - 15;
++		else
++			width = name_width + 15;
++	}
++
++	/* Find the longest filename and max number of changes */
  	for (i = 0; i < data->nr; i++) {
  		struct diffstat_file *file = data->files[i];
- 		int change = file->added + file->deleted;
-@@ -620,6 +632,8 @@ static void show_stats(struct diffstat_t
++		int change = file->added + file->deleted;
++
++		if (0 < (len = quote_c_style(file->name, NULL, NULL, 0))) {
++			char *qname = xmalloc(len + 1);
++			quote_c_style(file->name, qname, NULL, 0);
++			free(file->name);
++			file->name = qname;
++		}
+ 
+ 		len = strlen(file->name);
+ 		if (max_len < len)
+@@ -567,54 +609,53 @@ static void show_stats(struct diffstat_t
+ 
+ 		if (file->is_binary || file->is_unmerged)
  			continue;
- 		if (max_change < change)
- 			max_change = change;
-+		if (0 < change && (!min_change || change < min_change))
-+			min_change = change;
+-		if (max_change < file->added + file->deleted)
+-			max_change = file->added + file->deleted;
++		if (max_change < change)
++			max_change = change;
  	}
  
- 	/* Compute the width of the graph part;
-@@ -635,6 +649,12 @@ static void show_stats(struct diffstat_t
- 	else
- 		width = max_change;
- 
-+	/* See if the minimum change is shown with the normal scale
-+	 * and if not switch to non-linear scale
++	/* Compute the width of the graph part;
++	 * 10 is for one blank at the beginning of the line plus
++	 * " | count " between the name and the graph.
++	 *
++	 * From here on, name_width is the width of the name area,
++	 * and width is the width of the graph area.
 +	 */
-+	if (min_change && !scale_linear(min_change, width, max_change))
-+		non_linear_scale = 1;
++	name_width = (name_width < max_len) ? name_width : max_len;
++	if (width < (name_width + 10) + max_change)
++		width = width - (name_width + 10);
++	else
++		width = max_change;
 +
  	for (i = 0; i < data->nr; i++) {
  		const char *prefix = "";
  		char *name = data->files[i]->name;
-@@ -684,6 +704,11 @@ static void show_stats(struct diffstat_t
+ 		int added = data->files[i]->added;
+ 		int deleted = data->files[i]->deleted;
+-
+-		if (0 < (len = quote_c_style(name, NULL, NULL, 0))) {
+-			char *qname = xmalloc(len + 1);
+-			quote_c_style(name, qname, NULL, 0);
+-			free(name);
+-			data->files[i]->name = name = qname;
+-		}
++		int name_len;
  
- 		if (max_change < width)
- 			;
-+		else if (non_linear_scale) {
-+			total = scale_non_linear(total, width, max_change);
-+			add = scale_linear(add, total, add + del);
-+			del = total - add;
-+		}
- 		else {
- 			total = scale_linear(total, width, max_change);
- 			add = scale_linear(add, width, max_change);
+ 		/*
+ 		 * "scale" the filename
+ 		 */
+-		len = strlen(name);
+-		max = max_len;
+-		if (max > 50)
+-			max = 50;
+-		if (len > max) {
++		len = name_width;
++		name_len = strlen(name);
++		if (name_width < name_len) {
+ 			char *slash;
+ 			prefix = "...";
+-			max -= 3;
+-			name += len - max;
++			len -= 3;
++			name += name_len - len;
+ 			slash = strchr(name, '/');
+ 			if (slash)
+ 				name = slash;
+ 		}
+-		len = max;
+-
+-		/*
+-		 * scale the add/delete
+-		 */
+-		max = max_change;
+-		if (max + len > 70)
+-			max = 70 - len;
+ 
+ 		if (data->files[i]->is_binary) {
+-			printf(" %s%-*s |  Bin\n", prefix, len, name);
++			show_name(prefix, name, len);
++			printf("  Bin\n");
+ 			goto free_diffstat_file;
+ 		}
+ 		else if (data->files[i]->is_unmerged) {
+-			printf(" %s%-*s |  Unmerged\n", prefix, len, name);
++			show_name(prefix, name, len);
++			printf("  Unmerged\n");
+ 			goto free_diffstat_file;
+ 		}
+ 		else if (!data->files[i]->is_renamed &&
+@@ -623,27 +664,34 @@ static void show_stats(struct diffstat_t
+ 			goto free_diffstat_file;
+ 		}
+ 
++		/*
++		 * scale the add/delete
++		 */
+ 		add = added;
+ 		del = deleted;
+ 		total = add + del;
+ 		adds += add;
+ 		dels += del;
+ 
+-		if (max_change > 0) {
+-			total = (total * max + max_change / 2) / max_change;
+-			add = (add * max + max_change / 2) / max_change;
++		if (max_change < width)
++			;
++		else {
++			total = scale_linear(total, width, max_change);
++			add = scale_linear(add, width, max_change);
+ 			del = total - add;
+ 		}
+-		printf(" %s%-*s |%5d %.*s%.*s\n", prefix,
+-				len, name, added + deleted,
+-				add, pluses, del, minuses);
++		show_name(prefix, name, len);
++		printf("%5d ", added + deleted);
++		show_graph('+', add);
++		show_graph('-', del);
++		putchar('\n');
+ 	free_diffstat_file:
+ 		free(data->files[i]->name);
+ 		free(data->files[i]);
+ 	}
+ 	free(data->files);
+ 	printf(" %d files changed, %d insertions(+), %d deletions(-)\n",
+-			total_files, adds, dels);
++	       total_files, adds, dels);
+ }
+ 
+ struct checkdiff_t {
+@@ -1681,6 +1729,14 @@ int diff_opt_parse(struct diff_options *
+ 	}
+ 	else if (!strcmp(arg, "--stat"))
+ 		options->output_format |= DIFF_FORMAT_DIFFSTAT;
++	else if (!strncmp(arg, "--stat-width=", 13)) {
++		options->stat_width = strtoul(arg + 13, NULL, 10);
++		options->output_format |= DIFF_FORMAT_DIFFSTAT;
++	}
++	else if (!strncmp(arg, "--stat-name-width=", 18)) {
++		options->stat_name_width = strtoul(arg + 18, NULL, 10);
++		options->output_format |= DIFF_FORMAT_DIFFSTAT;
++	}
+ 	else if (!strcmp(arg, "--check"))
+ 		options->output_format |= DIFF_FORMAT_CHECKDIFF;
+ 	else if (!strcmp(arg, "--summary"))
+@@ -2438,7 +2494,7 @@ void diff_flush(struct diff_options *opt
+ 			if (check_pair_status(p))
+ 				diff_flush_stat(p, options, &diffstat);
+ 		}
+-		show_stats(&diffstat);
++		show_stats(&diffstat, options);
+ 		separator++;
+ 	}
+ 
+diff --git a/diff.h b/diff.h
+index b60a02e..e06d0f4 100644
+--- a/diff.h
++++ b/diff.h
+@@ -69,6 +69,9 @@ struct diff_options {
+ 	const char *stat_sep;
+ 	long xdl_opts;
+ 
++	int stat_width;
++	int stat_name_width;
++
+ 	int nr_paths;
+ 	const char **paths;
+ 	int *pathlens;
 -- 
 1.4.2.1.gf80a
