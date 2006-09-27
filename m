@@ -1,131 +1,106 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: [PATCH] Ignore executable bit when adding files if filemode=0.
-Date: Wed, 27 Sep 2006 01:21:19 -0400
-Message-ID: <20060927052119.GA9614@spearce.org>
+From: David Rientjes <rientjes@cs.washington.edu>
+Subject: Re: [PATCH 3/3] diff --stat: sometimes use non-linear scaling.
+Date: Tue, 26 Sep 2006 22:32:47 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64N.0609262216390.12560@attu2.cs.washington.edu>
+References: <7vfyeejakq.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64N.0609262005150.520@attu4.cs.washington.edu>
+ <7vmz8lj3pl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Sep 27 07:21:36 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 27 07:32:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSRrN-00055z-DE
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 07:21:29 +0200
+	id 1GSS2Q-0006s6-E9
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 07:32:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965132AbWI0FV0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 01:21:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965172AbWI0FV0
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 01:21:26 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:27549 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S965132AbWI0FVZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 01:21:25 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GSRrG-0004I9-NO
-	for git@vger.kernel.org; Wed, 27 Sep 2006 01:21:23 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9726920FB28; Wed, 27 Sep 2006 01:21:19 -0400 (EDT)
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S965346AbWI0Fcv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 01:32:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965347AbWI0Fcv
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 01:32:51 -0400
+Received: from mx2.cs.washington.edu ([128.208.2.105]:34742 "EHLO
+	mx2.cs.washington.edu") by vger.kernel.org with ESMTP
+	id S965346AbWI0Fcu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Sep 2006 01:32:50 -0400
+Received: from attu2.cs.washington.edu (attu2.cs.washington.edu [128.208.1.138])
+	by mx2.cs.washington.edu (8.13.7/8.13.7/1.6) with ESMTP id k8R5WmUj014497
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 26 Sep 2006 22:32:48 -0700
+	(envelope-from rientjes@cs.washington.edu)
+Received: from localhost (rientjes@localhost)
+	by attu2.cs.washington.edu (8.13.7/8.13.7/Submit/1.2) with ESMTP id k8R5WlWv013441;
+	Tue, 26 Sep 2006 22:32:47 -0700
+	(envelope-from rientjes@cs.washington.edu)
+X-Authentication-Warning: attu2.cs.washington.edu: rientjes owned process doing -bs
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vmz8lj3pl.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27875>
 
-If the user has configured core.filemode=0 then we shouldn't set
-the execute bit in the index when adding a new file as the user
-has indicated that the local filesystem can't be trusted.
+On Tue, 26 Sep 2006, Junio C Hamano wrote:
 
-This means that when adding files that should be marked executable
-in a repository with core.filemode=0 the user must perform a
-'git update-index --chmod=+x' on the file before committing the
-addition.
+> David Rientjes <rientjes@cs.washington.edu> writes:
+> 
+> > Again with the constant placement in a comparison expression.
+> 
+> I won't comment on this one.  See list archives ;-).
+> 
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- builtin-update-index.c |    4 +++-
- read-cache.c           |    4 +++-
- t/t3700-add.sh         |   22 ++++++++++++++++++++++
- 3 files changed, 28 insertions(+), 2 deletions(-)
+I'm very familiar with the list archives and your support of writing 
+relationals like 0 < x.  It's a matter of taste.  And since the large 
+majority of programmers in any language write x > 0 instead, I think it's 
+preferrable to write code that is in the style and taste of the majority.
 
-diff --git a/builtin-update-index.c b/builtin-update-index.c
-index 0620e77..a3c0a45 100644
---- a/builtin-update-index.c
-+++ b/builtin-update-index.c
-@@ -112,11 +112,13 @@ static int add_file_to_cache(const char 
- 	ce->ce_mode = create_ce_mode(st.st_mode);
- 	if (!trust_executable_bit) {
- 		/* If there is an existing entry, pick the mode bits
--		 * from it.
-+		 * from it, otherwise force to 644.
- 		 */
- 		int pos = cache_name_pos(path, namelen);
- 		if (0 <= pos)
- 			ce->ce_mode = active_cache[pos]->ce_mode;
-+		else
-+			ce->ce_mode = create_ce_mode(S_IFREG | 0644);
- 	}
- 
- 	if (index_path(ce->sha1, path, &st, !info_only))
-diff --git a/read-cache.c b/read-cache.c
-index 20c9d49..97c3867 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -347,11 +347,13 @@ int add_file_to_index(const char *path, 
- 	ce->ce_mode = create_ce_mode(st.st_mode);
- 	if (!trust_executable_bit) {
- 		/* If there is an existing entry, pick the mode bits
--		 * from it.
-+		 * from it, otherwise force to 644.
- 		 */
- 		int pos = cache_name_pos(path, namelen);
- 		if (pos >= 0)
- 			ce->ce_mode = active_cache[pos]->ce_mode;
-+		else
-+			ce->ce_mode = create_ce_mode(S_IFREG | 0644);
- 	}
- 
- 	if (index_path(ce->sha1, path, &st, 1))
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index 6cd05c3..d36f22d 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -19,4 +19,26 @@ test_expect_success \
-     'Test that "git-add -- -q" works' \
-     'touch -- -q && git-add -- -q'
- 
-+test_expect_success \
-+	'git-add: Test that executable bit is not used if core.filemode=0' \
-+	'git repo-config core.filemode 0 &&
-+	 echo foo >xfoo1 &&
-+	 chmod 755 xfoo1 &&
-+	 git-add xfoo1 &&
-+	 case "`git-ls-files --stage xfoo1`" in
-+	 100644" "*xfoo1) echo ok;;
-+	 *) echo fail; git-ls-files --stage xfoo1; exit 1;;
-+	 esac'
-+
-+test_expect_success \
-+	'git-update-index --add: Test that executable bit is not used...' \
-+	'git repo-config core.filemode 0 &&
-+	 echo foo >xfoo2 &&
-+	 chmod 755 xfoo2 &&
-+	 git-add xfoo2 &&
-+	 case "`git-ls-files --stage xfoo2`" in
-+	 100644" "*xfoo2) echo ok;;
-+	 *) echo fail; git-ls-files --stage xfoo2; exit 1;;
-+	 esac'
-+
- test_done
--- 
-1.4.2.1.g7a39b
+Large software projects require a conformity in the style in which the 
+code is written.  Granted the git developer community is small, there is 
+still a need for this confomity so that developers don't have to put up 
+with the subtleties in the style of which individuals decide to code.
+
+When I read "x > 0", my mind parses that very easily.  When I read "0 < 
+x", it takes me a few cycles longer.  I think the goal of any software 
+project is to not only emit efficient and quality code, but also code that 
+can be read and deciphered with ease unless it's impossible otherwise.
+
+> What's happening here in this particular case is:
+> 
+> 	if the changes fits within the alloted width
+> 		; /* we do not have to do anything */
+> 	else if we are using non-linear scale {
+>                	scale it like this
+> 	}
+> 	else {
+>                	scale it like that
+> 	}
+> 
+> so the code actually matches the flow of thought perfectly well.
+> 
+> I first tried to write it without "if () ;/*empty*/ else" chain
+> like this:
+> 
+> 	if given width is narrower than changes we have {
+>         	if we are doing non-linear scale {
+>                 	scale it like this
+>                 }
+>                 else {
+>                 	scale it like that
+> 		}
+> 	}
+> 
+> 
+> It made the indentation unnecessarily deep.
+> 
+
+To change the code itself because of a hard 80-column limit or because 
+you're tired of hitting the tab key is poor style.  The idents are there 
+for a purpose: it tells the reader that the code is inside a block.  So 
+when this conditional becomes a screen wide, I can understand it on the 
+second screen and remember that I'm inside a conditional and not rely on 
+the previous 'else' to jog my memory.  C is not a whitespace-dependent 
+language like Python, but since when did idents (which are there _solely_ 
+for the purpose of helping the reader) become deprecated?
+
+		David
