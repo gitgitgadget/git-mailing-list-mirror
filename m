@@ -1,61 +1,60 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/3] update a few Porcelain-ish for ref lock safety.
-Date: Wed, 27 Sep 2006 00:25:45 -0700
-Message-ID: <7vbqp1g492.fsf@assigned-by-dhcp.cox.net>
-References: <20060918065429.6f4de06e.chriscool@tuxfamily.org>
-	<200609231322.30214.chriscool@tuxfamily.org>
-	<7veju2nthl.fsf@assigned-by-dhcp.cox.net>
-	<200609240645.54467.chriscool@tuxfamily.org>
-	<7vmz8o1em0.fsf_-_@assigned-by-dhcp.cox.net>
-	<7vu02uqzaj.fsf@assigned-by-dhcp.cox.net>
-	<45196CAB.6030903@shadowen.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/3] diff --stat: sometimes use non-linear scaling.
+Date: Wed, 27 Sep 2006 09:36:51 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0609270929590.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vfyeejakq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 27 09:26:23 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Jan Engelhardt <jengelh@linux01.gwdg.de>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Adrian Bunk <bunk@stusta.de>
+X-From: git-owner@vger.kernel.org Wed Sep 27 09:37:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSTni-0007id-Nq
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 09:25:51 +0200
+	id 1GSTyX-0001Xu-2N
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 09:37:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965423AbWI0HZs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 03:25:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965422AbWI0HZs
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 03:25:48 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:63630 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S965421AbWI0HZr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 03:25:47 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060927072546.YYUN6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 27 Sep 2006 03:25:46 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id TKRi1V00H1kojtg0000000
-	Wed, 27 Sep 2006 03:25:43 -0400
-To: Andy Whitcroft <apw@shadowen.org>
-In-Reply-To: <45196CAB.6030903@shadowen.org> (Andy Whitcroft's message of
-	"Tue, 26 Sep 2006 19:08:43 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965428AbWI0Hgz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 03:36:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965429AbWI0Hgz
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 03:36:55 -0400
+Received: from mail.gmx.de ([213.165.64.20]:32202 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S965428AbWI0Hgx (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Sep 2006 03:36:53 -0400
+Received: (qmail invoked by alias); 27 Sep 2006 07:36:52 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp034) with SMTP; 27 Sep 2006 09:36:52 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vfyeejakq.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27886>
 
-Andy Whitcroft <apw@shadowen.org> writes:
+Hi,
 
->> +prev=0000000000000000000000000000000000000000
->
-> It seems a little odd to need to use such a large 'none' thing.  Will
-> linus' updates start returning this when there is no tag?  If so then it
-> makes sense.  Else perhaps it would be nice to have a short cut for it.
->  Such as 'none'.
+On Tue, 26 Sep 2006, Junio C Hamano wrote:
 
-True.  It probably is better to accept something shorter, like
-an empty string, or token "none".  But this is a plumbing
-command, and I was not too concerned about having to say 40 "0"
-in the Porcelain scripts.
+> When some files have big changes and others are touched only
+> slightly, diffstat graph did not show differences among smaller
+> changes that well.  This changes the graph scaling to non-linear
+> algorithm in such a case.
+
+I want to say something about the purpose of the patch, not some totally 
+unimportant superficialities.
+
+In your example, a three line change has more than three plusses, and I 
+find that wrong.
+
+But I would actually find another change very useful: still linear, but 
+such that if lines were added, at least one plus should be shown, and 
+likewise with minus. (Often I ask myself, was this file removed, or just 
+dramatically reduced, when I only see minusses).
+
+Ciao,
+Dscho
