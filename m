@@ -1,65 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Notes on Using Git with Subprojects
-Date: Wed, 27 Sep 2006 15:13:38 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0609271509240.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <45196628.9010107@gmail.com> <Pine.LNX.4.64.0609261629160.9789@iabervon.org>
- <20060926213003.GA8177@spearce.org> <4519AACD.7020508@gmail.com>
- <20060927080652.GA8056@admingilde.org>
- <Pine.LNX.4.63.0609271152270.14200@wbgn013.biozentrum.uni-wuerzburg.de>
- <20060927113813.GC8056@admingilde.org>
- <Pine.LNX.4.63.0609271358100.14200@wbgn013.biozentrum.uni-wuerzburg.de>
- <20060927124604.GD8056@admingilde.org>
+From: Matthew L Foster <mfoster167@yahoo.com>
+Subject: Re: git and time
+Date: Wed, 27 Sep 2006 07:09:18 -0700 (PDT)
+Message-ID: <20060927140918.65775.qmail@web51004.mail.yahoo.com>
+References: <7vodt2nmft.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: A Large Angry SCM <gitzilla@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 27 15:14:11 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 27 16:10:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSZEU-0006SH-DK
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 15:13:50 +0200
+	id 1GSa6F-0003GZ-Gt
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 16:09:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751152AbWI0NNm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 09:13:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751156AbWI0NNm
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 09:13:42 -0400
-Received: from mail.gmx.de ([213.165.64.20]:36224 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751152AbWI0NNl (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Sep 2006 09:13:41 -0400
-Received: (qmail invoked by alias); 27 Sep 2006 13:13:39 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp032) with SMTP; 27 Sep 2006 15:13:39 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Martin Waitz <tali@admingilde.org>
-In-Reply-To: <20060927124604.GD8056@admingilde.org>
-X-Y-GMX-Trusted: 0
+	id S932259AbWI0OJU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 10:09:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932260AbWI0OJU
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 10:09:20 -0400
+Received: from web51004.mail.yahoo.com ([206.190.38.135]:13470 "HELO
+	web51004.mail.yahoo.com") by vger.kernel.org with SMTP
+	id S932259AbWI0OJU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Sep 2006 10:09:20 -0400
+Received: (qmail 65777 invoked by uid 60001); 27 Sep 2006 14:09:18 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=IN6hiQ4IcM//RnBnsdJf8Kwo7/S2ezPWWd9pVYGqD9hipQKVBGYmDfHRr8DCUaGqC7zYUQeDS8jAqEGYdUNCOEZIJsBUNr7EB7YT5vOvJ5cZZ7sVDWGwv9Y5wG1CaJxAa+n/h9kOTWvm++GV7JH5075cyd4w9VXr4TLXpOP/2hw=  ;
+Received: from [207.172.80.85] by web51004.mail.yahoo.com via HTTP; Wed, 27 Sep 2006 07:09:18 PDT
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vodt2nmft.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27905>
 
-Hi,
 
-On Wed, 27 Sep 2006, Martin Waitz wrote:
+> Each commit object in git records two timestamps.  When the
+> author made that change, and when the change was made into a
+> commit object in _some_ repository. 
 
-> On Wed, Sep 27, 2006 at 02:01:11PM +0200, Johannes Schindelin wrote:
->
-> > AFAICT this is not the idea of subprojects-in-git. If you have to track 
-> > the subprojects in the root project manually anyway, you don't need _any_ 
-> > additional tool (you _can_ track files in a subdirectory containing a .git 
-> > subdirectory).
-> 
-> But then you loose the fine grained commits of your subprojects. You 
-> only store the tree of the subproject when committing to the parent, not 
-> the entire history.
+Perhaps git should record three(+) timestamps, adding when the change was committed into this
+repository? Last weekend there was a committ in Linus' kernel tree with a timestamp ~2 days into
+the future, which could be a problem in a scenario involving when an important bug fix was
+merged/published in Linus' kernel tree, situations like that should be impossible. How can git be
+said to keep an accurate record of history if time is uncertain?
 
-The more I get told about subprojects (I don't have a use for them 
-myself), the more I think you are right: subprojects should not be 
-integrated deeply into git.
+-Matt
 
-Ciao,
-Dscho
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
