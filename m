@@ -1,70 +1,81 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git and time
-Date: Wed, 27 Sep 2006 10:42:52 +0200
-Message-ID: <451A398C.3060800@op5.se>
-References: <20060926233321.GA17084@coredump.intra.peff.net>	<20060927002745.15344.qmail@web51005.mail.yahoo.com> <7vodt2nmft.fsf@assigned-by-dhcp.cox.net>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [PATCH 3/3] diff --stat: sometimes use non-linear scaling.
+Date: Wed, 27 Sep 2006 11:16:20 +0200
+Message-ID: <20060927091620.GB8056@admingilde.org>
+References: <7vfyeejakq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Matthew L Foster <mfoster167@yahoo.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 27 10:43:55 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="/WwmFnJnmDyWGHa4"
+Cc: git@vger.kernel.org, Jan Engelhardt <jengelh@linux01.gwdg.de>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Adrian Bunk <bunk@stusta.de>
+X-From: git-owner@vger.kernel.org Wed Sep 27 11:16:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSV0e-0007lm-Qw
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 10:43:18 +0200
+	id 1GSVWj-0008UC-M9
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 11:16:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750865AbWI0Im7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 04:42:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750858AbWI0Im7
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 04:42:59 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:15533 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750864AbWI0Im6
+	id S965464AbWI0JQW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 05:16:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965465AbWI0JQW
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 05:16:22 -0400
+Received: from agent.admingilde.org ([213.95.21.5]:52100 "EHLO
+	mail.admingilde.org") by vger.kernel.org with ESMTP id S965464AbWI0JQV
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 04:42:58 -0400
-Received: by smtp-gw1.op5.se (Postfix, from userid 588)
-	id B07846BD7E; Wed, 27 Sep 2006 10:42:56 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
-	linux-server1.op5.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.4 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.1.4
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 44FEE6BD7C; Wed, 27 Sep 2006 10:42:53 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+	Wed, 27 Sep 2006 05:16:21 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1GSVWe-0003GV-4G; Wed, 27 Sep 2006 11:16:20 +0200
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vodt2nmft.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vfyeejakq.fsf@assigned-by-dhcp.cox.net>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27893>
 
-Junio C Hamano wrote:
-> Matthew L Foster <mfoster167@yahoo.com> writes:
-> 
->>> PS Nit: Git doesn't work with changesets, it works with snapshots,
->>> building a directed graph of snapshots. Maybe that is the source of your
->>> confusion
->> It's true I don't know much about git, what is the difference
->> between a changeset and a snapshot?  Are you saying timestamps
->> should be tracked separately or tracked by an scm system built
->> on top of git? Does/should git care about the when of a
->> snapshot?
-> 
-> I do not know what Jeff meant by snapshot vs changeset, so I
-> would not comment on this part.
-> 
 
-Me neither, but I've seen this distinction before on the mailing-list.
+--/WwmFnJnmDyWGHa4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-To my mind, a changeset is the patch that brings some form of data from 
-one state (snapshot) to another. In this respect, git is certainly both 
-snapshot- and changeset-based.
+hoi :)
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+On Tue, Sep 26, 2006 at 07:40:53PM -0700, Junio C Hamano wrote:
+>  .gitignore                       |    1
+>  Documentation/git-tar-tree.txt   |    3 +++++++++
+>  Documentation/git-upload-tar.txt |   39 -----------------------------
+>  Documentation/git.txt            |    4 -----------
+>  Makefile                         |    1
+>  builtin-tar-tree.c               |  130 +++++++++++++++-----------------=
+------
+>  builtin-upload-tar.c             |   74 --------------------------------=
+--
+>  git.c                            |    1
+>  8 files changed, 53 insertions(+), 200 deletions(-)
+
+hmm, the small changes (1 line) are still not shown :-(.
+I like the idea of non-linear display, but we have to fine-tune the
+algorithm a little bit more.
+
+--=20
+Martin Waitz
+
+--/WwmFnJnmDyWGHa4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFGkFkj/Eaxd/oD7IRAiXBAJ91Un0KzvOtK21LG+2PKeVGMGYLcACfcv/T
+X2NS1sb/SefeptgLO9cvrNE=
+=Byt3
+-----END PGP SIGNATURE-----
+
+--/WwmFnJnmDyWGHa4--
