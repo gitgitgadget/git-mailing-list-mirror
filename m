@@ -1,75 +1,86 @@
-From: Andreas Ericsson <ae@op5.se>
+From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: git and time
-Date: Wed, 27 Sep 2006 16:29:45 +0200
-Message-ID: <451A8AD9.2010107@op5.se>
-References: <20060927140918.65775.qmail@web51004.mail.yahoo.com>
+Date: Wed, 27 Sep 2006 11:11:02 -0400
+Message-ID: <20060927151102.GC20705@spearce.org>
+References: <20060926233321.GA17084@coredump.intra.peff.net> <20060927002745.15344.qmail@web51005.mail.yahoo.com> <20060927033459.GA27622@coredump.intra.peff.net> <20060926234309.b16aa44e.seanlkml@sympatico.ca> <20060927042850.GB9460@spearce.org> <7vfyedd3bw.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 27 16:30:17 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 27 17:12:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSaQ5-0008TO-R2
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 16:29:54 +0200
+	id 1GSb4i-0002Yy-Qw
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 17:11:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932326AbWI0O3s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 10:29:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932328AbWI0O3s
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 10:29:48 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:11452 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932326AbWI0O3s
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 10:29:48 -0400
-Received: by smtp-gw1.op5.se (Postfix, from userid 588)
-	id DC8BF6BD4F; Wed, 27 Sep 2006 16:29:46 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
-	linux-server1.op5.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.1.4
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 9815E6BCDC; Wed, 27 Sep 2006 16:29:45 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-To: Matthew L Foster <mfoster167@yahoo.com>
-In-Reply-To: <20060927140918.65775.qmail@web51004.mail.yahoo.com>
+	id S964899AbWI0PLJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 11:11:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964895AbWI0PLI
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 11:11:08 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:21733 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S964901AbWI0PLF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Sep 2006 11:11:05 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GSb3q-0003wt-Jl; Wed, 27 Sep 2006 11:10:58 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 251DC20FB28; Wed, 27 Sep 2006 11:11:02 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vfyedd3bw.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27907>
 
-Matthew L Foster wrote:
-> How can git be
-> said to keep an accurate record of history if time is uncertain?
-> 
+Junio C Hamano <junkio@cox.net> wrote:
+> One thing that makes "the common library code" less useful is
+> that lock_ref_sha1() and its cousin lock_any_ref_for_update() do
+> not let the caller to tell why a ref could not be locked ("did
+> it not exist?  did the old_sha1 not match?"  and in
+> lock_ref_sha1()'s case "did the ref have funny characters?").
 
-Because git doesn't care about timestamps. It stores them as comments 
-(albeit auto-formatted comments) and relies on the dependency chain to 
-provide history.
+Yes.  But I thought that in all such cases we use error or die so
+the message is sent to STDERR before the process either terminates
+or the function returns NULL.  So although the caller doesn't know
+why the lock failed the end user does.
 
-In the same way that contributors are expected to write clear and 
-concise commit-messages, they are also expected to keep their system 
-clocks somewhat in sync. Sometimes one or the other fails, and this is 
-as inevitable as it can be annoying (although commit-messages along the 
-line of "fixed some bugs causing some random crashes" for a commit that 
-touches 2384 lines are indefinitely worse than a bad timestamp).
+Git hasn't exactly structured its error messages in the past.
+If we are talking about going down the path of having functions
+return why they failed to the caller so the caller can react to
+the failure as they see fit then we've got some work to do.  :)
 
-What's beautiful about git is that it's designed to present a correct 
-history even if random-contributor-X's system clock is out of sync with 
-the rest of the world, as it inevitably will be at one point or another. 
-It handles content, and the order in which each piece of content was 
-added/removed/mutilated/transformed into something else, and it does a 
-good job at that.
+> diff --git a/receive-pack.c b/receive-pack.c
+> @@ -318,9 +258,11 @@ int main(int argc, char **argv)
+>  	if (!dir)
+>  		usage(receive_pack_usage);
+>  
+> -	if(!enter_repo(dir, 0))
+> +	if (!enter_repo(dir, 0))
+>  		die("'%s': unable to chdir or not a git archive", dir);
+>  
 
-All that aside though, would you rather have that fix pronto with a bad 
-timestamp, or three days later when the contributor had time to set up 
-ntp properly?
+You are missing:
++	setup_ident();
+
+Without that reflog can't get the proper committer data from the
+host's gecos information.  This is probably what is desired for
+most pushes over SSH.
+
+> +	git_config(git_default_config);
+> +
+>  	write_head_info();
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Shawn.
