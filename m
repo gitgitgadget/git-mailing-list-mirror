@@ -1,137 +1,77 @@
-From: David Rientjes <rientjes@cs.washington.edu>
-Subject: Re: [PATCH 1/3] diff --stat: allow custom diffstat output width.
-Date: Tue, 26 Sep 2006 20:11:25 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64N.0609262001460.520@attu4.cs.washington.edu>
-References: <7vr6xyjal0.fsf@assigned-by-dhcp.cox.net>
+From: Dave Jones <davej@redhat.com>
+Subject: Re: apply-mbox claiming corrupt patch.
+Date: Tue, 26 Sep 2006 23:14:03 -0400
+Message-ID: <20060927031403.GA31144@redhat.com>
+References: <20060927024628.GA29182@redhat.com> <200609262301.12235.len.brown@intel.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Adrian Bunk <bunk@stusta.de>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed Sep 27 05:14:56 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 27 05:15:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSPsq-0001C7-Ij
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 05:14:52 +0200
+	id 1GSPsv-0001DT-TQ
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 05:14:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932333AbWI0DOu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Sep 2006 23:14:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932338AbWI0DOu
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 23:14:50 -0400
-Received: from mx1.cs.washington.edu ([128.208.5.52]:64389 "EHLO
-	mx1.cs.washington.edu") by vger.kernel.org with ESMTP
-	id S932333AbWI0DOt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Sep 2006 23:14:49 -0400
-Received: from attu4.cs.washington.edu (attu4.cs.washington.edu [128.208.1.140])
-	by mx1.cs.washington.edu (8.13.7/8.13.7/1.6) with ESMTP id k8R3BPvH019774
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 26 Sep 2006 20:11:25 -0700
-	(envelope-from rientjes@cs.washington.edu)
-Received: from localhost (rientjes@localhost)
-	by attu4.cs.washington.edu (8.13.7/8.13.7/Submit/1.2) with ESMTP id k8R3BPVA001392;
-	Tue, 26 Sep 2006 20:11:25 -0700
-	(envelope-from rientjes@cs.washington.edu)
-X-Authentication-Warning: attu4.cs.washington.edu: rientjes owned process doing -bs
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vr6xyjal0.fsf@assigned-by-dhcp.cox.net>
+	id S932344AbWI0DOx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Sep 2006 23:14:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932343AbWI0DOw
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 23:14:52 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:14735 "EHLO mx1.redhat.com")
+	by vger.kernel.org with ESMTP id S932338AbWI0DOv (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Sep 2006 23:14:51 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id k8R3E4f4023153;
+	Tue, 26 Sep 2006 23:14:04 -0400
+Received: from pressure.kernelslacker.org (vpn-248-4.boston.redhat.com [10.13.248.4])
+	by int-mx1.corp.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id k8R3E3G8003998;
+	Tue, 26 Sep 2006 23:14:03 -0400
+Received: from pressure.kernelslacker.org (localhost.localdomain [127.0.0.1])
+	by pressure.kernelslacker.org (8.13.8/8.13.8) with ESMTP id k8R3E3Du031371;
+	Tue, 26 Sep 2006 23:14:03 -0400
+Received: (from davej@localhost)
+	by pressure.kernelslacker.org (8.13.8/8.13.8/Submit) id k8R3E3r6031370;
+	Tue, 26 Sep 2006 23:14:03 -0400
+X-Authentication-Warning: pressure.kernelslacker.org: davej set sender to davej@redhat.com using -f
+To: Len Brown <lenb@kernel.org>
+Content-Disposition: inline
+In-Reply-To: <200609262301.12235.len.brown@intel.com>
+User-Agent: Mutt/1.4.2.2i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27863>
 
-On Tue, 26 Sep 2006, Junio C Hamano wrote:
+On Tue, Sep 26, 2006 at 11:01:12PM -0400, Len Brown wrote:
+ > I ran into a similar problem recently -- though looking
+ > at the patch below I can't prove it is the exact same problem.
+ > 
+ > Patch appears to put a space, + or - on each line.
+ > Somebody edited their patch with kate, and that automatically
+ > "cleaned up" the lines with just a space on them -- leaving
+ > them completely blank.
+ > 
+ > patch ate the result, but git-am (and git-apply) did not.
+ > fixed it by refreshing with quilt.
 
-> +static void show_graph(char ch, int cnt)
-> +{
-> +	if (!cnt)
-> +		return;
-> +	while (cnt--)
-> +		putchar(ch);
-> +}
-> +
+Through some more trial and error, it turned out that chopping
+off the footer of the email (the last two lines here..)
 
-'if (cnt <= 0)' or 'while (cnt-- > 0)' is a better API./
+ > > @@ -716,7 +739,7 @@ static int __init longhaul_cpu_init(stru
+ > >  	return 0;
+ > >  
+ > >  err_acpi:
+ > > -	printk(KERN_ERR PFX "No ACPI support for CPU frequency changes.\n");
+ > > +	printk(KERN_ERR PFX "No ACPI support. No VT8601 or VT8623 northbridge. Aborting.\n");
+ > >  	return -ENODEV;
+ > >  }
+ > > 
+ > > 
+ > > ----------------------------------------------------------------------
+ > > Jestes kierowca? To poczytaj! >>> http://link.interia.pl/f199e
 
-> +static void show_stats(struct diffstat_t* data, struct diff_options *options)
->  {
->  	int i, len, add, del, total, adds = 0, dels = 0;
-> -	int max, max_change = 0, max_len = 0;
-> +	int max_change = 0, max_len = 0;
->  	int total_files = data->nr;
-> +	int width, name_width;
->  
->  	if (data->nr == 0)
->  		return;
->  
-> +	width = options->stat_width ? options->stat_width : 80;
-> +	name_width = options->stat_name_width ? options->stat_name_width : 50;
-> +
-> +	/* Sanity: give at least 5 columns to the graph,
-> +	 * but leave at least 10 columns for the name.
-> +	 */
-> +	if (width < name_width + 15) {
-> +		if (25 < name_width)
-> +			name_width = width - 15;
-> +		else
-> +			width = name_width + 15;
-> +	}
-> +
+Made it all work.
+Very strange.
 
-Constants go on the right side of comparison expressions.
-
-> +	/* Find the longest filename and max number of changes */
->  	for (i = 0; i < data->nr; i++) {
->  		struct diffstat_file *file = data->files[i];
-> +		int change = file->added + file->deleted;
-> +
-> +		if (0 < (len = quote_c_style(file->name, NULL, NULL, 0))) {
-> +			char *qname = xmalloc(len + 1);
-> +			quote_c_style(file->name, qname, NULL, 0);
-> +			free(file->name);
-> +			file->name = qname;
-> +		}
-
-Same.
-
-> @@ -623,27 +664,34 @@ static void show_stats(struct diffstat_t
->  			goto free_diffstat_file;
->  		}
->  
-> +		/*
-> +		 * scale the add/delete
-> +		 */
->  		add = added;
->  		del = deleted;
->  		total = add + del;
->  		adds += add;
->  		dels += del;
->  
-> -		if (max_change > 0) {
-> -			total = (total * max + max_change / 2) / max_change;
-> -			add = (add * max + max_change / 2) / max_change;
-> +		if (max_change < width)
-> +			;
-> +		else {
-> +			total = scale_linear(total, width, max_change);
-> +			add = scale_linear(add, width, max_change);
->  			del = total - add;
->  		}
-
-if (max_change >= width)
-
-> diff --git a/diff.h b/diff.h
-> index b60a02e..e06d0f4 100644
-> --- a/diff.h
-> +++ b/diff.h
-> @@ -69,6 +69,9 @@ struct diff_options {
->  	const char *stat_sep;
->  	long xdl_opts;
->  
-> +	int stat_width;
-> +	int stat_name_width;
-> +
-
-Can you use unsigned char here instead?
-
-		David
+	Dave
