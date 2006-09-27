@@ -1,87 +1,70 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: [PATCH 3/3] diff --stat: sometimes use non-linear scaling.
-Date: Wed, 27 Sep 2006 04:41:12 -0400
-Message-ID: <BAYC1-PASMTP059765F6CE0979DC2F8D5AAE1A0@CEZ.ICE>
-References: <7vfyeejakq.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64N.0609262005150.520@attu4.cs.washington.edu>
-	<7vmz8lj3pl.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64N.0609262216390.12560@attu2.cs.washington.edu>
-	<7vejtxhlv6.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64N.0609262320260.9088@attu4.cs.washington.edu>
-	<7vfyedg56m.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64N.0609270006020.9602@attu4.cs.washington.edu>
-	<Pine.LNX.4.63.0609270948140.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-	<BAYC1-PASMTP024D1DA4730F9DF93F857FAE1A0@CEZ.ICE>
-	<Pine.LNX.4.63.0609271030180.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git and time
+Date: Wed, 27 Sep 2006 10:42:52 +0200
+Message-ID: <451A398C.3060800@op5.se>
+References: <20060926233321.GA17084@coredump.intra.peff.net>	<20060927002745.15344.qmail@web51005.mail.yahoo.com> <7vodt2nmft.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: David Rientjes <rientjes@cs.washington.edu>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 27 10:41:27 2006
+Cc: Matthew L Foster <mfoster167@yahoo.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 27 10:43:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSUym-0007CX-5B
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 10:41:22 +0200
+	id 1GSV0e-0007lm-Qw
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 10:43:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964845AbWI0IlP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 04:41:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964861AbWI0IlP
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 04:41:15 -0400
-Received: from bayc1-pasmtp05.bayc1.hotmail.com ([65.54.191.165]:5661 "EHLO
-	BAYC1-PASMTP05.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S964845AbWI0IlO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 04:41:14 -0400
-X-Originating-IP: [65.94.249.130]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.94.249.130]) by BAYC1-PASMTP05.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Wed, 27 Sep 2006 01:41:13 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GSUye-0005C2-Qr; Wed, 27 Sep 2006 04:41:12 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Message-Id: <20060927044112.cc170405.seanlkml@sympatico.ca>
-In-Reply-To: <Pine.LNX.4.63.0609271030180.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.10.3; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 27 Sep 2006 08:41:14.0293 (UTC) FILETIME=[B0F66650:01C6E210]
+	id S1750865AbWI0Im7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 04:42:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750858AbWI0Im7
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 04:42:59 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:15533 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1750864AbWI0Im6
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Sep 2006 04:42:58 -0400
+Received: by smtp-gw1.op5.se (Postfix, from userid 588)
+	id B07846BD7E; Wed, 27 Sep 2006 10:42:56 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
+	linux-server1.op5.se
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.4 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.1.4
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 44FEE6BD7C; Wed, 27 Sep 2006 10:42:53 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vodt2nmft.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27892>
 
-On Wed, 27 Sep 2006 10:35:16 +0200 (CEST)
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-
-> In this case, though, "English" is utterly, totally irrelevant. The 
-> question is a mathematical one, and thus, the solution is a mathematical 
-> one.
-
-Well, no..  At least for me, I "think" in english, not mathematics.  And
-thus I have to understand each condition in my native language.  And i'm
-being honest with you when I tell you that my parser hiccups every time
-I see such a construct.
-
-> So, in essence, if you do not understand a conditional with a constant on 
-> the left side, just because it happens to honour the mathematical view of 
-> "left is small, right is large", you do not stand a chance of 
-> understanding the formula, right?
-
-It's not a matter of being able to understand, it's being able to digest
-at a glance, almost without a thought as opposed to consciously having
-to rearrange the arguments into something that "feels" right.
-
-> Oh, come on! You cannot possibly spend even _seconds_ on this particular 
-> construct!
+Junio C Hamano wrote:
+> Matthew L Foster <mfoster167@yahoo.com> writes:
 > 
-> 'nough said.
+>>> PS Nit: Git doesn't work with changesets, it works with snapshots,
+>>> building a directed graph of snapshots. Maybe that is the source of your
+>>> confusion
+>> It's true I don't know much about git, what is the difference
+>> between a changeset and a snapshot?  Are you saying timestamps
+>> should be tracked separately or tracked by an scm system built
+>> on top of git? Does/should git care about the when of a
+>> snapshot?
+> 
+> I do not know what Jeff meant by snapshot vs changeset, so I
+> would not comment on this part.
+> 
 
-I'm telling you that it is disconcerting and annoying to have to rejig such
-a construct.  Whereas when expressed in the opposite format it makes reading
-simple and natural.  Making the code easier and more pleasurable to read.
+Me neither, but I've seen this distinction before on the mailing-list.
 
-And if you find it so easy to read either way, then why not bend for those
-of us who have trouble reading it your way instead of just telling us to get
-stuffed?
+To my mind, a changeset is the patch that brings some form of data from 
+one state (snapshot) to another. In this respect, git is certainly both 
+snapshot- and changeset-based.
 
-Sean
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
