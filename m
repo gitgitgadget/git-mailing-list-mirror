@@ -1,56 +1,75 @@
-From: Matthew L Foster <mfoster167@yahoo.com>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: git and time
-Date: Wed, 27 Sep 2006 07:09:18 -0700 (PDT)
-Message-ID: <20060927140918.65775.qmail@web51004.mail.yahoo.com>
-References: <7vodt2nmft.fsf@assigned-by-dhcp.cox.net>
+Date: Wed, 27 Sep 2006 16:29:45 +0200
+Message-ID: <451A8AD9.2010107@op5.se>
+References: <20060927140918.65775.qmail@web51004.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 27 16:10:03 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 27 16:30:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSa6F-0003GZ-Gt
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 16:09:23 +0200
+	id 1GSaQ5-0008TO-R2
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 16:29:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932259AbWI0OJU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 10:09:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932260AbWI0OJU
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 10:09:20 -0400
-Received: from web51004.mail.yahoo.com ([206.190.38.135]:13470 "HELO
-	web51004.mail.yahoo.com") by vger.kernel.org with SMTP
-	id S932259AbWI0OJU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 10:09:20 -0400
-Received: (qmail 65777 invoked by uid 60001); 27 Sep 2006 14:09:18 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=IN6hiQ4IcM//RnBnsdJf8Kwo7/S2ezPWWd9pVYGqD9hipQKVBGYmDfHRr8DCUaGqC7zYUQeDS8jAqEGYdUNCOEZIJsBUNr7EB7YT5vOvJ5cZZ7sVDWGwv9Y5wG1CaJxAa+n/h9kOTWvm++GV7JH5075cyd4w9VXr4TLXpOP/2hw=  ;
-Received: from [207.172.80.85] by web51004.mail.yahoo.com via HTTP; Wed, 27 Sep 2006 07:09:18 PDT
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vodt2nmft.fsf@assigned-by-dhcp.cox.net>
+	id S932326AbWI0O3s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 10:29:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932328AbWI0O3s
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 10:29:48 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:11452 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932326AbWI0O3s
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Sep 2006 10:29:48 -0400
+Received: by smtp-gw1.op5.se (Postfix, from userid 588)
+	id DC8BF6BD4F; Wed, 27 Sep 2006 16:29:46 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
+	linux-server1.op5.se
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.1.4
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 9815E6BCDC; Wed, 27 Sep 2006 16:29:45 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+To: Matthew L Foster <mfoster167@yahoo.com>
+In-Reply-To: <20060927140918.65775.qmail@web51004.mail.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27906>
 
+Matthew L Foster wrote:
+> How can git be
+> said to keep an accurate record of history if time is uncertain?
+> 
 
-> Each commit object in git records two timestamps.  When the
-> author made that change, and when the change was made into a
-> commit object in _some_ repository. 
+Because git doesn't care about timestamps. It stores them as comments 
+(albeit auto-formatted comments) and relies on the dependency chain to 
+provide history.
 
-Perhaps git should record three(+) timestamps, adding when the change was committed into this
-repository? Last weekend there was a committ in Linus' kernel tree with a timestamp ~2 days into
-the future, which could be a problem in a scenario involving when an important bug fix was
-merged/published in Linus' kernel tree, situations like that should be impossible. How can git be
-said to keep an accurate record of history if time is uncertain?
+In the same way that contributors are expected to write clear and 
+concise commit-messages, they are also expected to keep their system 
+clocks somewhat in sync. Sometimes one or the other fails, and this is 
+as inevitable as it can be annoying (although commit-messages along the 
+line of "fixed some bugs causing some random crashes" for a commit that 
+touches 2384 lines are indefinitely worse than a bad timestamp).
 
--Matt
+What's beautiful about git is that it's designed to present a correct 
+history even if random-contributor-X's system clock is out of sync with 
+the rest of the world, as it inevitably will be at one point or another. 
+It handles content, and the order in which each piece of content was 
+added/removed/mutilated/transformed into something else, and it does a 
+good job at that.
 
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+All that aside though, would you rather have that fix pronto with a bad 
+timestamp, or three days later when the contributor had time to set up 
+ntp properly?
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
