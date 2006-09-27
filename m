@@ -1,72 +1,58 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] gitweb: "raw" links to blobs at HEAD
-Date: Tue, 26 Sep 2006 11:53:26 -0700 (PDT)
-Message-ID: <20060926185326.10590.qmail@web31810.mail.mud.yahoo.com>
-References: <7v8xk7rup3.fsf@assigned-by-dhcp.cox.net>
-Reply-To: ltuikov@yahoo.com
+From: "Sharon Mccracken" <praiseworthyjo@alle.net>
+Subject: Regarding MSN
+Date: Wed, 27 Sep 2006 03:14:31 -0300
+Message-ID: <LDR3D4$E6LAK8595MOMCYZCPG4573WT3AJPUVA8@alle.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 26 20:53:59 2006
+Content-Type: text/plain
+X-From: git-owner@vger.kernel.org Tue Sep 26 21:15:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSI3n-00046r-R2
-	for gcvg-git@gmane.org; Tue, 26 Sep 2006 20:53:40 +0200
+	id 1GSIOR-0000YL-Gs
+	for gcvg-git@gmane.org; Tue, 26 Sep 2006 21:15:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932168AbWIZSx2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Sep 2006 14:53:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932172AbWIZSx2
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 14:53:28 -0400
-Received: from web31810.mail.mud.yahoo.com ([68.142.207.73]:4958 "HELO
-	web31810.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S932168AbWIZSx1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Sep 2006 14:53:27 -0400
-Received: (qmail 10592 invoked by uid 60001); 26 Sep 2006 18:53:26 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=pqC2mXYjGEtVuKR2MBnXn35vbqfhP1BUiwHaPfEDvjlYLopxc+VNebdm167RJToUk+lSqbRbSlftEGKhEKQsEC8Rd2qXBcVPp0XtcmaCiRngaZLYiEAghDQIytAHv8OlPDBeD6zxGa4a5LCy7IUFUBWclEqwTMCY9lyL+XfnlC0=  ;
-Received: from [64.215.88.90] by web31810.mail.mud.yahoo.com via HTTP; Tue, 26 Sep 2006 11:53:26 PDT
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v8xk7rup3.fsf@assigned-by-dhcp.cox.net>
+	id S932479AbWIZTOm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Sep 2006 15:14:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932481AbWIZTOl
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Sep 2006 15:14:41 -0400
+Received: from sym.gdsz.cncnet.net ([210.22.15.66]:20487 "HELO 2458BC")
+	by vger.kernel.org with SMTP id S932479AbWIZTOl (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Sep 2006 15:14:41 -0400
+Received: from yqysmtp4.alle.net (unknown [10.253.44.66]) by gkxirelay0.alle.net (Postfix) with ESMTP id O3M009K35HK; Wed, 27 Sep 2006 03:14:31 -0300 (EDT) 
+X-Terra-Karma: 0% 
+X-Terra-Hash: 2g4f19j2b07e58ehtom9t2j0o3kd234z
+Received: from alle.net (rgkwebmail8.terra.com [66.231.02.23]) (authenticated user gulpta@alle.net) by ccqsmtp7.alle.net (Postfix) with ESMTP id Q17K9G81BD3; Wed, 27 Sep 2006 03:14:31 -0300 (EDT) 
+To: git@vger.kernel.org, ddissettqldf@vger.kernel.org
+X-Sensitivity: 3 
+X-XaM3-API-Version: 4.15 (B109)
+X-SenderIP: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27810>
+X-Spam-Report: 8.4 points;
+ * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
+ *      [score: 0.0000]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?210.22.15.66>]
+ *  4.0 RCVD_IN_XBL RBL: Received via a relay in Spamhaus XBL
+ *      [210.22.15.66 listed in sbl-xbl.spamhaus.org]
+ *  4.0 RCVD_IN_SBL RBL: Received via a relay in Spamhaus SBL
+ *      [210.22.15.66 listed in sbl-xbl.spamhaus.org]
+ *  0.0 RCVD_IN_SORBS_WEB RBL: SORBS: sender is a abuseable web server
+ *      [66.231.02.23 listed in dnsbl.sorbs.net]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27811>
 
---- Junio C Hamano <junkio@cox.net> wrote:
-> This does not feel right.  Go to summary view, pick the tree
-> link of a non-head commit from the shortlog list, and the raw
-> links on the resulting page all say hb=HEAD.
+Fill out the form to recieve the money we have prepared for you.
+YOUR NAME 3.5% Int. $300,000.00 to $1 million.
 
-I see your point.
+You can cash out or home eq. to buy anything
+you may need or want with our company only.
+ 
+-boat
+-car
+-yacht
+-remodel your house
+-pay off other loans
 
-> Doesn't this make clicking the entry itself (blob view) and
-> clicking on the raw link (blob-plain view) inconsistent?
-
-It this exactly this consistency which the patch used to de-couple
-it and use the "raw" to point to HEAD.
-
-> The former goes to the blob from that revision while the latter
-> always goes to the HEAD.
-
-Yes, I completely understand the conundrum.
-
-Ideally, hb would equal HEAD from the _context_, but
-  1) hb and h != HEAD for any "raw" link,
-  2) one can set hb=HEAD in the context only when the "blob page"
-     can be loaded, which is impossible for binary blobs.
-
-So the fix would be that, unless the user had selected a hb/h
-explicitly, set "raw" to HEAD (i.e. by default), but leave the entry
-with hb/h in SHA.  This way, one can take a reference to HEAD or
-SHA of the head depending on what is needed.  And if they had
-selected a hb/h explicitly then both the entry and the "raw"
-would point to the SHA.
-
-Such a patch can go on top of those two.
-
-    Luben
+http://geocities.yahoo.com.br/candice48_p927/
