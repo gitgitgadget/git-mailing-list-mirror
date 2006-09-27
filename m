@@ -1,60 +1,73 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH 3/3] diff --stat: sometimes use non-linear scaling.
-Date: Wed, 27 Sep 2006 09:36:51 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0609270929590.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Wed, 27 Sep 2006 09:50:11 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0609270948140.14200@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <7vfyeejakq.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64N.0609262005150.520@attu4.cs.washington.edu>
+ <7vmz8lj3pl.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64N.0609262216390.12560@attu2.cs.washington.edu>
+ <7vejtxhlv6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64N.0609262320260.9088@attu4.cs.washington.edu>
+ <7vfyedg56m.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64N.0609270006020.9602@attu4.cs.washington.edu>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Jan Engelhardt <jengelh@linux01.gwdg.de>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Adrian Bunk <bunk@stusta.de>
-X-From: git-owner@vger.kernel.org Wed Sep 27 09:37:18 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 27 09:50:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSTyX-0001Xu-2N
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 09:37:01 +0200
+	id 1GSUBP-0004R9-0O
+	for gcvg-git@gmane.org; Wed, 27 Sep 2006 09:50:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965428AbWI0Hgz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 03:36:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965429AbWI0Hgz
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 03:36:55 -0400
-Received: from mail.gmx.de ([213.165.64.20]:32202 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S965428AbWI0Hgx (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Sep 2006 03:36:53 -0400
-Received: (qmail invoked by alias); 27 Sep 2006 07:36:52 -0000
+	id S965442AbWI0HuQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 03:50:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965444AbWI0HuP
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 03:50:15 -0400
+Received: from mail.gmx.de ([213.165.64.20]:28104 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S965442AbWI0HuN (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Sep 2006 03:50:13 -0400
+Received: (qmail invoked by alias); 27 Sep 2006 07:50:11 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp034) with SMTP; 27 Sep 2006 09:36:52 +0200
+  by mail.gmx.net (mp010) with SMTP; 27 Sep 2006 09:50:11 +0200
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vfyeejakq.fsf@assigned-by-dhcp.cox.net>
+To: David Rientjes <rientjes@cs.washington.edu>
+In-Reply-To: <Pine.LNX.4.64N.0609270006020.9602@attu4.cs.washington.edu>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27887>
 
 Hi,
 
-On Tue, 26 Sep 2006, Junio C Hamano wrote:
+On Wed, 27 Sep 2006, David Rientjes wrote:
 
-> When some files have big changes and others are touched only
-> slightly, diffstat graph did not show differences among smaller
-> changes that well.  This changes the graph scaling to non-linear
-> algorithm in such a case.
+> On Wed, 27 Sep 2006, Junio C Hamano wrote:
+> 
+> > David Rientjes <rientjes@cs.washington.edu> writes:
+> > 
+> > > Your argument of saying to yourself "if line_width cannot fit max + len 
+> > > then we do this" has no relevance at all.  I can say "if max + len is too 
+> > > big for line_width we do this" just the same.
+> > 
+> > Actually that is exactly my point.  "Just the same".  There is
+> > no reason to choose one way or the other from purely logical or
+> > mathematical point of view.
+> > 
+> 
+> Nothing about this is "mathematical" at all and I never claimed it was.  
+> But there _is_ a reason to choose one way over the other and that is 
+> because the MAJORITY of programmers do it one way and YOU do it another 
+> way.  Why is it so hard to write all the code in the same style so that 
+> there is as little variation in the code as possible?
 
-I want to say something about the purpose of the patch, not some totally 
-unimportant superficialities.
+Could you stop it already?
 
-In your example, a three line change has more than three plusses, and I 
-find that wrong.
+Git's source code is very clean and readable, even if there are inversions 
+you might not be used to.
 
-But I would actually find another change very useful: still linear, but 
-such that if lines were added, at least one plus should be shown, and 
-likewise with minus. (Often I ask myself, was this file removed, or just 
-dramatically reduced, when I only see minusses).
+Besides, always doing it the same way is boring. _Boring_. Or do you make 
+love to your girl-friend the same way over and over again?
 
 Ciao,
 Dscho
