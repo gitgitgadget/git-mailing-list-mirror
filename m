@@ -1,116 +1,67 @@
-From: Shawn Pearce <spearce@spearce.org>
+From: Matthew L Foster <mfoster167@yahoo.com>
 Subject: Re: git and time
-Date: Wed, 27 Sep 2006 17:56:12 -0400
-Message-ID: <20060927215612.GB21839@spearce.org>
-References: <Pine.LNX.4.64.0609271354480.3952@g5.osdl.org> <20060927214417.36420.qmail@web51002.mail.yahoo.com>
+Date: Wed, 27 Sep 2006 15:28:54 -0700 (PDT)
+Message-ID: <20060927222854.82278.qmail@web51014.mail.yahoo.com>
+References: <Pine.LNX.4.64.0609271446160.3952@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, Andreas Ericsson <ae@op5.se>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 27 23:56:35 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Andreas Ericsson <ae@op5.se>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 28 00:29:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GShOD-00036I-2l
-	for gcvg-git@gmane.org; Wed, 27 Sep 2006 23:56:25 +0200
+	id 1GShtj-0001QS-3n
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 00:28:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030909AbWI0V4W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 17:56:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030910AbWI0V4W
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 17:56:22 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:6330 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1030909AbWI0V4U (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 17:56:20 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GShNu-0001OZ-0E; Wed, 27 Sep 2006 17:56:06 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 0293D20FB28; Wed, 27 Sep 2006 17:56:12 -0400 (EDT)
-To: Matthew L Foster <mfoster167@yahoo.com>
-Content-Disposition: inline
-In-Reply-To: <20060927214417.36420.qmail@web51002.mail.yahoo.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1031148AbWI0W24 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 18:28:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031149AbWI0W24
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 18:28:56 -0400
+Received: from web51014.mail.yahoo.com ([206.190.39.79]:19074 "HELO
+	web51014.mail.yahoo.com") by vger.kernel.org with SMTP
+	id S1031148AbWI0W24 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Sep 2006 18:28:56 -0400
+Received: (qmail 82280 invoked by uid 60001); 27 Sep 2006 22:28:54 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=Ywa4VPrAQttibBNXZlfNW8jgSy4hDdxM7oYxkjSgaY+YzmxR1kxJ2hvvPOByPG5dMuN7bCRr4ndjwC8FxgW9h+oGNFfJZOGr1iYZyL4BwiJuhhbCsomhtzdFH2GPHriawP7GZ9l39MdneH0QvGituUmV3YG2DXwf9RL+HBbsy8A=  ;
+Received: from [207.172.80.85] by web51014.mail.yahoo.com via HTTP; Wed, 27 Sep 2006 15:28:54 PDT
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0609271446160.3952@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27939>
 
-Matthew L Foster <mfoster167@yahoo.com> wrote:
-> --- Linus Torvalds <torvalds@osdl.org> wrote:
-> 
-> >  - so I replicate my home machine tree to the one on master.kernel.org, 
-> >    and now others can see it.
-> > 
-> > When did the merge happen? It happened at 8:30 on my machine, and that's 
-> > what is recorded. End of story. No ifs, buts, maybes about it. That's the 
-> > only time you can _ever_ see for that merge.
-> 
-> Ok, so it's more complex because of the workflow issue of delayed/pseudo mirroring/replication
-> between private and public repos?
+--- Linus Torvalds <torvalds@osdl.org> wrote:
 
-No.  Its no different than anything else.  Linus' personal repository
-is just as visible to you as say Andrew Morton's personal repository
-(read: neither one is visible to you).  Therefore the date/time
-that a given commit hits either one of those repositories is only
-of interest to the people with direct access to it.  Which is Linus
-and Andrew respectively.  And probably nobody else.
+> The actual action happened at 8:30. And git tracks only truth. It doesn't 
+> rewrite the truth afterward.
 
-When Linus pushes all of those merges out to kernel.org those
-commits are arriving at "his" kernel.org repository at a date/time
-that is absolutely after when they first arrived in Linus' personal
-repository.  Note that the kernel.org repository is a completely
-different repository from Linus' personal work repository!
+So the separate action of replication is not tracked? Replication/sub merges are denied the
+possibility of "truth"?
 
-But due to clock skew, time zone differences, etc. between systems
-those commits may actually appear to arrive at kernel.org before,
-at the same time as, or after they arrived on Linus' personal system.
-:-)
+To be clear I think there are actually two separate though semi-related issues:
 
-> This cloning/replication is not done through git?
+- 1. release/replication time of a mirrored private --> public repo
 
-I don't know.  I'd wager Linus is probably using Git to push changes
-to some repository on a master system behind the kernel.org domain
-name, and that master then gets replicated out to mirror systems
-through some form of replication.
+- 2. A repo's commit order being inconsistent with local time order
 
-> Are you saying it's impossible for master.kernel.org's git to track the local time of each
-> commit/merge/replication? Perhaps replication time is precisely what should/could be tracked
-> (locally)? 
+My questions are primarily focused on #2. Last weekend even your private repo's commit order was
+out of sync with your local time order because a remote git server's time was grossly
+misconfigured, right? Integrity wise that shouldn't happen. I am merely asking if tracking
+commits/merges using local repo time could solve both issues? If the local merge time information
+is already available in the ref-log then gitweb.cgi might only need to be made aware of it.
 
-I don't think the replication time is really important here.  If it
-was then Git should be used for the replication of Git repositories
-being mirrored on kernel.org.  I doubt you'd get every mirror
-operator to do that however.
+-Matt
 
-> From an integrity or at least gitweb.cgi's viewpoint it seems very important to me that commit
-> order also be per repo consistent with time order.
 
-I'm not sure I follow you.  Time order has nothing to do with
-anything.  That's largely been the entire point of this thread.
-
-Because of the potentical for clock skew even on a single system
-you can't take much stock in a timestamp.  But with Git you can at
-least completely trust the commit graph, provided that you trust
-those who made commits before your own commit.  Of course this
-trust is only possible because the commit graph cannot be altered
-once a node has been added into it.
-
-As such the commit graph is consistent between repositories (assuming
-they have the same head commits), but the timestamps of the reflogs
-within each will widely differ.  They could widely differ even on
-the same system due to ntpd updating the clock at the exact wrong
-moment for example.  :)
-
--- 
-Shawn.
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
