@@ -1,79 +1,76 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/3] diff --stat: sometimes use non-linear scaling.
-Date: Thu, 28 Sep 2006 02:20:42 -0700
-Message-ID: <7v64f8xs7p.fsf@assigned-by-dhcp.cox.net>
-References: <7vfyeejakq.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0609270810470.3952@g5.osdl.org>
-	<20060928081757.GF8056@admingilde.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: What's in git.git
+Date: Thu, 28 Sep 2006 11:36:23 +0200
+Message-ID: <20060928093623.GJ20017@pasky.or.cz>
+References: <7vodt0zbhc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 28 11:21:06 2006
+X-From: git-owner@vger.kernel.org Thu Sep 28 11:36:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSs4b-0004Z3-2s
-	for gcvg-git@gmane.org; Thu, 28 Sep 2006 11:20:54 +0200
+	id 1GSsJh-0007P9-6Z
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 11:36:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751335AbWI1JUo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 05:20:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751372AbWI1JUo
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 05:20:44 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:24317 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1751335AbWI1JUo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Sep 2006 05:20:44 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060928092043.ZCXU2704.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 28 Sep 2006 05:20:43 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id TlLl1V00t1kojtg0000000
-	Thu, 28 Sep 2006 05:20:45 -0400
-To: Martin Waitz <tali@admingilde.org>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751760AbWI1Jg0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 05:36:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751768AbWI1Jg0
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 05:36:26 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:54947 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751760AbWI1JgZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Sep 2006 05:36:25 -0400
+Received: (qmail 26531 invoked by uid 2001); 28 Sep 2006 11:36:23 +0200
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vodt0zbhc.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27997>
 
-Martin Waitz <tali@admingilde.org> writes:
+Dear diary, on Thu, Sep 28, 2006 at 09:39:11AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+>   -
 
->> It should at least never be superlinear, I believe.
->
-> So if we want to keep the logarithmic scale we can do some maths:
->...
-> But only I have not succeeded in solving these equations, I always stop
-> at the last invariant :-(
+BTW, what's the difference between '-' and '+'?
 
-There is another constraint you did not mention.  Here is the
-output from my another failed experiment:
+>   + Git.pm lost Git.xs; its remnant still remains, though.
+>     Notably, we still compile x86_64 with -fPIC, and the top
+>     level Makefile has {BASIC,ALL}_{CFLAGS,LDFLAGS} distinction
+>     and INSTALL talks about perl/blib/arch/auto.  I am torn
+>     between removing these and keeping them; on one hand, they
+>     are not needed and makes new developers wonder what the
+>     distinction between BASIC and ALL are.  On the other hand,
+>     we may eventually would want to reintroduce Git.xs in the
+>     future and keeping them might help us.  But on the third
+>     hand ;-), we can always resurrect it from the repository and
+>     that is the point of using git to keep track of the project,
+>     so removing them might not be such a big deal.  I'd like to
+>     decide between this two and push it out to 'master' before
+>     doing the -rc1.
 
- .gitignore                       |    1 -
- Documentation/git-tar-tree.txt   |    3 +++
- Documentation/git-upload-tar.txt |   39 -----------------------------
- Documentation/git.txt            |    4 ----
- Makefile                         |    1 -
- builtin-tar-tree.c               |  130 +++++++++++++++-----------------------
- builtin-upload-tar.c             |   74 ----------------------------------
- git.c                            |    1 -
- 8 files changed, 53 insertions(+), 200 deletions(-)
+FWIW, I'd say kill it all (perhaps except BASIC_*, I don't know about
+that one) - we indeed can easily resurrect this, and that was the
+presumption with which I've killed the rest of Git.xs. There's no point
+in keeping legacy cruft around when we can take it back from the
+history.
 
-The deletion from Documentation/git-upload-tar.txt looks much
-larger than addition to builtin-tar-tree.c in the above, but
-there are 50 lines added to builtin-tar-tree.c (which is why
-this experiment is a failure).
+Perhaps we could throw a note to perl/Makefile saying
 
-Because we are dealing with non-linear scaling, the total of
-scaled adds and scaled deletes does not equal to scaled total.
-We can deal with this in two ways.  Scale the total and
-distribute it, or scale adds and deletes individually and make
-sure the sum of scaled adds and deletes never exceed the width.
-Obviously the former is easier to implement but it was _wrong_.
+	# If you are thinking about adding Git.xs support, please note
+	# that we have already been there before - see the #next branch
+	# history for more-or-less working one already added, and also
+	# the reason why it was removed for now.
 
-The fitting algorithm in the posted patch scales the total to
-fit the alloted width and then distributes the result to adds
-and deletes.
+so that noone wastes their time.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
