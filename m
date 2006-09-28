@@ -1,58 +1,58 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+From: A Large Angry SCM <gitzilla@gmail.com>
 Subject: Re: git and time
-Date: Thu, 28 Sep 2006 22:36:37 +0200
-Organization: Dewire
-Message-ID: <200609282236.37513.robin.rosenberg.lists@dewire.com>
-References: <20060928165509.77413.qmail@web51001.mail.yahoo.com> <Pine.LNX.4.64.0609281003070.3952@g5.osdl.org>
+Date: Thu, 28 Sep 2006 13:46:12 -0700
+Message-ID: <451C3494.8030701@gmail.com>
+References: <20060928165509.77413.qmail@web51001.mail.yahoo.com>
+Reply-To: git@vger.kernel.org
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Matthew L Foster <mfoster167@yahoo.com>,
-	Rogan Dawes <discard@dawes.za.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 28 22:36:31 2006
+Cc: Rogan Dawes <discard@dawes.za.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 28 22:46:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GT2cN-0003uH-TS
-	for gcvg-git@gmane.org; Thu, 28 Sep 2006 22:36:28 +0200
+	id 1GT2lz-0006Sl-TR
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 22:46:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750739AbWI1UgY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 16:36:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750758AbWI1UgY
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 16:36:24 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:3167 "EHLO torino.dewire.com")
-	by vger.kernel.org with ESMTP id S1750739AbWI1UgX (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Sep 2006 16:36:23 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by torino.dewire.com (Postfix) with ESMTP id 15BF5802895;
-	Thu, 28 Sep 2006 22:33:34 +0200 (CEST)
-Received: from torino.dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 27889-10; Thu, 28 Sep 2006 22:33:33 +0200 (CEST)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by torino.dewire.com (Postfix) with ESMTP id B7A46802676;
-	Thu, 28 Sep 2006 22:33:31 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: KMail/1.9.4
-In-Reply-To: <Pine.LNX.4.64.0609281003070.3952@g5.osdl.org>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1750822AbWI1UqU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 16:46:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750833AbWI1UqU
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 16:46:20 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:969 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1750822AbWI1UqT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Sep 2006 16:46:19 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so826484nfa
+        for <git@vger.kernel.org>; Thu, 28 Sep 2006 13:46:18 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=kwqPNMXvl96wgpapFDTGhMggR62o/+YZrl2lXhJ2XatA2vDyFr87CgUemBZot4fkPZae70yNxbEv5c6uoGaid/Emg0/BsdgnpFIXmI6QDhHxlrOjQw1MlV8JadXghbbiEkzVHxVfNjiISvhA5pBsSpC3EYPnh6RPWXBSZ1vj33c=
+Received: by 10.49.10.3 with SMTP id n3mr595088nfi;
+        Thu, 28 Sep 2006 13:46:17 -0700 (PDT)
+Received: from ?10.0.0.6? ( [67.20.67.46])
+        by mx.gmail.com with ESMTP id c1sm6242913nfe.2006.09.28.13.46.15;
+        Thu, 28 Sep 2006 13:46:17 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060911)
+To: Matthew L Foster <mfoster167@yahoo.com>
+In-Reply-To: <20060928165509.77413.qmail@web51001.mail.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28048>
 
-torsdag 28 september 2006 19:11 skrev Linus Torvalds:
-> The time that git records is purely a random number. It's a random number
-> that _humans_ can choose to care about or not, and it's a random number
-> that git itself uses only in the sense of "ok, I've got two equal choices,
-> let's toss a coin to select which one I'll look at next", BUT IT IS A
-> RANDOM NUMBER.
+Matthew L Foster wrote:
+> --- Rogan Dawes <discard@dawes.za.net> wrote:
+> 
+>> I just don't think that any of the kernel developers feel the need to 
+>> police any one else's clocks . . . they're more interested in the 
+>> contents of the patch.
+> 
+> I am not saying git should "police any one else's clocks", I am saying git should be designed or
+> configured in such a way, using local time, that it obviates the current reliance on everyone
+> else's clock being set correctly. 
 
-I'd think of it as comment, about as (un)reliable as the author field or the 
-descriptive free-form comment people enter when they commit. It's not even 
-necessarily the local system time if GIT_AUTHOR_DATE has been set.
-
--- robin
+Sounds like you're suggesting that Git should not record any timestamps 
+at all. After all, Git doesn't need them.
