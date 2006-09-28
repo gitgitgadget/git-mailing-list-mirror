@@ -1,255 +1,145 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [PATCH] Make cvsexportcommit work with filenames containing spaces.
-Date: Fri, 29 Sep 2006 01:28:55 +0200
-Message-ID: <200609290128.56217.robin.rosenberg@dewire.com>
-References: <20060922223506.3377.34859.stgit@lathund.dewire.com> <7vvenfw727.fsf@assigned-by-dhcp.cox.net>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: [PATCH] gitweb: "alternate" starts with shade (i.e. 1)
+Date: Thu, 28 Sep 2006 16:47:50 -0700 (PDT)
+Message-ID: <20060928234750.47448.qmail@web31802.mail.mud.yahoo.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: Multipart/Mixed;
-  boundary="Boundary-00=_4qFHFeNWGZLei7X"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 29 01:28:49 2006
+Content-Type: multipart/mixed; boundary="0-1281253118-1159487270=:46000"
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Fri Sep 29 01:48:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GT5J9-0000vL-W8
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 01:28:48 +0200
+	id 1GT5bi-0005CP-GR
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 01:47:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751103AbWI1X2p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 19:28:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751115AbWI1X2p
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 19:28:45 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:55906 "EHLO
-	torino.dewire.com") by vger.kernel.org with ESMTP id S1751103AbWI1X2n
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Sep 2006 19:28:43 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by torino.dewire.com (Postfix) with ESMTP id DC1A8802895;
-	Fri, 29 Sep 2006 01:25:53 +0200 (CEST)
-Received: from torino.dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 29572-07; Fri, 29 Sep 2006 01:25:53 +0200 (CEST)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by torino.dewire.com (Postfix) with ESMTP id 24A4C802676;
-	Fri, 29 Sep 2006 01:25:49 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.9.4
-In-Reply-To: <7vvenfw727.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1750927AbWI1Xrz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 19:47:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161368AbWI1Xrz
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 19:47:55 -0400
+Received: from web31802.mail.mud.yahoo.com ([68.142.207.65]:44153 "HELO
+	web31802.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1750927AbWI1Xry (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Sep 2006 19:47:54 -0400
+Received: (qmail 47450 invoked by uid 60001); 28 Sep 2006 23:47:50 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=DwVQjix7vOB3pexrMA/tiitPYBppiRMDT8kbWdrkaAqgHAsSIjWG6HfliR5SgU/mFR06Q08343soBaMN/YdAtUKstwpH3NqyaF32DvpxM2WRs0OQxqUNs1OMAqe2cE2qiEnBROFLHvHvpIsJuErS5NlLww/i5FdfanVgCpcRS2I=  ;
+Received: from [64.215.88.90] by web31802.mail.mud.yahoo.com via HTTP; Thu, 28 Sep 2006 16:47:50 PDT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28068>
 
---Boundary-00=_4qFHFeNWGZLei7X
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+--0-1281253118-1159487270=:46000
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 8bit
+Content-Id: 
 Content-Disposition: inline
 
+When displaying a list of rows (difftree, shortlog, etc),
+the first entry is now printed shaded, i.e. alternate is
+initialized to 1, as opposed to non-shaded (alternate
+initialized to 0).
 
-Jounio. Thanks for the feedback. It is your fedora patch 2.5.4 that doesn't work. 
-It doesn't seem to handle spaces in filenames in any way. Not much I can do about that.
+This solves the problem when there is only one row to
+display -- it is displayed shaded to visually indicate that
+it is "active", part of a "list", etc.
 
-Btw, 2.5.4 is nine years old, but strangely that's the one that's around everywhere on
-source mirrors, but most (=the few ones I checked) Linux distros have 2.5.9 (except RH).
+(Compare this to the trivial case of more than one entry,
+where the rows have alternating shade, thus suggesting
+being part of a "list" of "active" entries, etc.)
 
--- robin
-
---Boundary-00=_4qFHFeNWGZLei7X
-Content-Type: text/x-diff;
-  charset="iso-8859-1";
-  name="cvsexportcommit"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename="cvsexportcommit"
-
-Make cvsexportcommit work with filenames containing spaces.
-
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-
-Binary files are except to this so far.
-
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
 ---
+ gitweb/gitweb.perl |   16 ++++++++--------
+ 1 files changed, 8 insertions(+), 8 deletions(-)
+--0-1281253118-1159487270=:46000
+Content-Type: text/plain; name="p1.txt"
+Content-Description: 1207600725-p1.txt
+Content-Disposition: inline; filename="p1.txt"
 
- git-cvsexportcommit.perl       |   27 +++++++++++++++++---
- t/t9200-git-cvsexportcommit.sh |   55 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 79 insertions(+), 3 deletions(-)
-
-diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
-index 99b3dc3..ecded35 100755
---- a/git-cvsexportcommit.perl
-+++ b/git-cvsexportcommit.perl
-@@ -5,6 +5,7 @@ # - cannot add or remove binary files
- # - does not propagate permissions
- # - tells "ready for commit" even when things could not be completed
- #   (eg addition of a binary file)
-+# - Fedora/RHEL uses patch 2.5.4 which doesn't handles spaces in file names
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index afffbbe..79c8052 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1699,7 +1699,7 @@ sub git_difftree_body {
+ 	print "</div>\n";
  
- use strict;
- use Getopt::Std;
-@@ -121,7 +122,14 @@ #print @files;
- $? && die "Error in git-diff-tree";
- foreach my $f (@files) {
-     chomp $f;
--    my @fields = split(m!\s+!, $f);
-+    $f =~ m/^(\S+) (\S+) (\S+) (\S+) (\S+)	(.*)/;
-+    my @fields = ();
-+    $fields[++$#fields] = $1;
-+    $fields[++$#fields] = $2;
-+    $fields[++$#fields] = $3;
-+    $fields[++$#fields] = $4;
-+    $fields[++$#fields] = $5;
-+    $fields[++$#fields] = $6;
-     if ($fields[4] eq 'A') {
-         my $path = $fields[5];
- 	push @afiles, $path;
-@@ -217,7 +225,7 @@ foreach my $f (@bfiles) {
-     }
+ 	print "<table class=\"diff_tree\">\n";
+-	my $alternate = 0;
++	my $alternate = 1;
+ 	my $patchno = 0;
+ 	foreach my $line (@{$difftree}) {
+ 		my %diff = parse_difftree_raw_line($line);
+@@ -1993,7 +1993,7 @@ sub git_shortlog_body {
+ 	$to = $#{$revlist} if (!defined $to || $#{$revlist} < $to);
  
-     # replace with the new file
--     `git-cat-file blob $blob > $f`;
-+     `git-cat-file blob $blob > "$f"`;
+ 	print "<table class=\"shortlog\" cellspacing=\"0\">\n";
+-	my $alternate = 0;
++	my $alternate = 1;
+ 	for (my $i = $from; $i <= $to; $i++) {
+ 		my $commit = $revlist->[$i];
+ 		#my $ref = defined $refs ? format_ref_marker($refs, $commit) : '';
+@@ -2035,7 +2035,7 @@ sub git_history_body {
+ 	$to = $#{$revlist} unless (defined $to && $to <= $#{$revlist});
  
-     # TODO: something smart with file modes
+ 	print "<table class=\"history\" cellspacing=\"0\">\n";
+-	my $alternate = 0;
++	my $alternate = 1;
+ 	for (my $i = $from; $i <= $to; $i++) {
+ 		if ($revlist->[$i] !~ m/^([0-9a-fA-F]{40})/) {
+ 			next;
+@@ -2099,7 +2099,7 @@ sub git_tags_body {
+ 	$to = $#{$taglist} if (!defined $to || $#{$taglist} < $to);
  
-@@ -231,7 +239,20 @@ ## apply non-binary changes
- my $fuzz = $opt_p ? 0 : 2;
+ 	print "<table class=\"tags\" cellspacing=\"0\">\n";
+-	my $alternate = 0;
++	my $alternate = 1;
+ 	for (my $i = $from; $i <= $to; $i++) {
+ 		my $entry = $taglist->[$i];
+ 		my %tag = %$entry;
+@@ -2159,7 +2159,7 @@ sub git_heads_body {
+ 	$to = $#{$headlist} if (!defined $to || $#{$headlist} < $to);
  
- print "Patching non-binary files\n";
--print `(git-diff-tree -p $parent -p $commit | patch -p1 -F $fuzz ) 2>&1`;
-+
-+my $saveslash = $/;
-+undef $/;
-+
-+open DIFF, "git-diff-tree -p $parent -p $commit|" || die "Cannot diff";
-+open PATCH, "|patch -p1 -F $fuzz" || die "Cannot patch";
-+my $delta = <DIFF>;
-+close DIFF || die "Could not diff";
-+unless (defined $ENV{'GIT_CVSEXPORTCOMMIT_NO_SPACES'}) {
-+  $delta =~ s/\n(index [^\n]*)\n(--- [^\n]*)\n(\+\+\+ [^\n]*)\n(@@[^\n]*@@)\n/$1\n$2\t\n$3\t\n$4\n/sg
-+}
-+print PATCH $delta;
-+close PATCH || die "Could not patch";
-+$/ = $saveslash;
+ 	print "<table class=\"heads\" cellspacing=\"0\">\n";
+-	my $alternate = 0;
++	my $alternate = 1;
+ 	for (my $i = $from; $i <= $to; $i++) {
+ 		my $entry = $headlist->[$i];
+ 		my %tag = %$entry;
+@@ -2275,7 +2275,7 @@ sub git_project_list {
+ 	}
+ 	print "<th></th>\n" .
+ 	      "</tr>\n";
+-	my $alternate = 0;
++	my $alternate = 1;
+ 	foreach my $pr (@projects) {
+ 		if ($alternate) {
+ 			print "<tr class=\"dark\">\n";
+@@ -2793,7 +2793,7 @@ sub git_tree {
+ 	git_print_page_path($file_name, 'tree', $hash_base);
+ 	print "<div class=\"page_body\">\n";
+ 	print "<table cellspacing=\"0\">\n";
+-	my $alternate = 0;
++	my $alternate = 1;
+ 	foreach my $line (@entries) {
+ 		my %t = parse_ls_tree_line($line, -z => 1);
  
- my $dirtypatch = 0;
- if (($? >> 8) == 2) {
-diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
-new file mode 100755
-index 0000000..548e329
---- /dev/null
-+++ b/t/t9200-git-cvsexportcommit.sh
-@@ -0,0 +1,55 @@
-+#!/bin/bash
-+
-+test_description='CVS export comit. 
-+
-+These tests are ad-hoc ones made to test
-+some changes, not a complete test.'
-+
-+. ./test-lib.sh
-+
-+export CVSROOT=$(pwd)/cvsroot
-+export CVSWORK=$(pwd)/cvswork
-+rm -rf "$CVSROOT" "$CVSWORK"
-+mkdir "$CVSROOT" &&
-+cvs init &&
-+cvs -Q co -d "$CVSWORK" . &&
-+export GIT_DIR=$(pwd)/.git &&
-+echo >empty &&
-+git add empty &&
-+git commit -a -m "Initial" 2>/dev/null ||
-+exit 1
-+
-+test_expect_success \
-+    'New file' \
-+    'echo hello >newfile.txt &&
-+     git add newfile.txt &&
-+     git commit -a -m "Hello" &&
-+     id=$(git rev-list --max-count=1 HEAD) &&
-+     (cd "$CVSWORK" &&
-+     git cvsexportcommit -c $id &&
-+     test $(cat CVS/Entries|wc -l) = 2
-+     )'
-+
-+test_expect_success \
-+     'New file with spaces in file name' \
-+     'echo ok then >"with spaces.txt" &&
-+      git add "with spaces.txt" && \
-+      git commit -a -m "With spaces" &&
-+      id=$(git rev-list --max-count=1 HEAD) &&
-+      (cd "$CVSWORK" &&
-+      git-cvsexportcommit -c $id &&
-+      test $(cat CVS/Entries|wc -l) = 3
-+      )'
-+
-+test_expect_success \
-+     'Update file with spaces in file name' \
-+     'echo Ok then >>"with spaces.txt" &&
-+      git add "with spaces.txt" &&
-+      git commit -a -m "Update with spaces" &&
-+      id=$(git rev-list --max-count=1 HEAD) &&
-+      (cd "$CVSWORK" &&
-+      git-cvsexportcommit -c $id &&
-+      test $(cat CVS/Entries|wc -l) = 3
-+      )'
-+     
-+test_done
+@@ -3389,7 +3389,7 @@ sub git_search {
+ 	git_print_header_div('commit', esc_html($co{'title'}), $hash);
+ 
+ 	print "<table cellspacing=\"0\">\n";
+-	my $alternate = 0;
++	my $alternate = 1;
+ 	if ($commit_search) {
+ 		$/ = "\0";
+ 		open my $fd, "-|", git_cmd(), "rev-list", "--header", "--parents", $hash or next;
+-- 
+1.4.2.1.g05f0f
 
---Boundary-00=_4qFHFeNWGZLei7X
-Content-Type: text/x-diff;
-  charset="iso-8859-1";
-  name="cvsexportcommitrm"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename="cvsexportcommitrm"
 
-Make cvsexportcommit remove files.
-
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
-
- git-cvsexportcommit.perl       |    2 +-
- t/t9200-git-cvsexportcommit.sh |   12 ++++++++++++
- 2 files changed, 13 insertions(+), 1 deletions(-)
-
-diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
-index ecded35..4fb55a6 100755
---- a/git-cvsexportcommit.perl
-+++ b/git-cvsexportcommit.perl
-@@ -143,7 +143,7 @@ foreach my $f (@files) {
-     if ($fields[4] eq 'M') {
- 	push @mfiles, $fields[5];
-     }
--    if ($fields[4] eq 'R') {
-+    if ($fields[4] eq 'D') {
- 	push @dfiles, $fields[5];
-     }
- }
-diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
-index 548e329..6f28da6 100755
---- a/t/t9200-git-cvsexportcommit.sh
-+++ b/t/t9200-git-cvsexportcommit.sh
-@@ -52,4 +52,16 @@ test_expect_success \
-       test $(cat CVS/Entries|wc -l) = 3
-       )'
-      
-+test_expect_success \
-+     'Remove file with spaces in file name' \
-+     'echo Ok then >"with spaces.txt" &&
-+      rm -v "with spaces.txt" && \
-+      git rm "with spaces.txt" && \
-+      git commit -a -m "Remove file" &&
-+      id=$(git rev-list --max-count=1 HEAD) &&
-+      (cd "$CVSWORK" &&
-+      git-cvsexportcommit -v -c $id &&
-+      test $(cat CVS/Entries|wc -l) = 2
-+      )'
-+     
- test_done
-
---Boundary-00=_4qFHFeNWGZLei7X--
+--0-1281253118-1159487270=:46000--
