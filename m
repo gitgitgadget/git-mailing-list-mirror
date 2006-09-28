@@ -1,67 +1,72 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Matthew L Foster <mfoster167@yahoo.com>
 Subject: Re: git and time
-Date: Wed, 27 Sep 2006 19:21:22 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609271918350.3952@g5.osdl.org>
-References: <20060928013914.16514.qmail@web51005.mail.yahoo.com>
+Date: Wed, 27 Sep 2006 19:29:17 -0700 (PDT)
+Message-ID: <20060928022917.29678.qmail@web51011.mail.yahoo.com>
+References: <20060928013611.GC7469@thunk.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Shawn Pearce <spearce@spearce.org>, Andreas Ericsson <ae@op5.se>,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@osdl.org>, Andreas Ericsson <ae@op5.se>,
 	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
 	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 28 04:21:44 2006
+X-From: git-owner@vger.kernel.org Thu Sep 28 04:29:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSlWs-0005P9-RN
-	for gcvg-git@gmane.org; Thu, 28 Sep 2006 04:21:39 +0200
+	id 1GSleL-0006Vi-M8
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 04:29:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965201AbWI1CVf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 22:21:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965203AbWI1CVf
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 22:21:35 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:20884 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965201AbWI1CVf (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Sep 2006 22:21:35 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8S2LNnW013888
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 27 Sep 2006 19:21:24 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8S2LM00026012;
-	Wed, 27 Sep 2006 19:21:22 -0700
-To: Matthew L Foster <mfoster167@yahoo.com>
-In-Reply-To: <20060928013914.16514.qmail@web51005.mail.yahoo.com>
-X-Spam-Status: No, hits=-0.464 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.154 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965218AbWI1C3T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 22:29:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965219AbWI1C3S
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 22:29:18 -0400
+Received: from web51011.mail.yahoo.com ([68.142.224.81]:61621 "HELO
+	web51011.mail.yahoo.com") by vger.kernel.org with SMTP
+	id S965218AbWI1C3S (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Sep 2006 22:29:18 -0400
+Received: (qmail 29680 invoked by uid 60001); 28 Sep 2006 02:29:17 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=sherjmVR239spRzpYVZS5ATblo0f2CXUiYKb4nOj7lu3zGvXbvZq8E1S3I3e6S5YhlBqBTbRoicWSiNiawPwkY2m9l+Zg4rMhfwJDtorUugj0H88R9W8cFRt5nmPRrOHvl3MFcIN6dcCcc+pCV2DSQMnt/bU33t30/eRLcONgEg=  ;
+Received: from [207.172.80.85] by web51011.mail.yahoo.com via HTTP; Wed, 27 Sep 2006 19:29:17 PDT
+To: Theodore Tso <tytso@mit.edu>
+In-Reply-To: <20060928013611.GC7469@thunk.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27968>
 
+--- Theodore Tso <tytso@mit.edu> wrote:
 
-
-On Wed, 27 Sep 2006, Matthew L Foster wrote:
+> On Wed, Sep 27, 2006 at 05:12:41PM -0700, Matthew L Foster wrote:
+> > 
+> > Ignoring the separate issue of replication for a momment, can
+> > someone respond to my time integrity question about whether a future
+> > version of git could trust/prefer its local time rather than a
+> > remote/sub/parent (non replicated) git server's timestamp? 
 > 
-> From a web display/generic notion of integrity perspective time order 
-> matters to me but it looks like I am the only one. Keeping track of 
-> _local_ commit time would not add any dependencies.
+> No, it can't.  In order to do that it would have to change the commit,
+> and that would be rewriting history.
 
-Actually, I think one problem here is that anybody why looks at just the 
-gitweb interface may not realize how git works.
+Perhaps the actual change itself should not contain a "commit time", only "local commit time"
+should matter or be tracked locally (if time is tracked/matters any). To repeat from a previous
+mail, I am not saying timestamps (local or other) should be tracked in a git distributed way,
+quite the opposite, local commit time should be tracked locally. 
 
-If you use gitk as your primary way of learning about a git problem, the 
-whole time issue just goes away, because gitk shows the _real_ 
-relationships so well.
+Replication is a separate issue if I understand git any. Please correct me if I misunderstand: the
+kernel.org gitweb.cgi linux repo time inconsistencies happened when Linus pulled into his
+_private_ repo from a remote git server with misconfigured time, _not_ when he later replicated
+those errant timestamps from his private repo to the public kernel.org one. I don't care nearly as
+much about replication not being time aware, I care about a _merge_ from a remote misconfigured
+git server making timestamps inconsistent with commit order. Using/prefering local time could
+solve this but perhaps I am the only one that thinks local time is most important.
 
-I used gitk in all my initial explanations of git, because it turned a 
-fairly abstract "here, let me explain how it works" into a "See? Look at 
-this" kind of situation.
+-Matt
 
-I think gitweb is great (in a way I have _never_ felt about any of the CVS 
-web interfaces I have ever seen), but gitweb doesn't really explain how 
-things work as well as gitk does.
 
-		Linus
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
