@@ -1,110 +1,94 @@
-From: Matthew L Foster <mfoster167@yahoo.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: git and time
-Date: Thu, 28 Sep 2006 10:30:51 -0700 (PDT)
-Message-ID: <20060928173051.94640.qmail@web51004.mail.yahoo.com>
-References: <20060928170110.GD3650@socrates.priv>
+Date: Thu, 28 Sep 2006 11:01:55 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0609281043380.3952@g5.osdl.org>
+References: <20060928173350.95443.qmail@web51004.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Thu Sep 28 19:43:49 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Rogan Dawes <discard@dawes.za.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 28 20:02:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSzv3-0006GD-AR
-	for gcvg-git@gmane.org; Thu, 28 Sep 2006 19:43:33 +0200
+	id 1GT0Cw-0001TV-5k
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 20:02:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030309AbWI1Rna (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 13:43:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030327AbWI1Rna
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 13:43:30 -0400
-Received: from shawidc-mo1.cg.shawcable.net ([24.71.223.10]:24729 "EHLO
-	pd5mo1so.prod.shaw.ca") by vger.kernel.org with ESMTP
-	id S1030309AbWI1Rn3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Sep 2006 13:43:29 -0400
-Received: from pd5mr2so.prod.shaw.ca
- (pd5mr2so-qfe3.prod.shaw.ca [10.0.141.233]) by l-daemon
- (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
- with ESMTP id <0J6B00ERKD57UW40@l-daemon> for git@vger.kernel.org; Thu,
- 28 Sep 2006 11:41:31 -0600 (MDT)
-Received: from pn2ml6so.prod.shaw.ca ([10.0.121.150])
- by pd5mr2so.prod.shaw.ca (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar
- 15 2004)) with ESMTP id <0J6B000BYD56K3D0@pd5mr2so.prod.shaw.ca> for
- git@vger.kernel.org; Thu, 28 Sep 2006 11:41:31 -0600 (MDT)
-Received: from socrates.priv ([68.148.44.50])
- by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
- with ESMTP id <0J6B00FL0D569X11@l-daemon> for git@vger.kernel.org; Thu,
- 28 Sep 2006 11:41:30 -0600 (MDT)
-Received: from socrates.priv (localhost [127.0.0.1])
-	by socrates.priv (8.13.4/8.13.4) with ESMTP id k8SHigkS021790	for
- <git@vger.kernel.org>; Thu, 28 Sep 2006 11:44:42 -0600
-Received: (from cougar@localhost)	by socrates.priv (8.13.4/8.13.4/Submit)
- id k8SHigRJ021789	for git@vger.kernel.org; Thu, 28 Sep 2006 11:44:42 -0600
-Received: from socrates.priv (localhost [127.0.0.1])
-	by socrates.priv (8.13.4/8.13.4) with ESMTP id k8SHe1Ar021758	for
- <cougar@localhost>; Thu, 28 Sep 2006 11:40:02 -0600
-Received: from serve.wwwroot17.net [209.51.149.122]	by socrates.priv with IMAP
- (fetchmail-6.3.4)	for <cougar@localhost> (single-drop); Thu,
- 28 Sep 2006 11:40:02 -0600 (MDT)
-Received: from media by serve.wwwroot17.net with local-bsmtp (Exim 4.52)
-	id 1GSzip-0000Ed-Vz	for tom.prince@media-group.com; Thu,
- 28 Sep 2006 13:31:04 -0400
-Received: from [129.128.83.10] (helo=mail.ualberta.net)
-	by serve.wwwroot17.net with esmtps (TLSv1:AES256-SHA:256)	(Exim 4.52)
-	id 1GSzip-0000EP-1P	for tom.prince@media-group.com; Thu,
- 28 Sep 2006 13:30:55 -0400
-Received: from web51004.mail.yahoo.com ([206.190.38.135]:30673)
-	by mail.ualberta.net with smtp (Exim 4.60)
-	(envelope-from <mfoster167@yahoo.com>)
-	id 1GSziy-000CjV-06	for tom.prince@ualberta.net; Thu,
- 28 Sep 2006 11:31:04 -0600
-Received: (qmail 94642 invoked by uid 60001); Thu, 28 Sep 2006 17:30:52 +0000
-Received: from [207.172.80.85] by web51004.mail.yahoo.com via HTTP; Thu,
- 28 Sep 2006 10:30:51 -0700 (PDT)
-In-reply-to: <20060928170110.GD3650@socrates.priv>
-To: Tom Prince <tom.prince@ualberta.net>
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;  s=s1024; d=yahoo.com;
- h=Message-ID:Received:Date:From:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
- b=1WgJQZ8aiCbNkyu7FHzKLSvu88YGVKZ3pf6yjh6VZrhI0l9715XkStL8LU2WuO7E441Ag0Zae7RBlBwgE5lOrlS9GyRFbnCaKN/1p3TP7GpelZudEtSamBXaHaWRbdIQuX/JkiSE3gu9765OowQb2E7xCFbY/HSZS9AnYTn9bzs=  ;
-X-Spam-Checker-Version: SpamAssassin 3.1.5 (2006-08-29) on serve.wwwroot17.net
-X-Spam-Status: No, score=-2.6 required=8.0 tests=BAYES_00 autolearn=ham
-	version=3.1.5
-X-Spam-Level: 
+	id S1751966AbWI1SB7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 14:01:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751964AbWI1SB7
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 14:01:59 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:21212 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751966AbWI1SB6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Sep 2006 14:01:58 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8SI1unW023159
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 28 Sep 2006 11:01:56 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8SI1tKE017136;
+	Thu, 28 Sep 2006 11:01:56 -0700
+To: Matthew L Foster <mfoster167@yahoo.com>
+In-Reply-To: <20060928173350.95443.qmail@web51004.mail.yahoo.com>
+X-Spam-Status: No, hits=-0.46 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.154 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28027>
 
---- Tom Prince <tom.prince@ualberta.net> wrote:
 
-> On Thu, Sep 28, 2006 at 09:55:08AM -0700, Matthew L Foster wrote:
-> > 
-> > --- Rogan Dawes <discard@dawes.za.net> wrote:
-> > 
-> > > I just don't think that any of the kernel developers feel the need to 
-> > > police any one else's clocks . . . they're more interested in the 
-> > > contents of the patch.
-> > 
-> > I am not saying git should "police any one else's clocks", I am saying git should be designed
-> or
-> > configured in such a way, using local time, that it obviates the current reliance on everyone
-> > else's clock being set correctly. 
-> > 
-> > -Matt
+
+On Thu, 28 Sep 2006, Matthew L Foster wrote:
 > 
-> The point is, it DOES NOT rely on anyone's clock being set correctly.
+> It should be possible to export git data, through say a web interface, 
+> in a such a way that local time order is consistent with commit order.
 
-gitweb.cgi does. It should be possible to export git data, through say a web interface, in a such
-a way that local time order is consistent with commit order. 
+I really don't think the thing you ask for exists.
 
-[responding to Linus' mail here:] I understand that git doesn't care about time internally as it
-treats it as a random number for people to care about or not on their own, I am only saying that
-local time is more likely to be cared about than disparate remote creation times. 
+Don't get me wrong. You _can_ have a local time for each commit that 
+tracks "when did this commit show up in this particular branch". Git 
+already supports that, even if gitweb cannot show it, and in fact showing 
+it would be very hard (since the exact same commit can often exist in 
+multiple different branches, you'd have to show multiple times: in Junios 
+"git" tree you often have a commit that showed up in the "next" branch 
+three weeks ago, but in the "master" branch only yesterday).
 
--Matt
+The _problem_ with this is that it makes the whole concept of time 
+meaningless. It's pointless. You can do it, but I guarantee you that once 
+you actually use it for a while, you'll want to go back. There are several 
+reasons for that:
 
+ - it means that the -same- exact project, when looked at frm two 
+   different sites that mirror it, have totally different times. In other 
+   words, the times have become pointless for something like gitweb.
 
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+ - it means that all times will be seriously "compressed", in that you'll 
+   find hundreds (or thousands) of commits that just have the same 
+   timestamp. You could try to "spread them out" by just making up some 
+   totally arbitrary mapping function, but that would basically have 
+   absolutely no basis in anything that has any relationship to "reality"
+
+So it just doesn't make any sense.
+
+The only thing that makes sense is that in your private repository (that 
+is _not_ exported to others through "gitweb" or something like that), you 
+can ask yourself the question:
+
+	"What did my tree look like yesterday before I went out for a 
+	 beer, and came back drunk as a toad, and screwed everything up?"
+
+And the thing is, you can do that already. Just say
+
+	git log "master@{18 hours ago}"
+
+and git will hopefully show you (assuming you had enabled ref-logging as 
+described earlier in this thread) exactly what you wanted.
+
+See? 
+
+But it does not make sense in _any_ other setting. Certainly not gitweb.
+
+			Linus
