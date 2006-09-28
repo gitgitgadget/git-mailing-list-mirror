@@ -1,95 +1,85 @@
-From: Nicolas Pitre <nico@cam.org>
+From: David Lang <dlang@digitalinsight.com>
 Subject: Re: git and time
-Date: Wed, 27 Sep 2006 22:51:55 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0609272232040.9349@xanadu.home>
-References: <20060928022917.29678.qmail@web51011.mail.yahoo.com>
+Date: Wed, 27 Sep 2006 19:43:03 -0700 (PDT)
+Message-ID: <Pine.LNX.4.63.0609271938070.23262@qynat.qvtvafvgr.pbz>
+References: <20060928024938.46785.qmail@web51009.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Theodore Tso <tytso@mit.edu>, Linus Torvalds <torvalds@osdl.org>,
-	Andreas Ericsson <ae@op5.se>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 28 04:52:11 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Sean <seanlkml@sympatico.ca>, Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 28 04:57:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSm0K-0003Dr-Oo
-	for gcvg-git@gmane.org; Thu, 28 Sep 2006 04:52:05 +0200
+	id 1GSm58-00043c-Sc
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 04:57:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965237AbWI1Cv5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 22:51:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965239AbWI1Cv5
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 22:51:57 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:18332 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S965237AbWI1Cv4
+	id S965238AbWI1C5A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 22:57:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965239AbWI1C5A
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 22:57:00 -0400
+Received: from warden-p.diginsite.com ([208.29.163.248]:46820 "HELO
+	warden.diginsite.com") by vger.kernel.org with SMTP id S965238AbWI1C47
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 22:51:56 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J6A004YC7YJ8AO0@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 27 Sep 2006 22:51:55 -0400 (EDT)
-In-reply-to: <20060928022917.29678.qmail@web51011.mail.yahoo.com>
-X-X-Sender: nico@xanadu.home
+	Wed, 27 Sep 2006 22:56:59 -0400
+Received: from wlvims02.diginsite.com by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Wed, 27 Sep 2006 19:56:59 -0700
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Wed, 27 Sep 2006 19:56:33 -0700
+X-X-Sender: dlang@dlang.diginsite.com
 To: Matthew L Foster <mfoster167@yahoo.com>
+In-Reply-To: <20060928024938.46785.qmail@web51009.mail.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27971>
 
 On Wed, 27 Sep 2006, Matthew L Foster wrote:
 
-> --- Theodore Tso <tytso@mit.edu> wrote:
-> 
-> > On Wed, Sep 27, 2006 at 05:12:41PM -0700, Matthew L Foster wrote:
-> > > 
-> > > Ignoring the separate issue of replication for a momment, can
-> > > someone respond to my time integrity question about whether a future
-> > > version of git could trust/prefer its local time rather than a
-> > > remote/sub/parent (non replicated) git server's timestamp? 
-> > 
-> > No, it can't.  In order to do that it would have to change the commit,
-> > and that would be rewriting history.
-> 
-> Perhaps the actual change itself should not contain a "commit time", 
-> only "local commit time" should matter or be tracked locally (if time 
-> is tracked/matters any). To repeat from a previous mail, I am not 
-> saying timestamps (local or other) should be tracked in a git 
-> distributed way, quite the opposite, local commit time should be 
-> tracked locally.
+> --- Sean <seanlkml@sympatico.ca> wrote:
+>
+>> On Wed, 27 Sep 2006 18:48:11 -0700 (PDT)
+>> Matthew L Foster <mfoster167@yahoo.com> wrote:
+>>
+>>> I actually understand that and agree. All I've been saying is it (git or gitweb.cgi) should
+>> prefer
+>>> the local timestamp rather than any "remote" timestamps for no other reason than to minimize
+>> the
+>>> possibility of timestamps being grossly inaccurate.
+>>
+>> But any local time stamp would be a _lie_.  The time stamp in the commit records
+>> when it was actually created.  And as Junio has pointed out, hundreds of commits
+>> will typically arrive in a repo at the exact same time.  Your suggestion would
+>> have them all showing the exact same time.  That's not helpful, and it loses
+>> important factual information.
+>
+> How does git ensure that the timestamp in a commit records when it was actually created? I am not
+> saying throw away creation time, just that local time is more preferable and relevant and
+> git/gitweb.cgi should not in any way depend on time being configured correctly on each and every
+> git server. I think users of kernel.org's repo (or web interface) care more about when change X
+> was commited to it than when an author created/emailed change X, but perhaps I am wrong or don't
+> understand git or both.
 
-What I think you want and what you should talk about is that you're 
-interested into the "local appearance time" for a given commit and not 
-"local commit time".  Using that terminology is probably much less 
-confusing in the GIT world.
+what you are missing is that there is no one true time 'when the change was 
+commited' to record.
 
-To do so you'll need a GIT command that doesn'T exist yet.  Let's call 
-it git-local-arrival.  It could be defined as follows:
+the closest that you can get in a distributed environement is 'when was this 
+change created' and that is the locally defined time on the box that created it 
+(or as Ted stated, some much more complicated process requireing network access 
+to a certified time server)
 
-SYNOPSIS
+after it has been created it has been commited (on that box). the same change 
+could be commited on 50 other boxes, either by receiving it through git, or by 
+receiving it via other methods.
 
-	git-local-arrival <committish>
+all 51 of the boxes above are equally important to git. the fact that one or two 
+of those boxes happen to have a user named Linus doesn't matter.
 
-DESCRIPTION
+however, if what you want to know is 'in what order did this change get into the 
+tree I am looking at compared to other changes' git can tell you that and what 
+it will tell you is accurate, no matter what the clocks are set to on the 
+various systems.
 
-	The command displays the time when given commit appeared in the 
-	local repository.
-
-Is that what you want?  That's certainly something _I_ would be 
-interested in.  But such a command would have to do some commit graph 
-walking, based on the recorded reflog data, (there is not much 
-documentation about reflog unfortunately) to find out exactly when given 
-commit actually was fetched into the local repository.  While that would 
-be perfectly acceptable to use on your own machine, I don't think it 
-would be a good idea to let gitweb use it due to the computing cost 
-required.
-
-But again that's something possible but for which there is currently no 
-code.
-
-[ thinking out loud: maybe git-rev-list could provide that local 
-  appearance time quite easily though... ]
-
-
-Nicolas
+David Lang
