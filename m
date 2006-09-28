@@ -1,70 +1,65 @@
-From: Matthew L Foster <mfoster167@yahoo.com>
-Subject: Re: git and time
-Date: Thu, 28 Sep 2006 07:50:27 -0700 (PDT)
-Message-ID: <20060928145027.26643.qmail@web51011.mail.yahoo.com>
-References: <20060928131710.GE7469@thunk.org>
+From: "Michael S. Tsirkin" <mst@mellanox.co.il>
+Subject: Re: Notes on Using Git with Subprojects
+Date: Thu, 28 Sep 2006 18:02:25 +0300
+Message-ID: <20060928150224.GE28790@mellanox.co.il>
+References: <7vhcyt81gn.fsf@assigned-by-dhcp.cox.net>
+Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Matthew L Foster <mfoster167@yahoo.com>,
-	Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 28 16:50:55 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: skimo@liacs.nl, Martin Waitz <tali@admingilde.org>,
+	A Large Angry SCM <gitzilla@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
+	Josh Triplett <josh@freedesktop.org>,
+	Jamey Sharp <jamey@minilop.net>
+X-From: git-owner@vger.kernel.org Thu Sep 28 17:02:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSxDd-0006Of-3Q
-	for gcvg-git@gmane.org; Thu, 28 Sep 2006 16:50:33 +0200
+	id 1GSxOi-0000no-Sn
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 17:02:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161162AbWI1Ou3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 10:50:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161164AbWI1Ou3
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 10:50:29 -0400
-Received: from web51011.mail.yahoo.com ([68.142.224.81]:44125 "HELO
-	web51011.mail.yahoo.com") by vger.kernel.org with SMTP
-	id S1161162AbWI1Ou2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Sep 2006 10:50:28 -0400
-Received: (qmail 26645 invoked by uid 60001); 28 Sep 2006 14:50:27 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=MV+JegTAkud1PyW6grbADyv4Sr5ApZ6XRL64tnsPtsR8czZT20ED1g5ZBVt45ZiBguYk1UgDQ2ez/HrRu20A3M1vgr73FxvgKQjG96Py7MnnmQFDxTVvVdFurrsntGAZH11pZIxef5LBJo1g8207UuIcgLGQoRnBNfid1y6YIoY=  ;
-Received: from [207.172.80.85] by web51011.mail.yahoo.com via HTTP; Thu, 28 Sep 2006 07:50:27 PDT
-To: Theodore Tso <tytso@mit.edu>, Sean <seanlkml@sympatico.ca>
-In-Reply-To: <20060928131710.GE7469@thunk.org>
+	id S1161173AbWI1PB6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 11:01:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751909AbWI1PB5
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 11:01:57 -0400
+Received: from dev.mellanox.co.il ([194.90.237.44]:19860 "EHLO
+	dev.mellanox.co.il") by vger.kernel.org with ESMTP id S1751908AbWI1PB4
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Sep 2006 11:01:56 -0400
+Received: from mellanox.co.il ([194.90.237.34])
+	by dev.mellanox.co.il (8.13.1/8.13.1) with SMTP id k8SF12gI000889;
+	Thu, 28 Sep 2006 18:01:02 +0300
+Received: by mellanox.co.il (sSMTP sendmail emulation); Thu, 28 Sep 2006 18:02:25 +0300
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vhcyt81gn.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28005>
 
---- Theodore Tso <tytso@mit.edu> wrote:
+Quoting r. Junio C Hamano <junkio@cox.net>:
+> Avoiding checking out parts of the project tree that you do not
+> care about while you work on such a single large project is
+> another interesting and useful area to think about, but I would
+> say at that point it is not about subproject at all -- it is
+> about working in a sparsely populated working tree of a single
+> project.
 
-> In git, we believe that all repositories are equal, and that any sense
-> that a particular repository is the "master" or the "mainline" is
-> strictly speaking, a matter of convention.  What Matthew I think is
-> asking for is direct support in git for that notion.
+I agree completely - at least as far as I'm concerned, working in
+a sparsely populated working tree is what it's all about.
+For example, sometimes I am just editing documentation and
+it would be nice 
 
-No. I merely think git should try harder to ensure that commit order is consistent with time
-order, it really should (somehow) be impossible for git and gitweb.cgi to have commit dates ~2
-days in the future. I think replication is a separate issue. In a distributed system the only
-"time" that makes any sense or is the most relevant in many situations and most importantly is the
-only thing that can be semi-trusted is local time. "Creation date" is basically just random text
-someone entered, there is no guarantee and you are tempting inconsistent time order. And git
-shouldn't be so fragile as to need each and every git server to have time set semi-correctly, but
-I guess it's a bigger deal to non-developers as we actually use time and also believe even web
-interfaces should have consistency and integrity. 
+It's easy to check out just a subdirectory the first time:
+>git checkout master `git-ls-tree -r --name-only master subdirectory`
+>echo ref: refs/heads/master > .git/HEAD
+but when you try a pull/rebase git will check out all of the tree.
 
--Matt
+Is there some way to avoid this?
 
--Matt
-
--Matt
- 
-
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+-- 
+MST
