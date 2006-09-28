@@ -1,85 +1,81 @@
-From: David Lang <dlang@digitalinsight.com>
+From: Sean <seanlkml@sympatico.ca>
 Subject: Re: git and time
-Date: Wed, 27 Sep 2006 19:43:03 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0609271938070.23262@qynat.qvtvafvgr.pbz>
-References: <20060928024938.46785.qmail@web51009.mail.yahoo.com>
+Date: Wed, 27 Sep 2006 23:03:30 -0400
+Message-ID: <BAYC1-PASMTP01E800F7F176623630BE98AE1B0@CEZ.ICE>
+References: <BAYC1-PASMTP06CEC55B088A0817EB52CBAE1B0@CEZ.ICE>
+	<20060928024938.46785.qmail@web51009.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Sean <seanlkml@sympatico.ca>, Junio C Hamano <junkio@cox.net>,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>,
 	Linus Torvalds <torvalds@osdl.org>,
 	Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
 	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 28 04:57:18 2006
+X-From: git-owner@vger.kernel.org Thu Sep 28 05:04:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSm58-00043c-Sc
-	for gcvg-git@gmane.org; Thu, 28 Sep 2006 04:57:04 +0200
+	id 1GSmBh-00056B-3D
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 05:03:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965238AbWI1C5A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 22:57:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965239AbWI1C5A
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 22:57:00 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:46820 "HELO
-	warden.diginsite.com") by vger.kernel.org with SMTP id S965238AbWI1C47
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 22:56:59 -0400
-Received: from wlvims02.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Wed, 27 Sep 2006 19:56:59 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Wed, 27 Sep 2006 19:56:33 -0700
-X-X-Sender: dlang@dlang.diginsite.com
+	id S965241AbWI1DDd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 23:03:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965242AbWI1DDd
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 23:03:33 -0400
+Received: from bayc1-pasmtp01.bayc1.hotmail.com ([65.54.191.161]:32196 "EHLO
+	bayc1-pasmtp01.bayc1.hotmail.com") by vger.kernel.org with ESMTP
+	id S965241AbWI1DDc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Sep 2006 23:03:32 -0400
+X-Originating-IP: [65.94.249.130]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.94.249.130]) by bayc1-pasmtp01.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 27 Sep 2006 20:03:32 -0700
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with esmtp (Exim 4.43)
+	id 1GSmBO-0007eJ-Vp; Wed, 27 Sep 2006 23:03:31 -0400
 To: Matthew L Foster <mfoster167@yahoo.com>
+Message-Id: <20060927230330.90c63d23.seanlkml@sympatico.ca>
 In-Reply-To: <20060928024938.46785.qmail@web51009.mail.yahoo.com>
+X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.10.3; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 28 Sep 2006 03:03:32.0287 (UTC) FILETIME=[AE4764F0:01C6E2AA]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27971>
 
-On Wed, 27 Sep 2006, Matthew L Foster wrote:
+On Wed, 27 Sep 2006 19:49:37 -0700 (PDT)
+Matthew L Foster <mfoster167@yahoo.com> wrote:
 
-> --- Sean <seanlkml@sympatico.ca> wrote:
->
->> On Wed, 27 Sep 2006 18:48:11 -0700 (PDT)
->> Matthew L Foster <mfoster167@yahoo.com> wrote:
->>
->>> I actually understand that and agree. All I've been saying is it (git or gitweb.cgi) should
->> prefer
->>> the local timestamp rather than any "remote" timestamps for no other reason than to minimize
->> the
->>> possibility of timestamps being grossly inaccurate.
->>
->> But any local time stamp would be a _lie_.  The time stamp in the commit records
->> when it was actually created.  And as Junio has pointed out, hundreds of commits
->> will typically arrive in a repo at the exact same time.  Your suggestion would
->> have them all showing the exact same time.  That's not helpful, and it loses
->> important factual information.
->
 > How does git ensure that the timestamp in a commit records when it was actually created? I am not
 > saying throw away creation time, just that local time is more preferable and relevant and
 > git/gitweb.cgi should not in any way depend on time being configured correctly on each and every
+
+The time stamp held in each Git commit accurately records the system time
+of the machine on which it was created.  That's about the only guarantee 
+offered.
+
+The vast majority of the time this accurately records the proper time.
+In the rare case when the system time is set incorrectly Git will
+"accurately" record this value.  The good news is that Git continues
+to work without any problem even if this happens.  Hopefully, you
+can put your mind at ease over that issue.
+
 > git server. I think users of kernel.org's repo (or web interface) care more about when change X
 > was commited to it than when an author created/emailed change X, but perhaps I am wrong or don't
-> understand git or both.
+> understand git or both. 
 
-what you are missing is that there is no one true time 'when the change was 
-commited' to record.
+Well no, the time each commit was actually created and imported into its
+initial repository is also interesting to people.
 
-the closest that you can get in a distributed environement is 'when was this 
-change created' and that is the locally defined time on the box that created it 
-(or as Ted stated, some much more complicated process requireing network access 
-to a certified time server)
+But I happen to agree with you that it would be nice to _also_ show the
+time that each commit appeared in the kernel.org repo.  Unfortunately, the
+way Git is designed this just isn't easy.  In fact, Junio has gone so far
+as to dare everyone not to even try to implement that feature.  So we might
+just have to accept that we'll never see that information on kernel.org.
 
-after it has been created it has been commited (on that box). the same change 
-could be commited on 50 other boxes, either by receiving it through git, or by 
-receiving it via other methods.
+You will likely become a lot more comfortable with this, the more you get
+to know and use Git.  Perhaps playing with gitk is worthwhile, as Linus
+suggested.  Hopefully you can let this issue go, at least until you've
+played with git some more.
 
-all 51 of the boxes above are equally important to git. the fact that one or two 
-of those boxes happen to have a user named Linus doesn't matter.
-
-however, if what you want to know is 'in what order did this change get into the 
-tree I am looking at compared to other changes' git can tell you that and what 
-it will tell you is accurate, no matter what the clocks are set to on the 
-various systems.
-
-David Lang
+Sean
