@@ -1,86 +1,131 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: git and time
-Date: Wed, 27 Sep 2006 20:23:27 -0400
-Message-ID: <20060928002327.GA22593@spearce.org>
-References: <Pine.LNX.4.64.0609271606050.3952@g5.osdl.org> <20060928001241.62887.qmail@web51013.mail.yahoo.com>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: [PATCH] gitweb: Add history and blame to git_difftree_body()
+Date: Wed, 27 Sep 2006 17:24:49 -0700 (PDT)
+Message-ID: <20060928002449.64051.qmail@web31802.mail.mud.yahoo.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, Andreas Ericsson <ae@op5.se>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 28 02:23:42 2006
+Content-Type: multipart/mixed; boundary="0-476788578-1159403089=:63135"
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Thu Sep 28 02:25:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSjgh-00043x-G7
-	for gcvg-git@gmane.org; Thu, 28 Sep 2006 02:23:40 +0200
+	id 1GSjiK-0004NV-Fb
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 02:25:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965174AbWI1AXh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 20:23:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031283AbWI1AXg
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 20:23:36 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:33228 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S965173AbWI1AXf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 20:23:35 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GSjgN-00043n-PX; Wed, 27 Sep 2006 20:23:19 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id A77D020FB28; Wed, 27 Sep 2006 20:23:27 -0400 (EDT)
-To: Matthew L Foster <mfoster167@yahoo.com>
-Content-Disposition: inline
-In-Reply-To: <20060928001241.62887.qmail@web51013.mail.yahoo.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1031284AbWI1AYw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 20:24:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031285AbWI1AYw
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 20:24:52 -0400
+Received: from web31802.mail.mud.yahoo.com ([68.142.207.65]:5456 "HELO
+	web31802.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1031284AbWI1AYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Sep 2006 20:24:50 -0400
+Received: (qmail 64053 invoked by uid 60001); 28 Sep 2006 00:24:49 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=I093yk+nLuCyODH7RsJNC8/QnDoNYEtRrTYAxd40MONlKynUPQq1wKscMZyzdo/RqWYoMK38Z6pKHWDcXexavBnMF9AbozvTV5b9hT4zQV1eW/TN7ruuZ30H9LmCqla5liAcu7ePQ219fzmj13r3mFwHqyhEjKfTvXQtBz7033g=  ;
+Received: from [64.215.88.90] by web31802.mail.mud.yahoo.com via HTTP; Wed, 27 Sep 2006 17:24:49 PDT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27956>
 
-Matthew L Foster <mfoster167@yahoo.com> wrote:
-> 
-> Ignoring the separate issue of replication for a momment, can someone respond to my time integrity
-> question about whether a future version of git could trust/prefer its local time rather than a
-> remote/sub/parent (non replicated) git server's timestamp? How do we fix gitweb.cgi, ref-log? How
-> useful is gitweb.cgi if timestamps are all over the place? It does not make sense that commit
-> order is currently out of sync with time order in the main linux kernel tree git repo on
-> kernel.org. Why must each and every repo be dependent on time being set properly on all other git
-> servers? How useful is change history or commit order without some concept of (local) time order?
+--0-476788578-1159403089=:63135
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 8bit
+Content-Id: 
+Content-Disposition: inline
 
-Dependency order is all that matters.
+Add blame and history to Deleted files.
+Add blame and history to Modified or Type changed files.
+Add blame and history to Renamed or Copied files.
 
-It doesn't matter if K. Hacker makes a bug fix at 8 am his local
-time or 3 days ago.  All that matters is that K. Hacker made it by
-changing version A to version B.  Therefore commit B (containing
-the bug fix) depends on commit A and only commit A (which may in
-turn depend on commit A^, etc.).
+This allows us to do
+	blame->commit->blame->commit->blame->...
+instead of
+	blame->commit->file->blame->commit->file->blame->...
+which is longer and easier to get wrong.
 
-That dependency in turn implies that you can't have bug fix B without
-whatever feature/bug fix was A, and what that dependend on, etc.
-Thus you know you have some particular chain of events as a result
-of having B.  That's all that's interesting.
+Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
+---
+ gitweb/gitweb.perl |   35 +++++++++++++++++++++++------------
+ 1 files changed, 23 insertions(+), 12 deletions(-)
 
+--0-476788578-1159403089=:63135
+Content-Type: text/plain; name="p3.txt"
+Content-Description: 3222950043-p3.txt
+Content-Disposition: inline; filename="p3.txt"
 
-It _may_ matter to me that I received commit B (and maybe commit A)
-at 3 pm my local time.  It may not.
-
-In general I don't care too much about when a commit comes to me and
-when it doesn't or when it was written, though I do look at
-
-	git log next@{yesterday}..next
-
-to see what Junio has pushed out recently.  Since I tend to
-fetch only once per day (and usually around the same time of day)
-this works reasonably well.
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index c87f60e..f772fa3 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1721,9 +1721,12 @@ sub git_difftree_body {
+ 				print $cgi->a({-href => "#patch$patchno"}, "patch");
+ 				print " | ";
+ 			}
++			print $cgi->a({-href => href(action=>"blame", hash_base=>$parent,
++						     file_name=>$diff{'file'})},
++				      "blame") . " | ";
+ 			print $cgi->a({-href => href(action=>"history", hash_base=>$parent,
+-			                             file_name=>$diff{'file'})},
+-			              "history");
++						     file_name=>$diff{'file'})},
++				      "history");
+ 			print "</td>\n";
+ 
+ 		} elsif ($diff{'status'} eq "M" || $diff{'status'} eq "T") { # modified, or type changed
+@@ -1763,8 +1766,11 @@ sub git_difftree_body {
+ 				}
+ 				print " | ";
+ 			}
+-			print $cgi->a({-href => href(action=>"history",
+-						     hash_base=>$hash, file_name=>$diff{'file'})},
++			print $cgi->a({-href => href(action=>"blame", hash_base=>$hash,
++						     file_name=>$diff{'file'})},
++				      "blame") . " | ";
++			print $cgi->a({-href => href(action=>"history", hash_base=>$hash,
++						     file_name=>$diff{'file'})},
+ 				      "history");
+ 			print "</td>\n";
+ 
+@@ -1790,17 +1796,22 @@ sub git_difftree_body {
+ 				if ($action eq 'commitdiff') {
+ 					# link to patch
+ 					$patchno++;
+-					print " | " .
+-						$cgi->a({-href => "#patch$patchno"}, "patch");
++					print $cgi->a({-href => "#patch$patchno"}, "patch");
+ 				} else {
+-					print " | " .
+-						$cgi->a({-href => href(action=>"blobdiff",
+-						                       hash=>$diff{'to_id'}, hash_parent=>$diff{'from_id'},
+-						                       hash_base=>$hash, hash_parent_base=>$parent,
+-						                       file_name=>$diff{'to_file'}, file_parent=>$diff{'from_file'})},
+-						        "diff");
++					print $cgi->a({-href => href(action=>"blobdiff",
++								     hash=>$diff{'to_id'}, hash_parent=>$diff{'from_id'},
++								     hash_base=>$hash, hash_parent_base=>$parent,
++								     file_name=>$diff{'to_file'}, file_parent=>$diff{'from_file'})},
++						      "diff");
+ 				}
++				print " | ";
+ 			}
++			print $cgi->a({-href => href(action=>"blame", hash_base=>$parent,
++						     file_name=>$diff{'from_file'})},
++				      "blame") . " | ";
++			print $cgi->a({-href => href(action=>"history", hash_base=>$parent,
++						     file_name=>$diff{'from_file'})},
++				      "history");
+ 			print "</td>\n";
+ 
+ 		} # we should not encounter Unmerged (U) or Unknown (X) status
 -- 
-Shawn.
+1.4.2.1.g271e
+
+
+--0-476788578-1159403089=:63135--
