@@ -1,60 +1,63 @@
-From: Matthew L Foster <mfoster167@yahoo.com>
-Subject: Re: git and time
-Date: Thu, 28 Sep 2006 15:55:05 -0700 (PDT)
-Message-ID: <20060928225505.23517.qmail@web51003.mail.yahoo.com>
-References: <Pine.LNX.4.63.0609290032440.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: gitweb: using quotemeta
+Date: Thu, 28 Sep 2006 16:18:28 -0700
+Message-ID: <7vodszshq3.fsf@assigned-by-dhcp.cox.net>
+References: <20060928211600.97412.qmail@web31808.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Rogan Dawes <discard@dawes.za.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 29 00:55:35 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 29 01:19:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GT4mv-0002kD-5Q
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 00:55:30 +0200
+	id 1GT59x-0007Wm-Q2
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 01:19:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161365AbWI1WzJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 18:55:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161368AbWI1WzI
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 18:55:08 -0400
-Received: from web51003.mail.yahoo.com ([206.190.38.134]:47221 "HELO
-	web51003.mail.yahoo.com") by vger.kernel.org with SMTP
-	id S1161369AbWI1WzH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Sep 2006 18:55:07 -0400
-Received: (qmail 23519 invoked by uid 60001); 28 Sep 2006 22:55:06 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=e05XPH4Eonva+JRQecI92OJDyXdS5uPeebvIqz5YFTUY0Rko+Ot4EMS8QCCB8GC9veVpMbWmj++s94DQNwft91fM7lRu2FXxK1pdcHHi/ttQAQ8sOPJkM8gmBtLum/uxxrrXWtIkAAYJZdC/gm28cboBjcD89C9GutGJt8c4ecA=  ;
-Received: from [207.172.80.85] by web51003.mail.yahoo.com via HTTP; Thu, 28 Sep 2006 15:55:05 PDT
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0609290032440.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S1030386AbWI1XSw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 19:18:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030391AbWI1XSv
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 19:18:51 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:20639 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751027AbWI1XS3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Sep 2006 19:18:29 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060928231828.KZPO12909.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 28 Sep 2006 19:18:28 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id TzJW1V01o1kojtg0000000
+	Thu, 28 Sep 2006 19:18:31 -0400
+To: ltuikov@yahoo.com
+In-Reply-To: <20060928211600.97412.qmail@web31808.mail.mud.yahoo.com> (Luben
+	Tuikov's message of "Thu, 28 Sep 2006 14:15:59 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28065>
 
---- Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
-> what exactly are you trying to achieve here? 
+> Commit ab41dfbfd4f3f9fedac71550027e9813b11abe3d introduces
+> the use of quotemeta to quote the $filename of the snapshot.
+> The commit message explains:
+>
+>     Just in case filename contains end of line character.
+>
+> But quotemeta quotes any characters not matching /A-Za-z_0-9/.
+> Which means that we get strings like this:
+>     
+>     linux\-2\.6\.git\-5c2d97cb31fb77981797fec46230ca005b865799\.tar\.gz
+>
+> Is this the desired behavior?  FWIW, the backslash character
+> is not part of of the name, but ended up when the snapshot was written
+> to the filesystem.
 
-Timestamps not being all over the place in gitweb.cgi. 
+Ouch, that was a sloppy planning and coding, and sloppier
+reviewing.  Sorry.
 
-> If you really want to understand why git does not rely on timestamps, and 
-> why it should not, and why you can still be happy nevertheless, there are 
-> enough answers in this thread.
-
-I agree and understand that distributed git should not and does not rely on timestamps, I am just
-suggesting that it might be worthwhile to _locally_ track local commit time more efficiently for
-local use in things like gitweb.cgi. 
-
--Matt
-
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+What is the right quoting there?  Just quoting double-quotes?
