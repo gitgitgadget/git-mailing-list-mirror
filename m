@@ -1,96 +1,86 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] --stat: ensure at least one '-' for deletions, and one '+'
- for additions
-Date: Thu, 28 Sep 2006 17:37:39 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0609281735040.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: Re: Notes on Using Git with Subprojects
+Date: Thu, 28 Sep 2006 17:39:15 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0609281738120.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <45196628.9010107@gmail.com> <Pine.LNX.4.64.0609261629160.9789@iabervon.org>
+ <20060926213003.GA8177@spearce.org> <4519AACD.7020508@gmail.com>
+ <20060927080652.GA8056@admingilde.org> <451AADC3.40201@gmail.com>
+ <20060927173335.GC2807@coredump.intra.peff.net> <451B45D6.1010006@gmail.com>
+ <20060928035238.GC22897@spearce.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Thu Sep 28 17:37:53 2006
+Cc: A Large Angry SCM <gitzilla@gmail.com>, Jeff King <peff@peff.net>,
+	Martin Waitz <tali@admingilde.org>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 28 17:39:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSxxJ-0001NU-3D
-	for gcvg-git@gmane.org; Thu, 28 Sep 2006 17:37:45 +0200
+	id 1GSxz0-0001lX-Jm
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 17:39:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965057AbWI1Phm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 11:37:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965075AbWI1Phm
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 11:37:42 -0400
-Received: from mail.gmx.de ([213.165.64.20]:27784 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S965057AbWI1Phl (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Sep 2006 11:37:41 -0400
-Received: (qmail invoked by alias); 28 Sep 2006 15:37:40 -0000
+	id S965158AbWI1PjU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 11:39:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965118AbWI1PjT
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 11:39:19 -0400
+Received: from mail.gmx.de ([213.165.64.20]:1256 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S965158AbWI1PjS (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Sep 2006 11:39:18 -0400
+Received: (qmail invoked by alias); 28 Sep 2006 15:39:16 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp045) with SMTP; 28 Sep 2006 17:37:40 +0200
+  by mail.gmx.net (mp045) with SMTP; 28 Sep 2006 17:39:16 +0200
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org, junkio@cox.net
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20060928035238.GC22897@spearce.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28008>
 
+Hi,
 
-The number of '-' and '+' is still linear. The idea is that
-scaled-length := floor(a * length + b) with the following constraints: if 
-length == 1, scaled-length == 1, and the combined length of plusses 
-and minusses should not be larger than the width by a small margin. Thus,
+On Wed, 27 Sep 2006, Shawn Pearce wrote:
 
-	a + b == 1
+> A Large Angry SCM <gitzilla@gmail.com> wrote:
+> > Jeff King wrote:
+> > [...]
+> > >One thing that I believe some people have requested for subprojects is
+> > >to avoid downloading files/history for subprojects you're not interested
+> > >in.  I think this could be faciliated in this scheme by only cloning the
+> > >heads of the subprojects you're interested in (there would need to be
+> > >special machinery to handle this at the root level if we want to allow
+> > >making root commits without necessarily having all of the subprojects).
+> > 
+> > In what I'm suggesting, commits are local to a project's working 
+> > directory repository and are pushed somewhere else to be recorded long 
+> > term. Since projects are stand alone, possibly with dependencies, 
+> > working on a (sub)project without having other associated (sub)projects 
+> > is accomplished by checking it out.
+> > 
+> > >A first step to this would be an argument to git-clone to allow cloning
+> > >only a subset of refs.
+> > 
+> > Something like this?
+> > 
+> > 	git-init-db
+> > 	git-fetch <repository> <refspecs>
+> 
+> More like:
+> 
+>  	git-init-db
+>  	git-fetch --keep <repository> <refspecs>
+> 
+> but yes.  :-)
 
-and
-	a * max_plusses + b + a * max_minusses + b = width + 1
+You are missing the remotes/ information:
 
-The solution is
+git-repo-config remote.origin.url <repository>
+for spec in <refspecs>; do
+	git-repo-config remote.origin.fetch $spec ^$
+done
 
-	a * x + b = ((width - 1) * (x - 1) + max_change - 1)
-		 / (max_change - 1)
-
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-
----
-
-	While testing this, I hit a bug which was hard to squash: commit
-	v1.3.3~14 _always_ showed no minusses and plusses in the diffstat.
-
-	Until I realized that the offending diffstat was in the commit
-	_message_ :-)
-
- diff.c |   11 +++++++----
- 1 files changed, 7 insertions(+), 4 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 98c29bf..53c30bd 100644
---- a/diff.c
-+++ b/diff.c
-@@ -640,9 +640,12 @@ const char mime_boundary_leader[] = "---
- static int scale_linear(int it, int width, int max_change)
- {
- 	/*
--	 * round(width * it / max_change);
-+	 * make sure that at least one '-' is printed if there were deletions,
-+	 * and likewise for '+'.
- 	 */
--	return (it * width * 2 + max_change) / (max_change * 2);
-+	if (max_change < 2)
-+		return it;
-+	return ((it - 1) * (width - 1) + max_change - 1) / (max_change - 1);
- }
- 
- static void show_name(const char *prefix, const char *name, int len,
-@@ -774,9 +777,9 @@ static void show_stats(struct diffstat_t
- 		dels += del;
- 
- 		if (width <= max_change) {
--			total = scale_linear(total, width, max_change);
- 			add = scale_linear(add, width, max_change);
--			del = total - add;
-+			del = scale_linear(del, width, max_change);
-+			total = add + del;
- 		}
- 		show_name(prefix, name, len, reset, set);
- 		printf("%5d ", added + deleted);
--- 
-1.4.2.1.g89d5d-dirty
+Ciao,
+Dscho
