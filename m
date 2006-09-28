@@ -1,74 +1,52 @@
-From: Shawn Pearce <spearce@spearce.org>
+From: Jeff King <peff@peff.net>
 Subject: Re: Notes on Using Git with Subprojects
-Date: Wed, 27 Sep 2006 23:58:55 -0400
-Message-ID: <20060928035855.GD22897@spearce.org>
-References: <45196628.9010107@gmail.com> <Pine.LNX.4.64.0609261629160.9789@iabervon.org> <20060926213003.GA8177@spearce.org> <4519AACD.7020508@gmail.com> <20060927080652.GA8056@admingilde.org> <451AADC3.40201@gmail.com> <20060927173335.GC2807@coredump.intra.peff.net> <451B45D6.1010006@gmail.com> <20060928035225.GA22006@coredump.intra.peff.net>
+Date: Thu, 28 Sep 2006 00:00:27 -0400
+Message-ID: <20060928040027.GA22489@coredump.intra.peff.net>
+References: <45196628.9010107@gmail.com> <Pine.LNX.4.64.0609261629160.9789@iabervon.org> <20060926213003.GA8177@spearce.org> <4519AACD.7020508@gmail.com> <20060927080652.GA8056@admingilde.org> <451AADC3.40201@gmail.com> <20060927173335.GC2807@coredump.intra.peff.net> <451B45D6.1010006@gmail.com> <20060928035225.GA22006@coredump.intra.peff.net> <20060928035855.GD22897@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: A Large Angry SCM <gitzilla@gmail.com>,
 	Martin Waitz <tali@admingilde.org>,
 	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 28 05:59:19 2006
+X-From: git-owner@vger.kernel.org Thu Sep 28 06:00:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSn3E-0007hZ-UR
-	for gcvg-git@gmane.org; Thu, 28 Sep 2006 05:59:10 +0200
+	id 1GSn4b-0007r3-5r
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 06:00:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751281AbWI1D7F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 23:59:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751285AbWI1D7F
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 23:59:05 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:25318 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751281AbWI1D7D (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 23:59:03 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GSn2r-00036F-Ij; Wed, 27 Sep 2006 23:58:45 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id C9AFF20FB28; Wed, 27 Sep 2006 23:58:55 -0400 (EDT)
-To: Jeff King <peff@peff.net>
+	id S965164AbWI1EAa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 00:00:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965257AbWI1EAa
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 00:00:30 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:9654 "HELO
+	peff.net") by vger.kernel.org with SMTP id S965164AbWI1EA3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Sep 2006 00:00:29 -0400
+Received: (qmail 20927 invoked from network); 28 Sep 2006 00:00:27 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 28 Sep 2006 00:00:27 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Sep 2006 00:00:27 -0400
+To: Shawn Pearce <spearce@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <20060928035225.GA22006@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <20060928035855.GD22897@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27981>
 
-Jeff King <peff@peff.net> wrote:
-> On Wed, Sep 27, 2006 at 08:47:34PM -0700, A Large Angry SCM wrote:
+On Wed, Sep 27, 2006 at 11:58:55PM -0400, Shawn Pearce wrote:
+
+> If you are fetching a set of commits from a repository you probably
+> should be fetching any tags that point at the commits you've fetched.
+> They tend to be few compared to the commits, they tend to be small,
+> and they tend to be important milestones in the tracked project.
 > 
-> > >A first step to this would be an argument to git-clone to allow cloning
-> > >only a subset of refs.
-> > Something like this?
-> > 
-> > 	git-init-db
-> > 	git-fetch <repository> <refspecs>
-> 
-> Exactly, but I was suggesting something more user-friendly (e.g., it's
-> nice to use git-clone because it creates the remotes file). I was going
-> to hack up a quick change to git-clone, but I think some thought needs
-> to be given to semantics, especially with respect to tags (should it
-> imply no tags? Only tags which point to refs we're already fetching?).
+> I think that's why the native Git protocol sends tags for any
+> commits that were also sent.  :)
 
-If you are fetching a set of commits from a repository you probably
-should be fetching any tags that point at the commits you've fetched.
-They tend to be few compared to the commits, they tend to be small,
-and they tend to be important milestones in the tracked project.
+Oh, that's clever. :)
 
-I think that's why the native Git protocol sends tags for any
-commits that were also sent.  :)
+Do we do the right thing for non-git transports?
 
--- 
-Shawn.
+-Peff
