@@ -1,153 +1,67 @@
-From: Sasha Khapyorsky <sashak@voltaire.com>
-Subject: partial svnimport [was: Re: [PATCH] git-svnimport: Parse log message for Signed-off-by: lines]
-Date: Thu, 28 Sep 2006 22:44:57 +0300
-Message-ID: <20060928194457.GE10617@sashak.voltaire.com>
-References: <20060905184611.GB14732@sashak.voltaire.com> <7v1wqqc8dh.fsf@assigned-by-dhcp.cox.net> <20060905221754.GI14732@sashak.voltaire.com> <7v8xkxc2tr.fsf@assigned-by-dhcp.cox.net> <20060906125317.GA21645@sashak.voltaire.com> <20060906153314.GE6999@kiste.smurf.noris.de>
+From: Matthew L Foster <mfoster167@yahoo.com>
+Subject: Re: git and time
+Date: Thu, 28 Sep 2006 12:43:16 -0700 (PDT)
+Message-ID: <20060928194316.42986.qmail@web51004.mail.yahoo.com>
+References: <Pine.LNX.4.63.0609281941570.14200@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 28 21:40:06 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Rogan Dawes <discard@dawes.za.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 28 21:43:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GT1jf-0006jq-Rk
-	for gcvg-git@gmane.org; Thu, 28 Sep 2006 21:39:56 +0200
+	id 1GT1n0-0007aJ-0y
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 21:43:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161026AbWI1Tjx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 15:39:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161027AbWI1Tjx
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 15:39:53 -0400
-Received: from taurus.voltaire.com ([193.47.165.240]:26809 "EHLO
-	taurus.voltaire.com") by vger.kernel.org with ESMTP
-	id S1161026AbWI1Tjw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Sep 2006 15:39:52 -0400
-Received: from sashak ([172.25.5.107]) by taurus.voltaire.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 28 Sep 2006 22:39:48 +0300
-Received: by sashak (sSMTP sendmail emulation); Thu, 28 Sep 2006 22:44:57 +0300
-To: Matthias Urlichs <smurf@smurf.noris.de>
-Content-Disposition: inline
-In-Reply-To: <20060906153314.GE6999@kiste.smurf.noris.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-OriginalArrivalTime: 28 Sep 2006 19:39:48.0344 (UTC) FILETIME=[DB95D780:01C6E335]
+	id S1161029AbWI1TnS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 15:43:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161038AbWI1TnS
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 15:43:18 -0400
+Received: from web51004.mail.yahoo.com ([206.190.38.135]:2133 "HELO
+	web51004.mail.yahoo.com") by vger.kernel.org with SMTP
+	id S1161029AbWI1TnR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Sep 2006 15:43:17 -0400
+Received: (qmail 42988 invoked by uid 60001); 28 Sep 2006 19:43:16 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=vDbhEPNGVjYxW9LTexpn5OFOBQBW4RGsgzcOkbiFmZrVcenaET+0zJjsYoACAHc/ZTijRGPh5bulI9bJIzUG6V5DD+75jxECJTiLTIQyH2FNMKULBWD/MwVEyPwjlWeM422jNZYtjaqvDDdBdxr6ozMWKIQALs5EuYZhEcN+sjs=  ;
+Received: from [207.172.80.85] by web51004.mail.yahoo.com via HTTP; Thu, 28 Sep 2006 12:43:16 PDT
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0609281941570.14200@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28042>
 
-Hi,
+--- Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
-On 17:33 Wed 06 Sep     , Matthias Urlichs wrote:
-> Hi,
+> On Thu, 28 Sep 2006, Matthew L Foster wrote:
 > 
-> Sasha Khapyorsky:
-> > At least I didn't succeed with reversed layout. With option
-> > -T <trunk>/$project import works but only for trunk branch, attempts
-> > to specify branch as -b <branches> or -b <branches>/$project don't help,
-> > the same is with tags.
-> > 
-> That's true. The problem is that it wants the tag or branch name as the
-> last component of the path.
+> > It should be possible to export git data, through say a web interface, 
+> > in a such a way that local time order is consistent with commit order.
 > 
-> A more generic solution would be to use wildcards in the branch/tag
-> specification, to allow more than one wildcard, and to be able to
-> specify the exact form of the branch or tag name on the git side.
+> Why?
 
-Or perhaps just to specify path of the project (or sub-project) after
-trunk/branches*/ . Like in this patch:
+- So exported data is never/rarely in an inconsistent state with respect to commit order and local
+time order (data integrity).
 
+- To encourage people to care about/prefer local commit time rather than remote creation/emailed
+time
 
-diff --git a/git-svnimport.perl b/git-svnimport.perl
-index 988514e..86a6e8a 100755
---- a/git-svnimport.perl
-+++ b/git-svnimport.perl
-@@ -31,7 +31,8 @@ die "Need SVN:Core 1.2.1 or better" if $
- $ENV{'TZ'}="UTC";
- 
- our($opt_h,$opt_o,$opt_v,$opt_u,$opt_C,$opt_i,$opt_m,$opt_M,$opt_t,$opt_T,
--    $opt_b,$opt_r,$opt_I,$opt_A,$opt_s,$opt_l,$opt_d,$opt_D,$opt_S,$opt_F);
-+    $opt_b,$opt_r,$opt_I,$opt_A,$opt_s,$opt_l,$opt_d,$opt_D,$opt_S,$opt_F,
-+    $opt_P);
- 
- sub usage() {
- 	print STDERR <<END;
-@@ -39,17 +40,19 @@ Usage: ${\basename $0}     # fetch/updat
-        [-o branch-for-HEAD] [-h] [-v] [-l max_rev]
-        [-C GIT_repository] [-t tagname] [-T trunkname] [-b branchname]
-        [-d|-D] [-i] [-u] [-r] [-I ignorefilename] [-s start_chg]
--       [-m] [-M regex] [-A author_file] [-S] [-F] [SVN_URL]
-+       [-m] [-M regex] [-A author_file] [-S] [-F] [-P project] [SVN_URL]
- END
- 	exit(1);
- }
- 
--getopts("A:b:C:dDFhiI:l:mM:o:rs:t:T:Suv") or usage();
-+getopts("A:b:C:dDFhiI:l:mM:o:rs:t:T:SP:uv") or usage();
- usage if $opt_h;
- 
- my $tag_name = $opt_t || "tags";
- my $trunk_name = $opt_T || "trunk";
- my $branch_name = $opt_b || "branches";
-+my $project_name = $opt_P || "";
-+$project_name = "/" . $project_name if ($project_name);
- 
- @ARGV == 1 or @ARGV == 2 or usage();
- 
-@@ -356,11 +359,11 @@ sub revert_split_path($$) {
- 	my $svnpath;
- 	$path = "" if $path eq "/"; # this should not happen, but ...
- 	if($branch eq "/") {
--		$svnpath = "$trunk_name/$path";
-+		$svnpath = "$trunk_name$project_name/$path";
- 	} elsif($branch =~ m#^/#) {
--		$svnpath = "$tag_name$branch/$path";
-+		$svnpath = "$tag_name$branch$project_name/$path";
- 	} else {
--		$svnpath = "$branch_name/$branch/$path";
-+		$svnpath = "$branch_name/$branch$project_name/$path";
- 	}
- 
- 	$svnpath =~ s#/+$##;
-@@ -864,6 +867,20 @@ #	}
- 	print "DONE: $revision $dest $cid\n" if $opt_v;
- }
- 
-+sub project_path($$)
-+{
-+	my ($path, $project) = @_;
-+
-+	$path = "/".$path unless ($path =~ m#^\/#) ;
-+	return $1 if ($path =~ m#^$project\/(.*)$#);
-+
-+	$path =~ s#\.#\\\.#g;
-+	$path =~ s#\+#\\\+#g;
-+	return "/" if ($project =~ m#^$path.*$#);
-+
-+	return undef;
-+}
-+
- sub commit_all {
- 	# Recursive use of the SVN connection does not work
- 	local $svn = $svn2;
-@@ -883,6 +900,10 @@ sub commit_all {
- 	while(my($path,$action) = each %$changed_paths) {
- 		($branch,$path) = split_path($revision,$path);
- 		next if not defined $branch;
-+		if ($project_name) {
-+			$path = project_path($path, $project_name);
-+			next if not defined $path;
-+		}
- 		$done{$branch}{$path} = $action;
- 	}
- 	while(($branch,$changed_paths) = each %done) {
+- So people that user repo X, or binaries from repo X, know when bug fix Y/fancy new feature Z was
+committed/merged locally
 
+- In many situations "history" is incomplete without local commit time. If a company has a new
+driver they would probably prefer to know when the main kernel repo has it, not when they
+created/emailed it or when a remote repo committed it.
 
-(will submit if above is acceptable)
+-Matt
 
-> All of this should be specified in the repository's git config file,
-> not on the command line.
-
-It is for incremental imports? So we will not need to reproduce exact
-command line for each git-svnimport run? Good idea.
-
-Sasha
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
