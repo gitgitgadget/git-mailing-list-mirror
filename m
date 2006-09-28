@@ -1,59 +1,84 @@
-From: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
-Subject: [PATCH] fetch: Add output for the not fast forward case
-Date: Fri, 29 Sep 2006 00:15:34 +0200
-Message-ID: <873babbptl.fsf@gmail.com>
+From: Adrian Bunk <bunk@stusta.de>
+Subject: Re: [PATCH 1/3] diff --stat: allow custom diffstat output width.
+Date: Fri, 29 Sep 2006 00:24:02 +0200
+Message-ID: <20060928222402.GC3469@stusta.de>
+References: <7vr6xyjal0.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0609281349110.3952@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Fri Sep 29 00:16:29 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 29 00:24:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GT4AP-0002mT-Tn
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 00:15:42 +0200
+	id 1GT4Ie-0004mf-WD
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 00:24:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932528AbWI1WPi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 28 Sep 2006 18:15:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932527AbWI1WPi
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 18:15:38 -0400
-Received: from ifae-s0.ifae.es ([192.101.162.68]:3287 "EHLO ifae-s0.ifae.es")
-	by vger.kernel.org with ESMTP id S932528AbWI1WPh (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Sep 2006 18:15:37 -0400
-Received: from bela (caronte.ifae.es [192.101.162.199])
-	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id k8SMFYQ05113
-	for <git@vger.kernel.org>; Fri, 29 Sep 2006 00:15:35 +0200
-To: git <git@vger.kernel.org>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.50 (gnu/linux)
+	id S1161333AbWI1WYJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 18:24:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161334AbWI1WYJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 18:24:09 -0400
+Received: from emailhub.stusta.mhn.de ([141.84.69.5]:54283 "HELO
+	mailout.stusta.mhn.de") by vger.kernel.org with SMTP
+	id S1161333AbWI1WYG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Sep 2006 18:24:06 -0400
+Received: (qmail 20437 invoked from network); 28 Sep 2006 22:24:05 -0000
+Received: from r063144.stusta.swh.mhn.de (10.150.63.144)
+  by mailhub.stusta.mhn.de with SMTP; 28 Sep 2006 22:24:05 -0000
+Received: by r063144.stusta.swh.mhn.de (Postfix, from userid 1000)
+	id 104B211427C; Fri, 29 Sep 2006 00:24:03 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0609281349110.3952@g5.osdl.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28057>
 
+On Thu, Sep 28, 2006 at 01:54:27PM -0700, Linus Torvalds wrote:
+> 
+> 
+> On Tue, 26 Sep 2006, Junio C Hamano wrote:
+> >
+> > This adds two parameters to "diff --stat".
+> > 
+> >  . --stat-width=72 tells that the page should fit on 72-column output.
+> > 
+> >  . --stat-name-width=30 tells that the filename part is limited
+> >    to 30 columns.
+> 
+> Thinking some more about this, I have to say, I do hate the syntax.
+> 
+> It may be clear thanks to being verbose, but it's _hell_ to write.
+> 
+> It has the same problem the "--stat-with-patch" argument had: sure, it 
+> worked, but it was really really inconvenient, and just doing a 
+> combination of "--stat -p" is much nicer.
+> 
+> So how about just extending the existing "--stat" thing, and just making 
+> it do something like
+> 
+> 	git diff --stat=72,30
+> 
+> instead (perhaps along with a config option to set the defaults to 
+> something else if we want to).
+> 
+> What do you think?
+>...
 
-Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
----
+What about staying compatible with diffstat?
 
-This patch follows the notation of the other mail, but for the
-not-fast-forward case I think it makes more sense to use the '...'
-notation. If you don't like it, just use:
+IOW, change --stat-width=72 to -w72, or at least allow it alternatively?
 
-+		echo >&2 "  from $local to $2"
+> 		Linus
 
- git-fetch.sh |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+cu
+Adrian
 
-diff --git a/git-fetch.sh b/git-fetch.sh
-index 1bc6108..15d6800 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -190,6 +190,7 @@ fast_forward_local () {
- 		;;
- 	    esac || {
- 		echo >&2 "* $1: does not fast forward to $3;"
-+		echo >&2 "  $local...$2"
- 		case ",$force,$single_force," in
- 		*,t,*)
- 			echo >&2 "  forcing update."
---=20
-1.4.2.1.g5a0f
+-- 
+
+       "Is there not promise of rain?" Ling Tan asked suddenly out
+        of the darkness. There had been need of rain for many days.
+       "Only a promise," Lao Er said.
+                                       Pearl S. Buck - Dragon Seed
