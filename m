@@ -1,72 +1,49 @@
 From: Matthew L Foster <mfoster167@yahoo.com>
 Subject: Re: git and time
-Date: Thu, 28 Sep 2006 15:29:35 -0700 (PDT)
-Message-ID: <20060928222935.66578.qmail@web51012.mail.yahoo.com>
-References: <20060928195056.GA3751@spearce.org>
+Date: Thu, 28 Sep 2006 15:31:41 -0700 (PDT)
+Message-ID: <20060928223141.39864.qmail@web51010.mail.yahoo.com>
+References: <451C4BE6.20407@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Rogan Dawes <discard@dawes.za.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 29 00:29:51 2006
+Cc: git@vger.kernel.org, Rogan Dawes <discard@dawes.za.net>
+X-From: git-owner@vger.kernel.org Fri Sep 29 00:31:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GT4Nv-0005zF-Ow
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 00:29:40 +0200
+	id 1GT4Py-0006OG-AE
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 00:31:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161339AbWI1W3h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 18:29:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161340AbWI1W3h
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 18:29:37 -0400
-Received: from web51012.mail.yahoo.com ([68.142.224.82]:8325 "HELO
-	web51012.mail.yahoo.com") by vger.kernel.org with SMTP
-	id S1161339AbWI1W3g (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Sep 2006 18:29:36 -0400
-Received: (qmail 66580 invoked by uid 60001); 28 Sep 2006 22:29:35 -0000
+	id S1161342AbWI1Wbn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 18:31:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161344AbWI1Wbn
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 18:31:43 -0400
+Received: from web51010.mail.yahoo.com ([206.190.39.129]:28791 "HELO
+	web51010.mail.yahoo.com") by vger.kernel.org with SMTP
+	id S1161342AbWI1Wbm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Sep 2006 18:31:42 -0400
+Received: (qmail 39869 invoked by uid 60001); 28 Sep 2006 22:31:41 -0000
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
   s=s1024; d=yahoo.com;
   h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=BSzUkfYmplVqbylW42JxWzGB6JbqUp96h/61aXq/M8RYvhx+DhOoJzGvPuqyiRYNOsf19FkNrEct82Wqc0ED4oB6lQ/ZJXZIwuQuVTVCq6dFCQm/BNmEwDtppdq4EzOJcS1/X7IRgcv4bsMcDXjljlKZJ0wrBYsuCyRFJuvCYKA=  ;
-Received: from [207.172.80.85] by web51012.mail.yahoo.com via HTTP; Thu, 28 Sep 2006 15:29:35 PDT
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20060928195056.GA3751@spearce.org>
+  b=febDyXNtspBTFlMJtGDJ2XaGlIKMnge/CgBghbG/unfCmx4Ll5+OFig50jM2oYve9Fe9nIX9bsXJleTGssl2VmEextfN52ZbqgXyeos3T5gR4LLr5FnXqgmSpCn0HDQU3XreLaJDXhKP33v14Axu99ftXrTJYWxYaOvANYVF954=  ;
+Received: from [207.172.80.85] by web51010.mail.yahoo.com via HTTP; Thu, 28 Sep 2006 15:31:41 PDT
+To: git@vger.kernel.org
+In-Reply-To: <451C4BE6.20407@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28061>
 
---- Shawn Pearce <spearce@spearce.org> wrote:
+--- A Large Angry SCM <gitzilla@gmail.com> wrote:
 
-> > - So exported data is never/rarely in an inconsistent state with respect to commit order and
-> > local time order (data integrity).
-> 
-> Pick one.  You can't have "never" and "rarely".
+> There is no local commit time for things you get from a remote repository.
 
-I mean "rarely" in the sense that there is no guarantee that local time is exact but any
-inexactness would be confined locally.
- 
-> Track it by version, not timestamp.  Know what commit or tag SHA1
-> was used to produce that binary.  Ask GIT if the fix is in that
-> SHA1 ancestory or not.  I've already said that on this thread.
-
-So you are saying time, even local commit time, is completely unnecessary? I disagree. Git doesn't
-need to keep track of any times in a distributed way, it just might be worthwhile to keep track of
-local commit timestamps internally per repo.
-
-> I think they care more about what release of the kernel will have
-> that driver.  That can easily be determined by the DAG and by
-> understanding what branch(es) will wind up in the next release and
-> doing simple math: "Lets see, current release is version 2.6.9000,
-> so it will be in 2.6.9001."
-
-Even if people care more about "what release" that doesn't mean they don't care about (local
-commit) time.
+Are you saying it's impossible to internally record/track local commit/merge time for things you
+get from a remote repository, ref-log?
 
 -Matt
-
 
 __________________________________________________
 Do You Yahoo!?
