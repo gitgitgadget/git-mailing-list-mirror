@@ -1,109 +1,81 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: git and time
-Date: Thu, 28 Sep 2006 09:17:10 -0400
-Message-ID: <20060928131710.GE7469@thunk.org>
-References: <7vzmck7pis.fsf@assigned-by-dhcp.cox.net> <20060928014811.19568.qmail@web51005.mail.yahoo.com> <20060927220404.8e216945.seanlkml@sympatico.ca>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's in git.git
+Date: Thu, 28 Sep 2006 15:27:35 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0609281456520.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vodt0zbhc.fsf@assigned-by-dhcp.cox.net> <20060928093623.GJ20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthew L Foster <mfoster167@yahoo.com>,
-	Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 28 15:18:15 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 28 15:27:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSvlX-0005VW-0T
-	for gcvg-git@gmane.org; Thu, 28 Sep 2006 15:17:27 +0200
+	id 1GSvvT-00089p-N4
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 15:27:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932495AbWI1NRR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 09:17:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751877AbWI1NRR
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 09:17:17 -0400
-Received: from thunk.org ([69.25.196.29]:63212 "EHLO thunker.thunk.org")
-	by vger.kernel.org with ESMTP id S1751870AbWI1NRQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Sep 2006 09:17:16 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1GSvne-0006Ho-Pk; Thu, 28 Sep 2006 09:19:39 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.60)
-	(envelope-from <tytso@thunk.org>)
-	id 1GSvlG-00012X-4o; Thu, 28 Sep 2006 09:17:10 -0400
-To: Sean <seanlkml@sympatico.ca>
-Content-Disposition: inline
-In-Reply-To: <20060927220404.8e216945.seanlkml@sympatico.ca>
-User-Agent: Mutt/1.5.11
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S965417AbWI1N1i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 09:27:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751887AbWI1N1i
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 09:27:38 -0400
+Received: from mail.gmx.de ([213.165.64.20]:8623 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751886AbWI1N1h (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Sep 2006 09:27:37 -0400
+Received: (qmail invoked by alias); 28 Sep 2006 13:27:36 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp044) with SMTP; 28 Sep 2006 15:27:36 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20060928093623.GJ20017@pasky.or.cz>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28002>
 
-On Wed, Sep 27, 2006 at 10:04:04PM -0400, Sean wrote:
+Hi,
 
-> > I actually understand that and agree. All I've been saying is it
-> > (git or gitweb.cgi) should prefer the local timestamp rather than
-> > any "remote" timestamps for no other reason than to minimize the
-> > possibility of timestamps being grossly inaccurate.
+On Thu, 28 Sep 2006, Petr Baudis wrote:
+
+> Dear diary, on Thu, Sep 28, 2006 at 09:39:11AM CEST, I got a letter
+> where Junio C Hamano <junkio@cox.net> said that...
 > 
-> But any local time stamp would be a _lie_.  The time stamp in the
-> commit records when it was actually created.  And as Junio has
-> pointed out, hundreds of commits will typically arrive in a repo at
-> the exact same time.  Your suggestion would have them all showing
-> the exact same time.  That's not helpful, and it loses important
-> factual information.
+> >   + Git.pm lost Git.xs; its remnant still remains, though.
+> >     Notably, we still compile x86_64 with -fPIC, and the top
+> >     level Makefile has {BASIC,ALL}_{CFLAGS,LDFLAGS} distinction
+> >     and INSTALL talks about perl/blib/arch/auto.  I am torn
+> >     between removing these and keeping them; on one hand, they
+> >     are not needed and makes new developers wonder what the
+> >     distinction between BASIC and ALL are.  On the other hand,
+> >     we may eventually would want to reintroduce Git.xs in the
+> >     future and keeping them might help us.  But on the third
+> >     hand ;-), we can always resurrect it from the repository and
+> >     that is the point of using git to keep track of the project,
+> >     so removing them might not be such a big deal.  I'd like to
+> >     decide between this two and push it out to 'master' before
+> >     doing the -rc1.
+> 
+> FWIW, I'd say kill it all (perhaps except BASIC_*, I don't know about
+> that one) - we indeed can easily resurrect this, and that was the
+> presumption with which I've killed the rest of Git.xs. There's no point
+> in keeping legacy cruft around when we can take it back from the
+> history.
+> 
+> Perhaps we could throw a note to perl/Makefile saying
+> 
+> 	# If you are thinking about adding Git.xs support, please note
+> 	# that we have already been there before - see the #next branch
+> 	# history for more-or-less working one already added, and also
+> 	# the reason why it was removed for now.
+> 
+> so that noone wastes their time.
 
-There are two issues here.  Could a git tree record the local time
-that each commit entered the repository?  Sure.  Someone who wanted to
-hack up git so that it created a local db file associating the SHA
-hash name of the commit with when it arrived in its local repository.
-It would not be part of the "true" git repository information, and it
-could be something which is optional in the sense that if the
-information is lost, it's not the end of the world, vis-a-vis correct
-git functioning.
+Having ranted so often about Git.xs, I feel like I have to apologize. It 
+would be a better idea (IMHO) to put an effort into having the _option_ to 
+use Git.xs, since it is so much more efficient. If it is a strict opt-in, 
+I think it could remain in "next", and it would be much more likely that 
+people took up the ball and worked towards libifying git.
 
-The second question, though, is would it be *useful*?  Presumably this
-would be an option, so the user could request to see the time when a
-commit hit a particular repository, as well as when the commit was
-first created --- or perhaps both.
-
-The problem though is that this could easily get confusing, since it
-adds a distinction (which repository am I talking to?) which normally
-doesn't exist in git.  And it forces us to make explicit things that
-normally are kept hidden --- such as whether or not Linus does his
-work directly on the git tree which is exposed by master.kernel.org,
-or whether he does the work on his own local tree, and then pushes the
-changes to master.kernel.org.  
-
-In git, we believe that all repositories are equal, and that any sense
-that a particular repository is the "master" or the "mainline" is
-strictly speaking, a matter of convention.  What Matthew I think is
-asking for is direct support in git for that notion.
-
-So it *could* be done, but whether or not it is a good idea or worth
-the complexity is a different question.  One could imagine a
-completely different protocol, which exported the contents of the
-hypothetical db database described above.  So for maintainers that
-were *important*, and who were willing to make this information
-available, given a particular SHA hash of a commit, one could ask the
-question, "when did this commit first eneter your repository"?
-
-Matthew seems hung up on on desperately wanting to know this
-information as it relates to a particular repository --- Linus's.
-This is in fact different from when the commit hit the repository
-which is master.kernel.org which is why the local commit times on
-master.kernel.org wouldn't be useful.  
-
-HOWEVER, if it was judged important enough, and worth the complexity
-that it would add to git, the ability to track when a commit entered a
-particular repository and the ability to export it via some kind of
-web interface certainly be implemented.  Linus would then have to
-decide whether this was information he felt like making available to
-inquisitive seekers wanting to know this sort of info.
-
-						- Ted
+Ciao,
+Dscho
