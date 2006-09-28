@@ -1,58 +1,92 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: daemon.c fails to build on Darwin
-Date: 28 Sep 2006 08:48:36 -0700
-Message-ID: <86ejtw3sbv.fsf@blue.stonehenge.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: daemon.c fails to build on Darwin
+Date: Thu, 28 Sep 2006 18:01:10 +0200
+Message-ID: <81b0412b0609280901q109961cfydeaea7ff305eca67@mail.gmail.com>
+References: <86ejtw3sbv.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Sep 28 17:48:58 2006
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_6721_18430742.1159459270668"
+Cc: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Sep 28 18:01:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSy7t-0004Cb-Hq
-	for gcvg-git@gmane.org; Thu, 28 Sep 2006 17:48:42 +0200
+	id 1GSyK4-0007GN-MF
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 18:01:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964958AbWI1Psi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 11:48:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964962AbWI1Psi
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 11:48:38 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:18561 "EHLO
-	blue.stonehenge.com") by vger.kernel.org with ESMTP id S964958AbWI1Psh
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Sep 2006 11:48:37 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id 512EE8FAB6
-	for <git@vger.kernel.org>; Thu, 28 Sep 2006 08:48:37 -0700 (PDT)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 14662-03-8 for <git@vger.kernel.org>;
- Thu, 28 Sep 2006 08:48:36 -0700 (PDT)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id C6C708FAB7; Thu, 28 Sep 2006 08:48:36 -0700 (PDT)
-To: git@vger.kernel.org
-x-mayan-date: Long count = 12.19.13.12.4; tzolkin = 3 Kan; haab = 17 Chen
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751159AbWI1QBN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 12:01:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751225AbWI1QBN
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 12:01:13 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:63310 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751159AbWI1QBM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Sep 2006 12:01:12 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so762478nfa
+        for <git@vger.kernel.org>; Thu, 28 Sep 2006 09:01:11 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
+        b=FCrk4woJvaSkYyGndHAdgdTc+dGtzZ96Z2PPk+zVg6QyaXhobg0SZl5EJ+bDe4T2+I9oDNWnCXr+mlSpfw3cVY4TtiRQYZuS3H2piUzt/xAGojVcru0kYBJe1oG93JdgzfwV7z0g1CHi8DemdhPtblfOvzRjurBEV5iL/daZPBs=
+Received: by 10.78.200.20 with SMTP id x20mr1579837huf;
+        Thu, 28 Sep 2006 09:01:10 -0700 (PDT)
+Received: by 10.78.115.11 with HTTP; Thu, 28 Sep 2006 09:01:10 -0700 (PDT)
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+In-Reply-To: <86ejtw3sbv.fsf@blue.stonehenge.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28010>
 
+------=_Part_6721_18430742.1159459270668
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-If this is obvious, can someone fix it?  If not, I'll try to sort it out later
-tonight.
+On 28 Sep 2006 08:48:36 -0700, Randal L. Schwartz <merlyn@stonehenge.com> wrote:
+>
+> If this is obvious, can someone fix it?  If not, I'll try to sort it out later
+> tonight.
+>
 
-    gcc -o daemon.o -c -g -O2 -Wall -I/sw/include -I/opt/local/include -DSHA1_HEADER='<openssl/sha.h>' -DNO_STRLCPY daemon.c
-    daemon.c: In function 'fill_in_extra_table_entries':
-    daemon.c:460: error: 'HOST_NAME_MAX' undeclared (first use in this function)
-    daemon.c:460: error: (Each undeclared identifier is reported only once
-    daemon.c:460: error: for each function it appears in.)
-    daemon.c:460: warning: unused variable 'addrbuf'
-    make: *** [daemon.o] Error 1
+I used the patch attached.
 
-This is with 2d5b459107cf07bbb307cfb196c2007c497a6dd2.
+BTW, could we please _use_ the const keyword?
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+------=_Part_6721_18430742.1159459270668
+Content-Type: text/x-diff; name=fix-daemon-no-ipv6.patch; 
+	charset=ANSI_X3.4-1968
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_esnc3t3q
+Content-Disposition: attachment; filename="fix-daemon-no-ipv6.patch"
+
+ZGlmZiAtLWdpdCBhL2RhZW1vbi5jIGIvZGFlbW9uLmMKaW5kZXggNTMzNWQyMS4uOGI1NGM2MyAx
+MDA2NDQKLS0tIGEvZGFlbW9uLmMKKysrIGIvZGFlbW9uLmMKQEAgLTgzMCw3ICs4MzAsNyBAQCAj
+ZW5kaWYKIAogI2Vsc2UgLyogTk9fSVBWNiAqLwogCi1zdGF0aWMgaW50IHNvY2tzZXR1cChjaGFy
+ICpsaXNlbl9hZGRyLCBpbnQgbGlzdGVuX3BvcnQsIGludCAqKnNvY2tsaXN0X3ApCitzdGF0aWMg
+aW50IHNvY2tzZXR1cChjaGFyICpsaXN0ZW5fYWRkciwgaW50IGxpc3Rlbl9wb3J0LCBpbnQgKipz
+b2NrbGlzdF9wKQogewogCXN0cnVjdCBzb2NrYWRkcl9pbiBzaW47CiAJaW50IHNvY2tmZDsKZGlm
+ZiAtLWdpdCBhL2dpdC1jb21wYXQtdXRpbC5oIGIvZ2l0LWNvbXBhdC11dGlsLmgKaW5kZXggN2Vk
+MThlMS4uYTU0MjlkMSAxMDA3NTUKLS0tIGEvZ2l0LWNvbXBhdC11dGlsLmgKKysrIGIvZ2l0LWNv
+bXBhdC11dGlsLmgKQEAgLTMzLDYgKzMzLDEwIEBAICNpZm5kZWYgUEFUSF9NQVgKICNkZWZpbmUg
+UEFUSF9NQVggNDA5NgogI2VuZGlmCiAKKyNpZm5kZWYgSE9TVF9OQU1FX01BWAorI2RlZmluZSBI
+T1NUX05BTUVfTUFYIDI1NgorI2VuZGlmCisKICNpZmRlZiBfX0dOVUNfXwogI2RlZmluZSBOT1JF
+VFVSTiBfX2F0dHJpYnV0ZV9fKChfX25vcmV0dXJuX18pKQogI2Vsc2UKZGlmZiAtLWdpdCBhL2lu
+dGVycG9sYXRlLmMgYi9pbnRlcnBvbGF0ZS5jCmluZGV4IDYyNzAxZDguLjVkOWQxODggMTAwNjQ0
+Ci0tLSBhL2ludGVycG9sYXRlLmMKKysrIGIvaW50ZXJwb2xhdGUuYwpAQCAtOCwxMCArOCwxMCBA
+QCAjaW5jbHVkZSAiZ2l0LWNvbXBhdC11dGlsLmgiCiAjaW5jbHVkZSAiaW50ZXJwb2xhdGUuaCIK
+IAogCi12b2lkIGludGVycF9zZXRfZW50cnkoc3RydWN0IGludGVycCAqdGFibGUsIGludCBzbG90
+LCBjaGFyICp2YWx1ZSkKK3ZvaWQgaW50ZXJwX3NldF9lbnRyeShzdHJ1Y3QgaW50ZXJwICp0YWJs
+ZSwgaW50IHNsb3QsIGNvbnN0IGNoYXIgKnZhbHVlKQogewogCWNoYXIgKm9sZHZhbCA9IHRhYmxl
+W3Nsb3RdLnZhbHVlOwotCWNoYXIgKm5ld3ZhbCA9IHZhbHVlOworCWNoYXIgKm5ld3ZhbCA9IE5V
+TEw7CiAKIAlpZiAob2xkdmFsKQogCQlmcmVlKG9sZHZhbCk7CmRpZmYgLS1naXQgYS9pbnRlcnBv
+bGF0ZS5oIGIvaW50ZXJwb2xhdGUuaAppbmRleCBhNTVmYjhlLi4xOTBhMTgwIDEwMDY0NAotLS0g
+YS9pbnRlcnBvbGF0ZS5oCisrKyBiL2ludGVycG9sYXRlLmgKQEAgLTE2LDcgKzE2LDcgQEAgc3Ry
+dWN0IGludGVycCB7CiAJY2hhciAqdmFsdWU7CiB9OwogCi1leHRlcm4gdm9pZCBpbnRlcnBfc2V0
+X2VudHJ5KHN0cnVjdCBpbnRlcnAgKnRhYmxlLCBpbnQgc2xvdCwgY2hhciAqdmFsdWUpOworZXh0
+ZXJuIHZvaWQgaW50ZXJwX3NldF9lbnRyeShzdHJ1Y3QgaW50ZXJwICp0YWJsZSwgaW50IHNsb3Qs
+IGNvbnN0IGNoYXIgKnZhbHVlKTsKIGV4dGVybiB2b2lkIGludGVycF9jbGVhcl90YWJsZShzdHJ1
+Y3QgaW50ZXJwICp0YWJsZSwgaW50IG5pbnRlcnBzKTsKIAogZXh0ZXJuIGludCBpbnRlcnBvbGF0
+ZShjaGFyICpyZXN1bHQsIGludCByZXNsZW4sCg==
+------=_Part_6721_18430742.1159459270668--
