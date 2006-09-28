@@ -1,55 +1,58 @@
 From: Matthew L Foster <mfoster167@yahoo.com>
 Subject: Re: git and time
-Date: Thu, 28 Sep 2006 15:45:51 -0700 (PDT)
-Message-ID: <20060928224551.8086.qmail@web51002.mail.yahoo.com>
-References: <451C4BE6.20407@gmail.com>
+Date: Thu, 28 Sep 2006 15:55:05 -0700 (PDT)
+Message-ID: <20060928225505.23517.qmail@web51003.mail.yahoo.com>
+References: <Pine.LNX.4.63.0609290032440.14200@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Rogan Dawes <discard@dawes.za.net>
-X-From: git-owner@vger.kernel.org Fri Sep 29 00:46:22 2006
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Rogan Dawes <discard@dawes.za.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 29 00:55:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GT4dv-0000mG-OZ
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 00:46:12 +0200
+	id 1GT4mv-0002kD-5Q
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 00:55:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932533AbWI1Wpy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 18:45:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932536AbWI1Wpx
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 18:45:53 -0400
-Received: from web51002.mail.yahoo.com ([206.190.38.133]:2212 "HELO
-	web51002.mail.yahoo.com") by vger.kernel.org with SMTP
-	id S932533AbWI1Wpw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Sep 2006 18:45:52 -0400
-Received: (qmail 8088 invoked by uid 60001); 28 Sep 2006 22:45:51 -0000
+	id S1161365AbWI1WzJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 18:55:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161368AbWI1WzI
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 18:55:08 -0400
+Received: from web51003.mail.yahoo.com ([206.190.38.134]:47221 "HELO
+	web51003.mail.yahoo.com") by vger.kernel.org with SMTP
+	id S1161369AbWI1WzH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Sep 2006 18:55:07 -0400
+Received: (qmail 23519 invoked by uid 60001); 28 Sep 2006 22:55:06 -0000
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
   s=s1024; d=yahoo.com;
   h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=ezX3rpbcJAPhtywIZXHSdl5EAXAql92zQoLfy5U/KpRnhRB5h9m0/0N8ErOcd9rMCyvA4RuicC4zljC5AOAJHroalG1KSrEUm3vlznnl757l7iiKzbtslkYUjatzLrQUXa8noLbBKGxkjoVwqax8T7yP7FlTeEtPxlPydpo4Zfo=  ;
-Received: from [207.172.80.85] by web51002.mail.yahoo.com via HTTP; Thu, 28 Sep 2006 15:45:51 PDT
-To: git@vger.kernel.org
-In-Reply-To: <451C4BE6.20407@gmail.com>
+  b=e05XPH4Eonva+JRQecI92OJDyXdS5uPeebvIqz5YFTUY0Rko+Ot4EMS8QCCB8GC9veVpMbWmj++s94DQNwft91fM7lRu2FXxK1pdcHHi/ttQAQ8sOPJkM8gmBtLum/uxxrrXWtIkAAYJZdC/gm28cboBjcD89C9GutGJt8c4ecA=  ;
+Received: from [207.172.80.85] by web51003.mail.yahoo.com via HTTP; Thu, 28 Sep 2006 15:55:05 PDT
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0609290032440.14200@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28064>
 
---- A Large Angry SCM <gitzilla@gmail.com> wrote:
+--- Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
-> When I wrote "Sounds like you're suggesting that Git should not record 
-> any timestamps at all", I meant _you_ don't think Git should record 
-> _any_ timestamps since they can't be guaranteed to match the DAG.
+> what exactly are you trying to achieve here? 
 
-Well, I mean since there is no time order matching commit order guarantee for distributed git the
-only timestamp to use for anything locally is local time (if timestamps are used at all). The
-current remote creation or merge time could stay as is (I don't care either way), but at least
-gitweb.cgi should become local commit time/ref-log aware. Though if it's infeasible or requires
-some rearchitecting it might not happen.
+Timestamps not being all over the place in gitweb.cgi. 
 
--Matt 
+> If you really want to understand why git does not rely on timestamps, and 
+> why it should not, and why you can still be happy nevertheless, there are 
+> enough answers in this thread.
 
+I agree and understand that distributed git should not and does not rely on timestamps, I am just
+suggesting that it might be worthwhile to _locally_ track local commit time more efficiently for
+local use in things like gitweb.cgi. 
+
+-Matt
 
 __________________________________________________
 Do You Yahoo!?
