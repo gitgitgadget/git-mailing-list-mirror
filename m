@@ -1,206 +1,86 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: [PATCH] gitweb: Remove excessively redundant entries from git_difftree_body
-Date: Wed, 27 Sep 2006 17:23:25 -0700 (PDT)
-Message-ID: <20060928002325.70519.qmail@web31815.mail.mud.yahoo.com>
-Reply-To: ltuikov@yahoo.com
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: git and time
+Date: Wed, 27 Sep 2006 20:23:27 -0400
+Message-ID: <20060928002327.GA22593@spearce.org>
+References: <Pine.LNX.4.64.0609271606050.3952@g5.osdl.org> <20060928001241.62887.qmail@web51013.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="0-1072763538-1159403005=:70272"
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Thu Sep 28 02:23:41 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, Andreas Ericsson <ae@op5.se>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 28 02:23:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSjgX-00042S-CT
-	for gcvg-git@gmane.org; Thu, 28 Sep 2006 02:23:30 +0200
+	id 1GSjgh-00043x-G7
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 02:23:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031282AbWI1AX0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 20:23:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965173AbWI1AX0
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 20:23:26 -0400
-Received: from web31815.mail.mud.yahoo.com ([68.142.206.168]:48991 "HELO
-	web31815.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S965171AbWI1AX0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 20:23:26 -0400
-Received: (qmail 70521 invoked by uid 60001); 28 Sep 2006 00:23:25 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=P+6b1+RKqsLXKcbsMkiapphg/KlL2Ko4Oe9jp/KVcWn/6Coz8KgDuSB9IE5qx1qk5wdxaqv0wbwD6csKXIDFrUMsB0zfY4UBSQUK3dTaMK3lPls+ZJ/nQ2ktrfnBweC+kPo3lxcZrGuqhOQYPRpfvJeJTOBr6cB2zqaZbbrO9tc=  ;
-Received: from [64.215.88.90] by web31815.mail.mud.yahoo.com via HTTP; Wed, 27 Sep 2006 17:23:25 PDT
-To: git@vger.kernel.org
+	id S965174AbWI1AXh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 20:23:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031283AbWI1AXg
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 20:23:36 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:33228 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S965173AbWI1AXf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Sep 2006 20:23:35 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GSjgN-00043n-PX; Wed, 27 Sep 2006 20:23:19 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id A77D020FB28; Wed, 27 Sep 2006 20:23:27 -0400 (EDT)
+To: Matthew L Foster <mfoster167@yahoo.com>
+Content-Disposition: inline
+In-Reply-To: <20060928001241.62887.qmail@web51013.mail.yahoo.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27955>
 
---0-1072763538-1159403005=:70272
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 8bit
-Content-Id: 
-Content-Disposition: inline
+Matthew L Foster <mfoster167@yahoo.com> wrote:
+> 
+> Ignoring the separate issue of replication for a momment, can someone respond to my time integrity
+> question about whether a future version of git could trust/prefer its local time rather than a
+> remote/sub/parent (non replicated) git server's timestamp? How do we fix gitweb.cgi, ref-log? How
+> useful is gitweb.cgi if timestamps are all over the place? It does not make sense that commit
+> order is currently out of sync with time order in the main linux kernel tree git repo on
+> kernel.org. Why must each and every repo be dependent on time being set properly on all other git
+> servers? How useful is change history or commit order without some concept of (local) time order?
 
-1) All entries on the left are blobs and clicking on them
-leads to blobs.  No more diff or blob depending on what
-happened (modified or mode changed) to the file -- this goes
-to the right, in the "link" column.
+Dependency order is all that matters.
 
-2) Remove redundant "blob" from the link column on the right.
-This can now be had by clicking on the entry itself.
+It doesn't matter if K. Hacker makes a bug fix at 8 am his local
+time or 3 days ago.  All that matters is that K. Hacker made it by
+changing version A to version B.  Therefore commit B (containing
+the bug fix) depends on commit A and only commit A (which may in
+turn depend on commit A^, etc.).
 
-This reduces and simplifies the code.
+That dependency in turn implies that you can't have bug fix B without
+whatever feature/bug fix was A, and what that dependend on, etc.
+Thus you know you have some particular chain of events as a result
+of having B.  That's all that's interesting.
 
-Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
----
- gitweb/gitweb.perl |   92 +++++++++++++++++++---------------------------------
- 1 files changed, 34 insertions(+), 58 deletions(-)
---0-1072763538-1159403005=:70272
-Content-Type: text/plain; name="p2.txt"
-Content-Description: 1908141687-p2.txt
-Content-Disposition: inline; filename="p2.txt"
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 56638f2..c87f60e 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1692,47 +1692,39 @@ sub git_difftree_body {
- 			my $mode_chng = "<span class=\"file_status new\">[new $to_file_type";
- 			$mode_chng   .= " with mode: $to_mode_str" if $to_mode_str;
- 			$mode_chng   .= "]</span>";
--			print "<td>" .
--			      $cgi->a({-href => href(action=>"blob", hash=>$diff{'to_id'},
-+			print "<td>";
-+			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'to_id'},
- 			                             hash_base=>$hash, file_name=>$diff{'file'}),
--			              -class => "list"}, esc_html($diff{'file'})) .
--			      "</td>\n" .
--			      "<td>$mode_chng</td>\n" .
--			      "<td class=\"link\">" .
--			      $cgi->a({-href => href(action=>"blob", hash=>$diff{'to_id'},
--			                             hash_base=>$hash, file_name=>$diff{'file'})},
--			              "blob");
-+				       -class => "list"}, esc_html($diff{'file'}));
-+			print "</td>\n";
-+			print "<td>$mode_chng</td>\n";
-+			print "<td class=\"link\">";
- 			if ($action eq 'commitdiff') {
- 				# link to patch
- 				$patchno++;
--				print " | " .
--				      $cgi->a({-href => "#patch$patchno"}, "patch");
-+				print $cgi->a({-href => "#patch$patchno"}, "patch");
- 			}
- 			print "</td>\n";
- 
- 		} elsif ($diff{'status'} eq "D") { # deleted
- 			my $mode_chng = "<span class=\"file_status deleted\">[deleted $from_file_type]</span>";
--			print "<td>" .
--			      $cgi->a({-href => href(action=>"blob", hash=>$diff{'from_id'},
-+			print "<td>";
-+			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'from_id'},
- 			                             hash_base=>$parent, file_name=>$diff{'file'}),
--			               -class => "list"}, esc_html($diff{'file'})) .
--			      "</td>\n" .
--			      "<td>$mode_chng</td>\n" .
--			      "<td class=\"link\">" .
--			      $cgi->a({-href => href(action=>"blob", hash=>$diff{'from_id'},
--			                             hash_base=>$parent, file_name=>$diff{'file'})},
--			              "blob") .
--			      " | ";
-+			               -class => "list"}, esc_html($diff{'file'}));
-+			print "</td>\n";
-+			print "<td>$mode_chng</td>\n";
-+			print "<td class=\"link\">";
- 			if ($action eq 'commitdiff') {
- 				# link to patch
- 				$patchno++;
--				print " | " .
--				      $cgi->a({-href => "#patch$patchno"}, "patch");
-+				print $cgi->a({-href => "#patch$patchno"}, "patch");
-+				print " | ";
- 			}
- 			print $cgi->a({-href => href(action=>"history", hash_base=>$parent,
- 			                             file_name=>$diff{'file'})},
--			              "history") .
--			      "</td>\n";
-+			              "history");
-+			print "</td>\n";
- 
- 		} elsif ($diff{'status'} eq "M" || $diff{'status'} eq "T") { # modified, or type changed
- 			my $mode_chnge = "";
-@@ -1751,42 +1743,29 @@ sub git_difftree_body {
- 				$mode_chnge .= "]</span>\n";
- 			}
- 			print "<td>";
--			if ($diff{'to_id'} ne $diff{'from_id'}) { # modified
--				print $cgi->a({-href => href(action=>"blobdiff",
--				                             hash=>$diff{'to_id'}, hash_parent=>$diff{'from_id'},
--				                             hash_base=>$hash, hash_parent_base=>$parent,
--				                             file_name=>$diff{'file'}),
--				              -class => "list"}, esc_html($diff{'file'}));
--			} else { # only mode changed
--				print $cgi->a({-href => href(action=>"blob", hash=>$diff{'to_id'},
--				                             hash_base=>$hash, file_name=>$diff{'file'}),
--				              -class => "list"}, esc_html($diff{'file'}));
--			}
--			print "</td>\n" .
--			      "<td>$mode_chnge</td>\n" .
--			      "<td class=\"link\">" .
--			      $cgi->a({-href => href(action=>"blob", hash=>$diff{'to_id'},
--			                             hash_base=>$hash, file_name=>$diff{'file'})},
--			              "blob");
-+			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'to_id'},
-+						     hash_base=>$hash, file_name=>$diff{'file'}),
-+				       -class => "list"}, esc_html($diff{'file'}));
-+			print "</td>\n";
-+			print "<td>$mode_chnge</td>\n";
-+			print "<td class=\"link\">";
- 			if ($diff{'to_id'} ne $diff{'from_id'}) { # modified
- 				if ($action eq 'commitdiff') {
- 					# link to patch
- 					$patchno++;
--					print " | " .
--						$cgi->a({-href => "#patch$patchno"}, "patch");
-+					print $cgi->a({-href => "#patch$patchno"}, "patch");
- 				} else {
--					print " | " .
--						$cgi->a({-href => href(action=>"blobdiff",
--						                       hash=>$diff{'to_id'}, hash_parent=>$diff{'from_id'},
--						                       hash_base=>$hash, hash_parent_base=>$parent,
--						                       file_name=>$diff{'file'})},
--						        "diff");
-+					print $cgi->a({-href => href(action=>"blobdiff",
-+								     hash=>$diff{'to_id'}, hash_parent=>$diff{'from_id'},
-+								     hash_base=>$hash, hash_parent_base=>$parent,
-+								     file_name=>$diff{'file'})},
-+						      "diff");
- 				}
-+				print " | ";
- 			}
--			print " | " .
--				$cgi->a({-href => href(action=>"history",
--				                       hash_base=>$hash, file_name=>$diff{'file'})},
--				        "history");
-+			print $cgi->a({-href => href(action=>"history",
-+						     hash_base=>$hash, file_name=>$diff{'file'})},
-+				      "history");
- 			print "</td>\n";
- 
- 		} elsif ($diff{'status'} eq "R" || $diff{'status'} eq "C") { # renamed or copied
-@@ -1806,10 +1785,7 @@ sub git_difftree_body {
- 			                             hash=>$diff{'from_id'}, file_name=>$diff{'from_file'}),
- 			              -class => "list"}, esc_html($diff{'from_file'})) .
- 			      " with " . (int $diff{'similarity'}) . "% similarity$mode_chng]</span></td>\n" .
--			      "<td class=\"link\">" .
--			      $cgi->a({-href => href(action=>"blob", hash_base=>$hash,
--			                             hash=>$diff{'to_id'}, file_name=>$diff{'to_file'})},
--			              "blob");
-+			      "<td class=\"link\">";
- 			if ($diff{'to_id'} ne $diff{'from_id'}) {
- 				if ($action eq 'commitdiff') {
- 					# link to patch
+It _may_ matter to me that I received commit B (and maybe commit A)
+at 3 pm my local time.  It may not.
+
+In general I don't care too much about when a commit comes to me and
+when it doesn't or when it was written, though I do look at
+
+	git log next@{yesterday}..next
+
+to see what Junio has pushed out recently.  Since I tend to
+fetch only once per day (and usually around the same time of day)
+this works reasonably well.
+
 -- 
-1.4.2.1.g271e
-
-
---0-1072763538-1159403005=:70272--
+Shawn.
