@@ -1,68 +1,55 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Matthew L Foster <mfoster167@yahoo.com>
 Subject: Re: git and time
-Date: Thu, 28 Sep 2006 09:53:56 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609280949030.3952@g5.osdl.org>
-References: <d620685f0609271749p30da81d6p25cb759bf793d327@mail.gmail.com>
+Date: Thu, 28 Sep 2006 09:55:08 -0700 (PDT)
+Message-ID: <20060928165509.77413.qmail@web51001.mail.yahoo.com>
+References: <451BEA60.9050306@dawes.za.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 28 18:54:31 2006
+X-From: git-owner@vger.kernel.org Thu Sep 28 18:55:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSz9F-00049K-Hn
-	for gcvg-git@gmane.org; Thu, 28 Sep 2006 18:54:10 +0200
+	id 1GSzAJ-0004Qc-Fq
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 18:55:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751932AbWI1QyD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 12:54:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751933AbWI1QyD
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 12:54:03 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:20929 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751932AbWI1QyB (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Sep 2006 12:54:01 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8SGrvnW019096
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 28 Sep 2006 09:53:57 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8SGrueZ014585;
-	Thu, 28 Sep 2006 09:53:56 -0700
-To: apodtele <apodtele@gmail.com>
-In-Reply-To: <d620685f0609271749p30da81d6p25cb759bf793d327@mail.gmail.com>
-X-Spam-Status: No, hits=-0.461 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.154 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751933AbWI1QzL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 12:55:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751935AbWI1QzL
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 12:55:11 -0400
+Received: from web51001.mail.yahoo.com ([206.190.38.132]:36480 "HELO
+	web51001.mail.yahoo.com") by vger.kernel.org with SMTP
+	id S1751933AbWI1QzK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Sep 2006 12:55:10 -0400
+Received: (qmail 77415 invoked by uid 60001); 28 Sep 2006 16:55:09 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=ZEPapKLXtNHPjFVHwvvNx79FhkWJ+YhI6g2n3vcSBkmm1huY41BZV+IjMrAGLk+vzTnnfTcPzlnGjy9r6Jy5/sLANxSMe3jqSim3X8Xw07DdJpap2O7+Nn7FxCDnksKoIcdduB5IMv52j2+Y5E01DVkfymEl5Zdmm6KnRMn51sI=  ;
+Received: from [207.172.80.85] by web51001.mail.yahoo.com via HTTP; Thu, 28 Sep 2006 09:55:08 PDT
+To: Rogan Dawes <discard@dawes.za.net>
+In-Reply-To: <451BEA60.9050306@dawes.za.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28020>
 
 
+--- Rogan Dawes <discard@dawes.za.net> wrote:
 
-On Wed, 27 Sep 2006, apodtele wrote:
->
-> Shall we summarize? Time is a very important concept in physics.
+> I just don't think that any of the kernel developers feel the need to 
+> police any one else's clocks . . . they're more interested in the 
+> contents of the patch.
 
-Actually, even in physics (or very _much_ in physics), time doesn't 
-follow the nice procession that Matthew is kind of asking for.
+I am not saying git should "police any one else's clocks", I am saying git should be designed or
+configured in such a way, using local time, that it obviates the current reliance on everyone
+else's clock being set correctly. 
 
-In physics, particles can go backwards in time or forwards in time (the 
-_likelihood_ that a photon moves at exactly the speed of light is higher, 
-but on a quantum scale, strange things happen). 
+-Matt
 
-And everybody should by now know what relativity says: time does not 
-impose an "ordering" of events outside of the so-called "cone of light". 
-There is only an ordering imposed by _causality_, not by time.
-
-That, btw, is very similar to git. The only _true_ ordering in git is 
-causality. Time itself tends to have certain properties that makes it 
-_look_ like it is about causality, but in real life there is just a strong 
-correlation.
-
-Nature is sometimes stranger than our everyday experiences would have us 
-believe. And "time" is a hell of a lot more complicated than just a global 
-one-dimensional entity, steadily ticking away.
-
-			Linus
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
