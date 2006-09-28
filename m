@@ -1,56 +1,94 @@
-From: Jeff King <peff@peff.net>
+From: A Large Angry SCM <gitzilla@gmail.com>
 Subject: Re: Notes on Using Git with Subprojects
-Date: Thu, 28 Sep 2006 16:16:36 -0400
-Message-ID: <20060928201636.GA4386@coredump.intra.peff.net>
-References: <45196628.9010107@gmail.com> <Pine.LNX.4.64.0609261629160.9789@iabervon.org> <20060926213003.GA8177@spearce.org> <4519AACD.7020508@gmail.com> <20060927080652.GA8056@admingilde.org> <Pine.LNX.4.63.0609271152270.14200@wbgn013.biozentrum.uni-wuerzburg.de> <20060927113813.GC8056@admingilde.org> <Pine.LNX.4.63.0609271358100.14200@wbgn013.biozentrum.uni-wuerzburg.de> <20060927124413.GN1221MdfPADPa@greensroom.kotnet.org> <7vhcyt81gn.fsf@assigned-by-dhcp.cox.net>
+Date: Thu, 28 Sep 2006 13:30:39 -0700
+Message-ID: <451C30EF.8050305@gmail.com>
+References: <45196628.9010107@gmail.com> <Pine.LNX.4.64.0609261629160.9789@iabervon.org> <20060926213003.GA8177@spearce.org> <4519AACD.7020508@gmail.com> <20060927080652.GA8056@admingilde.org> <451AADC3.40201@gmail.com> <20060928073706.GE8056@admingilde.org>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: skimo@liacs.nl, Martin Waitz <tali@admingilde.org>,
-	A Large Angry SCM <gitzilla@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
-	Josh Triplett <josh@freedesktop.org>,
-	Jamey Sharp <jamey@minilop.net>
-X-From: git-owner@vger.kernel.org Thu Sep 28 22:17:00 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 28 22:30:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GT2JH-0007bS-Tb
-	for gcvg-git@gmane.org; Thu, 28 Sep 2006 22:16:44 +0200
+	id 1GT2Wv-0002eo-JK
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 22:30:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161171AbWI1UQk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 16:16:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161161AbWI1UQk
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 16:16:40 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:33722 "HELO
-	peff.net") by vger.kernel.org with SMTP id S1161175AbWI1UQj (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Sep 2006 16:16:39 -0400
-Received: (qmail 32626 invoked from network); 28 Sep 2006 16:16:36 -0400
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 28 Sep 2006 16:16:36 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Sep 2006 16:16:36 -0400
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vhcyt81gn.fsf@assigned-by-dhcp.cox.net>
+	id S1750756AbWI1Uaq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 16:30:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750748AbWI1Uaq
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 16:30:46 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:45454 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1750756AbWI1Uap (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Sep 2006 16:30:45 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so823177nfa
+        for <git@vger.kernel.org>; Thu, 28 Sep 2006 13:30:44 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=EomZ2Nbuu+Z0oIPf20sSFbZTXFPIcr4xcrlPZTjxl5bN573YeH5VUcYYCCQif+9iLDSP0+LxxvB39KmtJzW6D5FM7bDUGNnFTM/jWi8JZLP81PljjLEpXMniaF1d9gjqL3BkksqHw6YzixFvxz4SuoIf4ZB46YkadGjgd6ybu08=
+Received: by 10.49.8.15 with SMTP id l15mr572536nfi;
+        Thu, 28 Sep 2006 13:30:43 -0700 (PDT)
+Received: from ?10.0.0.6? ( [67.20.67.46])
+        by mx.gmail.com with ESMTP id b1sm6220040nfe.2006.09.28.13.30.41;
+        Thu, 28 Sep 2006 13:30:43 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060911)
+To: Martin Waitz <tali@admingilde.org>
+In-Reply-To: <20060928073706.GE8056@admingilde.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28046>
 
-On Wed, Sep 27, 2006 at 02:05:28PM -0700, Junio C Hamano wrote:
+Martin Waitz wrote:
+> On Wed, Sep 27, 2006 at 09:58:43AM -0700, A Large Angry SCM wrote:
+>> This means that modules are not separate, stand alone projects but, 
+>> rather, just a sub part of your bigger project. Very useful and 
+>> applicable in some situations but other situations want/need separate, 
+>> stand alone subprojects.
+> 
+> you can do everything with the submodule which would be possible with
+> a normal GIT repository.  And you can always clone it into an directory
+> which is not controlled by a parent project.
+> 
+> I really think that this is an very important property of a submodule.
 
-> Avoiding checking out parts of the project tree that you do not
-> care about while you work on such a single large project is
-> another interesting and useful area to think about, but I would
-> say at that point it is not about subproject at all -- it is
-> about working in a sparsely populated working tree of a single
-> project.
+I must be missing something.
 
-Keep in mind that it might not be an attempt to avoid checking out part
-of the tree, but rather importing part of the tree (the subproject) into
-your repository at all (to save space, download time, etc). So unless
-you're also proposing sparse repos, I think this still might be a
-subproject issue.
+I just read you original message in the (sub)thread again and you said:
 
--Peff
+	 * the .git/refs/heads directory of the submodule gets stored in
+	   .gitmodule/<modulename> inside the parent project
+
+If the submodule refs in the parent are a _copy_, then work performed in 
+the submodule outside of the parent will be lost when the parent is in 
+control of the submodule again.
+
+If the submodule refs in the parent are the actual submodule refs then 
+the submodule is not independent of the parent.
+
+If the submodule refs in the parent are a symlink to the refs in the 
+submodule, then the parent has no control over which version of the 
+submodule it gets on the next checkout since the submodule can update 
+the ref.
+
+[...]
+> One use-case which may be important here:
+> 
+> The submodule has two different branches which got forked and are not
+> intended to be merged again.  At some point in time the parent project
+> wants to switch from one branch of the submodule to another branch.
+> If a user still has modifications in the old branch and wants to
+> update the parent project then it is important to know if the local
+> modifications and those coming from the parent have to be merged or
+> should stay in different branches.
+> If the parent is switching branches there should only be some warning
+> if the user still has modifications in the old branch, giving him the
+> chance to port the modifications to the other branch.
+
+Again, this is leading me to believe that the submodule is not 
+independent of the parent.
