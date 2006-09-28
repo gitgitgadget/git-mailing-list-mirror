@@ -1,46 +1,65 @@
-From: apodtele <apodtele@gmail.com>
-Subject: Re: git and time
-Date: Thu, 28 Sep 2006 14:21:29 -0400
-Message-ID: <d620685f0609281121l53d67a9cn382b651eb7e936bd@mail.gmail.com>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH] gitweb: Remove excessively redundant entries from git_difftree_body
+Date: Thu, 28 Sep 2006 11:28:42 -0700 (PDT)
+Message-ID: <20060928182843.83600.qmail@web31802.mail.mud.yahoo.com>
+References: <7vmz8k7nhc.fsf@assigned-by-dhcp.cox.net>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Sep 28 20:21:56 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 28 20:29:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GT0Vz-0005xQ-Qi
-	for gcvg-git@gmane.org; Thu, 28 Sep 2006 20:21:44 +0200
+	id 1GT0cq-0007fe-Px
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 20:28:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751944AbWI1SVc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 14:21:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751939AbWI1SVb
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 14:21:31 -0400
-Received: from wr-out-0506.google.com ([64.233.184.234]:39604 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1751944AbWI1SVa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Sep 2006 14:21:30 -0400
-Received: by wr-out-0506.google.com with SMTP id 58so239899wri
-        for <git@vger.kernel.org>; Thu, 28 Sep 2006 11:21:30 -0700 (PDT)
+	id S1030351AbWI1S2q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 14:28:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030352AbWI1S2q
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 14:28:46 -0400
+Received: from web31802.mail.mud.yahoo.com ([68.142.207.65]:51047 "HELO
+	web31802.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1030351AbWI1S2p (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Sep 2006 14:28:45 -0400
+Received: (qmail 83602 invoked by uid 60001); 28 Sep 2006 18:28:43 -0000
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=bsptXyfG+IPlcq0o1UjRcP3SWTfoGTWCfZW/5Y4wpVbsXVZmgJuz2mRbu7ECksKL2q/I1c+1yYcf7WcJuBUnhJdDMe+aolF9UPIHvWDavlWWtGirKxVQNjZzdZfwjIV0YYb1vsGp12H8GwPny0Eb5zaGAFFcIQzvAtNAITLeDc4=
-Received: by 10.90.78.1 with SMTP id a1mr988575agb;
-        Thu, 28 Sep 2006 11:21:29 -0700 (PDT)
-Received: by 10.90.94.11 with HTTP; Thu, 28 Sep 2006 11:21:29 -0700 (PDT)
-To: git@vger.kernel.org
-Content-Disposition: inline
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=5pt9s3O8/+vws4D85fxSbGePLr2mgfYi71Y6OLHonfByFnou/Jpn3qTVE4Yy9BvbguN5ereiHX848X7AolY+XqEQX3L5u+2zrppM4v9ud7gNHW9r0WHRxBTmVGXIG3ppWP0LMXIt2IROBmffkiO91VC2za/56OXEH/NlbVye13U=  ;
+Received: from [64.215.88.90] by web31802.mail.mud.yahoo.com via HTTP; Thu, 28 Sep 2006 11:28:42 PDT
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vmz8k7nhc.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28030>
 
-On Thu, 28 Sep 2006, Matthew L Foster wrote:
->
-> It should be possible to export git data, through say a web interface,
-> in a such a way that local time order is consistent with commit order.
+--- Junio C Hamano <junkio@cox.net> wrote:
+> We lost blobdiff from commitdiff page with this patch, which I
+> think it probably is a good change.  We can say "when we display
+> a pathname you can click it to get the blob or tree".
 
-You are proposing to sort your genealogy tree by your ancestor's birthdays...
-Yeah, that is really cool and useful too! Look ma! The order is pretty random!
+I think so too.
+
+> By the way, just like your "blob" and "tree" link removal, I
+> think we can lose "commit" link in shortlog.  The list looks
+> rather cluttered with three links; we could replace it with
+> "snapshot" link if we wanted to.
+
+I agree.
+
+   Luben
+
+> I am neutral about doing that for long log pages.  The commit
+> titles are links there as well, but they do not look like "one
+> of the columns that can be clicked in a single line per row
+> table" as in shortlog page.  The page could also get "snapshot"
+> links.
+> 
+> 
+> 
+> 
+> 
