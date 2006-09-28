@@ -1,77 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] runstatus: do not recurse into subdirectories if not needed
-Date: Wed, 27 Sep 2006 17:09:28 -0700
-Message-ID: <7vac4k97if.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0609271315470.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Matthew L Foster <mfoster167@yahoo.com>
+Subject: Re: git and time
+Date: Wed, 27 Sep 2006 17:12:41 -0700 (PDT)
+Message-ID: <20060928001241.62887.qmail@web51013.mail.yahoo.com>
+References: <Pine.LNX.4.64.0609271606050.3952@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 28 02:09:50 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Andreas Ericsson <ae@op5.se>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 28 02:12:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSjTG-0001WO-Po
-	for gcvg-git@gmane.org; Thu, 28 Sep 2006 02:09:47 +0200
+	id 1GSjWA-00025y-2q
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 02:12:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031276AbWI1AJa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 20:09:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031278AbWI1AJa
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 20:09:30 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:2794 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1031276AbWI1AJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 20:09:29 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060928000928.FFBJ21457.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 27 Sep 2006 20:09:28 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Tc9W1V00n1kojtg0000000
-	Wed, 27 Sep 2006 20:09:31 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1031271AbWI1AMn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 20:12:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031274AbWI1AMn
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 20:12:43 -0400
+Received: from web51013.mail.yahoo.com ([68.142.224.83]:51088 "HELO
+	web51013.mail.yahoo.com") by vger.kernel.org with SMTP
+	id S1031271AbWI1AMm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Sep 2006 20:12:42 -0400
+Received: (qmail 62889 invoked by uid 60001); 28 Sep 2006 00:12:41 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=qgi7dsqtAI9qHy+xS+1eg3ehVKpuMTLJ9bmFrgklSS1UwJADYeIFBFKum1V4FB/Sa/YqPWxX2L4jz/yk8JK2p0p1o1UnJtUUwymTcjqRaQmmzMq0cSi5Ic0IEj0cSMfcZVWA+iLn6nrHTWSGs57/vL8TGPO3HVjlOuIXftK2ke4=  ;
+Received: from [207.172.80.85] by web51013.mail.yahoo.com via HTTP; Wed, 27 Sep 2006 17:12:41 PDT
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0609271606050.3952@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27950>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> This speeds up the case when you run git-status, having an untracked
-> subdirectory containing huge amounts of files.
->
-> It also clarifies the handling of hide_empty_directories; the old version
-> worked, but was hard to understand.
->
-> Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> ---
->  dir.c |   24 +++++++++++++++---------
->  1 files changed, 15 insertions(+), 9 deletions(-)
->
-> diff --git a/dir.c b/dir.c
-> index e2f472b..e69663c 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -274,6 +274,15 @@ static int dir_exists(const char *dirnam
->  	return !strncmp(active_cache[pos]->name, dirname, len);
->  }
->  
-> +static int dir_is_empty(const char *dirname)
-> +{
-> +	DIR *fdir = opendir(dirname);
-> +	int result = (readdir(fdir) == NULL);
-> +
-> +	closedir(fdir);
-> +	return result;
-> +}
-> +
+Ignoring the separate issue of replication for a momment, can someone respond to my time integrity
+question about whether a future version of git could trust/prefer its local time rather than a
+remote/sub/parent (non replicated) git server's timestamp? How do we fix gitweb.cgi, ref-log? How
+useful is gitweb.cgi if timestamps are all over the place? It does not make sense that commit
+order is currently out of sync with time order in the main linux kernel tree git repo on
+kernel.org. Why must each and every repo be dependent on time being set properly on all other git
+servers? How useful is change history or commit order without some concept of (local) time order?
 
-Does this really check if the directory is empty (I think you
-would read "." and ".." out of it at least)?
+-Matt 
 
-When the original code recurses into subdirectory, it seems to
-behave identically for a truly empty directory and a directory
-that has only ".git" (or excluded files in it under !show_ignored).
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
