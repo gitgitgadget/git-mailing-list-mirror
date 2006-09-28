@@ -1,59 +1,49 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: git and time
-Date: Thu, 28 Sep 2006 15:25:42 -0700
-Message-ID: <451C4BE6.20407@gmail.com>
-References: <20060928221237.85837.qmail@web51015.mail.yahoo.com>
-Reply-To: git@vger.kernel.org
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/3] diff --stat: allow custom diffstat output width.
+Date: Fri, 29 Sep 2006 00:26:40 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0609290025030.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vr6xyjal0.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0609281349110.3952@g5.osdl.org> <20060928222402.GC3469@stusta.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Rogan Dawes <discard@dawes.za.net>
-X-From: git-owner@vger.kernel.org Fri Sep 29 00:26:16 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 29 00:26:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GT4Ke-0005E1-6y
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 00:26:16 +0200
+	id 1GT4L8-0005MK-0K
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 00:26:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161336AbWI1WZs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 18:25:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161337AbWI1WZs
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 18:25:48 -0400
-Received: from nz-out-0102.google.com ([64.233.162.196]:30805 "EHLO
-	nz-out-0102.google.com") by vger.kernel.org with ESMTP
-	id S1161336AbWI1WZr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Sep 2006 18:25:47 -0400
-Received: by nz-out-0102.google.com with SMTP id n1so325686nzf
-        for <git@vger.kernel.org>; Thu, 28 Sep 2006 15:25:46 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=Lmniu3hIYoRwVyDcMs2aUadiXdMjMR0OsEOlEVSR87r9EJ2G83+xOlx0wh61zlD81f8CGCkWZLTw7KExOL7AmNwtcfLU7UvWdqhWUdRJnqsub74IJRLjAoB33nWEoXPZ22/Xa7uHIK9Q2gsFnhHdNCWspXhbSHTHKzjDHXDPHLs=
-Received: by 10.65.204.7 with SMTP id g7mr2643855qbq;
-        Thu, 28 Sep 2006 15:25:46 -0700 (PDT)
-Received: from ?10.0.0.6? ( [67.20.67.46])
-        by mx.gmail.com with ESMTP id d2sm2606169qbc.2006.09.28.15.25.45;
-        Thu, 28 Sep 2006 15:25:46 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060911)
-To: Matthew L Foster <mfoster167@yahoo.com>
-In-Reply-To: <20060928221237.85837.qmail@web51015.mail.yahoo.com>
+	id S1161337AbWI1W0n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 18:26:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161338AbWI1W0n
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 18:26:43 -0400
+Received: from mail.gmx.net ([213.165.64.20]:13448 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1161337AbWI1W0m (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Sep 2006 18:26:42 -0400
+Received: (qmail invoked by alias); 28 Sep 2006 22:26:41 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp010) with SMTP; 29 Sep 2006 00:26:41 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Adrian Bunk <bunk@stusta.de>
+In-Reply-To: <20060928222402.GC3469@stusta.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28059>
 
-Matthew L Foster wrote:
-> --- A Large Angry SCM <gitzilla@gmail.com> wrote:
-> 
->> Sounds like you're suggesting that Git should not record any timestamps 
->> at all. After all, Git doesn't need them.
-> 
-> Yeah kind of, since distributed git doesn't need timestamps and can't guarantee them the only time
-> that might make any sense to use locally is local commit time. 
+Hi,
 
-There is no local commit time for things you get from a remote repository.
+On Fri, 29 Sep 2006, Adrian Bunk wrote:
 
-When I wrote "Sounds like you're suggesting that Git should not record 
-any timestamps at all", I meant _you_ don't think Git should record 
-_any_ timestamps since they can't be guaranteed to match the DAG.
+> IOW, change --stat-width=72 to -w72, or at least allow it alternatively?
+
+With diff options, -w is identical to --ignore-all-space. (Yes, I know, it 
+is not in Documentation/diff-options.txt, but it is in "man diff".)
+
+Ciao,
+Dscho
