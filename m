@@ -1,49 +1,63 @@
-From: Timur Tabi <timur@freescale.com>
-Subject: Re: git-clone does not work if run in /temp
-Date: Thu, 28 Sep 2006 13:48:39 -0500
-Organization: Freescale
-Message-ID: <451C1907.4090104@freescale.com>
-References: <451C1635.9090608@freescale.com>
+From: fork0@t-online.de (Alex Riesen)
+Subject: [PATCH] fix daemon.c compilation for NO_IPV6=1
+Date: Thu, 28 Sep 2006 20:48:14 +0200
+Message-ID: <20060928184814.GA4294@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Sep 28 20:48:51 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Sep 28 20:48:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GT0wA-0003mw-0i
-	for gcvg-git@gmane.org; Thu, 28 Sep 2006 20:48:46 +0200
+	id 1GT0w9-0003mw-Eq
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 20:48:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030364AbWI1Ssm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 14:48:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030365AbWI1Ssm
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 14:48:42 -0400
-Received: from de01egw02.freescale.net ([192.88.165.103]:1176 "EHLO
-	de01egw02.freescale.net") by vger.kernel.org with ESMTP
-	id S1030364AbWI1Ssl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Sep 2006 14:48:41 -0400
-Received: from de01smr01.freescale.net (de01smr01.freescale.net [10.208.0.31])
-	by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id k8SJ1b53019683
-	for <git@vger.kernel.org>; Thu, 28 Sep 2006 12:01:37 -0700 (MST)
-Received: from [10.82.19.119] (ld0169-tx32.am.freescale.net [10.82.19.119])
-	by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id k8SImduU005908
-	for <git@vger.kernel.org>; Thu, 28 Sep 2006 13:48:40 -0500 (CDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.8.0.5) Gecko/20060720 SeaMonkey/1.0.3
-To: Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <451C1635.9090608@freescale.com>
+	id S1030360AbWI1Sse (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 14:48:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030364AbWI1Sse
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 14:48:34 -0400
+Received: from mailout11.sul.t-online.com ([194.25.134.85]:8578 "EHLO
+	mailout11.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S1030360AbWI1Ssd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Sep 2006 14:48:33 -0400
+Received: from fwd33.aul.t-online.de 
+	by mailout11.sul.t-online.com with smtp 
+	id 1GT0vt-000752-03; Thu, 28 Sep 2006 20:48:29 +0200
+Received: from tigra.home (ZZxmXMZJ8eAV+5LvQ5MS6O8Ke5h1PXWwxK-zVu-p15gCKUkG5GF-wB@[84.160.84.153]) by fwd33.sul.t-online.de
+	with esmtp id 1GT0vg-2C9gPI0; Thu, 28 Sep 2006 20:48:16 +0200
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 05426277AF;
+	Thu, 28 Sep 2006 20:48:14 +0200 (CEST)
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian))
+	id 1GT0ve-00020e-KR; Thu, 28 Sep 2006 20:48:14 +0200
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-ID: ZZxmXMZJ8eAV+5LvQ5MS6O8Ke5h1PXWwxK-zVu-p15gCKUkG5GF-wB
+X-TOI-MSGID: a2cb3646-f088-4ea5-8382-dcd758ee6211
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28033>
 
-Timur Tabi wrote:
-> If the current directory is '/temp', then git-clone fails:
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 
-Update: I just noticed I have a directory called "http:" (yes, with the colon) in my /temp directory, and that was causing the problem.
+---
 
-I still think this is a bug in git, though.  If I have time, I'll try to fix it myself.
+Just a typo.
 
--- 
-Timur Tabi
-Linux Kernel Developer @ Freescale
+diff --git a/daemon.c b/daemon.c
+index fc3951c..ad84928 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -834,7 +834,7 @@ #endif
+ 
+ #else /* NO_IPV6 */
+ 
+-static int socksetup(char *lisen_addr, int listen_port, int **socklist_p)
++static int socksetup(char *listen_addr, int listen_port, int **socklist_p)
+ {
+ 	struct sockaddr_in sin;
+ 	int sockfd;
