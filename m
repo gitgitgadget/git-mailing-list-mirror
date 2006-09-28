@@ -1,78 +1,90 @@
-From: Nicolas Pitre <nico@cam.org>
+From: Tom Prince <tom.prince@ualberta.net>
 Subject: Re: git and time
-Date: Wed, 27 Sep 2006 23:07:35 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0609272252041.9349@xanadu.home>
-References: <20060928001241.62887.qmail@web51013.mail.yahoo.com>
- <7vzmck7pis.fsf@assigned-by-dhcp.cox.net>
+Date: Wed, 27 Sep 2006 21:26:55 -0600
+Message-ID: <20060928032655.GB3650@socrates.priv>
+References: <BAYC1-PASMTP06CEC55B088A0817EB52CBAE1B0@CEZ.ICE>
+ <20060928024938.46785.qmail@web51009.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Matthew L Foster <mfoster167@yahoo.com>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 28 05:07:43 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Sep 28 05:23:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GSmFP-0005ny-Hu
-	for gcvg-git@gmane.org; Thu, 28 Sep 2006 05:07:39 +0200
+	id 1GSmV8-0008L3-0A
+	for gcvg-git@gmane.org; Thu, 28 Sep 2006 05:23:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965246AbWI1DHh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Sep 2006 23:07:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965248AbWI1DHg
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 23:07:36 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:29378 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S965246AbWI1DHg
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Sep 2006 23:07:36 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J6A007MX8ONQG60@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 27 Sep 2006 23:07:35 -0400 (EDT)
-In-reply-to: <7vzmck7pis.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
-To: Junio C Hamano <junkio@cox.net>
+	id S965245AbWI1DXq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Sep 2006 23:23:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965250AbWI1DXq
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Sep 2006 23:23:46 -0400
+Received: from shawidc-mo1.cg.shawcable.net ([24.71.223.10]:57056 "EHLO
+	pd4mo2so.prod.shaw.ca") by vger.kernel.org with ESMTP
+	id S965245AbWI1DXq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Sep 2006 23:23:46 -0400
+Received: from pd3mr7so.prod.shaw.ca (pd3mr7so-qfe3.prod.shaw.ca [10.0.141.23])
+ by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
+ with ESMTP id <0J6A007R89FLAH20@l-daemon> for git@vger.kernel.org; Wed,
+ 27 Sep 2006 21:23:45 -0600 (MDT)
+Received: from pn2ml6so.prod.shaw.ca ([10.0.121.150])
+ by pd3mr7so.prod.shaw.ca (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar
+ 15 2004)) with ESMTP id <0J6A00H0V9FL1D80@pd3mr7so.prod.shaw.ca> for
+ git@vger.kernel.org; Wed, 27 Sep 2006 21:23:45 -0600 (MDT)
+Received: from socrates.priv ([68.148.44.50])
+ by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
+ with ESMTP id <0J6A00MDQ9FJLX11@l-daemon> for git@vger.kernel.org; Wed,
+ 27 Sep 2006 21:23:45 -0600 (MDT)
+Received: from socrates.priv (localhost [127.0.0.1])
+	by socrates.priv (8.13.4/8.13.4) with ESMTP id k8S3QtqD009531	for
+ <git@vger.kernel.org>; Wed, 27 Sep 2006 21:26:55 -0600
+Received: (from cougar@localhost)	by socrates.priv (8.13.4/8.13.4/Submit)
+ id k8S3Qt2v009530	for git@vger.kernel.org; Wed, 27 Sep 2006 21:26:55 -0600
+In-reply-to: <20060928024938.46785.qmail@web51009.mail.yahoo.com>
+To: git@vger.kernel.org
+Mail-followup-to: git@vger.kernel.org
+Content-disposition: inline
+User-Agent: Mutt/1.5.11-2006-05-17
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/27974>
 
-On Wed, 27 Sep 2006, Junio C Hamano wrote:
+On Wed, Sep 27, 2006 at 07:49:37PM -0700, Matthew L Foster wrote:
+> How does git ensure that the timestamp in a commit records when it was
+> actually created?
+Git doesn't try. Git would be perfectly happy if time(2) returned a
+random value each time. No part of git uses the time in any meaningful
+way, it just keeps a record of it to display.
 
-> As Shawn said in a nearby thread, in a public and prominent
-> repository like kernel.org repository it may sometimes be
-> interesting and useful to know when each commit became available
-> on each branch.  I am reasonably sure that it would not however
-> make gitweb output easier to read to order its output by that
-> timestamp.   Linus pulls from subsystem maintainers all the time
-> and one pull may bring in dozens of commits, and they will get
-> the same timestamp if you did so.  Actually it is worse than
-> that.  He tends to batch, so he would have many such pulls and
-> patch applications in his private repository, perhaps over a few
-> hour, but the result will be pushed out to kernel.org with one
-> push operation.  To show the "truthful" time, your gitweb would
-> give the timestamp of that push operation for hundreds of
-> commits pushed out during that operation.
-> 
-> I do not personally think that would be useful at all.  And I
-> happen to know how expensive to teach gitweb to produce such an
-> output, so I would not seriously suggest anybody to try it.
+> I am not saying throw away creation time, just that local time is more
+> preferable and relevant and git/gitweb.cgi should not in any way
+> depend on time being configured correctly on each and every git
+> server.
+git and gitweb.cgi DO NOT in any way depend on time being configured
+correctly. If some machine has incorrectly configured time, then they
+will *correctly* display the strange time. 
 
-I beg to differ.  Such information might be really useful.  I agree 
-though that this is an expensive operation and gitweb might not be the 
-best place for it at all.
+> I think users of kernel.org's repo (or web interface) care
+> more about when change X was commited to it than when an author
+> created/emailed change X, but perhaps I am wrong or don't understand
+> git or both. 
+Based on comments on this list, it appears that most people don't aren't
+interested in when exactly a given change hits kernel.org. Several
+people have pointed out ways to get at the information you want, but
+none of have seen a need for the information, and so haven't the
+motivation to implement.
 
-For example... some times I look at git-log output and finds about a 
-certain bug fix that was apparently committed a month ago.  And 
-incidentally I recall having been bitten by that bug not really long 
-ago, say last week.  Although the bug fix was committed _somewhere_ last 
-month, what I would really want to know is just when _i_ received that 
-bug fix in my own repository to determine if it was before or after last 
-week.  So if it was before last week then I could conclude that the bug 
-fix didn't actually fix my bug.  Knowing that it has been committed last 
-month is absolutely useless to me in this case.
+It might help if you gave a use case for the information you want. If
+you give us a problem that you think the information will solve, the
+list will probably be able to you how to get at the information you
+want.
 
+I think you have some misconception of how git works. Git is designed to
+not lose information. Once a commit is created it is immutable,
+regardless of whether the time is wrong, or the author, or the commit
+message, or any bugs in the commit. This is a *feature*. It means you
+need to go out of your way to destroy history.
 
-Nicolas
+> -Matt
+
+  Tom
