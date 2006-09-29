@@ -1,74 +1,92 @@
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Subject: git sometimes stripping one path component in commit mails
-Date: Fri, 29 Sep 2006 10:41:26 +0200 (CEST)
-Message-ID: <Pine.LNX.4.62.0609291034020.28814@pademelon.sonytel.be>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git sometimes stripping one path component in commit mails
+Date: Fri, 29 Sep 2006 02:08:42 -0700
+Message-ID: <7v64f7nip1.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.62.0609291034020.28814@pademelon.sonytel.be>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Fri Sep 29 10:42:02 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 29 11:09:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTDwJ-0003iF-GA
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 10:41:47 +0200
+	id 1GTEMa-0001fb-Nl
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 11:08:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030412AbWI2Il3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Sep 2006 04:41:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030414AbWI2Il3
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 04:41:29 -0400
-Received: from witte.sonytel.be ([80.88.33.193]:16856 "EHLO witte.sonytel.be")
-	by vger.kernel.org with ESMTP id S1030412AbWI2Il2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Sep 2006 04:41:28 -0400
-Received: from pademelon.sonytel.be (mail.sonytel.be [43.221.60.197])
-	by witte.sonytel.be (8.12.10/8.12.10) with ESMTP id k8T8fQQe007884;
-	Fri, 29 Sep 2006 10:41:26 +0200 (MEST)
-To: git@vger.kernel.org,
-	Linux Kernel Development <linux-kernel@vger.kernel.org>
+	id S1161192AbWI2JIo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Sep 2006 05:08:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030448AbWI2JIo
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 05:08:44 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:36844 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1030447AbWI2JIn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Sep 2006 05:08:43 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060929090843.KXIZ12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 29 Sep 2006 05:08:43 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id U98e1V01F1kojtg0000000
+	Fri, 29 Sep 2006 05:08:39 -0400
+To: Geert Uytterhoeven <geert@linux-m68k.org>
+In-Reply-To: <Pine.LNX.4.62.0609291034020.28814@pademelon.sonytel.be> (Geert
+	Uytterhoeven's message of "Fri, 29 Sep 2006 10:41:26 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28106>
 
-	Hi,
+Geert Uytterhoeven <geert@linux-m68k.org> writes:
 
-I noticed git sometimes strips one path component from the filenames in the
-patches mailed to the git-commits mailing lists. This causes problems when
-piping these mails through diffstat.
+> Is this a current git bug, or a bug in the version used for those mailing
+> lists?
+>
+> | commit 94c12cc7d196bab34aaa98d38521549fa1e5ef76
+>...
+> | diff --git a/include/asm-s390/irqflags.h b/include/asm-s390/irqflags.h
+> | dissimilarity index 65%
+> | index 3b566a5..3f26131 100644
+> | --- include/asm-s390/irqflags.h
+> | +++ include/asm-s390/irqflags.h
+>       ^^
+>       woops
 
-Here is a part of an actual mail received through
-git-commits-head@vger.kernel.org to demonstrate this issue:
+This is a current git bug (and git bug ever since it started to
+say "dissimilarity index").  Thanks for noticing, and very sorry
+for the trouble.  It seems that a complete rewrite diff never
+worked and nobody seriously looked at them.
 
-Is this a current git bug, or a bug in the version used for those mailing
-lists?
+This should fix it.
 
-| commit 94c12cc7d196bab34aaa98d38521549fa1e5ef76
-| tree 8e0cec0ed44445d74a2cb5160303d6b4dfb1bc31
-| parent 25d83cbfaa44e1b9170c0941c3ef52ca39f54ccc
-| author Martin Schwidefsky <schwidefsky@de.ibm.com> 1159455403 +0200
-| committer Martin Schwidefsky <schwidefsky@de.ibm.com> 1159455403 +0200
+-- >8 --
+[PATCH] git-diff -B output fix.
 
-| diff --git a/include/asm-s390/irqflags.h b/include/asm-s390/irqflags.h
-| dissimilarity index 65%
-| index 3b566a5..3f26131 100644
-| --- include/asm-s390/irqflags.h
-| +++ include/asm-s390/irqflags.h
-      ^^
-      woops
+Geert noticed that complete rewrite diff missed the usual a/ and b/
+leading paths.  Pickaxe says it never worked, ever.
 
-| diff --git a/include/asm-s390/lowcore.h b/include/asm-s390/lowcore.h
-| index 18695d1..06583ed 100644
-| --- a/include/asm-s390/lowcore.h
-| +++ b/include/asm-s390/lowcore.h
-      ^^
-      OK
+Embarrassing.
 
-Gr{oetje,eeting}s,
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+ diff.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-						Geert
-
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-							    -- Linus Torvalds
+diff --git a/diff.c b/diff.c
+index 2464238..17f5a91 100644
+--- a/diff.c
++++ b/diff.c
+@@ -208,7 +208,7 @@ static void emit_rewrite_diff(const char
+ 	diff_populate_filespec(two, 0);
+ 	lc_a = count_lines(one->data, one->size);
+ 	lc_b = count_lines(two->data, two->size);
+-	printf("--- %s\n+++ %s\n@@ -", name_a, name_b);
++	printf("--- a/%s\n+++ b/%s\n@@ -", name_a, name_b);
+ 	print_line_count(lc_a);
+ 	printf(" +");
+ 	print_line_count(lc_b);
+-- 
+1.4.2.1.gce47b
