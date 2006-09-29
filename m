@@ -1,61 +1,95 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make cvsexportcommit work with filenames containing spaces.
-Date: Thu, 28 Sep 2006 23:37:58 -0700
-Message-ID: <7vy7s3npo9.fsf@assigned-by-dhcp.cox.net>
-References: <20060922223506.3377.34859.stgit@lathund.dewire.com>
-	<7vvenfw727.fsf@assigned-by-dhcp.cox.net>
-	<200609290128.56217.robin.rosenberg@dewire.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Fix approxidate() to understand more extended numbers
+Date: Thu, 28 Sep 2006 23:42:19 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0609282330440.3952@g5.osdl.org>
+References: <Pine.LNX.4.64.0609281211260.3952@g5.osdl.org>
+ <Pine.LNX.4.64.0609281212380.3952@g5.osdl.org>
+ <118833cc0609281712u2ce01bc5r8f3e97ae9c9a749a@mail.gmail.com>
+ <Pine.LNX.4.64.0609282300190.3952@g5.osdl.org> <7vd59fp5b9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 29 08:38:18 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Morten Welinder <mwelinder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 29 08:42:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTC0b-0000tb-SB
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 08:38:06 +0200
+	id 1GTC4q-0001sF-Ps
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 08:42:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161446AbWI2GiA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Sep 2006 02:38:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932545AbWI2GiA
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 02:38:00 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:4863 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932544AbWI2Gh7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Sep 2006 02:37:59 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060929063759.BAT12909.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 29 Sep 2006 02:37:59 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id U6du1V00b1kojtg0000000
-	Fri, 29 Sep 2006 02:37:55 -0400
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-In-Reply-To: <200609290128.56217.robin.rosenberg@dewire.com> (Robin
-	Rosenberg's message of "Fri, 29 Sep 2006 01:28:55 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161448AbWI2Gm0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Sep 2006 02:42:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161451AbWI2Gm0
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 02:42:26 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:42220 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1161448AbWI2GmZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Sep 2006 02:42:25 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8T6gKnW000415
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 28 Sep 2006 23:42:20 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8T6gJxQ006642;
+	Thu, 28 Sep 2006 23:42:19 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vd59fp5b9.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.458 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28096>
 
-Please do not do more than one patch per e-mail; I'll have to
-save the attachment in separate files and manually make commits,
-which is more work.
 
-The build procedure for the release to build rpms runs testsuite
-as part of it, so I need to think a bit how to proceed with this
-patch.  Leaving the test failing on FC5 means I won't be able to
-cut binary releases.  Checking early in the test script to see
-if "patch" can grok a diff for a file with whitespaces, and
-skipping the whitespace test if we have a bad "patch", seems to
-the best workaround.
 
-BTW, the addition of TAB to the patch tail is done by "git diff"  
-automatically for files with whitespace in them in the proposed
-updates version in "pu" (and it is done conditionally only for
-files whose names have whitespace), so I think your fix will
-become redundant when it graduates to "master".
+On Thu, 28 Sep 2006, Junio C Hamano wrote:
+
+> Linus Torvalds <torvalds@osdl.org> writes:
+> 
+> > On Thu, 28 Sep 2006, Morten Welinder wrote:
+> >>
+> >> Just don't hack at 12am or 12pm.
+> >
+> > I think 12pm is correct, but 12am probably isn't (12am should _subtract_ 
+> > 12, while 12pm does _not_ add 12).
+> 
+> But you have "if (hour > 0 && hour < 12)" in both am and pm so
+> assignment to tm would not trigger...
+
+That's not the point.
+
+If you write
+
+	12:30 am
+
+you really _should_ subtract 12, leaving you with 0:30. We don't. So we 
+end up with a 24-hour time of 12:30, which is obviously _pm_, and wrong.
+
+And "12 am" or "12 pm" doesn't work at all.
+
+> > That said, I have a rice cooker that avoids the problem by saying "0:10 PM" 
+> > for ten minutes past midday ;)
+> 
+> You eat rice?
+
+Ok, is it just me, or is that just a very odd question?
+
+I can see the question "You eat uni?". That really _does_ take a bit of 
+getting used to. And Natto I really _really_ don't see the point of. 
+
+But rice? Afaik, it's the most common food-staple in the world. It's not 
+exactly odd and exotic..
+
+> > Of course, all sane and civilized countries just use 24-hour format 
+> > anyway.
+> 
+> You are referring to the US, but neither is Japan sane nor
+> civilized ;-).
+
+Yeah, well, they've been learning bad habits. But at least they are 
+metric.
+
+		Linus
