@@ -1,79 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Fix approxidate() to understand more extended numbers
-Date: Fri, 29 Sep 2006 00:09:11 -0700
-Message-ID: <7vslibno88.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0609281211260.3952@g5.osdl.org>
-	<Pine.LNX.4.64.0609281212380.3952@g5.osdl.org>
-	<118833cc0609281712u2ce01bc5r8f3e97ae9c9a749a@mail.gmail.com>
-	<Pine.LNX.4.64.0609282300190.3952@g5.osdl.org>
-	<7vd59fp5b9.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0609282330440.3952@g5.osdl.org>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [PATCH] Make cvsexportcommit work with filenames containing spaces.
+Date: Fri, 29 Sep 2006 09:25:10 +0200
+Message-ID: <200609290925.11909.robin.rosenberg@dewire.com>
+References: <20060922223506.3377.34859.stgit@lathund.dewire.com> <200609290128.56217.robin.rosenberg@dewire.com> <7vy7s3npo9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 29 09:09:28 2006
+X-From: git-owner@vger.kernel.org Fri Sep 29 09:25:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTCUp-0007U9-76
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 09:09:20 +0200
+	id 1GTCk2-0002qS-C9
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 09:25:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161461AbWI2HJP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Sep 2006 03:09:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161460AbWI2HJO
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 03:09:14 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:20364 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1161461AbWI2HJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Sep 2006 03:09:13 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060929070912.DPGV26416.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 29 Sep 2006 03:09:12 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id U7981V00N1kojtg0000000
-	Fri, 29 Sep 2006 03:09:08 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0609282330440.3952@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 28 Sep 2006 23:42:19 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161470AbWI2HY7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Sep 2006 03:24:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161471AbWI2HY7
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 03:24:59 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:21868 "EHLO
+	torino.dewire.com") by vger.kernel.org with ESMTP id S1161470AbWI2HY6
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Sep 2006 03:24:58 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by torino.dewire.com (Postfix) with ESMTP id 3B4F4802898;
+	Fri, 29 Sep 2006 09:22:07 +0200 (CEST)
+Received: from torino.dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 00958-04; Fri, 29 Sep 2006 09:22:06 +0200 (CEST)
+Received: from lathund.dewire.com (lathund.dewire.com [10.1.2.238])
+	by torino.dewire.com (Postfix) with ESMTP id D71B180288F;
+	Fri, 29 Sep 2006 09:22:04 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.9.4
+In-Reply-To: <7vy7s3npo9.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28099>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+fredag 29 september 2006 08:37 skrev Junio C Hamano:
+> Please do not do more than one patch per e-mail; I'll have to
+> save the attachment in separate files and manually make commits,
+> which is more work.
+>
+> The build procedure for the release to build rpms runs testsuite
+> as part of it, so I need to think a bit how to proceed with this
+> patch.  Leaving the test failing on FC5 means I won't be able to
+> cut binary releases.  Checking early in the test script to see
+> if "patch" can grok a diff for a file with whitespaces, and
+> skipping the whitespace test if we have a bad "patch", seems to
+> the best workaround.
+>
+> BTW, the addition of TAB to the patch tail is done by "git diff"
+> automatically for files with whitespace in them in the proposed
+> updates version in "pu" (and it is done conditionally only for
+> files whose names have whitespace), so I think your fix will
+> become redundant when it graduates to "master".
 
->> > I think 12pm is correct, but 12am probably isn't (12am should _subtract_ 
->> > 12, while 12pm does _not_ add 12).
->> 
->> But you have "if (hour > 0 && hour < 12)" in both am and pm so
->> assignment to tm would not trigger...
->
-> That's not the point.
->
-> If you write
->
-> 	12:30 am
->
-> you really _should_ subtract 12, leaving you with 0:30. We don't. So we 
-> end up with a 24-hour time of 12:30, which is obviously _pm_, and wrong.
->
-> And "12 am" or "12 pm" doesn't work at all.
+But, then I can stop here, because that sounds like a much better solution. My
+hack is kind-of-kludgy anyway. I'll look in the pu branch. Still want the test 
+cases, although not complete?
 
-Ah, that's what you meant.  My brain a bit too tired from the
-day job tonight X-<.
-
->> > That said, I have a rice cooker that avoids the problem by saying "0:10 PM" 
->> > for ten minutes past midday ;)
->> 
->> You eat rice?
->
-> Ok, is it just me, or is that just a very odd question?
-
-Having rice cooker implied eating the stuff regularly and I just
-did not expect that from a north european.  Just showing my
-ignorance -- I've never been to Europe.
+-- robin
