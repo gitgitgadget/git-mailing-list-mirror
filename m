@@ -1,122 +1,75 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git and time
-Date: Thu, 28 Sep 2006 19:28:05 -0700
-Message-ID: <7virj7qudm.fsf@assigned-by-dhcp.cox.net>
-References: <20060929002748.GA11055@thunk.org>
-	<20060929014430.44203.qmail@web51006.mail.yahoo.com>
+Subject: Re: [PATCH] --stat: ensure at least one '-' for deletions, and one '+' for additions
+Date: Thu, 28 Sep 2006 19:28:58 -0700
+Message-ID: <7vd59fquc5.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0609281735040.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v1wpvvrww.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0609281942360.14200@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 29 04:28:19 2006
+X-From: git-owner@vger.kernel.org Fri Sep 29 04:29:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GT86r-0006QV-Ud
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 04:28:18 +0200
+	id 1GT87h-0006aF-00
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 04:29:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161270AbWI2C2K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 22:28:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161275AbWI2C2K
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 22:28:10 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:31401 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1161270AbWI2C2H (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Sep 2006 22:28:07 -0400
+	id S1030344AbWI2C3F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 22:29:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030392AbWI2C3E
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 22:29:04 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:35274 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1030344AbWI2C27 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Sep 2006 22:28:59 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao11.cox.net
+          by fed1rmmtao05.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060929022806.JFCR13992.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 28 Sep 2006 22:28:06 -0400
+          id <20060929022859.RYHB12909.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 28 Sep 2006 22:28:59 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id U2U81V00a1kojtg0000000
-	Thu, 28 Sep 2006 22:28:08 -0400
-To: Matthew L Foster <mfoster167@yahoo.com>
-In-Reply-To: <20060929014430.44203.qmail@web51006.mail.yahoo.com> (Matthew
-	L. Foster's message of "Thu, 28 Sep 2006 18:44:30 -0700 (PDT)")
+	id U2V11V00W1kojtg0000000
+	Thu, 28 Sep 2006 22:29:01 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28083>
 
-Matthew L Foster <mfoster167@yahoo.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Ok, I was wondering about that. In your example above the
-> internally unnecessary timestamp will be from Linus' private
-> repo, not master.kernel.org's?
+> However, I would argue it's actually an improvement. If you have as many 
+> additions as deletions, there should be an equal number of '-' and '+'.
 
-Yes, and it is stronger than that.  If somebody did a sata
-patch, sent that to Jeff over e-mail, and if the patch was
-accepted, Jeff will make a commit in his private repository,
-recording local time on his machine.  Later Linus may pull from
-Jeff and the commit object is transferred during that.
+That's one way to look at it.
 
-To Linus, the time he first saw the commit was the time he
-pulled from Jeff, so being able to tell when it came into his
-repository may help him if he pulled from other people too and
-then suddenly realizes his sata disk does not respond at all.
+Now how would you explain that a file that had 5 adds and 5
+deletes gets three pluses and three minuses while another file
+that had 10 adds and no delets gets seven pluses?
 
-He COULD say "it was working yesterday, I pulled from Jeff 3
-hours ago, and then David 2 hours ago, I did not do my own
-development during that time.  Did the breakage come when I
-pulled from Jeff or when I pulled from David?"  ref-log would
-let him do something like:
+Compute total and add, make del=total-add:
 
-	git checkout -b trythis master@{4.hours.ago}
+	foo |   10 ++++---
+        bar |   10 +++++++
 
-to make sure the state before he pulled from Jeff was a working
-state and then still on the trythis branch he cuold do
+Compute add and del independently:
 
-	git reset --hard master@{2.hours.30.minutes.ago}
+	foo |   10 +++---
+        bar |   10 +++++++
 
-to see if the state after he pulled from Jeff was broken.
+> After all, the integer number of symbols is just an approximation anyway.
 
-	Side note: in reality he does not have to care.  He can
-	just bisect it without using any of his "pull boundary"
-	time.
+Yes, and my guess is that the graph is usually much wider than 7
+columns as depicted above, so 3 vs 4 inconsistency in the former
+is less noticeable than 6 vs 7 inconsistency in the latter to
+the eye.  If we have to make a compromise, I think getting the
+lines for the files that have the same number of changes to line
+up at the right end would be more important.
 
-So that was discussion about the time Linus first saw the
-commit.  What about us, general public?  Until Linus pushes out
-the merge result, we would not see it.  Anyway, eventually he
-will push his tip of the branch out to kernel.org and rsync will
-mirror to public git:// and gitweb machines.
-
-What's the local time the general public sees the commit for the
-first time?  It's (forgetting for now the rsync mirroring delay)
-the time Linus pushed the tip of the branch out.  Along with all
-other hundreds of commits he acquired since the last time he
-pushed his tree out.
-
-It is sometimes useful to know when a particular commit has
-become available to the general public.  I do not think anybody
-is denying it.
-
-But it is a completely separate issue if it is useful to label
-the commits that happened to be pushed out together at the same
-time with the same timestamp on the gitweb short-log page (or
-short-log corner on the summary page).  Most of the time you
-will see commits pushed out by the same push operation and
-having exactly the same timestamp.  That's not very useful way
-to present the information.
-
-	Side note: some commits arrive kernel.org machine
-	earlier than others because Linus does not have infinite
-	bandwidth to kernel.org, but these hundreds of commits
-	become visible to the general public exactly the same
-	time, because we send them and as the last operation we
-	update the tip of the branch.  So you cannot even say
-	"record the time down to the second they arrived the
-	kernel.org repository" -- until the branch tip is
-	updated the general public cannot see them so the
-	arrival time (mtime of .git/objects/??/???...?? files)
-	does not even matter.
-
-If somebody feels strongly about it, I would suggest adding that
-information on the commit page of gitweb, where the program
-needs to deal with only one commit.  That would help somebody
-who is interested in _one_ particular commit and wants to know
-when it has become available to the general public.
-
--
+Another way is what I suggested earlier -- if the width is odd,
+drop one to avoid this problem altogether.  That would also be
+acceptable and probably be more consistent.
