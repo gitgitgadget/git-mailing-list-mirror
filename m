@@ -1,60 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/3] diff --stat: allow custom diffstat output width.
-Date: Thu, 28 Sep 2006 18:35:07 -0700
-Message-ID: <7vk63nsbec.fsf@assigned-by-dhcp.cox.net>
-References: <7vr6xyjal0.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0609281349110.3952@g5.osdl.org>
-	<7vac4ju1f1.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0609281458420.3952@g5.osdl.org>
+From: Matthew L Foster <mfoster167@yahoo.com>
+Subject: Re: git and time
+Date: Thu, 28 Sep 2006 18:44:30 -0700 (PDT)
+Message-ID: <20060929014430.44203.qmail@web51006.mail.yahoo.com>
+References: <20060929002748.GA11055@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 29 03:35:33 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Rogan Dawes <discard@dawes.za.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 29 03:46:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GT7HY-0001K5-MP
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 03:35:17 +0200
+	id 1GT7Qf-0003Ms-Cz
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 03:44:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161263AbWI2BfL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 21:35:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161266AbWI2BfL
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 21:35:11 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:53222 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1161263AbWI2BfJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Sep 2006 21:35:09 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060929013508.ZQFL12581.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 28 Sep 2006 21:35:08 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id U1bA1V01F1kojtg0000000
-	Thu, 28 Sep 2006 21:35:11 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0609281458420.3952@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 28 Sep 2006 15:07:16 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751247AbWI2Boi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 21:44:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751248AbWI2Boi
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 21:44:38 -0400
+Received: from web51006.mail.yahoo.com ([206.190.38.137]:55155 "HELO
+	web51006.mail.yahoo.com") by vger.kernel.org with SMTP
+	id S1751247AbWI2Boh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Sep 2006 21:44:37 -0400
+Received: (qmail 44205 invoked by uid 60001); 29 Sep 2006 01:44:30 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=Kt506ckGcnok+xoOzDulEobwoC79o5ZYSj1XGDoKXZG4jZJrGRsTXKs2QjMTNgkHHE41gYgUroMhZ4sCGiXxPM1VbD/vjTzfmWbXFxy2T80k8PJFv+LgJCscHg6fwK6aoYF0iu9xlX0Cyp5xITHCjr9MYw8gmCszFriJ3K3Q/3c=  ;
+Received: from [207.172.80.85] by web51006.mail.yahoo.com via HTTP; Thu, 28 Sep 2006 18:44:30 PDT
+To: Theodore Tso <tytso@mit.edu>
+In-Reply-To: <20060929002748.GA11055@thunk.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28081>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+--- Theodore Tso <tytso@mit.edu> wrote:
 
-> You should probably check the "width" and "name_width" values for sanity.
+> Git mirroring takes place using the same pushing and pulling that are
+> used with multiple repositories.  That's why if Linus does a huge
+> amount of work over the period of a day or two in his private
+> repository, and then publishes it master.kernel.org, the "local" time
+> on master.kernel.org will be the time when they are pushed to
+> master.kernel.org, because it's done via the same operation as any
+> other repository push or pull.
+> 
+> That's what everyone has been trying to tell you for this entire
+> thread....
 
-The output code forces (well, at least tries to force) some
-sanity into these values when they are not, so probably we do
-not need it.  If we want, we could check something like:
+Ok, I was wondering about that. In your example above the internally unnecessary timestamp will be
+from Linus' private repo, not master.kernel.org's? Even now knowing replication = merge/push/pull
+I still think it worthwile for local commit time to be effiently tracked locally and/or if already
+available in the local ref-log used by things like gitweb.cgi if feasible but I might be the only
+one that cares this much about time. Gitweb.cgi currently relies at least display/visually on
+those internally unnecessary and potentially misleading timestamps...
 
-    	if (name_width < 10 || width - name_width < 15)
-		die("at least 10 for name, and 15+name for width please");
+-Matt
 
-The number 10 is totally arbitrary; among the total area that is
-given by width, after subtracting name_width, 10 columns are
-taken by left and right end space, vertical bar and numbers, so
-the above gives at least 5 columns to draw the graph.
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
