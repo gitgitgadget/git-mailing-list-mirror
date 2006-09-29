@@ -1,66 +1,48 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: git and time
-Date: Fri, 29 Sep 2006 13:46:16 -0400
-Message-ID: <BAYC1-PASMTP0367047EB7DF5A3C38BCABAE180@CEZ.ICE>
-References: <20060926233321.GA17084@coredump.intra.peff.net>
-	<20060927002745.15344.qmail@web51005.mail.yahoo.com>
-	<BAYC1-PASMTP084ACE9B12C54DABFE8EB9AE1A0@CEZ.ICE>
-	<20060926205632.5d487cc9.seanlkml@sympatico.ca>
-	<Pine.LNX.4.63.0609261746160.22495@qynat.qvtvafvgr.pbz>
-	<7vk63qnlc2.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0609261823540.22495@qynat.qvtvafvgr.pbz>
-	<7vhcyukpkc.fsf@assigned-by-dhcp.cox.net>
-	<20060926224133.714337eb.seanlkml@sympatico.ca>
-	<20060929173736.GA13635@delft.aura.cs.cmu.edu>
+From: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
+Subject: [PATCH 0/5] fetch & co: misc output cleanup
+Date: Fri, 29 Sep 2006 20:05:01 +0200
+Message-ID: <87r6xu1rci.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	David Lang <dlang@digitalinsight.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 29 19:46:26 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Sep 29 20:05:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTMRK-0008Rb-A1
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 19:46:22 +0200
+	id 1GTMjW-0003PK-Iy
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 20:05:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161311AbWI2RqT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Sep 2006 13:46:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161318AbWI2RqT
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 13:46:19 -0400
-Received: from bayc1-pasmtp03.bayc1.hotmail.com ([65.54.191.163]:32380 "EHLO
-	BAYC1-PASMTP03.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1161311AbWI2RqS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Sep 2006 13:46:18 -0400
-X-Originating-IP: [65.94.249.130]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.94.249.130]) by BAYC1-PASMTP03.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 29 Sep 2006 10:46:17 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GTMRE-0004CQ-OI; Fri, 29 Sep 2006 13:46:16 -0400
-To: Jan Harkes <jaharkes@cs.cmu.edu>
-Message-Id: <20060929134616.7966d18c.seanlkml@sympatico.ca>
-In-Reply-To: <20060929173736.GA13635@delft.aura.cs.cmu.edu>
-X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.10.3; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 29 Sep 2006 17:46:17.0895 (UTC) FILETIME=[2AA78B70:01C6E3EF]
+	id S1751263AbWI2SFG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Sep 2006 14:05:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751287AbWI2SFG
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 14:05:06 -0400
+Received: from ifae-s0.ifae.es ([192.101.162.68]:43687 "EHLO ifae-s0.ifae.es")
+	by vger.kernel.org with ESMTP id S1751263AbWI2SFE (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Sep 2006 14:05:04 -0400
+Received: from bela (caronte.ifae.es [192.101.162.199])
+	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id k8TI51Q03510
+	for <git@vger.kernel.org>; Fri, 29 Sep 2006 20:05:02 +0200
+To: git <git@vger.kernel.org>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28117>
 
-On Fri, 29 Sep 2006 13:37:36 -0400
-Jan Harkes <jaharkes@cs.cmu.edu> wrote:
+Hi *,
 
-> I don't see the point in knowing how many days ago the security fix was
-> published, since I'd really care if my machine is running a kernel that
-> contains the fix.
+this patchset includes:
 
-It was just a single example, one maybe not important to you.  In fact
-it might be interesting to someone who isn't even running _any_ Linux
-kernel themselves; a security researcher or journalist for instance.
-There are other examples as well.  Maybe none of them would apply to
-your needs, but there are people who would find it interesting and
-convenient.
+      fetch: Reset remote refs list each time fetch_main is called
+      fetch & co: Use "hash1..hash2" instead of "from hash1 to hash2"
+      fetch & co: Use short sha1 in the output
+      fetch: Add output for the not fast forward case
+      fetch: Clean output
 
-Sean
+The first one is actually a bugfix (at least for me), but needed for the
+last one.
+
+ git-fetch.sh   |   19 ++++++++++++++-----
+ git-merge.sh   |    2 +-
+ git-resolve.sh |    2 +-
+ 3 files changed, 16 insertions(+), 7 deletions(-)
