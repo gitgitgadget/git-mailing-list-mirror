@@ -1,70 +1,74 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: What's in git.git
-Date: Fri, 29 Sep 2006 10:32:08 +0200
-Message-ID: <20060929083208.GL13132@pasky.or.cz>
-References: <7vodt0zbhc.fsf@assigned-by-dhcp.cox.net> <20060928093623.GJ20017@pasky.or.cz> <7vhcyrnn1g.fsf@assigned-by-dhcp.cox.net>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Subject: git sometimes stripping one path component in commit mails
+Date: Fri, 29 Sep 2006 10:41:26 +0200 (CEST)
+Message-ID: <Pine.LNX.4.62.0609291034020.28814@pademelon.sonytel.be>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 29 10:32:23 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Fri Sep 29 10:42:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTDn5-0001Hv-SQ
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 10:32:16 +0200
+	id 1GTDwJ-0003iF-GA
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 10:41:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030413AbWI2IcM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Sep 2006 04:32:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030412AbWI2IcM
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 04:32:12 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:46993 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1161142AbWI2IcL (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Sep 2006 04:32:11 -0400
-Received: (qmail 22228 invoked by uid 2001); 29 Sep 2006 10:32:08 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vhcyrnn1g.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1030412AbWI2Il3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Sep 2006 04:41:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030414AbWI2Il3
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 04:41:29 -0400
+Received: from witte.sonytel.be ([80.88.33.193]:16856 "EHLO witte.sonytel.be")
+	by vger.kernel.org with ESMTP id S1030412AbWI2Il2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Sep 2006 04:41:28 -0400
+Received: from pademelon.sonytel.be (mail.sonytel.be [43.221.60.197])
+	by witte.sonytel.be (8.12.10/8.12.10) with ESMTP id k8T8fQQe007884;
+	Fri, 29 Sep 2006 10:41:26 +0200 (MEST)
+To: git@vger.kernel.org,
+	Linux Kernel Development <linux-kernel@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28105>
 
-Dear diary, on Fri, Sep 29, 2006 at 09:34:51AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> diff --git a/INSTALL b/INSTALL
-> index 0d432d7..fa9bf74 100644
-> --- a/INSTALL
-> +++ b/INSTALL
-> @@ -38,19 +38,6 @@ Issues of note:
->     has been actively developed since 1997, and people have moved over to
->     graphical file managers.
->  
-> - - You can use git after building but without installing if you
-> -   wanted to.  Various git commands need to find other git
-> -   commands and scripts to do their work, so you would need to
-> -   arrange a few environment variables to tell them that their
-> -   friends will be found in your built source area instead of at
-> -   their standard installation area.  Something like this works
-> -   for me:
-> -
-> -	GIT_EXEC_PATH=`pwd`
-> -	PATH=`pwd`:$PATH
-> -	GITPERLLIB=`pwd`/perl/blib/lib:`pwd`/perl/blib/arch/auto/Git
-> -	export GIT_EXEC_PATH PATH GITPERLLIB
-> -
->   - Git is reasonably self-sufficient, but does depend on a few external
->     programs and libraries:
->  
+	Hi,
 
-The passage should be kept and even GITPERLLIB - just drop the second
-path after the colon.
+I noticed git sometimes strips one path component from the filenames in the
+patches mailed to the git-commits mailing lists. This causes problems when
+piping these mails through diffstat.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+Here is a part of an actual mail received through
+git-commits-head@vger.kernel.org to demonstrate this issue:
+
+Is this a current git bug, or a bug in the version used for those mailing
+lists?
+
+| commit 94c12cc7d196bab34aaa98d38521549fa1e5ef76
+| tree 8e0cec0ed44445d74a2cb5160303d6b4dfb1bc31
+| parent 25d83cbfaa44e1b9170c0941c3ef52ca39f54ccc
+| author Martin Schwidefsky <schwidefsky@de.ibm.com> 1159455403 +0200
+| committer Martin Schwidefsky <schwidefsky@de.ibm.com> 1159455403 +0200
+
+| diff --git a/include/asm-s390/irqflags.h b/include/asm-s390/irqflags.h
+| dissimilarity index 65%
+| index 3b566a5..3f26131 100644
+| --- include/asm-s390/irqflags.h
+| +++ include/asm-s390/irqflags.h
+      ^^
+      woops
+
+| diff --git a/include/asm-s390/lowcore.h b/include/asm-s390/lowcore.h
+| index 18695d1..06583ed 100644
+| --- a/include/asm-s390/lowcore.h
+| +++ b/include/asm-s390/lowcore.h
+      ^^
+      OK
+
+Gr{oetje,eeting}s,
+
+						Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+							    -- Linus Torvalds
