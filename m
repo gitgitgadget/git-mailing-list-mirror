@@ -1,87 +1,82 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [PATCH 1/3] diff --stat: allow custom diffstat output width.
-Date: Thu, 28 Sep 2006 22:26:37 -0700
-Message-ID: <7vr6xvp7jm.fsf@assigned-by-dhcp.cox.net>
+Date: Thu, 28 Sep 2006 22:58:10 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0609282252430.3952@g5.osdl.org>
 References: <7vr6xyjal0.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0609281349110.3952@g5.osdl.org>
-	<7vac4ju1f1.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0609281458420.3952@g5.osdl.org>
+ <Pine.LNX.4.64.0609281349110.3952@g5.osdl.org> <7vac4ju1f1.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0609281458420.3952@g5.osdl.org> <7vr6xvp7jm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 29 07:26:59 2006
+X-From: git-owner@vger.kernel.org Fri Sep 29 07:58:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTAtm-0003w4-KX
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 07:26:58 +0200
+	id 1GTBO8-0001Xv-3F
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 07:58:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161420AbWI2F0k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Sep 2006 01:26:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161421AbWI2F0k
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 01:26:40 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:12482 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1161419AbWI2F0i (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Sep 2006 01:26:38 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060929052637.KABI6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 29 Sep 2006 01:26:37 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id U5SZ1V00u1kojtg0000000
-	Fri, 29 Sep 2006 01:26:34 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0609281458420.3952@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 28 Sep 2006 15:07:16 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932130AbWI2F6R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Sep 2006 01:58:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932540AbWI2F6Q
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 01:58:16 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:48097 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932130AbWI2F6Q (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Sep 2006 01:58:16 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8T5wBnW031017
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 28 Sep 2006 22:58:12 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8T5wBN0005592;
+	Thu, 28 Sep 2006 22:58:11 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vr6xvp7jm.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.958 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28089>
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> I could have made it a more obvious "stupid" parser, I just think it's 
-> better to do it this way.
->
-> +	else if (!strncmp(arg, "--stat", 6)) {
-> +		char *end;
-> +		int width = options->stat_width;
-> +		int name_width = options->stat_name_width;
-> +		arg += 6;
-> +		end = arg;
-> +
-> +		switch (*arg) {
-> +		case '-':
-> +			if (!strncmp(arg, "-width=", 7))
-> +				width = strtoul(arg + 7, &end, 10);
-> +			else if (!strncmp(arg, "-name-width=", 12))
-> +				name_width = strtoul(arg + 12, &end, 10);
-> +			break;
-> +
-> +		case '=':
-> +			width = strtoul(arg+1, &end, 10);
-> +			if (*end == ',')
-> +				name_width = strtoul(end+1, &end, 10);
-> +		}
-> +
-> +		/* Important! This checks all the error cases! */
-> +		if (*end)
-> +			return 0;
->  		options->output_format |= DIFF_FORMAT_DIFFSTAT;
-> +		options->stat_name_width = name_width;
-> +		options->stat_width = width;
->  	}
 
-This is simply too clever; -pedantic does not like assignment of
-arg to end (constness -- and strtoul takes pointer to non-const
-char *, so making the type of end const char * is not an answer
-either).
+On Thu, 28 Sep 2006, Junio C Hamano wrote:
+> 
+> This is simply too clever; -pedantic does not like assignment of
+> arg to end (constness -- and strtoul takes pointer to non-const
+> char *, so making the type of end const char * is not an answer
+> either).
 
-And I do not like casting constness away: end = (char *) arg.
+The _code_ really is right. The problem is "strtoul()" interfaces and a 
+C typing oddity.
 
-Hmmmm.
+> And I do not like casting constness away: end = (char *) arg.
+
+You could fix it by doing something like this:
+
+	static inline unsigned long sane_strtoul(const char *n,
+						 const char **p,
+						 int base)
+	{
+		char *end;
+		unsigned long res;
+
+		res = strtoul(n, &end, base);
+		*p = end;
+		return res;
+	}
+
+because the only reason strtoul() warns now is that C type-rules don't 
+allow the (obviously safe - but pointers migth have strange 
+representations) conversion of "char **" into "const char **", even though 
+"char *" can be converted into "const char *".
+
+At that point, the cast is probably simpler, but the above should be 
+strictly correct pedantic ANSI C.
+
+I didn't even try it, though.
+
+			Linus
