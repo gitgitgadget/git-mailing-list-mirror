@@ -1,58 +1,97 @@
 From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] gitweb: tree view: hash_base and hash are now context sensitive
-Date: Fri, 29 Sep 2006 09:16:19 -0700 (PDT)
-Message-ID: <20060929161619.24848.qmail@web31806.mail.mud.yahoo.com>
-References: <7vmz8jp5p3.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] gitweb: tree view: hash_base and hash are now context sensitive
+Date: Fri, 29 Sep 2006 09:57:43 -0700 (PDT)
+Message-ID: <20060929165743.2810.qmail@web31812.mail.mud.yahoo.com>
 Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 29 18:17:01 2006
+Content-Type: multipart/mixed; boundary="0-155651327-1159549063=:998"
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Fri Sep 29 18:58:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTL2H-0006Nm-0s
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 18:16:25 +0200
+	id 1GTLgM-000700-7T
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 18:57:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932320AbWI2QQV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Sep 2006 12:16:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932322AbWI2QQV
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 12:16:21 -0400
-Received: from web31806.mail.mud.yahoo.com ([68.142.207.69]:29265 "HELO
-	web31806.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S932320AbWI2QQU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Sep 2006 12:16:20 -0400
-Received: (qmail 24850 invoked by uid 60001); 29 Sep 2006 16:16:19 -0000
+	id S1161289AbWI2Q5r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Sep 2006 12:57:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161290AbWI2Q5r
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 12:57:47 -0400
+Received: from web31812.mail.mud.yahoo.com ([68.142.207.75]:5740 "HELO
+	web31812.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1161289AbWI2Q5q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Sep 2006 12:57:46 -0400
+Received: (qmail 2812 invoked by uid 60001); 29 Sep 2006 16:57:43 -0000
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
   s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=LX86Dfw5PaVBFSnV+1wN0MF+m6HHQVJg/j0c7A1EK/CCiF3ZVOPKlrFc8uwuKJ9w9m8Ryt31dB4yPvNInbjdDukAQnUkkmmNZ+h3VuFghgb0gwkqbIsSEyqIdbi4Wnq/NDJpgZg/ndloDgswtiBkON2NshxGQGq1wWnfNEJvmxA=  ;
-Received: from [64.215.88.90] by web31806.mail.mud.yahoo.com via HTTP; Fri, 29 Sep 2006 09:16:19 PDT
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vmz8jp5p3.fsf@assigned-by-dhcp.cox.net>
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=LMYUWDZrp4VUJnXy+x/5aH2Rnfa0h6iWXib9wpkaFZI/go/Lg1Fxocviu1ceEHnRu20CMm33SZb5i2knu+FCXIUIgYm6jjF+VdnPJaO7f8HfqOwJfQ0AJhPAYjoLfq0yY5CxliEQvZbThy0qmA6ib82Im+jkTuG4Pyw82fs1Huc=  ;
+Received: from [64.215.88.90] by web31812.mail.mud.yahoo.com via HTTP; Fri, 29 Sep 2006 09:57:43 PDT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28114>
 
---- Junio C Hamano <junkio@cox.net> wrote:
-> > What are the objections to this patch?
-> 
-> No objections from me --- rather lack of objections from Jakub ;-)
+--0-155651327-1159549063=:998
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 8bit
+Content-Id: 
+Content-Disposition: inline
 
-We haven't heard anything from him, and on our last correspondence
-in this thread it seemed we're in agreement.
+In tree view, by default, hash_base is HEAD and hash is the
+entry equivalent.  Else the user had selected a hash_base or
+hash, say by clicking on a revision or commit, in which case
+those values are used.
 
-> But the fragments do not appear to apply anymore.
-[...]
-> There is no call to create blob_plain link with hash_base
-> hardcoded to "HEAD" in git-print-tree-entry.
-> 
-> Care to re-spin?
+Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
+---
+ gitweb/gitweb.perl |   18 +++++++++---------
+ 1 files changed, 9 insertions(+), 9 deletions(-)
 
-Doing it right now.
+--0-155651327-1159549063=:998
+Content-Type: text/plain; name="p1.txt"
+Content-Description: 1207600725-p1.txt
+Content-Disposition: inline; filename="p1.txt"
 
-Thanks,
-   Luben
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index be336f6..44991b1 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1672,9 +1672,9 @@ sub git_print_tree_entry {
+ 			              "history");
+ 		}
+ 		print " | " .
+-		      $cgi->a({-href => href(action=>"blob_plain",
+-		                             hash=>$t->{'hash'}, file_name=>"$basedir$t->{'name'}")},
+-		              "raw");
++			$cgi->a({-href => href(action=>"blob_plain", hash_base=>$hash_base,
++					       file_name=>"$basedir$t->{'name'}")},
++				"raw");
+ 		print "</td>\n";
+ 
+ 	} elsif ($t->{'type'} eq "tree") {
+@@ -2745,14 +2745,14 @@ sub git_blob {
+ sub git_tree {
+ 	my $have_snapshot = gitweb_have_snapshot();
+ 
++	if (!defined $hash_base) {
++		$hash_base = "HEAD";
++	}
+ 	if (!defined $hash) {
+-		$hash = git_get_head_hash($project);
+ 		if (defined $file_name) {
+-			my $base = $hash_base || $hash;
+-			$hash = git_get_hash_by_path($base, $file_name, "tree");
+-		}
+-		if (!defined $hash_base) {
+-			$hash_base = $hash;
++			$hash = git_get_hash_by_path($hash_base, $file_name, "tree");
++		} else {
++			$hash = $hash_base;
+ 		}
+ 	}
+ 	$/ = "\0";
+
+--0-155651327-1159549063=:998--
