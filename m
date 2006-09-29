@@ -1,87 +1,56 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [ANNOUNCE] Cogito-0.18
-Date: Fri, 29 Sep 2006 14:06:39 +0200
-Message-ID: <20060929120639.GK20017@pasky.or.cz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Fix approxidate() to understand more extended numbers
+Date: Fri, 29 Sep 2006 16:04:38 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0609291602200.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.64.0609281211260.3952@g5.osdl.org>
+ <Pine.LNX.4.64.0609281212380.3952@g5.osdl.org>
+ <118833cc0609281712u2ce01bc5r8f3e97ae9c9a749a@mail.gmail.com>
+ <Pine.LNX.4.64.0609282300190.3952@g5.osdl.org> <7vd59fp5b9.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0609282330440.3952@g5.osdl.org> <7vslibno88.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 29 14:07:10 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 29 16:05:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTH8z-0001S7-Oa
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 14:07:06 +0200
+	id 1GTIys-0004N2-6W
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 16:04:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030214AbWI2MGn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Sep 2006 08:06:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030212AbWI2MGn
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 08:06:43 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:37587 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1030197AbWI2MGl (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Sep 2006 08:06:41 -0400
-Received: (qmail 7647 invoked by uid 2001); 29 Sep 2006 14:06:39 +0200
-To: git@vger.kernel.org
-Content-Disposition: inline
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1161034AbWI2OEm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Sep 2006 10:04:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161035AbWI2OEl
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 10:04:41 -0400
+Received: from mail.gmx.de ([213.165.64.20]:41946 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1161034AbWI2OEk (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Sep 2006 10:04:40 -0400
+Received: (qmail invoked by alias); 29 Sep 2006 14:04:38 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp043) with SMTP; 29 Sep 2006 16:04:38 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vslibno88.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28109>
 
-  Hello,
+Hi,
 
-  I just released cogito-0.18 - new feature release of the Cogito
-user-friendly Git user interface.  The biggest highlights are
-super-duper cg-log, tagging interface and cg-patch -m. Contrary to my
-plan, this unfortunately does NOT contain three big things yet that are
-missing but will be in cogito-0.19 (which should be already quite near
-the ever-approaching version 1.0):
+On Fri, 29 Sep 2006, Junio C Hamano wrote:
 
-	- Rigorous three-way merging of uncommitted local changes
-	  instead of stashing local changes in patches
-	  (stashing produces harder-to-resolve conflicts and can
-	   in some extreme circumstances lead to loss or almost-loss
-	   of your local changes which is highly evil; this is my
-	   priority now; if you want to be absolutely safe, do not
-	   update/merge/switch your tree while having uncommitted
-	   changes in it)
-	- Support for cg-clone -a (clone all remote branches)
-	- Support for auto-pushing tags
+> Having rice cooker implied eating the stuff regularly and I just
+> did not expect that from a north european.  Just showing my
+> ignorance -- I've never been to Europe.
 
-  So, now for things that ARE part of 0.18: :-)
+Actually, yesterday I saw a digital wrist watch for the first time in my 
+life! Amazing! ;-)
 
-First, a simple README update is the only difference from 0.18rc2.
+There is even a running joke about Great Britain: "Oh yes, I _love_ 
+English dishes; especially the Chinese ones!"
 
-* INCOMPATIBLE: $COGITO_COLORS is renamed to $CG_COLORS
-* INCOMPATIBLE: cg-log now by default hides merges, -M behaviour is
-reversed
-* All kinds of very stale command aliases that were deprecated for eons
-were removed
-* .git/author is deprecated (use .git/config to set it up)
-* We now officially depend on 1.4.2 (we use git-*-fetch --stdin which makes
-fetching tags _MUCH_ faster)
-
-* cg-log was reworked to support cg-log -d (show diffs inline),
-  cg-log -S (pickaxe) and renames following (does not quite work, though;
-  I decided not to fix it and wait for revisions.c in Git to support it
-  since the perl script which takes care of this is quite a hack)
-* cg-switch -l to stash your local changes when switching branches
-* cg-commit --amend
-* Tagging interface (cg-tag, cg-tag-ls, cg-tag-show) was greatly enhanced
-* cg-patch -m for applying mailboxes
-* cg-clone -l now sets up an alternate instead of symlinking the object db
-* Support for cg-clone --reference
-* cg-admin-setuprepo supports setting up repositories over SSH
-* Support fetching over FTP
-* Other cool stuff!
-
-  Happy hacking,
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Of the 3 great composers Mozart tells us what it's like to be human,
-Beethoven tells us what it's like to be Beethoven and Bach tells us
-what it's like to be the universe.  -- Douglas Adams
+Ciao,
+Dscho
