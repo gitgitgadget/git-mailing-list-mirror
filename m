@@ -1,68 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Fix approxidate() to understand more extended numbers
-Date: Thu, 28 Sep 2006 23:14:50 -0700
-Message-ID: <7vd59fp5b9.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0609281211260.3952@g5.osdl.org>
-	<Pine.LNX.4.64.0609281212380.3952@g5.osdl.org>
-	<118833cc0609281712u2ce01bc5r8f3e97ae9c9a749a@mail.gmail.com>
-	<Pine.LNX.4.64.0609282300190.3952@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 1/3] diff --stat: allow custom diffstat output width.
+Date: Thu, 28 Sep 2006 23:17:14 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0609282307220.3952@g5.osdl.org>
+References: <7vr6xyjal0.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0609281349110.3952@g5.osdl.org> <7vac4ju1f1.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0609281458420.3952@g5.osdl.org> <7vr6xvp7jm.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0609282252430.3952@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Morten Welinder <mwelinder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 29 08:15:02 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 29 08:17:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTBeB-0004gl-B6
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 08:14:55 +0200
+	id 1GTBgY-0005Ao-2S
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 08:17:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161182AbWI2GOw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Sep 2006 02:14:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161271AbWI2GOw
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 02:14:52 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:21751 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1161182AbWI2GOv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Sep 2006 02:14:51 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060929061450.UFW22977.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 29 Sep 2006 02:14:50 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id U6Em1V00e1kojtg0000000
-	Fri, 29 Sep 2006 02:14:47 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0609282300190.3952@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 28 Sep 2006 23:03:11 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161316AbWI2GRT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Sep 2006 02:17:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964910AbWI2GRT
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 02:17:19 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:60901 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964904AbWI2GRS (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Sep 2006 02:17:18 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8T6HEnW031836
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 28 Sep 2006 23:17:15 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8T6HENA006044;
+	Thu, 28 Sep 2006 23:17:14 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <Pine.LNX.4.64.0609282252430.3952@g5.osdl.org>
+X-Spam-Status: No, hits=-0.958 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28094>
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> On Thu, 28 Sep 2006, Morten Welinder wrote:
->>
->> Just don't hack at 12am or 12pm.
->
-> I think 12pm is correct, but 12am probably isn't (12am should _subtract_ 
-> 12, while 12pm does _not_ add 12).
 
-But you have "if (hour > 0 && hour < 12)" in both am and pm so
-assignment to tm would not trigger...
+On Thu, 28 Sep 2006, Linus Torvalds wrote:
+> 
+> because the only reason strtoul() warns now is that C type-rules don't 
+> allow the (obviously safe - but pointers migth have strange 
+> representations) conversion of "char **" into "const char **", even though 
+> "char *" can be converted into "const char *".
 
-> That said, I have a rice cooker that avoids the problem by saying "0:10 PM" 
-> for ten minutes past midday ;)
+I phrased that badly. 
 
-You eat rice?
+IF C pointer conversion allowed implicit addition of "const" past the 
+top-most level, ANSI C would have just done "strtoul()" as 
 
-> Of course, all sane and civilized countries just use 24-hour format 
-> anyway.
+	unsigned long strtoul(const char *n, const char **p, int);
 
-You are referring to the US, but neither is Japan sane nor
-civilized ;-).
+ie they could just have added the "const" not just to the first argument, 
+and legact programs (without const) would still have worked fine.
+
+But _because_ that's not how C type rules work, we have the current 
+situation where the first argument is a "const char *", and the second 
+argument _logically_ should be a pointer to such an entity, but because 
+that would have caused bogus warnings for any code that just used a 
+regular "char **" without any const at all, that wasn't an option.
+
+So that explains why ANSI C has insane imbalances like this. It's easy to 
+add a "const" to a _first-level_ pointer to say "we allow both const and 
+regular pointers to this thing", but sadly you can't do it for a pointer 
+to such a pointer.
+
+			Linus
