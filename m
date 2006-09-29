@@ -1,92 +1,96 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git sometimes stripping one path component in commit mails
-Date: Fri, 29 Sep 2006 02:08:42 -0700
-Message-ID: <7v64f7nip1.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.62.0609291034020.28814@pademelon.sonytel.be>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 3/3] diff --stat: sometimes use non-linear scaling.
+Date: Fri, 29 Sep 2006 12:56:05 +0200
+Message-ID: <451CFBC5.3020006@op5.se>
+References: <7vfyeejakq.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0609270810470.3952@g5.osdl.org>	<20060928081757.GF8056@admingilde.org> <7v64f8xs7p.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 29 11:09:03 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Martin Waitz <tali@admingilde.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 29 12:56:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTEMa-0001fb-Nl
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 11:08:57 +0200
+	id 1GTG2R-0002EQ-C8
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 12:56:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161192AbWI2JIo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Sep 2006 05:08:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030448AbWI2JIo
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 05:08:44 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:36844 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1030447AbWI2JIn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Sep 2006 05:08:43 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060929090843.KXIZ12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 29 Sep 2006 05:08:43 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id U98e1V01F1kojtg0000000
-	Fri, 29 Sep 2006 05:08:39 -0400
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-In-Reply-To: <Pine.LNX.4.62.0609291034020.28814@pademelon.sonytel.be> (Geert
-	Uytterhoeven's message of "Fri, 29 Sep 2006 10:41:26 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S964802AbWI2K4L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Sep 2006 06:56:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964774AbWI2K4L
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 06:56:11 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:22699 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932156AbWI2K4I
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Sep 2006 06:56:08 -0400
+Received: by smtp-gw1.op5.se (Postfix, from userid 588)
+	id 20A396BD11; Fri, 29 Sep 2006 12:56:07 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
+	linux-server1.op5.se
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.1.4
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id D66336BD0F; Fri, 29 Sep 2006 12:56:05 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v64f8xs7p.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28107>
 
-Geert Uytterhoeven <geert@linux-m68k.org> writes:
+Junio C Hamano wrote:
+> Martin Waitz <tali@admingilde.org> writes:
+> 
+>>> It should at least never be superlinear, I believe.
+>> So if we want to keep the logarithmic scale we can do some maths:
+>> ...
+>> But only I have not succeeded in solving these equations, I always stop
+>> at the last invariant :-(
+> 
+> There is another constraint you did not mention.  Here is the
+> output from my another failed experiment:
+> 
+>  .gitignore                       |    1 -
+>  Documentation/git-tar-tree.txt   |    3 +++
+>  Documentation/git-upload-tar.txt |   39 -----------------------------
+>  Documentation/git.txt            |    4 ----
+>  Makefile                         |    1 -
+>  builtin-tar-tree.c               |  130 +++++++++++++++-----------------------
+>  builtin-upload-tar.c             |   74 ----------------------------------
+>  git.c                            |    1 -
+>  8 files changed, 53 insertions(+), 200 deletions(-)
+> 
+> The deletion from Documentation/git-upload-tar.txt looks much
+> larger than addition to builtin-tar-tree.c in the above, but
+> there are 50 lines added to builtin-tar-tree.c (which is why
+> this experiment is a failure).
+> 
+> Because we are dealing with non-linear scaling, the total of
+> scaled adds and scaled deletes does not equal to scaled total.
+> We can deal with this in two ways.  Scale the total and
+> distribute it, or scale adds and deletes individually and make
+> sure the sum of scaled adds and deletes never exceed the width.
+> Obviously the former is easier to implement but it was _wrong_.
+> 
+> The fitting algorithm in the posted patch scales the total to
+> fit the alloted width and then distributes the result to adds
+> and deletes.
+> 
 
-> Is this a current git bug, or a bug in the version used for those mailing
-> lists?
->
-> | commit 94c12cc7d196bab34aaa98d38521549fa1e5ef76
->...
-> | diff --git a/include/asm-s390/irqflags.h b/include/asm-s390/irqflags.h
-> | dissimilarity index 65%
-> | index 3b566a5..3f26131 100644
-> | --- include/asm-s390/irqflags.h
-> | +++ include/asm-s390/irqflags.h
->       ^^
->       woops
+Why not just take the stupid and simple solution and make it:
 
-This is a current git bug (and git bug ever since it started to
-say "dissimilarity index").  Thanks for noticing, and very sorry
-for the trouble.  It seems that a complete rewrite diff never
-worked and nobody seriously looked at them.
+file1   | +31,-19    +++
+file2   | +19,-106   ---
+file3   | +10,-10    ###
 
-This should fix it.
+That is, show the number of lines that actually changed, and print a 
+fixed number of plusses or minuses after the numbers to make it easy to, 
+at a glance, check if more lines were added than deleted or vice versa.
 
--- >8 --
-[PATCH] git-diff -B output fix.
-
-Geert noticed that complete rewrite diff missed the usual a/ and b/
-leading paths.  Pickaxe says it never worked, ever.
-
-Embarrassing.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- diff.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 2464238..17f5a91 100644
---- a/diff.c
-+++ b/diff.c
-@@ -208,7 +208,7 @@ static void emit_rewrite_diff(const char
- 	diff_populate_filespec(two, 0);
- 	lc_a = count_lines(one->data, one->size);
- 	lc_b = count_lines(two->data, two->size);
--	printf("--- %s\n+++ %s\n@@ -", name_a, name_b);
-+	printf("--- a/%s\n+++ b/%s\n@@ -", name_a, name_b);
- 	print_line_count(lc_a);
- 	printf(" +");
- 	print_line_count(lc_b);
 -- 
-1.4.2.1.gce47b
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
