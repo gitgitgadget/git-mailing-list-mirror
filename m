@@ -1,59 +1,135 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [PATCH 0/5] fetch & co: misc output cleanup
-Date: Fri, 29 Sep 2006 11:54:19 -0700
-Message-ID: <451D6BDB.50900@gmail.com>
-References: <87r6xu1rci.fsf@gmail.com>
-Reply-To: git <git@vger.kernel.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Fix approxidate() to understand more extended numbers
+Date: Fri, 29 Sep 2006 12:36:13 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0609291231560.3952@g5.osdl.org>
+References: <Pine.LNX.4.64.0609281211260.3952@g5.osdl.org>
+ <Pine.LNX.4.64.0609281212380.3952@g5.osdl.org>
+ <118833cc0609281712u2ce01bc5r8f3e97ae9c9a749a@mail.gmail.com>
+ <Pine.LNX.4.64.0609282300190.3952@g5.osdl.org> <7vd59fp5b9.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0609282330440.3952@g5.osdl.org> <7vslibno88.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 29 20:54:42 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 29 21:37:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTNVK-0006Ls-Ot
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 20:54:35 +0200
+	id 1GTOAD-0006qW-2u
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 21:36:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161453AbWI2SyY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 29 Sep 2006 14:54:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161451AbWI2SyX
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 14:54:23 -0400
-Received: from wr-out-0506.google.com ([64.233.184.231]:47165 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1161443AbWI2SyW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Sep 2006 14:54:22 -0400
-Received: by wr-out-0506.google.com with SMTP id i32so333336wra
-        for <git@vger.kernel.org>; Fri, 29 Sep 2006 11:54:21 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=RykxTz/yoQ6PaWFi/kpHk9g/+bwUMKdBMROtVF/33KW9Oube56DUfM8NtBPfKCSVHK5ucwVJvLxFAHzBHKc7CEatwfbMWMYa4O2hyF0FsMFI16PHd/9l2VCUZUKVDeqrsfgHcOXUu6GzpPeXCdGkG88SsNMHp0Q+SQfcoAk2ZYg=
-Received: by 10.90.25.3 with SMTP id 3mr827415agy;
-        Fri, 29 Sep 2006 11:54:21 -0700 (PDT)
-Received: from ?10.0.0.6? ( [68.233.231.217])
-        by mx.gmail.com with ESMTP id 25sm3698928wra.2006.09.29.11.54.20;
-        Fri, 29 Sep 2006 11:54:21 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060911)
-To: =?ISO-8859-1?Q?Santi_B=E9jar?= <sbejar@gmail.com>
-In-Reply-To: <87r6xu1rci.fsf@gmail.com>
+	id S1751361AbWI2Tgl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Sep 2006 15:36:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751370AbWI2Tgl
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 15:36:41 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:47769 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751361AbWI2Tgk (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Sep 2006 15:36:40 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8TJaIaX010901
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 29 Sep 2006 12:36:22 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8TJaE1f028344;
+	Fri, 29 Sep 2006 12:36:16 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vslibno88.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.452 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28125>
 
-Santi B=E9jar wrote:
-> this patchset includes:
->=20
->       fetch: Reset remote refs list each time fetch_main is called
->       fetch & co: Use "hash1..hash2" instead of "from hash1 to hash2"
->       fetch & co: Use short sha1 in the output
->       fetch: Add output for the not fast forward case
->       fetch: Clean output
 
-Please do not make short ID output the default. That is, unless you can=
-=20
-somehow guarantee that the short ID reported today will _always_ be=20
-unambiguous even with future additions to the repository.
+
+On Fri, 29 Sep 2006, Junio C Hamano wrote:
+> Linus Torvalds <torvalds@osdl.org> writes:
+> >
+> > If you write
+> >
+> > 	12:30 am
+> >
+> > you really _should_ subtract 12, leaving you with 0:30. We don't. So we 
+> > end up with a 24-hour time of 12:30, which is obviously _pm_, and wrong.
+> >
+> > And "12 am" or "12 pm" doesn't work at all.
+> 
+> Ah, that's what you meant.  My brain a bit too tired from the
+> day job tonight X-<.
+
+Here's a patch that should work. It just simplifies the whole thing to say 
+
+	"hour = (hour % 12) + X"
+
+where X is 12 for PM and 0 for AM.
+
+It also fixes the "exact date" parsing, which didn't parse AM at all, and 
+as such would do the same "12:30 AM" means "12:30 24-hour-format" bug. Of 
+course, I hope that no exact dates use AM/PM anyway, but since we support 
+the PM format, let's just get it right.
+
+Not hugely tested, but I did test some of it, and it all _looks_ sane.
+
+		Linus
+---
+diff --git a/date.c b/date.c
+index db4c185..1825922 100644
+--- a/date.c
++++ b/date.c
+@@ -256,8 +256,12 @@ static int match_alpha(const char *date,
+ 	}
+ 
+ 	if (match_string(date, "PM") == 2) {
+-		if (tm->tm_hour > 0 && tm->tm_hour < 12)
+-			tm->tm_hour += 12;
++		tm->tm_hour = (tm->tm_hour % 12) + 12;
++		return 2;
++	}
++
++	if (match_string(date, "AM") == 2) {
++		tm->tm_hour = (tm->tm_hour % 12) + 0;
+ 		return 2;
+ 	}
+ 
+@@ -600,28 +604,30 @@ static void date_tea(struct tm *tm, int 
+ 
+ static void date_pm(struct tm *tm, int *num)
+ {
+-	int hour = *num;
++	int hour, n = *num;
+ 	*num = 0;
+ 
+-	if (hour > 0 && hour < 12) {
+-		tm->tm_hour = hour;
++	hour = tm->tm_hour;
++	if (n) {
++		hour = n;
+ 		tm->tm_min = 0;
+ 		tm->tm_sec = 0;
+ 	}
+-	if (tm->tm_hour > 0 && tm->tm_hour < 12)
+-		tm->tm_hour += 12;
++	tm->tm_hour = (hour % 12) + 12;
+ }
+ 
+ static void date_am(struct tm *tm, int *num)
+ {
+-	int hour = *num;
++	int hour, n = *num;
+ 	*num = 0;
+ 
+-	if (hour > 0 && hour < 12) {
+-		tm->tm_hour = hour;
++	hour = tm->tm_hour;
++	if (n) {
++		hour = n;
+ 		tm->tm_min = 0;
+ 		tm->tm_sec = 0;
+ 	}
++	tm->tm_hour = (hour % 12);
+ }
+ 
+ static const struct special {
