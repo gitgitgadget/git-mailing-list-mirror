@@ -1,75 +1,61 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 1/3] diff --stat: allow custom diffstat output width.
-Date: Thu, 28 Sep 2006 23:17:14 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609282307220.3952@g5.osdl.org>
-References: <7vr6xyjal0.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0609281349110.3952@g5.osdl.org> <7vac4ju1f1.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0609281458420.3952@g5.osdl.org> <7vr6xvp7jm.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0609282252430.3952@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Make cvsexportcommit work with filenames containing spaces.
+Date: Thu, 28 Sep 2006 23:37:58 -0700
+Message-ID: <7vy7s3npo9.fsf@assigned-by-dhcp.cox.net>
+References: <20060922223506.3377.34859.stgit@lathund.dewire.com>
+	<7vvenfw727.fsf@assigned-by-dhcp.cox.net>
+	<200609290128.56217.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 29 08:17:24 2006
+X-From: git-owner@vger.kernel.org Fri Sep 29 08:38:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTBgY-0005Ao-2S
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 08:17:22 +0200
+	id 1GTC0b-0000tb-SB
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 08:38:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161316AbWI2GRT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Sep 2006 02:17:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964910AbWI2GRT
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 02:17:19 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:60901 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964904AbWI2GRS (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Sep 2006 02:17:18 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8T6HEnW031836
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 28 Sep 2006 23:17:15 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8T6HENA006044;
-	Thu, 28 Sep 2006 23:17:14 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.64.0609282252430.3952@g5.osdl.org>
-X-Spam-Status: No, hits=-0.958 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1161446AbWI2GiA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Sep 2006 02:38:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932545AbWI2GiA
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 02:38:00 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:4863 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S932544AbWI2Gh7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Sep 2006 02:37:59 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060929063759.BAT12909.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 29 Sep 2006 02:37:59 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id U6du1V00b1kojtg0000000
+	Fri, 29 Sep 2006 02:37:55 -0400
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+In-Reply-To: <200609290128.56217.robin.rosenberg@dewire.com> (Robin
+	Rosenberg's message of "Fri, 29 Sep 2006 01:28:55 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28095>
 
+Please do not do more than one patch per e-mail; I'll have to
+save the attachment in separate files and manually make commits,
+which is more work.
 
+The build procedure for the release to build rpms runs testsuite
+as part of it, so I need to think a bit how to proceed with this
+patch.  Leaving the test failing on FC5 means I won't be able to
+cut binary releases.  Checking early in the test script to see
+if "patch" can grok a diff for a file with whitespaces, and
+skipping the whitespace test if we have a bad "patch", seems to
+the best workaround.
 
-On Thu, 28 Sep 2006, Linus Torvalds wrote:
-> 
-> because the only reason strtoul() warns now is that C type-rules don't 
-> allow the (obviously safe - but pointers migth have strange 
-> representations) conversion of "char **" into "const char **", even though 
-> "char *" can be converted into "const char *".
-
-I phrased that badly. 
-
-IF C pointer conversion allowed implicit addition of "const" past the 
-top-most level, ANSI C would have just done "strtoul()" as 
-
-	unsigned long strtoul(const char *n, const char **p, int);
-
-ie they could just have added the "const" not just to the first argument, 
-and legact programs (without const) would still have worked fine.
-
-But _because_ that's not how C type rules work, we have the current 
-situation where the first argument is a "const char *", and the second 
-argument _logically_ should be a pointer to such an entity, but because 
-that would have caused bogus warnings for any code that just used a 
-regular "char **" without any const at all, that wasn't an option.
-
-So that explains why ANSI C has insane imbalances like this. It's easy to 
-add a "const" to a _first-level_ pointer to say "we allow both const and 
-regular pointers to this thing", but sadly you can't do it for a pointer 
-to such a pointer.
-
-			Linus
+BTW, the addition of TAB to the patch tail is done by "git diff"  
+automatically for files with whitespace in them in the proposed
+updates version in "pu" (and it is done conditionally only for
+files whose names have whitespace), so I think your fix will
+become redundant when it graduates to "master".
