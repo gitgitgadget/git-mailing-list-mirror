@@ -1,70 +1,60 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: git and time
-Date: Thu, 28 Sep 2006 20:27:48 -0400
-Message-ID: <20060929002748.GA11055@thunk.org>
-References: <Pine.LNX.4.64.0609281043380.3952@g5.osdl.org> <20060928191816.76466.qmail@web51014.mail.yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/3] diff --stat: allow custom diffstat output width.
+Date: Thu, 28 Sep 2006 18:35:07 -0700
+Message-ID: <7vk63nsbec.fsf@assigned-by-dhcp.cox.net>
+References: <7vr6xyjal0.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0609281349110.3952@g5.osdl.org>
+	<7vac4ju1f1.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0609281458420.3952@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Rogan Dawes <discard@dawes.za.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 29 02:29:41 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 29 03:35:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GT6FI-0007Xr-7U
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 02:28:53 +0200
+	id 1GT7HY-0001K5-MP
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 03:35:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161226AbWI2A2S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 20:28:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161224AbWI2A2Q
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 20:28:16 -0400
-Received: from thunk.org ([69.25.196.29]:21698 "EHLO thunker.thunk.org")
-	by vger.kernel.org with ESMTP id S1161223AbWI2A2J (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Sep 2006 20:28:09 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1GT6Gk-000075-TY; Thu, 28 Sep 2006 20:30:23 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.60)
-	(envelope-from <tytso@thunk.org>)
-	id 1GT6EG-0005jz-F5; Thu, 28 Sep 2006 20:27:48 -0400
-To: Matthew L Foster <mfoster167@yahoo.com>
-Content-Disposition: inline
-In-Reply-To: <20060928191816.76466.qmail@web51014.mail.yahoo.com>
-User-Agent: Mutt/1.5.11
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1161263AbWI2BfL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Sep 2006 21:35:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161266AbWI2BfL
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 21:35:11 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:53222 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1161263AbWI2BfJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Sep 2006 21:35:09 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060929013508.ZQFL12581.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 28 Sep 2006 21:35:08 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id U1bA1V01F1kojtg0000000
+	Thu, 28 Sep 2006 21:35:11 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0609281458420.3952@g5.osdl.org> (Linus Torvalds's
+	message of "Thu, 28 Sep 2006 15:07:16 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28080>
 
-On Thu, Sep 28, 2006 at 12:18:15PM -0700, Matthew L Foster wrote:
-> --- Linus Torvalds <torvalds@osdl.org> wrote:
->  
-> >  - it means that the -same- exact project, when looked at frm two 
-> >    different sites that mirror it, have totally different times. In other 
-> >    words, the times have become pointless for something like gitweb.
-> 
-> Mirrored git repos probably should use the same timestamp, e.g. the
-> "master" or "private" git server's local time. Replicated repos have
-> a delay compared to when you made changes in your private repo, that
-> is ok, replication is not what makes commit order inconsistent with
-> time, it's the act of pulling/merging from a server with
-> misconfigured time and gitweb.cgi trusting "creation time", right?
-> Or is replication the same thing as merging/pulling?
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Git mirroring takes place using the same pushing and pulling that are
-used with multiple repositories.  That's why if Linus does a huge
-amount of work over the period of a day or two in his private
-repository, and then publishes it master.kernel.org, the "local" time
-on master.kernel.org will be the time when they are pushed to
-master.kernel.org, because it's done via the same operation as any
-other repository push or pull.
+> You should probably check the "width" and "name_width" values for sanity.
 
-That's what everyone has been trying to tell you for this entire
-thread....
+The output code forces (well, at least tries to force) some
+sanity into these values when they are not, so probably we do
+not need it.  If we want, we could check something like:
 
-						- Ted
+    	if (name_width < 10 || width - name_width < 15)
+		die("at least 10 for name, and 15+name for width please");
+
+The number 10 is totally arbitrary; among the total area that is
+given by width, after subtracting name_width, 10 columns are
+taken by left and right end space, vertical bar and numbers, so
+the above gives at least 5 columns to draw the graph.
