@@ -1,96 +1,87 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 3/3] diff --stat: sometimes use non-linear scaling.
-Date: Fri, 29 Sep 2006 12:56:05 +0200
-Message-ID: <451CFBC5.3020006@op5.se>
-References: <7vfyeejakq.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0609270810470.3952@g5.osdl.org>	<20060928081757.GF8056@admingilde.org> <7v64f8xs7p.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [ANNOUNCE] Cogito-0.18
+Date: Fri, 29 Sep 2006 14:06:39 +0200
+Message-ID: <20060929120639.GK20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Martin Waitz <tali@admingilde.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 29 12:56:28 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 29 14:07:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTG2R-0002EQ-C8
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 12:56:15 +0200
+	id 1GTH8z-0001S7-Oa
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 14:07:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964802AbWI2K4L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Sep 2006 06:56:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964774AbWI2K4L
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 06:56:11 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:22699 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932156AbWI2K4I
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Sep 2006 06:56:08 -0400
-Received: by smtp-gw1.op5.se (Postfix, from userid 588)
-	id 20A396BD11; Fri, 29 Sep 2006 12:56:07 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
-	linux-server1.op5.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.1.4
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id D66336BD0F; Fri, 29 Sep 2006 12:56:05 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v64f8xs7p.fsf@assigned-by-dhcp.cox.net>
+	id S1030214AbWI2MGn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Sep 2006 08:06:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030212AbWI2MGn
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 08:06:43 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:37587 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1030197AbWI2MGl (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Sep 2006 08:06:41 -0400
+Received: (qmail 7647 invoked by uid 2001); 29 Sep 2006 14:06:39 +0200
+To: git@vger.kernel.org
+Content-Disposition: inline
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28108>
 
-Junio C Hamano wrote:
-> Martin Waitz <tali@admingilde.org> writes:
-> 
->>> It should at least never be superlinear, I believe.
->> So if we want to keep the logarithmic scale we can do some maths:
->> ...
->> But only I have not succeeded in solving these equations, I always stop
->> at the last invariant :-(
-> 
-> There is another constraint you did not mention.  Here is the
-> output from my another failed experiment:
-> 
->  .gitignore                       |    1 -
->  Documentation/git-tar-tree.txt   |    3 +++
->  Documentation/git-upload-tar.txt |   39 -----------------------------
->  Documentation/git.txt            |    4 ----
->  Makefile                         |    1 -
->  builtin-tar-tree.c               |  130 +++++++++++++++-----------------------
->  builtin-upload-tar.c             |   74 ----------------------------------
->  git.c                            |    1 -
->  8 files changed, 53 insertions(+), 200 deletions(-)
-> 
-> The deletion from Documentation/git-upload-tar.txt looks much
-> larger than addition to builtin-tar-tree.c in the above, but
-> there are 50 lines added to builtin-tar-tree.c (which is why
-> this experiment is a failure).
-> 
-> Because we are dealing with non-linear scaling, the total of
-> scaled adds and scaled deletes does not equal to scaled total.
-> We can deal with this in two ways.  Scale the total and
-> distribute it, or scale adds and deletes individually and make
-> sure the sum of scaled adds and deletes never exceed the width.
-> Obviously the former is easier to implement but it was _wrong_.
-> 
-> The fitting algorithm in the posted patch scales the total to
-> fit the alloted width and then distributes the result to adds
-> and deletes.
-> 
+  Hello,
 
-Why not just take the stupid and simple solution and make it:
+  I just released cogito-0.18 - new feature release of the Cogito
+user-friendly Git user interface.  The biggest highlights are
+super-duper cg-log, tagging interface and cg-patch -m. Contrary to my
+plan, this unfortunately does NOT contain three big things yet that are
+missing but will be in cogito-0.19 (which should be already quite near
+the ever-approaching version 1.0):
 
-file1   | +31,-19    +++
-file2   | +19,-106   ---
-file3   | +10,-10    ###
+	- Rigorous three-way merging of uncommitted local changes
+	  instead of stashing local changes in patches
+	  (stashing produces harder-to-resolve conflicts and can
+	   in some extreme circumstances lead to loss or almost-loss
+	   of your local changes which is highly evil; this is my
+	   priority now; if you want to be absolutely safe, do not
+	   update/merge/switch your tree while having uncommitted
+	   changes in it)
+	- Support for cg-clone -a (clone all remote branches)
+	- Support for auto-pushing tags
 
-That is, show the number of lines that actually changed, and print a 
-fixed number of plusses or minuses after the numbers to make it easy to, 
-at a glance, check if more lines were added than deleted or vice versa.
+  So, now for things that ARE part of 0.18: :-)
+
+First, a simple README update is the only difference from 0.18rc2.
+
+* INCOMPATIBLE: $COGITO_COLORS is renamed to $CG_COLORS
+* INCOMPATIBLE: cg-log now by default hides merges, -M behaviour is
+reversed
+* All kinds of very stale command aliases that were deprecated for eons
+were removed
+* .git/author is deprecated (use .git/config to set it up)
+* We now officially depend on 1.4.2 (we use git-*-fetch --stdin which makes
+fetching tags _MUCH_ faster)
+
+* cg-log was reworked to support cg-log -d (show diffs inline),
+  cg-log -S (pickaxe) and renames following (does not quite work, though;
+  I decided not to fix it and wait for revisions.c in Git to support it
+  since the perl script which takes care of this is quite a hack)
+* cg-switch -l to stash your local changes when switching branches
+* cg-commit --amend
+* Tagging interface (cg-tag, cg-tag-ls, cg-tag-show) was greatly enhanced
+* cg-patch -m for applying mailboxes
+* cg-clone -l now sets up an alternate instead of symlinking the object db
+* Support for cg-clone --reference
+* cg-admin-setuprepo supports setting up repositories over SSH
+* Support fetching over FTP
+* Other cool stuff!
+
+  Happy hacking,
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Of the 3 great composers Mozart tells us what it's like to be human,
+Beethoven tells us what it's like to be Beethoven and Bach tells us
+what it's like to be the universe.  -- Douglas Adams
