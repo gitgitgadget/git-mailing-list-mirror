@@ -1,63 +1,81 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Fix approxidate() to understand more extended numbers
-Date: Thu, 28 Sep 2006 23:03:11 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609282300190.3952@g5.osdl.org>
-References: <Pine.LNX.4.64.0609281211260.3952@g5.osdl.org> 
- <Pine.LNX.4.64.0609281212380.3952@g5.osdl.org>
- <118833cc0609281712u2ce01bc5r8f3e97ae9c9a749a@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: tree view: hash_base and hash are now context sensitive
+Date: Thu, 28 Sep 2006 23:06:32 -0700
+Message-ID: <7vmz8jp5p3.fsf@assigned-by-dhcp.cox.net>
+References: <20060928185232.96094.qmail@web31802.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 29 08:03:21 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 29 08:06:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTBSy-0002Qy-QW
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 08:03:21 +0200
+	id 1GTBW9-00036G-AE
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 08:06:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161267AbWI2GDS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Sep 2006 02:03:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161285AbWI2GDS
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 02:03:18 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:2275 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1161267AbWI2GDR (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Sep 2006 02:03:17 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8T63CnW031245
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 28 Sep 2006 23:03:12 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8T63B9s005739;
-	Thu, 28 Sep 2006 23:03:11 -0700
-To: Morten Welinder <mwelinder@gmail.com>
-In-Reply-To: <118833cc0609281712u2ce01bc5r8f3e97ae9c9a749a@mail.gmail.com>
-X-Spam-Status: No, hits=-0.458 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932069AbWI2GGe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Sep 2006 02:06:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932542AbWI2GGe
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 02:06:34 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:10409 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S932069AbWI2GGd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Sep 2006 02:06:33 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060929060633.MCED2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 29 Sep 2006 02:06:33 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id U66V1V0081kojtg0000000
+	Fri, 29 Sep 2006 02:06:29 -0400
+To: ltuikov@yahoo.com
+In-Reply-To: <20060928185232.96094.qmail@web31802.mail.mud.yahoo.com> (Luben
+	Tuikov's message of "Thu, 28 Sep 2006 11:52:32 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28091>
 
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
-
-On Thu, 28 Sep 2006, Morten Welinder wrote:
+>> > > Agreed, we should always refer to the commit-ish, for obvious
+>> > > reasons.
+>> > >
+>> > > This patch doesn't make this decision though.  It simply
+>> > > sets hash_base to HEAD if not defined.
+>> > >
+>> > > Now, since "git-ls-tree" works on both commit-ish and
+>> > > tree-ish, we are ok.
+>> > 
+>> > I think so, too.  Jakub?
+>> 
+>> Status?  I see Jakub hasn't objected, and it is really important
+>> for us to be able to link to "latest" binary blob -- for example
+>> a PDF spec file.
 >
-> Just don't hack at 12am or 12pm.
+> Junio,
+>
+> What are the objections to this patch?
 
-I think 12pm is correct, but 12am probably isn't (12am should _subtract_ 
-12, while 12pm does _not_ add 12).
+No objections from me --- rather lack of objections from Jakub ;-)
 
-That said, I have a rice cooker that avoids the problem by saying "0:10 PM" 
-for ten minutes past midday ;)
+But the fragments do not appear to apply anymore.
 
-Of course, all sane and civilized countries just use 24-hour format 
-anyway. "Military time" my *ss. 
+@@ -1625,7 +1625,7 @@ sub git_print_tree_entry {
+ 			              "history");
+ 		}
+ 		print " | " .
+-			$cgi->a({-href => href(action=>"blob_plain", hash_base=>"HEAD",
++			$cgi->a({-href => href(action=>"blob_plain", hash_base=>$hash_base,
+ 					       file_name=>"$basedir$t->{'name'}")},
+ 				"raw");
+ 		print "</td>\n";
 
-Some day the US will turn metric and 24-hour-format. If the sun doesn't 
-turn into a red giant first, that is.
+There is no call to create blob_plain link with hash_base
+hardcoded to "HEAD" in git-print-tree-entry.
 
-		Linus
+Care to re-spin?
