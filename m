@@ -1,95 +1,83 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Fix approxidate() to understand more extended numbers
-Date: Thu, 28 Sep 2006 23:42:19 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0609282330440.3952@g5.osdl.org>
-References: <Pine.LNX.4.64.0609281211260.3952@g5.osdl.org>
- <Pine.LNX.4.64.0609281212380.3952@g5.osdl.org>
- <118833cc0609281712u2ce01bc5r8f3e97ae9c9a749a@mail.gmail.com>
- <Pine.LNX.4.64.0609282300190.3952@g5.osdl.org> <7vd59fp5b9.fsf@assigned-by-dhcp.cox.net>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: Notes on Using Git with Subprojects
+Date: Fri, 29 Sep 2006 09:04:35 +0200
+Message-ID: <20060929070435.GA20011@admingilde.org>
+References: <45196628.9010107@gmail.com> <Pine.LNX.4.64.0609261629160.9789@iabervon.org> <20060926213003.GA8177@spearce.org> <4519AACD.7020508@gmail.com> <20060927080652.GA8056@admingilde.org> <451AADC3.40201@gmail.com> <20060928073706.GE8056@admingilde.org> <451C30EF.8050305@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Morten Welinder <mwelinder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 29 08:42:42 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="3V7upXqbjpZ4EhLz"
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 29 09:04:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTC4q-0001sF-Ps
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 08:42:29 +0200
+	id 1GTCQM-0006ef-SQ
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 09:04:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161448AbWI2Gm0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Sep 2006 02:42:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161451AbWI2Gm0
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 02:42:26 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:42220 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1161448AbWI2GmZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Sep 2006 02:42:25 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8T6gKnW000415
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 28 Sep 2006 23:42:20 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8T6gJxQ006642;
-	Thu, 28 Sep 2006 23:42:19 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd59fp5b9.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.458 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030395AbWI2HEj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Sep 2006 03:04:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030396AbWI2HEj
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 03:04:39 -0400
+Received: from agent.admingilde.org ([213.95.21.5]:21686 "EHLO
+	mail.admingilde.org") by vger.kernel.org with ESMTP
+	id S1030395AbWI2HEi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Sep 2006 03:04:38 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1GTCQF-0005LW-7d; Fri, 29 Sep 2006 09:04:35 +0200
+To: A Large Angry SCM <gitzilla@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <451C30EF.8050305@gmail.com>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28097>
 
 
+--3V7upXqbjpZ4EhLz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 28 Sep 2006, Junio C Hamano wrote:
+hoi :)
 
-> Linus Torvalds <torvalds@osdl.org> writes:
-> 
-> > On Thu, 28 Sep 2006, Morten Welinder wrote:
-> >>
-> >> Just don't hack at 12am or 12pm.
-> >
-> > I think 12pm is correct, but 12am probably isn't (12am should _subtract_ 
-> > 12, while 12pm does _not_ add 12).
-> 
-> But you have "if (hour > 0 && hour < 12)" in both am and pm so
-> assignment to tm would not trigger...
+On Thu, Sep 28, 2006 at 01:30:39PM -0700, A Large Angry SCM wrote:
+> If the submodule refs in the parent are the actual submodule refs then=20
+> the submodule is not independent of the parent.
 
-That's not the point.
+ok, it's not independent in that sense that you can move the directory
+away and expect the submodule to work even when the parent does not
+exist any more.
 
-If you write
+But you can do normal GIT work as before.
+You can create new branches (they will be stored in the parent
+but you have to "git add .gitmodule/..." explicitly in order
+to track the branch in the parent), fetch/pull from other sides,
+create commits, etc.
+So in your normal workflow you do not have to do anything in the
+parent while you work in the submodule.  That's what I've called
+"independent".
 
-	12:30 am
+I hope the intention is clear now, perhaps I've been sloppy
+with words.
 
-you really _should_ subtract 12, leaving you with 0:30. We don't. So we 
-end up with a 24-hour time of 12:30, which is obviously _pm_, and wrong.
+--=20
+Martin Waitz
 
-And "12 am" or "12 pm" doesn't work at all.
+--3V7upXqbjpZ4EhLz
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-> > That said, I have a rice cooker that avoids the problem by saying "0:10 PM" 
-> > for ten minutes past midday ;)
-> 
-> You eat rice?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
 
-Ok, is it just me, or is that just a very odd question?
+iD8DBQFFHMWDj/Eaxd/oD7IRAvcuAJ9h1SEBomD5CtlIF3NCVCUUkn6BNgCeN3MT
+yUTE3jtOlgXZSZKxPu4K6rc=
+=h9On
+-----END PGP SIGNATURE-----
 
-I can see the question "You eat uni?". That really _does_ take a bit of 
-getting used to. And Natto I really _really_ don't see the point of. 
-
-But rice? Afaik, it's the most common food-staple in the world. It's not 
-exactly odd and exotic..
-
-> > Of course, all sane and civilized countries just use 24-hour format 
-> > anyway.
-> 
-> You are referring to the US, but neither is Japan sane nor
-> civilized ;-).
-
-Yeah, well, they've been learning bad habits. But at least they are 
-metric.
-
-		Linus
+--3V7upXqbjpZ4EhLz--
