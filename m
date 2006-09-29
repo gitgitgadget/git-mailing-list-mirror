@@ -1,98 +1,70 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git and time
-Date: Fri, 29 Sep 2006 10:16:35 +0200
-Message-ID: <451CD663.8020806@op5.se>
-References: <20060928194316.42986.qmail@web51004.mail.yahoo.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: What's in git.git
+Date: Fri, 29 Sep 2006 10:32:08 +0200
+Message-ID: <20060929083208.GL13132@pasky.or.cz>
+References: <7vodt0zbhc.fsf@assigned-by-dhcp.cox.net> <20060928093623.GJ20017@pasky.or.cz> <7vhcyrnn1g.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Rogan Dawes <discard@dawes.za.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 29 10:16:52 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 29 10:32:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTDY2-00068L-Oe
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 10:16:43 +0200
+	id 1GTDn5-0001Hv-SQ
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 10:32:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030320AbWI2IQj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Sep 2006 04:16:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030316AbWI2IQj
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 04:16:39 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:15268 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1030320AbWI2IQi
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Sep 2006 04:16:38 -0400
-Received: by smtp-gw1.op5.se (Postfix, from userid 588)
-	id 1594B6BD75; Fri, 29 Sep 2006 10:16:37 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
-	linux-server1.op5.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.1.4
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 9ECB66BD11; Fri, 29 Sep 2006 10:16:35 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-To: Matthew L Foster <mfoster167@yahoo.com>
-In-Reply-To: <20060928194316.42986.qmail@web51004.mail.yahoo.com>
+	id S1030413AbWI2IcM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Sep 2006 04:32:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030412AbWI2IcM
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Sep 2006 04:32:12 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:46993 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1161142AbWI2IcL (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Sep 2006 04:32:11 -0400
+Received: (qmail 22228 invoked by uid 2001); 29 Sep 2006 10:32:08 +0200
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vhcyrnn1g.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28104>
 
-Matthew L Foster wrote:
-> --- Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> 
->> On Thu, 28 Sep 2006, Matthew L Foster wrote:
->>
->>> It should be possible to export git data, through say a web interface, 
->>> in a such a way that local time order is consistent with commit order.
->> Why?
-> 
-> - So exported data is never/rarely in an inconsistent state with respect to commit order and local
-> time order (data integrity).
-> 
+Dear diary, on Fri, Sep 29, 2006 at 09:34:51AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> diff --git a/INSTALL b/INSTALL
+> index 0d432d7..fa9bf74 100644
+> --- a/INSTALL
+> +++ b/INSTALL
+> @@ -38,19 +38,6 @@ Issues of note:
+>     has been actively developed since 1997, and people have moved over to
+>     graphical file managers.
+>  
+> - - You can use git after building but without installing if you
+> -   wanted to.  Various git commands need to find other git
+> -   commands and scripts to do their work, so you would need to
+> -   arrange a few environment variables to tell them that their
+> -   friends will be found in your built source area instead of at
+> -   their standard installation area.  Something like this works
+> -   for me:
+> -
+> -	GIT_EXEC_PATH=`pwd`
+> -	PATH=`pwd`:$PATH
+> -	GITPERLLIB=`pwd`/perl/blib/lib:`pwd`/perl/blib/arch/auto/Git
+> -	export GIT_EXEC_PATH PATH GITPERLLIB
+> -
+>   - Git is reasonably self-sufficient, but does depend on a few external
+>     programs and libraries:
+>  
 
-Moot point (it has been iterated so many times that I can't be asked to 
-repeat it again).
-
-> - To encourage people to care about/prefer local commit time rather than remote creation/emailed
-> time
-> 
-
-Most people use ntp, and are in general concerned with keeping their 
-clocks in sync as lots of other software depend on it (calender 
-functions, fe). It shouldn't be the task of project leaders to make sure 
-that the ~50000 random people around the world that submit patches to 
-opensource projects every day all have their clocks in sync.
-
-> - So people that user repo X, or binaries from repo X, know when bug fix Y/fancy new feature Z was
-> committed/merged locally
-> 
-
-Can be done using reflog. Feel free to submit patches. Make sure you 
-sync your clock to whatever ntp-server or other timekeeping mechanism 
-Junio uses before you commit and send your patch though. ;-)
-
-> - In many situations "history" is incomplete without local commit time. If a company has a new
-> driver they would probably prefer to know when the main kernel repo has it, not when they
-> created/emailed it or when a remote repo committed it.
-> 
-
-See the reflog response and, again, feel free to submit patches.
-
-To get you started, I think the easiest way would be to teach gitweb 
-about the reflog, and then insert a line saying
-"--- pushed to this repo $date ---"
-or something like that in the summary page whenever a commit is found 
-that is also in the reflog. This should also be fairly CPU efficient if 
-my guesses on how gitweb and the reflog works are correct. CBA to check, 
-since I sincerely and whole-heartedly don't care about it myself.
+The passage should be kept and even GITPERLLIB - just drop the second
+path after the colon.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
