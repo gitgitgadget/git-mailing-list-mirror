@@ -1,57 +1,72 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Use "hash1..hash2" instead of "from hash1 to hash2"
-Date: Thu, 28 Sep 2006 19:28:59 -0700
-Message-ID: <7v7iznquc4.fsf@assigned-by-dhcp.cox.net>
-References: <877iznbq0v.fsf@gmail.com>
+Subject: Re: [PATCH] fetch: Add output for the not fast forward case
+Date: Thu, 28 Sep 2006 19:29:00 -0700
+Message-ID: <7v1wpvquc3.fsf@assigned-by-dhcp.cox.net>
+References: <873babbptl.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 29 04:29:24 2006
+X-From: git-owner@vger.kernel.org Fri Sep 29 04:29:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GT87s-0006bt-92
-	for gcvg-git@gmane.org; Fri, 29 Sep 2006 04:29:20 +0200
+	id 1GT87s-0006bt-Q8
+	for gcvg-git@gmane.org; Fri, 29 Sep 2006 04:29:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030356AbWI2C3I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Sep 2006 22:29:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030392AbWI2C3G
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 22:29:06 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:60304 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1030356AbWI2C3B (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Sep 2006 22:29:01 -0400
+	id S1030392AbWI2C3I convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 28 Sep 2006 22:29:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030394AbWI2C3H
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Sep 2006 22:29:07 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:64698 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1030385AbWI2C3C convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Sep 2006 22:29:02 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao02.cox.net
+          by fed1rmmtao09.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060929022900.BONA12581.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 28 Sep 2006 22:29:00 -0400
+          id <20060929022901.IFJQ16798.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 28 Sep 2006 22:29:01 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id U2V21V00f1kojtg0000000
-	Thu, 28 Sep 2006 22:29:03 -0400
+	id U2V31V00b1kojtg0000000
+	Thu, 28 Sep 2006 22:29:04 -0400
 To: Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28085>
 
-This kind of "appearance only" change needs better
-justification.  Not that I am saying "from .. to" is better for
-such and such reasons, but that's how it's been, so if you are
-proposing to change it, you need to defend why it would help
-users (otherwise I would get hate mails that say "why did you
-merge it -- it broke my work habit in such and such way").
+Santi B=E9jar <sbejar@gmail.com> writes:
 
-You may be doing this for brevity.  In that case, it could
-also be worth shortening them to n unique digits; do we have a
-command to get "here is the SHA-1; give me its unique
-abbreviation at least n letters long but make it longer as
-needed to keep it unique"?
+> This patch follows the notation of the other mail, but for the
+> not-fast-forward case I think it makes more sense to use the '...'
+> notation.
 
-You may be doing this to help Cut & Paste.  Using A..B without
-spaces in between makes it easy to grab both at the same time as
-a range to give them to "git log".  At the same time it makes it
-harder to pick only A or B, so this is two-edged.
+Again, justification for three-dots not two as others is needed
+in the commit log part, not the commentary part.
+
+I tend to agree with you that A...B is nice in this case, _if_
+we use A..B for others.  Using A..B for others (I am guessing
+that you are doing this for Cut & Paste reasons to grab the
+whole range as one word) means that we assume users are a lot
+more likely to be interested in grabbing A..B as a range than
+grabbing only A or B as a point.
+
+I will not discuss if that assumption is correct here, but if we
+assume it is, using A...B makes a lot of sense for this case.
+After grabbing A..B in other cases, the user can give that to
+"git log" to see what the changes between old and new are.  In
+this non-fast-forward case, if we used three-dots A...B to talk
+about the two heads, the user can give it to "git log" to see
+how the two non-fast-forward heads have diverged.
+
+So the choice of .. and ... are internally consistent and very
+sensible.
+
+The question is if people more often want to grab both as a
+range than they want to grab either end point alone.  I am
+inclined to think your assumption is correct, but am not
+absolutely sure.
