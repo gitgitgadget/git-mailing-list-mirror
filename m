@@ -1,74 +1,64 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: [ANNOUNCE qgit-1.5.2] bug fix release
-Date: Sat, 30 Sep 2006 08:30:03 +0200
-Message-ID: <e5bfff550609292330s68f309dcodb6617e006002f61@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [ANNOUNCE] GIT 1.4.2.2
+Date: Fri, 29 Sep 2006 23:53:41 -0700
+Message-ID: <7v8xk1j156.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Sep 30 08:30:24 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 30 08:53:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTYMd-00026p-FS
-	for gcvg-git@gmane.org; Sat, 30 Sep 2006 08:30:19 +0200
+	id 1GTYjN-0006aK-MS
+	for gcvg-git@gmane.org; Sat, 30 Sep 2006 08:53:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751070AbWI3GaG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Sep 2006 02:30:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751069AbWI3GaG
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Sep 2006 02:30:06 -0400
-Received: from py-out-1112.google.com ([64.233.166.180]:45230 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1751070AbWI3GaE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Sep 2006 02:30:04 -0400
-Received: by py-out-1112.google.com with SMTP id n25so1577354pyg
-        for <git@vger.kernel.org>; Fri, 29 Sep 2006 23:30:03 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=Y+aG/zRRp0KZWBTOXe6N1lEFkDw6d3Qa6I9AllCV6zPBCZqQF7e1ERPhBqPDzcFWmwVZPvzZ2fQQ7WR07W746EGXXx9x0yMfswLuQSaufORanZuU3Q/ya6+YHD/LRFT4UdxzAEIhcW+0I/pU9XHsZXLav8GS6pAL/Ns3BzA0x5A=
-Received: by 10.35.37.13 with SMTP id p13mr2151958pyj;
-        Fri, 29 Sep 2006 23:30:03 -0700 (PDT)
-Received: by 10.35.42.9 with HTTP; Fri, 29 Sep 2006 23:30:03 -0700 (PDT)
-To: "Git Mailing List" <git@vger.kernel.org>,
-	linux-kernel@vger.kernel.org
-Content-Disposition: inline
+	id S1751076AbWI3Gxn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Sep 2006 02:53:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751104AbWI3Gxn
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Sep 2006 02:53:43 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:42434 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S1751076AbWI3Gxm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Sep 2006 02:53:42 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060930065342.NNDU6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 30 Sep 2006 02:53:42 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id UWtd1V00K1kojtg0000000
+	Sat, 30 Sep 2006 02:53:38 -0400
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28140>
 
-This is mostly a bug fix release.
+The latest maintenance release GIT 1.4.2.2 is available at the
+usual places:
 
-Fixes are all over the place but most important are the fixes to code
-range filtering.
+  http://www.kernel.org/pub/software/scm/git/
 
-Code range filtering is when you select some text in file viewer and
-want to view the list of revisions that modified that code range.
+  git-1.4.2.2.tar.{gz,bz2}			(tarball)
+  git-htmldocs-1.4.2.2.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.4.2.2.tar.{gz,bz2}		(preformatted docs)
+  RPMS/$arch/git-*-1.4.2.2-1.$arch.rpm	(RPM)
 
-Download tarball from http://www.sourceforge.net/projects/qgit
+This is strictly a bugfix release.  While we will soon be in
+stabilization slow-down for 1.4.3, one of the bugs this release
+contains fixes for actually has bitten people who use the kernel
+commits mailing list, so this is to push the fixes out early.
 
-or directly from git public repository
-git://git.kernel.org/pub/scm/qgit/qgit.git
+----------------------------------------------------------------
 
+Changes since v1.4.2.1 are as follows:
 
-Please refer to http://digilander.libero.it/mcostalba/ for additional
-information.
+Junio C Hamano:
+      Fix git-am safety checks
+      git-diff -B output fix.
 
-	Marco
-
-
-ChangeLog from 1.5.1
-
-- fix a memory leak in case annotation is closed while processing
-- fix a rare segfault due to a race in annotation code
-- fix commit when the change in working dir is a file deletion
-- fix file list is not cleared when changing to revision with no files
-- load file history without --topo-order option
-- fix bold file content after removing range filter
-- fix range filter miscalculation
-- fixed two bugs in range filter code
-- fix file view font to match main view one
-- fix date/time column title issues
-- fix a very rare hang on exit
-- refactor exceptions handling code
+Liu Yubao:
+      Fix duplicate xmalloc in builtin-add
