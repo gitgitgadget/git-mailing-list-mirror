@@ -1,128 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 5/5] fetch: Clean output
-Date: Sat, 30 Sep 2006 03:37:44 -0700
-Message-ID: <7vr6xtej2f.fsf@assigned-by-dhcp.cox.net>
-References: <87r6xu1rci.fsf@gmail.com> <8764f61r74.fsf@gmail.com>
-	<7vpsdehzcs.fsf@assigned-by-dhcp.cox.net>
-	<8aa486160609300242i6f52ee90o235e668a5d865fb7@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git and time
+Date: Sat, 30 Sep 2006 10:36:26 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0609301033460.3952@g5.osdl.org>
+References: <20060928022917.29678.qmail@web51011.mail.yahoo.com>
+ <Pine.LNX.4.64.0609272232040.9349@xanadu.home> <7vfyec63jx.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0609281029300.9349@xanadu.home> <7vd59ejokp.fsf@assigned-by-dhcp.cox.net>
+ <20060930045037.GB18479@spearce.org> <7v4pupizix.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 30 12:37:50 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 30 19:36:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTcEA-0006qW-8T
-	for gcvg-git@gmane.org; Sat, 30 Sep 2006 12:37:50 +0200
+	id 1GTilT-0003Yk-Px
+	for gcvg-git@gmane.org; Sat, 30 Sep 2006 19:36:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750796AbWI3Khq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Sep 2006 06:37:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750782AbWI3Khq
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Sep 2006 06:37:46 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:61324 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1750796AbWI3Khp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Sep 2006 06:37:45 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060930103745.TWOJ6711.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 30 Sep 2006 06:37:45 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Uadn1V0081kojtg0000000
-	Sat, 30 Sep 2006 06:37:47 -0400
-To: Santi <sbejar@gmail.com>
-In-Reply-To: <8aa486160609300242i6f52ee90o235e668a5d865fb7@mail.gmail.com>
-	(sbejar@gmail.com's message of "Sat, 30 Sep 2006 11:42:33 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751331AbWI3Rgg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Sep 2006 13:36:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751332AbWI3Rgg
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Sep 2006 13:36:36 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:13516 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751331AbWI3Rgf (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Sep 2006 13:36:35 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k8UHaRaX002708
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 30 Sep 2006 10:36:28 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k8UHaQcQ026572;
+	Sat, 30 Sep 2006 10:36:26 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v4pupizix.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.45 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28145>
 
-Santi <sbejar@gmail.com> writes:
 
-> So at the end, something like this output?
->
-> $ git fetch -v   # the committish lines for the -v.
-> * refs/heads/origin: fast forward to remote branch 'master' of ../git/
-> old..new: 1ad7a06..bc1a580
-> * refs/heads/pu: does not fast forward to remote branch 'pu' of ../git/
-> old...new: 7c733a8...5faa935
-> forcing update.
-> * refs/heads/next: same as remote branch 'origin/next' of ../git/
-> committish: ce47b9f
-> ...
-> * refs/tags/v1.4.2-rc4: storing tag 'v1.4.2-rc4' of ../git/
-> committish: 8c7a107
->
-> $ git fetch -v origin refs/heads/master
-> * committish: 695dffe
-> branch 'master' of ../git/
 
-For the last one, the second and third line feel backwards.
+On Sat, 30 Sep 2006, Junio C Hamano wrote:
 
-Most cases in your summary (i.e. storing on a tracking branch or
-tag) in general look like:
+> Shawn Pearce <spearce@spearce.org> writes:
+> 
+> > Agreed.  I've been missing such a command and have wanted to add
+> > one but it wasn't important enough to me to actually code it.  :)
+> 
+> Everything you said in your message sounds sane and makes sense
+> to me.  Now we have to find a sucker^Wvolunteer to implement it
+> ;-).
 
-        * <local ref name>: <what happened and where it came from>
-	<label>: <object names>
+Ehh. As far as I can see it's 
+ - a damn hard thing to do efficiently
+ - essentially exactly the same problem you already solved with "git 
+   describe"
 
-where <label> (e.g. old..new) describes what <object names>
-mean.  So to be consistent, the <label> for "same as" case
-(i.e. storing what is fetched in a local ref, but it was already
-the same) and "storing anew" case, we might want to say their
-true object types, not "committish".
+In other words, I think you could make git describe do it, by simply 
+making it parse not just all tags, but also walking the branch log.
 
-Also we probably would want to "s/remote branch/branch" in the
-"where from" part, since we always say "remote" in fetch anyway.
-
-Then the last case where we do not use local tracking branch
-would simply be something like:
-
-	* fetched branch 'master' of ../git
-        commit: 695dffe
-
-How about this?  Essentially the same as the above but with
-minor tweaks.
-
-1. the ones we store in our local ref (either branches or tags):
-
- 1a) fast-forward
-
-  * refs/heads/origin: fast forward to branch 'master' of ../git/
-    old..new: 1ad7a06..bc1a580
-
- 1b) same (only shown under -v)
-
-  * refs/heads/next: same as branch 'origin/next' of ../git/
-    commit: ce47b9f
-
- 1c) non-fast-forward, forced
-
-  * refs/heads/pu: forcing update to branch 'pu' of ../git/
-    old...new: 7c733a8...5faa935
-
- 1d) non-fast-forward, did not update because not forced
-
-  * refs/heads/po: does not fast-forward to branch 'po' of ../git/
-    old...new: 7c733a8...5faa935
-
- 1e) creating a new local ref to store
-
-  * refs/tags/v1.4.2-rc4: storing tag 'v1.4.2-rc4' of ../git/
-    tag: 8c7a107
-
-2. the ones we do not store in our local ref (only shown under -v):
-
-  * fetched branch 'master' of ../git
-    commit: 695dffe
-
-I think we should reword the "what happened" for 1d to clarify
-that we did not touch refs/heads/po, but other than that I am
-reasonably happy about how they look consistent.
-
-But please don't take the above too seriously.  As everybody
-should be very well aware by now, I am very bad at UI designs.
+		Linus
