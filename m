@@ -1,152 +1,110 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 2/2] refs: minor restructuring of cached refs data.
-Date: Sat, 30 Sep 2006 12:49:03 -0700
-Message-ID: <7vr6xtcez4.fsf@assigned-by-dhcp.cox.net>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 1/2] Move code resolving packed refs into its own function.
+Date: Sat, 30 Sep 2006 22:01:58 +0200
+Message-ID: <20060930220158.d331bb7c.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Sep 30 21:49:21 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 30 21:55:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTkpm-0004z3-Ou
-	for gcvg-git@gmane.org; Sat, 30 Sep 2006 21:49:15 +0200
+	id 1GTkw3-00065g-3f
+	for gcvg-git@gmane.org; Sat, 30 Sep 2006 21:55:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751791AbWI3TtH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Sep 2006 15:49:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751786AbWI3TtH
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Sep 2006 15:49:07 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:9103 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751791AbWI3TtF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Sep 2006 15:49:05 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060930194904.FHVW6235.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 30 Sep 2006 15:49:04 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Ujp61V01S1kojtg0000000
-	Sat, 30 Sep 2006 15:49:07 -0400
-To: git@vger.kernel.org
+	id S1751802AbWI3Tzk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Sep 2006 15:55:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751805AbWI3Tzk
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Sep 2006 15:55:40 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:41098 "EHLO smtp1-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1751802AbWI3Tzj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Sep 2006 15:55:39 -0400
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 1E45168B57;
+	Sat, 30 Sep 2006 21:55:38 +0200 (CEST)
+To: Junio Hamano <junkio@cox.net>
+X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.8.20; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28150>
 
-Once we read packed and loose refs, for_each_ref() and friends
-kept using them even after write_ref_sha1() and delete_ref()
-changed the refs.  This adds invalidate_cached_refs() as a way
-to flush the cached information.
+This patch move Linus' packed refs resolving code from
+"resolve_ref" into a new "resolve_packed_ref" extern
+function so that it can be reused when needed.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- * This should not change the behaviour of the existing code in
-   any way, but is a necessary step to handle ref deletion
-   correctly.
+ cache.h |    2 ++
+ refs.c  |   34 ++++++++++++++++++++--------------
+ 2 files changed, 22 insertions(+), 14 deletions(-)
 
- refs.c |   56 +++++++++++++++++++++++++++++++++++++++++++-------------
- 1 files changed, 43 insertions(+), 13 deletions(-)
-
+diff --git a/cache.h b/cache.h
+index 4e01a74..f37bc18 100644
+--- a/cache.h
++++ b/cache.h
+@@ -296,6 +296,8 @@ extern int get_sha1_hex(const char *hex,
+ extern char *sha1_to_hex(const unsigned char *sha1);	/* static buffer result! */
+ extern int read_ref(const char *filename, unsigned char *sha1);
+ extern const char *resolve_ref(const char *path, unsigned char *sha1, int, int *);
++extern const char *resolve_packed_ref(const char *ref, unsigned char *sha1, int, int *);
++
+ extern int create_symref(const char *ref, const char *refs_heads_master);
+ extern int validate_symref(const char *ref);
+ 
 diff --git a/refs.c b/refs.c
-index b433c0c..6ee5f96 100644
+index 3d4cdd1..5e3988b 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -66,12 +66,42 @@ static struct ref_list *add_ref(const ch
- 	return list;
+@@ -148,6 +148,25 @@ static struct ref_list *get_loose_refs(v
+ 	return refs;
  }
  
--static struct ref_list *get_packed_refs(void)
-+/*
-+ * Future: need to be in "struct repository"
-+ * when doing a full libification.
-+ */
-+struct cached_refs {
-+	char did_loose;
-+	char did_packed;
-+	struct ref_list *loose;
-+	struct ref_list *packed;
-+} cached_refs;
-+
-+static void free_ref_list(struct ref_list *list)
++const char *resolve_packed_ref(const char *ref, unsigned char *sha1,
++			       int reading, int *flag)
 +{
-+	struct ref_list *next;
-+	for ( ; list; list = next) {
-+		next = list->next;
-+		free(list);
++	struct ref_list *list = get_packed_refs();
++	while (list) {
++		if (!strcmp(ref, list->name)) {
++			hashcpy(sha1, list->sha1);
++			if (flag)
++				*flag |= REF_ISPACKED;
++			return ref;
++		}
++		list = list->next;
 +	}
++	if (reading || errno != ENOENT)
++		return NULL;
++	hashclr(sha1);
++	return ref;
 +}
 +
-+static void invalidate_cached_refs(void)
- {
--	static int did_refs = 0;
--	static struct ref_list *refs = NULL;
-+	struct cached_refs *ca = &cached_refs;
-+
-+	if (ca->did_loose && ca->loose)
-+		free_ref_list(ca->loose);
-+	if (ca->did_packed && ca->packed)
-+		free_ref_list(ca->packed);
-+	ca->loose = ca->packed = NULL;
-+	ca->did_loose = ca->did_packed = 0;
-+}
- 
--	if (!did_refs) {
-+static struct ref_list *get_packed_refs(void)
-+{
-+	if (!cached_refs.did_packed) {
-+		struct ref_list *refs = NULL;
- 		FILE *f = fopen(git_path("packed-refs"), "r");
- 		if (f) {
- 			struct ref_list *list = NULL;
-@@ -86,9 +116,10 @@ static struct ref_list *get_packed_refs(
- 			fclose(f);
- 			refs = list;
- 		}
--		did_refs = 1;
-+		cached_refs.packed = refs;
-+		cached_refs.did_packed = 1;
- 	}
--	return refs;
-+	return cached_refs.packed;
- }
- 
- static struct ref_list *get_ref_dir(const char *base, struct ref_list *list)
-@@ -138,14 +169,11 @@ static struct ref_list *get_ref_dir(cons
- 
- static struct ref_list *get_loose_refs(void)
- {
--	static int did_refs = 0;
--	static struct ref_list *refs = NULL;
--
--	if (!did_refs) {
--		refs = get_ref_dir("refs", NULL);
--		did_refs = 1;
-+	if (!cached_refs.did_loose) {
-+		cached_refs.loose = get_ref_dir("refs", NULL);
-+		cached_refs.did_loose = 1;
- 	}
--	return refs;
-+	return cached_refs.loose;
- }
- 
  /* We allow "recursive" symbolic refs. Only within reason, though */
-@@ -401,6 +429,7 @@ int delete_ref(const char *refname, unsi
- 		fprintf(stderr, "warning: unlink(%s) failed: %s",
- 			lock->log_file, strerror(errno));
+ #define MAXDEPTH 5
  
-+	invalidate_cached_refs();
- 	return ret;
- }
+@@ -177,20 +196,7 @@ const char *resolve_ref(const char *ref,
+ 		 * reading.
+ 		 */
+ 		if (lstat(path, &st) < 0) {
+-			struct ref_list *list = get_packed_refs();
+-			while (list) {
+-				if (!strcmp(ref, list->name)) {
+-					hashcpy(sha1, list->sha1);
+-					if (flag)
+-						*flag |= REF_ISPACKED;
+-					return ref;
+-				}
+-				list = list->next;
+-			}
+-			if (reading || errno != ENOENT)
+-				return NULL;
+-			hashclr(sha1);
+-			return ref;
++			return resolve_packed_ref(ref, sha1, reading, flag);
+ 		}
  
-@@ -665,6 +694,7 @@ int write_ref_sha1(struct ref_lock *lock
- 		unlock_ref(lock);
- 		return -1;
- 	}
-+	invalidate_cached_refs();
- 	if (log_ref_write(lock, sha1, logmsg) < 0) {
- 		unlock_ref(lock);
- 		return -1;
+ 		/* Follow "normalized" - ie "refs/.." symlinks by hand */
 -- 
-1.4.2.1.g5a98f
+1.4.2.1.g7cf04
