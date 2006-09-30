@@ -1,84 +1,53 @@
-From: Martin Waitz <tali@admingilde.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] gitweb: start to generate PATH_INFO URLs
-Date: Sat, 30 Sep 2006 20:14:09 +0200
-Message-ID: <20060930181408.GD2871@admingilde.org>
-References: <20060929221641.GC2871@admingilde.org> <7v8xk2jofc.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 30 Sep 2006 12:42:04 -0700
+Message-ID: <7vfye9dtv7.fsf@assigned-by-dhcp.cox.net>
+References: <20060929221641.GC2871@admingilde.org>
+	<7v8xk2jofc.fsf@assigned-by-dhcp.cox.net>
+	<20060930181408.GD2871@admingilde.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="GZVR6ND4mMseVXL/"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 30 20:14:28 2006
+X-From: git-owner@vger.kernel.org Sat Sep 30 21:42:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTjLr-0002eY-Dh
-	for gcvg-git@gmane.org; Sat, 30 Sep 2006 20:14:16 +0200
+	id 1GTkiz-0003ha-H0
+	for gcvg-git@gmane.org; Sat, 30 Sep 2006 21:42:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751388AbWI3SOL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Sep 2006 14:14:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751391AbWI3SOL
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Sep 2006 14:14:11 -0400
-Received: from agent.admingilde.org ([213.95.21.5]:48269 "EHLO
-	mail.admingilde.org") by vger.kernel.org with ESMTP
-	id S1751388AbWI3SOK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Sep 2006 14:14:10 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1GTjLl-0004Q4-1W; Sat, 30 Sep 2006 20:14:09 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v8xk2jofc.fsf@assigned-by-dhcp.cox.net>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S1751784AbWI3TmJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Sep 2006 15:42:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751785AbWI3TmJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Sep 2006 15:42:09 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:10173 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1751784AbWI3TmG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Sep 2006 15:42:06 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20060930194205.DBPO12581.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 30 Sep 2006 15:42:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Uji71V00R1kojtg0000000
+	Sat, 30 Sep 2006 15:42:08 -0400
+To: Martin Waitz <tali@admingilde.org>
+In-Reply-To: <20060930181408.GD2871@admingilde.org> (Martin Waitz's message of
+	"Sat, 30 Sep 2006 20:14:09 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28147>
 
+Martin Waitz <tali@admingilde.org> writes:
 
---GZVR6ND4mMseVXL/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Should we use the gitweb feature mechanism to enable/disable
+> PATH_INFO URL generation?
 
-hoi :)
-
-On Fri, Sep 29, 2006 at 03:30:47PM -0700, Junio C Hamano wrote:
-> Martin Waitz <tali@admingilde.org> writes:
->=20
-> > Instead of providing the project as a ?p=3D parameter it is simply appe=
-nded
-> > to the base URI.
-> > All other parameters are appended to that, except for ?a=3Dsummary which
-> > is the default and can be omitted.
->=20
-> Supporting PATH_INFO in the sense that we do sensible things
-> when we get called with one is one thing, but generating such a
-> URL that uses PATH_INFO is a different thing.  I suspect not
-> everybody's webserver is configured to call us with PATH_INFO,
-> so this should be conditional.
-
-right, and in fact it was more intended as a RFC, to see what
-people think about such a thing.  Obviously I wanted to have
-it for my repository, so I implemented it unconditional first.
-
-Should we use the gitweb feature mechanism to enable/disable
-PATH_INFO URL generation?
-
---=20
-Martin Waitz
-
---GZVR6ND4mMseVXL/
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFHrPwj/Eaxd/oD7IRAhCAAJ4+TgF8G3ei6+IRoXfuIJDPB/QadwCfW7qk
-csK6nwDYXdbJlJsx0XKFeMo=
-=W3xe
------END PGP SIGNATURE-----
-
---GZVR6ND4mMseVXL/--
+That sounds sensible.  I personally do not think many people
+would object if you made the default to true.  Also I do not
+think it would make much sense to make this overridable by
+repository configuration.
