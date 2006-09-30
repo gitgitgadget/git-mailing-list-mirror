@@ -1,58 +1,119 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: What's in git.git
-Date: Sat, 30 Sep 2006 00:31:18 -0700
-Message-ID: <7vzmchhku0.fsf@assigned-by-dhcp.cox.net>
-References: <7vodt0zbhc.fsf@assigned-by-dhcp.cox.net>
-	<20060928093623.GJ20017@pasky.or.cz>
-	<7vhcyrnn1g.fsf@assigned-by-dhcp.cox.net>
-	<20060929083208.GL13132@pasky.or.cz>
+From: Santi <sbejar@gmail.com>
+Subject: Re: [PATCH 5/5] fetch: Clean output
+Date: Sat, 30 Sep 2006 11:42:33 +0200
+Message-ID: <8aa486160609300242i6f52ee90o235e668a5d865fb7@mail.gmail.com>
+References: <87r6xu1rci.fsf@gmail.com> <8764f61r74.fsf@gmail.com>
+	 <7vpsdehzcs.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 30 09:31:25 2006
+X-From: git-owner@vger.kernel.org Sat Sep 30 11:42:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTZJj-00059I-LQ
-	for gcvg-git@gmane.org; Sat, 30 Sep 2006 09:31:24 +0200
+	id 1GTbMk-00057i-1U
+	for gcvg-git@gmane.org; Sat, 30 Sep 2006 11:42:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751107AbWI3HbV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Sep 2006 03:31:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751108AbWI3HbU
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Sep 2006 03:31:20 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:47012 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1751107AbWI3HbU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Sep 2006 03:31:20 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20060930073119.VTXK2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 30 Sep 2006 03:31:19 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id UXXE1V00g1kojtg0000000
-	Sat, 30 Sep 2006 03:31:15 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20060929083208.GL13132@pasky.or.cz> (Petr Baudis's message of
-	"Fri, 29 Sep 2006 10:32:08 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751208AbWI3Jmf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 30 Sep 2006 05:42:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751213AbWI3Jmf
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Sep 2006 05:42:35 -0400
+Received: from wx-out-0506.google.com ([66.249.82.239]:9876 "EHLO
+	wx-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1751208AbWI3Jme convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Sep 2006 05:42:34 -0400
+Received: by wx-out-0506.google.com with SMTP id s14so1183765wxc
+        for <git@vger.kernel.org>; Sat, 30 Sep 2006 02:42:33 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ULVCfpBTO4TC6riFAGYhJZMJwjZR4hwszCvSeRe3Muwtl8gTDcoldtIh/j6KHtGgmrkmerpKbNIPIjkdW6VC5EF8lAVGZJKYVXo88prCgobEeSrqmRdRkFKUDnwvv6azHHaFm4mopCUa+TtKqSO5QwUy5GNbHCAfKT9Vb1+j3+4=
+Received: by 10.70.117.1 with SMTP id p1mr6959673wxc;
+        Sat, 30 Sep 2006 02:42:33 -0700 (PDT)
+Received: by 10.70.19.6 with HTTP; Sat, 30 Sep 2006 02:42:33 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vpsdehzcs.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28143>
 
-Petr Baudis <pasky@suse.cz> writes:
-
->> - - You can use git after building but without installing if you
->>...
->> -	export GIT_EXEC_PATH PATH GITPERLLIB
->> -
->>   - Git is reasonably self-sufficient, but does depend on a few external
->>     programs and libraries:
+2006/9/30, Junio C Hamano <junkio@cox.net>:
+> Santi B=E9jar <sbejar@gmail.com> writes:
 >
-> The passage should be kept and even GITPERLLIB - just drop the second
-> path after the colon.
+> > Do not show duplicated remote branch information and reformat the o=
+utput as:
+> >
+> > $ git fetch -v   # the committish lines for the -v.
+> > * refs/heads/origin: fast forward to remote branch 'master' of ../g=
+it/
+> >   1ad7a06..bc1a580
+> >   committish: bc1a580
+>
+> I am not quite sure about this --- it is not obvious what these
+> two numbers represent anymore.  Also I think the last line
+> outlived its usefulness (99% of the time refs are committish, so
+> noting exception is good but otherwise it is not interesting).
 
-Thanks.
+I agree in the case of updating a ref, but I would keep it otherwise
+(and even in this case only when -v is given).
+
+>
+> I know you opted for minimum patch, but it might be a good time
+> to polish the wording a bit while we are touching the general
+> vicinity of the code.
+>
+> How about saying something like:
+>
+>  * refs/heads/origin: fast forward to remote branch 'master' of ../gi=
+t/
+>    old..new =3D 1ad7a06..bc1a580
+
+I like it.
+
+>
+> > * refs/heads/pu: does not fast forward to remote branch 'pu' of ../=
+git/;
+> >   7c733a8...5faa935
+> >   not updating.
+> >   forcing update.
+> >   committish: 5faa935
+>
+> This is even more confusing.  Perhaps we would want to have two
+> cases, depending on --force (and +).
+
+Sorry, it was from two copy'n'paste. I did it in a new repository
+(without the +), then it stoped at this point (I suppose to force the
+user to solve the problem). Then I put the + and did the copy'n'paste
+again without deleting this extra line.
+
+>
+>  * refs/heads/pu: does not fast forward to remote branch 'pu' of ../g=
+it/;
+>    but forcing update anyway.  old...new =3D 7c733a8...5faa935
+
+With the old...new in a new line?
+
+So at the end, something like this output?
+
+$ git fetch -v   # the committish lines for the -v.
+* refs/heads/origin: fast forward to remote branch 'master' of ../git/
+ old..new: 1ad7a06..bc1a580
+* refs/heads/pu: does not fast forward to remote branch 'pu' of ../git/
+ old...new: 7c733a8...5faa935
+ forcing update.
+* refs/heads/next: same as remote branch 'origin/next' of ../git/
+ committish: ce47b9f
+=2E..
+* refs/tags/v1.4.2-rc4: storing tag 'v1.4.2-rc4' of ../git/
+ committish: 8c7a107
+
+$ git fetch -v origin refs/heads/master
+* committish: 695dffe
+ branch 'master' of ../git/
+
+Santi
