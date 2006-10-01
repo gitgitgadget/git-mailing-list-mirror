@@ -1,63 +1,78 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: What will happen to git.git in the near future
-Date: Sun, 1 Oct 2006 13:23:16 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610011318100.3952@g5.osdl.org>
-References: <7v7iztbldm.fsf@assigned-by-dhcp.cox.net> <7vd59c2vev.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610011132040.3952@g5.osdl.org>
- <Pine.LNX.4.63.0610012052520.14200@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0610011256580.3952@g5.osdl.org>
- <Pine.LNX.4.63.0610012208410.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Sebastian Harl <sh@tokkee.org>
+Subject: [BUG] "git cat-file tree <sha1>" prints garbage
+Date: Sun, 1 Oct 2006 22:26:02 +0200
+Message-ID: <20061001202602.GD32373@albany.tokkee.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 01 22:23:53 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="vr1sEM+RgL05fCrX"
+X-From: git-owner@vger.kernel.org Sun Oct 01 22:26:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GU7qe-0003uS-Fq
-	for gcvg-git@gmane.org; Sun, 01 Oct 2006 22:23:40 +0200
+	id 1GU7t3-0004OG-Fq
+	for gcvg-git@gmane.org; Sun, 01 Oct 2006 22:26:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932308AbWJAUXY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Oct 2006 16:23:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932310AbWJAUXY
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Oct 2006 16:23:24 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:26025 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932308AbWJAUXX (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 Oct 2006 16:23:23 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k91KNGaX028369
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 1 Oct 2006 13:23:17 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k91KNGH7029288;
-	Sun, 1 Oct 2006 13:23:16 -0700
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0610012208410.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Spam-Status: No, hits=-0.447 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932315AbWJAU0G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 Oct 2006 16:26:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932317AbWJAU0G
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Oct 2006 16:26:06 -0400
+Received: from mail.tokkee.org ([212.114.247.92]:3727 "EHLO albany.tokkee.org")
+	by vger.kernel.org with ESMTP id S932315AbWJAU0D (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Oct 2006 16:26:03 -0400
+Received: by albany.tokkee.org (Postfix, from userid 1000)
+	id DC9F7364001; Sun,  1 Oct 2006 22:26:02 +0200 (CEST)
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28201>
 
 
+--vr1sEM+RgL05fCrX
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, 1 Oct 2006, Johannes Schindelin wrote:
-> 
-> The problem is that the Makefile does not realize that Git.xs no longer is 
-> there. Neither does the code which recreates the Makefile.
+Hi,
 
-No. The problem is that top-level dependency rules for perl/Makefile are 
-simply _wrong_. It claims it depends on some things (which is true), but 
-then it totally ignores _other_ things that it also depends on.
+When using "git cat-file tree <sha1>" to print a tree's content, it produces
+garbage output like the following:
 
-Further, even if it was right, the rules to actually _generate_ the 
-Makefile then seems wrong, in that it cares about files it shouldn't care 
-about in the first place.
+  $ git cat-file -t c0cd1e4e1888be6a70d44476996ece8be1ab52a2
+  tree
+  $ git cat-file tree c0cd1e4e1888be6a70d44476996ece8be1ab52a2
+  100644 .gitignore%=EBF7=A6=F9q=A4=A2=90=AB=82:=93y=97=C7=BD100644
+  COPYINGo=F8|Fd=98C=97bW=91=C8=EA;=BB_"y=A340000 Documentation=8A>=DD=A2=
+=DE=C0=9F=E7=9C $=EB#=BA=E2=90=FC100755
+  GIT-VERSION-GEN
+  [...]
 
-So why do that at all? Why accept such crap?
+Using "git cat-file -p <sha1>" works fine.
+(The above example uses one of the latest commits of the git.git repository)
 
-			Linus
+Cheers,
+Sebastian
+
+--=20
+Sebastian "tokkee" Harl
+GnuPG-ID: 0x8501C7FC
+http://tokkee.org/
+
+
+--vr1sEM+RgL05fCrX
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFICRaEFEKc4UBx/wRAkPoAKCHcHvLE7vWQ8zuRI2+nu/LnS2WnwCgkKfK
+fcjz76rt9b9eaj6w2UTDu6s=
+=Ae7Y
+-----END PGP SIGNATURE-----
+
+--vr1sEM+RgL05fCrX--
