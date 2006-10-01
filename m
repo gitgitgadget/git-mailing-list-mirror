@@ -1,55 +1,58 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: What will happen to git.git in the near future
-Date: Sun, 1 Oct 2006 12:57:25 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610011256580.3952@g5.osdl.org>
-References: <7v7iztbldm.fsf@assigned-by-dhcp.cox.net> <7vd59c2vev.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610011132040.3952@g5.osdl.org>
- <Pine.LNX.4.63.0610012052520.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] Use git-update-ref to delete a tag instead of rm()ing the
+ ref file.
+Date: Sun, 1 Oct 2006 22:16:22 +0200
+Message-ID: <20061001221622.0f68b471.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 01 21:57:43 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 01 22:10:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GU7RR-0006gx-CQ
-	for gcvg-git@gmane.org; Sun, 01 Oct 2006 21:57:37 +0200
+	id 1GU7dn-00011W-9v
+	for gcvg-git@gmane.org; Sun, 01 Oct 2006 22:10:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932253AbWJAT5e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Oct 2006 15:57:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932254AbWJAT5e
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Oct 2006 15:57:34 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:59807 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932253AbWJAT5d (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 Oct 2006 15:57:33 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k91JvQaX027266
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 1 Oct 2006 12:57:27 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k91JvPLa028716;
-	Sun, 1 Oct 2006 12:57:26 -0700
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0610012052520.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Spam-Status: No, hits=-0.448 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932233AbWJAUKQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 Oct 2006 16:10:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932287AbWJAUKP
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Oct 2006 16:10:15 -0400
+Received: from smtp4-g19.free.fr ([212.27.42.30]:52153 "EHLO smtp4-g19.free.fr")
+	by vger.kernel.org with ESMTP id S932233AbWJAUKO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Oct 2006 16:10:14 -0400
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp4-g19.free.fr (Postfix) with SMTP id 3D5AC5497C;
+	Sun,  1 Oct 2006 22:10:13 +0200 (CEST)
+To: Junio Hamano <junkio@cox.net>
+X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.8.20; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28198>
 
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ git-tag.sh |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
 
-
-On Sun, 1 Oct 2006, Johannes Schindelin wrote:
-> 
-> Just rm perl/{Git.{bs,c},Makefile} and remake.
-
-Now this works.
-
-So somebody tell me why we even invoke that Makefile that shouldn't be 
-there?
-
-		Linus
+diff --git a/git-tag.sh b/git-tag.sh
+index 2bde3c0..6463b31 100755
+--- a/git-tag.sh
++++ b/git-tag.sh
+@@ -47,8 +47,10 @@ do
+     -d)
+     	shift
+ 	tag_name="$1"
+-	rm "$GIT_DIR/refs/tags/$tag_name" && \
+-	        echo "Deleted tag $tag_name."
++	tag=$(git-show-ref --verify --hash -- "refs/tags/$tag_name") ||
++		die "Seriously, what tag are you talking about?"
++	git-update-ref -m 'tag: delete' -d "refs/tags/$tag_name" "$tag" &&
++		echo "Deleted tag $tag_name."
+ 	exit $?
+ 	;;
+     -*)
+-- 
+1.4.2.1.g8a7b-dirty
