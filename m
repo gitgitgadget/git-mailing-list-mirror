@@ -1,150 +1,93 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] gitweb: make leftmost column of blame less cluttered.
-Date: Sun, 01 Oct 2006 02:19:44 -0700
-Message-ID: <7vwt7k4clr.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH 1/2] Move code resolving packed refs into its own function.
+Date: Sun, 01 Oct 2006 02:58:03 -0700
+Message-ID: <7vodsw2w9g.fsf@assigned-by-dhcp.cox.net>
+References: <20060930220158.d331bb7c.chriscool@tuxfamily.org>
+	<7vmz8hccxl.fsf@assigned-by-dhcp.cox.net>
+	<200610010606.32561.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Oct 01 11:19:52 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 01 11:58:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GTxUE-00044F-Ji
-	for gcvg-git@gmane.org; Sun, 01 Oct 2006 11:19:50 +0200
+	id 1GTy5Q-0004F8-3z
+	for gcvg-git@gmane.org; Sun, 01 Oct 2006 11:58:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750744AbWJAJTr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Oct 2006 05:19:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751382AbWJAJTr
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Oct 2006 05:19:47 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:29174 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1750744AbWJAJTq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Oct 2006 05:19:46 -0400
+	id S1751698AbWJAJ6H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 Oct 2006 05:58:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751704AbWJAJ6H
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Oct 2006 05:58:07 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:15268 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1751698AbWJAJ6E (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Oct 2006 05:58:04 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao01.cox.net
+          by fed1rmmtao07.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061001091945.MOHY6077.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 1 Oct 2006 05:19:45 -0400
+          id <20061001095804.PRGF21457.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 1 Oct 2006 05:58:04 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id UxKn1V00N1kojtg0000000
-	Sun, 01 Oct 2006 05:19:48 -0400
-To: git@vger.kernel.org
+	id Uxy61V00Z1kojtg0000000
+	Sun, 01 Oct 2006 05:58:07 -0400
+To: Christian Couder <chriscool@tuxfamily.org>
+In-Reply-To: <200610010606.32561.chriscool@tuxfamily.org> (Christian Couder's
+	message of "Sun, 1 Oct 2006 06:06:32 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28174>
 
-Instead of labelling each and every line with clickable commit
-object name, this makes the blame output to show them only on
-the first line of each group of lines from the same revision.
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-Also it makes mouse-over to show the minimum authorship and
-authordate information for extra cuteness ;-).
+> Junio C Hamano wrote:
+>> Christian Couder <chriscool@tuxfamily.org> writes:
+>> > This patch move Linus' packed refs resolving code from
+>> > "resolve_ref" into a new "resolve_packed_ref" extern
+>> > function so that it can be reused when needed.
+>>
+>> I think we are stepping on each other's toes.  How far into the
+>> process of making correct branch deletion are you?
+>
+> I am not farther than the 2 patches I sent yesterday (before going to bed).
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+Thanks.  I just did not want to waste your work with overlapping
+duplicated efforts.
 
- * I've been staying away from the party to paint the bikeshed,
-   but I had a bit of time to kill tonight.  Let's see if people
-   might like this...
+I think what we have in "next" tonight is in a more-or-less
+testable shape, although it has still a long way to reach
+"master".  Things I know we need to address:
 
- gitweb/gitweb.perl |   67 +++++++++++++++++++++++++++++++++++++++++----------
- 1 files changed, 54 insertions(+), 13 deletions(-)
+ - I've updated lock_ref_sha1_basic() to remove empty left-over
+   directories and to notice conflicts between 'foo/bar' vs
+   'foo' when creating a new ref, hopefully in the same spirit
+   as your patch to safe_create_leading_directories(), but done
+   differently (safe_... function is meant to be used anywhere
+   not just $GIT_DIR/refs/, and it felt wrong for it to take
+   exception for packed refs).  We should do the same for the
+   reflog hierarchy but we currently don't.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 44991b1..7e4ec8d 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2429,6 +2429,41 @@ sub git_tag {
- 	git_footer_html();
- }
- 
-+sub git_blame_flush_chunk {
-+	my ($name, $revdata, $color, $rev, @line) = @_;
-+	my $label = substr($rev, 0, 8);
-+	my $line = scalar(@line);
-+	my $cnt = 0;
-+	my $pop = '';
-+
-+	if ($revdata->{$rev} ne '') {
-+		$pop = ' title="' . esc_html($revdata->{$rev}) . '"';
-+	}
-+
-+	for (@line) {
-+		my ($lineno, $data) = @$_;
-+		$cnt++;
-+		print "<tr class=\"$color\">\n";
-+		if ($cnt == 1) {
-+			print "<td class=\"sha1\"$pop";
-+			if ($line > 1) {
-+				print " rowspan=\"$line\"";
-+			}
-+			print ">";
-+			print $cgi->a({-href => href(action=>"commit",
-+						     hash=>$rev,
-+						     file_name=>$name)},
-+				      $label);
-+			print "</td>\n";
-+		}
-+		print "<td class=\"linenr\">".
-+		    "<a id=\"l$lineno\" href=\"#l$lineno\" class=\"linenr\">" .
-+		    esc_html($lineno) . "</a></td>\n";
-+		print "<td class=\"pre\">" . esc_html($data) . "</td>\n";
-+		print "</tr>\n";
-+	}
-+}
-+
- sub git_blame2 {
- 	my $fd;
- 	my $ftype;
-@@ -2474,27 +2509,33 @@ sub git_blame2 {
- <table class="blame">
- <tr><th>Commit</th><th>Line</th><th>Data</th></tr>
- HTML
-+	my @chunk = ();
-+	my %revdata = ();
- 	while (<$fd>) {
- 		/^([0-9a-fA-F]{40}).*?(\d+)\)\s{1}(\s*.*)/;
--		my $full_rev = $1;
--		my $rev = substr($full_rev, 0, 8);
--		my $lineno = $2;
--		my $data = $3;
--
-+		my ($full_rev, $author, $date, $lineno, $data) =
-+		    /^([0-9a-f]{40}).*?\s\((.*?)\s+([-\d]+ [:\d]+ [-+\d]+)\s+(\d+)\)\s(.*)/;
-+		if (!exists $revdata{$full_rev}) {
-+			$revdata{$full_rev} = "$author, $date";
-+		}
- 		if (!defined $last_rev) {
- 			$last_rev = $full_rev;
- 		} elsif ($last_rev ne $full_rev) {
-+			git_blame_flush_chunk($file_name,
-+					      \%revdata,
-+					      $rev_color[$current_color],
-+					      $last_rev, @chunk);
-+			@chunk = ();
- 			$last_rev = $full_rev;
- 			$current_color = ++$current_color % $num_colors;
- 		}
--		print "<tr class=\"$rev_color[$current_color]\">\n";
--		print "<td class=\"sha1\">" .
--			$cgi->a({-href => href(action=>"commit", hash=>$full_rev, file_name=>$file_name)},
--			        esc_html($rev)) . "</td>\n";
--		print "<td class=\"linenr\"><a id=\"l$lineno\" href=\"#l$lineno\" class=\"linenr\">" .
--		      esc_html($lineno) . "</a></td>\n";
--		print "<td class=\"pre\">" . esc_html($data) . "</td>\n";
--		print "</tr>\n";
-+		push @chunk, [$lineno, $data];
-+	}
-+	if (@chunk) {
-+		git_blame_flush_chunk($file_name,
-+				      \%revdata,
-+				      $rev_color[$current_color],
-+				      $last_rev, @chunk);
- 	}
- 	print "</table>\n";
- 	print "</div>";
--- 
-1.4.2.1.gc9fffe
+ - We need to audit our shell scripts to make sure they do not
+   depend on being able to look directly into $GIT_DIR/refs to
+   see if the ref they are interested in exists.  I've fixed a
+   few in git-fetch while handling the patch to clean up its
+   output from Santi, but I would not be surprised if there are
+   more.  The code in git-branch and git-tag to list what's
+   there are Ok; they use "rev-parse --symbolic --all/--tags".
+
+ - I think gitweb should be Ok; it does peek-remote on the
+   repository.  Although we would probably want to update
+   git_get_references and git_get_refs_list sub to use
+   for-each-ref there, that can be done as a later optimization.
+
+ - Dumb transports are not aware of packed refs on the remote
+   side.  The underlying commit walkers (anything that links
+   with fetch.c) needs their fetch_ref() implementation updated
+   to look at the packed-refs file from the remote side and we
+   should be fine after that.  I haven't looked at rsync
+   transport but the change necessary there shouldn't be too
+   involved.
