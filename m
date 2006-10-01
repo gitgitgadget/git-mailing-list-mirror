@@ -1,100 +1,106 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Decode long title for link tooltips
-Date: Sun, 1 Oct 2006 23:49:04 +0200
-Message-ID: <200610012349.05391.jnareb@gmail.com>
-References: <873baet4ka.wl@mail2.atmark-techno.com> <eforb7$fgd$1@sea.gmane.org> <87r6xrvi0g.wl@mail2.atmark-techno.com>
+From: Martin Waitz <tali@admingilde.org>
+Subject: [PATCH] gitweb: start to generate PATH_INFO URLs.
+Date: Sun, 1 Oct 2006 23:57:48 +0200
+Message-ID: <20061001215748.GG2871@admingilde.org>
+References: <20060929221641.GC2871@admingilde.org> <7v8xk2jofc.fsf@assigned-by-dhcp.cox.net> <20060930181408.GD2871@admingilde.org> <7vfye9dtv7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 01 23:49:07 2006
+X-From: git-owner@vger.kernel.org Sun Oct 01 23:58:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GU9BC-0002Kx-Ha
-	for gcvg-git@gmane.org; Sun, 01 Oct 2006 23:48:58 +0200
+	id 1GU9Jq-0003jj-24
+	for gcvg-git@gmane.org; Sun, 01 Oct 2006 23:57:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932420AbWJAVsu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Oct 2006 17:48:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932422AbWJAVsu
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Oct 2006 17:48:50 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:14174 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S932420AbWJAVst (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Oct 2006 17:48:49 -0400
-Received: by ug-out-1314.google.com with SMTP id o38so450462ugd
-        for <git@vger.kernel.org>; Sun, 01 Oct 2006 14:48:48 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=h5seSdZlhuJE9waAL6T/O8BFpSNHvC/4FL3Al+WctB8g1DGxqhIg6ObHkvi9O8hji+tMMaLNjGGWt015U8ArH+9mfjwJOXbxaZ44vkKmQavcHBWr0dNJEiJbDH/LwcDR5BhE5Pn5YEBdqHbYJCIrkeR340gDoPjBoivz/4CjtoM=
-Received: by 10.67.119.13 with SMTP id w13mr2250021ugm;
-        Sun, 01 Oct 2006 14:48:48 -0700 (PDT)
-Received: from host-81-190-17-45.torun.mm.pl ( [81.190.17.45])
-        by mx.gmail.com with ESMTP id j34sm4109940ugc.2006.10.01.14.48.47;
-        Sun, 01 Oct 2006 14:48:48 -0700 (PDT)
-To: Yasushi SHOJI <yashi@atmark-techno.com>
-User-Agent: KMail/1.9.3
-In-Reply-To: <87r6xrvi0g.wl@mail2.atmark-techno.com>
+	id S932426AbWJAV5v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 Oct 2006 17:57:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932427AbWJAV5v
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Oct 2006 17:57:51 -0400
+Received: from agent.admingilde.org ([213.95.21.5]:10911 "EHLO
+	mail.admingilde.org") by vger.kernel.org with ESMTP id S932426AbWJAV5u
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 1 Oct 2006 17:57:50 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1GU9Jk-00038b-UD; Sun, 01 Oct 2006 23:57:48 +0200
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <7vfye9dtv7.fsf@assigned-by-dhcp.cox.net>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28207>
 
-Yasushi SHOJI wrote:
-> At Sun, 01 Oct 2006 18:45:46 +0200,
-> Jakub Narebski wrote:
-> > 
-> > Yasushi SHOJI wrote:
-> > 
-> > > This is a simple one liner to decode long title string in perl's
-> > > internal form to utf-8 for link tooltips.
-> > > 
-> > > This is not crucial if the commit message is all in ASCII, however, if
-> > > you decide to use other encoding, such as UTF-8, tooltips ain't
-> > > readable any more.
-> > 
-> > Perhaps it would be better to abstract it away into esc_attr (as escape
-> > attribute) subroutine, if such situation i.e. output of generated string
-> > into some attribute of some element happens in some other place.
-> 
-> I liked the idea.  there were 7 places already.
-> 
-> I just couldn't get why you picked esc_attr for the name.  is there a
-> patch for the func I missed?
+Instead of providing the project as a ?p= parameter it is simply appended to
+the base URI.  All other parameters are appended to that, except for ?a=summary
+which is the default and can be omitted.
 
-To keep it in the style of names like esc_param (escaping the GET parameter
-to be passed), esc_url (escaping URL to be put as argument of href attribute
-of <link> or <a> element) and esc_html (escaping output). 
+The old URL generation can be selected by disabling the "pathinfo" feature
+in gitweb_config.perl.
 
-esc_attr is to escape ATTRibutes of elements, for example title attribute.
-I'm not sure if CGI module does escaping for example of '"' in attributes...
+Signed-off-by: Martin Waitz <tali@admingilde.org>
+---
+ gitweb/gitweb.perl |   22 +++++++++++++++++++++-
+ 1 files changed, 21 insertions(+), 1 deletions(-)
 
-> anyway, a patch for the abstruction is attached.  rename the func name
-> if you don't like it.
-
-Anyone can send patch renaming subroutines. to_utf8 is a good name... till
-we allow non-utf8 encodings. And the name can be used for other places where
-we do string decoding from Perl internal form to utf-8.
-
-> # i don't know how to reply to an email and also attaching a patch
-> # from git format-patch.  should I just submit the patch in a separate
-> # email?
-
-There are two formats used (check out Documentation/SubmittingPatches).
-
-First used for short replies, or some comments which you don't want to have
-in commit description (commit message) is to put additional text just right
-after "---" separating commit message from the patch.
-
-Second, used for example if reply is longer than commit message, or patch
-is just an attachement/footnote to reply, is to put the reply above the
-body of message generated by format patch, and separate it from the
-patch for example by "-- >8 --". The idea is that committer can remove the
-top part of email and apply the rest as is.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 597d29f..edbd3ea 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -102,6 +102,10 @@ our %feature = (
+ 		'sub' => \&feature_pickaxe,
+ 		'override' => 0,
+ 		'default' => [1]},
++
++	'pathinfo' => {
++		'override' => 0,
++		'default' => [1]},
+ );
+ 
+ sub gitweb_check_feature {
+@@ -355,6 +359,7 @@ ## action links
+ 
+ sub href(%) {
+ 	my %params = @_;
++	my $href = $my_uri;
+ 
+ 	my @mapping = (
+ 		project => "p",
+@@ -373,6 +378,19 @@ sub href(%) {
+ 
+ 	$params{'project'} = $project unless exists $params{'project'};
+ 
++	my ($use_pathinfo) = gitweb_check_feature('pathinfo');
++	if ($use_pathinfo) {
++		# use PATH_INFO for project name
++		$href .= "/$params{'project'}" if defined $params{'project'};
++		delete $params{'project'};
++
++		# Summary just uses the project path URL
++		if (defined $params{'action'} && $params{'action'} eq 'summary') {
++			delete $params{'action'};
++		}
++	}
++
++	# now encode the parameters explicitly
+ 	my @result = ();
+ 	for (my $i = 0; $i < @mapping; $i += 2) {
+ 		my ($name, $symbol) = ($mapping[$i], $mapping[$i+1]);
+@@ -380,7 +398,9 @@ sub href(%) {
+ 			push @result, $symbol . "=" . esc_param($params{$name});
+ 		}
+ 	}
+-	return "$my_uri?" . join(';', @result);
++	$href .= "?" . join(';', @result) if scalar @result;
++
++	return $href;
+ }
+ 
+ 
 -- 
-Jakub Narebski
-Poland
+1.4.2.gb8b6b
+
+-- 
+Martin Waitz
