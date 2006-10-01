@@ -1,61 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Multiple checkouts of the same repository
-Date: Sun, 1 Oct 2006 21:17:57 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0610012116310.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <3bbc18d20610011203p40d631b7o3bd2c6971a2bfcca@mail.gmail.com> 
- <Pine.LNX.4.63.0610012105590.14200@wbgn013.biozentrum.uni-wuerzburg.de>
- <3bbc18d20610011214y6132d98eq9cd58b23721bb87d@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Remove excessively redundant entries from git_difftree_body
+Date: Sun, 01 Oct 2006 21:20:26 +0200
+Organization: At home
+Message-ID: <efp4d6$a7b$1@sea.gmane.org>
+References: <20060928002325.70519.qmail@web31815.mail.mud.yahoo.com> <7vmz8k7nhc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 01 21:18:07 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sun Oct 01 21:20:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GU6p8-0007F5-Ef
-	for gcvg-git@gmane.org; Sun, 01 Oct 2006 21:18:02 +0200
+	id 1GU6rW-0007kF-1H
+	for gcvg-git@gmane.org; Sun, 01 Oct 2006 21:20:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932221AbWJATSA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Oct 2006 15:18:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932224AbWJATR7
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Oct 2006 15:17:59 -0400
-Received: from mail.gmx.net ([213.165.64.20]:22210 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932221AbWJATR7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 Oct 2006 15:17:59 -0400
-Received: (qmail invoked by alias); 01 Oct 2006 19:17:57 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp017) with SMTP; 01 Oct 2006 21:17:57 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Matt McCutchen <hashproduct+git@gmail.com>
-In-Reply-To: <3bbc18d20610011214y6132d98eq9cd58b23721bb87d@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S932225AbWJATU0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 Oct 2006 15:20:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932224AbWJATU0
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Oct 2006 15:20:26 -0400
+Received: from main.gmane.org ([80.91.229.2]:59580 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932225AbWJATUY (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Oct 2006 15:20:24 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GU6rF-0007gC-4F
+	for git@vger.kernel.org; Sun, 01 Oct 2006 21:20:13 +0200
+Received: from host-81-190-17-45.torun.mm.pl ([81.190.17.45])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 01 Oct 2006 21:20:13 +0200
+Received: from jnareb by host-81-190-17-45.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 01 Oct 2006 21:20:13 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-17-45.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28194>
 
-Hi,
+Junio C Hamano wrote:
 
-On Sun, 1 Oct 2006, Matt McCutchen wrote:
-
-> On 10/1/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > A better method is to use a local clone:
-> > 
-> >         git-clone --local --shared A  B
-> > 
-> > Such a clone will be very fast, and cheap, because it sets up links (not
-> > just symbolic links, but links that git understands).
+> Luben Tuikov <ltuikov@yahoo.com> writes:
 > 
-> But that gives me two separate repositories, so I have to push and
-> pull to keep them in sync, which is a pain.
+>> 1) All entries on the left are blobs and clicking on them
+>> leads to blobs.  No more diff or blob depending on what
+>> happened (modified or mode changed) to the file -- this goes
+>> to the right, in the "link" column.
+>>
+>> 2) Remove redundant "blob" from the link column on the right.
+>> This can now be had by clicking on the entry itself.
+>>
+>> This reduces and simplifies the code.
+>>
+>> Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
+> 
+> We lost blobdiff from commitdiff page with this patch, which I
+> think it probably is a good change.  We can say "when we display
+> a pathname you can click it to get the blob or tree".
 
-So you want the commits to show in A, too? I propose using a hook for 
-that.
-
-The fact is, your setup is fragile, and I think that is hard to fix if you 
-do not make A and B git repositories in their own right.
-
-Hth,
-Dscho
+In my opinion it is a bad change. We now have "patch" inner-link
+to anchor in commitdiff view, but it's equivalent in commit view
+i.e. diff aka blobdiff vanished.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
