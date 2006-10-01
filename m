@@ -1,92 +1,73 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: tree view: eliminate redundant "blob"
-Date: Sun, 1 Oct 2006 21:27:36 +0200
-Message-ID: <200610012127.37113.jnareb@gmail.com>
-References: <efc2no$eti$2@sea.gmane.org> <200610012041.15296.jnareb@gmail.com> <7vd59b27c4.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: What will happen to git.git in the near future
+Date: Sun, 1 Oct 2006 12:56:28 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610011255030.3952@g5.osdl.org>
+References: <7v7iztbldm.fsf@assigned-by-dhcp.cox.net> <7vd59c2vev.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610011132040.3952@g5.osdl.org> <7vlknz27qm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 01 21:27:27 2006
+X-From: git-owner@vger.kernel.org Sun Oct 01 21:57:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GU6yD-0000pQ-Fr
-	for gcvg-git@gmane.org; Sun, 01 Oct 2006 21:27:25 +0200
+	id 1GU7Qi-0006X6-FF
+	for gcvg-git@gmane.org; Sun, 01 Oct 2006 21:56:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932200AbWJAT1W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Oct 2006 15:27:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932230AbWJAT1W
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Oct 2006 15:27:22 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:4687 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S932200AbWJAT1V (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Oct 2006 15:27:21 -0400
-Received: by ug-out-1314.google.com with SMTP id o38so443020ugd
-        for <git@vger.kernel.org>; Sun, 01 Oct 2006 12:27:19 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=FPbmIm/XWZsfJEpFDR6jstoUzdNF7P1uH709ACKdcZTRGnIpkZ68qmDe0Dd0pi6vKsRrbHu+gjw/JkbtmotCzFno4pZOZVCxFHF6Cr6jPrfU1iO2ei16s6BJGDDx6PQn1rTho1gqj4T1xd+TCSVp47paRd5RFAt8MMo2Ek+0hk0=
-Received: by 10.67.119.5 with SMTP id w5mr2162777ugm;
-        Sun, 01 Oct 2006 12:27:19 -0700 (PDT)
-Received: from host-81-190-17-45.torun.mm.pl ( [81.190.17.45])
-        by mx.gmail.com with ESMTP id k30sm4526529ugc.2006.10.01.12.27.18;
-        Sun, 01 Oct 2006 12:27:19 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>, Luben Tuikov <ltuikov@yahoo.com>
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vd59b27c4.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S932252AbWJAT4e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 Oct 2006 15:56:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932253AbWJAT4e
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Oct 2006 15:56:34 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:34975 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932252AbWJAT4d (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Oct 2006 15:56:33 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k91JuTaX027244
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 1 Oct 2006 12:56:29 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k91JuSdi028691;
+	Sun, 1 Oct 2006 12:56:28 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vlknz27qm.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.448 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28196>
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
+
+
+On Sun, 1 Oct 2006, Junio C Hamano wrote:
 > 
-> > ... That means that we cannot distinguish really well (at 
-> > least color) between tree and blob entries.
+> Everybody hated the perl crud, so we removed Git.xs and is not
+> even part of the source anymore.
 > 
-> Do we even say links are blue and underlined by forcing that in
-> our css?
+> This is a symptom that Git.c leftover from an earlier build was
+> in the working tree.  Could you try running "rm -f perl/Git.c"
+> before building and see if it helps?
 
-That is default style of link element, as specified by default CSS
-for HTML/XHTML.
+Nope.
 
-> Doesn't leading drwxr-xr-x mean anything?
+Then I just get
 
-Neither d in drwxr-xr-x, nor trailing / in the name are significant
-enough indicators of directory vs file (tree vs blob) indicator,
-especially that by default git-ls-tree output mixes trees with blobs.
- 
-> Why is making the distinction important in the first place?
+	make[1]: Entering directory `/home/torvalds/git/perl'
+	Running Mkbootstrap for Git ()
+	chmod 644 Git.bs
+	rm -f blib/arch/auto/Git/Git.so
+	gcc  -shared -L/usr/local/lib Git.o  -o blib/arch/auto/Git/Git.so       \
+	        \
+	  
+	gcc: Git.o: No such file or directory
+	gcc: no input files
 
-If you browse tree, you usually click on tree links, but not on blob
-links.
+instead.
 
-> > In the case of shortlog/log/history/heads/tags view, to clearly mark 
-> > subject/title of a commit or tag as link, we would have to use default 
-> > link decoration....
-> > But underlined text is harder to read, and blue underlined text even 
-> > more so...
-> 
-> This is something in which I can see some more sense than tree
-> vs blob issue, but only as a principle issue.  In practice, the
-> list of commit subjects is the first thing users encounter, and
-> as long as there is some visual indication (e.g. mousing over it
-> makes it obvious it is something that is clickable), I think
-> users will quickly pick up that it will lead to the commit's
-> detail.
+If that file isn't even supposed to _exist_, then why do we have build 
+rules etc crap to do all this? It sounds like the makefiles are broken.
 
-Well, that is certainly the question of style (redundancy vs. uncluttered
-output plus some coding issues).
-
-By the way, I've planned to move printing those kind of links to separate
-subroutine (output based on type of object the links are related to, and
-somewhat als on the action/view we are in)...
--- 
-Jakub Narebski
-Poland
+		Linus
