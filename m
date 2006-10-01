@@ -1,52 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What will happen to git.git in the near future
-Date: Sun, 1 Oct 2006 20:53:36 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0610012052520.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v7iztbldm.fsf@assigned-by-dhcp.cox.net> <7vd59c2vev.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610011132040.3952@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: tree view: eliminate redundant "blob"
+Date: Sun, 01 Oct 2006 11:56:27 -0700
+Message-ID: <7vd59b27c4.fsf@assigned-by-dhcp.cox.net>
+References: <efc2no$eti$2@sea.gmane.org>
+	<20060926213236.79160.qmail@web31815.mail.mud.yahoo.com>
+	<7v64f9hku2.fsf@assigned-by-dhcp.cox.net>
+	<200610012041.15296.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 01 20:54:03 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 01 20:56:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GU6Rr-0001sJ-1z
-	for gcvg-git@gmane.org; Sun, 01 Oct 2006 20:54:01 +0200
+	id 1GU6UK-0002VW-VM
+	for gcvg-git@gmane.org; Sun, 01 Oct 2006 20:56:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932194AbWJASxk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Oct 2006 14:53:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932197AbWJASxk
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Oct 2006 14:53:40 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45800 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932196AbWJASxi (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 Oct 2006 14:53:38 -0400
-Received: (qmail invoked by alias); 01 Oct 2006 18:53:37 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp019) with SMTP; 01 Oct 2006 20:53:37 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0610011132040.3952@g5.osdl.org>
-X-Y-GMX-Trusted: 0
+	id S932198AbWJAS43 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 Oct 2006 14:56:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932199AbWJAS43
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Oct 2006 14:56:29 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:54180 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S932198AbWJAS42 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Oct 2006 14:56:28 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061001185628.BAUK6235.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 1 Oct 2006 14:56:28 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id V6wW1V00y1kojtg0000000
+	Sun, 01 Oct 2006 14:56:30 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200610012041.15296.jnareb@gmail.com> (Jakub Narebski's message
+	of "Sun, 1 Oct 2006 20:41:14 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28189>
 
-Hi,
+Jakub Narebski <jnareb@gmail.com> writes:
 
-On Sun, 1 Oct 2006, Linus Torvalds wrote:
+> ... That means that we cannot distinguish really well (at 
+> least color) between tree and blob entries.
 
-> 	Git.xs: In function 'XS_Git_xs_version':
-> 	Git.xs:62: error: 'GIT_VERSION' undeclared (first use in this function)
-> 	Git.xs:62: error: (Each undeclared identifier is reported only once
-> 	Git.xs:62: error: for each function it appears in.)
+Do we even say links are blue and underlined by forcing that in
+our css?
 
-We had that discussion in another thread already.
+Doesn't leading drwxr-xr-x mean anything?
 
-Just rm perl/{Git.{bs,c},Makefile} and remake.
+Why is making the distinction important in the first place?
 
-Ciao,
-Dscho
+> In the case of shortlog/log/history/heads/tags view, to clearly mark 
+> subject/title of a commit or tag as link, we would have to use default 
+> link decoration....
+> But underlined text is harder to read, and blue underlined text even 
+> more so...
+
+This is something in which I can see some more sense than tree
+vs blob issue, but only as a principle issue.  In practice, the
+list of commit subjects is the first thing users encounter, and
+as long as there is some visual indication (e.g. mousing over it
+makes it obvious it is something that is clickable), I think
+users will quickly pick up that it will lead to the commit's
+detail.
