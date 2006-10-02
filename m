@@ -1,63 +1,72 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [PATCH] Stop making git-merge-recur
-Date: Sun, 01 Oct 2006 21:52:58 -0700
-Message-ID: <45209B2A.8070900@gmail.com>
-References: <45207D32.8040300@gmail.com> <7vu02nz5w6.fsf@assigned-by-dhcp.cox.net>
-Reply-To: gitzilla@gmail.com
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [BUG] 'git mv a/fileA b/fileB' causes 'c/fileC' to be deleted
+Date: Sun, 01 Oct 2006 22:05:18 -0700
+Message-ID: <7vven3xq7l.fsf@assigned-by-dhcp.cox.net>
+References: <750170aa0610010721p66899ba5pcc7efa13be4cd10a@mail.gmail.com>
+	<7vpsdc0wkz.fsf@assigned-by-dhcp.cox.net>
+	<750170aa0610011833n39271704q349d86af76832783@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 02 06:53:35 2006
+X-From: git-owner@vger.kernel.org Mon Oct 02 07:05:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GUFnw-0000KF-P2
-	for gcvg-git@gmane.org; Mon, 02 Oct 2006 06:53:27 +0200
+	id 1GUFzb-00022u-4n
+	for gcvg-git@gmane.org; Mon, 02 Oct 2006 07:05:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932607AbWJBExF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Oct 2006 00:53:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932606AbWJBExE
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Oct 2006 00:53:04 -0400
-Received: from py-out-1112.google.com ([64.233.166.182]:15980 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S932607AbWJBExD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Oct 2006 00:53:03 -0400
-Received: by py-out-1112.google.com with SMTP id n25so2324787pyg
-        for <git@vger.kernel.org>; Sun, 01 Oct 2006 21:53:02 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=D6m8ZGZBLGno4pNvkXGZhYMUQuk4SY0YAFjG6mLD/HAlPNdUDKFjjpLRxURToK4DQAI6+yltvk+KF/L9h/jx4CdUh6ENLu0l8lmu9xaIx+nfv6BfPc7P4qaH2pLRXzzrGhv4xiixvT4BU21GGtb4lTy8tlSVqzrksth8gWbzm7Y=
-Received: by 10.64.180.4 with SMTP id c4mr6602234qbf;
-        Sun, 01 Oct 2006 21:53:02 -0700 (PDT)
-Received: from ?10.0.0.6? ( [68.233.231.217])
-        by mx.gmail.com with ESMTP id e15sm5341963qba.2006.10.01.21.53.01;
-        Sun, 01 Oct 2006 21:53:02 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060911)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vu02nz5w6.fsf@assigned-by-dhcp.cox.net>
+	id S932603AbWJBFFV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Oct 2006 01:05:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932613AbWJBFFU
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Oct 2006 01:05:20 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:13038 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S932603AbWJBFFT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Oct 2006 01:05:19 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061002050519.WCAT16798.fed1rmmtao09.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 2 Oct 2006 01:05:19 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id VH5D1V00P1kojtg0000000
+	Mon, 02 Oct 2006 01:05:14 -0400
+To: "Michael Cassar" <m.e.cassar@gmail.com>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28216>
 
-Junio C Hamano wrote:
-> A Large Angry SCM <gitzilla@gmail.com> writes:
-> 
->> Git-merge-recur is no longer installed and make clean no longer
->> removes it, so creating making it.
-> 
-> Thanks for noticing.
-> 
-> The bug is actually not installing nor cleaning it.  People who
-> wanted to stay on the bleeding edge could add "-s recur" on the
-> command line, or have "merge.twohead = recur" in the config;
-> this is what we actually encouraged people for wider testing.
-> We do not suddenly break them.  I planned the removal for the
-> release after 1.4.3.
-> 
-> This should fix it -- could you eyeball it please?
+Thanks.  I see it reproduces.
 
-+1
+It is a bug in git-mv that fails to update cache-tree data
+structure properly.  This patch should fix it.
+
+-- >8 --
+git-mv: do not write out a bogus cache-tree in the index
+
+The command updates the cache without invalidating the cache
+tree entries.  Since this is not as performance critical as
+one-tree and two-tree git-read-tree and git-apply, disable
+use of cache-tree entirely.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+
+diff --git a/builtin-mv.c b/builtin-mv.c
+index 4d21d88..9a4e2e0 100644
+--- a/builtin-mv.c
++++ b/builtin-mv.c
+@@ -83,6 +83,9 @@ int cmd_mv(int argc, const char **argv, 
+ 	if (read_cache() < 0)
+ 		die("index file corrupt");
+ 
++	/* This does not manage cache-tree properly */
++	cache_tree_free(&active_cache_tree);
++
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+ 
