@@ -1,60 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [ANNOUNCE] GIT 1.4.2.3
-Date: Mon, 02 Oct 2006 01:17:19 -0700
-Message-ID: <7vu02nw2r4.fsf@assigned-by-dhcp.cox.net>
+From: picca@synchrotron-soleil.fr
+Subject: problem with git-cvsimport
+Date: Mon, 2 Oct 2006 11:15:34 +0200
+Organization: Synchrotron-soleil.fr
+Message-ID: <20061002111534.eaadb330.picca@synchrotron-soleil.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 02 10:17:36 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Oct 02 11:15:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GUIzT-0003wx-Hx
-	for gcvg-git@gmane.org; Mon, 02 Oct 2006 10:17:31 +0200
+	id 1GUJtk-0005qn-4Z
+	for gcvg-git@gmane.org; Mon, 02 Oct 2006 11:15:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750835AbWJBIRW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Oct 2006 04:17:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750848AbWJBIRV
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Oct 2006 04:17:21 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:35529 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1750835AbWJBIRU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Oct 2006 04:17:20 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061002081720.NNZT6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 2 Oct 2006 04:17:20 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id VLHE1V00E1kojtg0000000
-	Mon, 02 Oct 2006 04:17:14 -0400
+	id S1750974AbWJBJPh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Oct 2006 05:15:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750981AbWJBJPh
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Oct 2006 05:15:37 -0400
+Received: from dns.synchrotron-soleil.fr ([195.221.0.3]:8654 "EHLO
+	sucette.synchrotron-soleil.fr") by vger.kernel.org with ESMTP
+	id S1750952AbWJBJPg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Oct 2006 05:15:36 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by sucette.synchrotron-soleil.fr (Postfix) with ESMTP id F10987C4BA
+	for <git@vger.kernel.org>; Mon,  2 Oct 2006 11:15:33 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at synchrotron-soleil.fr
+Received: from sucette.synchrotron-soleil.fr ([127.0.0.1])
+	by localhost (sucette.synchrotron-soleil.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id yp1vsJ007Tmh for <git@vger.kernel.org>;
+	Mon,  2 Oct 2006 11:15:33 +0200 (CEST)
+Received: from venusbis.synchrotron-soleil.fr (venusbis.synchrotron-soleil.fr [195.221.0.152])
+	by sucette.synchrotron-soleil.fr (Postfix) with ESMTP id A2B8E7C4B6
+	for <git@vger.kernel.org>; Mon,  2 Oct 2006 11:15:33 +0200 (CEST)
+Received: from localhost.localdomain ([195.221.5.120]) by venusbis.synchrotron-soleil.fr with Microsoft SMTPSVC(6.0.3790.1830);
+	 Mon, 2 Oct 2006 11:16:08 +0200
 To: git@vger.kernel.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.8.20; i486-pc-linux-gnu)
+X-OriginalArrivalTime: 02 Oct 2006 09:16:08.0995 (UTC) FILETIME=[65914F30:01C6E603]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28222>
 
-The latest maintenance release GIT 1.4.2.3 is available at the
-usual places:
+Hello
 
-  http://www.kernel.org/pub/software/scm/git/
+I tryed to import this sourceforge project with git-cvsimport
+The command was:
 
-  git-1.4.2.3.tar.{gz,bz2}			(tarball)
-  git-htmldocs-1.4.2.3.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.4.2.3.tar.{gz,bz2}		(preformatted docs)
-  RPMS/$arch/git-*-1.4.2.3-1.$arch.rpm	(RPM)
+git-cvsimport -v -d :pserver:anonymous@tango-cs.cvs.sourceforge.net:/cvsroot/tango-cs -C tango.git tango
 
-Sorry to be doing two maintenance releases in rapid succession,
-but git-mv breakage causes random tree corruption and is rather
-serious.
+unfortunetly the command stop with this error:
 
-----------------------------------------------------------------
+skip patchset 3713: 1159522283 before 1159522323
+skip patchset 3714: 1159522323 before 1159522323
+DONE.
+fatal: Needed a single revision
+fatal: Needed a single revision
+Usage: /usr/bin/git-merge [-n] [--no-commit] [--squash] [-s <strategy>]... <merg
+e-message> <head> <remote>+
+Could not merge origin into the current branch.
 
-Changes since v1.4.2.2 are as follows:
+I am using the debian testing git-core version aka 1.4.1.1
 
-Junio C Hamano:
-      git-mv: invalidate the removed path properly in cache-tree
-      git-push: .git/remotes/ file does not require SP after colon
+Why ?
+
+
+Have a nice day.
