@@ -1,69 +1,66 @@
 From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] gitweb: tree view: eliminate redundant "blob"
-Date: Mon, 2 Oct 2006 12:46:50 -0700 (PDT)
-Message-ID: <20061002194650.12839.qmail@web31806.mail.mud.yahoo.com>
-References: <7vd59b27c4.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] gitweb: Remove excessively redundant entries from git_difftree_body
+Date: Mon, 2 Oct 2006 12:48:47 -0700 (PDT)
+Message-ID: <20061002194847.285.qmail@web31811.mail.mud.yahoo.com>
+References: <efp4d6$a7b$1@sea.gmane.org>
 Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 02 21:47:43 2006
+X-From: git-owner@vger.kernel.org Mon Oct 02 21:48:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GUTke-0005bC-2I
-	for gcvg-git@gmane.org; Mon, 02 Oct 2006 21:46:57 +0200
+	id 1GUTmV-00063q-RZ
+	for gcvg-git@gmane.org; Mon, 02 Oct 2006 21:48:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965389AbWJBTqv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Oct 2006 15:46:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965392AbWJBTqv
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Oct 2006 15:46:51 -0400
-Received: from web31806.mail.mud.yahoo.com ([68.142.207.69]:47803 "HELO
-	web31806.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S965389AbWJBTqv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Oct 2006 15:46:51 -0400
-Received: (qmail 12841 invoked by uid 60001); 2 Oct 2006 19:46:50 -0000
+	id S964874AbWJBTst (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Oct 2006 15:48:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964894AbWJBTst
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Oct 2006 15:48:49 -0400
+Received: from web31811.mail.mud.yahoo.com ([68.142.207.74]:40321 "HELO
+	web31811.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S964874AbWJBTss (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Oct 2006 15:48:48 -0400
+Received: (qmail 287 invoked by uid 60001); 2 Oct 2006 19:48:47 -0000
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
   s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=LYtFRtsueTvgY9hIBWOeEp1sobqyI+nc1lyx5JLgcpqxxDvAj67bePRmRCyhmMx4sSHw1Ud9YO7UZqq5tKML+C39IyqoEFm/Z4JwH+t9OpvFjEYC5dh8OvK1YXgz3JpFla08HOSuEz6Ikb854M11z052srUhy4V5nmUG+AB9sMI=  ;
-Received: from [64.215.88.90] by web31806.mail.mud.yahoo.com via HTTP; Mon, 02 Oct 2006 12:46:50 PDT
-To: Junio C Hamano <junkio@cox.net>, Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <7vd59b27c4.fsf@assigned-by-dhcp.cox.net>
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=to6/TvfpFAx/NmmqD4wlKwReUazdRhI+zQCErprWWcYz0tuL7f1s+7tZBKzKzAcIsN9G1plvx3m5XKXzHxKPlFK6uq5zievw9PV6BkXRdqpw7q/4JGdipnhQZOsQGI/NQOuP59av6nRJqEPHJz7qNZ/WA7DIaz8+ywkKZTCX5rM=  ;
+Received: from [64.215.88.90] by web31811.mail.mud.yahoo.com via HTTP; Mon, 02 Oct 2006 12:48:47 PDT
+To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+In-Reply-To: <efp4d6$a7b$1@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28232>
 
---- Junio C Hamano <junkio@cox.net> wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
+--- Jakub Narebski <jnareb@gmail.com> wrote:
+> Junio C Hamano wrote:
 > 
-> > ... That means that we cannot distinguish really well (at 
-> > least color) between tree and blob entries.
+> > Luben Tuikov <ltuikov@yahoo.com> writes:
+> > 
+> >> 1) All entries on the left are blobs and clicking on them
+> >> leads to blobs.  No more diff or blob depending on what
+> >> happened (modified or mode changed) to the file -- this goes
+> >> to the right, in the "link" column.
+> >>
+> >> 2) Remove redundant "blob" from the link column on the right.
+> >> This can now be had by clicking on the entry itself.
+> >>
+> >> This reduces and simplifies the code.
+> >>
+> >> Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
+> > 
+> > We lost blobdiff from commitdiff page with this patch, which I
+> > think it probably is a good change.  We can say "when we display
+> > a pathname you can click it to get the blob or tree".
 > 
-> Do we even say links are blue and underlined by forcing that in
-> our css?
-> 
-> Doesn't leading drwxr-xr-x mean anything?
-> 
-> Why is making the distinction important in the first place?
-> 
-> > In the case of shortlog/log/history/heads/tags view, to clearly mark 
-> > subject/title of a commit or tag as link, we would have to use default 
-> > link decoration....
-> > But underlined text is harder to read, and blue underlined text even 
-> > more so...
-> 
-> This is something in which I can see some more sense than tree
-> vs blob issue, but only as a principle issue.  In practice, the
-> list of commit subjects is the first thing users encounter, and
-> as long as there is some visual indication (e.g. mousing over it
-> makes it obvious it is something that is clickable), I think
-> users will quickly pick up that it will lead to the commit's
-> detail.
+> In my opinion it is a bad change. We now have "patch" inner-link
+> to anchor in commitdiff view, but it's equivalent in commit view
+> i.e. diff aka blobdiff vanished.
 
-Very well put.
+All which can be easily had.
 
-   Luben
+    Luben
