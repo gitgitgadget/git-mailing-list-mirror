@@ -1,63 +1,53 @@
-From: Dennis Stosberg <dennis@stosberg.net>
-Subject: [PATCH] lock_ref_sha1_basic does not remove empty directories on BSD
-Date: Mon, 2 Oct 2006 19:23:53 +0200
-Message-ID: <20061002172353.G44b12bbc@leonov.stosberg.net>
+From: Stefan Richter <stefanr@s5r6.in-berlin.de>
+Subject: [PATCH] escape tilde in Documentation/git-rev-parse.txt
+Date: Mon, 2 Oct 2006 20:55:05 +0200 (CEST)
+Message-ID: <tkrat.4532d38d43e16a62@s5r6.in-berlin.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Oct 02 19:24:48 2006
+Content-Type: TEXT/PLAIN; CHARSET=us-ascii
+X-From: git-owner@vger.kernel.org Mon Oct 02 20:58:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GURWT-00059a-1x
-	for gcvg-git@gmane.org; Mon, 02 Oct 2006 19:24:10 +0200
+	id 1GUSz2-0002NF-Tc
+	for gcvg-git@gmane.org; Mon, 02 Oct 2006 20:57:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965149AbWJBRX5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Oct 2006 13:23:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965152AbWJBRX4
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Oct 2006 13:23:56 -0400
-Received: from kleekamp.stosberg.net ([85.116.201.130]:49280 "EHLO
-	kleekamp.stosberg.net") by vger.kernel.org with ESMTP
-	id S965149AbWJBRX4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Oct 2006 13:23:56 -0400
-Received: by kleekamp.stosberg.net (Postfix, from userid 500)
-	id CDC9A12727E; Mon,  2 Oct 2006 19:23:53 +0200 (CEST)
+	id S964859AbWJBS5l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Oct 2006 14:57:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964856AbWJBS5l
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Oct 2006 14:57:41 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:31410 "EHLO
+	einhorn.in-berlin.de") by vger.kernel.org with ESMTP
+	id S964854AbWJBS5k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Oct 2006 14:57:40 -0400
+X-Envelope-From: stefanr@s5r6.in-berlin.de
+Received: from [192.168.0.41] ([83.221.230.151])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id k92IvRGO003520
+	for <git@vger.kernel.org>; Mon, 2 Oct 2006 20:57:34 +0200
 To: git@vger.kernel.org
-Content-Disposition: inline
-Received: from leonov ([unix socket]) by leonov (Cyrus v2.1.18-IPv6-Debian-2.1.18-1+sarge2) with LMTP; Mon, 02 Oct 2006 19:16:22 +0200
-X-Sieve: CMU Sieve 2.2
-User-Agent: mutt-ng/devel-r802 (Debian)
+Content-Disposition: INLINE
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28227>
 
-lock_ref_sha1_basic relies on errno beeing set to EISDIR by the
-call to read() in resolve_ref() to detect directories.  But calling
-read() on a directory under NetBSD returns EPERM, and even succeeds
-for local filesystems on FreeBSD.
+fixes a failure to build the git-rev-parse manpage,
+seen with asciidoc 8.0.0
 
-Signed-off-by: Dennis Stosberg <dennis@stosberg.net>
+Signed-off-by: Stefan Richter <stefanr@s5r6.in-berlin.de>
 ---
- refs.c |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index aa4c4e0..305c1a9 100644
---- a/refs.c
-+++ b/refs.c
-@@ -234,6 +234,12 @@ const char *resolve_ref(const char *ref,
- 			}
- 		}
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index b761b4b..671b4e3 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -138,7 +138,7 @@ syntax.
+   'rev{caret}0' means the commit itself and is used when 'rev' is the
+   object name of a tag object that refers to a commit object.
  
-+		/* Is it a directory? */
-+		if (S_ISDIR(st.st_mode)) {
-+			errno = EISDIR;
-+			return NULL;
-+		}
-+
- 		/*
- 		 * Anything else, just open it and try to use it as
- 		 * a ref
--- 
-1.4.2
+-* A suffix '~<n>' to a revision parameter means the commit
++* A suffix '$$~$$<n>' to a revision parameter means the commit
+   object that is the <n>th generation grand-parent of the named
+   commit object, following only the first parent.  I.e. rev~3 is
+   equivalent to rev{caret}{caret}{caret} which is equivalent to\
