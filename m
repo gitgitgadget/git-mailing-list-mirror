@@ -1,59 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Multiple checkouts of the same repository
-Date: Mon, 2 Oct 2006 12:16:15 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0610021214070.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <3bbc18d20610011203p40d631b7o3bd2c6971a2bfcca@mail.gmail.com> 
- <Pine.LNX.4.63.0610012105590.14200@wbgn013.biozentrum.uni-wuerzburg.de> 
- <3bbc18d20610011214y6132d98eq9cd58b23721bb87d@mail.gmail.com> 
- <Pine.LNX.4.63.0610012116310.14200@wbgn013.biozentrum.uni-wuerzburg.de>
- <3bbc18d20610011404x52d8ba15ib51ac2a7060bd25e@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: tree view: eliminate redundant "blob"
+Date: Mon, 2 Oct 2006 12:56:34 +0200
+Message-ID: <200610021256.35236.jnareb@gmail.com>
+References: <efc2no$eti$2@sea.gmane.org> <200610012127.37113.jnareb@gmail.com> <4520BC84.5090800@op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 02 12:16:36 2006
+X-From: git-owner@vger.kernel.org Mon Oct 02 12:56:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GUKqT-0007pH-Ty
-	for gcvg-git@gmane.org; Mon, 02 Oct 2006 12:16:22 +0200
+	id 1GULTB-0006eS-T4
+	for gcvg-git@gmane.org; Mon, 02 Oct 2006 12:56:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750713AbWJBKQS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Oct 2006 06:16:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750725AbWJBKQS
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Oct 2006 06:16:18 -0400
-Received: from mail.gmx.de ([213.165.64.20]:58799 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1750713AbWJBKQS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Oct 2006 06:16:18 -0400
-Received: (qmail invoked by alias); 02 Oct 2006 10:16:16 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp007) with SMTP; 02 Oct 2006 12:16:16 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Matt McCutchen <hashproduct+git@gmail.com>
-In-Reply-To: <3bbc18d20610011404x52d8ba15ib51ac2a7060bd25e@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1750784AbWJBK4R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Oct 2006 06:56:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750786AbWJBK4Q
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Oct 2006 06:56:16 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:56387 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1750784AbWJBK4Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Oct 2006 06:56:16 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so487994ugd
+        for <git@vger.kernel.org>; Mon, 02 Oct 2006 03:56:15 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=byFwIdTBwq5dXLN7InhbmAOvg+LOcPOAOfislPNCLI2uoU+Qi719Z2FeZPZ077QYnqXU79kfBTmkSmNchRI45P9uGGrTSSEjV3YStmRmrVvLDElfS6ZtzXiQxcGOmU3dAa+FV2Fde3rygsYSpIuwA3+XsbaAMSBr8NgO1WV5rg8=
+Received: by 10.67.93.6 with SMTP id v6mr2690270ugl;
+        Mon, 02 Oct 2006 03:56:14 -0700 (PDT)
+Received: from host-81-190-17-45.torun.mm.pl ( [81.190.17.45])
+        by mx.gmail.com with ESMTP id w40sm4610033ugc.2006.10.02.03.56.14;
+        Mon, 02 Oct 2006 03:56:14 -0700 (PDT)
+To: Andreas Ericsson <ae@op5.se>
+User-Agent: KMail/1.9.3
+In-Reply-To: <4520BC84.5090800@op5.se>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28224>
 
-Hi,
-
-On Sun, 1 Oct 2006, Matt McCutchen wrote:
-
-> On 10/1/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > The fact is, your setup is fragile, and I think that is hard to fix if you
-> > do not make A and B git repositories in their own right.
+Andreas Ericsson wrote:
+> Jakub Narebski wrote:
+>> Junio C Hamano wrote:
+>> 
+>>> Doesn't leading drwxr-xr-x mean anything?
+>> 
+>> Neither d in drwxr-xr-x, nor trailing / in the name are significant
+>> enough indicators of directory vs file (tree vs blob) indicator,
+>> especially that by default git-ls-tree output mixes trees with blobs.
+>>  
 > 
-> I think my setup is much simpler than having two separate repositories
-> that update each other using hooks.  What can go wrong, besides the
-> scenario I mentioned where one working tree doesn't get updated when I
-> commit through the other one?
+> I beg to differ. The trailing slash would indeed help, as peoples eyes 
+> are generally focused on the mouse-pointer rather than some 5-10" to the 
+> left of it. If we're worrying that windows folks use \ for 
+> path-delimiter, I think they'll pick up the difference quick enough.
 
-I do not know, but it feels wrong. Git does not expect something like 
-this, much like an operating system does not expect another computer to 
-access its root hard disk. So _I_ think your setup is fragile.
+I agree that it would help, but it is not enough when tree (directory)
+and blob (file) would have the same color and the same decoration.
 
-Ciao,
-Dscho
+-- 
+Jakub Narebski
+Poland
