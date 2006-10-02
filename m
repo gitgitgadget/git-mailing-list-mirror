@@ -1,57 +1,67 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] gitweb: tree view: hash_base and hash are now context sensitive
-Date: Mon, 2 Oct 2006 12:51:10 -0700 (PDT)
-Message-ID: <20061002195110.33802.qmail@web31801.mail.mud.yahoo.com>
-References: <efpfc3$765$1@sea.gmane.org>
-Reply-To: ltuikov@yahoo.com
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Add history and blame to git_difftree_body()
+Date: Mon, 2 Oct 2006 21:55:23 +0200
+Message-ID: <200610022155.24487.jnareb@gmail.com>
+References: <20061002193217.86165.qmail@web31814.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Mon Oct 02 21:52:22 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 02 21:56:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GUToy-0006ff-GP
-	for gcvg-git@gmane.org; Mon, 02 Oct 2006 21:51:25 +0200
+	id 1GUTsb-0007gA-Ke
+	for gcvg-git@gmane.org; Mon, 02 Oct 2006 21:55:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964923AbWJBTvN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Oct 2006 15:51:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964929AbWJBTvN
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Oct 2006 15:51:13 -0400
-Received: from web31801.mail.mud.yahoo.com ([68.142.207.64]:26253 "HELO
-	web31801.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S964923AbWJBTvL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Oct 2006 15:51:11 -0400
-Received: (qmail 33804 invoked by uid 60001); 2 Oct 2006 19:51:10 -0000
+	id S964931AbWJBTzG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Oct 2006 15:55:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964932AbWJBTzG
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Oct 2006 15:55:06 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:62131 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S964931AbWJBTzD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Oct 2006 15:55:03 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so549775ugd
+        for <git@vger.kernel.org>; Mon, 02 Oct 2006 12:55:02 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=l0Cic2v5IODneZ/Hu7U5Zr6ZgFtucvihhMXI7rEa5NQ6yVFqw2rhvIP3JhpmnksAxNTIIAAX12qikIQXYS8HJ0uhE8dxN48Illx3ZLPYMhckduLs8RBHTe1wY93KIsPPnyXDXjzd6W4ou1bCIYwajT7a9+stNIvxVy1yvp/WCWE=  ;
-Received: from [64.215.88.90] by web31801.mail.mud.yahoo.com via HTTP; Mon, 02 Oct 2006 12:51:10 PDT
-To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-In-Reply-To: <efpfc3$765$1@sea.gmane.org>
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=ZGKjKSpthuUS/5sdb4i8QhR6ynfBPF+NSQOWurk2kpL2tPxo0pTefEk+YZBZj7AUAo+Luj8ek65acUlqnYpd8JPVH2k7061qn1jm6yRGUfV/s+c1YfRZtzJYF1rM/PVFHI9vVH36wNdYkMgxRxV66xHllMIDjEmC6hmONryZWvU=
+Received: by 10.67.121.15 with SMTP id y15mr2968957ugm;
+        Mon, 02 Oct 2006 12:55:02 -0700 (PDT)
+Received: from host-81-190-17-45.torun.mm.pl ( [81.190.17.45])
+        by mx.gmail.com with ESMTP id o30sm5473373ugd.2006.10.02.12.55.01;
+        Mon, 02 Oct 2006 12:55:01 -0700 (PDT)
+To: Luben Tuikov <ltuikov@yahoo.com>
+User-Agent: KMail/1.9.3
+In-Reply-To: <20061002193217.86165.qmail@web31814.mail.mud.yahoo.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28234>
 
---- Jakub Narebski <jnareb@gmail.com> wrote:
-> Luben Tuikov wrote:
+Luben Tuikov wrote:
+> --- Jakub Narebski <jnareb@gmail.com> wrote:
+> > Luben Tuikov wrote:
+> > 
+> > > Add blame and history to Deleted files.
+> > > Add blame and history to Modified or Type changed files.
+> > > Add blame and history to Renamed or Copied files.
+> > 
+> > Blame has to be added conditionally (gitweb_have_blame).
 > 
-> > What this patch does is simply set "h" and/or "hb" to
-> > the string "HEAD" instead of the string "<SHA1 of HEAD>" when
-> > h/hb is not defined.
-> 
-> I guess there it is a good idea, but we should always think
-> over if we want "constant" link, always showing the same thing,
-> or a "variable" (or "news") link, showing current version.
-> 
-> Explicit sha1 hash as 'h'/'hb' gives persistent, cacheable link,
-> while e.g. "HEAD" gives "variable" link.
+> Can you please not edit the CC field when you reply?
+I do not edit Cc: field. I reply via GMane NNTP (Usenet)
+interface.
 
-Exactly what is wanted by people using git in a work environment.
+> I can see that only the GIT mailing list was left,
+> but my email had been removed.
+It was not removed, it was not added.
 
-   Luben
-P.S. Please don't edit out the CC list leaving only git in. Click
-"Reply-all" please, just like everyone else does.
+-- 
+Jakub Narebski
+Poland
