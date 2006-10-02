@@ -1,75 +1,164 @@
 From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] gitweb: tree view: eliminate redundant "blob"
-Date: Mon, 2 Oct 2006 12:11:15 -0700 (PDT)
-Message-ID: <20061002191115.84730.qmail@web31811.mail.mud.yahoo.com>
-References: <200610012041.15296.jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: make leftmost column of blame less cluttered.
+Date: Mon, 2 Oct 2006 12:29:30 -0700 (PDT)
+Message-ID: <20061002192930.86293.qmail@web31803.mail.mud.yahoo.com>
+References: <7vwt7k4clr.fsf@assigned-by-dhcp.cox.net>
 Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: Luben Tuikov <ltuikov@yahoo.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 02 21:12:56 2006
+X-From: git-owner@vger.kernel.org Mon Oct 02 21:29:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GUTCE-0005Ww-Od
-	for gcvg-git@gmane.org; Mon, 02 Oct 2006 21:11:23 +0200
+	id 1GUTTs-0001P5-Ci
+	for gcvg-git@gmane.org; Mon, 02 Oct 2006 21:29:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965359AbWJBTLS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Oct 2006 15:11:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965364AbWJBTLS
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Oct 2006 15:11:18 -0400
-Received: from web31811.mail.mud.yahoo.com ([68.142.207.74]:54190 "HELO
-	web31811.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S965359AbWJBTLQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Oct 2006 15:11:16 -0400
-Received: (qmail 84732 invoked by uid 60001); 2 Oct 2006 19:11:15 -0000
+	id S965190AbWJBT3c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Oct 2006 15:29:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965377AbWJBT3c
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Oct 2006 15:29:32 -0400
+Received: from web31803.mail.mud.yahoo.com ([68.142.207.66]:16016 "HELO
+	web31803.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S965190AbWJBT3b (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Oct 2006 15:29:31 -0400
+Received: (qmail 86295 invoked by uid 60001); 2 Oct 2006 19:29:30 -0000
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
   s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=BoPZ1RdZ2QIZINq/AIBt7uawqS+ItNq0CkWJoUs6kKZ1RKjruoEdgAgTXUOJiqD5Tfk1XN9x7mnFweoonzCiU/9NmJQnn92q2k8XugH+IfCcnjHLvWM3KHea8aMR3w0AGaql06PQjTauaJUTi3vGR8cuHRp8QLH7+C9+v1cA2uI=  ;
-Received: from [64.215.88.90] by web31811.mail.mud.yahoo.com via HTTP; Mon, 02 Oct 2006 12:11:15 PDT
-To: Jakub Narebski <jnareb@gmail.com>, Junio C Hamano <junkio@cox.net>
-In-Reply-To: <200610012041.15296.jnareb@gmail.com>
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=XPIF6CMJN9dPaEczkHiBlVdUP2yxCURiIYh0rIaUqBpsuytB4bTnrPoKKnvlf3b5PDxPICNBWS0EVMjDTByZnrBfvus4nYuo9nNzDaVRh+mi24nrxy2o9+/AnGX270WFiqfAtqvnT8Vl2j6gtyOLHN9f8RO/kg8m9DIdJQ5N+C8=  ;
+Received: from [64.215.88.90] by web31803.mail.mud.yahoo.com via HTTP; Mon, 02 Oct 2006 12:29:30 PDT
+To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+In-Reply-To: <7vwt7k4clr.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28229>
 
---- Jakub Narebski <jnareb@gmail.com> wrote:
-> But that is plain impossible without compromising interface usability.
-> Let me explain. 
+--- Junio C Hamano <junkio@cox.net> wrote:
+
+> Instead of labelling each and every line with clickable commit
+> object name, this makes the blame output to show them only on
+> the first line of each group of lines from the same revision.
 > 
-> In the case of tree view (directory listing) we have blobs (files and 
-> symlinks) and trees (directories). To mark item unequivocably as link 
-> it has to have default link color (blue) and default link decoration 
-> (underline). That means that we cannot distinguish really well (at 
-> least color) between tree and blob entries. I'd rather have redundant 
-> "blob"/"tree" (self)links, clearly marked as links, and tree entries 
-> using link decoration (blue, underlined) while blob entries have 
-> default text decoration (black, no underline).
+> Also it makes mouse-over to show the minimum authorship and
+> authordate information for extra cuteness ;-).
 > 
-> In the case of shortlog/log/history/heads/tags view, to clearly mark 
-> subject/title of a commit or tag as link, we would have to use default 
-> link decoration. Let's for a while abandon link-within-link, i.e. using 
-> some of committags also in commit title (in shortlog/history view)...
-> But underlined text is harder to read, and blue underlined text even 
-> more so (as for example it is hard to read italics, commonly used for 
-> emphasis). I'd rather have additional "commit" link, clearly marked as 
-> link, and leave subject as is, as hidden link, as a shortcut.
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+> ---
+
+ACK.  Please commit.
+
+   Luben
+
 > 
-> I think that redundancy in a visual interface (and not only visual, as 
-> seen in the example of Perl programming language) is a good idea, 
-> contrary to the redundancy in code or data (database).
-
-Jakub,
-
-Your opinion here is highly subjective.
-
-Years of experience make certain things "make sense" and other
-"make less sense".  Note that that is in itself subjective.
-
-Give it 10 years, your opinion will change.
-
-     Luben
+>  * I've been staying away from the party to paint the bikeshed,
+>    but I had a bit of time to kill tonight.  Let's see if people
+>    might like this...
+> 
+>  gitweb/gitweb.perl |   67 +++++++++++++++++++++++++++++++++++++++++----------
+>  1 files changed, 54 insertions(+), 13 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 44991b1..7e4ec8d 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -2429,6 +2429,41 @@ sub git_tag {
+>  	git_footer_html();
+>  }
+>  
+> +sub git_blame_flush_chunk {
+> +	my ($name, $revdata, $color, $rev, @line) = @_;
+> +	my $label = substr($rev, 0, 8);
+> +	my $line = scalar(@line);
+> +	my $cnt = 0;
+> +	my $pop = '';
+> +
+> +	if ($revdata->{$rev} ne '') {
+> +		$pop = ' title="' . esc_html($revdata->{$rev}) . '"';
+> +	}
+> +
+> +	for (@line) {
+> +		my ($lineno, $data) = @$_;
+> +		$cnt++;
+> +		print "<tr class=\"$color\">\n";
+> +		if ($cnt == 1) {
+> +			print "<td class=\"sha1\"$pop";
+> +			if ($line > 1) {
+> +				print " rowspan=\"$line\"";
+> +			}
+> +			print ">";
+> +			print $cgi->a({-href => href(action=>"commit",
+> +						     hash=>$rev,
+> +						     file_name=>$name)},
+> +				      $label);
+> +			print "</td>\n";
+> +		}
+> +		print "<td class=\"linenr\">".
+> +		    "<a id=\"l$lineno\" href=\"#l$lineno\" class=\"linenr\">" .
+> +		    esc_html($lineno) . "</a></td>\n";
+> +		print "<td class=\"pre\">" . esc_html($data) . "</td>\n";
+> +		print "</tr>\n";
+> +	}
+> +}
+> +
+>  sub git_blame2 {
+>  	my $fd;
+>  	my $ftype;
+> @@ -2474,27 +2509,33 @@ sub git_blame2 {
+>  <table class="blame">
+>  <tr><th>Commit</th><th>Line</th><th>Data</th></tr>
+>  HTML
+> +	my @chunk = ();
+> +	my %revdata = ();
+>  	while (<$fd>) {
+>  		/^([0-9a-fA-F]{40}).*?(\d+)\)\s{1}(\s*.*)/;
+> -		my $full_rev = $1;
+> -		my $rev = substr($full_rev, 0, 8);
+> -		my $lineno = $2;
+> -		my $data = $3;
+> -
+> +		my ($full_rev, $author, $date, $lineno, $data) =
+> +		    /^([0-9a-f]{40}).*?\s\((.*?)\s+([-\d]+ [:\d]+ [-+\d]+)\s+(\d+)\)\s(.*)/;
+> +		if (!exists $revdata{$full_rev}) {
+> +			$revdata{$full_rev} = "$author, $date";
+> +		}
+>  		if (!defined $last_rev) {
+>  			$last_rev = $full_rev;
+>  		} elsif ($last_rev ne $full_rev) {
+> +			git_blame_flush_chunk($file_name,
+> +					      \%revdata,
+> +					      $rev_color[$current_color],
+> +					      $last_rev, @chunk);
+> +			@chunk = ();
+>  			$last_rev = $full_rev;
+>  			$current_color = ++$current_color % $num_colors;
+>  		}
+> -		print "<tr class=\"$rev_color[$current_color]\">\n";
+> -		print "<td class=\"sha1\">" .
+> -			$cgi->a({-href => href(action=>"commit", hash=>$full_rev, file_name=>$file_name)},
+> -			        esc_html($rev)) . "</td>\n";
+> -		print "<td class=\"linenr\"><a id=\"l$lineno\" href=\"#l$lineno\" class=\"linenr\">" .
+> -		      esc_html($lineno) . "</a></td>\n";
+> -		print "<td class=\"pre\">" . esc_html($data) . "</td>\n";
+> -		print "</tr>\n";
+> +		push @chunk, [$lineno, $data];
+> +	}
+> +	if (@chunk) {
+> +		git_blame_flush_chunk($file_name,
+> +				      \%revdata,
+> +				      $rev_color[$current_color],
+> +				      $last_rev, @chunk);
+>  	}
+>  	print "</table>\n";
+>  	print "</div>";
+> -- 
+> 1.4.2.1.gc9fffe
+> 
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
