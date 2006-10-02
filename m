@@ -1,76 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [BUG] 'git mv a/fileA b/fileB' causes 'c/fileC' to be deleted
-Date: Sun, 01 Oct 2006 22:20:13 -0700
-Message-ID: <7vmz8fxpiq.fsf@assigned-by-dhcp.cox.net>
-References: <750170aa0610010721p66899ba5pcc7efa13be4cd10a@mail.gmail.com>
-	<7vpsdc0wkz.fsf@assigned-by-dhcp.cox.net>
-	<750170aa0610011833n39271704q349d86af76832783@mail.gmail.com>
-	<7vven3xq7l.fsf@assigned-by-dhcp.cox.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] gitweb: tree view: eliminate redundant "blob"
+Date: Mon, 02 Oct 2006 09:15:16 +0200
+Message-ID: <4520BC84.5090800@op5.se>
+References: <efc2no$eti$2@sea.gmane.org> <200610012041.15296.jnareb@gmail.com> <7vd59b27c4.fsf@assigned-by-dhcp.cox.net> <200610012127.37113.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 02 07:20:27 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, Luben Tuikov <ltuikov@yahoo.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 02 09:15:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GUGE1-00043B-3X
-	for gcvg-git@gmane.org; Mon, 02 Oct 2006 07:20:21 +0200
+	id 1GUI1L-0003Cr-QO
+	for gcvg-git@gmane.org; Mon, 02 Oct 2006 09:15:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932614AbWJBFUQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Oct 2006 01:20:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932618AbWJBFUQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Oct 2006 01:20:16 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:12944 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S932614AbWJBFUO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Oct 2006 01:20:14 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061002052013.LBEV6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 2 Oct 2006 01:20:13 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id VHL71V00z1kojtg0000000
-	Mon, 02 Oct 2006 01:20:08 -0400
-To: "Michael Cassar" <m.e.cassar@gmail.com>
-In-Reply-To: <7vven3xq7l.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sun, 01 Oct 2006 22:05:18 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932715AbWJBHPU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Oct 2006 03:15:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932716AbWJBHPU
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Oct 2006 03:15:20 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:34754 "EHLO
+	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932715AbWJBHPT
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 2 Oct 2006 03:15:19 -0400
+Received: by smtp-gw1.op5.se (Postfix, from userid 588)
+	id 4A79F6BD76; Mon,  2 Oct 2006 09:15:18 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
+	linux-server1.op5.se
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.1.4
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 1ED3A6BD74; Mon,  2 Oct 2006 09:15:17 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200610012127.37113.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28218>
 
-Junio C Hamano <junkio@cox.net> writes:
+Jakub Narebski wrote:
+> Junio C Hamano wrote:
+> 
+>> Doesn't leading drwxr-xr-x mean anything?
+> 
+> Neither d in drwxr-xr-x, nor trailing / in the name are significant
+> enough indicators of directory vs file (tree vs blob) indicator,
+> especially that by default git-ls-tree output mixes trees with blobs.
+>  
 
-> Thanks.  I see it reproduces.
->
-> It is a bug in git-mv that fails to update cache-tree data
-> structure properly.  This patch should fix it.
+I beg to differ. The trailing slash would indeed help, as peoples eyes 
+are generally focused on the mouse-pointer rather than some 5-10" to the 
+left of it. If we're worrying that windows folks use \ for 
+path-delimiter, I think they'll pick up the difference quick enough.
 
-The previous patch was safer but unnecessarily was a bit heavy
-handed.  This should fix it nicer.
-
--- >8 --
-git-mv: invalidate the removed path properly in cache-tree
-
-The command updated the cache without invalidating the cache
-tree entries while removing an existing entry.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-
-diff --git a/builtin-mv.c b/builtin-mv.c
-index 4d21d88..54dd3bf 100644
---- a/builtin-mv.c
-+++ b/builtin-mv.c
-@@ -278,6 +278,7 @@ int cmd_mv(int argc, const char **argv, 
- 		for (i = 0; i < deleted.nr; i++) {
- 			const char *path = deleted.items[i].path;
- 			remove_file_from_cache(path);
-+			cache_tree_invalidate_path(active_cache_tree, path);
- 		}
- 
- 		if (active_cache_changed) {
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
