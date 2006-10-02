@@ -1,85 +1,86 @@
-From: "Michael Cassar" <m.e.cassar@gmail.com>
-Subject: Re: [BUG] 'git mv a/fileA b/fileB' causes 'c/fileC' to be deleted
-Date: Mon, 2 Oct 2006 11:33:09 +1000
-Message-ID: <750170aa0610011833n39271704q349d86af76832783@mail.gmail.com>
-References: <750170aa0610010721p66899ba5pcc7efa13be4cd10a@mail.gmail.com>
-	 <7vpsdc0wkz.fsf@assigned-by-dhcp.cox.net>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: [PATCH] Stop making git-merge-recur
+Date: Sun, 01 Oct 2006 19:45:06 -0700
+Message-ID: <45207D32.8040300@gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 02 03:33:20 2006
+X-From: git-owner@vger.kernel.org Mon Oct 02 04:45:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GUCgI-0007Yo-Vf
-	for gcvg-git@gmane.org; Mon, 02 Oct 2006 03:33:19 +0200
+	id 1GUDo1-0001yM-Uo
+	for gcvg-git@gmane.org; Mon, 02 Oct 2006 04:45:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932585AbWJBBdL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Oct 2006 21:33:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932586AbWJBBdL
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Oct 2006 21:33:11 -0400
-Received: from wx-out-0506.google.com ([66.249.82.225]:3036 "EHLO
-	wx-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S932585AbWJBBdK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Oct 2006 21:33:10 -0400
-Received: by wx-out-0506.google.com with SMTP id s14so1553762wxc
-        for <git@vger.kernel.org>; Sun, 01 Oct 2006 18:33:09 -0700 (PDT)
+	id S1751287AbWJBCpT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 Oct 2006 22:45:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751295AbWJBCpT
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Oct 2006 22:45:19 -0400
+Received: from py-out-1112.google.com ([64.233.166.178]:53271 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1751287AbWJBCpR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Oct 2006 22:45:17 -0400
+Received: by py-out-1112.google.com with SMTP id n25so2282210pyg
+        for <git@vger.kernel.org>; Sun, 01 Oct 2006 19:45:16 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Ti3woND6SFIV2qbV05UQpRxRVtOOLae3bC38gFBcVUH7p0UuOkKPp3ONs/vlBpvSTyjTf79YTbUtZB8k2XCJ44WZj4uep5FGRq+uzzDPRa9toALUMGfrw6fBn79tVPIYTJ7vS+Sd4ZN0pbxsP7WE6/Kx5RLST7EV9Euu7bdpXEc=
-Received: by 10.70.18.11 with SMTP id 11mr5695487wxr;
-        Sun, 01 Oct 2006 18:33:09 -0700 (PDT)
-Received: by 10.70.42.9 with HTTP; Sun, 1 Oct 2006 18:33:09 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vpsdc0wkz.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:content-type:content-transfer-encoding;
+        b=HUSYmEqO+CWXUpLbyFSscU8gWjWlbAqS9IYGqYFBxWat58xP12G6kv41yJ6loo8MTQZB6m+KCZaQjm/XbKJwfY1ZXy2+FLZxaoWZBqIFWc6rekgBXZQppDe3ROX0hFPVXd29Iky+RtxCv8TGZ6Xla3iZW9tw82CPDosYs7zu2AU=
+Received: by 10.65.212.3 with SMTP id o3mr320673qbq;
+        Sun, 01 Oct 2006 19:45:16 -0700 (PDT)
+Received: from ?10.0.0.6? ( [68.233.231.217])
+        by mx.gmail.com with ESMTP id f15sm103851qba.2006.10.01.19.45.15;
+        Sun, 01 Oct 2006 19:45:16 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060911)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28211>
 
-On 10/2/06, Junio C Hamano <junkio@cox.net> wrote:
-> There could be a bigger problem, but it does not seem to easily
-> reproduce as you noted in the message.  It could be that some
-> unrelated thing in the working tree is playing a role in this
-> breakage, but I do not think of offhand what that is.
+Git-merge-recur is no longer installed and make clean no longer
+removes it, so creating making it.
 
-> [...]  Care to show a bit more details
-> on your working tree?
 
-Okay, I should stop being lazy and actually produce a minimal test-case.
+Signed-off-by: A Large Angry SCM <gitzilla@gmail.com>
+---
 
-Here we go:
+ Makefile |    8 ++------
+ 1 files changed, 2 insertions(+), 6 deletions(-)
 
---CUT--
-#!/bin/bash
-
-git init-db
-
-mkdir papers
-mkdir papers/unsorted
-mkdir papers/all-papers
-mkdir partA
-echo 'moo' > papers/unsorted/Thesis.pdf
-echo 'cow' > partA/outline.txt
-echo 'this file has brackets in its filename' > 'papers/unsorted/(brackets).pdf'
-
-git add  papers partA
-git commit -m 'intial commit'
-
-git mv papers/unsorted/Thesis.pdf papers/all-papers/moo-blah.pdf
-git commit -m 'move a file'
-
-cg log -f
---CUT--
-
-The problem seems to have come from the fact that a file in the source
-directory of the move contained brackets in its filename.Removing the
-file causes the problem to go away.
-
-Hope this helps a little,
-
-Mike
+diff --git a/Makefile b/Makefile
+index dd33158..37bd59d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -586,8 +586,7 @@ export prefix TAR INSTALL DESTDIR SHELL_
+ 
+ ### Build rules
+ 
+-all: $(ALL_PROGRAMS) $(BUILT_INS) git$X gitk gitweb/gitweb.cgi \
+-	git-merge-recur$X
++all: $(ALL_PROGRAMS) $(BUILT_INS) git$X gitk gitweb/gitweb.cgi
+ 
+ all: perl/Makefile
+ 	$(MAKE) -C perl
+@@ -603,9 +602,6 @@ git$X: git.c common-cmds.h $(BUILTIN_OBJ
+ 
+ help.o: common-cmds.h
+ 
+-git-merge-recur$X: git-merge-recursive$X
+-	rm -f $@ && ln git-merge-recursive$X $@
+-
+ $(BUILT_INS): git$X
+ 	rm -f $@ && ln git$X $@
+ 
+@@ -918,7 +914,7 @@ check-docs::
+ 	do \
+ 		case "$$v" in \
+ 		git-merge-octopus | git-merge-ours | git-merge-recursive | \
+-		git-merge-resolve | git-merge-stupid | git-merge-recur | \
++		git-merge-resolve | git-merge-stupid | \
+ 		git-merge-recursive-old | \
+ 		git-ssh-pull | git-ssh-push ) continue ;; \
+ 		esac ; \
