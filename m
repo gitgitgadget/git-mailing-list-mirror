@@ -1,74 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/2] Move code resolving packed refs into its own function.
-Date: Tue, 03 Oct 2006 10:39:20 -0700
-Message-ID: <7v4pulpad3.fsf@assigned-by-dhcp.cox.net>
-References: <20060930220158.d331bb7c.chriscool@tuxfamily.org>
-	<7vmz8hccxl.fsf@assigned-by-dhcp.cox.net>
-	<200610010606.32561.chriscool@tuxfamily.org>
-	<7vodsw2w9g.fsf@assigned-by-dhcp.cox.net> <eftjua$2ii$1@sea.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: start to generate PATH_INFO URLs.
+Date: Tue, 03 Oct 2006 19:50:00 +0200
+Organization: At home
+Message-ID: <efu7r9$fra$1@sea.gmane.org>
+References: <20060929221641.GC2871@admingilde.org> <7v8xk2jofc.fsf@assigned-by-dhcp.cox.net> <20060930181408.GD2871@admingilde.org> <7vfye9dtv7.fsf@assigned-by-dhcp.cox.net> <20061001215748.GG2871@admingilde.org> <eftkdk$2ii$3@sea.gmane.org> <7vbqotpadg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=iso-8859-2
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: jnareb@gmail.com
-X-From: git-owner@vger.kernel.org Tue Oct 03 19:40:05 2006
+X-From: git-owner@vger.kernel.org Tue Oct 03 19:51:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GUoEo-00034R-Vr
-	for gcvg-git@gmane.org; Tue, 03 Oct 2006 19:39:27 +0200
+	id 1GUoPW-0005Y6-9f
+	for gcvg-git@gmane.org; Tue, 03 Oct 2006 19:50:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030227AbWJCRjX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 3 Oct 2006 13:39:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030366AbWJCRjW
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Oct 2006 13:39:22 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:51376 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1030227AbWJCRjV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Oct 2006 13:39:21 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061003173921.RYJY21457.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 3 Oct 2006 13:39:21 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id VtfE1V00b1kojtg0000000
-	Tue, 03 Oct 2006 13:39:15 -0400
+	id S1030384AbWJCRu0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 3 Oct 2006 13:50:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030395AbWJCRu0
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Oct 2006 13:50:26 -0400
+Received: from main.gmane.org ([80.91.229.2]:40357 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1030392AbWJCRuZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Oct 2006 13:50:25 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GUoPB-0005S8-12
+	for git@vger.kernel.org; Tue, 03 Oct 2006 19:50:09 +0200
+Received: from host-81-190-17-45.torun.mm.pl ([81.190.17.45])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 03 Oct 2006 19:50:09 +0200
+Received: from jnareb by host-81-190-17-45.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 03 Oct 2006 19:50:09 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-17-45.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28285>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Junio C Hamano wrote:
 
-> Junio C Hamano wrote:
->
->> =A0- I think gitweb should be Ok; it does peek-remote on the
->> =A0 =A0repository. =A0Although we would probably want to update
->> =A0 =A0git_get_references and git_get_refs_list sub to use
->> =A0 =A0for-each-ref there, that can be done as a later optimization.
->
-> I'd rather have gitweb use git-for-each-ref after the command
-> is in the official release... if not, then keep it in the 'next'
-> branch.
+> Jakub Narebski <jnareb@gmail.com> writes:
+>=20
+>> Martin Waitz wrote:
+>>
+>>> +=A0=A0=A0=A0=A0=A0=A0'pathinfo' =3D> {
+>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0'override' =3D> 0,
+>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0'default' =3D> [1]},
+>>
+>> You should add failsafe to gitweb_check_feature for when 'sub' is no=
+t
+set;
+>> for example when somebody sets $feature{'pathinfo'}{'override'} to 1=
+=2E
+>=20
+> Yes, I noticed this last night while playing with it.  We would
+> at least need a big warning that says this should not be made
+> overridable (which does not make any sense anyway).
+>=20
+> Setting 'sub' to a failsafe one that only returns what is in the
+> default without looking at individual repository would be the
+> cleanest, I think.
 
-Of course.  What else did you expect?
-
-> By the way, I have an idea to join the git-show-ref and git-for-each-=
-ref:
-> simply add --deref option to git-for-each-ref, which would output
-> dereferenced tag just after the reference itself (well, perhaps with =
-the
-> exception when sorting, perhaps not), with the deref name like in
-> git-show-ref and git-peek-remote, i.e. <ref>^{}
-
-Patches welcome.  --verify needs to use totally separate
-codepath though.  for-each-ref is primarily for easy displaying
-and expects the caller to script in order to skip ones that are
-irrelevant while listing (e.g. asking for *objectname does not
-error for a non-tag but the caller can deduce that ref is not a
-tag by it being empty and skip it); show-ref --verify is for
-easy checking for an exact match and should not even walk.
+Perhaps we should not add 'override' key, and test for existence
+of 'override' to fallback on 'sub'.
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
