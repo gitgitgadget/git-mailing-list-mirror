@@ -1,58 +1,77 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: start to generate PATH_INFO URLs.
-Date: Tue, 03 Oct 2006 14:18:25 +0200
-Organization: At home
-Message-ID: <eftkdk$2ii$3@sea.gmane.org>
-References: <20060929221641.GC2871@admingilde.org> <7v8xk2jofc.fsf@assigned-by-dhcp.cox.net> <20060930181408.GD2871@admingilde.org> <7vfye9dtv7.fsf@assigned-by-dhcp.cox.net> <20061001215748.GG2871@admingilde.org>
+From: Martin Waitz <tali@admingilde.org>
+Subject: git-fetch --update-head-ok ?
+Date: Tue, 3 Oct 2006 14:34:52 +0200
+Message-ID: <20061003123452.GK2871@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Tue Oct 03 14:20:36 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="6lXr1rPCNTf1w0X8"
+X-From: git-owner@vger.kernel.org Tue Oct 03 14:35:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GUjFz-0004ax-6E
-	for gcvg-git@gmane.org; Tue, 03 Oct 2006 14:20:19 +0200
+	id 1GUjUa-0007aw-CY
+	for gcvg-git@gmane.org; Tue, 03 Oct 2006 14:35:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750749AbWJCMUP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 3 Oct 2006 08:20:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750769AbWJCMUP
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Oct 2006 08:20:15 -0400
-Received: from main.gmane.org ([80.91.229.2]:22694 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750749AbWJCMUN (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Oct 2006 08:20:13 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1GUjFi-0004Wr-HY
-	for git@vger.kernel.org; Tue, 03 Oct 2006 14:20:02 +0200
-Received: from host-81-190-17-45.torun.mm.pl ([81.190.17.45])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 03 Oct 2006 14:20:02 +0200
-Received: from jnareb by host-81-190-17-45.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 03 Oct 2006 14:20:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1750802AbWJCMex (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Oct 2006 08:34:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750807AbWJCMex
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Oct 2006 08:34:53 -0400
+Received: from agent.admingilde.org ([213.95.21.5]:16061 "EHLO
+	mail.admingilde.org") by vger.kernel.org with ESMTP
+	id S1750802AbWJCMex (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Oct 2006 08:34:53 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1GUjU4-000085-5C
+	for git@vger.kernel.org; Tue, 03 Oct 2006 14:34:52 +0200
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-17-45.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+Content-Disposition: inline
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28269>
 
-Martin Waitz wrote:
 
-> +=A0=A0=A0=A0=A0=A0=A0'pathinfo' =3D> {
-> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0'override' =3D> 0,
-> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0'default' =3D> [1]},
+--6lXr1rPCNTf1w0X8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-You should add failsafe to gitweb_check_feature for when 'sub' is not s=
-et;
-for example when somebody sets $feature{'pathinfo'}{'override'} to 1.
+hoi :)
+
+I have no idea why there is a --update-head-ok, but the code looks
+like it has a typo:
+
+diff --git a/git-fetch.sh b/git-fetch.sh
+index 09a5d6c..5843639 100755
+--- a/git-fetch.sh
++++ b/git-fetch.sh
+@@ -433,7 +433,7 @@ esac
+ # If the original head was empty (i.e. no "master" yet), or
+ # if we were told not to worry, we do not have to check.
+ case ",$update_head_ok,$orig_head," in
+-*,, | t,* )
++*,, | ,t,* )
+        ;;
+ *)
+        curr_head=3D$(git-rev-parse --verify HEAD 2>/dev/null)
+
 --=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Martin Waitz
+
+--6lXr1rPCNTf1w0X8
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFIljsj/Eaxd/oD7IRAmkMAJ9RRteiNZufhZfowemm7HEwvo8UpgCfd0Ln
+dcSHf2yHMUTTnyOCqQDUFIM=
+=3vDG
+-----END PGP SIGNATURE-----
+
+--6lXr1rPCNTf1w0X8--
