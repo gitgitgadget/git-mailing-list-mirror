@@ -1,104 +1,60 @@
-From: Alan Chandler <alan@chandlerfamily.org.uk>
-Subject: [PATCH] Fix usage string to match that given in the man page
-Date: Tue, 3 Oct 2006 21:11:25 +0100
-Message-ID: <200610032111.25259.alan@chandlerfamily.org.uk>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: document webserver configuration for common gitweb/repo URLs.
+Date: Tue, 03 Oct 2006 13:15:38 -0700
+Message-ID: <7v1wppnok5.fsf@assigned-by-dhcp.cox.net>
+References: <20061003080328.GI2871@admingilde.org>
+	<E1GUkQe-0007qU-AN@home.chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: Multipart/Mixed;
-  boundary="Boundary-00=_tPsIF/+6CeKFpuX"
-X-From: git-owner@vger.kernel.org Tue Oct 03 22:14:14 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 03 22:17:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GUqbz-0005Rz-VV
-	for gcvg-git@gmane.org; Tue, 03 Oct 2006 22:11:32 +0200
+	id 1GUqg4-0006rS-L7
+	for gcvg-git@gmane.org; Tue, 03 Oct 2006 22:15:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030311AbWJCUL2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Oct 2006 16:11:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030316AbWJCUL1
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Oct 2006 16:11:27 -0400
-Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:726
-	"EHLO home.chandlerfamily.org.uk") by vger.kernel.org with ESMTP
-	id S1030311AbWJCUL1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Oct 2006 16:11:27 -0400
-Received: from kanger.home ([192.168.0.21])
-	by home.chandlerfamily.org.uk with esmtp (Exim 4.63)
-	(envelope-from <alan@chandlerfamily.org.uk>)
-	id 1GUqbt-0003NJ-Gs
-	for git@vger.kernel.org; Tue, 03 Oct 2006 21:11:25 +0100
-User-Agent: KMail/1.9.4
-To: git@vger.kernel.org
+	id S964856AbWJCUPl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Oct 2006 16:15:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964868AbWJCUPl
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Oct 2006 16:15:41 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:11497 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S964856AbWJCUPk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Oct 2006 16:15:40 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061003201539.IGBF18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 3 Oct 2006 16:15:39 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id VwFZ1V00B1kojtg0000000
+	Tue, 03 Oct 2006 16:15:33 -0400
+To: "Alan Chandler" <alan@chandlerfamily.org.uk>
+In-Reply-To: <E1GUkQe-0007qU-AN@home.chandlerfamily.org.uk> (Alan Chandler's
+	message of "Tue, 03 Oct 2006 14:35:24 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28296>
 
---Boundary-00=_tPsIF/+6CeKFpuX
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+"Alan Chandler" <alan@chandlerfamily.org.uk> writes:
 
-Still not managed to understand git-send-mail sufficiently well to  not 
-accidently miss of this list when I sending it to Junio
+> Martin Waitz writes:
+>
+>> Add a small apache configuration which shows how to use apache
+>> to put gitweb and GIT repositories at the same URL.
+>
+> It might be helpful to include
+>
+> SetEnv GITWEB_CONFIG /etc/gitweb.conf
+>
+> in that little apache snippet, to show how specify a config file for
+> gitweb.
 
-
-
-Signed-off-by: Alan Chandler <alan@chandlerfamily.org.uk>
----
- git.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/git.c b/git.c
-index ae80e78..b8e8622 100644
---- a/git.c
-+++ b/git.c
-@@ -16,7 +16,7 @@ #include "quote.h"
- #include "builtin.h"
-
- const char git_usage_string[] =
--	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [--help] COMMAND [ ARGS ]";
-+	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate] [--bare]
- [--git-dir=GIT_DIR] [--help] COMMAND [ARGS]";
-
- static void prepend_to_path(const char *dir, int len)
- {
---
-1.4.2.1
-
--------------------------------------------------------
-
--- 
-Alan Chandler
-http://www.chandlerfamily.org.uk
-
---Boundary-00=_tPsIF/+6CeKFpuX
-Content-Type: text/plain;
-  name="[PATCH] Fix usage string to match that given in the man page"
-Content-Transfer-Encoding: 7bit
-
-From: Alan Chandler <alan@chandlerfamily.org.uk>
-
-Signed-off-by: Alan Chandler <alan@chandlerfamily.org.uk>
----
- git.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/git.c b/git.c
-index ae80e78..b8e8622 100644
---- a/git.c
-+++ b/git.c
-@@ -16,7 +16,7 @@ #include "quote.h"
- #include "builtin.h"
- 
- const char git_usage_string[] =
--	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [--help] COMMAND [ ARGS ]";
-+	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate] [--bare] [--git-dir=GIT_DIR] [--help] COMMAND [ARGS]";
- 
- static void prepend_to_path(const char *dir, int len)
- {
--- 
-1.4.2.1
-
-
---Boundary-00=_tPsIF/+6CeKFpuX--
+I agree.  Please make it so by sending in a one-liner patch with
+sign-off so that we can get attribution right without minimum
+fuss.
