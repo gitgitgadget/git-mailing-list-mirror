@@ -1,78 +1,127 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitweb: start to generate PATH_INFO URLs.
-Date: Tue, 03 Oct 2006 13:16:13 -0700
-Message-ID: <7vwt7hm9yq.fsf@assigned-by-dhcp.cox.net>
-References: <20060929221641.GC2871@admingilde.org>
-	<7v8xk2jofc.fsf@assigned-by-dhcp.cox.net>
-	<20060930181408.GD2871@admingilde.org>
-	<7vfye9dtv7.fsf@assigned-by-dhcp.cox.net>
-	<20061001215748.GG2871@admingilde.org> <eftkdk$2ii$3@sea.gmane.org>
-	<7vbqotpadg.fsf@assigned-by-dhcp.cox.net> <efu7r9$fra$1@sea.gmane.org>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH] gitweb: tree view: eliminate redundant "blob"
+Date: Tue, 3 Oct 2006 13:20:06 -0700 (PDT)
+Message-ID: <20061003202006.72783.qmail@web31804.mail.mud.yahoo.com>
+References: <200610031018.40273.jnareb@gmail.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 03 22:18:12 2006
+X-From: git-owner@vger.kernel.org Tue Oct 03 22:21:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GUqgd-00076V-2b
-	for gcvg-git@gmane.org; Tue, 03 Oct 2006 22:16:20 +0200
+	id 1GUqkP-0008L5-E3
+	for gcvg-git@gmane.org; Tue, 03 Oct 2006 22:20:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030236AbWJCUQQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 3 Oct 2006 16:16:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030316AbWJCUQQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Oct 2006 16:16:16 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:20613 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1030236AbWJCUQP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Oct 2006 16:16:15 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061003201614.QNQQ12909.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 3 Oct 2006 16:16:14 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id VwG81V0051kojtg0000000
-	Tue, 03 Oct 2006 16:16:08 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <efu7r9$fra$1@sea.gmane.org> (Jakub Narebski's message of "Tue,
-	03 Oct 2006 19:50:00 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030318AbWJCUUJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Oct 2006 16:20:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030324AbWJCUUJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Oct 2006 16:20:09 -0400
+Received: from web31804.mail.mud.yahoo.com ([68.142.207.67]:55648 "HELO
+	web31804.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1030318AbWJCUUH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Oct 2006 16:20:07 -0400
+Received: (qmail 72785 invoked by uid 60001); 3 Oct 2006 20:20:07 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=24Lmh88DvGdPvgrG5TLcbuZJVRjT4c7j/zP+7XspQHnMDlwQ8v90RBj5n0Nc5GsmAc3EKznniLLmkOqSu+mhf8dqhuH2SBgd8ZRK81Nqaq9uayEfPq8FVFQ8gIHkeyYnGjV+4+BMzDNwVzJKD6M5cyd4X3ee2lRAEmQDGBNI4U4=  ;
+Received: from [64.215.88.90] by web31804.mail.mud.yahoo.com via HTTP; Tue, 03 Oct 2006 13:20:06 PDT
+To: Jakub Narebski <jnareb@gmail.com>, Junio C Hamano <junkio@cox.net>
+In-Reply-To: <200610031018.40273.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28298>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+--- Jakub Narebski <jnareb@gmail.com> wrote:
+> On Tue, 3 Oct 2006, Junio C Hamano wrote:
+> 
+> > Honestly, I _hate_ to be in the position to decide in which
+> > color the bikeshed should be, but sometimes that is what a
+> > maintainer has to do.
+> 
+> Joys and tribulations of being maintainer... ;-)
 
-> Junio C Hamano wrote:
->
->> Jakub Narebski <jnareb@gmail.com> writes:
->>=20
->>> Martin Waitz wrote:
->>>
->>>> +=A0=A0=A0=A0=A0=A0=A0'pathinfo' =3D> {
->>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0'override' =3D> 0,
->>>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0'default' =3D> [1]},
->>>
->>> You should add failsafe to gitweb_check_feature for when 'sub' is n=
-ot
-> set;
->>> for example when somebody sets $feature{'pathinfo'}{'override'} to =
-1.
->>=20
->> Yes, I noticed this last night while playing with it.  We would
->> at least need a big warning that says this should not be made
->> overridable (which does not make any sense anyway).
->>=20
->> Setting 'sub' to a failsafe one that only returns what is in the
->> default without looking at individual repository would be the
->> cleanest, I think.
->
-> Perhaps we should not add 'override' key, and test for existence
-> of 'override' to fallback on 'sub'.
+Junio is doing an excellent job at maintaining GIT!  He's
+tried to accomodate everyone, since this kind of flexibility
+decides how many entities and companies adopt GIT and in return
+this makes GIT better, by having those entities and companies
+send back patches.  It is a well understood loop.
 
-Excellent idea.  Please make it so.
+You should take a look at Linux and some subsystem's maintainers
+"maintainership".  The worst thing by far that can happen to
+a project being maintained is when "maintainership" becomes
+the maintainer's _job_, as opposed to a professional (specializing
+in a contingent field) who is doing maintainership in his spare
+time. (i.e. the way it was in the 70s-80s with UNIX.)
+
+Anyway, I digress, sorry.
+
+> > By the same logic, the purpose of the tree view is to show
+> > contents of a tree object.  If the user picks up the convention
+> > for the short log that each listed commit can be clicked to
+> > obtain details about it, it probably is natural for the user to
+> > expect that each listed entry in the tree view can be clicked to
+> > obtain details about it, so not showing the redundant tree/blob
+> > link is in line with that.  And it would be consistent not to
+> > give underline to the file or directory names.
+> 
+> I'd rather have underline for directory names to distinguish
+> it even more from files (blob entries), even for monochromatic
+> text display.
+
+I strongly agree with Junio.  Intuition of gitweb spills in all
+of its interfaces.  The nature of gitweb dictates that certain
+things are clickable, simply because it is, after all, a web
+interface to none other but GIT.
+
+We don't need an overly explicit interface in gitweb, since gitweb
+is not supposed to _teach_ git, but present it.
+
+Take a look at other SCMs interfaces: perforce, cvs, clearcase, etc.
+
+> I am of two mind about removing "redundant" links movement.
+> 
+> First, I don't thing that avoiding redundancy in _user interface_
+> is a good argument. We sometimes add redundancy, for example in
+> commitdiff view for each patch we have sha1 of blob in the gitweb
+> header clickable, and obvously link, and we have the names of from
+> and to files in diff header "hidden links" and clickable. I could
+> agree with the argument about removing redundancy from the _code_,
+> and/or with the argument about _uncluttering_ interface.
+> 
+> Second, removing "redundant" links coupled with the fact that
+> the links the removed links duplicated cannot for mentioned resons
+> have default links style, so it is harder to guess that they are
+> links ("mystery meat navigation", although not in it's worst edition).
+> So there is tradeoff. Uncluttering the interface and simplifying
+> the code, but at the cost of gitweb interface being harder to beginners.
+
+What "beginners" are you refering to?  GIT beginners or gitweb beginners?
+gitweb is not supposed to be a teaching tool to GIT.
+
+> It is a question of policy then, do we cater to beginner users, or to
+> advanced users (which know/discovered that file name in tree view
+> and commit subject/title line in shortlog are links to respectively
+> blob view of a file and commit view of a commit).
+> 
+> Third, we should be consistent: either leave redundant links, perhaps
+> separating it by putting it into separate "selflink" column (see for 
+> example tags view), or remove redundat links where possible in all 
+> views.
+
+An absolutely excellent argument for the confines of a college course
+paper or assignment on GUI.  Not very convicing to people with years
+and years of experience in SCMs and what-not.
+
+What we want is not some zelous argument about what is the "right"
+way or the "proper" way (all very subjective) of doing the interface
+of gitweb.  What we want is an intuitive and workable interface,
+minimizing the number of eye movements, mouse movement, mouse clicks
+to get to the information being sought.
+
+    Luben
