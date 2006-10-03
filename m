@@ -1,71 +1,60 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH] gitweb: start to generate PATH_INFO URLs.
-Date: Tue, 3 Oct 2006 22:28:31 +0200
-Message-ID: <20061003202831.GS2871@admingilde.org>
-References: <20060929221641.GC2871@admingilde.org> <7v8xk2jofc.fsf@assigned-by-dhcp.cox.net> <20060930181408.GD2871@admingilde.org> <7vfye9dtv7.fsf@assigned-by-dhcp.cox.net> <20061001215748.GG2871@admingilde.org> <eftkdk$2ii$3@sea.gmane.org> <7vbqotpadg.fsf@assigned-by-dhcp.cox.net> <efu7r9$fra$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: "git diff --summary --diff-filter=AD" without --stat does not work.
+Date: Tue, 03 Oct 2006 13:36:41 -0700
+Message-ID: <7vejtpm90m.fsf@assigned-by-dhcp.cox.net>
+References: <7v3ba5tdlj.fsf@dee.twinsun.com>
+	<Pine.LNX.4.63.0610032221330.14200@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="q8dntDJTu318bll0"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 03 22:28:48 2006
+X-From: git-owner@vger.kernel.org Tue Oct 03 22:37:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GUqsW-0002cs-G4
-	for gcvg-git@gmane.org; Tue, 03 Oct 2006 22:28:36 +0200
+	id 1GUr0R-00053n-1n
+	for gcvg-git@gmane.org; Tue, 03 Oct 2006 22:36:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964802AbWJCU2d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Oct 2006 16:28:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964862AbWJCU2d
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Oct 2006 16:28:33 -0400
-Received: from agent.admingilde.org ([213.95.21.5]:53707 "EHLO
-	mail.admingilde.org") by vger.kernel.org with ESMTP id S964802AbWJCU2c
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 3 Oct 2006 16:28:32 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1GUqsR-0006j2-SB; Tue, 03 Oct 2006 22:28:31 +0200
-To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <efu7r9$fra$1@sea.gmane.org>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S1030361AbWJCUgn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Oct 2006 16:36:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030362AbWJCUgn
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Oct 2006 16:36:43 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:17147 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1030361AbWJCUgm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Oct 2006 16:36:42 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061003203642.UMFZ26416.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 3 Oct 2006 16:36:42 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Vwcb1V00m1kojtg0000000
+	Tue, 03 Oct 2006 16:36:36 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0610032221330.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Tue, 3 Oct 2006 22:23:02 +0200
+	(CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28302>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
---q8dntDJTu318bll0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> I think it should only show create/delete notes and not even
+>> diff text.
+>
+> What exactly is the problem? My tree only has minor patches, which should 
+> not affect the output of your command, and it does this:
+>
+> $ git diff --summary --diff-filter=AD next..pu
+>  create mode 100644 builtin-diff-status.c
+>  create mode 100644 para-walk.c
+>  create mode 100644 para-walk.h
+>  create mode 100644 test-para.c
 
-hoi :-)
-
-On Tue, Oct 03, 2006 at 07:50:00PM +0200, Jakub Narebski wrote:
-> Perhaps we should not add 'override' key, and test for existence
-> of 'override' to fallback on 'sub'.
-
-this is a no-op: if the config file sets override to 1 then
-we still break.
-
-Of course one say: don't do it then.
-But then we don't need the check at all.
-
---=20
-Martin Waitz
-
---q8dntDJTu318bll0
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFIsfvj/Eaxd/oD7IRAhtjAJ93zal1bUt5ST+B62F3RF+70irwMwCeNYqA
-TOT3meeSF7DVDkWMy65xC+w=
-=BpRq
------END PGP SIGNATURE-----
-
---q8dntDJTu318bll0--
+I suspect the real issue is that it does not turn 'recursive'
+on.
