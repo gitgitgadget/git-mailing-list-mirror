@@ -1,76 +1,66 @@
-From: Martin Waitz <tali@admingilde.org>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [PATCH] gitweb: start to generate PATH_INFO URLs
-Date: Tue, 3 Oct 2006 19:12:29 +0200
-Message-ID: <20061003171229.GN2871@admingilde.org>
-References: <20060929221641.GC2871@admingilde.org> <eftk98$2ii$2@sea.gmane.org>
+Date: Tue, 03 Oct 2006 19:19:42 +0200
+Organization: At home
+Message-ID: <efu62g$7f8$1@sea.gmane.org>
+References: <20060929221641.GC2871@admingilde.org> <eftk98$2ii$2@sea.gmane.org> <20061003171229.GN2871@admingilde.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="/0U0QBNx7JIUZLHm"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 03 19:12:40 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue Oct 03 19:21:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GUnoo-0005Gw-67
-	for gcvg-git@gmane.org; Tue, 03 Oct 2006 19:12:34 +0200
+	id 1GUnwt-0007Ip-AN
+	for gcvg-git@gmane.org; Tue, 03 Oct 2006 19:20:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030337AbWJCRMb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Oct 2006 13:12:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030338AbWJCRMb
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Oct 2006 13:12:31 -0400
-Received: from agent.admingilde.org ([213.95.21.5]:6596 "EHLO
-	mail.admingilde.org") by vger.kernel.org with ESMTP
-	id S1030337AbWJCRMa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Oct 2006 13:12:30 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1GUnoj-0003Cr-Ih; Tue, 03 Oct 2006 19:12:29 +0200
-To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <eftk98$2ii$2@sea.gmane.org>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S1030332AbWJCRUu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Oct 2006 13:20:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030334AbWJCRUu
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Oct 2006 13:20:50 -0400
+Received: from main.gmane.org ([80.91.229.2]:27596 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1030332AbWJCRUu (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Oct 2006 13:20:50 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GUnvU-0006v8-9G
+	for git@vger.kernel.org; Tue, 03 Oct 2006 19:19:28 +0200
+Received: from host-81-190-17-45.torun.mm.pl ([81.190.17.45])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 03 Oct 2006 19:19:28 +0200
+Received: from jnareb by host-81-190-17-45.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 03 Oct 2006 19:19:28 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-17-45.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28280>
 
+Martin Waitz wrote:
 
---/0U0QBNx7JIUZLHm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Tue, Oct 03, 2006 at 02:16:05PM +0200, Jakub Narebski wrote:
+>> Martin Waitz wrote:
+>> > Instead of providing the project as a ?p= parameter it is simply appended
+>> > to the base URI.
+>> 
+>> I have just modified href() to be able to use it for actions which don't
+>> need the ?p= parameter... and you didn't take into consideration the case
+>> when $params{'project'} is set, but undefined.
+> 
+> is this handled correctly in the second patch which got committed to
+> next?
 
-hoi :)
+I think it is (from the examining the patch, not from testing).
 
-On Tue, Oct 03, 2006 at 02:16:05PM +0200, Jakub Narebski wrote:
-> Martin Waitz wrote:
-> > Instead of providing the project as a ?p=3D parameter it is simply appe=
-nded
-> > to the base URI.
->=20
-> I have just modified href() to be able to use it for actions which don't
-> need the ?p=3D parameter... and you didn't take into consideration the ca=
-se
-> when $params{'project'} is set, but undefined.
-
-is this handled correctly in the second patch which got committed to
-next?
-
---=20
-Martin Waitz
-
---/0U0QBNx7JIUZLHm
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFIpn9j/Eaxd/oD7IRAvqPAJ0Y+jQj5+J5c6TsNI5EMMqv+ZaBAQCeKMRs
-BqowEGy+ueiK6khGahF+GjQ=
-=uHH9
------END PGP SIGNATURE-----
-
---/0U0QBNx7JIUZLHm--
+Perhaps we should use PATH_INFO if current URL uses PATH_INFO... 
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
