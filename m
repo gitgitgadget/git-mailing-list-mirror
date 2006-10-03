@@ -1,71 +1,95 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitweb: make leftmost column of blame less cluttered.
-Date: Mon, 02 Oct 2006 21:19:57 -0700
-Message-ID: <7vpsdat4ia.fsf@assigned-by-dhcp.cox.net>
-References: <7vwt7k4clr.fsf@assigned-by-dhcp.cox.net>
-	<20061002192930.86293.qmail@web31803.mail.mud.yahoo.com>
+Subject: Re: [PATCH] escape tilde in Documentation/git-rev-parse.txt
+Date: Mon, 02 Oct 2006 22:52:57 -0700
+Message-ID: <7vhcymt07a.fsf@assigned-by-dhcp.cox.net>
+References: <tkrat.4532d38d43e16a62@s5r6.in-berlin.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 03 06:20:33 2006
+X-From: git-owner@vger.kernel.org Tue Oct 03 07:53:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GUblZ-0006Oi-2p
-	for gcvg-git@gmane.org; Tue, 03 Oct 2006 06:20:25 +0200
+	id 1GUdDC-0005mj-HT
+	for gcvg-git@gmane.org; Tue, 03 Oct 2006 07:53:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965085AbWJCET7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Oct 2006 00:19:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965087AbWJCET7
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Oct 2006 00:19:59 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:48572 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S965092AbWJCET6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Oct 2006 00:19:58 -0400
+	id S965268AbWJCFw7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Oct 2006 01:52:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965269AbWJCFw7
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Oct 2006 01:52:59 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:8412 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S965268AbWJCFw6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Oct 2006 01:52:58 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao06.cox.net
+          by fed1rmmtao12.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061003041957.GCSB6235.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 3 Oct 2006 00:19:57 -0400
+          id <20061003055258.BMK26416.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 3 Oct 2006 01:52:58 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id VgL01V0041kojtg0000000
-	Tue, 03 Oct 2006 00:20:00 -0400
-To: ltuikov@yahoo.com
-In-Reply-To: <20061002192930.86293.qmail@web31803.mail.mud.yahoo.com> (Luben
-	Tuikov's message of "Mon, 2 Oct 2006 12:29:30 -0700 (PDT)")
+	id Vht01V0071kojtg0000000
+	Tue, 03 Oct 2006 01:53:00 -0400
+To: Stefan Richter <stefanr@s5r6.in-berlin.de>
+In-Reply-To: <tkrat.4532d38d43e16a62@s5r6.in-berlin.de> (Stefan Richter's
+	message of "Mon, 2 Oct 2006 20:55:05 +0200 (CEST)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28246>
 
-Luben Tuikov <ltuikov@yahoo.com> writes:
+Stefan Richter <stefanr@s5r6.in-berlin.de> writes:
 
-> --- Junio C Hamano <junkio@cox.net> wrote:
+> fixes a failure to build the git-rev-parse manpage,
+> seen with asciidoc 8.0.0
 >
->> Instead of labelling each and every line with clickable commit
->> object name, this makes the blame output to show them only on
->> the first line of each group of lines from the same revision.
->> 
->> Also it makes mouse-over to show the minimum authorship and
->> authordate information for extra cuteness ;-).
->> 
->> Signed-off-by: Junio C Hamano <junkio@cox.net>
->> ---
->
-> ACK.  Please commit.
+> Signed-off-by: Stefan Richter <stefanr@s5r6.in-berlin.de>
+> ---
+> diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+> index b761b4b..671b4e3 100644
+> --- a/Documentation/git-rev-parse.txt
+> +++ b/Documentation/git-rev-parse.txt
+> @@ -138,7 +138,7 @@ syntax.
+>    'rev{caret}0' means the commit itself and is used when 'rev' is the
+>    object name of a tag object that refers to a commit object.
+>  
+> -* A suffix '~<n>' to a revision parameter means the commit
+> +* A suffix '$$~$$<n>' to a revision parameter means the commit
+>    object that is the <n>th generation grand-parent of the named
+>    commit object, following only the first parent.  I.e. rev~3 is
+>    equivalent to rev{caret}{caret}{caret} which is equivalent to\
 
-Won't, at least as its current shape.  Somebody privately
-mentioned that the code risks slurping the entire file in the
-@chunk if it is untouched since the initial import, which is not
-what we want.
+But this makes it asciidoc 7.1 barf, so we need an alternative
+compatible to both.
 
-The memory consumption worries aside, that would make the
-clickable commit object name to appear only very at the
-beginning of the page and would make it inconvenient to actually
-visit the commit after scrolling down to see later lines.
+This works for me on 7.1; is your 8.0 happy with it?
 
-It might become usable if it is given a cap to limit the number
-of lines to put in a chunk.  I dunno.
+-- >8 --
+
+diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
+index 8196d78..44b1ce4 100644
+--- a/Documentation/asciidoc.conf
++++ b/Documentation/asciidoc.conf
+@@ -11,6 +11,7 @@ # the command.
+ caret=^
+ startsb=&#91;
+ endsb=&#93;
++tilde=&#126;
+ 
+ ifdef::backend-docbook[]
+ [gitlink-inlinemacro]
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index b761b4b..2f1306c 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -138,7 +138,7 @@ syntax.
+   'rev{caret}0' means the commit itself and is used when 'rev' is the
+   object name of a tag object that refers to a commit object.
+ 
+-* A suffix '~<n>' to a revision parameter means the commit
++* A suffix '{tilde}<n>' to a revision parameter means the commit
+   object that is the <n>th generation grand-parent of the named
+   commit object, following only the first parent.  I.e. rev~3 is
+   equivalent to rev{caret}{caret}{caret} which is equivalent to\
