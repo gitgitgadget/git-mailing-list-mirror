@@ -1,59 +1,71 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Check that a tag exists using show-ref instead of looking for the ref file.
-Date: Tue, 03 Oct 2006 13:26:30 -0700
-Message-ID: <7virj1m9hl.fsf@assigned-by-dhcp.cox.net>
-References: <20061001223304.d37df36f.chriscool@tuxfamily.org>
-	<7vlknxrcja.fsf@assigned-by-dhcp.cox.net>
-	<200610032211.05847.chriscool@tuxfamily.org>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [PATCH] gitweb: start to generate PATH_INFO URLs.
+Date: Tue, 3 Oct 2006 22:28:31 +0200
+Message-ID: <20061003202831.GS2871@admingilde.org>
+References: <20060929221641.GC2871@admingilde.org> <7v8xk2jofc.fsf@assigned-by-dhcp.cox.net> <20060930181408.GD2871@admingilde.org> <7vfye9dtv7.fsf@assigned-by-dhcp.cox.net> <20061001215748.GG2871@admingilde.org> <eftkdk$2ii$3@sea.gmane.org> <7vbqotpadg.fsf@assigned-by-dhcp.cox.net> <efu7r9$fra$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="q8dntDJTu318bll0"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 03 22:27:25 2006
+X-From: git-owner@vger.kernel.org Tue Oct 03 22:28:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GUqqY-0001uu-JJ
-	for gcvg-git@gmane.org; Tue, 03 Oct 2006 22:26:35 +0200
+	id 1GUqsW-0002cs-G4
+	for gcvg-git@gmane.org; Tue, 03 Oct 2006 22:28:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030324AbWJCU0b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Oct 2006 16:26:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030326AbWJCU0b
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Oct 2006 16:26:31 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:2552 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1030324AbWJCU0b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Oct 2006 16:26:31 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061003202630.ITGH13992.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 3 Oct 2006 16:26:30 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id VwSQ1V00F1kojtg0000000
-	Tue, 03 Oct 2006 16:26:24 -0400
-To: Christian Couder <chriscool@tuxfamily.org>
-In-Reply-To: <200610032211.05847.chriscool@tuxfamily.org> (Christian Couder's
-	message of "Tue, 3 Oct 2006 22:11:05 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S964802AbWJCU2d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Oct 2006 16:28:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964862AbWJCU2d
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Oct 2006 16:28:33 -0400
+Received: from agent.admingilde.org ([213.95.21.5]:53707 "EHLO
+	mail.admingilde.org") by vger.kernel.org with ESMTP id S964802AbWJCU2c
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 3 Oct 2006 16:28:32 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1GUqsR-0006j2-SB; Tue, 03 Oct 2006 22:28:31 +0200
+To: Jakub Narebski <jnareb@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <efu7r9$fra$1@sea.gmane.org>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28301>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
 
-> Junio C Hamano wrote:
->> Thanks.  We also need this to avoid refetching already packed
->> tags.
->
-> Yeah, I did a very quick check on the shell scripts and I obviously missed 
-> some places that need updates.
->
-> In fact, I couldn't resist to start implementing the deleted-refs/$frotz~ref 
-> stuff we talked about...
+--q8dntDJTu318bll0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-How would that help?  We need to audit the existing scripts
-since they would not look under $GIT_DIR/deleted-refs currently
-anyway.
+hoi :-)
+
+On Tue, Oct 03, 2006 at 07:50:00PM +0200, Jakub Narebski wrote:
+> Perhaps we should not add 'override' key, and test for existence
+> of 'override' to fallback on 'sub'.
+
+this is a no-op: if the config file sets override to 1 then
+we still break.
+
+Of course one say: don't do it then.
+But then we don't need the check at all.
+
+--=20
+Martin Waitz
+
+--q8dntDJTu318bll0
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFIsfvj/Eaxd/oD7IRAhtjAJ93zal1bUt5ST+B62F3RF+70irwMwCeNYqA
+TOT3meeSF7DVDkWMy65xC+w=
+=BpRq
+-----END PGP SIGNATURE-----
+
+--q8dntDJTu318bll0--
