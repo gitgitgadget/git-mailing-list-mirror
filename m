@@ -1,80 +1,49 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH] git-rebase: Add a -v option to show a diffstat of the changes upstream at the start of a rebase.
-Date: Wed, 4 Oct 2006 08:59:43 +0200
-Message-ID: <20061004065943.GT2871@admingilde.org>
-References: <45228FEB.10602@codeweavers.com> <7v4pulm3j6.fsf@assigned-by-dhcp.cox.net>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: [PATCH 0/3] gitweb: blame: print commit8 on the leading row of a commit-block
+Date: Wed, 4 Oct 2006 00:10:41 -0700 (PDT)
+Message-ID: <20061004071041.60663.qmail@web31807.mail.mud.yahoo.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="i6vqABX3nJKXLk01"
-Cc: Robert Shearman <rob@codeweavers.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 04 09:00:09 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed Oct 04 09:10:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GV0jM-0002on-N9
-	for gcvg-git@gmane.org; Wed, 04 Oct 2006 08:59:49 +0200
+	id 1GV0tx-0005rl-Gi
+	for gcvg-git@gmane.org; Wed, 04 Oct 2006 09:10:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932382AbWJDG7q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Oct 2006 02:59:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932394AbWJDG7q
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Oct 2006 02:59:46 -0400
-Received: from agent.admingilde.org ([213.95.21.5]:31710 "EHLO
-	mail.admingilde.org") by vger.kernel.org with ESMTP id S932382AbWJDG7p
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 4 Oct 2006 02:59:45 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1GV0jH-0008Gf-CB; Wed, 04 Oct 2006 08:59:43 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v4pulm3j6.fsf@assigned-by-dhcp.cox.net>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S1030453AbWJDHKm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Oct 2006 03:10:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030456AbWJDHKm
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Oct 2006 03:10:42 -0400
+Received: from web31807.mail.mud.yahoo.com ([68.142.207.70]:50621 "HELO
+	web31807.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1030453AbWJDHKl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Oct 2006 03:10:41 -0400
+Received: (qmail 60665 invoked by uid 60001); 4 Oct 2006 07:10:41 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=QCmzib+MFg5hHvGsSrddkN4ncJi6o2zVlpOZnBJyxm7dVBvroHjWoJsWC77KvcC7xa1z8dnFoPNYQejHWI7s7X1aw5bgtm5eGAoPA0q9P2OWEeArkfMmVBPfYtrjVn/a2aYlq6a8F9rsHFvYukG3zrGi30RlNRFNCKLnVLPIrnY=  ;
+Received: from [71.80.233.118] by web31807.mail.mud.yahoo.com via HTTP; Wed, 04 Oct 2006 00:10:41 PDT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28316>
 
+The following set of patches implements Junio's excellent
+idea of printing the commit-8 only on the leading row of
+a commit block, as well as implementing mouse-over title of
+the author and the date of the commit.   Thus making the output
+of git_blame2() less cluttered yet able to give more information
+should the user mouse-over the commit.
 
---i6vqABX3nJKXLk01
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The difference is that this implementations doesn't use a "stack-like"
+chunk to represent each block-per-commit, thus eliminating the concern
+of rare but present files with 100s of 1000s of lines with only an
+initial commit.
 
-hoi :)
-
-On Tue, Oct 03, 2006 at 03:35:09PM -0700, Junio C Hamano wrote:
-> Robert Shearman <rob@codeweavers.com> writes:
-> > +-v, \--verbose::
-> > +	Display a diffstat of what changed upstream since the last rebase.
-> > +
->=20
-> I initially was a bit surprised that you did not show diff
-> between onto and our HEAD (i.e. show the damages contained in
-> the topic you are rebasing that will be inflicted on upstream),
-> but I think your way of showing the upstream changes makes more
-> sense.  From the workflow point of view, this is for people who
-> rebase instead of pull, and when pulling we show what the
-> upstream did while we were looking the other way, so this
-> naturally matches that behaviour for rebase.  I would say it is
-> a good thinking.
-
-but perhaps we should use the same command line options as pull:
-default to show the diffstat and use -n to suppress it?
-
---=20
-Martin Waitz
-
---i6vqABX3nJKXLk01
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFI1vfj/Eaxd/oD7IRAkyjAKCCTetHijbgODfw38fm6jaPhsLSBwCfTrL0
-vo7H8rLuFbsF7fQ8TeAflOU=
-=TJCP
------END PGP SIGNATURE-----
-
---i6vqABX3nJKXLk01--
+     Luben
