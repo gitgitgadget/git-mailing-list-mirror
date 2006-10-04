@@ -1,71 +1,81 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Luben Tuikov <ltuikov@yahoo.com>
 Subject: Re: [PATCH] gitweb: make leftmost column of blame less cluttered.
-Date: Tue, 03 Oct 2006 19:26:05 -0700
-Message-ID: <7virj0lsua.fsf@assigned-by-dhcp.cox.net>
-References: <20061003192018.GR2871@admingilde.org>
-	<20061003194551.70537.qmail@web31809.mail.mud.yahoo.com>
+Date: Tue, 3 Oct 2006 19:48:37 -0700 (PDT)
+Message-ID: <20061004024837.4462.qmail@web31808.mail.mud.yahoo.com>
+References: <7virj0lsua.fsf@assigned-by-dhcp.cox.net>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org, Martin Waitz <tali@admingilde.org>
-X-From: git-owner@vger.kernel.org Wed Oct 04 04:27:03 2006
+X-From: git-owner@vger.kernel.org Wed Oct 04 04:48:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GUwTE-0006zv-RD
-	for gcvg-git@gmane.org; Wed, 04 Oct 2006 04:26:53 +0200
+	id 1GUwoM-0002js-Qu
+	for gcvg-git@gmane.org; Wed, 04 Oct 2006 04:48:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030719AbWJDC0J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Oct 2006 22:26:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030724AbWJDC0J
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Oct 2006 22:26:09 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:48590 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1030719AbWJDC0G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Oct 2006 22:26:06 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061004022606.JPMX26416.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 3 Oct 2006 22:26:06 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id W2Rz1V00f1kojtg0000000
-	Tue, 03 Oct 2006 22:26:00 -0400
-To: ltuikov@yahoo.com
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030451AbWJDCsj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Oct 2006 22:48:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030710AbWJDCsj
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Oct 2006 22:48:39 -0400
+Received: from web31808.mail.mud.yahoo.com ([68.142.207.71]:413 "HELO
+	web31808.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1030451AbWJDCsi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Oct 2006 22:48:38 -0400
+Received: (qmail 4464 invoked by uid 60001); 4 Oct 2006 02:48:37 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=mB8wPynE1jlernYjmXDYvWj2luDpbj8Zb0tvROy/Q97grC5AHTcTrVbKi6orQRcOTh5nvlhpoZZjuZzfzTM5w8iY1xkVrVmnEcZExL2w3vre/4UR4OMbLnyfjP+DBJamJukzLFd4iTW1u9klk+jvp6lypeKL5V87DD18A7X/rao=  ;
+Received: from [64.215.88.90] by web31808.mail.mud.yahoo.com via HTTP; Tue, 03 Oct 2006 19:48:37 PDT
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7virj0lsua.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28313>
 
-Luben Tuikov <ltuikov@yahoo.com> writes:
+--- Junio C Hamano <junkio@cox.net> wrote:
+> > I like the fact that the "data part" of blame is text, and
+> > that the commit-8 is on the left, and color-chunked.  Sometimes
+> > people simply _remember_ a number of commit-8's and thus the
+> > layout of blame is intentional, since they can look to the left
+> > and recognize a commit-8...
+> 
+> It is not only the initial commit.  A substantial rewrite and
+> new development also has the same issue.
+> 
+> I think you are also contradicting yourself by saying that
+> people would recognize a commit-8, and at the same time you do
+> not like the chunk code that makes sure you do not get too few
+> of them.  If people _do_ recognize commit-8 (I seriously doubt
+> that), then wouldn't it help to make sure you have them on every
+> couple-dozen lines so that the user would see the familiar one
+> even when scrolled?
 
->> Then you don't need to worry about repeating the commit id,
->> and perhaps it is not even needed any more?
+It is not that I don't like it.  For example if we didn't have
+the block-per-commit-coloring, then we'd make use of this, but it
+seems that the block-per-commit-coloring exists for the purpose to
+show conglomerations of same-commit lines, thus obviating the need
+to repeat it (commit-8) every so many lines.
 
-I am contradicting myself but I personally like what Pasky runs
-at http://repo.or.cz/ too, although it goes to the other extreme
-to spend more space for line-by-line annotation ;-)
+The other question is how many lines should the repeat-chunk be?
 
-> I like Junio's first patch on the subject with the only
-> objection that the "chunk" can be 100s of 1000s of lines
-> if the file is too big and there had never been any changes
-> since the initial commit.
->
-> I like the fact that the "data part" of blame is text, and
-> that the commit-8 is on the left, and color-chunked.  Sometimes
-> people simply _remember_ a number of commit-8's and thus the
-> layout of blame is intentional, since they can look to the left
-> and recognize a commit-8...
+In my case I'd like to set it to infinity, since the
+block-per-commit-coloring gives me the same information.
 
-It is not only the initial commit.  A substantial rewrite and
-new development also has the same issue.
+The other extreme case is set it to 1, thus obviating the need to
+use block-per-commit-coloring.
 
-I think you are also contradicting yourself by saying that
-people would recognize a commit-8, and at the same time you do
-not like the chunk code that makes sure you do not get too few
-of them.  If people _do_ recognize commit-8 (I seriously doubt
-that), then wouldn't it help to make sure you have them on every
-couple-dozen lines so that the user would see the familiar one
-even when scrolled?
+The middle ground as it seems to me, neither infinity nor 1, is
+to just use the block-per-commit-coloring and use your idea of printing
+the commit-8 only on the leading block row with mouse-over author
+and date info. That's an excellent idea.*
+
+    Luben
+* I've three patches which implement your excellent idea but without
+using a "stack-like" chunk, eliminating the concern of rare but present
+files with 100s of 1000s of lines with only an initial commit.  Should I
+post them?
