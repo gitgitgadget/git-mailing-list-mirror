@@ -1,65 +1,71 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: pull-fetch-param.txt
-Date: Tue, 03 Oct 2006 19:03:25 -0700
-Message-ID: <7vzmccltw2.fsf@assigned-by-dhcp.cox.net>
-References: <tkrat.4532d38d43e16a62@s5r6.in-berlin.de>
-	<7vhcymt07a.fsf@assigned-by-dhcp.cox.net>
-	<452211C2.8020402@s5r6.in-berlin.de>
-	<7vven1rfpj.fsf@assigned-by-dhcp.cox.net>
-	<45222B18.1090305@s5r6.in-berlin.de>
-	<7v64f1np8i.fsf@assigned-by-dhcp.cox.net>
-	<4522E66B.4080103@methods.co.nz>
+Subject: Re: [PATCH] gitweb: make leftmost column of blame less cluttered.
+Date: Tue, 03 Oct 2006 19:26:05 -0700
+Message-ID: <7virj0lsua.fsf@assigned-by-dhcp.cox.net>
+References: <20061003192018.GR2871@admingilde.org>
+	<20061003194551.70537.qmail@web31809.mail.mud.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Stefan Richter <stefanr@s5r6.in-berlin.de>
-X-From: git-owner@vger.kernel.org Wed Oct 04 04:07:56 2006
+Cc: git@vger.kernel.org, Martin Waitz <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Wed Oct 04 04:27:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GUw6c-0001sE-Mh
-	for gcvg-git@gmane.org; Wed, 04 Oct 2006 04:03:44 +0200
+	id 1GUwTE-0006zv-RD
+	for gcvg-git@gmane.org; Wed, 04 Oct 2006 04:26:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030520AbWJDCD1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Oct 2006 22:03:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030703AbWJDCD1
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Oct 2006 22:03:27 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:27312 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1030520AbWJDCD0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Oct 2006 22:03:26 -0400
+	id S1030719AbWJDC0J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Oct 2006 22:26:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030724AbWJDC0J
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Oct 2006 22:26:09 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:48590 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1030719AbWJDC0G (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Oct 2006 22:26:06 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao04.cox.net
+          by fed1rmmtao12.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061004020326.QPTC22409.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 3 Oct 2006 22:03:26 -0400
+          id <20061004022606.JPMX26416.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 3 Oct 2006 22:26:06 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id W23K1V00P1kojtg0000000
-	Tue, 03 Oct 2006 22:03:20 -0400
-To: Stuart Rackham <srackham@methods.co.nz>
-In-Reply-To: <4522E66B.4080103@methods.co.nz> (Stuart Rackham's message of
-	"Wed, 04 Oct 2006 11:38:35 +1300")
+	id W2Rz1V00f1kojtg0000000
+	Tue, 03 Oct 2006 22:26:00 -0400
+To: ltuikov@yahoo.com
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28312>
 
-Stuart Rackham <srackham@methods.co.nz> writes:
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
-> From the AsciiDoc User Guide
-> (http://www.methods.co.nz/asciidoc/userguide.html#X53):
+>> Then you don't need to worry about repeating the commit id,
+>> and perhaps it is not even needed any more?
+
+I am contradicting myself but I personally like what Pasky runs
+at http://repo.or.cz/ too, although it goes to the other extreme
+to spend more space for line-by-line annotation ;-)
+
+> I like Junio's first patch on the subject with the only
+> objection that the "chunk" can be 100s of 1000s of lines
+> if the file is too big and there had never been any changes
+> since the initial commit.
 >
-> If you want to disable unconstrained quotes, the new alternative
-> constrained quotes syntax and the new index entry syntax then you can
-> define the attribute asciidoc7compatible (for example by using the -a
-> asciidoc7compatible command-line option).
->
-> --
-> Stuart Rackham
+> I like the fact that the "data part" of blame is text, and
+> that the commit-8 is on the left, and color-chunked.  Sometimes
+> people simply _remember_ a number of commit-8's and thus the
+> layout of blame is intentional, since they can look to the left
+> and recognize a commit-8...
 
-Thank you for a quick reply.
+It is not only the initial commit.  A substantial rewrite and
+new development also has the same issue.
 
-Stefan, can you try it with the earlier commit to escape tilde
-reverted and see if our documentation set behaves well?
+I think you are also contradicting yourself by saying that
+people would recognize a commit-8, and at the same time you do
+not like the chunk code that makes sure you do not get too few
+of them.  If people _do_ recognize commit-8 (I seriously doubt
+that), then wouldn't it help to make sure you have them on every
+couple-dozen lines so that the user would see the familiar one
+even when scrolled?
