@@ -1,57 +1,58 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/3] gitweb: gitweb.perl: mode change 0755->0644
-Date: Wed, 04 Oct 2006 01:14:21 -0700
-Message-ID: <7vodssjy5e.fsf@assigned-by-dhcp.cox.net>
-References: <20061004071414.88341.qmail@web31812.mail.mud.yahoo.com>
-	<20061004074658.GA29964@moooo.ath.cx>
+Subject: Re: [PATCH 0/3] gitweb: blame: print commit8 on the leading row of a commit-block
+Date: Wed, 04 Oct 2006 01:18:52 -0700
+Message-ID: <7vk63gjxxv.fsf@assigned-by-dhcp.cox.net>
+References: <20061004071041.60663.qmail@web31807.mail.mud.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Luben Tuikov <ltuikov@yahoo.com>
-X-From: git-owner@vger.kernel.org Wed Oct 04 10:14:46 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 04 10:19:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GV1ta-0004ZB-OE
-	for gcvg-git@gmane.org; Wed, 04 Oct 2006 10:14:27 +0200
+	id 1GV1xx-0005f7-ME
+	for gcvg-git@gmane.org; Wed, 04 Oct 2006 10:18:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030665AbWJDIOX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Oct 2006 04:14:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030653AbWJDIOX
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Oct 2006 04:14:23 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:35063 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1030665AbWJDIOW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Oct 2006 04:14:22 -0400
+	id S1030641AbWJDISy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Oct 2006 04:18:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030666AbWJDISy
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Oct 2006 04:18:54 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:65205 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1030641AbWJDISx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Oct 2006 04:18:53 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao03.cox.net
+          by fed1rmmtao07.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061004081422.CERD2704.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 4 Oct 2006 04:14:22 -0400
+          id <20061004081853.XYGF21457.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 4 Oct 2006 04:18:53 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id W8EQ1V00A1kojtg0000000
-	Wed, 04 Oct 2006 04:14:24 -0400
-To: Matthias Lederhofer <matled@gmx.net>
-In-Reply-To: <20061004074658.GA29964@moooo.ath.cx> (Matthias Lederhofer's
-	message of "Wed, 4 Oct 2006 09:46:58 +0200")
+	id W8Jv1V00S1kojtg0000000
+	Wed, 04 Oct 2006 04:18:56 -0400
+To: Luben Tuikov <ltuikov@yahoo.com>
+In-Reply-To: <20061004071041.60663.qmail@web31807.mail.mud.yahoo.com> (Luben
+	Tuikov's message of "Wed, 4 Oct 2006 00:10:41 -0700 (PDT)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28324>
 
-Matthias Lederhofer <matled@gmx.net> writes:
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
-> Luben Tuikov <ltuikov@yahoo.com> wrote:
->> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
->> old mode 100755
-> What is the reason to do this?  gitweb.perl is a valid perl script and
-> can be executed without modification (setting environment variables
-> makes this useful).
+> The following set of patches implements Junio's excellent
+> idea of printing the commit-8 only on the leading row of
+> a commit block, as well as implementing mouse-over title of
+> the author and the date of the commit.
 
-I made an mistake to make it non-executable in "next", and Luben
-is just mimicking my previous typo.  Will fix to make it
-executable again.
+By the way, by definition any idea by me on UI is sucky, not
+excellent.
 
-Sorry about the confusion.
+I think this patch gives title= only to rows that happen to be
+at the beginning of a block, as opposed to what I placed in
+"next" which does it for the whole commit-8 column (and I did
+not have to do that for N lines because it uses rowspan to
+extend that column over multiple rows), so I suspect it makes
+"mouse-over" less useful.
