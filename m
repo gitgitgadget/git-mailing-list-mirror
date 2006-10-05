@@ -1,66 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] pack-refs: use lockfile as everybody else does.
-Date: Wed, 04 Oct 2006 23:15:48 -0700
-Message-ID: <7vodsrguej.fsf@assigned-by-dhcp.cox.net>
-References: <7v7izhrc2v.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0610041954480.3952@g5.osdl.org>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH 1/2] gitweb: blame: Print just a single new line char per table row
+Date: Wed, 4 Oct 2006 23:48:17 -0700 (PDT)
+Message-ID: <20061005064817.21552.qmail@web31804.mail.mud.yahoo.com>
+References: <7vejtnij5n.fsf@assigned-by-dhcp.cox.net>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 05 08:16:46 2006
+X-From: git-owner@vger.kernel.org Thu Oct 05 08:48:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVMX7-0007L8-Q2
-	for gcvg-git@gmane.org; Thu, 05 Oct 2006 08:16:38 +0200
+	id 1GVN1p-00045j-Dt
+	for gcvg-git@gmane.org; Thu, 05 Oct 2006 08:48:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751152AbWJEGPv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Oct 2006 02:15:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751499AbWJEGPv
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Oct 2006 02:15:51 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:27878 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751152AbWJEGPu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Oct 2006 02:15:50 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061005061549.WLWZ6235.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 5 Oct 2006 02:15:49 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id WWFr1V00T1kojtg0000000
-	Thu, 05 Oct 2006 02:15:52 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0610041954480.3952@g5.osdl.org> (Linus Torvalds's
-	message of "Wed, 4 Oct 2006 19:55:42 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751514AbWJEGsS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Oct 2006 02:48:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751515AbWJEGsS
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Oct 2006 02:48:18 -0400
+Received: from web31804.mail.mud.yahoo.com ([68.142.207.67]:39044 "HELO
+	web31804.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1751514AbWJEGsS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Oct 2006 02:48:18 -0400
+Received: (qmail 21554 invoked by uid 60001); 5 Oct 2006 06:48:17 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=Cs0HfPRJDfNiTiMarQMAj+YNbV3A8OxkHHDl0D3Py+rLH9H/G/tgTn7ywUUs16Z8tQuUmf7XG8akRBM/jpLO+iUB9lWDJeJPdAPpQSBfDYNj3HLK7RkzHZUdaPFxctjOn7ni08fMf0BwXyonCXfedB182Kb+T7P6SAoVZYxu1wQ=  ;
+Received: from [71.80.233.118] by web31804.mail.mud.yahoo.com via HTTP; Wed, 04 Oct 2006 23:48:17 PDT
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vejtnij5n.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28346>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+--- Junio C Hamano <junkio@cox.net> wrote:
+> I have to say the browser is seriously broken if whitespaces
+> between <tr> and <td>, </td> and next <td>, </td> and </tr>
+> makes a difference to its behaviour.  Aren't there a way to tell
+> the browser to cut "visually"?  E.g. "The area I want to cut is
 
-> Yes, there should be a fflush() there before the fsync.
+I'm not sure, I'm using latest Firefox.
 
-While I have your attention...  The code that follows the
-committing of packed-refs file by calling rename() to move the
-lock file to its final name prunes already packed refs, and we
-should really make sure the effect of rename() survives before
-starting to remove loose refs from the filesystem.
+> from this data column, and lines from here to there.  I do not
+> want the leftmost two columns (commit-8 and lineno)".
+> 
+> I do not mind applying this, but that is only because it does
+> not make its source any less readable.  It does make things
+> harder to debug if somebody is debugging its output by reading
+> the generated raw HTML, so it is not like there is no downside.
 
-How would one ensure the effect of rename(2) hits the disk
-platter before proceeding to do something else?  We seem to do
-sync(1) in git-repack.sh for similar reasons, and I wonder if we
-should do a sync(2) there.  I doubt it would be worth it though;
-the function can return before the actual writing is done.
+If you think that this could be a problem or affects negatively,
+please don't apply.  cut-paste-edit is a small price to pay
+as opposed to messing up the code and output.
 
-If the write-out of metainfo is ordered enough that if we rename
-the packed-refs lock file to its final destination and then we
-unlink loose refs, it might be reasonably safe to assume that
-rename(2)'s effect has already hit the disk when the effect of
-unlink(2) does, of the machine crashes in the meantime, as long
-as none of the later unlink hits the disk before rename does it
-is Ok.
+> You might want to run links (or lynx) in screen ;-).  Screen
+> supports left- (or right-, or both-sides) bounded cut which I
+> find extremely useful.
+
+Ok, I'll try that.
+
+    Luben
