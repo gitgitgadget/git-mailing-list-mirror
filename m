@@ -1,87 +1,58 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: [PATCH 1/2] gitweb: blame: Print just a single new line char per table row
-Date: Wed, 4 Oct 2006 17:59:26 -0700 (PDT)
-Message-ID: <20061005005926.57010.qmail@web31808.mail.mud.yahoo.com>
-Reply-To: ltuikov@yahoo.com
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: make leftmost column of blame less cluttered.
+Date: Wed, 04 Oct 2006 18:03:02 -0700
+Message-ID: <7v1wpnk20p.fsf@assigned-by-dhcp.cox.net>
+References: <20061004155928.57310.qmail@web31809.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="0-1237924797-1160009966=:56984"
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Thu Oct 05 03:07:10 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 05 03:08:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVHaF-0000jw-4x
-	for gcvg-git@gmane.org; Thu, 05 Oct 2006 02:59:31 +0200
+	id 1GVHdj-0001nE-Na
+	for gcvg-git@gmane.org; Thu, 05 Oct 2006 03:03:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751289AbWJEA72 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Oct 2006 20:59:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751290AbWJEA72
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Oct 2006 20:59:28 -0400
-Received: from web31808.mail.mud.yahoo.com ([68.142.207.71]:61802 "HELO
-	web31808.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1751289AbWJEA71 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Oct 2006 20:59:27 -0400
-Received: (qmail 57012 invoked by uid 60001); 5 Oct 2006 00:59:26 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=dvAZsDBL3iRolnVPb2sR2ysybu4itTKV/fnkkND/gU/gAXXjRHi8bkMfBs8/J8/Q1o2iwXhrsY0HK3Ner7P/hbPLX+Jgbi+aPBgwBLDkI25GIVHvM46662tPzg9tZv838rhluj1xiDjeQ0hVoPFe8/9NZCUDALQJuAItNUawoSc=  ;
-Received: from [64.215.88.90] by web31808.mail.mud.yahoo.com via HTTP; Wed, 04 Oct 2006 17:59:26 PDT
-To: git@vger.kernel.org
+	id S1751296AbWJEBDE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Oct 2006 21:03:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751298AbWJEBDE
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Oct 2006 21:03:04 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:30955 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1751296AbWJEBDD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Oct 2006 21:03:03 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061005010303.OWEQ18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 4 Oct 2006 21:03:03 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id WR2w1V00J1kojtg0000000
+	Wed, 04 Oct 2006 21:02:56 -0400
+To: ltuikov@yahoo.com
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28337>
 
---0-1237924797-1160009966=:56984
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 8bit
-Content-Id: 
-Content-Disposition: inline
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
-This makes cut-and-paste from blame legible, else after
-pasting it is broken into too many lines.
+> Yes, I completely understand the problem you're describing
+> here and have seen even more extreme examples of it.
 
-Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
----
- gitweb/gitweb.perl |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+I agree with your conclusion.  More than one commit-8 placed in
+a large group end up visually suggesting that they are
+separating the group into multiple pieces that have some
+meaning, which is not, because the contrast of zebra shading
+between groups is very subtle and is much weaker than commit-8
+"clickable handles".
 
---0-1237924797-1160009966=:56984
-Content-Type: text/plain; name="p1.txt"
-Content-Description: 1207600725-p1.txt
-Content-Disposition: inline; filename="p1.txt"
+I am not suggesting to make the contrast of shading stronger;
+that would make things harder to read, and readability matters
+more on that page.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index cba0840..451bf5d 100644
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2509,7 +2509,7 @@ HTML
- 			$current_color = ++$current_color % $num_colors;
- 			$print_c8 = 1;
- 		}
--		print "<tr class=\"$rev_color[$current_color]\">\n";
-+		print "<tr class=\"$rev_color[$current_color]\">";
- 		print "<td class=\"sha1\"";
- 		if ($print_c8 == 1) {
- 			print " title=\"$author, $date\"";
-@@ -2519,10 +2519,10 @@ HTML
- 			print $cgi->a({-href => href(action=>"commit", hash=>$full_rev, file_name=>$file_name)},
- 				      esc_html($rev));
- 		}
--		print "</td>\n";
-+		print "</td>";
- 		print "<td class=\"linenr\"><a id=\"l$lineno\" href=\"#l$lineno\" class=\"linenr\">" .
--		      esc_html($lineno) . "</a></td>\n";
--		print "<td class=\"pre\">" . esc_html($data) . "</td>\n";
-+		      esc_html($lineno) . "</a></td>";
-+		print "<td class=\"pre\">" . esc_html($data) . "</td>";
- 		print "</tr>\n";
- 	}
- 	print "</table>\n";
--- 
-1.4.2.3.g7d77
-
-
---0-1237924797-1160009966=:56984--
+Will revert mine from "next" (along with the mistakenly dropped
+executable bit) and replace with your patch 1 and 2.
