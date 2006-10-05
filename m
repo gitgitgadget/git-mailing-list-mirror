@@ -1,235 +1,61 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [StGIT PATCH] Command to move a patch to the top
-Date: Thu, 05 Oct 2006 23:14:28 +0200
-Message-ID: <20061005211428.17126.50031.stgit@lathund.dewire.com>
-References: <20061005211414.17126.64563.stgit@lathund.dewire.com>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Thu Oct 05 23:15:00 2006
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 6/6] gitweb: use blame --porcelain
+Date: Thu, 05 Oct 2006 14:18:36 -0700
+Message-ID: <7vlknubgwj.fsf@assigned-by-dhcp.cox.net>
+References: <7vwt7ebhe9.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Oct 05 23:19:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVaXn-0001zH-Us
-	for gcvg-git@gmane.org; Thu, 05 Oct 2006 23:14:16 +0200
+	id 1GVac5-0003JK-Ru
+	for gcvg-git@gmane.org; Thu, 05 Oct 2006 23:18:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751340AbWJEVOK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Oct 2006 17:14:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751363AbWJEVOJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Oct 2006 17:14:09 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:20584 "EHLO
-	torino.dewire.com") by vger.kernel.org with ESMTP id S1751340AbWJEVOD
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 5 Oct 2006 17:14:03 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by torino.dewire.com (Postfix) with ESMTP id C3DBD8028A6
-	for <git@vger.kernel.org>; Thu,  5 Oct 2006 23:11:06 +0200 (CEST)
-Received: from torino.dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 15161-02 for <git@vger.kernel.org>; Thu,  5 Oct 2006 23:11:06 +0200 (CEST)
-Received: from lathund.dewire.com (unknown [10.9.0.3])
-	by torino.dewire.com (Postfix) with ESMTP id 3CACB802676
-	for <git@vger.kernel.org>; Thu,  5 Oct 2006 23:11:06 +0200 (CEST)
-Received: from localhost (lathund.dewire.com [127.0.0.1])
-	by lathund.dewire.com (Postfix) with ESMTP id C56F129006
-	for <git@vger.kernel.org>; Thu,  5 Oct 2006 23:14:31 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at localhost.localdomain
-Received: from lathund.dewire.com ([127.0.0.1])
-	by localhost (lathund.dewire.com [127.0.0.1]) (amavisd-new, port 10025)
-	with LMTP id Xo0-DSohOXXG for <git@vger.kernel.org>;
-	Thu,  5 Oct 2006 23:14:28 +0200 (CEST)
-Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1])
-	by lathund.dewire.com (Postfix) with ESMTP id D46DF28F96
-	for <git@vger.kernel.org>; Thu,  5 Oct 2006 23:14:28 +0200 (CEST)
+	id S1751381AbWJEVSi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Oct 2006 17:18:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751385AbWJEVSi
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Oct 2006 17:18:38 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:33005 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751381AbWJEVSh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Oct 2006 17:18:37 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061005211836.NMCD22977.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 5 Oct 2006 17:18:36 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id WlJf1V0041kojtg0000000
+	Thu, 05 Oct 2006 17:18:39 -0400
 To: git@vger.kernel.org
-In-Reply-To: <20061005211414.17126.64563.stgit@lathund.dewire.com>
-User-Agent: StGIT/0.10
-X-Virus-Scanned: by amavisd-new at dewire.com
+In-Reply-To: <7vwt7ebhe9.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Thu, 05 Oct 2006 14:07:58 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28372>
 
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Side note.
 
+This change does not give any more information (other than the
+link to the corresponding line in the original version) than the
+current gitweb in "next", but "blame --porcelain" returns richer
+information than it used to be available, most notably the
+summary line.  It might be interesting to enhance the title pop-up
+mechanism to show them on mouse-over, but I was too lazy ;-).
 
----
+I've considered making the commit-8 link to link not to the
+commit page for the originating commit but to the corresponding
+line in the blame page for it, but opted to take over the line
+number link, which was serving far less useful purpose.  Your
+keyboard has PgUp and PgDn to let you navigate within the same
+blame output.
 
- stgit/commands/float.py |   78 +++++++++++++++++++++++++++++++++++++++++++++++
- stgit/main.py           |    3 ++
- t/t1500-float.sh        |   56 ++++++++++++++++++++++++++++++++++
- 3 files changed, 137 insertions(+), 0 deletions(-)
-
-diff --git a/stgit/commands/float.py b/stgit/commands/float.py
-new file mode 100644
-index 0000000..3e39b35
---- /dev/null
-+++ b/stgit/commands/float.py
-@@ -0,0 +1,78 @@
-+
-+__copyright__ = """
-+Copyright (C) 2006, Robin Rosenberg <robin.rosenberg@dewire.com>
-+
-+This program is free software; you can redistribute it and/or modify
-+it under the terms of the GNU General Public License version 2 as
-+published by the Free Software Foundation.
-+
-+This program is distributed in the hope that it will be useful,
-+but WITHOUT ANY WARRANTY; without even the implied warranty of
-+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+GNU General Public License for more details.
-+
-+You should have received a copy of the GNU General Public License
-+along with this program; if not, write to the Free Software
-+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-+"""
-+
-+import sys, os
-+from optparse import OptionParser, make_option
-+
-+from stgit.commands.common import *
-+from stgit.utils import *
-+from stgit import stack, git
-+
-+help = 'push a patch to the top, even if applied'
-+usage = """%prog [options]
-+
-+Push a patch to the top even if applied. The necessary
-+pop and push operations will be performed to accomplish
-+this. """
-+
-+#options = [make_option('-b', '--branch',
-+#                       help = 'use BRANCH instead of the default one')].
-+
-+options = [make_option('-a', '--all',
-+                       help = 'push all the unapplied patches',
-+                       action = 'store_true'),
-+           make_option('--keep',
-+                       help = 'keep the current working directory',
-+                       action = 'store_true'),
-+           make_option('-m', '--merged',
-+                       help = 'check for patches merged upstream',
-+                       action = 'store_true') ]
-+           
-+def func(parser, options, args):
-+    """Pops and pushed to make the named patch the topmost patch
-+    """
-+
-+    if not options.keep:
-+        check_local_changes()
-+        check_conflicts()
-+        check_head_top_equal()
-+
-+    unapplied = crt_series.get_unapplied()
-+    applied = crt_series.get_applied()
-+    all = []
-+    all.extend(unapplied)
-+    all.extend(applied)
-+
-+    patches = parse_patches(args, all)
-+
-+    topush=[]
-+    topop=[]
-+
-+    for p in patches:
-+        while p in applied:
-+            top = applied[-1]
-+            print applied
-+            if not top in patches:
-+                topush.insert(0,top)
-+            topop.append(top)
-+            x = applied.pop()
-+    for p in patches:
-+        topush.append(p)
-+
-+    pop_patches(topop, options.keep)
-+    push_patches(topush, options.merged)
-diff --git a/stgit/main.py b/stgit/main.py
-index f59bce6..e9cc6cd 100644
---- a/stgit/main.py
-+++ b/stgit/main.py
-@@ -38,6 +38,7 @@ import stgit.commands.clone
- import stgit.commands.commit
- import stgit.commands.export
- import stgit.commands.files
-+import stgit.commands.float
- import stgit.commands.fold
- import stgit.commands.goto
- import stgit.commands.id
-@@ -77,6 +78,7 @@ commands = {
-     'commit':   stgit.commands.commit,
-     'export':   stgit.commands.export,
-     'files':    stgit.commands.files,
-+    'float':    stgit.commands.float,
-     'fold':     stgit.commands.fold,
-     'goto':     stgit.commands.goto,
-     'id':       stgit.commands.id,
-@@ -113,6 +115,7 @@ stackcommands = (
-     'applied',
-     'clean',
-     'commit',
-+    'float',
-     'goto',
-     'init',
-     'pop',
-diff --git a/t/t1500-float.sh b/t/t1500-float.sh
-new file mode 100755
-index 0000000..dbcd8ce
---- /dev/null
-+++ b/t/t1500-float.sh
-@@ -0,0 +1,56 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2006 Robin Rosenberg
-+#
-+
-+test_description='Test floating a number of patches to the top of the stack
-+
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success \
-+	'Initialize the StGIT repository' \
-+	'stg init &&
-+	 stg new A -m "a" && echo A >a.txt && stg add a.txt && stg refresh &&
-+	 stg new B -m "b" && echo B >b.txt && stg add b.txt && stg refresh &&
-+	 stg new C -m "c" && echo C >c.txt && stg add c.txt && stg refresh &&
-+	 stg new D -m "d" && echo D >d.txt && stg add d.txt && stg refresh &&
-+	 stg new E -m "e" && echo E >e.txt && stg add e.txt && stg refresh &&
-+	 stg new F -m "f" && echo F >f.txt && stg add f.txt && stg refresh &&
-+	 stg new G -m "g" && echo G >g.txt && stg add g.txt && stg refresh &&
-+	 stg pop &&
-+	 test "`echo \`cat .git/patches/master/applied\``" = "A B C D E F"
-+	'
-+
-+test_expect_success \
-+	'Float A to top' \
-+	'stg float A &&
-+	 test "`echo \`cat .git/patches/master/applied\``" = "B C D E F A"
-+	'
-+test_expect_success \
-+	'Float A to top (noop)' \
-+	'stg float A &&
-+	 test "`echo \`cat .git/patches/master/applied\``" = "B C D E F A"
-+	'
-+test_expect_success \
-+	'Float B C to top' \
-+	'stg float B C &&
-+	 test "`echo \`cat .git/patches/master/applied\``" = "D E F A B C"
-+	'
-+test_expect_success \
-+	'Float E A to top' \
-+	'stg float E A &&
-+	 test "`echo \`cat .git/patches/master/applied\``" = "D F B C E A"
-+	'
-+test_expect_success \
-+	'Float E to top' \
-+	'stg float E &&
-+	 test "`echo \`cat .git/patches/master/applied\``" = "D F B C A E"
-+	'
-+test_expect_success \
-+	'Float G F to top' \
-+	'stg float G F &&
-+	 test "`echo \`cat .git/patches/master/applied\``" = "D B C A E G F"
-+	'
-+test_done
+As I noted in the log message for [3/6], I suspect that the
+curent implementation to show the original line number is
+unnecessarily inefficient.  Improvement is much encouraged.
+Again, I am too lazy to look into it right now.
