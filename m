@@ -1,67 +1,80 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] pack-refs: use lockfile as everybody else does.
-Date: Thu, 5 Oct 2006 07:51:19 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610050747590.3952@g5.osdl.org>
-References: <7v7izhrc2v.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610041954480.3952@g5.osdl.org> <7vodsrguej.fsf@assigned-by-dhcp.cox.net>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: [PATCH] gitweb: Do not print "log" and "shortlog" redundantly in commit view
+Date: Thu, 5 Oct 2006 12:22:57 -0700 (PDT)
+Message-ID: <20061005192257.50209.qmail@web31809.mail.mud.yahoo.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 05 16:55:58 2006
+Content-Type: multipart/mixed; boundary="0-2063115975-1160076177=:49087"
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Thu Oct 05 21:23:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVUZN-0001ny-KW
-	for gcvg-git@gmane.org; Thu, 05 Oct 2006 16:51:30 +0200
+	id 1GVYoA-0002Ps-9b
+	for gcvg-git@gmane.org; Thu, 05 Oct 2006 21:23:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751261AbWJEOvZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Oct 2006 10:51:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbWJEOvZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Oct 2006 10:51:25 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:10634 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751261AbWJEOvY (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Oct 2006 10:51:24 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k95EpJaX024464
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 5 Oct 2006 07:51:20 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k95EpJCW021618;
-	Thu, 5 Oct 2006 07:51:19 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vodsrguej.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-2.459 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750847AbWJETW7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Oct 2006 15:22:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750879AbWJETW7
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Oct 2006 15:22:59 -0400
+Received: from web31809.mail.mud.yahoo.com ([68.142.207.72]:337 "HELO
+	web31809.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1750847AbWJETW6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Oct 2006 15:22:58 -0400
+Received: (qmail 50211 invoked by uid 60001); 5 Oct 2006 19:22:57 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=PZ2ozG23MFXqRJhdtVNY9tc1/qCgGOkJ2FX6cve/kaa3ApiwFfsW1Tm3XqdX97XX1qEZPsJagj3GoqEgYQmAGkMCTcntc6fdXLxAeG4DLeF+ezxfsATa6PgKeTlLEoV7dVCZbtv2CAwMOl9NA2CxVPBc0BjDaqD5DPuPARANr4Q=  ;
+Received: from [64.215.88.90] by web31809.mail.mud.yahoo.com via HTTP; Thu, 05 Oct 2006 12:22:57 PDT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28360>
+
+--0-2063115975-1160076177=:49087
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 8bit
+Content-Id: 
+Content-Disposition: inline
+
+Do not print "log" and "shortlog" redundantly in commit
+view.  This is passed into the $extra argument of
+git_print_page_nav from git_commit, but git_print_page_nav
+prints "log" and "shortlog" already with the same head.
+
+Noticed by Junio.
+
+Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
+---
+ gitweb/gitweb.perl |    5 -----
+ 1 files changed, 0 insertions(+), 5 deletions(-)
+
+--0-2063115975-1160076177=:49087
+Content-Type: text/plain; name="p1.txt"
+Content-Description: 1207600725-p1.txt
+Content-Disposition: inline; filename="p1.txt"
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index bfd1405..65f1d82 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3014,11 +3014,6 @@ sub git_commit {
+ 			$cgi->a({-href => href(action=>"blame", hash_parent=>$parent, file_name=>$file_name)},
+ 			        "blame");
+ 	}
+-	if (defined $co{'parent'}) {
+-		push @views_nav,
+-			$cgi->a({-href => href(action=>"shortlog", hash=>$hash)}, "shortlog"),
+-			$cgi->a({-href => href(action=>"log", hash=>$hash)}, "log");
+-	}
+ 	git_header_html(undef, $expires);
+ 	git_print_page_nav('commit', defined $co{'parent'} ? '' : 'commitdiff',
+ 	                   $hash, $co{'tree'}, $hash,
+-- 
+1.4.2.3.g2e575
 
 
-
-On Wed, 4 Oct 2006, Junio C Hamano wrote:
-> 
-> How would one ensure the effect of rename(2) hits the disk
-> platter before proceeding to do something else?  We seem to do
-> sync(1) in git-repack.sh for similar reasons, and I wonder if we
-> should do a sync(2) there.  I doubt it would be worth it though;
-> the function can return before the actual writing is done.
-
-sync() is supposed to wait until the data is on the disk, anything else is 
-likely to be a bad implementation (even if POSIX may not _guarantee_ it).
-
-Also, most filesystems (for various reasons, not the least of which is 
-"speed of fsck") will journal metadata, but not file contents. Which means 
-that if a crash happens and one of the loose refs has already been 
-removed, then (thanks to journaling) that means that on most filesystems 
-the rename would already have been guaranteed to hit the disk - even 
-regardless of any sync().
-
-So in practice, it's much more important to guarantee the file contents 
-(the fsync) part, because the OS already tends to guarantee metadata 
-ordering.
-
-			Linus
+--0-2063115975-1160076177=:49087--
