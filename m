@@ -1,58 +1,48 @@
 From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] gitweb: tree view: eliminate redundant "blob"
-Date: Wed, 4 Oct 2006 17:15:23 -0700 (PDT)
-Message-ID: <20061005001523.72654.qmail@web31806.mail.mud.yahoo.com>
-References: <7vzmcdpwso.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH 0/2] gitweb: blame: make cut-and-paste legible
+Date: Wed, 4 Oct 2006 17:57:47 -0700 (PDT)
+Message-ID: <20061005005747.61529.qmail@web31811.mail.mud.yahoo.com>
 Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 05 02:15:32 2006
+X-From: git-owner@vger.kernel.org Thu Oct 05 03:06:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVGtd-0007aw-H5
-	for gcvg-git@gmane.org; Thu, 05 Oct 2006 02:15:30 +0200
+	id 1GVHYd-0000Ab-Ls
+	for gcvg-git@gmane.org; Thu, 05 Oct 2006 02:57:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751247AbWJEAPZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Oct 2006 20:15:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751253AbWJEAPZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Oct 2006 20:15:25 -0400
-Received: from web31806.mail.mud.yahoo.com ([68.142.207.69]:3946 "HELO
-	web31806.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1751247AbWJEAPY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Oct 2006 20:15:24 -0400
-Received: (qmail 72656 invoked by uid 60001); 5 Oct 2006 00:15:23 -0000
+	id S1751283AbWJEA5t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Oct 2006 20:57:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751287AbWJEA5t
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Oct 2006 20:57:49 -0400
+Received: from web31811.mail.mud.yahoo.com ([68.142.207.74]:20877 "HELO
+	web31811.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1751283AbWJEA5r (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Oct 2006 20:57:47 -0400
+Received: (qmail 61531 invoked by uid 60001); 5 Oct 2006 00:57:47 -0000
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
   s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=dmTFgKDnbqIq8PTTaKcgVP20n1WvKD+heTyud43EKv6BIqKX7S0VQvChL3bI4JI/I6KKAT6FiV9NFAzm1N14Kuw8Bj2OqSSoqrn90EWFC0OtTqEcZTo6vrN/WCIPqBy5BLwsJh66JN1dXAEqT4nFd9AW0JKrjfAtfKsU2IXmUaM=  ;
-Received: from [64.215.88.90] by web31806.mail.mud.yahoo.com via HTTP; Wed, 04 Oct 2006 17:15:23 PDT
-To: Junio C Hamano <junkio@cox.net>, Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <7vzmcdpwso.fsf@assigned-by-dhcp.cox.net>
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=YmelzBDG7sxQgYgKPeNSmDKNcEsADz3HjGjmaZtJoVtN0ixoE/ud4L0nkldzzFK1hJs7i/Q2WQGXI/52cgcpcsqajWQulVikpX7Mq2hIx66BBOsn0JgZotb+JqtY8y5luw7mdHYQYGpgwXtiTu4Ei7SjKBMUycuePCsNQP4O05Q=  ;
+Received: from [64.215.88.90] by web31811.mail.mud.yahoo.com via HTTP; Wed, 04 Oct 2006 17:57:47 PDT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28335>
 
---- Junio C Hamano <junkio@cox.net> wrote:
-> BTW,
-> 
->  - why do we have shortlog and log twice in the top navigation
->    bar in commit view (a=commit)?
+The following set of patches makes cut-and-paste from blame
+legible in the destination buffer.  E.g.:
 
-It appears to be in the $extra argument to git_print_page_nav()
-from git_commit() from cae1862a, lines 3033-3037.
+cae1862a	3033		if (defined $co{'parent'}) {
+        	3034			push @views_nav,
+        	3035				$cgi->a({-href => href(action=>"shortlog", hash=>$hash)}, "shortlog"),
+        	3036				$cgi->a({-href => href(action=>"log", hash=>$hash)}, "log");
+        	3037		}
+
+It also adds "title" to all rows of data.
 
     Luben
-
-
-> 
->  - sometimes I'd like to view my tags sorted by name not by
->    age.  Maybe we could add <sort-by> control on the age and
->    name columns for git_tags_body()?
-> 
-> 
-> 
