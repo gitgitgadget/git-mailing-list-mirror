@@ -1,70 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: perhaps time to remove git_blame from gitweb, and git-annotate?
-Date: Thu, 05 Oct 2006 01:13:15 -0700
-Message-ID: <7vu02jfaec.fsf_-_@assigned-by-dhcp.cox.net>
-References: <7vejtnij5n.fsf@assigned-by-dhcp.cox.net>
-	<20061005064817.21552.qmail@web31804.mail.mud.yahoo.com>
+From: Franck Bui-Huu <vagabon.xyz@gmail.com>
+Subject: [PATCH] Add git-upload-archive to the main git man page
+Date: Thu, 05 Oct 2006 10:42:16 +0200
+Message-ID: <4524C568.2050507@innova-card.com>
+Reply-To: Franck <vagabon.xyz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Luben Tuikov <ltuikov@yahoo.com>, Petr Baudis <pasky@suse.cz>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Ryan Anderson <ryan@michonline.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Martin Langhoff <martin@catalyst.net.nz>,
-	Martyn Smith <martyn@catalyst.net.nz>,
-	Fredrik Kuivinen <freku045@student.liu.se>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Thu Oct 05 10:14:42 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 05 10:41:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVOM8-0004Kt-U1
-	for gcvg-git@gmane.org; Thu, 05 Oct 2006 10:13:25 +0200
+	id 1GVOn8-00027s-53
+	for gcvg-git@gmane.org; Thu, 05 Oct 2006 10:41:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751209AbWJEINU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Oct 2006 04:13:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751220AbWJEINU
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Oct 2006 04:13:20 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:425 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1751209AbWJEINR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Oct 2006 04:13:17 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061005081316.EIGJ13992.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 5 Oct 2006 04:13:16 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id WYDJ1V00N1kojtg0000000
-	Thu, 05 Oct 2006 04:13:19 -0400
-To: git@vger.kernel.org
-In-Reply-To: <20061005064817.21552.qmail@web31804.mail.mud.yahoo.com> (Luben
-	Tuikov's message of "Wed, 4 Oct 2006 23:48:17 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751343AbWJEIlP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Oct 2006 04:41:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751344AbWJEIlP
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Oct 2006 04:41:15 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:36244 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751343AbWJEIlO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Oct 2006 04:41:14 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so723321nfa
+        for <git@vger.kernel.org>; Thu, 05 Oct 2006 01:41:12 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:reply-to:user-agent:mime-version:to:cc:subject:content-type:content-transfer-encoding:from;
+        b=pi7nZyBUuKuX6igXuAHs+t+NrrQ31JnMFl5h+iN2q5Q8ylBCQzTpo1UlzCX3yeFqkikG3RYKmJzfvh3o2t51bkWmKyiuPklcizIzkIhGRapl4cKJQdU4SLDaVR/jj5Vmf84vz2MmzsyhTT15aJFe8t2PIpOL0xkYPg4jdLkY6HI=
+Received: by 10.49.75.2 with SMTP id c2mr3566672nfl;
+        Thu, 05 Oct 2006 01:41:12 -0700 (PDT)
+Received: from ?192.168.0.24? ( [81.252.61.1])
+        by mx.google.com with ESMTP id p72sm3385576nfc.2006.10.05.01.41.12;
+        Thu, 05 Oct 2006 01:41:12 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.4 (X11/20060614)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28348>
 
-It's been a while since we lost git_blame from %actions list.  I
-am wondering maybe it's time to remove it, after 1.4.3 happens.
+From: Franck Bui-Huu <fbuihuu@gmail.com>
 
-While I was looking at it, I noticed that it would make
-git-cvsserver the last in-tree user of git-annotate.  As I
-understand it, "git-blame -c" should produce compatible output
-to the command, so it might also be a good time to consider
-removal of git-annotate as well while updating git-cvsserver to
-use git-blame instead of it.
+Signed-off-by: Franck Bui-Huu <fbuihuu@gmail.com>
+---
+ Documentation/git.txt |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-Do people have reason to favor annotate over blame?  To keep
-existing people's scripts working I think we should add a small
-amount of code to blame.c to default to compatibility mode when
-the command is called as git-annotate at least for a while, but
-other than that I do not see much issue against scheduling for
-annotate's removal.
-
-I am not going to do anything about this right now (the "master"
-branch is in freeze-and-stabilize phase), but if people have
-issues I overlooked, raise hands now please?
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 2135b65..3af6fc6 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -243,6 +243,9 @@ gitlink:git-update-server-info[1]::
+ 	Updates auxiliary information on a dumb server to help
+ 	clients discover references and packs on it.
+ 
++gitlink:git-upload-archive[1]::
++	Invoked by 'git-archive' to send a generated archive.
++
+ gitlink:git-upload-pack[1]::
+ 	Invoked by 'git-fetch-pack' to push
+ 	what are asked for.
+-- 
+1.4.2.3
