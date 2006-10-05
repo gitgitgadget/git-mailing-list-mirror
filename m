@@ -1,105 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-send-email w/ headers
-Date: Thu, 05 Oct 2006 16:34:25 -0700
-Message-ID: <7viriy9w1q.fsf@assigned-by-dhcp.cox.net>
-References: <200610041250.50272.len.brown@intel.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [RFC][PATCH] gitweb: Make the Git logo link target to point to the homepage
+Date: Fri, 6 Oct 2006 01:57:19 +0200
+Message-ID: <20061005235719.GM20017@pasky.or.cz>
+References: <20060919212725.GA13132@pasky.or.cz> <20060923125746.GJ8259@pasky.or.cz> <7virjes7dq.fsf@assigned-by-dhcp.cox.net> <20060923194643.GN13132@pasky.or.cz> <20061005204752.GL20017@pasky.or.cz> <7vhcyibgon.fsf@assigned-by-dhcp.cox.net> <7vbqoqbg5p.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 06 01:34:52 2006
+X-From: git-owner@vger.kernel.org Fri Oct 06 01:57:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVcjc-0003rE-3X
-	for gcvg-git@gmane.org; Fri, 06 Oct 2006 01:34:36 +0200
+	id 1GVd5h-0008EX-96
+	for gcvg-git@gmane.org; Fri, 06 Oct 2006 01:57:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932429AbWJEXe1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Oct 2006 19:34:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932431AbWJEXe1
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Oct 2006 19:34:27 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:48570 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S932429AbWJEXe0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Oct 2006 19:34:26 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061005233426.ZDQE21457.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 5 Oct 2006 19:34:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id WnaU1V00e1kojtg0000000
-	Thu, 05 Oct 2006 19:34:29 -0400
-To: Len Brown <lenb@kernel.org>
-In-Reply-To: <200610041250.50272.len.brown@intel.com> (Len Brown's message of
-	"Wed, 4 Oct 2006 12:50:50 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932442AbWJEX5W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Oct 2006 19:57:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932444AbWJEX5W
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Oct 2006 19:57:22 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:60315 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932442AbWJEX5V (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Oct 2006 19:57:21 -0400
+Received: (qmail 14584 invoked by uid 2001); 6 Oct 2006 01:57:19 +0200
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vbqoqbg5p.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28377>
 
-Len Brown <len.brown@intel.com> writes:
+Dear diary, on Thu, Oct 05, 2006 at 11:34:42PM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> Junio C Hamano <junkio@cox.net> writes:
+> 
+> > Petr Baudis <pasky@suse.cz> writes:
+> >
+> >>> > > Ping?  This is the only gitweb patch still in my stg stack. I guess
+> >>> > > noone really cares strongly either way since there were no comments.
+> >>> > 
+> >>> > I did not care either way, but I did not like either of these
+> >>> > hardcoded strings in the code, and felt that if we are touching
+> >>> > that part of the code we also should be making real improvement
+> >>> > at the same time ;-).  
+> >>> > 
+> >>> > Doing something like this would let us update it easier, and 
+> >>> > let people override with GITWEB_CONFIG if they want to.
+> >>> 
+> >>> Reasonable.
+> >>> 
+> >>> Acked-by: Petr Baudis <pasky@suse.cz>
+> >>
+> >> So, what happenned to this patch?
+> >
+> > Did anybody send in an applicable patch?
+> 
+> Ah, I found it; you do not have to re-send it.  But do you still
+> want it?
 
-> git-send-email seems to strip out my custom headers.
+Yes. :-) (I wouldn't prod about it otherwise.)
 
-It seems to not care about anything but a selected few.
-
-Could you give this a try, please?
-
--- >8 --
-git-send-email: do not drop custom headers the user prepared
-
-The command picked up only Subject, CC, and From headers in the
-incoming mbox text.  Sending out patches prepared by
-git-format-patch with user's custom headers was impossible with
-that.
-
-Just keep the ones it does not need to look at and add them to
-the header of the message when sending it out.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 4a20310..77e4557 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -83,7 +83,7 @@ # Constants (essentially)
- my $compose_filename = ".msg.$$";
- 
- # Variables we fill in automatically, or via prompting:
--my (@to,@cc,@initial_cc,@bcclist,
-+my (@to,@cc,@initial_cc,@bcclist,@xh,
- 	$initial_reply_to,$initial_subject,@files,$from,$compose,$time);
- 
- # Behavior modification variables
-@@ -422,6 +422,9 @@ X-Mailer: git-send-email $gitversion
- 		$header .= "In-Reply-To: $reply_to\n";
- 		$header .= "References: $references\n";
- 	}
-+	if (@xh) {
-+		$header .= join("\n", @xh);
-+	}
- 
- 	if ($smtp_server =~ m#^/#) {
- 		my $pid = open my $sm, '|-';
-@@ -472,6 +475,7 @@ foreach my $t (@files) {
- 
- 	my $author_not_sender = undef;
- 	@cc = @initial_cc;
-+	@xh = ();
- 	my $found_mbox = 0;
- 	my $header_done = 0;
- 	$message = "";
-@@ -495,6 +499,9 @@ foreach my $t (@files) {
- 						$2, $_) unless $quiet;
- 					push @cc, $2;
- 				}
-+				elsif (/^[-A-Za-z]+:\s+\S/) {
-+					push @xh, $_;
-+				}
- 
- 			} else {
- 				# In the traditional
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
