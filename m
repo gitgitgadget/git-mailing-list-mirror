@@ -1,64 +1,53 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/2] gitweb: blame: Print just a single new line char per table row
-Date: Wed, 04 Oct 2006 19:35:48 -0700
-Message-ID: <7vejtnij5n.fsf@assigned-by-dhcp.cox.net>
-References: <20061005005926.57010.qmail@web31808.mail.mud.yahoo.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] pack-refs: use lockfile as everybody else does.
+Date: Wed, 4 Oct 2006 19:55:42 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610041954480.3952@g5.osdl.org>
+References: <7v7izhrc2v.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 05 04:35:59 2006
+X-From: git-owner@vger.kernel.org Thu Oct 05 04:55:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVJ5U-0003PU-PK
-	for gcvg-git@gmane.org; Thu, 05 Oct 2006 04:35:53 +0200
+	id 1GVJOr-0006lV-T6
+	for gcvg-git@gmane.org; Thu, 05 Oct 2006 04:55:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751334AbWJECfu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Oct 2006 22:35:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751335AbWJECfu
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Oct 2006 22:35:50 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:27799 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1751334AbWJECft (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Oct 2006 22:35:49 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061005023548.ISCA21457.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 4 Oct 2006 22:35:48 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id WSbh1V00r1kojtg0000000
-	Wed, 04 Oct 2006 22:35:42 -0400
-To: Luben Tuikov <ltuikov@yahoo.com>
-In-Reply-To: <20061005005926.57010.qmail@web31808.mail.mud.yahoo.com> (Luben
-	Tuikov's message of "Wed, 4 Oct 2006 17:59:26 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751333AbWJECzu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Oct 2006 22:55:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751348AbWJECzu
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Oct 2006 22:55:50 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:47232 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751333AbWJECzt (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Oct 2006 22:55:49 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k952thaX018849
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 4 Oct 2006 19:55:44 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k952tgj2003060;
+	Wed, 4 Oct 2006 19:55:42 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v7izhrc2v.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-2.459 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28344>
 
-Luben Tuikov <ltuikov@yahoo.com> writes:
 
-> This makes cut-and-paste from blame legible, else after
-> pasting it is broken into too many lines.
->
-> Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
 
-I have to say the browser is seriously broken if whitespaces
-between <tr> and <td>, </td> and next <td>, </td> and </tr>
-makes a difference to its behaviour.  Aren't there a way to tell
-the browser to cut "visually"?  E.g. "The area I want to cut is
-from this data column, and lines from here to there.  I do not
-want the leftmost two columns (commit-8 and lineno)".
+On Tue, 3 Oct 2006, Junio C Hamano wrote:
+> 
+>  Also I am not sure about the "fsync(fd); fclose(refs_file)"
+>  sequence I did not touch with this patch.  Doesn't stdio still
+>  have stuff buffered when you run fsync()?  Would adding fflush()
+>  in between help?
 
-I do not mind applying this, but that is only because it does
-not make its source any less readable.  It does make things
-harder to debug if somebody is debugging its output by reading
-the generated raw HTML, so it is not like there is no downside.
+Yes, there should be a fflush() there before the fsync.
 
-You might want to run links (or lynx) in screen ;-).  Screen
-supports left- (or right-, or both-sides) bounded cut which I
-find extremely useful.
+		Linus
