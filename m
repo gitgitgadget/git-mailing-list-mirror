@@ -1,108 +1,61 @@
-From: takis@lumumba.uhasselt.be (Panagiotis Issaris)
-Subject: Problem cloning packed-and-pruned http repository
-Date: Fri, 6 Oct 2006 23:26:16 +0200
-Message-ID: <20061006212616.GA5175@lumumba.uhasselt.be>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH] gitweb: Do not print "log" and "shortlog" redundantly in commit view
+Date: Fri, 6 Oct 2006 15:16:03 -0700 (PDT)
+Message-ID: <20061006221603.50873.qmail@web31815.mail.mud.yahoo.com>
+References: <eg51fi$7rs$2@sea.gmane.org>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Oct 06 23:50:19 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Sat Oct 07 00:16:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVxaA-000430-NE
-	for gcvg-git@gmane.org; Fri, 06 Oct 2006 23:50:15 +0200
+	id 1GVxzJ-0000qC-6g
+	for gcvg-git@gmane.org; Sat, 07 Oct 2006 00:16:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422988AbWJFVuI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Oct 2006 17:50:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422987AbWJFVuI
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 17:50:08 -0400
-Received: from student.uhasselt.be ([193.190.2.1]:2060 "EHLO
-	student.uhasselt.be") by vger.kernel.org with ESMTP
-	id S1422989AbWJFVuF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Oct 2006 17:50:05 -0400
-Received: from localhost (datastorage.uhasselt.be [193.190.2.17])
-	by student.uhasselt.be (Postfix) with ESMTP id EFDCB1332
-	for <git@vger.kernel.org>; Fri,  6 Oct 2006 23:50:03 +0200 (CEST)
-X-Virus-Scanned: by Amavisd antivirus & antispam cluster at uhasselt.be
-Received: from lumumba.uhasselt.be (lumumba.uhasselt.be [193.190.9.252])
-	by student.uhasselt.be (Postfix) with ESMTP id 1253D3B84
-	for <git@vger.kernel.org>; Fri,  6 Oct 2006 23:26:17 +0200 (CEST)
-Received: by lumumba.uhasselt.be (Postfix, from userid 1000)
-	id D4703EDB4A; Fri,  6 Oct 2006 23:26:16 +0200 (CEST)
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6+20040907i
+	id S1422993AbWJFWQH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Oct 2006 18:16:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422994AbWJFWQH
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 18:16:07 -0400
+Received: from web31815.mail.mud.yahoo.com ([68.142.206.168]:51569 "HELO
+	web31815.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1422993AbWJFWQE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Oct 2006 18:16:04 -0400
+Received: (qmail 50875 invoked by uid 60001); 6 Oct 2006 22:16:03 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=vIsSEaP0fm7sQb5pxt0TMqh/40cV+6tJbdPgoEKe01hArw91MAL7Ala9SjWoTGSvloHtbsXjH0Qgdf63ME8NwDIi78lMAlF5snMVoyGY9d+ph/bG4GEczGwqZgs31I5oXKaZquGj9RFvP2oUzIu6qV2yrOhaofE0LaJSyZd35LU=  ;
+Received: from [64.215.88.90] by web31815.mail.mud.yahoo.com via HTTP; Fri, 06 Oct 2006 15:16:03 PDT
+To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+In-Reply-To: <eg51fi$7rs$2@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28447>
 
-Hi
+--- Jakub Narebski <jnareb@gmail.com> wrote:
+> Gaah, the whole cae1862a3b55b487731e9857f2213ac59d5646d commit
+> "gitweb: More per-view navigation bar links" is somewhat broken.
+> Up to this point we used top navigation bar for commit (hash base)
+> or whole project related links, while bottom part of navigation
+> bar for "formats" i.e. links related to current view (passing hash)
+> or for pagination.
+> 
+> So while "snapshot" link has it's place in top navigation bar
+> (but by modyfying git_print_page_nav subroutine, not by adding it
+> by hand), "history" for example IMHO doesn't; history link should be
+> present in the bottom part of navigation bar. Perhaps we could
+> reuse git_print_page_nav for formats, for example blob wiew would have
+>         blob | _blame_ | _history_ | _raw_ | _HEAD_
+> while tree view would have
+>         tree | _snapshot_ | _history_ | _HEAD_
+> (where _text_ indices link).  Perhaps _snapshot_ in tree view
+> shouldn't be repeated, although top one might mean snapshot of commitish,
+> bottom one snapshot of tree.
 
-I've been having trouble setting up a public repository using GIT. After
-I have pushed my repository to a directory within ~/public_html, I can
-clone it. But the repository is _big_ (261M).
+Only a single one: of committish please.
 
-So, I use "git-repack" on it and a "git-prune-packed". This makes it
-nicely fit in 14MiB. If I try to clone this pruned/packed repository
-again both cg-clone hangs on it (as does git-clone).
-
-Here's two outputs demonstrating this. One repository was a "cp -lr"
-clone [1] of the other, and one was packed/pruned, the other wasn't:
-takis@poseidon:/tmp$ cg-clone http://lumumba.uhasselt.be/takis/git/ffmpeg-h264.git
-defaulting to local storage area
-Fetching head...
-Fetching objects...
-progress: 38 objects, 159434 bytes
-cg-clone: interrupted
-takis@poseidon:/tmp$ cg-clone http://lumumba.uhasselt.be/takis/git/ffmpeg-h264-test.git
-defaulting to local storage area
-Fetching head...
-Fetching objects...
-Getting alternates list for http://lumumba.uhasselt.be/takis/git/ffmpeg-h264-test.git/
-Getting pack list for http://lumumba.uhasselt.be/takis/git/ffmpeg-h264-test.git/
-progress: 0 objects, 0 bytes
-cg-clone: interrupted
-
-So, I tried tracing it, to see what was going on:
-takis@poseidon:/tmp/a$ ps x|grep git
-18386 pts/9    S+     0:00 /bin/sh /home/takis/bin/git-clone http://lumumba.uhasselt.be/takis/git/ffmpeg-h264-test.git
-18400 pts/9    S+     0:00 git-http-fetch -v -a -w heads/master heads/master http://lumumba.uhasselt.be/takis/git/ffmpeg-h264-test.git/
-18416 pts/10   S+     0:00 grep git
-
-takis@poseidon:/tmp/a$ strace -f -p 18400
-Process 18400 attached - interrupt to quit
-select(0, [], [], [], {0, 48000})       = 0 (Timeout)
-poll([{fd=4, events=POLLIN}], 1, 0)     = 0
-gettimeofday({1160169868, 454932}, NULL) = 0
-gettimeofday({1160169868, 454989}, NULL) = 0
-select(0, [], [], [], {0, 50000})       = 0 (Timeout)
-poll([{fd=4, events=POLLIN}], 1, 0)     = 0
-gettimeofday({1160169868, 506226}, NULL) = 0
-gettimeofday({1160169868, 506277}, NULL) = 0
-select(0, [], [], [], {0, 50000})       = 0 (Timeout)
-poll([{fd=4, events=POLLIN}], 1, 0)     = 0
-gettimeofday({1160169868, 558245}, NULL) = 0
-gettimeofday({1160169868, 558296}, NULL) = 0
-select(0, [], [], [], {0, 50000})       = 0 (Timeout)
-poll([{fd=4, events=POLLIN}], 1, 0)     = 0
-gettimeofday({1160169868, 610227}, NULL) = 0
-gettimeofday({1160169868, 610277}, NULL) = 0
-select(0, [], [], [], {0, 50000})       = 0 (Timeout)
-...
-
-And this keeps going on... so I can't see any data getting in :-(
-
-Any hints what I might be doing wrong?
-
-Thanks in advance for any replies! :)
-
-With friendly regards,
-Takis
-
-[1] I am aware of "git-clone -l -s" but wanted to make fully
-independent copy and wasn't sure about any links between them if only
-using "-l".
--- 
-OpenPGP key: http://lumumba.uhasselt.be/takis/takis_public_key.txt
-fingerprint: 6571 13A3 33D9 3726 F728  AA98 F643 B12E ECF3 E029
+    Luben
