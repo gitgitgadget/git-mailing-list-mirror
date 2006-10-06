@@ -1,61 +1,73 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] gitweb: Do not print "log" and "shortlog" redundantly in commit view
-Date: Fri, 6 Oct 2006 15:16:03 -0700 (PDT)
-Message-ID: <20061006221603.50873.qmail@web31815.mail.mud.yahoo.com>
-References: <eg51fi$7rs$2@sea.gmane.org>
-Reply-To: ltuikov@yahoo.com
+From: takis@lumumba.uhasselt.be (Panagiotis Issaris)
+Subject: Re: Problem cloning packed-and-pruned http repository
+Date: Sat, 7 Oct 2006 00:05:42 +0200
+Message-ID: <20061006220542.GA5890@lumumba.uhasselt.be>
+References: <20061006212616.GA5175@lumumba.uhasselt.be>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Sat Oct 07 00:16:34 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sat Oct 07 00:28:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVxzJ-0000qC-6g
-	for gcvg-git@gmane.org; Sat, 07 Oct 2006 00:16:13 +0200
+	id 1GVyBM-0003Jt-Jq
+	for gcvg-git@gmane.org; Sat, 07 Oct 2006 00:28:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422993AbWJFWQH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Oct 2006 18:16:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422994AbWJFWQH
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 18:16:07 -0400
-Received: from web31815.mail.mud.yahoo.com ([68.142.206.168]:51569 "HELO
-	web31815.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1422993AbWJFWQE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Oct 2006 18:16:04 -0400
-Received: (qmail 50875 invoked by uid 60001); 6 Oct 2006 22:16:03 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=vIsSEaP0fm7sQb5pxt0TMqh/40cV+6tJbdPgoEKe01hArw91MAL7Ala9SjWoTGSvloHtbsXjH0Qgdf63ME8NwDIi78lMAlF5snMVoyGY9d+ph/bG4GEczGwqZgs31I5oXKaZquGj9RFvP2oUzIu6qV2yrOhaofE0LaJSyZd35LU=  ;
-Received: from [64.215.88.90] by web31815.mail.mud.yahoo.com via HTTP; Fri, 06 Oct 2006 15:16:03 PDT
-To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-In-Reply-To: <eg51fi$7rs$2@sea.gmane.org>
+	id S1422704AbWJFW2i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Oct 2006 18:28:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932653AbWJFW2h
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 18:28:37 -0400
+Received: from student.uhasselt.be ([193.190.2.1]:30479 "EHLO
+	student.uhasselt.be") by vger.kernel.org with ESMTP id S932652AbWJFW2h
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 6 Oct 2006 18:28:37 -0400
+Received: from localhost (datastorage.uhasselt.be [193.190.2.17])
+	by student.uhasselt.be (Postfix) with ESMTP id 68F23318A
+	for <git@vger.kernel.org>; Sat,  7 Oct 2006 00:28:36 +0200 (CEST)
+X-Virus-Scanned: by Amavisd antivirus & antispam cluster at uhasselt.be
+Received: from lumumba.uhasselt.be (lumumba.uhasselt.be [193.190.9.252])
+	by student.uhasselt.be (Postfix) with ESMTP id B4E0C133F
+	for <git@vger.kernel.org>; Sat,  7 Oct 2006 00:05:42 +0200 (CEST)
+Received: by lumumba.uhasselt.be (Postfix, from userid 1000)
+	id 52A57EDB4F; Sat,  7 Oct 2006 00:05:42 +0200 (CEST)
+To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20061006212616.GA5175@lumumba.uhasselt.be>
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28448>
 
---- Jakub Narebski <jnareb@gmail.com> wrote:
-> Gaah, the whole cae1862a3b55b487731e9857f2213ac59d5646d commit
-> "gitweb: More per-view navigation bar links" is somewhat broken.
-> Up to this point we used top navigation bar for commit (hash base)
-> or whole project related links, while bottom part of navigation
-> bar for "formats" i.e. links related to current view (passing hash)
-> or for pagination.
+Hi
+
+On Fri, Oct 06, 2006 at 11:26:16PM +0200 or thereabouts,  wrote:
+> [...]
+> I've been having trouble setting up a public repository using GIT. After
+> I have pushed my repository to a directory within ~/public_html, I can
+> clone it. But the repository is _big_ (261M).
 > 
-> So while "snapshot" link has it's place in top navigation bar
-> (but by modyfying git_print_page_nav subroutine, not by adding it
-> by hand), "history" for example IMHO doesn't; history link should be
-> present in the bottom part of navigation bar. Perhaps we could
-> reuse git_print_page_nav for formats, for example blob wiew would have
->         blob | _blame_ | _history_ | _raw_ | _HEAD_
-> while tree view would have
->         tree | _snapshot_ | _history_ | _HEAD_
-> (where _text_ indices link).  Perhaps _snapshot_ in tree view
-> shouldn't be repeated, although top one might mean snapshot of commitish,
-> bottom one snapshot of tree.
+> So, I use "git-repack" on it and a "git-prune-packed". This makes it
+> nicely fit in 14MiB. If I try to clone this pruned/packed repository
+> again both cg-clone hangs on it (as does git-clone).
+> [...] 
+> takis@poseidon:/tmp$ cg-clone http://lumumba.uhasselt.be/takis/git/ffmpeg-h264-test.git
+> defaulting to local storage area
+> Fetching head...
+> Fetching objects...
+> Getting alternates list for http://lumumba.uhasselt.be/takis/git/ffmpeg-h264-test.git/
+> Getting pack list for http://lumumba.uhasselt.be/takis/git/ffmpeg-h264-test.git/
+> progress: 0 objects, 0 bytes
+> cg-clone: interrupted
+> 
+Apparently, it does work :-/ After a _long_ time I noticed that the
+repository indeed got cloned... I am not sure if this is normal behavior
+or not, it seemed to take a _really_ long. I would have thought
+downloading 14MiB should not take a long time on my ADSL line.
 
-Only a single one: of committish please.
 
-    Luben
+With friendly regards,
+Takis
+
+-- 
+OpenPGP key: http://lumumba.uhasselt.be/takis/takis_public_key.txt
+fingerprint: 6571 13A3 33D9 3726 F728  AA98 F643 B12E ECF3 E029
