@@ -1,58 +1,57 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: Unresolved issues #4
-Date: Fri, 06 Oct 2006 09:53:28 -0700
-Message-ID: <45268A08.6030700@gmail.com>
-References: <7vpseyelcw.fsf@assigned-by-dhcp.cox.net> <7vfye20xjt.fsf@assigned-by-dhcp.cox.net>
-Reply-To: git@vger.kernel.org
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Oct 06 18:53:42 2006
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] gitweb: Handle commits with empty commit messages more reasonably
+Date: Fri, 06 Oct 2006 18:55:04 +0200
+Message-ID: <20061006165504.3934.97392.stgit@rover>
+References: <20061006135508.GO20017@pasky.or.cz>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 06 18:55:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVsx7-00065e-V0
-	for gcvg-git@gmane.org; Fri, 06 Oct 2006 18:53:38 +0200
+	id 1GVsyg-0006S8-2p
+	for gcvg-git@gmane.org; Fri, 06 Oct 2006 18:55:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422716AbWJFQxf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Oct 2006 12:53:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422717AbWJFQxf
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 12:53:35 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:30891 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1422716AbWJFQxe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Oct 2006 12:53:34 -0400
-Received: by ug-out-1314.google.com with SMTP id o38so347760ugd
-        for <git@vger.kernel.org>; Fri, 06 Oct 2006 09:53:33 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=lwwRxLgpVysubrgNG5mnOQX4GmzjGOhW5XAjhOeKYcf9gjWh/F93nlL58j8WWTlff3/+ddje60LZ/Sx7hYpjD6rDJ/rZeQ99OFlf6oF7a34RV8Q9/zYrhu9gBIP0txRe2iy2JgIlTit0Wlmo2mvnmu/kgJcHzQTxJwR12fRPy6I=
-Received: by 10.78.165.16 with SMTP id n16mr1917404hue;
-        Fri, 06 Oct 2006 09:53:33 -0700 (PDT)
-Received: from ?10.0.0.6? ( [68.233.231.217])
-        by mx.google.com with ESMTP id 2sm2637128hue.2006.10.06.09.53.31;
-        Fri, 06 Oct 2006 09:53:32 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060911)
-To: git@vger.kernel.org
-In-Reply-To: <7vfye20xjt.fsf@assigned-by-dhcp.cox.net>
+	id S1422718AbWJFQzK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Oct 2006 12:55:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422719AbWJFQzK
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 12:55:10 -0400
+Received: from rover.dkm.cz ([62.24.64.27]:11739 "EHLO rover.dkm.cz")
+	by vger.kernel.org with ESMTP id S1422718AbWJFQzF (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Oct 2006 12:55:05 -0400
+Received: from [127.0.0.1] (rover [127.0.0.1])
+	by rover.dkm.cz (Postfix) with ESMTP id 48FF28B363;
+	Fri,  6 Oct 2006 18:55:04 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <20061006135508.GO20017@pasky.or.cz>
+User-Agent: StGIT/0.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28420>
 
-Junio C Hamano wrote:
-> Recent issues I am aware of but haven't kept track of closely
-> enough and as a result do not have a clue about X-<.
-> 
-> From: A Large Angry SCM <gitzilla@gmail.com>
-> Subject: Notes on Using Git with Subprojects
-> Message-ID: <45196628.9010107@gmail.com>
-> 
-> [jc: a very nice write-up of a subprojects workflow. I do not
->  remember if it produced any actionable items, though]
-> 
+Currently those look very weird, you can't get easily at the commit view
+etc. This patch makes their title '(no commit message)'.
 
-No actionable items that I'm aware of.
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
+
+ gitweb/gitweb.perl |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index ea159e9..56e5231 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1115,6 +1115,9 @@ sub parse_commit {
+ 			last;
+ 		}
+ 	}
++	if ($co{'title'} eq "") {
++		$co{'title'} = $co{'title_short'} = '(no commit message)';
++	}
+ 	# remove added spaces
+ 	foreach my $line (@commit_lines) {
+ 		$line =~ s/^    //;
