@@ -1,73 +1,100 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] gitweb: Remove redundant "commit" link from shortlog
-Date: Fri, 6 Oct 2006 11:27:20 -0700 (PDT)
-Message-ID: <20061006182720.88733.qmail@web31812.mail.mud.yahoo.com>
-References: <20061006135508.GO20017@pasky.or.cz>
-Reply-To: ltuikov@yahoo.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 06 20:28:06 2006
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] gitweb: Support hiding of chosen repositories from project list
+Date: Fri, 06 Oct 2006 20:28:22 +0200
+Message-ID: <20061006182822.9194.78330.stgit@rover>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 06 20:28:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVuQ8-0003Gn-Jw
-	for gcvg-git@gmane.org; Fri, 06 Oct 2006 20:27:40 +0200
+	id 1GVuQu-0003QE-Ci
+	for gcvg-git@gmane.org; Fri, 06 Oct 2006 20:28:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422820AbWJFS1X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Oct 2006 14:27:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422821AbWJFS1X
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 14:27:23 -0400
-Received: from web31812.mail.mud.yahoo.com ([68.142.207.75]:62395 "HELO
-	web31812.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1422820AbWJFS1W (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Oct 2006 14:27:22 -0400
-Received: (qmail 88735 invoked by uid 60001); 6 Oct 2006 18:27:20 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=bEQPypA2wLwdGwUvSEBCemVPAd/v3POdX3Iy51u6FqchOxG9TXStckw/rOLBL5lBeKj0McM58sm242jbTP3gfyrERekzCN0mPPy6xFGTkqpAolCB3G46JDYUGWofI03PhelaAeKY/DUxV9WqvlMo63hhFNEdDA6IcuHo3oFHSpM=  ;
-Received: from [64.215.88.90] by web31812.mail.mud.yahoo.com via HTTP; Fri, 06 Oct 2006 11:27:20 PDT
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20061006135508.GO20017@pasky.or.cz>
+	id S1422824AbWJFS2Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Oct 2006 14:28:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422823AbWJFS2Z
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 14:28:25 -0400
+Received: from rover.dkm.cz ([62.24.64.27]:38605 "EHLO rover.dkm.cz")
+	by vger.kernel.org with ESMTP id S1422824AbWJFS2Y (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Oct 2006 14:28:24 -0400
+Received: from [127.0.0.1] (rover [127.0.0.1])
+	by rover.dkm.cz (Postfix) with ESMTP id B3C1C8B4A2;
+	Fri,  6 Oct 2006 20:28:22 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: StGIT/0.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28428>
 
---- Petr Baudis <pasky@suse.cz> wrote:
-> Dear diary, on Fri, Sep 29, 2006 at 01:48:40AM CEST, I got a letter
-> where Luben Tuikov <ltuikov@yahoo.com> said that...
-> > Remove the redundant "commit" link from shortlog.
-> > It can be had by simply clicking on the entry title
-> > of the row.
-> > 
-> > Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
-> 
-> And what if the commit message is empty?
-> 
-> Witness at http://repo.or.cz/?p=test;a=summary
+This makes it possible to hide certain repository from project list
+(while still keeping it accessible, so it's not just an inverse of
+ export-ok). By default the file that needs to be created in the
+repository is '.hide'.
 
-Clearly a pathological case.  Who or why would anyone do this?
-I don't think we should worry about such pathological cases.
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
-Commits without commit messages do not question GIT.  They
-question the committer... (that's the morning chuckle)
+ Makefile           |    2 ++
+ gitweb/gitweb.perl |   11 +++++++++--
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
-    Luben
-
-
-> 
-> -- 
-> 				Petr "Pasky" Baudis
-> Stuff: http://pasky.or.cz/
-> #!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-> $/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-> lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+diff --git a/Makefile b/Makefile
+index a151029..afb29e9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -125,6 +125,7 @@ GITWEB_HOME_LINK_STR = projects
+ GITWEB_SITENAME =
+ GITWEB_PROJECTROOT = /srv/git
+ GITWEB_EXPORT_OK =
++GITWEB_HIDE_REPO = .hide
+ GITWEB_STRICT_EXPORT =
+ GITWEB_BASE_URL =
+ GITWEB_LIST =
+@@ -673,6 +674,7 @@ gitweb/gitweb.cgi: gitweb/gitweb.perl
+ 	    -e 's|++GITWEB_SITENAME++|$(GITWEB_SITENAME)|g' \
+ 	    -e 's|++GITWEB_PROJECTROOT++|$(GITWEB_PROJECTROOT)|g' \
+ 	    -e 's|++GITWEB_EXPORT_OK++|$(GITWEB_EXPORT_OK)|g' \
++	    -e 's|++GITWEB_HIDE_REPO++|$(GITWEB_HIDE_REPO)|g' \
+ 	    -e 's|++GITWEB_STRICT_EXPORT++|$(GITWEB_STRICT_EXPORT)|g' \
+ 	    -e 's|++GITWEB_BASE_URL++|$(GITWEB_BASE_URL)|g' \
+ 	    -e 's|++GITWEB_LIST++|$(GITWEB_LIST)|g' \
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 3a10124..b06e96a 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -66,6 +66,11 @@ # show repository only if this file exis
+ # (only effective if this variable evaluates to true)
+ our $export_ok = "++GITWEB_EXPORT_OK++";
+ 
++# hide repository from the list if this file exists
++# (the repository is still accessible, just not shown in the project list)
++# (only effective if this variable evaulates to true)
++our $hide_repo = "++GITWEB_HIDE_REPO++";
++
+ # only allow viewing of repositories also shown on the overview page
+ our $strict_export = "++GITWEB_STRICT_EXPORT++";
+ 
+@@ -864,7 +869,8 @@ sub git_get_projects_list {
+ 
+ 				my $subdir = substr($File::Find::name, $pfxlen + 1);
+ 				# we check related file in $projectroot
+-				if (check_export_ok("$projectroot/$subdir")) {
++				if ((!$hide_repo or ! -e "$projectroot/$subdir/$hide_repo")
++				    and check_export_ok("$projectroot/$subdir")) {
+ 					push @list, { path => $subdir };
+ 					$File::Find::prune = 1;
+ 				}
+@@ -885,7 +891,8 @@ sub git_get_projects_list {
+ 			if (!defined $path) {
+ 				next;
+ 			}
+-			if (check_export_ok("$projectroot/$path")) {
++			if ((!$hide_repo or ! -e "$projectroot/$path/$hide_repo")
++			    and check_export_ok("$projectroot/$path")) {
+ 				my $pr = {
+ 					path => $path,
+ 					owner => decode("utf8", $owner, Encode::FB_DEFAULT),
