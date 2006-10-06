@@ -1,69 +1,67 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 1/2] git-archive --format=zip: use default version ID
-Date: Sat, 07 Oct 2006 01:47:24 +0200
-Message-ID: <4526EB0C.6000802@lsrfire.ath.cx>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: Problem cloning packed-and-pruned http repository
+Date: Fri, 6 Oct 2006 19:49:30 -0400
+Message-ID: <BAYC1-PASMTP08A34A8FB0703E4D2ABAF9AE130@CEZ.ICE>
+References: <20061006212616.GA5175@lumumba.uhasselt.be>
+	<20061006220542.GA5890@lumumba.uhasselt.be>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Franck Bui-Huu <vagabon.xyz@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 07 01:47:27 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 07 01:49:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVzPT-00010F-3v
-	for gcvg-git@gmane.org; Sat, 07 Oct 2006 01:47:19 +0200
+	id 1GVzRf-0001Nc-Qm
+	for gcvg-git@gmane.org; Sat, 07 Oct 2006 01:49:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932663AbWJFXrP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Oct 2006 19:47:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751169AbWJFXrP
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 19:47:15 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:32952
-	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S1750705AbWJFXrO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Oct 2006 19:47:14 -0400
-Received: from [10.0.1.3] (p508E6834.dip.t-dialin.net [80.142.104.52])
-	by neapel230.server4you.de (Postfix) with ESMTP id 9513D1002B;
-	Sat,  7 Oct 2006 01:47:13 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.7 (Windows/20060909)
-To: Junio C Hamano <junkio@cox.net>
-X-Enigmail-Version: 0.94.0.0
+	id S1750705AbWJFXtd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Oct 2006 19:49:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751169AbWJFXtd
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 19:49:33 -0400
+Received: from bayc1-pasmtp08.bayc1.hotmail.com ([65.54.191.168]:51382 "EHLO
+	BAYC1-PASMTP08.CEZ.ICE") by vger.kernel.org with ESMTP
+	id S1750705AbWJFXtc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Oct 2006 19:49:32 -0400
+X-Originating-IP: [65.93.42.136]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.42.136]) by BAYC1-PASMTP08.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 6 Oct 2006 16:57:51 -0700
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with esmtp (Exim 4.43)
+	id 1GVzRa-00047m-PO; Fri, 06 Oct 2006 19:49:30 -0400
+To: takis@lumumba.uhasselt.be (Panagiotis Issaris)
+Message-Id: <20061006194930.cf400ec4.seanlkml@sympatico.ca>
+In-Reply-To: <20061006220542.GA5890@lumumba.uhasselt.be>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 06 Oct 2006 23:57:51.0843 (UTC) FILETIME=[3BC64B30:01C6E9A3]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28450>
 
-Use 10 for the "version needed to extract" field.  This is the
-default value, and we want to use it because we don't do anything
-special.  Info-ZIP's zip uses it, too.
+On Sat, 7 Oct 2006 00:05:42 +0200
+takis@lumumba.uhasselt.be (Panagiotis Issaris) wrote:
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- archive-zip.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+> Apparently, it does work :-/ After a _long_ time I noticed that the
+> repository indeed got cloned... I am not sure if this is normal behavior
+> or not, it seemed to take a _really_ long. I would have thought
+> downloading 14MiB should not take a long time on my ADSL line.
 
-diff --git a/archive-zip.c b/archive-zip.c
-index 3ffdad6..ae74623 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -214,7 +214,7 @@ static int write_zip_entry(const unsigne
- 
- 	copy_le32(dirent.magic, 0x02014b50);
- 	copy_le16(dirent.creator_version, 0);
--	copy_le16(dirent.version, 20);
-+	copy_le16(dirent.version, 10);
- 	copy_le16(dirent.flags, 0);
- 	copy_le16(dirent.compression_method, method);
- 	copy_le16(dirent.mtime, zip_time);
-@@ -236,7 +236,7 @@ static int write_zip_entry(const unsigne
- 	zip_dir_entries++;
- 
- 	copy_le32(header.magic, 0x04034b50);
--	copy_le16(header.version, 20);
-+	copy_le16(header.version, 10);
- 	copy_le16(header.flags, 0);
- 	copy_le16(header.compression_method, method);
- 	copy_le16(header.mtime, zip_time);
--- 
-1.4.2.3.gf59615
+It's not normal.  There's something odd going on.  I can clone your
+repo with wget in about two minutes, while Git still hadn't downloaded
+anything after 12 minutes when I killed it.
+
+Poked around a bit, and found that if I comment out these lines from
+http-fetch.c:
+
+#ifndef NO_EXPAT
+        if (remote_ls(repo, "objects/pack/", PROCESS_FILES,
+                      process_ls_pack, NULL) == 0)
+                return 0;
+#endif
+
+Then everything downloads nice and fast.  Does anyone have a guess
+why that would be?
+
+Sean
