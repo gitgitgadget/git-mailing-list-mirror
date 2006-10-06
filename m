@@ -1,60 +1,47 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: perhaps time to remove git_blame from gitweb, and git-annotate?
-Date: Fri, 6 Oct 2006 15:07:04 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0610061505360.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vejtnij5n.fsf@assigned-by-dhcp.cox.net>
- <20061005064817.21552.qmail@web31804.mail.mud.yahoo.com>
- <7vu02jfaec.fsf_-_@assigned-by-dhcp.cox.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Remove bashism from t3210-pack-refs.sh
+Date: Fri, 6 Oct 2006 15:35:21 +0200
+Message-ID: <81b0412b0610060635n51482e71wab02f9a11be4e619@mail.gmail.com>
+References: <20061006091054.15209.35068.stgit@leonov.stosberg.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Luben Tuikov <ltuikov@yahoo.com>,
-	Petr Baudis <pasky@suse.cz>, Jakub Narebski <jnareb@gmail.com>,
-	Ryan Anderson <ryan@michonline.com>,
-	Martin Langhoff <martin@catalyst.net.nz>,
-	Martyn Smith <martyn@catalyst.net.nz>,
-	Fredrik Kuivinen <freku045@student.liu.se>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Fri Oct 06 15:07:46 2006
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 06 15:35:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVpQ2-0006HV-0U
-	for gcvg-git@gmane.org; Fri, 06 Oct 2006 15:07:14 +0200
+	id 1GVprW-0005Lz-8u
+	for gcvg-git@gmane.org; Fri, 06 Oct 2006 15:35:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932191AbWJFNHK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Oct 2006 09:07:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932225AbWJFNHK
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 09:07:10 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37006 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932191AbWJFNHI (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Oct 2006 09:07:08 -0400
-Received: (qmail invoked by alias); 06 Oct 2006 13:07:07 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp042) with SMTP; 06 Oct 2006 15:07:07 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vu02jfaec.fsf_-_@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1422651AbWJFNfZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Oct 2006 09:35:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422650AbWJFNfZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 09:35:25 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:56448 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1422651AbWJFNfW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Oct 2006 09:35:22 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so316180ugd
+        for <git@vger.kernel.org>; Fri, 06 Oct 2006 06:35:21 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=OgYdX3lHhY0mMrhBlSaUauJYimzh1bspG7T24+kHHjqkq+Cc09TfvSRM2mgNT2+r84A3veVSExERGD7bkpdDbl8pUGaaB94veb6Nq/0ho8yvkBKqhbQLsbS+iZqmfG6l1qACEjsjojHNq1MWj/pyj/ZZxd0vai8rOy0W8N4bRzw=
+Received: by 10.78.176.20 with SMTP id y20mr1716437hue;
+        Fri, 06 Oct 2006 06:35:21 -0700 (PDT)
+Received: by 10.78.115.8 with HTTP; Fri, 6 Oct 2006 06:35:21 -0700 (PDT)
+To: "Dennis Stosberg" <dennis@stosberg.net>
+In-Reply-To: <20061006091054.15209.35068.stgit@leonov.stosberg.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28401>
 
-Hi,
+On 10/6/06, Dennis Stosberg <dennis@stosberg.net> wrote:
+> -     SHA1=$(< .git/refs/heads/a) &&
+> +     SHA1=`cat .git/refs/heads/a` &&
 
-On Thu, 5 Oct 2006, Junio C Hamano wrote:
-
-> Do people have reason to favor annotate over blame?  To keep
-> existing people's scripts working I think we should add a small
-> amount of code to blame.c to default to compatibility mode when
-> the command is called as git-annotate at least for a while, but
-> other than that I do not see much issue against scheduling for
-> annotate's removal.
-
-+1. Although I would leave git-annotate in git, if only to meet 
-expectations of new git users.
-
-Ciao,
-Dscho
+Only "<" (the redirection part) is bashism. The "$()" is POSIX.
