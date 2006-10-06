@@ -1,35 +1,35 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] ref-log: allow ref@{count} syntax.
-Date: Fri, 6 Oct 2006 12:05:21 -0400
-Message-ID: <20061006160521.GA20024@spearce.org>
-References: <7vsli20y1c.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Unresolved issues #4
+Date: Fri, 6 Oct 2006 12:11:01 -0400
+Message-ID: <20061006161101.GB20024@spearce.org>
+References: <7vpseyelcw.fsf@assigned-by-dhcp.cox.net> <7vfye20xjt.fsf@assigned-by-dhcp.cox.net> <eg5co6$g9n$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 06 18:05:52 2006
+X-From: git-owner@vger.kernel.org Fri Oct 06 18:11:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVsCj-0001mz-Et
-	for gcvg-git@gmane.org; Fri, 06 Oct 2006 18:05:42 +0200
+	id 1GVsI2-0003Py-GE
+	for gcvg-git@gmane.org; Fri, 06 Oct 2006 18:11:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751543AbWJFQFa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Oct 2006 12:05:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422688AbWJFQF3
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 12:05:29 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:53211 "EHLO
+	id S932111AbWJFQLH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Oct 2006 12:11:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751562AbWJFQLG
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 12:11:06 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:59612 "EHLO
 	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751543AbWJFQF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Oct 2006 12:05:27 -0400
+	id S1751560AbWJFQLE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Oct 2006 12:11:04 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GVsCN-0001DL-Bn; Fri, 06 Oct 2006 12:05:19 -0400
+	id 1GVsHo-0001ze-Ag; Fri, 06 Oct 2006 12:10:56 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id CE07420E490; Fri,  6 Oct 2006 12:05:21 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
+	id 1A54B20E490; Fri,  6 Oct 2006 12:11:01 -0400 (EDT)
+To: Jakub Narebski <jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vsli20y1c.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <eg5co6$g9n$1@sea.gmane.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -42,29 +42,25 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28413>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Often I find myself wanting to say 'tip of "next" before I
-> merged the last three topics'.  Now I can say that with:
+Jakub Narebski <jnareb@gmail.com> wrote:
+> > From: Shawn Pearce <spearce@spearce.org>
+> > Message-ID: <20060930045037.GB18479@spearce.org>
+> > 
+> > "git ref-log" command to interact with ref-log?
+> > 
+> > [jc: not much interest from users?]
 > 
-> 	git log next@{3}..next
-> 
-> Since small integers alone are invalid input strings to
-> approxidate, there is no fear of confusion.
-> 
-> Signed-off-by: Junio C Hamano <junkio@cox.net>
-> ---
-> 
->  * The implementation is rather hacky but I think this is
->    mildly useful.  Likes, dislikes?
+> I thing it can increase number of reflog users. 
 
-Ack'd.
+Agreed and I'd really like to see that command but I have not had the
+time to do code it myself.  What time I am able to make available
+for Git in the near future needs to be for the window mmap rewrite
+ontop of Nico's delta offset changes that are currently in next.
 
-Its a useful feature. Something I've been wanting myself for
-some time.  I usually just guess with '@{5.minutes.ago}' or some
-nonsense until I find the right time.  But since I know it was X
-operations ago, '@{X}' will be very handy.  Thanks!
+If nobody gets around to it I'll likely try to pick it up and do it,
+but that probably won't be for at least a month, maybe two.
 
 -- 
 Shawn.
