@@ -1,53 +1,58 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Re: git-send-email w/ headers
-Date: Fri, 06 Oct 2006 17:52:10 +0100
-Message-ID: <1160153530.4795.51.camel@pmac.infradead.org>
-References: <200610041250.50272.len.brown@intel.com>
-	 <7viriy9w1q.fsf@assigned-by-dhcp.cox.net>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: Unresolved issues #4
+Date: Fri, 06 Oct 2006 09:53:28 -0700
+Message-ID: <45268A08.6030700@gmail.com>
+References: <7vpseyelcw.fsf@assigned-by-dhcp.cox.net> <7vfye20xjt.fsf@assigned-by-dhcp.cox.net>
+Reply-To: git@vger.kernel.org
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Len Brown <lenb@kernel.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 06 18:52:40 2006
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Oct 06 18:53:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVswA-0005sw-7N
-	for gcvg-git@gmane.org; Fri, 06 Oct 2006 18:52:38 +0200
+	id 1GVsx7-00065e-V0
+	for gcvg-git@gmane.org; Fri, 06 Oct 2006 18:53:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422715AbWJFQwf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Oct 2006 12:52:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422716AbWJFQwf
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 12:52:35 -0400
-Received: from pentafluge.infradead.org ([213.146.154.40]:62387 "EHLO
-	pentafluge.infradead.org") by vger.kernel.org with ESMTP
-	id S1422715AbWJFQwe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Oct 2006 12:52:34 -0400
-Received: from pmac.infradead.org ([81.187.2.168])
-	by pentafluge.infradead.org with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
-	id 1GVsvj-0006wO-EI; Fri, 06 Oct 2006 17:52:11 +0100
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7viriy9w1q.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.8.0 (2.8.0-7.fc6.dwmw2.2) 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S1422716AbWJFQxf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Oct 2006 12:53:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422717AbWJFQxf
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 12:53:35 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:30891 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1422716AbWJFQxe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Oct 2006 12:53:34 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so347760ugd
+        for <git@vger.kernel.org>; Fri, 06 Oct 2006 09:53:33 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=lwwRxLgpVysubrgNG5mnOQX4GmzjGOhW5XAjhOeKYcf9gjWh/F93nlL58j8WWTlff3/+ddje60LZ/Sx7hYpjD6rDJ/rZeQ99OFlf6oF7a34RV8Q9/zYrhu9gBIP0txRe2iy2JgIlTit0Wlmo2mvnmu/kgJcHzQTxJwR12fRPy6I=
+Received: by 10.78.165.16 with SMTP id n16mr1917404hue;
+        Fri, 06 Oct 2006 09:53:33 -0700 (PDT)
+Received: from ?10.0.0.6? ( [68.233.231.217])
+        by mx.google.com with ESMTP id 2sm2637128hue.2006.10.06.09.53.31;
+        Fri, 06 Oct 2006 09:53:32 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060911)
+To: git@vger.kernel.org
+In-Reply-To: <7vfye20xjt.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28419>
 
-On Thu, 2006-10-05 at 16:34 -0700, Junio C Hamano wrote:
-> Len Brown <len.brown@intel.com> writes:
+Junio C Hamano wrote:
+> Recent issues I am aware of but haven't kept track of closely
+> enough and as a result do not have a clue about X-<.
 > 
-> > git-send-email seems to strip out my custom headers.
+> From: A Large Angry SCM <gitzilla@gmail.com>
+> Subject: Notes on Using Git with Subprojects
+> Message-ID: <45196628.9010107@gmail.com>
 > 
-> It seems to not care about anything but a selected few.
+> [jc: a very nice write-up of a subprojects workflow. I do not
+>  remember if it produced any actionable items, though]
 > 
-> Could you give this a try, please? 
 
-It also needs to preserve (and indeed to provide by default)
-Content-Type headers to specify the character set.
-
--- 
-dwmw2
+No actionable items that I'm aware of.
