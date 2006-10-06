@@ -1,96 +1,60 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb: using quotemeta
-Date: Fri, 6 Oct 2006 14:38:50 +0200
-Message-ID: <200610061438.50965.jnareb@gmail.com>
-References: <20061002201256.89409.qmail@web31809.mail.mud.yahoo.com> <200610022250.32029.jnareb@gmail.com> <7vven1syg0.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: perhaps time to remove git_blame from gitweb, and git-annotate?
+Date: Fri, 6 Oct 2006 15:07:04 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0610061505360.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vejtnij5n.fsf@assigned-by-dhcp.cox.net>
+ <20061005064817.21552.qmail@web31804.mail.mud.yahoo.com>
+ <7vu02jfaec.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 06 14:38:40 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Luben Tuikov <ltuikov@yahoo.com>,
+	Petr Baudis <pasky@suse.cz>, Jakub Narebski <jnareb@gmail.com>,
+	Ryan Anderson <ryan@michonline.com>,
+	Martin Langhoff <martin@catalyst.net.nz>,
+	Martyn Smith <martyn@catalyst.net.nz>,
+	Fredrik Kuivinen <freku045@student.liu.se>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Fri Oct 06 15:07:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVoy0-0007n9-6L
-	for gcvg-git@gmane.org; Fri, 06 Oct 2006 14:38:18 +0200
+	id 1GVpQ2-0006HV-0U
+	for gcvg-git@gmane.org; Fri, 06 Oct 2006 15:07:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751176AbWJFMiN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 6 Oct 2006 08:38:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbWJFMiM
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 08:38:12 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:28088 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1751176AbWJFMiL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Oct 2006 08:38:11 -0400
-Received: by ug-out-1314.google.com with SMTP id o38so309008ugd
-        for <git@vger.kernel.org>; Fri, 06 Oct 2006 05:38:10 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=JcTCDz02Z4hXbOetCzz1u6i1WUY1XsnWET6SnInFCQwScf0oGHkGmkfApufbHqcDxmXC5X9iqCaRxWZkiV1Q/HulnWf0ZquzO67j+MbGG22cNvJo8J9DSBlhjMmeDpmteWFOKvuMwbFLp0lsR+7QxuY2pywngOAR+v537qsQAJw=
-Received: by 10.67.105.19 with SMTP id h19mr3156982ugm;
-        Fri, 06 Oct 2006 05:38:09 -0700 (PDT)
-Received: from host-81-190-18-48.torun.mm.pl ( [81.190.18.48])
-        by mx.google.com with ESMTP id m4sm1855508ugc.2006.10.06.05.38.08;
-        Fri, 06 Oct 2006 05:38:09 -0700 (PDT)
+	id S932191AbWJFNHK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Oct 2006 09:07:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932225AbWJFNHK
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 09:07:10 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37006 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932191AbWJFNHI (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Oct 2006 09:07:08 -0400
+Received: (qmail invoked by alias); 06 Oct 2006 13:07:07 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp042) with SMTP; 06 Oct 2006 15:07:07 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vven1syg0.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+In-Reply-To: <7vu02jfaec.fsf_-_@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28400>
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
->=20
->> But you forget that in HTTP headers, to be more exact in
->> =A0=A0=A0=A0=A0=A0Content-Disposition: inline; filename=3D"<filename=
->"
->> header, the quote '"' and end-of-line '\n' characters in <filename>
->> are treated specially. So you need to quote somehow at least those
->> two characters.
->=20
-> True, but untrue. =A0This is just a suggestion so we do not _have_
-> to quote. =A0We only need to avoid spitting out dq and lf
-> literally. =A0We could even just do something like the attached if
-> we wanted to:
->=20
-> =A0=A0=A0=A0=A0=A0=A0=A0s/[^ -~]+/?/g=A0=A0=A0;# replace each sequenc=
-e of bytes outside
-> =A0 =A0 =A0 =A0 =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 # ' =
-' to '~' range to a '?'
->=20
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 44991b1..e7202ee 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -2651,7 +2651,7 @@ sub git_blob_plain {
-> =A0=A0=A0=A0=A0=A0=A0=A0# save as filename, even when no $file_name i=
-s given
-> =A0=A0=A0=A0=A0=A0=A0=A0my $save_as =3D "$hash";
-> =A0=A0=A0=A0=A0=A0=A0=A0if (defined $file_name) {
-> -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0$save_as =3D $file_name=
-;
-> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0($save_as =3D $file_nam=
-e) =3D~ s/[^ -~]+/?/g;
-> =A0=A0=A0=A0=A0=A0=A0=A0} elsif ($type =3D~ m/^text\//) {
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0$save_as .=3D '.txt';
-> =A0=A0=A0=A0=A0=A0=A0=A0}
+Hi,
 
-I'd rather add (and use) separate subroutine for quoting/escaping
-values in HTTP headers, or to be more exact for the filename part
-of HTTP header "Content-Disposition:". This way if we decide to
-not replace all characters outside US-ASCII in suggested filename
-to save with '?', but only qoublequote '"' and linefeed '\n' characters=
-,
-or even implement RFC 2047 to do the encoding (of course if browsers
-can read it), we could do this in one place.=20
+On Thu, 5 Oct 2006, Junio C Hamano wrote:
 
-How such a subroutine should be named? esc_http? esc_header or esc_hdr?
-esc_http_header? Any other ideas?
---=20
-Jakub Narebski
-Poland
+> Do people have reason to favor annotate over blame?  To keep
+> existing people's scripts working I think we should add a small
+> amount of code to blame.c to default to compatibility mode when
+> the command is called as git-annotate at least for a while, but
+> other than that I do not see much issue against scheduling for
+> annotate's removal.
+
++1. Although I would leave git-annotate in git, if only to meet 
+expectations of new git users.
+
+Ciao,
+Dscho
