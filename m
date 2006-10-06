@@ -1,60 +1,58 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Unresolved issues #4
-Date: Fri, 6 Oct 2006 12:12:08 -0400
-Message-ID: <20061006161208.GC20024@spearce.org>
-References: <7vpseyelcw.fsf@assigned-by-dhcp.cox.net> <7vfye20xjt.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: perhaps time to remove git_blame from gitweb, and git-annotate?
+Date: Fri, 6 Oct 2006 18:16:37 +0200
+Message-ID: <20061006161637.GS20017@pasky.or.cz>
+References: <7vejtnij5n.fsf@assigned-by-dhcp.cox.net> <20061005064817.21552.qmail@web31804.mail.mud.yahoo.com> <7vu02jfaec.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 06 18:12:31 2006
+Cc: git@vger.kernel.org, Luben Tuikov <ltuikov@yahoo.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Ryan Anderson <ryan@michonline.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Martin Langhoff <martin@catalyst.net.nz>,
+	Martyn Smith <martyn@catalyst.net.nz>,
+	Fredrik Kuivinen <freku045@student.liu.se>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Fri Oct 06 18:16:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVsJE-0003ly-2f
-	for gcvg-git@gmane.org; Fri, 06 Oct 2006 18:12:26 +0200
+	id 1GVsNP-000509-GW
+	for gcvg-git@gmane.org; Fri, 06 Oct 2006 18:16:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751565AbWJFQMO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Oct 2006 12:12:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751564AbWJFQMO
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 12:12:14 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:3805 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751563AbWJFQML (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Oct 2006 12:12:11 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GVsIt-00026c-Do; Fri, 06 Oct 2006 12:12:03 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 34E4020E490; Fri,  6 Oct 2006 12:12:08 -0400 (EDT)
+	id S1751587AbWJFQQk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Oct 2006 12:16:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751580AbWJFQQk
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 12:16:40 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:41362 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751382AbWJFQQk (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Oct 2006 12:16:40 -0400
+Received: (qmail 17930 invoked by uid 2001); 6 Oct 2006 18:16:37 +0200
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <7vfye20xjt.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <7vu02jfaec.fsf_-_@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28415>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> From: Shawn Pearce <spearce@spearce.org>
-> Message-ID: <20060926215745.GC8177@spearce.org>
-> 
-> git-mirror (reverse of git-push --all).
-> 
-> [jc: any progress?]
+Dear diary, on Thu, Oct 05, 2006 at 10:13:15AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> It's been a while since we lost git_blame from %actions list.  I
+> am wondering maybe it's time to remove it, after 1.4.3 happens.
 
-No.  Back burner.  Waaaaaaay back.  I have your comments and I'd
-like to incorporate them and resubmit but I've had other things
-demanding my time.
+I will not mourn git-annotate disappearance (perhaps it could stay an
+alias to git-blame -c; I don't like this UI-wise but we already do this
+kind of thing with git-log / git-whatchanged). I still like gitweb blame
+better than blame2 but I'll just patch blame to look like blame2 (or
+better) and be happy with that.
 
 -- 
-Shawn.
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
