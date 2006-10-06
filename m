@@ -1,76 +1,57 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: gitweb: using quotemeta
-Date: Fri, 6 Oct 2006 20:45:37 +0200
-Message-ID: <20061006184537.GU20017@pasky.or.cz>
-References: <20061006182409.87381.qmail@web31812.mail.mud.yahoo.com> <20061006135019.GN20017@pasky.or.cz> <20061006182105.17519.qmail@web31806.mail.mud.yahoo.com>
+Subject: Re: Commit to more than one branch at once?
+Date: Fri, 6 Oct 2006 20:52:27 +0200
+Message-ID: <20061006185227.GV20017@pasky.or.cz>
+References: <45269E02.50407@s5r6.in-berlin.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 06 20:46:35 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 06 20:53:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVuhc-00075Q-Fu
-	for gcvg-git@gmane.org; Fri, 06 Oct 2006 20:45:44 +0200
+	id 1GVuoD-0000Hi-2W
+	for gcvg-git@gmane.org; Fri, 06 Oct 2006 20:52:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422835AbWJFSpj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Oct 2006 14:45:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422839AbWJFSpj
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 14:45:39 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:52356 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1422835AbWJFSpj (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Oct 2006 14:45:39 -0400
-Received: (qmail 31880 invoked by uid 2001); 6 Oct 2006 20:45:37 +0200
-To: Luben Tuikov <ltuikov@yahoo.com>
+	id S1422834AbWJFSwa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Oct 2006 14:52:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422840AbWJFSwa
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 14:52:30 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:65428 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1422834AbWJFSw3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Oct 2006 14:52:29 -0400
+Received: (qmail 32326 invoked by uid 2001); 6 Oct 2006 20:52:27 +0200
+To: Stefan Richter <stefanr@s5r6.in-berlin.de>
 Content-Disposition: inline
-In-Reply-To: <20061006182409.87381.qmail@web31812.mail.mud.yahoo.com> <20061006182105.17519.qmail@web31806.mail.mud.yahoo.com>
+In-Reply-To: <45269E02.50407@s5r6.in-berlin.de>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28433>
 
-Dear diary, on Fri, Oct 06, 2006 at 08:21:05PM CEST, I got a letter
-where Luben Tuikov <ltuikov@yahoo.com> said that...
-> > According to RFC2183, the filename is a value. According to RFC2045, a
-> > value is either a token (uninteresting) or a quoted-string. According to
-> > RFC822:
-> > 
-> >      quoted-string = <"> *(qtext/quoted-pair) <">; Regular qtext or
-> >                                                  ;   quoted chars.
-> > 
-> >      qtext       =  <any CHAR excepting <">,     ; => may be folded
-> >                      "\" & CR, and including
-> >                      linear-white-space>
-> > 
-> >      quoted-pair =  "\" CHAR                     ; may quote any char
-> > 
-> > So what we emit is completely correct.
+Dear diary, on Fri, Oct 06, 2006 at 08:18:42PM CEST, I got a letter
+where Stefan Richter <stefanr@s5r6.in-berlin.de> said that...
+> if I git-cherry-pick a commit from branch A into branch B, this is shown
+> as a difference in "git-log B..A".
 > 
-> (Your quotations do not seem correct according to 
->   ftp://ftp.rfc-editor.org/in-notes/rfc2045.txt !)
+> Is it possible to commit a change to two or more branches but preserve
+> the identity of the change? IOW, is there an alternative to
+> git-cherry-pick that does not have above mentioned side effect?
 
-Wow, you caused my GNOME at work to do something totally horrible after
-me clicking on that link... ;-)
+  Philosophical answer:
 
-I'm not sure how is RFC2045 relevant - this is from RFC822, RFC2045 does
-not define those non-terminals.
-
-> Petr, I agree with your that what we emit is "completely correct".
-> 
-> But is is _mangled_.  I.e. why mangle the filename from "a.b" to
-> "a\.b" ?  Indeed the latter _is_ qtext but it is not the original name
-> given to the file.
-..snip..
-> Sorry, I ment to say that the latter doesn't appear to be qtext.
-> 
-> Bottomline is that quotemeta does not convert into qtext, and as thus
-> should never have been used.
-
-It's a moot point now, but I don't see that - inside qtext, any
-character can be quoted, so what we do is technically ok.
+  This is a point where it shows that Git is snapshot-based, not
+changeset-based version control system. So you are not committing a
+change, you are committing a snapshot taken after the change. So only
+snapshots have identity and if the snapshots differ, they obviously have
+different identity. Thus your commit has to have different identity.
+Furthermore the commit ties the snapshot with some history (and only
+this is the first moment where the concept of the 'change' emerges), and
+if you have different history, identity of your commit cannot be
+the same either.
 
 -- 
 				Petr "Pasky" Baudis
