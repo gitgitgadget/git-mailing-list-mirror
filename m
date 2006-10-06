@@ -1,52 +1,53 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] gitweb: Do not print "log" and "shortlog" redundantly in commit view
-Date: Fri, 6 Oct 2006 18:35:52 +0200
-Message-ID: <20061006163552.GT20017@pasky.or.cz>
-References: <20061005192257.50209.qmail@web31809.mail.mud.yahoo.com> <eg51fi$7rs$2@sea.gmane.org>
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: Re: git-send-email w/ headers
+Date: Fri, 06 Oct 2006 17:52:10 +0100
+Message-ID: <1160153530.4795.51.camel@pmac.infradead.org>
+References: <200610041250.50272.len.brown@intel.com>
+	 <7viriy9w1q.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 06 18:36:21 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Len Brown <lenb@kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 06 18:52:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVsg2-0001yb-GS
-	for gcvg-git@gmane.org; Fri, 06 Oct 2006 18:35:58 +0200
+	id 1GVswA-0005sw-7N
+	for gcvg-git@gmane.org; Fri, 06 Oct 2006 18:52:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422704AbWJFQfz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Oct 2006 12:35:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422705AbWJFQfz
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 12:35:55 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:45238 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1422704AbWJFQfy (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Oct 2006 12:35:54 -0400
-Received: (qmail 19653 invoked by uid 2001); 6 Oct 2006 18:35:52 +0200
-To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <eg51fi$7rs$2@sea.gmane.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1422715AbWJFQwf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Oct 2006 12:52:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422716AbWJFQwf
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 12:52:35 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:62387 "EHLO
+	pentafluge.infradead.org") by vger.kernel.org with ESMTP
+	id S1422715AbWJFQwe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Oct 2006 12:52:34 -0400
+Received: from pmac.infradead.org ([81.187.2.168])
+	by pentafluge.infradead.org with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
+	id 1GVsvj-0006wO-EI; Fri, 06 Oct 2006 17:52:11 +0100
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7viriy9w1q.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.8.0 (2.8.0-7.fc6.dwmw2.2) 
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28418>
 
-Dear diary, on Fri, Oct 06, 2006 at 09:44:29AM CEST, I got a letter
-where Jakub Narebski <jnareb@gmail.com> said that...
-> Gaah, the whole cae1862a3b55b487731e9857f2213ac59d5646d commit
-> "gitweb: More per-view navigation bar links" is somewhat broken.
-> Up to this point we used top navigation bar for commit (hash base)
-> or whole project related links, while bottom part of navigation
-> bar for "formats" i.e. links related to current view (passing hash)
-> or for pagination.
+On Thu, 2006-10-05 at 16:34 -0700, Junio C Hamano wrote:
+> Len Brown <len.brown@intel.com> writes:
+> 
+> > git-send-email seems to strip out my custom headers.
+> 
+> It seems to not care about anything but a selected few.
+> 
+> Could you give this a try, please? 
 
-Umm, and how did that commit break that? Except the issue this patch
-fixes - sorry about that, I have no idea wth was I thinking.
+It also needs to preserve (and indeed to provide by default)
+Content-Type headers to specify the character set.
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+dwmw2
