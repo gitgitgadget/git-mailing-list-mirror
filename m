@@ -1,58 +1,108 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: activestate perl: Makemaker generates broken Makefiles.
-Date: Thu, 05 Oct 2006 21:57:46 -0700
-Message-ID: <7viriy2g8l.fsf@assigned-by-dhcp.cox.net>
-References: <81b0412b0610040425j60d0647dk1489d02657379c13@mail.gmail.com>
+Subject: Re: git-send-email w/ headers
+Date: Thu, 05 Oct 2006 23:09:18 -0700
+Message-ID: <7v1wpm2cxd.fsf@assigned-by-dhcp.cox.net>
+References: <200610041250.50272.len.brown@intel.com>
+	<7viriy9w1q.fsf@assigned-by-dhcp.cox.net>
+	<200610060041.56807.len.brown@intel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Oct 06 06:58:05 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 06 08:09:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVhmW-0007Wz-2p
-	for gcvg-git@gmane.org; Fri, 06 Oct 2006 06:57:56 +0200
+	id 1GVitj-0003CJ-HQ
+	for gcvg-git@gmane.org; Fri, 06 Oct 2006 08:09:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750996AbWJFE5x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Oct 2006 00:57:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751799AbWJFE5x
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 00:57:53 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:4065 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1750996AbWJFE5w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Oct 2006 00:57:52 -0400
+	id S932616AbWJFGJU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Oct 2006 02:09:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932617AbWJFGJU
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 02:09:20 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:16305 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932616AbWJFGJT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Oct 2006 02:09:19 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao06.cox.net
+          by fed1rmmtao08.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061006045751.NHXV6235.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 6 Oct 2006 00:57:51 -0400
+          id <20061006060919.DYAV22977.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 6 Oct 2006 02:09:19 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id Wsxu1V00A1kojtg0000000
-	Fri, 06 Oct 2006 00:57:54 -0400
-To: "Alex Riesen" <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b0610040425j60d0647dk1489d02657379c13@mail.gmail.com>
-	(Alex Riesen's message of "Wed, 4 Oct 2006 13:25:56 +0200")
+	id Wu9M1V00d1kojtg0000000
+	Fri, 06 Oct 2006 02:09:22 -0400
+To: Len Brown <lenb@kernel.org>
+In-Reply-To: <200610060041.56807.len.brown@intel.com> (Len Brown's message of
+	"Fri, 6 Oct 2006 00:41:56 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28386>
 
-"Alex Riesen" <raa.lkml@gmail.com> writes:
+Len Brown <len.brown@intel.com> writes:
 
-> Just a heads up. Makefile.PL can't be used. The attached patch removes
-> everything perl (sorry, but it'd help someone to get going).
+> But the Signed-off-by: line from the original message body has
+> now been swallowed up into the message header -- so my mailer
+> doesn't display it.
 
-Since we do not have Git.xs anymore, wouldn't it be possible for
-us to remove perl/Makefile.PL and have our own perl/Makefile
-which does:
+Sorry, what I sent out has worse breakage than not having your
+custom header.  It would eat the first paragraph of your message
+X-<.
 
- * install Git.pm to $(prefix)/share/git-core/perl (aka GIT_PERL_DIR)
+A replacement patch is attached.  If you have already applied
+the previous patch, you can hand edit the line that says:
 
- * see if Error.pm is available on the system, and if not install
-   private-Error.pm as Error.pm
+	$header .= join("\n", @xh);
 
-to make everybody happy???
+to
+
+	$header .= join("\n", @xh) . "\n";
+
+It forgets to end the last line of the headers with LF.
+
+---
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 3f50aba..2fd5e87 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -83,7 +83,7 @@ # Constants (essentially)
+ my $compose_filename = ".msg.$$";
+ 
+ # Variables we fill in automatically, or via prompting:
+-my (@to,@cc,@initial_cc,@bcclist,
++my (@to,@cc,@initial_cc,@bcclist,@xh,
+ 	$initial_reply_to,$initial_subject,@files,$from,$compose,$time);
+ 
+ # Behavior modification variables
+@@ -422,6 +422,9 @@ X-Mailer: git-send-email $gitversion
+ 		$header .= "In-Reply-To: $reply_to\n";
+ 		$header .= "References: $references\n";
+ 	}
++	if (@xh) {
++		$header .= join("\n", @xh) . "\n";
++	}
+ 
+ 	if ($smtp_server =~ m#^/#) {
+ 		my $pid = open my $sm, '|-';
+@@ -472,6 +475,7 @@ foreach my $t (@files) {
+ 
+ 	my $author_not_sender = undef;
+ 	@cc = @initial_cc;
++	@xh = ();
+ 	my $found_mbox = 0;
+ 	my $header_done = 0;
+ 	$message = "";
+@@ -495,6 +499,9 @@ foreach my $t (@files) {
+ 						$2, $_) unless $quiet;
+ 					push @cc, $2;
+ 				}
++				elsif (/^[-A-Za-z]+:\s+\S/) {
++					push @xh, $_;
++				}
+ 
+ 			} else {
+ 				# In the traditional
