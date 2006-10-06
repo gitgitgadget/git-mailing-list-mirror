@@ -1,70 +1,57 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [RFC][PATCH] gitweb: Make the Git logo link target to point to the homepage
-Date: Fri, 6 Oct 2006 01:57:19 +0200
-Message-ID: <20061005235719.GM20017@pasky.or.cz>
-References: <20060919212725.GA13132@pasky.or.cz> <20060923125746.GJ8259@pasky.or.cz> <7virjes7dq.fsf@assigned-by-dhcp.cox.net> <20060923194643.GN13132@pasky.or.cz> <20061005204752.GL20017@pasky.or.cz> <7vhcyibgon.fsf@assigned-by-dhcp.cox.net> <7vbqoqbg5p.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Could we please make "cherry-pick" not add the message by default?
+Date: Thu, 5 Oct 2006 17:14:29 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610051711310.3952@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 06 01:57:31 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Fri Oct 06 02:14:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVd5h-0008EX-96
-	for gcvg-git@gmane.org; Fri, 06 Oct 2006 01:57:25 +0200
+	id 1GVdMQ-0003As-CG
+	for gcvg-git@gmane.org; Fri, 06 Oct 2006 02:14:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932442AbWJEX5W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Oct 2006 19:57:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932444AbWJEX5W
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Oct 2006 19:57:22 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:60315 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932442AbWJEX5V (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Oct 2006 19:57:21 -0400
-Received: (qmail 14584 invoked by uid 2001); 6 Oct 2006 01:57:19 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vbqoqbg5p.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932482AbWJFAOi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Oct 2006 20:14:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932485AbWJFAOi
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Oct 2006 20:14:38 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:51925 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932482AbWJFAOh (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Oct 2006 20:14:37 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k960EYaX026021
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 5 Oct 2006 17:14:34 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k960EULd010954;
+	Thu, 5 Oct 2006 17:14:32 -0700
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=-0.461 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28378>
 
-Dear diary, on Thu, Oct 05, 2006 at 11:34:42PM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> Junio C Hamano <junkio@cox.net> writes:
-> 
-> > Petr Baudis <pasky@suse.cz> writes:
-> >
-> >>> > > Ping?  This is the only gitweb patch still in my stg stack. I guess
-> >>> > > noone really cares strongly either way since there were no comments.
-> >>> > 
-> >>> > I did not care either way, but I did not like either of these
-> >>> > hardcoded strings in the code, and felt that if we are touching
-> >>> > that part of the code we also should be making real improvement
-> >>> > at the same time ;-).  
-> >>> > 
-> >>> > Doing something like this would let us update it easier, and 
-> >>> > let people override with GITWEB_CONFIG if they want to.
-> >>> 
-> >>> Reasonable.
-> >>> 
-> >>> Acked-by: Petr Baudis <pasky@suse.cz>
-> >>
-> >> So, what happenned to this patch?
-> >
-> > Did anybody send in an applicable patch?
-> 
-> Ah, I found it; you do not have to re-send it.  But do you still
-> want it?
 
-Yes. :-) (I wouldn't prod about it otherwise.)
+It appears that more and more people are finding "git cherry-pick", and we 
+now have a number of totally inane
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+	cherry picked from 1b16e7ac850969f38b375e511e3fa2f474a33867 commit
+
+messages in the kernel logs, because I don't want to just re-cherry-pick 
+them and edit peoples logs.
+
+Those messages not only make no grammatical sense (you'd say "commit X" 
+rather than "X commit"), but they have no point. The original commit is 
+not reachable and makes no sense any more, and that's actually likely to 
+always be the common case.
+
+So could we just (a) fix the message word order to make sense and (b) make 
+it only happen if people explicitly ask for it, rather than by default?
+
+		Linus
