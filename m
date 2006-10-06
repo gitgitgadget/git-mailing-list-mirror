@@ -1,96 +1,96 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Unresolved issues #4
-Date: Fri, 06 Oct 2006 12:56:48 +0200
-Organization: At home
-Message-ID: <eg5co6$g9n$1@sea.gmane.org>
-References: <7vpseyelcw.fsf@assigned-by-dhcp.cox.net> <7vfye20xjt.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: gitweb: using quotemeta
+Date: Fri, 6 Oct 2006 14:38:50 +0200
+Message-ID: <200610061438.50965.jnareb@gmail.com>
+References: <20061002201256.89409.qmail@web31809.mail.mud.yahoo.com> <200610022250.32029.jnareb@gmail.com> <7vven1syg0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri Oct 06 12:57:38 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 06 14:38:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVnOL-00067O-QQ
-	for gcvg-git@gmane.org; Fri, 06 Oct 2006 12:57:22 +0200
+	id 1GVoy0-0007n9-6L
+	for gcvg-git@gmane.org; Fri, 06 Oct 2006 14:38:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751474AbWJFK5T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Oct 2006 06:57:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751476AbWJFK5T
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 06:57:19 -0400
-Received: from main.gmane.org ([80.91.229.2]:57286 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751474AbWJFK5S (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Oct 2006 06:57:18 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GVnNo-0005vJ-PY
-	for git@vger.kernel.org; Fri, 06 Oct 2006 12:56:48 +0200
-Received: from host-81-190-18-48.torun.mm.pl ([81.190.18.48])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 06 Oct 2006 12:56:48 +0200
-Received: from jnareb by host-81-190-18-48.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 06 Oct 2006 12:56:48 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-18-48.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751176AbWJFMiN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 6 Oct 2006 08:38:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbWJFMiM
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 08:38:12 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:28088 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1751176AbWJFMiL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Oct 2006 08:38:11 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so309008ugd
+        for <git@vger.kernel.org>; Fri, 06 Oct 2006 05:38:10 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=JcTCDz02Z4hXbOetCzz1u6i1WUY1XsnWET6SnInFCQwScf0oGHkGmkfApufbHqcDxmXC5X9iqCaRxWZkiV1Q/HulnWf0ZquzO67j+MbGG22cNvJo8J9DSBlhjMmeDpmteWFOKvuMwbFLp0lsR+7QxuY2pywngOAR+v537qsQAJw=
+Received: by 10.67.105.19 with SMTP id h19mr3156982ugm;
+        Fri, 06 Oct 2006 05:38:09 -0700 (PDT)
+Received: from host-81-190-18-48.torun.mm.pl ( [81.190.18.48])
+        by mx.google.com with ESMTP id m4sm1855508ugc.2006.10.06.05.38.08;
+        Fri, 06 Oct 2006 05:38:09 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vven1syg0.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28399>
 
 Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>=20
+>> But you forget that in HTTP headers, to be more exact in
+>> =A0=A0=A0=A0=A0=A0Content-Disposition: inline; filename=3D"<filename=
+>"
+>> header, the quote '"' and end-of-line '\n' characters in <filename>
+>> are treated specially. So you need to quote somehow at least those
+>> two characters.
+>=20
+> True, but untrue. =A0This is just a suggestion so we do not _have_
+> to quote. =A0We only need to avoid spitting out dq and lf
+> literally. =A0We could even just do something like the attached if
+> we wanted to:
+>=20
+> =A0=A0=A0=A0=A0=A0=A0=A0s/[^ -~]+/?/g=A0=A0=A0;# replace each sequenc=
+e of bytes outside
+> =A0 =A0 =A0 =A0 =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 # ' =
+' to '~' range to a '?'
+>=20
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 44991b1..e7202ee 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -2651,7 +2651,7 @@ sub git_blob_plain {
+> =A0=A0=A0=A0=A0=A0=A0=A0# save as filename, even when no $file_name i=
+s given
+> =A0=A0=A0=A0=A0=A0=A0=A0my $save_as =3D "$hash";
+> =A0=A0=A0=A0=A0=A0=A0=A0if (defined $file_name) {
+> -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0$save_as =3D $file_name=
+;
+> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0($save_as =3D $file_nam=
+e) =3D~ s/[^ -~]+/?/g;
+> =A0=A0=A0=A0=A0=A0=A0=A0} elsif ($type =3D~ m/^text\//) {
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0$save_as .=3D '.txt';
+> =A0=A0=A0=A0=A0=A0=A0=A0}
 
-> Recent issues I am aware of but haven't kept track of closely
-> enough and as a result do not have a clue about X-<.
-> 
-> From: A Large Angry SCM <gitzilla@gmail.com>
-> Subject: Notes on Using Git with Subprojects
-> Message-ID: <45196628.9010107@gmail.com>
-> 
-> [jc: a very nice write-up of a subprojects workflow. I do not
->  remember if it produced any actionable items, though]
+I'd rather add (and use) separate subroutine for quoting/escaping
+values in HTTP headers, or to be more exact for the filename part
+of HTTP header "Content-Disposition:". This way if we decide to
+not replace all characters outside US-ASCII in suggested filename
+to save with '?', but only qoublequote '"' and linefeed '\n' characters=
+,
+or even implement RFC 2047 to do the encoding (of course if browsers
+can read it), we could do this in one place.=20
 
-It did produce two workflows: the original "build time"
-by A Large Angry SCM/Gitzilla, which I think is/will be
-available at http://git.rsbx.net/Notes/Git_Subprojects.txt
-and second using linked objects and refs. Both I think not
-quite finished; perhaps some of the code could be put
-in 'pu'.
-
-Perhaps to be added to Subpro.txt in 'todo' branch,
-and/or to git wiki...
-
-> From: Shawn Pearce <spearce@spearce.org>
-> Message-ID: <20060930045037.GB18479@spearce.org>
-> 
-> "git ref-log" command to interact with ref-log?
-> 
-> [jc: not much interest from users?]
-
-I thing it can increase number of reflog users. 
-
-> From: Josh Triplett <josh@freedesktop.org>
-> Message-ID: <451A30E4.50801@freedesktop.org>
-> 
-> git-split
-
-Should be git-split-hierarchy or git-split-by-directory
-I think. We could have also git-split-history, which would
-split current history into archive repository, and active
-repository with archive repository grafted in; or add to
-archive repository if it exists, regraft active (current work)
-repository and prune below new grafts. 
-
-> [jc: no response to the initial review comments]
-
-It is "done once" problem, and usable only for some repositories,
-so perhaps this is the cause of not many responses.
--- 
+How such a subroutine should be named? esc_http? esc_header or esc_hdr?
+esc_http_header? Any other ideas?
+--=20
 Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Poland
