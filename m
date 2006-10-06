@@ -1,60 +1,53 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Decode long title for link tooltips
-Date: Fri, 06 Oct 2006 10:54:46 +0200
-Organization: At home
-Message-ID: <eg55jb$nar$1@sea.gmane.org>
-References: <873baet4ka.wl@mail2.atmark-techno.com> <871wpyt3ch.wl@mail2.atmark-techno.com> <87zmcmroqf.wl@mail2.atmark-techno.com> <eforb7$fgd$1@sea.gmane.org> <87r6xrvi0g.wl@mail2.atmark-techno.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri Oct 06 11:00:21 2006
+From: Dennis Stosberg <dennis@stosberg.net>
+Subject: [PATCH] Remove bashism from t3210-pack-refs.sh
+Date: Fri, 06 Oct 2006 11:10:54 +0200
+Message-ID: <20061006091054.15209.35068.stgit@leonov.stosberg.net>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Fri Oct 06 11:11:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVlXi-0007cl-S5
-	for gcvg-git@gmane.org; Fri, 06 Oct 2006 10:58:55 +0200
+	id 1GVljg-0002RO-1g
+	for gcvg-git@gmane.org; Fri, 06 Oct 2006 11:11:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751355AbWJFI6w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Oct 2006 04:58:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751370AbWJFI6v
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 04:58:51 -0400
-Received: from main.gmane.org ([80.91.229.2]:54930 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751355AbWJFI6v (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Oct 2006 04:58:51 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GVlUq-0006sK-S9
-	for git@vger.kernel.org; Fri, 06 Oct 2006 10:55:57 +0200
-Received: from host-81-190-18-48.torun.mm.pl ([81.190.18.48])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 06 Oct 2006 10:55:56 +0200
-Received: from jnareb by host-81-190-18-48.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 06 Oct 2006 10:55:56 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S932106AbWJFJK5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Oct 2006 05:10:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932110AbWJFJK5
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 05:10:57 -0400
+Received: from kleekamp.stosberg.net ([85.116.201.130]:50307 "EHLO
+	kleekamp.stosberg.net") by vger.kernel.org with ESMTP
+	id S932106AbWJFJK4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Oct 2006 05:10:56 -0400
+Received: from leonov.stosberg.net (localhost [127.0.0.1])
+	by kleekamp.stosberg.net (Postfix) with ESMTP id 8D43D108A0E
+	for <git@vger.kernel.org>; Fri,  6 Oct 2006 11:10:54 +0200 (CEST)
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-18-48.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+User-Agent: StGIT/0.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28393>
 
-Yasushi SHOJI wrote:
+This bashism makes the test fail if /bin/sh is not bash.
 
-[...]]
-> Subject: [PATCH] gitweb: refactor decode() for utf8 conversion
-> 
-> we already had a few place using decode() to convert perl internal
-> encode to utf8.  added a new thin wrapper to do just that.
-> 
-> Signed-off-by: Yasushi SHOJI <yashi@atmark-techno.com>
+Signed-off-by: Dennis Stosberg <dennis@stosberg.net>
+---
 
-What happened to this patch? Dropped or omitted by mistake?
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+ t/t3210-pack-refs.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
+index f31e79c..ca5bd49 100755
+--- a/t/t3210-pack-refs.sh
++++ b/t/t3210-pack-refs.sh
+@@ -23,7 +23,7 @@ SHA1=
+ test_expect_success \
+     'see if git show-ref works as expected' \
+     'git-branch a &&
+-     SHA1=$(< .git/refs/heads/a) &&
++     SHA1=`cat .git/refs/heads/a` &&
+      echo "$SHA1 refs/heads/a" >expect &&
+      git-show-ref a >result &&
+      diff expect result'
