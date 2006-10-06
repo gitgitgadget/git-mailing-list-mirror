@@ -1,55 +1,56 @@
-From: Matthew Wilcox <matthew@wil.cx>
-Subject: Make git-send-email detect mbox-style patches more readily
-Date: Fri, 6 Oct 2006 14:24:14 -0600
-Message-ID: <20061006202414.GR2563@parisc-linux.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: [commit view] Do not suppress commitdiff link in root commit
+Date: Fri, 06 Oct 2006 22:57:05 +0200
+Organization: At home
+Message-ID: <eg6fti$ffc$1@sea.gmane.org>
+References: <20061006165933.4127.72491.stgit@rover>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Oct 06 22:24:38 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Fri Oct 06 22:57:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVwFD-0002m6-A3
-	for gcvg-git@gmane.org; Fri, 06 Oct 2006 22:24:32 +0200
+	id 1GVwko-0000rP-CA
+	for gcvg-git@gmane.org; Fri, 06 Oct 2006 22:57:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932581AbWJFUYQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Oct 2006 16:24:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932583AbWJFUYP
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 16:24:15 -0400
-Received: from palinux.external.hp.com ([192.25.206.14]:25795 "EHLO
-	mail.parisc-linux.org") by vger.kernel.org with ESMTP
-	id S932581AbWJFUYP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Oct 2006 16:24:15 -0400
-Received: by mail.parisc-linux.org (Postfix, from userid 26919)
-	id B7E38494003; Fri,  6 Oct 2006 14:24:14 -0600 (MDT)
+	id S1422956AbWJFU5H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Oct 2006 16:57:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422957AbWJFU5H
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 16:57:07 -0400
+Received: from main.gmane.org ([80.91.229.2]:42730 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1422956AbWJFU5E (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Oct 2006 16:57:04 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GVwkW-0000mR-Tz
+	for git@vger.kernel.org; Fri, 06 Oct 2006 22:56:53 +0200
+Received: from host-81-190-26-229.torun.mm.pl ([81.190.26.229])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 06 Oct 2006 22:56:52 +0200
+Received: from jnareb by host-81-190-26-229.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 06 Oct 2006 22:56:52 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-26-229.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28444>
 
+Petr Baudis wrote:
 
-Earlier today, I embarrassed myself by trying to construct a patch that
-git-send-email would send, and I missed out the putting
+> There's no reason for that, the commitdiff view is meaningful for the
+> root commit as well and we link to it everywhere else.
 
->From garbage
-
-line on the front, which led it to send the patches with a
-Subject: From: Matthew Wilcox <matthew@wil.cx>
-line.  Bad.
-
-This patch makes git-send-email detect an mbox-style file more readily,
-and correctly handles the patches I constructed.
-
---- git-core-willy/git-send-email.perl	2006-07-24 23:45:08.000000000 -0400
-+++ git-core-1.4.1.1/git-send-email.perl	2006-10-06 16:02:37.000000000 -0400
-@@ -451,6 +451,7 @@
- 		if (!$header_done) {
- 			$found_mbox = 1, next if (/^From /);
- 			chomp;
-+			$found_mbox = 1 if (/^(From|Date|Cc|Subject):/);
- 
- 			if ($found_mbox) {
- 				if (/^Subject:\s+(.*)$/) {
+It not used to be. It is since we added '--root' as hash_parent ('hp')
+parameter for parentless commits.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
