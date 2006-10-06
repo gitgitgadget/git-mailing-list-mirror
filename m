@@ -1,80 +1,59 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] gitweb: Convert Content-Disposition filenames into qtext
-Date: Fri, 6 Oct 2006 21:20:06 +0200
-Message-ID: <20061006192006.GW20017@pasky.or.cz>
-References: <20061006191801.68649.qmail@web31815.mail.mud.yahoo.com>
+From: Stefan Richter <stefanr@s5r6.in-berlin.de>
+Subject: Re: Commit to more than one branch at once?
+Date: Fri, 06 Oct 2006 21:23:59 +0200
+Message-ID: <4526AD4F.70305@s5r6.in-berlin.de>
+References: <45269E02.50407@s5r6.in-berlin.de> <BAYC1-PASMTP020F3D66B3E46CDBE82D40AE130@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 06 21:20:26 2006
+X-From: git-owner@vger.kernel.org Fri Oct 06 21:24:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GVvF0-0006J6-IN
-	for gcvg-git@gmane.org; Fri, 06 Oct 2006 21:20:15 +0200
+	id 1GVvIq-0007EK-Vd
+	for gcvg-git@gmane.org; Fri, 06 Oct 2006 21:24:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422869AbWJFTUL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Oct 2006 15:20:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422854AbWJFTUL
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 15:20:11 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:26317 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932458AbWJFTUI (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Oct 2006 15:20:08 -0400
-Received: (qmail 2509 invoked by uid 2001); 6 Oct 2006 21:20:06 +0200
-To: Luben Tuikov <ltuikov@yahoo.com>
-Content-Disposition: inline
-In-Reply-To: <20061006191801.68649.qmail@web31815.mail.mud.yahoo.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1422657AbWJFTYJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Oct 2006 15:24:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422693AbWJFTYJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 15:24:09 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:27027 "EHLO
+	einhorn.in-berlin.de") by vger.kernel.org with ESMTP
+	id S1422657AbWJFTYG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Oct 2006 15:24:06 -0400
+X-Envelope-From: stefanr@s5r6.in-berlin.de
+Received: from [192.168.0.41] ([83.221.230.151])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id k96JNxbA003414
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 6 Oct 2006 21:24:00 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.6) Gecko/20060730 SeaMonkey/1.0.4
+To: Sean <seanlkml@sympatico.ca>
+In-Reply-To: <BAYC1-PASMTP020F3D66B3E46CDBE82D40AE130@CEZ.ICE>
+X-Enigmail-Version: 0.94.1.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28439>
 
-Dear diary, on Fri, Oct 06, 2006 at 09:18:01PM CEST, I got a letter
-where Luben Tuikov <ltuikov@yahoo.com> said that...
-> Convert a string (e.g. a filename) into qtext as defined
-> in RFC 822, from RFC 2183.  To be used by Content-Disposition.
+Sean wrote:
+> Only merging the branches will make the commit show up in branch B with
+> the same SHA1 number (or identity) that it had in branch A.  This is a
+> fundamental part of Git.  The sha1 of each commit is based in part on
+> the sha1 of its parent.  Thus it's impossible[1] to copy a commit to
+> another branch (ie. reparent it) without changing its identity.
 > 
-> Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
-> ---
->  gitweb/gitweb.perl |   18 ++++++++++++++----
->  1 files changed, 14 insertions(+), 4 deletions(-)
+> Sean
+> 
+> [1]  Okay, more or less impossible.. don't ask me do the math.
 
-Content-Description: 1207600725-p1.txt
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index f848648..a35d02c 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -520,6 +520,16 @@ sub esc_html {
->  	return $str;
->  }
->  
-> +# Convert a string (e.g. a filename) into qtext as defined
-> +# in RFC 822, from RFC 2183.  To be used by Content-Disposition.
-> +sub to_qtext {
-> +	my $str = shift;
-> +	$str =~ s/\\/\\\\/g;
-> +	$str =~ s/\"/\\\"/g;
-> +	$str =~ s/\r/\\r/g;
-
-\r? Not \n?
-
-> +	return $str;
-> +}
-> +
->  # git may return quoted and escaped filenames
->  sub unquote {
->  	my $str = shift;
-
-Other than that,
-
-Acked-by: Petr Baudis <pasky@suse.cz>
-
+Ah, I didn't see the wood for the trees. And this dependence of a
+commit's identity on the history is also a (or the) reason why mergers
+are necessarily spliced in as commits with unique identity too...
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+Stefan Richter
+-=====-=-==- =-=- --==-
+http://arcgraph.de/sr/
