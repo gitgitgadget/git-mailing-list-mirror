@@ -1,61 +1,46 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH 2/2] gitweb: Show trailing slash when listing tree entry in tree listing
-Date: Sat, 7 Oct 2006 21:12:46 +0200
-Message-ID: <20061007191246.GF20017@pasky.or.cz>
-References: <20061007141043.16912.73982.stgit@rover> <20061007184418.64881.qmail@web31812.mail.mud.yahoo.com> <eg8tpu$drj$1@sea.gmane.org>
+Subject: Re: [PATCH 1/2] gitweb: Show snapshot links for tree entries in tree listing
+Date: Sat, 7 Oct 2006 21:15:52 +0200
+Message-ID: <20061007191552.GG20017@pasky.or.cz>
+References: <20061007184148.GE20017@pasky.or.cz> <20061007185253.90045.qmail@web31810.mail.mud.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 07 21:13:16 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 07 21:18:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GWHbZ-0002cq-FM
-	for gcvg-git@gmane.org; Sat, 07 Oct 2006 21:13:02 +0200
+	id 1GWHeO-0003eG-S4
+	for gcvg-git@gmane.org; Sat, 07 Oct 2006 21:15:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932725AbWJGTMt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Oct 2006 15:12:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932778AbWJGTMt
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 15:12:49 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:59353 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932725AbWJGTMs (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Oct 2006 15:12:48 -0400
-Received: (qmail 25307 invoked by uid 2001); 7 Oct 2006 21:12:46 +0200
-To: Jakub Narebski <jnareb@gmail.com>
+	id S932778AbWJGTPy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Oct 2006 15:15:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932779AbWJGTPy
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 15:15:54 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:54731 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932778AbWJGTPx (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Oct 2006 15:15:53 -0400
+Received: (qmail 25623 invoked by uid 2001); 7 Oct 2006 21:15:52 +0200
+To: Luben Tuikov <ltuikov@yahoo.com>
 Content-Disposition: inline
-In-Reply-To: <eg8tpu$drj$1@sea.gmane.org>
+In-Reply-To: <20061007185253.90045.qmail@web31810.mail.mud.yahoo.com>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28500>
 
-Dear diary, on Sat, Oct 07, 2006 at 09:06:25PM CEST, I got a letter
-where Jakub Narebski <jnareb@gmail.com> said that...
-> Luben Tuikov wrote:
-> 
-> > --- Petr Baudis <pasky@suse.cz> wrote:
-> >> +                          esc_html($t->{'name'} . '/'));
-> > 
-> > First, this is a Unixism, and would confuse other OS users.
+Dear diary, on Sat, Oct 07, 2006 at 08:52:53PM CEST, I got a letter
+where Luben Tuikov <ltuikov@yahoo.com> said that...
+> Another thing is that currently tree/directory entries' third (links)
+> column to be shortest of all, and this gives my eyes another indication
+> that this is a tree.
 
-drwxr-xr-x
-
-> By the way, I miss somewhat the "redundant" tree/blob links in tree
-> view...
-
-I didn't want to post about it but I share the feeling - I have to keep
-thinking consciously about clicking on the file name instead of on the
-view name - and the situation is worse for regular files, since it is
-not really apparent that the filenames are clickablea. My mind knows
-that I'm supposed to click on them (not users' mind!), but the eyes and
-hands are still clueless.
-
-So, I'd like to either have the view links or the filenames in classical
-link style so that it's apparent they are clickable; I didn't post a
-patch since I didn't have time/energy to fight for it yet. ;-)
+What would people think about first listing all the trees, then all the
+blobs? Just like LANG=C ls does, as well as cvsweb and overally most of
+the rest of the relevant world.
 
 -- 
 				Petr "Pasky" Baudis
