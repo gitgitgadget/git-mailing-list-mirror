@@ -1,191 +1,81 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] gitweb: Document features better
-Date: Sat, 07 Oct 2006 15:17:47 +0200
-Message-ID: <20061007131746.13690.38921.stgit@rover>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Oct 07 15:19:01 2006
+Subject: Re: [PATCH] gitweb: Do not print "log" and "shortlog" redundantly in commit view
+Date: Sat, 7 Oct 2006 15:24:57 +0200
+Message-ID: <20061007132457.GB20017@pasky.or.cz>
+References: <eg51fi$7rs$2@sea.gmane.org> <20061006221603.50873.qmail@web31815.mail.mud.yahoo.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 07 15:25:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GWC4M-0000vv-SN
-	for gcvg-git@gmane.org; Sat, 07 Oct 2006 15:18:24 +0200
+	id 1GWCAx-0002S9-J3
+	for gcvg-git@gmane.org; Sat, 07 Oct 2006 15:25:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932079AbWJGNRu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Oct 2006 09:17:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932067AbWJGNRu
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 09:17:50 -0400
-Received: from rover.dkm.cz ([62.24.64.27]:47579 "EHLO rover.dkm.cz")
-	by vger.kernel.org with ESMTP id S932087AbWJGNRs (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Oct 2006 09:17:48 -0400
-Received: from [127.0.0.1] (rover [127.0.0.1])
-	by rover.dkm.cz (Postfix) with ESMTP id 1E6468BBE5;
-	Sat,  7 Oct 2006 15:17:47 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: 7vbqoowmb4.fsf@assigned-by-dhcp.cox.net
-References: 7vbqoowmb4.fsf@assigned-by-dhcp.cox.net
-User-Agent: StGIT/0.10
+	id S1750720AbWJGNY7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Oct 2006 09:24:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751777AbWJGNY7
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 09:24:59 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:14245 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750720AbWJGNY7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Oct 2006 09:24:59 -0400
+Received: (qmail 24915 invoked by uid 2001); 7 Oct 2006 15:24:57 +0200
+To: Luben Tuikov <ltuikov@yahoo.com>
+Content-Disposition: inline
+In-Reply-To: <20061006221603.50873.qmail@web31815.mail.mud.yahoo.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28481>
 
-This expands gitweb/README to talk some more about GITWEB_CONFIG, moves
-feature-specific documentation in gitweb.cgi to the inside of the %features
-array, and adds some short description of all the features.
+Dear diary, on Sat, Oct 07, 2006 at 12:16:03AM CEST, I got a letter
+where Luben Tuikov <ltuikov@yahoo.com> said that...
+> --- Jakub Narebski <jnareb@gmail.com> wrote:
+> > Gaah, the whole cae1862a3b55b487731e9857f2213ac59d5646d commit
+> > "gitweb: More per-view navigation bar links" is somewhat broken.
+> > Up to this point we used top navigation bar for commit (hash base)
+> > or whole project related links, while bottom part of navigation
+> > bar for "formats" i.e. links related to current view (passing hash)
+> > or for pagination.
+> > 
+> > So while "snapshot" link has it's place in top navigation bar
+> > (but by modyfying git_print_page_nav subroutine, not by adding it
+> > by hand), "history" for example IMHO doesn't; history link should be
+> > present in the bottom part of navigation bar. Perhaps we could
+> > reuse git_print_page_nav for formats, for example blob wiew would have
+> >         blob | _blame_ | _history_ | _raw_ | _HEAD_
+> > while tree view would have
+> >         tree | _snapshot_ | _history_ | _HEAD_
+> > (where _text_ indices link).  Perhaps _snapshot_ in tree view
+> > shouldn't be repeated, although top one might mean snapshot of commitish,
+> > bottom one snapshot of tree.
+> 
+> Only a single one: of committish please.
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+Then it will be impossible to get snapshot of any subtree (apart of
+manually constructing the URL). Hmm, and it's a bug that we don't show
+the snapshot link when listing tree entry in tree listing, I thought we
+did in the past...?
 
- gitweb/README      |   16 +++++++++++++-
- gitweb/gitweb.perl |   59 ++++++++++++++++++++++++++++++++++++----------------
- 2 files changed, 56 insertions(+), 19 deletions(-)
+I think we should make it more clear what each of the bars concerns,
+perhaps doing some more significant redesign:
 
-diff --git a/gitweb/README b/gitweb/README
-index 78e6fc0..e02e90f 100644
---- a/gitweb/README
-+++ b/gitweb/README
-@@ -26,12 +26,26 @@ You can specify the following configurat
-  * GITWEB_LOGO
-    Points to the location where you put git-logo.png on your web server.
-  * GITWEB_CONFIG
--   This file will be loaded using 'require'.  If the environment
-+   This file will be loaded using 'require' and can be used to override any
-+   of the options above as well as some other options - see the top of
-+   'gitweb.cgi' for their full list and description.  If the environment
-    $GITWEB_CONFIG is set when gitweb.cgi is executed the file in the
-    environment variable will be loaded instead of the file
-    specified when gitweb.cgi was created.
- 
- 
-+Runtime gitweb configuration
-+----------------------------
-+
-+You can adjust gitweb behaviour using the file specified in `GITWEB_CONFIG`
-+(defaults to 'gitweb_config.perl' in the same directory as the CGI).
-+See the top of 'gitweb.cgi' for the list of variables and some description.
-+The most notable thing that is not configurable at compile time are the
-+optional features, stored in the '%features' variable. You can find further
-+description on how to reconfigure the default features setting in your
-+`GITWEB_CONFIG` or per-project in `project.git/config` inside 'gitweb.cgi'.
-+
-+
- Webserver configuration
- -----------------------
- 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index b06e96a..c4970f4 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -100,22 +100,62 @@ our %feature = (
- 	#
- 	# use gitweb_check_feature(<feature>) to check if <feature> is enabled
- 
-+	# Enable the 'blame' blob view, showing the last commit that modified
-+	# each line in the file. This can be very CPU-intensive.
-+
-+	# To enable system wide have in $GITWEB_CONFIG
-+	# $feature{'blame'}{'default'} = [1];
-+	# To have project specific config enable override in $GITWEB_CONFIG
-+	# $feature{'blame'}{'override'} = 1;
-+	# and in project config gitweb.blame = 0|1;
- 	'blame' => {
- 		'sub' => \&feature_blame,
- 		'override' => 0,
- 		'default' => [0]},
- 
-+	# Enable the 'snapshot' link, providing a compressed tarball of any
-+	# tree. This can potentially generate high traffic if you have large
-+	# project.
-+
-+	# To disable system wide have in $GITWEB_CONFIG
-+	# $feature{'snapshot'}{'default'} = [undef];
-+	# To have project specific config enable override in $GITWEB_CONFIG
-+	# $feature{'blame'}{'override'} = 1;
-+	# and in project config gitweb.snapshot = none|gzip|bzip2;
- 	'snapshot' => {
- 		'sub' => \&feature_snapshot,
- 		'override' => 0,
- 		#         => [content-encoding, suffix, program]
- 		'default' => ['x-gzip', 'gz', 'gzip']},
- 
-+	# Enable the pickaxe search, which will list the commits that modified
-+	# a given string in a file. This can be practical and quite faster
-+	# alternative to 'blame', but still potentially CPU-intensive.
-+
-+	# To enable system wide have in $GITWEB_CONFIG
-+	# $feature{'pickaxe'}{'default'} = [1];
-+	# To have project specific config enable override in $GITWEB_CONFIG
-+	# $feature{'pickaxe'}{'override'} = 1;
-+	# and in project config gitweb.pickaxe = 0|1;
- 	'pickaxe' => {
- 		'sub' => \&feature_pickaxe,
- 		'override' => 0,
- 		'default' => [1]},
- 
-+	# Make gitweb use an alternative format of the URLs which can be
-+	# more readable and natural-looking: project name and some other
-+	# information is embedded directly in the path and the query string
-+	# contains only auxiliary information. All gitweb installations
-+	# support recognizing URL in both formats, this configures only
-+	# which formats the gitweb-generated links should use.
-+
-+	# To enable system wide have in $GITWEB_CONFIG
-+	# $feature{'pathinfo'}{'default'} = [1];
-+	# Project specific override is not supported.
-+	# Note that you will need to change the default location of CSS,
-+	# favicon, logo and possibly other files to an absolute URL. Also,
-+	# if gitweb.cgi serves as your indexfile, you will need to force
-+	# $my_uri to contain the script name in your $GITWEB_CONFIG.
- 	'pathinfo' => {
- 		'override' => 0,
- 		'default' => [0]},
-@@ -136,12 +176,6 @@ sub gitweb_check_feature {
- 	return $sub->(@defaults);
- }
- 
--# To enable system wide have in $GITWEB_CONFIG
--# $feature{'blame'}{'default'} = [1];
--# To have project specific config enable override in $GITWEB_CONFIG
--# $feature{'blame'}{'override'} = 1;
--# and in project config gitweb.blame = 0|1;
--
- sub feature_blame {
- 	my ($val) = git_get_project_config('blame', '--bool');
- 
-@@ -154,12 +188,6 @@ sub feature_blame {
- 	return $_[0];
- }
- 
--# To disable system wide have in $GITWEB_CONFIG
--# $feature{'snapshot'}{'default'} = [undef];
--# To have project specific config enable override in $GITWEB_CONFIG
--# $feature{'blame'}{'override'} = 1;
--# and in project config  gitweb.snapshot = none|gzip|bzip2
--
- sub feature_snapshot {
- 	my ($ctype, $suffix, $command) = @_;
- 
-@@ -183,12 +211,6 @@ sub gitweb_have_snapshot {
- 	return $have_snapshot;
- }
- 
--# To enable system wide have in $GITWEB_CONFIG
--# $feature{'pickaxe'}{'default'} = [1];
--# To have project specific config enable override in $GITWEB_CONFIG
--# $feature{'pickaxe'}{'override'} = 1;
--# and in project config gitweb.pickaxe = 0|1;
--
- sub feature_pickaxe {
- 	my ($val) = git_get_project_config('pickaxe', '--bool');
- 
-@@ -434,6 +456,7 @@ sub href(%) {
- 	my ($use_pathinfo) = gitweb_check_feature('pathinfo');
- 	if ($use_pathinfo) {
- 		# use PATH_INFO for project name
-+		# TODO: use PATH_INFO for other stuff as well
- 		$href .= "/$params{'project'}" if defined $params{'project'};
- 		delete $params{'project'};
- 
+[summary] is redundant, you have this big project name link in the top
+left corner. All the other navbar options concern commit, so why not
+merge it with the awkward commit box below the navbars?
+
+All the "views bar" options concern the currently selected object, so
+why not merge it with the object "descriptor", that is the path?
+
+Patches will follow up.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
