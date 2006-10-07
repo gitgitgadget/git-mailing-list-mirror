@@ -1,79 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitweb: Convert Content-Disposition filenames into qtext
-Date: Sat, 07 Oct 2006 03:34:02 -0700
-Message-ID: <7vvemwqusl.fsf@assigned-by-dhcp.cox.net>
-References: <20061006192006.GW20017@pasky.or.cz>
-	<20061006193059.21334.qmail@web31807.mail.mud.yahoo.com>
-	<7vk63ctq47.fsf@assigned-by-dhcp.cox.net> <eg7u5n$mt9$1@sea.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC PATCH] Add WEBDAV timeout to http-fetch.
+Date: Sat, 07 Oct 2006 13:27:39 +0200
+Organization: At home
+Message-ID: <eg82tq$2uq$1@sea.gmane.org>
+References: <20061006212616.GA5175@lumumba.uhasselt.be> <20061006220542.GA5890@lumumba.uhasselt.be> <BAYC1-PASMTP08A34A8FB0703E4D2ABAF9AE130@CEZ.ICE> <BAYC1-PASMTP11CF83A008B0B3BA5F6B15AE100@CEZ.ICE> <7viriwsa75.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, ltuikov@yahoo.com
-X-From: git-owner@vger.kernel.org Sat Oct 07 12:34:42 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Sat Oct 07 13:27:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GW9VT-0004XO-4K
-	for gcvg-git@gmane.org; Sat, 07 Oct 2006 12:34:12 +0200
+	id 1GWAKj-0004KB-05
+	for gcvg-git@gmane.org; Sat, 07 Oct 2006 13:27:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750807AbWJGKeF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Oct 2006 06:34:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750809AbWJGKeF
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 06:34:05 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:37374 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1750807AbWJGKeD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Oct 2006 06:34:03 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061007103402.UFKX22409.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 7 Oct 2006 06:34:02 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id XNa51V00A1kojtg0000000
-	Sat, 07 Oct 2006 06:34:05 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <eg7u5n$mt9$1@sea.gmane.org> (Jakub Narebski's message of "Sat,
-	07 Oct 2006 12:06:31 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750922AbWJGL1F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 7 Oct 2006 07:27:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750931AbWJGL1E
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 07:27:04 -0400
+Received: from main.gmane.org ([80.91.229.2]:7602 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750922AbWJGL1C (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Oct 2006 07:27:02 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GWAKX-0004HG-83
+	for git@vger.kernel.org; Sat, 07 Oct 2006 13:26:57 +0200
+Received: from host-81-190-22-223.torun.mm.pl ([81.190.22.223])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 07 Oct 2006 13:26:57 +0200
+Received: from jnareb by host-81-190-22-223.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 07 Oct 2006 13:26:57 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-22-223.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28473>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Junio C Hamano wrote:
 
-> Junio C Hamano wrote:
->
->> Luben Tuikov <ltuikov@yahoo.com> writes:
->> 
->>>>> +# Convert a string (e.g. a filename) into qtext as defined
->>>>> +# in RFC 822, from RFC 2183.  To be used by Content-Disposition.
->>>>> +sub to_qtext {
->>>>> +  my $str = shift;
->>>>> +  $str =~ s/\\/\\\\/g;
->>>>> +  $str =~ s/\"/\\\"/g;
->
-> Here probably it could be
->         $str =~ s/"/\\"/g;
->
->>>>> +  $str =~ s/\r/\\r/g;
->>>> 
->>>> \r? Not \n?
->>>
->>> Yes, \r, not \n.
->> 
->> \r to \\r? Not to \\\r?
->
-> We want "\r" in suggested filename, not "\
-> " I think, so it is "\\r".
+> I think it is prudent to protect the client from a broken server
+> and it is independent from "fixing" the server side. =A0It would
+> perhaps make sense to make this overridable somehow but I am not
+> sure how -- .git/config is too global (the problem would be per
+> remote site), and having the user to set environment variable
+> only when going to specific server is too cumbersome to be
+> useful. =A0This ideally should be a per-remote configuration
+> item.
 
-Is that what you guys are attempting to achieve?
-
-If we are trying to suggest a filename that is safe by avoiding
-certain characters, I suspect leaving a backslash and dq as-is
-is just as bad as leaving a CR in.  So if that is the goal here,
-I think it might be better and a lot simpler to just replace
-each run of bytes not in Portable Filename Character Set with an
-underscore '_'.
+Perhaps use undocumented (hint, hint! for whoever did code this)
+per-user ~/.gitconfig?
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
