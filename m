@@ -1,51 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitweb: [commit view] Do not suppress commitdiff link in root commit
-Date: Sat, 07 Oct 2006 00:25:52 -0700
-Message-ID: <7vmz88ziwv.fsf@assigned-by-dhcp.cox.net>
-References: <20061006165933.4127.72491.stgit@rover>
+From: takis@lumumba.uhasselt.be (Panagiotis Issaris)
+Subject: Re: [RFC PATCH] Add WEBDAV timeout to http-fetch.
+Date: Sat, 7 Oct 2006 10:30:46 +0200
+Message-ID: <20061007083046.GB12900@lumumba.uhasselt.be>
+References: <20061006212616.GA5175@lumumba.uhasselt.be> <20061006220542.GA5890@lumumba.uhasselt.be> <BAYC1-PASMTP08A34A8FB0703E4D2ABAF9AE130@CEZ.ICE> <20061006220401.a4485d67.seanlkml@sympatico.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Oct 07 09:26:09 2006
+X-From: git-owner@vger.kernel.org Sat Oct 07 10:31:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GW6ZL-0002Dt-0S
-	for gcvg-git@gmane.org; Sat, 07 Oct 2006 09:25:59 +0200
+	id 1GW7ap-0007YB-La
+	for gcvg-git@gmane.org; Sat, 07 Oct 2006 10:31:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932695AbWJGHZx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Oct 2006 03:25:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932760AbWJGHZx
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 03:25:53 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:36584 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S932695AbWJGHZw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Oct 2006 03:25:52 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061007072552.QHDO26416.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 7 Oct 2006 03:25:52 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id XKRv1V0051kojtg0000000
-	Sat, 07 Oct 2006 03:25:55 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20061006165933.4127.72491.stgit@rover> (Petr Baudis's message of
-	"Fri, 06 Oct 2006 18:59:33 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750723AbWJGIat (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Oct 2006 04:30:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750794AbWJGIat
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 04:30:49 -0400
+Received: from student.uhasselt.be ([193.190.2.1]:47113 "EHLO
+	student.uhasselt.be") by vger.kernel.org with ESMTP
+	id S1750723AbWJGIas (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Oct 2006 04:30:48 -0400
+Received: from localhost (datastorage.uhasselt.be [193.190.2.17])
+	by student.uhasselt.be (Postfix) with ESMTP id B604111E7
+	for <git@vger.kernel.org>; Sat,  7 Oct 2006 10:30:46 +0200 (CEST)
+X-Virus-Scanned: by Amavisd antivirus & antispam cluster at uhasselt.be
+Received: from lumumba.uhasselt.be (lumumba.uhasselt.be [193.190.9.252])
+	by student.uhasselt.be (Postfix) with ESMTP id 98EDD13AE
+	for <git@vger.kernel.org>; Sat,  7 Oct 2006 10:30:46 +0200 (CEST)
+Received: by lumumba.uhasselt.be (Postfix, from userid 1000)
+	id 8CE99EDB0F; Sat,  7 Oct 2006 10:30:46 +0200 (CEST)
+To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20061006220401.a4485d67.seanlkml@sympatico.ca>
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28457>
 
-Petr Baudis <pasky@suse.cz> writes:
+Hi,
 
-> There's no reason for that, the commitdiff view is meaningful for the
-> root commit as well and we link to it everywhere else.
+Thanks for your quick reply!
 
-It probably is not any more useful than the blob view but I
-agree there is no strong reason to supress it, as long as the
-commitdiff page is prepared to show the root commit (which I
-haven't checked -- if you have --root you should be Ok).
+On Fri, Oct 06, 2006 at 10:04:01PM -0400 or thereabouts, Sean wrote:
+> If a server is having problems delivering the Git repo over WEBDAV,
+> timeout after two minutes so that a regular http transfer can
+> be tried.
+> [...]
+> Maybe the real solution is just to figure out and fix whatever is
+> going on with the WEBDAV server and forget this patch.
+I had a quick glance at the Apache2 config on this server:
+grep -i dav /etc/apache2/apache2.conf
+# redirects for folders with DAV methods.
+BrowserMatch "^WebDAVFS/1.[012]" redirect-carefully
+
+Google showed me some bugs occurring on other software where they said
+the problems were happening because the redirect weren't handled
+correctly. I haven't got a clue about this, but thought mentioning it
+might ring someone's bell :)
+
+With friendly regards,
+Takis
+-- 
+OpenPGP key: http://lumumba.luc.ac.be/takis/takis_public_key.txt
+fingerprint: 6571 13A3 33D9 3726 F728  AA98 F643 B12E ECF3 E029
