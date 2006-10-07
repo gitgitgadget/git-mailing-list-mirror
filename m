@@ -1,78 +1,67 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] move --show-cdup, --show-prefix, and --show-git-dir out of git-rev-parse.
-Date: Sat, 7 Oct 2006 23:36:03 +0200
-Message-ID: <20061007213603.GB2871@admingilde.org>
-References: <20061007210429.GA2871@admingilde.org> <eg95a6$2v7$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC PATCH] Add WEBDAV timeout to http-fetch.
+Date: Sat, 07 Oct 2006 15:24:10 -0700
+Message-ID: <7vvemvpxx1.fsf@assigned-by-dhcp.cox.net>
+References: <20061006212616.GA5175@lumumba.uhasselt.be>
+	<20061006220542.GA5890@lumumba.uhasselt.be>
+	<BAYC1-PASMTP08A34A8FB0703E4D2ABAF9AE130@CEZ.ICE>
+	<BAYC1-PASMTP11CF83A008B0B3BA5F6B15AE100@CEZ.ICE>
+	<7viriwsa75.fsf@assigned-by-dhcp.cox.net>
+	<20061007193559.GA27920@poseidon.issaris.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="CPn8Wy5ME997YUMW"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 07 23:36:14 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Sean <seanlkml@sympatico.ca>, git@vger.kernel.org,
+	Nick Hengeveld <nickh@reactrix.com>
+X-From: git-owner@vger.kernel.org Sun Oct 08 00:24:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GWJq5-0000lj-ML
-	for gcvg-git@gmane.org; Sat, 07 Oct 2006 23:36:10 +0200
+	id 1GWKaq-0001vz-9U
+	for gcvg-git@gmane.org; Sun, 08 Oct 2006 00:24:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932869AbWJGVgG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Oct 2006 17:36:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932868AbWJGVgG
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 17:36:06 -0400
-Received: from agent.admingilde.org ([213.95.21.5]:39586 "EHLO
-	mail.admingilde.org") by vger.kernel.org with ESMTP id S932869AbWJGVgE
-	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 7 Oct 2006 17:36:04 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1GWJpz-0007Ry-CM; Sat, 07 Oct 2006 23:36:03 +0200
-To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <eg95a6$2v7$1@sea.gmane.org>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S1750928AbWJGWYN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Oct 2006 18:24:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750977AbWJGWYN
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 18:24:13 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:16791 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1750922AbWJGWYM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Oct 2006 18:24:12 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061007222411.OSAN13992.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 7 Oct 2006 18:24:11 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id XaQD1V00f1kojtg0000000
+	Sat, 07 Oct 2006 18:24:14 -0400
+To: Panagiotis Issaris <takis.issaris@uhasselt.be>
+In-Reply-To: <20061007193559.GA27920@poseidon.issaris.org> (Panagiotis
+	Issaris's message of "Sat, 7 Oct 2006 21:35:59 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28512>
 
+Panagiotis Issaris <takis.issaris@uhasselt.be> writes:
 
---CPn8Wy5ME997YUMW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> > Maybe the real solution is just to figure out and fix whatever is
+>> > going on with the WEBDAV server and forget this patch.
+>> 
+>> I think it is prudent to protect the client from a broken server
+>> and it is independent from "fixing" the server side.  It would
+>>[...]
+> Wouldn't most users ctrl-c the program before the two minute timeout occurs?
+> Especially since their appears to be nothing happening?
 
-On Sat, Oct 07, 2006 at 11:14:34PM +0200, Jakub Narebski wrote:
-> Martin Waitz wrote:
-> > They don't really have anything to do with refs.
->=20
-> But is it a good idea to add yet another command? We have too many of them
-> already...
+I think we are talking about the same thing -- after you kill it
+with C-c you would want to work it around.  The question is how?
 
-true
-
-> I'd rather add one command, git-admin/git-config, or just move the options
-> to the "git" command. So we would have "git --show-git-dir" in addition to
-> "git --git-dir=3D<directory>".
-
-I thought doing the same for these commands as for --help and --version
-but wanted to hear some opinions first...
-
-After all, the comment in front of --version talked about legacy,
-so I was afraid to add more legacy ;-)
-
---=20
-Martin Waitz
-
---CPn8Wy5ME997YUMW
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFKB3Dj/Eaxd/oD7IRAloYAJ4r+f89deDb+chwgFpeeGuEaUmeSgCdGqFO
-JWWTfbrNtsS/Smh0uMfMK4k=
-=pDHz
------END PGP SIGNATURE-----
-
---CPn8Wy5ME997YUMW--
+You would want to re-run with timeout value of 0 second (or
+WEBDAV disabled, if we can have such an option); if it works
+then you would want the tool to remember that you want to use
+that particular settings but probably only when talking to that
+remote.
