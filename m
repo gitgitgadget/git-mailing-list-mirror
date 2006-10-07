@@ -1,69 +1,78 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [PATCH 2/2] gitweb: Show trailing slash when listing tree entry
- in tree listing
-Date: Sat, 07 Oct 2006 14:31:43 -0700
-Message-ID: <45281CBF.7030405@gmail.com>
-References: <20061007184418.64881.qmail@web31812.mail.mud.yahoo.com>
-Reply-To: git@vger.kernel.org
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [RFC] move --show-cdup, --show-prefix, and --show-git-dir out of git-rev-parse.
+Date: Sat, 7 Oct 2006 23:36:03 +0200
+Message-ID: <20061007213603.GB2871@admingilde.org>
+References: <20061007210429.GA2871@admingilde.org> <eg95a6$2v7$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 07 23:32:04 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="CPn8Wy5ME997YUMW"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 07 23:36:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GWJlx-0008LW-ER
-	for gcvg-git@gmane.org; Sat, 07 Oct 2006 23:31:53 +0200
+	id 1GWJq5-0000lj-ML
+	for gcvg-git@gmane.org; Sat, 07 Oct 2006 23:36:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932857AbWJGVbu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Oct 2006 17:31:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932859AbWJGVbu
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 17:31:50 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:10371 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S932857AbWJGVbt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Oct 2006 17:31:49 -0400
-Received: by nf-out-0910.google.com with SMTP id x30so1531214nfb
-        for <git@vger.kernel.org>; Sat, 07 Oct 2006 14:31:48 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=VS5h7aBluzZUTVv/SrKoQxARralLRJjx6mB0dfImSv128M48ge5FPTSYu4h6LErCvKuRZZpctWYuq9PcZhZLuQLFSo+QgL9XoXwQ3JhG+qHz9r7+ETSiTr0uAM9IIvKFjdF6d2KVxZhLIo8bQvUISMMZ9/CzsK6gW5Xp7TBIp38=
-Received: by 10.78.123.5 with SMTP id v5mr3197359huc;
-        Sat, 07 Oct 2006 14:31:48 -0700 (PDT)
-Received: from ?10.0.0.6? ( [68.233.231.217])
-        by mx.google.com with ESMTP id 32sm4992472hui.2006.10.07.14.31.46;
-        Sat, 07 Oct 2006 14:31:47 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060911)
-To: ltuikov@yahoo.com
-In-Reply-To: <20061007184418.64881.qmail@web31812.mail.mud.yahoo.com>
+	id S932869AbWJGVgG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Oct 2006 17:36:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932868AbWJGVgG
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 17:36:06 -0400
+Received: from agent.admingilde.org ([213.95.21.5]:39586 "EHLO
+	mail.admingilde.org") by vger.kernel.org with ESMTP id S932869AbWJGVgE
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 7 Oct 2006 17:36:04 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1GWJpz-0007Ry-CM; Sat, 07 Oct 2006 23:36:03 +0200
+To: Jakub Narebski <jnareb@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <eg95a6$2v7$1@sea.gmane.org>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28511>
 
-Luben Tuikov wrote:
-> --- Petr Baudis <pasky@suse.cz> wrote:
->> Signed-off-by: Petr Baudis <pasky@suse.cz>
->> ---
-> 
-> First, this is a Unixism, and would confuse other OS users.
-> Second, "/" is after all _not part of the name_ of the tree/directory,
-> but part of the filesystem's path separator, let's not export it
-> to users of other OS's.
-> Third, directories/trees are already clearly 
->   1) underlined, and
->   2) differently colored,
-> which makes it overly obvious what it what.
-> 
-> In fact, my eyes only scan for the different color/underlined
-> entries when I'm searching for a directory in tree view.  I don't even
-> look at the left-most column.
 
-Not that I care that much, but
-   1) not all browsers show underlines (try some text mode browsers)
-   2) not all browsers show colors (try some text mode browsers)
-   2) not all people see all colors
+--CPn8Wy5ME997YUMW
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Sat, Oct 07, 2006 at 11:14:34PM +0200, Jakub Narebski wrote:
+> Martin Waitz wrote:
+> > They don't really have anything to do with refs.
+>=20
+> But is it a good idea to add yet another command? We have too many of them
+> already...
+
+true
+
+> I'd rather add one command, git-admin/git-config, or just move the options
+> to the "git" command. So we would have "git --show-git-dir" in addition to
+> "git --git-dir=3D<directory>".
+
+I thought doing the same for these commands as for --help and --version
+but wanted to hear some opinions first...
+
+After all, the comment in front of --version talked about legacy,
+so I was afraid to add more legacy ;-)
+
+--=20
+Martin Waitz
+
+--CPn8Wy5ME997YUMW
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFKB3Dj/Eaxd/oD7IRAloYAJ4r+f89deDb+chwgFpeeGuEaUmeSgCdGqFO
+JWWTfbrNtsS/Smh0uMfMK4k=
+=pDHz
+-----END PGP SIGNATURE-----
+
+--CPn8Wy5ME997YUMW--
