@@ -1,87 +1,117 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: [RFC PATCH] Add WEBDAV timeout to http-fetch.
-Date: Fri, 6 Oct 2006 22:04:01 -0400
-Message-ID: <BAYC1-PASMTP11CF83A008B0B3BA5F6B15AE100@CEZ.ICE>
-References: <20061006212616.GA5175@lumumba.uhasselt.be>
-	<20061006220542.GA5890@lumumba.uhasselt.be>
-	<BAYC1-PASMTP08A34A8FB0703E4D2ABAF9AE130@CEZ.ICE>
+From: Len Brown <len.brown@intel.com>
+Subject: Re: git-send-email w/ headers
+Date: Sat, 7 Oct 2006 00:40:48 -0400
+Organization: Intel Open Source Technology Center
+Message-ID: <200610070040.48919.len.brown@intel.com>
+References: <200610041250.50272.len.brown@intel.com> <200610060041.56807.len.brown@intel.com> <7v1wpm2cxd.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Len Brown <lenb@kernel.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: takis@lumumba.uhasselt.be (Panagiotis Issaris), git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 07 04:05:41 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 07 06:39:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GW1Xt-0005EW-UV
-	for gcvg-git@gmane.org; Sat, 07 Oct 2006 04:04:10 +0200
+	id 1GW3xj-0000jr-9b
+	for gcvg-git@gmane.org; Sat, 07 Oct 2006 06:38:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422886AbWJGCEG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Oct 2006 22:04:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423049AbWJGCEG
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Oct 2006 22:04:06 -0400
-Received: from bayc1-pasmtp11.bayc1.hotmail.com ([65.54.191.171]:45108 "EHLO
-	BAYC1-PASMTP11.CEZ.ICE") by vger.kernel.org with ESMTP
-	id S1422886AbWJGCED (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Oct 2006 22:04:03 -0400
-X-Originating-IP: [65.93.42.136]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.42.136]) by BAYC1-PASMTP11.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 6 Oct 2006 19:12:29 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GW1Xl-0004EW-QF; Fri, 06 Oct 2006 22:04:01 -0400
-To: Sean <seanlkml@sympatico.ca>
-Message-Id: <20061006220401.a4485d67.seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP08A34A8FB0703E4D2ABAF9AE130@CEZ.ICE>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 07 Oct 2006 02:12:30.0140 (UTC) FILETIME=[0AD097C0:01C6E9B6]
+	id S1751680AbWJGEis (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Oct 2006 00:38:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751681AbWJGEis
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 00:38:48 -0400
+Received: from hera.kernel.org ([140.211.167.34]:4744 "EHLO hera.kernel.org")
+	by vger.kernel.org with ESMTP id S1751683AbWJGEir (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Oct 2006 00:38:47 -0400
+Received: from lenb-laptop (c-65-96-213-102.hsd1.ma.comcast.net [65.96.213.102])
+	(authenticated bits=0)
+	by hera.kernel.org (8.13.7/8.13.7) with ESMTP id k974cAK6013675
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
+	Sat, 7 Oct 2006 04:38:41 GMT
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.8.2
+In-Reply-To: <7v1wpm2cxd.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Virus-Scanned: ClamAV 0.88.4/2002/Fri Oct  6 22:58:03 2006 on hera.kernel.org
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.6 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL,URI_NOVOWEL autolearn=no version=3.1.3
+X-Spam-Checker-Version: SpamAssassin 3.1.3 (2006-06-01) on hera.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28453>
 
+On Friday 06 October 2006 02:09, Junio C Hamano wrote:
+> Len Brown <len.brown@intel.com> writes:
+> 
+> > But the Signed-off-by: line from the original message body has
+> > now been swallowed up into the message header -- so my mailer
+> > doesn't display it.
+> 
+> Sorry, what I sent out has worse breakage than not having your
+> custom header.  It would eat the first paragraph of your message
+> X-<.
+> 
+> A replacement patch is attached. 
 
-If a server is having problems delivering the Git repo over WEBDAV,
-timeout after two minutes so that a regular http transfer can
-be tried.
+Latest patch seems to be doing the right thing (included below).
 
+However, I've discovered another rough edge.
+git-send-email offers to --compose an initial message, but it doesn't
+pick up the .git/config header like git-format-patch does:
+
+$ cat .git/config
+[format]
+        headers = Reply-To: Len Brown <lenb@kernel.org>\nOrganization: Intel Open Source Technology Center\n
+
+thanks,
+-Len
+
+Return-Path: <len.brown@intel.com>
+ Received: from sccrmhc13.comcast.net (sccrmhc13.comcast.net [63.240.77.83])
+        by hera.kernel.org (8.13.7/8.13.7) with ESMTP id k974Of6m010205
+        for <lenb@kernel.org>; Sat, 7 Oct 2006 04:25:09 GMT
+ Received: from localhost.localdomain (c-65-96-213-102.hsd1.ma.comcast.net[65.96.213.102])
+          by comcast.net (sccrmhc13) with SMTP
+          id <2006100704243601300452mke>; Sat, 7 Oct 2006 04:24:36 +0000
+ From: Len Brown <len.brown@intel.com>
+ To: lenb@kernel.org
+ Cc: Len Brown <len.brown@intel.com>
+ Subject: [PATCH 1/14] test: create junk
+ Date: Sat,  7 Oct 2006 00:27:35 -0400
+ Message-Id: <11601952702774-git-send-email-len.brown@intel.com>
+ X-Mailer: git-send-email 1.4.2.3.gabd6-dirty
+ In-Reply-To: <11601952681813-git-send-email-len.brown@intel.com>
+ References: <11601952681813-git-send-email-len.brown@intel.com>
+ Message-Id: <7488d8f01c21a6411ad99c1d16e95ecd6e1542a6.1160195250.git.len.brown@intel.com>
+ Date: Wed, 4 Oct 2006 01:11:12 -0400
+ Reply-To: Len Brown <lenb@kernel.org>
+ Organization: Intel Open Source Technology Center
+ X-Virus-Scanned: ClamAV 0.88.4/2002/Fri Oct  6 22:58:03 2006 on hera.kernel.org
+ X-Virus-Status: Clean
+ X-Spam-Status: No, score=-1.0 required=5.0 tests=AWL,BAYES_00,
+        FORGED_RCVD_HELO,INVALID_DATE autolearn=no version=3.1.3
+ X-Spam-Checker-Version: SpamAssassin 3.1.3 (2006-06-01) on hera.kernel.org
+ Status: R
+ X-Status: NGC
+ X-KMail-EncryptionState: 
+ X-KMail-SignatureState: 
+ X-KMail-MDN-Sent: 
+ 
+Signed-off-by: Len Brown <len.brown@intel.com>
 ---
-
- http-fetch.c |    1 +
+ junk |    1 +
  1 files changed, 1 insertions(+), 0 deletions(-)
 
-Not sure if this is the correct fix, but it should improve the situation
-for cloning and fetching from servers like Takis's.  When connecting to
-his server WEBDAV doesn't respond after the initial connection.  Nothing
-proceeds until the OS connection times out many minutes later.
-
-This patch sets the CURL timeout to two minutes so that things proceed
-sooner.  Even with this patch it takes two extra minutes of "dead time"
-to complete all operations; obivously this still sucks.
-
-However, I don't know if the two minute timeout is long enough for
-all cases with a server where WEBDAV is functioning properly.
-Hopefully someone who knows more about Curl can comment and perhaps
-offer another solution.
-
-Maybe the real solution is just to figure out and fix whatever is
-going on with the WEBDAV server and forget this patch.
-
-Sean
-
-
-diff --git a/http-fetch.c b/http-fetch.c
-index bc74f30..046245a 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -861,6 +861,7 @@ static int remote_ls(struct alt_base *re
- 	curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 1);
- 	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_PROPFIND);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
-+	curl_easy_setopt(slot->curl, CURLOPT_TIMEOUT, 120);
- 
- 	if (start_active_slot(slot)) {
- 		run_active_slot(slot);
+diff --git a/junk b/junk
+new file mode 100644
+index 0000000..9ecf3cf
+--- /dev/null
++++ b/junk
+@@ -0,0 +1 @@
++this
 -- 
-1.4.2.3.gabd697
+1.4.2.3.gabd6-dirty
