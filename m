@@ -1,86 +1,55 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] gitweb: Do not print "log" and "shortlog" redundantly in commit view
-Date: Sat, 7 Oct 2006 16:17:21 +0200
-Message-ID: <20061007141721.GC20017@pasky.or.cz>
-References: <eg51fi$7rs$2@sea.gmane.org> <20061006221603.50873.qmail@web31815.mail.mud.yahoo.com> <20061007132457.GB20017@pasky.or.cz> <200610071605.23277.jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC PATCH] Add WEBDAV timeout to http-fetch.
+Date: Sat, 7 Oct 2006 19:32:25 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0610071930300.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20061006212616.GA5175@lumumba.uhasselt.be>
+ <20061006220542.GA5890@lumumba.uhasselt.be> <BAYC1-PASMTP08A34A8FB0703E4D2ABAF9AE130@CEZ.ICE>
+ <BAYC1-PASMTP11CF83A008B0B3BA5F6B15AE100@CEZ.ICE> <7viriwsa75.fsf@assigned-by-dhcp.cox.net>
+ <eg82tq$2uq$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Luben Tuikov <ltuikov@yahoo.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 07 16:17:50 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 07 19:32:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GWCzl-0005Bj-Dv
-	for gcvg-git@gmane.org; Sat, 07 Oct 2006 16:17:41 +0200
+	id 1GWG2L-0003EN-Er
+	for gcvg-git@gmane.org; Sat, 07 Oct 2006 19:32:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932090AbWJGOR0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Oct 2006 10:17:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932094AbWJGOR0
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 10:17:26 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:18115 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932090AbWJGORX (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Oct 2006 10:17:23 -0400
-Received: (qmail 29500 invoked by uid 2001); 7 Oct 2006 16:17:21 +0200
+	id S932398AbWJGRc1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Oct 2006 13:32:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932422AbWJGRc1
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 13:32:27 -0400
+Received: from mail.gmx.de ([213.165.64.20]:64933 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S932398AbWJGRc1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Oct 2006 13:32:27 -0400
+Received: (qmail invoked by alias); 07 Oct 2006 17:32:25 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp033) with SMTP; 07 Oct 2006 19:32:25 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <200610071605.23277.jnareb@gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <eg82tq$2uq$1@sea.gmane.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28488>
 
-Dear diary, on Sat, Oct 07, 2006 at 04:05:22PM CEST, I got a letter
-where Jakub Narebski <jnareb@gmail.com> said that...
-> Petr Baudis wrote:
-> > Then it will be impossible to get snapshot of any subtree (apart of
-> > manually constructing the URL). Hmm, and it's a bug that we don't show
-> > the snapshot link when listing tree entry in tree listing, I thought
-> > we did in the past...?
-> > 
-> > I think we should make it more clear what each of the bars concerns,
-> > perhaps doing some more significant redesign:
-> > 
-> > [summary] is redundant, you have this big project name link in the top
-> > left corner. All the other navbar options concern commit, so why not
-> > merge it with the awkward commit box below the navbars?
-> > 
-> > All the "views bar" options concern the currently selected object, so
-> > why not merge it with the object "descriptor", that is the path?
+Hi,
 
-To make the idea more graphic:
+On Sat, 7 Oct 2006, Jakub Narebski wrote:
 
-Commit title master             shortlog | log | commit | commitdiff | tree
+> Perhaps use undocumented (hint, hint! for whoever did code this)
+> per-user ~/.gitconfig?
 
-[project.git] / subdir / filename              blame | history | raw | HEAD
+A good idea to use this (hint, hint! whoever finds out how it works can 
+document it as well) feature.
 
+HOWEVER, Junio pointed out that he'd like a finer grain than per-repo, and 
+.gitconfig is a coarser one! (BTW why do you strip Junio from your Cc: 
+when you respond directly to his email?)
 
-Or perhaps first the navigation, then the title.
-
-> > Patches will follow up.
-
-I have decided to reprioritize and do other stuff now. I will get back
-to it sometime later if noone does it first.
-
-> I think that "summary" has it's place rather in the bottom navigation 
-> bar, in the "views bar", because it is related to current object not 
-> current commit (the "tree" entry in top navigation bar, "actions bar", 
-> is somewhat misleading because it actually is the tree of the commit, 
-> not any tree).
-
-It's not related to current object any more than to the current commit
-and is really out-of-place in both bars. It's related only to the
-current project.
-
-We _do_ have a project-global bar at each page. It's the footer,
-containing the description and RSS link. What about stashing it there?
-;-)
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+Ciao,
+Dscho
