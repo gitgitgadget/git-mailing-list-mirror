@@ -1,82 +1,72 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH 2/2] gitweb: Show trailing slash when listing tree entry in tree listing
-Date: Sat, 7 Oct 2006 11:44:18 -0700 (PDT)
-Message-ID: <20061007184418.64881.qmail@web31812.mail.mud.yahoo.com>
-References: <20061007141043.16912.73982.stgit@rover>
-Reply-To: ltuikov@yahoo.com
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [PATCH] gitweb: Support hiding of chosen repositories from project list
+Date: Sat, 7 Oct 2006 20:48:27 +0200
+Message-ID: <20061007184827.GX2871@admingilde.org>
+References: <20061006182822.9194.78330.stgit@rover> <7vu02gtqqd.fsf@assigned-by-dhcp.cox.net> <20061007123200.GY20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 07 20:44:29 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="jigfid2yHjNFZUTO"
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 07 20:48:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GWH9q-0003Dr-Ci
-	for gcvg-git@gmane.org; Sat, 07 Oct 2006 20:44:23 +0200
+	id 1GWHDt-0004NM-Hn
+	for gcvg-git@gmane.org; Sat, 07 Oct 2006 20:48:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751832AbWJGSoT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Oct 2006 14:44:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751833AbWJGSoT
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 14:44:19 -0400
-Received: from web31812.mail.mud.yahoo.com ([68.142.207.75]:8825 "HELO
-	web31812.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1751832AbWJGSoT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Oct 2006 14:44:19 -0400
-Received: (qmail 64883 invoked by uid 60001); 7 Oct 2006 18:44:18 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=pP5kHXTO2g5PBrrCiKWgHJdHfZ8bNv7iiZbVBZKKsz2i5miXSypKTIrN6i6dXMjOEuQsv39n/4Uo4so9zvSYc6tvJ4a4Tbrgxw/q8Avgt8s8ZtI3XSzR6+Er3t9FMxvaeuZs20qAhSF49YK5VaGFwM7IrPLYbEfPNG84l77wggs=  ;
-Received: from [71.80.233.118] by web31812.mail.mud.yahoo.com via HTTP; Sat, 07 Oct 2006 11:44:18 PDT
-To: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>
-In-Reply-To: <20061007141043.16912.73982.stgit@rover>
+	id S932618AbWJGSsa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Oct 2006 14:48:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932619AbWJGSsa
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 14:48:30 -0400
+Received: from agent.admingilde.org ([213.95.21.5]:60573 "EHLO
+	mail.admingilde.org") by vger.kernel.org with ESMTP id S932618AbWJGSs3
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 7 Oct 2006 14:48:29 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1GWHDo-0005yA-0g; Sat, 07 Oct 2006 20:48:28 +0200
+To: Petr Baudis <pasky@suse.cz>
+Content-Disposition: inline
+In-Reply-To: <20061007123200.GY20017@pasky.or.cz>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28495>
 
---- Petr Baudis <pasky@suse.cz> wrote:
-> Signed-off-by: Petr Baudis <pasky@suse.cz>
-> ---
 
-First, this is a Unixism, and would confuse other OS users.
-Second, "/" is after all _not part of the name_ of the tree/directory,
-but part of the filesystem's path separator, let's not export it
-to users of other OS's.
-Third, directories/trees are already clearly 
-  1) underlined, and
-  2) differently colored,
-which makes it overly obvious what it what.
+--jigfid2yHjNFZUTO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-In fact, my eyes only scan for the different color/underlined
-entries when I'm searching for a directory in tree view.  I don't even
-look at the left-most column.
+hoi :)
 
-NACK!
+On Sat, Oct 07, 2006 at 02:32:00PM +0200, Petr Baudis wrote:
+> (BTW, I privately consider /pub/git as completely specific to kernel.org
+> setup and pure evil to have as default; I would much prefer to have the
+> default something more standard and LHS-compliant like /srv/git (almost)
+> is. Though I can see the possible pitfalls of changing the default at
+> this point (though Google says that only tipc.cslab.ericsson.net uses
+> the same path)
 
-   Luben
+Well, Google is not always right.
+I know at least one more site with this path ;-)
 
-> 
->  gitweb/gitweb.perl |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 096a01b..c3d09a2 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -1791,7 +1791,7 @@ sub git_print_tree_entry {
->  		print "<td class=\"list\">";
->  		print $cgi->a({-href => href(action=>"tree", hash=>$t->{'hash'},
->  		                             file_name=>"$basedir$t->{'name'}", %base_key)},
-> -		              esc_html($t->{'name'}));
-> +		              esc_html($t->{'name'} . '/'));
->  		print "</td>\n";
->  		print "<td class=\"link\">";
->  		if (defined $hash_base) {
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+--=20
+Martin Waitz
+
+--jigfid2yHjNFZUTO
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFJ/Z7j/Eaxd/oD7IRAp2ZAKCCPveIwdFu6RJhnCK+7uLGhgp4YwCffnQ4
+k6593LZ9mNtFOZjj3fMZyto=
+=WYAh
+-----END PGP SIGNATURE-----
+
+--jigfid2yHjNFZUTO--
