@@ -1,59 +1,66 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] move --show-cdup, --show-prefix, and --show-git-dir out of git-rev-parse.
-Date: Sat, 07 Oct 2006 23:14:34 +0200
-Organization: At home
-Message-ID: <eg95a6$2v7$1@sea.gmane.org>
-References: <20061007210429.GA2871@admingilde.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH 2/2] gitweb: Show trailing slash when listing tree entry in tree listing
+Date: Sat, 7 Oct 2006 23:15:31 +0200
+Message-ID: <20061007211531.GH20017@pasky.or.cz>
+References: <20061007141043.16912.73982.stgit@rover> <20061007184418.64881.qmail@web31812.mail.mud.yahoo.com> <eg8tpu$drj$1@sea.gmane.org> <20061007191246.GF20017@pasky.or.cz> <eg9378$rln$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sat Oct 07 23:14:15 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 07 23:15:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GWJUp-00058o-3p
-	for gcvg-git@gmane.org; Sat, 07 Oct 2006 23:14:11 +0200
+	id 1GWJWC-0005Ra-7J
+	for gcvg-git@gmane.org; Sat, 07 Oct 2006 23:15:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932865AbWJGVOI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Oct 2006 17:14:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932866AbWJGVOI
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 17:14:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:61844 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932865AbWJGVOF (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Oct 2006 17:14:05 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GWJUY-00055e-4U
-	for git@vger.kernel.org; Sat, 07 Oct 2006 23:13:54 +0200
-Received: from host-81-190-22-223.torun.mm.pl ([81.190.22.223])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 07 Oct 2006 23:13:54 +0200
-Received: from jnareb by host-81-190-22-223.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 07 Oct 2006 23:13:54 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-22-223.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S932866AbWJGVPd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Oct 2006 17:15:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932867AbWJGVPd
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 17:15:33 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:65454 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S932866AbWJGVPd (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Oct 2006 17:15:33 -0400
+Received: (qmail 4125 invoked by uid 2001); 7 Oct 2006 23:15:31 +0200
+To: Jakub Narebski <jnareb@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <eg9378$rln$1@sea.gmane.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28508>
 
-Martin Waitz wrote:
+Dear diary, on Sat, Oct 07, 2006 at 10:38:51PM CEST, I got a letter
+where Jakub Narebski <jnareb@gmail.com> said that...
+> Petr Baudis wrote:
+> 
+> > So, I'd like to either have the view links or the filenames in classical
+> > link style so that it's apparent they are clickable; I didn't post a
+> > patch since I didn't have time/energy to fight for it yet. ;-)
+> 
+> There is a tradeout. Either have easily distinguishable directories and
+> files, by using both different color and decoration (underline), or we have
+> filename/directory name clearly marked as link. One or the other.
+> 
+> That is why I'd rather have this "redundant" blob/tree link (perhaps in
+> separate column).
 
-> They don't really have anything to do with refs.
+As I suggested in another mail, perhaps the whole problem is wrong and
+you shouldn't have to dug for trees in a bunch of blobs in the first
+place - let's group all the trees at the top, as all the well-behaved
+directory listings do.
 
-But is it a good idea to add yet another command? We have too many of them
-already...
+> But this is a matter of policy, unless we want to add theme support to
+> gitweb ;-))
 
-I'd rather add one command, git-admin/git-config, or just move the options
-to the "git" command. So we would have "git --show-git-dir" in addition to
-"git --git-dir=<directory>".
+We _do_ have that - you can supply your own gitweb.css. But the defaults
+should be sensible.
+
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
