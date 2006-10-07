@@ -1,50 +1,76 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH 1/2] gitweb: Show snapshot links for tree entries in tree listing
-Date: Sat, 7 Oct 2006 21:15:52 +0200
-Message-ID: <20061007191552.GG20017@pasky.or.cz>
-References: <20061007184148.GE20017@pasky.or.cz> <20061007185253.90045.qmail@web31810.mail.mud.yahoo.com>
+From: Martin Waitz <tali@admingilde.org>
+Subject: [PATCH] test-lib: separate individual test better in verbose mode.
+Date: Sat, 7 Oct 2006 21:27:46 +0200
+Message-ID: <20061007192746.GZ2871@admingilde.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 07 21:18:18 2006
+X-From: git-owner@vger.kernel.org Sat Oct 07 21:28:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GWHeO-0003eG-S4
-	for gcvg-git@gmane.org; Sat, 07 Oct 2006 21:15:57 +0200
+	id 1GWHqH-0007rd-BQ
+	for gcvg-git@gmane.org; Sat, 07 Oct 2006 21:28:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932778AbWJGTPy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Oct 2006 15:15:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932779AbWJGTPy
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 15:15:54 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:54731 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932778AbWJGTPx (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Oct 2006 15:15:53 -0400
-Received: (qmail 25623 invoked by uid 2001); 7 Oct 2006 21:15:52 +0200
-To: Luben Tuikov <ltuikov@yahoo.com>
+	id S932783AbWJGT1s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Oct 2006 15:27:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932786AbWJGT1s
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 15:27:48 -0400
+Received: from agent.admingilde.org ([213.95.21.5]:23199 "EHLO
+	mail.admingilde.org") by vger.kernel.org with ESMTP id S932783AbWJGT1r
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 7 Oct 2006 15:27:47 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1GWHpq-0003l9-Nk
+	for git@vger.kernel.org; Sat, 07 Oct 2006 21:27:46 +0200
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20061007185253.90045.qmail@web31810.mail.mud.yahoo.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28501>
 
-Dear diary, on Sat, Oct 07, 2006 at 08:52:53PM CEST, I got a letter
-where Luben Tuikov <ltuikov@yahoo.com> said that...
-> Another thing is that currently tree/directory entries' third (links)
-> column to be shortest of all, and this gives my eyes another indication
-> that this is a tree.
+When running tests with --verbose it is difficult to see where
+one test starts and where it ends because everything is printed
+in one big lump.
+Fix that by printing one single newline between each test.
 
-What would people think about first listing all the trees, then all the
-blobs? Just like LANG=C ls does, as well as cvsweb and overally most of
-the rest of the relevant world.
+Signed-off-by: Martin Waitz <tali@admingilde.org>
+---
+ t/test-lib.sh |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index b523fef..2488e6e 100755
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -135,6 +135,7 @@ test_expect_failure () {
+ 	else
+ 		test_failure_ "$@"
+ 	fi
++	echo >&3 ""
+ }
+ 
+ test_expect_success () {
+@@ -148,6 +149,7 @@ test_expect_success () {
+ 	else
+ 		test_failure_ "$@"
+ 	fi
++	echo >&3 ""
+ }
+ 
+ test_expect_code () {
+@@ -161,6 +163,7 @@ test_expect_code () {
+ 	else
+ 		test_failure_ "$@"
+ 	fi
++	echo >&3 ""
+ }
+ 
+ # Most tests can use the created repository, but some amy need to create more.
+-- 
+1.4.2.3
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+Martin Waitz
