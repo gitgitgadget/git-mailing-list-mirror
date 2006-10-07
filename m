@@ -1,77 +1,111 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Convert Content-Disposition filenames into qtext
-Date: Sat, 07 Oct 2006 12:06:31 +0200
-Organization: At home
-Message-ID: <eg7u5n$mt9$1@sea.gmane.org>
-References: <20061006192006.GW20017@pasky.or.cz> <20061006193059.21334.qmail@web31807.mail.mud.yahoo.com> <7vk63ctq47.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Make git-send-email detect mbox-style patches more readily
+Date: Sat, 07 Oct 2006 03:09:05 -0700
+Message-ID: <7vy7rssaim.fsf@assigned-by-dhcp.cox.net>
+References: <20061006202414.GR2563@parisc-linux.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sat Oct 07 12:06:29 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 07 12:09:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GW94d-0008Nb-Vu
-	for gcvg-git@gmane.org; Sat, 07 Oct 2006 12:06:28 +0200
+	id 1GW97J-0000Oa-2O
+	for gcvg-git@gmane.org; Sat, 07 Oct 2006 12:09:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750766AbWJGKGT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Oct 2006 06:06:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750775AbWJGKGT
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 06:06:19 -0400
-Received: from main.gmane.org ([80.91.229.2]:10893 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750766AbWJGKGS (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Oct 2006 06:06:18 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GW94B-0008Ja-7N
-	for git@vger.kernel.org; Sat, 07 Oct 2006 12:05:59 +0200
-Received: from host-81-190-22-223.torun.mm.pl ([81.190.22.223])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 07 Oct 2006 12:05:59 +0200
-Received: from jnareb by host-81-190-22-223.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 07 Oct 2006 12:05:59 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-22-223.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1750775AbWJGKJH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Oct 2006 06:09:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750777AbWJGKJH
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 06:09:07 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:37269 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1750775AbWJGKJG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Oct 2006 06:09:06 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061007100906.OPOM12909.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 7 Oct 2006 06:09:06 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id XN981V0101kojtg0000000
+	Sat, 07 Oct 2006 06:09:09 -0400
+To: Matthew Wilcox <matthew@wil.cx>
+In-Reply-To: <20061006202414.GR2563@parisc-linux.org> (Matthew Wilcox's
+	message of "Fri, 6 Oct 2006 14:24:14 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28469>
 
-Junio C Hamano wrote:
+Matthew Wilcox <matthew@wil.cx> writes:
 
-> Luben Tuikov <ltuikov@yahoo.com> writes:
-> 
->>>> +# Convert a string (e.g. a filename) into qtext as defined
->>>> +# in RFC 822, from RFC 2183.  To be used by Content-Disposition.
->>>> +sub to_qtext {
->>>> +  my $str = shift;
->>>> +  $str =~ s/\\/\\\\/g;
->>>> +  $str =~ s/\"/\\\"/g;
+> Earlier today, I embarrassed myself by trying to construct a patch that
+> git-send-email would send, and I missed out the putting
+>
+> From garbage
+>
+> line on the front, which led it to send the patches with a
+> Subject: From: Matthew Wilcox <matthew@wil.cx>
+> line.  Bad.
 
-Here probably it could be
-        $str =~ s/"/\\"/g;
+I do not mind this patch per-se, but what do you prepare your
+patch with?  Straight "diff -pu" between two directories?
+quilt?
 
->>>> +  $str =~ s/\r/\\r/g;
->>> 
->>> \r? Not \n?
->>
->> Yes, \r, not \n.
-> 
-> \r to \\r? Not to \\\r?
+Since the command deals with two formats (mbox and "send lots of
+email"), I am wondering if it would be bettern to loosen the
+regexp you used further to catch something like this:
 
-We want "\r" in suggested filename, not "\
-" I think, so it is "\\r".
+	/^[-A-Za-z]+:\s/
 
-Otherwise we could use simplier
-        $str =~ s/([\\"\r])/\\\1/g;
+The reason why I suspect it would be better to do this loosening
+is because I've queued the patch I did yesterday for Len to
+allow the prepared patch file to contain custom header fields,
+not just the set of headers hardcoded in the send-email script.
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+The second line in the "send lots of email" format is e-mail
+subject, and it is conceivable that would match the above
+pattern, so this may not be workable, though.
+
+Maybe something like this?
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 3f50aba..ed8652c 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -472,15 +472,21 @@ foreach my $t (@files) {
+ 
+ 	my $author_not_sender = undef;
+ 	@cc = @initial_cc;
+-	my $found_mbox = 0;
++	my $input_format = undef;
+ 	my $header_done = 0;
+ 	$message = "";
+ 	while(<F>) {
+ 		if (!$header_done) {
+-			$found_mbox = 1, next if (/^From /);
++			if (/^From /) {
++				$input_format = 'mbox';
++				next;
++			}
+ 			chomp;
++			if (!defined $input_format && /^[-A-Za-z]+:\s/) {
++				$input_format = 'mbox';
++			}
+ 
+-			if ($found_mbox) {
++			if (defined $input_format && $input_format eq 'mbox') {
+ 				if (/^Subject:\s+(.*)$/) {
+ 					$subject = $1;
+ 
+@@ -502,6 +508,7 @@ foreach my $t (@files) {
+ 				# line 1 = cc
+ 				# line 2 = subject
+ 				# So let's support that, too.
++				$input_format = 'lots';
+ 				if (@cc == 0) {
+ 					printf("(non-mbox) Adding cc: %s from line '%s'\n",
+ 						$_, $_) unless $quiet;
