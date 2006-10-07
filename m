@@ -1,81 +1,56 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] gitweb: Do not print "log" and "shortlog" redundantly in commit view
-Date: Sat, 7 Oct 2006 15:24:57 +0200
-Message-ID: <20061007132457.GB20017@pasky.or.cz>
-References: <eg51fi$7rs$2@sea.gmane.org> <20061006221603.50873.qmail@web31815.mail.mud.yahoo.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Document features better
+Date: Sat, 07 Oct 2006 15:35:48 +0200
+Organization: At home
+Message-ID: <eg8ae2$lje$1@sea.gmane.org>
+References: <20061007131746.13690.38921.stgit@rover>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 07 15:25:27 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sat Oct 07 15:36:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GWCAx-0002S9-J3
-	for gcvg-git@gmane.org; Sat, 07 Oct 2006 15:25:12 +0200
+	id 1GWCLc-0004pH-0x
+	for gcvg-git@gmane.org; Sat, 07 Oct 2006 15:36:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750720AbWJGNY7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Oct 2006 09:24:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751777AbWJGNY7
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 09:24:59 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:14245 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750720AbWJGNY7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Oct 2006 09:24:59 -0400
-Received: (qmail 24915 invoked by uid 2001); 7 Oct 2006 15:24:57 +0200
-To: Luben Tuikov <ltuikov@yahoo.com>
-Content-Disposition: inline
-In-Reply-To: <20061006221603.50873.qmail@web31815.mail.mud.yahoo.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751792AbWJGNfw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Oct 2006 09:35:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751793AbWJGNfw
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 09:35:52 -0400
+Received: from main.gmane.org ([80.91.229.2]:36239 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751792AbWJGNfv (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Oct 2006 09:35:51 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GWCKs-0004dN-G2
+	for git@vger.kernel.org; Sat, 07 Oct 2006 15:35:26 +0200
+Received: from host-81-190-22-223.torun.mm.pl ([81.190.22.223])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 07 Oct 2006 15:35:26 +0200
+Received: from jnareb by host-81-190-22-223.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 07 Oct 2006 15:35:26 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-22-223.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28482>
 
-Dear diary, on Sat, Oct 07, 2006 at 12:16:03AM CEST, I got a letter
-where Luben Tuikov <ltuikov@yahoo.com> said that...
-> --- Jakub Narebski <jnareb@gmail.com> wrote:
-> > Gaah, the whole cae1862a3b55b487731e9857f2213ac59d5646d commit
-> > "gitweb: More per-view navigation bar links" is somewhat broken.
-> > Up to this point we used top navigation bar for commit (hash base)
-> > or whole project related links, while bottom part of navigation
-> > bar for "formats" i.e. links related to current view (passing hash)
-> > or for pagination.
-> > 
-> > So while "snapshot" link has it's place in top navigation bar
-> > (but by modyfying git_print_page_nav subroutine, not by adding it
-> > by hand), "history" for example IMHO doesn't; history link should be
-> > present in the bottom part of navigation bar. Perhaps we could
-> > reuse git_print_page_nav for formats, for example blob wiew would have
-> >         blob | _blame_ | _history_ | _raw_ | _HEAD_
-> > while tree view would have
-> >         tree | _snapshot_ | _history_ | _HEAD_
-> > (where _text_ indices link).  Perhaps _snapshot_ in tree view
-> > shouldn't be repeated, although top one might mean snapshot of commitish,
-> > bottom one snapshot of tree.
-> 
-> Only a single one: of committish please.
+Petr Baudis wrote:
 
-Then it will be impossible to get snapshot of any subtree (apart of
-manually constructing the URL). Hmm, and it's a bug that we don't show
-the snapshot link when listing tree entry in tree listing, I thought we
-did in the past...?
+> This expands gitweb/README to talk some more about GITWEB_CONFIG, moves
+> feature-specific documentation in gitweb.cgi to the inside of the %features
+> array, and adds some short description of all the features.
 
-I think we should make it more clear what each of the bars concerns,
-perhaps doing some more significant redesign:
-
-[summary] is redundant, you have this big project name link in the top
-left corner. All the other navbar options concern commit, so why not
-merge it with the awkward commit box below the navbars?
-
-All the "views bar" options concern the currently selected object, so
-why not merge it with the object "descriptor", that is the path?
-
-Patches will follow up.
-
+Thanks. Very nice.
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
