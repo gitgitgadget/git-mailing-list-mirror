@@ -1,70 +1,94 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [RFC PATCH] Add WEBDAV timeout to http-fetch.
-Date: Sat, 7 Oct 2006 19:45:56 +0200
-Message-ID: <20061007174556.GD20017@pasky.or.cz>
-References: <20061006212616.GA5175@lumumba.uhasselt.be> <20061006220542.GA5890@lumumba.uhasselt.be> <BAYC1-PASMTP08A34A8FB0703E4D2ABAF9AE130@CEZ.ICE> <BAYC1-PASMTP11CF83A008B0B3BA5F6B15AE100@CEZ.ICE> <7viriwsa75.fsf@assigned-by-dhcp.cox.net> <eg82tq$2uq$1@sea.gmane.org> <Pine.LNX.4.63.0610071930300.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH] gitweb: Convert Content-Disposition filenames into qtext
+Date: Sat, 7 Oct 2006 11:01:15 -0700 (PDT)
+Message-ID: <20061007180115.59728.qmail@web31814.mail.mud.yahoo.com>
+References: <7vvemwqusl.fsf@assigned-by-dhcp.cox.net>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 07 19:46:08 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, ltuikov@yahoo.com
+X-From: git-owner@vger.kernel.org Sat Oct 07 20:01:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GWGFO-0006wW-7O
-	for gcvg-git@gmane.org; Sat, 07 Oct 2006 19:46:02 +0200
+	id 1GWGUa-0001w0-Nk
+	for gcvg-git@gmane.org; Sat, 07 Oct 2006 20:01:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932445AbWJGRp6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Oct 2006 13:45:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932452AbWJGRp6
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 13:45:58 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:56709 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S932445AbWJGRp6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Oct 2006 13:45:58 -0400
-Received: (qmail 15944 invoked by uid 2001); 7 Oct 2006 19:45:56 +0200
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0610071930300.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932521AbWJGSBS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Oct 2006 14:01:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932525AbWJGSBS
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Oct 2006 14:01:18 -0400
+Received: from web31814.mail.mud.yahoo.com ([68.142.206.167]:29307 "HELO
+	web31814.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S932521AbWJGSBQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Oct 2006 14:01:16 -0400
+Received: (qmail 59730 invoked by uid 60001); 7 Oct 2006 18:01:15 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=YjqV1niYuBXtDP5AomCkQ/TWAR0QIA+izwYGOFnB9vV+a8s3kcKI6HMf++c5YA7nQZgPoDyfXGQMx0tfgqcq7Z7Uby5uJ4AcbAUstVVYuH3n5y0iDxuC7ODIhiS/wbXiJ7dosdG/Jog9lZpz9BSo8lj5yG91tHeqHez8Oc+TAG0=  ;
+Received: from [71.80.233.118] by web31814.mail.mud.yahoo.com via HTTP; Sat, 07 Oct 2006 11:01:15 PDT
+To: Junio C Hamano <junkio@cox.net>, Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <7vvemwqusl.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28491>
 
-(This post's gonna be really strange.)
-
-Dear diary, on Sat, Oct 07, 2006 at 07:32:25PM CEST, I got a letter
-where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
-> On Sat, 7 Oct 2006, Jakub Narebski wrote:
+--- Junio C Hamano <junkio@cox.net> wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
 > 
-> > Perhaps use undocumented (hint, hint! for whoever did code this)
-> > per-user ~/.gitconfig?
+> > Junio C Hamano wrote:
+> >
+> >> Luben Tuikov <ltuikov@yahoo.com> writes:
+> >> 
+> >>>>> +# Convert a string (e.g. a filename) into qtext as defined
+> >>>>> +# in RFC 822, from RFC 2183.  To be used by Content-Disposition.
+> >>>>> +sub to_qtext {
+> >>>>> +  my $str = shift;
+> >>>>> +  $str =~ s/\\/\\\\/g;
+> >>>>> +  $str =~ s/\"/\\\"/g;
+> >
+> > Here probably it could be
+> >         $str =~ s/"/\\"/g;
+> >
+> >>>>> +  $str =~ s/\r/\\r/g;
+> >>>> 
+> >>>> \r? Not \n?
+> >>>
+> >>> Yes, \r, not \n.
+> >> 
+> >> \r to \\r? Not to \\\r?
+> >
+> > We want "\r" in suggested filename, not "\
+> > " I think, so it is "\\r".
 > 
-> A good idea to use this (hint, hint! whoever finds out how it works can 
-> document it as well) feature.
+> Is that what you guys are attempting to achieve?
 
-(Which is no excuse for the initial implementor not documenting it,
-though.)
+I think so.
 
-> HOWEVER, Junio pointed out that he'd like a finer grain than per-repo, and 
-> .gitconfig is a coarser one!
+> If we are trying to suggest a filename that is safe by avoiding
+> certain characters, I suspect leaving a backslash and dq as-is
+> is just as bad as leaving a CR in.  So if that is the goal here,
+> I think it might be better and a lot simpler to just replace
+> each run of bytes not in Portable Filename Character Set with an
+> underscore '_'.
 
-(I honestly don't think it's worth it at all to make this configurable.
-What's the point?)
+I think that if I were to download a file which had those chars
+in it, I'd like to at least be able to see the _intention_ of what
+chars the actual file name had.
 
-> (BTW why do you strip Junio from your Cc: when you respond directly to
-> his email?)
+So if I download a filename which looks like this:
 
-Jakub, what about putting a mini-FAQ to your signature? ;-)
+     This is a \" test \" file \\.\r
 
-It would be nice if gmane supported honoring mail-followup-to when
-gatewaying posts back to the mailing list (of course it would need to do
-some smart anti-spam protection).
+Then I know that the intention had been:
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+     This is a " test " file \.<CR>
+
+It becomes an intention, since it needs to be carried over
+a qtext.
+
+   Luben
