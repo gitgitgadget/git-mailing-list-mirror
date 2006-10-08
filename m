@@ -1,124 +1,55 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Cleanup Git logo and Git logo target generation
-Date: Sun, 8 Oct 2006 22:17:24 +0200
-Message-ID: <200610082217.25457.jnareb@gmail.com>
-References: <20060919212725.GA13132@pasky.or.cz> <egauic$1l2$1@sea.gmane.org> <7vwt7aio8l.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: Cleanup Git logo and Git logo target generation
+Date: Sun, 08 Oct 2006 13:33:13 -0700
+Message-ID: <7vbqomim46.fsf@assigned-by-dhcp.cox.net>
+References: <20060919212725.GA13132@pasky.or.cz> <ef43do$fm1$1@sea.gmane.org>
+	<7vac4qs43g.fsf@assigned-by-dhcp.cox.net>
+	<200610061231.06017.jnareb@gmail.com> <egauic$1l2$1@sea.gmane.org>
+	<7vwt7aio8l.fsf@assigned-by-dhcp.cox.net>
+	<20061008201031.GL20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 08 22:16:44 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 08 22:33:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GWf4d-0002PN-9A
-	for gcvg-git@gmane.org; Sun, 08 Oct 2006 22:16:35 +0200
+	id 1GWfKo-0005ru-3Z
+	for gcvg-git@gmane.org; Sun, 08 Oct 2006 22:33:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751433AbWJHUQc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 Oct 2006 16:16:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751434AbWJHUQc
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Oct 2006 16:16:32 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:494 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1751433AbWJHUQc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Oct 2006 16:16:32 -0400
-Received: by ug-out-1314.google.com with SMTP id o38so510175ugd
-        for <git@vger.kernel.org>; Sun, 08 Oct 2006 13:16:30 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=EOl9jzHxKUWmXGwDbRH2iHmqxfGbt1bo5H6Rl0nEggJYlEChG4pN0df7dCkX87J6bjeSDDQPWmo09o1DtYzg7KFxpt72Pr39aIfRDZJh6aNlhNn+lCdq23Fp4lfSPlVbpclj2LY9Cd6PVd/Gg5NVHimZ617dzkvDIV7SMlTML7g=
-Received: by 10.67.117.18 with SMTP id u18mr5900402ugm;
-        Sun, 08 Oct 2006 13:16:30 -0700 (PDT)
-Received: from host-81-190-27-91.torun.mm.pl ( [81.190.27.91])
-        by mx.google.com with ESMTP id w40sm677450ugc.2006.10.08.13.16.29;
-        Sun, 08 Oct 2006 13:16:30 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vwt7aio8l.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1751389AbWJHUdP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 Oct 2006 16:33:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751390AbWJHUdP
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Oct 2006 16:33:15 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:54967 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1751389AbWJHUdO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Oct 2006 16:33:14 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061008203314.PBJ12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 8 Oct 2006 16:33:14 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id XwZ51V00L1kojtg0000000
+	Sun, 08 Oct 2006 16:33:05 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20061008201031.GL20017@pasky.or.cz> (Petr Baudis's message of
+	"Sun, 8 Oct 2006 22:10:31 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28550>
 
-Rename $githelp_url and $githelp_label to $logo_url and $logo_label to
-be more obvious what they refer to; while at it add commented out
-previous contents (git documentation at kernel.org). Add comment about
-logo size.
+Petr Baudis <pasky@suse.cz> writes:
 
-Use $cgi->a(...) to generate Git logo link; it automatically escapes
-attribute values when it is needed.  Escape href attribute using
-esc_url instead of (incorrect!) esc_html.
+> Is there a problem with taking <200610061231.06017.jnareb@gmail.com>?
+>
+> I think it's currently not worth the complexity and breakage of
+> backwards compatibility to do the more elaborate form you proposed.
 
-Move styling of git logo <img> element from "style" attribute to CSS
-via setting class to "logo".  Perhaps we should set it by id rather
-than by class.
-
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-I hope that this version is applicable...
-
- gitweb/gitweb.css  |    5 +++++
- gitweb/gitweb.perl |   17 +++++++++--------
- 2 files changed, 14 insertions(+), 8 deletions(-)
-
-diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-index 668e69a..3f62b6d 100644
---- a/gitweb/gitweb.css
-+++ b/gitweb/gitweb.css
-@@ -16,6 +16,11 @@ a:hover, a:visited, a:active {
- 	color: #880000;
- }
- 
-+img.logo {
-+	float: right;
-+	border-width: 0px;
-+}
-+
- div.page_header {
- 	height: 25px;
- 	padding: 8px;
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 3320069..a966f9f 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -46,13 +46,16 @@ our $home_text = "++GITWEB_HOMETEXT++";
- 
- # URI of default stylesheet
- our $stylesheet = "++GITWEB_CSS++";
--# URI of GIT logo
-+# URI of GIT logo (72x27 size)
- our $logo = "++GITWEB_LOGO++";
- # URI of GIT favicon, assumed to be image/png type
- our $favicon = "++GITWEB_FAVICON++";
- 
--our $githelp_url = "http://git.or.cz/";
--our $githelp_label = "git homepage";
-+# URI and label (title) of GIT logo link
-+#our $logo_url = "http://www.kernel.org/pub/software/scm/git/docs/";
-+#our $logo_label = "git documentation";
-+our $logo_url = "http://git.or.cz/";
-+our $logo_label = "git homepage";
- 
- # source of projects list
- our $projects_list = "++GITWEB_LIST++";
-@@ -1376,11 +1379,9 @@ EOF
- 	print "</head>\n" .
- 	      "<body>\n" .
- 	      "<div class=\"page_header\">\n" .
--	      "<a href=\"" . esc_html($githelp_url) .
--	      "\" title=\"" . esc_html($githelp_label) .
--	      "\">" .
--	      "<img src=\"$logo\" width=\"72\" height=\"27\" alt=\"git\" style=\"float:right; border-width:0px;\"/>" .
--	      "</a>\n";
-+	      $cgi->a({-href => esc_url($logo_url),
-+	               -title => $logo_label},
-+	              qq(<img src="$logo" width="72" height="27" alt="git" class="logo"/>));
- 	print $cgi->a({-href => esc_url($home_link)}, $home_link_str) . " / ";
- 	if (defined $project) {
- 		print $cgi->a({-href => href(action=>"summary")}, esc_html($project));
--- 
-1.4.2.1
+I agree with that, except that the 72x27 dimension bit troubles
+me.
