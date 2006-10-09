@@ -1,109 +1,132 @@
 From: Junio C Hamano <junkio@cox.net>
 Subject: Re: "fatal: Untracked working tree file 'so-and-so' would be overwritten by merge"
-Date: Sun, 08 Oct 2006 21:48:11 -0700
-Message-ID: <7v7izaf62c.fsf@assigned-by-dhcp.cox.net>
+Date: Sun, 08 Oct 2006 22:20:09 -0700
+Message-ID: <7vodsmdq0m.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0610081657400.3952@g5.osdl.org>
+	<7v7izaf62c.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 09 06:48:34 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 09 07:20:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GWn3x-0001I6-J7
-	for gcvg-git@gmane.org; Mon, 09 Oct 2006 06:48:25 +0200
+	id 1GWnYp-0006nF-AF
+	for gcvg-git@gmane.org; Mon, 09 Oct 2006 07:20:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751564AbWJIEsN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Oct 2006 00:48:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751271AbWJIEsM
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Oct 2006 00:48:12 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:8840 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1750705AbWJIEsM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Oct 2006 00:48:12 -0400
+	id S1751658AbWJIFUN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Oct 2006 01:20:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932228AbWJIFUN
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Oct 2006 01:20:13 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:63457 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1751658AbWJIFUL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Oct 2006 01:20:11 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao07.cox.net
+          by fed1rmmtao10.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061009044811.QVJX21457.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 9 Oct 2006 00:48:11 -0400
+          id <20061009052010.XDJE18985.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 9 Oct 2006 01:20:10 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id Y4oE1V00Y1kojtg0000000
-	Mon, 09 Oct 2006 00:48:15 -0400
+	id Y5LD1V0021kojtg0000000
+	Mon, 09 Oct 2006 01:20:13 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0610081657400.3952@g5.osdl.org> (Linus Torvalds's
-	message of "Sun, 8 Oct 2006 17:11:01 -0700 (PDT)")
+In-Reply-To: <7v7izaf62c.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sun, 08 Oct 2006 21:48:11 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28562>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Junio C Hamano <junkio@cox.net> writes:
 
-> Hmm. I'm getting this message annoyingly often, simply because a few files 
-> that used to be tracked are now generated, and so they exist in my tree 
-> but are no longer tracked.
+> But that is a bit tricky.  This is not on the aggressive path,
+> and the merge result is decided by the policy implemented by the
+> caller of read-tree.  So in that sense we should not be doing
+> the working tree check ourselves either.  We just should leave
+> that to the caller.
 >
-> However, they may be tracked in an older tree that I pull, because in that 
-> older tree they _do_ exist, and we get the
+> Hence, I think removing the above "else if" part altogether is
+> the right thing to do here.
 >
-> 	fatal: Untracked working tree file 'so-and-so' would be overwritten by merge.
->
-> which is actually incorrect, because the merge result will not even 
-> _contain_ that untracked file any more.
+> ---
+> diff --git a/unpack-trees.c b/unpack-trees.c
+> index 3ac0289..b1d78b8 100644
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -661,8 +661,6 @@ int threeway_merge(struct cache_entry **
+>  	if (index) {
+>  		verify_uptodate(index, o);
+>  	}
+> -	else if (path)
+> -		verify_absent(path, "overwritten", o);
+>  
+>  	o->nontrivial_merge = 1;
+>  
 
-> So the message is misleading - we should only consider this a fatal thing 
-> if we actually do generate that file as part of a git-read-tree, but if a 
-> merge won't touch a file, it shouldn't be "overwritten".
->
-> It's true that if the _other_ end actually removed a file that we used to 
-> have (ie the file _disappears_ as part of the merge), then we should 
-> verify that that file matched what we're going to remove, but if the old 
-> index didn't contain the file at all, and the new index won't contain it 
-> either, it really should be a no-op.
+Note note note.  The above patch alone leaves merge risky to
+remove an untracked working tree files, and needs to be
+compensated by corresponding checks to the git-merge-xxx
+strategies.  The original code was overcautious, but was
+protecting valid cases too.
 
-True.
+For example, you and I recently independently did something
+called show-refs (mine was actually called show-ref but I could
+have picked a name that happened to conflict with yours), and it
+was when I had an uncommitted, not even in index, work-in-progress
+when I saw your version.  If I pulled from you, the version of
+read-tree without above check would have happily said it is OK
+to do a three-way merge, and git-merge-one-file would have said
+you added one while I haven't, and would have tried to overwrite
+the file in my working tree.
 
-I think it is verify_absent() on l.665 in threeway_merge().
+But this still feels wrong, at two levels.
 
-	if (index) {
-		verify_uptodate(index, o);
-	}
-	else if (path)
-		verify_absent(path, "overwritten", o);
+For one thing, the beauty of git merge was that if there is a
+risk of local changes being lost, it was detected at read-tree
+stage and we did not even touch index in that case.  Not
+detecting problems at read-tree time and leaving it to
+merge-one-file feels wrong.  Very wrong.
 
-	o->nontrivial_merge = 1;
-
-We say "we know this path is involved in the non-trivial merge;
-if the current index has it, it had better be up-to-date" (the
-first "if").  I think that up to that check is fine.
-
-However, we say that otherwise, the path should not exist in the
-working tree; this should not be done unconditionally.  As you
-say, the check should depend on the merge result.
-
-But that is a bit tricky.  This is not on the aggressive path,
-and the merge result is decided by the policy implemented by the
-caller of read-tree.  So in that sense we should not be doing
-the working tree check ourselves either.  We just should leave
-that to the caller.
-
-Hence, I think removing the above "else if" part altogether is
-the right thing to do here.
+I suspect the other issue I have is easier to address -- if we
+were to implement the check at merge-one-file level, it would be
+something like the attached patch, but at the same time it
+should take .gitignore file into account.
 
 ---
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 3ac0289..b1d78b8 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -661,8 +661,6 @@ int threeway_merge(struct cache_entry **
- 	if (index) {
- 		verify_uptodate(index, o);
- 	}
--	else if (path)
--		verify_absent(path, "overwritten", o);
- 
- 	o->nontrivial_merge = 1;
- 
+
+diff --git a/git-merge-one-file.sh b/git-merge-one-file.sh
+index fba4b0c..25aedb7 100755
+--- a/git-merge-one-file.sh
++++ b/git-merge-one-file.sh
+@@ -23,6 +23,9 @@ #
+ "$1.." | "$1.$1" | "$1$1.")
+ 	if [ "$2" ]; then
+ 		echo "Removing $4"
++	elif test -f "$4"
++		echo "ERROR: untracked $4 is removed by the merge."
++		exit 1
+ 	fi
+ 	if test -f "$4"; then
+ 		rm -f -- "$4" &&
+@@ -34,8 +37,16 @@ #
+ #
+ # Added in one.
+ #
+-".$2." | "..$3" )
++".$2.")
++	# the other side did not add and we added so there is nothing
++	# to be done.
++	;;
++"..$3")
+ 	echo "Adding $4"
++	test -f "$4" || {
++		echo "ERROR: untracked $4 is overwritten by the merge."
++		exit 1
++	}
+ 	git-update-index --add --cacheinfo "$6$7" "$2$3" "$4" &&
+ 		exec git-checkout-index -u -f -- "$4"
+ 	;;
