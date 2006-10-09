@@ -1,58 +1,49 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: Re: perhaps time to remove git_blame from gitweb, and git-annotate?
-Date: Mon, 9 Oct 2006 03:37:18 -0700
-Message-ID: <20061009103710.GX1558@h4x0r5.com>
-References: <7vejtnij5n.fsf@assigned-by-dhcp.cox.net> <20061005064817.21552.qmail@web31804.mail.mud.yahoo.com> <7vu02jfaec.fsf_-_@assigned-by-dhcp.cox.net>
+From: Pierre Marc Dumuid <pierre.dumuid@adelaide.edu.au>
+Subject: gitk feature request..
+Date: Mon, 09 Oct 2006 21:22:27 +0930
+Message-ID: <452A37FB.60507@adelaide.edu.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Luben Tuikov <ltuikov@yahoo.com>,
-	Petr Baudis <pasky@suse.cz>, Jakub Narebski <jnareb@gmail.com>,
-	Ryan Anderson <ryan@michonline.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Martin Langhoff <martin@catalyst.net.nz>,
-	Martyn Smith <martyn@catalyst.net.nz>,
-	Fredrik Kuivinen <freku045@student.liu.se>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Mon Oct 09 12:38:56 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Oct 09 14:00:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GWsW4-0006Oq-7E
-	for gcvg-git@gmane.org; Mon, 09 Oct 2006 12:37:50 +0200
+	id 1GWtgm-0004H6-A1
+	for gcvg-git@gmane.org; Mon, 09 Oct 2006 13:52:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751267AbWJIKhp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Oct 2006 06:37:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751781AbWJIKhp
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Oct 2006 06:37:45 -0400
-Received: from h4x0r5.com ([70.85.31.202]:35857 "EHLO h4x0r5.com")
-	by vger.kernel.org with ESMTP id S1751267AbWJIKho (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Oct 2006 06:37:44 -0400
-Received: from ryan by h4x0r5.com with local (Exim 4.50)
-	id 1GWsVa-0001Ub-Ox; Mon, 09 Oct 2006 03:37:19 -0700
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vu02jfaec.fsf_-_@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.9i
-X-michonline.com-MailScanner: Found to be clean
-X-michonline.com-MailScanner-From: ryan@h4x0r5.com
+	id S932611AbWJILwe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Oct 2006 07:52:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932612AbWJILwe
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Oct 2006 07:52:34 -0400
+Received: from bld-mail07.adl2.internode.on.net ([203.16.214.71]:31393 "EHLO
+	mail.internode.on.net") by vger.kernel.org with ESMTP
+	id S932611AbWJILwd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Oct 2006 07:52:33 -0400
+Received: from [192.168.1.100] (unverified [203.122.224.179]) 
+	by mail.internode.on.net (SurgeMail 3.2f) with ESMTP id 45230926 
+	for <git@vger.kernel.org>; Mon, 09 Oct 2006 21:22:28 +0930 (CST)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28569>
 
-On Thu, Oct 05, 2006 at 01:13:15AM -0700, Junio C Hamano wrote:
-> It's been a while since we lost git_blame from %actions list.  I
-> am wondering maybe it's time to remove it, after 1.4.3 happens.
+Hi,
+I was adviced on the IRC channel to send my feature requests here...
 
-I certainly have no objection.  In fact, I sent a patch a moment ago.
-(I didn't keep the cc: on it, I figured there was too high a chance of
-mishap when pasting the cc: list.)
+I have two feature requests:
+1. a bugzilla to place feature requests.
+2. All the stored "views" that can be created and placed under the 
+"view" menu should be unique for each repository.
 
-I forgot to mentio it in the email, but I have the change pullable from:
-http://h4x0r5.com/~ryan/git/ryan.git/ del-annotate
-(and gitwebed from http://h4x0r5.com/~ryan/gitweb.cgi )
--- 
+Currently I am starting to use git for a few projects, and I've found 
+that my named view list is growing.. too much.  I think that there 
+should be a foluder in the .git directory that contains a list of the 
+named views so that a person's menu isn't flooded with entries relating 
+to different repositories..
 
-Ryan Anderson
-  sometimes Pug Majere
+Regards,
+Pierre
