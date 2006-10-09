@@ -1,75 +1,68 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC/PATCH] merge: loosen overcautious "working file will be lost" check.
-Date: Mon, 09 Oct 2006 15:47:36 -0700
-Message-ID: <7vy7rp9kdz.fsf@assigned-by-dhcp.cox.net>
-References: <7v8xjqdoq1.fsf_-_@assigned-by-dhcp.cox.net>
-	<20061009172053.48882.qmail@web31804.mail.mud.yahoo.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Does GIT has vc keywords like CVS/Subversion?
+Date: Tue, 10 Oct 2006 00:48:53 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0610100045430.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <4b3406f0610081825y1d066579yba305b6540c8d0e9@mail.gmail.com> 
+ <4529B77A.707@gmail.com>  <Pine.LNX.4.64.0610090904360.3952@g5.osdl.org>
+ <46a038f90610091408y29f60a12gea7040b5412331c6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 10 00:47:55 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Liu Yubao <yubao.liu@gmail.com>,
+	Dongsheng Song <dongsheng.song@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 10 00:49:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GX3uP-0003gj-UX
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 00:47:43 +0200
+	id 1GX3ve-0003uK-PP
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 00:48:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751909AbWJIWri (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Oct 2006 18:47:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751910AbWJIWri
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Oct 2006 18:47:38 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:40834 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1751909AbWJIWrh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Oct 2006 18:47:37 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061009224736.OAQO12581.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 9 Oct 2006 18:47:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id YNnf1V00L1kojtg0000000
-	Mon, 09 Oct 2006 18:47:39 -0400
-To: ltuikov@yahoo.com
-In-Reply-To: <20061009172053.48882.qmail@web31804.mail.mud.yahoo.com> (Luben
-	Tuikov's message of "Mon, 9 Oct 2006 10:20:52 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750710AbWJIWs4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Oct 2006 18:48:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750719AbWJIWs4
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Oct 2006 18:48:56 -0400
+Received: from mail.gmx.net ([213.165.64.20]:696 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750710AbWJIWsz (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Oct 2006 18:48:55 -0400
+Received: (qmail invoked by alias); 09 Oct 2006 22:48:54 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp019) with SMTP; 10 Oct 2006 00:48:54 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90610091408y29f60a12gea7040b5412331c6@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28582>
 
-Luben Tuikov <ltuikov@yahoo.com> writes:
+Hi,
 
-> I think this is a good thing.
->
-> How about this case I've noticed in my trees:
->
-> After branching out, a file is deleted, only to add
-> a different file with the same file name.
->
-> Then any time I pull in from the trunk to merge,
-> merge fails with git-diff-files showing all 0's and the
-> file name in question.  Picture:
->
->   Branch B       +-----------------M1---->
->                 /                 /
->                C2 <-- git-add A  /
->               /                 /
->              C1 <-- git-rm A   /
->             /                 /
-> Trunk -----+-----------------+---->
+On Tue, 10 Oct 2006, Martin Langhoff wrote:
 
-Sorry I do not understand the picture; where is the common
-ancestor?  If it is the left plus sign on the Trunk line, and
-you are talking about what happens when making the merge M1,
-then before C1 A did not exist (so Trunk tip which is the right
-plus sign on the Trunk line would not either), and the other
-head (tip of branch B you are pulling the trunk into) would have
-one already (from C2), so I would imagine it would be "one side
-adds while the other did not touch" (net effect since branch B
-forked from trunk is an addition of A, while Trunk did not do
-anything with respect to path A), so I do not see where any
-conflict can come from.  Puzzled.
+> On 10/10/06, Linus Torvalds <torvalds@osdl.org> wrote:
+>
+> >  - outside of the SCM, keyword substitution can make sense, but doing it
+> >    should be in helper scripts or something that can easily tailor it for
+> >    the actual need of that particular project.
+
+... like a pre-commit hook.
+
+> If we have a tool that I can pass a file or a directory tree and will 
+> find the (perfectly|closely) matching trees and related commits.
+> 
+> For the single file case, searching for an exact SHA1 match is easy,
+> as is by path.
+
+If you have the path, you can reuse the whole algorithm for finding the 
+best delta base.
+
+However, if you do not have the path, you might as well just give up (if 
+there is no perfect match for the SHA1), since the SHA1 is _not_ similar 
+for similar contents. IOW, you'd literally have to search _all_ objects in 
+the repository, which usually takes a long, long time.
+
+Ciao,
+Dscho
