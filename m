@@ -1,37 +1,36 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: "fatal: Untracked working tree file 'so-and-so' would be
- overwritten by merge"
-Date: Mon, 9 Oct 2006 09:03:08 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610090858120.3952@g5.osdl.org>
-References: <Pine.LNX.4.64.0610081657400.3952@g5.osdl.org>
- <7v7izaf62c.fsf@assigned-by-dhcp.cox.net> <7vodsmdq0m.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Does GIT has vc keywords like CVS/Subversion?
+Date: Mon, 9 Oct 2006 09:13:14 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610090904360.3952@g5.osdl.org>
+References: <4b3406f0610081825y1d066579yba305b6540c8d0e9@mail.gmail.com>
+ <4529B77A.707@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 09 18:03:45 2006
+Cc: Dongsheng Song <dongsheng.song@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 09 18:16:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GWxb9-0000UU-HA
-	for gcvg-git@gmane.org; Mon, 09 Oct 2006 18:03:24 +0200
+	id 1GWxmL-0003vi-8u
+	for gcvg-git@gmane.org; Mon, 09 Oct 2006 18:14:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932812AbWJIQDU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Oct 2006 12:03:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932953AbWJIQDU
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Oct 2006 12:03:20 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:55230 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932812AbWJIQDT (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Oct 2006 12:03:19 -0400
+	id S932964AbWJIQNe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Oct 2006 12:13:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932966AbWJIQNd
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Oct 2006 12:13:33 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:26818 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932967AbWJIQN1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Oct 2006 12:13:27 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k99G39aX015421
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k99GDFaX016137
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 9 Oct 2006 09:03:09 -0700
+	Mon, 9 Oct 2006 09:13:16 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k99G38YH003330;
-	Mon, 9 Oct 2006 09:03:08 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vodsmdq0m.fsf@assigned-by-dhcp.cox.net>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k99GDE0T003662;
+	Mon, 9 Oct 2006 09:13:15 -0700
+To: Liu Yubao <yubao.liu@gmail.com>
+In-Reply-To: <4529B77A.707@gmail.com>
 X-Spam-Status: No, hits=-0.466 required=5 tests=AWL
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
 X-MIMEDefang-Filter: osdl$Revision: 1.155 $
@@ -39,66 +38,47 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28572>
 
 
 
-On Sun, 8 Oct 2006, Junio C Hamano wrote:
+On Mon, 9 Oct 2006, Liu Yubao wrote:
 > 
-> Note note note.  The above patch alone leaves merge risky to
-> remove an untracked working tree files, and needs to be
-> compensated by corresponding checks to the git-merge-xxx
-> strategies.  The original code was overcautious, but was
-> protecting valid cases too.
+> IMHO, I don't think keyword substitution is a good idea, as it will confuse
+> the external diff/merge tools.
 
-I think the difference _should_ be that we only remove the local file if 
-it was removed _remotely_.
+There are other reasons why it's a _horrible_ idea, like the fact that it 
+can mess up binary files etc (so if you do keyword substitution, you also 
+need to suddenly care _deeply_ whether a file is binary or not).
 
-In  that case, it was there in the original tree, and removing it is 
-correct.
+The whole notion of keyword substitution is just totally idiotic. It's 
+trivial to do "outside" of the actual content tracking, if you want to 
+have it when doing release trees as tar-balls etc.
 
-> diff --git a/git-merge-one-file.sh b/git-merge-one-file.sh index 
-> fba4b0c..25aedb7 100755 --- a/git-merge-one-file.sh +++ 
-> b/git-merge-one-file.sh @@ -23,6 +23,9 @@ #
->  "$1.." | "$1.$1" | "$1$1.")
+So:
+ - inside of the SCM, keyword substitution is pointless, since you have 
+   much better tools available (like "git log filename")
+ - outside of the SCM, keyword substitution can make sense, but doing it 
+   should be in helper scripts or something that can easily tailor it for 
+   the actual need of that particular project.
 
-So I actually think that we should NOT consider these three cases to be 
-the same.
+For example, we actually do a certain kind of keyword subtituion for the 
+kernel. Look at the -git snapshots: the script that generates the snapshot 
+diffs has a simple sequence in it to "keyword substitute" the Makefile for 
+the EXTRAVERSION flag, so the diff will result in the Makefile having the 
+knowledge of which git SHA1 version the resulting patch was, even though 
+the thing isn't a git tree any more:
 
-There are really two distinct cases:
+	...
+	git-read-tree $CURCOMM
+	git-checkout-index Makefile
+	perl -pi -e "s/EXTRAVERSION =.*/EXTRAVERSION = $EXTRAVERSION/" Makefile
+	git-diff-index -m -p $RELTREE | gzip -9 > $STAGE/patch-$CURNAME.gz
+	...
 
- - "$1.." and "$1.$1"
-	The file had already been removed locally, AND WE SHOULD NOT TOUCH 
-	IT.
+So this is how to do keyword substitution in a _sane_ way.
 
- - "$1$1.":
-	The file was removed remotely, and we SHOULD remove it locally.
-
-In fact, we already have that as a "special case":
-
->  	if [ "$2" ]; then
->  		echo "Removing $4"
-> +	elif test -f "$4"
-> +		echo "ERROR: untracked $4 is removed by the merge."
-> +		exit 1
->  	fi
->  	if test -f "$4"; then
->  		rm -f -- "$4" &&
-
-That
-
-	if [ "$2" ]; then
-		echo "Removing $4"
-
-is _exactly_ that case: it is the "$1$1." case, and we already treat it 
-differently, but we actually treat it differently the wrong way: we only 
-print out the message for that case, but the actual "touch working tree" 
-code should _also_ be affected.
-
-If the local index doesn't change, we should not print out the "Removing 
-'so-and-so'" message, but we should also not even _touch_ that file, 
-because it was already "gone" as far as the local tree was concerned.
-
-Agreed?
+Sure, we could do something like this as a git script, and support it 
+"natively", but the fact is, keyword substitution is just stupid.
 
 		Linus
