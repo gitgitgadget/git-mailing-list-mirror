@@ -1,101 +1,54 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: GIT 1.4.3-rc2
-Date: Tue, 10 Oct 2006 00:11:04 -0700
-Message-ID: <7viris63xz.fsf@assigned-by-dhcp.cox.net>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: Does GIT has vc keywords like CVS/Subversion?
+Date: Tue, 10 Oct 2006 09:37:57 +0200
+Message-ID: <452B4DD5.6060508@lsrfire.ath.cx>
+References: <4b3406f0610081825y1d066579yba305b6540c8d0e9@mail.gmail.com>	 <4529B77A.707@gmail.com>	 <Pine.LNX.4.64.0610090904360.3952@g5.osdl.org> <46a038f90610091408y29f60a12gea7040b5412331c6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Oct 10 09:12:04 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Liu Yubao <yubao.liu@gmail.com>,
+	Dongsheng Song <dongsheng.song@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 10 09:38:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXBm9-0003w6-Ud
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 09:11:42 +0200
+	id 1GXCBz-0001Zk-3W
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 09:38:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965067AbWJJHLH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 03:11:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965070AbWJJHLG
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 03:11:06 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:6598 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S965067AbWJJHLF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 03:11:05 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061010071105.OBMV6235.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 10 Oct 2006 03:11:05 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id YXB71V00S1kojtg0000000
-	Tue, 10 Oct 2006 03:11:08 -0400
-To: git@vger.kernel.org
+	id S965078AbWJJHiT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 10 Oct 2006 03:38:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965079AbWJJHiT
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 03:38:19 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:9654
+	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S965078AbWJJHiT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Oct 2006 03:38:19 -0400
+Received: from [10.0.1.3] (p508E408B.dip.t-dialin.net [80.142.64.139])
+	by neapel230.server4you.de (Postfix) with ESMTP id 8E35F39016;
+	Tue, 10 Oct 2006 09:38:17 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.7 (Windows/20060909)
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90610091408y29f60a12gea7040b5412331c6@mail.gmail.com>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28615>
 
-I've tagged the tip of master as 1.4.3-rc2.  Modulo last minute
-brown paper bag, I think we are pretty close to the real thing,
-hopefully should happen this weekend.
+Martin Langhoff schrieb:
+> For the outside of the SCM case, keyword subst is useful indeed if
+> someone has a $version_unknown tarball, unpacks it and hacks away. It
+> is a pretty broken scenario, and less likely to happen nowadays with
+> easy access to SCM tools.
 
-Changes since 1.4.3-rc1 are as follows; they are mostly fixes as
-expected (except one thing -- which shows in this list itself).
+If you still have the tar file, and if it has been created using
+git-archive or git-tar-tree it may contain the commit ID in an archive
+comment.  You can use git-get-tar-commit-id to extract it in that case.
 
-Alan Chandler (2):
-      Update the gitweb/README file to include setting the GITWEB_CONFIG environment
-      Fix usage string to match that given in the man page
+This won't work with official git project tarballs btw., as commit ID
+embedding has been turned off.  The reason is that older tar versions
+extracted the comment as a regular file, which confused users.
 
-Alexandre Julliard (2):
-      git.el: Fixed inverted "renamed from/to" message.
-      vc-git.el: Switch to using git-blame instead of git-annotate.
-
-Dennis Stosberg (2):
-      lock_ref_sha1_basic does not remove empty directories on BSD
-      Add default values for --window and --depth to the docs
-
-Franck Bui-Huu (1):
-      Add git-upload-archive to the main git man page
-
-Jakub Narebski (1):
-      gitweb: Cleanup Git logo and Git logo target generation
-
-Junio C Hamano (9):
-      Makefile: install and clean merge-recur, still.
-      git-mv: invalidate the removed path properly in cache-tree
-      git-push: .git/remotes/ file does not require SP after colon
-      escape tilde in Documentation/git-rev-parse.txt
-      tar-tree deprecation: we eat our own dog food.
-      gitweb: Make the Git logo link target to point to the homepage
-      git-send-email: avoid uninitialized variable warning.
-      cherry-pick: make -r the default
-      Fix git-revert
-
-Luben Tuikov (3):
-      gitweb: Escape ESCAPE (\e) character
-      gitweb: Do not print "log" and "shortlog" redundantly in commit view
-      gitweb: blame: Minimize vertical table row padding
-
-Martin Waitz (4):
-      gitweb: document webserver configuration for common gitweb/repo URLs.
-      git-commit: cleanup unused function.
-      git-commit: fix coding style.
-      test-lib: separate individual test better in verbose mode.
-
-Nicolas Pitre (1):
-      add commit count options to git-shortlog
-
-Petr Baudis (4):
-      Show snapshot link in shortlog only if have_snapsho
-      gitweb: Separate (new) and (deleted) in commitdiff by a space
-      gitweb: Handle commits with empty commit messages more reasonably
-      gitweb: [commit view] Do not suppress commitdiff link in root commit
-
-Rene Scharfe (1):
-      git-tar-tree: don't RUN_SETUP
-
-Robin Rosenberg (1):
-      Error in test description of t1200-tutorial
-
-Yasushi SHOJI (1):
-      gitweb: refactor decode() for utf8 conversion
+Ren=E9
