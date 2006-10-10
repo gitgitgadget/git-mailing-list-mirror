@@ -1,53 +1,91 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH 2/2] gitweb: Show trailing slash when listing tree entry in tree listing
-Date: Tue, 10 Oct 2006 11:23:43 -0700 (PDT)
-Message-ID: <20061010182343.18986.qmail@web31808.mail.mud.yahoo.com>
-References: <200610101514.20705.Josef.Weidendorfer@gmx.de>
-Reply-To: ltuikov@yahoo.com
+From: Edesio Costa e Silva <edesio@softaplic.com.br>
+Subject: Re: Approxidate licensing
+Date: Tue, 10 Oct 2006 15:33:25 -0300
+Message-ID: <20061010183325.GC12993@softaplic.com.br>
+References: <Pine.LNX.4.64.0610101246241.9789@iabervon.org> <1073a5540610101128q3fb9f68fsf3a28fbda20927d1@mail.gmail.com>
+Reply-To: Edesio Costa e Silva <edesio@ieee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jeff King <peff@peff.net>, Petr Baudis <pasky@suse.cz>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Oct 10 20:25:02 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Edesio Costa e Silva <edesio@task.com.br>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 10 20:33:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXMGw-0003qS-Ih
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 20:24:11 +0200
+	id 1GXMQ8-00063l-22
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 20:33:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965028AbWJJSXq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 14:23:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965025AbWJJSXq
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 14:23:46 -0400
-Received: from web31808.mail.mud.yahoo.com ([68.142.207.71]:3217 "HELO
-	web31808.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S965028AbWJJSXo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 14:23:44 -0400
-Received: (qmail 18988 invoked by uid 60001); 10 Oct 2006 18:23:43 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=RrK+pF9h/Cbae2f7nbW0tfPsVKNo+2hVAphyJ52Hx0Lhq1o0bH4YRTSOOuQ3ifWVm6iABwqRUTuFLk7KlCxbLaaL4IQ2Na4QYVXLb6gDiKYowNz+GTVZJOhF5AHeI20MtldLv8IKaiwdLbcAYz6r6EkAdPHiXsz0gReON4uvZkI=  ;
-Received: from [64.215.88.90] by web31808.mail.mud.yahoo.com via HTTP; Tue, 10 Oct 2006 11:23:43 PDT
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	Andreas Ericsson <ae@op5.se>
-In-Reply-To: <200610101514.20705.Josef.Weidendorfer@gmx.de>
+	id S965093AbWJJSdg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 10 Oct 2006 14:33:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965094AbWJJSdg
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 14:33:36 -0400
+Received: from master.softaplic.com.br ([200.162.94.241]:33991 "EHLO
+	overlord.softaplic.com.br") by vger.kernel.org with ESMTP
+	id S965093AbWJJSdf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Oct 2006 14:33:35 -0400
+Received: from edesio by overlord.softaplic.com.br with local (Exim 4.50)
+	id 1GXMPt-0004lV-Cj; Tue, 10 Oct 2006 15:33:25 -0300
+To: barkalow@iabervon.org
+Content-Disposition: inline
+In-Reply-To: <1073a5540610101128q3fb9f68fsf3a28fbda20927d1@mail.gmail.com>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28651>
 
---- Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
-> One thing I found confusing in this regard the first time:
-> Why do list rows show a recoloring with mouse over?
+Try the TCL modules that parse date and time (tclGetDate.y and
+tclClock.c). They are licensed BSD style.
 
-It's a highlight and it's a good highlight.  It suggests that the
-row is "alive", i.e. that the title is clickable.  It "shows" you
-your current "selection" by having the mouse pointer over the row.
+Ed=E9sio
 
-I like it.
-
-    Luben
+> From: Daniel Barkalow <barkalow@iabervon.org>
+> Date: Oct 10, 2006 2:39 PM
+> Subject: Approxidate licensing
+> To: Linus Torvalds <torvalds@osdl.org>, Junio C Hamano
+> <junkio@cox.net>, dwmw2@infradead.org
+> Cc: git@vger.kernel.org
+>=20
+>=20
+> I'm working on an LGPL project (for my company; it's obscure enough a=
+nd
+> we're lazy enough that we're not really distributing it in general in
+> either source or binary form), and I'm running into the usual date pa=
+rsing
+> issue (i.e., all the standard functions are broken in various ways). =
+My
+> plan has been to write my own, but it's hard to get the motivation wh=
+en
+> approxidate exists, works well, and is open source.
+>=20
+> Would the three of you agree to license date.c under the LGPL or BSD?=
+ It
+> looks like you're the only authors of non-trivial changes [1]. And it=
+ seems
+> reasonable to want the date parsing thing under non-GPL terms outside=
+ of
+> git.
+>=20
+>        -Daniel
+> *This .sig left intentionally blank*
+>=20
+> [1] git log and git blame are pretty impressive, but they don't quite
+> catch that most of date.c was written by David as part of commit-tree=
+=2Ec,
+> then Tony replaced it with a version that uses curl, then Edgar separ=
+ated
+> it out into a date.c and simultaneously reverted Tony's changes. On t=
+he
+> other hand, the commit messages do say this, and you can use git log =
+and
+> git blame to verify that they're true. The only thing they don't let
+> you verify is what the differences are between the date.c added in
+> ecee9d9e and the similar part of commit-tree.c in 812666c8. If someon=
+e
+> wants to make git blame *really* magic, date.c would be a good test c=
+ase.
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
