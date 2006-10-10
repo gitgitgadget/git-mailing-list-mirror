@@ -1,66 +1,60 @@
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: Junio's wishes [Was: Re: Approxidate licensing]
-Date: Tue, 10 Oct 2006 16:54:26 -0400
-Message-ID: <200610102054.k9AKsQ2a004095@laptop13.inf.utfsm.cl>
-References: <junkio@cox.net>
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 10 22:55:11 2006
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/2] gitweb: Show trailing slash when listing tree entry in tree listing
+Date: Tue, 10 Oct 2006 23:00:16 +0200
+Message-ID: <200610102300.16935.jnareb@gmail.com>
+References: <20061010205238.33892.qmail@web31803.mail.mud.yahoo.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 10 22:59:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXOca-00041m-KG
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 22:54:41 +0200
+	id 1GXOh4-0005AN-K9
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 22:59:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030353AbWJJUyi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 16:54:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030354AbWJJUyh
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 16:54:37 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:13994 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S1030353AbWJJUyh (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Oct 2006 16:54:37 -0400
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id k9AKsQUJ012476
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 10 Oct 2006 16:54:27 -0400
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1])
-	by laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id k9AKsQ2a004095;
-	Tue, 10 Oct 2006 16:54:26 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
-   of "Tue, 10 Oct 2006 12:23:01 MST." <7v64es0ycq.fsf@assigned-by-dhcp.cox.net> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.19.1]); Tue, 10 Oct 2006 16:54:27 -0400 (CLT)
-X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
+	id S1030364AbWJJU7N convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 10 Oct 2006 16:59:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030365AbWJJU7N
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 16:59:13 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:22727 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1030364AbWJJU7L (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Oct 2006 16:59:11 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so831290ugd
+        for <git@vger.kernel.org>; Tue, 10 Oct 2006 13:59:10 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=X0tros0O+yjGKGfIiQwfvua+maHR+k2VfPAcoHARUkJGT0srfjX1+CvvT56fFpnr7c/OeqW3tI9fkejlXBsMtWZzmGz9d18YGX7nvN42MXv6Fq2awIiVS/NFl39/kotw4YGrTMyMnf1mOlxMNEp7chGQvn4qr8JRcD7y3uUROzw=
+Received: by 10.66.224.19 with SMTP id w19mr8711851ugg;
+        Tue, 10 Oct 2006 13:59:10 -0700 (PDT)
+Received: from host-81-190-20-194.torun.mm.pl ( [81.190.20.194])
+        by mx.google.com with ESMTP id x33sm1071240ugc.2006.10.10.13.59.09;
+        Tue, 10 Oct 2006 13:59:09 -0700 (PDT)
+To: Luben Tuikov <ltuikov@yahoo.com>
+User-Agent: KMail/1.9.3
+In-Reply-To: <20061010205238.33892.qmail@web31803.mail.mud.yahoo.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28669>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> My wishes about the code I write for this project is very
-> simple:
-> 
->      If you improve my code that had helped you to make it help
->      you even better, I would like to have that change back, so
->      that your change would help me the same way as it helped
->      you.
-> 
-> The readers may have noticed that I have slight problem with
-> GPLv2; in my wish it does not matter if you distribute the
-> result or not.  And I am selfish.  It is not about helping my
-> users, but about helping me ;-).
+Luben Tuikov wrote:
+> P.S. Notice how there is a "snapshot" link on each line of
+> shortlog, but there is no "snapshot" link in the nav bar
+> of a=3Dcommit. =A0The "snapshot" link is next to "tree" down
+> in the commit data. =A0There is also a "tree" link which is also
+> in the navbar, but "shortlog" is missing.
 
-There is a small practical problem with that: How would you find out I'm
-using a modified version of your code internally? Also, the "distribution"
-part of GPLv2 is a useful filter: Only such modifications that are
-worthwhile to distribute get back, not each and every corner I paint myself
-into while playing around.
-
-All in all, a nice balance, IMVHO.
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                    Fono: +56 32 2654431
-Universidad Tecnica Federico Santa Maria             +56 32 2654239
-Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
+The problem with snapshot is that we can have snapshot of a commit
+(and all links in the top part of navigation bar till now deals with=20
+current commit), and snapshot of a tree, which can be subdirectory
+(and all links in the bottom part of navigation bar deals with=20
+the views/presentations of a current object).
+--=20
+Jakub Narebski
+Poland
