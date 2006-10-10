@@ -1,83 +1,112 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/2] gitweb: Show trailing slash when listing tree entry in tree listing
-Date: Mon, 09 Oct 2006 22:10:27 -0700
-Message-ID: <7vy7ro7o3g.fsf@assigned-by-dhcp.cox.net>
-References: <20061007141043.16912.73982.stgit@rover>
-	<20061007184418.64881.qmail@web31812.mail.mud.yahoo.com>
-	<eg8tpu$drj$1@sea.gmane.org> <20061007191246.GF20017@pasky.or.cz>
-	<20061009205551.GO20017@pasky.or.cz>
-	<7vslhx9k6c.fsf@assigned-by-dhcp.cox.net>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH] gitweb: Show project README if available
+Date: Mon, 9 Oct 2006 22:15:45 -0700 (PDT)
+Message-ID: <20061010051545.15859.qmail@web31801.mail.mud.yahoo.com>
+References: <20061010025627.19317.70511.stgit@rover>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 10 07:10:37 2006
+X-From: git-owner@vger.kernel.org Tue Oct 10 07:15:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GX9sw-0002nQ-HO
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 07:10:34 +0200
+	id 1GX9y1-0003l0-8d
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 07:15:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964971AbWJJFKa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 01:10:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964979AbWJJFKa
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 01:10:30 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:30090 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S964971AbWJJFK2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 01:10:28 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061010051028.GTWH12909.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 10 Oct 2006 01:10:28 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id YVAW1V00u1kojtg0000000
-	Tue, 10 Oct 2006 01:10:31 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <7vslhx9k6c.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Mon, 09 Oct 2006 15:52:11 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S964979AbWJJFPq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 01:15:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964981AbWJJFPq
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 01:15:46 -0400
+Received: from web31801.mail.mud.yahoo.com ([68.142.207.64]:20866 "HELO
+	web31801.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S964979AbWJJFPq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Oct 2006 01:15:46 -0400
+Received: (qmail 15861 invoked by uid 60001); 10 Oct 2006 05:15:45 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=sJFPWHrWmQwhJ9rOQyHEAb5Q47ssJIlijKwRoqj8LkoMHGySavHOw3gCE/0I4Gb69z+PbJN5IRldjkgjOF85CNizrVUcRiLdov40RwFnIp2lpxKh/3rjNIWhvdzuCh0RaiGNGdnZU/pNooF3b7bZPJvu0+MwQv0/KHCW5dAeQpc=  ;
+Received: from [71.80.233.118] by web31801.mail.mud.yahoo.com via HTTP; Mon, 09 Oct 2006 22:15:45 PDT
+To: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>
+In-Reply-To: <20061010025627.19317.70511.stgit@rover>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28602>
 
-Junio C Hamano <junkio@cox.net> writes:
+--- Petr Baudis <pasky@suse.cz> wrote:
+> If the project includes a README file, show it in the summary page.
+> The usual "this should be in the config file" argument does not apply here
+> since this can be larger and having such a big string in the config file
+> would be impractical.
+> 
+> I don't know if this is suitable upstream, but it's one of the repo.or.cz
+> custom modifications that I've thought could be interesting for others
+> as well.
 
-> Petr Baudis <pasky@suse.cz> writes:
->
->> This is the count of actions invoked from the tree, commit and
->> commitdiff view (using the referer information):
->>
->>     blame  blob   total requests containing 'a='
->> #2  1      18     264
->> #1  31     23     399
->> #0  4      6      50
->>
->> The disparation between #2 and #1,#0 is quite apparent. If we want more
->> exact results, I will let #0 accumulate data for a week and then revert
->> the removal of the links and start another sample.
->
-> I am not sure -- you are certainly counting me looking at your
-> blame output while working on the slimmed down blame output (you
-> may remember that I noted that while your output gives names and
-> dates for each line which is busier I kind of liked it in one of
-> my previous messages), and we talked about gitweb blame lot
-> recently on the list so that might have spurred people's
-> curiosity.
+I don't see how a read-me file relates to gitweb.
 
-Having said that, I agree to the point you are trying to make
-here.  It was a mistake to remove blob/tree links from the view
-that lists pathnames.
+People may call those files "00README" or "README.txt"
+or "README.TXT" or "README_001", etc.
 
-If we did not have any obviously clickable links on the right
-hand side it might have been a different story, but when given
-UNIXy permission bits, pathname and blame/history/raw links,
-nobody would think of clicking on the pathname itself to grab
-its contents.  The blame link would give you the same
-information (and a bit more) and people would just go there
-without much thinking.
+The contents of such a file has nothing to do with gitweb,
+and or git.  It may work for repo.or.cz but is unlikely that
+it would work for all projects for all git repos and for all
+gitweb interfaces.
 
-It probably is wise to resurrect those "redundant" links.
+The contents of a read-me file could be quite large and thus
+not suitable for the "summary" page.  Both the contents and the
+size may not be suitable.  "repo.or.cz" is the exception, not
+the rule.
+
+A readme file isn't written with the intent of git or gitweb.
+It is a function of the project, not the SCM used to keep it in, or
+the SCM web interface used to show it.
+
+I don't understand why the "description"  file doesn't do what
+you want?  Do you need it to be multi-line or slightly larger?
+Why not just extend "description" and/or create/use a second
+file called "description_long" to store multi-line descriptions?
+
+Or why not extend the "description" file s.t. only the first
+line would be shown in the "description" line of "summary" and
+down below, show the rest of the description file if present?
+
+This way it is known that this is a function of gitweb.
+
+     Luben
+
+> 
+> Signed-off-by: Petr Baudis <pasky@suse.cz>
+> ---
+> 
+>  gitweb/gitweb.perl |    8 ++++++++
+>  1 files changed, 8 insertions(+), 0 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 7547c4d..4e56af9 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -2535,6 +2535,14 @@ sub git_summary {
+>  	}
+>  	print "</table>\n";
+>  
+> +	if (-s "$projectroot/$project/README") {
+> +		if (open my $fd, "$projectroot/$project/README") {
+> +			print "<div class=\"title\">readme</div>\n";
+> +			print $_ while (<$fd>);
+> +			close $fd;
+> +		}
+> +	}
+> +
+>  	open my $fd, "-|", git_cmd(), "rev-list", "--max-count=17",
+>  		git_get_head_hash($project)
+>  		or die_error(undef, "Open git-rev-list failed");
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
