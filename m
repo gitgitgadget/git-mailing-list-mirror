@@ -1,62 +1,74 @@
-From: "Dongsheng Song" <dongsheng.song@gmail.com>
-Subject: Re: Why gitweb commitdiff NO diff output ?
-Date: Tue, 10 Oct 2006 18:46:34 +0800
-Message-ID: <4b3406f0610100346v16f1f2f6i305963bc1b398dac@mail.gmail.com>
-References: <4b3406f0609280032y77cb5961i220b3cfd741ebfd4@mail.gmail.com>
-	 <20061003095250.GJ2871@admingilde.org>
-	 <7vwt7hnvsk.fsf@assigned-by-dhcp.cox.net>
-	 <4b3406f0610080122r17a10ea4h2c71a399fb8398a@mail.gmail.com>
-	 <7v64et9fjq.fsf@assigned-by-dhcp.cox.net>
-	 <4b3406f0610091851i593f3e53v5d5fef891edb6d48@mail.gmail.com>
-	 <7v1wpgapew.fsf@assigned-by-dhcp.cox.net>
-	 <7viris9a6g.fsf@assigned-by-dhcp.cox.net>
-	 <4b3406f0610092336v5ab58134i280f64223a272b0b@mail.gmail.com>
-	 <7vy7ro64pq.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Show project README if available
+Date: Tue, 10 Oct 2006 13:21:17 +0200
+Organization: At home
+Message-ID: <egfvlb$m2c$1@sea.gmane.org>
+References: <20061010025627.19317.70511.stgit@rover> <7vejtg97qh.fsf@assigned-by-dhcp.cox.net> <7v7iz894ct.fsf@assigned-by-dhcp.cox.net> <20061010105521.GQ20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 10 13:21:59 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue Oct 10 13:22:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXFg7-0002oh-BA
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 13:21:43 +0200
+	id 1GXFgH-0002rn-90
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 13:21:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932629AbWJJLVj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 07:21:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933013AbWJJLVj
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 07:21:39 -0400
-Received: from py-out-1112.google.com ([64.233.166.180]:25478 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S932629AbWJJLVi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 07:21:38 -0400
-Received: by py-out-1112.google.com with SMTP id n25so2778507pyg
-        for <git@vger.kernel.org>; Tue, 10 Oct 2006 04:21:37 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GDWgE5h0T9OSCbGvzT47xiAO0fyBqGPTiPujyHlpuIubcK3/4beeVAnCQxb/E5KUjOfVa0XRQnNMC/GRXdgzFLGJ7+s2uws2xxuVaIJUuQjWRKUD9Ebw+56WBY1123zvfUUbKh6KArbH5Ie7BmhxF1JmnCcL+6DgquvUpOZ/fEg=
-Received: by 10.35.37.13 with SMTP id p13mr14887645pyj;
-        Tue, 10 Oct 2006 03:46:35 -0700 (PDT)
-Received: by 10.35.106.3 with HTTP; Tue, 10 Oct 2006 03:46:34 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vy7ro64pq.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S933019AbWJJLVu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 07:21:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933014AbWJJLVt
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 07:21:49 -0400
+Received: from main.gmane.org ([80.91.229.2]:54194 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932979AbWJJLVs (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Oct 2006 07:21:48 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GXFfb-0002gy-U0
+	for git@vger.kernel.org; Tue, 10 Oct 2006 13:21:11 +0200
+Received: from host-81-190-27-91.torun.mm.pl ([81.190.27.91])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Oct 2006 13:21:11 +0200
+Received: from jnareb by host-81-190-27-91.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Oct 2006 13:21:11 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-27-91.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28628>
 
-Thanks, now that's OK.
+Petr Baudis wrote:
 
->
-> I am not sure what version of gitweb your distribution packages,
-> but it used to be that commitdiff page wanted to create
-> temporary file somewhere on the filesystem (the variable was
-> $git_temp and by default it was set to "/tmp/gitweb", I think).
-> Your other pages such as commit and log page seem to be working,
-> so perhaps your gitweb has trouble writing there only on that
-> machine?
->
+> Dear diary, on Tue, Oct 10, 2006 at 06:33:54AM CEST, I got a letter
+> where Junio C Hamano <junkio@cox.net> said that...
+>> Junio C Hamano <junkio@cox.net> writes:
+>> 
+>> > Petr Baudis <pasky@suse.cz> writes:
+>> >
+>> >> If the project includes a README file, show it in the summary page.
+>> >...
+>> > I wonder how this should relate to .git/description file,
+>> > though.  In other words, it _might_ make sense to change where
+>> > we show the contents of description right now to show the first
+>> > line and take README from the same location.
+> 
+> In principle I like this idea. One problem is that description is not
+> supposed to contain HTML and my README is (perhaps it should read
+> README.html instead), and I really want README to. And if it's not
+> plaintext, division of the first line and the rest does not work so
+> well:
+
+Perhaps we should assume $GIT_DIR/README to be text/plain (and useable
+as motd), and $GIT_DIR/README.html as text/html, preffering the README.html.
+The "problem" is if README.html is HTML _fragment_, or is it self contained
+HTML (and we should use iframe, object, or strip it).
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
