@@ -1,110 +1,94 @@
-From: Phillip Susi <psusi@cfl.rr.com>
-Subject: Release 1.4.2 build failure
-Date: Tue, 10 Oct 2006 16:22:21 -0400
-Message-ID: <452C00FD.1020307@cfl.rr.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] repack: allow simultaneous packing and pruning
+Date: Tue, 10 Oct 2006 13:24:23 -0700
+Message-ID: <7vk637zzpk.fsf@assigned-by-dhcp.cox.net>
+References: <20061010102210.568341380D6@magnus.utsl.gen.nz>
+	<Pine.LNX.4.64.0610100800490.3952@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Oct 10 22:22:33 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 10 22:24:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXO76-0005Ky-Me
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 22:22:09 +0200
+	id 1GXO9M-0005oA-5I
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 22:24:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030271AbWJJUWE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 16:22:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030272AbWJJUWE
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 16:22:04 -0400
-Received: from iriserv.iradimed.com ([69.44.168.233]:39040 "EHLO iradimed.com")
-	by vger.kernel.org with ESMTP id S1030271AbWJJUWC (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Oct 2006 16:22:02 -0400
-Received: from [10.1.1.235] ([10.1.1.235]) by iradimed.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 10 Oct 2006 16:22:16 -0400
-User-Agent: Thunderbird 1.5.0.7 (Windows/20060909)
-To: git@vger.kernel.org
-X-OriginalArrivalTime: 10 Oct 2006 20:22:16.0094 (UTC) FILETIME=[C71EA3E0:01C6ECA9]
-X-TM-AS-Product-Ver: SMEX-7.2.0.1122-3.6.1039-14744.000
-X-TM-AS-Result: No--2.910500-5.000000-2
+	id S1030281AbWJJUYZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 16:24:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030282AbWJJUYZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 16:24:25 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:39083 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1030281AbWJJUYZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Oct 2006 16:24:25 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061010202424.ZNTK12581.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 10 Oct 2006 16:24:24 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id YkQT1V0051kojtg0000000
+	Tue, 10 Oct 2006 16:24:27 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0610100800490.3952@g5.osdl.org> (Linus Torvalds's
+	message of "Tue, 10 Oct 2006 08:03:54 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28662>
 
-I tried to build git release 1.4.2 and it failed with the following tests:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-*** t3403-rebase-skip.sh ***
-*   ok 1: setup
-*   ok 2: rebase with git am -3 (default)
-* FAIL 3: rebase --skip with am -3
+> On Tue, 10 Oct 2006, Sam Vilain wrote:
+>>
+>> If using git-repack -a, unreferenced objects are kept behind in the
+>> pack.  This might be the best default, but there are no good ways
+>> to clean up the packfiles if a lot of rebasing is happening, or
+>> branches have been deleted.
+>
+> Don't do this.
+>
+> I understand why you want to do it, but the fact is, it's dangerous.
 
-                 git reset --hard HEAD &&
-                 git rebase --skip
+Sorry, I understand "it's dangerous" part, but I do not
+understand "why you want to do it" part.
 
-*   ok 4: checkout skip-merge
-*   ok 5: rebase with --merge
-*   ok 6: rebase --skip with --merge
-* FAIL 7: merge and reference trees equal
-         test -z "`git-diff-tree skip-merge skip-reference`"
-* failed 2 among 7 test(s)
+@@ -32,6 +33,11 @@ case ",$all_into_one," in
+ ,,)
+ 	rev_list='--unpacked'
+ 	pack_objects='--incremental'
++	if [ -n "$prune" ]
++	then
++	    # prune junk first
++	    git-prune
++	fi
+ 	;;
+ ,t,)
+ 	rev_list=
 
+This shouldn't make any difference if the repository is
+quiescent (and is dangerous if it isn't).  pack-objects will
+not get fed things that are not reachable.
 
-I enabled the --verbose and --debug test options in the test script 
-makefile and then got this:
+@@ -40,8 +46,14 @@ case ",$all_into_one," in
+ 	# Redundancy check in all-into-one case is trivial.
+ 	existing=`cd "$PACKDIR" && \
+ 	    find . -type f \( -name '*.pack' -o -name '*.idx' \) -print`
++
++	if [ -n "$prune" ]
++	then
++	    rev_list=`cd "$GIT_DIR" && find refs -type f -print`
++	fi
+ 	;;
+ esac
++
 
+We give --all to rev-list so this should not have any effect
+either; other than that the code introduced by this hunk is
+broken with packed-refs.
 
-*   ok 2: rebase with git am -3 (default)
-* expecting success:
-         git reset --hard HEAD &&
-         git rebase --skip
-
-previous dotest directory .dotest still exists but mbox given.
-* FAIL 3: rebase --skip with am -3
-
-                 git reset --hard HEAD &&
-                 git rebase --skip
-
-* expecting success: git checkout -f skip-merge
-*   ok 4: checkout skip-merge
-* expecting failure: git rebase --merge master
-Merging HEAD with aa79649ca1fa23815a1ad3e336d9f860599556a3
-Merging:
-7cb7464379042fecc2968751bd55656a97d28c77 goodbye
-aa79649ca1fa23815a1ad3e336d9f860599556a3 we should skip this
-found 1 common ancestor(s):
-b0ab61719ccd2e08f34e326172362a485540934e hello
-Auto-merging hello
-CONFLICT (content): Merge conflict in hello
-
-
-When you have resolved this problem run "git rebase --continue".
-If you would prefer to skip this patch, instead run "git rebase --skip".
-To restore the original branch and stop rebasing run "git rebase
---abort".
-
-*   ok 5: rebase with --merge
-* expecting success:
-         git reset --hard HEAD &&
-         git rebase --skip
-
-Merging HEAD with 46a6fc9814012b86849bc8fc8ae2d5cc1958c3cb
-Merging:
-7cb7464379042fecc2968751bd55656a97d28c77 goodbye
-46a6fc9814012b86849bc8fc8ae2d5cc1958c3cb this should not be skipped
-found 1 common ancestor(s):
-aa79649ca1fa23815a1ad3e336d9f860599556a3 we should skip this
-
-Committed: 0002 this should not be skipped
-All done.
-*   ok 6: rebase --skip with --merge
-* expecting success: test -z "`git-diff-tree skip-merge skip-reference`"
-* FAIL 7: merge and reference trees equal
-         test -z "`git-diff-tree skip-merge skip-reference`"
-/tmp/buildd/git-core-1.4.2/t/../gitk: line 3: exec: wish: not found
-* failed 2 among 7 test(s)
-
-
-Does anyone know what this means?  I am building on Ubuntu Dapper Drake.
-
-Please CC replies.
+Isn't "repack -a -d" what Sam wants?
