@@ -1,90 +1,70 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] gitweb wishlist and TODO list
-Date: Tue, 10 Oct 2006 10:54:54 +0200
-Message-ID: <200610101054.54948.jnareb@gmail.com>
-References: <20061010014743.80094.qmail@web31801.mail.mud.yahoo.com>
+Subject: Re: [PATCH] gitweb: Show project README if available
+Date: Tue, 10 Oct 2006 11:00:41 +0200
+Organization: At home
+Message-ID: <egfndo$lg6$1@sea.gmane.org>
+References: <20061010025627.19317.70511.stgit@rover>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 10 10:54:10 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Tue Oct 10 11:01:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXDN6-0002fP-Tu
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 10:53:57 +0200
+	id 1GXDTW-0004Ny-Oz
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 11:00:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965112AbWJJIxy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 04:53:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965113AbWJJIxy
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 04:53:54 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:15347 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S965112AbWJJIxx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 04:53:53 -0400
-Received: by ug-out-1314.google.com with SMTP id o38so712055ugd
-        for <git@vger.kernel.org>; Tue, 10 Oct 2006 01:53:52 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=neSfqmB9zFctr/9G/+tkLJb7M9aYOH9x3NNFtJBfrGhtJwHFPW6uBmP/QzOcyUZNjdDQQm851jAR2RiMM+QCVGL3m6eRUP+2bFv9Al9ZWhRbnDOhcRXXgWjzhxYlCsYOUaeST2Yl2nmHY17Qn1BdvhjDx1VOVMPsrGg8ZglUE5Y=
-Received: by 10.67.105.19 with SMTP id h19mr7973684ugm;
-        Tue, 10 Oct 2006 01:53:51 -0700 (PDT)
-Received: from host-81-190-27-91.torun.mm.pl ( [81.190.27.91])
-        by mx.google.com with ESMTP id k28sm2477180ugd.2006.10.10.01.53.51;
-        Tue, 10 Oct 2006 01:53:51 -0700 (PDT)
-To: Luben Tuikov <ltuikov@yahoo.com>
-User-Agent: KMail/1.9.3
-In-Reply-To: <20061010014743.80094.qmail@web31801.mail.mud.yahoo.com>
-Content-Disposition: inline
+	id S965113AbWJJJAX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 10 Oct 2006 05:00:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965114AbWJJJAW
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 05:00:22 -0400
+Received: from main.gmane.org ([80.91.229.2]:34541 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S965113AbWJJJAV (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Oct 2006 05:00:21 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GXDT5-0004Gm-Be
+	for git@vger.kernel.org; Tue, 10 Oct 2006 11:00:08 +0200
+Received: from host-81-190-27-91.torun.mm.pl ([81.190.27.91])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Oct 2006 11:00:07 +0200
+Received: from jnareb by host-81-190-27-91.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Oct 2006 11:00:07 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-27-91.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28620>
 
-Luben Tuikov wrote:
-> --- Jakub Narebski <jnareb@gmail.com> wrote:
-> >  * Improve blame view, making use of --porcelain option to git-blame (for
-> >    later). Perhaps change blame view from table based one to div based one.
-> 
-> >    Use different colors for different commits (graph coloring problem).
-> 
-> Oh, no please no.
-> 
-> Why do you think I left the color list as a list?  I did try to use
-> more colors when I wrote it, and it was ugly as h3ll and very distracting
-> when doing real work.  So I ended up with the two color (shades) we have
-> now and this is what I submitted.
-> 
-> Also, any kind of "graph coloring problem" would make blame slow.
+Petr Baudis wrote:
 
-One of ideas (without having some nice _mathematical_ solution, i.e. not
-having for to try and check different coloring but calculating coloring, 
-of a blame graph coloring problem[*1*]) was to use few colors, 3, 6, 8
-based on some hash of sha1 of commit (for example first character) plus
-alternating "darkness" of those colors to ensure that neighbours would
-have different colors. Another was to use first 6 characters of sha1 as
-a color, then flatten the color to suitable for background (perhaps also
-with some kind of ensuring that neigbour blames would have different color). 
+> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+print $_ while (<$fd>);
 
-Junio idea of basing color/brighness (of some part of blame output at
-least) on the _age_ of region (perhaps using two altrenating _colors_)
-has also it's merit.
+Wouldn't it be better to do it in slurp mode, i.e.
 
-Nevertheless, such change would be preceded by an RFC, and discussion.
+        {
+                local $/
+                print <$fd>;
+        }
 
-> In any way, if you/someone does implement this "coloring" can you please
-> make it an option, because I'll never turn it on.  Thanks!
+instead?
 
-Not a problem to make blame coloring a feature.
+Do you assume that README is HTML fragment? If not, you should esc_html=
+ it.
+Besides, we have similar (if assumed to have one line only) file, namel=
+y
+description.
 
-
-Footnotes:
-[*1*] Blame graph coloring problem: 1) regions blamed on the same commit
-should have the same color 2) neighbour blame regions should have different
-colors.
--- 
+Besides, README for a project can be huge. Git README has 589 lines!
+--=20
 Jakub Narebski
-Poland
+Warsaw, Poland
+ShadeHawk on #git
