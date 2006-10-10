@@ -1,64 +1,74 @@
-From: Matthew Wilcox <matthew@wil.cx>
-Subject: [PATCH] Understand the meaning of commas in git-send-email
-Date: Tue, 10 Oct 2006 08:59:36 -0600
-Message-ID: <20061010145936.GC8993@parisc-linux.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] repack: allow simultaneous packing and pruning
+Date: Tue, 10 Oct 2006 08:03:54 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610100800490.3952@g5.osdl.org>
+References: <20061010102210.568341380D6@magnus.utsl.gen.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Oct 10 17:01:15 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 10 17:05:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXJ56-0008QY-0h
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 16:59:44 +0200
+	id 1GXJ9F-0001Ff-7p
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 17:04:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932140AbWJJO7i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 10:59:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932142AbWJJO7i
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 10:59:38 -0400
-Received: from palinux.external.hp.com ([192.25.206.14]:55466 "EHLO
-	mail.parisc-linux.org") by vger.kernel.org with ESMTP
-	id S932141AbWJJO7h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 10:59:37 -0400
-Received: by mail.parisc-linux.org (Postfix, from userid 26919)
-	id C7756494009; Tue, 10 Oct 2006 08:59:36 -0600 (MDT)
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932135AbWJJPD6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 11:03:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932143AbWJJPD6
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 11:03:58 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:41453 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932135AbWJJPD5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Oct 2006 11:03:57 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9AF3taX026500
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 10 Oct 2006 08:03:56 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9AF3sVM011331;
+	Tue, 10 Oct 2006 08:03:55 -0700
+To: Sam Vilain <sam@vilain.net>
+In-Reply-To: <20061010102210.568341380D6@magnus.utsl.gen.nz>
+X-Spam-Status: No, hits=-2.466 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.94__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28634>
 
 
-I made the mistake of adding one Cc: line with two email addresses on
-it, instead of two Cc: lines with one email address each.  Extending
-git-send-email to parse that case turns out to not be too much work.
 
-Signed-off-by: Matthew Wilcox <matthew@wil.cx>
+On Tue, 10 Oct 2006, Sam Vilain wrote:
+>
+> If using git-repack -a, unreferenced objects are kept behind in the
+> pack.  This might be the best default, but there are no good ways
+> to clean up the packfiles if a lot of rebasing is happening, or
+> branches have been deleted.
 
---- /usr/bin/git-send-email	2006-07-29 09:52:13.000000000 -0600
-+++ ./git-send-email.perl	2006-10-10 08:46:13.000000000 -0600
-@@ -537,13 +542,15 @@
- 	my @emails;
- 
- 	foreach my $entry (@_) {
--		if (my $clean = extract_valid_address($entry)) {
--			$seen{$clean} ||= 0;
--			next if $seen{$clean}++;
--			push @emails, $entry;
--		} else {
--			print STDERR "W: unable to extract a valid address",
--					" from: $entry\n";
-+		foreach my $addr (split(/, */, $entry)) {
-+			if (my $clean = extract_valid_address($addr)) {
-+				$seen{$clean} ||= 0;
-+				next if $seen{$clean}++;
-+				push @emails, $addr;
-+			} else {
-+				print STDERR "W: unable to extract a valid",
-+					" address from: $entry\n";
-+			}
- 		}
- 	}
- 	return @emails;
+Don't do this.
+
+I understand why you want to do it, but the fact is, it's dangerous.
+
+Right now, "git repack" is actually safe to run even on a repository which 
+is being modified! And that's actually important, if you have something 
+like a shared repo that gets re-packed every once in a while from a 
+cron-job!
+
+So the refs might be up-dated as it runs, and if that happens, your 
+pruning doesn't really do the right thing - it might consider a new loose 
+object to be unreachable, because it didn't check whether the refs have 
+changed since it read them so that it might actually _be_ reachable after 
+all.
+
+So please don't do this. 
+
+It's important for operations to always think about "what happens if 
+somebody does a 'commit' or pushes into the tree at the same time?".
+
+For example, the "git prune-packed" that gets run afterwards is _not_ 
+racy, because it will only prune objects that already exist in the pack.
+
+		Linus
