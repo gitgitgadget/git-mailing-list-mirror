@@ -1,57 +1,81 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Why gitweb commitdiff NO diff output ?
-Date: Mon, 09 Oct 2006 17:32:09 -0700
-Message-ID: <7v64et9fjq.fsf@assigned-by-dhcp.cox.net>
-References: <4b3406f0609280032y77cb5961i220b3cfd741ebfd4@mail.gmail.com>
-	<eft8u4$un0$2@sea.gmane.org> <20061003095250.GJ2871@admingilde.org>
-	<7vwt7hnvsk.fsf@assigned-by-dhcp.cox.net>
-	<4b3406f0610080122r17a10ea4h2c71a399fb8398a@mail.gmail.com>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [RFC/PATCH] merge: loosen overcautious "working file will be lost" check.
+Date: Mon, 9 Oct 2006 17:59:15 -0700 (PDT)
+Message-ID: <20061010005915.30066.qmail@web31813.mail.mud.yahoo.com>
+References: <7vd5919g55.fsf@assigned-by-dhcp.cox.net>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 10 02:49:30 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 10 03:03:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GX5Xf-0002bK-UU
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 02:32:21 +0200
+	id 1GX5xo-0004nL-Rr
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 02:59:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751930AbWJJAcL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Oct 2006 20:32:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751931AbWJJAcL
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Oct 2006 20:32:11 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:4295 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751930AbWJJAcK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Oct 2006 20:32:10 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061010003210.SKSD22977.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 9 Oct 2006 20:32:10 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id YQYC1V00i1kojtg0000000
-	Mon, 09 Oct 2006 20:32:13 -0400
-To: "Dongsheng Song" <dongsheng.song@gmail.com>
-In-Reply-To: <4b3406f0610080122r17a10ea4h2c71a399fb8398a@mail.gmail.com>
-	(Dongsheng Song's message of "Sun, 8 Oct 2006 16:22:23 +0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S964887AbWJJA7R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Oct 2006 20:59:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964889AbWJJA7R
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Oct 2006 20:59:17 -0400
+Received: from web31813.mail.mud.yahoo.com ([68.142.207.76]:50108 "HELO
+	web31813.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S964887AbWJJA7Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Oct 2006 20:59:16 -0400
+Received: (qmail 30068 invoked by uid 60001); 10 Oct 2006 00:59:15 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=yuJhdPwW+krLGPqMlP2cuO2A/PxGnQiNaHJjzQy9WkAbnhcumsoj99v9FaY9pTxsv4hw42qGVvhETSYSVDXR62dUk+nu8n2tXDNqjkqYubGz3ny6Hmrjek8MrVdYbnFIduSUMbggPhKB/MeZWzAGzeFbLIlKS3ZQ20COn0W6UIs=  ;
+Received: from [64.215.88.90] by web31813.mail.mud.yahoo.com via HTTP; Mon, 09 Oct 2006 17:59:15 PDT
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vd5919g55.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28589>
 
-The site does not return any of these four blobs that are part
-of the commitdiff when a=blob is requested on them.
+--- Junio C Hamano <junkio@cox.net> wrote:
+> Ah, I misunderstood.  But then I do not understand why you see
+> all 0 anywhere.  Merge base has the path, branch B has it, and
+> trunk has it too; wouldn't it result in regular 3-way merge?
+> 
+> I understand you do _not_ even want a regular 3-way merge in
+> this case, but that is a separate issue.  You could write a new
+> merge strategy to traverse ancestry chain between the merge base
+> and each heads you are merging and notice disappearance and
+> reappearance of the path, but that would slow things down
+> tremendously for normal case and I do not think it is worth it.
+> 
+> You would also have exactly the same issue if you do not remove
+> and then add the file, but if your work on the branch involves a
+> significant rewrite.  Depending on how good the rewrite is,
+> bugfixes that happened on the trunk based on an ancient code may
+> not even be needed (in other words, it would not apply cleanly
+> anyway, but it does not matter -- the branch work is much better
+> or has different set of problems that the trunk fix is
+> irrelevant).
+> 
+> At that point, M1 would involve significant merge conflicts (and
+> not all-0 which I am still puzzled about), but I suspect that
+> the situation is obvious enough to the human (inspect git log
+> branch...trunk output and the log somewhere had better indicate
+> that the are unrelated), and the solution very much is different
+> case-by-case (most likely the person who pulls branch into trunk
+> would say "keep ours" for the path which would mean running "git
+> cat-file :2:$path >$path", or say "we are not really ready to merge
+> yet" and abort the entire merge; somebody on the trunk pulling
+> from that branch might say "I want other smaller fixes but this
+> total rewrite is not ready yet -- keep ours", or "now we know
+> this is total rewrite and the small updates on the trunk does
+> not matter -- take theirs and from now on we will improve on the
+> work done on the branch").
+> 
+> So in short, I do not think there is a clear-cut improvement we
+> can do to the tools to solve this.
 
-        file:a34d77e47bf1561db1ade4f6b247598b880f80d5 ->
-        file:7625c494df01d4745e67bd4423e2fdbe9fc43799
+Yes, I agree.
 
-        file:b207fe30a5430f97d27d398d89c974b068694c7a ->
-        file:57b07ace4bb6352416bbf9436b9f2642b3273257
-
-I would first suspect if the repository actually have them _and_
-with an appropriate mode protection to be readable by your
-gitweb process.
+   Luben
