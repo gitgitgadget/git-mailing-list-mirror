@@ -1,63 +1,49 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] repack: allow simultaneous packing and pruning
-Date: Tue, 10 Oct 2006 14:25:49 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610101423561.3952@g5.osdl.org>
-References: <20061010102210.568341380D6@magnus.utsl.gen.nz>
- <Pine.LNX.4.64.0610100800490.3952@g5.osdl.org> <452BF8B3.5090305@tromer.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Release 1.4.2 build failure
+Date: Tue, 10 Oct 2006 15:11:23 -0700
+Message-ID: <7vejtfzur8.fsf@assigned-by-dhcp.cox.net>
+References: <452C00FD.1020307@cfl.rr.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 10 23:27:11 2006
+X-From: git-owner@vger.kernel.org Wed Oct 11 00:11:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXP72-00031Z-PN
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 23:26:09 +0200
+	id 1GXPou-0005x4-QT
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 00:11:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030417AbWJJV0F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 17:26:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030432AbWJJV0F
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 17:26:05 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:33942 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1030417AbWJJV0C (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Oct 2006 17:26:02 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9ALPnaX020293
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 10 Oct 2006 14:25:50 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9ALPnqn024577;
-	Tue, 10 Oct 2006 14:25:49 -0700
-To: Eran Tromer <git2eran@tromer.org>
-In-Reply-To: <452BF8B3.5090305@tromer.org>
-X-Spam-Status: No, hits=-2.467 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030571AbWJJWLZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 18:11:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030572AbWJJWLZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 18:11:25 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:52430 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1030571AbWJJWLY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Oct 2006 18:11:24 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061010221124.LJSZ18985.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 10 Oct 2006 18:11:24 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id YmBT1V0071kojtg0000000
+	Tue, 10 Oct 2006 18:11:27 -0400
+To: Phillip Susi <psusi@cfl.rr.com>
+In-Reply-To: <452C00FD.1020307@cfl.rr.com> (Phillip Susi's message of "Tue, 10
+	Oct 2006 16:22:21 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28674>
 
+Are you by any chance running the test with the stdin connected
+to </dev/null?
 
+If so, the fix is in 1.4.2.2.
 
-On Tue, 10 Oct 2006, Eran Tromer wrote:
-> 
-> Too late: "git repack -a -d" already does it, in contradiction to its 
-> manpage. It creates a new pack by following .git/refs, and then deletes 
-> all old pack files.
-
-That's very different.
-
-That just means that you should not try to do two _concurrent_ repacks. 
-
-> Don't run it on a shared repo, then. And grab a coffee while it runs.
-> But why force leaf repositories to accumulate garbage?
-
-Nobody forces that.
-
-You can run "git prune" if you want to. But at least we know that "git 
-prune" is unsafe.
-
-			Linus
+BTW, the latest "maint" release is 1.4.2.3 and we have 1.4.3-rc2
+from the "master" branch.
