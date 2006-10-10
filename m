@@ -1,68 +1,63 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 2/2] gitweb: Show trailing slash when listing tree entry in tree listing
-Date: Tue, 10 Oct 2006 23:13:47 +0200
-Message-ID: <200610102313.48170.jnareb@gmail.com>
-References: <20061010210226.47626.qmail@web31809.mail.mud.yahoo.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] repack: allow simultaneous packing and pruning
+Date: Tue, 10 Oct 2006 14:25:49 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610101423561.3952@g5.osdl.org>
+References: <20061010102210.568341380D6@magnus.utsl.gen.nz>
+ <Pine.LNX.4.64.0610100800490.3952@g5.osdl.org> <452BF8B3.5090305@tromer.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 10 23:13:03 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 10 23:27:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXOu8-0008JZ-80
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 23:12:48 +0200
+	id 1GXP72-00031Z-PN
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 23:26:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030400AbWJJVMo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 10 Oct 2006 17:12:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030399AbWJJVMo
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 17:12:44 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:54025 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1030400AbWJJVMn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 17:12:43 -0400
-Received: by ug-out-1314.google.com with SMTP id o38so833637ugd
-        for <git@vger.kernel.org>; Tue, 10 Oct 2006 14:12:42 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=KDJHHYYqUJu9WmX2axHusB0Lz8X+GaAtX+D2jSscaLgsdAI6jDYbeRCUfoEk36I+8KUG1ZSU4S/+Hu66EvlRpDVSi+N70PVPk5sS3mvdO+kWq7FvucbD8rXHn4kw8goMJ61EoU04rRyfsO22NYX5VAGDtysV0jSPrWzbH+zv/lk=
-Received: by 10.67.117.2 with SMTP id u2mr8709804ugm;
-        Tue, 10 Oct 2006 14:12:41 -0700 (PDT)
-Received: from host-81-190-20-194.torun.mm.pl ( [81.190.20.194])
-        by mx.google.com with ESMTP id e33sm3189085ugd.2006.10.10.14.12.40;
-        Tue, 10 Oct 2006 14:12:41 -0700 (PDT)
-To: Luben Tuikov <ltuikov@yahoo.com>
-User-Agent: KMail/1.9.3
-In-Reply-To: <20061010210226.47626.qmail@web31809.mail.mud.yahoo.com>
-Content-Disposition: inline
+	id S1030417AbWJJV0F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 17:26:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030432AbWJJV0F
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 17:26:05 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:33942 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030417AbWJJV0C (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Oct 2006 17:26:02 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9ALPnaX020293
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 10 Oct 2006 14:25:50 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9ALPnqn024577;
+	Tue, 10 Oct 2006 14:25:49 -0700
+To: Eran Tromer <git2eran@tromer.org>
+In-Reply-To: <452BF8B3.5090305@tromer.org>
+X-Spam-Status: No, hits=-2.467 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28673>
 
-Dnia wtorek 10. pa=BCdziernika 2006 23:02, Luben Tuikov napisa=B3:
-> > > Isn't that a simple "labelling" question? =A0I do not think
-> > > anybody minds to show clickable string "contents" (instead of
-> > > "blob" or "tree") at the places you mention above and if we did
-> > > so everybody would be happy, right?
-> >=20
-> > Not, IMHO it is not a good idea. Clicking on file name leads to it
-> > contents, but it is not obvoius what kind of view is it. "blob" lin=
-k
->=20
-> It is pretty obvious to me: the contents of the object, whether it be
-> "blob" or "tree". =A0The contents of "blob" and the contents of "tree=
-"
-> as shown by gitweb.
 
-It's pretty obvous to you, because there is only one basic view of tree=
-,=20
-and one basic view of blob. It is not the case for example for commits=20
-in shortlog view, where we have commit and commitdiff views. It is=20
-possible that either blobs or trees acquire another views.
---=20
-Jakub Narebski
-Poland
+
+On Tue, 10 Oct 2006, Eran Tromer wrote:
+> 
+> Too late: "git repack -a -d" already does it, in contradiction to its 
+> manpage. It creates a new pack by following .git/refs, and then deletes 
+> all old pack files.
+
+That's very different.
+
+That just means that you should not try to do two _concurrent_ repacks. 
+
+> Don't run it on a shared repo, then. And grab a coffee while it runs.
+> But why force leaf repositories to accumulate garbage?
+
+Nobody forces that.
+
+You can run "git prune" if you want to. But at least we know that "git 
+prune" is unsafe.
+
+			Linus
