@@ -1,70 +1,62 @@
-From: Eran Tromer <git2eran@tromer.org>
-Subject: Re: [PATCH] repack: allow simultaneous packing and pruning
-Date: Tue, 10 Oct 2006 21:46:59 +0200
-Message-ID: <452BF8B3.5090305@tromer.org>
-References: <20061010102210.568341380D6@magnus.utsl.gen.nz> <Pine.LNX.4.64.0610100800490.3952@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/2] gitweb: Show trailing slash when listing tree entry in tree listing
+Date: Tue, 10 Oct 2006 12:57:30 -0700
+Message-ID: <7vvemsymdx.fsf@assigned-by-dhcp.cox.net>
+References: <egfo99$lg6$2@sea.gmane.org>
+	<20061010191904.99261.qmail@web31809.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Oct 10 21:54:05 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 10 21:57:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXNfm-0007VD-03
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 21:53:54 +0200
+	id 1GXNjK-0008My-O0
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 21:57:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030237AbWJJTxv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 15:53:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030240AbWJJTxu
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 15:53:50 -0400
-Received: from line108-16.adsl.actcom.co.il ([192.117.108.16]:32720 "EHLO
-	lucian.tromer.org") by vger.kernel.org with ESMTP id S1030237AbWJJTxu
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 15:53:50 -0400
-Received: from [192.168.4.6] ([192.168.4.6])
-	by lucian.tromer.org (8.13.7/8.12.11) with ESMTP id k9AJrWin010111;
-	Tue, 10 Oct 2006 21:53:33 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.7) Gecko/20060913 Fedora/1.5.0.7-1.fc5 Thunderbird/1.5.0.7 Mnenhy/0.7.4.0
-To: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.64.0610100800490.3952@g5.osdl.org>
+	id S1030236AbWJJT5c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 15:57:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030239AbWJJT5c
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 15:57:32 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:10693 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1030236AbWJJT5b (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Oct 2006 15:57:31 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061010195730.FRDD6235.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 10 Oct 2006 15:57:30 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id YjxZ1V00E1kojtg0000000
+	Tue, 10 Oct 2006 15:57:33 -0400
+To: ltuikov@yahoo.com
+In-Reply-To: <20061010191904.99261.qmail@web31809.mail.mud.yahoo.com> (Luben
+	Tuikov's message of "Tue, 10 Oct 2006 12:19:04 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28660>
 
-On 2006-10-10 17:03, Linus Torvalds wrote:
-> On Tue, 10 Oct 2006, Sam Vilain wrote:
->> If using git-repack -a, unreferenced objects are kept behind in the
->> pack.  This might be the best default, but there are no good ways
->> to clean up the packfiles if a lot of rebasing is happening, or
->> branches have been deleted.
-> 
-> Don't do this.
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
-Too late: "git repack -a -d" already does it, in contradiction to its
-manpage. It creates a new pack by following .git/refs, and then deletes
-all old pack files.
+> Or,
+>    "Click on the 'blob' link to get the ... Click on the 'tree' link to
+>     get the ... Oh you didn't know what a 'tree' or 'blob' object is?
+>     A 'blob' is ... A 'tree' is ..."
+>
+> At which point the engineer has lost 90% of his interest.
+>
+> It even gets even worse for the obnoxious "tree" link next to each commit
+> in shortlog view:
+>    "The tree link is the the tree object which is part of a commit object.
+>     Oh you don't know the internals of a commit object?  A commit object
+>     binds a tree object and a (parent) commit object, but blah, blah, blah..."
 
-> I understand why you want to do it, but the fact is, it's dangerous.
-> 
-> Right now, "git repack" is actually safe to run even on a repository which 
-> is being modified! And that's actually important, if you have something 
-> like a shared repo that gets re-packed every once in a while from a 
-> cron-job!
-
-Don't run it on a shared repo, then. And grab a coffee while it runs.
-But why force leaf repositories to accumulate garbage?
-
-This functionality is just as racy, and just as necessary, as
-"git-prune". It merely garbage-collects the packs as well. Git seems to
-collect unreferenced objects faster than the space between the cushions
-in my sofa, and there ought to be a way to tidy up things.
-
-Linus, I see why you neither need nor want this functionality in your
-typical workflow, but things look different for a downstream developer
-who engages in a variety of garbage-generating activities like tracking
-wild trees, rebasing patches and using stgit. I really don't need that
-unreferenced copy of 2.6.15-rc2-mm1 in my packs anymore.
-
-  Eran
+Isn't that a simple "labelling" question?  I do not think
+anybody minds to show clickable string "contents" (instead of
+"blob" or "tree") at the places you mention above and if we did
+so everybody would be happy, right?
