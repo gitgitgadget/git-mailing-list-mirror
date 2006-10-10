@@ -1,69 +1,94 @@
-From: "Dongsheng Song" <dongsheng.song@gmail.com>
-Subject: Re: Why gitweb commitdiff NO diff output ?
-Date: Tue, 10 Oct 2006 09:51:10 +0800
-Message-ID: <4b3406f0610091851i593f3e53v5d5fef891edb6d48@mail.gmail.com>
-References: <4b3406f0609280032y77cb5961i220b3cfd741ebfd4@mail.gmail.com>
-	 <eft8u4$un0$2@sea.gmane.org> <20061003095250.GJ2871@admingilde.org>
-	 <7vwt7hnvsk.fsf@assigned-by-dhcp.cox.net>
-	 <4b3406f0610080122r17a10ea4h2c71a399fb8398a@mail.gmail.com>
-	 <7v64et9fjq.fsf@assigned-by-dhcp.cox.net>
+From: Pazu <pazu@pazu.com.br>
+Subject: Re: git-svn fetch fails when a file is renamed changing only case
+Date: Mon, 09 Oct 2006 23:11:30 -0300
+Message-ID: <egevhe$d15$1@sea.gmane.org>
+References: <ege016$vrb$1@sea.gmane.org> <m2psd1rwb0.fsf@ziti.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 10 04:02:43 2006
+X-From: git-owner@vger.kernel.org Tue Oct 10 04:13:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GX6m4-0006LB-OY
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 03:51:27 +0200
+	id 1GX77C-0005kC-Fq
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 04:13:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964902AbWJJBvN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Oct 2006 21:51:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964907AbWJJBvN
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Oct 2006 21:51:13 -0400
-Received: from py-out-1112.google.com ([64.233.166.181]:34027 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S964906AbWJJBvL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Oct 2006 21:51:11 -0400
-Received: by py-out-1112.google.com with SMTP id n25so2581974pyg
-        for <git@vger.kernel.org>; Mon, 09 Oct 2006 18:51:10 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=q8d6R5Zs0uYjZSdZRkt78brnc2+YY9hbZS//hJorSeYBQR4Ua3wE3py2M+IR/88zoW5kV+3pD+uPe1+77Wau+w1N80umKdXMdSXUwizufYEcUhoIUHmLZf+a92oZ14XjOBNgYt2QPMzcTvF8jk+UruqNRRPE2YUZl6tod7dtaUo=
-Received: by 10.35.76.9 with SMTP id d9mr1937426pyl;
-        Mon, 09 Oct 2006 18:51:10 -0700 (PDT)
-Received: by 10.35.106.3 with HTTP; Mon, 9 Oct 2006 18:51:10 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7v64et9fjq.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1750763AbWJJCNB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Oct 2006 22:13:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751293AbWJJCNB
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Oct 2006 22:13:01 -0400
+Received: from main.gmane.org ([80.91.229.2]:13487 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750763AbWJJCNA (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Oct 2006 22:13:00 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GX76u-0005f8-6Q
+	for git@vger.kernel.org; Tue, 10 Oct 2006 04:12:48 +0200
+Received: from 200.213.42.52 ([200.213.42.52])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Oct 2006 04:12:48 +0200
+Received: from pazu by 200.213.42.52 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Oct 2006 04:12:48 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 200.213.42.52
+User-Agent: Thunderbird 1.5.0.7 (Macintosh/20060909)
+In-Reply-To: <m2psd1rwb0.fsf@ziti.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28593>
 
-NO.
+Seth Falcon wrote:
 
-When I change the repository's owner to gitweb process,  no diff output yet.
+> IOW, are you sure this is an issue in git-svn and not an issue in
+> filesystem + svn?  For example, I think you will also have problems
+> with a repository that contains in the same dir TESTFILE and TestFile
+> :-\
 
-$ chown -R www-data:www-data  cauchy/ gcc/ mph/
+If I try something like:
 
-2006/10/10, Junio C Hamano <junkio@cox.net>:
-> The site does not return any of these four blobs that are part
-> of the commitdiff when a=blob is requested on them.
->
->         file:a34d77e47bf1561db1ade4f6b247598b880f80d5 ->
->         file:7625c494df01d4745e67bd4423e2fdbe9fc43799
->
->         file:b207fe30a5430f97d27d398d89c974b068694c7a ->
->         file:57b07ace4bb6352416bbf9436b9f2642b3273257
->
-> I would first suspect if the repository actually have them _and_
-> with an appropriate mode protection to be readable by your
-> gitweb process.
->
->
->
->
+mini:~$ svn mv TESTFILE TestFile
+
+It will fail with a message saying that TestFile already exists, since 
+HFS+ is case insensitive by default:
+
+svn: File 'TestFile' already exists
+
+But keep in mind this is a shared repository, and people working on 
+case-sensitive file systems may rename the file. I can do it too, if I 
+use full URL's (all examples here use the same test repository provided 
+in my first message):
+
+mini:~$ svn mv file:///tmp/git-svn-rename-test/TESTFILE 
+file:///tmp/git-svn-rename-test/TestFile
+Commited revision 5.
+
+Anyway, when I'm updating a working copy, svn will do the right thing:
+
+mini:~$ svn co -r1 file:///tmp/git-svn-rename-test
+D    git-svn-rename-test/TESTFILE
+A    git-svn-rename-test/TestFile
+Checked out revision 1.
+
+mini:~$ cd git-svn-rename-test
+mini:git-svn-rename-test$ svn up -r3
+D    TestFile
+A    TESTFILE
+Updated to revision 3.
+
+A rename for svn is just a copy followed by delete, so when updating, 
+TestFile is removed and then recreated as TESTFILE, correctly.
+
+So, to finally answer your question, no, unfortunately I don't think 
+this is purely an svn problem. Yes, I would have problems with two files 
+named TestFile and TESTFILE in the same dir, but that's not what happens 
+in this test case.
+
+Well, I'll keep browsing the git-svn source code, and try to make some 
+sense out of it...
+
+-- Marcus
