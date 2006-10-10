@@ -1,73 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Approxidate licensing
-Date: Tue, 10 Oct 2006 12:23:01 -0700
-Message-ID: <7v64es0ycq.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0610101246241.9789@iabervon.org>
+From: Eran Tromer <git2eran@tromer.org>
+Subject: Re: [PATCH] repack: allow simultaneous packing and pruning
+Date: Tue, 10 Oct 2006 21:46:59 +0200
+Message-ID: <452BF8B3.5090305@tromer.org>
+References: <20061010102210.568341380D6@magnus.utsl.gen.nz> <Pine.LNX.4.64.0610100800490.3952@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 10 21:23:27 2006
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Oct 10 21:54:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXNC0-0000SV-Pk
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 21:23:09 +0200
+	id 1GXNfm-0007VD-03
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 21:53:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932256AbWJJTXF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 15:23:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932269AbWJJTXE
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 15:23:04 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:44476 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S932256AbWJJTXC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 15:23:02 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061010192301.ZZGJ21457.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 10 Oct 2006 15:23:01 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id YjP41V00P1kojtg0000000
-	Tue, 10 Oct 2006 15:23:04 -0400
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.64.0610101246241.9789@iabervon.org> (Daniel
-	Barkalow's message of "Tue, 10 Oct 2006 13:39:47 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030237AbWJJTxv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 15:53:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030240AbWJJTxu
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 15:53:50 -0400
+Received: from line108-16.adsl.actcom.co.il ([192.117.108.16]:32720 "EHLO
+	lucian.tromer.org") by vger.kernel.org with ESMTP id S1030237AbWJJTxu
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Oct 2006 15:53:50 -0400
+Received: from [192.168.4.6] ([192.168.4.6])
+	by lucian.tromer.org (8.13.7/8.12.11) with ESMTP id k9AJrWin010111;
+	Tue, 10 Oct 2006 21:53:33 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.7) Gecko/20060913 Fedora/1.5.0.7-1.fc5 Thunderbird/1.5.0.7 Mnenhy/0.7.4.0
+To: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.64.0610100800490.3952@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28659>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+On 2006-10-10 17:03, Linus Torvalds wrote:
+> On Tue, 10 Oct 2006, Sam Vilain wrote:
+>> If using git-repack -a, unreferenced objects are kept behind in the
+>> pack.  This might be the best default, but there are no good ways
+>> to clean up the packfiles if a lot of rebasing is happening, or
+>> branches have been deleted.
+> 
+> Don't do this.
 
-> Would the three of you agree to license date.c under the LGPL or BSD? It 
-> looks like you're the only authors of non-trivial changes [1]. And it seems 
-> reasonable to want the date parsing thing under non-GPL terms outside of 
-> git.
+Too late: "git repack -a -d" already does it, in contradiction to its
+manpage. It creates a new pack by following .git/refs, and then deletes
+all old pack files.
 
-I do not think I have enough code in there to influence the
-license of that file, so what I say below does not matter on
-this particular issue.
+> I understand why you want to do it, but the fact is, it's dangerous.
+> 
+> Right now, "git repack" is actually safe to run even on a repository which 
+> is being modified! And that's actually important, if you have something 
+> like a shared repo that gets re-packed every once in a while from a 
+> cron-job!
 
-The project as a whole is GPLv2 and GPLv2 only, but date.c is
-isolated enough that I think there are valid form of using it in
-your program without making your program a derived work.  In
-other words, I do not think I have (even if I had written
-significant part of it, which I didn't) right to demand to see
-the rest of your program if you used date.c.  I do not think I
-even have rights to ask about what kind of program it is.
+Don't run it on a shared repo, then. And grab a coffee while it runs.
+But why force leaf repositories to accumulate garbage?
 
-My wishes about the code I write for this project is very
-simple:
+This functionality is just as racy, and just as necessary, as
+"git-prune". It merely garbage-collects the packs as well. Git seems to
+collect unreferenced objects faster than the space between the cushions
+in my sofa, and there ought to be a way to tidy up things.
 
-     If you improve my code that had helped you to make it help
-     you even better, I would like to have that change back, so
-     that your change would help me the same way as it helped
-     you.
+Linus, I see why you neither need nor want this functionality in your
+typical workflow, but things look different for a downstream developer
+who engages in a variety of garbage-generating activities like tracking
+wild trees, rebasing patches and using stgit. I really don't need that
+unreferenced copy of 2.6.15-rc2-mm1 in my packs anymore.
 
-The readers may have noticed that I have slight problem with
-GPLv2; in my wish it does not matter if you distribute the
-result or not.  And I am selfish.  It is not about helping my
-users, but about helping me ;-).
+  Eran
