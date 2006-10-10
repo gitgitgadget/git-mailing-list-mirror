@@ -1,78 +1,76 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 2/2] gitweb: Show trailing slash when listing tree entry in tree listing
-Date: Wed, 11 Oct 2006 00:40:20 +0200
-Message-ID: <200610110040.21235.jnareb@gmail.com>
-References: <20061010221458.85789.qmail@web31804.mail.mud.yahoo.com>
+From: Eran Tromer <git2eran@tromer.org>
+Subject: Re: [PATCH] repack: allow simultaneous packing and pruning
+Date: Wed, 11 Oct 2006 01:45:22 +0200
+Message-ID: <452C3092.7090003@tromer.org>
+References: <20061010102210.568341380D6@magnus.utsl.gen.nz> <Pine.LNX.4.64.0610100800490.3952@g5.osdl.org> <452BF8B3.5090305@tromer.org> <Pine.LNX.4.64.0610101423561.3952@g5.osdl.org> <452C19FC.7030001@tromer.org> <Pine.LNX.4.64.0610101524050.3952@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 11 00:42:28 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 11 01:52:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXQIm-0003WI-3D
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 00:42:20 +0200
+	id 1GXRON-0007DU-QX
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 01:52:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030626AbWJJWkv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 10 Oct 2006 18:40:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030622AbWJJWkh
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 18:40:37 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:10538 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1030617AbWJJWjQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 18:39:16 -0400
-Received: by ug-out-1314.google.com with SMTP id o38so10503ugd
-        for <git@vger.kernel.org>; Tue, 10 Oct 2006 15:39:14 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=PVKQa3FafaSg9DK+DZAjJmo9pPh1NVjJ5unfxaD4GqEcsFYJ+kBQFvIza5gNKjumoEfuANs5/mP0WDk7PVQpJyKIU4A49BivAkG07RIsvQYAtdNxgl629+Wo5NTCPYIgl7Zs5FXLNvKlSfiiW5Dq90sGjbPu/B282ZsxKKmzHkI=
-Received: by 10.66.240.12 with SMTP id n12mr71711ugh;
-        Tue, 10 Oct 2006 15:39:14 -0700 (PDT)
-Received: from host-81-190-20-194.torun.mm.pl ( [81.190.20.194])
-        by mx.google.com with ESMTP id j3sm48916ugd.2006.10.10.15.39.14;
-        Tue, 10 Oct 2006 15:39:14 -0700 (PDT)
-To: Luben Tuikov <ltuikov@yahoo.com>
-User-Agent: KMail/1.9.3
-In-Reply-To: <20061010221458.85789.qmail@web31804.mail.mud.yahoo.com>
-Content-Disposition: inline
+	id S932278AbWJJXwG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 19:52:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932279AbWJJXwG
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 19:52:06 -0400
+Received: from line108-16.adsl.actcom.co.il ([192.117.108.16]:430 "EHLO
+	lucian.tromer.org") by vger.kernel.org with ESMTP id S932278AbWJJXwE
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Oct 2006 19:52:04 -0400
+Received: from [192.168.4.6] ([192.168.4.6])
+	by lucian.tromer.org (8.13.7/8.12.11) with ESMTP id k9ANpsTi012065;
+	Wed, 11 Oct 2006 01:51:55 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.7) Gecko/20060913 Fedora/1.5.0.7-1.fc5 Thunderbird/1.5.0.7 Mnenhy/0.7.4.0
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0610101524050.3952@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28684>
 
-Dnia =B6roda 11. pa=BCdziernika 2006 00:14, Luben Tuikov napisa=B3:
-> --- Jakub Narebski <jnareb@gmail.com> wrote:
-> > Luben Tuikov wrote:
-> > > P.S. Notice how there is a "snapshot" link on each line of
-> > > shortlog, but there is no "snapshot" link in the nav bar
-> > > of a=3Dcommit. The "snapshot" link is next to "tree" down
-> > > in the commit data. There is also a "tree" link which is also
-> > > in the navbar, but "shortlog" is missing.
-> >=20
-> > The problem with snapshot is that we can have snapshot of a commit
-> > (and all links in the top part of navigation bar till now deals wit=
-h=20
-> > current commit), and snapshot of a tree, which can be subdirectory
-> > (and all links in the bottom part of navigation bar deals with=20
-> > the views/presentations of a current object).
->=20
-> Oh, yes, that's exactly what we need: two links of the same name
-> ("snapshot") in the top row of navbar and in the bottom row of navbar=
-=2E
+On 2006-10-11 00:27, Linus Torvalds wrote:
+> Those unreferenced objects are old history that won't be part of any new 
+> history.
+> 
+> If you create new history, they won't be in the pack.
 
-I'm mentioning the problem, that "snapshot" has two meaning for a tree.
-I personally think that we should have commit snapshot links (with=20
-commit sha in the extended tar header if we use tgz snapshots) for=20
-"heads", "tags" and "project list" views, and perhaps in the "commit"=20
-and optionally "commitdiff" view; perhaps but not necessary for each=20
-commit-list view like log, shortlog, search, history. But the snapshot=20
-link should be as a view of a (sub)directory only in the bottom part of=
-=20
-navigation bar.
+... because git-repack moves only already-referenced objects to packs
+(and once they're referenced a subsequent "git-repack -a -d" won't lose
+them). Curiously, this critically depends on Documentation/git-repack
+being wrong:
 
---=20
-Jakub Narebski
-Poland
+  This script is used to combine all objects that do not currently
+  reside in a "pack", into a pack.
+
+However, this means there is no safe way to create a new pack without
+adding all its content as loose objects first.
+
+For example, the following is racy because there's a point where the new
+pack is on disk but not yet referenced:
+
+$ git-fetch --keep foo &  git-repack -a -d
+
+
+>> But "git prune" does not GC packs, only loose objects.
+> 
+> Right. And you'd want to repack _and_ prune, but they should be kept 
+> separate, because one is safe, the other is not.
+
+Ah, semantics.
+
+The request was for removing unreferenced objects ("pruning") in *packs*
+while doing the repacking. This turns out to be already implemented
+(contrary to the docs) and, as you explained, safe.
+
+Pruning both packed and loose objects while repacking is neither safe
+nor requested (and is indeed roughly equivalent to just
+"git-repack -a -d; git-prune").
+
+
+  Eran
