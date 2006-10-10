@@ -1,58 +1,65 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH 2/2] gitweb: Show trailing slash when listing tree entry in tree listing
-Date: Tue, 10 Oct 2006 15:14:58 -0700 (PDT)
-Message-ID: <20061010221458.85789.qmail@web31804.mail.mud.yahoo.com>
-References: <200610102300.16935.jnareb@gmail.com>
-Reply-To: ltuikov@yahoo.com
+From: Eran Tromer <git2eran@tromer.org>
+Subject: Re: [PATCH] repack: allow simultaneous packing and pruning
+Date: Wed, 11 Oct 2006 00:09:00 +0200
+Message-ID: <452C19FC.7030001@tromer.org>
+References: <20061010102210.568341380D6@magnus.utsl.gen.nz> <Pine.LNX.4.64.0610100800490.3952@g5.osdl.org> <452BF8B3.5090305@tromer.org> <Pine.LNX.4.64.0610101423561.3952@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 11 00:15:17 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 11 00:15:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXPsR-0006gH-I4
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 00:15:08 +0200
+	id 1GXPt5-0006oK-2Y
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 00:15:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030584AbWJJWPA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 10 Oct 2006 18:15:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030582AbWJJWPA
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 18:15:00 -0400
-Received: from web31804.mail.mud.yahoo.com ([68.142.207.67]:26985 "HELO
-	web31804.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1030581AbWJJWO7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 18:14:59 -0400
-Received: (qmail 85791 invoked by uid 60001); 10 Oct 2006 22:14:58 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=EOKXNWSOeQnRUIGJvpti6Pa34G6Grh9BCBeAC/S93hD/7cz1MMmrVdvEABJ05zB0sBXLIrmFKvXtzCl7EQpmxtFUGP1/NhjWvNJII6cupz8yF+oxx57LW13bnCuIMVL7/wLYFOaVoZMM41cLByQ2TKE/04StQugmWJrSvhC056o=  ;
-Received: from [64.215.88.90] by web31804.mail.mud.yahoo.com via HTTP; Tue, 10 Oct 2006 15:14:58 PDT
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200610102300.16935.jnareb@gmail.com>
+	id S1030583AbWJJWPo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 18:15:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030588AbWJJWPn
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 18:15:43 -0400
+Received: from line108-16.adsl.actcom.co.il ([192.117.108.16]:12266 "EHLO
+	lucian.tromer.org") by vger.kernel.org with ESMTP id S1030583AbWJJWPn
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Oct 2006 18:15:43 -0400
+Received: from [192.168.4.6] ([192.168.4.6])
+	by lucian.tromer.org (8.13.7/8.12.11) with ESMTP id k9AMFX6e011287;
+	Wed, 11 Oct 2006 00:15:34 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.7) Gecko/20060913 Fedora/1.5.0.7-1.fc5 Thunderbird/1.5.0.7 Mnenhy/0.7.4.0
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0610101423561.3952@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28677>
 
---- Jakub Narebski <jnareb@gmail.com> wrote:
-> Luben Tuikov wrote:
-> > P.S. Notice how there is a "snapshot" link on each line of
-> > shortlog, but there is no "snapshot" link in the nav bar
-> > of a=3Dcommit. =EF=BF=BDThe "snapshot" link is next to "tree" down
-> > in the commit data. =EF=BF=BDThere is also a "tree" link which is a=
-lso
-> > in the navbar, but "shortlog" is missing.
->=20
-> The problem with snapshot is that we can have snapshot of a commit
-> (and all links in the top part of navigation bar till now deals with=20
-> current commit), and snapshot of a tree, which can be subdirectory
-> (and all links in the bottom part of navigation bar deals with=20
-> the views/presentations of a current object).
+On 2006-10-10 23:25, Linus Torvalds wrote:
+> On Tue, 10 Oct 2006, Eran Tromer wrote:
+>> Too late: "git repack -a -d" already does it, in contradiction to its 
+>> manpage. It creates a new pack by following .git/refs, and then deletes 
+>> all old pack files.
+> 
+> That's very different.
+> 
+> That just means that you should not try to do two _concurrent_ repacks. 
 
-Oh, yes, that's exactly what we need: two links of the same name
-("snapshot") in the top row of navbar and in the bottom row of navbar.
+How so? This process loses the unreferenced objects from the old packs,
+where "referenced" is determined in a racy way. Same problem.
 
-     Luben
+> 
+>> Don't run it on a shared repo, then. And grab a coffee while it runs.
+>> But why force leaf repositories to accumulate garbage?
+> 
+> Nobody forces that.
+> 
+> You can run "git prune" if you want to. But at least we know that "git 
+> prune" is unsafe.
+
+But "git prune" does not GC packs, only loose objects.
+
+Anyway, I think the right thing to do is to make "git repack -a -d"
+operate safely (not drop any objects), and add a new --prune option
+so that "git repack -a -d --prune" does what "git repack -a -d" used to do.
+
+  Eran
