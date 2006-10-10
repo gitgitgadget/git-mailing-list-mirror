@@ -1,67 +1,101 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] gitweb: Show trailing slash when listing tree entry in tree listing
-Date: Tue, 10 Oct 2006 03:05:31 -0400
-Message-ID: <20061010070531.GB2413@coredump.intra.peff.net>
-References: <20061009205551.GO20017@pasky.or.cz> <20061010062126.46664.qmail@web31810.mail.mud.yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: GIT 1.4.3-rc2
+Date: Tue, 10 Oct 2006 00:11:04 -0700
+Message-ID: <7viris63xz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Oct 10 09:05:41 2006
+X-From: git-owner@vger.kernel.org Tue Oct 10 09:12:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXBgI-0002SO-0a
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 09:05:38 +0200
+	id 1GXBm9-0003w6-Ud
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 09:11:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965056AbWJJHFe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 03:05:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965061AbWJJHFe
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 03:05:34 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:49598 "HELO
-	peff.net") by vger.kernel.org with SMTP id S965058AbWJJHFd (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Oct 2006 03:05:33 -0400
-Received: (qmail 23547 invoked from network); 10 Oct 2006 03:05:31 -0400
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 10 Oct 2006 03:05:31 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Oct 2006 03:05:31 -0400
-To: Luben Tuikov <ltuikov@yahoo.com>
-Content-Disposition: inline
-In-Reply-To: <20061010062126.46664.qmail@web31810.mail.mud.yahoo.com>
+	id S965067AbWJJHLH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 03:11:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965070AbWJJHLG
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 03:11:06 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:6598 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S965067AbWJJHLF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Oct 2006 03:11:05 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061010071105.OBMV6235.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 10 Oct 2006 03:11:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id YXB71V00S1kojtg0000000
+	Tue, 10 Oct 2006 03:11:08 -0400
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28614>
 
-On Mon, Oct 09, 2006 at 11:21:26PM -0700, Luben Tuikov wrote:
+I've tagged the tip of master as 1.4.3-rc2.  Modulo last minute
+brown paper bag, I think we are pretty close to the real thing,
+hopefully should happen this weekend.
 
-> Anyone can come up with any "statistic" to convince anyone of
-> anything.  It's the American way! (to financial success)
+Changes since 1.4.3-rc1 are as follows; they are mostly fixes as
+expected (except one thing -- which shows in this list itself).
 
-Petr introduced quantitative evidence and an analysis. You can argue
-that his numbers or his analysis are incorrect, but berating statistics
-as a whole is not a compelling argument.
+Alan Chandler (2):
+      Update the gitweb/README file to include setting the GITWEB_CONFIG environment
+      Fix usage string to match that given in the man page
 
-> Anyway, the "confused" link clearly says "blame".  I'm not sure why
-> your people were trying to think and figure it out, as opposed to
-> simply clicking on the file name itself.  It is the most intuitive
-> thing to do as I mentioned in my previous email.
+Alexandre Julliard (2):
+      git.el: Fixed inverted "renamed from/to" message.
+      vc-git.el: Switch to using git-blame instead of git-annotate.
 
-Is it? I think the point of Petr's data is to show that, for whatever
-reason, people are NOT intuitively doing as you expect.
+Dennis Stosberg (2):
+      lock_ref_sha1_basic does not remove empty directories on BSD
+      Add default values for --window and --depth to the docs
 
-> Did you do any demographics on your clickers?  What is their background?
+Franck Bui-Huu (1):
+      Add git-upload-archive to the main git man page
 
-Aren't they, by definition, gitweb users? And isn't that the target
-demographic?  You can argue that there are potential gitweb users who
-will behave completely differently, but I haven't seen any evidence to
-support that claim.
+Jakub Narebski (1):
+      gitweb: Cleanup Git logo and Git logo target generation
 
-> I can hardly accept this "statistic" as a proof to "reintroduce
-> the redundant links".
+Junio C Hamano (9):
+      Makefile: install and clean merge-recur, still.
+      git-mv: invalidate the removed path properly in cache-tree
+      git-push: .git/remotes/ file does not require SP after colon
+      escape tilde in Documentation/git-rev-parse.txt
+      tar-tree deprecation: we eat our own dog food.
+      gitweb: Make the Git logo link target to point to the homepage
+      git-send-email: avoid uninitialized variable warning.
+      cherry-pick: make -r the default
+      Fix git-revert
 
-It's not a proof. It's evidence in support of a claim. Sorry, but this
-isn't math.
+Luben Tuikov (3):
+      gitweb: Escape ESCAPE (\e) character
+      gitweb: Do not print "log" and "shortlog" redundantly in commit view
+      gitweb: blame: Minimize vertical table row padding
 
--Peff
+Martin Waitz (4):
+      gitweb: document webserver configuration for common gitweb/repo URLs.
+      git-commit: cleanup unused function.
+      git-commit: fix coding style.
+      test-lib: separate individual test better in verbose mode.
+
+Nicolas Pitre (1):
+      add commit count options to git-shortlog
+
+Petr Baudis (4):
+      Show snapshot link in shortlog only if have_snapsho
+      gitweb: Separate (new) and (deleted) in commitdiff by a space
+      gitweb: Handle commits with empty commit messages more reasonably
+      gitweb: [commit view] Do not suppress commitdiff link in root commit
+
+Rene Scharfe (1):
+      git-tar-tree: don't RUN_SETUP
+
+Robin Rosenberg (1):
+      Error in test description of t1200-tutorial
+
+Yasushi SHOJI (1):
+      gitweb: refactor decode() for utf8 conversion
