@@ -1,158 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] cvsserver: Show correct letters for modified, removed and
- added files
-Date: Wed, 11 Oct 2006 00:20:43 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0610110019400.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] repack: allow simultaneous packing and pruning
+Date: Tue, 10 Oct 2006 15:27:13 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610101524050.3952@g5.osdl.org>
+References: <20061010102210.568341380D6@magnus.utsl.gen.nz>
+ <Pine.LNX.4.64.0610100800490.3952@g5.osdl.org> <452BF8B3.5090305@tromer.org>
+ <Pine.LNX.4.64.0610101423561.3952@g5.osdl.org> <452C19FC.7030001@tromer.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 11 00:21:07 2006
+X-From: git-owner@vger.kernel.org Wed Oct 11 00:27:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXPxz-0007rV-8m
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 00:20:51 +0200
+	id 1GXQ4I-0000Ze-3l
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 00:27:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030574AbWJJWUs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 18:20:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030579AbWJJWUs
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 18:20:48 -0400
-Received: from mail.gmx.de ([213.165.64.20]:36076 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1030574AbWJJWUq (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Oct 2006 18:20:46 -0400
-Received: (qmail invoked by alias); 10 Oct 2006 22:20:44 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp020) with SMTP; 11 Oct 2006 00:20:44 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Martyn Smith <martyn@catalyst.net.nz>,
-	Martin Langhoff <martin@catalyst.net.nz>
-X-Y-GMX-Trusted: 0
+	id S1030579AbWJJW1S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 18:27:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030598AbWJJW1S
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 18:27:18 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:31151 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030579AbWJJW1R (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Oct 2006 18:27:17 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9AMREaX024684
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 10 Oct 2006 15:27:15 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9AMRD7K027718;
+	Tue, 10 Oct 2006 15:27:13 -0700
+To: Eran Tromer <git2eran@tromer.org>
+In-Reply-To: <452C19FC.7030001@tromer.org>
+X-Spam-Status: No, hits=-2.468 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28681>
 
 
-Earlier, cvsserver showed always an 'U', sometimes even without a space
-between the 'U' and the name. Now, the correct letter is shown, with a
-space.
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
- git-cvsserver.perl |   63 ++++++++++++++++++++++++++++++++++++++++++----------
- 1 files changed, 51 insertions(+), 12 deletions(-)
+On Wed, 11 Oct 2006, Eran Tromer wrote:
+> 
+> How so? This process loses the unreferenced objects from the old packs,
+> where "referenced" is determined in a racy way. Same problem.
 
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index 2c1b0c7..7260f32 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -807,7 +807,14 @@ sub req_update
-             $meta = $updater->getmeta($filename);
-         }
- 
--        next unless ( $meta->{revision} );
-+	if ( ! defined $meta )
-+	{
-+	    $meta = {
-+	        name => $filename,
-+	        revision => 0,
-+	        filehash => 'added'
-+	    };
-+	}
- 
-         my $oldmeta = $meta;
- 
-@@ -837,7 +844,7 @@ sub req_update
-              and not exists ( $state->{opt}{C} ) )
-         {
-             $log->info("Tell the client the file is modified");
--            print "MT text U\n";
-+            print "MT text M \n";
-             print "MT fname $filename\n";
-             print "MT newline\n";
-             next;
-@@ -857,15 +864,36 @@ sub req_update
- 	    }
-         }
-         elsif ( not defined ( $state->{entries}{$filename}{modified_hash} )
--		or $state->{entries}{$filename}{modified_hash} eq $oldmeta->{filehash} )
-+		or $state->{entries}{$filename}{modified_hash} eq $oldmeta->{filehash}
-+		or $meta->{filehash} eq 'added' )
-         {
--            $log->info("Updating '$filename'");
--            # normal update, just send the new revision (either U=Update, or A=Add, or R=Remove)
--            print "MT +updated\n";
--            print "MT text U\n";
--            print "MT fname $filename\n";
--            print "MT newline\n";
--            print "MT -updated\n";
-+            # normal update, just send the new revision (either U=Update,
-+            # or A=Add, or R=Remove)
-+	    if ( defined($wrev) && $wrev < 0 )
-+	    {
-+	        $log->info("Tell the client the file is scheduled for removal");
-+		print "MT text R \n";
-+                print "MT fname $filename\n";
-+                print "MT newline\n";
-+		next;
-+	    }
-+	    elsif ( !defined($wrev) || $wrev == 0 )
-+	    {
-+	        $log->info("Tell the client the file will be added");
-+		print "MT text A \n";
-+                print "MT fname $filename\n";
-+                print "MT newline\n";
-+		next;
-+
-+	    }
-+	    else {
-+                $log->info("Updating '$filename' $wrev");
-+                print "MT +updated\n";
-+                print "MT text U \n";
-+                print "MT fname $filename\n";
-+                print "MT newline\n";
-+		print "MT -updated\n";
-+	    }
- 
-             my ( $filepart, $dirpart ) = filenamesplit($filename,1);
- 
-@@ -1711,6 +1739,17 @@ sub argsfromdir
- 
-     return if ( scalar ( @{$state->{args}} ) > 1 );
- 
-+    my @gethead = @{$updater->gethead};
-+
-+    # push added files
-+    foreach my $file (keys %{$state->{entries}}) {
-+    	if ( exists $state->{entries}{$file}{revision} &&
-+		$state->{entries}{$file}{revision} == 0 )
-+	{
-+	    push @gethead, { name => $file, filehash => 'added' };
-+	}
-+    }
-+
-     if ( scalar(@{$state->{args}}) == 1 )
-     {
-         my $arg = $state->{args}[0];
-@@ -1718,7 +1757,7 @@ sub argsfromdir
- 
-         $log->info("Only one arg specified, checking for directory expansion on '$arg'");
- 
--        foreach my $file ( @{$updater->gethead} )
-+        foreach my $file ( @gethead )
-         {
-             next if ( $file->{filehash} eq "deleted" and not defined ( $state->{entries}{$file->{name}} ) );
-             next unless ( $file->{name} =~ /^$arg\// or $file->{name} eq $arg  );
-@@ -1731,7 +1770,7 @@ sub argsfromdir
- 
-         $state->{args} = [];
- 
--        foreach my $file ( @{$updater->gethead} )
-+        foreach my $file ( @gethead )
-         {
-             next if ( $file->{filehash} eq "deleted" and not defined ( $state->{entries}{$file->{name}} ) );
-             next unless ( $file->{name} =~ s/^$state->{prependdir}// );
--- 
-1.4.3.rc2.g35de
+No.
+
+Those unreferenced objects are old history that won't be part of any new 
+history.
+
+If you create new history, they won't be in the pack.
+
+It's obviously possible that you create new history that has a blob that 
+is equal to some old history (and no loose object will be created), but by 
+then we're _really_ reaching. 
+
+> But "git prune" does not GC packs, only loose objects.
+
+Right. And you'd want to repack _and_ prune, but they should be kept 
+separate, because one is safe, the other is not.
+
+Of course, if the code were to check that no references have changed over 
+the operation, then I wouldn't have any objections.
+
+		Linus
