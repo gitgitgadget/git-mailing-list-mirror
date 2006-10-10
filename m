@@ -1,112 +1,83 @@
 From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] gitweb: Show project README if available
-Date: Mon, 9 Oct 2006 22:15:45 -0700 (PDT)
-Message-ID: <20061010051545.15859.qmail@web31801.mail.mud.yahoo.com>
-References: <20061010025627.19317.70511.stgit@rover>
+Subject: Re: [PATCH 2/2] gitweb: Show trailing slash when listing tree entry in tree listing
+Date: Mon, 9 Oct 2006 22:38:41 -0700 (PDT)
+Message-ID: <20061010053841.42852.qmail@web31815.mail.mud.yahoo.com>
+References: <7vy7ro7o3g.fsf@assigned-by-dhcp.cox.net>
 Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 10 07:15:53 2006
+X-From: git-owner@vger.kernel.org Tue Oct 10 07:38:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GX9y1-0003l0-8d
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 07:15:49 +0200
+	id 1GXAKE-0008VY-0u
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 07:38:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964979AbWJJFPq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 01:15:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964981AbWJJFPq
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 01:15:46 -0400
-Received: from web31801.mail.mud.yahoo.com ([68.142.207.64]:20866 "HELO
-	web31801.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S964979AbWJJFPq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 01:15:46 -0400
-Received: (qmail 15861 invoked by uid 60001); 10 Oct 2006 05:15:45 -0000
+	id S964994AbWJJFin (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 01:38:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964995AbWJJFim
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 01:38:42 -0400
+Received: from web31815.mail.mud.yahoo.com ([68.142.206.168]:33366 "HELO
+	web31815.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S964994AbWJJFim (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Oct 2006 01:38:42 -0400
+Received: (qmail 42854 invoked by uid 60001); 10 Oct 2006 05:38:41 -0000
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
   s=s1024; d=yahoo.com;
   h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=sJFPWHrWmQwhJ9rOQyHEAb5Q47ssJIlijKwRoqj8LkoMHGySavHOw3gCE/0I4Gb69z+PbJN5IRldjkgjOF85CNizrVUcRiLdov40RwFnIp2lpxKh/3rjNIWhvdzuCh0RaiGNGdnZU/pNooF3b7bZPJvu0+MwQv0/KHCW5dAeQpc=  ;
-Received: from [71.80.233.118] by web31801.mail.mud.yahoo.com via HTTP; Mon, 09 Oct 2006 22:15:45 PDT
-To: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>
-In-Reply-To: <20061010025627.19317.70511.stgit@rover>
+  b=NtQ3n3d1Z/6kmpVcJACGyGN+lSF81/o15WvtPgStCdUQ6ZLzMc0nYACpA9aOi8KesYxgDnSp3e5YeHMcEm9T6nzO2hQejnpI7L+f4NBQrtTKtpkYoh8eZtTFGNYCJ+5CJY4bBM/4Q4FFeVp9iymxZsZZ8Ej6OqncQl2LxSM2Yz8=  ;
+Received: from [71.80.233.118] by web31815.mail.mud.yahoo.com via HTTP; Mon, 09 Oct 2006 22:38:41 PDT
+To: Junio C Hamano <junkio@cox.net>, Petr Baudis <pasky@suse.cz>
+In-Reply-To: <7vy7ro7o3g.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28603>
 
---- Petr Baudis <pasky@suse.cz> wrote:
-> If the project includes a README file, show it in the summary page.
-> The usual "this should be in the config file" argument does not apply here
-> since this can be larger and having such a big string in the config file
-> would be impractical.
+--- Junio C Hamano <junkio@cox.net> wrote:
+> Having said that, I agree to the point you are trying to make
+> here.  It was a mistake to remove blob/tree links from the view
+> that lists pathnames.
 > 
-> I don't know if this is suitable upstream, but it's one of the repo.or.cz
-> custom modifications that I've thought could be interesting for others
-> as well.
+> If we did not have any obviously clickable links on the right
+> hand side it might have been a different story, but when given
+> UNIXy permission bits, pathname and blame/history/raw links,
+> nobody would think of clicking on the pathname itself to grab
+> its contents.  The blame link would give you the same
 
-I don't see how a read-me file relates to gitweb.
+I've seen the exact opposite.
 
-People may call those files "00README" or "README.txt"
-or "README.TXT" or "README_001", etc.
+BTW, what is our standard here? People with zero-computer
+exposure? With some? With high?
 
-The contents of such a file has nothing to do with gitweb,
-and or git.  It may work for repo.or.cz but is unlikely that
-it would work for all projects for all git repos and for all
-gitweb interfaces.
+Certainly, if I didn't know what a folder/directory/tree is,
+and what a file is and I was told to "get" that file, the first
+thing I'd do when I see it on the screen would be to "put my pointer
+over the file and press the action button".
 
-The contents of a read-me file could be quite large and thus
-not suitable for the "summary" page.  Both the contents and the
-size may not be suitable.  "repo.or.cz" is the exception, not
-the rule.
+It is when people actually start to "think" is when they fail
+to naively click on the pathname (name of the file) to get it.
 
-A readme file isn't written with the intent of git or gitweb.
-It is a function of the project, not the SCM used to keep it in, or
-the SCM web interface used to show it.
+The naive approach is to simply click on what you want to get.
 
-I don't understand why the "description"  file doesn't do what
-you want?  Do you need it to be multi-line or slightly larger?
-Why not just extend "description" and/or create/use a second
-file called "description_long" to store multi-line descriptions?
+The interesting point here is that people with zero and high
+computer exposure tend to click on the file name to obtain it.
+Only people with some computer exposure start to "think" and
+"figure it out" and fail to intuit to naively point at the
+file name to get the file. 
 
-Or why not extend the "description" file s.t. only the first
-line would be shown in the "description" line of "summary" and
-down below, show the rest of the description file if present?
+So this is 2/3 to 1/3.
 
-This way it is known that this is a function of gitweb.
-
-     Luben
-
+> information (and a bit more) and people would just go there
+> without much thinking.
 > 
-> Signed-off-by: Petr Baudis <pasky@suse.cz>
-> ---
-> 
->  gitweb/gitweb.perl |    8 ++++++++
->  1 files changed, 8 insertions(+), 0 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 7547c4d..4e56af9 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -2535,6 +2535,14 @@ sub git_summary {
->  	}
->  	print "</table>\n";
->  
-> +	if (-s "$projectroot/$project/README") {
-> +		if (open my $fd, "$projectroot/$project/README") {
-> +			print "<div class=\"title\">readme</div>\n";
-> +			print $_ while (<$fd>);
-> +			close $fd;
-> +		}
-> +	}
-> +
->  	open my $fd, "-|", git_cmd(), "rev-list", "--max-count=17",
->  		git_get_head_hash($project)
->  		or die_error(undef, "Open git-rev-list failed");
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+> It probably is wise to resurrect those "redundant" links.
+
+If someone does this, can they also remove the now "other"
+redundant link? (the link at the pathname itself) A simple
+code analyzer would show the duplicate code in gitweb.
+
+   Luben
