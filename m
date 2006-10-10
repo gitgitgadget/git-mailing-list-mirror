@@ -1,77 +1,64 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: add a message encouraging use of SVN::* libraries
-Date: Wed, 11 Oct 2006 18:19:55 -0700
-Message-ID: <11606159952672-git-send-email-normalperson@yhbt.net>
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Oct 12 03:20:34 2006
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [RFC] gitweb wishlist and TODO list
+Date: Mon, 9 Oct 2006 18:47:43 -0700 (PDT)
+Message-ID: <20061010014743.80094.qmail@web31801.mail.mud.yahoo.com>
+References: <egdge3$t12$1@sea.gmane.org>
+Reply-To: ltuikov@yahoo.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Oct 12 05:15:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Received: from mail-relay.eunet.no ([193.71.71.242])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXpF9-0005IV-1M
-	for gcvg-git@gmane.org; Thu, 12 Oct 2006 03:20:16 +0200
+	id 1GXr2J-0004mR-7v
+	for gcvg-git@gmane.org; Thu, 12 Oct 2006 05:15:07 +0200
+Received: from vger.kernel.org (vger.kernel.org [209.132.176.167])
+	by mail-relay.eunet.no (8.13.6/8.13.1/GN) with ESMTP id k9A1luZw073334
+	for <gcvg-git@gmane.org>; Tue, 10 Oct 2006 03:47:56 +0200 (CEST)
+	(envelope-from git-owner@vger.kernel.org)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161342AbWJLBUJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Oct 2006 21:20:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965249AbWJLBUJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 21:20:09 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:59788 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S965248AbWJLBUI (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Oct 2006 21:20:08 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id DB9437DC08E;
-	Wed, 11 Oct 2006 18:19:55 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed, 11 Oct 2006 18:19:55 -0700
-To: Junio C Hamano <junkio@cox.net>
-X-Mailer: git-send-email 1.4.3.rc2.g1cbb0
+	id S964893AbWJJBrp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Oct 2006 21:47:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964892AbWJJBrp
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Oct 2006 21:47:45 -0400
+Received: from web31801.mail.mud.yahoo.com ([68.142.207.64]:30859 "HELO
+	web31801.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S964893AbWJJBrp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Oct 2006 21:47:45 -0400
+Received: (qmail 80096 invoked by uid 60001); 10 Oct 2006 01:47:43 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=Sru5Ep9Qs8iyljLOsIYucpKbBsBGqQpFyaega/khDM+YLbH5C1TWGBavmB3CMRU1GsFzzID75YsAnK2y9E0a4FSyHUz/XRb7yeegG2XkYRUSpZizROJNIvZkFGse+LleZwm+oN6+GRvjkEylERLSSYmq0TuFU+MbmjKw+JMo1pQ=  ;
+Received: from [64.215.88.90] by web31801.mail.mud.yahoo.com via HTTP; Mon, 09 Oct 2006 18:47:43 PDT
+To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+In-Reply-To: <egdge3$t12$1@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28767>
+X-Spam-Status: No, score=-0.2 required=4.0 tests=BAYES_40 autolearn=ham 
+	version=3.1.3
+X-Spam-Checker-Version: SpamAssassin 3.1.3 (2006-06-01) on spamd1.kq.no
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28768>
 
-I'm using svn 1.4.0-4 in Debian unstable and apparently there's
-a regression on the SVN side that prevents a symlink from
-becoming a regular file (which git supports, of course).
+--- Jakub Narebski <jnareb@gmail.com> wrote:
+>  * Improve blame view, making use of --porcelain option to git-blame (for
+>    later). Perhaps change blame view from table based one to div based one.
 
-It's not a noticeable regression for most people, but this broke
-the full-svn-tests target in t/Makefile for me.
+>    Use different colors for different commits (graph coloring problem).
 
-The SVN::* Perl libraries seem to have matured and improved over
-the past year, and git-svn has supported them for several months
-now, so with that I encourage all users to start using the
-SVN::* Perl libraries with git-svn.
+Oh, no please no.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- git-svn.perl |   14 ++++++++++++++
- 1 files changed, 14 insertions(+), 0 deletions(-)
+Why do you think I left the color list as a list?  I did try to use
+more colors when I wrote it, and it was ugly as h3ll and very distracting
+when doing real work.  So I ended up with the two color (shades) we have
+now and this is what I submitted.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 84d2c58..a128d90 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -40,8 +40,22 @@ memoize('cmt_metadata');
- memoize('get_commit_time');
- 
- my ($SVN_PATH, $SVN, $SVN_LOG, $_use_lib);
-+
-+sub nag_lib {
-+	print STDERR <<EOF;
-+! Please consider installing the SVN Perl libraries (version 1.1.0 or
-+! newer).  You will generally get better performance and fewer bugs,
-+! especially if you:
-+! 1) have a case-insensitive filesystem
-+! 2) replace symlinks with files (and vice-versa) in commits
-+
-+EOF
-+}
-+
- $_use_lib = 1 unless $ENV{GIT_SVN_NO_LIB};
- libsvn_load();
-+nag_lib() unless $_use_lib;
-+
- my $_optimize_commits = 1 unless $ENV{GIT_SVN_NO_OPTIMIZE_COMMITS};
- my $sha1 = qr/[a-f\d]{40}/;
- my $sha1_short = qr/[a-f\d]{4,40}/;
--- 
-1.4.3.rc2.g1cbb0
+Also, any kind of "graph coloring problem" would make blame slow.
+
+In any way, if you/someone does implement this "coloring" can you please
+make it an option, because I'll never turn it on.  Thanks!
+
+     Luben
