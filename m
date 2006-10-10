@@ -1,66 +1,64 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] gitweb: Show project README if available
-Date: Tue, 10 Oct 2006 04:56:28 +0200
-Message-ID: <20061010025627.19317.70511.stgit@rover>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: Show project README if available
+Date: Mon, 09 Oct 2006 20:20:54 -0700
+Message-ID: <7vejtg97qh.fsf@assigned-by-dhcp.cox.net>
+References: <20061010025627.19317.70511.stgit@rover>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Oct 10 04:56:37 2006
+X-From: git-owner@vger.kernel.org Tue Oct 10 05:21:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GX7nG-0005Zn-Tt
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 04:56:35 +0200
+	id 1GX8BP-0002BF-Dy
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 05:21:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751993AbWJJC4b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Oct 2006 22:56:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751994AbWJJC4a
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Oct 2006 22:56:30 -0400
-Received: from rover.dkm.cz ([62.24.64.27]:58335 "EHLO rover.dkm.cz")
-	by vger.kernel.org with ESMTP id S1751993AbWJJC4a (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Oct 2006 22:56:30 -0400
-Received: from [127.0.0.1] (rover [127.0.0.1])
-	by rover.dkm.cz (Postfix) with ESMTP id 221398BBE0;
-	Tue, 10 Oct 2006 04:56:28 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: StGIT/0.10
+	id S964773AbWJJDU5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Oct 2006 23:20:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964956AbWJJDU5
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Oct 2006 23:20:57 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:6113 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S964773AbWJJDUz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Oct 2006 23:20:55 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061010032055.ZNTA22977.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 9 Oct 2006 23:20:55 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id YTLx1V00T1kojtg0000000
+	Mon, 09 Oct 2006 23:20:58 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20061010025627.19317.70511.stgit@rover> (Petr Baudis's message
+	of "Tue, 10 Oct 2006 04:56:28 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28599>
 
-If the project includes a README file, show it in the summary page.
-The usual "this should be in the config file" argument does not apply here
-since this can be larger and having such a big string in the config file
-would be impractical.
+Petr Baudis <pasky@suse.cz> writes:
 
-I don't know if this is suitable upstream, but it's one of the repo.or.cz
-custom modifications that I've thought could be interesting for others
-as well.
+> If the project includes a README file, show it in the summary page.
+> The usual "this should be in the config file" argument does not apply here
+> since this can be larger and having such a big string in the config file
+> would be impractical.
+>
+> I don't know if this is suitable upstream, but it's one of the repo.or.cz
+> custom modifications that I've thought could be interesting for others
+> as well.
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+I agree something like this would be very useful.
 
- gitweb/gitweb.perl |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
+I wonder how this should relate to .git/description file,
+though.  In other words, it _might_ make sense to change where
+we show the contents of description right now to show the first
+line and take README from the same location.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 7547c4d..4e56af9 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2535,6 +2535,14 @@ sub git_summary {
- 	}
- 	print "</table>\n";
- 
-+	if (-s "$projectroot/$project/README") {
-+		if (open my $fd, "$projectroot/$project/README") {
-+			print "<div class=\"title\">readme</div>\n";
-+			print $_ while (<$fd>);
-+			close $fd;
-+		}
-+	}
-+
- 	open my $fd, "-|", git_cmd(), "rev-list", "--max-count=17",
- 		git_get_head_hash($project)
- 		or die_error(undef, "Open git-rev-list failed");
+Having said that I'd take this as is in "next" and wait for
+public to decide having two separate files is Ok (which I
+suspect is the case) or we'd be better off in the longer term to
+try to minimize random files under $GIT_DIR.
