@@ -1,82 +1,59 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: GIT 1.4.3-rc2
-Date: Tue, 10 Oct 2006 19:55:01 +0200
-Message-ID: <20061010175501.GD8612@admingilde.org>
-References: <7viris63xz.fsf@assigned-by-dhcp.cox.net> <20061010093914.GC8612@admingilde.org> <7vpsd02hkm.fsf@assigned-by-dhcp.cox.net>
+From: Pazu <pazu@pazu.com.br>
+Subject: Re: git-svn fetch fails when a file is renamed changing only case
+Date: Tue, 10 Oct 2006 14:57:14 -0300
+Message-ID: <eggmun$1gf$1@sea.gmane.org>
+References: <ege016$vrb$1@sea.gmane.org> <m2psd1rwb0.fsf@ziti.local> <egevhe$d15$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="iVCmgExH7+hIHJ1A"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 10 19:55:36 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Oct 10 19:58:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXLot-0005tP-0u
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 19:55:11 +0200
+	id 1GXLry-0006Ul-Fm
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 19:58:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030208AbWJJRzG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 13:55:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030205AbWJJRzG
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 13:55:06 -0400
-Received: from agent.admingilde.org ([213.95.21.5]:53475 "EHLO
-	mail.admingilde.org") by vger.kernel.org with ESMTP id S964911AbWJJRzC
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 13:55:02 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1GXLoj-0002fD-He; Tue, 10 Oct 2006 19:55:01 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vpsd02hkm.fsf@assigned-by-dhcp.cox.net>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S964911AbWJJR6K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 13:58:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964912AbWJJR6K
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 13:58:10 -0400
+Received: from main.gmane.org ([80.91.229.2]:16050 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964911AbWJJR6H (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Oct 2006 13:58:07 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GXLrV-0006QS-Ih
+	for git@vger.kernel.org; Tue, 10 Oct 2006 19:57:54 +0200
+Received: from 201.37.98.50 ([201.37.98.50])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Oct 2006 19:57:53 +0200
+Received: from pazu by 201.37.98.50 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Oct 2006 19:57:53 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 201.37.98.50
+User-Agent: Thunderbird 1.5.0.7 (Macintosh/20060909)
+In-Reply-To: <egevhe$d15$1@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28646>
 
+Pazu wrote:
 
---iVCmgExH7+hIHJ1A
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Well, I'll keep browsing the git-svn source code, and try to make some 
+> sense out of it...
 
-hoi :)
+While doing that I noticed the error happens in a code path that only 
+gets executed when SVN::Core isn't available. So I decided to go through 
+the trouble of manually building and installing the subversion perl 
+bindings, and to my delight, git-svn is working flawlessly now.
 
-On Tue, Oct 10, 2006 at 10:42:33AM -0700, Junio C Hamano wrote:
-> > have you looked into the git-fetch --update-head-ok thing I sent last
-> > week?
->=20
-> I remember seeing it and wondering what workflow would need it.
-> Also at the same time I wondered if it was indeed needed for a
-> workflow why that workflow can get away with adding only that
-> option to git-fetch without either adding more things to it or
-> have a custom porcelain that drives the underlying
-> git-fetch-pack directly.
+Since svn binaries *use* the svn libraries, I still don't think this was 
+subversion's fault, but probably some bug in git-svn parsing svn output. 
+Oh well, using SVN::Core fixed, and git-svn is a lot faster to boot.
 
-I was wondering about it, too.
-That's why I haven't added a [PATCH] tag to the message
-and just added the diff to show the broken part ;-).
-
-It is clear that the code as it is now does not work but perhaps
-the right fix is to simply kill that option.
-As nobody replied to the message I guess that nobody cares and
-we can remove it after the release.
-
---=20
-Martin Waitz
-
---iVCmgExH7+hIHJ1A
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFK951j/Eaxd/oD7IRAkj/AJsFvkR/LnMW+tflNtRgSTqNwb6K3QCfXvx7
-yRojwp8s7SHts4ujplcXZSA=
-=uJkF
------END PGP SIGNATURE-----
-
---iVCmgExH7+hIHJ1A--
+-- Marcus
