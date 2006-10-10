@@ -1,72 +1,158 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH 2/2] gitweb: Show trailing slash when listing tree entry in tree listing
-Date: Tue, 10 Oct 2006 15:18:53 -0700 (PDT)
-Message-ID: <20061010221853.98520.qmail@web31807.mail.mud.yahoo.com>
-References: <200610102313.48170.jnareb@gmail.com>
-Reply-To: ltuikov@yahoo.com
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] cvsserver: Show correct letters for modified, removed and
+ added files
+Date: Wed, 11 Oct 2006 00:20:43 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0610110019400.14200@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 11 00:19:27 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 11 00:21:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXPwW-0007aR-Pt
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 00:19:21 +0200
+	id 1GXPxz-0007rV-8m
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 00:20:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030590AbWJJWS4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 10 Oct 2006 18:18:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030595AbWJJWS4
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 18:18:56 -0400
-Received: from web31807.mail.mud.yahoo.com ([68.142.207.70]:31339 "HELO
-	web31807.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1030590AbWJJWSy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 18:18:54 -0400
-Received: (qmail 98522 invoked by uid 60001); 10 Oct 2006 22:18:53 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=FLUblHpVkL6e14Q2jqFuEF88GjS8D0NsJr0dEY6SdjPeFx6j/HVY6ExSryGrTOFWzOH9saFd/2aVh9NyM3nPVsKb7OQuP6fmaIFtP2TgTJ7mMGwtaeV6INeYXHPFZd33JdXsCCDi76RD/VRHa/jogKZC72YOFNEVRsfQYUmJd64=  ;
-Received: from [64.215.88.90] by web31807.mail.mud.yahoo.com via HTTP; Tue, 10 Oct 2006 15:18:53 PDT
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200610102313.48170.jnareb@gmail.com>
+	id S1030574AbWJJWUs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 18:20:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030579AbWJJWUs
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 18:20:48 -0400
+Received: from mail.gmx.de ([213.165.64.20]:36076 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1030574AbWJJWUq (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Oct 2006 18:20:46 -0400
+Received: (qmail invoked by alias); 10 Oct 2006 22:20:44 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp020) with SMTP; 11 Oct 2006 00:20:44 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Martyn Smith <martyn@catalyst.net.nz>,
+	Martin Langhoff <martin@catalyst.net.nz>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28680>
 
---- Jakub Narebski <jnareb@gmail.com> wrote:
-> Dnia wtorek 10. pa=EF=BF=BDdziernika 2006 23:02, Luben Tuikov napisa=EF=
-=BF=BD:
-> > > > Isn't that a simple "labelling" question? =EF=BF=BDI do not thi=
-nk
-> > > > anybody minds to show clickable string "contents" (instead of
-> > > > "blob" or "tree") at the places you mention above and if we did
-> > > > so everybody would be happy, right?
-> > >=20
-> > > Not, IMHO it is not a good idea. Clicking on file name leads to i=
-t
-> > > contents, but it is not obvoius what kind of view is it. "blob" l=
-ink
-> >=20
-> > It is pretty obvious to me: the contents of the object, whether it =
-be
-> > "blob" or "tree". =EF=BF=BDThe contents of "blob" and the contents =
-of "tree"
-> > as shown by gitweb.
->=20
-> It's pretty obvous to you, because there is only one basic view of tr=
-ee,=20
-> and one basic view of blob. It is not the case for example for commit=
-s=20
-> in shortlog view, where we have commit and commitdiff views. It is=20
-> possible that either blobs or trees acquire another views.
 
-Excuse me, weren't we talking about "blob" and "tree"?
+Earlier, cvsserver showed always an 'U', sometimes even without a space
+between the 'U' and the name. Now, the correct letter is shown, with a
+space.
 
-How come you all of a sudden introduce commits?  Let's keep on topic:
-"blob" and "tree".
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
+ git-cvsserver.perl |   63 ++++++++++++++++++++++++++++++++++++++++++----------
+ 1 files changed, 51 insertions(+), 12 deletions(-)
 
-   Luben
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 2c1b0c7..7260f32 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -807,7 +807,14 @@ sub req_update
+             $meta = $updater->getmeta($filename);
+         }
+ 
+-        next unless ( $meta->{revision} );
++	if ( ! defined $meta )
++	{
++	    $meta = {
++	        name => $filename,
++	        revision => 0,
++	        filehash => 'added'
++	    };
++	}
+ 
+         my $oldmeta = $meta;
+ 
+@@ -837,7 +844,7 @@ sub req_update
+              and not exists ( $state->{opt}{C} ) )
+         {
+             $log->info("Tell the client the file is modified");
+-            print "MT text U\n";
++            print "MT text M \n";
+             print "MT fname $filename\n";
+             print "MT newline\n";
+             next;
+@@ -857,15 +864,36 @@ sub req_update
+ 	    }
+         }
+         elsif ( not defined ( $state->{entries}{$filename}{modified_hash} )
+-		or $state->{entries}{$filename}{modified_hash} eq $oldmeta->{filehash} )
++		or $state->{entries}{$filename}{modified_hash} eq $oldmeta->{filehash}
++		or $meta->{filehash} eq 'added' )
+         {
+-            $log->info("Updating '$filename'");
+-            # normal update, just send the new revision (either U=Update, or A=Add, or R=Remove)
+-            print "MT +updated\n";
+-            print "MT text U\n";
+-            print "MT fname $filename\n";
+-            print "MT newline\n";
+-            print "MT -updated\n";
++            # normal update, just send the new revision (either U=Update,
++            # or A=Add, or R=Remove)
++	    if ( defined($wrev) && $wrev < 0 )
++	    {
++	        $log->info("Tell the client the file is scheduled for removal");
++		print "MT text R \n";
++                print "MT fname $filename\n";
++                print "MT newline\n";
++		next;
++	    }
++	    elsif ( !defined($wrev) || $wrev == 0 )
++	    {
++	        $log->info("Tell the client the file will be added");
++		print "MT text A \n";
++                print "MT fname $filename\n";
++                print "MT newline\n";
++		next;
++
++	    }
++	    else {
++                $log->info("Updating '$filename' $wrev");
++                print "MT +updated\n";
++                print "MT text U \n";
++                print "MT fname $filename\n";
++                print "MT newline\n";
++		print "MT -updated\n";
++	    }
+ 
+             my ( $filepart, $dirpart ) = filenamesplit($filename,1);
+ 
+@@ -1711,6 +1739,17 @@ sub argsfromdir
+ 
+     return if ( scalar ( @{$state->{args}} ) > 1 );
+ 
++    my @gethead = @{$updater->gethead};
++
++    # push added files
++    foreach my $file (keys %{$state->{entries}}) {
++    	if ( exists $state->{entries}{$file}{revision} &&
++		$state->{entries}{$file}{revision} == 0 )
++	{
++	    push @gethead, { name => $file, filehash => 'added' };
++	}
++    }
++
+     if ( scalar(@{$state->{args}}) == 1 )
+     {
+         my $arg = $state->{args}[0];
+@@ -1718,7 +1757,7 @@ sub argsfromdir
+ 
+         $log->info("Only one arg specified, checking for directory expansion on '$arg'");
+ 
+-        foreach my $file ( @{$updater->gethead} )
++        foreach my $file ( @gethead )
+         {
+             next if ( $file->{filehash} eq "deleted" and not defined ( $state->{entries}{$file->{name}} ) );
+             next unless ( $file->{name} =~ /^$arg\// or $file->{name} eq $arg  );
+@@ -1731,7 +1770,7 @@ sub argsfromdir
+ 
+         $state->{args} = [];
+ 
+-        foreach my $file ( @{$updater->gethead} )
++        foreach my $file ( @gethead )
+         {
+             next if ( $file->{filehash} eq "deleted" and not defined ( $state->{entries}{$file->{name}} ) );
+             next unless ( $file->{name} =~ s/^$state->{prependdir}// );
+-- 
+1.4.3.rc2.g35de
