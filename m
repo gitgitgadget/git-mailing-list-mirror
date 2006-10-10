@@ -1,49 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Release 1.4.2 build failure
-Date: Tue, 10 Oct 2006 15:11:23 -0700
-Message-ID: <7vejtfzur8.fsf@assigned-by-dhcp.cox.net>
-References: <452C00FD.1020307@cfl.rr.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Junio's wishes [Was: Re: Approxidate licensing]
+Date: Tue, 10 Oct 2006 15:12:04 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610101509460.3952@g5.osdl.org>
+References: <200610102054.k9AKsQ2a004095@laptop13.inf.utfsm.cl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 11 00:11:50 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 11 00:12:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXPou-0005x4-QT
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 00:11:29 +0200
+	id 1GXPpo-0006AG-4S
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 00:12:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030571AbWJJWLZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 18:11:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030572AbWJJWLZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 18:11:25 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:52430 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1030571AbWJJWLY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 18:11:24 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061010221124.LJSZ18985.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 10 Oct 2006 18:11:24 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id YmBT1V0071kojtg0000000
-	Tue, 10 Oct 2006 18:11:27 -0400
-To: Phillip Susi <psusi@cfl.rr.com>
-In-Reply-To: <452C00FD.1020307@cfl.rr.com> (Phillip Susi's message of "Tue, 10
-	Oct 2006 16:22:21 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030572AbWJJWMV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 18:12:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030573AbWJJWMU
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 18:12:20 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:39593 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030572AbWJJWMT (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Oct 2006 18:12:19 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9AMC6aX023816
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 10 Oct 2006 15:12:06 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9AMC4Br027179;
+	Tue, 10 Oct 2006 15:12:05 -0700
+To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+In-Reply-To: <200610102054.k9AKsQ2a004095@laptop13.inf.utfsm.cl>
+X-Spam-Status: No, hits=-0.468 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28675>
 
-Are you by any chance running the test with the stdin connected
-to </dev/null?
 
-If so, the fix is in 1.4.2.2.
 
-BTW, the latest "maint" release is 1.4.2.3 and we have 1.4.3-rc2
-from the "master" branch.
+On Tue, 10 Oct 2006, Horst H. von Brand wrote:
+>
+> There is a small practical problem with that: How would you find out I'm
+> using a modified version of your code internally? Also, the "distribution"
+> part of GPLv2 is a useful filter: Only such modifications that are
+> worthwhile to distribute get back, not each and every corner I paint myself
+> into while playing around.
+
+Hey, I obviously agree that the GPLv2 is a good license, but at the same 
+time, I think too many people tend to think _just_ about legal issues.
+
+Sometimes the wishes of an author should matter, regardless of whether 
+there is any law that forces you to do so. So I personally think a license 
+that says: "if you improve this, give out the improvements regardless of 
+whether you distribute things further or not" is a nice sentiment, and 
+should be honored, regardless of whether you can legally enforce any such 
+private tinkering or not.
+
+			Linus
