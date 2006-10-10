@@ -1,112 +1,90 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] gitweb: Show project README if available
-Date: Tue, 10 Oct 2006 10:33:26 +0200
-Message-ID: <452B5AD6.7040301@op5.se>
-References: <20061010051545.15859.qmail@web31801.mail.mud.yahoo.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] gitweb wishlist and TODO list
+Date: Tue, 10 Oct 2006 10:54:54 +0200
+Message-ID: <200610101054.54948.jnareb@gmail.com>
+References: <20061010014743.80094.qmail@web31801.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 10 10:33:47 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 10 10:54:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXD3M-0005X7-Mz
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 10:33:33 +0200
+	id 1GXDN6-0002fP-Tu
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 10:53:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965105AbWJJIda (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 04:33:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965106AbWJJId3
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 04:33:29 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:7568 "EHLO smtp-gw1.op5.se")
-	by vger.kernel.org with ESMTP id S965105AbWJJId3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Oct 2006 04:33:29 -0400
-Received: by smtp-gw1.op5.se (Postfix, from userid 588)
-	id C149E6BE08; Tue, 10 Oct 2006 10:33:27 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
-	linux-server1.op5.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.1.4
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 3FD2E6BD5D; Tue, 10 Oct 2006 10:33:26 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-To: ltuikov@yahoo.com
-In-Reply-To: <20061010051545.15859.qmail@web31801.mail.mud.yahoo.com>
+	id S965112AbWJJIxy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 04:53:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965113AbWJJIxy
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 04:53:54 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:15347 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S965112AbWJJIxx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Oct 2006 04:53:53 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so712055ugd
+        for <git@vger.kernel.org>; Tue, 10 Oct 2006 01:53:52 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=neSfqmB9zFctr/9G/+tkLJb7M9aYOH9x3NNFtJBfrGhtJwHFPW6uBmP/QzOcyUZNjdDQQm851jAR2RiMM+QCVGL3m6eRUP+2bFv9Al9ZWhRbnDOhcRXXgWjzhxYlCsYOUaeST2Yl2nmHY17Qn1BdvhjDx1VOVMPsrGg8ZglUE5Y=
+Received: by 10.67.105.19 with SMTP id h19mr7973684ugm;
+        Tue, 10 Oct 2006 01:53:51 -0700 (PDT)
+Received: from host-81-190-27-91.torun.mm.pl ( [81.190.27.91])
+        by mx.google.com with ESMTP id k28sm2477180ugd.2006.10.10.01.53.51;
+        Tue, 10 Oct 2006 01:53:51 -0700 (PDT)
+To: Luben Tuikov <ltuikov@yahoo.com>
+User-Agent: KMail/1.9.3
+In-Reply-To: <20061010014743.80094.qmail@web31801.mail.mud.yahoo.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28619>
 
 Luben Tuikov wrote:
-> --- Petr Baudis <pasky@suse.cz> wrote:
->> If the project includes a README file, show it in the summary page.
->> The usual "this should be in the config file" argument does not apply here
->> since this can be larger and having such a big string in the config file
->> would be impractical.
->>
->> I don't know if this is suitable upstream, but it's one of the repo.or.cz
->> custom modifications that I've thought could be interesting for others
->> as well.
+> --- Jakub Narebski <jnareb@gmail.com> wrote:
+> >  * Improve blame view, making use of --porcelain option to git-blame (for
+> >    later). Perhaps change blame view from table based one to div based one.
 > 
-> I don't see how a read-me file relates to gitweb.
+> >    Use different colors for different commits (graph coloring problem).
 > 
-> People may call those files "00README" or "README.txt"
-> or "README.TXT" or "README_001", etc.
+> Oh, no please no.
 > 
-> The contents of such a file has nothing to do with gitweb,
-> and or git.  It may work for repo.or.cz but is unlikely that
-> it would work for all projects for all git repos and for all
-> gitweb interfaces.
+> Why do you think I left the color list as a list?  I did try to use
+> more colors when I wrote it, and it was ugly as h3ll and very distracting
+> when doing real work.  So I ended up with the two color (shades) we have
+> now and this is what I submitted.
 > 
+> Also, any kind of "graph coloring problem" would make blame slow.
 
-Well, git isn't the right tool for everything, and umbrellas are only 
-good when it rains.
+One of ideas (without having some nice _mathematical_ solution, i.e. not
+having for to try and check different coloring but calculating coloring, 
+of a blame graph coloring problem[*1*]) was to use few colors, 3, 6, 8
+based on some hash of sha1 of commit (for example first character) plus
+alternating "darkness" of those colors to ensure that neighbours would
+have different colors. Another was to use first 6 characters of sha1 as
+a color, then flatten the color to suitable for background (perhaps also
+with some kind of ensuring that neigbour blames would have different color). 
 
-> The contents of a read-me file could be quite large and thus
-> not suitable for the "summary" page.  Both the contents and the
-> size may not be suitable.  "repo.or.cz" is the exception, not
-> the rule.
-> 
-> A readme file isn't written with the intent of git or gitweb.
-> It is a function of the project, not the SCM used to keep it in, or
-> the SCM web interface used to show it.
-> 
+Junio idea of basing color/brighness (of some part of blame output at
+least) on the _age_ of region (perhaps using two altrenating _colors_)
+has also it's merit.
 
-I can quite clearly envision usage for a README file for gitweb 
-exclusive usage; It would show a link to coding guidelines, 
-email-addresses for mailing-lists and project maintainers, bugtracker 
-urls and other things which are handy to find fast on the web but that 
-you don't necessarily want to dig around inside the repo for.
+Nevertheless, such change would be preceded by an RFC, and discussion.
 
-the project-root/README usually holds info along the lines of
-"This program is really spiffy. It does this, this and that, and if you 
-configure it properly, it will Make the World a Better Place(tm)."; Too 
-newbie'ish info for people looking to submit bugs, patches and suggestions.
+> In any way, if you/someone does implement this "coloring" can you please
+> make it an option, because I'll never turn it on.  Thanks!
+
+Not a problem to make blame coloring a feature.
 
 
-> I don't understand why the "description"  file doesn't do what
-> you want?  Do you need it to be multi-line or slightly larger?
-> Why not just extend "description" and/or create/use a second
-> file called "description_long" to store multi-line descriptions?
-> 
-
-I imagine description_long is what's discussed here, although README is 
-the suggested name.
-
-> Or why not extend the "description" file s.t. only the first
-> line would be shown in the "description" line of "summary" and
-> down below, show the rest of the description file if present?
-> 
-
-Junio suggested this 2 hours before you sent your mail, and it seems as 
-reasonable now as it did then. It also makes .git/description consistent 
-with how we write and show commit-messages.
-
+Footnotes:
+[*1*] Blame graph coloring problem: 1) regions blamed on the same commit
+should have the same color 2) neighbour blame regions should have different
+colors.
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Jakub Narebski
+Poland
