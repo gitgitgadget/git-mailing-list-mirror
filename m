@@ -1,94 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] repack: allow simultaneous packing and pruning
-Date: Tue, 10 Oct 2006 13:24:23 -0700
-Message-ID: <7vk637zzpk.fsf@assigned-by-dhcp.cox.net>
-References: <20061010102210.568341380D6@magnus.utsl.gen.nz>
-	<Pine.LNX.4.64.0610100800490.3952@g5.osdl.org>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: git benchmark
+Date: Tue, 10 Oct 2006 22:32:37 +0200
+Message-ID: <4d8e3fd30610101332h2853b558re33c5c69003bbe86@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 10 22:24:47 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Oct 10 22:32:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXO9M-0005oA-5I
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 22:24:28 +0200
+	id 1GXOHK-0007So-AC
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 22:32:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030281AbWJJUYZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 16:24:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030282AbWJJUYZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 16:24:25 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:39083 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1030281AbWJJUYZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 16:24:25 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061010202424.ZNTK12581.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 10 Oct 2006 16:24:24 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id YkQT1V0051kojtg0000000
-	Tue, 10 Oct 2006 16:24:27 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0610100800490.3952@g5.osdl.org> (Linus Torvalds's
-	message of "Tue, 10 Oct 2006 08:03:54 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030295AbWJJUcj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 16:32:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030296AbWJJUcj
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 16:32:39 -0400
+Received: from wr-out-0506.google.com ([64.233.184.224]:43734 "EHLO
+	wr-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1030295AbWJJUcj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Oct 2006 16:32:39 -0400
+Received: by wr-out-0506.google.com with SMTP id i32so407160wra
+        for <git@vger.kernel.org>; Tue, 10 Oct 2006 13:32:37 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=Tcb2dgIZVlPoUOJI2Or+EDQb9pZKbGHuBOwFIRjUTrQsWP2EYQScGRPLnr4i2ESLk1Cctgdit8d4YPEtJVei+5J6gi+gUI7ScSo+gYn1gyF02qPxy2whrXz5MXbBHOIIl9ShqtgIsgR9BF7SKfKhX/NytGCBrHysbEP8Xz19G9U=
+Received: by 10.90.105.19 with SMTP id d19mr4065430agc;
+        Tue, 10 Oct 2006 13:32:37 -0700 (PDT)
+Received: by 10.90.74.19 with HTTP; Tue, 10 Oct 2006 13:32:37 -0700 (PDT)
+To: "Git Mailing List" <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28663>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+hi all,
+I installed both git and mercurial, I would like to repeat test as per
+http://git.or.cz/gitwiki/GitBenchmarks but I need help on how to run
+them... hints?
 
-> On Tue, 10 Oct 2006, Sam Vilain wrote:
->>
->> If using git-repack -a, unreferenced objects are kept behind in the
->> pack.  This might be the best default, but there are no good ways
->> to clean up the packfiles if a lot of rebasing is happening, or
->> branches have been deleted.
->
-> Don't do this.
->
-> I understand why you want to do it, but the fact is, it's dangerous.
+I'm really not a git/mercurial expert so step by step instruction
+would be more then appreciated, then I'll run test and report
+results...
 
-Sorry, I understand "it's dangerous" part, but I do not
-understand "why you want to do it" part.
+Thanks.
 
-@@ -32,6 +33,11 @@ case ",$all_into_one," in
- ,,)
- 	rev_list='--unpacked'
- 	pack_objects='--incremental'
-+	if [ -n "$prune" ]
-+	then
-+	    # prune junk first
-+	    git-prune
-+	fi
- 	;;
- ,t,)
- 	rev_list=
-
-This shouldn't make any difference if the repository is
-quiescent (and is dangerous if it isn't).  pack-objects will
-not get fed things that are not reachable.
-
-@@ -40,8 +46,14 @@ case ",$all_into_one," in
- 	# Redundancy check in all-into-one case is trivial.
- 	existing=`cd "$PACKDIR" && \
- 	    find . -type f \( -name '*.pack' -o -name '*.idx' \) -print`
-+
-+	if [ -n "$prune" ]
-+	then
-+	    rev_list=`cd "$GIT_DIR" && find refs -type f -print`
-+	fi
- 	;;
- esac
-+
-
-We give --all to rev-list so this should not have any effect
-either; other than that the code introduced by this hunk is
-broken with packed-refs.
-
-Isn't "repack -a -d" what Sam wants?
+Ciao,
+-- 
+Paolo
+http://paolo.ciarrocchi.googlepages.com
+http://picasaweb.google.com/paolo.ciarrocchi
