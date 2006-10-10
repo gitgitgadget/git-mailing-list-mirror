@@ -1,73 +1,112 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/2] gitweb: Show trailing slash when listing tree entry in tree listing
-Date: Tue, 10 Oct 2006 01:28:08 -0700
-Message-ID: <7vac4460dj.fsf@assigned-by-dhcp.cox.net>
-References: <20061009205551.GO20017@pasky.or.cz>
-	<20061010062126.46664.qmail@web31810.mail.mud.yahoo.com>
-	<20061010070531.GB2413@coredump.intra.peff.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] gitweb: Show project README if available
+Date: Tue, 10 Oct 2006 10:33:26 +0200
+Message-ID: <452B5AD6.7040301@op5.se>
+References: <20061010051545.15859.qmail@web31801.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Luben Tuikov <ltuikov@yahoo.com>, Petr Baudis <pasky@suse.cz>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 10 10:29:21 2006
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 10 10:33:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXCyS-0004KI-9O
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 10:28:28 +0200
+	id 1GXD3M-0005X7-Mz
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 10:33:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965100AbWJJI2L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 04:28:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965084AbWJJI2K
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 04:28:10 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:25533 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S965100AbWJJI2J (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 04:28:09 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061010082809.XEGZ16798.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 10 Oct 2006 04:28:09 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id YYUB1V0071kojtg0000000
-	Tue, 10 Oct 2006 04:28:12 -0400
-To: Jeff King <peff@peff.net>
-In-Reply-To: <20061010070531.GB2413@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 10 Oct 2006 03:05:31 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965105AbWJJIda (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 04:33:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965106AbWJJId3
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 04:33:29 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:7568 "EHLO smtp-gw1.op5.se")
+	by vger.kernel.org with ESMTP id S965105AbWJJId3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Oct 2006 04:33:29 -0400
+Received: by smtp-gw1.op5.se (Postfix, from userid 588)
+	id C149E6BE08; Tue, 10 Oct 2006 10:33:27 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
+	linux-server1.op5.se
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.1.4
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 3FD2E6BD5D; Tue, 10 Oct 2006 10:33:26 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+To: ltuikov@yahoo.com
+In-Reply-To: <20061010051545.15859.qmail@web31801.mail.mud.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28618>
 
-Jeff King <peff@peff.net> writes:
+Luben Tuikov wrote:
+> --- Petr Baudis <pasky@suse.cz> wrote:
+>> If the project includes a README file, show it in the summary page.
+>> The usual "this should be in the config file" argument does not apply here
+>> since this can be larger and having such a big string in the config file
+>> would be impractical.
+>>
+>> I don't know if this is suitable upstream, but it's one of the repo.or.cz
+>> custom modifications that I've thought could be interesting for others
+>> as well.
+> 
+> I don't see how a read-me file relates to gitweb.
+> 
+> People may call those files "00README" or "README.txt"
+> or "README.TXT" or "README_001", etc.
+> 
+> The contents of such a file has nothing to do with gitweb,
+> and or git.  It may work for repo.or.cz but is unlikely that
+> it would work for all projects for all git repos and for all
+> gitweb interfaces.
+> 
 
-> On Mon, Oct 09, 2006 at 11:21:26PM -0700, Luben Tuikov wrote:
->
->> Anyone can come up with any "statistic" to convince anyone of
->> anything.  It's the American way! (to financial success)
->
-> Petr introduced quantitative evidence and an analysis. You can argue
-> that his numbers or his analysis are incorrect, but berating statistics
-> as a whole is not a compelling argument.
+Well, git isn't the right tool for everything, and umbrellas are only 
+good when it rains.
 
-Although I tend to agree with Pasky, I think Luben has a point
-in that the click count he quoted does not have enough samples
-and also tainted by known skews (both Gitzilla and I have
-admitted that we hit blames unnecessarily not because we wanted
-to see the blamed project but because we wanted to see how the
-blame on his site shows things) to draw any meaningful
-conclusion.
+> The contents of a read-me file could be quite large and thus
+> not suitable for the "summary" page.  Both the contents and the
+> size may not be suitable.  "repo.or.cz" is the exception, not
+> the rule.
+> 
+> A readme file isn't written with the intent of git or gitweb.
+> It is a function of the project, not the SCM used to keep it in, or
+> the SCM web interface used to show it.
+> 
 
-But that is as far as I would go agreeing with Luben on this
-thread.  If we did not have anything else that obviously are
-clickable it might be natural to expect people to click on
-otherwise unhighlighted filenames to grab the blob data.  But
-the current layout that shows filenames in plain and a few
-obviously clickable links on the same line draws eyes and mouse
-away from the filename and to the links on the right hand side,
-even for somebody like me, who intellectually knows (because I
-merged it) that the filenames in trees ought to be clickable.
+I can quite clearly envision usage for a README file for gitweb 
+exclusive usage; It would show a link to coding guidelines, 
+email-addresses for mailing-lists and project maintainers, bugtracker 
+urls and other things which are handy to find fast on the web but that 
+you don't necessarily want to dig around inside the repo for.
+
+the project-root/README usually holds info along the lines of
+"This program is really spiffy. It does this, this and that, and if you 
+configure it properly, it will Make the World a Better Place(tm)."; Too 
+newbie'ish info for people looking to submit bugs, patches and suggestions.
+
+
+> I don't understand why the "description"  file doesn't do what
+> you want?  Do you need it to be multi-line or slightly larger?
+> Why not just extend "description" and/or create/use a second
+> file called "description_long" to store multi-line descriptions?
+> 
+
+I imagine description_long is what's discussed here, although README is 
+the suggested name.
+
+> Or why not extend the "description" file s.t. only the first
+> line would be shown in the "description" line of "summary" and
+> down below, show the rest of the description file if present?
+> 
+
+Junio suggested this 2 hours before you sent your mail, and it seems as 
+reasonable now as it did then. It also makes .git/description consistent 
+with how we write and show commit-messages.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
