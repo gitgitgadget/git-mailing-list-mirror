@@ -1,65 +1,70 @@
-From: Eran Tromer <git2eran@tromer.org>
-Subject: Re: [PATCH] repack: allow simultaneous packing and pruning
-Date: Wed, 11 Oct 2006 00:09:00 +0200
-Message-ID: <452C19FC.7030001@tromer.org>
-References: <20061010102210.568341380D6@magnus.utsl.gen.nz> <Pine.LNX.4.64.0610100800490.3952@g5.osdl.org> <452BF8B3.5090305@tromer.org> <Pine.LNX.4.64.0610101423561.3952@g5.osdl.org>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: rpmbuild fails
+Date: Wed, 11 Oct 2006 00:18:18 +0200
+Message-ID: <200610110018.19035.Josef.Weidendorfer@gmx.de>
+References: <pan.2006.10.10.20.31.48.692444@alarsen.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 11 00:15:57 2006
+Cc: git@vger.kernel.org, Junio Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Oct 11 00:19:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXPt5-0006oK-2Y
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 00:15:47 +0200
+	id 1GXPwY-0007aR-F6
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 00:19:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030583AbWJJWPo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 18:15:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030588AbWJJWPn
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 18:15:43 -0400
-Received: from line108-16.adsl.actcom.co.il ([192.117.108.16]:12266 "EHLO
-	lucian.tromer.org") by vger.kernel.org with ESMTP id S1030583AbWJJWPn
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 18:15:43 -0400
-Received: from [192.168.4.6] ([192.168.4.6])
-	by lucian.tromer.org (8.13.7/8.12.11) with ESMTP id k9AMFX6e011287;
-	Wed, 11 Oct 2006 00:15:34 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.7) Gecko/20060913 Fedora/1.5.0.7-1.fc5 Thunderbird/1.5.0.7 Mnenhy/0.7.4.0
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0610101423561.3952@g5.osdl.org>
+	id S1030592AbWJJWSc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 18:18:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030590AbWJJWSb
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 18:18:31 -0400
+Received: from mail.gmx.de ([213.165.64.20]:53130 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1030594AbWJJWSV (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Oct 2006 18:18:21 -0400
+Received: (qmail invoked by alias); 10 Oct 2006 22:18:20 -0000
+Received: from p5496AE33.dip0.t-ipconnect.de (EHLO noname) [84.150.174.51]
+  by mail.gmx.net (mp027) with SMTP; 11 Oct 2006 00:18:20 +0200
+X-Authenticated: #352111
+To: Anders Larsen <al@alarsen.net>
+User-Agent: KMail/1.9.3
+In-Reply-To: <pan.2006.10.10.20.31.48.692444@alarsen.net>
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28678>
 
-On 2006-10-10 23:25, Linus Torvalds wrote:
-> On Tue, 10 Oct 2006, Eran Tromer wrote:
->> Too late: "git repack -a -d" already does it, in contradiction to its 
->> manpage. It creates a new pack by following .git/refs, and then deletes 
->> all old pack files.
+On Tuesday 10 October 2006 22:31, Anders Larsen wrote:
+> The current git fails when building rpms:
 > 
-> That's very different.
-> 
-> That just means that you should not try to do two _concurrent_ repacks. 
+> 	RPM build errors:
+> 	    Installed (but unpackaged) file(s) found:
+> 	   /usr/lib/perl5/vendor_perl/5.8.6/Git.pm
 
-How so? This process loses the unreferenced objects from the old packs,
-where "referenced" is determined in a racy way. Same problem.
+I got the same.
+I'm no rpm guru, but changing %{perl_vendorarch} into
+%{perl_vendorlib} in git.spec.in helped for me.
 
-> 
->> Don't run it on a shared repo, then. And grab a coffee while it runs.
->> But why force leaf repositories to accumulate garbage?
-> 
-> Nobody forces that.
-> 
-> You can run "git prune" if you want to. But at least we know that "git 
-> prune" is unsafe.
+Obviously, the generated perl/Makefile installs Git.pm
+into the perl vendor *library* directory, and not the arch
+one.
 
-But "git prune" does not GC packs, only loose objects.
+I do not provide a real patch, as I have no idea if
+this is really the correct fix (we have no arch-dependent
+perl files anymore, yes?).
 
-Anyway, I think the right thing to do is to make "git repack -a -d"
-operate safely (not drop any objects), and add a new --prune option
-so that "git repack -a -d --prune" does what "git repack -a -d" used to do.
+However, something like the above should go into git-1.4.3.
 
-  Eran
+> Indeed git.spec.in does not specify any files for perl-Git, only
+> 	%files -n perl-Git -f perl-files
+> 	%defattr(-,root,root)
+> nothing more.
+
+Hmm... Obviously the "... -f perl-files" includes all files
+mentioned in file "perl-files" into perl-Git. The problem was
+that without the above change this file was empty.
+
+Josef
