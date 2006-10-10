@@ -1,37 +1,37 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Show project README if available
-Date: Tue, 10 Oct 2006 11:00:41 +0200
+Subject: Re: [PATCH 2/2] gitweb: Show trailing slash when listing tree entry in tree listing
+Date: Tue, 10 Oct 2006 11:15:22 +0200
 Organization: At home
-Message-ID: <egfndo$lg6$1@sea.gmane.org>
-References: <20061010025627.19317.70511.stgit@rover>
+Message-ID: <egfo99$lg6$2@sea.gmane.org>
+References: <7vy7ro7o3g.fsf@assigned-by-dhcp.cox.net> <20061010053841.42852.qmail@web31815.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Tue Oct 10 11:01:11 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue Oct 10 11:17:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXDTW-0004Ny-Oz
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 11:00:35 +0200
+	id 1GXDj6-0008Ic-Va
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 11:16:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965113AbWJJJAX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 10 Oct 2006 05:00:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965114AbWJJJAW
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 05:00:22 -0400
-Received: from main.gmane.org ([80.91.229.2]:34541 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S965113AbWJJJAV (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Oct 2006 05:00:21 -0400
+	id S965124AbWJJJQ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 05:16:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965127AbWJJJQ2
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 05:16:28 -0400
+Received: from main.gmane.org ([80.91.229.2]:25824 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S965125AbWJJJQ1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Oct 2006 05:16:27 -0400
 Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GXDT5-0004Gm-Be
-	for git@vger.kernel.org; Tue, 10 Oct 2006 11:00:08 +0200
+	id 1GXDhY-0007vK-Ci
+	for git@vger.kernel.org; Tue, 10 Oct 2006 11:15:04 +0200
 Received: from host-81-190-27-91.torun.mm.pl ([81.190.27.91])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 10 Oct 2006 11:00:07 +0200
+        for <git@vger.kernel.org>; Tue, 10 Oct 2006 11:15:04 +0200
 Received: from jnareb by host-81-190-27-91.torun.mm.pl with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 10 Oct 2006 11:00:07 +0200
+        for <git@vger.kernel.org>; Tue, 10 Oct 2006 11:15:04 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
 X-Complaints-To: usenet@sea.gmane.org
@@ -41,30 +41,37 @@ User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28621>
 
-Petr Baudis wrote:
+Luben Tuikov wrote:
 
-> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-print $_ while (<$fd>);
+>> It probably is wise to resurrect those "redundant" links.
+> 
+> If someone does this, can they also remove the now "other"
+> redundant link? (the link at the pathname itself) A simple
+> code analyzer would show the duplicate code in gitweb.
 
-Wouldn't it be better to do it in slurp mode, i.e.
+Easy, easy now.
 
-        {
-                local $/
-                print <$fd>;
-        }
 
-instead?
+I'd rather add some more "hidden" links, but for each hidden
+link (which are convenience only, to have larger are to click,
+or to have closer area to click) I'd like to have clearly marked
+link (marked as a link, i.e. using default link style; and with link text
+denoting _kind_ of link) which leads to the same contents. 
 
-Do you assume that README is HTML fragment? If not, you should esc_html=
- it.
-Besides, we have similar (if assumed to have one line only) file, namel=
-y
-description.
+For example on project list page I would made also project description
+(and not only project name) clickable, leading tp project summary.
+Making project name direct link wouldn't work for sites like kernel.org
+with long (hierarchical) project names like
+  linux/kernel/git/wim/linux-2.6-watchdog-experimental.git
+And for other sites project name is/can be bit on the short side.
 
-Besides, README for a project can be huge. Git README has 589 lines!
---=20
+But we agreed (I guess) to disagree on the whole redundancy in user
+interface issue (although I agree on the issue of reducing clutter).
+BTW. we can reduce redundancy in the code without need for removing
+"alternate entry points" in interface, I think.
+-- 
 Jakub Narebski
 Warsaw, Poland
 ShadeHawk on #git
