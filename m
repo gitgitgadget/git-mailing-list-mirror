@@ -1,62 +1,110 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/2] gitweb: Show trailing slash when listing tree entry in tree listing
-Date: Tue, 10 Oct 2006 12:57:30 -0700
-Message-ID: <7vvemsymdx.fsf@assigned-by-dhcp.cox.net>
-References: <egfo99$lg6$2@sea.gmane.org>
-	<20061010191904.99261.qmail@web31809.mail.mud.yahoo.com>
+From: Phillip Susi <psusi@cfl.rr.com>
+Subject: Release 1.4.2 build failure
+Date: Tue, 10 Oct 2006 16:22:21 -0400
+Message-ID: <452C00FD.1020307@cfl.rr.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 10 21:57:46 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Oct 10 22:22:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXNjK-0008My-O0
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 21:57:35 +0200
+	id 1GXO76-0005Ky-Me
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 22:22:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030236AbWJJT5c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 15:57:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030239AbWJJT5c
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 15:57:32 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:10693 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1030236AbWJJT5b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 15:57:31 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061010195730.FRDD6235.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 10 Oct 2006 15:57:30 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id YjxZ1V00E1kojtg0000000
-	Tue, 10 Oct 2006 15:57:33 -0400
-To: ltuikov@yahoo.com
-In-Reply-To: <20061010191904.99261.qmail@web31809.mail.mud.yahoo.com> (Luben
-	Tuikov's message of "Tue, 10 Oct 2006 12:19:04 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030271AbWJJUWE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 16:22:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030272AbWJJUWE
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 16:22:04 -0400
+Received: from iriserv.iradimed.com ([69.44.168.233]:39040 "EHLO iradimed.com")
+	by vger.kernel.org with ESMTP id S1030271AbWJJUWC (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Oct 2006 16:22:02 -0400
+Received: from [10.1.1.235] ([10.1.1.235]) by iradimed.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 10 Oct 2006 16:22:16 -0400
+User-Agent: Thunderbird 1.5.0.7 (Windows/20060909)
+To: git@vger.kernel.org
+X-OriginalArrivalTime: 10 Oct 2006 20:22:16.0094 (UTC) FILETIME=[C71EA3E0:01C6ECA9]
+X-TM-AS-Product-Ver: SMEX-7.2.0.1122-3.6.1039-14744.000
+X-TM-AS-Result: No--2.910500-5.000000-2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28661>
 
-Luben Tuikov <ltuikov@yahoo.com> writes:
+I tried to build git release 1.4.2 and it failed with the following tests:
 
-> Or,
->    "Click on the 'blob' link to get the ... Click on the 'tree' link to
->     get the ... Oh you didn't know what a 'tree' or 'blob' object is?
->     A 'blob' is ... A 'tree' is ..."
->
-> At which point the engineer has lost 90% of his interest.
->
-> It even gets even worse for the obnoxious "tree" link next to each commit
-> in shortlog view:
->    "The tree link is the the tree object which is part of a commit object.
->     Oh you don't know the internals of a commit object?  A commit object
->     binds a tree object and a (parent) commit object, but blah, blah, blah..."
+*** t3403-rebase-skip.sh ***
+*   ok 1: setup
+*   ok 2: rebase with git am -3 (default)
+* FAIL 3: rebase --skip with am -3
 
-Isn't that a simple "labelling" question?  I do not think
-anybody minds to show clickable string "contents" (instead of
-"blob" or "tree") at the places you mention above and if we did
-so everybody would be happy, right?
+                 git reset --hard HEAD &&
+                 git rebase --skip
+
+*   ok 4: checkout skip-merge
+*   ok 5: rebase with --merge
+*   ok 6: rebase --skip with --merge
+* FAIL 7: merge and reference trees equal
+         test -z "`git-diff-tree skip-merge skip-reference`"
+* failed 2 among 7 test(s)
+
+
+I enabled the --verbose and --debug test options in the test script 
+makefile and then got this:
+
+
+*   ok 2: rebase with git am -3 (default)
+* expecting success:
+         git reset --hard HEAD &&
+         git rebase --skip
+
+previous dotest directory .dotest still exists but mbox given.
+* FAIL 3: rebase --skip with am -3
+
+                 git reset --hard HEAD &&
+                 git rebase --skip
+
+* expecting success: git checkout -f skip-merge
+*   ok 4: checkout skip-merge
+* expecting failure: git rebase --merge master
+Merging HEAD with aa79649ca1fa23815a1ad3e336d9f860599556a3
+Merging:
+7cb7464379042fecc2968751bd55656a97d28c77 goodbye
+aa79649ca1fa23815a1ad3e336d9f860599556a3 we should skip this
+found 1 common ancestor(s):
+b0ab61719ccd2e08f34e326172362a485540934e hello
+Auto-merging hello
+CONFLICT (content): Merge conflict in hello
+
+
+When you have resolved this problem run "git rebase --continue".
+If you would prefer to skip this patch, instead run "git rebase --skip".
+To restore the original branch and stop rebasing run "git rebase
+--abort".
+
+*   ok 5: rebase with --merge
+* expecting success:
+         git reset --hard HEAD &&
+         git rebase --skip
+
+Merging HEAD with 46a6fc9814012b86849bc8fc8ae2d5cc1958c3cb
+Merging:
+7cb7464379042fecc2968751bd55656a97d28c77 goodbye
+46a6fc9814012b86849bc8fc8ae2d5cc1958c3cb this should not be skipped
+found 1 common ancestor(s):
+aa79649ca1fa23815a1ad3e336d9f860599556a3 we should skip this
+
+Committed: 0002 this should not be skipped
+All done.
+*   ok 6: rebase --skip with --merge
+* expecting success: test -z "`git-diff-tree skip-merge skip-reference`"
+* FAIL 7: merge and reference trees equal
+         test -z "`git-diff-tree skip-merge skip-reference`"
+/tmp/buildd/git-core-1.4.2/t/../gitk: line 3: exec: wish: not found
+* failed 2 among 7 test(s)
+
+
+Does anyone know what this means?  I am building on Ubuntu Dapper Drake.
+
+Please CC replies.
