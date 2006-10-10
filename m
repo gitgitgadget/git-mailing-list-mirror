@@ -1,55 +1,57 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: git benchmark
-Date: Tue, 10 Oct 2006 22:32:37 +0200
-Message-ID: <4d8e3fd30610101332h2853b558re33c5c69003bbe86@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Oct 10 22:32:51 2006
+From: Anders Larsen <al@alarsen.net>
+Subject: rpmbuild fails
+Date: Tue, 10 Oct 2006 22:31:49 +0200
+Organization: systems engineer Anders Larsen
+Message-ID: <pan.2006.10.10.20.31.48.692444@alarsen.net>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Tue Oct 10 22:45:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXOHK-0007So-AC
-	for gcvg-git@gmane.org; Tue, 10 Oct 2006 22:32:42 +0200
+	id 1GXOTc-0001u8-Us
+	for gcvg-git@gmane.org; Tue, 10 Oct 2006 22:45:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030295AbWJJUcj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 16:32:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030296AbWJJUcj
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 16:32:39 -0400
-Received: from wr-out-0506.google.com ([64.233.184.224]:43734 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1030295AbWJJUcj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 16:32:39 -0400
-Received: by wr-out-0506.google.com with SMTP id i32so407160wra
-        for <git@vger.kernel.org>; Tue, 10 Oct 2006 13:32:37 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=Tcb2dgIZVlPoUOJI2Or+EDQb9pZKbGHuBOwFIRjUTrQsWP2EYQScGRPLnr4i2ESLk1Cctgdit8d4YPEtJVei+5J6gi+gUI7ScSo+gYn1gyF02qPxy2whrXz5MXbBHOIIl9ShqtgIsgR9BF7SKfKhX/NytGCBrHysbEP8Xz19G9U=
-Received: by 10.90.105.19 with SMTP id d19mr4065430agc;
-        Tue, 10 Oct 2006 13:32:37 -0700 (PDT)
-Received: by 10.90.74.19 with HTTP; Tue, 10 Oct 2006 13:32:37 -0700 (PDT)
-To: "Git Mailing List" <git@vger.kernel.org>
-Content-Disposition: inline
+	id S1030331AbWJJUpJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 16:45:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030330AbWJJUpH
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 16:45:07 -0400
+Received: from main.gmane.org ([80.91.229.2]:36522 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1030329AbWJJUpE (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Oct 2006 16:45:04 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1GXOTG-0001pE-O1
+	for git@vger.kernel.org; Tue, 10 Oct 2006 22:45:02 +0200
+Received: from p54ac262a.dip0.t-ipconnect.de ([84.172.38.42])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Oct 2006 22:45:02 +0200
+Received: from al by p54ac262a.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Oct 2006 22:45:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: p54ac262a.dip0.t-ipconnect.de
+User-Agent: Pan/0.14.2 (This is not a psychotic episode. It's a cleansing moment of clarity.)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28664>
 
-hi all,
-I installed both git and mercurial, I would like to repeat test as per
-http://git.or.cz/gitwiki/GitBenchmarks but I need help on how to run
-them... hints?
+The current git fails when building rpms:
 
-I'm really not a git/mercurial expert so step by step instruction
-would be more then appreciated, then I'll run test and report
-results...
+	RPM build errors:
+	    Installed (but unpackaged) file(s) found:
+	   /usr/lib/perl5/vendor_perl/5.8.6/Git.pm
 
-Thanks.
+Indeed git.spec.in does not specify any files for perl-Git, only
+	%files -n perl-Git -f perl-files
+	%defattr(-,root,root)
+nothing more.
 
-Ciao,
--- 
-Paolo
-http://paolo.ciarrocchi.googlepages.com
-http://picasaweb.google.com/paolo.ciarrocchi
+How is this supposed to be handled correctly?
+
+Cheers
+ Anders
