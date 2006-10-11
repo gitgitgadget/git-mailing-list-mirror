@@ -1,60 +1,64 @@
-From: Wolfgang Denk <wd@denx.de>
-Subject: cg-commit does not run pre-commit hook?
-Date: Wed, 11 Oct 2006 22:30:54 +0200
-Message-ID: <20061011203054.C5F80353A48@atlas.denx.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 11 22:33:40 2006
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] gitweb: Fix search form when PATH_INFO is enabled
+Date: Wed, 11 Oct 2006 22:31:15 +0200
+Message-ID: <20061011203115.28629.20993.stgit@rover>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 11 22:34:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXkjE-0003sC-FH
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 22:31:00 +0200
+	id 1GXkjZ-0003ww-4t
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 22:31:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161241AbWJKUa5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Oct 2006 16:30:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161242AbWJKUa5
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 16:30:57 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:57284 "EHLO
-	mail-out.m-online.net") by vger.kernel.org with ESMTP
-	id S1161241AbWJKUa4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Oct 2006 16:30:56 -0400
-Received: from mail01.m-online.net (svr21.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id 76D2FA0148;
-	Wed, 11 Oct 2006 22:30:55 +0200 (CEST)
-X-Auth-Info: e8mvRVddKy53J7j2+Nmu7Q49razc5UwJzfTrA8F1vqc=
-X-Auth-Info: e8mvRVddKy53J7j2+Nmu7Q49razc5UwJzfTrA8F1vqc=
-Received: from mail.denx.de (p54967D94.dip.t-dialin.net [84.150.125.148])
-	by smtp-auth.mnet-online.de (Postfix) with ESMTP id 62EF593980;
-	Wed, 11 Oct 2006 22:30:55 +0200 (CEST)
-Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
-	by mail.denx.de (Postfix) with ESMTP id F059D6D00BA;
-	Wed, 11 Oct 2006 22:30:54 +0200 (CEST)
-Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
-	by atlas.denx.de (Postfix) with ESMTP id C5F80353A48;
-	Wed, 11 Oct 2006 22:30:54 +0200 (MEST)
-To: Petr Baudis <pasky@suse.cz>
+	id S1161243AbWJKUbS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Oct 2006 16:31:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161244AbWJKUbR
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 16:31:17 -0400
+Received: from rover.dkm.cz ([62.24.64.27]:51404 "EHLO rover.dkm.cz")
+	by vger.kernel.org with ESMTP id S1161243AbWJKUbQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Oct 2006 16:31:16 -0400
+Received: from [127.0.0.1] (rover [127.0.0.1])
+	by rover.dkm.cz (Postfix) with ESMTP id 561808B4B8;
+	Wed, 11 Oct 2006 22:31:15 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: StGIT/0.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28744>
 
-Hi,
+Currently that was broken. Ideal fix would make the search form use
+PATH_INFO too, but it's just one insignificant place so it's no big deal if
+we don't for now... This at least makes it work.
 
-I noticed that cg-commit does not run the pre-commit  hook.  Is  this
-intentional,  or  am  I  doing anyhting wrong? When I use git-coimmit
-instead the hook is run just  fine.  This  is  with  git-1.4.2.1  and
-cogito-0.18 of FC4 / FC5 systems.
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
-Best regards,
+ gitweb/gitweb.perl |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-Wolfgang Denk
-
--- 
-Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
-Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
-There are bugs and then there are bugs.  And then there are bugs.
-                                                    - Karl Lehenbauer
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index d165fdc..18c0d52 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -445,6 +445,9 @@ sub href(%) {
+ 	my %params = @_;
+ 	my $href = $my_uri;
+ 
++	# XXX: Warning: If you touch this, check the search form for updating,
++	# too.
++
+ 	my @mapping = (
+ 		project => "p",
+ 		action => "a",
+@@ -1553,6 +1556,7 @@ #provides backwards capability for those
+ 		}
+ 		$cgi->param("a", "search");
+ 		$cgi->param("h", $search_hash);
++		$cgi->param("p", $project);
+ 		print $cgi->startform(-method => "get", -action => $my_uri) .
+ 		      "<div class=\"search\">\n" .
+ 		      $cgi->hidden(-name => "p") . "\n" .
