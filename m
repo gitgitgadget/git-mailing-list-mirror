@@ -1,72 +1,156 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: [RFC] separate .git from working directory
-Date: Wed, 11 Oct 2006 11:43:03 -0400
-Message-ID: <BAYC1-PASMTP10003954B66E10247020A7AE140@CEZ.ICE>
-References: <fcaeb9bf0610110623q365d3ffcw9ba9e11936d03a9d@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] atomic write for sideband remote messages
+Date: Wed, 11 Oct 2006 11:49:15 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0610111127360.2435@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 11 17:46:51 2006
+X-From: git-owner@vger.kernel.org Wed Oct 11 17:54:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXgEo-0002PR-9Y
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 17:43:20 +0200
+	id 1GXgKe-0004S7-G1
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 17:49:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161048AbWJKPnJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Oct 2006 11:43:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161082AbWJKPnJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 11:43:09 -0400
-Received: from bayc1-pasmtp10.bayc1.hotmail.com ([65.54.191.170]:44899 "EHLO
-	BAYC1-PASMTP10.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1161048AbWJKPnG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Oct 2006 11:43:06 -0400
-X-Originating-IP: [65.93.42.136]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.42.136]) by BAYC1-PASMTP10.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Wed, 11 Oct 2006 08:46:40 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GXgEa-0003FM-EO; Wed, 11 Oct 2006 11:43:04 -0400
-To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Message-Id: <20061011114303.0a23496e.seanlkml@sympatico.ca>
-In-Reply-To: <fcaeb9bf0610110623q365d3ffcw9ba9e11936d03a9d@mail.gmail.com>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 11 Oct 2006 15:46:40.0890 (UTC) FILETIME=[71C87DA0:01C6ED4C]
+	id S1161085AbWJKPtR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Oct 2006 11:49:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161090AbWJKPtR
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 11:49:17 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:22304 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1161085AbWJKPtQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Oct 2006 11:49:16 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J6Z00G3GAM3AEG0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 11 Oct 2006 11:49:15 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28723>
 
-On Wed, 11 Oct 2006 20:23:50 +0700
-"Nguyen Thai Ngoc Duy" <pclouds@gmail.com> wrote:
+It has been a few times that I ended up with such a confusing display:
 
-> I was thinking about this while reading subproject thread. In a simple
-> case, I have a repo A located at ~/project-a and another repo B
-> located at ~/project-a/some/dir/project-b. With this setup, command
-> "find" and other directory-recursive commands will run horribly from
-> ~/project-a when they go inside project-b/.git (no I don't want to
-> repack -d everytime I want to find something).
-> I propose to move project-b/.git outside and place a file, say
-> .gitdir, in project-b directory. git-sh-setup and setup_git_directory
-> are taught to recognize .gitdir, read it to find the actual GIT_DIR
-> recorded inside .gitdir. This way git commands inside project-b should
-> work fine while I can "find ~/project-a -name blah" or "grep -R blah"
-> quickly.
-> .gitdir format could be  a simple shell-like format with environment
-> variable assignments.
+|remote: Generating pack...
+|remote: Done counting 17 objects.
+|remote: Result has 9 objects.
+|remote: Deltifying 9 objects.
+|remote:  100% (9/9) done
+|remote: Unpacking 9 objects
+|Total 9, written 9 (delta 8), reused 0 (delta 0)
+| 100% (9/9) done
 
-Probably wouldn't be too hard to implement, but is it worth it?
+The confusion can be avoided in most cases by writing the remote message 
+in one go to prevent interleacing with local messages.  The buffer 
+declaration has been moved inside recv_sideband() to avoid extra string 
+copies.
 
-You can export a GIT_DIR manually pretty easily if you want to move
-the .git directory somewhere else.  Also you could make a "git find"
-shell script named "gf" that does something like:
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 
-#/bin/sh
-find "$@" ! -path '*/.git/*'
+---
 
-Which would let you type  "gf -name blah" and automatically ignore
-the .git directory.
-
-Sean
+diff --git a/builtin-archive.c b/builtin-archive.c
+index 6dabdee..9177379 100644
+--- a/builtin-archive.c
++++ b/builtin-archive.c
+@@ -75,7 +75,7 @@ static int run_remote_archiver(const cha
+ 		die("git-archive: expected a flush");
+ 
+ 	/* Now, start reading from fd[0] and spit it out to stdout */
+-	rv = recv_sideband("archive", fd[0], 1, 2, buf, sizeof(buf));
++	rv = recv_sideband("archive", fd[0], 1, 2);
+ 	close(fd[0]);
+ 	rv |= finish_connect(pid);
+ 
+diff --git a/fetch-clone.c b/fetch-clone.c
+index b632ca0..76b99af 100644
+--- a/fetch-clone.c
++++ b/fetch-clone.c
+@@ -115,12 +115,10 @@ static pid_t setup_sideband(int sideband
+ 		die("%s: unable to fork off sideband demultiplexer", me);
+ 	if (!side_pid) {
+ 		/* subprocess */
+-		char buf[LARGE_PACKET_MAX];
+-
+ 		close(fd[0]);
+ 		if (xd[0] != xd[1])
+ 			close(xd[1]);
+-		if (recv_sideband(me, xd[0], fd[1], 2, buf, sizeof(buf)))
++		if (recv_sideband(me, xd[0], fd[1], 2))
+ 			exit(1);
+ 		exit(0);
+ 	}
+diff --git a/sideband.c b/sideband.c
+index 1b14ff8..277fa3c 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -11,10 +11,13 @@ #include "sideband.h"
+  * stream, aka "verbose").  A message over band #3 is a signal that
+  * the remote died unexpectedly.  A flush() concludes the stream.
+  */
+-int recv_sideband(const char *me, int in_stream, int out, int err, char *buf, int bufsz)
++int recv_sideband(const char *me, int in_stream, int out, int err)
+ {
++	char buf[7 + LARGE_PACKET_MAX + 1];
++	strcpy(buf, "remote:");
+ 	while (1) {
+-		int len = packet_read_line(in_stream, buf, bufsz);
++		int band, len;
++		len	= packet_read_line(in_stream, buf+7, LARGE_PACKET_MAX);
+ 		if (len == 0)
+ 			break;
+ 		if (len < 1) {
+@@ -22,25 +25,26 @@ int recv_sideband(const char *me, int in
+ 			safe_write(err, buf, len);
+ 			return SIDEBAND_PROTOCOL_ERROR;
+ 		}
++		band = buf[7] & 0xff;
+ 		len--;
+-		switch (buf[0] & 0xFF) {
++		switch (band) {
+ 		case 3:
+-			safe_write(err, "remote: ", 8);
+-			safe_write(err, buf+1, len);
+-			safe_write(err, "\n", 1);
++			buf[7] = ' ';
++			buf[8+len] = '\n';
++			safe_write(err, buf, 8+len+1);
+ 			return SIDEBAND_REMOTE_ERROR;
+ 		case 2:
+-			safe_write(err, "remote: ", 8);
+-			safe_write(err, buf+1, len);
++			buf[7] = ' ';
++			safe_write(err, buf, 8+len);
+ 			continue;
+ 		case 1:
+-			safe_write(out, buf+1, len);
++			safe_write(out, buf+8, len);
+ 			continue;
+ 		default:
+-			len = sprintf(buf + 1,
++			len = sprintf(buf,
+ 				      "%s: protocol error: bad band #%d\n",
+-				      me, buf[0] & 0xFF);
+-			safe_write(err, buf+1, len);
++				      me, band);
++			safe_write(err, buf, len);
+ 			return SIDEBAND_PROTOCOL_ERROR;
+ 		}
+ 	}
+diff --git a/sideband.h b/sideband.h
+index 4872106..a84b691 100644
+--- a/sideband.h
++++ b/sideband.h
+@@ -7,7 +7,7 @@ #define SIDEBAND_REMOTE_ERROR -1
+ #define DEFAULT_PACKET_MAX 1000
+ #define LARGE_PACKET_MAX 65520
+ 
+-int recv_sideband(const char *me, int in_stream, int out, int err, char *, int);
++int recv_sideband(const char *me, int in_stream, int out, int err);
+ ssize_t send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_max);
+ 
+ #endif
