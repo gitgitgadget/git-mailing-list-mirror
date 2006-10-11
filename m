@@ -1,66 +1,82 @@
-From: Ralf Baechle <ralf@linux-mips.org>
-Subject: Gitweb indentation wrong in Internet Explorer
-Date: Wed, 11 Oct 2006 18:25:53 +0100
-Message-ID: <20061011172553.GA1147@linux-mips.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn fetch fails when a file is renamed changing only case
+Date: Wed, 11 Oct 2006 10:42:20 -0700
+Message-ID: <20061011174220.GA32013@soma>
+References: <ege016$vrb$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Oct 11 19:26:49 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 11 19:42:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXhq0-0001lT-VP
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 19:25:49 +0200
+	id 1GXi5Q-00069o-7I
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 19:41:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161149AbWJKRZp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Oct 2006 13:25:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161152AbWJKRZp
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 13:25:45 -0400
-Received: from ftp.linux-mips.org ([194.74.144.162]:51632 "EHLO
-	ftp.linux-mips.org") by vger.kernel.org with ESMTP id S1161149AbWJKRZp
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Oct 2006 13:25:45 -0400
-Received: from localhost.localdomain ([127.0.0.1]:37064 "EHLO
-	dl5rb.ham-radio-op.net") by ftp.linux-mips.org with ESMTP
-	id S20037437AbWJKRZo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Oct 2006 18:25:44 +0100
-Received: from denk.linux-mips.net (denk.linux-mips.net [127.0.0.1])
-	by dl5rb.ham-radio-op.net (8.13.7/8.13.7) with ESMTP id k9BHPsCK001221;
-	Wed, 11 Oct 2006 18:25:54 +0100
-Received: (from ralf@localhost)
-	by denk.linux-mips.net (8.13.7/8.13.7/Submit) id k9BHPr1j001220;
-	Wed, 11 Oct 2006 18:25:53 +0100
-To: git@vger.kernel.org
+	id S1161168AbWJKRll (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Oct 2006 13:41:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161169AbWJKRll
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 13:41:41 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:7563 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1161168AbWJKRlk (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Oct 2006 13:41:40 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 6B04C7DC08E;
+	Wed, 11 Oct 2006 10:41:38 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed, 11 Oct 2006 10:42:20 -0700
+To: Pazu <pazu@pazu.com.br>
 Content-Disposition: inline
-User-Agent: Mutt/1.4.2.1i
+In-Reply-To: <ege016$vrb$1@sea.gmane.org>
+User-Agent: Mutt/1.5.12-2006-07-14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28729>
 
-I have a report from an MSIE suffering user:
+Pazu <pazu@pazu.com.br> wrote:
+> For example, if you had a file named TestFile and it's renamed to 
+> TESTFILE, git-svn fails to fetch revisions after the rename.
+> 
+> My perl skills are close to non-existant, so I'm afraid I don't know how 
+> to fix this. Attached to this message, however, is a sample svn 
+> repository that can reproduce this bug. Just unpack it somewhere (let's 
+> say, in /tmp) and try the following:
+> 
+> tar -C /tmp -xzf git-svn-rename-test.tar.gz
+> mkdir test-wc
+> cd test-wc
+> git-svn init file:///tmp/git-svn-rename-test
+> git-svn fetch
+> 
+> The last command will fail after fetching revision #3, where a file 
+> named TestFile was renamed to TESTFILE. Here's the stack trace:
+> 
+> svn: 'TestFile' is not under version control
+> 256 at /Users/pazu/bin/git-svn line 2015
+>         main::safe_qx('svn', 'propget', 'svn:keywords', 
+> 'TestFile@BASE') called at /Users/pazu/bin/git-svn line 2154
+>         main::svn_propget_base('svn:keywords', 'TestFile') called at 
+> /Users/pazu/bin/git-svn line 1773
+>         main::do_update_index('ARRAY(0x180bd68)', 'remove', 'undef') 
+> called at /Users/pazu/bin/git-svn line 1805
+>         main::index_changes() called at /Users/pazu/bin/git-svn line 1875
+>         main::git_commit('HASH(0x180bd98)', 
+> 'c77db38dc752305ba19ebe19b22306551d0f8d52') called at 
+> /Users/pazu/bin/git-svn line 346
+>         main::fetch_cmd() called at /Users/pazu/bin/git-svn line 290
+>         main::fetch() called at /Users/pazu/bin/git-svn line 149
+ 
+> I'm on Mac OS X (Intel) 10.4.8
 
-> When I use it (and I believe I've seen this on my laptop as well as my
-> workstation) all left-hand margin whitespace is collapsed to nothingness.
-> Once can still parse the code, but it's harder with no indentations.
+Ah, the problem is that git-svn relies on git-diff-files and
+git-ls-files to track changes when using the command-line svn client.
+git itself is a case-sensitive file-system, but git-svn relies on the
+working tree if you didn't have the SVN libraries, and successfully
+stats the 'TestFile' even though it no longer exists (and is replaced
+by 'TESTFILE').
 
-A screenshot from a Windows laptop to illustrate the problem is at
-http://www.linux-mips.org/~ralf/gitweb.png.  It shows the code was
-preformatted correctly which seems to be an IE bug but the following patch
-seems to work around it.
+Good to know that the SVN:: libraries are working for you, though.
 
-*** gitweb.cgi.dist	2006-10-09 19:02:19.561726255 +0100
---- gitweb.cgi	2006-10-09 19:03:31.744837495 +0100
-***************
-*** 234,239 ****
---- 234,240 ----
-  	my $str = shift;
-  	$str = decode("utf8", $str, Encode::FB_DEFAULT);
-  	$str = escapeHTML($str);
-+ 	$str =~ s/ /&nbsp;/g;
-  	return $str;
-  }
-
-Thanks,
-
-  Ralf  
+-- 
+Eric Wong
