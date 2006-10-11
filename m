@@ -1,88 +1,191 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Show project README if available
-Date: Wed, 11 Oct 2006 22:33:46 +0200
-Organization: At home
-Message-ID: <egjkf8$ht$2@sea.gmane.org>
-References: <20061010025627.19317.70511.stgit@rover> <egfndo$lg6$1@sea.gmane.org> <20061010104149.GP20017@pasky.or.cz> <200610111423.00656.jnareb@gmail.com> <20061011181729.GB2897@coredump.intra.peff.net> <egje5k$5rn$1@sea.gmane.org> <7v3b9utzqi.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Wed Oct 11 22:47:35 2006
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] gitweb: Make search type a popup menu
+Date: Wed, 11 Oct 2006 22:58:17 +0200
+Message-ID: <20061011205817.1855.31725.stgit@rover>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 11 23:00:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXkuF-0006tG-5B
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 22:42:23 +0200
+	id 1GXl9j-00036U-9d
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 22:58:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161258AbWJKUmT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Oct 2006 16:42:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161259AbWJKUmS
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 16:42:18 -0400
-Received: from main.gmane.org ([80.91.229.2]:38847 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1161258AbWJKUmR (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Oct 2006 16:42:17 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1GXkry-0006Eb-2t
-	for git@vger.kernel.org; Wed, 11 Oct 2006 22:40:04 +0200
-Received: from host-81-190-20-194.torun.mm.pl ([81.190.20.194])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Oct 2006 22:40:02 +0200
-Received: from jnareb by host-81-190-20-194.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Oct 2006 22:40:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-20-194.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1161371AbWJKU6U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Oct 2006 16:58:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161372AbWJKU6U
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 16:58:20 -0400
+Received: from rover.dkm.cz ([62.24.64.27]:43174 "EHLO rover.dkm.cz")
+	by vger.kernel.org with ESMTP id S1161371AbWJKU6T (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Oct 2006 16:58:19 -0400
+Received: from [127.0.0.1] (rover [127.0.0.1])
+	by rover.dkm.cz (Postfix) with ESMTP id 98B878BBD8;
+	Wed, 11 Oct 2006 22:58:17 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: StGIT/0.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28747>
 
-Junio C Hamano wrote:
+This makes the multiple search types actually usable by the user;
+if you don't read the gitweb source, you don't even have an idea
+that you can write things like that there.
 
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
->> Jeff King wrote:
->>
->>> On Wed, Oct 11, 2006 at 02:23:00PM +0200, Jakub Narebski wrote:
->>> 
->>>> Can any Perl expert tell us how Perl truly solve this? What is the best
->>>> way to dump whole [remaining] contents of file (from filehandle) to STDOUT?
->>> 
->>> The same you would in C: read fix-sized buffers and dump them.
->> [...]
->>> Or you can use the File::Copy module, which is part of the standard
->>> distribution (and I believe has been so for all perl5 versions, but I
->>> could be wrong):
->>
->> And 
->>
->>         {
->>                 local $/;
->>                 print <$fd>;
->>         }
->>
->> doesn't do the right thing?
-[...]
-> You can strace your Perl to see what yours does yourself:
-> 
->       strace perl -e 'print <STDIN>' >/dev/null <some-huge-file
-> 
-> You will see a bunch of read(0, ..., 4096) and after all of that
-> finishes, finally you will see a bunch of write(1, ..., 4096).
-> Where do you think the data is in the meantime?
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
-Pity that Perl does this that a way.
+ gitweb/gitweb.css  |    2 ++
+ gitweb/gitweb.perl |   61 ++++++++++++++++++++++++++++++++++++++--------------
+ 2 files changed, 47 insertions(+), 16 deletions(-)
 
-Should we use File::Copy thorough the gitweb, instead of using slurp mode?
-Well, perhaps except small files, like $GIT_DIR/description...
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
+index 3f62b6d..0eda982 100644
+--- a/gitweb/gitweb.css
++++ b/gitweb/gitweb.css
+@@ -333,6 +333,8 @@ div.index_include {
+ }
+ 
+ div.search {
++	font-size: 12px;
++	font-weight: normal;
+ 	margin: 4px 8px;
+ 	position: absolute;
+ 	top: 56px;
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 18c0d52..28c7932 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -347,6 +347,13 @@ if (defined $searchtext) {
+ 	$searchtext = quotemeta $searchtext;
+ }
+ 
++our $searchtype = $cgi->param('st');
++if (defined $searchtype) {
++	if ($searchtype =~ m/[^a-z]/) {
++		die_error(undef, "Invalid searchtype parameter");
++	}
++}
++
+ # now read PATH_INFO and use it as alternative to parameters
+ sub evaluate_path_info {
+ 	return if defined $project;
+@@ -411,6 +418,7 @@ my %actions = (
+ 	"log" => \&git_log,
+ 	"rss" => \&git_rss,
+ 	"search" => \&git_search,
++	"search_help" => \&git_search_help,
+ 	"shortlog" => \&git_shortlog,
+ 	"summary" => \&git_summary,
+ 	"tag" => \&git_tag,
+@@ -460,6 +468,7 @@ sub href(%) {
+ 		page => "pg",
+ 		order => "o",
+ 		searchtext => "s",
++		searchtype => "st",
+ 	);
+ 	my %mapping = @mapping;
+ 
+@@ -1562,6 +1571,10 @@ #provides backwards capability for those
+ 		      $cgi->hidden(-name => "p") . "\n" .
+ 		      $cgi->hidden(-name => "a") . "\n" .
+ 		      $cgi->hidden(-name => "h") . "\n" .
++		      $cgi->popup_menu(-name => 'st', -default => 'commit',
++				       -values => ['commit', 'author', 'committer', 'pickaxe']) .
++		      $cgi->sup($cgi->a({-href => href(action=>"search_help")}, "?")) .
++		      " search:\n",
+ 		      $cgi->textfield(-name => "s", -value => $searchtext) . "\n" .
+ 		      "</div>" .
+ 		      $cgi->end_form() . "\n";
+@@ -3601,18 +3614,8 @@ sub git_search {
+ 		die_error(undef, "Unknown commit object");
+ 	}
+ 
+-	my $commit_search = 1;
+-	my $author_search = 0;
+-	my $committer_search = 0;
+-	my $pickaxe_search = 0;
+-	if ($searchtext =~ s/^author\\://i) {
+-		$author_search = 1;
+-	} elsif ($searchtext =~ s/^committer\\://i) {
+-		$committer_search = 1;
+-	} elsif ($searchtext =~ s/^pickaxe\\://i) {
+-		$commit_search = 0;
+-		$pickaxe_search = 1;
+-
++	$searchtype ||= 'commit';
++	if ($searchtype eq 'pickaxe') {
+ 		# pickaxe may take all resources of your box and run for several minutes
+ 		# with every query - so decide by yourself how public you make this feature
+ 		my ($have_pickaxe) = gitweb_check_feature('pickaxe');
+@@ -3620,23 +3623,24 @@ sub git_search {
+ 			die_error('403 Permission denied', "Permission denied");
+ 		}
+ 	}
++
+ 	git_header_html();
+ 	git_print_page_nav('','', $hash,$co{'tree'},$hash);
+ 	git_print_header_div('commit', esc_html($co{'title'}), $hash);
+ 
+ 	print "<table cellspacing=\"0\">\n";
+ 	my $alternate = 1;
+-	if ($commit_search) {
++	if ($searchtype eq 'commit' or $searchtype eq 'author' or $searchtype eq 'committer') {
+ 		$/ = "\0";
+ 		open my $fd, "-|", git_cmd(), "rev-list", "--header", "--parents", $hash or next;
+ 		while (my $commit_text = <$fd>) {
+ 			if (!grep m/$searchtext/i, $commit_text) {
+ 				next;
+ 			}
+-			if ($author_search && !grep m/\nauthor .*$searchtext/i, $commit_text) {
++			if ($searchtype eq 'author' && !grep m/\nauthor .*$searchtext/i, $commit_text) {
+ 				next;
+ 			}
+-			if ($committer_search && !grep m/\ncommitter .*$searchtext/i, $commit_text) {
++			if ($searchtype eq 'committer' && !grep m/\ncommitter .*$searchtext/i, $commit_text) {
+ 				next;
+ 			}
+ 			my @commit_lines = split "\n", $commit_text;
+@@ -3678,7 +3682,7 @@ sub git_search {
+ 		close $fd;
+ 	}
+ 
+-	if ($pickaxe_search) {
++	if ($searchtype eq 'pickaxe') {
+ 		$/ = "\n";
+ 		my $git_command = git_cmd_str();
+ 		open my $fd, "-|", "$git_command rev-list $hash | " .
+@@ -3738,6 +3742,31 @@ sub git_search {
+ 	git_footer_html();
+ }
+ 
++sub git_search_help {
++	git_header_html();
++	git_print_page_nav('','', $hash,$hash,$hash);
++	print <<EOT;
++<dl>
++<dt><b>commit</b></dt>
++<dd>The commit messages and authorship information will be scanned for the given string.</dd>
++<dt><b>author</b></dt>
++<dd>Name and e-mail of the change author and date of birth of the patch will be scanned for the given string.</dd>
++<dt><b>committer</b></dt>
++<dd>Name and e-mail of the committer and date of commit will be scanned for the given string.</dd>
++EOT
++	my ($have_pickaxe) = gitweb_check_feature('pickaxe');
++	if ($have_pickaxe) {
++		print <<EOT;
++<dt><b>pickaxe</b></dt>
++<dd>All commits that caused the string to appear or disappear from any file (changes that
++added, removed or "modified" the string) will be listed. This search can take a while and
++takes a lot of strain on the server, so please use it wisely.</dd>
++EOT
++	}
++	print "</dl>\n";
++	git_footer_html();
++}
++
+ sub git_shortlog {
+ 	my $head = git_get_head_hash($project);
+ 	if (!defined $hash) {
