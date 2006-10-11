@@ -1,62 +1,47 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [RFC] separate .git from working directory
-Date: Thu, 12 Oct 2006 04:46:51 +0700
-Message-ID: <fcaeb9bf0610111446i35251fc9i6517cc5b3b53fe84@mail.gmail.com>
-References: <fcaeb9bf0610110623q365d3ffcw9ba9e11936d03a9d@mail.gmail.com>
-	 <20061011181425.GA10922@admingilde.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: Restore object-named links in item lists
+Date: Wed, 11 Oct 2006 14:48:10 -0700
+Message-ID: <7viriqsew5.fsf@assigned-by-dhcp.cox.net>
+References: <20061011201812.26857.58295.stgit@rover>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 11 23:49:03 2006
+X-From: git-owner@vger.kernel.org Wed Oct 11 23:49:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXluv-0000Fu-De
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 23:47:09 +0200
+	id 1GXlw4-0000c9-0m
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 23:48:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422651AbWJKVqy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Oct 2006 17:46:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422660AbWJKVqy
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 17:46:54 -0400
-Received: from wx-out-0506.google.com ([66.249.82.228]:13642 "EHLO
-	wx-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1422651AbWJKVqw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Oct 2006 17:46:52 -0400
-Received: by wx-out-0506.google.com with SMTP id s14so341505wxc
-        for <git@vger.kernel.org>; Wed, 11 Oct 2006 14:46:51 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=aIdTZoVCceh/FRBTLA6qluiAKPRSp9oXLXPhakXAx7pZYsDdHG0D/lKSo8n5MmN0pvExZyvT6fTYrzpB7h7Z0zQFoVM5nNd9uskuzrUIxrj5fq+q8hRTH3xC9D6qo6+Gq2bJ+AvYRzuc8wZ7zoc4ZqoznO7aXhab9eEtz7Tx1wE=
-Received: by 10.70.35.1 with SMTP id i1mr1510038wxi;
-        Wed, 11 Oct 2006 14:46:51 -0700 (PDT)
-Received: by 10.70.46.13 with HTTP; Wed, 11 Oct 2006 14:46:51 -0700 (PDT)
-To: "Martin Waitz" <tali@admingilde.org>
-In-Reply-To: <20061011181425.GA10922@admingilde.org>
-Content-Disposition: inline
+	id S1422665AbWJKVsP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Oct 2006 17:48:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422662AbWJKVsO
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 17:48:14 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:36039 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1422664AbWJKVsL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Oct 2006 17:48:11 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061011214811.CLBV12581.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 11 Oct 2006 17:48:11 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Z9oD1V00V1kojtg0000000
+	Wed, 11 Oct 2006 17:48:14 -0400
+To: Petr Baudis <pasky@suse.cz>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28753>
 
-On 10/12/06, Martin Waitz <tali@admingilde.org> wrote:
-> For subprojects you really need a shared object repository.
-> In such a setup b/.git/objects would be a symlink to the parent
-> object directory.
->
-> On the other hand, you already have the same problem with
-> a/.git/objects.  If you really want to move .git outside of the
-> working directory you can always do so by using a symlink for
-> the entire .git directory.
+I would love to take this but please defer it for now; the patch
+does not apply to any of my topic branches (nor "next").
 
-I thought about symlinks. However find will follow symlinks and
-traverse .git directories again. My goal is to prevent looking into
-.git directories
-
->
-> --
-> Martin Waitz
--- 
-Duy
+I'd like to stabilize "master" for v1.4.3 this week, and would
+like to merge bunch of stuff that are already in "next" to
+"master" after that.  I'd prefer to come back to gitweb when the
+dust settles.
