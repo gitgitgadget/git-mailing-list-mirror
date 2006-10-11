@@ -1,70 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Show project README if available
-Date: Wed, 11 Oct 2006 20:46:14 +0200
-Organization: At home
-Message-ID: <egje5k$5rn$1@sea.gmane.org>
-References: <20061010025627.19317.70511.stgit@rover> <egfndo$lg6$1@sea.gmane.org> <20061010104149.GP20017@pasky.or.cz> <200610111423.00656.jnareb@gmail.com> <20061011181729.GB2897@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Wed Oct 11 20:48:08 2006
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-svn: multi-init saves and reuses --tags and --branches arguments
+Date: Wed, 11 Oct 2006 11:53:21 -0700
+Message-ID: <11605928022833-git-send-email-normalperson@yhbt.net>
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Oct 11 20:53:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXj6v-0000dt-Ru
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 20:47:22 +0200
+	id 1GXjCr-0002Jt-Ky
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 20:53:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161021AbWJKSrS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Oct 2006 14:47:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161063AbWJKSrS
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 14:47:18 -0400
-Received: from main.gmane.org ([80.91.229.2]:32135 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1161021AbWJKSrR (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Oct 2006 14:47:17 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GXj6W-0000VN-CB
-	for git@vger.kernel.org; Wed, 11 Oct 2006 20:46:56 +0200
-Received: from host-81-190-20-194.torun.mm.pl ([81.190.20.194])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Oct 2006 20:46:56 +0200
-Received: from jnareb by host-81-190-20-194.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Oct 2006 20:46:56 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-20-194.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1030237AbWJKSxY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Oct 2006 14:53:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030403AbWJKSxY
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 14:53:24 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:31371 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1030237AbWJKSxX (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Oct 2006 14:53:23 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id CC15A7DC08E;
+	Wed, 11 Oct 2006 11:53:21 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed, 11 Oct 2006 11:53:22 -0700
+To: Junio C Hamano <junkio@cox.net>
+X-Mailer: git-send-email 1.4.3.rc2.gbe730
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28738>
 
-Jeff King wrote:
+This should make it much easier to track newly added tags and
+branches.  Re-running multi-init without command-line arguments
+should now detect new-tags and branches.
 
-> On Wed, Oct 11, 2006 at 02:23:00PM +0200, Jakub Narebski wrote:
-> 
->> Can any Perl expert tell us how Perl truly solve this? What is the best
->> way to dump whole [remaining] contents of file (from filehandle) to STDOUT?
-> 
-> The same you would in C: read fix-sized buffers and dump them.
-[...]
-> Or you can use the File::Copy module, which is part of the standard
-> distribution (and I believe has been so for all perl5 versions, but I
-> could be wrong):
+--trunk shouldn't change often, but running multi-init on it
+is now idempotent.
 
-And 
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-svn.perl |   18 ++++++++++++++----
+ 1 files changed, 14 insertions(+), 4 deletions(-)
 
-        {
-                local $/;
-                print <$fd>;
-        }
-
-doesn't do the right thing?
+diff --git a/git-svn.perl b/git-svn.perl
+index f5c7d46..5a6c87e 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -682,12 +682,17 @@ sub multi_init {
+ 		}
+ 		$_trunk = $url . $_trunk;
+ 	}
++	my $ch_id;
+ 	if ($GIT_SVN eq 'git-svn') {
+-		print "GIT_SVN_ID set to 'trunk' for $_trunk\n";
++		$ch_id = 1;
+ 		$GIT_SVN = $ENV{GIT_SVN_ID} = 'trunk';
+ 	}
+ 	init_vars();
+-	init($_trunk);
++	unless (-d $GIT_SVN_DIR) {
++		print "GIT_SVN_ID set to 'trunk' for $_trunk\n" if $ch_id;
++		init($_trunk);
++		sys('git-repo-config', 'svn.trunk', $_trunk);
++	}
+ 	complete_url_ls_init($url, $_branches, '--branches/-b', '');
+ 	complete_url_ls_init($url, $_tags, '--tags/-t', 'tags/');
+ }
+@@ -937,16 +942,21 @@ sub complete_url_ls_init {
+ 				print STDERR "W: Unrecognized URL: $u\n";
+ 				die "This should never happen\n";
+ 			}
++			# don't try to init already existing refs
+ 			my $id = $pfx.$1;
+-			print "init $u => $id\n";
+ 			$GIT_SVN = $ENV{GIT_SVN_ID} = $id;
+ 			init_vars();
+-			init($u);
++			unless (-d $GIT_SVN_DIR) {
++				print "init $u => $id\n";
++				init($u);
++			}
+ 		}
+ 		exit 0;
+ 	}
+ 	waitpid $pid, 0;
+ 	croak $? if $?;
++	my ($n) = ($switch =~ /^--(\w+)/);
++	sys('git-repo-config', "svn.$n", $var);
+ }
+ 
+ sub common_prefix {
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+1.4.2.3.gc5a8
