@@ -1,58 +1,171 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] separate .git from working directory
-Date: Wed, 11 Oct 2006 15:22:31 -0700
-Message-ID: <7vd58ysdaw.fsf@assigned-by-dhcp.cox.net>
-References: <fcaeb9bf0610110623q365d3ffcw9ba9e11936d03a9d@mail.gmail.com>
-	<20061011181425.GA10922@admingilde.org>
-	<fcaeb9bf0610111446i35251fc9i6517cc5b3b53fe84@mail.gmail.com>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH] gitweb: Restore object-named links in item lists
+Date: Wed, 11 Oct 2006 15:21:01 -0700 (PDT)
+Message-ID: <20061011222101.36525.qmail@web31808.mail.mud.yahoo.com>
+References: <20061011201812.26857.58295.stgit@rover>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 12 00:24:25 2006
+X-From: git-owner@vger.kernel.org Thu Oct 12 00:24:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXmTF-0001rP-Ta
-	for gcvg-git@gmane.org; Thu, 12 Oct 2006 00:22:38 +0200
+	id 1GXmSN-0001Yj-EY
+	for gcvg-git@gmane.org; Thu, 12 Oct 2006 00:21:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161569AbWJKWWe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Oct 2006 18:22:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161571AbWJKWWe
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 18:22:34 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:7912 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1161569AbWJKWWd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Oct 2006 18:22:33 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061011222232.IRCF22977.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 11 Oct 2006 18:22:32 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id ZANb1V00A1kojtg0000000
-	Wed, 11 Oct 2006 18:22:35 -0400
-To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-In-Reply-To: <fcaeb9bf0610111446i35251fc9i6517cc5b3b53fe84@mail.gmail.com>
-	(Nguyen Thai Ngoc Duy's message of "Thu, 12 Oct 2006 04:46:51 +0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161570AbWJKWVH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Oct 2006 18:21:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161569AbWJKWVH
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 18:21:07 -0400
+Received: from web31808.mail.mud.yahoo.com ([68.142.207.71]:14267 "HELO
+	web31808.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1161570AbWJKWVC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Oct 2006 18:21:02 -0400
+Received: (qmail 36527 invoked by uid 60001); 11 Oct 2006 22:21:01 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=Fveh6gGdhvD/96+67tPouZlIHdizy6avVKA0tIZWvXtbvl1D71pROJpOTuV7nn8PubbMZihkirQFUFEQVDo3BWDjAzVeDgr6nxAsyK89zlOXK8r0iUXGqLNibpZFO7zsfH5oVzggWZcN4LuNKAY3P3nWYARwV2jYol2kNkAQyFQ=  ;
+Received: from [64.215.88.90] by web31808.mail.mud.yahoo.com via HTTP; Wed, 11 Oct 2006 15:21:01 PDT
+To: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>
+In-Reply-To: <20061011201812.26857.58295.stgit@rover>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28759>
 
-"Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
+--- Petr Baudis <pasky@suse.cz> wrote:
+> This restores the redundant links removed earlier. It supersedes my patch
+> to stick slashes to tree entries.
 
-> I thought about symlinks. However find will follow symlinks and
-> traverse .git directories again. My goal is to prevent looking into
-> .git directories
+I NACK this, but it depends on Junio.
 
-I do not think the user (i.e. the developer working in his git
-tree or git forest that hosts subprojects) should have to bend
-and move .git directories away from the directory structure he
-works in just to please the tool (i.e. find).  In this case the
-tool has an easy way to bend itself to match what the user
-wants, which is:
+BTW, if you so much like to bring this back,
+why don't you _revert_ the commit which removed them,
+_resolve_, _commit_ and then submit that commit.
 
-	find ... \( -type d -name .git -prune \) -o ...
+The reason is that we know that the original works
+and here you're rewriting (untested as opposed
+to the original) code.
+
+NACK, I don't see the need for this.
+
+But if this does go in, can you please remove the
+"hidden" links so that _less_ identical code is left
+to be maintained.  (I don't know anyone who's getting
+paid to maintain gitweb, do you?)
+
+   Luben
+
+> 
+> Signed-off-by: Petr Baudis <pasky@suse.cz>
+> ---
+> 
+>  gitweb/gitweb.perl |   42 ++++++++++++++++++++++++++++--------------
+>  1 files changed, 28 insertions(+), 14 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index a11fa38..d8298b9 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -1785,18 +1785,20 @@ sub git_print_tree_entry {
+>  					       file_name=>"$basedir$t->{'name'}", %base_key),
+>  				 -class => "list"}, esc_html($t->{'name'})) . "</td>\n";
+>  		print "<td class=\"link\">";
+> +		print $cgi->a({-href => href(action=>"blob", hash=>$t->{'hash'},
+> +					     file_name=>"$basedir$t->{'name'}", %base_key)},
+> +			      "blob");
+>  		if ($have_blame) {
+> -			print $cgi->a({-href => href(action=>"blame", hash=>$t->{'hash'},
+> +			print " | " .
+> +				$cgi->a({-href => href(action=>"blame", hash=>$t->{'hash'},
+>  						     file_name=>"$basedir$t->{'name'}", %base_key)},
+> -				      "blame");
+> +					"blame");
+>  		}
+>  		if (defined $hash_base) {
+> -			if ($have_blame) {
+> -				print " | ";
+> -			}
+> -			print $cgi->a({-href => href(action=>"history", hash_base=>$hash_base,
+> +			print " | " .
+> +				$cgi->a({-href => href(action=>"history", hash_base=>$hash_base,
+>  			                             hash=>$t->{'hash'}, file_name=>"$basedir$t->{'name'}")},
+> -			              "history");
+> +					"history");
+>  		}
+>  		print " | " .
+>  			$cgi->a({-href => href(action=>"blob_plain", hash_base=>$hash_base,
+> @@ -1811,17 +1813,19 @@ sub git_print_tree_entry {
+>  		              esc_html($t->{'name'}));
+>  		print "</td>\n";
+>  		print "<td class=\"link\">";
+> +		print $cgi->a({-href => href(action=>"tree", hash=>$t->{'hash'},
+> +					     file_name=>"$basedir$t->{'name'}", %base_key)},
+> +			      "tree");
+>  		if (defined $hash_base) {
+> -			print $cgi->a({-href => href(action=>"history", hash_base=>$hash_base,
+> +			print " | " .
+> +				$cgi->a({-href => href(action=>"history", hash_base=>$hash_base,
+>  			                             file_name=>"$basedir$t->{'name'}")},
+> -			              "history");
+> -			if ($have_snapshot) {
+> -				print " | ";
+> -			}
+> +					"history");
+>  		}
+>  		if ($have_snapshot) {
+> -			print $cgi->a({-href => href(action=>"snapshot", hash=>$t->{'hash'})},
+> -				      "snapshot");
+> +			print " | " .
+> +				$cgi->a({-href => href(action=>"snapshot", hash=>$t->{'hash'})},
+> +					"snapshot");
+>  		}
+>  		print "</td>\n";
+>  	}
+> @@ -1902,6 +1906,9 @@ sub git_difftree_body {
+>  				print $cgi->a({-href => "#patch$patchno"}, "patch");
+>  				print " | ";
+>  			}
+> +			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'from_id'},
+> +			                             hash_base=>$parent, file_name=>$diff{'file'})},
+> +				      "blob") . " | ";
+>  			print $cgi->a({-href => href(action=>"blame", hash_base=>$parent,
+>  						     file_name=>$diff{'file'})},
+>  				      "blame") . " | ";
+> @@ -1947,6 +1954,9 @@ sub git_difftree_body {
+>  				}
+>  				print " | ";
+>  			}
+> +			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'to_id'},
+> +						     hash_base=>$hash, file_name=>$diff{'file'})},
+> +				      "blob") . " | ";
+>  			print $cgi->a({-href => href(action=>"blame", hash_base=>$hash,
+>  						     file_name=>$diff{'file'})},
+>  				      "blame") . " | ";
+> @@ -1987,6 +1997,9 @@ sub git_difftree_body {
+>  				}
+>  				print " | ";
+>  			}
+> +			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'from_id'},
+> +						     hash_base=>$parent, file_name=>$diff{'from_file'})},
+> +				      "blob") . " | ";
+>  			print $cgi->a({-href => href(action=>"blame", hash_base=>$parent,
+>  						     file_name=>$diff{'from_file'})},
+>  				      "blame") . " | ";
+> @@ -2154,6 +2167,7 @@ sub git_shortlog_body {
+>  		                          href(action=>"commit", hash=>$commit), $ref);
+>  		print "</td>\n" .
+>  		      "<td class=\"link\">" .
+> +		      $cgi->a({-href => href(action=>"commit", hash=>$commit)}, "commit") . " | " .
+>  		      $cgi->a({-href => href(action=>"commitdiff", hash=>$commit)}, "commitdiff") . " | " .
+>  		      $cgi->a({-href => href(action=>"tree", hash=>$commit, hash_base=>$commit)}, "tree");
+>  		if (gitweb_have_snapshot()) {
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
