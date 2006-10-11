@@ -1,61 +1,101 @@
-From: Panagiotis Issaris <takis.issaris@uhasselt.be>
-Subject: Re: [RFC PATCH] Add WEBDAV timeout to http-fetch.
-Date: Wed, 11 Oct 2006 12:13:04 +0000 (UTC)
-Message-ID: <loom.20061011T140959-200@post.gmane.org>
-References: <20061006212616.GA5175@lumumba.uhasselt.be> <20061006220542.GA5890@lumumba.uhasselt.be> <BAYC1-PASMTP08A34A8FB0703E4D2ABAF9AE130@CEZ.ICE> <BAYC1-PASMTP11CF83A008B0B3BA5F6B15AE100@CEZ.ICE> <7viriwsa75.fsf@assigned-by-dhcp.cox.net> <eg82tq$2uq$1@sea.gmane.org> <Pine.LNX.4.63.0610071930300.14200@wbgn013.biozentrum.uni-wuerzburg.de> <20061007223023.GI20017@pasky.or.cz> <Pine.LNX.4.63.0610080034490.14200@wbgn013.biozentrum.uni-wuerzburg.de> <7vbqonpfyl.fsf@assigned-by-dhcp.cox.net> <BAYC1-PASMTP053FFB92C509E9427F85B0AE110@CEZ.ICE> <7vfydyinto.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Show project README if available
+Date: Wed, 11 Oct 2006 14:23:00 +0200
+Message-ID: <200610111423.00656.jnareb@gmail.com>
+References: <20061010025627.19317.70511.stgit@rover> <egfndo$lg6$1@sea.gmane.org> <20061010104149.GP20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Oct 11 14:22:55 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 11 14:27:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXd5T-0003IQ-Tp
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 14:21:28 +0200
+	id 1GXdA3-0004tI-UY
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 14:26:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751224AbWJKMVX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Oct 2006 08:21:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751225AbWJKMVX
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 08:21:23 -0400
-Received: from main.gmane.org ([80.91.229.2]:27344 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751224AbWJKMVW (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Oct 2006 08:21:22 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1GXd45-0002rD-UH
-	for git@vger.kernel.org; Wed, 11 Oct 2006 14:20:02 +0200
-Received: from edm-006.edm.uhasselt.be ([193.190.10.6])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Oct 2006 14:20:01 +0200
-Received: from takis.issaris by edm-006.edm.uhasselt.be with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Oct 2006 14:20:01 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 193.190.10.6 (Mozilla/5.0 (X11; U; Linux i686; nl; rv:1.8.1) Gecko/20061003 Firefox/2.0)
+	id S1751238AbWJKM0I convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 11 Oct 2006 08:26:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751240AbWJKM0I
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 08:26:08 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:24991 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1751238AbWJKM0H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Oct 2006 08:26:07 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so92924ugd
+        for <git@vger.kernel.org>; Wed, 11 Oct 2006 05:26:05 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=gCkuAyzduNWX8nSMnDcK/GPoifSlAya3uVIl5hg0US9UAWOnaThjhEc0gs4obS3H9cPDQdKxvis5/TRHb5xAOiYvm5+IfysVn2ZCW4bMX18xbstWi4h8FsCcGjJz+nt4NY74izvdevTOAC/CBeqwxXBAACZu9oQevJlqaZdXb20=
+Received: by 10.67.119.13 with SMTP id w13mr928901ugm;
+        Wed, 11 Oct 2006 05:26:05 -0700 (PDT)
+Received: from host-81-190-20-194.torun.mm.pl ( [81.190.20.194])
+        by mx.google.com with ESMTP id l40sm655190ugc.2006.10.11.05.26.04;
+        Wed, 11 Oct 2006 05:26:04 -0700 (PDT)
+To: Petr Baudis <pasky@suse.cz>
+User-Agent: KMail/1.9.3
+In-Reply-To: <20061010104149.GP20017@pasky.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28712>
 
-Hi,
+Petr "Pasky" Baudis wrote:
+> Dear diary, on Tue, Oct 10, 2006 at 11:00:41AM CEST, I got a letter
+> where Jakub Narebski <jnareb@gmail.com> said that...
+> > Petr Baudis wrote:
+> >=20
+> > > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0print $_ while (<$fd>);
+> >=20
+> > Wouldn't it be better to do it in slurp mode, i.e.
+> >=20
+> >         {
+> >                 local $/
+> >                 print <$fd>;
+> >         }
+> >=20
+> > instead?
+>=20
+> I personally prefer my version as it prevents allocation of big chunk=
+s
+> of memory, but I don't really care in this particular case.
 
-Junio C Hamano <junkio <at> cox.net> writes:
->[...]
-> And even for an isolated group where everybody knows that
-> everybody else runs DAV-enabled clients, they need info/refs
-> prepared for ls-remote and git-fetch script, which means you
-> will run update-server-info to keep objects/info/packs up to
-> date.
-This patch worked excellent for me. Thanks! :) Any chance this might make it
-into your tree? I recommended GIT to the FFmpeg developers and would like to be
-able to recommend them to use GIT without any extra patches.
+Can any Perl expert tell us how Perl truly solve this? What is the best
+way to dump whole [remaining] contents of file (from filehandle) to STD=
+OUT?
 
-> Nick, do you see holes in my logic?
+> > Do you assume that README is HTML fragment? If not, you should esc_=
+html it.
+> > Besides, we have similar (if assumed to have one line only) file, n=
+amely
+> > description.
+>=20
+> I _do_ assume that README is HTML fragment (so that you can use links=
+,
+> non-proportional fonts, etc.), this is a difference to the descriptio=
+n
+> file.
 
-With friendly regards,
-Takis 
+Hmmm... perhaps better name would be description_long.html, or descript=
+ion.html
+Or at least README.html.
+
+Description could be moved to the config file; your's project README co=
+uldn't.
+
+> > Besides, README for a project can be huge. Git README has 589 lines=
+!
+>=20
+> This is not /README from the tree but README in the .git directory, s=
+o
+> it may not be the same. In the repo.or.cz admin interface, I limit
+> README to 8kb.
+
+Sorry. My mistake.
+--=20
+Jakub Narebski
+Poland
