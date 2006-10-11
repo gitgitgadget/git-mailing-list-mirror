@@ -1,77 +1,60 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] gitweb: Do not automatically append " git" to custom site name
-Date: Wed, 11 Oct 2006 22:22:28 +0200
-Message-ID: <20061011202228.27279.97423.stgit@rover>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 11 22:22:52 2006
+From: Wolfgang Denk <wd@denx.de>
+Subject: cg-commit does not run pre-commit hook?
+Date: Wed, 11 Oct 2006 22:30:54 +0200
+Message-ID: <20061011203054.C5F80353A48@atlas.denx.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 11 22:33:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXkb4-0001h2-BP
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 22:22:34 +0200
+	id 1GXkjE-0003sC-FH
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 22:31:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161234AbWJKUWb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Oct 2006 16:22:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161235AbWJKUWa
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 16:22:30 -0400
-Received: from rover.dkm.cz ([62.24.64.27]:19853 "EHLO rover.dkm.cz")
-	by vger.kernel.org with ESMTP id S1161234AbWJKUW3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Oct 2006 16:22:29 -0400
-Received: from [127.0.0.1] (rover [127.0.0.1])
-	by rover.dkm.cz (Postfix) with ESMTP id A88B18BBD8;
-	Wed, 11 Oct 2006 22:22:28 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: StGIT/0.10
+	id S1161241AbWJKUa5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Oct 2006 16:30:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161242AbWJKUa5
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 16:30:57 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:57284 "EHLO
+	mail-out.m-online.net") by vger.kernel.org with ESMTP
+	id S1161241AbWJKUa4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Oct 2006 16:30:56 -0400
+Received: from mail01.m-online.net (svr21.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id 76D2FA0148;
+	Wed, 11 Oct 2006 22:30:55 +0200 (CEST)
+X-Auth-Info: e8mvRVddKy53J7j2+Nmu7Q49razc5UwJzfTrA8F1vqc=
+X-Auth-Info: e8mvRVddKy53J7j2+Nmu7Q49razc5UwJzfTrA8F1vqc=
+Received: from mail.denx.de (p54967D94.dip.t-dialin.net [84.150.125.148])
+	by smtp-auth.mnet-online.de (Postfix) with ESMTP id 62EF593980;
+	Wed, 11 Oct 2006 22:30:55 +0200 (CEST)
+Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
+	by mail.denx.de (Postfix) with ESMTP id F059D6D00BA;
+	Wed, 11 Oct 2006 22:30:54 +0200 (CEST)
+Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
+	by atlas.denx.de (Postfix) with ESMTP id C5F80353A48;
+	Wed, 11 Oct 2006 22:30:54 +0200 (MEST)
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28743>
 
-If you customized the site name, you probably do not want the " git"
-appended so that the page title is not bastardized; I want repo.or.cz pages
-titled "Public Git Hosting", not "Public Git Hosting git" (what's hosting
-what?).
+Hi,
 
-This slightly changes the $site_name semantics but only very
-insignificantly.
+I noticed that cg-commit does not run the pre-commit  hook.  Is  this
+intentional,  or  am  I  doing anyhting wrong? When I use git-coimmit
+instead the hook is run just  fine.  This  is  with  git-1.4.2.1  and
+cogito-0.18 of FC4 / FC5 systems.
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+Best regards,
 
- gitweb/gitweb.perl |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+Wolfgang Denk
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index c2dfdab..d165fdc 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -39,7 +39,7 @@ our $home_link_str = "++GITWEB_HOME_LINK
- 
- # name of your site or organization to appear in page titles
- # replace this with something more descriptive for clearer bookmarks
--our $site_name = "++GITWEB_SITENAME++" || $ENV{'SERVER_NAME'} || "Untitled";
-+our $site_name = "++GITWEB_SITENAME++" || "$ENV{'SERVER_NAME'} Git" || "Untitled Git";
- 
- # filename of html text to include at top of each page
- our $site_header = "++GITWEB_SITE_HEADER++";
-@@ -1455,7 +1455,7 @@ sub git_header_html {
- 	my $status = shift || "200 OK";
- 	my $expires = shift;
- 
--	my $title = "$site_name git";
-+	my $title = "$site_name";
- 	if (defined $project) {
- 		$title .= " - $project";
- 		if (defined $action) {
-@@ -3842,7 +3842,7 @@ sub git_opml {
- <?xml version="1.0" encoding="utf-8"?>
- <opml version="1.0">
- <head>
--  <title>$site_name Git OPML Export</title>
-+  <title>$site_name OPML Export</title>
- </head>
- <body>
- <outline text="git RSS feeds">
+-- 
+Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
+Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
+There are bugs and then there are bugs.  And then there are bugs.
+                                                    - Karl Lehenbauer
