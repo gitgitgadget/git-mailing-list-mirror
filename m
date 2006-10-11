@@ -1,64 +1,64 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: [PATCH] gitweb: Fix zebra coloring flip introduced by eeef88cd2
-Date: Tue, 10 Oct 2006 19:09:03 -0700 (PDT)
-Message-ID: <20061011020903.63831.qmail@web31812.mail.mud.yahoo.com>
-Reply-To: ltuikov@yahoo.com
+From: "Dongsheng Song" <dongsheng.song@gmail.com>
+Subject: Re: Why gitweb commitdiff NO diff output ?
+Date: Wed, 11 Oct 2006 10:31:04 +0800
+Message-ID: <4b3406f0610101931v7c479a9esfc3f2bccb28c2d25@mail.gmail.com>
+References: <4b3406f0609280032y77cb5961i220b3cfd741ebfd4@mail.gmail.com>
+	 <4b3406f0610080122r17a10ea4h2c71a399fb8398a@mail.gmail.com>
+	 <7v64et9fjq.fsf@assigned-by-dhcp.cox.net>
+	 <4b3406f0610091851i593f3e53v5d5fef891edb6d48@mail.gmail.com>
+	 <7v1wpgapew.fsf@assigned-by-dhcp.cox.net>
+	 <7viris9a6g.fsf@assigned-by-dhcp.cox.net>
+	 <4b3406f0610092336v5ab58134i280f64223a272b0b@mail.gmail.com>
+	 <7vy7ro64pq.fsf@assigned-by-dhcp.cox.net>
+	 <4b3406f0610100346v16f1f2f6i305963bc1b398dac@mail.gmail.com>
+	 <7viris2hkh.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Wed Oct 11 04:10:21 2006
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 11 04:31:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXTXe-0006JM-Dy
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 04:09:54 +0200
+	id 1GXTsL-0002Tz-04
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 04:31:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932292AbWJKCJF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 22:09:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932284AbWJKCJF
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 22:09:05 -0400
-Received: from web31812.mail.mud.yahoo.com ([68.142.207.75]:15444 "HELO
-	web31812.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S932140AbWJKCJE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 22:09:04 -0400
-Received: (qmail 63833 invoked by uid 60001); 11 Oct 2006 02:09:03 -0000
+	id S932385AbWJKCbH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 22:31:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932386AbWJKCbH
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 22:31:07 -0400
+Received: from py-out-1112.google.com ([64.233.166.180]:27008 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S932385AbWJKCbG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Oct 2006 22:31:06 -0400
+Received: by py-out-1112.google.com with SMTP id n25so92405pyg
+        for <git@vger.kernel.org>; Tue, 10 Oct 2006 19:31:05 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=ZWjYCB7CMeiIuY+Jhlny0fFf4yrhGnHBQe4VC3HV18XxFmo/kKSLwA2KljYAIR9Iv5aHeicNxhZETAXaEbrEIm72s7iFu239C4vPQggA3gZLk8dv/i/E9FWOfYUMdq6ceTpi+MTDkkJry/IwYtAkVE9/f3fYeHIjKySntxiwORw=  ;
-Received: from [64.215.88.90] by web31812.mail.mud.yahoo.com via HTTP; Tue, 10 Oct 2006 19:09:03 PDT
-To: git@vger.kernel.org
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=IUiSDfynrVbGU9MSnZV6YT+5PFJsPMuH+AYT1UpTxV/8KH8KEwy/4zxjUUkx6K9LFW1bGiCWJcn8VF4Z7GDletS5L6GL/zoWXipZtBdI5i1t0c7Z8UZb0pOih83v8dUcq2pr1l3uG07bYQxRYT1/TiEqjtEUTKX7gUblrry/xBY=
+Received: by 10.35.76.9 with SMTP id d9mr537070pyl;
+        Tue, 10 Oct 2006 19:31:04 -0700 (PDT)
+Received: by 10.35.106.3 with HTTP; Tue, 10 Oct 2006 19:31:04 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7viris2hkh.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28691>
 
-Commit eeef88cd2 introduced $group_size which
-inverted the meaning of $current_color.
+Yes, it was /tmp/gitweb permission problem.
 
-Normally we start with white (same as background) color
-for the zebra coloring, and flip to dark shade only when
-another commit changed some lines of the file.  (Thus
-if there are no changes, the file appears black on white.)
+I think it's a good idea for add a "common pitfals" section to gitweb/README.
 
-Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
----
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 173f521..77063f0 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2583,7 +2583,7 @@ sub git_blame2 {
- 	git_print_page_path($file_name, $ftype, $hash_base);
- 	my @rev_color = (qw(light2 dark2));
- 	my $num_colors = scalar(@rev_color);
--	my $current_color = 0;
-+	my $current_color = 1;
- 	my $last_rev;
- 	print <<HTML;
- <div class="page_body">
--- 
-1.4.3.rc2.gd2a59
+2006/10/11, Junio C Hamano <junkio@cox.net>:
+>
+> Care to share your experience to help others?
+>
+> If it was /tmp/gitweb permission problem then the newer gitweb
+> shouldn't have that issue so it would be a moot point, but if
+> the pitfall still applies to the current software we might want
+> to add a "common pitfals" section to gitweb/README.
+>
