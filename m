@@ -1,47 +1,69 @@
-From: Seth Falcon <sethfalcon@gmail.com>
+From: Pazu <pazu@pazu.com.br>
 Subject: Re: core-git and porcelains
-Date: Wed, 11 Oct 2006 10:01:08 -0700
-Message-ID: <m2r6xe4wiz.fsf@ziti.local>
-References: <egivn8$5mf$1@sea.gmane.org> <20061011150842.GA31298@spearce.org>
+Date: Wed, 11 Oct 2006 14:13:33 -0300
+Message-ID: <egj8ot$eq6$1@sea.gmane.org>
+References: <egivn8$5mf$1@sea.gmane.org> <20061011150842.GA31298@spearce.org> <egj73t$80e$1@sea.gmane.org> <20061011165403.GC31298@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Oct 11 19:02:26 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Oct 11 19:17:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXhTA-0002mQ-8b
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 19:02:17 +0200
+	id 1GXhh4-00076U-Ss
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 19:16:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965067AbWJKRBq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Oct 2006 13:01:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965228AbWJKRBp
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 13:01:45 -0400
-Received: from wr-out-0506.google.com ([64.233.184.230]:4719 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S965067AbWJKRBo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Oct 2006 13:01:44 -0400
-Received: by wr-out-0506.google.com with SMTP id i32so58759wra
-        for <git@vger.kernel.org>; Wed, 11 Oct 2006 10:01:44 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:to:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        b=RcPkjqTnMxje9/on65cxTgUHpS8m11vKoC/COiN2flcCAUD/KJePTwt8Ve75ruiEvmDZT+3vOgupsifOvz8YjTK8aDE4XKsGsoYWfAEPZH3uqPAfUHu07EgrsBCcOgFMFFVb/JIB2+airGFkMNfeqyLTZYcBfQPR+k7dfa9M2TM=
-Received: by 10.90.52.2 with SMTP id z2mr631631agz;
-        Wed, 11 Oct 2006 10:01:43 -0700 (PDT)
-Received: from ziti.local ( [140.107.181.122])
-        by mx.google.com with ESMTP id e19sm1321281qba.2006.10.11.10.01.42;
-        Wed, 11 Oct 2006 10:01:43 -0700 (PDT)
+	id S1161135AbWJKRQH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Oct 2006 13:16:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161157AbWJKRQH
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 13:16:07 -0400
+Received: from main.gmane.org ([80.91.229.2]:52142 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1161135AbWJKRQD (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Oct 2006 13:16:03 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GXhf6-0006Ob-KB
+	for git@vger.kernel.org; Wed, 11 Oct 2006 19:14:32 +0200
+Received: from 201.37.98.50 ([201.37.98.50])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Oct 2006 19:14:32 +0200
+Received: from pazu by 201.37.98.50 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Oct 2006 19:14:32 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-In-Reply-To: <20061011150842.GA31298@spearce.org> (Shawn Pearce's message of "Wed, 11 Oct 2006 11:08:42 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 201.37.98.50
+User-Agent: Thunderbird 1.5.0.7 (Macintosh/20060909)
+In-Reply-To: <20061011165403.GC31298@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28727>
 
-I second Shawn's suggestion to stick with core Git.  I have similar
-uses as you describe: projects where I'm the lone developer and using
-git to help track projects that use svn.
+Shawn Pearce wrote:
 
-+ seth
+> I don't use multiple upstream branches in SVN fortunately, but the
+> git-svn documentation suggests there is a way to change the Git
+> branch name from 'refs/remotes/git-svn' to another name such that
+> you can create one Git branch for each remote SVN branch.  Of course
+> you need to set that environment variable before invoking git-svn.
+
+I was reading git-svn documentation and just found about multi-init. 
+Seems like you're describing, execept that no branch get init'ed as the 
+"default" branch, and you always need to specify the the branch name 
+before doing a fetch/dcomic/etc. I hope this works for me -- I'll need 
+to switch between two or three remote branches quite frequently.
+
+> As for my daily work with git-svn, I run "git svn fetch" to fetch any
+> changes that had occurred in SVN along the branch I follow, then if
+> any changes did exist I merge them into my Git working branch with
+> "git pull . refs/remotes/git-svn".  When I'm ready to send stuff
+> back up to SVN I do "git svn dcommit refs/remotes/git-svn..master",
+> where master is the name of the Git branch I want to send.
+
+Sounds a lot like what I do today with svk. If git works for me just as 
+good as svk, the speed increase alone will make the switch worth.
+
+-- Marcus
