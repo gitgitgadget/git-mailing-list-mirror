@@ -1,58 +1,53 @@
-From: Junio C Hamano <junkio@cox.net>
+From: David Woodhouse <dwmw2@infradead.org>
 Subject: Re: Approxidate licensing
-Date: Wed, 11 Oct 2006 00:55:01 -0700
-Message-ID: <7viriruw16.fsf@assigned-by-dhcp.cox.net>
+Date: Wed, 11 Oct 2006 08:57:03 +0100
+Message-ID: <1160553423.7920.60.camel@pmac.infradead.org>
 References: <Pine.LNX.4.64.0610101246241.9789@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, dwmw2@infradead.org,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 11 09:55:40 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 11 09:57:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXYvs-0002IU-9O
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 09:55:17 +0200
+	id 1GXYxp-0002wC-3q
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 09:57:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030677AbWJKHzI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Oct 2006 03:55:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030681AbWJKHzI
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 03:55:08 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:50412 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1030677AbWJKHzD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Oct 2006 03:55:03 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061011075502.CEPI26416.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 11 Oct 2006 03:55:02 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Yvv41V00h1kojtg0000000
-	Wed, 11 Oct 2006 03:55:05 -0400
+	id S1161013AbWJKH5N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Oct 2006 03:57:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161011AbWJKH5N
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 03:57:13 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:5550 "EHLO
+	pentafluge.infradead.org") by vger.kernel.org with ESMTP
+	id S1161013AbWJKH5M (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Oct 2006 03:57:12 -0400
+Received: from pmac.infradead.org ([81.187.2.168])
+	by pentafluge.infradead.org with esmtpsa (Exim 4.62 #1 (Red Hat Linux))
+	id 1GXYxc-0001L8-TM; Wed, 11 Oct 2006 08:57:05 +0100
 To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.64.0610101246241.9789@iabervon.org> (Daniel
-	Barkalow's message of "Tue, 10 Oct 2006 13:39:47 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <Pine.LNX.4.64.0610101246241.9789@iabervon.org>
+X-Mailer: Evolution 2.8.0 (2.8.0-7.fc6.dwmw2.2) 
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28701>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+On Tue, 2006-10-10 at 13:39 -0400, Daniel Barkalow wrote:
+> Would the three of you agree to license date.c under the LGPL or BSD? It 
+> looks like you're the only authors of non-trivial changes [1]. And it seems 
+> reasonable to want the date parsing thing under non-GPL terms outside of 
+> git.
 
-> [1] git log and git blame are pretty impressive, but they don't quite 
-> catch that most of date.c was written by David as part of commit-tree.c, 
-> then Tony replaced it with a version that uses curl, then Edgar separated 
-> it out into a date.c and simultaneously reverted Tony's changes. On the 
-> other hand, the commit messages do say this, and you can use git log and 
-> git blame to verify that they're true. The only thing they don't let 
-> you verify is what the differences are between the date.c added in 
-> ecee9d9e and the similar part of commit-tree.c in 812666c8. If someone 
-> wants to make git blame *really* magic, date.c would be a good test case.
+Yeah, LGPL and BSD are both fine by me -- although I don't actually
+recognise much of my own code in there. 
 
-That's good to know.  I have in my head a super-duper blame that
-I outlined in my obituary for git-annotate, but that is still a
-vaporware and will continue to be for some time.
+Btw, why isn't the meaning of 'tea-time' properly modified according to
+the locale?
+
+-- 
+dwmw2
