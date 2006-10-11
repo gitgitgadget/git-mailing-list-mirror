@@ -1,49 +1,60 @@
-From: Phillip Susi <psusi@cfl.rr.com>
-Subject: Re: Release 1.4.2 build failure
-Date: Wed, 11 Oct 2006 11:12:39 -0400
-Message-ID: <452D09E7.10709@cfl.rr.com>
-References: <452C00FD.1020307@cfl.rr.com> <7vejtfzur8.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] gitweb wishlist and TODO list
+Date: Wed, 11 Oct 2006 17:09:59 +0200
+Organization: At home
+Message-ID: <egj1g6$bk6$1@sea.gmane.org>
+References: <egdge3$t12$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 11 17:14:30 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Wed Oct 11 17:25:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXfl4-0000ca-09
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 17:12:34 +0200
+	id 1GXftn-0003Xn-7m
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 17:21:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965223AbWJKPMa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Oct 2006 11:12:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965226AbWJKPMa
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 11:12:30 -0400
-Received: from iriserv.iradimed.com ([69.44.168.233]:8611 "EHLO iradimed.com")
-	by vger.kernel.org with ESMTP id S965223AbWJKPMa (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Oct 2006 11:12:30 -0400
-Received: from [10.1.1.235] ([10.1.1.235]) by iradimed.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Wed, 11 Oct 2006 11:12:38 -0400
-User-Agent: Thunderbird 1.5.0.7 (Windows/20060909)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vejtfzur8.fsf@assigned-by-dhcp.cox.net>
-X-OriginalArrivalTime: 11 Oct 2006 15:12:38.0933 (UTC) FILETIME=[B0AE9450:01C6ED47]
-X-TM-AS-Product-Ver: SMEX-7.2.0.1122-3.6.1039-14744.002
-X-TM-AS-Result: No--14.026200-5.000000-31
+	id S1161078AbWJKPUk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 11 Oct 2006 11:20:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161079AbWJKPUk
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 11:20:40 -0400
+Received: from main.gmane.org ([80.91.229.2]:29638 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1161078AbWJKPUj (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Oct 2006 11:20:39 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GXfpO-00028R-O6
+	for git@vger.kernel.org; Wed, 11 Oct 2006 17:17:03 +0200
+Received: from host-81-190-20-194.torun.mm.pl ([81.190.20.194])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Oct 2006 17:17:02 +0200
+Received: from jnareb by host-81-190-20-194.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Oct 2006 17:17:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-20-194.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28720>
 
-Yes, I think the debian build system does that.  I must have missed the 
-newer 1.4.2.x releases when scanning the directory.  Thanks.
+Jakub Narebski wrote:
 
-Junio C Hamano wrote:
-> Are you by any chance running the test with the stdin connected
-> to </dev/null?
-> 
-> If so, the fix is in 1.4.2.2.
-> 
-> BTW, the latest "maint" release is 1.4.2.3 and we have 1.4.3-rc2
-> from the "master" branch.
-> 
+> =A0* Graph of number of changed files in given branch; probably shoul=
+d be
+> =A0 =A0cached.
+
+See for example StatCVS and FishEye
+  http://www-128.ibm.com/developerworks/java/library/j-statcvs/
+  http://statcvs.sourceforge.net/statcvs-stats/
+
+  http://fisheye.codehaus.org/browse/activecluster
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
