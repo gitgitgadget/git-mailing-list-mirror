@@ -1,64 +1,49 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [RFC] separate .git from working directory
-Date: Thu, 12 Oct 2006 04:55:32 +0700
-Message-ID: <fcaeb9bf0610111455y225237cmdbaadbf294686d8e@mail.gmail.com>
-References: <fcaeb9bf0610110623q365d3ffcw9ba9e11936d03a9d@mail.gmail.com>
-	 <BAYC1-PASMTP10003954B66E10247020A7AE140@CEZ.ICE>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] gitweb: Do not automatically append " git" to custom site name
+Date: Wed, 11 Oct 2006 18:06:21 -0400
+Message-ID: <20061011220621.GA4041@coredump.intra.peff.net>
+References: <20061011202228.27279.97423.stgit@rover>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 11 23:57:06 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 12 00:07:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXm38-0002ba-CD
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 23:55:39 +0200
+	id 1GXmDc-0005a5-PF
+	for gcvg-git@gmane.org; Thu, 12 Oct 2006 00:06:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161213AbWJKVzf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Oct 2006 17:55:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161538AbWJKVze
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 17:55:34 -0400
-Received: from wx-out-0506.google.com ([66.249.82.225]:13656 "EHLO
-	wx-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1161213AbWJKVzd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Oct 2006 17:55:33 -0400
-Received: by wx-out-0506.google.com with SMTP id s14so343556wxc
-        for <git@vger.kernel.org>; Wed, 11 Oct 2006 14:55:32 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=epe8H48HhjxLYq5s/fdplBGbM3ihQxt/fZ+x685LVRjjGCQ4zBziNklCodjlWvmRLNHc+iOFAN4Jcc3G323gF5Dpsi/X489rWq6egQtbRD9RfqXCQFGsvsFYidMsWXLKCNE8F6EbaidQp5o1jdDxyHReH0nLFP944Urj1ZfeaJs=
-Received: by 10.70.111.2 with SMTP id j2mr1471620wxc;
-        Wed, 11 Oct 2006 14:55:32 -0700 (PDT)
-Received: by 10.70.46.13 with HTTP; Wed, 11 Oct 2006 14:55:32 -0700 (PDT)
-To: Sean <seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP10003954B66E10247020A7AE140@CEZ.ICE>
+	id S965225AbWJKWGZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Oct 2006 18:06:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965189AbWJKWGZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 18:06:25 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:44737 "HELO
+	peff.net") by vger.kernel.org with SMTP id S965110AbWJKWGY (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Oct 2006 18:06:24 -0400
+Received: (qmail 4441 invoked from network); 11 Oct 2006 18:06:21 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 11 Oct 2006 18:06:21 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Oct 2006 18:06:21 -0400
+To: Petr Baudis <pasky@suse.cz>
 Content-Disposition: inline
+In-Reply-To: <20061011202228.27279.97423.stgit@rover>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28757>
 
-On 10/11/06, Sean <seanlkml@sympatico.ca> wrote:
-> You can export a GIT_DIR manually pretty easily if you want to move
-> the .git directory somewhere else.  Also you could make a "git find"
-> shell script named "gf" that does something like:
->
-> #/bin/sh
-> find "$@" ! -path '*/.git/*'
->
-> Which would let you type  "gf -name blah" and automatically ignore
-> the .git directory.
+On Wed, Oct 11, 2006 at 10:22:28PM +0200, Petr Baudis wrote:
 
-It should work. However I would rather use "normal" find than
-specialized ones. Imagine somedays I hate find and start to love grep,
-I would have to find out --exclude option and create new "gg" script.
-In worse cases where recursive commands don't support filtering, I
-have no chance to filter out .git directories.
+> +our $site_name = "++GITWEB_SITENAME++" || "$ENV{'SERVER_NAME'} Git" || "Untitled Git";
 
->
-> Sean
--- 
-Duy
+This will never show "Untitled" (instead it shows " Git") and will cause
+a perl warning if $ENV{SERVER_NAME} is not defined and warnings are
+enabled (which tye are in gitweb).
+
+I think this is what you want:
+
+our $site_name = "++GITWEB_SITENAME++" ||
+                 ($ENV{SERVER_NAME} || "Untitled") . " Git";
+
+-Peff
