@@ -1,85 +1,58 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: Clueless bisect error message
-Date: Wed, 11 Oct 2006 14:50:28 +0700
-Message-ID: <fcaeb9bf0610110050h4c3a56fbge19607ff0bc094af@mail.gmail.com>
-References: <fcaeb9bf0610110008g642da719pb17f7f52169097e2@mail.gmail.com>
-	 <7vpsczuxj9.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Approxidate licensing
+Date: Wed, 11 Oct 2006 00:55:01 -0700
+Message-ID: <7viriruw16.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0610101246241.9789@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 11 09:50:55 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, dwmw2@infradead.org,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 11 09:55:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXYrN-0000wN-KK
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 09:50:37 +0200
+	id 1GXYvs-0002IU-9O
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 09:55:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030352AbWJKHua (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Oct 2006 03:50:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030677AbWJKHua
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 03:50:30 -0400
-Received: from wx-out-0506.google.com ([66.249.82.235]:50542 "EHLO
-	wx-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1030352AbWJKHu3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Oct 2006 03:50:29 -0400
-Received: by wx-out-0506.google.com with SMTP id s14so139427wxc
-        for <git@vger.kernel.org>; Wed, 11 Oct 2006 00:50:28 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Gbk24rjiwp19j2psXQlYTCP0kS1Z/L9V6H+YNOaYSlgGle4p9Pq4nR5jh52LLvUz2YdNjc2hZAlQxWEObV8Ees5Ws+M2ioS80I0sCVQWebawWFG8mIk5BUPUfWpzye4HBxGUAvi20VPoHzDtVZlb9xrp7mMuNhr+y0oFVItUAkU=
-Received: by 10.70.49.12 with SMTP id w12mr165392wxw;
-        Wed, 11 Oct 2006 00:50:28 -0700 (PDT)
-Received: by 10.70.46.13 with HTTP; Wed, 11 Oct 2006 00:50:28 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vpsczuxj9.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1030677AbWJKHzI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Oct 2006 03:55:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030681AbWJKHzI
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 03:55:08 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:50412 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1030677AbWJKHzD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Oct 2006 03:55:03 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061011075502.CEPI26416.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 11 Oct 2006 03:55:02 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Yvv41V00h1kojtg0000000
+	Wed, 11 Oct 2006 03:55:05 -0400
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.64.0610101246241.9789@iabervon.org> (Daniel
+	Barkalow's message of "Tue, 10 Oct 2006 13:39:47 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28700>
 
-On 10/11/06, Junio C Hamano <junkio@cox.net> wrote:
-> "Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
->
-> > $ git bisect start
-> > won't bisect on seeked tree
-> >
-> > It complained because .git/head-name contained 't' which had been
-> > deleted before. git-bisect reset works. However I'd request git-bisect
-> > to inform more useful messages. At first, I was completely stunned:
-> > "what is a seeked tree? how can I fix that?"
->
-> Interesting.  There is certainly something clueless but I am not
-> sure if it is git-bisect.
->
-> Other git-core tools never create $GIT_DIR/head-name unless
-> bisect is in effect, and you end your bisect session by doing
-> "bisect reset" (otherwise there is no easy way to get back to
-> your original branch head).  How did head-name got 't' in it,
-> and how was branch 't' removed?
-Well, I probably removed it myself. It's one of my temporary branches
-IIRC. Perhaps I forgot  to do "bisect reset".
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
->
-> If the answer to the first question is because earlier you
-> created a temporary branch 't' to run a bisect, and the answer
-> to the latter is because you ended your bisect session by saying
-> "git checkout -f someotherbranch && git branch -D t", then we
-> should be able to fix that by removing head-name upon branch
-> switching with "git checkout".
-That might be the case. I used bisect on this repo a long ago. I'm not
-sure what actually happened.
+> [1] git log and git blame are pretty impressive, but they don't quite 
+> catch that most of date.c was written by David as part of commit-tree.c, 
+> then Tony replaced it with a version that uses curl, then Edgar separated 
+> it out into a date.c and simultaneously reverted Tony's changes. On the 
+> other hand, the commit messages do say this, and you can use git log and 
+> git blame to verify that they're true. The only thing they don't let 
+> you verify is what the differences are between the date.c added in 
+> ecee9d9e and the similar part of commit-tree.c in 812666c8. If someone 
+> wants to make git blame *really* magic, date.c would be a good test case.
 
->
-> By looking at commit 810255f, however, I suspect that fix would
-> break Cogito.  The wording of the message actually comes from
-> Cogito nomenclature.
-Ah. I forgot to say I'm using git 1.4.2.1. My only wish is not a fix
-(unless it's a trivial fix) but that bisect should explain the
-situation better and guide people to fix it. I had grepped bisect man
-page for "seeked tree" and was still clueless.
--- 
-Duy
+That's good to know.  I have in my head a super-duper blame that
+I outlined in my obituary for git-annotate, but that is still a
+vaporware and will continue to be for some time.
