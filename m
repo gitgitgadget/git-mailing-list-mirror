@@ -1,48 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] cvsserver: fix "cvs diff" in a subdirectory
-Date: Tue, 10 Oct 2006 18:01:15 -0700
-Message-ID: <7vslhvy8bo.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0610110032560.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: [ANNOUNCE] repo.or.cz does full-fledged hosting now, and more
+Date: Wed, 11 Oct 2006 14:50:49 +1300
+Message-ID: <46a038f90610101850r2b5e830ch8e9e035ab7a8fdae@mail.gmail.com>
+References: <20061011003051.GS20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Martyn Smith <martyn@catalyst.net.nz>,
-	Martin Langhoff <martin@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Wed Oct 11 03:01:26 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 11 03:57:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXSTH-0007ac-V7
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 03:01:20 +0200
+	id 1GXTHQ-0007Xm-PO
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 03:53:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030419AbWJKBBR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Oct 2006 21:01:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965144AbWJKBBR
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 21:01:17 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:51860 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S965141AbWJKBBQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Oct 2006 21:01:16 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061011010116.BPVD28934.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 10 Oct 2006 21:01:16 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Yp1J1V00H1kojtg0000000
-	Tue, 10 Oct 2006 21:01:19 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0610110032560.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Wed, 11 Oct 2006 00:33:28 +0200
-	(CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030754AbWJKBuw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Oct 2006 21:50:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030755AbWJKBuw
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Oct 2006 21:50:52 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:4193 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1030754AbWJKBuv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Oct 2006 21:50:51 -0400
+Received: by nf-out-0910.google.com with SMTP id x37so490443nfc
+        for <git@vger.kernel.org>; Tue, 10 Oct 2006 18:50:50 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Wk7vqDia5VlzIwyncj3jPz0W0lSKWHhbk5ZYD805KROTH4SU0USsjCF2BlBPeaV3M1ojvcHGZJqBEX+WNqf51SBn14J7xVJvKaa7hj7mWrCm3/z3Y0NtCk4+aPEx+4rvVbYoMkPu4TZZCO51qGwiai6Ilx+nP8F5RvsMTNj2uuU=
+Received: by 10.49.8.15 with SMTP id l15mr2312905nfi;
+        Tue, 10 Oct 2006 18:50:49 -0700 (PDT)
+Received: by 10.49.11.5 with HTTP; Tue, 10 Oct 2006 18:50:49 -0700 (PDT)
+To: "Petr Baudis" <pasky@ucw.cz>
+In-Reply-To: <20061011003051.GS20017@pasky.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28689>
 
-Will park this and the "U for update, M for modified" patch in
-"pu", waiting for acks from actual git-cvsserver users.  It
-feels it is safe enough change, so with an Ack from Mart[yi]n
-it may be woth having it in 1.4.3
+On 10/11/06, Petr Baudis <pasky@ucw.cz> wrote:
+>   few weeks ago, I have announced repo.or.cz public mirroring service
+> which would snap repositories, mirror them and provide a gitweb
+> interface for them. While at it, it also aims to serve as a testbed
+> for various new cool gitweb-related enhancements.
+
+I shall co-opt your "git-related free services" message and say:
+Eduforge.org is a Gforge setup that supports GIT, openly available for
+education-related projects.
+
+Wohoo!
+
+
+
+martin
