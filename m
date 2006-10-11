@@ -1,71 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Clueless bisect error message
-Date: Wed, 11 Oct 2006 00:22:34 -0700
-Message-ID: <7vpsczuxj9.fsf@assigned-by-dhcp.cox.net>
-References: <fcaeb9bf0610110008g642da719pb17f7f52169097e2@mail.gmail.com>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: [PATCH] gitweb: blame porcelain: lineno and orig lineno swapped
+Date: Wed, 11 Oct 2006 00:30:05 -0700 (PDT)
+Message-ID: <20061011073005.1178.qmail@web31813.mail.mud.yahoo.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 11 09:22:44 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed Oct 11 09:30:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXYQJ-000273-PE
-	for gcvg-git@gmane.org; Wed, 11 Oct 2006 09:22:40 +0200
+	id 1GXYXc-0004C1-Um
+	for gcvg-git@gmane.org; Wed, 11 Oct 2006 09:30:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932420AbWJKHWg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Oct 2006 03:22:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932454AbWJKHWg
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 03:22:36 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:33423 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932420AbWJKHWg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Oct 2006 03:22:36 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061011072235.FROV13992.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 11 Oct 2006 03:22:35 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id YvNe1V0051kojtg0000000
-	Wed, 11 Oct 2006 03:22:38 -0400
-To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-In-Reply-To: <fcaeb9bf0610110008g642da719pb17f7f52169097e2@mail.gmail.com>
-	(Nguyen Thai Ngoc Duy's message of "Wed, 11 Oct 2006 14:08:11 +0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161005AbWJKHaJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Oct 2006 03:30:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161009AbWJKHaJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Oct 2006 03:30:09 -0400
+Received: from web31813.mail.mud.yahoo.com ([68.142.207.76]:49555 "HELO
+	web31813.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1161005AbWJKHaH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Oct 2006 03:30:07 -0400
+Received: (qmail 1181 invoked by uid 60001); 11 Oct 2006 07:30:05 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=RPvXzsmJhxS72y8qjX3wiljFbRlYNRLKjFIflPHufy9wUkrmtgyV66GJJ9inSaAqi41C34cfQ13ncr5EQbm374/TsXtNKP5k85IIiybjTlTvPNXfBSt1tu9talphpq52pIKCsTKhKhYs45E/PlKWRgeIsMaa+YkYSCQA3KkVc00=  ;
+Received: from [71.80.233.118] by web31813.mail.mud.yahoo.com via HTTP; Wed, 11 Oct 2006 00:30:05 PDT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28698>
 
-"Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
+Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
+---
+ gitweb/gitweb.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> $ git bisect start
-> won't bisect on seeked tree
->
-> It complained because .git/head-name contained 't' which had been
-> deleted before. git-bisect reset works. However I'd request git-bisect
-> to inform more useful messages. At first, I was completely stunned:
-> "what is a seeked tree? how can I fix that?"
-
-Interesting.  There is certainly something clueless but I am not
-sure if it is git-bisect.
-
-Other git-core tools never create $GIT_DIR/head-name unless
-bisect is in effect, and you end your bisect session by doing
-"bisect reset" (otherwise there is no easy way to get back to
-your original branch head).  How did head-name got 't' in it,
-and how was branch 't' removed?
-
-If the answer to the first question is because earlier you
-created a temporary branch 't' to run a bisect, and the answer
-to the latter is because you ended your bisect session by saying
-"git checkout -f someotherbranch && git branch -D t", then we
-should be able to fix that by removing head-name upon branch
-switching with "git checkout".
-
-By looking at commit 810255f, however, I suspect that fix would
-break Cogito.  The wording of the message actually comes from
-Cogito nomenclature.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 77063f0..19f434d 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2594,7 +2594,7 @@ HTML
+ 	while (1) {
+ 		$_ = <$fd>;
+ 		last unless defined $_;
+-		my ($full_rev, $lineno, $orig_lineno, $group_size) =
++		my ($full_rev, $orig_lineno, $lineno, $group_size) =
+ 		    /^([0-9a-f]{40}) (\d+) (\d+)(?: (\d+))?$/;
+ 		if (!exists $metainfo{$full_rev}) {
+ 			$metainfo{$full_rev} = {};
+-- 
+1.4.3.rc2.gacda
