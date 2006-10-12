@@ -1,58 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] diff: fix 2 whitespace issues
-Date: Thu, 12 Oct 2006 09:40:33 -0700
-Message-ID: <7v4pu9pjwe.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0610121418180.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: cg-commit does not run pre-commit hook?
+Date: Thu, 12 Oct 2006 09:59:24 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610120957460.3952@g5.osdl.org>
+References: <20061012155444.27391353BDE@atlas.denx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 12 18:41:52 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andreas Ericsson <ae@op5.se>, Petr Baudis <pasky@suse.cz>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 12 19:01:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GY3bq-0007en-8N
-	for gcvg-git@gmane.org; Thu, 12 Oct 2006 18:40:38 +0200
+	id 1GY3uR-00061o-B5
+	for gcvg-git@gmane.org; Thu, 12 Oct 2006 18:59:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932674AbWJLQkf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Oct 2006 12:40:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932679AbWJLQkf
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 12:40:35 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:41353 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932674AbWJLQke (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Oct 2006 12:40:34 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061012164033.OKGL12909.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 12 Oct 2006 12:40:33 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id ZUgP1V0011kojtg0000000
-	Thu, 12 Oct 2006 12:40:23 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0610121418180.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Thu, 12 Oct 2006 14:22:14 +0200
-	(CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932644AbWJLQ7s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Oct 2006 12:59:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932655AbWJLQ7s
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 12:59:48 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:28342 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932644AbWJLQ7r (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Oct 2006 12:59:47 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9CGxPaX032249
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 12 Oct 2006 09:59:26 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9CGxOab002009;
+	Thu, 12 Oct 2006 09:59:25 -0700
+To: Wolfgang Denk <wd@denx.de>
+In-Reply-To: <20061012155444.27391353BDE@atlas.denx.de>
+X-Spam-Status: No, hits=-0.467 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28789>
 
-I noticed this breakage sometime last week and it was sitting at
-near the bottom of my stack of things to look at.  Ray's
-bugreport and your fix were quite timely.  Thanks.
 
-You mentioned six whitespace problems but I counted only three
-and the test failed on "CR at the end"; the test vector was easy
-to hand-fix thanks to the "index" line.
 
-This patch is an example that we do not want to transmit files
-that has CRs in e-mail.  These CRs appear in format-patch
-output, so either the user needs to do --attach (and perhaps the
-option needs to do base64 or qp in such a case) or format-patch
-needs to treat a blob with CR as binary and emit binary diff?
-The latter is not appropriate since patches apply just fine with
-CR in them.
+On Thu, 12 Oct 2006, Wolfgang Denk wrote:
+> > 
+> > git log
+> 
+> Sorry, this does not work, as I can access the  commit  message  only
+> *after* the commit completed, and then it's too late to get it into a
+> file that shall be included with the very same commit.
+
+Why? That's just stupid.
+
+If you want to have a ChangeLog file, it's _much_ better to just 
+auto-generate it after the fact. When you cut a tar-file, just have the 
+script autogenerate the changelog then and there. Why do it inside the 
+SCM that keeps track of the data _anyway_.
+
+> True, as long as you can work within the SCM. The changelog file  I'm
+> talking  about is mostly for people who just work with exported trees
+> (for example, when they download a tarball).
+
+Right - but it's easy enough to add it to the tar-ball, so..
+
+		Linus
