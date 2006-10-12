@@ -1,83 +1,95 @@
-From: Junio C Hamano <junkio@cox.net>
+From: apodtele <apodtele@gmail.com>
 Subject: Re: [PATCH 1/2] diff --stat: use asymptotic scaling in graph
-Date: Thu, 12 Oct 2006 14:53:29 -0700
-Message-ID: <7vlknlmc9y.fsf@assigned-by-dhcp.cox.net>
+Date: Thu, 12 Oct 2006 17:37:14 -0400
+Message-ID: <d620685f0610121437m38eb454g7597b2a93010b023@mail.gmail.com>
 References: <d620685f0610121237k458665c5m7bbde2d565d7ef81@mail.gmail.com>
+	 <20061012201646.GC10922@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 13 00:26:57 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Oct 13 00:27:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GY8Uf-00025M-L5
-	for gcvg-git@gmane.org; Thu, 12 Oct 2006 23:53:35 +0200
+	id 1GY8F0-00065X-I1
+	for gcvg-git@gmane.org; Thu, 12 Oct 2006 23:37:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751142AbWJLVxb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Oct 2006 17:53:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751147AbWJLVxb
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 17:53:31 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:15300 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1751142AbWJLVxa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Oct 2006 17:53:30 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061012215330.QDF12909.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 12 Oct 2006 17:53:30 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id ZZtJ1V00Z1kojtg0000000
-	Thu, 12 Oct 2006 17:53:19 -0400
-To: Alexei Podtelezhnikov <apodtele@gmail.com>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751067AbWJLVhS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Oct 2006 17:37:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751078AbWJLVhR
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 17:37:17 -0400
+Received: from wx-out-0506.google.com ([66.249.82.228]:50499 "EHLO
+	wx-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1751067AbWJLVhP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Oct 2006 17:37:15 -0400
+Received: by wx-out-0506.google.com with SMTP id s14so674471wxc
+        for <git@vger.kernel.org>; Thu, 12 Oct 2006 14:37:14 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=esOrgUHcdeJd86QdbCkvUMZlXEKPN87vQoglm7+6nIj0DTxL86loNtf9q49S1ssDROkstdPRG7nc3cyB+6wgFj3Q5Q6EFxSPkFND2xHTD7xqfwgKVukYCobGRt88Ihn/kEl2rnNNeNlpYQdshIdaL0x4fwKeDdMcYbTkz3Qb2Jc=
+Received: by 10.90.32.19 with SMTP id f19mr1819230agf;
+        Thu, 12 Oct 2006 14:37:14 -0700 (PDT)
+Received: by 10.90.95.6 with HTTP; Thu, 12 Oct 2006 14:37:14 -0700 (PDT)
+To: "Martin Waitz" <tali@admingilde.org>, git@vger.kernel.org
+In-Reply-To: <20061012201646.GC10922@admingilde.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28805>
 
-apodtele <apodtele@gmail.com> writes:
-
-> Instead of conditionally scaling the stat graph for large changes,
-> always scale it asymptotically: small changes shall appear without any
-> distortions.
+On 10/12/06, Martin Waitz <tali@admingilde.org> wrote:
+> On Thu, Oct 12, 2006 at 03:37:17PM -0400, apodtele wrote:
+> > Instead of conditionally scaling the stat graph for large changes,
+> > always scale it asymptotically: small changes shall appear without any
+> > distortions.
 >
-> Signed-off-by: Alexei Podtelezhnikov
+> very nice idea!
+>
+> > +     return it * width / (it + width) + 1;
+>
+> but wouldn't this formula result in at least 1, even for a 0 change?
+> Perhaps we'd have to special case an input of 0?
 
-Missing e-mail address on S-o-b line.  If your mail From: line
-does not say who you are, please add an extra From: line in the
-body, like this:
+Corrected patch follows.
 
-	From: Alexei Podtelezhnikov <apodtele@gmail.com>
-        Subject: [PATCH 1/2] diff --stat: ...
+--- diff.c	2006-10-12 14:45:13.000000000 -0400
++++ diff.c	2006-10-12 17:32:15.000000000 -0400
+@@ -637,15 +637,12 @@
 
-        Instead of ...
+ const char mime_boundary_leader[] = "------------";
 
-	Signed-off-by: Alexei Podtelezhnikov <apodtele@gmail.com>
+-static int scale_linear(int it, int width, int max_change)
++static int scale_nonlinear(int it, int width)
+ {
+-	/*
+-	 * make sure that at least one '-' is printed if there were deletions,
+-	 * and likewise for '+'.
+-	 */
+-	if (max_change < 2)
+-		return it;
+-	return ((it - 1) * (width - 1) + max_change - 1) / (max_change - 1);
++	if (it)
++		return it * width / (it + width) + 1;
++	else
++		return 0;
+ }
 
+ static void show_name(const char *prefix, const char *name, int len,
+@@ -776,11 +773,9 @@
+ 		adds += add;
+ 		dels += del;
 
-I am not sure if any non-linear scaling is worth pursuing.
-Suppose your change set has three files modified:
-
-	A	adds 20 lines, deletes 10 lines
-        B	adds 10 lines, deletes 20 lines
-        C	adds 30 lines, deletes 30 lines
-
-When drawing into a specified width that leaves 20-column for
-the graph part, what would we see?  What would we see if the
-graph part is 21-column wide?  59-column wide?  80-column wide?
-
-For obvious reasons, the total length of A and B exceeds half of
-C, which looks quite misleading.
-
-         A | ++++++++++++--------
-         B | ++++++++------------
-         C | +++++++++++++++---------------
-
-We could align things in the middle, like this, though:
-
-         A |    ++++++++++++--------
-         B |        ++++++++------------
-         C | +++++++++++++++---------------
+-		if (width <= max_change) {
+-			add = scale_linear(add, width, max_change);
+-			del = scale_linear(del, width, max_change);
+-			total = add + del;
+-		}
++		add = scale_nonlinear(add, width / 2);
++		del = scale_nonlinear(del, width / 2);
++		total = add + del;
+ 		show_name(prefix, name, len, reset, set);
+ 		printf("%5d ", added + deleted);
+ 		show_graph('+', add, add_c, reset);
