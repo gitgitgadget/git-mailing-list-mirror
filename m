@@ -1,86 +1,86 @@
-From: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
-Subject: Re: Standard cogito + patches: Changes to 'master'
-Date: Thu, 12 Oct 2006 23:01:30 +0200
-Message-ID: <20061012210130.GA4813@schottelius.org>
-References: <20060818175454.8961.qmail@bruehe.schottelius.org> <20060818180143.GA4118@schottelius.org> <20060924172845.GT20017@pasky.or.cz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] diff: fix 2 whitespace issues
+Date: Thu, 12 Oct 2006 23:08:03 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0610122254350.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0610121418180.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v4pu9pjwe.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="2fHTh5uZTiUOsy+g"
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-1024602135-1160687283=:14200"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 12 23:40:38 2006
+X-From: git-owner@vger.kernel.org Thu Oct 12 23:45:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GY7gS-00046s-1H
-	for gcvg-git@gmane.org; Thu, 12 Oct 2006 23:01:40 +0200
+	id 1GY7mk-0005vB-VA
+	for gcvg-git@gmane.org; Thu, 12 Oct 2006 23:08:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750822AbWJLVBf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Oct 2006 17:01:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750804AbWJLVBf
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 17:01:35 -0400
-Received: from gw.ptr-62-65-141-133.customer.ch.netstream.com ([62.65.141.133]:39953
-	"HELO schottelius.org") by vger.kernel.org with SMTP
-	id S1750822AbWJLVBe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Oct 2006 17:01:34 -0400
-Received: (qmail 4933 invoked by uid 1000); 12 Oct 2006 21:01:30 -0000
-To: Petr Baudis <pasky@suse.cz>
-Content-Disposition: inline
-In-Reply-To: <20060924172845.GT20017@pasky.or.cz>
-User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
-X-Linux-Info: http://linux.schottelius.org/
-X-Operating-System: Linux 2.6.18-1-486
+	id S1750892AbWJLVIG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Oct 2006 17:08:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750934AbWJLVIG
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 17:08:06 -0400
+Received: from mail.gmx.de ([213.165.64.20]:33211 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750892AbWJLVIF (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Oct 2006 17:08:05 -0400
+Received: (qmail invoked by alias); 12 Oct 2006 21:08:03 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp039) with SMTP; 12 Oct 2006 23:08:03 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v4pu9pjwe.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28799>
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
---2fHTh5uZTiUOsy+g
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+---1148973799-1024602135-1160687283=:14200
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
 
-Petr Baudis [Sun, Sep 24, 2006 at 07:28:45PM +0200]:
-> Dear diary, on Fri, Aug 18, 2006 at 08:01:43PM CEST, I got a letter
-> where Nico -telmich- Schottelius <nico-linux-git@schottelius.org> said th=
-at...
-> > nico-linux-git@schottelius.org [Fri, Aug 18, 2006 at 05:54:54PM -0000]:
-> > >  [Commits]
-> >=20
-> > For those who do not know where to find that branch:
-> >=20
-> > Gitweb:  http://unix.schottelius.org/cgi-bin/gitweb.cgi
-> > Git-repo:http://unix.schottelius.org/git/cogito-original.git/=20
->=20
-> I've decided to bite the bullet wrt.  the messy history (since I feel so
-> lonely in the Cogito repository ;) and merged it. Thanks! :-)
->=20
-> Is there anything new in the POSIX shell porting mission?
+Hi,
 
-Not yet, still having problems because I moved to another place.
+On Thu, 12 Oct 2006, Junio C Hamano wrote:
 
-Currently online via notebook directly attached to a ugly zyxel :(
+> I noticed this breakage sometime last week and it was sitting at near 
+> the bottom of my stack of things to look at.
 
-But yes, that'll be finished sometime ;-)
+I actually enjoyed tracking your todo "branch", although lately, there is 
+substantially less traffic there. Maybe git is finished ;-)
 
-Nico
+> You mentioned six whitespace problems but I counted only three
+> and the test failed on "CR at the end"; the test vector was easy
+> to hand-fix thanks to the "index" line.
+> 
+> This patch is an example that we do not want to transmit files
+> that has CRs in e-mail.  These CRs appear in format-patch
+> output, so either the user needs to do --attach (and perhaps the
+> option needs to do base64 or qp in such a case) or format-patch
+> needs to treat a blob with CR as binary and emit binary diff?
+> The latter is not appropriate since patches apply just fine with
+> CR in them.
 
---=20
-``...if there's one thing about Linux users, they're do-ers, not whiners.''
-(A quotation of Andy Patrizio I completely agree with)
+The problem is more likely my (strange) workflow. I never use 
+git-send-email. Not only because I am a bit wary of the Perl stuff, but 
+also because I cannot use sendmail directly (some stoopid "firewall" 
+pretending to fix spamming from %&/%&/ users with their %&"§ infected 
+Windows machines).
 
---2fHTh5uZTiUOsy+g
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+Thus, I used ^R in my venerable patched pine to insert the file, and (just 
+a guess) pine -- in its infinite wisdom -- decided I'd probably not want 
+the carriage return, when I put it there on purpose, using my l33t sk1llz.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
+In hindsight, it might be not _that_ important to test for a carriage 
+return, but testing _any_ whitespace should do (which I put in also, for 
+good measure). However, carriage returns from my beloved friends using the 
+Most Stupid operating system were the reason I hacked in the whitespace 
+options, and therefore I wanted to test this case specifically.
 
-iD8DBQFFLq0quL75KpiFGIwRAk2YAKCIH80xiEroqH4a75KDPQnjWHEHHQCfZWQ4
-wf3I6WRac5PypOH+nafp2iw=
-=GBrb
------END PGP SIGNATURE-----
+Ciao,
+Dscho
 
---2fHTh5uZTiUOsy+g--
+---1148973799-1024602135-1160687283=:14200--
