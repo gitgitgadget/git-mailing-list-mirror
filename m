@@ -1,74 +1,86 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH 1/2] diff --stat: use asymptotic scaling in graph
-Date: Thu, 12 Oct 2006 22:16:46 +0200
-Message-ID: <20061012201646.GC10922@admingilde.org>
-References: <d620685f0610121237k458665c5m7bbde2d565d7ef81@mail.gmail.com>
+From: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
+Subject: Re: Standard cogito + patches: Changes to 'master'
+Date: Thu, 12 Oct 2006 23:01:30 +0200
+Message-ID: <20061012210130.GA4813@schottelius.org>
+References: <20060818175454.8961.qmail@bruehe.schottelius.org> <20060818180143.GA4118@schottelius.org> <20060924172845.GT20017@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="adJ1OR3c6QgCpb/j"
+	protocol="application/pgp-signature"; boundary="2fHTh5uZTiUOsy+g"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 12 23:13:48 2006
+X-From: git-owner@vger.kernel.org Thu Oct 12 23:40:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GY6z5-00007M-G0
-	for gcvg-git@gmane.org; Thu, 12 Oct 2006 22:16:52 +0200
+	id 1GY7gS-00046s-1H
+	for gcvg-git@gmane.org; Thu, 12 Oct 2006 23:01:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750742AbWJLUQs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Oct 2006 16:16:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750978AbWJLUQs
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 16:16:48 -0400
-Received: from agent.admingilde.org ([213.95.21.5]:27565 "EHLO
-	mail.admingilde.org") by vger.kernel.org with ESMTP
-	id S1750742AbWJLUQs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Oct 2006 16:16:48 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1GY6z0-00086B-OE; Thu, 12 Oct 2006 22:16:46 +0200
-To: apodtele <apodtele@gmail.com>
+	id S1750822AbWJLVBf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Oct 2006 17:01:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750804AbWJLVBf
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 17:01:35 -0400
+Received: from gw.ptr-62-65-141-133.customer.ch.netstream.com ([62.65.141.133]:39953
+	"HELO schottelius.org") by vger.kernel.org with SMTP
+	id S1750822AbWJLVBe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Oct 2006 17:01:34 -0400
+Received: (qmail 4933 invoked by uid 1000); 12 Oct 2006 21:01:30 -0000
+To: Petr Baudis <pasky@suse.cz>
 Content-Disposition: inline
-In-Reply-To: <d620685f0610121237k458665c5m7bbde2d565d7ef81@mail.gmail.com>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20060924172845.GT20017@pasky.or.cz>
+User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
+X-Linux-Info: http://linux.schottelius.org/
+X-Operating-System: Linux 2.6.18-1-486
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28798>
 
 
---adJ1OR3c6QgCpb/j
+--2fHTh5uZTiUOsy+g
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-hoi :)
+Petr Baudis [Sun, Sep 24, 2006 at 07:28:45PM +0200]:
+> Dear diary, on Fri, Aug 18, 2006 at 08:01:43PM CEST, I got a letter
+> where Nico -telmich- Schottelius <nico-linux-git@schottelius.org> said th=
+at...
+> > nico-linux-git@schottelius.org [Fri, Aug 18, 2006 at 05:54:54PM -0000]:
+> > >  [Commits]
+> >=20
+> > For those who do not know where to find that branch:
+> >=20
+> > Gitweb:  http://unix.schottelius.org/cgi-bin/gitweb.cgi
+> > Git-repo:http://unix.schottelius.org/git/cogito-original.git/=20
+>=20
+> I've decided to bite the bullet wrt.  the messy history (since I feel so
+> lonely in the Cogito repository ;) and merged it. Thanks! :-)
+>=20
+> Is there anything new in the POSIX shell porting mission?
 
-On Thu, Oct 12, 2006 at 03:37:17PM -0400, apodtele wrote:
-> Instead of conditionally scaling the stat graph for large changes,
-> always scale it asymptotically: small changes shall appear without any
-> distortions.
+Not yet, still having problems because I moved to another place.
 
-very nice idea!
+Currently online via notebook directly attached to a ugly zyxel :(
 
-> +	return it * width / (it + width) + 1;
+But yes, that'll be finished sometime ;-)
 
-but wouldn't this formula result in at least 1, even for a 0 change?
-Perhaps we'd have to special case an input of 0?
+Nico
 
 --=20
-Martin Waitz
+``...if there's one thing about Linux users, they're do-ers, not whiners.''
+(A quotation of Andy Patrizio I completely agree with)
 
---adJ1OR3c6QgCpb/j
+--2fHTh5uZTiUOsy+g
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: Digital signature
 Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+Version: GnuPG v1.4.5 (GNU/Linux)
 
-iD8DBQFFLqKuj/Eaxd/oD7IRAm0wAJ9Gnxp6lUjr4N/gsBHsP7EPkrg+kgCfZY4s
-+ZLawNizMmwhpVzw4mf4KMA=
-=jgUX
+iD8DBQFFLq0quL75KpiFGIwRAk2YAKCIH80xiEroqH4a75KDPQnjWHEHHQCfZWQ4
+wf3I6WRac5PypOH+nafp2iw=
+=GBrb
 -----END PGP SIGNATURE-----
 
---adJ1OR3c6QgCpb/j--
+--2fHTh5uZTiUOsy+g--
