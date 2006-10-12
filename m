@@ -1,76 +1,65 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH 1/2] diff --stat: use asymptotic scaling in graph
-Date: Fri, 13 Oct 2006 00:27:03 +0200
-Message-ID: <20061012222703.GA31152@admingilde.org>
-References: <d620685f0610121237k458665c5m7bbde2d565d7ef81@mail.gmail.com> <20061012201646.GC10922@admingilde.org> <d620685f0610121437m38eb454g7597b2a93010b023@mail.gmail.com> <452EBF99.5020108@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] git-pickaxe: blame rewritten.
+Date: Thu, 12 Oct 2006 23:55:49 +0200
+Organization: At home
+Message-ID: <egmdkv$k33$1@sea.gmane.org>
+References: <7v7iz5rk4b.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="pWyiEgJYm5f9v55/"
-Cc: apodtele <apodtele@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 13 00:41:43 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Fri Oct 13 00:43:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GY91C-0004Sd-4Q
-	for gcvg-git@gmane.org; Fri, 13 Oct 2006 00:27:10 +0200
+	id 1GY96W-0006Vc-PU
+	for gcvg-git@gmane.org; Fri, 13 Oct 2006 00:32:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751213AbWJLW1H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Oct 2006 18:27:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751219AbWJLW1H
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 18:27:07 -0400
-Received: from agent.admingilde.org ([213.95.21.5]:8112 "EHLO
-	mail.admingilde.org") by vger.kernel.org with ESMTP
-	id S1751213AbWJLW1E (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Oct 2006 18:27:04 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1GY915-00014X-Qe; Fri, 13 Oct 2006 00:27:03 +0200
-To: A Large Angry SCM <gitzilla@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <452EBF99.5020108@gmail.com>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S1751226AbWJLWch (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Oct 2006 18:32:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751221AbWJLWch
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 18:32:37 -0400
+Received: from main.gmane.org ([80.91.229.2]:39661 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751226AbWJLWcg (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Oct 2006 18:32:36 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GY8ri-0000F6-4R
+	for git@vger.kernel.org; Fri, 13 Oct 2006 00:17:22 +0200
+Received: from host-81-190-17-207.torun.mm.pl ([81.190.17.207])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 13 Oct 2006 00:17:22 +0200
+Received: from jnareb by host-81-190-17-207.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 13 Oct 2006 00:17:22 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-17-207.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28814>
 
+Junio C Hamano wrote:
 
---pWyiEgJYm5f9v55/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Currently it does what git-blame does, but only faster.
+> 
+> More importantly, its internal structure is designed to support
+> content movement (aka cut-and-paste) more easily by allowing
+> more than one paths to be taken from the same commit.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+> ---
+> 
+> I really hate to do this immediately after writing obituary for
+> annotate, but I had a solid 24-hour to work on git, which is a
+> rare opportunity for me these days, so here it is.
 
-hoi :)
-
-On Thu, Oct 12, 2006 at 03:20:09PM -0700, A Large Angry SCM wrote:
-> >+    if (it)
-> >+        return it * width / (it + width) + 1;
-> >+    else
-> >+        return 0;
->=20
-> No conditional needed:
->=20
-> 	return it * width / (it + width - 1)
-
-But then it would start scaling much earlier
-(for width 10: at 2 instead of 4).
-This is not bad per se, but different...
-
---=20
-Martin Waitz
-
---pWyiEgJYm5f9v55/
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFLsE3j/Eaxd/oD7IRAqUgAJ9isjZH51m+hKu8WCHvAf+yI/s3bACeNrv9
-fPQ1AiFo0YTm0hw0wc1Q4cA=
-=kXz6
------END PGP SIGNATURE-----
-
---pWyiEgJYm5f9v55/--
+Why not reuse git-annotate name? git-pickaxe doesn't do pickaxe...
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
