@@ -1,72 +1,250 @@
-From: Sergio Callegari <scallegari@arces.unibo.it>
-Subject: Re: [RFC] separate .git from working directory
-Date: Thu, 12 Oct 2006 14:15:02 +0200
-Organization: University of Bologna
-Message-ID: <200610121415.03086.scallegari@arces.unibo.it>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] diff: fix 2 whitespace issues
+Date: Thu, 12 Oct 2006 14:22:14 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0610121418180.14200@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Oct 12 14:16:04 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Thu Oct 12 14:23:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GXzTO-00020P-K4
-	for gcvg-git@gmane.org; Thu, 12 Oct 2006 14:15:39 +0200
+	id 1GXzaP-0004FV-QU
+	for gcvg-git@gmane.org; Thu, 12 Oct 2006 14:22:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751354AbWJLMPe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Oct 2006 08:15:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751365AbWJLMPe
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 08:15:34 -0400
-Received: from arces.unibo.it ([137.204.143.6]:10885 "EHLO arces.unibo.it")
-	by vger.kernel.org with ESMTP id S1751354AbWJLMPd (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Oct 2006 08:15:33 -0400
-Received: from [192.168.143.223] (mars-fw.arces.unibo.it [137.204.143.2])
-	by arces.unibo.it (8.13.7/8.13.7) with ESMTP id k9CCFYoR019264
-	for <git@vger.kernel.org>; Thu, 12 Oct 2006 14:15:34 +0200
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.4
-Content-Disposition: inline
-X-Spam-Status: No, score=-98.0 required=5.5 tests=BAYES_80,USER_IN_WHITELIST 
-	autolearn=no version=3.1.3-gr0
-X-Spam-Checker-Version: SpamAssassin 3.1.3-gr0 (2006-06-01) on 
-	mail.arces.unibo.it
-X-Virus-Scanned: ClamAV 0.88.4/2026/Thu Oct 12 08:47:06 2006 on arces.unibo.it
-X-Virus-Status: Clean
+	id S1750965AbWJLMWS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Oct 2006 08:22:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750980AbWJLMWS
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 08:22:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:64900 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751007AbWJLMWQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Oct 2006 08:22:16 -0400
+Received: (qmail invoked by alias); 12 Oct 2006 12:22:15 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp026) with SMTP; 12 Oct 2006 14:22:15 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net, Ray Lehtiniemi <rayl@mail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28777>
 
-Possibly a bit different from the RFC, however,
 
-Other than making find happy, I see other potential advantages in supporting 
-the two options of having .git be either
+When whitespace or whitespace change was ignored, the function
+xdl_recmatch() returned memcmp() style differences, which is wrong,
+since it should return 0 on non-match.
 
-- a directory containing all the git stuff
-- a single file with a pointer to the real directory containing the objects, 
-references, branches, etc.
+Also, there were three horrible off-by-one bugs, even leading to wrong
+hashes in the whitespace special handling.
 
-1) It might make the life easier on platforms where symlinks are not the 
-easiest thing to do (are there any?)
+The issue was noticed by Ray Lehtiniemi.
 
-2) it might make it easier to work with syncronization tools (some of you 
-might know that I got burnt with them recently). One of the issues of 
-syncronizatoin tools is that they typically recognize renames as the 
-non-atomical sequence of creation+deletion. Hence imagine the following 
-scenario. I have ProjectFoo with the .git dir in. I tell the syncronization 
-tool to ignore things called .git (not to get burned again!). I decide to 
-rename ProjectFoo into ProjectBar. When I sync, I get with a ProjectBar with 
-no .git directory since .git was meant to be ignored and is consequently lost 
-in the creation+deletion sequence. All objects are then lost at one of the 
-two hosts participating in the syncronization. If .git was only a file with a 
-pointer, it would at least be possible to recreate it by hand without 
-depending on the other syncronization host.
+For good measure, this commit adds a test.
 
-3) it might make it possible to have all the git archives in a single place, 
-where it is easy to program a script to scan all the archives and repack all 
-of them periodically or to scan all of them and backup them periodically, 
-etc.
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-Sergio
+---
+
+	These bugs are embarassing. I have no idea how my tests succeeded 
+	when I submitted the support for -b and -w...
+
+	Note that "git diff --check" complains about six whitespaces
+	at the end of line in the test, which are there on purpose.
+
+ t/t4015-diff-whitespace.sh |  122 ++++++++++++++++++++++++++++++++++++++++++++
+ xdiff/xutils.c             |   29 ++++------
+ 2 files changed, 134 insertions(+), 17 deletions(-)
+
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+new file mode 100755
+index 0000000..c945085
+--- /dev/null
++++ b/t/t4015-diff-whitespace.sh
+@@ -0,0 +1,122 @@
++#!/bin/sh
++#
++# Copyright (c) 2006 Johannes E. Schindelin
++#
++
++test_description='Test special whitespace in diff engine.
++
++'
++. ./test-lib.sh
++. ../diff-lib.sh
++
++# Ray Lehtiniemi's example
++
++cat << EOF > x
++do {
++   nothing;
++} while (0);
++EOF
++
++git-update-index --add x
++
++cat << EOF > x
++do
++{
++   nothing;
++}
++while (0);
++EOF
++
++cat << EOF > expect
++diff --git a/x b/x
++index adf3937..6edc172 100644
++--- a/x
+++++ b/x
++@@ -1,3 +1,5 @@
++-do {
+++do
+++{
++    nothing;
++-} while (0);
+++}
+++while (0);
++EOF
++
++git-diff > out
++test_expect_success "Ray's example without options" 'diff -u expect out'
++
++git-diff -w > out
++test_expect_success "Ray's example with -w" 'diff -u expect out'
++
++git-diff -b > out
++test_expect_success "Ray's example with -b" 'diff -u expect out'
++
++cat << EOF > x
++whitespace at beginning
++whitespace change
++whitespace in the middle
++whitespace at end
++unchanged line
++CR at end
++EOF
++
++git-update-index x
++
++cat << EOF > x
++	whitespace at beginning
++whitespace 	 change
++white space in the middle
++whitespace at end  
++unchanged line
++CR at end
++EOF
++
++cat << EOF > expect
++diff --git a/x b/x
++index d99af23..8b32fb5 100644
++--- a/x
+++++ b/x
++@@ -1,6 +1,6 @@
++-whitespace at beginning
++-whitespace change
++-whitespace in the middle
++-whitespace at end
+++	whitespace at beginning
+++whitespace 	 change
+++white space in the middle
+++whitespace at end  
++ unchanged line
++-CR at end
+++CR at end
++EOF
++git-diff > out
++test_expect_success 'another test, without options' 'diff -u expect out'
++
++cat << EOF > expect
++diff --git a/x b/x
++index d99af23..8b32fb5 100644
++EOF
++git-diff -w > out
++test_expect_success 'another test, with -w' 'diff -u expect out'
++
++cat << EOF > expect
++diff --git a/x b/x
++index d99af23..8b32fb5 100644
++--- a/x
+++++ b/x
++@@ -1,6 +1,6 @@
++-whitespace at beginning
+++	whitespace at beginning
++ whitespace change
++-whitespace in the middle
++-whitespace at end
+++white space in the middle
+++whitespace at end  
++ unchanged line
++-CR at end
+++CR at end
++EOF
++git-diff -b > out
++test_expect_success 'another test, with -b' 'diff -u expect out'
++
++test_done
+diff --git a/xdiff/xutils.c b/xdiff/xutils.c
+index f7bdd39..9e4bb47 100644
+--- a/xdiff/xutils.c
++++ b/xdiff/xutils.c
+@@ -191,36 +191,30 @@ int xdl_recmatch(const char *l1, long s1
+ 	int i1, i2;
+ 
+ 	if (flags & XDF_IGNORE_WHITESPACE) {
+-		for (i1 = i2 = 0; i1 < s1 && i2 < s2; i1++, i2++) {
++		for (i1 = i2 = 0; i1 < s1 && i2 < s2; ) {
+ 			if (isspace(l1[i1]))
+ 				while (isspace(l1[i1]) && i1 < s1)
+ 					i1++;
+-			else if (isspace(l2[i2]))
++			if (isspace(l2[i2]))
+ 				while (isspace(l2[i2]) && i2 < s2)
+ 					i2++;
+-			else if (l1[i1] != l2[i2])
+-				return l2[i2] - l1[i1];
++			if (i1 < s1 && i2 < s2 && l1[i1++] != l2[i2++])
++				return 0;
+ 		}
+-		if (i1 >= s1)
+-			return 1;
+-		else if (i2 >= s2)
+-			return -1;
++		return (i1 >= s1 && i2 >= s2);
+ 	} else if (flags & XDF_IGNORE_WHITESPACE_CHANGE) {
+-		for (i1 = i2 = 0; i1 < s1 && i2 < s2; i1++, i2++) {
++		for (i1 = i2 = 0; i1 < s1 && i2 < s2; ) {
+ 			if (isspace(l1[i1])) {
+ 				if (!isspace(l2[i2]))
+-					return -1;
++					return 0;
+ 				while (isspace(l1[i1]) && i1 < s1)
+ 					i1++;
+ 				while (isspace(l2[i2]) && i2 < s2)
+ 					i2++;
+-			} else if (l1[i1] != l2[i2])
+-				return l2[i2] - l1[i1];
++			} else if (l1[i1++] != l2[i2++])
++				return 0;
+ 		}
+-		if (i1 >= s1)
+-			return 1;
+-		else if (i2 >= s2)
+-			return -1;
++		return (i1 >= s1 && i2 >= s2);
+ 	} else
+ 		return s1 == s2 && !memcmp(l1, l2, s1);
+ 
+@@ -233,7 +227,8 @@ unsigned long xdl_hash_record(char const
+ 
+ 	for (; ptr < top && *ptr != '\n'; ptr++) {
+ 		if (isspace(*ptr) && (flags & XDF_WHITESPACE_FLAGS)) {
+-			while (ptr < top && isspace(*ptr) && ptr[1] != '\n')
++			while (ptr + 1 < top && isspace(ptr[1])
++					&& ptr[1] != '\n')
+ 				ptr++;
+ 			if (flags & XDF_IGNORE_WHITESPACE_CHANGE) {
+ 				ha += (ha << 5);
+-- 
+1.4.3.rc2.g4e05
