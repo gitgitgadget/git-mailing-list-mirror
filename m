@@ -1,135 +1,119 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] git-pickaxe: blame rewritten.
-Date: Thu, 12 Oct 2006 12:31:07 -0700 (PDT)
-Message-ID: <20061012193107.44651.qmail@web31805.mail.mud.yahoo.com>
+Date: Thu, 12 Oct 2006 12:09:38 -0700
+Message-ID: <7viripnyfh.fsf@assigned-by-dhcp.cox.net>
 References: <7v7iz5rk4b.fsf@assigned-by-dhcp.cox.net>
-Reply-To: ltuikov@yahoo.com
+	<Pine.LNX.4.64.0610120854440.3952@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Thu Oct 12 22:04:02 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 12 22:23:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GY6Gw-0003oV-C7
-	for gcvg-git@gmane.org; Thu, 12 Oct 2006 21:31:15 +0200
+	id 1GY5w9-0005lR-Hq
+	for gcvg-git@gmane.org; Thu, 12 Oct 2006 21:09:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750844AbWJLTbK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Oct 2006 15:31:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750861AbWJLTbJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 15:31:09 -0400
-Received: from web31805.mail.mud.yahoo.com ([68.142.207.68]:61869 "HELO
-	web31805.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1750844AbWJLTbI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Oct 2006 15:31:08 -0400
-Received: (qmail 44653 invoked by uid 60001); 12 Oct 2006 19:31:07 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=DKPb/vZRVzr8+GvSznmmE71qS+8nSjrrzfZPDBgGEeFHFGuBUpy802n6ViBbcch/ZW3g7PBXZbpzc5fGThrdSc5N/XbMMMXsvShTm9Bd6HVvviCx7RhrwkFYmW2bILknrfpm5P7r2nPlhympu7hz19GQkAkj9gvaOX788hHEmUI=  ;
-Received: from [64.215.88.90] by web31805.mail.mud.yahoo.com via HTTP; Thu, 12 Oct 2006 12:31:07 PDT
-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-In-Reply-To: <7v7iz5rk4b.fsf@assigned-by-dhcp.cox.net>
+	id S1751155AbWJLTJl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Oct 2006 15:09:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750903AbWJLTJl
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 15:09:41 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:61434 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1751148AbWJLTJj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Oct 2006 15:09:39 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061012190939.RSVP13992.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 12 Oct 2006 15:09:39 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id ZX9U1V00C1kojtg0000000
+	Thu, 12 Oct 2006 15:09:28 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0610120854440.3952@g5.osdl.org> (Linus Torvalds's
+	message of "Thu, 12 Oct 2006 08:58:54 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28794>
 
---- Junio C Hamano <junkio@cox.net> wrote:
-> Currently it does what git-blame does, but only faster.
-> 
-> More importantly, its internal structure is designed to support
-> content movement (aka cut-and-paste) more easily by allowing
-> more than one paths to be taken from the same commit.
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Good work.
- 
-> I have given only cursory check to its output (some files are
-> blamed slightly differently from how git-blame does), but it
+> Btw, could we please get rid of this horrible command line syntax.
+>
+> Pretty much _every_ other git command takes the form
+>
+> 	git cmd [<rev>] [--] <path>
+>
+> but for some reason annotate and blame (and now pickaxe) do it the wrong 
+> way around, and do
+>
+> 	git cmd [--] <path> [<rev>]
+>
+> which is just irritating to somebody who has grown very used to being able 
+> to specify revisions first.
 
-Details?  How differently?
+Side note: I do not intend to keep it named pickaxe -- only
+while it is in "pu".
 
-> appears that there is no major breakage.  You can see for
-> example try annotating builtin-apply.c starting from v1.4.0;
-> there are two differences, which pickaxe assigns blame to older
-> commits and both of them seem to be sensible.
+I think we could support all of them to retain backward
+compatibility:
 
-Renames are naturally supported?
+	git blame [-options] <path> [<rev>]		(*1*)
+	git blame [-options] -- <path> [<rev>]		(*2*)
+	git blame [-options] [<rev>] [--] <path>	(*3*)
 
-> diff --git a/Documentation/git-pickaxe.txt b/Documentation/git-pickaxe.txt
-> new file mode 100644
-> index 0000000..7f30cdf
-> --- /dev/null
-> +++ b/Documentation/git-pickaxe.txt
-> @@ -0,0 +1,104 @@
-> +git-pickaxe(1)
-> +==============
-> +
-> +NAME
-> +----
-> +git-pickaxe - Show what revision and author last modified each line of a file
-[...]
-> +THE PORCELAIN FORMAT
-> +--------------------
-> +
+(*1*) Only for path that does not start with a '-'; we should
+      tighten the input to make sure <path> lstat()'s fine
+      (which we currently do with pickaxe), <path> cannot be
+      interpreted as a valud rev, and when <rev> is given, <rev>
+      does not lstat() Ok, to avoid ambiguity.  Other cases we
+      should require the newer format with explicit -- (*3*).
 
-Let's quantify the output:
----cut---
-The porcelain format is as follows:
+(*2*) Backward compatible canoncal format.  The above comment
+      for validation does not apply, as (*3*) never has more
+      than one path for 'annotate/blame/pickaxe'
 
-<SHA-1> <orig line> <line> [<num lines>
-author <name>
-author-mail <email format>
-author-time <time>
-author-tz <TZ>
-committer <name>
-committer-mail <email format>
-committer-time <time>
-committer-tz <TZ>
-filename <string>
-summary <string>]
-<TAB><line data>
+(*3*) The canonical format for ohter git commands.  Without
+      an explicit --, <rev> should not lstat() Ok, and <path>
+      should, to avoid ambiguity.
 
-Where
-  <SHA-1> is the SHA-1 of the commit which introduces this line.
-  <orig line> it the line number where this line is introduced.
-  <line> is the line number of the final file (at SHA-1 commit)
+> (I'd actually also like to have a range-modifier, so that I could do
+>
+> 	git annotate --since=2.weeks.ago v2.6.18.. <path>
+>
+> that didn't go back beyond a certain point,...
 
-Then, if <SHA-1> is different from the previous line's SHA-1 (if no
-previous then always different), a header follows.  It starts by the
-number of lines that this <SHA-1> commit introduces, then on a new
-line, information about about the commit is printed for the following
-seveal lines, then newline, TAB, and the line data.
+I am not sure about revision bottom (v.2.6.18..) offhand, but
+the age limit (--since=2.weeks) should be trivial.
 
-If, OTOH, <SHA-1> is the same as the previous line's <SHA-1> then the
-header is not printed as indicated by brackets. Just newline,
-TAB, and the line data.
----cut----
+Inside pass_blame() while we iterate over the parents of the
+suspect we are looking at, you can skip the parent if it is
+older than the age limit, or an ancestor of revision bottom,
+like this:
 
-This kind of makes it slightly clearer.
+--- l/builtin-pickaxe.c
++++ k/builtin-pickaxe.c
+@@ -450,6 +450,12 @@ static void pass_blame(struct scoreboard
+ 	     parent = parent->next, parent_ix++) {
+ 		if (parse_commit(parent->item))
+ 			continue;
++
++		if (parent is older than age limit)
++			continue;
++		if (parent is an ancestor of revision bottom)
++			continue;
++
+ 		porigin = find_origin(sb, parent->item, origin->path);
+ 		if (!porigin)
+ 			porigin = find_rename(sb, parent->item, origin);
 
-Junio, is it possible to also print the "previous" commit?
-I mean, is it tenable to print the commit such that
-a "git-diff C B -- A:file" will give a diff of the block of lines
-we're looking at?
 
-Picture:
-
-Annotate A:file
-C B line 1
-X D line 2
-C B line 3
-F G line 4
-...
-
-Currently we do not print "C, X, F", but only "B, D, G".
-So in effect, <orig line> is the line of, wlg, "C:file"
-where line 1 was introduced (by commit B). I.e.
-the "parent" commit of that commit, which doesn't always
-exist. (e.g. if the commit added the file)
-
-Is this tenable?  If it is not or if it is going to make
-it slow or ambiguous, lets forget about it.
-
-     Luben
+I think we can get away by checking if the parent _is_ the
+revision bottom (or one of the bottoms, if you say "--not
+v2.6.18 v2.6.17.13") instead of doing "is it an ancestor" check,
+in practice.  But that is not correct when a merge is involved.
