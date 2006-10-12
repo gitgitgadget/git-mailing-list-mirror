@@ -1,129 +1,83 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: [PATCH] git-revert with conflicts to behave as git-merge with conflicts
-Date: Thu, 12 Oct 2006 14:52:42 -0700 (PDT)
-Message-ID: <20061012215242.16419.qmail@web31810.mail.mud.yahoo.com>
-Reply-To: ltuikov@yahoo.com
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/2] diff --stat: use asymptotic scaling in graph
+Date: Thu, 12 Oct 2006 14:53:29 -0700
+Message-ID: <7vlknlmc9y.fsf@assigned-by-dhcp.cox.net>
+References: <d620685f0610121237k458665c5m7bbde2d565d7ef81@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="0-1617166853-1160689962=:13221"
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Fri Oct 13 00:18:05 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 13 00:26:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GY8Tx-0001tf-MH
-	for gcvg-git@gmane.org; Thu, 12 Oct 2006 23:52:50 +0200
+	id 1GY8Uf-00025M-L5
+	for gcvg-git@gmane.org; Thu, 12 Oct 2006 23:53:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751132AbWJLVwq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Oct 2006 17:52:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751141AbWJLVwq
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 17:52:46 -0400
-Received: from web31810.mail.mud.yahoo.com ([68.142.207.73]:25481 "HELO
-	web31810.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1751132AbWJLVwq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Oct 2006 17:52:46 -0400
-Received: (qmail 16421 invoked by uid 60001); 12 Oct 2006 21:52:42 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=DoYBfG+i7N37pI43KB37lDLVXpgFrIpRD3z5RMipyjH9DuEpNgB3FJa1wLiXMxp6Q8nhBfLuUlpkZ5fMC+KTSZhcJz089WMn81Grf7hXot1DOxWanq/DSSdpDPT4xliLVWmXyRgb8BS59DnsYYMTYBLSNHOhHm4K4RkQnACVNKg=  ;
-Received: from [64.215.88.90] by web31810.mail.mud.yahoo.com via HTTP; Thu, 12 Oct 2006 14:52:42 PDT
-To: git@vger.kernel.org
+	id S1751142AbWJLVxb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Oct 2006 17:53:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751147AbWJLVxb
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 17:53:31 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:15300 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751142AbWJLVxa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Oct 2006 17:53:30 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061012215330.QDF12909.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 12 Oct 2006 17:53:30 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id ZZtJ1V00Z1kojtg0000000
+	Thu, 12 Oct 2006 17:53:19 -0400
+To: Alexei Podtelezhnikov <apodtele@gmail.com>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28804>
 
---0-1617166853-1160689962=:13221
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 8bit
-Content-Id: 
-Content-Disposition: inline
+apodtele <apodtele@gmail.com> writes:
 
-In a busy project, reverting a commit almost always results
-in a conflict between one or more files (depending on the
-commit being reverted).  It is useful to record this
-conflict in the commit-to-be message of the resulting commit
-(after the resolve).  The process now becomes:
+> Instead of conditionally scaling the stat graph for large changes,
+> always scale it asymptotically: small changes shall appear without any
+> distortions.
+>
+> Signed-off-by: Alexei Podtelezhnikov
 
-git-revert <SHA-1>
-<git complains and prints failed automatic>
-<user manually resolves>
-git-update-index <resolved files>
-git-commit -s
+Missing e-mail address on S-o-b line.  If your mail From: line
+does not say who you are, please add an extra From: line in the
+body, like this:
 
-And the commit message is now a merge of the revert commit
-message and the conflict commit message, giving the user a
-chance to edit it or add more information:
----cut---
-Revert "title of reverted commit"
+	From: Alexei Podtelezhnikov <apodtele@gmail.com>
+        Subject: [PATCH 1/2] diff --stat: ...
 
-This reverts commit <SHA-1>
+        Instead of ...
 
-Conflicts:
-
-    <filename>
-    ...
----cut---
-
-Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
----
- git-commit.sh |    4 ++--
- git-revert.sh |   11 ++++++++++-
- 2 files changed, 12 insertions(+), 3 deletions(-)
---0-1617166853-1160689962=:13221
-Content-Type: text/plain; name="p1.txt"
-Content-Description: 1207600725-p1.txt
-Content-Disposition: inline; filename="p1.txt"
-
-diff --git a/git-commit.sh b/git-commit.sh
-index 4bd0e46..81c3a0c 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -441,7 +441,7 @@ then
- elif test "$use_commit" != ""
- then
- 	git-cat-file commit "$use_commit" | sed -e '1,/^$/d'
--elif test -f "$GIT_DIR/MERGE_HEAD" && test -f "$GIT_DIR/MERGE_MSG"
-+elif test -f "$GIT_DIR/MERGE_MSG"
- then
- 	cat "$GIT_DIR/MERGE_MSG"
- elif test -f "$GIT_DIR/SQUASH_MSG"
-@@ -607,7 +607,7 @@ then
- 	commit=$(cat "$GIT_DIR"/COMMIT_MSG | git-commit-tree $tree $PARENTS) &&
- 	rlogm=$(sed -e 1q "$GIT_DIR"/COMMIT_MSG) &&
- 	git-update-ref -m "$rloga: $rlogm" HEAD $commit "$current" &&
--	rm -f -- "$GIT_DIR/MERGE_HEAD" &&
-+	rm -f -- "$GIT_DIR/MERGE_HEAD" "$GIT_DIR/MERGE_MSG" &&
- 	if test -f "$NEXT_INDEX"
- 	then
- 		mv "$NEXT_INDEX" "$THIS_INDEX"
-diff --git a/git-revert.sh b/git-revert.sh
-index 4fd81b6..2e23cf4 100755
---- a/git-revert.sh
-+++ b/git-revert.sh
-@@ -145,9 +145,18 @@ git-read-tree -m -u --aggressive $base $
- result=$(git-write-tree 2>/dev/null) || {
-     echo >&2 "Simple $me fails; trying Automatic $me."
-     git-merge-index -o git-merge-one-file -a || {
-+	    mv -f .msg .git/MERGE_MSG
-+	    {
-+		echo '
-+Conflicts:
-+'
-+		git ls-files --unmerged |
-+		sed -e 's/^[^	]*	/	/' |
-+		uniq
-+	    } >>"$GIT_DIR/MERGE_MSG"
- 	    echo >&2 "Automatic $me failed.  After resolving the conflicts,"
- 	    echo >&2 "mark the corrected paths with 'git-update-index <paths>'"
--	    echo >&2 "and commit with 'git commit -F .msg'"
-+	    echo >&2 "and commit the result."
- 	    case "$me" in
- 	    cherry-pick)
- 		echo >&2 "You may choose to use the following when making"
--- 
-1.4.3.rc2.g6f09-dirty
+	Signed-off-by: Alexei Podtelezhnikov <apodtele@gmail.com>
 
 
---0-1617166853-1160689962=:13221--
+I am not sure if any non-linear scaling is worth pursuing.
+Suppose your change set has three files modified:
+
+	A	adds 20 lines, deletes 10 lines
+        B	adds 10 lines, deletes 20 lines
+        C	adds 30 lines, deletes 30 lines
+
+When drawing into a specified width that leaves 20-column for
+the graph part, what would we see?  What would we see if the
+graph part is 21-column wide?  59-column wide?  80-column wide?
+
+For obvious reasons, the total length of A and B exceeds half of
+C, which looks quite misleading.
+
+         A | ++++++++++++--------
+         B | ++++++++------------
+         C | +++++++++++++++---------------
+
+We could align things in the middle, like this, though:
+
+         A |    ++++++++++++--------
+         B |        ++++++++------------
+         C | +++++++++++++++---------------
