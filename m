@@ -1,86 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] diff: fix 2 whitespace issues
-Date: Thu, 12 Oct 2006 23:08:03 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0610122254350.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0610121418180.14200@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v4pu9pjwe.fsf@assigned-by-dhcp.cox.net>
+From: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
+Subject: gitweb / kernel.org
+Date: Thu, 12 Oct 2006 23:08:21 +0200
+Message-ID: <20061012210821.GB4813@schottelius.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-1024602135-1160687283=:14200"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 12 23:45:07 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="s/l3CgOIzMHHjg/5"
+X-From: git-owner@vger.kernel.org Thu Oct 12 23:49:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GY7mk-0005vB-VA
-	for gcvg-git@gmane.org; Thu, 12 Oct 2006 23:08:11 +0200
+	id 1GY7nJ-00063V-DN
+	for gcvg-git@gmane.org; Thu, 12 Oct 2006 23:08:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750892AbWJLVIG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Oct 2006 17:08:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750934AbWJLVIG
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 17:08:06 -0400
-Received: from mail.gmx.de ([213.165.64.20]:33211 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1750892AbWJLVIF (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Oct 2006 17:08:05 -0400
-Received: (qmail invoked by alias); 12 Oct 2006 21:08:03 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp039) with SMTP; 12 Oct 2006 23:08:03 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v4pu9pjwe.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1750945AbWJLVI0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Oct 2006 17:08:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750938AbWJLVIZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 17:08:25 -0400
+Received: from gw.ptr-62-65-141-133.customer.ch.netstream.com ([62.65.141.133]:31503
+	"HELO schottelius.org") by vger.kernel.org with SMTP
+	id S1750945AbWJLVIY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Oct 2006 17:08:24 -0400
+Received: (qmail 4954 invoked by uid 1000); 12 Oct 2006 21:08:21 -0000
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
+X-Linux-Info: http://linux.schottelius.org/
+X-Operating-System: Linux 2.6.18-1-486
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28800>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
----1148973799-1024602135-1160687283=:14200
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+--s/l3CgOIzMHHjg/5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Hoi!
 
-On Thu, 12 Oct 2006, Junio C Hamano wrote:
+Just interested, what's the reason that gitweb is extremly slow
+on kernel.org?
 
-> I noticed this breakage sometime last week and it was sitting at near 
-> the bottom of my stack of things to look at.
+Just asking because when I see no problem at
+http://unix.schottelius.org/cgi-bin/gitweb.cgi on my
+dual xeon 2.4ghz / 1 GiB ram / 100Mbit inet / lighttpd 1.4.13.
 
-I actually enjoyed tracking your todo "branch", although lately, there is 
-substantially less traffic there. Maybe git is finished ;-)
+Yes, I'll have some thousand less hits than kernel.org, but
+simulating load with ab does not show any problem either.
 
-> You mentioned six whitespace problems but I counted only three
-> and the test failed on "CR at the end"; the test vector was easy
-> to hand-fix thanks to the "index" line.
-> 
-> This patch is an example that we do not want to transmit files
-> that has CRs in e-mail.  These CRs appear in format-patch
-> output, so either the user needs to do --attach (and perhaps the
-> option needs to do base64 or qp in such a case) or format-patch
-> needs to treat a blob with CR as binary and emit binary diff?
-> The latter is not appropriate since patches apply just fine with
-> CR in them.
+Just interested, what the bottleneck is.
 
-The problem is more likely my (strange) workflow. I never use 
-git-send-email. Not only because I am a bit wary of the Perl stuff, but 
-also because I cannot use sendmail directly (some stoopid "firewall" 
-pretending to fix spamming from %&/%&/ users with their %&"§ infected 
-Windows machines).
+Sincerly
 
-Thus, I used ^R in my venerable patched pine to insert the file, and (just 
-a guess) pine -- in its infinite wisdom -- decided I'd probably not want 
-the carriage return, when I put it there on purpose, using my l33t sk1llz.
+Nico
 
-In hindsight, it might be not _that_ important to test for a carriage 
-return, but testing _any_ whitespace should do (which I put in also, for 
-good measure). However, carriage returns from my beloved friends using the 
-Most Stupid operating system were the reason I hacked in the whitespace 
-options, and therefore I wanted to test this case specifically.
+--=20
+``...if there's one thing about Linux users, they're do-ers, not whiners.''
+(A quotation of Andy Patrizio I completely agree with)
 
-Ciao,
-Dscho
+--s/l3CgOIzMHHjg/5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
----1148973799-1024602135-1160687283=:14200--
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQFFLq7FuL75KpiFGIwRAhubAJ4/AjbXsloKt7g9Jr9WEE++/+4uVACfbbqB
+cEzA8GIR/WkbRkychKqS2Mo=
+=8n/h
+-----END PGP SIGNATURE-----
+
+--s/l3CgOIzMHHjg/5--
