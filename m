@@ -1,66 +1,68 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 Subject: Re: cg-commit does not run pre-commit hook?
-Date: Thu, 12 Oct 2006 09:59:24 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610120957460.3952@g5.osdl.org>
+Date: Thu, 12 Oct 2006 19:02:14 +0200
+Message-ID: <200610121902.14829.Josef.Weidendorfer@gmx.de>
 References: <20061012155444.27391353BDE@atlas.denx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: Andreas Ericsson <ae@op5.se>, Petr Baudis <pasky@suse.cz>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 12 19:01:37 2006
+X-From: git-owner@vger.kernel.org Thu Oct 12 19:05:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GY3uR-00061o-B5
-	for gcvg-git@gmane.org; Thu, 12 Oct 2006 18:59:51 +0200
+	id 1GY3z3-0007fH-GS
+	for gcvg-git@gmane.org; Thu, 12 Oct 2006 19:04:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932644AbWJLQ7s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Oct 2006 12:59:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932655AbWJLQ7s
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 12:59:48 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:28342 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932644AbWJLQ7r (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Oct 2006 12:59:47 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9CGxPaX032249
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 12 Oct 2006 09:59:26 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9CGxOab002009;
-	Thu, 12 Oct 2006 09:59:25 -0700
+	id S932704AbWJLREe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Oct 2006 13:04:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932705AbWJLREe
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 13:04:34 -0400
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:29354 "EHLO
+	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S932704AbWJLREd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Oct 2006 13:04:33 -0400
+Received: from a012.tum.vpn.lrz-muenchen.de (a012.tum.vpn.lrz-muenchen.de [129.187.51.12])
+	by mail.in.tum.de (Postfix) with ESMTP id 7780C27F5;
+	Thu, 12 Oct 2006 19:04:31 +0200 (MEST)
 To: Wolfgang Denk <wd@denx.de>
+User-Agent: KMail/1.9.3
 In-Reply-To: <20061012155444.27391353BDE@atlas.denx.de>
-X-Spam-Status: No, hits=-0.467 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28790>
 
+On Thursday 12 October 2006 17:54, Wolfgang Denk wrote:
+> Yes, but only *after* doing the job. That's why  I'm  looking  for  a
+> pre-commit hook.
 
-
-On Thu, 12 Oct 2006, Wolfgang Denk wrote:
-> > 
-> > git log
-> 
-> Sorry, this does not work, as I can access the  commit  message  only
-> *after* the commit completed, and then it's too late to get it into a
-> file that shall be included with the very same commit.
-
-Why? That's just stupid.
-
-If you want to have a ChangeLog file, it's _much_ better to just 
-auto-generate it after the fact. When you cut a tar-file, just have the 
-script autogenerate the changelog then and there. Why do it inside the 
-SCM that keeps track of the data _anyway_.
+pre-commit is not good either, as it runs *before* the editor pops up.
+So it can not access the commit message.
+You ask for a "pre-commit-post-edit" hook, which AFAIK currently
+is not available in git.
 
 > True, as long as you can work within the SCM. The changelog file  I'm
 > talking  about is mostly for people who just work with exported trees
 > (for example, when they download a tarball).
 
-Right - but it's easy enough to add it to the tar-ball, so..
+Can't you create the Changelog directly before preparing such an
+tarball?
 
-		Linus
+Usually when making a release/snapshot for a typical project, you
+can not directly take the newest tree from the SCM, but need
+to generate some files (like configure with automake/autoconf).
+
+Josef
+
+> 
+> 
+> Best regards,
+> 
+> Wolfgang Denk
+> 
