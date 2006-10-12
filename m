@@ -1,67 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: apodtele <apodtele@gmail.com>
 Subject: Re: [PATCH 1/2] diff --stat: use asymptotic scaling in graph
-Date: Fri, 13 Oct 2006 00:52:12 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0610130051440.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Thu, 12 Oct 2006 19:12:24 -0400
+Message-ID: <d620685f0610121612y62f335e5pc5930354edb8cd67@mail.gmail.com>
 References: <d620685f0610121237k458665c5m7bbde2d565d7ef81@mail.gmail.com>
- <20061012201646.GC10922@admingilde.org> <d620685f0610121437m38eb454g7597b2a93010b023@mail.gmail.com>
- <452EBF99.5020108@gmail.com> <20061012222703.GA31152@admingilde.org>
- <452EC625.7050301@gmail.com>
+	 <20061012201646.GC10922@admingilde.org>
+	 <d620685f0610121437m38eb454g7597b2a93010b023@mail.gmail.com>
+	 <452EBF99.5020108@gmail.com> <20061012222703.GA31152@admingilde.org>
+	 <452EC625.7050301@gmail.com>
+	 <Pine.LNX.4.63.0610130051440.14200@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin Waitz <tali@admingilde.org>, apodtele <apodtele@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 13 00:59:49 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Martin Waitz" <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Fri Oct 13 01:12:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GY9Pc-0004lF-W7
-	for gcvg-git@gmane.org; Fri, 13 Oct 2006 00:52:25 +0200
+	id 1GY9j6-0002vV-11
+	for gcvg-git@gmane.org; Fri, 13 Oct 2006 01:12:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751278AbWJLWwQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Oct 2006 18:52:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751288AbWJLWwQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 18:52:16 -0400
-Received: from mail.gmx.de ([213.165.64.20]:16844 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1751278AbWJLWwO (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Oct 2006 18:52:14 -0400
-Received: (qmail invoked by alias); 12 Oct 2006 22:52:13 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp018) with SMTP; 13 Oct 2006 00:52:13 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org
-In-Reply-To: <452EC625.7050301@gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1751292AbWJLXMZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Oct 2006 19:12:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751307AbWJLXMZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 19:12:25 -0400
+Received: from wx-out-0506.google.com ([66.249.82.235]:33235 "EHLO
+	wx-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1751292AbWJLXMZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Oct 2006 19:12:25 -0400
+Received: by wx-out-0506.google.com with SMTP id s14so695762wxc
+        for <git@vger.kernel.org>; Thu, 12 Oct 2006 16:12:24 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QUjgKh4Ft6CeTW2Urw8Ixb2lUumuZqPgbj3BW2Mz6i2kZc365RxKfqXBgfnBwNMABM88bIt6YURchI8yrl3Ah7H8DaqgJk6O7BFUNEdj50lo/HTEzGRxYYoE8Bxnkfq/5AzDaYViKkInKAqD9PCPK8/gG8TNQAbkbI3veuiFGow=
+Received: by 10.90.27.6 with SMTP id a6mr1830092aga;
+        Thu, 12 Oct 2006 16:12:24 -0700 (PDT)
+Received: by 10.90.95.6 with HTTP; Thu, 12 Oct 2006 16:12:24 -0700 (PDT)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0610130051440.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28818>
 
-Hi,
+On 10/12/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Am I the only one finding non-linear diffstat ugly and misleading?
 
-On Thu, 12 Oct 2006, A Large Angry SCM wrote:
-
-> Martin Waitz wrote:
-> > On Thu, Oct 12, 2006 at 03:20:09PM -0700, A Large Angry SCM wrote:
-> > > > +    if (it)
-> > > > +        return it * width / (it + width) + 1;
-> > > > +    else
-> > > > +        return 0;
-> > > No conditional needed:
-> > > 
-> > > 	return it * width / (it + width - 1)
-> > 
-> > But then it would start scaling much earlier
-> > (for width 10: at 2 instead of 4).
-> > This is not bad per se, but different...
-> > 
-> 
-> OK:
-> 	return (it * width + (it + width)/2)) / (it + width - 1)
-> 
-> Now it's back at 4. ;-)
-
-Am I the only one finding non-linear diffstat ugly and misleading?
-
-Ciao,
-Dscho
+Well, the scaling I propose _is_  linear for small changes. More
+importantly, the existing scheme is not linear across the diffs
+either. Different stats may _look_ the same but be very different in
+size in the existing scheme already. My proposal is invariant across
+diff stats. Junio's argument that a change of 30 doesn't look like a
+half of 60 is valid, of course. Does anyone really checks this with a
+ruler?
