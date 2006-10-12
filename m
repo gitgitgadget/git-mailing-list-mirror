@@ -1,58 +1,67 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: [PATCH] git-revert: use GIT_DIR shell variable for the MERGE_MSG
-Date: Thu, 12 Oct 2006 15:11:07 -0700 (PDT)
-Message-ID: <20061012221107.73011.qmail@web31804.mail.mud.yahoo.com>
-Reply-To: ltuikov@yahoo.com
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: [PATCH 1/2] diff --stat: use asymptotic scaling in graph
+Date: Thu, 12 Oct 2006 15:20:09 -0700
+Message-ID: <452EBF99.5020108@gmail.com>
+References: <d620685f0610121237k458665c5m7bbde2d565d7ef81@mail.gmail.com>	 <20061012201646.GC10922@admingilde.org> <d620685f0610121437m38eb454g7597b2a93010b023@mail.gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Fri Oct 13 00:31:47 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Martin Waitz <tali@admingilde.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 13 00:32:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GY8lm-0006aw-FV
-	for gcvg-git@gmane.org; Fri, 13 Oct 2006 00:11:16 +0200
+	id 1GY8ub-0001Wm-AO
+	for gcvg-git@gmane.org; Fri, 13 Oct 2006 00:20:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751171AbWJLWLK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Oct 2006 18:11:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751178AbWJLWLJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 18:11:09 -0400
-Received: from web31804.mail.mud.yahoo.com ([68.142.207.67]:59492 "HELO
-	web31804.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1751171AbWJLWLI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Oct 2006 18:11:08 -0400
-Received: (qmail 73013 invoked by uid 60001); 12 Oct 2006 22:11:07 -0000
+	id S1751203AbWJLWUQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Oct 2006 18:20:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751206AbWJLWUQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 18:20:16 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:18906 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751203AbWJLWUO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Oct 2006 18:20:14 -0400
+Received: by nf-out-0910.google.com with SMTP id x30so716961nfb
+        for <git@vger.kernel.org>; Thu, 12 Oct 2006 15:20:13 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=VbyOcTLCHxpXEoiDm1gZlYG2Ggli5G2uXCkQbnD9AhS6ZpoFWy6VdE2rNClsU6EvCAIwRJADiO0vipE6OxpERHY3SCmU5+7F2IfE1vyU6GoaAW4NET0XtIGaazn/1Ump1IITTwI1CZ5W2CVy+a1VcQ7IlEJJXxkjtSnV5DGvhPM=  ;
-Received: from [64.215.88.90] by web31804.mail.mud.yahoo.com via HTTP; Thu, 12 Oct 2006 15:11:07 PDT
-To: git@vger.kernel.org
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=EkG52vvdZp45NWCld+8m+a9G+UdgolW487cgNpRNcJaii/ZOL9WJsEMd6/8YluDG1iWd+HsUQzK8lVUh4FEkO7lDojlzBaI94tHtoEn2Y+9Gz4cEuh3+9TeM4okLNHnlRhSSoqeUDIjSfSoeHqr2R9pukh9MkrRF/pLAKeh5ApE=
+Received: by 10.78.201.8 with SMTP id y8mr2863959huf;
+        Thu, 12 Oct 2006 15:20:13 -0700 (PDT)
+Received: from ?10.0.0.6? ( [68.233.231.217])
+        by mx.google.com with ESMTP id 28sm2608806hua.2006.10.12.15.20.11;
+        Thu, 12 Oct 2006 15:20:13 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060911)
+To: apodtele <apodtele@gmail.com>
+In-Reply-To: <d620685f0610121437m38eb454g7597b2a93010b023@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28807>
 
-Ooops!
+apodtele wrote:
+> On 10/12/06, Martin Waitz <tali@admingilde.org> wrote:
+>> On Thu, Oct 12, 2006 at 03:37:17PM -0400, apodtele wrote:
+>> > Instead of conditionally scaling the stat graph for large changes,
+>> > always scale it asymptotically: small changes shall appear without any
+>> > distortions.
+>>
+>> very nice idea!
+>>
+>> > +     return it * width / (it + width) + 1;
+>>
+>> but wouldn't this formula result in at least 1, even for a 0 change?
+>> Perhaps we'd have to special case an input of 0?
+[...]
+> +    if (it)
+> +        return it * width / (it + width) + 1;
+> +    else
+> +        return 0;
 
-Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
----
- git-revert.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+No conditional needed:
 
-diff --git a/git-revert.sh b/git-revert.sh
-index 2e23cf4..6eab3c7 100755
---- a/git-revert.sh
-+++ b/git-revert.sh
-@@ -145,7 +145,7 @@ git-read-tree -m -u --aggressive $base $
- result=$(git-write-tree 2>/dev/null) || {
-     echo >&2 "Simple $me fails; trying Automatic $me."
-     git-merge-index -o git-merge-one-file -a || {
--	    mv -f .msg .git/MERGE_MSG
-+	    mv -f .msg "$GIT_DIR/MERGE_MSG"
- 	    {
- 		echo '
- Conflicts:
--- 
-1.4.3.rc2.gd9edb
+	return it * width / (it + width - 1)
