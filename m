@@ -1,86 +1,66 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: cg-commit does not run pre-commit hook?
-Date: Thu, 12 Oct 2006 16:42:39 +0200
-Message-ID: <452E545F.6060406@op5.se>
-References: <20061012142736.74DE7353BDE@atlas.denx.de>
+From: Sergio Callegari <scallegari@arces.unibo.it>
+Subject: gitk does not appreciate file names including spaces
+Date: Thu, 12 Oct 2006 16:45:36 +0200
+Organization: ARCES - =?ISO-8859-15?Q?Universit=E0_di_Bologna?=
+Message-ID: <452E5510.9090002@arces.unibo.it>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 12 16:46:11 2006
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Thu Oct 12 16:47:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GY1lm-0002VP-NW
-	for gcvg-git@gmane.org; Thu, 12 Oct 2006 16:42:47 +0200
+	id 1GY1pD-0003kN-4S
+	for gcvg-git@gmane.org; Thu, 12 Oct 2006 16:46:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932105AbWJLOmn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Oct 2006 10:42:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932462AbWJLOmn
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 10:42:43 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:56275 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S932105AbWJLOmm
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Oct 2006 10:42:42 -0400
-Received: by smtp-gw1.op5.se (Postfix, from userid 588)
-	id 713BF6BE1D; Thu, 12 Oct 2006 16:42:41 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
-	linux-server1.op5.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.1.4
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 45B8C6BE19; Thu, 12 Oct 2006 16:42:40 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-To: Wolfgang Denk <wd@denx.de>
-In-Reply-To: <20061012142736.74DE7353BDE@atlas.denx.de>
+	id S932518AbWJLOqL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 12 Oct 2006 10:46:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932516AbWJLOqL
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 10:46:11 -0400
+Received: from arces.unibo.it ([137.204.143.6]:46023 "EHLO arces.unibo.it")
+	by vger.kernel.org with ESMTP id S932522AbWJLOqJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Oct 2006 10:46:09 -0400
+Received: from [192.168.98.81] ([137.204.98.183])
+	(authenticated bits=0)
+	by arces.unibo.it (8.13.7/8.13.7) with ESMTP id k9CEk9t7000524
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Thu, 12 Oct 2006 16:46:10 +0200
+User-Agent: Thunderbird 1.5.0.7 (X11/20060921)
+To: git@vger.kernel.org
+X-Spam-Status: No, score=-100.2 required=5.5 tests=BAYES_40,USER_IN_WHITELIST 
+	autolearn=unavailable version=3.1.3-gr0
+X-Spam-Checker-Version: SpamAssassin 3.1.3-gr0 (2006-06-01) on 
+	mail.arces.unibo.it
+X-Virus-Scanned: ClamAV 0.88.4/2026/Thu Oct 12 08:47:06 2006 on arces.unibo.it
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28782>
 
-Wolfgang Denk wrote:
-> Dear Petr,
-> 
-> in message <20061012011548.GT20017@pasky.or.cz> you wrote:
->>   historically, Git and Cogito use a different set of hooks (Cogito got
->> hooks first but Git picked own names and usage and now is prevalent).
-> 
-> I see. And current versions of cogito don't support any pre-commit
-> script, right?
-> 
->> I have plans for making Cogito support Git hooks and slowly deprecate
->> those own ones for which Git has counterparts, but didn't get to it yet.
->> I might do today during the more boring lectures... ;-)
-> 
-> Keeping my fingers crossed :-)
-> 
-> I'm looking for a way  to  register  the  commit  message  into  some
-> changelog  file  which  gets  checked  in with the same commit. Or is
-> there another way to do this? 
-> 
+Just a short notice about it. Not a big issue, really... just that in t=
+he
+quadrant at the bottom right of the gitk screen, filenames including sp=
+aces
+are not shown properly.
 
-git log
+Sergio
 
-The commit message is already saved and git (and cogito, I presume) 
-provide tools to fetch those messages in the relevant different orders 
-(although ordering by date is flakey sometimes; see list-archives for 
-discussion).
+--=20
+----------------------------------------------------------------
+Dr. Sergio Callegari                 Via Fontanelle 40
+Researcher                           47100 Forl=EC
+II School of Engineering             Tel. +39.0543.786927
+University of Bologna                Fax. +39.0543.786926
 
-One part of why a proper SCM is so good to use is that you shouldn't 
-have to maintain a separate changelog. The SCM should create one for you 
-when you ask it, based on the comments you've entered when actually 
-making the changes.
-
-That aside, for actual releases, I generally write a short, gisted 
-"what's new" thingie inside the tag, based on the shortlog output and my 
-own memory. This comes in handy when management wants to have their 
-version of the shortlog, and developers can pretty easily find new 
-features by just sifting through the tag-messages.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Affiliated with:
+DEIS  - Dept. of Electronics, Computer Sciences and Systems,
+        University of Bologna (www.deis.unibo.it)
+ARCES - Advanced Research Center on Electronic Systems for
+        Information and Communication Technologies
+        Unversity of Bologna  (www.arces.unibo.it)
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
