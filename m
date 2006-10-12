@@ -1,66 +1,65 @@
-From: Sergio Callegari <scallegari@arces.unibo.it>
-Subject: gitk does not appreciate file names including spaces
-Date: Thu, 12 Oct 2006 16:45:36 +0200
-Organization: ARCES - =?ISO-8859-15?Q?Universit=E0_di_Bologna?=
-Message-ID: <452E5510.9090002@arces.unibo.it>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Thu Oct 12 16:47:17 2006
+From: Ray Lehtiniemi <rayl@mail.com>
+Subject: [PATCH] [PATCH] gitk: Handle spaces in filenames
+Date: Thu, 12 Oct 2006 09:03:39 -0600
+Message-ID: <11606654193188-git-send-email-rayl@mail.com>
+References: <452E5510.9090002@arces.unibo.it>
+ <11606654193083-git-send-email-rayl@mail.com>
+Cc: Ray Lehtiniemi <rayl@mail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 12 17:09:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GY1pD-0003kN-4S
-	for gcvg-git@gmane.org; Thu, 12 Oct 2006 16:46:21 +0200
+	id 1GY27q-0001Mj-19
+	for gcvg-git@gmane.org; Thu, 12 Oct 2006 17:05:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932518AbWJLOqL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 12 Oct 2006 10:46:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932516AbWJLOqL
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 10:46:11 -0400
-Received: from arces.unibo.it ([137.204.143.6]:46023 "EHLO arces.unibo.it")
-	by vger.kernel.org with ESMTP id S932522AbWJLOqJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Oct 2006 10:46:09 -0400
-Received: from [192.168.98.81] ([137.204.98.183])
-	(authenticated bits=0)
-	by arces.unibo.it (8.13.7/8.13.7) with ESMTP id k9CEk9t7000524
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Thu, 12 Oct 2006 16:46:10 +0200
-User-Agent: Thunderbird 1.5.0.7 (X11/20060921)
+	id S932566AbWJLPFb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Oct 2006 11:05:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932579AbWJLPFb
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 11:05:31 -0400
+Received: from shawidc-mo1.cg.shawcable.net ([24.71.223.10]:7466 "EHLO
+	pd2mo3so.prod.shaw.ca") by vger.kernel.org with ESMTP
+	id S932566AbWJLPFa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Oct 2006 11:05:30 -0400
+Received: from pd5mr4so.prod.shaw.ca
+ (pd5mr4so-qfe3.prod.shaw.ca [10.0.141.168]) by l-daemon
+ (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
+ with ESMTP id <0J71006NS365MO30@l-daemon> for git@vger.kernel.org; Thu,
+ 12 Oct 2006 09:03:41 -0600 (MDT)
+Received: from pn2ml2so.prod.shaw.ca ([10.0.121.146])
+ by pd5mr4so.prod.shaw.ca (Sun Java System Messaging Server 6.2-2.05 (built Apr
+ 28 2005)) with ESMTP id <0J7100MFJ3651AN0@pd5mr4so.prod.shaw.ca> for
+ git@vger.kernel.org; Thu, 12 Oct 2006 09:03:41 -0600 (MDT)
+Received: from ray.lehtiniemi.com ([68.147.121.172])
+ by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
+ with ESMTP id <0J7100ITS364JXM0@l-daemon> for git@vger.kernel.org; Thu,
+ 12 Oct 2006 09:03:41 -0600 (MDT)
+Received: by ray.lehtiniemi.com (Postfix, from userid 1000)
+	id A2E2750EFE6; Thu, 12 Oct 2006 09:03:39 -0600 (MDT)
+In-reply-to: <11606654193083-git-send-email-rayl@mail.com>
 To: git@vger.kernel.org
-X-Spam-Status: No, score=-100.2 required=5.5 tests=BAYES_40,USER_IN_WHITELIST 
-	autolearn=unavailable version=3.1.3-gr0
-X-Spam-Checker-Version: SpamAssassin 3.1.3-gr0 (2006-06-01) on 
-	mail.arces.unibo.it
-X-Virus-Scanned: ClamAV 0.88.4/2026/Thu Oct 12 08:47:06 2006 on arces.unibo.it
-X-Virus-Status: Clean
+X-Mailer: git-send-email 1.4.3.rc2.ge19ff
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28783>
 
-Just a short notice about it. Not a big issue, really... just that in t=
-he
-quadrant at the bottom right of the gitk screen, filenames including sp=
-aces
-are not shown properly.
+---
+ gitk |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Sergio
-
---=20
-----------------------------------------------------------------
-Dr. Sergio Callegari                 Via Fontanelle 40
-Researcher                           47100 Forl=EC
-II School of Engineering             Tel. +39.0543.786927
-University of Bologna                Fax. +39.0543.786926
-
-Affiliated with:
-DEIS  - Dept. of Electronics, Computer Sciences and Systems,
-        University of Bologna (www.deis.unibo.it)
-ARCES - Advanced Research Center on Electronic Systems for
-        Information and Communication Technologies
-        Unversity of Bologna  (www.arces.unibo.it)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+diff --git a/gitk b/gitk
+index ebbeac6..3196719 100755
+--- a/gitk
++++ b/gitk
+@@ -4324,7 +4324,7 @@ proc gettreediffline {gdtf ids} {
+ 	}
+ 	return
+     }
+-    set file [lindex $line 5]
++    set file [lrange $line 5 end]
+     lappend treediff $file
+ }
+ 
+-- 
+1.4.3.rc2.ge19ff
