@@ -1,71 +1,70 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] git-pickaxe: blame rewritten.
-Date: Fri, 13 Oct 2006 13:54:18 -0700 (PDT)
-Message-ID: <20061013205418.5087.qmail@web31803.mail.mud.yahoo.com>
-References: <7vmz81kwh3.fsf@assigned-by-dhcp.cox.net>
-Reply-To: ltuikov@yahoo.com
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/2] git-repack: -b to pass --delta-base-offset
+Date: Fri, 13 Oct 2006 14:22:46 -0700
+Message-ID: <7v64endi6x.fsf@assigned-by-dhcp.cox.net>
+References: <11607177011745-git-send-email-junkio@cox.net>
+	<11607177024171-git-send-email-junkio@cox.net>
+	<Pine.LNX.4.64.0610130912500.2435@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 13 22:54:26 2006
+X-From: git-owner@vger.kernel.org Fri Oct 13 23:23:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GYU2x-0006ip-I9
-	for gcvg-git@gmane.org; Fri, 13 Oct 2006 22:54:23 +0200
+	id 1GYUUj-0003gy-9o
+	for gcvg-git@gmane.org; Fri, 13 Oct 2006 23:23:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751899AbWJMUyU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Oct 2006 16:54:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751902AbWJMUyU
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Oct 2006 16:54:20 -0400
-Received: from web31803.mail.mud.yahoo.com ([68.142.207.66]:8111 "HELO
-	web31803.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1751899AbWJMUyT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Oct 2006 16:54:19 -0400
-Received: (qmail 5089 invoked by uid 60001); 13 Oct 2006 20:54:18 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=v3yzoYNs4XDSIdTb+RC4ne4iQQ2YrgHe71w0L6xPEVche5kRwyhXo7a8SabwC1DywQDHyDvmJwLyjk1Ps5k8bM9eAdXkTWdpbc7ZgxXUPg0ZGeAe7SPLunWdYdJ2muFEjA2lyey6lQ1zUqZkufZc98ssVMMjMJgnnlrZCgdXBeA=  ;
-Received: from [64.215.88.90] by web31803.mail.mud.yahoo.com via HTTP; Fri, 13 Oct 2006 13:54:18 PDT
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vmz81kwh3.fsf@assigned-by-dhcp.cox.net>
+	id S932073AbWJMVWt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Oct 2006 17:22:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932077AbWJMVWt
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Oct 2006 17:22:49 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:64669 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S932073AbWJMVWs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Oct 2006 17:22:48 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061013212247.HYGO18985.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 13 Oct 2006 17:22:47 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ZxNq1V00M1kojtg0000000
+	Fri, 13 Oct 2006 17:22:50 -0400
+To: Nicolas Pitre <nico@cam.org>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28861>
 
---- Junio C Hamano <junkio@cox.net> wrote:
-> Luben Tuikov <ltuikov@yahoo.com> writes:
-> 
-> > Junio, is it possible to also print the "previous" commit?
-> > I mean, is it tenable to print the commit such that
-> > a "git-diff C B -- A:file" will give a diff of the block of lines
-> > we're looking at?
-> 
-> There is no single "previous" in general.  Which side of the
-> merge would you take?
+Nicolas Pitre <nico@cam.org> writes:
 
-The parent commit.
+> On Thu, 12 Oct 2006, Junio C Hamano wrote:
+>
+>> This new option makes the resulting pack express the delta base
+>> with more compact "offset" format.
+>
+> Actually I thought about making it the default whenever git-pack-objects 
+> supported it, and use a negative option with git-repack to disable it 
+> instead.
+>
+> The fact is that there is little reason for not using delta base offsets 
+> in most cases and specifying -b all the time would become more of an 
+> annoyance.
+>
+> What do you think?
 
-For example,
-Annotation/blame of A:File
-C 1 line 1
-  2 line 2
-D 3 line 3
-B 4 line 4
+The only time it matters is if the packs in repository being
+repacked needs to be readable by older git, which I think is
+only when somebody with older git uses commit walkers to
+download the pack into a remote repository to use.  Using or not
+using delta-base-offset is tied to each repository, and in a
+sense that is similar to "repository format version".
 
-The parent commit of C, such that,
-git-diff parent(C) C -- A:File
-will give me the diff which introduced
-the "first block", or more generally,
-all lines annotated with C.
+So how about
 
-Then when I click on 1 or 2, I'd like to
-see Annotation/blame of parent(C):File,
-on the line number where the C "block" was
-introduced.
-
-   Luben
+	[core]
+        	repackUseDeltaBase = true
