@@ -1,62 +1,82 @@
-From: Santi <sbejar@gmail.com>
-Subject: Re: [PATCH] git-fetch: Allow branch."branchname".remote=.
-Date: Fri, 13 Oct 2006 11:08:53 +0200
-Message-ID: <8aa486160610130208s67ea0746o8a54910860b3fb78@mail.gmail.com>
-References: <87y7rk3b9n.fsf@gmail.com>
-	 <7vpscwd4ya.fsf@assigned-by-dhcp.cox.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: t4015-diff-whitespace broken on cygwin's bash
+Date: Fri, 13 Oct 2006 11:12:31 +0200
+Message-ID: <81b0412b0610130212uca8371fg92db5081a8175cb3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 13 11:09:03 2006
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_24298_29405790.1160730751260"
+Cc: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Oct 13 11:12:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GYJ2I-0002p9-IY
-	for gcvg-git@gmane.org; Fri, 13 Oct 2006 11:08:58 +0200
+	id 1GYJ5o-0003Y3-AE
+	for gcvg-git@gmane.org; Fri, 13 Oct 2006 11:12:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750847AbWJMJIz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 13 Oct 2006 05:08:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750899AbWJMJIz
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Oct 2006 05:08:55 -0400
-Received: from wx-out-0506.google.com ([66.249.82.231]:43001 "EHLO
-	wx-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1750847AbWJMJIy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Oct 2006 05:08:54 -0400
-Received: by wx-out-0506.google.com with SMTP id s14so806891wxc
-        for <git@vger.kernel.org>; Fri, 13 Oct 2006 02:08:53 -0700 (PDT)
+	id S1750701AbWJMJMe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Oct 2006 05:12:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750709AbWJMJMd
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Oct 2006 05:12:33 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:60445 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1750701AbWJMJMd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Oct 2006 05:12:33 -0400
+Received: by nf-out-0910.google.com with SMTP id x30so886642nfb
+        for <git@vger.kernel.org>; Fri, 13 Oct 2006 02:12:31 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=rX/conwW4P7vAENifki+Hec8vOFDTi6a9cqshV4Osiw4UQ3qLvBTsFiK9NblYhTBK+1ZkYz+X1wiuPK8oCQP2ljWGxXPvz6UrgYs1dSOJtWKmPbgACN6IgF57nw+7aSLzGTb1DybqOBaQ8nergQQLJSJOHb+JRceMoxt8fSQNRI=
-Received: by 10.70.96.3 with SMTP id t3mr4837056wxb;
-        Fri, 13 Oct 2006 02:08:53 -0700 (PDT)
-Received: by 10.70.46.8 with HTTP; Fri, 13 Oct 2006 02:08:53 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vpscwd4ya.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=O9zCLS15bmHq8Ug46112a1KEP8AummfKkSPfJgEa5TUo37d+ZIEHpf+Vt8HUSiexK0lF5L4/9fl3Bg0RFCjltw0JVkauS3dL7HcVIe0SXFW1xPG1cSGQeIsjY6JPLA6Q+aizk9XjJbXW+WDIe8djUp9I1mGSt7rUJCvAtdvpyKY=
+Received: by 10.78.203.13 with SMTP id a13mr3438285hug;
+        Fri, 13 Oct 2006 02:12:31 -0700 (PDT)
+Received: by 10.78.115.8 with HTTP; Fri, 13 Oct 2006 02:12:31 -0700 (PDT)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28835>
 
-2006/10/13, Junio C Hamano <junkio@cox.net>:
-> Santi B=E9jar <sbejar@gmail.com> writes:
->
->
-> What does it do?
->
+------=_Part_24298_29405790.1160730751260
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-It allows to define that the default remote repository is the local
-one. For example, in git.git you could have:
+It seem to cut off the last CR from text-here. I.e.
 
-[branch "next"]
-   remote=3D"."
-   merge=3Dmaster
+  cat <<EOF >x
+  ...
+  CR at end^M
+  EOF
 
-so the default merge in the next branch is the master branch in the
-local repository.
+becomes just "CR at end" in the output file, that is ^M (aka CR) stripped.
+The attached workaround worked for me, but is, as usual, too ugly to
+sign it off.
 
-Santi
+------=_Part_24298_29405790.1160730751260
+Content-Type: application/xxxxx; name="fix-t4015-diff-whitespace.patch"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="fix-t4015-diff-whitespace.patch"
+X-Attachment-Id: file0
+
+Y29tbWl0IDAwMTc5OTkxOGJhMGI3MTZjMzllMDRlMjhlMWIwNmY2NTYxMDIxOTMKQXV0aG9yOiBB
+bGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRlOiAgIEZyaSBPY3QgMTMgMTE6MDU6
+MTcgMjAwNiArMDIwMAoKICAgIGZpeCB0NDAxNS1kaWZmLXdoaXRlc3BhY2Uuc2ggb24gY3lnd2lu
+CgpkaWZmIC0tZ2l0IGEvdC90NDAxNS1kaWZmLXdoaXRlc3BhY2Uuc2ggYi90L3Q0MDE1LWRpZmYt
+d2hpdGVzcGFjZS5zaAppbmRleCBjOTQ1MDg1Li5jZTQ3YThhIDEwMDc1NQotLS0gYS90L3Q0MDE1
+LWRpZmYtd2hpdGVzcGFjZS5zaAorKysgYi90L3Q0MDE1LWRpZmYtd2hpdGVzcGFjZS5zaApAQCAt
+NTcsOCArNTcsOCBAQCB3aGl0ZXNwYWNlIGNoYW5nZQogd2hpdGVzcGFjZSBpbiB0aGUgbWlkZGxl
+CiB3aGl0ZXNwYWNlIGF0IGVuZAogdW5jaGFuZ2VkIGxpbmUKLUNSIGF0IGVuZA0KIEVPRgorZWNo
+byAtbmUgJ0NSIGF0IGVuZFxyXG4nID4+eAogCiBnaXQtdXBkYXRlLWluZGV4IHgKIApAQCAtODYs
+OSArODYsOSBAQCBpbmRleCBkOTlhZjIzLi44YjMyZmI1IDEwMDY0NAogK3doaXRlIHNwYWNlIGlu
+IHRoZSBtaWRkbGUKICt3aGl0ZXNwYWNlIGF0IGVuZCAgCiAgdW5jaGFuZ2VkIGxpbmUKLS1DUiBh
+dCBlbmQNCi0rQ1IgYXQgZW5kCiBFT0YKK3ByaW50ZiAnJXNDUiBhdCBlbmRcclxuJyAtID4+ZXhw
+ZWN0CitwcmludGYgJytDUiBhdCBlbmRcbicgPj5leHBlY3QKIGdpdC1kaWZmID4gb3V0CiB0ZXN0
+X2V4cGVjdF9zdWNjZXNzICdhbm90aGVyIHRlc3QsIHdpdGhvdXQgb3B0aW9ucycgJ2RpZmYgLXUg
+ZXhwZWN0IG91dCcKIApAQCAtMTEzLDkgKzExMyw5IEBAIGluZGV4IGQ5OWFmMjMuLjhiMzJmYjUg
+MTAwNjQ0CiArd2hpdGUgc3BhY2UgaW4gdGhlIG1pZGRsZQogK3doaXRlc3BhY2UgYXQgZW5kICAK
+ICB1bmNoYW5nZWQgbGluZQotLUNSIGF0IGVuZA0KLStDUiBhdCBlbmQKIEVPRgorcHJpbnRmICcl
+c0NSIGF0IGVuZFxyXG4nIC0gPj5leHBlY3QKK3ByaW50ZiAnK0NSIGF0IGVuZFxuJyA+PmV4cGVj
+dAogZ2l0LWRpZmYgLWIgPiBvdXQKIHRlc3RfZXhwZWN0X3N1Y2Nlc3MgJ2Fub3RoZXIgdGVzdCwg
+d2l0aCAtYicgJ2RpZmYgLXUgZXhwZWN0IG91dCcKIAo=
+------=_Part_24298_29405790.1160730751260--
