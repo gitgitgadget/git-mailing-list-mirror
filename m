@@ -1,83 +1,53 @@
-From: apodtele <apodtele@gmail.com>
-Subject: Re: [PATCH 1/2] diff --stat: use asymptotic scaling in graph
-Date: Fri, 13 Oct 2006 09:56:58 -0400
-Message-ID: <d620685f0610130656u55079a1fkc2c98a82f3aa4a33@mail.gmail.com>
-References: <d620685f0610121237k458665c5m7bbde2d565d7ef81@mail.gmail.com>
-	 <7vlknlmc9y.fsf@assigned-by-dhcp.cox.net>
+From: Pazu <pazu@pazu.com.br>
+Subject: Re: [PATCH] Removes the <?xml?> declaration from gitweb.pl
+Date: Fri, 13 Oct 2006 11:09:31 -0300
+Message-ID: <ego6nn$l78$1@sea.gmane.org>
+References: <20061011172553.GA1147@linux-mips.org> <egjnk5$bpn$2@sea.gmane.org> <200610120745.00909.robin.rosenberg.lists@dewire.com> <200610122321.18630.jnareb@gmail.com> <ego2nk$3nm$1@sea.gmane.org> <ego331$568$2@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 13 15:57:44 2006
+X-From: git-owner@vger.kernel.org Fri Oct 13 16:13:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GYNXR-0001pk-4G
-	for gcvg-git@gmane.org; Fri, 13 Oct 2006 15:57:25 +0200
+	id 1GYNlY-0005wg-8L
+	for gcvg-git@gmane.org; Fri, 13 Oct 2006 16:12:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750836AbWJMN5B (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Oct 2006 09:57:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750838AbWJMN5B
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Oct 2006 09:57:01 -0400
-Received: from wr-out-0506.google.com ([64.233.184.231]:24367 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1750836AbWJMN47 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Oct 2006 09:56:59 -0400
-Received: by wr-out-0506.google.com with SMTP id i32so150965wra
-        for <git@vger.kernel.org>; Fri, 13 Oct 2006 06:56:58 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=oUl3IJ4kJ6IhFx7h0WkHCHbCuLbpVKH4Xf1ELp8lzjQ/JkRypvwGLhwJ1+A9545mOPZiaaejsR/lMAXQWqJjlVukqINPkqQNnPMB2VL+6VYUuGrESY0NKnOBJdOkxlQ4Po9aEmKXC9VIm/plldItTVuJa0r8K4a5M3GYjrDd2Mg=
-Received: by 10.90.49.19 with SMTP id w19mr2235524agw;
-        Fri, 13 Oct 2006 06:56:58 -0700 (PDT)
-Received: by 10.90.95.6 with HTTP; Fri, 13 Oct 2006 06:56:58 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vlknlmc9y.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1750844AbWJMOLt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Oct 2006 10:11:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750845AbWJMOLt
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Oct 2006 10:11:49 -0400
+Received: from main.gmane.org ([80.91.229.2]:24272 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750842AbWJMOLt (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Oct 2006 10:11:49 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GYNkc-0005dl-NC
+	for git@vger.kernel.org; Fri, 13 Oct 2006 16:11:02 +0200
+Received: from 200.213.42.52 ([200.213.42.52])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 13 Oct 2006 16:11:02 +0200
+Received: from pazu by 200.213.42.52 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 13 Oct 2006 16:11:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 200.213.42.52
+User-Agent: Thunderbird 1.5.0.7 (Macintosh/20060909)
+In-Reply-To: <ego331$568$2@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28848>
 
-On 10/12/06, Junio C Hamano <junkio@cox.net> wrote:
-> apodtele <apodtele@gmail.com> writes:
-> > Instead of conditionally scaling the stat graph for large changes,
-> > always scale it asymptotically: small changes shall appear without any
-> > distortions.
-> I am not sure if any non-linear scaling is worth pursuing.
-> Suppose your change set has three files modified:
->
->         A       adds 20 lines, deletes 10 lines
->         B       adds 10 lines, deletes 20 lines
->         C       adds 30 lines, deletes 30 lines
->
-> For obvious reasons, the total length of A and B exceeds half of
-> C, which looks quite misleading.
->
->          A | ++++++++++++--------
->          B | ++++++++------------
->          C | +++++++++++++++---------------
+Jakub Narebski wrote:
 
-Before my patch is completely forgotten, let me critique the current
-approach. Currently everything is great and beautiful unless one
-particular change adds a couple of hundred lines, say, to a man page.
-With large changes in play, small changes are squashed to a single
-character. Would you argue that this scenario correctly represent
-importance of man pages? Would you say, that it's not misleading that
-1-, 2-, and 5-liners all look the same as long as a man page is
-prominently shown? Moreover, 1-, 2-, and 5- liners may look different
-depending on the size of that man page. The current approach is not
-invariant; it is, however, normalized as needed. "Normalized" is good,
-"as needed" is bad.
+> Well, there is yet another solution. Do browser detection, and do not output
+> <?xml ... ?> declaration for IE. Perhaps that would be best solution.
 
-With asymptotic scaling, 1-, 2-, and 5- liners are correctly
-represented by a correct number of characters, regardless of the size
-of that man page. 10- and 20- liners are _slightly_ distorted. I
-cannot stress it more: the representation will not depend on the size
-of changes in other files! You will be able to tell where truly large
-changes happened too! The price for this is that you won't be able to
-precisely compare the sizes of added man pages.
+Well, there's now drawback in removing the XML declaration (no browser 
+requires it), so why even worry about browser detection?
 
-It is your choice...
+-- Marcus
