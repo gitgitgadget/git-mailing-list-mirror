@@ -1,69 +1,115 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 1/2] diff --stat: use asymptotic scaling in graph
-Date: Thu, 12 Oct 2006 20:39:30 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0610122038330.2435@xanadu.home>
-References: <d620685f0610121237k458665c5m7bbde2d565d7ef81@mail.gmail.com>
- <20061012201646.GC10922@admingilde.org>
- <d620685f0610121437m38eb454g7597b2a93010b023@mail.gmail.com>
- <452EBF99.5020108@gmail.com> <20061012222703.GA31152@admingilde.org>
- <452EC625.7050301@gmail.com>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH] git-pickaxe: blame rewritten.
+Date: Thu, 12 Oct 2006 18:04:02 -0700 (PDT)
+Message-ID: <20061013010402.99837.qmail@web31814.mail.mud.yahoo.com>
+References: <7vzmc1jcz0.fsf@assigned-by-dhcp.cox.net>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: Martin Waitz <tali@admingilde.org>, apodtele <apodtele@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 13 02:43:51 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 13 03:05:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GYB5M-0003Gd-GU
-	for gcvg-git@gmane.org; Fri, 13 Oct 2006 02:39:45 +0200
+	id 1GYBT8-0003yH-Av
+	for gcvg-git@gmane.org; Fri, 13 Oct 2006 03:04:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751390AbWJMAjc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Oct 2006 20:39:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751394AbWJMAjc
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 20:39:32 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:30665 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1751390AbWJMAjb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Oct 2006 20:39:31 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J7100963TTU1FJ0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 12 Oct 2006 20:39:31 -0400 (EDT)
-In-reply-to: <452EC625.7050301@gmail.com>
-X-X-Sender: nico@xanadu.home
-To: A Large Angry SCM <gitzilla@gmail.com>
+	id S1751431AbWJMBEG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Oct 2006 21:04:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751437AbWJMBEG
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Oct 2006 21:04:06 -0400
+Received: from web31814.mail.mud.yahoo.com ([68.142.206.167]:39803 "HELO
+	web31814.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S1751431AbWJMBED (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Oct 2006 21:04:03 -0400
+Received: (qmail 99839 invoked by uid 60001); 13 Oct 2006 01:04:02 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=l19o2OdsW1ZxuFd5pl6WPJeOS83bufpyxnv3bSWqWzYtYPFhddVUR0bfB63U70+ynmvsl1/+h9lmYGjxMLjxxX6r9UFFFzcgJLXEYYjHqn3t0v3HVJDjsw2FldGVIxuACMxhEucHUcdSlLGB85zbiSsJLMDaHr+47negR6r7k/o=  ;
+Received: from [64.215.88.90] by web31814.mail.mud.yahoo.com via HTTP; Thu, 12 Oct 2006 18:04:02 PDT
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmc1jcz0.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28825>
 
-On Thu, 12 Oct 2006, A Large Angry SCM wrote:
-
-> Martin Waitz wrote:
-> > On Thu, Oct 12, 2006 at 03:20:09PM -0700, A Large Angry SCM wrote:
-> > > > +    if (it)
-> > > > +        return it * width / (it + width) + 1;
-> > > > +    else
-> > > > +        return 0;
-> > > No conditional needed:
-> > >
-> > >  return it * width / (it + width - 1)
-> > 
-> > But then it would start scaling much earlier
-> > (for width 10: at 2 instead of 4).
-> > This is not bad per se, but different...
-> > 
+--- Junio C Hamano <junkio@cox.net> wrote:
+> > ---cut---
+> > The porcelain format is as follows:
+> >
+> > <SHA-1> <orig line> <line> [<num lines>
 > 
-> OK:
-> 	return (it * width + (it + width)/2)) / (it + width - 1)
+> This is misleading.  <num lines> is always shown for the group
+> head, even if there was another group earlier from the same
+> commit (otherwise the Porcelain has to buffer the chunk, which
+
+Completely understood and always agreed upon.
+
+> you did not like).  Second and subsequent lines in the same
+> group do not have <num lines>.
+
+Completely understood and always agreed upon.
+
 > 
-> Now it's back at 4. ;-)
+> > author <name>
+> > author-mail <email format>
+> >...
+> > committer-tz <TZ>
+> > filename <string>
+> > summary <string>]
+> > <TAB><line data>
+> >
+> > Where
+> >   <SHA-1> is the SHA-1 of the commit which introduces this line.
+> >   <orig line> it the line number where this line is introduced.
+> >   <line> is the line number of the final file (at SHA-1 commit)
+> >
+> > Then, if <SHA-1> is different from the previous line's SHA-1 (if no
+> > previous then always different), a header follows.  It starts by the
+> > number of lines that this <SHA-1> commit introduces,...
+> 
+> So this description is wrong; <num lines> is not part of the
+> "extra".
 
-Sure, but at this point the original conditional is probably more 
-efficient.
+So, it is possible to print
 
+<SHA-1> <orig lineno> <this lineno> <num lines>
+TAB<data line>
 
-Nicolas
+?
+
+> I deliberately left it vague so that we can add things later to
+> the header.  Porcelains should ignore the fields that they do
+> not understand, and should not expect these fields listed above
+> come in the order the above list shows.
+
+If the format changes, then porcelains should change their parsing
+algorithms.
+
+> Also I deliberately left it vague so that Porcelains can get the
+> header for the same SHA-1 more than once.  This is needed when
+
+For different blocks separated by at least one different commit, yes.
+But the opposite should not be true.
+
+That is, you start a group, only when the previous commit differs
+from this commit.
+
+It would be prudent to print a <num lines> iff a group is started.
+
+> we add "ciff" to pick more than one paths from the same commit.
+> In such a case, most likely we are better off not to repeat
+> header fields from author...committer-tz and summary but we
+> would need filename.  The expectation to the Porcelains is:
+> 
+>    Read one line, which begins with commit object name and two
+>    or three numbers; if it has three numbers, it is the
+>    beginning of a group.
+
+And if it doesn't have three numbers?
+
+    Luben
