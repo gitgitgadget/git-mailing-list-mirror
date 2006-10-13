@@ -1,86 +1,57 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] git-pickaxe: blame rewritten.
-Date: Fri, 13 Oct 2006 14:59:42 -0700 (PDT)
-Message-ID: <20061013215942.36919.qmail@web31806.mail.mud.yahoo.com>
-References: <7vy7rjc2vg.fsf@assigned-by-dhcp.cox.net>
-Reply-To: ltuikov@yahoo.com
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/2] git-repack: -b to pass --delta-base-offset
+Date: Fri, 13 Oct 2006 15:11:02 -0700
+Message-ID: <7vslhrc1e1.fsf@assigned-by-dhcp.cox.net>
+References: <11607177011745-git-send-email-junkio@cox.net>
+	<11607177024171-git-send-email-junkio@cox.net>
+	<Pine.LNX.4.64.0610130912500.2435@xanadu.home>
+	<7v64endi6x.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0610131757050.2435@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 13 23:59:49 2006
+X-From: git-owner@vger.kernel.org Sat Oct 14 00:11:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GYV4E-0001X8-Gz
-	for gcvg-git@gmane.org; Fri, 13 Oct 2006 23:59:49 +0200
+	id 1GYVFE-0003Lt-Ry
+	for gcvg-git@gmane.org; Sat, 14 Oct 2006 00:11:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932086AbWJMV7o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Oct 2006 17:59:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932081AbWJMV7o
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Oct 2006 17:59:44 -0400
-Received: from web31806.mail.mud.yahoo.com ([68.142.207.69]:22431 "HELO
-	web31806.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S932086AbWJMV7n (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Oct 2006 17:59:43 -0400
-Received: (qmail 36921 invoked by uid 60001); 13 Oct 2006 21:59:42 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=U03Hxn7tOXIKZxTOFrIxiNm2qGwXEocXsGq0ADVxm43uC0/POfpIIDIE2C0KaKjyuYkRMqb2O2lCCRG49bw0PqCo8Pju1Zs765YAnYbVEAgIW93SKN5Omv/M8Y9nIjfdkGAjcKuhj9jELzY/8WgO4UaJFjzm64xr4wR1r8+Rzmg=  ;
-Received: from [64.215.88.90] by web31806.mail.mud.yahoo.com via HTTP; Fri, 13 Oct 2006 14:59:42 PDT
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy7rjc2vg.fsf@assigned-by-dhcp.cox.net>
+	id S1751895AbWJMWLF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Oct 2006 18:11:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751929AbWJMWLF
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Oct 2006 18:11:05 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:16329 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1751895AbWJMWLD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Oct 2006 18:11:03 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061013221102.JMTC18985.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 13 Oct 2006 18:11:02 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ZyB51V00T1kojtg0000000
+	Fri, 13 Oct 2006 18:11:06 -0400
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0610131757050.2435@xanadu.home> (Nicolas Pitre's
+	message of "Fri, 13 Oct 2006 17:58:43 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28866>
 
---- Junio C Hamano <junkio@cox.net> wrote:
-> Luben Tuikov <ltuikov@yahoo.com> writes:
-> 
-> > --- Junio C Hamano <junkio@cox.net> wrote:
-> >> Luben Tuikov <ltuikov@yahoo.com> writes:
-> >> 
-> >> > Junio, is it possible to also print the "previous" commit?
-> >> > I mean, is it tenable to print the commit such that
-> >> > a "git-diff C B -- A:file" will give a diff of the block of lines
-> >> > we're looking at?
-> >> 
-> >> There is no single "previous" in general.  Which side of the
-> >> merge would you take?
-> >
-> > The parent commit.
-> 
-> There is no single "the parent commit" in general.  Which side
-> of the merge would you take?
+Nicolas Pitre <nico@cam.org> writes:
 
-Yes, I realise that...
+>> So how about
+>> 
+>> 	[core]
+>>         	repackUseDeltaBase = true
+>
+> I agree, although "repackUseDeltaBase" is a bit vague as both delta 
+> types do use a delta base.
 
-I guess I'm trying to get to a successful implementation of
-the intention of commit 65910395c08e3dc4be685a9a9f60adfa61c89aa5
-(later reverted for a good reason).
-
-It is ok if this is not possible.  After all, the absolutely
-unambiguous way is blame->commit->blame->commit->..., etc,
-due to multiple parenting.
-
-> Also remeber, when we blame a line to a revision (unless we do
-> not limit the blame with v2.6.18.. and --since=2.weeks which
-> only git-pickaxe can do), the line is known to have been
-> introduced by _that_ commit.
-
-That is what we want.
-
-(fully agree with your previous comment that we limit _after_
- placing blame on a commit...)
-
-> If there were a corresponding line
-> in "the parent commit" for that line, we would not have assigned
-> the blame to the commit, but the blame would have been passed
-> down to "the parent commit" already.
-
-Indeed.
-
-   Luben
+True; core.repackUseDeltaBaseOffset that is.
