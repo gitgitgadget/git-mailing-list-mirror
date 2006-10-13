@@ -1,53 +1,78 @@
-From: Pazu <pazu@pazu.com.br>
-Subject: Re: [PATCH] Removes the <?xml?> declaration from gitweb.pl
-Date: Fri, 13 Oct 2006 11:09:31 -0300
-Message-ID: <ego6nn$l78$1@sea.gmane.org>
-References: <20061011172553.GA1147@linux-mips.org> <egjnk5$bpn$2@sea.gmane.org> <200610120745.00909.robin.rosenberg.lists@dewire.com> <200610122321.18630.jnareb@gmail.com> <ego2nk$3nm$1@sea.gmane.org> <ego331$568$2@sea.gmane.org>
+From: Nicolas Stroppa <nstroppa@computing.dcu.ie>
+Subject: git-svnimport and tags
+Date: Fri, 13 Oct 2006 15:44:55 +0100
+Message-ID: <452FA667.1060003@computing.dcu.ie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Oct 13 16:13:21 2006
+X-From: git-owner@vger.kernel.org Fri Oct 13 16:46:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GYNlY-0005wg-8L
-	for gcvg-git@gmane.org; Fri, 13 Oct 2006 16:12:00 +0200
+	id 1GYOIs-00071p-GO
+	for gcvg-git@gmane.org; Fri, 13 Oct 2006 16:46:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750844AbWJMOLt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Oct 2006 10:11:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750845AbWJMOLt
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Oct 2006 10:11:49 -0400
-Received: from main.gmane.org ([80.91.229.2]:24272 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750842AbWJMOLt (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Oct 2006 10:11:49 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GYNkc-0005dl-NC
-	for git@vger.kernel.org; Fri, 13 Oct 2006 16:11:02 +0200
-Received: from 200.213.42.52 ([200.213.42.52])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 13 Oct 2006 16:11:02 +0200
-Received: from pazu by 200.213.42.52 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 13 Oct 2006 16:11:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1750992AbWJMOqM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Oct 2006 10:46:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750994AbWJMOqM
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Oct 2006 10:46:12 -0400
+Received: from mailhost.computing.dcu.ie ([136.206.11.247]:58037 "EHLO
+	mailhost.computing.dcu.ie") by vger.kernel.org with ESMTP
+	id S1750952AbWJMOqL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Oct 2006 10:46:11 -0400
+Received: from [136.206.19.27] (pg-27.computing.dcu.ie [136.206.19.27])
+	by mailhost.computing.dcu.ie (8.13.2/8.13.2) with ESMTP id k9DEk4mH024883
+	for <git@vger.kernel.org.>; Fri, 13 Oct 2006 14:46:04 GMT
+User-Agent: Thunderbird 1.5.0.2 (X11/20060517)
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 200.213.42.52
-User-Agent: Thunderbird 1.5.0.7 (Macintosh/20060909)
-In-Reply-To: <ego331$568$2@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28849>
 
-Jakub Narebski wrote:
+Hello,
 
-> Well, there is yet another solution. Do browser detection, and do not output
-> <?xml ... ?> declaration for IE. Perhaps that would be best solution.
 
-Well, there's now drawback in removing the XML declaration (no browser 
-requires it), so why even worry about browser detection?
+A small report. (I am using cogito-0.18 and git 1.4.2.3.)
+I have imported an SVN project using git-svnimport.
+This project has several tags. Here is what I get with one the tags.
 
--- Marcus
+tricatel $ git-cat-file tag `cat .git/refs/tags/alanis-0.9.4`
+object [...]
+type commit
+tag alanis-0.9.4
+tagger nico <nico>
+
+
+If I do the same thing on a git repository created from scratch, I get:
+
+tricatel $ git-cat-file tag `cat .git/refs/tags/alanis-0.9.4`
+object [...]
+type commit
+tag alanis-0.9.4
+tagger nico <nico@[...]> 1160736694 +0100
+
+The date information is missing in the first case, which confuses
+cg-tag-show:
+tricatel $ cg-tag-show alanis-0.9.4
+[...]
+cg-Xlib: line 215: nico <n (nic * 3600 + co> * 60):
+syntax error in expression (error token is "(nic * 3600 + co> * 60)")
+
+I don't know if cg-tag-show should be more robust or if the date
+information should be in the tag.
+
+ Cheers,
+ nicolas
+
+
+
+-- 
+ _____________________________________________________________
+/
+| Nicolas Stroppa - nstroppa@computing.dcu.ie - +353-1-7006912
+| School of Computing, Dublin City University,
+| Glasnevin, Dublin 9, Ireland.
+| http://www.computing.dcu.ie/~nstroppa
+\_____________________________________________________________
