@@ -1,61 +1,62 @@
-From: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
-Subject: git-svn and u-boot broken.
-Date: Fri, 13 Oct 2006 21:19:34 +0200
-Message-ID: <00ad01c6eefc$84298280$1267a8c0@Jocke>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: git-svn and u-boot broken.
+Date: 13 Oct 2006 12:39:48 -0700
+Message-ID: <86slhsgg3f.fsf@blue.stonehenge.com>
+References: <00ad01c6eefc$84298280$1267a8c0@Jocke>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Oct 13 21:22:17 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 13 21:39:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GYSbe-0006bm-13
-	for gcvg-git@gmane.org; Fri, 13 Oct 2006 21:22:06 +0200
+	id 1GYSsq-0001T1-Vb
+	for gcvg-git@gmane.org; Fri, 13 Oct 2006 21:39:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751833AbWJMTVn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Oct 2006 15:21:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751837AbWJMTVm
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Oct 2006 15:21:42 -0400
-Received: from 147.175.241.83.in-addr.dgcsystems.net ([83.241.175.147]:21392
-	"EHLO tmnt04.transmode.se") by vger.kernel.org with ESMTP
-	id S1751833AbWJMTVl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Oct 2006 15:21:41 -0400
-Received: from Jocke ([84.217.9.178]) by tmnt04.transmode.se with Microsoft SMTPSVC(5.0.2195.6713);
-	 Fri, 13 Oct 2006 21:21:39 +0200
-To: <git@vger.kernel.org>
-X-Mailer: Microsoft Office Outlook 11
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2962
-Thread-Index: Acbu/IPW13xsYqkVTCK12RFI2IiAow==
-X-OriginalArrivalTime: 13 Oct 2006 19:21:39.0105 (UTC) FILETIME=[CE8B6910:01C6EEFC]
+	id S1751844AbWJMTju (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Oct 2006 15:39:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751846AbWJMTju
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Oct 2006 15:39:50 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:50036 "EHLO
+	blue.stonehenge.com") by vger.kernel.org with ESMTP
+	id S1751844AbWJMTjt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Oct 2006 15:39:49 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id C296A8F9D3;
+	Fri, 13 Oct 2006 12:39:48 -0700 (PDT)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 04336-01-67; Fri, 13 Oct 2006 12:39:48 -0700 (PDT)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 4BA068F9C7; Fri, 13 Oct 2006 12:39:48 -0700 (PDT)
+To: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
+x-mayan-date: Long count = 12.19.13.12.19; tzolkin = 5 Cauac; haab = 12 Yax
+In-Reply-To: <00ad01c6eefc$84298280$1267a8c0@Jocke>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28855>
 
-I am trying to create a SVN tree using git-svn from the u-boot git tree and it doesn't work.
-First, I had to change this (from memory) in git-svn:
-  my $got = SVN::TxDelta::send_stream($fh, @$atd, $self->{pool});
-to
-  my $got;
-  if ( $got ) {
-    $got = SVN::TxDelta::send_stream($fh, @$atd, $self->{pool});
-  } else {
-    $got = $exp
-  }
-I am no perl programmer so please change as you se fit.
+>>>>> "Joakim" == Joakim Tjernlund <joakim.tjernlund@transmode.se> writes:
 
-Secondly I ran out of open file descriptors which I "fixed" with ulimit -n 10000, maybe there is a leak
-in git-svn?
+Joakim> First, I had to change this (from memory) in git-svn:
+Joakim>   my $got = SVN::TxDelta::send_stream($fh, @$atd, $self->{pool});
+Joakim> to
+Joakim>   my $got;
+Joakim>   if ( $got ) {
+Joakim>     $got = SVN::TxDelta::send_stream($fh, @$atd, $self->{pool});
+Joakim>   } else {
+Joakim>     $got = $exp
+Joakim>   }
+Joakim> I am no perl programmer so please change as you se fit.
 
-Then it still failed, but this I could not fix. Don't have the error msg atm as I am home now, but
-it should be easy enough to reproduce, just clone current u-boot tree and try :)
+That doesn't make any sense.  You'll never run the if-true branch there.
+The value of $got immediately following "my $got;" is always undef.
 
-What I really would like to do is merge all u-boot commits up to a point into one commit
-and then commit that single git commit to a clean SVN repo. Then I want merge the
-remaining git commits(my own stuff).
-Tried to import a tar tree into the SVN repo with svn import and then merge
-the remain commits on top of that using git-svn but that didn't work, lots of conflicts.
-
- Jocke
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
