@@ -1,70 +1,61 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 2/2] git-repack: -b to pass --delta-base-offset
-Date: Fri, 13 Oct 2006 14:29:08 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0610131423200.2435@xanadu.home>
-References: <200610131805.k9DI5QDH016016@laptop13.inf.utfsm.cl>
+From: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
+Subject: git-svn and u-boot broken.
+Date: Fri, 13 Oct 2006 21:19:34 +0200
+Message-ID: <00ad01c6eefc$84298280$1267a8c0@Jocke>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>,
-	GIT Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 13 20:29:32 2006
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Oct 13 21:22:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GYRmh-0003Km-0j
-	for gcvg-git@gmane.org; Fri, 13 Oct 2006 20:29:27 +0200
+	id 1GYSbe-0006bm-13
+	for gcvg-git@gmane.org; Fri, 13 Oct 2006 21:22:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750988AbWJMS3X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Oct 2006 14:29:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751568AbWJMS3X
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Oct 2006 14:29:23 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:17787 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1750988AbWJMS3X (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Oct 2006 14:29:23 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J7300BEW7CK9G70@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 13 Oct 2006 14:29:08 -0400 (EDT)
-In-reply-to: <200610131805.k9DI5QDH016016@laptop13.inf.utfsm.cl>
-X-X-Sender: nico@xanadu.home
-To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+	id S1751833AbWJMTVn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Oct 2006 15:21:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751837AbWJMTVm
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Oct 2006 15:21:42 -0400
+Received: from 147.175.241.83.in-addr.dgcsystems.net ([83.241.175.147]:21392
+	"EHLO tmnt04.transmode.se") by vger.kernel.org with ESMTP
+	id S1751833AbWJMTVl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Oct 2006 15:21:41 -0400
+Received: from Jocke ([84.217.9.178]) by tmnt04.transmode.se with Microsoft SMTPSVC(5.0.2195.6713);
+	 Fri, 13 Oct 2006 21:21:39 +0200
+To: <git@vger.kernel.org>
+X-Mailer: Microsoft Office Outlook 11
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2962
+Thread-Index: Acbu/IPW13xsYqkVTCK12RFI2IiAow==
+X-OriginalArrivalTime: 13 Oct 2006 19:21:39.0105 (UTC) FILETIME=[CE8B6910:01C6EEFC]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28854>
 
-On Fri, 13 Oct 2006, Horst H. von Brand wrote:
+I am trying to create a SVN tree using git-svn from the u-boot git tree and it doesn't work.
+First, I had to change this (from memory) in git-svn:
+  my $got = SVN::TxDelta::send_stream($fh, @$atd, $self->{pool});
+to
+  my $got;
+  if ( $got ) {
+    $got = SVN::TxDelta::send_stream($fh, @$atd, $self->{pool});
+  } else {
+    $got = $exp
+  }
+I am no perl programmer so please change as you se fit.
 
-> Junio C Hamano <junkio@cox.net> wrote:
-> > This new option makes the resulting pack express the delta base
-> > with more compact "offset" format.
-> > 
-> > Signed-off-by: Junio C Hamano <junkio@cox.net>
-> 
-> [...]
-> 
-> > @@ -35,6 +35,12 @@ OPTIONS
-> >  	about people fetching via dumb protocols from it.  Use
-> >  	with '-d'.
-> >  
-> > +-b::
-> > +	Pass the `--delta-base-offset` to `git pack-objects`;
-> > +	see gitlink:git-pack-objects[1].  Do not use this option
-> > +	if you want the repository to be accessible by older
-> > +	versions of git.
-> > +
-> 
-> Need to tell which version is the cutoff (say before 1.4.3 won't work).
+Secondly I ran out of open file descriptors which I "fixed" with ulimit -n 10000, maybe there is a leak
+in git-svn?
 
-Before and including 1.4.3 actually.  
+Then it still failed, but this I could not fix. Don't have the error msg atm as I am home now, but
+it should be easy enough to reproduce, just clone current u-boot tree and try :)
 
-Oh and the description should be augmented with "... if you want the 
-repository to be accessible by older versions of git when _not_ using 
-the native GIT protocol." as the native protocol is able to select 
-between either format on the fly regardless of the on-disk pack format.
+What I really would like to do is merge all u-boot commits up to a point into one commit
+and then commit that single git commit to a clean SVN repo. Then I want merge the
+remaining git commits(my own stuff).
+Tried to import a tar tree into the SVN repo with svn import and then merge
+the remain commits on top of that using git-svn but that didn't work, lots of conflicts.
 
-
-Nicolas
+ Jocke
