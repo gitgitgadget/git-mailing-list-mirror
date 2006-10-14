@@ -1,242 +1,185 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: On blame/pickaxe
-Date: Sat, 14 Oct 2006 16:43:53 -0700
-Message-ID: <7vfydq79ae.fsf@assigned-by-dhcp.cox.net>
-References: <7vr6xddm7h.fsf@assigned-by-dhcp.cox.net>
-	<7vwt739org.fsf@assigned-by-dhcp.cox.net>
+From: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
+Subject: RE: git-svn and u-boot broken.
+Date: Sun, 15 Oct 2006 01:54:04 +0200
+Message-ID: <00f901c6efec$07fdc630$1267a8c0@Jocke>
+References: <20061014224636.GA12565@soma>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 15 01:44:06 2006
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Oct 15 01:56:20 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GYtAe-00049E-Vp
-	for gcvg-git@gmane.org; Sun, 15 Oct 2006 01:44:01 +0200
+	id 1GYtMZ-0005pl-CI
+	for gcvg-git@gmane.org; Sun, 15 Oct 2006 01:56:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752250AbWJNXnz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Oct 2006 19:43:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752249AbWJNXnz
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Oct 2006 19:43:55 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:46295 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1752250AbWJNXny (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Oct 2006 19:43:54 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061014234354.HUOK16798.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 14 Oct 2006 19:43:54 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id aPjx1V0051kojtg0000000
-	Sat, 14 Oct 2006 19:43:57 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <7vwt739org.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 14 Oct 2006 03:26:43 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752271AbWJNX4Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Oct 2006 19:56:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752268AbWJNX4Q
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Oct 2006 19:56:16 -0400
+Received: from 147.175.241.83.in-addr.dgcsystems.net ([83.241.175.147]:35356
+	"EHLO tmnt04.transmode.se") by vger.kernel.org with ESMTP
+	id S1752270AbWJNX4P (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Oct 2006 19:56:15 -0400
+Received: from Jocke ([84.217.9.178]) by tmnt04.transmode.se with Microsoft SMTPSVC(5.0.2195.6713);
+	 Sun, 15 Oct 2006 01:56:10 +0200
+To: "'Eric Wong'" <normalperson@yhbt.net>
+X-Mailer: Microsoft Office Outlook 11
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2962
+Thread-Index: Acbv4qQD4zn1yAERTIGc4M+8QDmHMwABvjhA
+In-Reply-To: <20061014224636.GA12565@soma>
+X-OriginalArrivalTime: 14 Oct 2006 23:56:10.0690 (UTC) FILETIME=[52C99220:01C6EFEC]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28896>
 
-Junio C Hamano <junkio@cox.net> writes:
+> Joakim Tjernlund <joakim.tjernlund@transmode.se> wrote:
+> > 
+> > > -----Original Message-----
+> > > From: Eric Wong [mailto:normalperson@yhbt.net] 
+> > > Sent: den 14 oktober 2006 08:28
+> > > To: Joakim Tjernlund
+> > > Cc: 'Randal L. Schwartz'; git@vger.kernel.org
+> > > Subject: Re: git-svn and u-boot broken.
+> > > 
+> > > Joakim Tjernlund <joakim.tjernlund@transmode.se> wrote:
+> > > >  
+> > > > 
+> > > > > -----Original Message-----
+> > > > > From: Randal L. Schwartz [mailto:merlyn@stonehenge.com] 
+> > > > > Sent: den 13 oktober 2006 21:40
+> > > > > To: Joakim Tjernlund
+> > > > > Cc: git@vger.kernel.org
+> > > > > Subject: Re: git-svn and u-boot broken.
+> > > > > 
+> > > > > >>>>> "Joakim" == Joakim Tjernlund 
+> > > > > <joakim.tjernlund@transmode.se> writes:
+> > > > > 
+> > > > > Joakim> First, I had to change this (from memory) in git-svn:
+> > > > > Joakim>   my $got = SVN::TxDelta::send_stream($fh, @$atd, 
+> > > > > $self->{pool});
+> > > > > Joakim> to
+> > > > > Joakim>   my $got;
+> > > > > Joakim>   if ( $got ) {
+> > > > > Joakim>     $got = SVN::TxDelta::send_stream($fh, @$atd, 
+> > > > > $self->{pool});
+> > > > > Joakim>   } else {
+> > > > > Joakim>     $got = $exp
+> > > > > Joakim>   }
+> > > > > Joakim> I am no perl programmer so please change as 
+> you se fit.
+> > > 
+> > > With your correction following merlyn's comments, it could 
+> > > work[1].  I'm
+> > > curious as to what change git-svn printed right before 
+> > > hitting an error
+> > 
+> > from memory:
+> > Usage: svn_txdelta_send_stream(x,y,z,m)
+>  
+> > > here, and would like to see the files (before and after) that were
+> > > printed by git-svn.
+> > 
+> > Sorry, don't have that hande ATM
+> 
+> Could you publish your git repository for u-boot and also the
+> exact commands (if you have them) you used to attempt the import
+> into SVN?  Thanks.
 
-> Junio C Hamano <junkio@cox.net> writes:
->
->> 4. Passing more blame.
->>
->> Instead of taking responsibility for the remainder, there are
->> other ways to find other people to pass blame on.  That's what
->> the "NEEDSWORK" comment in pass_blame() is about.
->
-> I've spent a few hours tonight to further work (eh, "have fun")
-> on this.  The version at the tip of "pu" implements detection of
-> a case like this:
-> ...
-> You can use the pickaxe on its source itself, like this:
->
-> 	git pickaxe -n master..pu builtin-pickaxe.c
->
-> If you compare this with output from:
->
-> 	git log --pretty=short -p master..pu builtin-pickaxe.c
->
-> you will notice the line-movement detection in action.
->
-> During the course of development, I had to move quite a few
-> static functions around so that they are defined before their
-> first call site.  This is partly because I am very bad at
-> initial planning (who is?) and this still being in experimental
-> stage I did not bother declaring static functions upfront as
-> forward declarations.
->
-> For example, commit db3f0f2 introduces find_last_in_target()
-> function, but it was moved up by commit b5c0e4f (near the tip of
-> "pu").  pickaxe blames the implementation of it to db3f0f20, and
-> also notices that the bulk of its logic was actually copied from
-> the implementation of pass_blame_to_parent() function in commit
-> b14dc9ef (the initial commit that introduced builtin-pickaxe.c).
->
-> What _ought_ to come next is to detect line movement across
-> files, but I'll go to bed for now.
+The git repo is a bit complicated as I don't have have anywhere
+to put it. However I don't think you need it, just clone DENX u-boot repo
+at git://www.denx.de/git/u-boot.git, it bails out before it gets to my
+changes.
 
-And this implements it.  After testing it some more, I'll have
-it near the tip of "pu" sometime tonight.
+Here is the script I use to test with
 
-I have to admit that I am becoming quite fond of the name
-"pickaxe", by the way.
+REPO="file:///tmp/SVNuboot"
+REPO_PATH="/tmp/SVNuboot"
+GIT_REPO="/tmp/mygituboot"
+ORG_REPO="/usr/local/src/u-boot"
+rm -rf "$REPO_PATH"
+rm -rf "$GIT_REPO"
+svnadmin create "$REPO_PATH"
+svn mkdir -m "initial repo layout" "$REPO"/trunk "$REPO"/branches "$REPO"/tags
+mkdir -p "$GIT_REPO"
+cd "$GIT_REPO"
+git-svn init "$REPO"/trunk
+echo  [user] >> .git/config
+echo  name="jocke" >> .git/config
+echo  email="Joakim.Tjernlund@transmode.se" >> .git/config
+git-svn fetch
+git checkout -b svn-branch remotes/git-svn
+git-fetch "$ORG_REPO" tmcu2:tmcu
+git-branch initial-uboot f5e0d03970409feb3c77ab0107d5dece6b7d45c9
+git pull . initial-uboot
+# --squash makes one large commit.
+#git pull --squash . initial-uboot
+#cg-commit -m "merge up to f5e0d03970409feb3c77ab0107d5dece6b7d45c9"
 
-I consider that the "following the changed lines and see where
-it came from" you described in the ancient message:
 
-    http://thread.gmane.org/gmane.comp.version-control.git/27/focus=217
+# without --squash one gets a SVN repo with lots of small commits(2)
+git pull . initial-uboot
+git-svn commit -q remotes/git-svn..svn-branch
 
-the holy grail of software archaeology.  Once we have it, I
-would feel I am pretty much _done_ with git.  It will have
-everything I want it to do.
 
-My "diff -S" (where the "pickaxe" name started) was a crude
-first step to achieve that goal.  The way I envisioned it was
-that you would feed the lines 50-89 as a single -S parameter to
-"git whatchanged" and the tool finds the commit that touched
-that area, and the Porcelain would either figure out what the
-corresponding lines in the previous commit look like or ask the
-user to highlight what to dig deeper interactively, and restart
-another "whatchanged" with adjusted value for -S.  Unfortunately
-nobody wrote such a Porcelain command.
+(2)
+ This fails currently with 
+ git-svn commit -q remotes/git-svn..svn-branch
+diff-tree 9030f4be0b324cb312cfecd86d4a7da04ffa99ee 8e9655f863246db60c51140153186acc2afdc855
+Inappropriate ioctl for device at /usr/bin/git-svn line 1462
+6400 at /usr/bin/git-svn line 1462
+6400 at /usr/bin/git-svn line 547
+        main::commit_lib('8e9655f863246db60c51140153186acc2afdc855', 'ef04a0aa2676738847bd69914cadac0b96d6e731',
+'4d03a21f2329bb13a9661a23742ac0b77a7a76d5', 'f190c11b1f22ff766e046588e5a7bb55f28ae305', '182e10691f378987b53c64ee0347d542e4924ef6',
+'527b5a511c804074eebfc08c9ae7860b6717da85', 'ea339205a94706d8b9170bbd89e8c1373df9a92f', '3ada834e30a0742991209140049035c626ccea85',
+'feaedfcf84c92599c0b805f66cc8a628d82411f0', ...) called at /usr/bin/git-svn line 457
+        main::commit('remotes/git-svn..svn-branch') called at /usr/bin/git-svn line 149
+> 
+> > > I'm not sure what change would show up in git but cause 
+> > > apply_textdelta
+> > > to return undef...
+> > > 
+> > > [1] - I am tempted to apply a change based on yours, but this 
+> > > could just
+> > > be working around another bug somewhere else (either in git-svn or
+> > > subversion).
+> > > 
+> > > > > That doesn't make any sense.  You'll never run the if-true 
+> > > > > branch there.
+> > > > > The value of $got immediately following "my $got;" is 
+> > > always undef.
+> > > > 
+> > > > git-pull --squash seems to do what I want but know I 
+> get this when
+> > > > committing to svn: 
+> > > > git-svn commit remotes/git-svn..svn-branch
+> > > > ...
+> > > >         A       cpu/mpc824x/drivers/i2c_export.h
+> > > >         A       cpu/mpc824x/drivers/i2o.h
+> > > >         A       cpu/mpc824x/drivers/i2o/Makefile
+> > > >         A       cpu/mpc824x/drivers/i2o/Makefile_pc
+> > > > Cannot allocate memory at /usr/bin/git-svn line 1462
+> > > > 3072 at /usr/bin/git-svn line 547
+> > > >         
+> > > main::commit_lib('2ff9bcb7908d2752f643695ab3a28f9ababfafab') 
+> > > called at /usr/bin/git-svn line 457
+> > > >         main::commit('remotes/git-svn..svn-branch') called 
+> > > at /usr/bin/git-svn line 149
+> > > 
+> > > How large is the changeset you're committing?
+> > > (git show --stat 2ff9bcb7908d2752f643695ab3a28f9ababfafab)
+> > 
+> > That gives me a huge listing that ends in:
+> >  4306 files changed, 1194819 insertions(+), 0 deletions(-)
+> 
+> Yikes, that's a huge commit.  git-svn memory usage was bounded
+> for the size of each changeset, so yes, this could get nasty.
+> Patch coming in a reply to this message.
 
-I think the command with this patch gets us closer to that goal;
-although it still does not have a way to detect "oh these five
-copies were consolidated into one" (I'd imagine we _could_ do
-that in find_copy_in_parent() function if we really wanted to --
-but that would be a tad expensive).  In any case, I think this
-is going in the right direction.
+Thanks, will try that patch next.
 
-Before anybody asks, the example Daniel Barkalow gave on date.c
-is far trickier and even this version would not catch it.  It
-requires digging random, distant, ancestors in order to look for
-lines that were lost by an earlier removal.
-
--- >8 --
-git-pickaxe: blame cut-and-paste lines.
-
-This completes the initial round of git-pickaxe.  In addition to
-the line movement the previous round implements, this finds new
-lines that were created by moving or cutting-and-pasting lines
-from different path in the parent.
-
-With this,
-
-	git pickaxe -f -n v1.4.0 -- revision.c
-
-finds that major part of that file actually came from rev-list.c
-when Linus split the latter at commit ae563642 and blames them
-to earlier commits that touches rev-list.c.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- builtin-pickaxe.c |   71 +++++++++++++++++++++++++++++++++++------------------
- 1 files changed, 47 insertions(+), 24 deletions(-)
-
-diff --git a/builtin-pickaxe.c b/builtin-pickaxe.c
-index 3f9f679..1124919 100644
---- a/builtin-pickaxe.c
-+++ b/builtin-pickaxe.c
-@@ -638,39 +638,16 @@ static int find_copy_in_blob(struct scor
- 	return 0;
- }
- 
--static int find_copy_in_parent(struct scoreboard *sb,
--			       struct origin *target,
--			       struct commit *parent,
--			       struct origin *porigin)
--{
--	int last_in_target;
--
--	last_in_target = find_last_in_target(sb, target);
--	if (last_in_target < 0)
--		return 1; /* nothing remains for this target */
--
--	/* NEEDSWORK: run diff-tree between target->commit with parent
--	 * to find the paths that were modified from parent, and find
--	 * copies in the parent; if we find any we can pass blame to it.
--	 * We have checked path in porigin so do not bother checking it
--	 * again (but porigin might be NULL).
--	 */
--
--	return 0;
--}
--
- static int find_move_in_parent(struct scoreboard *sb,
- 			       struct origin *target,
- 			       struct origin *parent)
- {
--	int last_in_target;
- 	struct blame_entry *ent;
- 	mmfile_t file_p;
- 	char type[10];
- 	char *blob_p;
- 
--	last_in_target = find_last_in_target(sb, target);
--	if (last_in_target < 0)
-+	if (find_last_in_target(sb, target) < 0)
- 		return 1; /* nothing remains for this target */
- 
- 	blob_p = read_sha1_file(parent->blob_sha1, type,
-@@ -690,6 +667,52 @@ static int find_move_in_parent(struct sc
- 	return 0;
- }
- 
-+static int find_copy_in_parent(struct scoreboard *sb,
-+			       struct origin *target,
-+			       struct commit *parent,
-+			       struct origin *porigin)
-+{
-+	struct diff_options diff_opts;
-+	const char *paths[1];
-+	int no_more, i;
-+
-+	if (find_last_in_target(sb, target) < 0)
-+		return 1; /* nothing remains for this target */
-+
-+	diff_setup(&diff_opts);
-+	diff_opts.recursive = 1;
-+	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-+
-+	/* Try "find copies harder" on new path */
-+	if (!porigin || strcmp(target->path, porigin->path)) {
-+		diff_opts.detect_rename = DIFF_DETECT_COPY;
-+		diff_opts.find_copies_harder = 1;
-+	}
-+	paths[0] = NULL;
-+	diff_tree_setup_paths(paths, &diff_opts);
-+	if (diff_setup_done(&diff_opts) < 0)
-+		die("diff-setup");
-+	diff_tree_sha1(parent->tree->object.sha1,
-+		       target->commit->tree->object.sha1,
-+		       "", &diff_opts);
-+	diffcore_std(&diff_opts);
-+
-+	for (i = no_more = 0; !no_more && i < diff_queued_diff.nr; i++) {
-+		struct diff_filepair *p = diff_queued_diff.queue[i];
-+		struct origin *new_porigin;
-+		if (!DIFF_FILE_VALID(p->one))
-+			continue; /* does not exist in parent */
-+		if (porigin && !strcmp(p->one->path, porigin->path))
-+			continue; /* find_move already checked this path */
-+
-+		new_porigin = find_origin(sb, parent, p->one->path);
-+		no_more = find_move_in_parent(sb, target, new_porigin);
-+	}
-+	diff_flush(&diff_opts);
-+
-+	return no_more;
-+}
-+
- #define MAXPARENT 16
- static void pass_blame(struct scoreboard *sb, struct origin *origin)
- {
--- 
-1.4.3.rc2.g195ab
+  Jocke
