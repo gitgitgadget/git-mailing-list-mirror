@@ -1,120 +1,82 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-pickaxe: blame rewritten.
-Date: Fri, 13 Oct 2006 15:50:56 -0700
-Message-ID: <7v8xjjbzjj.fsf@assigned-by-dhcp.cox.net>
-References: <20061013215942.36919.qmail@web31806.mail.mud.yahoo.com>
+From: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
+Subject: RE: git-svn and u-boot broken.
+Date: Sat, 14 Oct 2006 03:21:34 +0200
+Message-ID: <00e301c6ef2f$16993ac0$1267a8c0@Jocke>
+References: <86slhsgg3f.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 14 00:51:17 2006
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Oct 14 03:23:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GYVs4-00011n-UF
-	for gcvg-git@gmane.org; Sat, 14 Oct 2006 00:51:17 +0200
+	id 1GYYFg-0002sm-Ts
+	for gcvg-git@gmane.org; Sat, 14 Oct 2006 03:23:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751963AbWJMWu7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Oct 2006 18:50:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751977AbWJMWu6
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Oct 2006 18:50:58 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:10629 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1751961AbWJMWu5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Oct 2006 18:50:57 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061013225057.PHXQ22977.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 13 Oct 2006 18:50:57 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Zyqz1V0171kojtg0000000
-	Fri, 13 Oct 2006 18:51:00 -0400
-To: ltuikov@yahoo.com
-In-Reply-To: <20061013215942.36919.qmail@web31806.mail.mud.yahoo.com> (Luben
-	Tuikov's message of "Fri, 13 Oct 2006 14:59:42 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752031AbWJNBXm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Oct 2006 21:23:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752028AbWJNBXm
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Oct 2006 21:23:42 -0400
+Received: from 147.175.241.83.in-addr.dgcsystems.net ([83.241.175.147]:53935
+	"EHLO tmnt04.transmode.se") by vger.kernel.org with ESMTP
+	id S1752031AbWJNBXl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Oct 2006 21:23:41 -0400
+Received: from Jocke ([84.217.9.178]) by tmnt04.transmode.se with Microsoft SMTPSVC(5.0.2195.6713);
+	 Sat, 14 Oct 2006 03:23:39 +0200
+To: "'Randal L. Schwartz'" <merlyn@stonehenge.com>
+X-Mailer: Microsoft Office Outlook 11
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2962
+Thread-Index: Acbu/2XhgfSie4HXTBGPTIL6wyYORwAL5HPg
+In-Reply-To: <86slhsgg3f.fsf@blue.stonehenge.com>
+X-OriginalArrivalTime: 14 Oct 2006 01:23:39.0704 (UTC) FILETIME=[6107CB80:01C6EF2F]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28868>
 
-Luben Tuikov <ltuikov@yahoo.com> writes:
+ 
 
->> If there were a corresponding line
->> in "the parent commit" for that line, we would not have assigned
->> the blame to the commit, but the blame would have been passed
->> down to "the parent commit" already.
->
-> Indeed.
+> -----Original Message-----
+> From: Randal L. Schwartz [mailto:merlyn@stonehenge.com] 
+> Sent: den 13 oktober 2006 21:40
+> To: Joakim Tjernlund
+> Cc: git@vger.kernel.org
+> Subject: Re: git-svn and u-boot broken.
+> 
+> >>>>> "Joakim" == Joakim Tjernlund 
+> <joakim.tjernlund@transmode.se> writes:
+> 
+> Joakim> First, I had to change this (from memory) in git-svn:
+> Joakim>   my $got = SVN::TxDelta::send_stream($fh, @$atd, 
+> $self->{pool});
+> Joakim> to
+> Joakim>   my $got;
+> Joakim>   if ( $got ) {
+> Joakim>     $got = SVN::TxDelta::send_stream($fh, @$atd, 
+> $self->{pool});
+> Joakim>   } else {
+> Joakim>     $got = $exp
+> Joakim>   }
+> Joakim> I am no perl programmer so please change as you se fit.
+> 
+> That doesn't make any sense.  You'll never run the if-true 
+> branch there.
+> The value of $got immediately following "my $got;" is always undef.
 
-So is the topic retracted?
+git-pull --squash seems to do what I want but know I get this when
+committing to svn: 
+git-svn commit remotes/git-svn..svn-branch
+...
+        A       cpu/mpc824x/drivers/i2c_export.h
+        A       cpu/mpc824x/drivers/i2o.h
+        A       cpu/mpc824x/drivers/i2o/Makefile
+        A       cpu/mpc824x/drivers/i2o/Makefile_pc
+Cannot allocate memory at /usr/bin/git-svn line 1462
+3072 at /usr/bin/git-svn line 547
+        main::commit_lib('2ff9bcb7908d2752f643695ab3a28f9ababfafab') called at /usr/bin/git-svn line 457
+        main::commit('remotes/git-svn..svn-branch') called at /usr/bin/git-svn line 149
 
-Actually, I kind of know what you want.  However, I just do not
-think blame is the right place to do that.
-
-Suppose you have three lines with this history (for simplicity
-the ancestry is linear, time flows from left to right):
-
-        Revisions	0 1 2 3 4 5
-        line 1          a a a A A A
-        line 2          b b x y B B
-        line 3          c C C C C C
-
-and we dig from commit 5.  The three lines will get blamed to
-commit 3, 4 and 1 respectively.
-
-	last change	lineno	data
-	3		1	A
-        4		2	B
-        1		3	C
-
-You click lineno #2 and what you will see is this:
-	
-        Revisions	0 1 2 3 4
-        line 1          a a a A A
-        line 2          b b x y B
-        line 3          c C C C C
-
-	last change	lineno	data
-	3		1	A
-        4		2	B
-        1		3	C
-
-In such a case, we already know the current commit we are
-looking at (commit 4) is what introduced 'B', so there is no
-more digging down from that line, but we would like to peel that
-'B' to reveal what was behind it (in this case, 'y').  Clicking
-line 1 would take you to commit 3 and that happens to show the
-line after the line that had 'A' had 'y', but clicking line 3
-would take you to commit 1 and you would miss changes that had
-'x' or 'y' on the line before the line that had 'C'.  So "click
-surrounding ones to see how things changed" is not quite the
-right answer to the question "Ok, we know 'B' appeared in the
-commit that got blamed.  What, if anything, was there instead
-before that?"
-
-You would need to diff commit 4 and commit 3 (after all, we know
-4 introduced 'B' on line 2 so we know rev 3 is already different
-and does not have 'B' there) and guess what's on that line, and
-if you have more than one parent for commit 4 you would need to
-do that for each parent and show that in some human readable
-way.  This will be expensive but is a useful thing to do "on
-demand".
-
-I think "on demand" is really the key word here.  We can spend
-extra cycles to find that out when we know we are interested in
-what, if any, was there where we have 'B' today.  Spending that
-extra cycle to all lines in the blamed file will end up wasted
-if we are using this for "iteratively dig deeper" in gitweb.
-That is why I do not think blame is the right place to do this.
-
-What you can do to improve gitweb is to change the URL that each
-lineno on the blame page has, so that when it is pointing at the
-current commit (i.e. the commit we are looking at is the one
-that was blamed for the line), have it run an equivalent of
-"git-diff-tree -m -p commit", and guess what line that line that
-did not exist in any of the parent (in our example, line 2 that
-had 'B') is in the parent, and show 'git-blame' for that file in
-that parent around that line.
+ Jocke
