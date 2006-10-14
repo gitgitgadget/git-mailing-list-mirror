@@ -1,106 +1,54 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 2/2] When packing and pruning refs, remove "deleted-refs".
-Date: Sat, 14 Oct 2006 15:41:09 +0200
-Message-ID: <20061014154109.9a093319.chriscool@tuxfamily.org>
+Subject: [PATCH] Fix tracing when GIT_TRACE is set to an empty string.
+Date: Sat, 14 Oct 2006 16:05:25 +0200
+Message-ID: <20061014160525.c013e6d2.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 14 15:34:26 2006
+X-From: git-owner@vger.kernel.org Sat Oct 14 15:58:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GYjej-0001Wl-St
-	for gcvg-git@gmane.org; Sat, 14 Oct 2006 15:34:26 +0200
+	id 1GYk2E-00065u-7h
+	for gcvg-git@gmane.org; Sat, 14 Oct 2006 15:58:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422631AbWJNNeX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Oct 2006 09:34:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422638AbWJNNeX
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Oct 2006 09:34:23 -0400
-Received: from smtp2-g19.free.fr ([212.27.42.28]:3254 "EHLO smtp2-g19.free.fr")
-	by vger.kernel.org with ESMTP id S1422632AbWJNNeW (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Oct 2006 09:34:22 -0400
+	id S1422640AbWJNN6j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Oct 2006 09:58:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422642AbWJNN6j
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Oct 2006 09:58:39 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:51427 "EHLO smtp3-g19.free.fr")
+	by vger.kernel.org with ESMTP id S1422640AbWJNN6i (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Oct 2006 09:58:38 -0400
 Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp2-g19.free.fr (Postfix) with SMTP id 5E10E735DF;
-	Sat, 14 Oct 2006 15:34:21 +0200 (CEST)
+	by smtp3-g19.free.fr (Postfix) with SMTP id DEB6C47E59;
+	Sat, 14 Oct 2006 15:58:36 +0200 (CEST)
 To: Junio Hamano <junkio@cox.net>
 X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.8.20; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28878>
-
-When running "git pack-refs --prune" we have to also prune
-deleted ref files. To do this, remove recusively everything
-under "$GIT_DIR/deleted-refs".
-
-The new "remove_all_recursive" function has been copied from
-"remove_empty_dir_recursive" in "refs.c".
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28879>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin-pack-refs.c |   42 ++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 42 insertions(+), 0 deletions(-)
+ trace.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-diff --git a/builtin-pack-refs.c b/builtin-pack-refs.c
-index 1087657..84ca170 100644
---- a/builtin-pack-refs.c
-+++ b/builtin-pack-refs.c
-@@ -54,12 +54,54 @@ static void prune_ref(struct ref_to_prun
- 	}
- }
- 
-+static int remove_all_recursive(char *path)
-+{
-+	DIR *dir = opendir(path);
-+	struct dirent *e;
-+	int ret = 0;
-+	int len = strlen(path);
-+
-+	if (!dir)
-+		return unlink(path);
-+	if (path[len-1] != '/')
-+		path[len++] = '/';
-+	while ((e = readdir(dir)) != NULL) {
-+		struct stat st;
-+		int namlen;
-+		if ((e->d_name[0] == '.') &&
-+		    ((e->d_name[1] == 0) ||
-+		     ((e->d_name[1] == '.') && e->d_name[2] == 0)))
-+			continue; /* "." and ".." */
-+
-+		namlen = strlen(e->d_name);
-+		if ((len + namlen < PATH_MAX) &&
-+		    strcpy(path + len, e->d_name) &&
-+		    !lstat(path, &st) &&
-+		    (S_ISDIR(st.st_mode) ?
-+		     !remove_all_recursive(path) :
-+		     !unlink(path)))
-+			continue; /* happy */
-+
-+		/* path too long, stat, rmdir or unlink fails */
-+		ret = -1;
-+		break;
-+	}
-+	closedir(dir);
-+	if (!ret) {
-+		path[len] = 0;
-+		ret = rmdir(path);
-+	}
-+	return ret;
-+}
-+
- static void prune_refs(struct ref_to_prune *r)
+diff --git a/trace.c b/trace.c
+index f9efc91..495e5ed 100644
+--- a/trace.c
++++ b/trace.c
+@@ -55,7 +55,8 @@ static int get_trace_fd(int *need_close)
  {
- 	while (r) {
- 		prune_ref(r);
- 		r = r->next;
- 	}
-+
-+	remove_all_recursive(git_path("deleted-refs"));
- }
+ 	char *trace = getenv("GIT_TRACE");
  
- static struct lock_file packed;
+-	if (!trace || !strcmp(trace, "0") || !strcasecmp(trace, "false"))
++	if (!trace || !strcmp(trace, "") ||
++	    !strcmp(trace, "0") || !strcasecmp(trace, "false"))
+ 		return 0;
+ 	if (!strcmp(trace, "1") || !strcasecmp(trace, "true"))
+ 		return STDERR_FILENO;
 -- 
-1.4.3.rc2.gbcf275-dirty
+1.4.3.rc2.gadba
