@@ -1,99 +1,84 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/2] Delete ref $frotz by moving ref file to "deleted-$frotz~ref".
-Date: Sat, 14 Oct 2006 11:47:40 -0700
-Message-ID: <7vr6xa91kj.fsf@assigned-by-dhcp.cox.net>
-References: <20061014153949.2994a114.chriscool@tuxfamily.org>
+Subject: Re: [PATCH 1/2] diff --stat: use asymptotic scaling in graph
+Date: Sat, 14 Oct 2006 12:06:01 -0700
+Message-ID: <7v7iz290py.fsf@assigned-by-dhcp.cox.net>
+References: <d620685f0610121237k458665c5m7bbde2d565d7ef81@mail.gmail.com>
+	<7vlknlmc9y.fsf@assigned-by-dhcp.cox.net>
+	<d620685f0610130656u55079a1fkc2c98a82f3aa4a33@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 14 20:47:55 2006
+X-From: git-owner@vger.kernel.org Sat Oct 14 21:06:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GYoY2-0006SY-7g
-	for gcvg-git@gmane.org; Sat, 14 Oct 2006 20:47:50 +0200
+	id 1GYops-0001uP-Kt
+	for gcvg-git@gmane.org; Sat, 14 Oct 2006 21:06:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422801AbWJNSrm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Oct 2006 14:47:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422803AbWJNSrm
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Oct 2006 14:47:42 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:4288 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1422801AbWJNSrm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Oct 2006 14:47:42 -0400
+	id S1422825AbWJNTGE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Oct 2006 15:06:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422824AbWJNTGD
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Oct 2006 15:06:03 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:7617 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1422825AbWJNTGC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Oct 2006 15:06:02 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao08.cox.net
+          by fed1rmmtao05.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061014184741.NFOI22977.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 14 Oct 2006 14:47:41 -0400
+          id <20061014190602.NVAF12909.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 14 Oct 2006 15:06:02 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id aJnk1V0081kojtg0000000
-	Sat, 14 Oct 2006 14:47:44 -0400
-To: Christian Couder <chriscool@tuxfamily.org>
+	id aK641V00n1kojtg0000000
+	Sat, 14 Oct 2006 15:06:05 -0400
+To: apodtele <apodtele@gmail.com>
+In-Reply-To: <d620685f0610130656u55079a1fkc2c98a82f3aa4a33@mail.gmail.com>
+	(apodtele@gmail.com's message of "Fri, 13 Oct 2006 09:56:58 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28887>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+apodtele <apodtele@gmail.com> writes:
 
-> The idea is that moving:
->
-> $GIT_DIR/refs/<refpath>/frotz
->
-> to:
->
-> $GIT_DIR/deleted-refs/<refpath>/frotz~ref
->
-> maybe cheaper and safer than repacking the refs without the
-> deleted one.
+> Before my patch is completely forgotten, let me critique the current
+> approach. Currently everything is great and beautiful unless one
+> particular change adds a couple of hundred lines, say, to a man page.
+> With large changes in play, small changes are squashed to a single
+> character. Would you argue that this scenario correctly represent
+> importance of man pages? Would you say, that it's not misleading that
+> 1-, 2-, and 5-liners all look the same as long as a man page is
+> prominently shown? Moreover, 1-, 2-, and 5- liners may look different
+> depending on the size of that man page. The current approach is not
+> invariant; it is, however, normalized as needed. "Normalized" is good,
+> "as needed" is bad.
 
-Before actually implementing delete_ref(), we discussed this
-"deleted-refs/" idea. but I do not think it is a direction we
-would want to go.
+One thing that mildly irritates me has been:
 
-Ref deletion is an operation that happens far far rarer than
-updates and lookups, and I deliberately chose to optimize for
-the latter.
+	git log --stat v2.6.17..
 
-There are valid reasons to delete refs, and one most frequent
-one would be to discard throw-away temporary branches you may
-have needed to switch to when your work was interrupted.  But
-even counting that kind of deletion, I imagine that you would
-not be creating and removing more than one branch per every 10
-commits you would create, and I also imagine you would be
-invoking not less than 5 operations that inspect project
-history, such as git-log and git-diff, between commits you make.
+which, as you correctly point out, shows the bad effect of
+scaling per commit.  "Normalized as needed" is good.  What's bad
+is "not normalizing across things we show".
 
-An operation to build a new commit itself needs at least two
-lookups (one to see what's current upfront, and another to see
-nobody touched it upon lockless update).  Most history-related
-operations at least need to look at one (typically, HEAD), and
-any refname you use to spell the name of an object or revision
-range (e.g. "v2.6.17..v2.6.18~10" needs to look at tags/v2.6.17
-and tags/v2.6.18).  Optimizing for deletion path at the expense
-of giving even a tiny penalty to lookup path is optimizing for a
-wrong case, and that is why I rejected deleted-refs/ idea when I
-originally did the delete_ref() implementation.
+Even with your non-linear scaling, you would need to make sure
+every commit gets the same graph width; I do not think they
+currently do, due to name part scaling.
 
-Having said that, I would definitely think there still are rooms
-for optimization in the current implementation.  For example, I
-do not recall offhand if I made the code to unconditionally
-repack without the deleted one, or only repack when we know the
-ref being deleted exists in the packed refs file.  The latter
-obviously would be more efficient and if we currently do not do
-that, making it do so is a very welcomed change.  Especially,
-given that the latest code does not pack branch heads by
-default, when a temporary throw-away branch is discarded, it is
-far more likely that it is not packed and we do not need to
-repack.
+People are used to seeing the traditional diffstat output, so
+any improvement you make that is different from it (including
+e.g. "being able to show differences between 1- and 2- liner
+patch when a monster 800- liner happens to be in the same patch
+set", which is a worthwhile goal) will look bizarre and/or
+misleading to them and they would not like it.
 
-Independent from this topic of "removing deleted from packed" vs
-"using deleted-refs/", I think we still do not handle .git/logs/
-hierarchy correctly in the current code when ref deletion is
-involved.  We already made it to correctly unlink/rmdir/mkdir
-on-demand for .git/refs/ hierarchy and I think we need to have
-code that parallels that for the .git/logs/ side.
+With the change to align things in the middle, it might become
+easier to accept, because then it is _so_ obviously different
+from traditional diffstat, it is very clear to people that the
+output is different but still they can easily figure out that
+longer bars are for larger changes.
+
+And this new output needs to be an option.
