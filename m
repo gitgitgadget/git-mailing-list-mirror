@@ -1,73 +1,115 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: VCS comparison table
-Date: Sat, 14 Oct 2006 21:44:52 -0400
-Message-ID: <BAYC1-PASMTP01D7FF6651E6563344419BAE080@CEZ.ICE>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<egrgqe$1i9$1@sea.gmane.org>
-	<9e4733910610141606g749d268eudd85791620e1363a@mail.gmail.com>
-	<BAYC1-PASMTP08F9B6EA71E7C83DD93E8DAE080@CEZ.ICE>
-	<9e4733910610141734h581afdc9r4d330d6a5a5bd1aa@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn and u-boot broken.
+Date: Sat, 14 Oct 2006 18:48:00 -0700
+Message-ID: <20061015014800.GJ27128@hand.yhbt.net>
+References: <20061014210920.GD29149@localdomain> <00fa01c6eff2$5d7f8480$1267a8c0@Jocke>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 15 03:45:15 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 15 03:48:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GYv3u-0006ib-TA
-	for gcvg-git@gmane.org; Sun, 15 Oct 2006 03:45:12 +0200
+	id 1GYv6l-0006wf-UR
+	for gcvg-git@gmane.org; Sun, 15 Oct 2006 03:48:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752330AbWJOBoz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Oct 2006 21:44:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752324AbWJOBoz
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Oct 2006 21:44:55 -0400
-Received: from bayc1-pasmtp01.bayc1.hotmail.com ([65.54.191.161]:18079 "EHLO
-	bayc1-pasmtp01.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S932320AbWJOBoy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Oct 2006 21:44:54 -0400
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.81]) by bayc1-pasmtp01.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sat, 14 Oct 2006 18:44:54 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GYu7Z-00023E-1E; Sat, 14 Oct 2006 20:44:53 -0400
-To: "Jon Smirl" <jonsmirl@gmail.com>
-Message-Id: <20061014214452.8c2d2a5c.seanlkml@sympatico.ca>
-In-Reply-To: <9e4733910610141734h581afdc9r4d330d6a5a5bd1aa@mail.gmail.com>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 15 Oct 2006 01:44:54.0441 (UTC) FILETIME=[833EF990:01C6EFFB]
+	id S932320AbWJOBsE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Oct 2006 21:48:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752328AbWJOBsE
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Oct 2006 21:48:04 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:32919 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1752327AbWJOBsB (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Oct 2006 21:48:01 -0400
+Received: by hand.yhbt.net (Postfix, from userid 500)
+	id 1A3227DC08D; Sat, 14 Oct 2006 18:48:01 -0700 (PDT)
+To: Joakim Tjernlund <joakim.tjernlund@transmode.se>
+Content-Disposition: inline
+In-Reply-To: <00fa01c6eff2$5d7f8480$1267a8c0@Jocke>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28903>
 
-On Sat, 14 Oct 2006 20:34:22 -0400
-"Jon Smirl" <jonsmirl@gmail.com> wrote:
+Joakim Tjernlund <joakim.tjernlund@transmode.se> wrote:
+> > 
+> > Joakim Tjernlund <joakim.tjernlund@transmode.se> wrote:
+> > > > > Also, which version of git-svn are you running?  Also, which 
+> > > > > version of
+> > > > > Subversion (client library, and server (if possible) are 
+> > > > you running?
+> > > > 
+> > > > git 1.4.2.3
+> > > > subversion 1.3.2-r1
+> > > > 
+> > > > I will try upgrading to newer subverison.
+> > > 
+> > > subversion 1.4.0 didn't help
+> > > 
+> > > PS.
+> > > 
+> > > I can't find the dcommit command in git-cvs, has it been removed?
+> > > if so, then the docs need an update.
+> > 
+> > You mean git-svn, right?  No, 'dcommit' has not been removed 
+> > and I have
+> > no plans to remove it.
+> 
+> hmm, its it not released yet then? I don't have it in git 1.4.2.3
 
-> That is possible but I wish git had tools supporting this. What do you
-> do about core developers that want the full repo syncing to other
-> developers that only have a partial copy?
+Hm... guess not.  I track master on git.git.  1.4.3 should be released
+pretty soon, and should have dcommit.
 
-I don't think that will be an issue at all.
+> Also, I have difficulties to follow the docs on
+> http://www.kernel.org/pub/software/scm/git/docs/git-svn.html
 
-As an example, take the current Linux kernel repo maintained by Linus,
-and one of the repos containing old historic kernel data imported into
-Git.  Graft in the old historic data into your clone of Linus' repo,
-and you're done. Anyone can pull from you even if they don't have the
-historic data themselves.
+The most-up-to-date documentation is available here:
 
-With a little work you could do the same thing with the Mozilla data.
-After you decide where to make the split, you'd have to rewrite the
-commit history for the "current" repository, so that it terminates
-at an initial commit rather than having a direct connection to the
-historic data.  After that, the repos could be used just as described
-above, separately or graphed together.
+http://git-svn.bogomips.org/git-svn.html
 
-As far as I know though, there is still no way to use the git protocol
-for the initial pull of such a combined repository.  You have to pull
-both repos separately and graft them together locally.  This sounds
-harder than it is though and can be scripted easily.
+> Any chance you can update it with more examples?
+> Especially one that show how one can do one big initial
+> commit then merge your own changes on top of that?
 
-Sean
+Hmm.. large imports from git to svn can get confusing, and generally
+aren't very useful on the svn side since history gets flattened.
+So I generally don't recommend importing complete git histories into
+svn.
+
+> Something like this
+> REPO="file:///tmp/SVNuboot"
+> REPO_PATH="/tmp/SVNuboot"
+> GIT_REPO="/tmp/mygituboot"
+> ORG_REPO="/usr/local/src/u-boot"
+> rm -rf "$REPO_PATH"
+> rm -rf "$GIT_REPO"
+> svnadmin create "$REPO_PATH"
+> svn mkdir -m "initial repo layout" "$REPO"/trunk "$REPO"/branches "$REPO"/tags
+> mkdir -p "$GIT_REPO"
+> cd "$GIT_REPO"
+> git-svn init "$REPO"/trunk
+> echo  [user] >> .git/config
+> echo  name="jocke" >> .git/config
+> echo  email="Joakim.Tjernlund@transmode.se" >> .git/config
+> git-svn fetch
+> git checkout -b svn-branch remotes/git-svn
+> git-fetch "$ORG_REPO" tmcu2:tmcu
+> git-branch initial-uboot f5e0d03970409feb3c77ab0107d5dece6b7d45c9
+> git pull . initial-uboot
+> # --squash makes one large commit.
+> git pull --squash . initial-uboot
+> cg-commit -m "merge up to f5e0d03970409feb3c77ab0107d5dece6b7d45c9"
+> git-svn commit -q remotes/git-svn..svn-branch
+> git pull . tmcu # This doesn't work, I get merge conflicts
+> git-svn commit -q remotes/git-svn..svn-branch
+> 
+> Anyhow, I am glad to report that after applying your patch all my
+> problems with went away, no more Too many open file desc,  memory
+> alloc failed or Inappropriate ioctl for device, Thanks a lot.
+
+Cool, good to know.  It seems like the apply_textdelta returning undef
+was a result of memory allocation failures, then.
+
+-- 
+Eric Wong
