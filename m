@@ -1,65 +1,79 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: VCS comparison table
-Date: Sun, 15 Oct 2006 14:39:56 -0400
-Message-ID: <BAYC1-PASMTP036D3F961BC92DC72FAEF9AE080@CEZ.ICE>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<egrgqe$1i9$1@sea.gmane.org>
-	<9e4733910610141606g749d268eudd85791620e1363a@mail.gmail.com>
-	<20061015182303.GW20017@pasky.or.cz>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] pack-objects: use of version 3 delta is now optional.
+Date: Sun, 15 Oct 2006 14:51:08 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0610151433310.17085@xanadu.home>
+References: <7v4pu62ite.fsf@assigned-by-dhcp.cox.net>
+ <7virim10rb.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610151135110.17085@xanadu.home>
+ <7vac3xzbze.fsf@assigned-by-dhcp.cox.net> <egtu1r$813$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Jon Smirl <jonsmirl@gmail.com>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 15 20:40:11 2006
+Content-Type: multipart/mixed; boundary="Boundary_(ID_R6qy5mX4c6lKz7vj10r/8A)"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 15 20:51:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZAu4-00088z-5T
-	for gcvg-git@gmane.org; Sun, 15 Oct 2006 20:40:04 +0200
+	id 1GZB4r-00015Y-Jm
+	for gcvg-git@gmane.org; Sun, 15 Oct 2006 20:51:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030193AbWJOSj7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Oct 2006 14:39:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751169AbWJOSj7
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Oct 2006 14:39:59 -0400
-Received: from bayc1-pasmtp03.bayc1.hotmail.com ([65.54.191.163]:26788 "EHLO
-	BAYC1-PASMTP03.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1751161AbWJOSj7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Oct 2006 14:39:59 -0400
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP03.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sun, 15 Oct 2006 11:39:58 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GZ9xt-0000O6-4U; Sun, 15 Oct 2006 13:39:57 -0400
-To: Petr Baudis <pasky@suse.cz>
-Message-Id: <20061015143956.86db3a8b.seanlkml@sympatico.ca>
-In-Reply-To: <20061015182303.GW20017@pasky.or.cz>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 15 Oct 2006 18:39:58.0271 (UTC) FILETIME=[50C1ECF0:01C6F089]
+	id S1030206AbWJOSvK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Oct 2006 14:51:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030228AbWJOSvJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Oct 2006 14:51:09 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:52278 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1030225AbWJOSvI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Oct 2006 14:51:08 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J76006VIXP89EE0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 15 Oct 2006 14:51:08 -0400 (EDT)
+In-reply-to: <egtu1r$813$1@sea.gmane.org>
+X-X-Sender: nico@xanadu.home
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28927>
 
-On Sun, 15 Oct 2006 20:23:03 +0200
-Petr Baudis <pasky@suse.cz> wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> (BTW, yes, grafting the old history could help this time, but it is a
-> hack and not a good long-term solution - it is just putting the real
-> solution away until the project history will re-grew. Periodical
-> regrafting is even worse hack, since at that moment you break
-> fast-forwarding and this kind of "restarting the history" breaks deep
-> into the Git distributiveness.)
+--Boundary_(ID_R6qy5mX4c6lKz7vj10r/8A)
+Content-type: TEXT/PLAIN; charset=UTF-8
+Content-transfer-encoding: 8BIT
 
-But is there a better practical solution he can use today?  I don't think
-there is.  And the experience of the Linux kernel has shown that it's not
-really all that big a problem.  You even made a nice script to help people
-do it! ;o)
+On Sun, 15 Oct 2006, Jakub Narebski wrote:
 
-It's probably not the solution that should be used _next_ time the repository
-grows too big, but it sure seems like the correct solution this time around.
-Not many people will want all that old history anyway (10+ years as i recall?).
+> Junio C Hamano wrote:
+> 
+> > I think that is sensible.  I also was thinking that we should
+> > call the current one packv3 and the one with delta-base-offset
+> > packv4.
+> 
+> Just curious: what was the difference between packv1 and packv2,
+> and packv3 and packv4?
 
-Sean
+Pack v1 was really short-lived (one day or two).  It used a different 
+encoding for object size and delta size than what exists today.  When 
+the current encoding was adopted the pack version was bumped to 2 to 
+make sure anyone, if any, who might have started to rely upon packs in 
+those early days would not end up trying to use incompatible pack data.  
+Backward compatibility was not a concern at all back then of course.  
+So for all practical purposes just consider that pack version 1 never 
+existed.
+
+Pack version 3 simply redefined one bit in the delta encoding that was 
+never used.  The former definition of the bit was implemented in the 
+decode part, but attempts to use it in the encode part turned up to be 
+way too costly for really really poor benefits.  for details just have a 
+look at commit d60fc1c8649f80c006b9f493c542461e81608d4b.
+
+As for pack v4... My opinion is that nothing justifies it so far.  So if 
+I can convince Junio there shouldn't be any v4 just yet.
+
+
+Nicolas
+
+--Boundary_(ID_R6qy5mX4c6lKz7vj10r/8A)--
