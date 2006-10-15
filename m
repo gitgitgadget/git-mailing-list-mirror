@@ -1,71 +1,64 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [PATCH] pack-objects: use of version 3 delta is now optional.
-Date: Sun, 15 Oct 2006 13:00:25 -0700
-Message-ID: <45329359.1030302@gmail.com>
-References: <7v4pu62ite.fsf@assigned-by-dhcp.cox.net> <7virim10rb.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0610151135110.17085@xanadu.home> <7vac3xzbze.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0610151422510.17085@xanadu.home>
-Reply-To: git@vger.kernel.org
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: svn revision id in git commit?
+Date: Sun, 15 Oct 2006 22:25:57 +0200
+Organization: Dewire
+Message-ID: <200610152225.58744.robin.rosenberg.lists@dewire.com>
+References: <egtpe4$i8v$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sun Oct 15 22:00:42 2006
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 15 22:25:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZCA5-0002oV-US
-	for gcvg-git@gmane.org; Sun, 15 Oct 2006 22:00:42 +0200
+	id 1GZCY1-0006FF-8K
+	for gcvg-git@gmane.org; Sun, 15 Oct 2006 22:25:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422893AbWJOUAi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Oct 2006 16:00:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422895AbWJOUAi
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Oct 2006 16:00:38 -0400
-Received: from py-out-1112.google.com ([64.233.166.179]:33666 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1422893AbWJOUAi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Oct 2006 16:00:38 -0400
-Received: by py-out-1112.google.com with SMTP id n25so2030851pyg
-        for <git@vger.kernel.org>; Sun, 15 Oct 2006 13:00:28 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=sQdlnr0qPFCLPV+8zqutWVQhfqdJLEuwwMwjLkVNzkY9FoQjU8VomgLijLQJnJOEKSniElelieI5u/hsx1fq1N+hJI6IifKBzJ130bb9FRu1QOpAAKmy5jO/k4Wr8unLOMneLylpvCZab3N0NzY98W+FD/4VZ8Mj7Cmswp94Ptw=
-Received: by 10.65.239.13 with SMTP id q13mr8805060qbr;
-        Sun, 15 Oct 2006 13:00:28 -0700 (PDT)
-Received: from ?10.0.0.6? ( [68.233.231.217])
-        by mx.google.com with ESMTP id d12sm8064087qbc.2006.10.15.13.00.26;
-        Sun, 15 Oct 2006 13:00:27 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060911)
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0610151422510.17085@xanadu.home>
+	id S1422891AbWJOUZQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 15 Oct 2006 16:25:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030265AbWJOUZQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Oct 2006 16:25:16 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:14435 "EHLO
+	torino.dewire.com") by vger.kernel.org with ESMTP id S1030264AbWJOUZO convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Oct 2006 16:25:14 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by torino.dewire.com (Postfix) with ESMTP id D663B8028A6;
+	Sun, 15 Oct 2006 22:22:09 +0200 (CEST)
+Received: from torino.dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 03220-01; Sun, 15 Oct 2006 22:22:09 +0200 (CEST)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by torino.dewire.com (Postfix) with ESMTP id 8D7988028A2;
+	Sun, 15 Oct 2006 22:22:07 +0200 (CEST)
+To: "Anand Kumria" <wildfire@progsoc.org>
+User-Agent: KMail/1.9.4
+In-Reply-To: <egtpe4$i8v$1@sea.gmane.org>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28933>
 
-Nicolas Pitre wrote:
-> On Sun, 15 Oct 2006, Junio C Hamano wrote:
-> 
->> Nicolas Pitre <nico@cam.org> writes:
->>
->>> If anything, maybe this patch can be added before v1.4.3 is released:
->>> ...
->>> This way pack v3 could be fed to GIT v1.4.3 and above whenever we add 
->>> back pack v3 generation, and a pack converted to v2 from any v3 on the 
->>> fly when that capability is not present.
->> I think that is sensible.  I also was thinking that we should
->> call the current one packv3 and the one with delta-base-offset
->> packv4.
-> 
-> I think we should not.  The pack version should be tied to incompatible 
-> pack data to prevent older GIT versions from misinterpreting newer 
-> packs.  The delta block copy encoding is a perfect example of that where 
-> a bit changed meaning.
-> 
-> The delta-base-offset case included a new object type that wasn't used 
-> before hence there is no room for confusion, and yet that new delta 
-> object could be encoded according to pack version 2 or pack version 3 
-> which makes it orthogonal to the pack version itself.
+s=C3=B6ndag 15 oktober 2006 18:59 skrev Anand Kumria:
+> Hi,
+>
+> I'm using git-svnimport with great success; generally when I do a mer=
+ge
+> from the subversion (via git-svnimport) I tag the revision number I m=
+erge
+> up to.
 
-It's not a new object type. It's a new object _encoding_ method.
+The -r flags adds the subversion revision to the commit message. It's i=
+n the=20
+man page.
+
+BTW, you may want to look at git-svn if you are shadowing a subversion =
+repo.=20
+It adds then subversion revision by default. Neither creates a tag thou=
+gh.
+
+-- robin
