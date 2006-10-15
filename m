@@ -1,67 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] clone: the given repository dir should be relative to $PWD
-Date: Sat, 14 Oct 2006 18:16:33 -0700
-Message-ID: <7v7iz274zy.fsf@assigned-by-dhcp.cox.net>
-References: <87ac3zqebs.wl@mail2.atmark-techno.com>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: VCS comparison table
+Date: Sat, 14 Oct 2006 21:44:52 -0400
+Message-ID: <BAYC1-PASMTP01D7FF6651E6563344419BAE080@CEZ.ICE>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<egrgqe$1i9$1@sea.gmane.org>
+	<9e4733910610141606g749d268eudd85791620e1363a@mail.gmail.com>
+	<BAYC1-PASMTP08F9B6EA71E7C83DD93E8DAE080@CEZ.ICE>
+	<9e4733910610141734h581afdc9r4d330d6a5a5bd1aa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 15 03:16:40 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 15 03:45:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GYucK-0003SW-71
-	for gcvg-git@gmane.org; Sun, 15 Oct 2006 03:16:40 +0200
+	id 1GYv3u-0006ib-TA
+	for gcvg-git@gmane.org; Sun, 15 Oct 2006 03:45:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752304AbWJOBQf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Oct 2006 21:16:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752321AbWJOBQe
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Oct 2006 21:16:34 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:60291 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1750938AbWJOBQe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Oct 2006 21:16:34 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061015011633.JUAE16798.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 14 Oct 2006 21:16:33 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id aRGc1V00M1kojtg0000000
-	Sat, 14 Oct 2006 21:16:36 -0400
-To: Yasushi SHOJI <yashi@atmark-techno.com>
-In-Reply-To: <87ac3zqebs.wl@mail2.atmark-techno.com> (Yasushi SHOJI's message
-	of "Sat, 14 Oct 2006 21:02:51 +0900")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752330AbWJOBoz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Oct 2006 21:44:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752324AbWJOBoz
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Oct 2006 21:44:55 -0400
+Received: from bayc1-pasmtp01.bayc1.hotmail.com ([65.54.191.161]:18079 "EHLO
+	bayc1-pasmtp01.bayc1.hotmail.com") by vger.kernel.org with ESMTP
+	id S932320AbWJOBoy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Oct 2006 21:44:54 -0400
+X-Originating-IP: [65.93.43.81]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.43.81]) by bayc1-pasmtp01.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sat, 14 Oct 2006 18:44:54 -0700
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with esmtp (Exim 4.43)
+	id 1GYu7Z-00023E-1E; Sat, 14 Oct 2006 20:44:53 -0400
+To: "Jon Smirl" <jonsmirl@gmail.com>
+Message-Id: <20061014214452.8c2d2a5c.seanlkml@sympatico.ca>
+In-Reply-To: <9e4733910610141734h581afdc9r4d330d6a5a5bd1aa@mail.gmail.com>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 15 Oct 2006 01:44:54.0441 (UTC) FILETIME=[833EF990:01C6EFFB]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28901>
 
-Yasushi SHOJI <yashi@atmark-techno.com> writes:
+On Sat, 14 Oct 2006 20:34:22 -0400
+"Jon Smirl" <jonsmirl@gmail.com> wrote:
 
-> the repository argument for git-clone should be relative to $PWD
-> instead of the given target directory.  The old behavior gave us
-> surprising success and you need a few minute to know why it worked.
->
-> GIT_DIR is already exported so no need to cd into $D. And this makes
-> $PWD for git-fetch-pack, which is the actual command to take the given
-> repository dir, the same as git-clone.
->
-> Signed-off-by: Yasushi SHOJI <yashi@atmark-techno.com>
-> ---
->
-> While I'm not sure this is a feature we rely on or not, and I don't
-> want to change the way people work, IMHO the old behaviour isn't
-> appropriate for such higher level porcelain.
->
-> The patch should be for post 1.4.3.
+> That is possible but I wish git had tools supporting this. What do you
+> do about core developers that want the full repo syncing to other
+> developers that only have a partial copy?
 
-Well spotted.  I am fairly sure that this "clone from repository
-relative to the target" is not intended behaviour.  I'd say we
-should fix this before 1.4.3.
+I don't think that will be an issue at all.
 
-... or are there any valid reason to keep the current behaviour
-that I missed?
+As an example, take the current Linux kernel repo maintained by Linus,
+and one of the repos containing old historic kernel data imported into
+Git.  Graft in the old historic data into your clone of Linus' repo,
+and you're done. Anyone can pull from you even if they don't have the
+historic data themselves.
+
+With a little work you could do the same thing with the Mozilla data.
+After you decide where to make the split, you'd have to rewrite the
+commit history for the "current" repository, so that it terminates
+at an initial commit rather than having a direct connection to the
+historic data.  After that, the repos could be used just as described
+above, separately or graphed together.
+
+As far as I know though, there is still no way to use the git protocol
+for the initial pull of such a combined repository.  You have to pull
+both repos separately and graft them together locally.  This sounds
+harder than it is though and can be scripted easily.
+
+Sean
