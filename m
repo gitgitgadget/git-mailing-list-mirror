@@ -1,76 +1,64 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] pack-objects: use of version 3 delta is now optional.
-Date: Sun, 15 Oct 2006 11:57:44 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610151150530.3952@g5.osdl.org>
-References: <7v4pu62ite.fsf@assigned-by-dhcp.cox.net> <7virim10rb.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610151135110.17085@xanadu.home> <7vac3xzbze.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: VCS comparison table
+Date: Sun, 15 Oct 2006 21:24:58 +0200
+Message-ID: <20061015192458.GY18879@pasky.or.cz>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <egrgqe$1i9$1@sea.gmane.org> <9e4733910610141606g749d268eudd85791620e1363a@mail.gmail.com> <20061015182303.GW20017@pasky.or.cz> <20061015143956.86db3a8b.seanlkml@sympatico.ca>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 15 20:58:32 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Jon Smirl <jonsmirl@gmail.com>, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 15 21:25:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZBBn-0001vX-HI
-	for gcvg-git@gmane.org; Sun, 15 Oct 2006 20:58:23 +0200
+	id 1GZBc2-0005gj-DM
+	for gcvg-git@gmane.org; Sun, 15 Oct 2006 21:25:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030216AbWJOS6O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Oct 2006 14:58:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030224AbWJOS6O
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Oct 2006 14:58:14 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:55263 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1030216AbWJOS6O (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Oct 2006 14:58:14 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9FIvjaX006606
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 15 Oct 2006 11:57:46 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9FIvibl021318;
-	Sun, 15 Oct 2006 11:57:45 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vac3xzbze.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-2.468 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1422817AbWJOTZK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Oct 2006 15:25:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422811AbWJOTZJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Oct 2006 15:25:09 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:47791 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1422817AbWJOTZB (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Oct 2006 15:25:01 -0400
+Received: (qmail 2352 invoked by uid 2001); 15 Oct 2006 21:24:58 +0200
+To: Sean <seanlkml@sympatico.ca>
+Content-Disposition: inline
+In-Reply-To: <20061015143956.86db3a8b.seanlkml@sympatico.ca>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28929>
 
-
-
-On Sun, 15 Oct 2006, Junio C Hamano wrote:
+On Sun, Oct 15, 2006 at 08:39:56PM CEST, Sean wrote:
+> On Sun, 15 Oct 2006 20:23:03 +0200
+> Petr Baudis <pasky@suse.cz> wrote:
 > 
-> I think that is sensible.  I also was thinking that we should
-> call the current one packv3 and the one with delta-base-offset
-> packv4.
+> > (BTW, yes, grafting the old history could help this time, but it is a
+> > hack and not a good long-term solution - it is just putting the real
+> > solution away until the project history will re-grew. Periodical
+> > regrafting is even worse hack, since at that moment you break
+> > fast-forwarding and this kind of "restarting the history" breaks deep
+> > into the Git distributiveness.)
+> 
+> But is there a better practical solution he can use today?  I don't think
+> there is.  And the experience of the Linux kernel has shown that it's not
+> really all that big a problem.  You even made a nice script to help people
+> do it! ;o)
+> 
+> It's probably not the solution that should be used _next_ time the repository
+> grows too big, but it sure seems like the correct solution this time around.
+> Not many people will want all that old history anyway (10+ years as i recall?).
 
-Quite frankly, I wonder if the pure "copy size extension" (aka "v3") thing 
-is really worth it at all. 
+Well I'm not saying it's the incorrect solution today, only that we
+won't get around the problem by suggesting grafting forever. :-)
 
-I mean, seriously, how much does it buy us? A couple of bytes per every 
-64kB of delta copied? And the downside is that you can't re-use the deltas 
-with old clients and/or you have to re-create a "v2" delta at run-time 
-from a v3 delta by inflating, fixing and deflating it.
-
-So I would suggest:
-
- - call the delta-base-offset thing the "v3" pack format.
-
- - forget about the current "v3 delta" entirely. We might as well continue 
-   to support reading it, but there's no point in actually ever generating 
-   it. 
-
-In other words, I think the current situation in top-of-master is the 
-right situation. There's simply no point in adding code to convert v3 to 
-v2 on the fly - even if it's not rocket science, it's just not _worth_ it.
-
-(You could also have the extended copy deltas in v3-only, and only send it 
-to clients that you know supports it. However, the "convert to v2" format 
-issue still rears its ugly head, and as a result I just don't think it's 
-_ever_ worth it).
-
-		Linus
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
