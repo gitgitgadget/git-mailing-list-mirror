@@ -1,118 +1,118 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [RFC] Ideas for new "stats" view in gitweb
-Date: Sun, 15 Oct 2006 17:17:18 +0200
-Organization: At home
-Message-ID: <egtjda$8qg$1@sea.gmane.org>
-References: <egdge3$t12$1@sea.gmane.org> <egj1g6$bk6$1@sea.gmane.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Recent and near future backward incompatibilities
+Date: Sun, 15 Oct 2006 11:34:20 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0610151133450.17085@xanadu.home>
+References: <7v4pu62ite.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Sun Oct 15 17:17:31 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>,
+	Stephen Hemminger <shemminger@osdl.org>
+X-From: git-owner@vger.kernel.org Sun Oct 15 17:34:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZ7k1-0000FV-SE
-	for gcvg-git@gmane.org; Sun, 15 Oct 2006 17:17:30 +0200
+	id 1GZ80a-00031q-1j
+	for gcvg-git@gmane.org; Sun, 15 Oct 2006 17:34:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750867AbWJOPRT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 15 Oct 2006 11:17:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750877AbWJOPRT
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Oct 2006 11:17:19 -0400
-Received: from main.gmane.org ([80.91.229.2]:5527 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750867AbWJOPRS (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Oct 2006 11:17:18 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GZ7jk-0000Dw-PW
-	for git@vger.kernel.org; Sun, 15 Oct 2006 17:17:12 +0200
-Received: from host-81-190-17-207.torun.mm.pl ([81.190.17.207])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 15 Oct 2006 17:17:12 +0200
-Received: from jnareb by host-81-190-17-207.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 15 Oct 2006 17:17:12 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-17-207.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1750997AbWJOPeX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Oct 2006 11:34:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751000AbWJOPeW
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Oct 2006 11:34:22 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:60009 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1750987AbWJOPeV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Oct 2006 11:34:21 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J76006K8OL89E70@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 15 Oct 2006 11:34:21 -0400 (EDT)
+In-reply-to: <7v4pu62ite.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28917>
 
-Jakub Narebski wrote:
+On Sat, 14 Oct 2006, Junio C Hamano wrote:
 
-> Jakub Narebski wrote:
->=20
->> =A0* Graph of number of changed files in given branch; probably shou=
-ld be
->> =A0 =A0cached.
->=20
-> See for example StatCVS and FishEye
->   http://www-128.ibm.com/developerworks/java/library/j-statcvs/
->   http://statcvs.sourceforge.net/statcvs-stats/
->=20
->   http://fisheye.codehaus.org/browse/activecluster
+> It was brought to my attention that the public git.git
+> repository cannot be cloned with older versions of git.  More
+> precisely, packs generated with post 16854571 (NOT contained in
+> v1.4.2.3 but in the current "master" and more importantly in
+> v1.4.3-rc3 which I tagged tonight) can contain deltas that are
+> not compatible with the version of git before d60fc1c8, which
+> means that v1.1.6 and older (v1.2.0 and later are Ok).
 
-See also StatCVS-XML (http://statcvs-xml.berlios.de) and SvnStat
-(http://svnstat.sourceforge.net), both derivatives of StatCVS, with
-a few plots/charts added. If you know other graphical SCM statistics
-tools, please mention them.
+Ahhhhhh.  DAMN !
 
-Would additional "stats" view help? Does some bit of stats help (well,
-besides diffstat in commitdiff; perhaps later graphical diffstat in
-gitweb)?
+> One thing we can and should immediately do is to revert 16854571
+> for now until we decide how to resolve this issue cleanly.
+> 
+> These are what needs to happen but one of them is quite tricky:
+> 
+>  - the reusing of delta is what makes pack-objects practical,
+>    and it is expensive to look into existing delta to see if it
+>    is version 2 or version 3 before deciding to reuse each delta
+>    data, so even if we update pack-objects so that we can tell
+>    it to generate a pack that contains only version 2 deltas, it
+>    would be very expensive to do so and may not be practical.
 
-=46or example all (I think) above projects include plot of "size" (usua=
-lly in
-lines of code) of repository versus time, sometimes split into few top
-authors or few top subdirectories; sometimes limited to some subdirecto=
-ry or
-even to some file only, together with the plot of "commit volume" (usua=
-lly
-number of commits per unit, e.g. number of commits per day, but it coul=
-d be
-numbers of files changed and/or number of lines added/deleted) vs time.
-Tags are marked on the time scale. This supposedly helps to realize if
-project/part of project/individual file is in development, refactoring =
-or
-maintenace stage. And graph with different top authors plotted using
-different lines visualises which were active during which point of proj=
-ect
-history. I'm not sure what "commit volume" plot tells us.
+Why not?  After all users of GIT versions that don't understand pack 
+version 3 should be a very small minority by now.
 
-Next there are various tables and plots gathering statistics about auth=
-ors:
-lines of code + percentage, numbers of changes (commits) + percentage,
-average number of lines per change, ratio of modifications to adding ne=
-w
-code. Git has git-shortlog for creating similar summary. That probably
-helps to realize who takes what part in development of project. And the=
-re
-can be similar tables, charts and plots but with module/subdirectory/fi=
-le
-instead of author. For example top files with respect to size, changes,
-or number of revisions in history.
+>    am not sure how to resolve this issue efficiently right now;
+>    we need a bit of thinking.
 
-Then there are IMVHO not very useful (except for satisfying idle curios=
-ity)
-histograms of activity (either number of commits, or number of changed
-lines) per hour of day, or per day of week, or per month of year (in ol=
-der
-projects).
+Actually it doesn't have to be that expensive to convert deltas v2 to 
+deltas v3 on the fly.  They can be inflated, parsed, the copy ops that 
+exceed 0x10000 converted into multiple ops of smaller copy blocks, then 
+deflated.  This is certainly much less costly than rematching deltas 
+from scratch.
+
+Well I'd say you just revert pack v3 generation patch for now and 
+release v1.4.3 without it.  Pack v3 generation can wait a bit longer 
+until we implement the above or users of GIT that can read packs v2 only 
+are so few that we shouldn't care anymore and tell them to use an 
+intermediate version of GIT in order to clone the latest.  It is not 
+like if that makes such a big difference on pack size anyway (much less 
+than delta with offsets to base actually).
+
+>  - we need to add .git/config item that tells pack-objects to
+>    never generate version 3 delta for that particular
+>    repository.  This is similar to the way we would need to
+>    control the use of delta-base-offset representation currently
+>    cooking in "next".
+
+This is different. The delta-base-offset representation is decided at 
+run time every time a pack is generated and regardless if delta data is 
+being reused from another pack or regenerated afresh, and so with no 
+cost.  So this is no issue for users of old GIT versions since the 
+native GIT protocol already handle it in a backward compatible manner.
+
+The only issue here concerns users that don't use the native GIT 
+protocol.  But in this case they have two options: either they switch to 
+the native protocol, or they upgrade to the latest GIT version which 
+can always be pulled with the native GIT protocol.
+
+> We may have a similar issue when enabling generation of loose
+> objects with new style headers.  This is already controlled with
+> the core.legacyheaders configuration item.
+
+Sure, but those are never passed through the native GIT protocol which 
+makes it a much less critical issue.
+
+Not being able to upgrade to the latest GIT in order to actually cope 
+with the new format because the primary GIT repository started to feed 
+old GIT versions with that new format unconditionally really is a 
+problem though.
+
+I think we should not bend backward too much with repository 
+compatibility issues as long as there is no interoperability issues at 
+the protocol level.  But the GIT protocol must always remain 
+interoperable with whatever GIT version still in use.
 
 
-There are some other plots, charts, tables, graphs... Please do tell wh=
-ich
-ones would be good to have in gitweb.
-
-BTW. we most certainly would have to use some cache I guess... and we h=
-ave
-just removed the need for temporary files for creating diffs...
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Nicolas
