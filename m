@@ -1,57 +1,105 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] pack-objects: use of version 3 delta is now optional.
-Date: Sun, 15 Oct 2006 20:18:57 +0200
-Organization: At home
-Message-ID: <egtu1r$813$1@sea.gmane.org>
-References: <7v4pu62ite.fsf@assigned-by-dhcp.cox.net> <7virim10rb.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0610151135110.17085@xanadu.home> <7vac3xzbze.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: VCS comparison table
+Date: Sun, 15 Oct 2006 20:23:03 +0200
+Message-ID: <20061015182303.GW20017@pasky.or.cz>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <egrgqe$1i9$1@sea.gmane.org> <9e4733910610141606g749d268eudd85791620e1363a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Sun Oct 15 20:19:18 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 15 20:23:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZAZs-00051S-5k
-	for gcvg-git@gmane.org; Sun, 15 Oct 2006 20:19:12 +0200
+	id 1GZAdk-0005d5-BY
+	for gcvg-git@gmane.org; Sun, 15 Oct 2006 20:23:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030200AbWJOSTI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 15 Oct 2006 14:19:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030205AbWJOSTI
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Oct 2006 14:19:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:35022 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1030200AbWJOSTF (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Oct 2006 14:19:05 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GZAZZ-0004yL-GZ
-	for git@vger.kernel.org; Sun, 15 Oct 2006 20:18:53 +0200
-Received: from host-81-190-17-207.torun.mm.pl ([81.190.17.207])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 15 Oct 2006 20:18:53 +0200
-Received: from jnareb by host-81-190-17-207.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 15 Oct 2006 20:18:53 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-17-207.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1161081AbWJOSXJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Oct 2006 14:23:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161079AbWJOSXJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Oct 2006 14:23:09 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:59022 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1161081AbWJOSXG (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Oct 2006 14:23:06 -0400
+Received: (qmail 28295 invoked by uid 2001); 15 Oct 2006 20:23:04 +0200
+To: Jon Smirl <jonsmirl@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <9e4733910610141606g749d268eudd85791620e1363a@mail.gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28924>
 
-Junio C Hamano wrote:
+Dear diary, on Sun, Oct 15, 2006 at 01:06:10AM CEST, I got a letter
+where Jon Smirl <jonsmirl@gmail.com> said that...
+> On 10/14/06, Jakub Narebski <jnareb@gmail.com> wrote:
+> >There is work by Jon Smirl and Shawn Pearce on CVS to Git importer which 
+> >can
+> >manage large and complicated (read: f*cked-up) Mozilla CVS repository.
+> >  http://git.or.cz/gitwiki/InterfacesFrontendsAndTools#cvs2git
+> 
+> I am still working with the developers of the cvs2svn import tool to
+> fix things so that Mozilla CVS can be correctly imported. There are
+> still outstanding bugs in cvs2svn preventing a correct import. MozCVS
+> can be imported, but the resulting repository is not entirely correct.
+> 
+> Once they get the base cvs2svn fixed I'll port my patches to turn it
+> into cvs2git again.
 
-> I think that is sensible. =A0I also was thinking that we should
-> call the current one packv3 and the one with delta-base-offset
-> packv4.
+So what exactly is the cvs2git status now? AFAIU, there's a tool that
+parses the CVS repository and that is then "piped" to git-fastimport?
+git-fastimport is available somewhere (perhaps it would be interesting
+to publish it at repo.or.cz or something), is the current cvs2git
+version available as well?
 
-Just curious: what was the difference between packv1 and packv2,
-and packv3 and packv4?
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+> >2. Good support for system which most important developers use, and good
+> >support for system which most contributors use. If MS Windows is included
+> >in those, then Git perhaps wouldn't be the best choice.
+> 
+> Better Windows support is needed to make git the first choice among
+> the various SCMs.
+
+And this is probably not likely to happen soon.
+
+Well, I'm enlisted in a "Programming in Windows" course at my university
+now and I had this kind of thoughts, but I really can't promise
+anything. :-)
+
+> >4. Good support for _large_ project, with large history. Namely, that
+> >developer wouldn't need to download many megabytes and/or wouldn't need
+> >megabytes of working area. How that is solved, be it partial checkouts,
+> >lazy/shallow/sparse clone, subprojects, splitting into
+> >projects/repositories and having some superproject or build-time
+> >superproject, splitting repository into current and historical... that of
+> >course depends on SCM.
+> 
+> git has issues here. The smallest Mozilla download we have built so
+> far is 450MB for the initial checkout.
+
+(BTW, yes, grafting the old history could help this time, but it is a
+hack and not a good long-term solution - it is just putting the real
+solution away until the project history will re-grew. Periodical
+regrafting is even worse hack, since at that moment you break
+fast-forwarding and this kind of "restarting the history" breaks deep
+into the Git distributiveness.)
+
+> >5. ....
+> >
+> >and probably few more
+> 
+> 
+> The three most complex repositories are the kernel, gcc and Mozilla.
+> Gcc is in SVN now. Mozilla CVS and the kernel git.
+
+I believe OpenOffice CVS probably beats all three hands down very
+easily. KDE is also very big, and I don't think NetBSD is just ISO
+images either (if it contains any at all).
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
