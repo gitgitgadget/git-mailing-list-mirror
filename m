@@ -1,72 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Recent and near future backward incompatibilities
-Date: Sun, 15 Oct 2006 11:14:03 -0700
-Message-ID: <7v64elzbtg.fsf@assigned-by-dhcp.cox.net>
-References: <7v4pu62ite.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0610151133450.17085@xanadu.home>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] pack-objects: use of version 3 delta is now optional.
+Date: Sun, 15 Oct 2006 20:18:57 +0200
+Organization: At home
+Message-ID: <egtu1r$813$1@sea.gmane.org>
+References: <7v4pu62ite.fsf@assigned-by-dhcp.cox.net> <7virim10rb.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0610151135110.17085@xanadu.home> <7vac3xzbze.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>,
-	Stephen Hemminger <shemminger@osdl.org>
-X-From: git-owner@vger.kernel.org Sun Oct 15 20:14:11 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Sun Oct 15 20:19:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZAUy-0004Bg-PM
-	for gcvg-git@gmane.org; Sun, 15 Oct 2006 20:14:09 +0200
+	id 1GZAZs-00051S-5k
+	for gcvg-git@gmane.org; Sun, 15 Oct 2006 20:19:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422680AbWJOSOF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Oct 2006 14:14:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422678AbWJOSOF
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Oct 2006 14:14:05 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:26331 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1422680AbWJOSOE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Oct 2006 14:14:04 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061015181404.EMHR18985.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 15 Oct 2006 14:14:04 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id aiE61V01L1kojtg0000000
-	Sun, 15 Oct 2006 14:14:07 -0400
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0610151133450.17085@xanadu.home> (Nicolas Pitre's
-	message of "Sun, 15 Oct 2006 11:34:20 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030200AbWJOSTI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 15 Oct 2006 14:19:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030205AbWJOSTI
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Oct 2006 14:19:08 -0400
+Received: from main.gmane.org ([80.91.229.2]:35022 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1030200AbWJOSTF (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Oct 2006 14:19:05 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GZAZZ-0004yL-GZ
+	for git@vger.kernel.org; Sun, 15 Oct 2006 20:18:53 +0200
+Received: from host-81-190-17-207.torun.mm.pl ([81.190.17.207])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 15 Oct 2006 20:18:53 +0200
+Received: from jnareb by host-81-190-17-207.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 15 Oct 2006 20:18:53 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-17-207.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28923>
 
-Nicolas Pitre <nico@cam.org> writes:
+Junio C Hamano wrote:
 
-> Actually it doesn't have to be that expensive to convert deltas v2 to 
-> deltas v3 on the fly.  They can be inflated, parsed, the copy ops that 
-> exceed 0x10000 converted into multiple ops of smaller copy blocks, then 
-> deflated.  This is certainly much less costly than rematching deltas 
-> from scratch.
+> I think that is sensible. =A0I also was thinking that we should
+> call the current one packv3 and the one with delta-base-offset
+> packv4.
 
-True, when I think about it.
-
->>  - we need to add .git/config item that tells pack-objects to
->>    never generate version 3 delta for that particular
->>    repository.  This is similar to the way we would need to
->>    control the use of delta-base-offset representation currently
->>    cooking in "next".
->
-> This is different. The delta-base-offset representation is decided at 
-> run time every time a pack is generated and regardless if delta data is 
-> being reused from another pack or regenerated afresh, and so with no 
-> cost.  So this is no issue for users of old GIT versions since the 
-> native GIT protocol already handle it in a backward compatible manner.
->
-> The only issue here concerns users that don't use the native GIT 
-> protocol.  But in this case they have two options: either they switch to 
-> the native protocol, or they upgrade to the latest GIT version which 
-> can always be pulled with the native GIT protocol.
-
-True again.  Thanks.
+Just curious: what was the difference between packv1 and packv2,
+and packv3 and packv4?
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
