@@ -1,72 +1,102 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: VCS comparison table
-Date: Sat, 14 Oct 2006 20:34:22 -0400
-Message-ID: <9e4733910610141734h581afdc9r4d330d6a5a5bd1aa@mail.gmail.com>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	 <egrgqe$1i9$1@sea.gmane.org>
-	 <9e4733910610141606g749d268eudd85791620e1363a@mail.gmail.com>
-	 <BAYC1-PASMTP08F9B6EA71E7C83DD93E8DAE080@CEZ.ICE>
+From: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
+Subject: RE: git-svn and u-boot broken.
+Date: Sun, 15 Oct 2006 02:39:25 +0200
+Message-ID: <00fa01c6eff2$5d7f8480$1267a8c0@Jocke>
+References: <20061014210920.GD29149@localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 15 02:35:19 2006
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Oct 15 02:41:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GYtyD-0003Xb-0n
-	for gcvg-git@gmane.org; Sun, 15 Oct 2006 02:35:14 +0200
+	id 1GYu4N-0005Cf-Om
+	for gcvg-git@gmane.org; Sun, 15 Oct 2006 02:41:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752304AbWJOAeY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Oct 2006 20:34:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751452AbWJOAeY
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Oct 2006 20:34:24 -0400
-Received: from py-out-1112.google.com ([64.233.166.179]:4239 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1752304AbWJOAeX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Oct 2006 20:34:23 -0400
-Received: by py-out-1112.google.com with SMTP id n25so1725013pyg
-        for <git@vger.kernel.org>; Sat, 14 Oct 2006 17:34:23 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=JzapE4WQJ2rL6fmjubj6K+rFDqwoLY4mjnOHlUfZl8OIlAs+17ZwIEl++fVaI3YwtZ1HmFErlbki09UtvaxWkFsc1eH6bytmNSK2cSqgmaxv7epfbLumHf+K9DJEjo5tCZvYkD6P+hiGbsHjJTEEJCoTpVmOFFy29U2Av0LPAtE=
-Received: by 10.35.113.12 with SMTP id q12mr9243525pym;
-        Sat, 14 Oct 2006 17:34:22 -0700 (PDT)
-Received: by 10.35.60.14 with HTTP; Sat, 14 Oct 2006 17:34:22 -0700 (PDT)
-To: Sean <seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP08F9B6EA71E7C83DD93E8DAE080@CEZ.ICE>
-Content-Disposition: inline
+	id S1752315AbWJOAld (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Oct 2006 20:41:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752312AbWJOAld
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Oct 2006 20:41:33 -0400
+Received: from 147.175.241.83.in-addr.dgcsystems.net ([83.241.175.147]:4384
+	"EHLO tmnt04.transmode.se") by vger.kernel.org with ESMTP
+	id S1751452AbWJOAlc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Oct 2006 20:41:32 -0400
+Received: from Jocke ([84.217.9.178]) by tmnt04.transmode.se with Microsoft SMTPSVC(5.0.2195.6713);
+	 Sun, 15 Oct 2006 02:41:31 +0200
+To: "'Eric Wong'" <normalperson@yhbt.net>
+X-Mailer: Microsoft Office Outlook 11
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2962
+Thread-Index: Acbv1QsaKH/KPubdTqqgxZXOu34C1QAGgOdg
+In-Reply-To: <20061014210920.GD29149@localdomain>
+X-OriginalArrivalTime: 15 Oct 2006 00:41:31.0137 (UTC) FILETIME=[A84CD710:01C6EFF2]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28899>
 
-On 10/14/06, Sean <seanlkml@sympatico.ca> wrote:
-> On Sat, 14 Oct 2006 19:06:10 -0400
-> "Jon Smirl" <jonsmirl@gmail.com> wrote:
->
-> > Top two git issues effecting Mozilla choosing it
-> > 1) some way to avoid the initial 450MB download
->
-> Why not split the repository up after you import it?  Break it into
-> two repositories, last year or two, and then everything else.
+> 
+> Joakim Tjernlund <joakim.tjernlund@transmode.se> wrote:
+> > > > Also, which version of git-svn are you running?  Also, which 
+> > > > version of
+> > > > Subversion (client library, and server (if possible) are 
+> > > you running?
+> > > 
+> > > git 1.4.2.3
+> > > subversion 1.3.2-r1
+> > > 
+> > > I will try upgrading to newer subverison.
+> > 
+> > subversion 1.4.0 didn't help
+> > 
+> > PS.
+> > 
+> > I can't find the dcommit command in git-cvs, has it been removed?
+> > if so, then the docs need an update.
+> 
+> You mean git-svn, right?  No, 'dcommit' has not been removed 
+> and I have
+> no plans to remove it.
 
-That is possible but I wish git had tools supporting this. What do you
-do about core developers that want the full repo syncing to other
-developers that only have a partial copy?
+hmm, its it not released yet then? I don't have it in git 1.4.2.3
 
->
-> > 2) better windows support
->
-> Hard to imagine native windows support existing in time to be used by
-> the Mozilla folks, maybe in time for 3.0 :o)
->
-> Sean
->
+Also, I have difficulties to follow the docs on http://www.kernel.org/pub/software/scm/git/docs/git-svn.html
 
+Any chance you can update it with more examples?
+Especially one that show how one can do one big initial
+commit then merge your own changes on top of that?
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+Something like this
+REPO="file:///tmp/SVNuboot"
+REPO_PATH="/tmp/SVNuboot"
+GIT_REPO="/tmp/mygituboot"
+ORG_REPO="/usr/local/src/u-boot"
+rm -rf "$REPO_PATH"
+rm -rf "$GIT_REPO"
+svnadmin create "$REPO_PATH"
+svn mkdir -m "initial repo layout" "$REPO"/trunk "$REPO"/branches "$REPO"/tags
+mkdir -p "$GIT_REPO"
+cd "$GIT_REPO"
+git-svn init "$REPO"/trunk
+echo  [user] >> .git/config
+echo  name="jocke" >> .git/config
+echo  email="Joakim.Tjernlund@transmode.se" >> .git/config
+git-svn fetch
+git checkout -b svn-branch remotes/git-svn
+git-fetch "$ORG_REPO" tmcu2:tmcu
+git-branch initial-uboot f5e0d03970409feb3c77ab0107d5dece6b7d45c9
+git pull . initial-uboot
+# --squash makes one large commit.
+git pull --squash . initial-uboot
+cg-commit -m "merge up to f5e0d03970409feb3c77ab0107d5dece6b7d45c9"
+git-svn commit -q remotes/git-svn..svn-branch
+git pull . tmcu # This doesn't work, I get merge conflicts
+git-svn commit -q remotes/git-svn..svn-branch
+
+Anyhow, I am glad to report that after applying your patch all my
+problems with went away, no more Too many open file desc,  memory
+alloc failed or Inappropriate ioctl for device, Thanks a lot.
+
+ Jocke
