@@ -1,71 +1,65 @@
-From: Martin Pool <mbp@canonical.com>
-Subject: Re: VCS comparison table
-Date: Mon, 16 Oct 2006 13:53:27 +1000
-Message-ID: <20061016035326.GA8654@hope.sourcefrog.net>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<egr3ud$nqm$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] pack-objects: use of version 3 delta is now optional.
+Date: Sun, 15 Oct 2006 21:45:44 -0700
+Message-ID: <7v64ekyikn.fsf@assigned-by-dhcp.cox.net>
+References: <7v4pu62ite.fsf@assigned-by-dhcp.cox.net>
+	<7virim10rb.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0610151135110.17085@xanadu.home>
+	<7vac3xzbze.fsf@assigned-by-dhcp.cox.net> <egtu1r$813$1@sea.gmane.org>
+	<Pine.LNX.4.64.0610151433310.17085@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: bazaar-ng-bounces@lists.canonical.com Mon Oct 16 05:54:06 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 16 06:45:58 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZJY8-0007Xk-25
-	for gcvbg-bazaar-ng@m.gmane.org; Mon, 16 Oct 2006 05:54:00 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GZJXj-0003ei-Oo; Mon, 16 Oct 2006 04:53:35 +0100
-Received: from ozlabs.org ([203.10.76.45])
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <mbp@hope.sourcefrog.net>) id 1GZJXe-0003eV-0F
-	for bazaar-ng@lists.canonical.com; Mon, 16 Oct 2006 04:53:30 +0100
-Received: from hope.sourcefrog.net (ppp112-44.static.internode.on.net
-	[150.101.112.44])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by ozlabs.org (Postfix) with ESMTP id 96B78679E2;
-	Mon, 16 Oct 2006 13:53:28 +1000 (EST)
-Received: by hope.sourcefrog.net (Postfix, from userid 1000)
-	id 25CB95C412; Mon, 16 Oct 2006 13:53:27 +1000 (EST)
-To: Jakub Narebski <jnareb@gmail.com>
-Mail-Followup-To: Jakub Narebski <jnareb@gmail.com>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <egr3ud$nqm$1@sea.gmane.org>
-User-Agent: Mutt/1.5.12-2006-07-14
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28950>
+	id 1GZKMP-0006LH-9D
+	for gcvg-git@gmane.org; Mon, 16 Oct 2006 06:45:57 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751458AbWJPEpq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Oct 2006 00:45:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751457AbWJPEpq
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 00:45:46 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:38321 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1030193AbWJPEpq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Oct 2006 00:45:46 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061016044545.ZDJS16798.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 16 Oct 2006 00:45:45 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id aslo1V00c1kojtg0000000
+	Mon, 16 Oct 2006 00:45:48 -0400
+To: Nicolas Pitre <nico@cam.org>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28951>
 
-On 14 Oct 2006, Jakub Narebski <jnareb@gmail.com> wrote:
-> Jon Smirl wrote:
-> 
-> > It refers to this comparison chart between source control systems.
-> > http://bazaar-vcs.org/RcsComparisons
-> 
-> It is quite obvious that comparison of programs of given type (SMC)
-> on some program site (Bazaar-NG) is usually biased towards said program,
-> perhaps unconsciously: by emphasizing the features which were important
-> for developers of said program.
+Nicolas Pitre <nico@cam.org> writes:
 
-I don't think I saw the original post but thanks for the feedback, we'll
-update it.
+> As for pack v4... My opinion is that nothing justifies it so far.  So if 
+> I can convince Junio there shouldn't be any v4 just yet.
 
-> Gaah, subscribe-to-post mailing list!
+The only concern I have is the commit walkers (rsync has the
+same problem as well but we honestly do not care).  They just
+grab existing packs and try to use them.  I have been wondering
+if it might be safer to mark the delta-base-offset encoded packs
+v4 to make sure the clients would get "I know only v2 and v3 but
+you fed me v4" message.
 
-No, it's just moderated for first time posters to avoid spam.  Your
-message got through.
+People who own public repositories and who care about commit
+walkers need to refrain from using delta-base-offset when
+repacking (which can be done via configuration mechanism
+already).
+
+If download goes over git native protocol, there is no such
+worry -- they can pack using delta-base-offset and older clients
+will be fed a pack with 20-byte base object name just fine, so my
+worry is really only about commit walkers.
