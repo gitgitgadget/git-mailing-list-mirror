@@ -1,92 +1,73 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Davide Libenzi <davidel@xmailserver.org>
 Subject: Re: git-diff-tree inordinately (O(M*N)) slow on files with many
  changes
-Date: Mon, 16 Oct 2006 11:51:17 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610161130090.3962@g5.osdl.org>
+Date: Mon, 16 Oct 2006 12:44:52 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610161225470.7697@alien.or.mcafeemobile.com>
 References: <87slhopcws.fsf@rho.meyering.net> <Pine.LNX.4.64.0610160838200.3962@g5.osdl.org>
  <Pine.LNX.4.64.0610160904400.3962@g5.osdl.org> <87mz7wp6ek.fsf@rho.meyering.net>
  <Pine.LNX.4.64.0610160941270.7697@alien.or.mcafeemobile.com>
  <87ejt8p5l9.fsf@rho.meyering.net> <Pine.LNX.4.64.0610161038200.3962@g5.osdl.org>
  <Pine.LNX.4.64.0610161109430.7697@alien.or.mcafeemobile.com>
+ <Pine.LNX.4.64.0610161130090.3962@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jim Meyering <jim@meyering.net>,
+Cc: Junio C Hamano <junkio@cox.net>, Jim Meyering <jim@meyering.net>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 16 20:52:02 2006
+X-From: git-owner@vger.kernel.org Mon Oct 16 21:45:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZXYy-0006fl-Rv
-	for gcvg-git@gmane.org; Mon, 16 Oct 2006 20:51:49 +0200
+	id 1GZYOU-0002SR-1K
+	for gcvg-git@gmane.org; Mon, 16 Oct 2006 21:45:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422809AbWJPSvq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Oct 2006 14:51:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422813AbWJPSvp
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 14:51:45 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:35512 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1422809AbWJPSvp (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Oct 2006 14:51:45 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9GIpIaX014647
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 16 Oct 2006 11:51:19 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9GIpIIq023588;
-	Mon, 16 Oct 2006 11:51:18 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Davide Libenzi <davidel@xmailserver.org>
-In-Reply-To: <Pine.LNX.4.64.0610161109430.7697@alien.or.mcafeemobile.com>
-X-Spam-Status: No, hits=-3.471 required=5 tests=AWL,PATCH_UNIFIED_DIFF_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1422871AbWJPTo4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Oct 2006 15:44:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422881AbWJPTo4
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 15:44:56 -0400
+Received: from x35.xmailserver.org ([69.30.125.51]:23779 "EHLO
+	x35.xmailserver.org") by vger.kernel.org with ESMTP
+	id S1422871AbWJPToz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Oct 2006 15:44:55 -0400
+X-AuthUser: davidel@xmailserver.org
+Received: from alien.or.mcafeemobile.com
+	by xmailserver.org with [XMail 1.23 ESMTP Server]
+	id <S1F531F> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
+	Mon, 16 Oct 2006 12:44:53 -0700
+X-X-Sender: davide@alien.or.mcafeemobile.com
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0610161130090.3962@g5.osdl.org>
+X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
+X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28986>
 
+On Mon, 16 Oct 2006, Linus Torvalds wrote:
 
-Junio, I think this is worthy to go in before a 1.4.3 release. Possibly 
-even back-ported to earlier trees. Anything that causes an almost two 
-orders of magnitude slowdown (even if it's just on 64-bit architectures 
-and most people won't necessarily compile git that way) is worth fixing 
-pronto.
-
-On Mon, 16 Oct 2006, Davide Libenzi wrote:
 > 
-> Yeah, using an appropriate golden ratio prime for 64 bits fixes it. I 
-> think it's the best/minimal fix (use 0x9e37fffffffc0001UL, like the 
-> kernel does).
+> Junio, I think this is worthy to go in before a 1.4.3 release. Possibly 
+> even back-ported to earlier trees. Anything that causes an almost two 
+> orders of magnitude slowdown (even if it's just on 64-bit architectures 
+> and most people won't necessarily compile git that way) is worth fixing 
+> pronto.
 
-Ok. But then you need something like the appended to avoid warnings..
+I ended up using this one:
 
-(This is the only nice portable way to figure out at compile-time whether 
-"unsigned long" is more than 32 bits that I can come up with: everything 
-that uses actual C expressions ends up warning about integers not fitting 
-etc)
+#define XDL_HASHLONG(v, b) ((((unsigned long) (v) >> ((CHAR_BIT * sizeof(unsigned long)) - (b))) + \
+                            (unsigned long) (v)) & ((1UL << (b)) - 1))
 
-Quite frankly, I prefer my previous patch more, it just avoids that whole 
-problem, and two shifts and adds (even with a conditional) are often 
-faster than a full 64-bit multiply.
+The GR_PRIME selection does not make me feel good, and the 'static inline' 
+is puked-over by certain C compilers. It'd be probably fine to just use a 
+simple function, though the above should work just fine.
 
-		Linus
----
-diff --git a/xdiff/xmacros.h b/xdiff/xmacros.h
-index 4c2fde8..38f8f93 100644
---- a/xdiff/xmacros.h
-+++ b/xdiff/xmacros.h
-@@ -23,8 +23,13 @@
- #if !defined(XMACROS_H)
- #define XMACROS_H
- 
-+#include <limits.h>
- 
-+#if LONG_MAX > 2147483647ul
-+#define GR_PRIME 0x9e37fffffffc0001UL
-+#else
- #define GR_PRIME 0x9e370001UL
-+#endif
- 
- 
- #define XDL_MIN(a, b) ((a) < (b) ? (a): (b))
+real    0m0.665s
+user    0m0.655s
+sys     0m0.010s
+
+(Opteron 252)
+
+
+
+- Davide
