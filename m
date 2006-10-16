@@ -1,75 +1,56 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] pack-objects: use of version 3 delta is now optional.
-Date: Mon, 16 Oct 2006 09:43:04 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0610160929450.17085@xanadu.home>
-References: <7v4pu62ite.fsf@assigned-by-dhcp.cox.net>
- <7virim10rb.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610151135110.17085@xanadu.home>
- <7vac3xzbze.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610151150530.3952@g5.osdl.org>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: On blame/pickaxe
+Date: Mon, 16 Oct 2006 16:02:49 +0200
+Message-ID: <200610161602.49811.Josef.Weidendorfer@gmx.de>
+References: <7vr6xddm7h.fsf@assigned-by-dhcp.cox.net> <20061016022159.GZ20017@pasky.or.cz> <7v8xjgvjys.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 16 15:43:28 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>, Luben Tuikov <ltuikov@yahoo.com>,
+	git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Mon Oct 16 16:03:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZSkV-0002eE-0u
-	for gcvg-git@gmane.org; Mon, 16 Oct 2006 15:43:23 +0200
+	id 1GZT3g-0006Zn-0p
+	for gcvg-git@gmane.org; Mon, 16 Oct 2006 16:03:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932066AbWJPNnK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Oct 2006 09:43:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932072AbWJPNnK
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 09:43:10 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:18240 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S932066AbWJPNnF
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Oct 2006 09:43:05 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J78006JAE3S9FO1@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 16 Oct 2006 09:43:05 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.64.0610151150530.3952@g5.osdl.org>
-X-X-Sender: nico@xanadu.home
-To: Linus Torvalds <torvalds@osdl.org>
+	id S1750764AbWJPODJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Oct 2006 10:03:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750795AbWJPODI
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 10:03:08 -0400
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:22949 "EHLO
+	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S1750764AbWJPODG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Oct 2006 10:03:06 -0400
+Received: from dhcp-3s-48.lrr.in.tum.de (dhcp-3s-48.lrr.in.tum.de [131.159.35.48])
+	by mail.in.tum.de (Postfix) with ESMTP id 40E4D2819;
+	Mon, 16 Oct 2006 16:03:04 +0200 (MEST)
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.9.3
+In-Reply-To: <7v8xjgvjys.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28961>
 
-On Sun, 15 Oct 2006, Linus Torvalds wrote:
+Hi,
 
-> 
-> 
-> On Sun, 15 Oct 2006, Junio C Hamano wrote:
-> > 
-> > I think that is sensible.  I also was thinking that we should
-> > call the current one packv3 and the one with delta-base-offset
-> > packv4.
-> 
-> Quite frankly, I wonder if the pure "copy size extension" (aka "v3") thing 
-> is really worth it at all. 
-> 
-> I mean, seriously, how much does it buy us? A couple of bytes per every 
-> 64kB of delta copied? And the downside is that you can't re-use the deltas 
-> with old clients and/or you have to re-create a "v2" delta at run-time 
-> from a v3 delta by inflating, fixing and deflating it.
+this blame-passing thing really looks very promising and powerful.
 
-Right.  This is why I suggested Junio to just drop it for now.  Let's 
-just wait some more until this is just not an issue any longer, say in a 
-year from now when all major distributions have switched to a GIT 
-version that can read V3.
+On Monday 16 October 2006 08:43, you wrote:
+> If the user is not prepared to see code movement, pickaxe can be
+> run without -M nor -C to get the classic blame output.
 
-If until then we find the saving really worth the backward compatibility 
-v3-to-v2 conversion then we could reconsider.  But I don't think it is 
-worth it just yet.
+Another blame-passing heuristic would be very interesting for code:
+"Ignore white-space changes".
+This way, commits which only do some reindentations simply are skipped.
 
-In the mean time, if Junio adds the patch I posted yesterday advertising 
-the pack version capability over the native protocol then it'll help us 
-make things forward compatible if ever we decide to go with generating 
-packs v3 sooner.
+It looks like such a thing would just be a matter of passing "-b" to
+executions of "diff" in the blame-passing algorithm.
 
-
-Nicolas
+Josef
