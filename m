@@ -1,58 +1,78 @@
-From: Davide Libenzi <davidel@xmailserver.org>
-Subject: Re: git-diff-tree inordinately (O(M*N)) slow on files with many
- changes
-Date: Mon, 16 Oct 2006 11:30:59 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610161129350.7697@alien.or.mcafeemobile.com>
-References: <87slhopcws.fsf@rho.meyering.net> <Pine.LNX.4.64.0610160838200.3962@g5.osdl.org>
- <Pine.LNX.4.64.0610160904400.3962@g5.osdl.org> <87mz7wp6ek.fsf@rho.meyering.net>
- <Pine.LNX.4.64.0610160941270.7697@alien.or.mcafeemobile.com>
- <87ejt8p5l9.fsf@rho.meyering.net> <Pine.LNX.4.64.0610161038200.3962@g5.osdl.org>
- <873b9op19n.fsf@rho.meyering.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [RFH] git-svn documentation [was Re: git-svn and u-boot broken]
+Date: Mon, 16 Oct 2006 11:31:02 -0700
+Message-ID: <20061016183101.GL27128@hand.yhbt.net>
+References: <012b01c6f0a6$a1a636e0$1267a8c0@Jocke> <20061016034736.GA8782@localdomain> <453359A2.5090704@transmode.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 16 20:31:25 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 16 20:31:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZXF0-000149-Hb
-	for gcvg-git@gmane.org; Mon, 16 Oct 2006 20:31:11 +0200
+	id 1GZXF1-000149-Uq
+	for gcvg-git@gmane.org; Mon, 16 Oct 2006 20:31:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422789AbWJPSbF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Oct 2006 14:31:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422791AbWJPSbF
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 14:31:05 -0400
-Received: from x35.xmailserver.org ([69.30.125.51]:21987 "EHLO
-	x35.xmailserver.org") by vger.kernel.org with ESMTP
-	id S1422789AbWJPSbC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Oct 2006 14:31:02 -0400
-X-AuthUser: davidel@xmailserver.org
-Received: from alien.or.mcafeemobile.com
-	by xmailserver.org with [XMail 1.23 ESMTP Server]
-	id <S1F52E9> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
-	Mon, 16 Oct 2006 11:31:00 -0700
-X-X-Sender: davide@alien.or.mcafeemobile.com
-To: Jim Meyering <jim@meyering.net>
-In-Reply-To: <873b9op19n.fsf@rho.meyering.net>
-X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
-X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
+	id S1422790AbWJPSbG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Oct 2006 14:31:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422791AbWJPSbG
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 14:31:06 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:27549 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1422790AbWJPSbE (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Oct 2006 14:31:04 -0400
+Received: by hand.yhbt.net (Postfix, from userid 500)
+	id 381407DC08D; Mon, 16 Oct 2006 11:31:02 -0700 (PDT)
+To: Joakim Tjernlund <Joakim.Tjernlund@transmode.se>
+Content-Disposition: inline
+In-Reply-To: <453359A2.5090704@transmode.se>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28982>
 
-On Mon, 16 Oct 2006, Jim Meyering wrote:
+Joakim Tjernlund <Joakim.Tjernlund@transmode.se> wrote:
+> Eric Wong wrote:
+> > I would do something like this:
+> > 
+> > ... (same stuff as above before with svn setup...)
+> > git clone $ORG_REPO $GIT_REPO
+> > cd $GIT_REPO
+> > git-svn init "$REPO"/trunk
+> > git-svn fetch
+> > 
+> > # sync the SVN repo with initial-uboot
+> > # this will just commit a snapshot, without history, which I assume
+> > # is what you want.
+> > git-branch initial-uboot f5e0d03970409feb3c77ab0107d5dece6b7d45c9
+> > git-svn commit initial-uboot
+> > git checkout -b svn-branch remotes/git-svn
+> > git-pull . tmcu2
+> > 
+> > # this should work assuming the path from initial-uboot..tmcu2 is linear
+> > # use gitk initial-uboot..tmcu2 to check
+> > git-svn dcommit
+> 
+> Great! This was exactly what I wanted, thanks. I never realized that one should
+> do git-svn commit initial-uboot to get that single commit.
+> I also replaced git-svn dcommit with git-svn commit remotes/git-svn..svn-branch
+> as I don't have that version yet.
+> 
+> You should add this as an example I think.
+> 
+> Can I ask for an example that used multi-init and multi-fetch? I tried, but
+> could not make it work.
 
-> IMHO, my "&& vs. ||" patch is still worth applying.
-> If not, then the existing code doesn't make sense, and
-> there can be significant simplification in the affected loops.
-> With my patch, I get an additional 3x speed-up: diff-tree takes 0.7s
+git-svn multi-init https://svn.musicpd.org/mpd -T trunk -t tags -b branches
+git-svn multi-fetch
 
-No, the patch is broken. It will discard *any* line seen at least two 
-times, that is an extremely low threashold.
+In the latest git-svn (should be in 1.4.3), you can re-run 'git-svn
+multi-init' with no arguments to discover new tags+branches.
 
+Anybody willing to supply patches for better documentation?  I'll be
+quite busy with other projects the next two weeks, asciidoc is quite
+slow for me; but I'd like to have better docs for git-svn in 1.4.3.
 
-
-- Davide
+-- 
+Eric Wong
