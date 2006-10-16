@@ -1,92 +1,124 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: VCS comparison table
-Date: Sun, 15 Oct 2006 23:30:59 -0400
-Message-ID: <9e4733910610152030q45dbeb31l9eb0eb06bd6fd159@mail.gmail.com>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	 <egrgqe$1i9$1@sea.gmane.org>
-	 <9e4733910610141606g749d268eudd85791620e1363a@mail.gmail.com>
-	 <20061015182303.GW20017@pasky.or.cz>
-	 <9e4733910610151249m37c9f6abv37e07d7a801758bc@mail.gmail.com>
-	 <20061016032314.GA20017@pasky.or.cz>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn and u-boot broken.
+Date: Sun, 15 Oct 2006 20:47:36 -0700
+Message-ID: <20061016034736.GA8782@localdomain>
+References: <012b01c6f0a6$a1a636e0$1267a8c0@Jocke>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 16 05:41:38 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 16 05:47:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZJM7-0005pC-0l
-	for gcvg-git@gmane.org; Mon, 16 Oct 2006 05:41:35 +0200
+	id 1GZJS4-0006gx-B8
+	for gcvg-git@gmane.org; Mon, 16 Oct 2006 05:47:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751431AbWJPDlE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Oct 2006 23:41:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751440AbWJPDlE
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Oct 2006 23:41:04 -0400
-Received: from py-out-1112.google.com ([64.233.166.182]:39868 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1751431AbWJPDlC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Oct 2006 23:41:02 -0400
-Received: by py-out-1112.google.com with SMTP id n25so2154679pyg
-        for <git@vger.kernel.org>; Sun, 15 Oct 2006 20:41:01 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IsLHUgZu17+mm/xGh/BtJc26eUlpdAgqztkDbw6yn3QdoLmoXi7A9hYTh8g/0ItdJL5c+7Ms6KoqWAH1MsIHplMk00I1tfCyz4hW82hQ4obrki1BFubaBtYTApVYCwd23sMgBdAUyAIXP9UDgIqwhV6FuRdA+j6YQgX72h9G/k0=
-Received: by 10.35.99.6 with SMTP id b6mr11884358pym;
-        Sun, 15 Oct 2006 20:30:59 -0700 (PDT)
-Received: by 10.35.60.14 with HTTP; Sun, 15 Oct 2006 20:30:59 -0700 (PDT)
-To: "Petr Baudis" <pasky@suse.cz>
-In-Reply-To: <20061016032314.GA20017@pasky.or.cz>
+	id S1751447AbWJPDrj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Oct 2006 23:47:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751452AbWJPDrj
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Oct 2006 23:47:39 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:60826 "EHLO hand.yhbt.net")
+	by vger.kernel.org with ESMTP id S1751447AbWJPDri (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Oct 2006 23:47:38 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 39B6E7DC08D;
+	Sun, 15 Oct 2006 20:47:37 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun, 15 Oct 2006 20:47:37 -0700
+To: Joakim Tjernlund <joakim.tjernlund@transmode.se>
 Content-Disposition: inline
+In-Reply-To: <012b01c6f0a6$a1a636e0$1267a8c0@Jocke>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28949>
 
-On 10/15/06, Petr Baudis <pasky@suse.cz> wrote:
-> Dear diary, on Sun, Oct 15, 2006 at 09:49:08PM CEST, I got a letter
-> where Jon Smirl <jonsmirl@gmail.com> said that...
-> > On 10/15/06, Petr Baudis <pasky@suse.cz> wrote:
-> > >> I am still working with the developers of the cvs2svn import tool to
-> > >> fix things so that Mozilla CVS can be correctly imported. There are
-> > >> still outstanding bugs in cvs2svn preventing a correct import. MozCVS
-> > >> can be imported, but the resulting repository is not entirely correct.
-> > >>
-> > >> Once they get the base cvs2svn fixed I'll port my patches to turn it
-> > >> into cvs2git again.
-> > >
-> > >So what exactly is the cvs2git status now? AFAIU, there's a tool that
-> > >parses the CVS repository and that is then "piped" to git-fastimport?
-> > >git-fastimport is available somewhere (perhaps it would be interesting
-> > >to publish it at repo.or.cz or something), is the current cvs2git
-> > >version available as well?
-> >
-> > cvs2git is a set of patches that get applied to cvs2svn. The patches
-> > modify cvs2svn to output things in a format that git-fastimport can
-> > consume.
->
-> By the way, isn't what you want an incremental importer, because of the
-> 1.9 branch? According to its homepage, cvs2svn is not designed for
-> incremental importing. Or are you fixing that as well?
+Joakim Tjernlund <joakim.tjernlund@transmode.se> wrote:
+> > > > Any chance you can update it with more examples?
+> > > > Especially one that show how one can do one big initial
+> > > > commit then merge your own changes on top of that?
+> > > 
+> > > Hmm.. large imports from git to svn can get confusing, and generally
+> > > aren't very useful on the svn side since history gets flattened.
+> > > So I generally don't recommend importing complete git histories into
+> > > svn.
+> > 
+> > Yes, that's what I am trying to avoid below. Basically I want 
+> > to commit to SVN the
+> > whole u-boot tree as one commit up to the point where I 
+> > started to do my changes.
+> > Then I want my changes per commit on top of that. However I 
+> > don't want to loose the
+> > ability to merge/pull in future updates from denx u-boot tree.
+> > 
+> > I just don't know how to do it, the script below fails when 
+> > it tries to 
+> > pull the rest of the tree. Any ideas?
+> 
+> I really need some advice here, if you can share some ideas that would be great.
+> 
+> > 
+> > > 
+> > > > Something like this
+> > > > REPO="file:///tmp/SVNuboot"
+> > > > REPO_PATH="/tmp/SVNuboot"
+> > > > GIT_REPO="/tmp/mygituboot"
+> > > > ORG_REPO="/usr/local/src/u-boot"
+> > > > rm -rf "$REPO_PATH"
+> > > > rm -rf "$GIT_REPO"
+> > > > svnadmin create "$REPO_PATH"
+> > > > svn mkdir -m "initial repo layout" "$REPO"/trunk 
+> > > "$REPO"/branches "$REPO"/tags
+> > > > mkdir -p "$GIT_REPO"
+> > > > cd "$GIT_REPO"
+> > > > git-svn init "$REPO"/trunk
+> > > > echo  [user] >> .git/config
+> > > > echo  name="jocke" >> .git/config
+> > > > echo  email="Joakim.Tjernlund@transmode.se" >> .git/config
+> > > > git-svn fetch
+> > > > git checkout -b svn-branch remotes/git-svn
+> > > > git-fetch "$ORG_REPO" tmcu2:tmcu
 
-cvsps works ok on small amounts of data, but it can't handle the full
-Mozilla repo. The current idea is to convert the full repo with
-cvs2git and build the ini file needed by cvsps to support incremental
-imports. After that use cvsps.
+I assume the tmcu* branch is private as I don't see it in the u-boot
+repo.
 
+> > > > git-branch initial-uboot f5e0d03970409feb3c77ab0107d5dece6b7d45c9
+> > > > git pull . initial-uboot
+> > > > # --squash makes one large commit.
+> > > > git pull --squash . initial-uboot
+> > > > cg-commit -m "merge up to 
+> > f5e0d03970409feb3c77ab0107d5dece6b7d45c9"
+> > > > git-svn commit -q remotes/git-svn..svn-branch
+> > > > git pull . tmcu # This doesn't work, I get merge conflicts
+> > > > git-svn commit -q remotes/git-svn..svn-branch
 
->
-> --
->                                 Petr "Pasky" Baudis
-> Stuff: http://pasky.or.cz/
-> #!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-> $/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-> lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
->
+Using -q suppresses potentially useful information.  I wouldn't use
+it if you're not sure about what you're doing.
 
+I would do something like this:
+
+... (same stuff as above before with svn setup...)
+git clone $ORG_REPO $GIT_REPO
+cd $GIT_REPO
+git-svn init "$REPO"/trunk
+git-svn fetch
+
+# sync the SVN repo with initial-uboot
+# this will just commit a snapshot, without history, which I assume
+# is what you want.
+git-branch initial-uboot f5e0d03970409feb3c77ab0107d5dece6b7d45c9
+git-svn commit initial-uboot
+git checkout -b svn-branch remotes/git-svn
+git-pull . tmcu2
+
+# this should work assuming the path from initial-uboot..tmcu2 is linear
+# use gitk initial-uboot..tmcu2 to check
+git-svn dcommit
+
+Also, git-svn is really designed for individual developers who prefer to
+use git, but need to interact with project that already uses SVN.
+u-boot already uses git, so I don't see why you'd need git-svn :)
 
 -- 
-Jon Smirl
-jonsmirl@gmail.com
+Eric Wong
