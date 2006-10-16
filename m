@@ -1,57 +1,61 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] svnimport: Fix broken tags being generated
-Date: Mon, 16 Oct 2006 13:26:59 +0200
-Message-ID: <20061016112659.GB20017@pasky.or.cz>
-References: <20061016010037.27259.26157.stgit@machine.or.cz> <7vpscsx1hr.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] pack-objects: use of version 3 delta is now optional.
+Date: Mon, 16 Oct 2006 09:27:54 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0610160925580.17085@xanadu.home>
+References: <7v4pu62ite.fsf@assigned-by-dhcp.cox.net>
+ <7virim10rb.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610151135110.17085@xanadu.home>
+ <7vac3xzbze.fsf@assigned-by-dhcp.cox.net> <egtu1r$813$1@sea.gmane.org>
+ <Pine.LNX.4.64.0610151433310.17085@xanadu.home>
+ <7v64ekyikn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 16 13:27:23 2006
+X-From: git-owner@vger.kernel.org Mon Oct 16 15:28:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZQcc-0001fr-Ud
-	for gcvg-git@gmane.org; Mon, 16 Oct 2006 13:27:07 +0200
+	id 1GZSW8-0008IW-Hs
+	for gcvg-git@gmane.org; Mon, 16 Oct 2006 15:28:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751524AbWJPL1D (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Oct 2006 07:27:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751526AbWJPL1D
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 07:27:03 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:48077 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751524AbWJPL1B (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Oct 2006 07:27:01 -0400
-Received: (qmail 16112 invoked by uid 2001); 16 Oct 2006 13:26:59 +0200
+	id S1750945AbWJPN14 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Oct 2006 09:27:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750910AbWJPN14
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 09:27:56 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:7369 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1750700AbWJPN1z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Oct 2006 09:27:55 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J78006NADEI9FM1@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 16 Oct 2006 09:27:55 -0400 (EDT)
+In-reply-to: <7v64ekyikn.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vpscsx1hr.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28958>
 
-Dear diary, on Mon, Oct 16, 2006 at 07:40:00AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> Petr Baudis <pasky@suse.cz> writes:
-> 
-> > Currently git-svnimport generates broken tags missing the timespec in the
-> > 'tagger' line. This is a random stab at a minimal fix.
-> >
-> > Signed-off-by: Petr Baudis <pasky@suse.cz>
-> 
-> Interesting.  Applied.
-> 
-> I remember that older "git tag" does not even add the tagger
-> line (the kernel history starts using one from 2.6.13-rc4 on Jul
-> 28, 2005).  Does gitweb handle those tags correctly, I wonder?
+On Sun, 15 Oct 2006, Junio C Hamano wrote:
 
-It seems from git_tag() that the original author thought about that.
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> > As for pack v4... My opinion is that nothing justifies it so far.  So if 
+> > I can convince Junio there shouldn't be any v4 just yet.
+> 
+> The only concern I have is the commit walkers (rsync has the
+> same problem as well but we honestly do not care).  They just
+> grab existing packs and try to use them.  I have been wondering
+> if it might be safer to mark the delta-base-offset encoded packs
+> v4 to make sure the clients would get "I know only v2 and v3 but
+> you fed me v4" message.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+It'll get "this pack contains an unknown object type" kind of message, 
+which is almost as good IMHO, with the same end result.
+
+
+Nicolas
