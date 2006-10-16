@@ -1,86 +1,76 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 00:53:07 +0200
-Organization: At home
-Message-ID: <eh12fn$i9v$1@sea.gmane.org>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <egr3ud$nqm$1@sea.gmane.org> <45340713.6000707@utoronto.ca> <45340949.9070606@shadowen.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-diff-tree inordinately (O(M*N)) slow on files with many changes
+Date: Mon, 16 Oct 2006 15:53:17 -0700
+Message-ID: <7vy7rfub36.fsf@assigned-by-dhcp.cox.net>
+References: <87slhopcws.fsf@rho.meyering.net>
+	<Pine.LNX.4.64.0610160838200.3962@g5.osdl.org>
+	<Pine.LNX.4.64.0610160904400.3962@g5.osdl.org>
+	<87mz7wp6ek.fsf@rho.meyering.net>
+	<Pine.LNX.4.64.0610160941270.7697@alien.or.mcafeemobile.com>
+	<87ejt8p5l9.fsf@rho.meyering.net>
+	<Pine.LNX.4.64.0610161038200.3962@g5.osdl.org>
+	<Pine.LNX.4.64.0610161109430.7697@alien.or.mcafeemobile.com>
+	<Pine.LNX.4.64.0610161130090.3962@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-Cc: bazaar-ng@lists.canonical.com
-X-From: git-owner@vger.kernel.org Tue Oct 17 00:53:03 2006
+Cc: git@vger.kernel.org, Davide Libenzi <davidel@xmailserver.org>,
+	Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Tue Oct 17 00:53:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZbKM-0003v1-QZ
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 00:52:59 +0200
+	id 1GZbKk-0003yn-TK
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 00:53:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161148AbWJPWww (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Oct 2006 18:52:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161150AbWJPWww
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 18:52:52 -0400
-Received: from main.gmane.org ([80.91.229.2]:37820 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1161148AbWJPWwv (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Oct 2006 18:52:51 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GZbKD-0003t1-JX
-	for git@vger.kernel.org; Tue, 17 Oct 2006 00:52:49 +0200
-Received: from host-81-190-17-207.torun.mm.pl ([81.190.17.207])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 17 Oct 2006 00:52:49 +0200
-Received: from jnareb by host-81-190-17-207.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 17 Oct 2006 00:52:49 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-Followup-To: gmane.comp.version-control.git
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-17-207.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1161147AbWJPWxU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Oct 2006 18:53:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161150AbWJPWxU
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 18:53:20 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:18873 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1161147AbWJPWxT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Oct 2006 18:53:19 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061016225318.GAU18180.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 16 Oct 2006 18:53:18 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id bAtM1V00D1kojtg0000000
+	Mon, 16 Oct 2006 18:53:22 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0610161130090.3962@g5.osdl.org> (Linus Torvalds's
+	message of "Mon, 16 Oct 2006 11:51:17 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/28992>
 
-Andy Whitcroft wrote:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> Aaron Bentley wrote:
-> 
->>>> Git supports renames in its own way; it doesn't use file ids, nor
->>>> remember renames (the new "note" header for use e.g. by porcelains 
->>>> didn't pass if I remember correctly). But it does *detect* moving
->>>> _contents_, and even *copying* _contents_ when requested. And of
->>>> course it detect renames in merges.
->> 
->> You'll note we referred to that bevhavior on the page.  We don't think
->> what Git does is the same as supporting renames.  AIUI, some Git users
->> feel the same way.
-> 
-> In my experience there are two key features to rename support.  The
-> first that files move about efficiently ie. we don't have to carry a
-> different copy of the same file for each name it has had, this git
-> handles nicely.  The second is the seemless following of history 'back',
-> this git does not do trivially (when limited to specific files).  git
-> log on a renamed file pretty much stops at the rename point and you have
-> deal with it yourself.
+> Junio, I think this is worthy to go in before a 1.4.3 release. Possibly 
+> even back-ported to earlier trees.
 
-Both git log and git diff follows renames (with -M) and even copies 
-(with -C), but path _limiter_ doesn't follow renames. There is proposal
-to add --follow option to git rev-list to follow specified paths. There was
-a patch adding this option here on git mailing list (check archives), not
-added because it was fairly intrusive and not complete solution IIRC.
+Thanks for resolving this quickly; I was (am still somewhat)
+down sick today and missed all the excitement.
 
-I'd say that the second part is _partially_ supported, as we can follow
-history of renamed file with pathlimit, detect that file was renamed, and
-follow using previous name as pathlimit. For example if you know all the
-names the file had through history, you can get whole history providing all
-those names as pathlimit (well, unless there is some conflict like creating
-new file with the same name as file before rename; something that all
-file-id based solutions have problem with).
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+> Quite frankly, I prefer my previous patch more, it just avoids that whole 
+> problem, and two shifts and adds (even with a conditional) are often 
+> faster than a full 64-bit multiply.
+
+I agree (although I am not sure about the "do it twice for
+small" bit), and I think Davide agrees with you in his reply:
+
+Davide Libenzi <davidel@xmailserver.org> writes:
+> On Mon, 16 Oct 2006, Linus Torvalds wrote:
+> ...
+> I ended up using this one:
+>
+> #define XDL_HASHLONG(v, b) ((((unsigned long) (v) >> ((CHAR_BIT * sizeof(unsigned long)) - (b))) + \
+>                              (unsigned long) (v)) & ((1UL << (b)) - 1))
+
+so I am inclined to apply Davide's version, but I am going to
+bed again now...
