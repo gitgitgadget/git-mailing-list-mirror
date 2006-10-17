@@ -1,67 +1,134 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] nice ftplugin for vim, that shows the commited diff in a split'ed buffer.
-Date: Tue, 17 Oct 2006 15:04:39 -0700
-Message-ID: <7vmz7uiop4.fsf@assigned-by-dhcp.cox.net>
-References: <11610450702261-git-send-email-madcoder@debian.org>
-	<200610171238.04372.madcoder@debian.org>
-	<802d21790610170359v3f17438dn8009ae9a55b2405c@mail.gmail.com>
-	<200610171304.39131.madcoder@debian.org>
-	<46d6db660610171448h53de5e40wf55f19d6458127ef@mail.gmail.com>
+From: Robert Collins <robertc@robertcollins.net>
+Subject: Re: VCS comparison table
+Date: Wed, 18 Oct 2006 08:27:58 +1000
+Message-ID: <1161124078.9020.88.camel@localhost.localdomain>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<200610170119.09066.jnareb@gmail.com> <45346290.6050300@utoronto.ca>
+	<200610171120.09747.jnareb@gmail.com>
+	<1161078035.9020.73.camel@localhost.localdomain>
+	<Pine.LNX.4.64.0610170921540.3962@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Wed Oct 18 00:04:45 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature";
+	boundary="=-na+JGVOdb3I7Ra+ewo9f"
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: bazaar-ng-bounces@lists.canonical.com Wed Oct 18 00:28:41 2006
+Return-path: <bazaar-ng-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZx3D-0006F0-P8
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 00:04:44 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750803AbWJQWEl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 18:04:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750807AbWJQWEl
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 18:04:41 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:56781 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1750803AbWJQWEk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Oct 2006 18:04:40 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061017220440.WKMR18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 17 Oct 2006 18:04:40 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id ba4S1V00H1kojtg0000000
-	Tue, 17 Oct 2006 18:04:27 -0400
-To: "Christian MICHON" <christian.michon@gmail.com>
-In-Reply-To: <46d6db660610171448h53de5e40wf55f19d6458127ef@mail.gmail.com>
-	(Christian MICHON's message of "Tue, 17 Oct 2006 23:48:51 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29124>
+	id 1GZxQF-0002IR-Vw
+	for gcvbg-bazaar-ng@m.gmane.org; Wed, 18 Oct 2006 00:28:32 +0200
+Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
+	id 1GZxPw-0001He-JB; Tue, 17 Oct 2006 23:28:12 +0100
+Received: from smtp3.adl2.internode.on.net ([203.16.214.203])
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <robertc@robertcollins.net>) id 1GZxPk-0001H3-L6
+	for bazaar-ng@lists.canonical.com; Tue, 17 Oct 2006 23:28:03 +0100
+Received: from lifelesswks.robertcollins.net
+	(ppp245-86.static.internode.on.net [59.167.245.86])
+	by smtp3.adl2.internode.on.net (8.13.6/8.13.5) with ESMTP id
+	k9HMRsA7037768; Wed, 18 Oct 2006 07:57:54 +0930 (CST)
+	(envelope-from robertc@robertcollins.net)
+Received: from [192.168.1.5] (helo=lifelesslap.robertcollins.net)
+	by lifelesswks.robertcollins.net with esmtpa (Exim 4.60)
+	(envelope-from <robertc@robertcollins.net>)
+	id 1GZxPe-0004eL-9K; Wed, 18 Oct 2006 08:27:54 +1000
+Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
+	by lifelesslap.robertcollins.net with esmtp (Exim 4.60)
+	(envelope-from <robertc@robertcollins.net>)
+	id 1GZxPj-0007mz-4N; Wed, 18 Oct 2006 08:27:59 +1000
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0610170921540.3962@g5.osdl.org>
+X-Mailer: Evolution 2.6.1 
+X-BeenThere: bazaar-ng@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
+List-Post: <mailto:bazaar-ng@lists.canonical.com>
+List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-ng-bounces@lists.canonical.com
+Errors-To: bazaar-ng-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29125>
 
-"Christian MICHON" <christian.michon@gmail.com> writes:
 
-> On 10/17/06, Pierre Habouzit <madcoder@debian.org> wrote:
->> and that time, I'll send that to the git contrib/vim maintainer so that
->> I won't bother the list too much :)
->>
->
-> so there is a contrib/vim maintainer ? Sorry I'm new on git list
-> (though Pierre gave me some hints already with git/vim).
+--=-na+JGVOdb3I7Ra+ewo9f
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-If you have git sources, check contrib/README please.
+On Tue, 2006-10-17 at 09:41 -0700, Linus Torvalds wrote:
+>=20
+> On Tue, 17 Oct 2006, Robert Collins wrote:
+>=20
+> > On Tue, 2006-10-17 at 11:20 +0200, Jakub Narebski wrote:
+> > >=20
+> > >           ---- time --->
+> > >=20
+> > >     --*--*--*--*--*--*--*--*--*-- <branch>
+> > >           \            /
+> > >            \-*--X--*--/
+> > >=20
+> > > The branch it used to be on is gone...
+> >=20
+> > In bzr 0.12 this is :
+> > 2.1.2
+> >=20
+> > (assuming the first * is numbered '1'.)
+> >=20
+> > These numbers are fairly stable
+>=20
+> And here, by "fairly stable", you really mean "totally idiotic", don't=20
+> you?
+>=20
+> Guys, let's be blunt here, and just say you're wrong. The fact is, I've=20
+> used a system that uses the same naming bzr does, and I've used it likely=
+=20
+> longer and with a bigger project than anybody has likely _ever_ used bzr=20
+> for.
+>=20
+> It sounds like bzr is doing _exactly_ what bitkeeper did.=20
+>=20
+> Those "simple" numbers are totally idiotic. And when I say "totally=20
+> idiotic", please go back up a few sentences, and read those again. I know=
+=20
+> what I'm talking about. I know probably better than anybody in the bzr=20
+> camp.
 
-What I asked Pierre was to CC the patch to Jeff King who did
-contrib/vim -- it was "send it to him too", and not "do not send
-it to me".  I do not actively use vim myself so I am a wrong
-person to judge patches to that part of the source tree.
+Be as blunt as you want. You're expressing an opinion, and thats fine. I
+happen to think that we're right : users appear to really appreciate
+this bit of the UI, and I've not yet seen any evidence of confusion
+about it - though I will admit there is the possibility of that
+occurring.
 
-Apparently Pierre seems to have thought that I thought patches
-to the contrib/ part is "bothering the list", but that was not
-my intention.  I believe showing your patches for review by
-wider audiences is a good thing.
+I think its completely ok that git and bzr have made different choices
+in this regard, but I *dont* think our choice is in any regard 'totally
+idiotic'.
+
+[snip examples that are clearly predicated on how bk worked, not on how
+bzr works].
+
+-Rob
+--=20
+GPG key available at: <http://www.robertcollins.net/keys.txt>.
+
+--=-na+JGVOdb3I7Ra+ewo9f
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+
+iD8DBQBFNVjuM4BfeEKYx2ERAoluAJ9AdoRsQOXe6sKv6JUMFGp3rJ+JnQCePd7+
+g7uxYNYuvrITeAch1hag4cQ=
+=3HTU
+-----END PGP SIGNATURE-----
+
+--=-na+JGVOdb3I7Ra+ewo9f--
