@@ -1,70 +1,70 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [ANNOUNCE] GIT 1.4.2.4
-Date: Mon, 16 Oct 2006 22:31:56 -0700
-Message-ID: <7vvemjqzhv.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: VCS comparison table
+Date: Mon, 16 Oct 2006 23:23:53 -0700
+Message-ID: <7v64ejqx3a.fsf@assigned-by-dhcp.cox.net>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<egr3ud$nqm$1@sea.gmane.org> <45340713.6000707@utoronto.ca>
+	<Pine.LNX.4.63.0610170128350.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+	<4534656B.7080105@utoronto.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 17 07:32:11 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 17 08:23:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZhYa-0000aF-8Q
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 07:32:05 +0200
+	id 1GZiMn-0007k7-TH
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 08:23:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423114AbWJQFb7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 01:31:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423116AbWJQFb7
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 01:31:59 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:37255 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1423114AbWJQFb6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Oct 2006 01:31:58 -0400
+	id S1423138AbWJQGXz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 02:23:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423139AbWJQGXz
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 02:23:55 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:7825 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1423138AbWJQGXy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Oct 2006 02:23:54 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao06.cox.net
+          by fed1rmmtao03.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061017053157.SEPL6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 17 Oct 2006 01:31:57 -0400
+          id <20061017062353.UVYO2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 17 Oct 2006 02:23:53 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id bHXj1V01L1kojtg0000000
-	Tue, 17 Oct 2006 01:31:45 -0400
-To: git@vger.kernel.org
+	id bJPg1V00Q1kojtg0000000
+	Tue, 17 Oct 2006 02:23:41 -0400
+To: Aaron Bentley <aaron.bentley@utoronto.ca>
+In-Reply-To: <4534656B.7080105@utoronto.ca> (Aaron Bentley's message of "Tue,
+	17 Oct 2006 01:08:59 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29026>
 
-The latest maintenance release GIT 1.4.2.4 is available at the
-usual places:
+Aaron Bentley <aaron.bentley@utoronto.ca> writes:
 
-  http://www.kernel.org/pub/software/scm/git/
+> Johannes Schindelin wrote:
+>
+>>> You'll note we referred to that bevhavior on the page.  We don't think
+>>> what Git does is the same as supporting renames.  AIUI, some Git users
+>>> feel the same way.
+>> 
+>> Oh, we start another flamewar again?
+>
+> I'd hope not.  It sounds as though you feel that supporting renames in
+> the data representation is *wrong*, and therefore it should be an insult
+> to you if we said that Git fully supported renames.
 
-  git-1.4.2.4.tar.{gz,bz2}			(tarball)
-  git-htmldocs-1.4.2.4.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.4.2.4.tar.{gz,bz2}		(preformatted docs)
-  RPMS/$arch/git-*-1.4.2.4-1.$arch.rpm	(RPM)
+Not recording and not supporting are quite different things.
 
-We are close to 1.4.3, so this update coulc become moot very
-soon, but just in case we have to delay it, I am pushing this
-out for a rather important performance fix.  Without it, "git
-diff" on 64-bit machines can run 100x times slower than it
-should be on unfortunate input.
-
-Many thanks go to Jim Mayering for giving an easy to reproduce
-initial problem report, and Linus and Davide Libenzi to quickly
-come up with a fix.
-
-Unfortunately I do not have access to any RPM capable machine
-other than an x86-64 right now hence there is no RPM for x86-32
-for this release yet (but 32-bit machines do not need this fix
-to begin with, so it's Ok).
-
-----------------------------------------------------------------
-
-There is only one change since v1.4.2.3.
-
-Linus Torvalds:
-      Fix hash function in xdiff library
+What we don't do is to _record_ renames in the data structure.
+I personally would not use a word as strong as _wrong_ (and
+Linus may disagree), but (1) we can support renames without
+recording them just fine, (2) recording renames would not help
+to tell users about line movements across files which we would
+want to do, and (3) we are getting closer to come up with a way
+to even do (2) without recording renames.  Given these, perhaps
+I might say recording renames is _pointless_ when I am in good
+mood.
