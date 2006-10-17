@@ -1,68 +1,69 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Sam Vilain <sam@vilain.net>
 Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 04:40:56 +0200
-Message-ID: <20061017024056.GE20017@pasky.or.cz>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <egr3ud$nqm$1@sea.gmane.org> <45340713.6000707@utoronto.ca> <Pine.LNX.4.63.0610170128350.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Tue, 17 Oct 2006 16:52:02 +1300
+Message-ID: <45345362.8040902@vilain.net>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>	 <egrgqe$1i9$1@sea.gmane.org>	 <9e4733910610141606g749d268eudd85791620e1363a@mail.gmail.com>	 <20061015182303.GW20017@pasky.or.cz>	 <9e4733910610151249m37c9f6abv37e07d7a801758bc@mail.gmail.com>	 <20061016032314.GA20017@pasky.or.cz> <9e4733910610152030q45dbeb31l9eb0eb06bd6fd159@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
-	Jakub Narebski <jnareb@gmail.com>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 17 04:41:07 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 17 05:52:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZet7-0001iS-6A
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 04:41:05 +0200
+	id 1GZg08-00042C-QK
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 05:52:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422976AbWJQCk7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Oct 2006 22:40:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422979AbWJQCk6
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 22:40:58 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:1441 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1422976AbWJQCk6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Oct 2006 22:40:58 -0400
-Received: (qmail 6880 invoked by uid 2001); 17 Oct 2006 04:40:56 +0200
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0610170128350.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1422829AbWJQDwM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Oct 2006 23:52:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422868AbWJQDwM
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 23:52:12 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:44686 "EHLO
+	magnus.utsl.gen.nz") by vger.kernel.org with ESMTP id S1422829AbWJQDwL
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Oct 2006 23:52:11 -0400
+Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
+	id EB75E13810F; Tue, 17 Oct 2006 16:52:08 +1300 (NZDT)
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by magnus.utsl.gen.nz (Postfix) with ESMTP id D2580138021;
+	Tue, 17 Oct 2006 16:52:04 +1300 (NZDT)
+User-Agent: Thunderbird 1.5.0.2 (X11/20060521)
+To: Jon Smirl <jonsmirl@gmail.com>
+In-Reply-To: <9e4733910610152030q45dbeb31l9eb0eb06bd6fd159@mail.gmail.com>
+X-Enigmail-Version: 0.94.0.0
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
+	mail.magnus.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=0.0 required=5.0 tests=none autolearn=failed 
+	version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29013>
 
-Hi!
+Jon Smirl wrote:
+> cvsps works ok on small amounts of data, but it can't handle the full
+> Mozilla repo. The current idea is to convert the full repo with
+> cvs2git and build the ini file needed by cvsps to support incremental
+> imports. After that use cvsps.
+>   
 
-Dear diary, on Tue, Oct 17, 2006 at 01:45:34AM CEST, I got a letter
-where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
-> On Mon, 16 Oct 2006, Aaron Bentley wrote:
-> > As the author of two different Arch front-ends, I can say I haven't
-> > found that approach satisfactory.  Invoking multiple commands tends
-> > re-invoke the same validation routines over and over, killing
-> > efficiency, and diagnostics tend to be pretty poorly integrated.
-> 
-> Welcome to git! Git's commands are very efficient, and you can even pipe 
-> them efficiently! And now that we have GIT_TRACE, diagnostics are no 
-> concern.
+Looking through the client.mk used to check out the sub-portions of the
+CVS repository, I have to ask;
 
-I think Aaron rather meant that in case of an error, the error messages
-may seem incoherent from the perspective of a porcelain user if it's
-been generated by the plumbing. And I had that problem in Cogito as well
-few times in the past, but I think most of those are reasonable now (I
-can't think of a counter-example off the top of my head).
+Why are you trying to import this big collection of projects into a
+single git repository?
 
-Calling multiple git commands _is_ a problem, especially in a loop, but
-I think it's more the inherent fork()+execve() overhead than whatever
-happens over and over when main() takes over. Many git commands got
-adjusted so that you can call them just once and then feed from/to them
-over longer time period.
+View git's repositories not as a container for an entire community's
+code base, but more as object partitions.  Currently you are quite happy
+to use per-file version control partitions inherent to CVS.  Now you are
+looking at removing all of the partitions completely and hoping to end
+up with something managable.  That it has been possible at all to fit it
+into the space less than the size of a CD is staggering, but surely a
+piecemeal approach would be a pragmatic solution to this problem.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+Sam.
