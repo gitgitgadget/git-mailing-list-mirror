@@ -1,58 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [ANNOUNCE] GIT 1.4.3
-Date: Fri, 20 Oct 2006 22:29:37 -0700
-Message-ID: <7vbqo6i6da.fsf@assigned-by-dhcp.cox.net>
-References: <7vejt5xjt9.fsf@assigned-by-dhcp.cox.net>
-	<7v4ptylfvw.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0610201709430.3962@g5.osdl.org>
-	<20061021021235.GA29920@ftp.linux.org.uk>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: VCS comparison table
+Date: Tue, 17 Oct 2006 08:07:02 -0400
+Message-ID: <20061017080702.615a3b2f.seanlkml__27953.817000571$1161408618$gmane$org@sympatico.ca>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<200610171030.35854.jnareb@gmail.com>
+	<vpqejt76vgz.fsf@ecrins.imag.fr>
+	<200610171345.32313.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 21 07:29:45 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: bazaar-ng-bounces@lists.canonical.com Sat Oct 21 07:30:15 2006
+Return-path: <bazaar-ng-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gb9QV-0006j9-8U
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 07:29:43 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992796AbWJUF3j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Oct 2006 01:29:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992826AbWJUF3j
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 01:29:39 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:45745 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S2992796AbWJUF3i (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Oct 2006 01:29:38 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061021052938.DMKQ6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 21 Oct 2006 01:29:38 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id ctVP1V00K1kojtg0000000
-	Sat, 21 Oct 2006 01:29:23 -0400
-To: Al Viro <viro@ftp.linux.org.uk>
-In-Reply-To: <20061021021235.GA29920@ftp.linux.org.uk> (Al Viro's message of
-	"Sat, 21 Oct 2006 03:12:35 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29581>
+	id 1Gb9Qy-0006n4-Ap
+	for gcvbg-bazaar-ng@m.gmane.org; Sat, 21 Oct 2006 07:30:12 +0200
+Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
+	id 1GapMp-0007i3-01; Fri, 20 Oct 2006 09:04:36 +0100
+Received: from bayc1-pasmtp04.bayc1.hotmail.com ([65.54.191.164])
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <seanlkml@sympatico.ca>) id 1GZnir-0007Gg-I6
+	for bazaar-ng@lists.canonical.com; Tue, 17 Oct 2006 13:07:06 +0100
+X-Originating-IP: [65.93.43.81]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.43.81]) by
+	BAYC1-PASMTP04.bayc1.hotmail.com over TLS secured channel with
+	Microsoft SMTPSVC(6.0.3790.1830); Tue, 17 Oct 2006 05:07:04 -0700
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with esmtp (Exim 4.43)
+	id 1GZmmk-0005Yn-MB; Tue, 17 Oct 2006 07:07:02 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+Message-Id: <20061017080702.615a3b2f.seanlkml@sympatico.ca>
+In-Reply-To: <200610171345.32313.jnareb@gmail.com>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 17 Oct 2006 12:07:04.0288 (UTC)
+	FILETIME=[C2651600:01C6F1E4]
+X-Mailman-Approved-At: Fri, 20 Oct 2006 09:04:04 +0100
+X-BeenThere: bazaar-ng@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
+List-Post: <mailto:bazaar-ng@lists.canonical.com>
+List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-ng-bounces@lists.canonical.com
+Errors-To: bazaar-ng-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29582>
 
-Al Viro <viro@ftp.linux.org.uk> writes:
+On Tue, 17 Oct 2006 13:45:31 +0200
+Jakub Narebski <jnareb@gmail.com> wrote:
 
-> Speaking of irritations...  There is a major (and AFAICS fixable)
-> suckitude in git-cherry.  Basically, what it does is...
+> Git cannot do that remotely (with exception of git-tar-tree/git-archive 
+> which has --remote option), yet. But you can get contents of a file 
+> (with "git cat-file -p [<revision>:|:<stage>:]<filename>"), list 
+> directory (with "git ls-tree <tree-ish>") and compare files or 
+> directories (git diff family of commands) without need for working 
+> directory.
 
-Yeah, that sucks big time.  I never realized there are people
-who still are using it, though. git-format-patch used to use it,
-but the version was retired exactly five months ago, and there
-is no in-tree users anymore.
+Interesting, I didn't know about the --remote option.  So in fact as long
+as the remote has enabled upload-tar then anyone can do a "light checkout".
+However, it appears that kernel.org for instance doesn't enable this feature.
 
-I guess we could separate out the revision filtering logic in
-builtin-log.c:cmd_format_patch() and implement git-cherry as a
-new built-in.
+Sean
+  
