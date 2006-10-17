@@ -1,110 +1,57 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 17:32:19 +0200
-Message-ID: <vpqodsbrm9o.fsf@ecrins.imag.fr>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<egr3ud$nqm$1@sea.gmane.org> <45340713.6000707@utoronto.ca>
-	<Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
-	<45345AEF.6070107@utoronto.ca> <45348B5E.8000404@op5.se>
-	<4534E335.8070203@utoronto.ca> <4534F133.1090003@op5.se>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: heads-up: git-index-pack in "next" is broken
+Date: Tue, 17 Oct 2006 11:39:20 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0610171134130.1971@xanadu.home>
+References: <7vy7rfsfqa.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-X-From: bazaar-ng-bounces@lists.canonical.com Tue Oct 17 17:34:00 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 17 17:39:47 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZqwx-00009C-TL
-	for gcvbg-bazaar-ng@m.gmane.org; Tue, 17 Oct 2006 17:33:52 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GZqwb-00087A-Eh; Tue, 17 Oct 2006 16:33:29 +0100
-Received: from imag.imag.fr ([129.88.30.1])
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <Matthieu.Moy@imag.fr>) id 1GZqwY-000873-5Q
-	for bazaar-ng@lists.canonical.com; Tue, 17 Oct 2006 16:33:26 +0100
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.6/8.13.6) with ESMTP id k9HFWPUF006634
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 17 Oct 2006 17:32:25 +0200 (CEST)
-Received: from ecrins.imag.fr ([129.88.43.124])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50) id 1GZqvT-0004HW-B0; Tue, 17 Oct 2006 17:32:19 +0200
-Received: from moy by ecrins.imag.fr with local (Exim 4.50)
-	id 1GZqvT-00030E-7q; Tue, 17 Oct 2006 17:32:19 +0200
-To: Andreas Ericsson <ae@op5.se>
-In-Reply-To: <4534F133.1090003@op5.se> (Andreas Ericsson's message of "Tue\,
-	17 Oct 2006 17\:05\:23 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.6
-	(imag.imag.fr [129.88.30.1]);
-	Tue, 17 Oct 2006 17:32:28 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29087>
+	id 1GZr2L-0001YA-0V
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 17:39:26 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751151AbWJQPjW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 11:39:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751156AbWJQPjW
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 11:39:22 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:18491 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1751151AbWJQPjV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Oct 2006 11:39:21 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J7A006K1E5K9EL4@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 17 Oct 2006 11:39:20 -0400 (EDT)
+In-reply-to: <7vy7rfsfqa.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
+To: Junio C Hamano <junkio@cox.net>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29088>
 
-Andreas Ericsson <ae@op5.se> writes:
+On Mon, 16 Oct 2006, Junio C Hamano wrote:
 
-> This I don't understand. Let's say Alice has revision-154 in her repo,
-> located at alice.example.com. Let's say that commit is accessible with
-> the url "alice.example.com:revision-154". Bob pulls from her repo into
-> his own, which is located at bob.example.com.
+> I'm still a bit under the weather and do not have enough
+> concentration to dig into the problem tonight, but I noticed
+> that something in "next", most likely the delta-base-offset
+> patchset, broke git-index-pack:
+> 
+> $ X=ec0c3491753e115e1775256f6b7bd1bce4dea7cd
+> $ wget http://www.kernel.org/pub/scm/git/git.git/objects/pack/pack-$X.pack
+> $ ~/git-master/bin/git-index-pack pack-$X.pack
+> ec0c3491753e115e1775256f6b7bd1bce4dea7cd
+> $ git-index-pack pack-$X.pack
+> fatal: packfile 'pack-ec0c3491753e115e1775256f6b7bd1bce4dea7cd.pack' has unresolved deltas
 
-Another equation can help.
-
-Revision Identity != Revision Number.
-
-$ bzr log --show-ids
-------------------------------------------------------------
-revno: 1
-revision-id: Matthieu.Moy@imag.fr-20061017152029-4c5a2861bcf23b7d
-committer: Matthieu Moy <Matthieu.Moy@imag.fr>
-branch nick: foo
-timestamp: Tue 2006-10-17 17:20:29 +0200
-message:
-  some message
+Using the tip of the "next" branch (git version 1.4.2.4.gf9fe) I just 
+cannot reproduce this problem at all.  I always get a good index and 
+ec0c3491753e115e1775256f6b7bd1bce4dea7cd back.
 
 
-See, bzr has this unique revision identifier (not based on a hashsum).
-The design choice of bzr is to hide it as much as possible from the
-user interface.
-
-Then, if I'm in the branch in which I typed this command, I can reffer
-to this revision with simply
-
-  bzr whatever -r 1
-
-In the general case, I can access it with
-
-  bzr whatever -r revid:Matthieu.Moy@imag.fr-20061017152029-4c5a2861bcf23b7d
-
-(There's currently a lack in the UI to specify a remote revision-id,
-but that's not a problem in the model itself)
-
-bzr's internal use almost exclusively revision ID (ancestry
-information is all about revision id), and revno are a UI layered on
-top of it.
-
-I don't have strong needs in revision control, but I actually never
-encountered a case where I had to access a revision by providing its
-ID. So, for people like me, revision numbers are sufficient, and they
-are simple (for example, I can tell without running any command that
-revision 42 is older than revision 56 in a particular branch).
+Nicolas
