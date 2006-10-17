@@ -1,115 +1,206 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 10:15:41 +0200
-Message-ID: <200610171015.42320.jnareb@gmail.com>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<200610170119.09066.jnareb@gmail.com>
-	<45346290.6050300@utoronto.ca>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: [RFC/PATCH] git-fetch: Use already fetched branch with the --local flag.
+Date: Tue, 17 Oct 2006 10:36:35 +0200
+Message-ID: <8aa486160610170136n28ef3f94q630127982156a115@mail.gmail.com>
+References: <87ac3w8jl1.fsf@gmail.com>
+	 <7vbqobo1m1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 8bit
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: bazaar-ng-bounces@lists.canonical.com Tue Oct 17 10:30:26 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 17 10:36:52 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZkLA-0004ql-Im
-	for gcvbg-bazaar-ng@m.gmane.org; Tue, 17 Oct 2006 10:30:25 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GZkKy-0004Wn-Fp; Tue, 17 Oct 2006 09:30:12 +0100
-Received: from nf-out-0910.google.com ([64.233.182.186])
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <jnareb@gmail.com>) id 1GZkKv-0004WJ-T3
-	for bazaar-ng@lists.canonical.com; Tue, 17 Oct 2006 09:30:10 +0100
-Received: by nf-out-0910.google.com with SMTP id l37so228671nfc
-	for <bazaar-ng@lists.canonical.com>;
-	Tue, 17 Oct 2006 01:30:09 -0700 (PDT)
-Received: by 10.49.10.3 with SMTP id n3mr1136497nfi;
-	Tue, 17 Oct 2006 01:30:08 -0700 (PDT)
-Received: from host-81-190-17-207.torun.mm.pl ( [81.190.17.207])
-	by mx.google.com with ESMTP id o45sm540709nfa.2006.10.17.01.30.07;
-	Tue, 17 Oct 2006 01:30:08 -0700 (PDT)
-To: Aaron Bentley <aaron.bentley@utoronto.ca>
-User-Agent: KMail/1.9.3
-In-Reply-To: <45346290.6050300@utoronto.ca>
+	id 1GZkRE-00069b-Aa
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 10:36:40 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1423166AbWJQIgh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 04:36:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423168AbWJQIgh
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 04:36:37 -0400
+Received: from wx-out-0506.google.com ([66.249.82.238]:11282 "EHLO
+	wx-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1423166AbWJQIgg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Oct 2006 04:36:36 -0400
+Received: by wx-out-0506.google.com with SMTP id h28so2150386wxd
+        for <git@vger.kernel.org>; Tue, 17 Oct 2006 01:36:35 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=BwEV4B4pOTSSBcgYhMabsdd7t1wZHxpUjfKVh4EuT7k0XRdidwbFUfQTeE8AHqmc0HLxdD5XtXydZKuBGvQjoG5I0S0UDP/9fRI8ZLA0+wm2V9zfIhV+ABMCkV8X3eOcmHwz2gSM/tJihouurH6Efbu0aa8GuoQ9YypdRbEIxAM=
+Received: by 10.70.47.19 with SMTP id u19mr13289423wxu;
+        Tue, 17 Oct 2006 01:36:35 -0700 (PDT)
+Received: by 10.70.46.8 with HTTP; Tue, 17 Oct 2006 01:36:35 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vbqobo1m1.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29036>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29037>
 
-Dnia wtorek 17. pa¼dziernika 2006 06:56, Aaron Bentley napisa³:
-> Jakub Narebski wrote:
-> > Well, <ref>~<n> means <n>-th _parent_ of a given ref, which for branches
-> > (which constantly change) is a moving target.
-> 
-> Ah.  Bazaar uses negative numbers to refer to <n>th parents, and
-> positive numbers to refer to the number of commits that have been made
-> since the branch was initialized.
-> 
-> > One cannot have universally valid revision numbers (even
-> > only per branch) in distributed development. Subversion can do that only
-> > because it is centralized SCM. Global numbering and distributed nature
-> > doesn't mix... hence contents based sha1 as commit identifiers.
-> 
-> Sure.  Our UI approach is that unique identifiers can usefully be
-> abstracted away with a combination of URL + number, in the vast majority
-> of cases.
-> 
-> > But this doesn't matter much, because you can have really lightweight
-> > tags in git (especially now with packed refs support). So you can have
-> > the namespace you want.
-> 
-> The nice thing about revision numbers is that they're implicit-- no one
-> needs to take any action to update them, and so you can always use them.
-> 
-> > I wonder if any SCM other than git has easy way to "rebase" a branch,
-> > i.e. cut branch at branching point, and transplant it to the tip
-> > of other branch. For example you work on 'xx/topic' topic branch,
-> > and want to have changes in those branch but applied to current work,
-> > not to the version some time ago when you have started working on
-> > said feature.
-> 
-> If I understand correctly, in Bazaar, you'd just merge the current work
-> into 'xx/topic'.
-> 
-> > What your comparison matrick lacks for example is if given SCM
-> > saves information about branching point and merges, so you can
-> > get where two branches diverged, and when one branch was merged into
-> > another.
-> 
-> I'm not sure what you mean about divergence.  For example, Bazaar
-> records the complete ancestry of each branch, and determining the point
-> of divergence is as simple as finding the last common ancestor.  But are
-> you considering only the initial divergence?  Or if the branches merge
-> and then diverge again, would you consider that the point of divergence?
-> 
-> merge-point tracking is a prerequisite for Smart Merge, which does
-> appear on our matrix.
-> 
-> > Plugins = API + detection ifrastructure + loading on demand.
-> > Git has API, has a kind of detection ifrastructure (for commands and
-> > merge strategies only), doesn't have loading on demand. You can
-> > easily provide new commands (thanks to git wrapper) and new merge
-> > strategies.
-> 
-> I'm not sure what you mean by API, unless you mean the commandline.  If
-> that's what you mean, surely all unix commands are extensible in that
-> regard.
-> 
-> Aaron
-> 
+2006/10/17, Junio C Hamano <junkio@cox.net>:
+
+[...]
+
+>
+> You have an upstream repository that has more than one branches
+> you are interested in, say "master" and "next".  And you work on
+> top of both of them, so you have two branches of your own that
+> correspond to them.
+>
+> So you organize your remote section perhaps like this:
+>
+>         [remote."origin"]
+>                 url = git://git.k.o/.../git.git/
+>                 fetch = refs/heads/master:refs/remotes/origin/master
+>                 fetch = refs/heads/next:refs/remotes/origin/next
+>                 fetch = +refs/heads/pu:refs/remotes/origin/pu
+>
+>         [branch."master"]
+>                 remote = origin
+>                 merge = refs/heads/master
+>
+>         [branch."next"]
+>                 remote = origin
+>                 merge = refs/heads/next
+>
+> That is, your refs/heads/master corresponds to upstream's master
+> branch and your next corresponds to upstream's next branch.
+> When you are on your "master" you would merge changes made to
+> upstream's master into it with "git pull".
+
+Yes, that is.
+
+>
+>         By the way, could you add descriptions on remote.* to
+>         Documentation/config.txt?
+>
+
+I'll try. Off-topic: Do you want also docs for the ^@ notation and an
+implementation in git-rev-parse?
+
+> After doing a "git pull" while on your "master" and finishing
+> working on your "master", you might switch to your "next".  At
+> that point, if you want to merge upstream changes without
+> re-fetching, you can do either of the following:
+>
+>         git pull . remotes/origin/next
+>         git pull --local
+>
+> (the former can be "git pull" if "branch.next.remote=.").
+>
+> I think this is the point of your two patches, and in that
+> sense, the --local one makes "branch.remote=." patch
+> unnecessary.
+
+I see them differently. "branch.remote=." is when there is no upstream
+(e.g., for your next and master branches in git.git).
+
+>
+> While these save typing on "git pull", two things bother me.
+>
+>  * the tool is not helping you decide if you can get away
+>    without re-fetching.  you need to remember that (1) you
+>    fetched from the upstream to update "master" recently _and_
+>    (2) because of your [remote."origin"] configuration your
+>    remotes/origin/next was updated while you pulled into your
+>    "master".
+
+You never know if you can get away without re-fetching (or I don't
+parse this sentence :). The way I see it, you always us "git pull"
+except when you want to merge the exactly the already fetch branch
+because (1) you want to merge the same upstream as with other branch
+(2) you don't have access to the remote repository (3)...
+
+>
+>  * while the workflow assumes that one local branch is tied
+>    closely to one remote branch (in this example, tracked under
+>    remotes/origin), the rest of the tools do not take advantage
+>    of that assumption to help you decide what to do next.
+
+This is the next item in my TODO :)
+Next with a program similar to "svn info" showing misc info about a branch.
+
+>
+> For example, if each of your local branch is tied closely to one
+> remote branch, you should be able to "git fetch" to update the
+> tracking branches and then ask:
+>
+>  - what changes are in remote that I haven't merged?
+>
+>  - what happens when I pull --local right now?
+>
+>  - what changes if any are in mine alone missing from remote?
+>
+>  - can I push to remote right now (i.e. would it fast-forward)?
+>
+>  - how fresh is the tracking branch that corresponds to my
+>    current branch?
+>
+> Right now, these require you to spell out the name of the
+> tracking branch.  Assuming you are on your "next" branch:
+>
+>         git log ..remotes/origin/next
+>         git log remotes/origin/next..
+>         git log remotes/origin/next...next              [*1*]
+>         git show-branch remotes/origin/next next
+>         tail -n 1 .git/logs/remotes/origin/next
+>
+> would be the ways to ask the above questions (and the last one
+> is unreadable unless you can do strptime in your head).
+>
+> Maybe we can introduce a new extended SHA-1 notation to mean
+> "the tracking branch this branch usually merges from".  Then we
+> can say:
+>
+>         git log ..^
+>         git log ^..
+>         git log ^...
+>         git show-branch ^ next
+>
+> I am not sure '^' is syntactically viable, but hopefully you get
+> the idea.
+
+I get it. Another idea is to have a .git/ORIGIN that points to the
+tracking branch so you could say:
+
+         git log ..ORIGIN
+         git log ORIGIN..
+         git log ORIGIN...
+         git show-branch ORIGIN next
+
+One advantage is that it only needs changes to "git checkout" (and
+possibly others but not to plumbing ones).
+Another is that the ^ notation forces the low level tools to follow
+configs in [branch."..."] and [remote."..."].
+>
+>
+> [*1*] While three-dots symmetric difference is a nice addition
+> made recently, I often find it irritating that the output does
+> not tell which branch each of the commit is reachable from, and
+> end up running show-branch, which does.  Would anybody have a
+> clever idea to fix this cleanly?
+
+I don't know if it is a clever idea but...
+
+We could use the git-name-rev method:
+
+$git log a...b
+commit sha1 (a)
+....
+
+commit sha1 (a^)
+....
+
+commit sha1 (b^)
+....
+
+commit sha1 (b)
+....
+
+and without this when on both branches.
+
+Santi
