@@ -1,85 +1,83 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Aaron Bentley <aaron.bentley@utoronto.ca>
 Subject: Re: VCS comparison table
-Date: Wed, 18 Oct 2006 03:11:47 +0200
-Message-ID: <20061018011147.GN20017@pasky.or.cz>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <Pine.LNX.4.64.0610161625370.3962@g5.osdl.org> <45345AEF.6070107@utoronto.ca> <200610171030.35854.jnareb@gmail.com> <vpqejt76vgz.fsf@ecrins.imag.fr> <BAYC1-PASMTP02ADC5BEF688E61583283CAE0E0@CEZ.ICE> <vpqbqob5euu.fsf@ecrins.imag.fr>
+Date: Tue, 17 Oct 2006 19:33:48 -0400
+Message-ID: <4535685C.4010502@utoronto.ca>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <200610172351.17377.jnareb@gmail.com> <4535590C.4000004@utoronto.ca> <200610180057.25411.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sean <seanlkml@sympatico.ca>, Jakub Narebski <jnareb@gmail.com>,
-	Aaron Bentley <aaron.bentley@utoronto.ca>,
-	Linus Torvalds <torvalds@osdl.org>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 18 03:12:00 2006
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 18 02:14:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZzyQ-0001VH-6K
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 03:11:58 +0200
+	id 1GZz4Y-00033K-R3
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 02:14:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750965AbWJRBLt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 21:11:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751216AbWJRBLt
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 21:11:49 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:57296 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750965AbWJRBLt (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 21:11:49 -0400
-Received: (qmail 18940 invoked by uid 2001); 18 Oct 2006 03:11:47 +0200
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-Content-Disposition: inline
-In-Reply-To: <vpqbqob5euu.fsf@ecrins.imag.fr>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751117AbWJQXdz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 19:33:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751130AbWJQXdy
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 19:33:54 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41]:23493 "EHLO
+	server4.panoramicfeedback.com") by vger.kernel.org with ESMTP
+	id S1751117AbWJQXdy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Oct 2006 19:33:54 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41] helo=[127.0.0.1])
+	by server4.panoramicfeedback.com with esmtp (Exim 3.36 #1 (Debian))
+	id 1GZyRT-0005RJ-00; Tue, 17 Oct 2006 19:33:51 -0400
+User-Agent: Thunderbird 1.5.0.7 (X11/20060922)
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200610180057.25411.jnareb@gmail.com>
+X-Enigmail-Version: 0.94.0.0
+X-Panometrics-MailScanner: Found to be clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29141>
 
-Dear diary, on Tue, Oct 17, 2006 at 02:03:21PM CEST, I got a letter
-where Matthieu Moy <Matthieu.Moy@imag.fr> said that...
-> I have one repository, say, $repo.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Jakub Narebski wrote:
+> Aaron Bentley wrote:
+> By the way, are bzr "bundles" compatibile with ordinary patch?
+> git-format-patch patches are. They have additional metainfo,
+> but they are patches in heart.
+
+Yes, they are.
+
+>> I'm not sure what you think Bazaar does.  In Bazaar, a repository format
+>> plugin  implements the same API that a native repository format does.
+>>
+>> This is how bzr supports Subversion, Mercurial and Git repositories.
 > 
-> In it, I have one branch "$repo/bzr.dev" which is an exact mirror of
-> http://bazaar-vcs.org's branch.
-> 
-> I also have branches for patches (occasional in my case) that I'll
-> send to upstream. Say $repo/feature1, $repo/feature2, ...
-> 
-> If, by mistake, I start hacking on bzr.dev itself, I'll be warned at
-> commit time, create a branch, and commit in this new branch. I believe
-> git manages this in a different way, allowing you to commit in this
-> branch, and creating the branch next time you pull. But you know this
-> better than I ;-), I never got time to give a real try to git.
+> But if I remember correctly Subversion does not remember merge points
+> (merge commits), so how can you provide full Bazaar-NG compatibility
+> with Subversion repository as backend? Some repository formats lack
+> some features.
 
-In fact, in Git the branch is actually created at the moment you clone.
+That's true.  We support merge points in a way that's compatible with
+svk.  Subversion allows revisions to have arbitrary properties, and svk
+sets a property to indicate merges.
 
-For simplicity sake, let's say you cloned just a single branch, not the
-whole repository (or imagine a repository with a single branch). Then,
-in your local repository, two branches will be created: 'origin' and
-'master'. The origin branch is considered readonly (though Git does
-not enforce it) and only mirrors the branch in the remote repository.
-The master branch is the branch you do your work on, and it corresponds
-to the contents of your working tree.
+> In git we have import tools (most of them capable of incremental import),
+> a few exchange tools like git-cvsexportcommit, git-cvsserver, and
+> Tailor-like git-svn.
 
-Thus, when you are "updating" your repository (we also call that
-"pull"), what happens is that new commits are _fetched_ from the remote
-repository to your 'origin' branch and then the 'origin' branch is
-_merged_ to the 'master' branch. (You can even separate those two steps
-and do them manually. So you can e.g. periodically fetch but just check
-diffs with your master branch and never actually merge, or whatever.)
+Bzr's subversion support is quite nice.  You can commit, merge, run
+history viewers.
 
-If you never do any local commits on the repository, every time you
-merge the 'master' branch is ancestor of the 'origin' branch and only
-so-called fast-forward merge happens - the 'master' branch is updated to
-point at the same commit as the 'origin' branch.
+There are screenshots and stuff here:
+http://bazaar-vcs.org/BzrForeignBranches/Subversion
 
-If you _did_ do some local commits, a real merge of the two branches
-happens and a new merge commit tying the current master and origin
-history together is recorded on the merge branch.
+Aaron
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+iD8DBQFFNWhc0F+nu1YWqI0RAkH7AJ4/S648shA8IKg42xcGWdjnjmA+PgCdEDhg
+Af/mcG+XTy3Tsb9b1x3rYcg=
+=xnjF
+-----END PGP SIGNATURE-----
