@@ -1,113 +1,67 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 11:45:25 +0200
-Organization: At home
-Message-ID: <eh28mn$3vh$1@sea.gmane.org>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <egr3ud$nqm$1@sea.gmane.org> <45340713.6000707@utoronto.ca> <Pine.LNX.4.63.0610170128350.14200@wbgn013.biozentrum.uni-wuerzburg.de> <1161077599.9020.66.camel@localhost.localdomain>
+Date: Tue, 17 Oct 2006 11:59:57 +0200
+Message-ID: <4534A99D.4060208@op5.se>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<200610170119.09066.jnareb@gmail.com>
+	<45346290.6050300@utoronto.ca>
+	<200610171120.09747.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-Cc: bazaar-ng@lists.canonical.com
-X-From: git-owner@vger.kernel.org Tue Oct 17 11:46:21 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: bazaar-ng-bounces@lists.canonical.com Tue Oct 17 12:00:24 2006
+Return-path: <bazaar-ng-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZlWK-0001I0-1k
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 11:46:03 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423198AbWJQJp5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 05:45:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161040AbWJQJp5
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 05:45:57 -0400
-Received: from main.gmane.org ([80.91.229.2]:8896 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1161031AbWJQJp4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 05:45:56 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GZlVv-0001Br-3e
-	for git@vger.kernel.org; Tue, 17 Oct 2006 11:45:35 +0200
-Received: from host-81-190-17-207.torun.mm.pl ([81.190.17.207])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 17 Oct 2006 11:45:35 +0200
-Received: from jnareb by host-81-190-17-207.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 17 Oct 2006 11:45:35 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-Followup-To: gmane.comp.version-control.git
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-17-207.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29044>
+	id 1GZlkB-0003NG-J5
+	for gcvbg-bazaar-ng@m.gmane.org; Tue, 17 Oct 2006 12:00:19 +0200
+Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
+	id 1GZljv-0000q0-Pm; Tue, 17 Oct 2006 11:00:03 +0100
+Received: from linux-server1.op5.se ([193.201.96.2] helo=smtp-gw1.op5.se)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <ae@op5.se>) id 1GZljs-0000pv-Tn
+	for bazaar-ng@lists.canonical.com; Tue, 17 Oct 2006 11:00:01 +0100
+Received: by smtp-gw1.op5.se (Postfix, from userid 588)
+	id 7AA7C6BDAA; Tue, 17 Oct 2006 12:00:00 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
+	linux-server1.op5.se
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.1.4
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 8396B6BD2A; Tue, 17 Oct 2006 11:59:57 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200610171120.09747.jnareb@gmail.com>
+X-BeenThere: bazaar-ng@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
+List-Post: <mailto:bazaar-ng@lists.canonical.com>
+List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-ng-bounces@lists.canonical.com
+Errors-To: bazaar-ng-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29045>
 
-Robert Collins wrote:
-
-> On Tue, 2006-10-17 at 01:45 +0200, Johannes Schindelin wrote:
->> 
->> If you really, really think about it: it makes much more sense to record 
->> your intention in the commit message. So, instead of recording for _every_ 
->> _single_ file in folder1/ that it was moved to folder2/, it is better to 
->> say that you moved folder1/ to folder2/ _because of some special
->> reason_!
+Jakub Narebski wrote:
 > 
-> Just a small nit here: bzr does /not/ record the move of every file: it
-> records the rename of folder1 to folder2. One piece of data is all thats
-> recorded - no new manifest for the subdirectory is needed.
+> About new command detection: if you put program named git-<command>
+> in directory with the rest of git commands, then you can call it
+> as "git <command>" using git wrapper. I think.
 > 
-> Of course, a user can choose to move all the contents of a folder and
-> not the folder itself - its up to the user.
-> 
-> By recording the folder rename rather than the contents rename, we get
-> merges of new files added to folder1 in other branches come into folder2
-> automatically, without needing to do arbitrarily deep history processing
-> to determine that.
 
-Hmmm... I wonder how well git manages that (merge with renamed directory).
-
-  folder1/a  -->  folder2/a  --------> folder2/a
-  folder1/b  -->  folder2/b       /    folder2/b
-      \                          /     folder2/c
-       \------->  folder1/a  ---/
-                  folder1/b
-                  folder1/c
-
-
-I wonder how bzr manages "separate some files into subdirectory" (and how
-well git does that), i.e. we have
-
-   sub-file1
-   sub-file2
-   filea
-   fileb
-
-In the 'main' branch we separated "sub-*" files into subdirectory
-
-   sub/file1
-   sub/file2
-   filea
-   fileb
-
-How would that merge with adding new sub-* file on the branch to be merged?
-
-   sub-file1
-   sub-file2
-   sub-file3
-   filea
-   fileb
-
-
-Or how bzr manages sub-level movement, such as splitting file into two,
-or joining two files into one file.
-
-
-P.S. is anyone working on --follow option for renames following path
-limiting?
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Yup. The new command will also automagically appear in the "git help -a" 
+output. Those two functions have been available since the C wrapper was 
+born, although "git help -a" was the only available output for "command 
+not found" until someone introduced the more newbie-friendly list that 
+pops up now adays.
