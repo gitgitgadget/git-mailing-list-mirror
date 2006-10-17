@@ -1,74 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 02:04:52 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0610170157270.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Mon, 16 Oct 2006 17:08:55 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610161704240.3962@g5.osdl.org>
 References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
  <45340713.6000707@utoronto.ca> <Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
  <200610170155.10536.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Aaron Bentley <aaron.bentley@utoronto.ca>,
+Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
 	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 17 02:05:19 2006
+X-From: git-owner@vger.kernel.org Tue Oct 17 02:09:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZcSN-0007Iq-EZ
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 02:05:19 +0200
+	id 1GZcW4-0007kj-NB
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 02:09:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422957AbWJQAE7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Oct 2006 20:04:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422959AbWJQAE7
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 20:04:59 -0400
-Received: from mail.gmx.de ([213.165.64.20]:54246 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1422957AbWJQAE6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Oct 2006 20:04:58 -0400
-Received: (qmail invoked by alias); 17 Oct 2006 00:04:57 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp028) with SMTP; 17 Oct 2006 02:04:57 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S1422965AbWJQAJF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Oct 2006 20:09:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422966AbWJQAJF
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 20:09:05 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:39366 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1422965AbWJQAJE (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Oct 2006 20:09:04 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9H08vaX001305
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 16 Oct 2006 17:08:57 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9H08uHT001335;
+	Mon, 16 Oct 2006 17:08:56 -0700
 To: Jakub Narebski <jnareb@gmail.com>
 In-Reply-To: <200610170155.10536.jnareb@gmail.com>
-X-Y-GMX-Trusted: 0
+X-Spam-Status: No, hits=-0.473 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29002>
 
-Hi,
+
 
 On Tue, 17 Oct 2006, Jakub Narebski wrote:
-
-> Linus Torvalds wrote:
-> >>> About "checkouts", i.e. working directories with repository elsewhere:
-> >>> you can use GIT_DIR environmental variable or "git --git-dir" option,
-> >>> or symlinks, and if Nguyen Thai Ngoc D proposal to have .gitdir/.git
-> >>> "symref"-like file to point to repository passes, we can use that.
-> >> 
-> >> It sounds like the .gitdir/.git proposal would give Git "checkouts", by
-> >> our meaning of the term.
-> > 
-> > Well, in the git world, it's really just one shared repository that has 
-> > separate branch-namespaces, and separate working trees (aka "checkouts"). 
-> > So yes, it probably matches what bazaar would call a checkout.
-> > 
-> > Almost nobody seems to actually use it that way in git - it's mostly more 
-> > efficient to just have five different branches in the same working tree, 
-> > and switch between them. When you switch between branches in git, git only 
 > > rewrites the part of your working tree that actually changed, so switching 
 > > is extremely efficient even with a large repo. 
 > 
 > Unless you have branch(es) with totally different contents, like git.git
 > 'todo' branch.
 
-But I _do_ work with it! I just don't need to "checkout" it! Example:
+Yes. I have to say, that's likely a fairly odd case, and I wouldn't be 
+surprised if other VCS's don't support that mode of operation at _all_.
 
-git -p cat-file -p todo:TODO
-
-(How about making git-cat be a short cuut to "git -p cat-file -p"?)
+The fact that git branches can be independent of each other is very 
+natural in the git world, but 
 
 > > So there is seldom any real need or reason to actually have multiple 
 > > checkouts. But it certainly _works_.
@@ -77,20 +64,18 @@ git -p cat-file -p todo:TODO
 > you have to remember what to ser GIT_DIR to, or parameter for --git-dir
 > option.
 
-You'd just use alternates for that.
+I'd strongly suggest that people who do this should actually do
 
-But as Linus mentioned in another email, you mostly can use the _same_ 
-working directory. If you want to work on another branch, which is not all 
-that different from the current branch (say, you have a bug fix branch on 
-top of an upstream branch), you just _switch_ to it. Git recognizes those 
-files which are changed, and updates only these. Therefore, if you have 
-something like a Makefile system to build the project, you actually save 
-(compile) time as compared to the multiple-checkout scenario.
+	git clone -l
 
-I use this system a lot, since I maintain a few bugfixes for a few 
-projects until the bugfixes are applied upstream. BTW the 
-multiple-branches-in-one-working-directory workflow was propagated by Jeff 
-a long time ago, and it really changed my way of working. Thanks, Jeff!
+instead of actually playing games with symlinking .git/ itself or using 
+GIT_DIR. It means that the two checkouts get separate branch namespaces, 
+but that's really what you'd want most of the time. 
 
-Ciao,
-Dscho
+You _can_ share the whole branch namespace and do the symlink of .git (or 
+just set GIT_DIR - but that's pretty inconvenient), and it might end up 
+being "closer" to what some other VCS would do. But the natural thing to 
+do with git is to just share some of the objects through local "slaving" 
+of the repositories, and consider them otherwise entirely independent.
+
+		Linus
