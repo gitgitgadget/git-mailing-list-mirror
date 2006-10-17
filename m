@@ -1,127 +1,63 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: [PATCH] nice ftplugin for vim, that shows the commited diff in a split'ed buffer.
-Date: Tue, 17 Oct 2006 02:31:10 +0200
-Message-ID: <11610450701082-git-send-email-madcoder@debian.org>
-References: <11610450702261-git-send-email-madcoder@debian.org>
-Cc: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Tue Oct 17 02:31:50 2006
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: VCS comparison table
+Date: Tue, 17 Oct 2006 02:36:02 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0610170233110.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+ <45340713.6000707@utoronto.ca> <Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
+ <200610170155.10536.jnareb@gmail.com> <Pine.LNX.4.63.0610170157270.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0610161714590.3962@g5.osdl.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 17 02:37:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZcrW-000331-7W
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 02:31:18 +0200
+	id 1GZcwH-0004gX-4Q
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 02:36:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422974AbWJQAbO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Oct 2006 20:31:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422988AbWJQAbO
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 20:31:14 -0400
-Received: from pan.madism.org ([88.191.16.128]:5785 "EHLO hermes.madism.org")
-	by vger.kernel.org with ESMTP id S1422986AbWJQAbN (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Oct 2006 20:31:13 -0400
-Received: from hermes.madism.org (localhost.localdomain [127.0.0.1])
-	by hermes.madism.org (Postfix) with ESMTP id 81636B0060;
-	Tue, 17 Oct 2006 02:31:08 +0200 (CEST)
-Received: from hades.madism.org (olympe.madism.org [82.243.245.108])
-	by hermes.madism.org (Postfix) with ESMTP id 398F8B005C;
-	Tue, 17 Oct 2006 02:31:08 +0200 (CEST)
-Received: by hades.madism.org (Postfix, from userid 1000)
-	id B155E62112; Tue, 17 Oct 2006 02:31:10 +0200 (CEST)
-To: git@vger.kernel.org
-X-Mailer: git-send-email 1.4.2.3
-In-Reply-To: <11610450702261-git-send-email-madcoder@debian.org>
-X-AV-Checked: ClamAV (using ClamSMTP) at pan.madism.org
+	id S1422988AbWJQAgJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Oct 2006 20:36:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422989AbWJQAgJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 20:36:09 -0400
+Received: from mail.gmx.de ([213.165.64.20]:53681 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1422988AbWJQAgH (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Oct 2006 20:36:07 -0400
+Received: (qmail invoked by alias); 17 Oct 2006 00:36:05 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp027) with SMTP; 17 Oct 2006 02:36:05 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0610161714590.3962@g5.osdl.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29008>
 
-Signed-off-by: Pierre Habouzit <madcoder@debian.org>
----
- contrib/vim/README                 |    6 ++++
- contrib/vim/ftplugin/gitcommit.vim |   61 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 67 insertions(+), 0 deletions(-)
+Hi,
 
-diff --git a/contrib/vim/README b/contrib/vim/README
-index 9e7881f..26c1682 100644
---- a/contrib/vim/README
-+++ b/contrib/vim/README
-@@ -6,3 +6,9 @@ To syntax highlight git's commit message
-      $ cat >>$HOME/.vimrc <<'EOF'
-      autocmd BufNewFile,BufRead COMMIT_EDITMSG set filetype=gitcommit
-      EOF
-+
-+To use the fancy split-view with the currently commited diff, you need to:
-+  1. Copy ftplugin/gitcommit.vim to vim's ftplugin directory:
-+     $ mkdir -p $HOME/.vim/ftplugin
-+     $ cp ftplugin/gitcommit.vim $HOME/.vim/ftplugin
-+  2. Auto-detect the editing of git commit files (see above).
-diff --git a/contrib/vim/ftplugin/gitcommit.vim b/contrib/vim/ftplugin/gitcommit.vim
-new file mode 100644
-index 0000000..f9efd59
---- /dev/null
-+++ b/contrib/vim/ftplugin/gitcommit.vim
-@@ -0,0 +1,61 @@
-+if exists("b:did_ftplugin")
-+  finish
-+endif
-+
-+let b:did_ftplugin = 1
-+
-+setlocal tw=74
-+setlocal nowarn nowb
-+
-+"{{{ function Git_diff_windows
-+
-+function! Git_diff_windows()
-+    let i = 0
-+    let list_of_files = ''
-+
-+    " drop everything until '#  (will commit)' and the next empty line
-+    while i <= line('$')
-+        let line = getline(i)
-+        if line =~ '^#\s*(will commit)$'
-+            let i = i + 2
-+            break
-+        endif
-+
-+        let i = i + 1
-+    endwhile
-+
-+    " read file names until we have EOF or an empty line
-+    while i <= line('$')
-+        let line = getline(i)
-+        if line =~ '^#\s*[a-z ]*:.*->.*$'
-+            let file = substitute(line, '\v^#[^:]*:.*->\s*(.*)\s*$', '\1', '')
-+            let list_of_files = list_of_files . ' '.file
-+            let file = substitute(line, '\v^#[^:]*:\s*(.*)\s*->.*$', '\1', '')
-+            let list_of_files = list_of_files . ' '.file
-+        elseif line =~ '^#\s*[a-z ]*:'
-+            let file = substitute(line, '\v^#[^:]*:\s*(.*)\s*$', '\1', '')
-+            let list_of_files = list_of_files . ' '.file
-+        elseif line =~ '^#\s*$'
-+            break
-+        endif
-+
-+        let i = i + 1
-+    endwhile
-+
-+    if list_of_files == ""
-+        return
-+    endif
-+
-+    rightbelow vnew
-+    silent! setlocal ft=diff previewwindow bufhidden=delete nobackup noswf nobuflisted nowrap buftype=nofile
-+    exe 'normal :r!LANG=C cd ..; git diff HEAD -- ' . list_of_files . "\n1Gdd"
-+    exe 'normal :r!LANG=C cd ..; git diff HEAD -- ' . list_of_files . " \| git apply --stat\no\<esc>1GddO\<esc>"
-+    setlocal nomodifiable
-+    redraw!
-+    wincmd p
-+    redraw!
-+endfunction
-+
-+"}}}
-+
-+call Git_diff_windows()
--- 
-1.4.2.3
+On Mon, 16 Oct 2006, Linus Torvalds wrote:
+
+> On Tue, 17 Oct 2006, Johannes Schindelin wrote:
+> 
+> > (How about making git-cat be a short cuut to "git -p cat-file -p"?)
+> 
+> Well, you can just add
+> 
+> 	[alias]
+> 		cat=-p cat-file -p
+> 
+> to your ~/.gitconfig file, and you're there.
+
+Ha! I have that for a long time! Although I named it "s", since "git s 
+todo:TODO" is two letters shorter...
+
+Ciao,
+Dscho
+
+P.S.: BTW a certain person complained about ~/.gitconfig not being 
+documented, but evidently the itch was not big enough for that person to 
+document it himself...
