@@ -1,87 +1,105 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: heads-up: git-index-pack in "next" is broken
-Date: Tue, 17 Oct 2006 13:10:21 -0700
-Message-ID: <7vy7reitzm.fsf@assigned-by-dhcp.cox.net>
+Date: Tue, 17 Oct 2006 16:23:26 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0610171615340.1971@xanadu.home>
 References: <7vy7rfsfqa.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0610171134130.1971@xanadu.home>
-	<7vslhnj58e.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0610171251210.1971@xanadu.home>
-	<7vbqoake1v.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0610171437250.1971@xanadu.home>
-	<20061017233630.72a0aae5.vsu@altlinux.ru>
+ <Pine.LNX.4.64.0610171134130.1971@xanadu.home>
+ <7vslhnj58e.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610171251210.1971@xanadu.home>
+ <7vbqoake1v.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610171437250.1971@xanadu.home>
+ <20061017233630.72a0aae5.vsu@altlinux.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sergey Vlasov <vsu@altlinux.ru>
-X-From: git-owner@vger.kernel.org Tue Oct 17 22:10:40 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 17 22:23:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZvGc-0000lW-IO
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 22:10:29 +0200
+	id 1GZvTL-0003e1-86
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 22:23:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751130AbWJQUKX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 16:10:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751254AbWJQUKX
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 16:10:23 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:36048 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751130AbWJQUKW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Oct 2006 16:10:22 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061017201022.SALT6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 17 Oct 2006 16:10:22 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id bYA81V00P1kojtg0000000
-	Tue, 17 Oct 2006 16:10:09 -0400
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <20061017233630.72a0aae5.vsu@altlinux.ru> (Sergey Vlasov's
-	message of "Tue, 17 Oct 2006 23:36:30 +0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751365AbWJQUX2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 16:23:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbWJQUX2
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 16:23:28 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:30058 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1751266AbWJQUX1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Oct 2006 16:23:27 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J7A001RNRB2WQA0@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 17 Oct 2006 16:23:27 -0400 (EDT)
+In-reply-to: <20061017233630.72a0aae5.vsu@altlinux.ru>
+X-X-Sender: nico@xanadu.home
+To: Sergey Vlasov <vsu@altlinux.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29112>
 
-Sergey Vlasov <vsu@altlinux.ru> writes:
+On Tue, 17 Oct 2006, Sergey Vlasov wrote:
 
 > On Tue, 17 Oct 2006 14:47:16 -0400 (EDT) Nicolas Pitre wrote:
->
->> Is it possible that sizeof(union delta_base) might not be equal to 20 
->> for you?
->
+> 
+> > Is it possible that sizeof(union delta_base) might not be equal to 20 
+> > for you?
+> 
 > Yes, on x86_64 this is 24 because of 8-byte alignment for longs:
 
-Enough eyeballs made this bug shallow ;-)  Thanks.
+Ah bummer.  Then this is most likely the cause.  And here's a simple 
+fix (Junio please confirm):
 
 diff --git a/index-pack.c b/index-pack.c
-index fffddd2..49b6efe 100644
+index fffddd2..56c590e 100644
 --- a/index-pack.c
 +++ b/index-pack.c
-@@ -166,6 +166,7 @@ static void *unpack_raw_entry(unsigned l
- 	case OBJ_REF_DELTA:
- 		if (pos + 20 >= pack_limit)
- 			bad_object(offset, "object extends past end of pack");
-+		memset(delta_base, 0, sizeof(*delta_base));
- 		hashcpy(delta_base->sha1, pack_base + pos);
- 		pos += 20;
- 		break;
-@@ -290,6 +291,7 @@ static void resolve_delta(struct delta_e
- 		bad_object(obj->offset, "failed to apply delta");
- 	sha1_object(result, result_size, type, obj->sha1);
+@@ -23,6 +23,12 @@ union delta_base {
+ 	unsigned long offset;
+ };
  
-+	memset(&delta_base, 0, sizeof(delta_base));
- 	hashcpy(delta_base.sha1, obj->sha1);
- 	if (!find_delta_childs(&delta_base, &first, &last)) {
- 		for (j = first; j <= last; j++)
-@@ -365,6 +367,7 @@ static void parse_pack_objects(void)
++/*
++ * Even if sizeof(union delta_base) == 24 on 64-bit archs, we really want
++ * to memcmp() only the first 20 bytes.
++ */
++#define UNION_BASE_SZ	20
++
+ struct delta_entry
+ {
+ 	struct object_entry *obj;
+@@ -211,7 +217,7 @@ static int find_delta(const union delta_
+                 struct delta_entry *delta = &deltas[next];
+                 int cmp;
  
- 		if (obj->type == OBJ_REF_DELTA || obj->type == OBJ_OFS_DELTA)
- 			continue;
-+		memset(&base, 0, sizeof(base));
- 		hashcpy(base.sha1, obj->sha1);
- 		ref = !find_delta_childs(&base, &ref_first, &ref_last);
- 		memset(&base, 0, sizeof(base));
+-                cmp = memcmp(base, &delta->base, sizeof(*base));
++                cmp = memcmp(base, &delta->base, UNION_BASE_SZ);
+                 if (!cmp)
+                         return next;
+                 if (cmp < 0) {
+@@ -232,9 +238,9 @@ static int find_delta_childs(const union
+ 
+ 	if (first < 0)
+ 		return -1;
+-	while (first > 0 && !memcmp(&deltas[first - 1].base, base, sizeof(*base)))
++	while (first > 0 && !memcmp(&deltas[first - 1].base, base, UNION_BASE_SZ))
+ 		--first;
+-	while (last < end && !memcmp(&deltas[last + 1].base, base, sizeof(*base)))
++	while (last < end && !memcmp(&deltas[last + 1].base, base, UNION_BASE_SZ))
+ 		++last;
+ 	*first_index = first;
+ 	*last_index = last;
+@@ -312,7 +318,7 @@ static int compare_delta_entry(const voi
+ {
+ 	const struct delta_entry *delta_a = a;
+ 	const struct delta_entry *delta_b = b;
+-	return memcmp(&delta_a->base, &delta_b->base, sizeof(union delta_base));
++	return memcmp(&delta_a->base, &delta_b->base, UNION_BASE_SZ);
+ }
+ 
+ static void parse_pack_objects(void)
+
+
+Nicolas
