@@ -1,87 +1,78 @@
-From: Andreas Ericsson <ae@op5.se>
+From: Sean <seanlkml@sympatico.ca>
 Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 12:08:11 +0200
-Message-ID: <4534AB8B.8030505@op5.se>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>	 <200610170119.09066.jnareb@gmail.com> <45346290.6050300@utoronto.ca>	 <200610171120.09747.jnareb@gmail.com> <1161078035.9020.73.camel@localhost.localdomain>
+Date: Tue, 17 Oct 2006 06:23:13 -0400
+Message-ID: <BAYC1-PASMTP08A746E5FA6B87BC65BD37AE0E0@CEZ.ICE>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<egr3ud$nqm$1@sea.gmane.org>
+	<45340713.6000707@utoronto.ca>
+	<Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
+	<45345AEF.6070107@utoronto.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Aaron Bentley <aaron.bentley@utoronto.ca>,
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Jakub Narebski <jnareb@gmail.com>,
 	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 17 12:08:26 2006
+X-From: git-owner@vger.kernel.org Tue Oct 17 12:23:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZlrt-0004e9-8h
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 12:08:17 +0200
+	id 1GZm6R-0006sr-Q8
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 12:23:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161041AbWJQKIO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 06:08:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161047AbWJQKIO
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 06:08:14 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:61673 "EHLO
-	smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1161041AbWJQKIO
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Oct 2006 06:08:14 -0400
-Received: by smtp-gw1.op5.se (Postfix, from userid 588)
-	id B53A26BDE1; Tue, 17 Oct 2006 12:08:12 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
-	linux-server1.op5.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.1.4
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 8BC8D6BD2A; Tue, 17 Oct 2006 12:08:11 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-To: Robert Collins <robertc@robertcollins.net>
-In-Reply-To: <1161078035.9020.73.camel@localhost.localdomain>
+	id S1422676AbWJQKXQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 06:23:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161171AbWJQKXQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 06:23:16 -0400
+Received: from bayc1-pasmtp08.bayc1.hotmail.com ([65.54.191.168]:1339 "EHLO
+	BAYC1-PASMTP08.CEZ.ICE") by vger.kernel.org with ESMTP
+	id S1161169AbWJQKXP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Oct 2006 06:23:15 -0400
+X-Originating-IP: [65.93.43.81]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP08.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 17 Oct 2006 03:31:50 -0700
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with esmtp (Exim 4.43)
+	id 1GZlAH-0005K3-QH; Tue, 17 Oct 2006 05:23:13 -0400
+To: Aaron Bentley <aaron.bentley@utoronto.ca>
+Message-Id: <20061017062313.cd41e031.seanlkml@sympatico.ca>
+In-Reply-To: <45345AEF.6070107@utoronto.ca>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 17 Oct 2006 10:31:51.0093 (UTC) FILETIME=[7510B650:01C6F1D7]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29048>
 
-Robert Collins wrote:
-> On Tue, 2006-10-17 at 11:20 +0200, Jakub Narebski wrote:
->>           ---- time --->
->>
->>     --*--*--*--*--*--*--*--*--*-- <branch>
->>           \            /
->>            \-*--X--*--/
->>
->> The branch it used to be on is gone...
+On Tue, 17 Oct 2006 00:24:15 -0400
+Aaron Bentley <aaron.bentley@utoronto.ca> wrote:
+
+> The key thing about a checkout is that it's stored in a different
+> location from its repository.  This provides a few benefits:
 > 
-> In bzr 0.12 this is :
-> 2.1.2
-> 
+> - - you can publish a repository without publishing its working tree,
+>   possibly using standard mirroring tools like rsync.
 
-Would it be a different number in a different version of bazaar?
+Yeah, even in git you typically don't publish your working tree when
+making it available for cloning.  In fact the native git network
+protocol doesn't even have a way to transfer working trees.
 
-> (assuming the first * is numbered '1'.)
-> 
-> These numbers are fairly stable, in particular everything's number in
-> the mainline will be the same number in all the branches created from it
-> at that point in time, but a branch that initially creates a revision or
-> obtains it before the mainline will have a different number until they
-> syncronise with the mainline via pull.
-> 
+> - - you can have working trees on local systems while having the
+>   repository on a remote system.  This makes it easy to work on one
+>   logical branch from multiple locations, without getting out of sync.
 
-So basically anyone can pull/push from/to each other but only so long as 
-they decide upon a common master that handles synchronizing of the 
-number part of the url+number revision short-hands?
+That is a very nice feature.  Git would be improved if it could
+support that mode of operation as well.
 
-One thing that's been nagging me is how you actually find out the 
-url+number where the desired revision exists. That is, after you've 
-synced with master, or merged the mothership's master-branch into one of 
-your experimental branches where you've done some work that went before 
-mothership's master's current tip, do you have to have access to the 
-mothership's repo (as in, do you have to be online) to find out the 
-number part of url+number shorthand, or can you determine it solely from 
-what you have on your laptop?
+> - - you can use a checkout to maintain a local mirror of a read-only
+>   branch (I do this with http://bazaar-vcs.com/bzr/bzr.dev).
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+I'm not sure what you mean here.  A bzr checkout doesn't have any history
+does it?  So it's not a mirror of a branch, but just a checkout of the
+branch head?
+
+If so, Git can export a tarball of a branch (actually a snapshot as at
+any given commit) which can be mirrored out.
+
+Sean
