@@ -1,38 +1,39 @@
 From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: VCS comparison table
-Date: Mon, 16 Oct 2006 17:08:55 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610161704240.3962@g5.osdl.org>
+Date: Mon, 16 Oct 2006 17:23:43 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610161714590.3962@g5.osdl.org>
 References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
  <45340713.6000707@utoronto.ca> <Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
- <200610170155.10536.jnareb@gmail.com>
+ <200610170155.10536.jnareb@gmail.com> <Pine.LNX.4.63.0610170157270.14200@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Aaron Bentley <aaron.bentley@utoronto.ca>,
 	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 17 02:09:13 2006
+X-From: git-owner@vger.kernel.org Tue Oct 17 02:24:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZcW4-0007kj-NB
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 02:09:09 +0200
+	id 1GZckU-0001eP-GY
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 02:24:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422965AbWJQAJF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Oct 2006 20:09:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422966AbWJQAJF
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 20:09:05 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:39366 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1422965AbWJQAJE (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Oct 2006 20:09:04 -0400
+	id S1422977AbWJQAX5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Oct 2006 20:23:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422979AbWJQAX5
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 20:23:57 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:5067 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1422977AbWJQAX4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Oct 2006 20:23:56 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9H08vaX001305
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9H0NjaX002020
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 16 Oct 2006 17:08:57 -0700
+	Mon, 16 Oct 2006 17:23:46 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9H08uHT001335;
-	Mon, 16 Oct 2006 17:08:56 -0700
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200610170155.10536.jnareb@gmail.com>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9H0NhtO001765;
+	Mon, 16 Oct 2006 17:23:44 -0700
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0610170157270.14200@wbgn013.biozentrum.uni-wuerzburg.de>
 X-Spam-Status: No, hits=-0.473 required=5 tests=AWL
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
 X-MIMEDefang-Filter: osdl$Revision: 1.155 $
@@ -40,42 +41,68 @@ X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29003>
 
 
 
-On Tue, 17 Oct 2006, Jakub Narebski wrote:
-> > rewrites the part of your working tree that actually changed, so switching 
-> > is extremely efficient even with a large repo. 
+On Tue, 17 Oct 2006, Johannes Schindelin wrote:
+> > 
+> > Unless you have branch(es) with totally different contents, like git.git
+> > 'todo' branch.
 > 
-> Unless you have branch(es) with totally different contents, like git.git
-> 'todo' branch.
-
-Yes. I have to say, that's likely a fairly odd case, and I wouldn't be 
-surprised if other VCS's don't support that mode of operation at _all_.
-
-The fact that git branches can be independent of each other is very 
-natural in the git world, but 
-
-> > So there is seldom any real need or reason to actually have multiple 
-> > checkouts. But it certainly _works_.
+> But I _do_ work with it! I just don't need to "checkout" it! Example:
 > 
-> But without .git being either symlink, or .git/.gitdir "symref"-link,
-> you have to remember what to ser GIT_DIR to, or parameter for --git-dir
-> option.
+> git -p cat-file -p todo:TODO
 
-I'd strongly suggest that people who do this should actually do
+Ok, if there ever was an example of a strange git command-line, that was 
+it.
 
-	git clone -l
+> (How about making git-cat be a short cuut to "git -p cat-file -p"?)
 
-instead of actually playing games with symlinking .git/ itself or using 
-GIT_DIR. It means that the two checkouts get separate branch namespaces, 
-but that's really what you'd want most of the time. 
+Well, you can just add
 
-You _can_ share the whole branch namespace and do the symlink of .git (or 
-just set GIT_DIR - but that's pretty inconvenient), and it might end up 
-being "closer" to what some other VCS would do. But the natural thing to 
-do with git is to just share some of the objects through local "slaving" 
-of the repositories, and consider them otherwise entirely independent.
+	[alias]
+		cat=-p cat-file -p
 
-		Linus
+to your ~/.gitconfig file, and you're there.
+
+[ For all the non-git people here: the first "-p" is shorthand for 
+  "--paginate", and means that git will automatically start a pager for 
+  the output. The second "-p" is shorthand for "pretty" (there's no 
+  long-format command line switch for it, though), and means that git 
+  cat-file will show the result in a human-readable way, regardless of 
+  whether it's just a text-file, or a git directory ]
+
+So then you can do just
+
+	git cat todo:TODO
+
+and you're done.
+
+[ So for the non-git people, what that will actually _do_ is to show the 
+  TODO file in the "todo" branch - regardless of whether it is checked out 
+  or not, and start a pager for you. ]
+
+I actually do this sometimes, but I've never done it for branches (and I 
+do it seldom enough that I haven't added the alias). I do it for things 
+like
+
+	git cat v2.6.16:Makefile
+
+to see what a file looked like in a certain tagged release.
+
+People sometimes find the git command line confusing, but I have to say, 
+the thing is _damn_ expressive. I've never seen anybody else do things 
+like the above that git does really naturally, with not that much 
+confusion really.
+
+Even that "alias" file is quite readable, although I'd suggest writing out 
+the switches in full, ie
+
+	[alias]
+		cat=--paginate cat-file -p
+
+instead. That kind of helps explains what the alias does and avoids the 
+question of why there are two "-p" switches.
+
+			Linus
