@@ -1,79 +1,82 @@
-From: linux@horizon.com
+From: Sean <seanlkml@sympatico.ca>
 Subject: Re: VCS comparison table
-Date: 20 Oct 2006 04:43:18 -0400
-Message-ID: <20061020084318.9705.qmail@science.horizon.com>
-Cc: git@vger.kernel.org, linux@horizon.com
-X-From: git-owner@vger.kernel.org Fri Oct 20 10:43:35 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Date: Tue, 17 Oct 2006 19:18:38 -0400
+Message-ID: <20061017191838.1c36499b.seanlkml__27169.9432204061$1161334600$gmane$org@sympatico.ca>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<200610170119.09066.jnareb@gmail.com>
+	<45346290.6050300@utoronto.ca>
+	<200610171120.09747.jnareb@gmail.com>
+	<1161078035.9020.73.camel@localhost.localdomain>
+	<Pine.LNX.4.64.0610170921540.3962@g5.osdl.org>
+	<1161124078.9020.88.camel@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 10:56:34 2006
+Return-path: <bazaar-ng-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GapyN-00018z-Pb
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 10:43:27 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992594AbWJTInU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 04:43:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992595AbWJTInU
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 04:43:20 -0400
-Received: from science.horizon.com ([192.35.100.1]:43319 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S2992594AbWJTInU
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Oct 2006 04:43:20 -0400
-Received: (qmail 9706 invoked by uid 1000); 20 Oct 2006 04:43:18 -0400
-To: loki@research.canon.com.au
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29421>
+	id 1GaqB5-0003pb-Ii
+	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 10:56:31 +0200
+Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
+	id 1GapNM-0007lS-8P; Fri, 20 Oct 2006 09:05:08 +0100
+Received: from bayc1-pasmtp05.bayc1.hotmail.com ([65.54.191.165])
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <seanlkml@sympatico.ca>) id 1GZyCn-0003fl-96
+	for bazaar-ng@lists.canonical.com; Wed, 18 Oct 2006 00:18:42 +0100
+X-Originating-IP: [65.93.43.81]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.43.81]) by
+	BAYC1-PASMTP05.bayc1.hotmail.com over TLS secured channel with
+	Microsoft SMTPSVC(6.0.3790.1830); Tue, 17 Oct 2006 16:18:39 -0700
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with esmtp (Exim 4.43)
+	id 1GZxGg-0007XQ-F9; Tue, 17 Oct 2006 18:18:38 -0400
+To: Robert Collins <robertc@robertcollins.net>
+Message-Id: <20061017191838.1c36499b.seanlkml@sympatico.ca>
+In-Reply-To: <1161124078.9020.88.camel@localhost.localdomain>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 17 Oct 2006 23:18:39.0820 (UTC)
+	FILETIME=[946750C0:01C6F242]
+X-Mailman-Approved-At: Fri, 20 Oct 2006 09:04:04 +0100
+X-BeenThere: bazaar-ng@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
+List-Post: <mailto:bazaar-ng@lists.canonical.com>
+List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-ng-bounces@lists.canonical.com
+Errors-To: bazaar-ng-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29422>
 
-> I've been following the git-vs-bzr discussion, and I'd like to ask a
-> question (being new to both bzr and git). How does git disambiguate SHA1
-> hash collisions? I think git has an alternative way to name revisions
-> (can someone please explain it in more detail, I've seen <ref>~<n>
-> mentioned only in passing in this thread). It seems to me collisions are
-> a good argument in favour of having two independent naming schemes, so
-> that you're not solely relying on hashes being unique.
-> 
-> A strong argument is that a global namespace based on hashes of data is
-> ideal because the names are generated from the data being named, and
-> therefore are immutable. Same data => same name for that data, always
-> and forever, which is desirable when merging named data from many
-> sources. But the converse isn't true: one name does not necessarily map
-> to only that data. Have I misunderstood? Is this a problem?
+On Wed, 18 Oct 2006 08:27:58 +1000
+Robert Collins <robertc@robertcollins.net> wrote:
 
-Git avoids the problem by using a very large gryptographic hash.
-While recent cryptographic advances mean that it will soon be barely
-possible to deliberately construct two files with the same SHA hash,
-absent massivecomputational investment, it can be considered a truly
-random hash function.
+> Be as blunt as you want. You're expressing an opinion, and thats fine. I
+> happen to think that we're right : users appear to really appreciate
+> this bit of the UI, and I've not yet seen any evidence of confusion
+> about it - though I will admit there is the possibility of that
+> occurring.
 
-That means that, given N objects in the repository, there are N * (N-1)
-/ 2 pairs, each of which is a chance to collide.  The probability of
-having a collision is thus roughly N * (N-1) / 2^161.  Which doesn't
-reach 1/2 until N == 2^80.
+Yeah, but it's an opinion that is based on a huge real world project with
+hundreds of developers.  If Bazaar is ever used in a project of that
+size it may just see the same type of issues as Bk.  As has been mentioned
+elsewhere, Git users really appreciate the short forms it provides for
+referencing commits, so much so that there is no reason to invent a
+new (unstable) numbering system or attempt to hide the true underlying
+commit identities.
 
-Suppose a git repository has 100 objects added per second, continuously,
-until the Sun turns into a red giant and swallows the Earth in 5-6
-billion years' time (thus halting development).
+Just out of curiosity is there a Bazaar repo of the Linux kernel available
+somewhere?
 
-That will generate 2^64 objects in the repository, and the probability
-of there being a collison at that time is 2^128/2^161 = 2^-33, or 1 in
-8 billion, small enough to be negligible.
-
-For slightly more plausible repository sizes, the odds of having a
-problem are even more miniscule.
-
-And the benefits gained from having a completely deterministic
-data => name mapping are considerable, well worth running such
-a minisule risk of major problems.
-
-(There is a road map for conversion to the even larger SHA-256 if
-that ever proves necessary, but it's not likely to.)
-
-
-
-As for the <ref>~<n> syntax, see "man git-rev-parse".  The parent of <rev>
-is <rev>^.  If it has multiple parents, the othersare <rev>^2, <rev>^3, etc.
-
-<rev>^^^^ is the great-great-grandparent of the named rev, and may also
-be written <rev>~4.
+Sean
