@@ -1,137 +1,109 @@
-From: "Peter Baumann" <peter.baumann@gmail.com>
-Subject: Re: [PATCH] nice ftplugin for vim, that shows the commited diff in a split'ed buffer.
-Date: Tue, 17 Oct 2006 10:22:47 +0200
-Message-ID: <802d21790610170122j6191ba51l2c39d3bc6a3475b@mail.gmail.com>
-References: <11610450702261-git-send-email-madcoder@debian.org>
-	 <11610450701082-git-send-email-madcoder@debian.org>
+From: Martin Pool <mbp@sourcefrog.net>
+Subject: Re: VCS comparison table
+Date: Tue, 17 Oct 2006 18:21:59 +1000
+Message-ID: <20061017082159.GB5215@sourcefrog.net>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <egr3ud$nqm$1@sea.gmane.org> <45340713.6000707@utoronto.ca> <200610170119.09066.jnareb@gmail.com> <45346290.6050300@utoronto.ca> <20061017052019.GB21210@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 17 10:23:00 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 17 10:22:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZkDt-0003P8-OW
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 10:22:54 +0200
+	id 1GZkDy-0003QI-1x
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 10:22:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423154AbWJQIWu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 04:22:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423156AbWJQIWu
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 04:22:50 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:55276 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1423154AbWJQIWt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Oct 2006 04:22:49 -0400
-Received: by nf-out-0910.google.com with SMTP id c2so215155nfe
-        for <git@vger.kernel.org>; Tue, 17 Oct 2006 01:22:47 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IG6rvjsFdRB34vD+IpAXdVzwKZXz9uajKL6fMCc1cxQpY6HYwQe4AX+HqN0cE6BIe5Kxw8jUSMRjqkpEgAilcpc13KqCK90gYupvn8EhC6wuNgHbZ78DoO6d+FAv2LoDoLvcPCEGntQmGiL0HcJB4+2AielscKJ1FTwGdmdn5Ng=
-Received: by 10.78.94.37 with SMTP id r37mr9040547hub;
-        Tue, 17 Oct 2006 01:22:47 -0700 (PDT)
-Received: by 10.78.203.14 with HTTP; Tue, 17 Oct 2006 01:22:47 -0700 (PDT)
-To: "Pierre Habouzit" <madcoder@debian.org>
-In-Reply-To: <11610450701082-git-send-email-madcoder@debian.org>
+	id S1423156AbWJQIWz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 04:22:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423157AbWJQIWz
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 04:22:55 -0400
+Received: from ozlabs.org ([203.10.76.45]:48862 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S1423156AbWJQIWv (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 04:22:51 -0400
+Received: from hope.sourcefrog.net (ppp112-44.static.internode.on.net [150.101.112.44])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by ozlabs.org (Postfix) with ESMTP id 37B0167C4F;
+	Tue, 17 Oct 2006 18:22:50 +1000 (EST)
+Received: by hope.sourcefrog.net (Postfix, from userid 1000)
+	id 85E665C414; Tue, 17 Oct 2006 18:21:59 +1000 (EST)
+To: Shawn Pearce <spearce@spearce.org>
+Mail-Followup-To: Shawn Pearce <spearce@spearce.org>,
+	Aaron Bentley <aaron.bentley@utoronto.ca>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <20061017052019.GB21210@spearce.org>
+User-Agent: Mutt/1.5.12-2006-07-14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29034>
 
-2006/10/17, Pierre Habouzit <madcoder@debian.org>:
-> Signed-off-by: Pierre Habouzit <madcoder@debian.org>
-> ---
->  contrib/vim/README                 |    6 ++++
->  contrib/vim/ftplugin/gitcommit.vim |   61 ++++++++++++++++++++++++++++++++++++
->  2 files changed, 67 insertions(+), 0 deletions(-)
->
-> diff --git a/contrib/vim/README b/contrib/vim/README
-> index 9e7881f..26c1682 100644
-> --- a/contrib/vim/README
-> +++ b/contrib/vim/README
-> @@ -6,3 +6,9 @@ To syntax highlight git's commit message
->       $ cat >>$HOME/.vimrc <<'EOF'
->       autocmd BufNewFile,BufRead COMMIT_EDITMSG set filetype=gitcommit
->       EOF
-> +
-> +To use the fancy split-view with the currently commited diff, you need to:
-> +  1. Copy ftplugin/gitcommit.vim to vim's ftplugin directory:
-> +     $ mkdir -p $HOME/.vim/ftplugin
-> +     $ cp ftplugin/gitcommit.vim $HOME/.vim/ftplugin
-> +  2. Auto-detect the editing of git commit files (see above).
-> diff --git a/contrib/vim/ftplugin/gitcommit.vim b/contrib/vim/ftplugin/gitcommit.vim
-> new file mode 100644
-> index 0000000..f9efd59
-> --- /dev/null
-> +++ b/contrib/vim/ftplugin/gitcommit.vim
-> @@ -0,0 +1,61 @@
-> +if exists("b:did_ftplugin")
-> +  finish
-> +endif
-> +
-> +let b:did_ftplugin = 1
-> +
-> +setlocal tw=74
-> +setlocal nowarn nowb
-> +
-> +"{{{ function Git_diff_windows
-> +
-> +function! Git_diff_windows()
-> +    let i = 0
-> +    let list_of_files = ''
-> +
-> +    " drop everything until '#  (will commit)' and the next empty line
-> +    while i <= line('$')
-> +        let line = getline(i)
-> +        if line =~ '^#\s*(will commit)$'
-> +            let i = i + 2
-> +            break
-> +        endif
-> +
-> +        let i = i + 1
-> +    endwhile
-> +
-> +    " read file names until we have EOF or an empty line
-> +    while i <= line('$')
-> +        let line = getline(i)
-> +        if line =~ '^#\s*[a-z ]*:.*->.*$'
-> +            let file = substitute(line, '\v^#[^:]*:.*->\s*(.*)\s*$', '\1', '')
-> +            let list_of_files = list_of_files . ' '.file
-> +            let file = substitute(line, '\v^#[^:]*:\s*(.*)\s*->.*$', '\1', '')
-> +            let list_of_files = list_of_files . ' '.file
-> +        elseif line =~ '^#\s*[a-z ]*:'
-> +            let file = substitute(line, '\v^#[^:]*:\s*(.*)\s*$', '\1', '')
-> +            let list_of_files = list_of_files . ' '.file
-> +        elseif line =~ '^#\s*$'
-> +            break
-> +        endif
-> +
-> +        let i = i + 1
-> +    endwhile
-> +
-> +    if list_of_files == ""
-> +        return
-> +    endif
-> +
-> +    rightbelow vnew
+On 17 Oct 2006, Shawn Pearce <spearce@spearce.org> wrote:
+> Aaron Bentley <aaron.bentley@utoronto.ca> wrote:
+> > Jakub Narebski wrote:
+> > > One cannot have universally valid revision numbers (even
+> > > only per branch) in distributed development. Subversion can do that only
+> > > because it is centralized SCM. Global numbering and distributed nature
+> > > doesn't mix... hence contents based sha1 as commit identifiers.
+> > 
+> > Sure.  Our UI approach is that unique identifiers can usefully be
+> > abstracted away with a combination of URL + number, in the vast majority
+> > of cases.
+> 
+> But this only works when the URL is public.  In Git I can just lookup
+> the unique SHA1 for a revision in my private repository and toss it
+> into an email with a quick copy and paste.  
 
-I find it confusing that you split vertically, especially if I work in
- small terminals.
-I would prefere a horizontal split, thats why I changed it to the way
-to the way it is
-handled in the svn.vim commit case:
+Yes, but then people need to know how to get it out of your private
+repository.  For stuff that goes into well-known repositories I suppose
+it just propagates.
 
-below new
+> With Bazaar it sounds like I'd have to do that relative to some known
+> public repository, which just sounds like more work to me.
 
-> +    silent! setlocal ft=diff previewwindow bufhidden=delete nobackup noswf nobuflisted nowrap buftype=nofile
-> +    exe 'normal :r!LANG=C cd ..; git diff HEAD -- ' . list_of_files . "\n1Gdd"
-> +    exe 'normal :r!LANG=C cd ..; git diff HEAD -- ' . list_of_files . " \| git apply --stat\no\<esc>1GddO\<esc>"
+You can also name a revision using its UUID, in which case things will
+work similarly to git.  We tend to often say "in r1234 of dev".
 
-Why changing directory? I had to remove the cd .. to make it work. Otherwise
-git diff couldn't find the repository.
+> But I don't want to see this otherwise interesting thread devolve into
+> a "we do X better!" match so I'm not going to say anything further here.
 
-Greetings,
-  Peter
+Sure.
+
+> > > I wonder if any SCM other than git has easy way to "rebase" a branch,
+> > > i.e. cut branch at branching point, and transplant it to the tip
+> > > of other branch. For example you work on 'xx/topic' topic branch,
+> > > and want to have changes in those branch but applied to current work,
+> > > not to the version some time ago when you have started working on
+> > > said feature.
+> > 
+> > If I understand correctly, in Bazaar, you'd just merge the current work
+> > into 'xx/topic'.
+> 
+> Git has two approaches:
+> 
+>  - merge: The two independent lines of development are merged
+>    together under a new single graph node.  This is a merge commit
+>    and has two parent pointers, one for each independent line of
+>    development which was combined into one.  Up to 16 independent
+>    lines can be merged at once, though 12 is the record.
+> 
+>  - rebase: The commits from one line of development are replayed
+>    onto a totally different line of development.  This is often
+>    used to reapply your changes onto the upstream branch after the
+>    upstream has changed but before you send your changes upstream.
+>    It can often generate more readable commit history.
+> 
+> I believe what you are talking about in Bazaar is the former (merge)
+> while what Jakub was talking about was the latter (rebase).
+
+For the 'rebase' operation in Bazaar you can use 'bzr graft':
+
+  http://spacepants.org/src/bzrgraft/
+
+-- 
+Martin
