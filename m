@@ -1,49 +1,39 @@
-From: Robert Collins <robertc@robertcollins.net>
+From: Aaron Bentley <aaron.bentley@utoronto.ca>
 Subject: Re: VCS comparison table
-Date: Wed, 18 Oct 2006 08:27:58 +1000
-Message-ID: <1161124078.9020.88.camel@localhost.localdomain>
+Date: Tue, 17 Oct 2006 18:28:28 -0400
+Message-ID: <4535590C.4000004@utoronto.ca>
 References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<200610170119.09066.jnareb@gmail.com> <45346290.6050300@utoronto.ca>
-	<200610171120.09747.jnareb@gmail.com>
-	<1161078035.9020.73.camel@localhost.localdomain>
-	<Pine.LNX.4.64.0610170921540.3962@g5.osdl.org>
+	<200610172301.27101.jnareb@gmail.com>
+	<45354AD0.1020107@utoronto.ca>
+	<200610172351.17377.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature";
-	boundary="=-na+JGVOdb3I7Ra+ewo9f"
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: bazaar-ng-bounces@lists.canonical.com Wed Oct 18 00:28:41 2006
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+X-From: bazaar-ng-bounces@lists.canonical.com Wed Oct 18 00:28:42 2006
 Return-path: <bazaar-ng-bounces@lists.canonical.com>
 Envelope-to: gcvbg-bazaar-ng@m.gmane.org
 Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZxQF-0002IR-Vw
-	for gcvbg-bazaar-ng@m.gmane.org; Wed, 18 Oct 2006 00:28:32 +0200
+	id 1GZxQP-0002L6-D6
+	for gcvbg-bazaar-ng@m.gmane.org; Wed, 18 Oct 2006 00:28:41 +0200
 Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
 	by esperanza.ubuntu.com with esmtp (Exim 4.60)
 	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GZxPw-0001He-JB; Tue, 17 Oct 2006 23:28:12 +0100
-Received: from smtp3.adl2.internode.on.net ([203.16.214.203])
+	id 1GZxQO-0001KV-MQ; Tue, 17 Oct 2006 23:28:40 +0100
+Received: from server4.panoramicfeedback.com ([66.216.124.41])
 	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <robertc@robertcollins.net>) id 1GZxPk-0001H3-L6
-	for bazaar-ng@lists.canonical.com; Tue, 17 Oct 2006 23:28:03 +0100
-Received: from lifelesswks.robertcollins.net
-	(ppp245-86.static.internode.on.net [59.167.245.86])
-	by smtp3.adl2.internode.on.net (8.13.6/8.13.5) with ESMTP id
-	k9HMRsA7037768; Wed, 18 Oct 2006 07:57:54 +0930 (CST)
-	(envelope-from robertc@robertcollins.net)
-Received: from [192.168.1.5] (helo=lifelesslap.robertcollins.net)
-	by lifelesswks.robertcollins.net with esmtpa (Exim 4.60)
-	(envelope-from <robertc@robertcollins.net>)
-	id 1GZxPe-0004eL-9K; Wed, 18 Oct 2006 08:27:54 +1000
-Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
-	by lifelesslap.robertcollins.net with esmtp (Exim 4.60)
-	(envelope-from <robertc@robertcollins.net>)
-	id 1GZxPj-0007mz-4N; Wed, 18 Oct 2006 08:27:59 +1000
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0610170921540.3962@g5.osdl.org>
-X-Mailer: Evolution 2.6.1 
+	(envelope-from <aaron.bentley@utoronto.ca>) id 1GZxQK-0001KL-92
+	for bazaar-ng@lists.canonical.com; Tue, 17 Oct 2006 23:28:36 +0100
+Received: from server4.panoramicfeedback.com ([66.216.124.41] helo=[127.0.0.1])
+	by server4.panoramicfeedback.com with esmtp (Exim 3.36 #1 (Debian))
+	id 1GZxQF-0004xW-00; Tue, 17 Oct 2006 18:28:31 -0400
+User-Agent: Thunderbird 1.5.0.7 (X11/20060922)
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200610172351.17377.jnareb@gmail.com>
+X-Enigmail-Version: 0.94.0.0
+X-Panometrics-MailScanner: Found to be clean
 X-BeenThere: bazaar-ng@lists.canonical.com
 X-Mailman-Version: 2.1.8
 Precedence: list
@@ -57,78 +47,85 @@ List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
 	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
 Sender: bazaar-ng-bounces@lists.canonical.com
 Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29126>
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
---=-na+JGVOdb3I7Ra+ewo9f
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+Jakub Narebski wrote:
+> Aaron Bentley wrote:
 
-On Tue, 2006-10-17 at 09:41 -0700, Linus Torvalds wrote:
->=20
-> On Tue, 17 Oct 2006, Robert Collins wrote:
->=20
-> > On Tue, 2006-10-17 at 11:20 +0200, Jakub Narebski wrote:
-> > >=20
-> > >           ---- time --->
-> > >=20
-> > >     --*--*--*--*--*--*--*--*--*-- <branch>
-> > >           \            /
-> > >            \-*--X--*--/
-> > >=20
-> > > The branch it used to be on is gone...
-> >=20
-> > In bzr 0.12 this is :
-> > 2.1.2
-> >=20
-> > (assuming the first * is numbered '1'.)
-> >=20
-> > These numbers are fairly stable
->=20
-> And here, by "fairly stable", you really mean "totally idiotic", don't=20
-> you?
->=20
-> Guys, let's be blunt here, and just say you're wrong. The fact is, I've=20
-> used a system that uses the same naming bzr does, and I've used it likely=
-=20
-> longer and with a bigger project than anybody has likely _ever_ used bzr=20
-> for.
->=20
-> It sounds like bzr is doing _exactly_ what bitkeeper did.=20
->=20
-> Those "simple" numbers are totally idiotic. And when I say "totally=20
-> idiotic", please go back up a few sentences, and read those again. I know=
-=20
-> what I'm talking about. I know probably better than anybody in the bzr=20
-> camp.
+>> What is the bad side of using merge in this situation?
+> 
+> We want linear history, not polluted by merges. For example you cannot
+> send merge commit via email.
 
-Be as blunt as you want. You're expressing an opinion, and thats fine. I
-happen to think that we're right : users appear to really appreciate
-this bit of the UI, and I've not yet seen any evidence of confusion
-about it - though I will admit there is the possibility of that
-occurring.
+Oh.  Bazaar supports sending merge commits by email.
 
-I think its completely ok that git and bzr have made different choices
-in this regard, but I *dont* think our choice is in any regard 'totally
-idiotic'.
+> Another problem is that you want to
+> send _series_ of patches, string of commits (revisions), creating feature
+> part by part, with clean history; with merge you get _final result_
+> which will apply cleanly, with rebase you would get that series
+> of patches will apply cleanly.
 
-[snip examples that are clearly predicated on how bk worked, not on how
-bzr works].
+Yes, that's something that I'd heard about the kernel development
+methodology-- that a series of small patches is preferred to one patch
+that makes the whole change.
 
--Rob
---=20
-GPG key available at: <http://www.robertcollins.net/keys.txt>.
+That's not the way we operate.  We like to review all the changes at
+once.  But because bundles are applied with a 'merge' command, not a
+'patch' command, an old bundle will tend to apply more cleanly than an
+old patch would.
 
---=-na+JGVOdb3I7Ra+ewo9f
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
+> I smell yet another terminology conflict (although this time fault is
+> on the git side), namely that in git terminology "pull" is "fetch"
+> (i.e. getting changes done in remote repository since laste "fetch"
+> or since "clone") followed by merge. pull = fetch + merge.
 
+I guess so, since git merge will do fast-forward after a fetch.
+
+>> and more.  Because Python supports monkey-patching, a plugin can change
+>> absolutely anything.
+> 
+> Which is _not_ a good idea. Git is created in such way, that the repository
+> is abstracted away (introduction of pack format, and improving pack format
+> can and was done "behind the scenes", not changing any porcelanish (user)
+> commands), but we don't want any chage that would change this abstraction.
+
+I'm not sure what you think Bazaar does.  In Bazaar, a repository format
+plugin  implements the same API that a native repository format does.
+
+This is how bzr supports Subversion, Mercurial and Git repositories.
+
+> Changing repository format is not a good idea for "dumb" protocols; 
+
+I can't parse this.  Repository formats and protocols are different
+things, right?
+
+> native
+> protocol is quite extensible
+
+I was meaning dumb protocol extension.  I can't say how extensible the
+bzr native protocol is.
+> Adding
+> cURL based FTP read-only support to existing HTTP support was a matter
+> of few lines, if I remember correctly.
+
+We support read and write over native, ftp and WebDAV (a plugin).  We
+also have readonly http support.
+
+> Besides, if monkey-patching is something akin to advices, I guess that
+> performance might suffer.
+
+No, monkey-patched code executes at the same speed as unpatched code.
+There are arguments against monkey-patching, but speed is not one of them.
+
+Aaron
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.2.2 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
-iD8DBQBFNVjuM4BfeEKYx2ERAoluAJ9AdoRsQOXe6sKv6JUMFGp3rJ+JnQCePd7+
-g7uxYNYuvrITeAch1hag4cQ=
-=3HTU
+iD8DBQFFNVkM0F+nu1YWqI0RAjCaAJwOcWSUdVy7RpUZROJVxAC9aj/V/wCfUg0T
+uHkdc9k6i+v0QnhEvTXdszM=
+=YO8G
 -----END PGP SIGNATURE-----
-
---=-na+JGVOdb3I7Ra+ewo9f--
