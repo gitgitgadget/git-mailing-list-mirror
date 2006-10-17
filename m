@@ -1,64 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Don't use $author_name undefined when $from contains no /\s</.
-Date: Fri, 20 Oct 2006 00:52:34 -0700
-Message-ID: <7vhcxzpgot.fsf@assigned-by-dhcp.cox.net>
-References: <87vemgn1s2.fsf@rho.meyering.net>
-	<7vbqo8uvkn.fsf@assigned-by-dhcp.cox.net>
-	<878xjckw7x.fsf@rho.meyering.net>
-	<7vk62wruum.fsf@assigned-by-dhcp.cox.net>
-	<87fydkj8q1.fsf@penguin.cs.ucla.edu>
-	<7vr6x4q9b6.fsf@assigned-by-dhcp.cox.net>
-	<87pscnj29t.fsf@penguin.cs.ucla.edu>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: VCS comparison table
+Date: Tue, 17 Oct 2006 06:01:12 -0400
+Message-ID: <20061017060112.2d036f96.seanlkml__10841.6940704503$1161331464$gmane$org@sympatico.ca>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<egr3ud$nqm$1@sea.gmane.org> <45340713.6000707@utoronto.ca>
+	<200610170119.09066.jnareb@gmail.com>
+	<1161077866.9020.69.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 20 09:52:46 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 10:04:22 2006
+Return-path: <bazaar-ng-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GapBH-0000Hx-Qk
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 09:52:40 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992553AbWJTHwg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 03:52:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992556AbWJTHwg
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 03:52:36 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:30354 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S2992553AbWJTHwf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Oct 2006 03:52:35 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061020075235.VSTJ22977.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 20 Oct 2006 03:52:35 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id cXsL1V0081kojtg0000000
-	Fri, 20 Oct 2006 03:52:21 -0400
-To: Paul Eggert <eggert@CS.UCLA.EDU>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29413>
+	id 1GapMV-0002TS-Sg
+	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 10:04:15 +0200
+Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
+	id 1GapMO-0007VG-07; Fri, 20 Oct 2006 09:04:08 +0100
+Received: from bayc1-pasmtp07.bayc1.hotmail.com ([65.54.191.167]
+	helo=BAYC1-PASMTP07.CEZ.ICE)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <seanlkml@sympatico.ca>) id 1GZll5-0000v7-Td
+	for bazaar-ng@lists.canonical.com; Tue, 17 Oct 2006 11:01:18 +0100
+X-Originating-IP: [65.93.43.81]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP07.CEZ.ICE
+	over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830); 
+	Tue, 17 Oct 2006 03:06:59 -0700
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with esmtp (Exim 4.43)
+	id 1GZkoz-0005Ft-2i; Tue, 17 Oct 2006 05:01:13 -0400
+To: Robert Collins <robertc@robertcollins.net>
+Message-Id: <20061017060112.2d036f96.seanlkml@sympatico.ca>
+In-Reply-To: <1161077866.9020.69.camel@localhost.localdomain>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 17 Oct 2006 10:06:59.0843 (UTC)
+	FILETIME=[FC360530:01C6F1D3]
+X-Mailman-Approved-At: Fri, 20 Oct 2006 09:04:03 +0100
+X-BeenThere: bazaar-ng@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
+List-Post: <mailto:bazaar-ng@lists.canonical.com>
+List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-ng-bounces@lists.canonical.com
+Errors-To: bazaar-ng-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29414>
 
-Paul Eggert <eggert@CS.UCLA.EDU> writes:
+On Tue, 17 Oct 2006 19:37:45 +1000
+Robert Collins <robertc@robertcollins.net> wrote:
 
-> Since git uses diff -u format, it would make sense to git to work with
-> the upcoming POSIX spec for diff -u, either by adjusting the spec or
-> by adjusting git.
+> Precisely how does this rebase operate in git ? 
+> Does it preserve revision ids for the existing work, or do they all
+> change?
+> 
+> bzr has a graft plugin which walks one branch applying all its changes
+> to another preserving the users metadata but changing the uuids for
+> revisions. 
 
-It is not quite fair to talk as if I still have a choice.
+git rebase does exactly the same as you describe, including changing
+the sha1 for each commit it moves.
 
-Apparently a version of GNU diff that generates new format is
-already in the wild (I've received such a patch which was where
-this thread started).  Whether I like your change or not, the
-damage is already done and its output needs to be dealt with, so
-that we do not break users.
-
-Coding a workaround is not a big deal; the change is simple and
-trivial.  It's just I am somewhat unhappy, having to do a .1
-release immediately after v1.4.3 which took about two months to
-stabilize, although that's not your fault.  Sorry for venting.
+Sean
