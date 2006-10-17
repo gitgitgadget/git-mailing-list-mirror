@@ -1,172 +1,81 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] nice ftplugin for vim, that shows the commited diff in a split'ed buffer.
-Date: Tue, 17 Oct 2006 12:38:02 +0200
-Organization: Polytechnique.org
-Message-ID: <200610171238.04372.madcoder@debian.org>
-References: <11610450702261-git-send-email-madcoder@debian.org> <11610450701082-git-send-email-madcoder@debian.org> <802d21790610170122j6191ba51l2c39d3bc6a3475b@mail.gmail.com>
+From: Matthias Kestenholz <lists@spinlock.ch>
+Subject: Re: VCS comparison table
+Date: Tue, 17 Oct 2006 12:45:33 +0200
+Message-ID: <1161081933.26677.35.camel@localhost.localdomain>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	 <egr3ud$nqm$1@sea.gmane.org> <45340713.6000707@utoronto.ca>
+	 <Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
+	 <45345AEF.6070107@utoronto.ca>
+	 <BAYC1-PASMTP08A746E5FA6B87BC65BD37AE0E0@CEZ.ICE>
+	 <Pine.LNX.4.63.0610171229160.14200@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart6687004.dqHsB5XBZL";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 17 12:38:18 2006
+Cc: Sean <seanlkml@sympatico.ca>,
+	Aaron Bentley <aaron.bentley@utoronto.ca>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 17 12:45:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZmKq-0000vG-Ep
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 12:38:14 +0200
+	id 1GZmS8-00022o-9i
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 12:45:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161189AbWJQKiJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 06:38:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161206AbWJQKiI
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 06:38:08 -0400
-Received: from mx1.polytechnique.org ([129.104.30.34]:16537 "EHLO
-	mx1.polytechnique.org") by vger.kernel.org with ESMTP
-	id S1161189AbWJQKiH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Oct 2006 06:38:07 -0400
-Received: from mad.intersec.eu (beacon-free1.intersec.eu [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by ssl.polytechnique.org (Postfix) with ESMTP id 10E093318A;
-	Tue, 17 Oct 2006 12:38:06 +0200 (CEST)
-To: "Peter Baumann" <peter.baumann@gmail.com>
-User-Agent: KMail/1.9.5
-In-Reply-To: <802d21790610170122j6191ba51l2c39d3bc6a3475b@mail.gmail.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-X-AV-Checked: ClamAV using ClamSMTP at djali.polytechnique.org (Tue Oct 17 12:38:06 2006 +0200 (CEST))
-X-DCC-xorg-Metrics: djali 32702; Body=3 Fuz1=3 Fuz2=3
-X-Spam-Flag: No, tests=bogofilter, spamicity=0.000002, queueID=3F90933228
-X-Org-Mail: pierre.habouzit.2000@polytechnique.org
+	id S1161229AbWJQKpl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 06:45:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161218AbWJQKpl
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 06:45:41 -0400
+Received: from elephant.oekohosting.ch ([80.74.144.79]:7826 "EHLO
+	elephant.oekohosting.ch") by vger.kernel.org with ESMTP
+	id S1161234AbWJQKpk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Oct 2006 06:45:40 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by elephant.oekohosting.ch (Postfix) with ESMTP id AB2D962C147;
+	Tue, 17 Oct 2006 12:45:34 +0200 (CEST)
+Received: from elephant.oekohosting.ch ([127.0.0.1])
+	by localhost (elephant.oekohosting.ch [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 22040-01; Tue, 17 Oct 2006 12:45:31 +0200 (CEST)
+Received: from [192.168.1.7] (133.50.76.83.cust.bluewin.ch [83.76.50.133])
+	by elephant.oekohosting.ch (Postfix) with ESMTP id DC67662C074;
+	Tue, 17 Oct 2006 12:45:29 +0200 (CEST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0610171229160.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: Evolution 2.8.1 
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29054>
 
---nextPart6687004.dqHsB5XBZL
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Hi,
 
-Le mar 17 octobre 2006 10:22, Peter Baumann a =C3=A9crit :
-> 2006/10/17, Pierre Habouzit <madcoder@debian.org>:
-> > Signed-off-by: Pierre Habouzit <madcoder@debian.org>
-> > ---
-> >  contrib/vim/README                 |    6 ++++
-> >  contrib/vim/ftplugin/gitcommit.vim |   61
-> > ++++++++++++++++++++++++++++++++++++ 2 files changed, 67
-> > insertions(+), 0 deletions(-)
-> >
-> > diff --git a/contrib/vim/README b/contrib/vim/README
-> > index 9e7881f..26c1682 100644
-> > --- a/contrib/vim/README
-> > +++ b/contrib/vim/README
-> > @@ -6,3 +6,9 @@ To syntax highlight git's commit message
-> >       $ cat >>$HOME/.vimrc <<'EOF'
-> >       autocmd BufNewFile,BufRead COMMIT_EDITMSG set
-> > filetype=3Dgitcommit EOF
-> > +
-> > +To use the fancy split-view with the currently commited diff, you
-> > need to: +  1. Copy ftplugin/gitcommit.vim to vim's ftplugin
-> > directory: +     $ mkdir -p $HOME/.vim/ftplugin
-> > +     $ cp ftplugin/gitcommit.vim $HOME/.vim/ftplugin
-> > +  2. Auto-detect the editing of git commit files (see above).
-> > diff --git a/contrib/vim/ftplugin/gitcommit.vim
-> > b/contrib/vim/ftplugin/gitcommit.vim new file mode 100644
-> > index 0000000..f9efd59
-> > --- /dev/null
-> > +++ b/contrib/vim/ftplugin/gitcommit.vim
-> > @@ -0,0 +1,61 @@
-> > +if exists("b:did_ftplugin")
-> > +  finish
-> > +endif
-> > +
-> > +let b:did_ftplugin =3D 1
-> > +
-> > +setlocal tw=3D74
-> > +setlocal nowarn nowb
-> > +
-> > +"{{{ function Git_diff_windows
-> > +
-> > +function! Git_diff_windows()
-> > +    let i =3D 0
-> > +    let list_of_files =3D ''
-> > +
-> > +    " drop everything until '#  (will commit)' and the next empty
-> > line +    while i <=3D line('$')
-> > +        let line =3D getline(i)
-> > +        if line =3D~ '^#\s*(will commit)$'
-> > +            let i =3D i + 2
-> > +            break
-> > +        endif
-> > +
-> > +        let i =3D i + 1
-> > +    endwhile
-> > +
-> > +    " read file names until we have EOF or an empty line
-> > +    while i <=3D line('$')
-> > +        let line =3D getline(i)
-> > +        if line =3D~ '^#\s*[a-z ]*:.*->.*$'
-> > +            let file =3D substitute(line,
-> > '\v^#[^:]*:.*->\s*(.*)\s*$', '\1', '') +            let
-> > list_of_files =3D list_of_files . ' '.file
-> > +            let file =3D substitute(line,
-> > '\v^#[^:]*:\s*(.*)\s*->.*$', '\1', '') +            let
-> > list_of_files =3D list_of_files . ' '.file
-> > +        elseif line =3D~ '^#\s*[a-z ]*:'
-> > +            let file =3D substitute(line, '\v^#[^:]*:\s*(.*)\s*$',
-> > '\1', '') +            let list_of_files =3D list_of_files . ' '.file
-> > +        elseif line =3D~ '^#\s*$'
-> > +            break
-> > +        endif
-> > +
-> > +        let i =3D i + 1
-> > +    endwhile
-> > +
-> > +    if list_of_files =3D=3D ""
-> > +        return
-> > +    endif
-> > +
-> > +    rightbelow vnew
->
-> I find it confusing that you split vertically, especially if I work
-> in small terminals.
-> I would prefere a horizontal split, thats why I changed it to the way
-> to the way it is
-> handled in the svn.vim commit case:
->
-> below new
->
-> > +    silent! setlocal ft=3Ddiff previewwindow bufhidden=3Ddelete
-> > nobackup noswf nobuflisted nowrap buftype=3Dnofile +    exe 'normal
-> > :r!LANG=3DC cd ..; git diff HEAD -- ' . list_of_files . "\n1Gdd" +  =20
-> > exe 'normal :r!LANG=3DC cd ..; git diff HEAD -- ' . list_of_files . "
-> > \| git apply --stat\no\<esc>1GddO\<esc>"
->
-> Why changing directory? I had to remove the cd .. to make it work.
-> Otherwise git diff couldn't find the repository.
+On Tue, 2006-10-17 at 12:30 +0200, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Tue, 17 Oct 2006, Sean wrote:
+> 
+> > On Tue, 17 Oct 2006 00:24:15 -0400
+> > Aaron Bentley <aaron.bentley@utoronto.ca> wrote:
+> > 
+> > > - - you can have working trees on local systems while having the
+> > >   repository on a remote system.  This makes it easy to work on one
+> > >   logical branch from multiple locations, without getting out of sync.
+> > 
+> > That is a very nice feature.  Git would be improved if it could
+> > support that mode of operation as well.
+> 
+> It would also make things slow as hell. How do you deal with something 
+> like annotate in such a setup?
 
-because for me, wherever I'm from, the cwd is .git/ but it's maybe due=20
-to the fact that I use autochdir, I don't know.
+You'd probably have to do all processing server-side (git log, blame,
+merges... like in subversion, where you can merge and rename/move files
+remotely, IIRC). Of course, all the things which make git really useful
+for me (gitk, git log with all its arguments etc.) would not be
+available. Cheap checkouts would be made possible easily that way at the
+cost of higher server load and an abstraction layer over network for
+object access.
 
-=2D-=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+I don't know if that sounds reasonable at all.
 
---nextPart6687004.dqHsB5XBZL
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iD8DBQBFNLKMvGr7W6HudhwRAvsUAJ4/hv3Q1/Oe9CiB2on0D1uVJQCUJACdHLhO
-jKvDvKQHjBPNnIAvAym8EDg=
-=8Wcy
------END PGP SIGNATURE-----
-
---nextPart6687004.dqHsB5XBZL--
+	Matthias
