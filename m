@@ -1,85 +1,71 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Petr Baudis <pasky@suse.cz>
 Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 16:50:22 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610171642480.3962@g5.osdl.org>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
- <Pine.LNX.4.64.0610171448150.3962@g5.osdl.org> <45355EEE.3060105@utoronto.ca>
- <200610180124.28048.jnareb@gmail.com>
+Date: Wed, 18 Oct 2006 01:33:05 +0200
+Message-ID: <20061017233305.GG20017@pasky.or.cz>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <200610170119.09066.jnareb@gmail.com> <45346290.6050300@utoronto.ca> <200610171120.09747.jnareb@gmail.com> <1161078035.9020.73.camel@localhost.localdomain> <Pine.LNX.4.64.0610170921540.3962@g5.osdl.org> <1161124078.9020.88.camel@localhost.localdomain> <20061017191838.1c36499b.seanlkml@sympatico.ca>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
-	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 18 02:14:18 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Robert Collins <robertc@robertcollins.net>,
+	Linus Torvalds <torvalds@osdl.org>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 18 02:14:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZz4X-00033K-ME
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 02:14:14 +0200
+	id 1GZz4Z-00033K-CW
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 02:14:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751182AbWJQXuq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 19:50:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751172AbWJQXuq
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 19:50:46 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:30944 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751182AbWJQXup (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 19:50:45 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9HNoPaX009717
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 17 Oct 2006 16:50:26 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9HNoNmJ011360;
-	Tue, 17 Oct 2006 16:50:24 -0700
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200610180124.28048.jnareb@gmail.com>
-X-Spam-Status: No, hits=-0.473 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751109AbWJQXdK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 19:33:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751117AbWJQXdJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 19:33:09 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:58310 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751109AbWJQXdI (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 19:33:08 -0400
+Received: (qmail 7313 invoked by uid 2001); 18 Oct 2006 01:33:05 +0200
+To: Sean <seanlkml@sympatico.ca>
+Content-Disposition: inline
+In-Reply-To: <20061017191838.1c36499b.seanlkml@sympatico.ca>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29143>
 
-
-
-On Wed, 18 Oct 2006, Jakub Narebski wrote:
+Dear diary, on Wed, Oct 18, 2006 at 01:18:38AM CEST, I got a letter
+where Sean <seanlkml@sympatico.ca> said that...
+> On Wed, 18 Oct 2006 08:27:58 +1000
+> Robert Collins <robertc@robertcollins.net> wrote:
 > 
-> Merge commit in fast-forward case is only marking "here we did a pull"
-> (here we downloaded from other repository). It is just a marker which
-> place is in reflog, not in history. It is only cluttering history.
+> > Be as blunt as you want. You're expressing an opinion, and thats fine. I
+> > happen to think that we're right : users appear to really appreciate
+> > this bit of the UI, and I've not yet seen any evidence of confusion
+> > about it - though I will admit there is the possibility of that
+> > occurring.
+> 
+> Yeah, but it's an opinion that is based on a huge real world project with
+> hundreds of developers.  If Bazaar is ever used in a project of that
+> size it may just see the same type of issues as Bk.  As has been mentioned
+> elsewhere, Git users really appreciate the short forms it provides for
+> referencing commits, so much so that there is no reason to invent a
+> new (unstable) numbering system or attempt to hide the true underlying
+> commit identities.
 
-For non-git people (and maybe even git people who didn't follow some of 
-the "reflog" work):
+BTW, I think it's fine to build a system optimized for small-scale
+projects (if that's the intent), simplifying some things in favour of
+mostly straight histories instead of more complicated merge situations
+(although I tend to agree with Linus that if you don't behave in the way
+the users are used to in 100% cases, the more frequently you behave so
+the worse it comes back to bite in the rare cases you do). Just as RCS
+is fine when maintaining individual files for personal usage (I still
+actually occassionaly use it for few files).
 
- - git does actually have "local view" support, but it is very much 
-   _defined_ to be local. It does not pollute any history as seen by 
-   anybody else. It's called "reflog" (where "ref" is just the git name 
-   for any reference into a tree, and the "log" part is hopefully obvious)
-
-So each git repository can have (if you enable it) a full log of all the 
-changes to each branch. But it's not in the core git datastructures that 
-get replicated - because the local view of how the branches have changed 
-really _is_ just a local view. It's just a local log to each repository 
-(actually, one per branch).
-
-It's what allows a git person to say
-
-	git diff "master@{5.hours.ago}"
-
-because while "5 hours ago" is _not_ well-defined in a distributed 
-environment (five hours ago for _whom_?) it's perfectly well-defined in a 
-purely _local_ sense of one particular branch.
-
-So there's no need for a fakey "merge" that isn't a real merge and that 
-doesn't make sense for anybody else because it doesn't actually add any 
-real knowledge about the _history_ of the tree (only about a single 
-repository). If you want to see how the history of a particular repository 
-has evolved, you can just look at the reflog (although admittedly, common 
-tools like "gitk" don't even show it - the data is there if they would 
-want to, but the most common usage is the above kind of "show me what 
-happened in the last five hours in my current branch".
-
-			Linus
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
