@@ -1,102 +1,82 @@
-From: Aaron Bentley <aaron.bentley@utoronto.ca>
-Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 17:27:44 -0400
-Message-ID: <45354AD0.1020107@utoronto.ca>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<45349162.90001@op5.se> <453536AE.6060601@utoronto.ca>
-	<200610172301.27101.jnareb@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: heads-up: git-index-pack in "next" is broken
+Date: Tue, 17 Oct 2006 14:46:04 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610171440080.3962@g5.osdl.org>
+References: <7vy7rfsfqa.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610171134130.1971@xanadu.home> <7vslhnj58e.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610171251210.1971@xanadu.home> <7vbqoake1v.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610171437250.1971@xanadu.home> <20061017233630.72a0aae5.vsu@altlinux.ru>
+ <Pine.LNX.4.64.0610171615340.1971@xanadu.home> <Pine.LNX.4.64.0610171339030.3962@g5.osdl.org>
+ <Pine.LNX.4.64.0610171706260.1971@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sergey Vlasov <vsu@altlinux.ru>, Junio C Hamano <junkio@cox.net>,
 	git@vger.kernel.org
-X-From: bazaar-ng-bounces@lists.canonical.com Tue Oct 17 23:28:51 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+X-From: git-owner@vger.kernel.org Tue Oct 17 23:47:21 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZwUV-0007qH-B4
-	for gcvbg-bazaar-ng@m.gmane.org; Tue, 17 Oct 2006 23:28:51 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GZwUK-0005XF-3B; Tue, 17 Oct 2006 22:28:40 +0100
-Received: from server4.panoramicfeedback.com ([66.216.124.41])
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <aaron.bentley@utoronto.ca>) id 1GZwUB-0005Wa-PH
-	for bazaar-ng@lists.canonical.com; Tue, 17 Oct 2006 22:28:34 +0100
-Received: from server4.panoramicfeedback.com ([66.216.124.41]
-	helo=[192.168.2.19])
-	by server4.panoramicfeedback.com with esmtp (Exim 3.36 #1 (Debian))
-	id 1GZwU1-0004P0-00; Tue, 17 Oct 2006 17:28:26 -0400
-User-Agent: Debian Thunderbird 1.0.2 (X11/20060830)
-X-Accept-Language: en-us, en
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200610172301.27101.jnareb@gmail.com>
-X-Enigmail-Version: 0.91.0.0
-X-Panometrics-MailScanner: Found to be clean
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29117>
+	id 1GZwlP-0002mU-Lv
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 23:46:20 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1750911AbWJQVqQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 17:46:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750900AbWJQVqQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 17:46:16 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:62134 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750898AbWJQVqP (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 17:46:15 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9HLk5aX003084
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 17 Oct 2006 14:46:06 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9HLk4xQ006915;
+	Tue, 17 Oct 2006 14:46:04 -0700
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0610171706260.1971@xanadu.home>
+X-Spam-Status: No, hits=-0.474 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29118>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Jakub Narebski wrote:
->>Ah, now I see what you mean, and the "graft" plugin mentioned by others
->>fills that role.  I've never used it, though.
+
+On Tue, 17 Oct 2006, Nicolas Pitre wrote:
 > 
+> Because offsets into packs are expressed as unsigned long everywhere 
+> else (except in the current pack index on-disk format).
+
+Until your work, that "unsigned long" was totally just an internal thing 
+that didn't actually bleed into anything else.
+
+> > For some structure like this, it sounds positively wrong. Pack-files 
+> > should be architecture-neutral, which means that they shouldn't depend on 
+> > word-size, and they should be in some neutral byte-order.
 > 
-> Very useful as a kind of poor-man's-Quilt (or StGit). You develop some
-> feature step by step, commit by commit in your repository cooking it
-> in topic branch. Then before sending it to mailing list or maintainer
-> as a series of patches (using git-format-patch and git-send-email)
-> you rebase it on top of current work (current state), to ensure that
-> it would apply cleanly.
+> But they do.  Please consider this code:
 
-What is the bad side of using merge in this situation?
+Right. The pack-file itself. But the code that actually _generates_ it 
+mixes things in alarming ways.
 
->>Interesting.  We don't do 'fast-forward' in that case.
+> > In contrast, the new union introduced in "next" is just horrid. There's 
+> > not even any way to know which member to use, except apparently that it 
+> > expects that a SHA1 is never zero in the last 12 bytes. Which is probably 
+> > true, but still - that's some ugly stuff.
 > 
-> 
-> Fast-forward is a really good idea. Perhaps you could implement it,
-> if it is not hidden under different name?
+> This union should be looked at just like a sortable hash pointing to a 
+> base object so that deltas with the same base object can be sorted 
+> together.
 
-We support it as 'pull', but merge doesn't do it automatically, because
-we'd rather have merge behave the same all the time, and because 'pull'
-throws away your local commit ordering.
+.. and it sorts _differently_ on a big-endian vs little-endian thing, 
+doesn't it?
 
->>So it sounds to me like git is extensible, though not as thoroughly as bzr.
-> 
-> 
-> I think having good API for C, shell and Perl (and to lesser extent for any
-> scripting language) means that it is extensible more.
+So now the sort order depends on endianness and/or wordsize. That just 
+sounds really really wrong.
 
-I guess it's a value judgement on which is more important to extensibility:
-
-Git has more language support.
-
-Bzr has plugin autoloading, Protocol plugins, Repository format plugins,
-and more.  Because Python supports monkey-patching, a plugin can change
-absolutely anything.
-
-Aaron
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
-
-iD8DBQFFNUrP0F+nu1YWqI0RAizXAJ0Wnf2ZoIRpaba3mX2L4pN9XcWDPQCePtg/
-G/W6Oxm+kd8SzhGEEfLAxL8=
-=VqC7
------END PGP SIGNATURE-----
+			Linus
