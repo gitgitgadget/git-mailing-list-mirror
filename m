@@ -1,76 +1,101 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: heads-up: git-index-pack in "next" is broken
-Date: Tue, 17 Oct 2006 13:00:09 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0610171251210.1971@xanadu.home>
-References: <7vy7rfsfqa.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610171134130.1971@xanadu.home>
- <7vslhnj58e.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: What's in git.git
+Date: Tue, 17 Oct 2006 10:16:21 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610171005370.3962@g5.osdl.org>
+References: <7vvemjmlo2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 17 19:01:09 2006
+X-From: git-owner@vger.kernel.org Tue Oct 17 19:17:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZsIl-0002rh-5x
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 19:00:27 +0200
+	id 1GZsYZ-0006N1-0G
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 19:16:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751329AbWJQRAL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 13:00:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751336AbWJQRAL
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 13:00:11 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:22748 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1751333AbWJQRAK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Oct 2006 13:00:10 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J7A006QCHW99FV4@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 17 Oct 2006 13:00:09 -0400 (EDT)
-In-reply-to: <7vslhnj58e.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+	id S1751323AbWJQRQn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 13:16:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751333AbWJQRQn
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 13:16:43 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:51126 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751323AbWJQRQm (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 13:16:42 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9HHGMaX019025
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 17 Oct 2006 10:16:22 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9HHGL60029221;
+	Tue, 17 Oct 2006 10:16:21 -0700
 To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vvemjmlo2.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.476 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29095>
+
+
 
 On Tue, 17 Oct 2006, Junio C Hamano wrote:
-
-> Nicolas Pitre <nico@cam.org> writes:
+>
+> * The 'maint' branch has this fix and produced 1.4.2.4 release.
 > 
-> > On Mon, 16 Oct 2006, Junio C Hamano wrote:
-> >
-> >> I'm still a bit under the weather and do not have enough
-> >> concentration to dig into the problem tonight, but I noticed
-> >> that something in "next", most likely the delta-base-offset
-> >> patchset, broke git-index-pack:
-> >> 
-> >> $ X=ec0c3491753e115e1775256f6b7bd1bce4dea7cd
-> >> $ wget http://www.kernel.org/pub/scm/git/git.git/objects/pack/pack-$X.pack
-> >> $ ~/git-master/bin/git-index-pack pack-$X.pack
-> >> ec0c3491753e115e1775256f6b7bd1bce4dea7cd
-> >> $ git-index-pack pack-$X.pack
-> >> fatal: packfile 'pack-ec0c3491753e115e1775256f6b7bd1bce4dea7cd.pack' has unresolved deltas
-> >
-> > Using the tip of the "next" branch (git version 1.4.2.4.gf9fe) I just 
-> > cannot reproduce this problem at all.  I always get a good index and 
-> > ec0c3491753e115e1775256f6b7bd1bce4dea7cd back.
-> 
-> Hmph.  I just got exactly the same breakage; could this be
-> another 64-bit breakage?  My breakage was on x86-64.
+>    Linus Torvalds (1):
+>       Fix hash function in xdiff library
 
-I've been suspecting that since then as well.  I indeed tested on i386.
-But reviewing the code I just can't find any obvious spot where 64-bit 
-would be an issue, especially since your pack does not have any 
-OFS_DELTA objects.
+There's two things to note about this:
 
-Could you instrument the code at the end of 
-index-pack.c:parse_pack_objects() to display how many deltas were 
-actually resolved and how many were not?  IOW is it a case of all or 
-nothing, or is there an isolated case of corruption lurking somewhere?
+ - the libxdiff dependencies are broken, so it's likely that you need to 
+   do a "make clean; make" to actually see the result of this.
 
+   We really should fix this. I was bitten by this _again_ when I wanted 
+   to do some performance testing, and was scratching my head about why it 
+   didn't seem to matter.
 
-Nicolas
+   I haven't looked into which part of the Makefile is broken yet, so I 
+   really don't know what's broken, but maybe somebody who likes makefiles 
+   could take a look? Basically, doing a
+
+	touch xdiff/xmacros.h
+
+   should cause a recompile of a lot more than it causes.
+
+ - while the hash function problem _can_ cause really huge slowdowns in 
+   some unlucky situations, it actually causes noticeable performance 
+   issues even for normal situations.
+
+   For example, for me on a 2GHz merom machine in the current git 
+   directory:
+
+   Before:
+
+	[torvalds@merom git]$ time ./git log -p | wc -l
+	746211
+	
+	real    0m27.223s
+	user    0m26.894s
+	sys     0m0.424s
+
+   After:
+
+	[torvalds@merom git]$ time ./git log -p | wc -l
+	746211
+	
+	real    0m9.638s
+	user    0m9.329s
+	sys     0m0.468s
+
+   so there's a factor-of-three difference here even on a "normal" load 
+   like git itself. You don't need a huge file with tons of changes to see 
+   the effect of this.
+
+So we should fix the makefile to add whatever proper header file 
+dependencies, but we should also make sure that whoever builds binaries 
+has done a "make clean", otherwise the fix is potentially hidden.
+
+		Linus
