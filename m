@@ -1,63 +1,79 @@
-From: Sean <seanlkml@sympatico.ca>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 07:38:39 -0400
-Message-ID: <BAYC1-PASMTP02ADC5BEF688E61583283CAE0E0@CEZ.ICE>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
-	<45345AEF.6070107@utoronto.ca>
-	<200610171030.35854.jnareb@gmail.com>
-	<vpqejt76vgz.fsf@ecrins.imag.fr>
+Date: Tue, 17 Oct 2006 13:45:31 +0200
+Message-ID: <200610171345.32313.jnareb@gmail.com>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <200610171030.35854.jnareb@gmail.com> <vpqejt76vgz.fsf@ecrins.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Aaron Bentley <aaron.bentley@utoronto.ca>,
+Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
 	Linus Torvalds <torvalds@osdl.org>,
 	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 17 13:38:47 2006
+X-From: git-owner@vger.kernel.org Tue Oct 17 13:45:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZnHR-0001rv-U8
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 13:38:46 +0200
+	id 1GZnNl-00030X-73
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 13:45:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750859AbWJQLin (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 07:38:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423095AbWJQLin
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 07:38:43 -0400
-Received: from bayc1-pasmtp02.bayc1.hotmail.com ([65.54.191.162]:3473 "EHLO
-	BAYC1-PASMTP02.CEZ.ICE") by vger.kernel.org with ESMTP
-	id S1750858AbWJQLim (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Oct 2006 07:38:42 -0400
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP02.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 17 Oct 2006 04:38:41 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GZmLI-0005VU-8R; Tue, 17 Oct 2006 06:38:40 -0400
+	id S1423103AbWJQLpI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 07:45:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423129AbWJQLpI
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 07:45:08 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:11115 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1423103AbWJQLpF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Oct 2006 07:45:05 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so960614ugd
+        for <git@vger.kernel.org>; Tue, 17 Oct 2006 04:45:04 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=aFyfAH+Dyed/YRxKpy4tAKGgAp2i8AF9M2nFICqnJT22jr3II84dhpd/eGag0w9kOeSr29AUuJcy8PguFGP4up/RS5j3rnORJ0xXf4jhuY76kyJkCqoOZa0/uaymqXfCNP4FXlHpOyXr+wXcsCzZckyyHJFeRmdhOPvl0Su1GCA=
+Received: by 10.67.29.12 with SMTP id g12mr9627555ugj;
+        Tue, 17 Oct 2006 04:45:03 -0700 (PDT)
+Received: from host-81-190-17-207.torun.mm.pl ( [81.190.17.207])
+        by mx.google.com with ESMTP id 29sm32590uga.2006.10.17.04.45.02;
+        Tue, 17 Oct 2006 04:45:02 -0700 (PDT)
 To: Matthieu Moy <Matthieu.Moy@imag.fr>
-Message-Id: <20061017073839.3728d1e7.seanlkml@sympatico.ca>
+User-Agent: KMail/1.9.3
 In-Reply-To: <vpqejt76vgz.fsf@ecrins.imag.fr>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 17 Oct 2006 11:38:41.0759 (UTC) FILETIME=[CB9BC6F0:01C6F1E0]
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29060>
 
-On Tue, 17 Oct 2006 13:19:08 +0200
-Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+Matthieu Moy wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>>> - you can use a checkout to maintain a local mirror of a read-only
+>>>   branch (I do this with http://bazaar-vcs.com/bzr/bzr.dev).
+>>
+>> In git you can access contents _without_ checkout/working area.
+> 
+> Bazaar can do this too. For example,
+> "bzr cat http://something -r some-revision" gets the content of a file
+> at a given revision. But that's not what Aaron was refering to.
 
+Git cannot do that remotely (with exception of git-tar-tree/git-archive 
+which has --remote option), yet. But you can get contents of a file 
+(with "git cat-file -p [<revision>:|:<stage>:]<filename>"), list 
+directory (with "git ls-tree <tree-ish>") and compare files or 
+directories (git diff family of commands) without need for working 
+directory.
+ 
+AFAICT working area is required _only_ to resolve conflicts during 
+merge.
+
+> In Bazaar, checkouts can be two things:
+> 
 > 1) a working tree without any history information, pointing to some
 >    other location for the history itself (a la svn/CVS/...).
 >    (this is "light checkout")
-
-Git can do this from a local repository, it just can't do it from
-a remote repo (at least over the git native protocol).  However,
-over gitweb you can grab and unpack a tarball from a remote repo.
-In practice this is probably enough support for such a feature.
-
+> 
 > 2) a bound branch. It's not _very_ different from a normal branch, but
 >    mostly "commit" behaves differently:
 >    - it commits both on the local and the remote branch (equivalent to
@@ -66,38 +82,44 @@ In practice this is probably enough support for such a feature.
 >      bound to.
 >    (this is "heavy checkout")
 
-This doesn't sound right, at least in the spirit of git.  Git really
-wants to have a local commit which you may or may not push to a
-remote repo at a later time.  There is no upside to forcing it all to
-happen in one step, and a lot of downsides.  Gits focus is to support
-distributed offline development, not requiring a remote repo to be
-available at commit time.
- 
+In git by default in the top directory of working area you have .git 
+directory which contains whole repository (object database, refs (i.e. 
+branches and tags), information which branch is current, index aka. 
+gitcache, configuration, etc.). You can share object database locally 
+(which includes network filesystem).
+
+You can have .git (usually <project>.git then) directory without working 
+area.
+
+And you can symlink (and in the future "symref"-link) .git directory.
+
 > In both cases, this has the side effect that you can't commit if the
 > "upstream" branch is read-only. That's not fundamental, but handy.
 
-Again this seems really anti-git.  There is no reason for your local
-branch to be marked read only just because some upstream branch is
-so marked.
+There was proposal to allow for tracking branches to be marked 
+read-only, but it was not implemented yet.
 
-> I use it for example to have several "checkouts" of the same branch on
-> different machines. When I commit, bzr tells me "hey, boss, you're out
-> of date, why don't you update first" if I'm out of date. And if commit
-> succeeds, I'm sure it is already commited to the main branch. I'm sure
-> I won't pollute my history with merges which would only be the result
-> of forgetting to update.
+But git has reverse check: it forbids (unless forced by user) to fetch 
+into branch which has local changes (does not fast-forward). This make 
+sure that no information is lost.
 
-This is exactly the same in Git.  You really only ever push upstream
-when your local changes fast forward the remote, (ie. you're up to date).
-Git will warn you if your changes don't fast forward the remote.
- 
+The idea is that you fetch changes into tracking branch (e.g. 'master' 
+branch of some parent remote repository into 'origin' or 
+'remotes/<repository name>/master' branch); you don't commit changes to 
+such branch. You do your own work either on 'master' branch, then merge 
+(typically using "git pull") corresponding 'origin' tracking branch, or 
+use separate private feature branch and use rebase after fetch.
+
+[...]
 > The more fundamental thing I suppose is that it allows people to work
 > in a centralized way (checkout/commit/update/...), and Bazaar was
 > designed to allow several different workflows, including the
 > centralized one.
 
-While Git really isn't meant to work in a centralized way there's nothing
-preventing such a work flow.  It just requires the use of some surrounding
-infrastructure.
+Git is designed for distributed workflows, not for centralized one.
+All repositories are created equal :-)
 
-Sean
+-- 
+Jakub Narebski
+ShadeHawk on #git and #revctl
+Poland
