@@ -1,108 +1,81 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: VCS comparison table
-Date: Mon, 16 Oct 2006 17:23:43 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610161714590.3962@g5.osdl.org>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
- <45340713.6000707@utoronto.ca> <Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
- <200610170155.10536.jnareb@gmail.com> <Pine.LNX.4.63.0610170157270.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Tue, 17 Oct 2006 02:24:03 +0200
+Organization: At home
+Message-ID: <eh17q6$od$1@sea.gmane.org>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <45340713.6000707@utoronto.ca> <Pine.LNX.4.64.0610161625370.3962@g5.osdl.org> <200610170155.10536.jnareb@gmail.com> <Pine.LNX.4.64.0610161704240.3962@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Aaron Bentley <aaron.bentley@utoronto.ca>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 17 02:24:05 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: bazaar-ng@lists.canonical.com
+X-From: git-owner@vger.kernel.org Tue Oct 17 02:24:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZckU-0001eP-GY
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 02:24:02 +0200
+	id 1GZckN-0001dd-Ly
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 02:23:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422977AbWJQAX5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Oct 2006 20:23:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422979AbWJQAX5
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 20:23:57 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:5067 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1422977AbWJQAX4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Oct 2006 20:23:56 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9H0NjaX002020
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 16 Oct 2006 17:23:46 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9H0NhtO001765;
-	Mon, 16 Oct 2006 17:23:44 -0700
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0610170157270.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Spam-Status: No, hits=-0.473 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1422978AbWJQAXr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 16 Oct 2006 20:23:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422977AbWJQAXp
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 20:23:45 -0400
+Received: from main.gmane.org ([80.91.229.2]:19380 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1422978AbWJQAXo (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Oct 2006 20:23:44 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GZck9-0001bn-FX
+	for git@vger.kernel.org; Tue, 17 Oct 2006 02:23:41 +0200
+Received: from host-81-190-17-207.torun.mm.pl ([81.190.17.207])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 17 Oct 2006 02:23:41 +0200
+Received: from jnareb by host-81-190-17-207.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 17 Oct 2006 02:23:41 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-17-207.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29004>
 
+Linus Torvalds wrote:
 
+>> > So there is seldom any real need or reason to actually have multip=
+le=20
+>> > checkouts. But it certainly _works_.
+>>=20
+>> But without .git being either symlink, or .git/.gitdir "symref"-link=
+,
+>> you have to remember what to ser GIT_DIR to, or parameter for --git-=
+dir
+>> option.
+>=20
+> I'd strongly suggest that people who do this should actually do
+>=20
+> =A0=A0=A0=A0=A0=A0=A0=A0git clone -l
+>=20
+> instead of actually playing games with symlinking .git/ itself or usi=
+ng=20
+> GIT_DIR. It means that the two checkouts get separate branch namespac=
+es,=20
+> but that's really what you'd want most of the time.=20
 
-On Tue, 17 Oct 2006, Johannes Schindelin wrote:
-> > 
-> > Unless you have branch(es) with totally different contents, like git.git
-> > 'todo' branch.
-> 
-> But I _do_ work with it! I just don't need to "checkout" it! Example:
-> 
-> git -p cat-file -p todo:TODO
+Or symlinking .git/objects (and perhaps .git/remotes and .git/branches)=
+=2E
+BTW. wouldn't it be rather git clone -l -s? What would happenm on repac=
+k,
+or on repack -a -d?
 
-Ok, if there ever was an example of a strange git command-line, that was 
-it.
-
-> (How about making git-cat be a short cuut to "git -p cat-file -p"?)
-
-Well, you can just add
-
-	[alias]
-		cat=-p cat-file -p
-
-to your ~/.gitconfig file, and you're there.
-
-[ For all the non-git people here: the first "-p" is shorthand for 
-  "--paginate", and means that git will automatically start a pager for 
-  the output. The second "-p" is shorthand for "pretty" (there's no 
-  long-format command line switch for it, though), and means that git 
-  cat-file will show the result in a human-readable way, regardless of 
-  whether it's just a text-file, or a git directory ]
-
-So then you can do just
-
-	git cat todo:TODO
-
-and you're done.
-
-[ So for the non-git people, what that will actually _do_ is to show the 
-  TODO file in the "todo" branch - regardless of whether it is checked out 
-  or not, and start a pager for you. ]
-
-I actually do this sometimes, but I've never done it for branches (and I 
-do it seldom enough that I haven't added the alias). I do it for things 
-like
-
-	git cat v2.6.16:Makefile
-
-to see what a file looked like in a certain tagged release.
-
-People sometimes find the git command line confusing, but I have to say, 
-the thing is _damn_ expressive. I've never seen anybody else do things 
-like the above that git does really naturally, with not that much 
-confusion really.
-
-Even that "alias" file is quite readable, although I'd suggest writing out 
-the switches in full, ie
-
-	[alias]
-		cat=--paginate cat-file -p
-
-instead. That kind of helps explains what the alias does and avoids the 
-question of why there are two "-p" switches.
-
-			Linus
+But it is true that there is no need to checkout different branches
+to different working areas.
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
