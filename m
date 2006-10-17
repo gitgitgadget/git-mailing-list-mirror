@@ -1,141 +1,77 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 14:03:21 +0200
-Message-ID: <vpqbqob5euu.fsf@ecrins.imag.fr>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
-	<45345AEF.6070107@utoronto.ca> <200610171030.35854.jnareb@gmail.com>
-	<vpqejt76vgz.fsf@ecrins.imag.fr>
-	<BAYC1-PASMTP02ADC5BEF688E61583283CAE0E0@CEZ.ICE>
+Date: Tue, 17 Oct 2006 14:56:41 +0200
+Message-ID: <200610171456.41548.jnareb@gmail.com>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <BAYC1-PASMTP02ADC5BEF688E61583283CAE0E0@CEZ.ICE> <vpqbqob5euu.fsf@ecrins.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sean <seanlkml@sympatico.ca>,
 	Aaron Bentley <aaron.bentley@utoronto.ca>,
 	Linus Torvalds <torvalds@osdl.org>,
 	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 17 14:08:32 2006
+X-From: git-owner@vger.kernel.org Tue Oct 17 14:56:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZnkF-00074z-Lb
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 14:08:32 +0200
+	id 1GZoUT-0007oS-LF
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 14:56:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750702AbWJQMI3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 08:08:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750704AbWJQMI3
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 08:08:29 -0400
-Received: from imag.imag.fr ([129.88.30.1]:15571 "EHLO imag.imag.fr")
-	by vger.kernel.org with ESMTP id S1750702AbWJQMI2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 08:08:28 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.6/8.13.6) with ESMTP id k9HC4GCD020450
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 17 Oct 2006 14:04:17 +0200 (CEST)
-Received: from ecrins.imag.fr ([129.88.43.124])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1GZnfF-000769-RF; Tue, 17 Oct 2006 14:03:21 +0200
-Received: from moy by ecrins.imag.fr with local (Exim 4.50)
-	id 1GZnfF-00021Y-Nx; Tue, 17 Oct 2006 14:03:21 +0200
-To: Sean <seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP02ADC5BEF688E61583283CAE0E0@CEZ.ICE> (Sean's message of "Tue\, 17 Oct 2006 07\:38\:39 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.6 (imag.imag.fr [129.88.30.1]); Tue, 17 Oct 2006 14:04:17 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1750850AbWJQM4O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 17 Oct 2006 08:56:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750847AbWJQM4O
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 08:56:14 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:49845 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1750780AbWJQM4N (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Oct 2006 08:56:13 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so976096ugd
+        for <git@vger.kernel.org>; Tue, 17 Oct 2006 05:56:12 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Pie/o6IQfEjree3DC1vOg2kKEoyOo2Bp7nDtfTwRwTSX/ghOON0xLLu8qXrbIlQ7gjAkPk6GQ/9/dqn96i2eYVrf/lgkwVzQNH8TtG950U/b+hZH/DmiNcVsU3TkYsnQL7idAKdp4sCHJ9v/Rm9WDyg9jSJERajtXaD26sDdi1k=
+Received: by 10.67.97.18 with SMTP id z18mr9707470ugl;
+        Tue, 17 Oct 2006 05:56:12 -0700 (PDT)
+Received: from host-81-190-17-207.torun.mm.pl ( [81.190.17.207])
+        by mx.google.com with ESMTP id 20sm125673uga.2006.10.17.05.56.11;
+        Tue, 17 Oct 2006 05:56:11 -0700 (PDT)
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+User-Agent: KMail/1.9.3
+In-Reply-To: <vpqbqob5euu.fsf@ecrins.imag.fr>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29065>
 
-Sean <seanlkml@sympatico.ca> writes:
+Matthieu Moy wrote:
+>> This is exactly the same in Git. =A0You really only ever push upstre=
+am
+>> when your local changes fast forward the remote, (ie. you're up to d=
+ate).
+>> Git will warn you if your changes don't fast forward the remote.
+>=20
+> Yes, but you will have to do a merge at some point, right ? While I'm
+> keeping a purely linear history (not that it is good in the general
+> case, but for "projects" on which I'm the only developper, I find it
+> good. For example, my ${HOME}/etc/).
 
-> On Tue, 17 Oct 2006 13:19:08 +0200
-> Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
->
->> 1) a working tree without any history information, pointing to some
->>    other location for the history itself (a la svn/CVS/...).
->>    (this is "light checkout")
->
-> Git can do this from a local repository, it just can't do it from
-> a remote repo (at least over the git native protocol).  However,
-> over gitweb you can grab and unpack a tarball from a remote repo.
-> In practice this is probably enough support for such a feature.
+=46ast-forward doesn't result in merge.
 
-Anyway, given the price of disk space today, this only makes sense if
-you have a fast access to the repository (otherwise, you consider your
-local repository as a cache, and you're ready to pay the disk space
-price to save your bandwidth). In this case, it's often in your
-filesystem (local or NFS).
+If you have
 
->> 2) a bound branch. It's not _very_ different from a normal branch, but
->>    mostly "commit" behaves differently:
->>    - it commits both on the local and the remote branch (equivalent to
->>      "commit" + "push", but in a transactional way).
->>    - it refuses to commit if you're out of date with the branch you're
->>      bound to.
->>    (this is "heavy checkout")
->
-> This doesn't sound right, at least in the spirit of git.  Git really
-> wants to have a local commit which you may or may not push to a
-> remote repo at a later time.  There is no upside to forcing it all to
-> happen in one step, and a lot of downsides.  Gits focus is to support
-> distributed offline development, not requiring a remote repo to be
-> available at commit time.
+  1---2---3        <branch 1, or branch locally>
+           \
+            4---5  <branch 2, or branch at remote>
 
-I lied in my above description ;-).
+then this is fast-forward case. After pull (or push) you have
 
-I should have said "by default" ... but you have "commit --local" if
-you want to have a local commit on a bound branch (at this point, I
-should remind that not all branches are "bound branches". "bzr branch"
-creates branches similar to git ones).
+  1---2---3---4---5 <branch 1>
 
->> In both cases, this has the side effect that you can't commit if the
->> "upstream" branch is read-only. That's not fundamental, but handy.
->
-> Again this seems really anti-git.  There is no reason for your local
-> branch to be marked read only just because some upstream branch is
-> so marked.
+without merge.
 
-Will, take the example of my bzr setup.
-
-I have one repository, say, $repo.
-
-In it, I have one branch "$repo/bzr.dev" which is an exact mirror of
-http://bazaar-vcs.org's branch.
-
-I also have branches for patches (occasional in my case) that I'll
-send to upstream. Say $repo/feature1, $repo/feature2, ...
-
-If, by mistake, I start hacking on bzr.dev itself, I'll be warned at
-commit time, create a branch, and commit in this new branch. I believe
-git manages this in a different way, allowing you to commit in this
-branch, and creating the branch next time you pull. But you know this
-better than I ;-), I never got time to give a real try to git.
-
->> I use it for example to have several "checkouts" of the same branch on
->> different machines. When I commit, bzr tells me "hey, boss, you're out
->> of date, why don't you update first" if I'm out of date. And if commit
->> succeeds, I'm sure it is already commited to the main branch. I'm sure
->> I won't pollute my history with merges which would only be the result
->> of forgetting to update.
->
-> This is exactly the same in Git.  You really only ever push upstream
-> when your local changes fast forward the remote, (ie. you're up to date).
-> Git will warn you if your changes don't fast forward the remote.
-
-Yes, but you will have to do a merge at some point, right ? While I'm
-keeping a purely linear history (not that it is good in the general
-case, but for "projects" on which I'm the only developper, I find it
-good. For example, my ${HOME}/etc/).
-
-But don't get me wrong, I also prefer the decentralized way in most
-case. And I'm happy that bzr and git work like this by default. Just
-that at least *I* have cases where a centralized approach suits me
-better, and then I'm happy with that particular feature of bzr.
-
--- 
-Matthieu
+--=20
+Jakub Narebski
+Poland
