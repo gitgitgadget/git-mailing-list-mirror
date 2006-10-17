@@ -1,79 +1,102 @@
-From: Sean <seanlkml@sympatico.ca>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 10:34:23 -0400
-Message-ID: <BAYC1-PASMTP018A5B086047BE4212EFF8AE0E0@CEZ.ICE>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<egr3ud$nqm$1@sea.gmane.org>
-	<45340713.6000707@utoronto.ca>
-	<Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
-	<45345AEF.6070107@utoronto.ca>
-	<45348B5E.8000404@op5.se>
-	<4534E335.8070203@utoronto.ca>
+Date: Tue, 17 Oct 2006 16:41:02 +0200
+Message-ID: <200610171641.04455.jnareb@gmail.com>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <200610171555.56778.jnareb@gmail.com> <vpqr6x711cm.fsf@ecrins.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>, Linus Torvalds <torvalds@osdl.org>,
-	Jakub Narebski <jnareb@gmail.com>,
+Cc: Linus Torvalds <torvalds@osdl.org>, Andreas Ericsson <ae@op5.se>,
 	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 17 16:35:01 2006
+X-From: git-owner@vger.kernel.org Tue Oct 17 16:41:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZq1W-0003vb-PR
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 16:34:31 +0200
+	id 1GZq7V-0005Ii-49
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 16:40:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751094AbWJQOe0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 10:34:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751096AbWJQOe0
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 10:34:26 -0400
-Received: from bayc1-pasmtp01.bayc1.hotmail.com ([65.54.191.161]:64870 "EHLO
-	bayc1-pasmtp01.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1751094AbWJQOeZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Oct 2006 10:34:25 -0400
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.81]) by bayc1-pasmtp01.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 17 Oct 2006 07:34:24 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GZp5L-0005ze-Nz; Tue, 17 Oct 2006 09:34:23 -0400
-To: Aaron Bentley <aaron.bentley@utoronto.ca>
-Message-Id: <20061017103423.a9589295.seanlkml@sympatico.ca>
-In-Reply-To: <4534E335.8070203@utoronto.ca>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 17 Oct 2006 14:34:24.0983 (UTC) FILETIME=[57DC1670:01C6F1F9]
+	id S1751097AbWJQOki (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 10:40:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751102AbWJQOki
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 10:40:38 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:14374 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1751097AbWJQOkh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Oct 2006 10:40:37 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so1005635ugd
+        for <git@vger.kernel.org>; Tue, 17 Oct 2006 07:40:36 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=R2Vvi+EXrkwdYmeOW0H5JqVmklG8qvlv0CJSbBjnAh/PjPdLmlqL1Z2CKw9omKmYzQvbd+I7doT3CalM5tJfN1uAaRnPDlBWGiQa0nCFLZdO2HhKrEY7Icd+IOn8aQP4u+LjNStTiP+23O/ni8AV7DP2juURwQ/IODEkjd7W1AY=
+Received: by 10.66.220.17 with SMTP id s17mr9886284ugg;
+        Tue, 17 Oct 2006 07:40:35 -0700 (PDT)
+Received: from host-81-190-17-207.torun.mm.pl ( [81.190.17.207])
+        by mx.google.com with ESMTP id 59sm236988ugf.2006.10.17.07.40.34;
+        Tue, 17 Oct 2006 07:40:35 -0700 (PDT)
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+User-Agent: KMail/1.9.3
+In-Reply-To: <vpqr6x711cm.fsf@ecrins.imag.fr>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29082>
 
-On Tue, 17 Oct 2006 10:05:41 -0400
-Aaron Bentley <aaron.bentley@utoronto.ca> wrote:
-
-
-> No, you don't.  They may have each pulled from a different repository.
+Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
 > 
-> Take revision 00aabbcc, created by Linus.  Linus has it because he
-> committed it.  I have it because I pulled Linus' repository.  You have
-> it because Andrew Morton pulled Linus' repository, and you pulled Andrew
-> Morton's repository.
+>> While email can be used to exchange patches (git-format-patch to 
+>> generate patches, git-send-mail to send patches if you don't want to 
+>> use ordinary email client, git-am to apply patches) it cannot be used 
+>> to exchange all information (one cannot send for example tags, or
+>> merge commits).
+> 
+> In bzr, the "bundle" appears like a patch, but it actually contain the
+> same information as the revision(s) it contains (I believe this
+> applies to hg and Darcs too). A bundle can be used almost like a
+> branch. That's a key point, since revision identity is not based on
+> content's hash, so applying a patch is very different from merging a
+> bundle.
 
-Well his point was that they have pulled from each other directly or
-indirectly.  You can safely say that rev 00aabbcc.. in _any_ repository
-is the same rev.  This discussion started because of doubt expressed
-by some here on the list that the "simple" numbering scheme used by
-bzr can offer the same guarantee.  That is, rev 1.2.1 may be completely
-different commits in different repos in bazaar.
+The patch generated by git-format-patch has author information (in 
+"From:" header), original commit date (in "Date:" header), commit 
+message (first line in "Subject:", rest in message body), place for 
+comments which are not to be included in commit message, diffstat for 
+easier patch review, and git extended diff (with information about 
+renames detection, mode changes, 7-characters wide shortcuts of file 
+contents identifiers). It does not record parent information, original 
+comitter and comitter date, which branch we are on etc. You can quite 
+easily provide ordering of patches.
+
+Sending patches via email prohibits first line of commit message to be 
+enclosed in brackets (subject usually is "[PATCH] Commit description" 
+or "[PATCH n/m] Commit description") and enforces git convention of 
+commit message to consist of first line describing commit shortly, 
+separated by empty line from the longer description and signoff lines.
+
+"Bundle" equivalent, although binary in nature, would be thin pack.
  
-> With most SCMs that store the repository in the root of the tree,
-> disentangling the tree and repository requires care.  OTOH, this is just
-> as easy with Arch, CVS and SVN as it is with Bazaar.
+>> It is very usefull tool to have for "accidental" developer.
+> 
+> That's the key point, but patch review for non-accidental developpers
+> is also good :-).
 
-Just in case it wasn't clear, this is drop dead easy in Git too.
+How very true...
+ 
+>> BTW. git can provide binary patch for binary files (e.g. adding
+>> favicon for gitweb in git.git).
+> 
+> Bazaar's bundle use base64 encoding for binaries. I don't think that's
+> efficient binary diff (xdelta-like) though. Aaron has been fighting
+> quite a lot with MUA and MTA mixing up the patches (line ending in
+> particular) ...
 
-> No, I *want* the working tree files.  I run bzr from a checkout of bzr.dev.
+If I remember correctly git binary diff format is xdiff based, and uses 
+kind of ascii85 encoding (PostScript).
 
-Why?  Uncommitted changes shouldn't be propagated.  Once you have cloned
-the repo, you can checkout your own copy of the working tree files.
-
-Sean
+-- 
+Jakub Narebski
+Poland
