@@ -1,100 +1,94 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] nice ftplugin for vim, that shows the commited diff in a split'ed buffer.
-Date: Tue, 17 Oct 2006 13:04:38 +0200
-Organization: Polytechnique.org
-Message-ID: <200610171304.39131.madcoder@debian.org>
-References: <11610450702261-git-send-email-madcoder@debian.org> <200610171238.04372.madcoder@debian.org> <802d21790610170359v3f17438dn8009ae9a55b2405c@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: VCS comparison table
+Date: Tue, 17 Oct 2006 13:19:08 +0200
+Message-ID: <vpqejt76vgz.fsf@ecrins.imag.fr>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
+	<45345AEF.6070107@utoronto.ca> <200610171030.35854.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart3586685.MAJqzr5EZG";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 17 13:04:57 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
+	Linus Torvalds <torvalds@osdl.org>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 17 13:20:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZmkX-0004nx-E9
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 13:04:46 +0200
+	id 1GZmzG-00074V-Nc
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 13:19:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422852AbWJQLEm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 07:04:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423029AbWJQLEm
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 07:04:42 -0400
-Received: from mx1.polytechnique.org ([129.104.30.34]:30646 "EHLO
-	mx1.polytechnique.org") by vger.kernel.org with ESMTP
-	id S1422852AbWJQLEl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Oct 2006 07:04:41 -0400
-Received: from mad.intersec.eu (beacon-free1.intersec.eu [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by ssl.polytechnique.org (Postfix) with ESMTP id 49D50332F4;
-	Tue, 17 Oct 2006 13:04:40 +0200 (CEST)
-To: "Peter Baumann" <peter.baumann@gmail.com>
-User-Agent: KMail/1.9.5
-In-Reply-To: <802d21790610170359v3f17438dn8009ae9a55b2405c@mail.gmail.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-X-AV-Checked: ClamAV using ClamSMTP at djali.polytechnique.org (Tue Oct 17 13:04:40 2006 +0200 (CEST))
-X-DCC-xorg-Metrics: djali 32702; Body=3 Fuz1=3 Fuz2=3
-X-Spam-Flag: No, tests=bogofilter, spamicity=0.000411, queueID=710F633301
-X-Org-Mail: pierre.habouzit.2000@polytechnique.org
+	id S1423070AbWJQLTz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 07:19:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423072AbWJQLTz
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 07:19:55 -0400
+Received: from imag.imag.fr ([129.88.30.1]:61091 "EHLO imag.imag.fr")
+	by vger.kernel.org with ESMTP id S1423070AbWJQLTy (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 07:19:54 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.6/8.13.6) with ESMTP id k9HBJ9b6010407
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 17 Oct 2006 13:19:09 +0200 (CEST)
+Received: from ecrins.imag.fr ([129.88.43.124])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1GZmyS-00063J-Ox; Tue, 17 Oct 2006 13:19:08 +0200
+Received: from moy by ecrins.imag.fr with local (Exim 4.50)
+	id 1GZmyS-0001v7-M0; Tue, 17 Oct 2006 13:19:08 +0200
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200610171030.35854.jnareb@gmail.com> (Jakub Narebski's message of "Tue\, 17 Oct 2006 10\:30\:35 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.6 (imag.imag.fr [129.88.30.1]); Tue, 17 Oct 2006 13:19:10 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29058>
 
---nextPart3586685.MAJqzr5EZG
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Le mar 17 octobre 2006 12:59, Peter Baumann a =C3=A9crit :
-> 2006/10/17, Pierre Habouzit <madcoder@debian.org>:
-
-> > because for me, wherever I'm from, the cwd is .git/ but it's maybe
-> > due to the fact that I use autochdir, I don't know.
+>> - you can use a checkout to maintain a local mirror of a read-only
+>>   branch (I do this with http://bazaar-vcs.com/bzr/bzr.dev).
 >
-> Wouldn't it make sense to use something like 'git-rev-parse
-> --git-dir' or 'git-rev-parse --show-cdup' to get to the root of the
-> repository?
+> In git you can access contents _without_ checkout/working area.
 
-Yes it does, SungHyun Nam already sent a patch to me about that, that is=20
-quite interesting. I've merged it partly, and will make that commit=20
-plugin slightly better, so that people can:
- 1/ trig it by hand
- 2/ chose if the split is vertical or horizontal (I always have very big
-    terms with a lot of vertical splits in vim, so I like the latter,
-    other prefer the former)
- 3/ chose via a let g:gitcommit_diff_mode or sth like that in the vimrc
-    if that has to spawn automatically (0: none, 1: horiz split, 2: vert
-    split)
+Bazaar can do this too. For example,
+"bzr cat http://something -r some-revision" gets the content of a file
+at a given revision. But that's not what Aaron was refering to.
 
-and that time, I'll send that to the git contrib/vim maintainer so that=20
-I won't bother the list too much :)
+In Bazaar, checkouts can be two things:
 
-a corrected version of the commit file wrt the cwd is on my site=20
-already, with a bit of SungHyun changes[1].
+1) a working tree without any history information, pointing to some
+   other location for the history itself (a la svn/CVS/...).
+   (this is "light checkout")
 
+2) a bound branch. It's not _very_ different from a normal branch, but
+   mostly "commit" behaves differently:
+   - it commits both on the local and the remote branch (equivalent to
+     "commit" + "push", but in a transactional way).
+   - it refuses to commit if you're out of date with the branch you're
+     bound to.
+   (this is "heavy checkout")
 
- [1] http://madism.org/~madcoder/dotfiles/vim/ftplugin/git.vim
-=2D-=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+In both cases, this has the side effect that you can't commit if the
+"upstream" branch is read-only. That's not fundamental, but handy.
 
---nextPart3586685.MAJqzr5EZG
-Content-Type: application/pgp-signature
+I use it for example to have several "checkouts" of the same branch on
+different machines. When I commit, bzr tells me "hey, boss, you're out
+of date, why don't you update first" if I'm out of date. And if commit
+succeeds, I'm sure it is already commited to the main branch. I'm sure
+I won't pollute my history with merges which would only be the result
+of forgetting to update.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
+Once more, that's not fundamental, but handy.
 
-iD8DBQBFNLjHvGr7W6HudhwRAsQoAJ97Kh7sHlJVB9DTKTo0oDYTz5YD+QCffnlx
-oV9SJwLMp+PTfxWGDvOGTrg=
-=Uikh
------END PGP SIGNATURE-----
+The more fundamental thing I suppose is that it allows people to work
+in a centralized way (checkout/commit/update/...), and Bazaar was
+designed to allow several different workflows, including the
+centralized one.
 
---nextPart3586685.MAJqzr5EZG--
+-- 
+Matthieu
