@@ -1,78 +1,85 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: On blame/pickaxe
-Date: Fri, 20 Oct 2006 20:20:38 -0700
-Message-ID: <7vods6icc9.fsf@assigned-by-dhcp.cox.net>
-References: <7vr6xddm7h.fsf@assigned-by-dhcp.cox.net>
-	<20061016022159.GZ20017@pasky.or.cz>
-	<7v8xjgvjys.fsf@assigned-by-dhcp.cox.net>
-	<200610161602.49811.Josef.Weidendorfer@gmx.de>
-	<453393E5.3020203@shadowen.org> <20061017004429.GC20017@pasky.or.cz>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: VCS comparison table
+Date: Tue, 17 Oct 2006 10:01:50 -0400
+Message-ID: <20061017100150.b4919aac.seanlkml__6612.46223976395$1161404460$gmane$org@sympatico.ca>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
+	<45345AEF.6070107@utoronto.ca>
+	<200610171030.35854.jnareb@gmail.com>
+	<vpqejt76vgz.fsf@ecrins.imag.fr>
+	<BAYC1-PASMTP02ADC5BEF688E61583283CAE0E0@CEZ.ICE>
+	<vpqbqob5euu.fsf@ecrins.imag.fr>
+	<BAYC1-PASMTP10E107E5EB0F7E69167F41AE0E0@CEZ.ICE>
+	<vpqejt73vln.fsf@ecrins.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 21 05:20:45 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+X-From: bazaar-ng-bounces@lists.canonical.com Sat Oct 21 06:20:56 2006
+Return-path: <bazaar-ng-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gb7Pf-0005HG-0i
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 05:20:43 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992814AbWJUDUk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 23:20:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992817AbWJUDUk
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 23:20:40 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:22233 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S2992814AbWJUDUj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Oct 2006 23:20:39 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061021032038.IKJT6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 20 Oct 2006 23:20:38 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id crLP1V00b1kojtg0000000
-	Fri, 20 Oct 2006 23:20:24 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20061017004429.GC20017@pasky.or.cz> (Petr Baudis's message of
-	"Tue, 17 Oct 2006 02:44:29 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29578>
+	id 1Gb8Lt-0005CS-3m
+	for gcvbg-bazaar-ng@m.gmane.org; Sat, 21 Oct 2006 06:20:53 +0200
+Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
+	id 1GapNF-0007l0-BU; Fri, 20 Oct 2006 09:05:01 +0100
+Received: from bayc1-pasmtp10.bayc1.hotmail.com ([65.54.191.170])
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <seanlkml@sympatico.ca>) id 1GZpVx-0006wI-J9
+	for bazaar-ng@lists.canonical.com; Tue, 17 Oct 2006 15:01:53 +0100
+X-Originating-IP: [65.93.43.81]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.43.81]) by
+	BAYC1-PASMTP10.bayc1.hotmail.com over TLS secured channel with
+	Microsoft SMTPSVC(6.0.3790.1830); Tue, 17 Oct 2006 07:05:30 -0700
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with esmtp (Exim 4.43)
+	id 1GZoZq-0005sm-RT; Tue, 17 Oct 2006 09:01:50 -0400
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+Message-Id: <20061017100150.b4919aac.seanlkml@sympatico.ca>
+In-Reply-To: <vpqejt73vln.fsf@ecrins.imag.fr>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 17 Oct 2006 14:05:31.0218 (UTC)
+	FILETIME=[4E748B20:01C6F1F5]
+X-Mailman-Approved-At: Fri, 20 Oct 2006 09:04:04 +0100
+X-BeenThere: bazaar-ng@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
+List-Post: <mailto:bazaar-ng@lists.canonical.com>
+List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-ng-bounces@lists.canonical.com
+Errors-To: bazaar-ng-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29579>
 
-Petr Baudis <pasky@suse.cz> writes:
+On Tue, 17 Oct 2006 15:44:36 +0200
+Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
 
->> >> If the user is not prepared to see code movement, pickaxe can be
->> >> run without -M nor -C to get the classic blame output.
->
-> Ok, so in this case -M and -C does not mean just looking for
-> copies/movements in other files but inside the same file as well.
->
-> Perhaps we might want to differentiate those two cases since searching
-> in all files might be significantly slower.
+> > How does bzr avoid a merge when you're pushing changes from 3
+> > separate machines?
+> 
+> Err, the same way people have been doing for years ;-). If you don't
+> have local commits, "bzr update" will work in the same way as "cvs
+> update", it keeps your local changes, without recording history. Like
+> "git pull" does if you have uncommited changes I think.
 
-I do not personally worry about people confusing -M/-C to
-pickaxe with -M/-C given to diff (to pickaxe, use of diff is
-purely an internal implementation issue), and reused -M and -C
-to mean quite different things.  -M is to detect line movement
-inside a file (it is not strictly limited to "line movement",
-though. It _is_ about "copies and moves within the same file").
-On the other hand, -C (and its stronger form -C -C) is to detect
-copies and moves across file boundaries (but wholesale "file
-rename" comes as part of the basic algorithm so you do not have
-to ask for it with -M nor -C).  So in that sense pronouncing M
-"move" and C "copy" is not accurate.  Their differences is
-already what you said "we might want".
+Ah, okay.  Well Git can definitely manage this.  Just means you have to
+rebase any local changes before pushing.  This will keep the history
+linear and make sure that no merges are needed in the case you were asking
+about.
 
-However they match the cost expectation people are used to in
-diff options pretty well.  -M is not so expensive and -C is
-somewhat.  -C -C is like find-copies-harder and is quite
-expensive.
+So far, it sounds to me like bazaar and git are more alike than they are
+different.  Each have a few commands the other doesn't but all in all
+they sound very similar.  But i'm a Git fanboy so I aint switching
+now ;o)
 
-Also currently the code does not do "move" detection at all.
-Contrary to intuition, move detection is more expensive than
-copy detection in this case.
+Sean
