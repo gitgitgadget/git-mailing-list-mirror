@@ -1,106 +1,110 @@
-From: Sean <seanlkml@sympatico.ca>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
 Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 11:06:55 -0400
-Message-ID: <BAYC1-PASMTP074A2D2B30CAF96E374229AE0E0@CEZ.ICE>
+Date: Tue, 17 Oct 2006 17:32:19 +0200
+Message-ID: <vpqodsbrm9o.fsf@ecrins.imag.fr>
 References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<egr3ud$nqm$1@sea.gmane.org> <45340713.6000707@utoronto.ca>
 	<Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
-	<45345AEF.6070107@utoronto.ca>
-	<200610171030.35854.jnareb@gmail.com>
-	<vpqejt76vgz.fsf@ecrins.imag.fr>
-	<BAYC1-PASMTP02ADC5BEF688E61583283CAE0E0@CEZ.ICE>
-	<vpqbqob5euu.fsf@ecrins.imag.fr>
-	<BAYC1-PASMTP10E107E5EB0F7E69167F41AE0E0@CEZ.ICE>
-	<vpqejt73vln.fsf@ecrins.imag.fr>
-	<BAYC1-PASMTP10F617306F1477E66FA441AE0E0@CEZ.ICE>
-	<vpqlknf10u5.fsf@ecrins.imag.fr>
+	<45345AEF.6070107@utoronto.ca> <45348B5E.8000404@op5.se>
+	<4534E335.8070203@utoronto.ca> <4534F133.1090003@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 17 17:07:10 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+X-From: bazaar-ng-bounces@lists.canonical.com Tue Oct 17 17:34:00 2006
+Return-path: <bazaar-ng-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZqWz-0002PP-0U
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 17:07:01 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751113AbWJQPG6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 11:06:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751117AbWJQPG6
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 11:06:58 -0400
-Received: from bayc1-pasmtp07.bayc1.hotmail.com ([65.54.191.167]:33848 "EHLO
-	BAYC1-PASMTP07.CEZ.ICE") by vger.kernel.org with ESMTP
-	id S1751113AbWJQPG5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Oct 2006 11:06:57 -0400
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP07.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 17 Oct 2006 08:12:42 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GZpap-00067R-9n; Tue, 17 Oct 2006 10:06:55 -0400
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-Message-Id: <20061017110655.f7bcf3f1.seanlkml@sympatico.ca>
-In-Reply-To: <vpqlknf10u5.fsf@ecrins.imag.fr>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 17 Oct 2006 15:12:42.0453 (UTC) FILETIME=[B1423050:01C6F1FE]
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+	id 1GZqwx-00009C-TL
+	for gcvbg-bazaar-ng@m.gmane.org; Tue, 17 Oct 2006 17:33:52 +0200
+Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
+	id 1GZqwb-00087A-Eh; Tue, 17 Oct 2006 16:33:29 +0100
+Received: from imag.imag.fr ([129.88.30.1])
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <Matthieu.Moy@imag.fr>) id 1GZqwY-000873-5Q
+	for bazaar-ng@lists.canonical.com; Tue, 17 Oct 2006 16:33:26 +0100
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.6/8.13.6) with ESMTP id k9HFWPUF006634
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 17 Oct 2006 17:32:25 +0200 (CEST)
+Received: from ecrins.imag.fr ([129.88.43.124])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50) id 1GZqvT-0004HW-B0; Tue, 17 Oct 2006 17:32:19 +0200
+Received: from moy by ecrins.imag.fr with local (Exim 4.50)
+	id 1GZqvT-00030E-7q; Tue, 17 Oct 2006 17:32:19 +0200
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <4534F133.1090003@op5.se> (Andreas Ericsson's message of "Tue\,
+	17 Oct 2006 17\:05\:23 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.6
+	(imag.imag.fr [129.88.30.1]);
+	Tue, 17 Oct 2006 17:32:28 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+X-BeenThere: bazaar-ng@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
+List-Post: <mailto:bazaar-ng@lists.canonical.com>
+List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-ng-bounces@lists.canonical.com
+Errors-To: bazaar-ng-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29087>
 
-On Tue, 17 Oct 2006 16:19:46 +0200
-Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+Andreas Ericsson <ae@op5.se> writes:
 
-> Sure. As I said before, the little add-on of checkouts is that you say
-> once "I don't want to do local commit here", and bzr reminds you this
-> each time you commit. Well, where it can make a difference is that it
-> does it in a transactional way, that is, you don't have that little
-> window between the time you pull and the time you push your next
-> commit. But this would really be bad luck ;-).
+> This I don't understand. Let's say Alice has revision-154 in her repo,
+> located at alice.example.com. Let's say that commit is accessible with
+> the url "alice.example.com:revision-154". Bob pulls from her repo into
+> his own, which is located at bob.example.com.
 
-Yeah, it would be bad luck, but Git wouldn't actually let the push
-succeed if someone had changed the upstream repo in that small window.
-It would complain that your push wasn't a fast forward and ask you
-to update before pushing.
+Another equation can help.
 
-> Sure. And at least, if you want to prove that your decentralized SCM
-> is the best, you'd better look at features other than the ability to
-> commit on a local branch ;-). If you want a _real_ flamewar, better
-> talk about rename management or revision identity.
-> 
-> The thing is that most people migrated from CVS/svn, so they found
-> their new SCM to be incredibly better the existing. But it's generally
-> not _so_ much better than the other modern alternatives ;-). (and
-> don't forget to thank Darcs and Monotone who brought most of the good
-> ideas you and I are using)
+Revision Identity != Revision Number.
 
-Heh, true enough.  And the fact is they're all "borrowing" the
-best ideas from one another.  All of a sudden the others are all
-getting git-like bisect and gitk guis.  And of course Linus has
-said that he got quite a bit of inspiration from Monotone
-originally.
+$ bzr log --show-ids
+------------------------------------------------------------
+revno: 1
+revision-id: Matthieu.Moy@imag.fr-20061017152029-4c5a2861bcf23b7d
+committer: Matthieu Moy <Matthieu.Moy@imag.fr>
+branch nick: foo
+timestamp: Tue 2006-10-17 17:20:29 +0200
+message:
+  some message
 
-Beyond the distributed offline nature of using Git, the killer
-"feature" for me is its raw speed and flexibility[1].  It's
-really nice to be able to branch in under a second and try
-out a line of development etc.  Maybe this is just as easy
-in Bazaar but it's not true of say Mercurial.  Honestly, I
-just can't imagine any other SCM meeting my needs better than
-Git.  So I have a hard time taking complaints about rename
-management or revision identity seriously.
 
-While they don't affect my usage, IMHO the two biggest failings
-of Git are its lack of a shallow clone and its reliance on shell
-and other scripting languages so there is no native Windows version.
-I'm sure both of these areas are handled better by Bazaar and/or
-some of the other new SCMs where they'd be a better choice than
-Git.
+See, bzr has this unique revision identifier (not based on a hashsum).
+The design choice of bzr is to hide it as much as possible from the
+user interface.
 
-Sean
+Then, if I'm in the branch in which I typed this command, I can reffer
+to this revision with simply
 
-[1] As an aside, I don't understand why bazaar pushes the idea
-of "plugins".  For instance someone mentioned that bazaar has
-a bisect "plugin".  Well Git was able to add a bisect "command"
-without needing a plugin architecture.. so i'm at a loss as 
-to why plugins are seen as an advantage.
+  bzr whatever -r 1
+
+In the general case, I can access it with
+
+  bzr whatever -r revid:Matthieu.Moy@imag.fr-20061017152029-4c5a2861bcf23b7d
+
+(There's currently a lack in the UI to specify a remote revision-id,
+but that's not a problem in the model itself)
+
+bzr's internal use almost exclusively revision ID (ancestry
+information is all about revision id), and revno are a UI layered on
+top of it.
+
+I don't have strong needs in revision control, but I actually never
+encountered a case where I had to access a revision by providing its
+ID. So, for people like me, revision numbers are sufficient, and they
+are simple (for example, I can tell without running any command that
+revision 42 is older than revision 56 in a particular branch).
