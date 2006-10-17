@@ -1,67 +1,63 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Sean <seanlkml@sympatico.ca>
 Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 14:02:02 +0200
-Message-ID: <200610171402.03373.jnareb@gmail.com>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <vpqejt76vgz.fsf@ecrins.imag.fr> <200610171345.32313.jnareb@gmail.com>
+Date: Tue, 17 Oct 2006 08:07:02 -0400
+Message-ID: <BAYC1-PASMTP046FDC7A294B02BDB398D4AE0E0@CEZ.ICE>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<200610171030.35854.jnareb@gmail.com>
+	<vpqejt76vgz.fsf@ecrins.imag.fr>
+	<200610171345.32313.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Aaron Bentley <aaron.bentley@utoronto.ca>,
 	Linus Torvalds <torvalds@osdl.org>,
 	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 17 14:01:43 2006
+X-From: git-owner@vger.kernel.org Tue Oct 17 14:07:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZndb-0005vO-JC
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 14:01:39 +0200
+	id 1GZniw-0006rq-La
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 14:07:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750696AbWJQMBh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 08:01:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750698AbWJQMBg
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 08:01:36 -0400
-Received: from ug-out-1314.google.com ([66.249.92.169]:32943 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1750696AbWJQMBg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Oct 2006 08:01:36 -0400
-Received: by ug-out-1314.google.com with SMTP id o38so963800ugd
-        for <git@vger.kernel.org>; Tue, 17 Oct 2006 05:01:34 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=nLBbGe4newYpIBIb6ZX0nJXYpdlDv7iWl0Wo6QgI24FperIa6rc5jS8LwsRNdTWD7zliMxrtDQKb9dv4Bslxh5ya2gUOEDIQL30c4t/l5LX1lwCLRuAvxqyaL4tPJ1/WEa8WjAiYkpOYfvFQOH/skrTyQdVMJqGQ9zhR73dBXTk=
-Received: by 10.67.101.10 with SMTP id d10mr9620886ugm;
-        Tue, 17 Oct 2006 05:01:34 -0700 (PDT)
-Received: from host-81-190-17-207.torun.mm.pl ( [81.190.17.207])
-        by mx.google.com with ESMTP id e33sm51405ugd.2006.10.17.05.01.33;
-        Tue, 17 Oct 2006 05:01:34 -0700 (PDT)
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-User-Agent: KMail/1.9.3
+	id S1750717AbWJQMHH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 08:07:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750720AbWJQMHH
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 08:07:07 -0400
+Received: from bayc1-pasmtp04.bayc1.hotmail.com ([65.54.191.164]:38687 "EHLO
+	BAYC1-PASMTP04.bayc1.hotmail.com") by vger.kernel.org with ESMTP
+	id S1750717AbWJQMHE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Oct 2006 08:07:04 -0400
+X-Originating-IP: [65.93.43.81]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP04.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 17 Oct 2006 05:07:04 -0700
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with esmtp (Exim 4.43)
+	id 1GZmmk-0005Yn-MB; Tue, 17 Oct 2006 07:07:02 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+Message-Id: <20061017080702.615a3b2f.seanlkml@sympatico.ca>
 In-Reply-To: <200610171345.32313.jnareb@gmail.com>
-Content-Disposition: inline
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 17 Oct 2006 12:07:04.0288 (UTC) FILETIME=[C2651600:01C6F1E4]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29062>
 
-Jakub Narebski wrote:
-> In git by default in the top directory of working area you have .git 
-> directory which contains whole repository (object database, refs (i.e. 
-> branches and tags), information which branch is current, index aka. 
-> gitcache, configuration, etc.). You can share object database locally 
-> (which includes network filesystem).
-> 
-> You can have .git (usually <project>.git then) directory without working 
-> area.
+On Tue, 17 Oct 2006 13:45:31 +0200
+Jakub Narebski <jnareb@gmail.com> wrote:
 
-So called "bare" repository.
-> 
-> And you can symlink (and in the future "symref"-link) .git directory.
+> Git cannot do that remotely (with exception of git-tar-tree/git-archive 
+> which has --remote option), yet. But you can get contents of a file 
+> (with "git cat-file -p [<revision>:|:<stage>:]<filename>"), list 
+> directory (with "git ls-tree <tree-ish>") and compare files or 
+> directories (git diff family of commands) without need for working 
+> directory.
 
-And you can use GIT_DIR environmental variable or --git-dir option
-to git wrapper.
--- 
-Jakub Narebski
-Poland
+Interesting, I didn't know about the --remote option.  So in fact as long
+as the remote has enabled upload-tar then anyone can do a "light checkout".
+However, it appears that kernel.org for instance doesn't enable this feature.
+
+Sean
+  
