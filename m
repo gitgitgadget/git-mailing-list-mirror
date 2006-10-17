@@ -1,74 +1,51 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 10:01:50 -0400
-Message-ID: <BAYC1-PASMTP10F617306F1477E66FA441AE0E0@CEZ.ICE>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
-	<45345AEF.6070107@utoronto.ca>
-	<200610171030.35854.jnareb@gmail.com>
-	<vpqejt76vgz.fsf@ecrins.imag.fr>
-	<BAYC1-PASMTP02ADC5BEF688E61583283CAE0E0@CEZ.ICE>
-	<vpqbqob5euu.fsf@ecrins.imag.fr>
-	<BAYC1-PASMTP10E107E5EB0F7E69167F41AE0E0@CEZ.ICE>
-	<vpqejt73vln.fsf@ecrins.imag.fr>
+From: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
+Subject: Re: [RFC/PATCH] git-fetch: Use already fetched branch with the --local flag.
+Date: Tue, 17 Oct 2006 16:03:30 +0200
+Message-ID: <873b9n9gzx.fsf@gmail.com>
+References: <87ac3w8jl1.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Aaron Bentley <aaron.bentley@utoronto.ca>,
-	Linus Torvalds <torvalds@osdl.org>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 17 16:02:18 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue Oct 17 16:03:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZpW6-0005Na-K7
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 16:02:02 +0200
+	id 1GZpXc-0005hb-PK
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 16:03:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751027AbWJQOBx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 10:01:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750993AbWJQOBx
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 10:01:53 -0400
-Received: from bayc1-pasmtp10.bayc1.hotmail.com ([65.54.191.170]:53087 "EHLO
-	BAYC1-PASMTP10.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1751027AbWJQOBw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Oct 2006 10:01:52 -0400
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP10.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 17 Oct 2006 07:05:30 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GZoZq-0005sm-RT; Tue, 17 Oct 2006 09:01:50 -0400
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-Message-Id: <20061017100150.b4919aac.seanlkml@sympatico.ca>
-In-Reply-To: <vpqejt73vln.fsf@ecrins.imag.fr>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 17 Oct 2006 14:05:31.0218 (UTC) FILETIME=[4E748B20:01C6F1F5]
+	id S1750994AbWJQODe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 10:03:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751031AbWJQODe
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 10:03:34 -0400
+Received: from ifae-s0.ifae.es ([192.101.162.68]:58505 "EHLO ifae-s0.ifae.es")
+	by vger.kernel.org with ESMTP id S1750994AbWJQODd (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 10:03:33 -0400
+Received: from bela (caronte.ifae.es [192.101.162.199])
+	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id k9HE3VJ16896
+	for <git@vger.kernel.org>; Tue, 17 Oct 2006 16:03:31 +0200
+To: Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <87ac3w8jl1.fsf@gmail.com> (Santi =?utf-8?Q?B=C3=A9jar's?=
+ message of "Mon, 16 Oct
+	2006 15:40:42 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29075>
 
-On Tue, 17 Oct 2006 15:44:36 +0200
-Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
 
-> > How does bzr avoid a merge when you're pushing changes from 3
-> > separate machines?
-> 
-> Err, the same way people have been doing for years ;-). If you don't
-> have local commits, "bzr update" will work in the same way as "cvs
-> update", it keeps your local changes, without recording history. Like
-> "git pull" does if you have uncommited changes I think.
+Please, add this:
 
-Ah, okay.  Well Git can definitely manage this.  Just means you have to
-rebase any local changes before pushing.  This will keep the history
-linear and make sure that no merges are needed in the case you were asking
-about.
-
-So far, it sounds to me like bazaar and git are more alike than they are
-different.  Each have a few commands the other doesn't but all in all
-they sound very similar.  But i'm a Git fanboy so I aint switching
-now ;o)
-
-Sean
+diff --git a/git-parse-remote.sh b/git-parse-remote.sh
+index 617d022..a792323 100755
+--- a/git-parse-remote.sh
++++ b/git-parse-remote.sh
+@@ -260,7 +260,7 @@ get_ref_for_remote_branch (){
+ 	remotes)
+ 		ref=$(sed -ne '/^Pull: */{
+ 				s///p
+-			}' "$GIT_DIR/remotes/$1" | grep "$2:")
++			}' "$GIT_DIR/remotes/$1" | grep "^$2:")
+ 		expr "z$ref" : 'z[^:]*:\(.*\)'
+ 		;;
+ 	*)
