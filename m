@@ -1,47 +1,48 @@
 From: Sean <seanlkml@sympatico.ca>
 Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 18:56:22 -0400
-Message-ID: <20061017185622.30fbc6c0.seanlkml__41847.3392761827$1161334883$gmane$org@sympatico.ca>
+Date: Tue, 17 Oct 2006 08:57:23 -0400
+Message-ID: <20061017085723.7542ee6c.seanlkml__20673.2976054356$1161335024$gmane$org@sympatico.ca>
 References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<45349162.90001@op5.se> <453536AE.6060601@utoronto.ca>
-	<200610172301.27101.jnareb@gmail.com>
-	<45354AD0.1020107@utoronto.ca>
-	<BAYC1-PASMTP07AB11A64250AAF683424DAE0E0@CEZ.ICE>
-	<45355CBB.80108@utoronto.ca>
+	<Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
+	<45345AEF.6070107@utoronto.ca>
+	<200610171030.35854.jnareb@gmail.com>
+	<vpqejt76vgz.fsf@ecrins.imag.fr>
+	<BAYC1-PASMTP02ADC5BEF688E61583283CAE0E0@CEZ.ICE>
+	<vpqbqob5euu.fsf@ecrins.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
+Cc: Linus Torvalds <torvalds@osdl.org>, bazaar-ng@lists.canonical.com,
 	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 11:01:16 2006
+X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 11:03:41 2006
 Return-path: <bazaar-ng-bounces@lists.canonical.com>
 Envelope-to: gcvbg-bazaar-ng@m.gmane.org
 Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaqFg-0004qI-S0
-	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 11:01:16 +0200
+	id 1GaqHt-0005Hj-LA
+	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 11:03:33 +0200
 Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
 	by esperanza.ubuntu.com with esmtp (Exim 4.60)
 	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GapNL-0007lP-Fr; Fri, 20 Oct 2006 09:05:07 +0100
-Received: from bayc1-pasmtp01.bayc1.hotmail.com ([65.54.191.161])
+	id 1GapN2-0007jq-PH; Fri, 20 Oct 2006 09:04:49 +0100
+Received: from bayc1-pasmtp10.bayc1.hotmail.com ([65.54.191.170])
 	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <seanlkml@sympatico.ca>) id 1GZxrG-0002kS-4b
-	for bazaar-ng@lists.canonical.com; Tue, 17 Oct 2006 23:56:27 +0100
+	(envelope-from <seanlkml@sympatico.ca>) id 1GZoVb-0002ZS-8i
+	for bazaar-ng@lists.canonical.com; Tue, 17 Oct 2006 13:57:30 +0100
 X-Originating-IP: [65.93.43.81]
 X-Originating-Email: [seanlkml@sympatico.ca]
 Received: from linux1.attic.local ([65.93.43.81]) by
-	bayc1-pasmtp01.bayc1.hotmail.com over TLS secured channel with
-	Microsoft SMTPSVC(6.0.3790.1830); Tue, 17 Oct 2006 15:56:24 -0700
+	BAYC1-PASMTP10.bayc1.hotmail.com over TLS secured channel with
+	Microsoft SMTPSVC(6.0.3790.1830); Tue, 17 Oct 2006 06:01:04 -0700
 Received: from guru.attic.local ([10.10.10.28])
 	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GZwv8-0007Tx-St; Tue, 17 Oct 2006 17:56:22 -0400
-To: Aaron Bentley <aaron.bentley@utoronto.ca>
-Message-Id: <20061017185622.30fbc6c0.seanlkml@sympatico.ca>
-In-Reply-To: <45355CBB.80108@utoronto.ca>
+	id 1GZnZU-0005fs-2h; Tue, 17 Oct 2006 07:57:24 -0400
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+Message-Id: <20061017085723.7542ee6c.seanlkml@sympatico.ca>
+In-Reply-To: <vpqbqob5euu.fsf@ecrins.imag.fr>
 X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 17 Oct 2006 22:56:24.0362 (UTC)
-	FILETIME=[786898A0:01C6F23F]
+X-OriginalArrivalTime: 17 Oct 2006 13:01:04.0656 (UTC)
+	FILETIME=[4DCE0100:01C6F1EC]
 X-Mailman-Approved-At: Fri, 20 Oct 2006 09:04:04 +0100
 X-BeenThere: bazaar-ng@lists.canonical.com
 X-Mailman-Version: 2.1.8
@@ -56,35 +57,73 @@ List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
 	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
 Sender: bazaar-ng-bounces@lists.canonical.com
 Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29424>
 
-On Tue, 17 Oct 2006 18:44:11 -0400
-Aaron Bentley <aaron.bentley@utoronto.ca> wrote:
+On Tue, 17 Oct 2006 14:03:21 +0200
+Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
 
-> That can lead to feature bloat.  Some plugins are not useful to
-> everyone, e.g. Mercurial repository support.  Some plugins introduce
-> additional dependencies that we don't want to have in the core (e.g. the
-> rsync, baz-import and graph-ancestry commands).
+> Anyway, given the price of disk space today, this only makes sense if
+> you have a fast access to the repository (otherwise, you consider your
+> local repository as a cache, and you're ready to pay the disk space
+> price to save your bandwidth). In this case, it's often in your
+> filesystem (local or NFS).
 
-Shrug, it's really not that tough to do in regular ole source code.
-On Fedora for instance you have your choice of which rpms you want
-to install to get the features of Git you want.
+This is most likely the reason that people using Git don't clammor
+more for the ability to work without a local repository.  Disk is cheap
+and it just makes sense the vast majority of the time to have a complete
+copy of the repository yourself.  There are a lot of powerful things
+you can do once you have all that information in your repo.  Not the least
+of which is performing any and all operations while flying on a plane
+or sitting on a park bench.
 
-> Plugins also don't have a Bazaar's rigid release cycle, testing
-> requirements and coding conventions, so they are a convenient way to try
-> out an idea, before committing to the effort of getting it merged into
-> the core.
+> I should have said "by default" ... but you have "commit --local" if
+> you want to have a local commit on a bound branch (at this point, I
+> should remind that not all branches are "bound branches". "bzr branch"
+> creates branches similar to git ones).
 
-Hmm.. It's pretty easy to test out Git ideas too.  People do it all
-the time, and without plugins.  Junio maintains several such trees
-for instance.  Dunno.. I just think plugs _sounds_ good to developers
-without much real benefit to users over regular ole source code.
+Well, with Git the default is to only commit locally.  Of course, you
+could set your post commit hook to always push it to a remote if
+you wanted to.
 
-> The bisect plugin is just as performant as any other bzr command.  (The
-> whole VCS is in Python.)  Most people don't use it, so we don't ship it
-> as part of the base install, but anyone who wants it can have it.
+> Will, take the example of my bzr setup.
+> 
+> I have one repository, say, $repo.
+> 
+> In it, I have one branch "$repo/bzr.dev" which is an exact mirror of
+> http://bazaar-vcs.org's branch.
+> 
+> I also have branches for patches (occasional in my case) that I'll
+> send to upstream. Say $repo/feature1, $repo/feature2, ...
+> 
+> If, by mistake, I start hacking on bzr.dev itself, I'll be warned at
+> commit time, create a branch, and commit in this new branch. I believe
+> git manages this in a different way, allowing you to commit in this
+> branch, and creating the branch next time you pull. But you know this
+> better than I ;-), I never got time to give a real try to git.
 
-Sure, and anyone who wants to use StGit on top of Git can download and
-use it as well.
+Well, it's just a slight difference in perspective rather than any
+big issue here.  Git treats all repositories as peers, so it would never
+assume that just because one other particular repo has a branch marked
+as read only that it should be marked read only locally.  It lets you
+commit to it, and then push to say a third and fourth repo that are
+writable as well.  In practice this doesn't really cause any
+insurmountable problems.
+
+> Yes, but you will have to do a merge at some point, right ? While I'm
+> keeping a purely linear history (not that it is good in the general
+> case, but for "projects" on which I'm the only developper, I find it
+> good. For example, my ${HOME}/etc/).
+
+Well if you're committing changes from multiple different machines,
+how is that different from having say 3 different developers committing
+changes to the central repo?  How does bzr avoid a merge when you're
+pushing changes from 3 separate machines? 
+
+You mentioned that if you try to push and you're not up to date you'll
+be prompted to update (ie. pull from the upstream repo).  When you do such
+a pull do your local changes get rebased on top or is there a merge?   By
+your comments I guess you're saying they're rebased rather than merged, and
+this is how you keep a linear history.  Git can do this easily, but it's
+not done by default.
 
 Sean
