@@ -1,71 +1,67 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: VCS comparison table
-Date: Wed, 18 Oct 2006 01:33:05 +0200
-Message-ID: <20061017233305.GG20017@pasky.or.cz>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <200610170119.09066.jnareb@gmail.com> <45346290.6050300@utoronto.ca> <200610171120.09747.jnareb@gmail.com> <1161078035.9020.73.camel@localhost.localdomain> <Pine.LNX.4.64.0610170921540.3962@g5.osdl.org> <1161124078.9020.88.camel@localhost.localdomain> <20061017191838.1c36499b.seanlkml@sympatico.ca>
+Date: Wed, 18 Oct 2006 01:39:41 +0200
+Message-ID: <200610180139.41647.jnareb@gmail.com>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <4534F133.1090003@op5.se> <453532A5.6060701@utoronto.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Robert Collins <robertc@robertcollins.net>,
-	Linus Torvalds <torvalds@osdl.org>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 18 02:14:21 2006
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Andreas Ericsson <ae@op5.se>, Linus Torvalds <torvalds@osdl.org>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 18 02:14:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZz4Z-00033K-CW
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 02:14:16 +0200
+	id 1GZz4b-00033K-Gx
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 02:14:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751109AbWJQXdK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 19:33:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751117AbWJQXdJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 19:33:09 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:58310 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751109AbWJQXdI (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 19:33:08 -0400
-Received: (qmail 7313 invoked by uid 2001); 18 Oct 2006 01:33:05 +0200
-To: Sean <seanlkml@sympatico.ca>
+	id S1751160AbWJQXjM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 17 Oct 2006 19:39:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751162AbWJQXjM
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 19:39:12 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:16822 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1751160AbWJQXjL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Oct 2006 19:39:11 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so70725ugd
+        for <git@vger.kernel.org>; Tue, 17 Oct 2006 16:39:10 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=KWNtpZbUZgtxZHMhgwGVtrmpvNtWIpvv/hmHgZ2HkODZpP7hS0SAa/AkNEVuGwDKa4+t21buAmfmWc82bCcAaOT91K/cjfy90lppGtifiMcwv54yZlsX0wq4ctDgTG9/29OV52Uc4UqqYd8JsI0oj8eVcLcCZKTMEmWsd/9SiI4=
+Received: by 10.66.224.19 with SMTP id w19mr10748555ugg;
+        Tue, 17 Oct 2006 16:39:10 -0700 (PDT)
+Received: from host-81-190-17-207.torun.mm.pl ( [81.190.17.207])
+        by mx.google.com with ESMTP id u1sm285263uge.2006.10.17.16.39.09;
+        Tue, 17 Oct 2006 16:39:09 -0700 (PDT)
+To: Aaron Bentley <aaron.bentley@utoronto.ca>
+User-Agent: KMail/1.9.3
+In-Reply-To: <453532A5.6060701@utoronto.ca>
 Content-Disposition: inline
-In-Reply-To: <20061017191838.1c36499b.seanlkml@sympatico.ca>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29144>
 
-Dear diary, on Wed, Oct 18, 2006 at 01:18:38AM CEST, I got a letter
-where Sean <seanlkml@sympatico.ca> said that...
-> On Wed, 18 Oct 2006 08:27:58 +1000
-> Robert Collins <robertc@robertcollins.net> wrote:
-> 
-> > Be as blunt as you want. You're expressing an opinion, and thats fine. I
-> > happen to think that we're right : users appear to really appreciate
-> > this bit of the UI, and I've not yet seen any evidence of confusion
-> > about it - though I will admit there is the possibility of that
-> > occurring.
-> 
-> Yeah, but it's an opinion that is based on a huge real world project with
-> hundreds of developers.  If Bazaar is ever used in a project of that
-> size it may just see the same type of issues as Bk.  As has been mentioned
-> elsewhere, Git users really appreciate the short forms it provides for
-> referencing commits, so much so that there is no reason to invent a
-> new (unstable) numbering system or attempt to hide the true underlying
-> commit identities.
+Aaron Bentley wrote:
+>> This clears things up immensely. bazaar checkout !=3D git checkout.
+>> I still fail to see how a local copy you can't commit to is useful
+>=20
+> My bzr is run from a local copy I can't commit to. =A0To get the late=
+st
+> changes from http://bazaar-vcs.org, I can run "bzr update ~/bzr/dev".
+> To merge the latest changes into my branch, I can run
+> "bzr merge ~/bzr/dev". =A0It's also convenient for applying other peo=
+ples'
+> patches to.
 
-BTW, I think it's fine to build a system optimized for small-scale
-projects (if that's the intent), simplifying some things in favour of
-mostly straight histories instead of more complicated merge situations
-(although I tend to agree with Linus that if you don't behave in the way
-the users are used to in 100% cases, the more frequently you behave so
-the worse it comes back to bite in the rare cases you do). Just as RCS
-is fine when maintaining individual files for personal usage (I still
-actually occassionaly use it for few files).
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+Can you do "bzr log" in 'checkout', without need to specify "~/bzr/dev"=
+?
+If not, how this differs from checking out (in git terminology) outside=
+=20
+default working area, and requiring providing GIT_DIR or --git-dir for
+stuff?
+--=20
+Jakub Narebski
+Poland
