@@ -1,108 +1,93 @@
-From: Aaron Bentley <aaron.bentley@utoronto.ca>
-Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 00:56:48 -0400
-Message-ID: <45346290.6050300@utoronto.ca>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <egr3ud$nqm$1@sea.gmane.org> <45340713.6000707@utoronto.ca> <200610170119.09066.jnareb@gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 1/2] Delete ref $frotz by moving ref file to "deleted-$frotz~ref".
+Date: Tue, 17 Oct 2006 01:07:14 -0400
+Message-ID: <20061017050714.GA21210@spearce.org>
+References: <20061014153949.2994a114.chriscool@tuxfamily.org> <7vr6xa91kj.fsf@assigned-by-dhcp.cox.net> <200610170626.25654.chriscool@tuxfamily.org> <7v4pu3tuye.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 17 06:57:03 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 17 07:07:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZh0b-00045D-Mv
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 06:56:58 +0200
+	id 1GZhB7-0005hZ-QX
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 07:07:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423061AbWJQE4z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 00:56:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423062AbWJQE4y
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 00:56:54 -0400
-Received: from server4.panoramicfeedback.com ([66.216.124.41]:42162 "EHLO
-	server4.panoramicfeedback.com") by vger.kernel.org with ESMTP
-	id S1423061AbWJQE4x (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Oct 2006 00:56:53 -0400
-Received: from server4.panoramicfeedback.com ([66.216.124.41] helo=[127.0.0.1])
-	by server4.panoramicfeedback.com with esmtp (Exim 3.36 #1 (Debian))
-	id 1GZh0T-0000Yl-00; Tue, 17 Oct 2006 00:56:50 -0400
-User-Agent: Thunderbird 1.5.0.7 (X11/20060922)
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200610170119.09066.jnareb@gmail.com>
-X-Enigmail-Version: 0.94.0.0
-X-Panometrics-MailScanner: Found to be clean
+	id S1423091AbWJQFH1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 01:07:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423092AbWJQFH1
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 01:07:27 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:5100 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1423091AbWJQFHY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Oct 2006 01:07:24 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GZhAc-0005xc-UQ; Tue, 17 Oct 2006 01:07:19 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id CD12620E42A; Tue, 17 Oct 2006 01:07:14 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v4pu3tuye.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29020>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Junio C Hamano <junkio@cox.net> wrote:
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> 
+> > For example, when git becomes a major SCM, there may be people working on 
+> > big projects that want to create a new branch for each new bug and then 
+> > delete the branch when the code on the bug branch has been integrated into 
+> > a new release and the bug is closed.
+> 
+> I would say that is a very valid way to work with git,
+> regardless of the size of project.  Now, how often would you
+> create such a per-bug branch and delete one, compared to the
+> number of operations that would require ref lookups?  Your
+> example actually supports what I've said -- optimizing for
+> deletion at the cost of more expensive lookups is wrong.
 
-Jakub Narebski wrote:
-> Well, <ref>~<n> means <n>-th _parent_ of a given ref, which for branches
-> (which constantly change) is a moving target.
+I agree completely with Junio.  I make a lot of temporary "throw
+away" branches in Git; often they live on disk for 5/10 minutes at
+most before getting deleted again.  I also make a smaller number
+(but still significant) of longer lived branches that hang around
+for days or weeks before getting deleted.
 
-Ah.  Bazaar uses negative numbers to refer to <n>th parents, and
-positive numbers to refer to the number of commits that have been made
-since the branch was initialized.
+In the former case (throw away) I wouldn't want those refs added
+to the packed refs file.  They just don't live around long enough
+to make it worth it.  And when I delete them I want them gone.
+So moving them off to a 'deleted-refs' directory to indicate they
+are gone is just delaying the removal.  Not something I want.
 
-> One cannot have universally valid revision numbers (even
-> only per branch) in distributed development. Subversion can do that only
-> because it is centralized SCM. Global numbering and distributed nature
-> doesn't mix... hence contents based sha1 as commit identifiers.
+In the latter case (longer lived) I don't mind if I have to sit
+though an extra 500 ms to rewrite the entire packed refs file
+during a ref delete operation.  I lived with the branch for weeks;
+I can probably spare a second to finally get rid of it once its
+gone upstream.  Heck, the push to move that branch upstream might
+actually take longer to unpack the loose objects contained on that
+branch than the packed ref delete, even on 1000s of refs.
+ 
+> If the goal is to optimize for deletion path, then that is
+> true.  My point is that we do not want to optimize for deletion
+> path at the expense of more costly lookup path.
 
-Sure.  Our UI approach is that unique identifiers can usefully be
-abstracted away with a combination of URL + number, in the vast majority
-of cases.
+Absolutely.  I figure I do ref lookups at least 3x the number of ref
+deletes I perform.  And that's just thinking about the sequence of
+commands I commonly perform against my "throw away" branches which
+live for at most 10 minutes, let alone my longer lived branches
+that hang around for weeks.
 
-> But this doesn't matter much, because you can have really lightweight
-> tags in git (especially now with packed refs support). So you can have
-> the namespace you want.
-
-The nice thing about revision numbers is that they're implicit-- no one
-needs to take any action to update them, and so you can always use them.
-
-> I wonder if any SCM other than git has easy way to "rebase" a branch,
-> i.e. cut branch at branching point, and transplant it to the tip
-> of other branch. For example you work on 'xx/topic' topic branch,
-> and want to have changes in those branch but applied to current work,
-> not to the version some time ago when you have started working on
-> said feature.
-
-If I understand correctly, in Bazaar, you'd just merge the current work
-into 'xx/topic'.
-
-> What your comparison matrick lacks for example is if given SCM
-> saves information about branching point and merges, so you can
-> get where two branches diverged, and when one branch was merged into
-> another.
-
-I'm not sure what you mean about divergence.  For example, Bazaar
-records the complete ancestry of each branch, and determining the point
-of divergence is as simple as finding the last common ancestor.  But are
-you considering only the initial divergence?  Or if the branches merge
-and then diverge again, would you consider that the point of divergence?
-
-merge-point tracking is a prerequisite for Smart Merge, which does
-appear on our matrix.
-
-> Plugins = API + detection ifrastructure + loading on demand.
-> Git has API, has a kind of detection ifrastructure (for commands and
-> merge strategies only), doesn't have loading on demand. You can
-> easily provide new commands (thanks to git wrapper) and new merge
-> strategies.
-
-I'm not sure what you mean by API, unless you mean the commandline.  If
-that's what you mean, surely all unix commands are extensible in that
-regard.
-
-Aaron
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.2 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFFNGKQ0F+nu1YWqI0RAsW+AJoDOsNRmBjo3raT43JL6qn7SuJNRwCfe9l5
-oAZ9OyrxMQlHnwrruhcjz9Y=
-=RNuG
------END PGP SIGNATURE-----
+-- 
+Shawn.
