@@ -1,63 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 02:36:02 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0610170233110.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
- <45340713.6000707@utoronto.ca> <Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
- <200610170155.10536.jnareb@gmail.com> <Pine.LNX.4.63.0610170157270.14200@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0610161714590.3962@g5.osdl.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: On blame/pickaxe
+Date: Tue, 17 Oct 2006 02:44:29 +0200
+Message-ID: <20061017004429.GC20017@pasky.or.cz>
+References: <7vr6xddm7h.fsf@assigned-by-dhcp.cox.net> <20061016022159.GZ20017@pasky.or.cz> <7v8xjgvjys.fsf@assigned-by-dhcp.cox.net> <200610161602.49811.Josef.Weidendorfer@gmx.de> <453393E5.3020203@shadowen.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 17 02:37:00 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	Junio C Hamano <junkio@cox.net>,
+	Luben Tuikov <ltuikov@yahoo.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Tue Oct 17 02:44:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZcwH-0004gX-4Q
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 02:36:15 +0200
+	id 1GZd4M-0006wE-UE
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 02:44:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422988AbWJQAgJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Oct 2006 20:36:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422989AbWJQAgJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 20:36:09 -0400
-Received: from mail.gmx.de ([213.165.64.20]:53681 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1422988AbWJQAgH (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Oct 2006 20:36:07 -0400
-Received: (qmail invoked by alias); 17 Oct 2006 00:36:05 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp027) with SMTP; 17 Oct 2006 02:36:05 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0610161714590.3962@g5.osdl.org>
-X-Y-GMX-Trusted: 0
+	id S1422992AbWJQAoc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Oct 2006 20:44:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422994AbWJQAoc
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Oct 2006 20:44:32 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:17312 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1422992AbWJQAob (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Oct 2006 20:44:31 -0400
+Received: (qmail 20131 invoked by uid 2001); 17 Oct 2006 02:44:29 +0200
+To: Andy Whitcroft <apw@shadowen.org>
+Content-Disposition: inline
+In-Reply-To: <453393E5.3020203@shadowen.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29009>
 
-Hi,
+Dear diary, on Mon, Oct 16, 2006 at 04:15:01PM CEST, I got a letter
+where Andy Whitcroft <apw@shadowen.org> said that...
+> Josef Weidendorfer wrote:
+> > Hi,
+> > 
+> > this blame-passing thing really looks very promising and powerful.
+> > 
+> > On Monday 16 October 2006 08:43, you wrote:
+> >> If the user is not prepared to see code movement, pickaxe can be
+> >> run without -M nor -C to get the classic blame output.
 
-On Mon, 16 Oct 2006, Linus Torvalds wrote:
+Ok, so in this case -M and -C does not mean just looking for
+copies/movements in other files but inside the same file as well.
 
-> On Tue, 17 Oct 2006, Johannes Schindelin wrote:
+Perhaps we might want to differentiate those two cases since searching
+in all files might be significantly slower.
+
+> > Another blame-passing heuristic would be very interesting for code:
+> > "Ignore white-space changes".
+> > This way, commits which only do some reindentations simply are skipped.
+> > 
+> > It looks like such a thing would just be a matter of passing "-b" to
+> > executions of "diff" in the blame-passing algorithm.
 > 
-> > (How about making git-cat be a short cuut to "git -p cat-file -p"?)
-> 
-> Well, you can just add
-> 
-> 	[alias]
-> 		cat=-p cat-file -p
-> 
-> to your ~/.gitconfig file, and you're there.
+> I am thinking that that is probabally going to need to be optional, for
+> example python the indentation is everything to the meaning of the code.
 
-Ha! I have that for a long time! Although I named it "s", since "git s 
-todo:TODO" is two letters shorter...
+(OTOH, just today I was retrieving some code from deep inside a script
+to a common function, which of course caused massive indentation shift.
+So it is very desirable in order to catch these. But more we get
+involved in this, the more we will probably want to know about the
+syntax of the content we are digging in.)
 
-Ciao,
-Dscho
-
-P.S.: BTW a certain person complained about ~/.gitconfig not being 
-documented, but evidently the itch was not big enough for that person to 
-document it himself...
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
