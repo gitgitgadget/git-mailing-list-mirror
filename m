@@ -1,80 +1,70 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 01:31:06 -0400
-Message-ID: <20061017053106.GC21210@spearce.org>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <egr3ud$nqm$1@sea.gmane.org> <45340713.6000707@utoronto.ca> <Pine.LNX.4.63.0610170128350.14200@wbgn013.biozentrum.uni-wuerzburg.de> <4534656B.7080105@utoronto.ca>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [ANNOUNCE] GIT 1.4.2.4
+Date: Mon, 16 Oct 2006 22:31:56 -0700
+Message-ID: <7vvemjqzhv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 17 07:31:26 2006
+Cc: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 17 07:32:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZhXt-0000U7-6x
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 07:31:21 +0200
+	id 1GZhYa-0000aF-8Q
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 07:32:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423105AbWJQFbO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 01:31:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423114AbWJQFbO
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 01:31:14 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:1920 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1423105AbWJQFbN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Oct 2006 01:31:13 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GZhXf-0006pX-SD; Tue, 17 Oct 2006 01:31:07 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5A7B320E42A; Tue, 17 Oct 2006 01:31:06 -0400 (EDT)
-To: Aaron Bentley <aaron.bentley@utoronto.ca>
-Content-Disposition: inline
-In-Reply-To: <4534656B.7080105@utoronto.ca>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1423114AbWJQFb7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 01:31:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423116AbWJQFb7
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 01:31:59 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:37255 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1423114AbWJQFb6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Oct 2006 01:31:58 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061017053157.SEPL6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 17 Oct 2006 01:31:57 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id bHXj1V01L1kojtg0000000
+	Tue, 17 Oct 2006 01:31:45 -0400
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29025>
 
-Aaron Bentley <aaron.bentley@utoronto.ca> wrote:
-> Johannes Schindelin wrote:
-> > On Mon, 16 Oct 2006, Aaron Bentley wrote:
-> >> You'll note we referred to that bevhavior on the page.  We don't think
-> >> what Git does is the same as supporting renames.  AIUI, some Git users
-> >> feel the same way.
-> > 
-> > Oh, we start another flamewar again?
-> 
-> I'd hope not.  It sounds as though you feel that supporting renames in
-> the data representation is *wrong*, and therefore it should be an insult
-> to you if we said that Git fully supported renames.
+The latest maintenance release GIT 1.4.2.4 is available at the
+usual places:
 
-It would seem that the majority of folks on the Git list feel that
-way, myself among them.  I don't know that we'd find it an insult
-to say Git fully supports renames but I do think we have had better
-results from *not* recording them and looking for them after the
-fact with smart tools.
+  http://www.kernel.org/pub/software/scm/git/
 
-Junio's recent work with git-pickaxe (or whatever its name finally
-settles out to be) is a perfect example of this.  Despite not having
-"recorded renames" git-pickaxe is able to fairly accurately detect
-blocks of code moving between files, of which renaming files is just
-a special case.  This provides some fairly accurate blame reporting
-pointing to exactly which commit/author/datetime put a given line
-of code into the project.
+  git-1.4.2.4.tar.{gz,bz2}			(tarball)
+  git-htmldocs-1.4.2.4.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.4.2.4.tar.{gz,bz2}		(preformatted docs)
+  RPMS/$arch/git-*-1.4.2.4-1.$arch.rpm	(RPM)
 
-No additional metadata required.  All existing repositories can
-immediately benefit from the new tool.  Rather slick if you ask me.
+We are close to 1.4.3, so this update coulc become moot very
+soon, but just in case we have to delay it, I am pushing this
+out for a rather important performance fix.  Without it, "git
+diff" on 64-bit machines can run 100x times slower than it
+should be on unfortunate input.
 
--- 
-Shawn.
+Many thanks go to Jim Mayering for giving an easy to reproduce
+initial problem report, and Linus and Davide Libenzi to quickly
+come up with a fix.
+
+Unfortunately I do not have access to any RPM capable machine
+other than an x86-64 right now hence there is no RPM for x86-32
+for this release yet (but 32-bit machines do not need this fix
+to begin with, so it's Ok).
+
+----------------------------------------------------------------
+
+There is only one change since v1.4.2.3.
+
+Linus Torvalds:
+      Fix hash function in xdiff library
