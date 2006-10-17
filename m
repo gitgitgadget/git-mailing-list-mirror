@@ -1,62 +1,76 @@
-From: "Ryan Anderson" <rda@google.com>
-Subject: Re: [PATCH] add proper dependancies on the xdiff source
-Date: Tue, 17 Oct 2006 11:22:41 -0700
-Message-ID: <87dcb0bd0610171122o29be7d66r31ef60ef714ca536@mail.gmail.com>
-References: <Pine.LNX.4.64.0610171005370.3962@g5.osdl.org>
-	 <2ffb978570666d608b8a58c39e30b9d1@pinky>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: heads-up: git-index-pack in "next" is broken
+Date: Tue, 17 Oct 2006 14:47:16 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0610171437250.1971@xanadu.home>
+References: <7vy7rfsfqa.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610171134130.1971@xanadu.home>
+ <7vslhnj58e.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610171251210.1971@xanadu.home>
+ <7vbqoake1v.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 17 20:37:23 2006
+X-From: git-owner@vger.kernel.org Tue Oct 17 20:47:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZtoJ-00065K-Ne
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 20:37:08 +0200
+	id 1GZtyO-0008OO-M3
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 20:47:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750793AbWJQSWs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 14:22:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751409AbWJQSWs
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 14:22:48 -0400
-Received: from smtp-out.google.com ([216.239.45.12]:37435 "EHLO
-	smtp-out.google.com") by vger.kernel.org with ESMTP
-	id S1750793AbWJQSWr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Oct 2006 14:22:47 -0400
-Received: from zps78.corp.google.com (zps78.corp.google.com [172.25.146.78])
-	by smtp-out.google.com with ESMTP id k9HIMjGs013022
-	for <git@vger.kernel.org>; Tue, 17 Oct 2006 11:22:45 -0700
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=received:message-id:date:from:to:subject:cc:in-reply-to:
-	mime-version:content-type:content-transfer-encoding:
-	content-disposition:references;
-	b=JlWGGlYqkUpZU2sqTX5MV4XzSZkinmJZmC3bwOWgOtga9TelQUgSxaq7cgSBL+j9u
-	EhwHBY4FefcP5z4TdWOwg==
-Received: from nz-out-0102.google.com (nzdx3.prod.google.com [10.36.150.3])
-	by zps78.corp.google.com with ESMTP id k9HIMfCe014678
-	for <git@vger.kernel.org>; Tue, 17 Oct 2006 11:22:41 -0700
-Received: by nz-out-0102.google.com with SMTP id x3so2074nzd
-        for <git@vger.kernel.org>; Tue, 17 Oct 2006 11:22:41 -0700 (PDT)
-Received: by 10.65.186.18 with SMTP id n18mr12723157qbp;
-        Tue, 17 Oct 2006 11:22:41 -0700 (PDT)
-Received: by 10.64.83.11 with HTTP; Tue, 17 Oct 2006 11:22:41 -0700 (PDT)
-To: "Andy Whitcroft" <apw@shadowen.org>
-In-Reply-To: <2ffb978570666d608b8a58c39e30b9d1@pinky>
-Content-Disposition: inline
+	id S1750844AbWJQSrS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 14:47:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbWJQSrS
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 14:47:18 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:63621 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1750995AbWJQSrR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Oct 2006 14:47:17 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J7A0010EMUSWR90@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 17 Oct 2006 14:47:16 -0400 (EDT)
+In-reply-to: <7vbqoake1v.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29102>
 
-On 10/17/06, Andy Whitcroft <apw@shadowen.org> wrote:
-> We are not rebuilding the xdiff library when its header files change.
-> Add dependancies for those to the main Makefile.
->
-> Signed-off-by: Andy Whitcroft <apw@shadowen.org>
+On Tue, 17 Oct 2006, Junio C Hamano wrote:
 
-Acked-by: Ryan Anderson <ryan@google.com>
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> > Could you instrument the code at the end of 
+> > index-pack.c:parse_pack_objects() to display how many deltas were 
+> > actually resolved and how many were not?  IOW is it a case of all or 
+> > nothing, or is there an isolated case of corruption lurking somewhere?
+> 
+> fatal: packfile 'pack-ec0c3491753e115e1775256f6b7bd1bce4dea7cd.pack' has
+> 18915 unresolved ref-deltas and 0 ofs-deltas among 21205
 
-(I had a different variation on the same change just about ready to
-mail, but the dependencies match.  For a simple verification, "gcc -MM
-xdiff.c" is a good tool.)
+Hmmm....  Interesting.
+
+Is it possible that sizeof(union delta_base) might not be equal to 20 
+for you?
+
+> By the way, "Gaaaah".  Is this find_delta() called from
+> find_delta_children() doing the right thing?  I wonder if this
+> is open to accidental collisions?. If you have an object name
+> whose last 12-bytes are all NUL and you have a pack offset whose
+> bytes happens to be a good prefix for an object, what happens?
+
+It is filtered out later thusly:
+
+	...
+	for (j = ref_first; j <= ref_last; j++)
+		if (deltas[j].obj->type == OBJ_REF_DELTA)
+			resolve_delta(&deltas[j], data, ...);
+
+So if a collision happens the object won't be of the right type and it 
+is simply skipped.
+
+
+Nicolas
