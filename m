@@ -1,204 +1,164 @@
-From: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
-Subject: [PATCHv2] git-branch: Set branch properties
-Date: Tue, 17 Oct 2006 16:47:07 +0200
-Message-ID: <87y7rf80es.fsf@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: VCS comparison table
+Date: Tue, 17 Oct 2006 08:03:06 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610170737280.3962@g5.osdl.org>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+ <egr3ud$nqm$1@sea.gmane.org> <45340713.6000707@utoronto.ca>
+ <Pine.LNX.4.64.0610161625370.3962@g5.osdl.org> <45345AEF.6070107@utoronto.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Tue Oct 17 16:47:32 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 17 17:03:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZqDs-0006iM-1J
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 16:47:16 +0200
+	id 1GZqTd-0001eV-0w
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 17:03:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751123AbWJQOrM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 17 Oct 2006 10:47:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751126AbWJQOrL
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 10:47:11 -0400
-Received: from ifae-s0.ifae.es ([192.101.162.68]:55180 "EHLO ifae-s0.ifae.es")
-	by vger.kernel.org with ESMTP id S1751123AbWJQOrK (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 10:47:10 -0400
-Received: from bela (caronte.ifae.es [192.101.162.199])
-	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id k9HEl8J21461
-	for <git@vger.kernel.org>; Tue, 17 Oct 2006 16:47:08 +0200
-To: Git Mailing List <git@vger.kernel.org>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.50 (gnu/linux)
+	id S1751100AbWJQPDZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 11:03:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751112AbWJQPDZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 11:03:25 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:52973 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751100AbWJQPDY (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 11:03:24 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9HF37aX011327
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 17 Oct 2006 08:03:08 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9HF36WV024166;
+	Tue, 17 Oct 2006 08:03:06 -0700
+To: Aaron Bentley <aaron.bentley@utoronto.ca>
+In-Reply-To: <45345AEF.6070107@utoronto.ca>
+X-Spam-Status: No, hits=-0.473 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29084>
 
 
-Added a flag to git-branch (-c) that makes git-branch to write the
-config (branch properties) for the new branch so it will pull the same
-branch it branched from.
 
-If you want to work in the 'next' branch of git.git:
+On Tue, 17 Oct 2006, Aaron Bentley wrote:
+> 
+> But tags have local meaning only, unless someone has access to your
+> repository, right?
 
-$ git clone git://git.kernel.org/pub/scm/git/git.git
-$ cd git
-$ git branch -c mynext origin next
-$ tail -n 3 .git/config
-[branch "mynext"]
-        remote =3D origin
-        merge =3D refs/heads/next
-$ git branch -c secondnext next
-$ tail -n 3 .git/config
-[branch "secondnext"]
-        remote =3D .
-        merge =3D next
+Ehh. Exactly like the bzr numbers? You have to have access to the original 
+repo to name it.
 
-Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
----
+So your point is?
 
- Hi,
+If you do
 
-   it needs the get_ref_for_remote_branch function in
-   git-parse-remote.sh that is with the patch:
+	git log v2.6.17
 
-   [RFC/PATCH] git-fetch: Use already fetched branch with the --local
-   flag
+in a kernel repository, you'll see exactly what I see - because you'll 
+have gotten the tags, aka the "easy revision names".
 
-   Also, this does not apply cleanly in next, the change in next is and
-   the resolution trivial:
+Now, I'm obviously biased, but the thing is, git really does do this 
+right. No meaningless numbers. You give _meaningful_ revision names, and 
+they can be extremely powerful.
 
- <	rm -f "$GIT_DIR/logs/refs/heads/$branch_name"
- <	rm -f "$GIT_DIR/refs/heads/$branch_name"
- >	git update-ref -d "refs/heads/$branch_name" "$branch"
+And no, it's not just tags or the raw SHA1 numbers. You can do 
+relationships like
 
- What I have to do? Send the postimage or what?
+	git log HEAD~5..
 
- Another questions is about rerere: Can it be done at the hunk level? W=
-e
- could record the git-patch-id of the conflict and the postimage.
+which means "show the log for everything since five parents ago" (which is 
+_not_ the same as "show the last five revisions", because one of them may 
+have been a merge, and brought in a lot more of new commits).
 
- Documentation/git-branch.txt |   12 ++++++++++--
- git-branch.sh                |   30 +++++++++++++++++++++++++++---
- 2 files changed, 37 insertions(+), 5 deletions(-)
+Or, you can say
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.tx=
-t
-index d43ef1d..77bbf81 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -9,7 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git-branch' [-r]
--'git-branch' [-l] [-f] <branchname> [<start-point>]
-+'git-branch' [-l] [-f] [-c] <branchname> [<start-point> | <remote> <re=
-motebranch>]
- 'git-branch' (-d | -D) <branchname>...
-=20
- DESCRIPTION
-@@ -18,7 +18,8 @@ With no arguments given (or just `-r`) a
- will be shown, the current branch will be highlighted with an asterisk=
-=2E
-=20
- In its second form, a new branch named <branchname> will be created.
--It will start out with a head equal to the one given as <start-point>.
-+It will start out with a head equal to the one given as <start-point>,
-+or from branch <remotebranch> of the repository <remote>.
- If no <start-point> is given, the branch will be created with a head
- equal to that of the currently checked out branch.
-=20
-@@ -26,9 +27,16 @@ With a `-d` or `-D` option, `<branchname
- specify more than one branch for deletion.  If the branch currently
- has a ref log then the ref log will also be deleted.
-=20
-+With a `-c` option, the branch properties `branch.<branchname>.remote`
-+and `branch.<branchname>.merge` will be set.
-+
-=20
- OPTIONS
- -------
-+-c::
-+	Write the branch properties `branch.<branchname>.remote`
-+	and `branch.<branchname>.merge`.
-+
- -d::
- 	Delete a branch. The branch must be fully merged.
-=20
-diff --git a/git-branch.sh b/git-branch.sh
-index 4f31903..afd768a 100755
---- a/git-branch.sh
-+++ b/git-branch.sh
-@@ -1,9 +1,10 @@
- #!/bin/sh
-=20
--USAGE=3D'[-l] [(-d | -D) <branchname>] | [[-f] <branchname> [<start-po=
-int>]] | -r'
-+USAGE=3D'[-l] [(-d | -D) <branchname>] | [[-f] [-c] <branchname> [<sta=
-rt-point> | <remote> <remotebranch>]] | -r'
- LONG_USAGE=3D'If no arguments, show available branches and mark curren=
-t branch with a star.
- If one argument, create a new branch <branchname> based off of current=
- HEAD.
--If two arguments, create a new branch <branchname> based off of <start=
--point>.'
-+If two arguments, create a new branch <branchname> based off of <start=
--point>.
-+If three arguments, create a new branch <branchname> based off the bra=
-nch <remotebranch> of the repository <remote>.'
-=20
- SUBDIRECTORY_OK=3D'Yes'
- . git-sh-setup
-@@ -44,6 +45,8 @@ If you are sure you want to delete it, r
- 	esac
- 	rm -f "$GIT_DIR/logs/refs/heads/$branch_name"
- 	rm -f "$GIT_DIR/refs/heads/$branch_name"
-+	git repo-config --unset branch."$branchname".remote
-+	git repo-config --unset-all branch."$branchname".merge
- 	echo "Deleted branch $branch_name."
-     done
-     exit 0
-@@ -71,6 +74,9 @@ do
- 	-f)
- 		force=3D"$1"
- 		;;
-+	-c)
-+		config=3D"yes"
-+		;;
- 	-l)
- 		create_log=3D"yes"
- 		;;
-@@ -101,9 +107,21 @@ case "$#" in
- 	done
- 	exit 0 ;;
- 1)
-+	remote=3D"."
-+	remote_branch=3D"$headref"
- 	head=3DHEAD ;;
- 2)
-+	remote=3D"."
-+	remote_branch=3D"$2"
- 	head=3D"$2^0" ;;
-+3)
-+	remote=3D"$2"
-+	remote_branch=3D"$3"
-+	. git-parse-remote
-+	ref=3D$(get_ref_for_remote_branch "$remote" "$remote_branch")
-+	[ -z "$ref" ] && remote_branch=3D"refs/heads/$remote_branch" && \
-+		ref=3D$(get_ref_for_remote_branch "$remote" "$remote_branch")
-+	head=3D"$ref^0";;
- esac
- branchname=3D"$1"
-=20
-@@ -137,4 +155,10 @@ then
- 	mkdir -p $(dirname "$GIT_DIR/logs/refs/heads/$branchname")
- 	touch "$GIT_DIR/logs/refs/heads/$branchname"
- fi
--git update-ref -m "branch: Created from $head" "refs/heads/$branchname=
-" $rev
-+git update-ref -m "branch: Created from $head" "refs/heads/$branchname=
-" $rev || exit $?
-+
-+if test "$config" =3D "yes"
-+then
-+	git repo-config branch."$branchname".remote "$remote"
-+	git repo-config branch."$branchname".merge "$remote_branch"
-+fi
---=20
-1.4.2.4.g687a-dirty
+	git diff mybranch@{2.days.ago}..nextbranch
+
+which says exactly what you'd read it as: show the diff between what 
+"mybranch" looked like 2 days ago and what "nextbranch" looks like right 
+now.
+
+Or, since the namespace is the same for commit history _and_ for actual 
+file contents, and since some commands don't need commits, you can decide 
+to name not a revision, but a specific file or subdirectory in a revision, 
+and do things like
+
+	git -p grep -1 request_irq v2.6.17~2:drivers/char
+
+where the "revision" is not a commit revision at all, it's a _tree_ 
+revision, because we've looked up the revision for "v2.6.17~2" (which 
+means "the grandparent of the tag 2.6.17"), and then within that commit we 
+looked up the tree "drivers/char", and then we grepped (recursively) for 
+the string "request_irq" within that subtree (with one line of context), 
+and then we paginated the output through "less" (or whatever your pager is 
+set to).
+
+In other words, yes, the above does _exactly_ what you'd expect it to do.
+
+The fact is, nobody ever uses the SHA1 names directly in their normal 
+work. You'd use the branch names, tag-names, or some relationship operator 
+like "this long ago" or "the parent of" or similar).
+
+The only time you use actual SHA1 names is when you tell somebody _else_ 
+something. Or when you use "gitk" to look something up, and select a 
+commit, and then paste that commit name into "git show" (which is 
+obviously telling "somebody else" - it's communicating between two 
+programs).
+
+There's simply no reason to ever use the SHA1 names directly normally. But 
+they are there, and they are the _real_ revision numbers, and they 
+actually have real meaning between different repositories.
+
+So that "git grep" example above is actually 100% equivalent to
+
+	git -p grep -1 request_irq 3ff4e205e1
+
+but why would I ever write that? That's just insane. But in case you care, 
+the way I got that "3ff4e205e1" number, it was just by doing
+
+	git rev-parse v2.6.17~2:drivers/char
+
+and cutting-and-pasting the first ten hex-digits to  make sure I had 
+enough of a name to make it unique.
+
+So the SHA1 names always exist, and they are what git _internally_ uses, 
+but you'd normally not use them that much in your daily life. 
+
+They are great for explaining things, though. For example, when somebody 
+reports a bug, and has used "git bisect" to figure out where the bug 
+started happening, that's when the "real name" matters - since we normally 
+didn't tag that commit as being buggy when we created it ;)
+
+So that's when you'd say: "I bisected the problem, and it started 
+happening in commit 0123456789abcdef". And now everybody with a git 
+repository of the kernel can just look it up locally by 
+cutting-and-pasting that one number.
+
+> The key thing about a checkout is that it's stored in a different
+> location from its repository.  This provides a few benefits:
+
+Actually, git does something even better.
+
+Git allows the repository to be split up.
+
+You can get a git repository on a CD or DVD, and do
+
+	git clone -l -s /mount/cdrom myrepo
+
+and that "-s" means that the new "myrepo" actually is linked to the 
+original CDROM repository, and you can now _commit_ stuff and make changes 
+in myrepo, even though all the old history is on that CD-ROM. It won't add 
+any unnecessary stuff at all to the new repo.
+
+Or, you could do the "totally naked" checkout, so that the whole 
+repository is somewhere else (if that "somewhere else" is the CD-ROM, you 
+obviously cannot change anything ;)
+
+Or you can have <n> different repositories that are all related, and all 
+contain just the part that _they_ care about.
+
+		Linus
