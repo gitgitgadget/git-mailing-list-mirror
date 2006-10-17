@@ -1,43 +1,42 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: VCS comparison table
-Date: Wed, 18 Oct 2006 01:11:08 +0200
-Message-ID: <200610180111.09068.jnareb@gmail.com>
+Date: Tue, 17 Oct 2006 16:16:15 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610171610270.3962@g5.osdl.org>
 References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<45355CBB.80108@utoronto.ca>
-	<BAYC1-PASMTP01369CD694D75CB61ACCC7AE0E0@CEZ.ICE>
+	<200610172351.17377.jnareb@gmail.com> <4535590C.4000004@utoronto.ca>
+	<200610180057.25411.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
 	git@vger.kernel.org
-X-From: bazaar-ng-bounces@lists.canonical.com Wed Oct 18 01:10:55 2006
+X-From: bazaar-ng-bounces@lists.canonical.com Wed Oct 18 01:16:58 2006
 Return-path: <bazaar-ng-bounces@lists.canonical.com>
 Envelope-to: gcvbg-bazaar-ng@m.gmane.org
 Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZy5B-0003dy-U2
-	for gcvbg-bazaar-ng@m.gmane.org; Wed, 18 Oct 2006 01:10:50 +0200
+	id 1GZyB8-0004bO-6q
+	for gcvbg-bazaar-ng@m.gmane.org; Wed, 18 Oct 2006 01:16:58 +0200
 Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
 	by esperanza.ubuntu.com with esmtp (Exim 4.60)
 	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GZy5A-0003Th-Th; Wed, 18 Oct 2006 00:10:49 +0100
-Received: from ug-out-1314.google.com ([66.249.92.169])
+	id 1GZyAw-0003b1-Ry; Wed, 18 Oct 2006 00:16:46 +0100
+Received: from smtp.osdl.org ([65.172.181.4])
 	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <jnareb@gmail.com>) id 1GZy51-0003Sa-1r
-	for bazaar-ng@lists.canonical.com; Wed, 18 Oct 2006 00:10:43 +0100
-Received: by ug-out-1314.google.com with SMTP id 36so60880ugg
-	for <bazaar-ng@lists.canonical.com>;
-	Tue, 17 Oct 2006 16:10:38 -0700 (PDT)
-Received: by 10.66.216.6 with SMTP id o6mr2839253ugg;
-	Tue, 17 Oct 2006 16:10:38 -0700 (PDT)
-Received: from host-81-190-17-207.torun.mm.pl ( [81.190.17.207])
-	by mx.google.com with ESMTP id e1sm257760ugf.2006.10.17.16.10.37;
-	Tue, 17 Oct 2006 16:10:38 -0700 (PDT)
-To: Sean <seanlkml@sympatico.ca>
-User-Agent: KMail/1.9.3
-In-Reply-To: <BAYC1-PASMTP01369CD694D75CB61ACCC7AE0E0@CEZ.ICE>
-Content-Disposition: inline
+	(envelope-from <torvalds@osdl.org>) id 1GZyAs-0003aw-Ts
+	for bazaar-ng@lists.canonical.com; Wed, 18 Oct 2006 00:16:44 +0100
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9HNGKaX008063
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 17 Oct 2006 16:16:25 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9HNGF8W010219;
+	Tue, 17 Oct 2006 16:16:17 -0700
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200610180057.25411.jnareb@gmail.com>
+X-Spam-Status: No, hits=-0.473 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 X-BeenThere: bazaar-ng@lists.canonical.com
 X-Mailman-Version: 2.1.8
 Precedence: list
@@ -51,42 +50,35 @@ List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
 	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
 Sender: bazaar-ng-bounces@lists.canonical.com
 Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29134>
 
-/me too post ;-)
 
-Sean wrote:
-> On Tue, 17 Oct 2006 18:44:11 -0400
-> Aaron Bentley <aaron.bentley@utoronto.ca> wrote:
+
+On Wed, 18 Oct 2006, Jakub Narebski wrote:
 > 
-> > That can lead to feature bloat.  Some plugins are not useful to
-> > everyone, e.g. Mercurial repository support.  Some plugins introduce
-> > additional dependencies that we don't want to have in the core (e.g. the
-> > rsync, baz-import and graph-ancestry commands).
+> Perhaps it would be nice to have "bundles" in git too. As of now
+> we can save arbitrary part of history in a pack, but it is binary
+> not textual representation.
 > 
-> Shrug, it's really not that tough to do in regular ole source code.
-> On Fedora for instance you have your choice of which rpms you want
-> to install to get the features of Git you want.
+> Some of git workflow stems from old, pre-SCM Linux kernel workflow
+> of sending _patches_ via email.
 
-git-core, git-email, git-arch, git-cvs, git-svn, gitk
-(and git-debuginfo).
+Actually, the reason to _not_ have bundles very much stems from the fact 
+that BK did have bundles, and they were pretty horrid.
 
-gitk and gitweb were developed in its own repositories, but some time
-ago got incorporated into git repository. We have contrib/ area.
-QGit, Cogito, StGit are developed separately.
+It would be easy to send the exact same data as the native git protocol 
+sends over ssh (or the git port) as an email encoding. We did that a few 
+times with BK (there it's called "bk send" and "bk receive" to pack and 
+unpack those things), and after doing it about five times, I absolutely 
+refused to ever do it again. There's just no point, except to make your 
+mailbox grow without bounds, and it was really annoying. 
 
-> > Plugins also don't have a Bazaar's rigid release cycle, testing
-> > requirements and coding conventions, so they are a convenient way to try
-> > out an idea, before committing to the effort of getting it merged into
-> > the core.
-> 
-> Hmm.. It's pretty easy to test out Git ideas too.  People do it all
-> the time, and without plugins.  Junio maintains several such trees
-> for instance.  Dunno.. I just think plugs _sounds_ good to developers
-> without much real benefit to users over regular ole source code.
+So sending things as patches is just a lot more convenient if you want 
+emails.  And if you want to sync two repos directly, I think we've gotten 
+sufficiently past the old UUCP days when you want to use email as a 
+packetization medium.
 
-Thanks to many low lewel (plumbing in git-speak) commands it is very
-easy to prototype (write actually) new command in language suitable
-for fast prototyping, i.e. shell or Perl (or Python, too). Then if it is
-performance critical, or if it get troublesome to manage shell script
-version, it gets rewritten in C as builtin command.
+That said, "bundles" certainly wouldn't be _hard_ to do. And as long as 
+nobody tries to send _me_ any of them, I won't mind ;)
+
+		Linus
