@@ -1,62 +1,94 @@
-From: Sean <seanlkml@sympatico.ca>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 06:01:12 -0400
-Message-ID: <BAYC1-PASMTP07B8250B054F5CFF48C8C0AE0E0@CEZ.ICE>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<egr3ud$nqm$1@sea.gmane.org>
-	<45340713.6000707@utoronto.ca>
-	<200610170119.09066.jnareb@gmail.com>
-	<1161077866.9020.69.camel@localhost.localdomain>
+Date: Tue, 17 Oct 2006 12:06:26 +0200
+Organization: At home
+Message-ID: <eh29u4$8r1$1@sea.gmane.org>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <egr3ud$nqm$1@sea.gmane.org> <45340713.6000707@utoronto.ca> <200610170119.09066.jnareb@gmail.com> <1161077866.9020.69.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Aaron Bentley <aaron.bentley@utoronto.ca>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 17 12:01:24 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+Cc: bazaar-ng@lists.canonical.com
+X-From: git-owner@vger.kernel.org Tue Oct 17 12:06:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZll8-0003Xv-1j
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 12:01:18 +0200
+	id 1GZlq0-0004JC-HU
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 12:06:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161020AbWJQKBP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 06:01:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161041AbWJQKBP
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 06:01:15 -0400
-Received: from bayc1-pasmtp07.bayc1.hotmail.com ([65.54.191.167]:26100 "EHLO
-	BAYC1-PASMTP07.CEZ.ICE") by vger.kernel.org with ESMTP
-	id S1161020AbWJQKBO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Oct 2006 06:01:14 -0400
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP07.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 17 Oct 2006 03:06:59 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GZkoz-0005Ft-2i; Tue, 17 Oct 2006 05:01:13 -0400
-To: Robert Collins <robertc@robertcollins.net>
-Message-Id: <20061017060112.2d036f96.seanlkml@sympatico.ca>
-In-Reply-To: <1161077866.9020.69.camel@localhost.localdomain>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 17 Oct 2006 10:06:59.0843 (UTC) FILETIME=[FC360530:01C6F1D3]
+	id S1161070AbWJQKGS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 06:06:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161159AbWJQKGS
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 06:06:18 -0400
+Received: from main.gmane.org ([80.91.229.2]:4758 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1161070AbWJQKGR (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 06:06:17 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GZlpm-0004HF-Ve
+	for git@vger.kernel.org; Tue, 17 Oct 2006 12:06:07 +0200
+Received: from host-81-190-17-207.torun.mm.pl ([81.190.17.207])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 17 Oct 2006 12:06:06 +0200
+Received: from jnareb by host-81-190-17-207.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 17 Oct 2006 12:06:06 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-17-207.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29047>
 
-On Tue, 17 Oct 2006 19:37:45 +1000
-Robert Collins <robertc@robertcollins.net> wrote:
+Robert Collins wrote:
 
+> On Tue, 2006-10-17 at 01:19 +0200, Jakub Narebski wrote:
+>> 
+>> I wonder if any SCM other than git has easy way to "rebase" a branch,
+>> i.e. cut branch at branching point, and transplant it to the tip
+>> of other branch. For example you work on 'xx/topic' topic branch,
+>> and want to have changes in those branch but applied to current work,
+>> not to the version some time ago when you have started working on
+>> said feature. 
+> 
 > Precisely how does this rebase operate in git ? 
 > Does it preserve revision ids for the existing work, or do they all
 > change?
-> 
+
+Revision ids (commit ids) change of course. Therefore rebasing published
+branches is not recommended, as it is in fact rewriting history.
+
+It is however recommended before sending _series_ of patches (work on that
+series should be done using topic branch) to rebase topic branch they sit
+on for the patches to apply cleanly on top of current work. Or use StGit or
+other Quilt (patch management) equivalent.
+
 > bzr has a graft plugin which walks one branch applying all its changes
 > to another preserving the users metadata but changing the uuids for
 > revisions. 
 
-git rebase does exactly the same as you describe, including changing
-the sha1 for each commit it moves.
+This looks like "bzr graft" is the same as "git rebase". It can deal with
+conflict, cannot it?
 
-Sean
+
+P.S. It looks like we have yet another terminology conflict. In git "graft"
+means "history graft" i.e. file which changes parents of some commits. For
+example if we have historical repositoy and current repositoy we can join
+together using grafts (otherwise we would need to rewrite history, as sha1
+which serves as commit id includes parents information), e.g.
+
+   x--*--*--*--*....x--*--*--*--*
+
+    historical         current
+
+where 'x' is 'root' (parentless) commit, '--' denotes parentship, and '....'
+denotes "history graft".      
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
