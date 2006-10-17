@@ -1,82 +1,62 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: heads-up: git-index-pack in "next" is broken
-Date: Tue, 17 Oct 2006 14:46:04 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610171440080.3962@g5.osdl.org>
-References: <7vy7rfsfqa.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610171134130.1971@xanadu.home> <7vslhnj58e.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610171251210.1971@xanadu.home> <7vbqoake1v.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610171437250.1971@xanadu.home> <20061017233630.72a0aae5.vsu@altlinux.ru>
- <Pine.LNX.4.64.0610171615340.1971@xanadu.home> <Pine.LNX.4.64.0610171339030.3962@g5.osdl.org>
- <Pine.LNX.4.64.0610171706260.1971@xanadu.home>
+From: "Christian MICHON" <christian.michon@gmail.com>
+Subject: Re: [PATCH] nice ftplugin for vim, that shows the commited diff in a split'ed buffer.
+Date: Tue, 17 Oct 2006 23:48:51 +0200
+Message-ID: <46d6db660610171448h53de5e40wf55f19d6458127ef@mail.gmail.com>
+References: <11610450702261-git-send-email-madcoder@debian.org>
+	 <200610171238.04372.madcoder@debian.org>
+	 <802d21790610170359v3f17438dn8009ae9a55b2405c@mail.gmail.com>
+	 <200610171304.39131.madcoder@debian.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sergey Vlasov <vsu@altlinux.ru>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 17 23:47:21 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Oct 17 23:49:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZwlP-0002mU-Lv
-	for gcvg-git@gmane.org; Tue, 17 Oct 2006 23:46:20 +0200
+	id 1GZwnw-0003HX-DL
+	for gcvg-git@gmane.org; Tue, 17 Oct 2006 23:48:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750911AbWJQVqQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 17:46:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750900AbWJQVqQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 17:46:16 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:62134 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750898AbWJQVqP (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 17:46:15 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9HLk5aX003084
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 17 Oct 2006 14:46:06 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9HLk4xQ006915;
-	Tue, 17 Oct 2006 14:46:04 -0700
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0610171706260.1971@xanadu.home>
-X-Spam-Status: No, hits=-0.474 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750798AbWJQVsx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 17:48:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750954AbWJQVsx
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 17:48:53 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:18210 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1750798AbWJQVsw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Oct 2006 17:48:52 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so54517ugd
+        for <git@vger.kernel.org>; Tue, 17 Oct 2006 14:48:51 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Yh1Db6s0/DvSynKiOF+Om0vBdmtyhwMOxX/oGpFFtoe8zeIag7yFEG8mZ8S4okI3FyY7u23l9TXSx7eG1rk7J6dx9RTIYId3hkQSEWKhjntusCZicVK+RO6KCFImh+CY1gEQT58BCDcx61LrSUTPD4cYOP8O4OlCMN71zVkSnZI=
+Received: by 10.78.128.15 with SMTP id a15mr10066233hud;
+        Tue, 17 Oct 2006 14:48:51 -0700 (PDT)
+Received: by 10.78.198.20 with HTTP; Tue, 17 Oct 2006 14:48:51 -0700 (PDT)
+To: git@vger.kernel.org
+In-Reply-To: <200610171304.39131.madcoder@debian.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29119>
 
+On 10/17/06, Pierre Habouzit <madcoder@debian.org> wrote:
+> and that time, I'll send that to the git contrib/vim maintainer so that
+> I won't bother the list too much :)
+>
 
+so there is a contrib/vim maintainer ? Sorry I'm new on git list
+(though Pierre gave me some hints already with git/vim).
 
-On Tue, 17 Oct 2006, Nicolas Pitre wrote:
-> 
-> Because offsets into packs are expressed as unsigned long everywhere 
-> else (except in the current pack index on-disk format).
+I'm interested in testing more of these goodies. Because I
+actually use git now on a daily basis for tcl/verilog/EDA
+together with (g)vim.
 
-Until your work, that "unsigned long" was totally just an internal thing 
-that didn't actually bleed into anything else.
+I'd like particularly to know if a git-explorer type of plugin makes
+sense for (g)vim and would like in this case be part of the team
+developping it... using git of course :)
 
-> > For some structure like this, it sounds positively wrong. Pack-files 
-> > should be architecture-neutral, which means that they shouldn't depend on 
-> > word-size, and they should be in some neutral byte-order.
-> 
-> But they do.  Please consider this code:
-
-Right. The pack-file itself. But the code that actually _generates_ it 
-mixes things in alarming ways.
-
-> > In contrast, the new union introduced in "next" is just horrid. There's 
-> > not even any way to know which member to use, except apparently that it 
-> > expects that a SHA1 is never zero in the last 12 bytes. Which is probably 
-> > true, but still - that's some ugly stuff.
-> 
-> This union should be looked at just like a sortable hash pointing to a 
-> base object so that deltas with the same base object can be sorted 
-> together.
-
-.. and it sorts _differently_ on a big-endian vs little-endian thing, 
-doesn't it?
-
-So now the sort order depends on endianness and/or wordsize. That just 
-sounds really really wrong.
-
-			Linus
+-- 
+Christian
