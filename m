@@ -1,136 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Make the ftplugin right wrt gitdir
-Date: Wed, 18 Oct 2006 05:46:51 -0400
-Message-ID: <20061018094651.GA19907@coredump.intra.peff.net>
-References: <11611319762395-git-send-email-madcoder@debian.org> <200610181010.59995.madcoder@debian.org> <20061018090231.GA18807@coredump.intra.peff.net> <200610181107.56260.madcoder@debian.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: heads-up: git-index-pack in "next" is broken
+Date: Wed, 18 Oct 2006 12:00:28 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0610181159050.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vy7rfsfqa.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610171134130.1971@xanadu.home> <7vslhnj58e.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610171251210.1971@xanadu.home> <7vbqoake1v.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610171437250.1971@xanadu.home> <20061017233630.72a0aae5.vsu@altlinux.ru>
+ <Pine.LNX.4.64.0610171615340.1971@xanadu.home> <Pine.LNX.4.64.0610171339030.3962@g5.osdl.org>
+ <Pine.LNX.4.64.0610171706260.1971@xanadu.home> <Pine.LNX.4.64.0610171440080.3962@g5.osdl.org>
+ <Pine.LNX.4.64.0610171959070.1971@xanadu.home> <7vac3uif6i.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610172209070.1971@xanadu.home> <7v64eii7hh.fsf@assigned-by-dhcp.cox.net>
+ <7vu022gqji.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 18 11:47:03 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Wed Oct 18 12:00:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ga80o-0004JW-Gr
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 11:46:58 +0200
+	id 1Ga8E1-0006y5-49
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 12:00:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750990AbWJRJqy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 05:46:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751458AbWJRJqy
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 05:46:54 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3243 "HELO
-	peff.net") by vger.kernel.org with SMTP id S1750990AbWJRJqy (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Oct 2006 05:46:54 -0400
-Received: (qmail 8107 invoked from network); 18 Oct 2006 05:46:51 -0400
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 18 Oct 2006 05:46:51 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Oct 2006 05:46:51 -0400
-To: Pierre Habouzit <madcoder@debian.org>
-Content-Disposition: inline
-In-Reply-To: <200610181107.56260.madcoder@debian.org>
+	id S932169AbWJRKAd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Oct 2006 06:00:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932157AbWJRKAd
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 06:00:33 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58859 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1751455AbWJRKAc (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Oct 2006 06:00:32 -0400
+Received: (qmail invoked by alias); 18 Oct 2006 10:00:30 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp035) with SMTP; 18 Oct 2006 12:00:30 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vu022gqji.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29216>
 
-On Wed, Oct 18, 2006 at 11:07:54AM +0200, Pierre Habouzit wrote:
+Hi,
 
-> well the result file is here: 
-> http://madism.org/~madcoder/dotfiles/vim/ftplugin/git.vim
+On Tue, 17 Oct 2006, Junio C Hamano wrote:
 
-I was able to grab it...my comments are below.
+> +/*
+> + * Even if sizeof(union delta_base) == 24 on 64-bit archs, we really want
+> + * to memcmp() only the first 20 bytes.
+> + */
+> +#define UNION_BASE_SZ	20
 
->  if exists("b:did_ftplugin")
->    finish
->  endif
->  
->  let b:did_ftplugin = 1
->  
->  setlocal tw=74
->  setlocal nowarn nowb
+Excuse me for joining the game, but why don't you just use the 
+recently introduced hashcmp() for that purpose? AFAIU you do exactly that, 
+you compare hashes.
 
-Do things like tw really have anything to do with the ftplugin?
-Shouldn't they instead go into the user's vimrc?
-
->  "{{{ function Git_diff_windows
->  
->  function! Git_diff_windows(vertsplit, auto)
->      let i = 0
->      let list_of_files = ''
->  
->      " drop everything until '#  (will commit)' and the next empty line
->      while i <= line('$')
->          let line = getline(i)
->          if line =~ '^#\s*(will commit)$'
->              let i = i + 2
->              break
->          endif
->  
->          let i = i + 1
->      endwhile
->  
->      " read file names until we have EOF or an empty line
->      while i <= line('$')
->          let line = getline(i)
->          if line =~ '^#\s*[a-z ]*:.*->.*$'
->              let file = substitute(line, '\v^#[^:]*:.*->\s*(.*)\s*$', '\1', '')
->              let list_of_files = list_of_files . ' '.file
->              let file = substitute(line, '\v^#[^:]*:\s*(.*)\s*->.*$', '\1', '')
->              let list_of_files = list_of_files . ' '.file
->          elseif line =~ '^#\s*[a-z ]*:'
->              let file = substitute(line, '\v^#[^:]*:\s*(.*)\s*$', '\1', '')
->              let list_of_files = list_of_files . ' '.file
->          elseif line =~ '^#\s*$'
->              break
->          endif
->  
->          let i = i + 1
->      endwhile
->  
->      if list_of_files == ""
->          return
->      endif
->  
->      if a:vertsplit
->          rightbelow vnew
->      else
->          rightbelow new
->      endif
-
-This all looks OK to me, but then I don't really know vim script very
-well. :)
-
->      silent! setlocal ft=diff previewwindow bufhidden=delete nobackup noswf nobuflisted nowrap buftype=nofile
->      let gitDir = system('git rev-parse --git-dir 2>/dev/null')
->      let gitDir = substitute(gitDir, '.git\n', '', '')
->      let wd = getcwd()
->      if gitDir != ''
->          exe 'cd '.gitDir
->      endif
->      exe 'normal :r!LANG=C git diff HEAD -- ' . list_of_files . "\n1Gdd"
->      exe 'normal :r!LANG=C git diff HEAD -- ' . list_of_files . " \| git apply --stat\no\<esc>1GddO\<esc>"
->      exe 'cd '.wd
->      setlocal nomodifiable
-
-This procedure seems a bit hack-ish and fragile. I think the chdir is
-necessary not just to handle autochdir, but also because we want to do
-any diff from the top-level instead of a subdir. Why do we
-unconditionally set LANG=C? What about quoting for the file list?
-
-In general, is this really that much nicer than simply using the '-v'
-flag to git-commit?
-
->  if g:git_diff_spawn_mode == 1
->      call Git_diff_windows(0, 1)
->  elseif g:git_diff_spawn_mode == 2
->      call Git_diff_windows(1, 1)
->  endif
-
-This should probably handle the case where g:git_diff_spawn_mode is not
-defined (otherwise vim complains loudly):
-  if exists("g:git_diff_spawn_mode")
-     " do nothing
-  elseif g:git_diff_spawn_mode == 1
-etc.
-
--Peff
+Ciao,
+Dscho
