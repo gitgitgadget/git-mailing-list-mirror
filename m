@@ -1,76 +1,70 @@
-From: Aaron Bentley <aaron.bentley@utoronto.ca>
-Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 21:05:39 -0400
-Message-ID: <45357DE3.70206@utoronto.ca>
-References: <Pine.LNX.4.64.0610161625370.3962@g5.osdl.org> <45345AEF.6070107@utoronto.ca> <200610171030.35854.jnareb@gmail.com> <vpqejt76vgz.fsf@ecrins.imag.fr> <BAYC1-PASMTP02ADC5BEF688E61583283CAE0E0@CEZ.ICE> <vpqbqob5euu.fsf@ecrins.imag.fr> <20061018002523.GJ20017@pasky.or.cz> <4535778D.40006@utoronto.ca> <20061018004209.GL20017@pasky.or.cz> <45357A6E.3050603@utoronto.ca> <20061018005700.GM20017@pasky.or.cz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Integrating gitweb and git-browser (was: Re: VCS comparison table)
+Date: Wed, 18 Oct 2006 03:36:36 +0200
+Organization: At home
+Message-ID: <eh40e1$9g1$1@sea.gmane.org>
+References: <45345AEF.6070107@utoronto.ca> <200610171030.35854.jnareb@gmail.com> <vpqejt76vgz.fsf@ecrins.imag.fr> <BAYC1-PASMTP02ADC5BEF688E61583283CAE0E0@CEZ.ICE> <vpqbqob5euu.fsf@ecrins.imag.fr> <BAYC1-PASMTP10E107E5EB0F7E69167F41AE0E0@CEZ.ICE> <vpqejt73vln.fsf@ecrins.imag.fr> <BAYC1-PASMTP10F617306F1477E66FA441AE0E0@CEZ.ICE> <vpqlknf10u5.fsf@ecrins.imag.fr> <20061017110655.f7bcf3f1.seanlkml@sympatico.ca> <20061018001455.GI20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, Sean <seanlkml@sympatico.ca>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Linus Torvalds <torvalds@osdl.org>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 18 03:05:55 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed Oct 18 03:36:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZzsW-00083n-Vg
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 03:05:53 +0200
+	id 1Ga0Lv-0001xL-W6
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 03:36:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750932AbWJRBFu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 21:05:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750965AbWJRBFu
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 21:05:50 -0400
-Received: from server4.panoramicfeedback.com ([66.216.124.41]:58310 "EHLO
-	server4.panoramicfeedback.com") by vger.kernel.org with ESMTP
-	id S1750932AbWJRBFt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Oct 2006 21:05:49 -0400
-Received: from server4.panoramicfeedback.com ([66.216.124.41] helo=[127.0.0.1])
-	by server4.panoramicfeedback.com with esmtp (Exim 3.36 #1 (Debian))
-	id 1GZzsL-0006Sh-00; Tue, 17 Oct 2006 21:05:42 -0400
-User-Agent: Thunderbird 1.5.0.7 (X11/20060922)
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20061018005700.GM20017@pasky.or.cz>
-X-Enigmail-Version: 0.94.0.0
-X-Panometrics-MailScanner: Found to be clean
+	id S1751100AbWJRBgJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 21:36:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751109AbWJRBgJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 21:36:09 -0400
+Received: from main.gmane.org ([80.91.229.2]:24997 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751100AbWJRBgI (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 21:36:08 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Ga0Ln-0001w4-85
+	for git@vger.kernel.org; Wed, 18 Oct 2006 03:36:07 +0200
+Received: from host-81-190-17-207.torun.mm.pl ([81.190.17.207])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 18 Oct 2006 03:36:07 +0200
+Received: from jnareb by host-81-190-17-207.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 18 Oct 2006 03:36:07 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-17-207.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29170>
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29171>
 
 Petr Baudis wrote:
-> Dear diary, on Wed, Oct 18, 2006 at 02:50:54AM CEST, I got a letter
-> where Aaron Bentley <aaron.bentley@utoronto.ca> said that...
->> Petr Baudis wrote:
->>
->>> Ok, one last question - do you do most of the work locally, fetching
->>> bits of data as you need, or remotely, only taking input/producing
->>> output over the network (the pserver model)?
->> Personally, I do not do remote commits over slow links.  At home, I use
->> a single machine, and mirror my repository to a public machine using
->> rsync.  At work, I store my repository on an NFS server, and push my
->> repository to a public machine using rsync.
-> 
-> I meant the work of the commands (bzr log and such), not your personal
-> workflow. :-) Sorry for being unclear.
 
-When using the native network protocol, work can happen remotely.  (But
-the native protocol is quite new, and support for "smart" operations is
-currently limited.)  When using the dumb protocols, data is fetched from
-the remote system and processed locally.  Light checkouts are not
-recommended when the server is on a slow link, but heavyweight checkouts
-are quite suitable in that situation.
+> BTW, I'm thinking about implementing some plugin functionality for
+> gitweb 
 
-Aaron
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.2 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+Features support is kind of plugin system for gitweb. But certainly we could
+split gitweb into modules.
 
-iD8DBQFFNX3j0F+nu1YWqI0RAtRcAJ0fEZam6H3hs3YHY/dEYEhk3A73BQCdENHY
-s9+KZTfqnDJg8mHNmC2C/Ok=
-=Nqcn
------END PGP SIGNATURE-----
+> so that you can add your own views, so that git-browser can 
+> integrate to it more reasonably. (Currently it has completely different
+> UI and you have to patch gitweb in order to get the proper links at
+> proper places.) Sure, git-browser might get fully integrated to gitweb
+> later but that needs to be done sensitively so that people are not
+> scared by the horrible javascript blobs, etc.; currently git-browser is
+> very experimental, and adding it would be quite intrusive.
+
+I was thinking about adding using JavaScript, in shortlog (and perhaps
+shortlog-extended, i.e. with date and author) views one extra "diagram"
+column, with width set using JavaScript generated embedded style, and use
+only part of git-browser that generates diagram to draw it there.
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
