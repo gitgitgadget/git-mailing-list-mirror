@@ -1,96 +1,123 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: heads-up: git-index-pack in "next" is broken
-Date: Tue, 17 Oct 2006 22:23:30 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0610172209070.1971@xanadu.home>
-References: <7vy7rfsfqa.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610171134130.1971@xanadu.home>
- <7vslhnj58e.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610171251210.1971@xanadu.home>
- <7vbqoake1v.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610171437250.1971@xanadu.home>
- <20061017233630.72a0aae5.vsu@altlinux.ru>
- <Pine.LNX.4.64.0610171615340.1971@xanadu.home>
- <Pine.LNX.4.64.0610171339030.3962@g5.osdl.org>
- <Pine.LNX.4.64.0610171706260.1971@xanadu.home>
- <Pine.LNX.4.64.0610171440080.3962@g5.osdl.org>
- <Pine.LNX.4.64.0610171959070.1971@xanadu.home>
- <7vac3uif6i.fsf@assigned-by-dhcp.cox.net>
+From: Aaron Bentley <aaron.bentley@utoronto.ca>
+Subject: Re: VCS comparison table
+Date: Tue, 17 Oct 2006 23:10:34 -0400
+Message-ID: <45359B2A.1070102@utoronto.ca>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>	<Pine.LNX.4.64.0610171605440.3962@g5.osdl.org>	<45357411.20500@utoronto.ca>	<200610180246.18758.jnareb@gmail.com>	<45357CC3.4040507@utoronto.ca> <871wp6e7o9.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 18 04:23:39 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 18 05:11:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ga15j-0001nz-CD
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 04:23:35 +0200
+	id 1Ga1qA-0000oq-E5
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 05:11:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751153AbWJRCXc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 22:23:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbWJRCXc
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 22:23:32 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:34104 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1751153AbWJRCXb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Oct 2006 22:23:31 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J7B00IH47Z65G20@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 17 Oct 2006 22:23:30 -0400 (EDT)
-In-reply-to: <7vac3uif6i.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
-To: Junio C Hamano <junkio@cox.net>
+	id S1751214AbWJRDL2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 23:11:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751225AbWJRDL2
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 23:11:28 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41]:42440 "EHLO
+	server4.panoramicfeedback.com") by vger.kernel.org with ESMTP
+	id S1751214AbWJRDL1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Oct 2006 23:11:27 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41] helo=[127.0.0.1])
+	by server4.panoramicfeedback.com with esmtp (Exim 3.36 #1 (Debian))
+	id 1Ga1pu-0007ez-00; Tue, 17 Oct 2006 23:11:22 -0400
+User-Agent: Thunderbird 1.5.0.7 (X11/20060922)
+To: Carl Worth <cworth@cworth.org>
+In-Reply-To: <871wp6e7o9.wl%cworth@cworth.org>
+X-Enigmail-Version: 0.94.0.0
+X-Panometrics-MailScanner: Found to be clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29181>
 
-On Tue, 17 Oct 2006, Junio C Hamano wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> The part you pointed out to me about "accidental collision"
-> still bothers me somewhat.
+Carl Worth wrote:
+> Aaron, thanks for carrying this thread along and helping to bridge
+> some communication gaps. For example, when I saw your original two two
+> diagrams I was totally mystified how you were claiming that appending
+> a couple of nodes and edges to a DAG could change the "order" of the
+> DAG.
+> 
+> I think I understand what you're describing with the leftmost-parent
+> ordering now. But it's definitely an ordering that I would describe as
+> local-only. That is, the ordering has meaning only with respect to a
+> particular linearization of the DAG and that linearization is
+> different from one repository to the next.
 
-I'll try to clear them away.
+Well, the linarization for any particular head is well-defined, but
+since different branches have different heads...
 
-> Right now we do not produce ref-delta and ofs-delta in the same
-> stream, 
+> If in practice, nobody does the mirroring "pull" operation then how
+> are the numbers useful? For example, given your examples above, if
+> I'm understanding the concepts and terminology correctly, then if A
+> and B both "merge" from each other (and don't "pull") then they will
+> each end up with identical DAGs for the revision history but totally
+> distinct numbers. Correct?
 
-It is fully supported nevertheless.
+The DAGs will be different.  If A merges B, we get:
 
-> but if somebody did so then it would mean a disaster to have an 
-> accidental collision of an 8-byte offset value plus 12-byte traiing 
-> NUL and another base object whose object name happens to match that 
-> pattern.
+a
+|
+b
+|\
+c d
+|\|
+| e
+|/
+f
 
-Not really.  The only effect that would have on the sorted list of 
-delta entries -- such sorting used to bring all deltas with the same 
-base object contigously -- is that those deltas might not be perfectly 
-contigous wrt their base object.  This is why there is a test to skip 
-deltas if they happen not to be of the expected type.
+If B merges A before this, nothing happens, because B is already a
+superset of A.
 
-> I am actually Ok if we say the code assumes one stream has only
-> ref-delta or ofs-delta and never both.
+If B merges afterward, we get this:
+a
+|
+b
+|\
+d c
+|/|
+e |
+|\|
+| f
+|/
+g
 
-I'm perfectly OK with both types completely randomized.
+> So in that situation the numbers will not help A and B determine that
+> they have identical history or even identical working trees.
 
-> But then I suspect the first pass of parse_pack_objects() should
-> make sure that assumption holds true for the pack being
-> inspected and barf if it is not.
+They don't really have identical history.
 
-This is an unnecessary restriction though.
+> So what good are the numbers?
 
-> Also the second pass do not have to run two find_delta_childs() calls 
-> per delta object because by that time we know which kind would never 
-> appear in the packfile.
+They are good for naming mainline revisions that introduced particular
+changes.
 
-True, but the flexibility is worth having I think.  It makes the thing 
-more robust instead of less.
+> I can see that the numbers would have applicability with reference to
+> a single repository, (or equivalently a mirror of that repository),
+> but no utility as soon as there is any distributed development
+> happening.
 
-> By the way can we call that find_delta_children() pretty please?
+Well, there's distributed, and then there's *DISTRIBUTED*.  We don't
+quasi-randomly merge each others' branches.  We have a star topology
+around bzr.dev.  So when we refer to revnos, they're usually in bzr.dev.
 
-I have no problem with that.
+Aaron
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
-
-Nicolas
+iD8DBQFFNZsp0F+nu1YWqI0RAkmWAJ9PkrkubIHVgAn5Wbdkg9IBAHCviACdFx2x
+6ClmK4GmC1pRuRQACcSijNM=
+=SM1Y
+-----END PGP SIGNATURE-----
