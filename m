@@ -1,53 +1,98 @@
-From: Jeff Licquia <jeff@licquia.org>
-Subject: Re: VCS comparison table
-Date: Wed, 18 Oct 2006 14:03:10 -0400
-Message-ID: <1161194590.4467.34.camel@localhost.localdomain>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	 <4534C5CF.3000508@op5.se> <vpqlknf3wdz.fsf@ecrins.imag.fr>
-	 <200610171555.56778.jnareb@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [ANNOUNCE] Example Cogito Addon - cogito-bundle
+Date: Wed, 18 Oct 2006 20:52:25 +0200
+Message-ID: <20061018185225.GU20017@pasky.or.cz>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <200610172351.17377.jnareb@gmail.com> <4535590C.4000004@utoronto.ca> <200610180057.25411.jnareb@gmail.com> <Pine.LNX.4.64.0610171610270.3962@g5.osdl.org> <20061018053647.GA3507@coredump.intra.peff.net> <Pine.LNX.4.64.0610180739230.3962@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 18 20:04:16 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
+	Aaron Bentley <aaron.bentley@utoronto.ca>,
+	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 18 20:52:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaFlp-00084q-3m
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 20:04:01 +0200
+	id 1GaGWo-00012Y-Bw
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 20:52:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422745AbWJRSDU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 14:03:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422720AbWJRSDT
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 14:03:19 -0400
-Received: from jeffindy.licquia.org ([216.37.46.185]:30934 "EHLO
-	jeffindy.licquia.org") by vger.kernel.org with ESMTP
-	id S1422748AbWJRSDS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Oct 2006 14:03:18 -0400
-Received: from server1.internal.licquia.org (unknown [192.168.50.3])
-	by jeffindy.licquia.org (Postfix) with ESMTP id 34817F3C5;
-	Wed, 18 Oct 2006 14:03:17 -0400 (EDT)
-Received: from localhost.localdomain (unknown [192.168.52.6])
-	by server1.internal.licquia.org (Postfix) with ESMTP id 8464D980DA;
-	Wed, 18 Oct 2006 14:03:11 -0400 (EDT)
-Received: by localhost.localdomain (Postfix, from userid 1000)
-	id 1D8334E4025; Wed, 18 Oct 2006 14:03:10 -0400 (EDT)
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200610171555.56778.jnareb@gmail.com>
-X-Mailer: Evolution 2.6.3 
+	id S1422784AbWJRSwa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Oct 2006 14:52:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422780AbWJRSwa
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 14:52:30 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:24778 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1422789AbWJRSw3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Oct 2006 14:52:29 -0400
+Received: (qmail 2486 invoked by uid 2001); 18 Oct 2006 20:52:25 +0200
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0610180739230.3962@g5.osdl.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29250>
 
-On Tue, 2006-10-17 at 15:55 +0200, Jakub Narebski wrote:
-> Matthieu Moy wrote:
-> > This took time to come in bzr, but that's the bisect plugin:
-> > 
-> > http://bazaar-vcs.org/PluginRegistry
+Dear diary, on Wed, Oct 18, 2006 at 04:52:25PM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> said that...
+> In other words, to get such a pack, we'd _literally_ just do something 
+> like
 > 
-> Hmmm... I winder which SCM had it first.
+> 	git-rev-list --objects-edge origin.. |
+> 		git-pack-objects --stdout |
+> 		uuencode
+> 
+> and that would be it. You'd still need to add a "diffstat" to the thing, 
+> and tell the other end what the current HEAD is (so that it knows what 
+> it's supposed to fast-forward to), but it _literally_ is that simple.
+> 
+> "plug-in architecture" my ass. "I recognize this - it's UNIX!".
 
-You did.  The plugin is largely based on my experiences with the git
-version, and explicitly gives credit in the comments.
+Took me exactly an hour from mkdir cogito-bundle to cg-push to
+kernel.org. :-)
+
+cogito-bundle is an example on how to create third-party addons or
+plugins adding own commands to Cogito and using Cogito's infrastructure.
+It's not _that_ easy currently since you have to replicate large part of
+the build infrastructure locally; that could be fixed by installing some
+"library makefiles" and asciidoc toolkit to /usr/share or something, if
+there would be a real demand for such an addon API. cg-help and the cg
+wrapper will pick up the newly installed commands automagically. The
+only thing missing is updating cogito(7) to list the addon commands,
+which would take a bit more work.
+
+Though it's an example, it's actually supposed to be useful, by doing
+exactly what is outlined above - l - it lets you exchange commits over
+mail by so-called "bundles", similar to e.g. Bazaar bundles - basically,
+it is like push or fetch, but over email, and the commit ids are
+preserved when transferred in bundles (if you just send patches, the
+commit ids will end up different).
+
+The provided cg-bundle and cg-unbundle commands are rather crude and
+don't support many things - they don't actually include a diff, only a
+diffstat, etc. The uuencoded bundle is inlined in the mail, which I
+suspect isn't very useful; perhaps it would be more practical to just
+attach it binarily. Feel free to send patches (or bundles ;).
+
+An example bundle is available at
+
+	http://pasky.or.cz/~pasky/cp/example-bundle.txt
+
+as generated by
+
+	cogito.master$ cg-bundle -r v0.18 -m"Subject is this" \
+		-m"And some body now..." --stdout
+
+and cogito-bundle is available at
+
+	git://git.kernel.org/pub/scm/cogito/cogito-bundle.git/
+	(gitweb http://kernel.org/git/?p=cogito/cogito-bundle.git)
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
