@@ -1,59 +1,59 @@
-From: Jeff King <peff@peff.net>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
 Subject: Re: VCS comparison table
-Date: Wed, 18 Oct 2006 02:33:08 -0400
-Message-ID: <20061018063308.GB3507@coredump.intra.peff.net>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <egr3ud$nqm$1@sea.gmane.org> <45340713.6000707@utoronto.ca> <Pine.LNX.4.63.0610170128350.14200@wbgn013.biozentrum.uni-wuerzburg.de> <4534656B.7080105@utoronto.ca> <20061017062341.8a5c8530.seanlkml@sympatico.ca>
+Date: Wed, 18 Oct 2006 08:44:49 +0200
+Message-ID: <vpqlknem8bi.fsf@ecrins.imag.fr>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
+	<45345AEF.6070107@utoronto.ca> <200610171030.35854.jnareb@gmail.com>
+	<vpqejt76vgz.fsf@ecrins.imag.fr>
+	<BAYC1-PASMTP02ADC5BEF688E61583283CAE0E0@CEZ.ICE>
+	<vpqbqob5euu.fsf@ecrins.imag.fr> <20061018011147.GN20017@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 18 08:33:29 2006
+X-From: git-owner@vger.kernel.org Wed Oct 18 08:46:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ga4zV-0008KL-Io
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 08:33:25 +0200
+	id 1Ga5CG-0002Fe-KB
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 08:46:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750747AbWJRGdM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 02:33:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751440AbWJRGdM
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 02:33:12 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:30674 "HELO
-	peff.net") by vger.kernel.org with SMTP id S1750747AbWJRGdL (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Oct 2006 02:33:11 -0400
-Received: (qmail 30663 invoked from network); 18 Oct 2006 02:33:08 -0400
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 18 Oct 2006 02:33:08 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Oct 2006 02:33:08 -0400
-To: Sean <seanlkml@sympatico.ca>
-Content-Disposition: inline
-In-Reply-To: <20061017062341.8a5c8530.seanlkml@sympatico.ca>
+	id S1751439AbWJRGqd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Oct 2006 02:46:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450AbWJRGqd
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 02:46:33 -0400
+Received: from imag.imag.fr ([129.88.30.1]:55793 "EHLO imag.imag.fr")
+	by vger.kernel.org with ESMTP id S1751439AbWJRGqc (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Oct 2006 02:46:32 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.6/8.13.6) with ESMTP id k9I6inTj009540
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 18 Oct 2006 08:44:49 +0200 (CEST)
+Received: from ecrins.imag.fr ([129.88.43.124])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Ga5AX-0007OH-EZ; Wed, 18 Oct 2006 08:44:49 +0200
+Received: from moy by ecrins.imag.fr with local (Exim 4.50)
+	id 1Ga5AX-0004uz-Be; Wed, 18 Oct 2006 08:44:49 +0200
+To: bazaar-ng@lists.canonical.com, git@vger.kernel.org
+In-Reply-To: <20061018011147.GN20017@pasky.or.cz> (Petr Baudis's message of "Wed\, 18 Oct 2006 03\:11\:47 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.6 (imag.imag.fr [129.88.30.1]); Wed, 18 Oct 2006 08:44:49 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29196>
 
-On Tue, Oct 17, 2006 at 06:23:41AM -0400, Sean wrote:
+Petr Baudis <pasky@suse.cz> writes:
 
-> The "bzr missing" command sounds like a handy one.  
-> 
-> Someone on the xorg mailing list was recently lamenting that git does not
-> have an easy way to compare a local branch to a remote one.  While this
-> turns out to not be a big problem in git, it might be nice to have such
-> a command.
+> The origin branch is considered readonly (though Git does
+> not enforce it) and only mirrors the branch in the remote repository.
 
-What's wrong with:
+By curiosity, what happens if you accidentally commit to it?
 
-  git-fetch
-  gitk master...origin
-
-The git model is to do operations on local refs and objects, so the
-fetch is a natural part of that. The only downside I see is that you
-actually end up fetching the data rather than simply peeking at where
-the remote is. But a useful comparison will include at least grabbing
-the commit objects, and probably the tree objects (to do diffs) anyway.
-
--Peff
+-- 
+Matthieu
