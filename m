@@ -1,119 +1,80 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: VCS comparison table
-Date: Wed, 18 Oct 2006 13:08:41 +0200
-Message-ID: <20061018110841.GS20017@pasky.or.cz>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <200610171555.56778.jnareb@gmail.com> <vpqr6x711cm.fsf@ecrins.imag.fr> <200610171641.04455.jnareb@gmail.com> <20061018000026.GH20017@pasky.or.cz> <45357596.8050702@utoronto.ca> <20061018003920.GK20017@pasky.or.cz> <845b6e870610180228m39829c49nf37e07e76e744250@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [BUG] git-log shows first parent and repeated last for octopus merge
+Date: Wed, 18 Oct 2006 13:11:35 +0200
+Organization: At home
+Message-ID: <eh5242$rar$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	bazaar-ng@lists.canonical.com, Linus Torvalds <torvalds@osdl.org>,
-	Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 18 13:09:02 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed Oct 18 13:11:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ga9Hy-0003Nv-TJ
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 13:08:47 +0200
+	id 1Ga9Kb-0003vU-C2
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 13:11:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030196AbWJRLIn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 07:08:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030200AbWJRLIn
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 07:08:43 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:18653 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1030196AbWJRLIn (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Oct 2006 07:08:43 -0400
-Received: (qmail 9710 invoked by uid 2001); 18 Oct 2006 13:08:41 +0200
-To: Erik B?gfors <zindar@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <845b6e870610180228m39829c49nf37e07e76e744250@mail.gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1030204AbWJRLL0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Oct 2006 07:11:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030208AbWJRLL0
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 07:11:26 -0400
+Received: from main.gmane.org ([80.91.229.2]:55939 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1030204AbWJRLLZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Oct 2006 07:11:25 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Ga9KU-0003uS-31
+	for git@vger.kernel.org; Wed, 18 Oct 2006 13:11:22 +0200
+Received: from host-81-190-17-207.torun.mm.pl ([81.190.17.207])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 18 Oct 2006 13:11:22 +0200
+Received: from jnareb by host-81-190-17-207.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 18 Oct 2006 13:11:22 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-17-207.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29222>
 
-Dear diary, on Wed, Oct 18, 2006 at 11:28:32AM CEST, I got a letter
-where Erik B?gfors <zindar@gmail.com> said that...
-> On 10/18/06, Petr Baudis <pasky@suse.cz> wrote:
-> >Dear diary, on Wed, Oct 18, 2006 at 02:30:14AM CEST, I got a letter
-> >where Aaron Bentley <aaron.bentley@utoronto.ca> said that...
-> >> Petr Baudis wrote:
-> >> > Another aspect of this is that Git (Linus ;) is very focused on getting
-> >> > the history right, nice and clean (though it does not _mandate_ it and
-> >> > you can just wildly do one commit after another; it just provides tools
-> >> > to easily do it).
-> >>
-> >> Yes, rebasing is very uncommon in the bzr community.  We would rather
-> >> evaluate the complete change than walk through its history.  (Bundles
-> >> only show the changes you made, not the changes you merged from the
-> >> mainline.)
-> >>
-> >> In an earlier form, bundles contained a patch for every revision, and
-> >> people *hated* reading them.  So there's definitely a cultural
-> >> difference there.
-> >
-> >BTW, I think what describes the Git's (kernel's) stance very nicely is
-> >what I call the Al Viro's "homework problem":
-> >
-> >        http://lkml.org/lkml/2005/4/7/176
-> >
-> >If I understand you right, the bzr approach is what's described as "the
-> >dumbest kind" there? (No offense meant!)
-> 
-> Yes and no, The bundle includes both the full final thing, and each
-> step along the way. Each step along the way is something you'll get
-> when you merge it.
-> 
-> Once merged, it will be "next one" in the description above. It would
-> typically look something like this in "bzr log"(shortened)  In this
-> example, doing C requires doing A and B as well...
-> 
-> committer: foobar@foobar.com
-> message: merged in C
->      -------
->      committer: bar@bar.com
->      message: opps, fix bug in A
->      -------
->      committer: bar@bar.com
->      message: implement B
->      -------
->      committer: bar@bar.com
->      message: implement A
-> 
-> So, you'll get full history, including errors made :)  You can also
-> see who approved it to this branch (foobar) and who did the actual
-> work (bar)
+When trying to find how many merges and how many octopus merges (merges with
+more than two parents) are in git.git repository I have encountered the
+following strange output of git-log:
 
-I see, that's what I've been missing, thanks. So it's the middle path
-(as any other commonly used VCS for that matter, expect maybe darcs?;
-patch queues and rebasing count but it's a hack, not something properly
-supported by the design of Git, since at this point the development
-cannot be fully distributed).
+ 1000:jnareb@roke:~/git> git log --parents --full-history --max-count=1 \
+   211232bae64bcc60bbf5d1b5e5b2344c22ed767e -- a//b
+ commit 211232bae64bcc60bbf5d1b5e5b2344c22ed767e <last parent repeated>
+ Merge: d0d0d0b... d0d0d0b... d0d0d0b... d0d0d0b... d0d0d0b...
+ [...]
 
-I also assume that given this is the case, the big diff does really not
-serve any purpose besides human review?
+while git-show gives correct output
 
-But somewhere else in the thread it's been said that bundles can also
-contain merges. Does that means that bundles can look like:
+ 1005:jnareb@roke:~/git> git show 211232bae64bcc60bbf5d1b5e5b2344c22ed767e
+ commit 211232bae64bcc60bbf5d1b5e5b2344c22ed767e
+ Merge: fc54a9c... 9e30dd7... c4b83e6... 6602659... b28858b...
+ [...]
 
-   1
-  / \
- 2   4
- |   | _
- 3   5  |
-  \ /   | a bundle
-   6    |
-       ~
+Same with git-rev-list, also shows correct output:
 
-In that case, against what the big diff from 6 is done? 2? 4? Or even 1?
+ 1005:jnareb@roke:~/git> git rev-list --header --parents --max-count=1 \
+   211232bae64bcc60bbf5d1b5e5b2344c22ed767e
+ 211232bae64bcc60bbf5d1b5e5b2344c22ed767e [...] 
+ tree cdafa88fa4ed7fcc7bb6c64d62e2d7c4d3b65e42
+ parent fc54a9c30ccad3fde5890d2c0ca2e2acc0848fbc
+ parent 9e30dd7c0ecc9f10372f31539d0122db97418353
+ parent c4b83e618f1df7d8ecc9392fa40e5bebccbe6b5a
+ parent 660265909fc178581ef327076716dfd3550e6e7b
+ parent b28858bf65d4fd6d8bb070865518ec43817fe7f3
+ [...]
 
+1008:jnareb@roke:~/git> git --version
+git version 1.4.2.1
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
