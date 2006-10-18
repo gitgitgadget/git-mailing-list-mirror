@@ -1,97 +1,60 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: heads-up: git-index-pack in "next" is broken
-Date: Wed, 18 Oct 2006 09:52:23 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610180938540.3962@g5.osdl.org>
-References: <7vy7rfsfqa.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610171134130.1971@xanadu.home> <7vslhnj58e.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610171251210.1971@xanadu.home> <7vbqoake1v.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610171437250.1971@xanadu.home> <20061017233630.72a0aae5.vsu@altlinux.ru>
- <Pine.LNX.4.64.0610171615340.1971@xanadu.home> <Pine.LNX.4.64.0610171339030.3962@g5.osdl.org>
- <Pine.LNX.4.64.0610171706260.1971@xanadu.home> <Pine.LNX.4.64.0610171440080.3962@g5.osdl.org>
- <Pine.LNX.4.64.0610171959070.1971@xanadu.home> <Pine.LNX.4.64.0610171754040.3962@g5.osdl.org>
- <Pine.LNX.4.64.0610172140270.1971@xanadu.home> <Pine.LNX.4.64.0610171959180.3962@g5.osdl.org>
- <Pine.LNX.4.64.0610172242430.17253@alien.or.mcafeemobile.com>
- <Pine.LNX.4.64.0610180752500.3962@g5.osdl.org>
- <Pine.LNX.4.64.0610180845040.18388@alien.or.mcafeemobile.com>
+From: Seth Falcon <sethfalcon@gmail.com>
+Subject: Re: [RFH] git-svn documentation
+Date: Wed, 18 Oct 2006 10:22:46 -0700
+Message-ID: <m2mz7tr121.fsf@ziti.local>
+References: <012b01c6f0a6$a1a636e0$1267a8c0@Jocke>
+	<20061016034736.GA8782@localdomain> <453359A2.5090704@transmode.se>
+	<20061016183101.GL27128@hand.yhbt.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, Sergey Vlasov <vsu@altlinux.ru>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 18 18:53:07 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Oct 18 19:24:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaEeu-0002GB-Eh
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 18:52:49 +0200
+	id 1GaF8q-0000Rd-HL
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 19:23:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751362AbWJRQwp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 12:52:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751373AbWJRQwp
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 12:52:45 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:31177 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751362AbWJRQwn (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Oct 2006 12:52:43 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9IGqOaX000814
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 18 Oct 2006 09:52:25 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9IGqNqt009173;
-	Wed, 18 Oct 2006 09:52:23 -0700
-To: Davide Libenzi <davidel@xmailserver.org>
-In-Reply-To: <Pine.LNX.4.64.0610180845040.18388@alien.or.mcafeemobile.com>
-X-Spam-Status: No, hits=-0.47 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1422698AbWJRRWt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Oct 2006 13:22:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422668AbWJRRWt
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 13:22:49 -0400
+Received: from nz-out-0102.google.com ([64.233.162.204]:5865 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1422698AbWJRRWr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Oct 2006 13:22:47 -0400
+Received: by nz-out-0102.google.com with SMTP id z3so128138nzf
+        for <git@vger.kernel.org>; Wed, 18 Oct 2006 10:22:47 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:to:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=khZwUU0Zj0n2CVyEhDlG/O5FjH0BiCscFUQM8rDs8gRHNAe4udJfmz2+akGI/tlQZkVYuEJsZdoMbjU/8oUB3QA+M4bzI6op9SV+yOz+w0m+nxmg2nDBo4V8GdVcF3PhMtzEM1sjvPj8rz2Oe2wPD7PVTYRcrN3YqbtVXGTt6lY=
+Received: by 10.65.97.18 with SMTP id z18mr14894207qbl;
+        Wed, 18 Oct 2006 10:22:46 -0700 (PDT)
+Received: from ziti.local ( [140.107.156.111])
+        by mx.google.com with ESMTP id e15sm1462034qba.2006.10.18.10.22.45;
+        Wed, 18 Oct 2006 10:22:45 -0700 (PDT)
+To: git@vger.kernel.org
+In-Reply-To: <20061016183101.GL27128@hand.yhbt.net> (Eric Wong's message of "Mon, 16 Oct 2006 11:31:02 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29248>
 
+Eric Wong <normalperson@yhbt.net> writes:
+> Anybody willing to supply patches for better documentation?  I'll be
+> quite busy with other projects the next two weeks, asciidoc is quite
+> slow for me; but I'd like to have better docs for git-svn in 1.4.3.
 
+I'm starting to use git-svn more and would be willing to attempt to
+contribute some additional docs.  What I have in mind is a howto use
+git-svn sort of document (unless that isn't seen as useful)
 
-On Wed, 18 Oct 2006, Davide Libenzi wrote:
->
-> Speaking in general, seen at the hash function level, of course an interface 
-> should not give different result for different word sizes or word endianess. 
-> Considering the diff algorithm as interface, as I said, the output was 
-> unaffected by the 64 bits word size. It was just very slow.
+... unfortunately, as I use git-svn more I'm encountering some
+questions which will need resolution before I can have much confidence
+in my howto :-\
 
-Well, even the output may actually be affected, in the case of _real_ hash 
-collisions (as opposed to just the hash _list_ collision that XDL_HASHLONG 
-caused).
+Will post some howto and questions separately.
 
-So I actually think it would be better to have "uint32_t" as the hash 
-value - because that would mean that all diffs (or, in the case of the 
-block-algorithm, the deltas) are guaranteed to give the same results 
-regardless of architecture.
-
-Right now, we actually generate a 64-bit hash value (BUT: for short lines, 
-it's likely only _interesting_ in the low bits, so the high bits tend to 
-have a very high likelihood of being zero). So hash collisions are 
-different: on a 32-bit architecture, two lines may have the same hash, 
-while on a 64-bit one, they are different.
-
-And together with some of the limiters we have (eg XDL_MAX_EQLIMIT) hash 
-collisions can sometimes affect the output.
-
-Admittedly, in _practice_ this is really unlikely to affect anything 
-(you'd get a valid diff in either case, they'd just possibly be subtly 
-different, and the input data must be _really_ strange to even see that 
-case), but I do think that the hash algorithm can matter.
-
-NOTE! I'm not talking about XDL_HASHLONG(), I'm talking about the 
-xdl_hash_record() hash, which returns differently-sized hash results on 
-32-bit and 64-bit. And there are cases where we _only_ compare the hashes, 
-and don't actually double-check the contents.
-
-So I think that in _practice_ you can't see differences between a 32-bit 
-version and a 64-bit one, but the possibility is there. Using "uint32_t" 
-instead of "unsigned long" to keep track of hashes would avoid that 
-theoretical problem (and might actually make for better performance on 
-64-bit archtiectures, if only because of denser data structures and thus 
-better cache behaviour).
-
-			Linus
++ seth
