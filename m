@@ -1,71 +1,64 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Aaron Bentley <aaron.bentley@utoronto.ca>
 Subject: Re: VCS comparison table
-Date: Wed, 18 Oct 2006 02:48:49 +0200
-Message-ID: <200610180248.49713.jnareb__4216.28244589574$1161134967$gmane$org@gmail.com>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <20061018002523.GJ20017@pasky.or.cz> <4535778D.40006@utoronto.ca>
+Date: Tue, 17 Oct 2006 20:50:54 -0400
+Message-ID: <45357A6E.3050603__32055.0519078553$1161135026$gmane$org@utoronto.ca>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <Pine.LNX.4.64.0610161625370.3962@g5.osdl.org> <45345AEF.6070107@utoronto.ca> <200610171030.35854.jnareb@gmail.com> <vpqejt76vgz.fsf@ecrins.imag.fr> <BAYC1-PASMTP02ADC5BEF688E61583283CAE0E0@CEZ.ICE> <vpqbqob5euu.fsf@ecrins.imag.fr> <20061018002523.GJ20017@pasky.or.cz> <4535778D.40006@utoronto.ca> <20061018004209.GL20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@suse.cz>, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Sean <seanlkml@sympatico.ca>, Linus Torvalds <torvalds@osdl.org>,
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, Sean <seanlkml@sympatico.ca>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Linus Torvalds <torvalds@osdl.org>,
 	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 18 02:51:21 2006
+X-From: git-owner@vger.kernel.org Wed Oct 18 02:53:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZzbZ-0002KH-2n
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 02:48:22 +0200
+	id 1GZzeG-0003uh-2I
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 02:51:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751201AbWJRAsS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 20:48:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751202AbWJRAsS
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 20:48:18 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:17297 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1751201AbWJRAsR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Oct 2006 20:48:17 -0400
-Received: by ug-out-1314.google.com with SMTP id o38so78058ugd
-        for <git@vger.kernel.org>; Tue, 17 Oct 2006 17:48:16 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=ehnzkldHOYxC4oboI3xgEnzeCz0OmrLuyYAPRjIS540zeWLv8HhSZBUppi8yxrLnXkIq5r50OSYyoGMKdlL0gTfEGifbTWF08QlFctVQJ2aF5Tk23/9cNmc5+//4hTaKQPgytoPZtQUmxubP6Ow3TAeS72eUgJ/BK9sE61KHsXg=
-Received: by 10.66.244.11 with SMTP id r11mr10812019ugh;
-        Tue, 17 Oct 2006 17:48:16 -0700 (PDT)
-Received: from host-81-190-17-207.torun.mm.pl ( [81.190.17.207])
-        by mx.google.com with ESMTP id k28sm325716ugd.2006.10.17.17.48.15;
-        Tue, 17 Oct 2006 17:48:16 -0700 (PDT)
-To: Aaron Bentley <aaron.bentley@utoronto.ca>
-User-Agent: KMail/1.9.3
-In-Reply-To: <4535778D.40006@utoronto.ca>
-Content-Disposition: inline
+	id S1751207AbWJRAvE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 20:51:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751208AbWJRAvD
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 20:51:03 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41]:41926 "EHLO
+	server4.panoramicfeedback.com") by vger.kernel.org with ESMTP
+	id S1751207AbWJRAvB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Oct 2006 20:51:01 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41] helo=[127.0.0.1])
+	by server4.panoramicfeedback.com with esmtp (Exim 3.36 #1 (Debian))
+	id 1GZze4-0006Ki-00; Tue, 17 Oct 2006 20:50:57 -0400
+User-Agent: Thunderbird 1.5.0.7 (X11/20060922)
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20061018004209.GL20017@pasky.or.cz>
+X-Enigmail-Version: 0.94.0.0
+X-Panometrics-MailScanner: Found to be clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29165>
 
-Aaron Bentley wrote:
-> Petr Baudis wrote:
->>> this only makes sense if
->>> you have a fast access to the repository (otherwise, you consider your
->>> local repository as a cache, and you're ready to pay the disk space
->>> price to save your bandwidth). In this case, it's often in your
->>> filesystem (local or NFS).
->>
->> So how is the light checkout actually implemented? Do you grab the
->> complete new snapshot each time the remote repository is updated?
-> 
-> No, the lightweight checkouts store very little.  They have
-> - a copy of tree shape (filenames, paths, sha1 sums) from the last
->   commit.
-> - a copy of tree shape for the current working directory
-> - a map from stat values to sha-1 hashes
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Ah. So in git terminology it stores index and working directory
-(and perhaps the name of branch). 
+Petr Baudis wrote:
 
--- 
-Jakub Narebski
-Poland
+> Ok, one last question - do you do most of the work locally, fetching
+> bits of data as you need, or remotely, only taking input/producing
+> output over the network (the pserver model)?
+
+Personally, I do not do remote commits over slow links.  At home, I use
+a single machine, and mirror my repository to a public machine using
+rsync.  At work, I store my repository on an NFS server, and push my
+repository to a public machine using rsync.
+
+Aaron
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFFNXpu0F+nu1YWqI0RAjPTAJ4w9YOM5XLpnIP9jYywtfMr+LZLvACfdycA
+/TYAGUVGweR5+cPtDVAIBq4=
+=rsNR
+-----END PGP SIGNATURE-----
