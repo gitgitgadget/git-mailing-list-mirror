@@ -1,155 +1,140 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: heads-up: git-index-pack in "next" is broken
-Date: Tue, 17 Oct 2006 22:07:45 -0700
-Message-ID: <7vu022gqji.fsf@assigned-by-dhcp.cox.net>
-References: <7vy7rfsfqa.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0610171134130.1971@xanadu.home>
-	<7vslhnj58e.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0610171251210.1971@xanadu.home>
-	<7vbqoake1v.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0610171437250.1971@xanadu.home>
-	<20061017233630.72a0aae5.vsu@altlinux.ru>
-	<Pine.LNX.4.64.0610171615340.1971@xanadu.home>
-	<Pine.LNX.4.64.0610171339030.3962@g5.osdl.org>
-	<Pine.LNX.4.64.0610171706260.1971@xanadu.home>
-	<Pine.LNX.4.64.0610171440080.3962@g5.osdl.org>
-	<Pine.LNX.4.64.0610171959070.1971@xanadu.home>
-	<7vac3uif6i.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0610172209070.1971@xanadu.home>
-	<7v64eii7hh.fsf@assigned-by-dhcp.cox.net>
+From: Robert Collins <robertc@robertcollins.net>
+Subject: Re: VCS comparison table
+Date: Wed, 18 Oct 2006 14:55:48 +1000
+Message-ID: <1161147348.3423.24.camel@localhost.localdomain>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	 <200610170119.09066.jnareb@gmail.com> <45346290.6050300@utoronto.ca>
+	 <200610171120.09747.jnareb@gmail.com>
+	 <1161078035.9020.73.camel@localhost.localdomain>  <4534AB8B.8030505@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed Oct 18 07:08:04 2006
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-tNA1Is/FuRPXROPiW1+p"
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 18 07:14:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ga3et-0003u9-Fl
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 07:08:03 +0200
+	id 1Ga3lP-00052l-0u
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 07:14:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750925AbWJRFHt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 01:07:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751370AbWJRFHt
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 01:07:49 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:14833 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1750925AbWJRFHs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Oct 2006 01:07:48 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061018050746.EIXT12909.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 18 Oct 2006 01:07:46 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id bh7Y1V00D1kojtg0000000
-	Wed, 18 Oct 2006 01:07:33 -0400
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <7v64eii7hh.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Tue, 17 Oct 2006 21:16:26 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S964771AbWJRFOo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Oct 2006 01:14:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbWJRFOo
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 01:14:44 -0400
+Received: from ipmail01.adl2.internode.on.net ([203.16.214.140]:28558 "EHLO
+	ipmail01.adl2.internode.on.net") by vger.kernel.org with ESMTP
+	id S1751376AbWJRFOn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Oct 2006 01:14:43 -0400
+Received: from ppp245-86.static.internode.on.net (HELO lifelesswks.robertcollins.net) ([59.167.245.86])
+  by ipmail01.adl2.internode.on.net with ESMTP; 18 Oct 2006 14:26:26 +0930
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AR4FAMtTNUWBSg
+X-IronPort-AV: i="4.09,322,1157293800"; 
+   d="asc'?scan'208"; a="31225256:sNHT5673019044"
+Received: from ppp112-44.static.internode.on.net ([150.101.112.44] helo=lifelesslap.robertcollins.net)
+	by lifelesswks.robertcollins.net with esmtpa (Exim 4.60)
+	(envelope-from <robertc@robertcollins.net>)
+	id 1Ga3Tb-0006hr-0A; Wed, 18 Oct 2006 14:56:23 +1000
+Received: from localhost.on.net ([127.0.0.1] helo=localhost.localdomain)
+	by lifelesslap.robertcollins.net with esmtp (Exim 4.60)
+	(envelope-from <robertc@robertcollins.net>)
+	id 1Ga3T4-0001AB-2Q; Wed, 18 Oct 2006 14:55:50 +1000
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <4534AB8B.8030505@op5.se>
+X-Mailer: Evolution 2.6.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29188>
 
-Junio C Hamano <junkio@cox.net> writes:
 
-> Ah, I misread the code that uses union actually checks the type
-> in struct delta_entry (which embeds the union).  There won't be
-> any collision problem and you support both types at the same
-> time just fine.
->
-> And your patch to compare only the first 20-bytes makes sense
-> (assuming ulong is always shorter than 20-bytes which I think is
-> safe to assume).
+--=-tNA1Is/FuRPXROPiW1+p
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Does this sound fair (the code is yours, just asking about the
-log message)?
+On Tue, 2006-10-17 at 12:08 +0200, Andreas Ericsson wrote:
+> Robert Collins wrote:
+> > On Tue, 2006-10-17 at 11:20 +0200, Jakub Narebski wrote:
+> >>           ---- time --->
+> >>
+> >>     --*--*--*--*--*--*--*--*--*-- <branch>
+> >>           \            /
+> >>            \-*--X--*--/
+> >>
+> >> The branch it used to be on is gone...
+> >=20
+> > In bzr 0.12 this is :
+> > 2.1.2
+> >=20
+>=20
+> Would it be a different number in a different version of bazaar?
 
-If we really wanted to be purist, we could run comparison with
-the union and obj->type as two keys, but I do not think it is
-worth it.
+The dotted decimal display has only been introduced in bzr 0.12
 
--- >8 --
-From: Nicolas Pitre <nico@cam.org>
-Date: Tue, 17 Oct 2006 16:23:26 -0400
-Subject: [PATCH] index-pack: compare the first 20-bytes of the key.
+> > (assuming the first * is numbered '1'.)
+> >=20
+> > These numbers are fairly stable, in particular everything's number in
+> > the mainline will be the same number in all the branches created from i=
+t
+> > at that point in time, but a branch that initially creates a revision o=
+r
+> > obtains it before the mainline will have a different number until they
+> > syncronise with the mainline via pull.
+> >=20
+>=20
+> So basically anyone can pull/push from/to each other but only so long as=20
+> they decide upon a common master that handles synchronizing of the=20
+> number part of the url+number revision short-hands?
 
-The "union delta_base" is a strange beast.  It is a 20-byte
-binary blob key to search a binary searchable deltas[] array,
-each element of which uses it to represent its base object with
-either a full 20-byte SHA-1 or an offset in the pack.  Which
-representation is used is determined by another field of the
-deltas[] array element, obj->type, so there is no room for
-confusion, as long as we make sure we compare the keys for the
-same type only with appropriate length.  The code compared the
-full union with memcmp().
+Anyone can push and pull from each other - full stop. Whenever they
+'pull' in bzr terms, they get fast-forward happening (if I understand
+the git fast-forward behaviour correctly). After a fast-forward, the
+dotted decimal revision numbers in the two branches are identical - and
+they remain immutable until another fast forward occurs. Push always
+fast forwards, so the public copy of ones own repository that others
+pull or merge from is identical to your own. In a 'collection of
+branches with no mainline' scenario, people usually have fast forward
+occur from time to time, keeping the numbers consistent from the point
+your branch was last pulled by someone else, or you pulled them.
 
-When storing the in-pack offset, the union was first cleared
-before storing an unsigned long, so comparison worked fine.
+> One thing that's been nagging me is how you actually find out the=20
+> url+number where the desired revision exists. That is, after you've=20
+> synced with master, or merged the mothership's master-branch into one of=20
+> your experimental branches where you've done some work that went before=20
+> mothership's master's current tip, do you have to have access to the=20
+> mothership's repo (as in, do you have to be online) to find out the=20
+> number part of url+number shorthand, or can you determine it solely from=20
+> what you have on your laptop?
 
-On 64-bit architectures, however, the union typically is 24-byte
-long; the code did not clear the remaining 4-byte alignment
-padding when storing a full 20-byte SHA-1 representation.  Using
-memcmp() to compare the whole union was wrong.
+You can determine it locally - if you know any of the motherships
+revisions locally, we can generate the dotted-revnos that the
+motherships master-branch would have from the local data - and the last
+merge of mothership you did will have given you that details. I dont
+think we have a ui command to spit this out just yet, but it will be
+trivial to whip one up.
 
-This fixes the comparison to look at the first 20-bytes of the
-union, regardless of the architecture.  As long as ulong is
-smaller than 20-bytes this works fine.
+More commonly though, like git users have 'origin' and 'master'
+branches, bzr users tend to have a branch that is the 'origin' (for bzr
+itself this is usually called bzr.dev), as well as N other branches for
+their own work, which is probably why we haven't seen the need to have a
+ui command to spit out the revnos for an arbitrary branch.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- index-pack.c |   14 ++++++++++----
- 1 files changed, 10 insertions(+), 4 deletions(-)
+-Rob
 
-diff --git a/index-pack.c b/index-pack.c
-index fffddd2..56c590e 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -23,6 +23,12 @@ union delta_base {
- 	unsigned long offset;
- };
- 
-+/*
-+ * Even if sizeof(union delta_base) == 24 on 64-bit archs, we really want
-+ * to memcmp() only the first 20 bytes.
-+ */
-+#define UNION_BASE_SZ	20
-+
- struct delta_entry
- {
- 	struct object_entry *obj;
-@@ -211,7 +217,7 @@ static int find_delta(const union delta_
-                 struct delta_entry *delta = &deltas[next];
-                 int cmp;
- 
--                cmp = memcmp(base, &delta->base, sizeof(*base));
-+                cmp = memcmp(base, &delta->base, UNION_BASE_SZ);
-                 if (!cmp)
-                         return next;
-                 if (cmp < 0) {
-@@ -232,9 +238,9 @@ static int find_delta_childs(const union
- 
- 	if (first < 0)
- 		return -1;
--	while (first > 0 && !memcmp(&deltas[first - 1].base, base, sizeof(*base)))
-+	while (first > 0 && !memcmp(&deltas[first - 1].base, base, UNION_BASE_SZ))
- 		--first;
--	while (last < end && !memcmp(&deltas[last + 1].base, base, sizeof(*base)))
-+	while (last < end && !memcmp(&deltas[last + 1].base, base, UNION_BASE_SZ))
- 		++last;
- 	*first_index = first;
- 	*last_index = last;
-@@ -312,7 +318,7 @@ static int compare_delta_entry(const voi
- {
- 	const struct delta_entry *delta_a = a;
- 	const struct delta_entry *delta_b = b;
--	return memcmp(&delta_a->base, &delta_b->base, sizeof(union delta_base));
-+	return memcmp(&delta_a->base, &delta_b->base, UNION_BASE_SZ);
- }
- 
- static void parse_pack_objects(void)
--- 
-1.4.2.4.gf9fe
+--=20
+GPG key available at: <http://www.robertcollins.net/keys.txt>.
+
+--=-tNA1Is/FuRPXROPiW1+p
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+
+iD8DBQBFNbPUM4BfeEKYx2ERAjStAJ4jj4QNqmuihdmGGByNswpBjOGaqgCgnolS
+FEsH1jfz4FgqC3P5y7MFIKg=
+=xTM5
+-----END PGP SIGNATURE-----
+
+--=-tNA1Is/FuRPXROPiW1+p--
