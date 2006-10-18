@@ -1,89 +1,78 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: VCS comparison table
-Date: Wed, 18 Oct 2006 17:37:03 -0400
-Message-ID: <20061018213703.GE19194@spearce.org>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <45349162.90001@op5.se> <453536AE.6060601@utoronto.ca> <200610172301.27101.jnareb@gmail.com> <45354AD0.1020107@utoronto.ca> <BAYC1-PASMTP07AB11A64250AAF683424DAE0E0@CEZ.ICE> <45355CBB.80108@utoronto.ca> <BAYC1-PASMTP01369CD694D75CB61ACCC7AE0E0@CEZ.ICE> <eh64tk$rug$2@sea.gmane.org> <20061018172945.c0c58c38.seanlkml@sympatico.ca>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
+Date: Wed, 18 Oct 2006 23:39:35 +0200
+Message-ID: <20061018213935.GX20017@pasky.or.cz>
+References: <200610172351.17377.jnareb@gmail.com> <4535590C.4000004@utoronto.ca> <200610180057.25411.jnareb@gmail.com> <Pine.LNX.4.64.0610171610270.3962@g5.osdl.org> <20061018053647.GA3507@coredump.intra.peff.net> <Pine.LNX.4.64.0610180739230.3962@g5.osdl.org> <20061018185225.GU20017@pasky.or.cz> <20061018155704.b94b441d.seanlkml@sympatico.ca> <20061018204618.GW20017@pasky.or.cz> <20061018165341.bcece11f.seanlkml@sympatico.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Charles Duffy <cduffy@spamcop.net>, git@vger.kernel.org,
-	bazaar-ng@lists.canonical.com
-X-From: git-owner@vger.kernel.org Wed Oct 18 23:37:24 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 18 23:39:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaJ6I-0001HX-CL
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 23:37:22 +0200
+	id 1GaJ8b-0001n1-JQ
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 23:39:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423007AbWJRVhL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 17:37:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423009AbWJRVhL
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 17:37:11 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:19617 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1423007AbWJRVhJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Oct 2006 17:37:09 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GaJ60-0004mb-7A; Wed, 18 Oct 2006 17:37:04 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 4B96320E42A; Wed, 18 Oct 2006 17:37:04 -0400 (EDT)
+	id S1422655AbWJRVji (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Oct 2006 17:39:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423004AbWJRVji
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 17:39:38 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:43208 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1422655AbWJRVjh (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Oct 2006 17:39:37 -0400
+Received: (qmail 20662 invoked by uid 2001); 18 Oct 2006 23:39:35 +0200
 To: Sean <seanlkml@sympatico.ca>
 Content-Disposition: inline
-In-Reply-To: <20061018172945.c0c58c38.seanlkml@sympatico.ca>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <20061018165341.bcece11f.seanlkml@sympatico.ca>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29273>
 
-Sean <seanlkml@sympatico.ca> wrote:
-> On Wed, 18 Oct 2006 16:04:52 -0500
-> Charles Duffy <cduffy@spamcop.net> wrote:
+(Trimmed Cc' list, this is offtopic for bazaar-ng.)
+
+Dear diary, on Wed, Oct 18, 2006 at 10:53:41PM CEST, I got a letter
+where Sean <seanlkml@sympatico.ca> said that...
+> On Wed, 18 Oct 2006 22:46:18 +0200
+> Petr Baudis <pasky@suse.cz> wrote:
 > 
-> > Example time!
-> > 
-> > There's a plugin for Bzr which adds support for Cygwin-compatible 
-> > symlink support on Windows. (IIRC, this involves monkey-patching some of 
-> > the Python standard library bits).
-> > 
-> > Now, this is something which is *proposed* as a feature to be merged 
-> > into upstream bzr, and it may happen at some point. That said, when I 
-> > have a Windows-using coworker who wants to check out a repository that 
-> > has symlinks in it (with his win32-native, no-cygwin-required bzr 
-> > upstream binary), I don't need to tell him to go download and build bzr 
-> > from a third party; instead, I just need to tell him to run a single 
-> > command to check out the plugin in question into the bzr plugins folder.
-> > 
-> >  From an end-user convenience perspective, it's a pretty significant win.
+> > They could be written, but certainly not "just as easily". I'm more used
+> > to coding Cogito, I find it much more convenient than hacking git's
+> > shell scripts (those two may be interconnected ;), and there's plenty of
+> > infrastructure in Cogito missing in Git - Cogito has more flexible
+> > arguments parsing, documentation bundled with code, I could just
+> > cut'n'paste the code to handle -m arguments and message editor (and most
+> > of it is libified anyway) so I got that basically for free, and I think
+> > Cogito beats Git hands down in code readability.
 > 
-> You'll need a better example than that.  Git has supported a version
-> of Cygwin-compatible symlink support on Windows for quite some time.
-> And no plugins were needed.
+> Hmmm, if I get some time over the weekend i'll take a look at porting
+> them to Git.  But maybe some of the items you mentioned above deserve
+> to become part of Git proper?  It would definitely be nice to see
+> something like what you just did put into the hands of more users than
+> just those using Cogito, and its unfortunate that the current state
+> of Git code kept you from going that route.
 
-Actually I think the only part of that example that was really
-interesting was that Bzr runs natively on Windows and that Bzr's
-native method of extending the tool with additional features doesn't
-require Cygwin.
+You can use just this single tool from Cogito. ;-)
 
+The point is, I'll of course prefer doing this stuff in Cogito while I'm
+enhancing Cogito, and I'll work on Cogito while I and others will be
+using it. I didn't move on to pure Git long time ago since I simply
+consider its UI much inferior to Cogito's. Sure, given enough time and
+work, it is fixable - but UI flaws are very hard to fix and I find it
+more effective to work on Cogito for the time being, at least until I
+bring it to 1.0, then I'll see.
 
-Today Git doesn't run natively on Windows.  It runs slowly through
-Cygwin, thanks to lots of various overheads in different places.
-And due to the crappy disk drive in my Windows box.  :-)
+Besides, I'm used to Cogito. :-)
 
-Today Git is typically extended (at least initially in prototyping
-mode) through Perl, Python, TCL or Bourne shell scripts.  Although
-the first three are available natively on Windows the last requires
-Cygwin... and we've had some issues with ActiveState Perl on Windows
-in the past too.
+So yes, current Git code definitely is a part of the reason, but it is
+certainly not the main part of it.
 
 -- 
-Shawn.
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
