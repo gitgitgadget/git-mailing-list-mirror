@@ -1,95 +1,91 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: Make the ftplugin right wrt gitdir
-Date: Wed, 18 Oct 2006 11:07:54 +0200
-Organization: Polytechnique.org
-Message-ID: <200610181107.56260.madcoder@debian.org>
-References: <11611319762395-git-send-email-madcoder@debian.org> <200610181010.59995.madcoder@debian.org> <20061018090231.GA18807@coredump.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: VCS comparison table
+Date: Wed, 18 Oct 2006 11:20:49 +0200
+Message-ID: <200610181120.49749.jnareb@gmail.com>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <87zmbucs86.wl%cworth@cworth.org> <45359F36.6050609@utoronto.ca>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1755179.2paUnA6yzG";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 18 11:08:09 2006
+Cc: Carl Worth <cworth@cworth.org>, Petr Baudis <pasky@suse.cz>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Wed Oct 18 11:20:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ga7PB-0004Gw-MD
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 11:08:06 +0200
+	id 1Ga7b5-000723-4X
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 11:20:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932108AbWJRJIA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 05:08:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932114AbWJRJIA
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 05:08:00 -0400
-Received: from mx1.polytechnique.org ([129.104.30.34]:9685 "EHLO
-	mx1.polytechnique.org") by vger.kernel.org with ESMTP
-	id S932108AbWJRJH7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Oct 2006 05:07:59 -0400
-Received: from mad.intersec.eu (beacon-free1.intersec.eu [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by ssl.polytechnique.org (Postfix) with ESMTP id 137F4332BC;
-	Wed, 18 Oct 2006 11:07:58 +0200 (CEST)
-To: Jeff King <peff@peff.net>
-User-Agent: KMail/1.9.5
-In-Reply-To: <20061018090231.GA18807@coredump.intra.peff.net>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-X-AV-Checked: ClamAV using ClamSMTP at djali.polytechnique.org (Wed Oct 18 11:07:58 2006 +0200 (CEST))
-X-DCC-xorg-Metrics: djali 32702; Body=2 Fuz1=2 Fuz2=2
-X-Spam-Flag: No, tests=bogofilter, spamicity=0.013460, queueID=36020332E5
-X-Org-Mail: pierre.habouzit.2000@polytechnique.org
+	id S932160AbWJRJUT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Oct 2006 05:20:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932161AbWJRJUT
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 05:20:19 -0400
+Received: from hu-out-0506.google.com ([72.14.214.238]:16474 "EHLO
+	hu-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S932160AbWJRJUR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Oct 2006 05:20:17 -0400
+Received: by hu-out-0506.google.com with SMTP id 28so1424048hub
+        for <git@vger.kernel.org>; Wed, 18 Oct 2006 02:20:15 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=a827+psZbOVECYowYcWirRNJocV9V0tSKLKn6qmnbpG5ZmdC9dNMQ9VgsjYmmaun97IWz7XhhN1dmDqG/kTZHhhkQci2jmp2Qsr6YUZ25yLFLITfiWE7d5BcI4Pm8cA7xELOe1fdlKDd8P1gpujp8165yZUnzFrWfJyC9Rfo4rE=
+Received: by 10.67.91.6 with SMTP id t6mr11432620ugl;
+        Wed, 18 Oct 2006 02:20:15 -0700 (PDT)
+Received: from host-81-190-17-207.torun.mm.pl ( [81.190.17.207])
+        by mx.google.com with ESMTP id 5sm695948ugc.2006.10.18.02.20.14;
+        Wed, 18 Oct 2006 02:20:14 -0700 (PDT)
+To: Aaron Bentley <aaron.bentley@utoronto.ca>
+User-Agent: KMail/1.9.3
+In-Reply-To: <45359F36.6050609@utoronto.ca>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29211>
 
---nextPart1755179.2paUnA6yzG
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Aaron Bentley wrote:
+> Carl Worth wrote:
+>> On Wed, 18 Oct 2006 03:28:30 +0200, Jakub Narebski wrote:
+>>> Isn't it easier to review than "bundle", aka. mega-patch?
+>>
+>> There are even more important reasons to prefer a series of
+>> micro-commits over a mega-patch than just ease of merging.
+> 
+> A bundle isn't a mega-patch.  It contains all the source revisions.  So
+> when you merge or pull it, you get all the original revisions in your
+> repository.
 
-Le mer 18 octobre 2006 11:02, Jeff King a =C3=A9crit :
-> On Wed, Oct 18, 2006 at 10:10:59AM +0200, Pierre Habouzit wrote:
-> > > Looks like the patch is missing (more sleep required?).
-> >
-> > err, the patch is here:
-> > <1161132446703-git-send-email-madcoder@debian.org>
->
-> Right, that's the "be more robust" patch which applies on top of
-> something else (presumably "nice ftplugin for vim"), but the last one
-> I got of that (<11611319761977-git-send-email-madcoder@debian.org>)
-> causes vim errors and you immediately followed up with "that's still
-> not the good one." Where is that patch?
+But what patch reviewer see is a mega-patch showing the changeset
+of a whole "bundle", isn't it?
+[...]
+>> Now, I do admit that it is often useful to take the overall view of a
+>> patch series being submitted. This is often the case when a patch
+>> series is in some sub-module of the code for which I don't have as
+>> much direct involvement. In cases like that I will often do review
+>> only of the diff between the tips of the mainline and the branch of
+>> interest, (or if I trust the maintainer enough, perhaps just the
+>> diffstat between the two). But I'm still very glad that what lands in
+>> the history is the series of independent changes, and not one mega
+>> commit.
+> 
+> So the difference here is that bundles preserve the original commits the
+> changes came from, so even though it's presented as an overview, you
+> still have a series of independent changes in your history.
 
-hmm I see, curious though, I must have do sth stupid :|
+I think it is much better to review series of patches commit by commit;
+besides it allows to correct some inner patches before applying the whole
+series or drop one of patches in series (and it happened from time to time
+on git mailing list).
 
-well the result file is here:=20
-http://madism.org/~madcoder/dotfiles/vim/ftplugin/git.vim
-
-I've not access to my git repo from here, feel free to grab it and=20
-commit it, I don't care if there is not my name on it.
-
-and as of gitEmail you're right I don't use it, I wanted to to hilight=20
-the email address in the gitAuthor zone, but well, basically, it sucks,=20
-that makes too many colors.
-=2D-=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---nextPart1755179.2paUnA6yzG
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iD8DBQBFNe7svGr7W6HudhwRArkrAJ9U/caHSV1p6GSijmPPkjHDq4gqIwCZASR7
-9zxjuxui85nvYWdUs/+72mQ=
-=OuJG
------END PGP SIGNATURE-----
-
---nextPart1755179.2paUnA6yzG--
+So if git introduces bundles, I think they would take form of series
+of "patch" mails + introductory email with series description (currently
+it is not saved anywhere), shortlog, diffstat and perhaps more metainfo
+like bundle parent (which I think should be email form of branch really),
+tags introduced etc.
+-- 
+Jakub Narebski
+Poland
