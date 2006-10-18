@@ -1,99 +1,80 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: VCS comparison table
-Date: Wed, 18 Oct 2006 07:52:25 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610180739230.3962@g5.osdl.org>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<200610172351.17377.jnareb@gmail.com> <4535590C.4000004@utoronto.ca>
-	<200610180057.25411.jnareb@gmail.com>
-	<Pine.LNX.4.64.0610171610270.3962@g5.osdl.org>
-	<20061018053647.GA3507@coredump.intra.peff.net>
+Subject: Re: heads-up: git-index-pack in "next" is broken
+Date: Wed, 18 Oct 2006 07:56:51 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610180752500.3962@g5.osdl.org>
+References: <7vy7rfsfqa.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610171134130.1971@xanadu.home> <7vslhnj58e.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610171251210.1971@xanadu.home> <7vbqoake1v.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610171437250.1971@xanadu.home> <20061017233630.72a0aae5.vsu@altlinux.ru>
+ <Pine.LNX.4.64.0610171615340.1971@xanadu.home> <Pine.LNX.4.64.0610171339030.3962@g5.osdl.org>
+ <Pine.LNX.4.64.0610171706260.1971@xanadu.home> <Pine.LNX.4.64.0610171440080.3962@g5.osdl.org>
+ <Pine.LNX.4.64.0610171959070.1971@xanadu.home> <Pine.LNX.4.64.0610171754040.3962@g5.osdl.org>
+ <Pine.LNX.4.64.0610172140270.1971@xanadu.home> <Pine.LNX.4.64.0610171959180.3962@g5.osdl.org>
+ <Pine.LNX.4.64.0610172242430.17253@alien.or.mcafeemobile.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-X-From: bazaar-ng-bounces@lists.canonical.com Wed Oct 18 16:53:45 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+Cc: Nicolas Pitre <nico@cam.org>, Sergey Vlasov <vsu@altlinux.ru>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 18 16:57:58 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaCnK-0001Qh-Le
-	for gcvbg-bazaar-ng@m.gmane.org; Wed, 18 Oct 2006 16:53:23 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GaCmy-0002aF-NR; Wed, 18 Oct 2006 15:53:00 +0100
-Received: from smtp.osdl.org ([65.172.181.4])
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <torvalds@osdl.org>) id 1GaCmX-0002Vo-9e
-	for bazaar-ng@lists.canonical.com; Wed, 18 Oct 2006 15:52:33 +0100
+	id 1GaCrE-0002EW-M6
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 16:57:25 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1161106AbWJRO5G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Oct 2006 10:57:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161084AbWJRO5G
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 10:57:06 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:52886 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1161107AbWJRO5D (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Oct 2006 10:57:03 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9IEqQaX025174
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9IEuqaX025467
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 18 Oct 2006 07:52:27 -0700
+	Wed, 18 Oct 2006 07:56:52 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9IEqPhB005132;
-	Wed, 18 Oct 2006 07:52:25 -0700
-To: Jeff King <peff@peff.net>
-In-Reply-To: <20061018053647.GA3507@coredump.intra.peff.net>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9IEup6l005279;
+	Wed, 18 Oct 2006 07:56:51 -0700
+To: Davide Libenzi <davidel@xmailserver.org>
+In-Reply-To: <Pine.LNX.4.64.0610172242430.17253@alien.or.mcafeemobile.com>
 X-Spam-Status: No, hits=-0.47 required=5 tests=AWL
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
 X-MIMEDefang-Filter: osdl$Revision: 1.155 $
 X-Scanned-By: MIMEDefang 2.36
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29236>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29237>
 
 
 
-On Wed, 18 Oct 2006, Jeff King wrote:
+On Tue, 17 Oct 2006, Davide Libenzi wrote:
 > 
-> I never used BK, but my understanding is that it was based on
-> changesets, so a bundle was a group of changesets.
+> Ehm, I think there's a little bit of confusion. The incorrect golden ratio 
+> prime selection for 64 bits machines was coalescing hash indexes into a 
+> very limited number of buckets, hence creating very bad performance on diff 
+> operations. The result of the diff would have been exacly the same, just 
+> coming out after the time for a cup of coffee and a croissant ;)
 
-Yes.
+But my point is, you would have been better off _without_ an algorithm 
+that cared about the word-size at all, or with just using "uint32_t".
 
-> Because a git commit represents the entire tree state, how can we avoid 
-> sending the entire tree in each bundle?
+See? Yes, a "unsigned long" has more bits for hashing on a 64-bit 
+architecture. But that's totally the wrong way of thinking about it. YOU 
+DO NOT WANT MORE BITS! You want the same damn answer regardless of 
+architecture!
 
-That's not the problem. That's easy to handle - and we already do. That's 
-the whole point of the wire-transfer protocol (ie sending deltas, and only 
-sending enough to actually matter).
+A diff algorithm that gives different answers on a 32-bit LE architecture 
+than on a 64-bit BE architecture is BROKEN. If I run on x86-64, I want the 
+same answers I got on x86-32, and the same ones I get on ppc32. Anything 
+else is SIMPLY NOT ACCEPTABLE!
 
-> The interactive protocols can ask "what do you have?" but an email 
-> bundle is presumably meant to work without a round trip.
+So the whole idea that you should have used 64-bit values was broken, 
+broken, broken. You should never have had anything that cared, because 
+anything that cares is by definition buggy.
 
-Right, but they can do exactly what bk did: you have to have a reference 
-to what the other side has. In git, that's usually even simpler: you'd do
-
-	git send origin..
-
-and that "origin" is what the other end is expected to already have.
-
-Of course, if you send an unconnected bundle (ie you give an origin that 
-the other end _doesn't_ have), you're screwed.
-
-In other words, to get such a pack, we'd _literally_ just do something 
-like
-
-	git-rev-list --objects-edge origin.. |
-		git-pack-objects --stdout |
-		uuencode
-
-and that would be it. You'd still need to add a "diffstat" to the thing, 
-and tell the other end what the current HEAD is (so that it knows what 
-it's supposed to fast-forward to), but it _literally_ is that simple.
-
-"plug-in architecture" my ass. "I recognize this - it's UNIX!".
+This is why we should use the _low_ bits. Never the high bits.
 
 		Linus
