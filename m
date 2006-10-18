@@ -1,113 +1,99 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] When rewriting parents, cull duplicates
-Date: Wed, 18 Oct 2006 16:26:56 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0610181622320.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <eh5242$rar$1@sea.gmane.org>
- <Pine.LNX.4.63.0610181551150.14200@wbgn013.biozentrum.uni-wuerzburg.de>
- <200610181602.36856.jnareb@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: VCS comparison table
+Date: Wed, 18 Oct 2006 07:52:25 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610180739230.3962@g5.osdl.org>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<200610172351.17377.jnareb@gmail.com> <4535590C.4000004@utoronto.ca>
+	<200610180057.25411.jnareb@gmail.com>
+	<Pine.LNX.4.64.0610171610270.3962@g5.osdl.org>
+	<20061018053647.GA3507@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 18 16:27:31 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+X-From: bazaar-ng-bounces@lists.canonical.com Wed Oct 18 16:53:45 2006
+Return-path: <bazaar-ng-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaCNp-0004Mj-8E
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 16:27:02 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161027AbWJRO07 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 10:26:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161033AbWJRO07
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 10:26:59 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39822 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1161027AbWJRO06 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Oct 2006 10:26:58 -0400
-Received: (qmail invoked by alias); 18 Oct 2006 14:26:57 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp042) with SMTP; 18 Oct 2006 16:26:57 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200610181602.36856.jnareb@gmail.com>
-X-Y-GMX-Trusted: 0
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29235>
+	id 1GaCnK-0001Qh-Le
+	for gcvbg-bazaar-ng@m.gmane.org; Wed, 18 Oct 2006 16:53:23 +0200
+Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
+	id 1GaCmy-0002aF-NR; Wed, 18 Oct 2006 15:53:00 +0100
+Received: from smtp.osdl.org ([65.172.181.4])
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <torvalds@osdl.org>) id 1GaCmX-0002Vo-9e
+	for bazaar-ng@lists.canonical.com; Wed, 18 Oct 2006 15:52:33 +0100
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9IEqQaX025174
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 18 Oct 2006 07:52:27 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9IEqPhB005132;
+	Wed, 18 Oct 2006 07:52:25 -0700
+To: Jeff King <peff@peff.net>
+In-Reply-To: <20061018053647.GA3507@coredump.intra.peff.net>
+X-Spam-Status: No, hits=-0.47 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
+X-BeenThere: bazaar-ng@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
+List-Post: <mailto:bazaar-ng@lists.canonical.com>
+List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-ng-bounces@lists.canonical.com
+Errors-To: bazaar-ng-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29236>
 
 
-Earlier, when calling
 
-	git log --parents some-ref -- path/file
+On Wed, 18 Oct 2006, Jeff King wrote:
+> 
+> I never used BK, but my understanding is that it was based on
+> changesets, so a bundle was a group of changesets.
 
-it was possible that in case of merges, multiple parents would be
-rewritten as the _same_ commit, which would happily be printed
-multiple times.
+Yes.
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Because a git commit represents the entire tree state, how can we avoid 
+> sending the entire tree in each bundle?
 
----
+That's not the problem. That's easy to handle - and we already do. That's 
+the whole point of the wire-transfer protocol (ie sending deltas, and only 
+sending enough to actually matter).
 
-	Subject: Re: [BUG] git-log shows first parent and repeated last 
-	for octopus merge
+> The interactive protocols can ask "what do you have?" but an email 
+> bundle is presumably meant to work without a round trip.
 
-	On Wed, 18 Oct 2006, Jakub Narebski wrote:
+Right, but they can do exactly what bk did: you have to have a reference 
+to what the other side has. In git, that's usually even simpler: you'd do
 
-	> Johannes Schindelin wrote:
-	> > On Wed, 18 Oct 2006, Jakub Narebski wrote:
-	> > 
-	> > > When trying to find how many merges and how many octopus 
-	> > > merges (merges with more than two parents) are in git.git 
-	> > > repository I have encountered the following strange output 
-	> > > of git-log:
-	> > > 
-	> > > 1000:jnareb@roke:~/git> git log --parents --full-history \
-	> > > --max-count=1 211232bae64bcc60bbf5d1b5e5b2344c22ed767e -- a//b
-	> > >  commit 211232bae64bcc60bbf5d1b5e5b2344c22ed767e <...>
-	> > >  Merge: d0d0d0b... d0d0d0b... d0d0d0b... d0d0d0b... d0d0d0b...
-	> > >  [...]
-	> > 
-	> > This happens because a//b rewrites the history, i.e. the 
-	> > parents are edited. IMHO it makes no sense at all to show the 
-	> > parents in such a case, since they are bogus.
-	> 
-	> Or rather it has no sense to _repeat_ rewritten parent the 
-	> number of times the commit has parents originally.
+	git send origin..
 
-	Here you are.
+and that "origin" is what the other end is expected to already have.
 
- revision.c |   13 ++++++++++++-
- 1 files changed, 12 insertions(+), 1 deletions(-)
+Of course, if you send an unconnected bundle (ie you give an origin that 
+the other end _doesn't_ have), you're screwed.
 
-diff --git a/revision.c b/revision.c
-index 280e92b..8a2ca52 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1086,12 +1086,23 @@ static int rewrite_one(struct rev_info *
- 	}
- }
- 
-+static int parent_is_duplicate(struct commit_list *parents,
-+		struct commit_list *current)
-+{
-+	for (; parents != current; parents = parents->next)
-+		if (parents->item == current->item)
-+			return 1;
-+	return 0;
-+}
-+
- static void rewrite_parents(struct rev_info *revs, struct commit *commit)
- {
- 	struct commit_list **pp = &commit->parents;
- 	while (*pp) {
- 		struct commit_list *parent = *pp;
--		if (rewrite_one(revs, &parent->item) < 0) {
-+		if (rewrite_one(revs, &parent->item) < 0 ||
-+				/* cull duplicates */
-+				parent_is_duplicate(commit->parents, parent)) {
- 			*pp = parent->next;
- 			continue;
- 		}
--- 
-1.4.2.4.g21cef-dirty
+In other words, to get such a pack, we'd _literally_ just do something 
+like
+
+	git-rev-list --objects-edge origin.. |
+		git-pack-objects --stdout |
+		uuencode
+
+and that would be it. You'd still need to add a "diffstat" to the thing, 
+and tell the other end what the current HEAD is (so that it knows what 
+it's supposed to fast-forward to), but it _literally_ is that simple.
+
+"plug-in architecture" my ass. "I recognize this - it's UNIX!".
+
+		Linus
