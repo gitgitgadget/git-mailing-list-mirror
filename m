@@ -1,80 +1,59 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
+From: Jeff King <peff@peff.net>
 Subject: Re: VCS comparison table
-Date: Wed, 18 Oct 2006 08:22:13 +0200
-Message-ID: <vpqpscqm9d6.fsf@ecrins.imag.fr>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<200610172301.27101.jnareb@gmail.com> <45354AD0.1020107@utoronto.ca>
-	<200610172351.17377.jnareb@gmail.com>
+Date: Wed, 18 Oct 2006 02:33:08 -0400
+Message-ID: <20061018063308.GB3507@coredump.intra.peff.net>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <egr3ud$nqm$1@sea.gmane.org> <45340713.6000707@utoronto.ca> <Pine.LNX.4.63.0610170128350.14200@wbgn013.biozentrum.uni-wuerzburg.de> <4534656B.7080105@utoronto.ca> <20061017062341.8a5c8530.seanlkml@sympatico.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org
-X-From: bazaar-ng-bounces@lists.canonical.com Wed Oct 18 08:23:01 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jakub Narebski <jnareb@gmail.com>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 18 08:33:29 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ga4pI-0006fy-31
-	for gcvbg-bazaar-ng@m.gmane.org; Wed, 18 Oct 2006 08:22:52 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1Ga4pH-0008Hu-0h; Wed, 18 Oct 2006 07:22:51 +0100
-Received: from imag.imag.fr ([129.88.30.1])
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <Matthieu.Moy@imag.fr>) id 1Ga4pE-0008Hp-Aa
-	for bazaar-ng@lists.canonical.com; Wed, 18 Oct 2006 07:22:48 +0100
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.6/8.13.6) with ESMTP id k9I6MEvT005253
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 18 Oct 2006 08:22:15 +0200 (CEST)
-Received: from ecrins.imag.fr ([129.88.43.124])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50) id 1Ga4og-0006j1-0z; Wed, 18 Oct 2006 08:22:14 +0200
-Received: from moy by ecrins.imag.fr with local (Exim 4.50)
-	id 1Ga4of-0004ta-U7; Wed, 18 Oct 2006 08:22:13 +0200
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200610172351.17377.jnareb@gmail.com> (Jakub Narebski's message
-	of "Tue\, 17 Oct 2006 23\:51\:16 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.6
-	(imag.imag.fr [129.88.30.1]);
-	Wed, 18 Oct 2006 08:22:15 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29194>
+	id 1Ga4zV-0008KL-Io
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 08:33:25 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1750747AbWJRGdM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Oct 2006 02:33:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751440AbWJRGdM
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 02:33:12 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:30674 "HELO
+	peff.net") by vger.kernel.org with SMTP id S1750747AbWJRGdL (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Oct 2006 02:33:11 -0400
+Received: (qmail 30663 invoked from network); 18 Oct 2006 02:33:08 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 18 Oct 2006 02:33:08 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Oct 2006 02:33:08 -0400
+To: Sean <seanlkml@sympatico.ca>
+Content-Disposition: inline
+In-Reply-To: <20061017062341.8a5c8530.seanlkml@sympatico.ca>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29195>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Tue, Oct 17, 2006 at 06:23:41AM -0400, Sean wrote:
 
->>> Fast-forward is a really good idea. Perhaps you could implement it,
->>> if it is not hidden under different name?
->> 
->> We support it as 'pull', but merge doesn't do it automatically, because
->> we'd rather have merge behave the same all the time, and because 'pull'
->> throws away your local commit ordering.
->
-> I smell yet another terminology conflict (although this time fault is
-> on the git side), namely that in git terminology "pull" is "fetch"
-> (i.e. getting changes done in remote repository since laste "fetch"
-> or since "clone") followed by merge. pull = fetch + merge.
+> The "bzr missing" command sounds like a handy one.  
+> 
+> Someone on the xorg mailing list was recently lamenting that git does not
+> have an easy way to compare a local branch to a remote one.  While this
+> turns out to not be a big problem in git, it might be nice to have such
+> a command.
 
-AAUI, the initial claim was that after a rebase, git can do a
-fast-forward, but Aaron has missed the /after a rebase/ part.
+What's wrong with:
 
-And yes, it the bzr terminology, bzr can do a "pull" after a "graft".
-I don't think there's a fundamental difference here.
+  git-fetch
+  gitk master...origin
+
+The git model is to do operations on local refs and objects, so the
+fetch is a natural part of that. The only downside I see is that you
+actually end up fetching the data rather than simply peeking at where
+the remote is. But a useful comparison will include at least grabbing
+the commit objects, and probably the tree objects (to do diffs) anyway.
+
+-Peff
