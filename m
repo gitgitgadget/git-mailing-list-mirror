@@ -1,68 +1,77 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: VCS comparison table
-Date: Wed, 18 Oct 2006 02:39:20 +0200
-Message-ID: <20061018003920.GK20017__14424.2265880623$1161134820$gmane$org@pasky.or.cz>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <200610171555.56778.jnareb@gmail.com> <vpqr6x711cm.fsf@ecrins.imag.fr> <200610171641.04455.jnareb@gmail.com> <20061018000026.GH20017@pasky.or.cz> <45357596.8050702@utoronto.ca>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] Nice ftplugin for vim, that shows the commited diff in a split'ed buffer.
+Date: Wed, 18 Oct 2006 02:40:54 +0200
+Organization: Polytechnique.org
+Message-ID: <200610180240.54775.madcoder@debian.org>
+References: <7vodsbmlkr.fsf@assigned-by-dhcp.cox.net> <11611319762395-git-send-email-madcoder@debian.org> <11611319761977-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Oct 18 02:44:52 2006
+Content-Type: multipart/signed;
+  boundary="nextPart1527527.0iuvdfCAjp";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 18 02:45:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZzSu-00083x-Qk
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 02:39:25 +0200
+	id 1GZzUT-0008VM-13
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 02:41:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751161AbWJRAjW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 20:39:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751168AbWJRAjW
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 20:39:22 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:15760 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751161AbWJRAjV (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 20:39:21 -0400
-Received: (qmail 15622 invoked by uid 2001); 18 Oct 2006 02:39:20 +0200
-To: Aaron Bentley <aaron.bentley@utoronto.ca>
-Content-Disposition: inline
-In-Reply-To: <45357596.8050702@utoronto.ca>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751188AbWJRAk5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 20:40:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751190AbWJRAk5
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 20:40:57 -0400
+Received: from pan.madism.org ([88.191.16.128]:47828 "EHLO hermes.madism.org")
+	by vger.kernel.org with ESMTP id S1751188AbWJRAk4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 20:40:56 -0400
+Received: from hermes.madism.org (localhost.localdomain [127.0.0.1])
+	by hermes.madism.org (Postfix) with ESMTP id 3ADDFB005D;
+	Wed, 18 Oct 2006 02:40:53 +0200 (CEST)
+Received: from hades.madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by hermes.madism.org (Postfix) with ESMTP id 266D3B005C;
+	Wed, 18 Oct 2006 02:40:53 +0200 (CEST)
+To: Jeff King <peff@peff.net>
+User-Agent: KMail/1.9.5
+In-Reply-To: <11611319761977-git-send-email-madcoder@debian.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+X-AV-Checked: ClamAV (using ClamSMTP) at pan.madism.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29157>
 
-Dear diary, on Wed, Oct 18, 2006 at 02:30:14AM CEST, I got a letter
-where Aaron Bentley <aaron.bentley@utoronto.ca> said that...
-> Petr Baudis wrote:
-> > Another aspect of this is that Git (Linus ;) is very focused on getting
-> > the history right, nice and clean (though it does not _mandate_ it and
-> > you can just wildly do one commit after another; it just provides tools
-> > to easily do it).
-> 
-> Yes, rebasing is very uncommon in the bzr community.  We would rather
-> evaluate the complete change than walk through its history.  (Bundles
-> only show the changes you made, not the changes you merged from the
-> mainline.)
-> 
-> In an earlier form, bundles contained a patch for every revision, and
-> people *hated* reading them.  So there's definitely a cultural
-> difference there.
+--nextPart1527527.0iuvdfCAjp
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-BTW, I think what describes the Git's (kernel's) stance very nicely is
-what I call the Al Viro's "homework problem":
+Le mer 18 octobre 2006 02:39, Pierre Habouzit a =C3=A9crit :
+> Signed-off-by: Pierre Habouzit <madcoder@debian.org>
 
-	http://lkml.org/lkml/2005/4/7/176
+damn, sorry, that's still not the good one :|
 
-If I understand you right, the bzr approach is what's described as "the
-dumbest kind" there? (No offense meant!)
+/me feels very tired.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+=2D-=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--nextPart1527527.0iuvdfCAjp
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQBFNXgWvGr7W6HudhwRAnSBAJ9jV1iIXQZ82ufRiCw8onYyWiU30QCZAWau
+uv3JDBXrFR8WUDpRA96VW3U=
+=BHWe
+-----END PGP SIGNATURE-----
+
+--nextPart1527527.0iuvdfCAjp--
