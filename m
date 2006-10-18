@@ -1,74 +1,80 @@
-From: Davide Libenzi <davidel@xmailserver.org>
-Subject: Re: heads-up: git-index-pack in "next" is broken
-Date: Tue, 17 Oct 2006 23:09:50 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610172242430.17253@alien.or.mcafeemobile.com>
-References: <7vy7rfsfqa.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610171134130.1971@xanadu.home> <7vslhnj58e.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610171251210.1971@xanadu.home> <7vbqoake1v.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610171437250.1971@xanadu.home> <20061017233630.72a0aae5.vsu@altlinux.ru>
- <Pine.LNX.4.64.0610171615340.1971@xanadu.home> <Pine.LNX.4.64.0610171339030.3962@g5.osdl.org>
- <Pine.LNX.4.64.0610171706260.1971@xanadu.home> <Pine.LNX.4.64.0610171440080.3962@g5.osdl.org>
- <Pine.LNX.4.64.0610171959070.1971@xanadu.home> <Pine.LNX.4.64.0610171754040.3962@g5.osdl.org>
- <Pine.LNX.4.64.0610172140270.1971@xanadu.home> <Pine.LNX.4.64.0610171959180.3962@g5.osdl.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: VCS comparison table
+Date: Wed, 18 Oct 2006 08:22:13 +0200
+Message-ID: <vpqpscqm9d6.fsf@ecrins.imag.fr>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<200610172301.27101.jnareb@gmail.com> <45354AD0.1020107@utoronto.ca>
+	<200610172351.17377.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, Sergey Vlasov <vsu@altlinux.ru>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 18 08:11:09 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+X-From: bazaar-ng-bounces@lists.canonical.com Wed Oct 18 08:23:01 2006
+Return-path: <bazaar-ng-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ga4co-0004QA-6x
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 08:09:59 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751081AbWJRGJz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 02:09:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751437AbWJRGJz
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 02:09:55 -0400
-Received: from x35.xmailserver.org ([69.30.125.51]:26086 "EHLO
-	x35.xmailserver.org") by vger.kernel.org with ESMTP
-	id S1751081AbWJRGJy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Oct 2006 02:09:54 -0400
-X-AuthUser: davidel@xmailserver.org
-Received: from alien.or.mcafeemobile.com
-	by xmailserver.org with [XMail 1.23 ESMTP Server]
-	id <S1F58CF> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
-	Tue, 17 Oct 2006 23:09:50 -0700
-X-X-Sender: davide@alien.or.mcafeemobile.com
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0610171959180.3962@g5.osdl.org>
-X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
-X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29193>
+	id 1Ga4pI-0006fy-31
+	for gcvbg-bazaar-ng@m.gmane.org; Wed, 18 Oct 2006 08:22:52 +0200
+Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
+	id 1Ga4pH-0008Hu-0h; Wed, 18 Oct 2006 07:22:51 +0100
+Received: from imag.imag.fr ([129.88.30.1])
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <Matthieu.Moy@imag.fr>) id 1Ga4pE-0008Hp-Aa
+	for bazaar-ng@lists.canonical.com; Wed, 18 Oct 2006 07:22:48 +0100
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.6/8.13.6) with ESMTP id k9I6MEvT005253
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 18 Oct 2006 08:22:15 +0200 (CEST)
+Received: from ecrins.imag.fr ([129.88.43.124])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50) id 1Ga4og-0006j1-0z; Wed, 18 Oct 2006 08:22:14 +0200
+Received: from moy by ecrins.imag.fr with local (Exim 4.50)
+	id 1Ga4of-0004ta-U7; Wed, 18 Oct 2006 08:22:13 +0200
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200610172351.17377.jnareb@gmail.com> (Jakub Narebski's message
+	of "Tue\, 17 Oct 2006 23\:51\:16 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.6
+	(imag.imag.fr [129.88.30.1]);
+	Wed, 18 Oct 2006 08:22:15 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+X-BeenThere: bazaar-ng@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
+List-Post: <mailto:bazaar-ng@lists.canonical.com>
+List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-ng-bounces@lists.canonical.com
+Errors-To: bazaar-ng-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29194>
 
-On Tue, 17 Oct 2006, Linus Torvalds wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> > Does this mean that, with your own change to xdiff that has just been 
-> > committed, you actually created a "problem"?  Because this is a change 
-> > that creates different behaviors whether a 32-bit or 64-bit architecture 
-> > is used, Right?
-> 
-> If you go back to that discussion, I actually pointed out several times 
-> that the whole bug _was_ actually introduced exactly because the xdiff 
-> code used things that behave differently depending on word-size.
+>>> Fast-forward is a really good idea. Perhaps you could implement it,
+>>> if it is not hidden under different name?
+>> 
+>> We support it as 'pull', but merge doesn't do it automatically, because
+>> we'd rather have merge behave the same all the time, and because 'pull'
+>> throws away your local commit ordering.
+>
+> I smell yet another terminology conflict (although this time fault is
+> on the git side), namely that in git terminology "pull" is "fetch"
+> (i.e. getting changes done in remote repository since laste "fetch"
+> or since "clone") followed by merge. pull = fetch + merge.
 
-Ehm, I think there's a little bit of confusion. The incorrect golden ratio 
-prime selection for 64 bits machines was coalescing hash indexes into a 
-very limited number of buckets, hence creating very bad performance on diff 
-operations. The result of the diff would have been exacly the same, just 
-coming out after the time for a cup of coffee and a croissant ;)
+AAUI, the initial claim was that after a rebase, git can do a
+fast-forward, but Aaron has missed the /after a rebase/ part.
 
-
-> So the bug in xdiff was _exactly_ that somebody - totally incorrectly - 
-> thought it should work "better" on 64-bits. 
-
-Haha, not exactly. I had just forgot about the incoming 64 bits world at 
-the time.
-
-
-
-- Davide
+And yes, it the bzr terminology, bzr can do a "pull" after a "graft".
+I don't think there's a fundamental difference here.
