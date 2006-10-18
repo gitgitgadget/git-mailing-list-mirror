@@ -1,36 +1,36 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
-Date: Wed, 18 Oct 2006 17:32:26 -0400
-Message-ID: <20061018213225.GD19194@spearce.org>
-References: <20061018053647.GA3507@coredump.intra.peff.net> <Pine.LNX.4.64.0610180739230.3962@g5.osdl.org> <20061018185225.GU20017@pasky.or.cz> <20061018185907.GV20017@pasky.or.cz> <7vy7rd1m4q.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0610181510510.1971@xanadu.home> <20061018191834.GA18829@spearce.org> <Pine.LNX.4.64.0610181525410.1971@xanadu.home> <20061018204626.GA19194@spearce.org> <Pine.LNX.4.64.0610181358200.3962@g5.osdl.org>
+Subject: Re: VCS comparison table
+Date: Wed, 18 Oct 2006 17:37:03 -0400
+Message-ID: <20061018213703.GE19194@spearce.org>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <45349162.90001@op5.se> <453536AE.6060601@utoronto.ca> <200610172301.27101.jnareb@gmail.com> <45354AD0.1020107@utoronto.ca> <BAYC1-PASMTP07AB11A64250AAF683424DAE0E0@CEZ.ICE> <45355CBB.80108@utoronto.ca> <BAYC1-PASMTP01369CD694D75CB61ACCC7AE0E0@CEZ.ICE> <eh64tk$rug$2@sea.gmane.org> <20061018172945.c0c58c38.seanlkml@sympatico.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 18 23:32:40 2006
+Cc: Charles Duffy <cduffy@spamcop.net>, git@vger.kernel.org,
+	bazaar-ng@lists.canonical.com
+X-From: git-owner@vger.kernel.org Wed Oct 18 23:37:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaJ1g-0000GW-FQ
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 23:32:37 +0200
+	id 1GaJ6I-0001HX-CL
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 23:37:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422992AbWJRVcd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 17:32:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422994AbWJRVcd
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 17:32:33 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:33184 "EHLO
+	id S1423007AbWJRVhL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Oct 2006 17:37:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423009AbWJRVhL
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 17:37:11 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:19617 "EHLO
 	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1422992AbWJRVcc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Oct 2006 17:32:32 -0400
+	id S1423007AbWJRVhJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Oct 2006 17:37:09 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GaJ1W-0004Sw-BM; Wed, 18 Oct 2006 17:32:26 -0400
+	id 1GaJ60-0004mb-7A; Wed, 18 Oct 2006 17:37:04 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5BF3C20E42A; Wed, 18 Oct 2006 17:32:26 -0400 (EDT)
-To: Linus Torvalds <torvalds@osdl.org>
+	id 4B96320E42A; Wed, 18 Oct 2006 17:37:04 -0400 (EDT)
+To: Sean <seanlkml@sympatico.ca>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0610181358200.3962@g5.osdl.org>
+In-Reply-To: <20061018172945.c0c58c38.seanlkml@sympatico.ca>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -43,51 +43,47 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29272>
 
-Linus Torvalds <torvalds@osdl.org> wrote:
-> On Wed, 18 Oct 2006, Shawn Pearce wrote:
-> >
-> > I guess its my turn then to work in the mmap window code, huh?  :-)
+Sean <seanlkml@sympatico.ca> wrote:
+> On Wed, 18 Oct 2006 16:04:52 -0500
+> Charles Duffy <cduffy@spamcop.net> wrote:
 > 
-> There are bigger reasons to _never_ allow packs to contain deltas to 
-> outside of themselves:
+> > Example time!
+> > 
+> > There's a plugin for Bzr which adds support for Cygwin-compatible 
+> > symlink support on Windows. (IIRC, this involves monkey-patching some of 
+> > the Python standard library bits).
+> > 
+> > Now, this is something which is *proposed* as a feature to be merged 
+> > into upstream bzr, and it may happen at some point. That said, when I 
+> > have a Windows-using coworker who wants to check out a repository that 
+> > has symlinks in it (with his win32-native, no-cygwin-required bzr 
+> > upstream binary), I don't need to tell him to go download and build bzr 
+> > from a third party; instead, I just need to tell him to run a single 
+> > command to check out the plugin in question into the bzr plugins folder.
+> > 
+> >  From an end-user convenience perspective, it's a pretty significant win.
 > 
->  - there's no point. 
->  - it's a bad design. 
+> You'll need a better example than that.  Git has supported a version
+> of Cygwin-compatible symlink support on Windows for quite some time.
+> And no plugins were needed.
 
-That and all of the other reasons you cited in your message are
-why I haven't finished trying to use some sort of dictionary based
-compression for packing objects.
-
-On the other hand we've already seen how packs >1.5 GiB in size
-(certainly well within the 4 GiB limitation in the current index
-file format) cannot be repacked by git-repack-objects on a 32
-bit address space as the entire pack file is mmap'd on one shot.
-After the kernel space of ~1 GiB and the pack file at ~1.5 GiB
-there's very little address space left for the application code.
-
-My comment that you quoted was about mmap'ing the pack files in
-large chunks (around 64-128 MiB at a time, but configurable from
-.git/config) rather than as an entire massive mapping.  It had
-absolutely nothing to do about changing the pack file format, the
-index format, or any other on disk format.  Although it would add
-a new pair of configuration options to .git/config.  Is that change
-too radical?  :-)
-
-With such a change the Git and Linux kernel repositories would both
-still mmap in one chunk but much larger projects like Mozilla or
-very large pack files coming out of git-fastimport would actually
-be usable on 32 bit architectures without running into address space
-limitations so quickly.  Git would also be slightly more usable for
-some people who have a lot of very uncompressable data stored in Git.
+Actually I think the only part of that example that was really
+interesting was that Bzr runs natively on Windows and that Bzr's
+native method of extending the tool with additional features doesn't
+require Cygwin.
 
 
-Unless of course you are actively working on a fix for the Linux
-kernel so that we can actually have all 4 GiB of virtual address
-space available for the userspace git-repack-objects process.
-Or have some sort of secret plan to upgrade everyone who uses Git
-to 64 bit processors which support 64 bit address spaces...
+Today Git doesn't run natively on Windows.  It runs slowly through
+Cygwin, thanks to lots of various overheads in different places.
+And due to the crappy disk drive in my Windows box.  :-)
+
+Today Git is typically extended (at least initially in prototyping
+mode) through Perl, Python, TCL or Bourne shell scripts.  Although
+the first three are available natively on Windows the last requires
+Cygwin... and we've had some issues with ActiveState Perl on Windows
+in the past too.
 
 -- 
 Shawn.
