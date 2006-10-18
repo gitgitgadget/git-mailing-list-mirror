@@ -1,76 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-imap-send: Strip smtp From_ header from imap message.
-Date: Tue, 17 Oct 2006 23:04:43 -0700
-Message-ID: <7vlknegnwk.fsf@assigned-by-dhcp.cox.net>
-References: <452EBF77.7040301@oribi.org>
+From: Davide Libenzi <davidel@xmailserver.org>
+Subject: Re: heads-up: git-index-pack in "next" is broken
+Date: Tue, 17 Oct 2006 23:09:50 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610172242430.17253@alien.or.mcafeemobile.com>
+References: <7vy7rfsfqa.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610171134130.1971@xanadu.home> <7vslhnj58e.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610171251210.1971@xanadu.home> <7vbqoake1v.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610171437250.1971@xanadu.home> <20061017233630.72a0aae5.vsu@altlinux.ru>
+ <Pine.LNX.4.64.0610171615340.1971@xanadu.home> <Pine.LNX.4.64.0610171339030.3962@g5.osdl.org>
+ <Pine.LNX.4.64.0610171706260.1971@xanadu.home> <Pine.LNX.4.64.0610171440080.3962@g5.osdl.org>
+ <Pine.LNX.4.64.0610171959070.1971@xanadu.home> <Pine.LNX.4.64.0610171754040.3962@g5.osdl.org>
+ <Pine.LNX.4.64.0610172140270.1971@xanadu.home> <Pine.LNX.4.64.0610171959180.3962@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Mike McCormack <mike@codeweavers.com>
-X-From: git-owner@vger.kernel.org Wed Oct 18 08:07:17 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>, Sergey Vlasov <vsu@altlinux.ru>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 18 08:11:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ga4a3-0003uH-5l
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 08:07:07 +0200
+	id 1Ga4co-0004QA-6x
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 08:09:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751441AbWJRGEu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 02:04:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751437AbWJRGEu
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 02:04:50 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:28112 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1751439AbWJRGEt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Oct 2006 02:04:49 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061018060448.SWVR2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 18 Oct 2006 02:04:48 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id bi4b1V00C1kojtg0000000
-	Wed, 18 Oct 2006 02:04:35 -0400
-To: Markus Amsler <markus.amsler@oribi.org>
-In-Reply-To: <452EBF77.7040301@oribi.org> (Markus Amsler's message of "Fri, 13
-	Oct 2006 00:19:35 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751081AbWJRGJz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Oct 2006 02:09:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751437AbWJRGJz
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 02:09:55 -0400
+Received: from x35.xmailserver.org ([69.30.125.51]:26086 "EHLO
+	x35.xmailserver.org") by vger.kernel.org with ESMTP
+	id S1751081AbWJRGJy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Oct 2006 02:09:54 -0400
+X-AuthUser: davidel@xmailserver.org
+Received: from alien.or.mcafeemobile.com
+	by xmailserver.org with [XMail 1.23 ESMTP Server]
+	id <S1F58CF> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
+	Tue, 17 Oct 2006 23:09:50 -0700
+X-X-Sender: davide@alien.or.mcafeemobile.com
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0610171959180.3962@g5.osdl.org>
+X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
+X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29193>
 
-Markus Amsler <markus.amsler@oribi.org> writes:
+On Tue, 17 Oct 2006, Linus Torvalds wrote:
 
-> Cyrus imap refuses messages with a 'From ' Header.
->
-> Signed-off-by: Markus Amsler <markus.amsler@oribi.org>
+> > Does this mean that, with your own change to xdiff that has just been 
+> > committed, you actually created a "problem"?  Because this is a change 
+> > that creates different behaviors whether a 32-bit or 64-bit architecture 
+> > is used, Right?
+> 
+> If you go back to that discussion, I actually pointed out several times 
+> that the whole bug _was_ actually introduced exactly because the xdiff 
+> code used things that behave differently depending on word-size.
 
-Do you know if this change does not upset other implementations
-of imap servers?
+Ehm, I think there's a little bit of confusion. The incorrect golden ratio 
+prime selection for 64 bits machines was coalescing hash indexes into a 
+very limited number of buckets, hence creating very bad performance on diff 
+operations. The result of the diff would have been exacly the same, just 
+coming out after the time for a cup of coffee and a croissant ;)
 
-Mike, are you Ok with this change?
 
----
-  imap-send.c |    8 ++++++++
-  1 files changed, 8 insertions(+), 0 deletions(-)
+> So the bug in xdiff was _exactly_ that somebody - totally incorrectly - 
+> thought it should work "better" on 64-bits. 
 
-diff --git a/imap-send.c b/imap-send.c
-index 362e474..16804ab 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -1226,6 +1226,14 @@ split_msg( msg_data_t *all_msgs, msg_dat
- 	if (msg->len < 5 || strncmp( data, "From ", 5 ))
- 		return 0;
+Haha, not exactly. I had just forgot about the incoming 64 bits world at 
+the time.
 
-+	p = strchr( data, '\n' );
-+	if (p) {
-+		p = &p[1];
-+		msg->len -= p-data;
-+		*ofs += p-data;
-+		data = p;
-+	}
-+
- 	p = strstr( data, "\nFrom " );
- 	if (p)
- 		msg->len = &p[1] - data;
+
+
+- Davide
