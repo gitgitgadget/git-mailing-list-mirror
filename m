@@ -1,80 +1,77 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
-Date: Wed, 18 Oct 2006 16:53:41 -0400
-Message-ID: <BAYC1-PASMTP0628ED9CBD2F53119374EEAE0F0@CEZ.ICE>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<200610172351.17377.jnareb@gmail.com>
-	<4535590C.4000004@utoronto.ca>
-	<200610180057.25411.jnareb@gmail.com>
-	<Pine.LNX.4.64.0610171610270.3962@g5.osdl.org>
-	<20061018053647.GA3507@coredump.intra.peff.net>
-	<Pine.LNX.4.64.0610180739230.3962@g5.osdl.org>
-	<20061018185225.GU20017@pasky.or.cz>
-	<20061018155704.b94b441d.seanlkml@sympatico.ca>
-	<20061018204618.GW20017@pasky.or.cz>
+From: Charles Duffy <cduffy@spamcop.net>
+Subject: Re: VCS comparison table
+Date: Wed, 18 Oct 2006 16:04:52 -0500
+Message-ID: <eh64tk$rug$2@sea.gmane.org>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>	<45349162.90001@op5.se>	<453536AE.6060601@utoronto.ca>	<200610172301.27101.jnareb@gmail.com>	<45354AD0.1020107@utoronto.ca>	<BAYC1-PASMTP07AB11A64250AAF683424DAE0E0@CEZ.ICE>	<45355CBB.80108@utoronto.ca>
+	<BAYC1-PASMTP01369CD694D75CB61ACCC7AE0E0@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, Jeff King <peff@peff.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Aaron Bentley <aaron.bentley@utoronto.ca>,
-	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 18 22:53:56 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: git@vger.kernel.org
+X-From: bazaar-ng-bounces@lists.canonical.com Wed Oct 18 23:10:40 2006
+Return-path: <bazaar-ng-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaIQ7-0001Od-Qt
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 22:53:48 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751517AbWJRUxo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 16:53:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030278AbWJRUxo
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 16:53:44 -0400
-Received: from bayc1-pasmtp06.bayc1.hotmail.com ([65.54.191.166]:44208 "EHLO
-	BAYC1-PASMTP06.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1751517AbWJRUxn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Oct 2006 16:53:43 -0400
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP06.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Wed, 18 Oct 2006 13:56:52 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GaHTx-0002Y2-82; Wed, 18 Oct 2006 15:53:41 -0400
-To: Petr Baudis <pasky@suse.cz>
-Message-Id: <20061018165341.bcece11f.seanlkml@sympatico.ca>
-In-Reply-To: <20061018204618.GW20017@pasky.or.cz>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 18 Oct 2006 20:56:52.0718 (UTC) FILETIME=[F03050E0:01C6F2F7]
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+	id 1GaIgD-0004c0-8x
+	for gcvbg-bazaar-ng@m.gmane.org; Wed, 18 Oct 2006 23:10:25 +0200
+Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
+	id 1GaIfw-000327-V7; Wed, 18 Oct 2006 22:10:09 +0100
+Received: from main.gmane.org ([80.91.229.2] helo=ciao.gmane.org)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <gcvbg-bazaar-ng@m.gmane.org>) id 1GaIfs-00031H-Cv
+	for bazaar-ng@lists.canonical.com; Wed, 18 Oct 2006 22:10:05 +0100
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1GaIfq-0004Wf-5q
+	for bazaar-ng@lists.canonical.com; Wed, 18 Oct 2006 23:10:02 +0200
+Received: from 64.128.31.220 ([64.128.31.220])
+	by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+	id 1AlnuQ-0007hv-00
+	for <bazaar-ng@lists.canonical.com>; Wed, 18 Oct 2006 23:10:02 +0200
+Received: from cduffy by 64.128.31.220 with local (Gmexim 0.1 (Debian))
+	id 1AlnuQ-0007hv-00
+	for <bazaar-ng@lists.canonical.com>; Wed, 18 Oct 2006 23:10:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: bazaar-ng@lists.canonical.com
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 64.128.31.220
+User-Agent: Thunderbird 1.5.0.4 (X11/20060516)
+In-Reply-To: <BAYC1-PASMTP01369CD694D75CB61ACCC7AE0E0@CEZ.ICE>
+X-BeenThere: bazaar-ng@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
+List-Post: <mailto:bazaar-ng@lists.canonical.com>
+List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-ng-bounces@lists.canonical.com
+Errors-To: bazaar-ng-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29266>
 
-On Wed, 18 Oct 2006 22:46:18 +0200
-Petr Baudis <pasky@suse.cz> wrote:
+Sean wrote:
+> Hmm.. It's pretty easy to test out Git ideas too.  People do it all
+> the time, and without plugins.  Junio maintains several such trees
+> for instance.  Dunno.. I just think plugs _sounds_ good to developers
+> without much real benefit to users over regular ole source code.
 
-> They could be written, but certainly not "just as easily". I'm more used
-> to coding Cogito, I find it much more convenient than hacking git's
-> shell scripts (those two may be interconnected ;), and there's plenty of
-> infrastructure in Cogito missing in Git - Cogito has more flexible
-> arguments parsing, documentation bundled with code, I could just
-> cut'n'paste the code to handle -m arguments and message editor (and most
-> of it is libified anyway) so I got that basically for free, and I think
-> Cogito beats Git hands down in code readability.
+Example time!
 
-Hmmm, if I get some time over the weekend i'll take a look at porting
-them to Git.  But maybe some of the items you mentioned above deserve
-to become part of Git proper?  It would definitely be nice to see
-something like what you just did put into the hands of more users than
-just those using Cogito, and its unfortunate that the current state
-of Git code kept you from going that route.
+There's a plugin for Bzr which adds support for Cygwin-compatible 
+symlink support on Windows. (IIRC, this involves monkey-patching some of 
+the Python standard library bits).
 
-> It would be of course technically possible, yes. But somewhat more work,
-> this is just a quick hack.
+Now, this is something which is *proposed* as a feature to be merged 
+into upstream bzr, and it may happen at some point. That said, when I 
+have a Windows-using coworker who wants to check out a repository that 
+has symlinks in it (with his win32-native, no-cygwin-required bzr 
+upstream binary), I don't need to tell him to go download and build bzr 
+from a third party; instead, I just need to tell him to run a single 
+command to check out the plugin in question into the bzr plugins folder.
 
-No doubt, there would be some slightly thorny issues to deal with.  It
-might even end up too fragile to be worthwhile.
-
-Sean
+ From an end-user convenience perspective, it's a pretty significant win.
