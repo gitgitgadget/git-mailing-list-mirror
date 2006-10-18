@@ -1,60 +1,76 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 22:57:01 -0700
-Message-ID: <7vpscqgo9e.fsf@assigned-by-dhcp.cox.net>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<200610172351.17377.jnareb@gmail.com> <4535590C.4000004@utoronto.ca>
-	<200610180057.25411.jnareb@gmail.com>
-	<Pine.LNX.4.64.0610171610270.3962@g5.osdl.org>
-	<20061018053647.GA3507@coredump.intra.peff.net>
+Subject: Re: [PATCH] git-imap-send: Strip smtp From_ header from imap message.
+Date: Tue, 17 Oct 2006 23:04:43 -0700
+Message-ID: <7vlknegnwk.fsf@assigned-by-dhcp.cox.net>
+References: <452EBF77.7040301@oribi.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Aaron Bentley <aaron.bentley@utoronto.ca>,
-	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed Oct 18 07:57:11 2006
+Cc: git@vger.kernel.org, Mike McCormack <mike@codeweavers.com>
+X-From: git-owner@vger.kernel.org Wed Oct 18 08:07:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ga4QP-00030w-4u
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 07:57:09 +0200
+	id 1Ga4a3-0003uH-5l
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 08:07:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751429AbWJRF5G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 01:57:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751434AbWJRF5F
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 01:57:05 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:45721 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1751429AbWJRF5C (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Oct 2006 01:57:02 -0400
+	id S1751441AbWJRGEu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Oct 2006 02:04:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751437AbWJRGEu
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 02:04:50 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:28112 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1751439AbWJRGEt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Oct 2006 02:04:49 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao06.cox.net
+          by fed1rmmtao03.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061018055702.QJKL6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 18 Oct 2006 01:57:02 -0400
+          id <20061018060448.SWVR2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 18 Oct 2006 02:04:48 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id bhwo1V00J1kojtg0000000
-	Wed, 18 Oct 2006 01:56:49 -0400
-To: Jeff King <peff@peff.net>
-In-Reply-To: <20061018053647.GA3507@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 18 Oct 2006 01:36:47 -0400")
+	id bi4b1V00C1kojtg0000000
+	Wed, 18 Oct 2006 02:04:35 -0400
+To: Markus Amsler <markus.amsler@oribi.org>
+In-Reply-To: <452EBF77.7040301@oribi.org> (Markus Amsler's message of "Fri, 13
+	Oct 2006 00:19:35 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29192>
 
-Jeff King <peff@peff.net> writes:
+Markus Amsler <markus.amsler@oribi.org> writes:
 
-> We could always make a guess ("git send --remote-has master~10") but
-> that seems awfully error-prone. I assume a changeset-oriented system
-> would implicitly keep some concept of "I think Linus is at master~10"
-> and do it automatically.
+> Cyrus imap refuses messages with a 'From ' Header.
+>
+> Signed-off-by: Markus Amsler <markus.amsler@oribi.org>
 
-We could always anchor at a well known point ("git send v2.6.18..").
-If you as the recipient do not have the preimage, the "bundle" would
-identify what the assumed common ancestor is and you can fetch
-it before proceeding.
+Do you know if this change does not upset other implementations
+of imap servers?
+
+Mike, are you Ok with this change?
+
+---
+  imap-send.c |    8 ++++++++
+  1 files changed, 8 insertions(+), 0 deletions(-)
+
+diff --git a/imap-send.c b/imap-send.c
+index 362e474..16804ab 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -1226,6 +1226,14 @@ split_msg( msg_data_t *all_msgs, msg_dat
+ 	if (msg->len < 5 || strncmp( data, "From ", 5 ))
+ 		return 0;
+
++	p = strchr( data, '\n' );
++	if (p) {
++		p = &p[1];
++		msg->len -= p-data;
++		*ofs += p-data;
++		data = p;
++	}
++
+ 	p = strstr( data, "\nFrom " );
+ 	if (p)
+ 		msg->len = &p[1] - data;
