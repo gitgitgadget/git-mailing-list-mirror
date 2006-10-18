@@ -1,82 +1,68 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: [PATCH] be more vim-ish, and also syntax hilight Signed-off-by lines.
-Date: Wed, 18 Oct 2006 02:39:35 +0200
-Message-ID: <11611319762395-git-send-email-madcoder@debian.org>
-References: <7vodsbmlkr.fsf@assigned-by-dhcp.cox.net> <1161131976193-git-send-email-madcoder@debian.org>
-Cc: git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: VCS comparison table
+Date: Wed, 18 Oct 2006 02:39:20 +0200
+Message-ID: <20061018003920.GK20017__14424.2265880623$1161134820$gmane$org@pasky.or.cz>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <200610171555.56778.jnareb@gmail.com> <vpqr6x711cm.fsf@ecrins.imag.fr> <200610171641.04455.jnareb@gmail.com> <20061018000026.GH20017@pasky.or.cz> <45357596.8050702@utoronto.ca>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
 X-From: git-owner@vger.kernel.org Wed Oct 18 02:44:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZzTB-0008Bj-SR
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 02:39:47 +0200
+	id 1GZzSu-00083x-Qk
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 02:39:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751183AbWJRAji (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 20:39:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751188AbWJRAji
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 20:39:38 -0400
-Received: from pan.madism.org ([88.191.16.128]:41428 "EHLO hermes.madism.org")
-	by vger.kernel.org with ESMTP id S1751183AbWJRAjh (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 20:39:37 -0400
-Received: from hermes.madism.org (localhost.localdomain [127.0.0.1])
-	by hermes.madism.org (Postfix) with ESMTP id 0B0FCB005C;
-	Wed, 18 Oct 2006 02:39:34 +0200 (CEST)
-Received: from hades.madism.org (olympe.madism.org [82.243.245.108])
-	by hermes.madism.org (Postfix) with ESMTP id D8035B005D;
-	Wed, 18 Oct 2006 02:39:33 +0200 (CEST)
-Received: by hades.madism.org (Postfix, from userid 1000)
-	id 822D262112; Wed, 18 Oct 2006 02:39:36 +0200 (CEST)
-To: Jeff King <peff@peff.net>
-X-Mailer: git-send-email 1.4.2.3
-In-Reply-To: <1161131976193-git-send-email-madcoder@debian.org>
-X-AV-Checked: ClamAV (using ClamSMTP) at pan.madism.org
+	id S1751161AbWJRAjW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 20:39:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751168AbWJRAjW
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 20:39:22 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:15760 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751161AbWJRAjV (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 20:39:21 -0400
+Received: (qmail 15622 invoked by uid 2001); 18 Oct 2006 02:39:20 +0200
+To: Aaron Bentley <aaron.bentley@utoronto.ca>
+Content-Disposition: inline
+In-Reply-To: <45357596.8050702@utoronto.ca>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29156>
 
-Signed-off-by: Pierre Habouzit <madcoder@debian.org>
----
- contrib/vim/syntax/gitcommit.vim |   18 ++++++++++++++++++
- 1 files changed, 18 insertions(+), 0 deletions(-)
+Dear diary, on Wed, Oct 18, 2006 at 02:30:14AM CEST, I got a letter
+where Aaron Bentley <aaron.bentley@utoronto.ca> said that...
+> Petr Baudis wrote:
+> > Another aspect of this is that Git (Linus ;) is very focused on getting
+> > the history right, nice and clean (though it does not _mandate_ it and
+> > you can just wildly do one commit after another; it just provides tools
+> > to easily do it).
+> 
+> Yes, rebasing is very uncommon in the bzr community.  We would rather
+> evaluate the complete change than walk through its history.  (Bundles
+> only show the changes you made, not the changes you merged from the
+> mainline.)
+> 
+> In an earlier form, bundles contained a patch for every revision, and
+> people *hated* reading them.  So there's definitely a cultural
+> difference there.
 
-diff --git a/contrib/vim/syntax/gitcommit.vim b/contrib/vim/syntax/gitcommit.vim
-index a9de09f..d0c6e5d 100644
---- a/contrib/vim/syntax/gitcommit.vim
-+++ b/contrib/vim/syntax/gitcommit.vim
-@@ -1,3 +1,14 @@
-+" Vim syntax file
-+" Language:	git commit message
-+
-+" Quit when a (custom) syntax file was already loaded
-+if exists("b:current_syntax")
-+  finish
-+endif
-+
-+syn region gitSignedOff start=/^Signed-off-by:/ end=/$/ contains=gitAuthor,gitEmail
-+syn region gitAuthor contained start=/\s/ end=/$/
-+
- syn region gitLine start=/^#/ end=/$/
- syn region gitCommit start=/^# Updated but not checked in:$/ end=/^#$/ contains=gitHead,gitCommitFile
- syn region gitHead contained start=/^#   (.*)/ end=/^#$/
-@@ -8,6 +19,9 @@ syn match gitCommitFile contained /^#\t.
- syn match gitChangedFile contained /^#\t.*/hs=s+2
- syn match gitUntrackedFile contained /^#\t.*/hs=s+2
- 
-+hi def link gitSignedOff Keyword
-+hi def link gitAuthor Normal
-+
- hi def link gitLine Comment
- hi def link gitCommit Comment
- hi def link gitChanged Comment
-@@ -16,3 +30,7 @@ hi def link gitUntracked Comment
- hi def link gitCommitFile Type
- hi def link gitChangedFile Constant
- hi def link gitUntrackedFile Constant
-+
-+let b:current_syntax = "git"
-+
-+" vim: ts=8 sw=2
+BTW, I think what describes the Git's (kernel's) stance very nicely is
+what I call the Al Viro's "homework problem":
+
+	http://lkml.org/lkml/2005/4/7/176
+
+If I understand you right, the bzr approach is what's described as "the
+dumbest kind" there? (No offense meant!)
+
 -- 
-1.4.2.3
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
