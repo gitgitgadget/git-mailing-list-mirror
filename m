@@ -1,60 +1,88 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: VCS comparison table
-Date: Wed, 18 Oct 2006 23:52:56 +0200
-Message-ID: <20061018215255.GZ20017@pasky.or.cz>
-References: <453536AE.6060601@utoronto.ca> <200610172301.27101.jnareb@gmail.com> <45354AD0.1020107@utoronto.ca> <BAYC1-PASMTP07AB11A64250AAF683424DAE0E0@CEZ.ICE> <45355CBB.80108@utoronto.ca> <BAYC1-PASMTP01369CD694D75CB61ACCC7AE0E0@CEZ.ICE> <eh64tk$rug$2@sea.gmane.org> <20061018172945.c0c58c38.seanlkml@sympatico.ca> <20061018213703.GE19194@spearce.org> <20061018174450.f2108a21.seanlkml@sympatico.ca>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
+Date: Wed, 18 Oct 2006 17:54:43 -0400
+Message-ID: <BAYC1-PASMTP11CB0FFA29B2098DFE92FEAE0F0@CEZ.ICE>
+References: <200610172351.17377.jnareb@gmail.com>
+	<4535590C.4000004@utoronto.ca>
+	<200610180057.25411.jnareb@gmail.com>
+	<Pine.LNX.4.64.0610171610270.3962@g5.osdl.org>
+	<20061018053647.GA3507@coredump.intra.peff.net>
+	<Pine.LNX.4.64.0610180739230.3962@g5.osdl.org>
+	<20061018185225.GU20017@pasky.or.cz>
+	<20061018155704.b94b441d.seanlkml@sympatico.ca>
+	<20061018204618.GW20017@pasky.or.cz>
+	<20061018165341.bcece11f.seanlkml@sympatico.ca>
+	<20061018213935.GX20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 18 23:53:05 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 18 23:54:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaJLR-0004N0-Pm
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 23:53:02 +0200
+	id 1GaJNB-0004iI-LY
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 23:54:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423020AbWJRVw6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 17:52:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423042AbWJRVw6
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 17:52:58 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:22990 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1423020AbWJRVw5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Oct 2006 17:52:57 -0400
-Received: (qmail 21962 invoked by uid 2001); 18 Oct 2006 23:52:56 +0200
-To: Sean <seanlkml@sympatico.ca>
-Content-Disposition: inline
-In-Reply-To: <20061018174450.f2108a21.seanlkml@sympatico.ca>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1423040AbWJRVyq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Oct 2006 17:54:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423047AbWJRVyq
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 17:54:46 -0400
+Received: from bayc1-pasmtp11.bayc1.hotmail.com ([65.54.191.171]:17872 "EHLO
+	BAYC1-PASMTP11.CEZ.ICE") by vger.kernel.org with ESMTP
+	id S1423040AbWJRVyp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Oct 2006 17:54:45 -0400
+X-Originating-IP: [65.93.43.81]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP11.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 18 Oct 2006 15:03:30 -0700
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with esmtp (Exim 4.43)
+	id 1GaIR1-0002my-N3; Wed, 18 Oct 2006 16:54:43 -0400
+To: Petr Baudis <pasky@suse.cz>
+Message-Id: <20061018175443.50b728f6.seanlkml@sympatico.ca>
+In-Reply-To: <20061018213935.GX20017@pasky.or.cz>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 18 Oct 2006 22:03:30.0906 (UTC) FILETIME=[3F4B63A0:01C6F301]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29282>
 
-Dear diary, on Wed, Oct 18, 2006 at 11:44:50PM CEST, I got a letter
-where Sean <seanlkml@sympatico.ca> said that...
-> On Wed, 18 Oct 2006 17:37:03 -0400
-> Shawn Pearce <spearce@spearce.org> wrote:
+On Wed, 18 Oct 2006 23:39:35 +0200
+Petr Baudis <pasky@suse.cz> wrote:
+
+> You can use just this single tool from Cogito. ;-)
+
+I'd rather not have to keep two separate tools up to date, i just want
+to install Git and have all these features installed.  Especially since
+there is so much overlap in what these two packages do.  That would seem
+like the best thing to do for most users in fact, asking them to install
+and keep both up to date just doesn't make sense, to me at least.
+
+> The point is, I'll of course prefer doing this stuff in Cogito while I'm
+> enhancing Cogito, and I'll work on Cogito while I and others will be
+> using it. I didn't move on to pure Git long time ago since I simply
+> consider its UI much inferior to Cogito's. Sure, given enough time and
+> work, it is fixable - but UI flaws are very hard to fix and I find it
+> more effective to work on Cogito for the time being, at least until I
+> bring it to 1.0, then I'll see.
 > 
-> > Today Git is typically extended (at least initially in prototyping
-> > mode) through Perl, Python, TCL or Bourne shell scripts.  Although
-> > the first three are available natively on Windows the last requires
-> > Cygwin... and we've had some issues with ActiveState Perl on Windows
-> > in the past too.
+> Besides, I'm used to Cogito. :-)
 > 
-> Just for kicks and giggles it would be nice if someone tried out
-> one of the native Windows bourne shell ports[1] just to see how much
-> is missing.  A bunch of command line utilities would have to be ported
-> as well; maybe too many.  But i've held out booting a Windows box
-> for a long time so.... not it!
+> So yes, current Git code definitely is a part of the reason, but it is
+> certainly not the main part of it.
 
-I think that before starting to think about the porcelain scripts, you
-need to port the plumbing. :-)
+It's just a shame that your talents are split off from helping the main
+project more.  Git would be further along today in content and PR if it
+had managed to attract you back from your Cogito adventure.  Then all
+the nice things you're able to say about Cogito might then be said
+about Git proper, and maybe we'd attract even more users.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+While you've contributed more to Git than many others (including me
+obviously), it would sure be nice to see you back full time on Git.
+I want to type "git bundle" without having to install more
+software damnit ;o)  But of course you have to decide what's best
+for yourself.
+
+Sean
