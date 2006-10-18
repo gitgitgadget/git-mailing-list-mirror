@@ -1,67 +1,136 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-imap-send: Strip smtp From_ header from imap message.
-Date: Wed, 18 Oct 2006 03:28:11 -0700
-Message-ID: <7vejt53olg.fsf@assigned-by-dhcp.cox.net>
-References: <452EBF77.7040301@oribi.org>
-	<7vlknegnwk.fsf@assigned-by-dhcp.cox.net>
-	<45367A5F.7060507@codeweavers.com>
+From: "Matthew D. Fuller" <fullermd@over-yonder.net>
+Subject: Re: VCS comparison table
+Date: Wed, 18 Oct 2006 05:32:21 -0500
+Message-ID: <20061018103220.GS75501@over-yonder.net>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <Pine.LNX.4.64.0610171605440.3962@g5.osdl.org> <45357411.20500@utoronto.ca> <200610180246.18758.jnareb@gmail.com> <45357CC3.4040507@utoronto.ca> <871wp6e7o9.wl%cworth@cworth.org> <45359B2A.1070102@utoronto.ca> <4535E844.8010604@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Markus Amsler <markus.amsler@oribi.org>
-X-From: git-owner@vger.kernel.org Wed Oct 18 12:28:38 2006
+Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Carl Worth <cworth@cworth.org>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 18 12:32:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ga8f7-0004Ck-CZ
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 12:28:38 +0200
+	id 1Ga8iy-0004vY-Ot
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 12:32:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030183AbWJRK2a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 06:28:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030188AbWJRK2a
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 06:28:30 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:51428 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1030183AbWJRK23 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Oct 2006 06:28:29 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061018102828.KKTD12909.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 18 Oct 2006 06:28:28 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id bmTz1V0091kojtg0000000
-	Wed, 18 Oct 2006 06:28:15 -0400
-To: Mike McCormack <mike@codeweavers.com>
-In-Reply-To: <45367A5F.7060507@codeweavers.com> (Mike McCormack's message of
-	"Thu, 19 Oct 2006 04:02:55 +0900")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030188AbWJRKcZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Oct 2006 06:32:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751461AbWJRKcY
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 06:32:24 -0400
+Received: from ns.centralmiss.com ([206.156.254.79]:65488 "EHLO
+	optimus.centralmiss.com") by vger.kernel.org with ESMTP
+	id S1751463AbWJRKcX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Oct 2006 06:32:23 -0400
+Received: from draco.over-yonder.net (adsl-072-148-013-213.sip.jan.bellsouth.net [72.148.13.213])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by optimus.centralmiss.com (Postfix) with ESMTP id B38EA2842A;
+	Wed, 18 Oct 2006 05:32:21 -0500 (CDT)
+Received: by draco.over-yonder.net (Postfix, from userid 100)
+	id 2C30961C52; Wed, 18 Oct 2006 05:32:21 -0500 (CDT)
+To: Andreas Ericsson <ae@op5.se>
+Content-Disposition: inline
+In-Reply-To: <4535E844.8010604@op5.se>
+X-Editor: vi
+X-OS: FreeBSD <http://www.freebsd.org/>
+User-Agent: Mutt/1.5.11-fullermd.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29220>
 
-Mike McCormack <mike@codeweavers.com> writes:
-
-> Junio C Hamano wrote:
->> Markus Amsler <markus.amsler@oribi.org> writes:
->>
->>> Cyrus imap refuses messages with a 'From ' Header.
->>>
->>> Signed-off-by: Markus Amsler <markus.amsler@oribi.org>
->>
->> Do you know if this change does not upset other implementations
->> of imap servers?
->>
->> Mike, are you Ok with this change?
+On Wed, Oct 18, 2006 at 10:39:32AM +0200 I heard the voice of
+Andreas Ericsson, and lo! it spake thus:
 >
-> Works for me with Courier IMAP.  I'm no expert on mail headers either,
-> so no objections from me.
->
-> Mike
+> So in essence, the revnos work wonderfully so long as there is a
+> central server to make them immutable?
 
-Thanks; then will apply.
+It seems from my somewhat detached perspective that there's a lot of
+conflation of 'conventions' with 'capabilities' around this thread...
 
-By the way, Markus, did you send the patch with imap-send?  It
-had a funny whitespace corruptions.
+
+With a single linear branch, revnos work wonderfully, and are probably
+much more useful than any sort of UUID.  It would be silly in this day
+and age to design a VCS aimed specifically for this use case, of
+course.  That doesn't mean a VCS shouldn't make it easy, though.
+
+
+With a star config, revnos are useful locally and with reference to
+the "main" branch[es].  And, most of the world is star configs of one
+sort or another.  Actually, one might say that practically ALL the
+world outside of linux-kernel is star-configs   ;)
+
+In many cases in the star setup, a revno (particularly along the
+'trunk') is more directly useful than a UUID; consider particularly
+the case of somebody who's just mirroring/following, not actively
+developing.  In some cases, the UUID is more useful.  Certainly, using
+a revno in a case where the UUID is more appropriate is Bad, but
+that's just a matter of using the right tool.
+
+
+With a uber-distributed full-mesh setup, revnos may be basically
+useless for anything except local lookups (which boils down to
+"useless for most anything you'd identify a revision for").  For that
+case, you'd practically always use the UUID, and pretend revnos don't
+exist.
+
+
+The merge revno forms (123.5.2.17 and the like), I'm somewhat
+ambivalent about in many ways.  But, you don't have to use them any
+more than you have to use "top-level" revnos.  If either form of revno
+is Wrong for your case (whether it be because "I hate numbers
+wholesale", or because "Numbers don't cover this case usefully"), then
+you just use the UUID and pretend the number isn't there.  If you
+wanted them completely out of sight, I wouldn't expect it to be very
+hard to talk bzr into never showing the revnos and just showing the
+UUID ("revid").
+
+
+
+[ I don't speak for bzr, despite the fact that I'm about to appear to ]
+
+>From where I sit, revnos are quite useful in the first 1.5 or 2 cases.
+Some would argue that they're not useless in the third case as well,
+but that's no necessary point to hash out; it certainly does no
+technical harm to have them there, since you can just ignore them if
+they don't help you.  I think a good case could be made that the vast
+majority of VCS use in the world is a form of case 2.
+
+Git comes out of a world where case 3 is All, and the other cases are,
+if not actively ignored, at least far secondary considerations, so it
+can hardly be surprising that it doesn't have or want something that
+adds practically nothing to its case.
+
+bzr, both in its own development schema, and in the expected audience,
+is overwhelmingly case 2 (of which case 1 is really just a degenerate
+version), but that doesn't mean case 3 is ignored or impossible.  The
+UUID's are there for when you need them, and can be used anywhere you
+might use a number, and just as easily.  It's a community convention
+to organize development in such a way that the number is "usually"
+useful, and when it is, it's certainly easier.  That doesn't mean you
+HAVE to use it in cases where it doesn't fit, though.  "bzr people
+like to avoid using UUID's" doesn't lead to "bzr can't handle the
+cases where UUID's are necessary".
+
+
+> Doesn't this mean that one of your key features doesn't actually
+> work in a completely distributed setup
+
+That's one way of phrasing it, I guess.  I'd say rather "a particular
+feature isn't applicable to a completely distributed setup".  I'm sure
+git has a lot of features that are key for somebody that "don't work"
+for someone else, just because they're doing something that person
+doesn't want done.  Just because somebody else thinks their toaster
+oven is a great way to solder, doesn't mean you have to sell yours.
+You can just leave it in the cupboard and use an iron instead.
+
+
+
+-- 
+Matthew Fuller     (MF4839)   |  fullermd@over-yonder.net
+Systems/Network Administrator |  http://www.over-yonder.net/~fullermd/
+           On the Internet, nobody can hear you scream.
