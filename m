@@ -1,102 +1,89 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: heads-up: git-index-pack in "next" is broken
-Date: Wed, 18 Oct 2006 09:02:44 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0610180901210.1971@xanadu.home>
-References: <7vy7rfsfqa.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610171134130.1971@xanadu.home>
- <7vslhnj58e.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610171251210.1971@xanadu.home>
- <7vbqoake1v.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610171437250.1971@xanadu.home>
- <20061017233630.72a0aae5.vsu@altlinux.ru>
- <Pine.LNX.4.64.0610171615340.1971@xanadu.home>
- <Pine.LNX.4.64.0610171339030.3962@g5.osdl.org>
- <Pine.LNX.4.64.0610171706260.1971@xanadu.home>
- <Pine.LNX.4.64.0610171440080.3962@g5.osdl.org>
- <Pine.LNX.4.64.0610171959070.1971@xanadu.home>
- <7vac3uif6i.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610172209070.1971@xanadu.home>
- <7v64eii7hh.fsf@assigned-by-dhcp.cox.net>
- <7vu022gqji.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: VCS comparison table
+Date: Wed, 18 Oct 2006 15:10:22 +0200
+Message-ID: <200610181510.23095.jnareb@gmail.com>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <45360DAE.8000702@op5.se> <20061018124320.GT75501@over-yonder.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed Oct 18 15:03:18 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Andreas Ericsson <ae@op5.se>,
+	Aaron Bentley <aaron.bentley@utoronto.ca>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Carl Worth <cworth@cworth.org>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 18 15:10:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaB4b-0002eD-Q4
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 15:03:06 +0200
+	id 1GaBBW-0004Fp-Ot
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 15:10:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030263AbWJRNDA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 09:03:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030265AbWJRNDA
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 09:03:00 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:24884 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1030263AbWJRNC7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Oct 2006 09:02:59 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J7C00IJY1KL6040@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 18 Oct 2006 09:02:45 -0400 (EDT)
-In-reply-to: <7vu022gqji.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
-To: Junio C Hamano <junkio@cox.net>
+	id S1030272AbWJRNKK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 18 Oct 2006 09:10:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030273AbWJRNKK
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 09:10:10 -0400
+Received: from qb-out-0506.google.com ([72.14.204.230]:49858 "EHLO
+	qb-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1030272AbWJRNKI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Oct 2006 09:10:08 -0400
+Received: by qb-out-0506.google.com with SMTP id p36so702088qba
+        for <git@vger.kernel.org>; Wed, 18 Oct 2006 06:10:07 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=nqC/yVBunwoMR+iAycsGiB/yM8Nz9kFv1YqRtaIsKFtEldj8YOgItuAWm2gbI3I37xTXgr/Ipq61EXPyj0tqCz/qpsHo6Hthb3XjOcb20OOcNqOwiifn8UYh1Mj9AAnHEDUxDAC8DK897qvtrjChJP/80KsTxv7MCF/medmd+6Y=
+Received: by 10.66.249.11 with SMTP id w11mr11731552ugh;
+        Wed, 18 Oct 2006 06:09:48 -0700 (PDT)
+Received: from host-81-190-17-207.torun.mm.pl ( [81.190.17.207])
+        by mx.google.com with ESMTP id z40sm918599ugc.2006.10.18.06.09.46;
+        Wed, 18 Oct 2006 06:09:47 -0700 (PDT)
+To: "Matthew D. Fuller" <fullermd@over-yonder.net>
+User-Agent: KMail/1.9.3
+In-Reply-To: <20061018124320.GT75501@over-yonder.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29230>
 
-On Tue, 17 Oct 2006, Junio C Hamano wrote:
+Dnia =B6roda 18. pa=BCdziernika 2006 14:43, Matthew D. Fuller napisa=B3=
+:
+> On Wed, Oct 18, 2006 at 01:19:10PM +0200 I heard the voice of
+> Andreas Ericsson, and lo! it spake thus:
+> >=20
+> > It's just that we have this one place where gitweb is installed,
+> > which management likes whereas devs don't have that on their laptop=
+=2E
+> > It's also convenient to have one place to find all changes rather
+> > than pulling from 1-to-N different people just to have a look at
+> > what they've done.
+>=20
+> I think this just by itself lends support to:
+>=20
+> > The point I'm trying to make here is that the star config might be
+> > the most common case today because
+>=20
+> c) Stars work well as a mental model for humans.
+>=20
+> Heck, in large, Linux is star-ish.  There s "2.6.1", "2.6.2", etc;
+> that's a trunk.  Any time you have releases, you're establishing a
+> "master" branch.  For most people using Linux, there's a trunk,
+> whether it's the kernel.org trunk, or the "What Redhat ships" trunk,
+> etc.  The closer you drill to the day-to-day work on the kernel, the
+> farther it gets from trunks, but if it were full-mesh at all levels I
+> don't think it would be nearly as usable for regular computing tasks
+> as it is.
 
-> Junio C Hamano <junkio@cox.net> writes:
-> 
-> > Ah, I misread the code that uses union actually checks the type
-> > in struct delta_entry (which embeds the union).  There won't be
-> > any collision problem and you support both types at the same
-> > time just fine.
-> >
-> > And your patch to compare only the first 20-bytes makes sense
-> > (assuming ulong is always shorter than 20-bytes which I think is
-> > safe to assume).
-> 
-> Does this sound fair (the code is yours, just asking about the
-> log message)?
-> 
-> If we really wanted to be purist, we could run comparison with
-> the union and obj->type as two keys, but I do not think it is
-> worth it.
-> 
-> -- >8 --
-> From: Nicolas Pitre <nico@cam.org>
-> Date: Tue, 17 Oct 2006 16:23:26 -0400
-> Subject: [PATCH] index-pack: compare the first 20-bytes of the key.
-> 
-> The "union delta_base" is a strange beast.  It is a 20-byte
-> binary blob key to search a binary searchable deltas[] array,
-> each element of which uses it to represent its base object with
-> either a full 20-byte SHA-1 or an offset in the pack.  Which
-> representation is used is determined by another field of the
-> deltas[] array element, obj->type, so there is no room for
-> confusion, as long as we make sure we compare the keys for the
-> same type only with appropriate length.  The code compared the
-> full union with memcmp().
-> 
-> When storing the in-pack offset, the union was first cleared
-> before storing an unsigned long, so comparison worked fine.
-> 
-> On 64-bit architectures, however, the union typically is 24-byte
-> long; the code did not clear the remaining 4-byte alignment
-> padding when storing a full 20-byte SHA-1 representation.  Using
-> memcmp() to compare the whole union was wrong.
-> 
-> This fixes the comparison to look at the first 20-bytes of the
-> union, regardless of the architecture.  As long as ulong is
-> smaller than 20-bytes this works fine.
-> 
-> Signed-off-by: Junio C Hamano <junkio@cox.net>
-
-Signed-off-by: Nicolas Pitre <nico@cam.org>
+No, it is not. If you consider only published Linus repository, and
+private repositories of other people, it usually is star-ish (although
+mentioned situaltion where somebody else repository took place of cente=
+r
+of star-ish configuration wouldn't be possible in tru star-ish model).
+But please take note of stable repository, -mm repository; the changes
+are exchanged there and back again. And "What Redhat ships" is AFAIK
+mix of different repositories and own patches.=20
+=20
+--=20
+Jakub Narebski
+Poland
