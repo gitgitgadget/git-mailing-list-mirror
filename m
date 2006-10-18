@@ -1,91 +1,102 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: "=?ISO-8859-1?Q?Erik_B=E5gfors?=" <zindar@gmail.com>
 Subject: Re: VCS comparison table
-Date: Wed, 18 Oct 2006 11:20:49 +0200
-Message-ID: <200610181120.49749.jnareb@gmail.com>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <87zmbucs86.wl%cworth@cworth.org> <45359F36.6050609@utoronto.ca>
+Date: Wed, 18 Oct 2006 11:28:32 +0200
+Message-ID: <845b6e870610180228m39829c49nf37e07e76e744250@mail.gmail.com>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	 <200610171555.56778.jnareb@gmail.com> <vpqr6x711cm.fsf@ecrins.imag.fr>
+	 <200610171641.04455.jnareb@gmail.com>
+	 <20061018000026.GH20017@pasky.or.cz> <45357596.8050702@utoronto.ca>
+	 <20061018003920.GK20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Carl Worth <cworth@cworth.org>, Petr Baudis <pasky@suse.cz>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Oct 18 11:20:29 2006
+Cc: "Aaron Bentley" <aaron.bentley@utoronto.ca>,
+	"Matthieu Moy" <Matthieu.Moy@imag.fr>,
+	bazaar-ng@lists.canonical.com,
+	"Linus Torvalds" <torvalds@osdl.org>,
+	"Andreas Ericsson" <ae@op5.se>, git@vger.kernel.org,
+	"Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 18 11:29:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ga7b5-000723-4X
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 11:20:23 +0200
+	id 1Ga7jC-0000Pd-Ru
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 11:28:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932160AbWJRJUT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 05:20:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932161AbWJRJUT
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 05:20:19 -0400
-Received: from hu-out-0506.google.com ([72.14.214.238]:16474 "EHLO
-	hu-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S932160AbWJRJUR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Oct 2006 05:20:17 -0400
-Received: by hu-out-0506.google.com with SMTP id 28so1424048hub
-        for <git@vger.kernel.org>; Wed, 18 Oct 2006 02:20:15 -0700 (PDT)
+	id S932136AbWJRJ2f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Oct 2006 05:28:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932132AbWJRJ2f
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 05:28:35 -0400
+Received: from py-out-1112.google.com ([64.233.166.178]:30376 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S932148AbWJRJ2e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Oct 2006 05:28:34 -0400
+Received: by py-out-1112.google.com with SMTP id n25so290073pyg
+        for <git@vger.kernel.org>; Wed, 18 Oct 2006 02:28:33 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=a827+psZbOVECYowYcWirRNJocV9V0tSKLKn6qmnbpG5ZmdC9dNMQ9VgsjYmmaun97IWz7XhhN1dmDqG/kTZHhhkQci2jmp2Qsr6YUZ25yLFLITfiWE7d5BcI4Pm8cA7xELOe1fdlKDd8P1gpujp8165yZUnzFrWfJyC9Rfo4rE=
-Received: by 10.67.91.6 with SMTP id t6mr11432620ugl;
-        Wed, 18 Oct 2006 02:20:15 -0700 (PDT)
-Received: from host-81-190-17-207.torun.mm.pl ( [81.190.17.207])
-        by mx.google.com with ESMTP id 5sm695948ugc.2006.10.18.02.20.14;
-        Wed, 18 Oct 2006 02:20:14 -0700 (PDT)
-To: Aaron Bentley <aaron.bentley@utoronto.ca>
-User-Agent: KMail/1.9.3
-In-Reply-To: <45359F36.6050609@utoronto.ca>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=m4KfM7xAPd7f5ahk8tXedv+ksMcXhjq/ScbN/YQ2ieKW3oH8NwgEIrrm/8AlfBCQEML8F/5eh0kfF2d0RmAFSNWH8aX8g5s4o6jV+ovIF/wCGLWKej5Mw8Z1B8SBlAIOnsNRoqd4fzxU+HP1YzIZHqQpMlkoZL/MZXx6pfehnfE=
+Received: by 10.35.102.1 with SMTP id e1mr17322697pym;
+        Wed, 18 Oct 2006 02:28:33 -0700 (PDT)
+Received: by 10.35.116.4 with HTTP; Wed, 18 Oct 2006 02:28:32 -0700 (PDT)
+To: "Petr Baudis" <pasky@suse.cz>
+In-Reply-To: <20061018003920.GK20017@pasky.or.cz>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29212>
 
-Aaron Bentley wrote:
-> Carl Worth wrote:
->> On Wed, 18 Oct 2006 03:28:30 +0200, Jakub Narebski wrote:
->>> Isn't it easier to review than "bundle", aka. mega-patch?
->>
->> There are even more important reasons to prefer a series of
->> micro-commits over a mega-patch than just ease of merging.
-> 
-> A bundle isn't a mega-patch.  It contains all the source revisions.  So
-> when you merge or pull it, you get all the original revisions in your
-> repository.
+On 10/18/06, Petr Baudis <pasky@suse.cz> wrote:
+> Dear diary, on Wed, Oct 18, 2006 at 02:30:14AM CEST, I got a letter
+> where Aaron Bentley <aaron.bentley@utoronto.ca> said that...
+> > Petr Baudis wrote:
+> > > Another aspect of this is that Git (Linus ;) is very focused on getting
+> > > the history right, nice and clean (though it does not _mandate_ it and
+> > > you can just wildly do one commit after another; it just provides tools
+> > > to easily do it).
+> >
+> > Yes, rebasing is very uncommon in the bzr community.  We would rather
+> > evaluate the complete change than walk through its history.  (Bundles
+> > only show the changes you made, not the changes you merged from the
+> > mainline.)
+> >
+> > In an earlier form, bundles contained a patch for every revision, and
+> > people *hated* reading them.  So there's definitely a cultural
+> > difference there.
+>
+> BTW, I think what describes the Git's (kernel's) stance very nicely is
+> what I call the Al Viro's "homework problem":
+>
+>         http://lkml.org/lkml/2005/4/7/176
+>
+> If I understand you right, the bzr approach is what's described as "the
+> dumbest kind" there? (No offense meant!)
 
-But what patch reviewer see is a mega-patch showing the changeset
-of a whole "bundle", isn't it?
-[...]
->> Now, I do admit that it is often useful to take the overall view of a
->> patch series being submitted. This is often the case when a patch
->> series is in some sub-module of the code for which I don't have as
->> much direct involvement. In cases like that I will often do review
->> only of the diff between the tips of the mainline and the branch of
->> interest, (or if I trust the maintainer enough, perhaps just the
->> diffstat between the two). But I'm still very glad that what lands in
->> the history is the series of independent changes, and not one mega
->> commit.
-> 
-> So the difference here is that bundles preserve the original commits the
-> changes came from, so even though it's presented as an overview, you
-> still have a series of independent changes in your history.
+Yes and no, The bundle includes both the full final thing, and each
+step along the way. Each step along the way is something you'll get
+when you merge it.
 
-I think it is much better to review series of patches commit by commit;
-besides it allows to correct some inner patches before applying the whole
-series or drop one of patches in series (and it happened from time to time
-on git mailing list).
+Once merged, it will be "next one" in the description above. It would
+typically look something like this in "bzr log"(shortened)  In this
+example, doing C requires doing A and B as well...
 
-So if git introduces bundles, I think they would take form of series
-of "patch" mails + introductory email with series description (currently
-it is not saved anywhere), shortlog, diffstat and perhaps more metainfo
-like bundle parent (which I think should be email form of branch really),
-tags introduced etc.
--- 
-Jakub Narebski
-Poland
+committer: foobar@foobar.com
+message: merged in C
+      -------
+      committer: bar@bar.com
+      message: opps, fix bug in A
+      -------
+      committer: bar@bar.com
+      message: implement B
+      -------
+      committer: bar@bar.com
+      message: implement A
+
+So, you'll get full history, including errors made :)  You can also
+see who approved it to this branch (foobar) and who did the actual
+work (bar)
+
+/Erik
