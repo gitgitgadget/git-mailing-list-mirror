@@ -1,51 +1,52 @@
 From: Sean <seanlkml@sympatico.ca>
 Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 10:01:50 -0400
-Message-ID: <20061017100150.b4919aac.seanlkml__6612.46223976395$1161404460$gmane$org@sympatico.ca>
+Date: Wed, 18 Oct 2006 19:49:45 -0400
+Message-ID: <20061018194945.3e5105e7.seanlkml__29789.188996847$1161405144$gmane$org@sympatico.ca>
 References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
-	<45345AEF.6070107@utoronto.ca>
-	<200610171030.35854.jnareb@gmail.com>
-	<vpqejt76vgz.fsf@ecrins.imag.fr>
-	<BAYC1-PASMTP02ADC5BEF688E61583283CAE0E0@CEZ.ICE>
-	<vpqbqob5euu.fsf@ecrins.imag.fr>
-	<BAYC1-PASMTP10E107E5EB0F7E69167F41AE0E0@CEZ.ICE>
-	<vpqejt73vln.fsf@ecrins.imag.fr>
+	<45349162.90001@op5.se> <453536AE.6060601@utoronto.ca>
+	<200610172301.27101.jnareb@gmail.com>
+	<45354AD0.1020107@utoronto.ca>
+	<BAYC1-PASMTP07AB11A64250AAF683424DAE0E0@CEZ.ICE>
+	<45355CBB.80108@utoronto.ca>
+	<BAYC1-PASMTP01369CD694D75CB61ACCC7AE0E0@CEZ.ICE>
+	<eh64tk$rug$2@sea.gmane.org>
+	<BAYC1-PASMTP069C473B2E79389E5BFC92AE0F0@CEZ.ICE>
+	<eh6dgr$pu8$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-X-From: bazaar-ng-bounces@lists.canonical.com Sat Oct 21 06:20:56 2006
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: bazaar-ng-bounces@lists.canonical.com Sat Oct 21 06:32:21 2006
 Return-path: <bazaar-ng-bounces@lists.canonical.com>
 Envelope-to: gcvbg-bazaar-ng@m.gmane.org
 Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gb8Lt-0005CS-3m
-	for gcvbg-bazaar-ng@m.gmane.org; Sat, 21 Oct 2006 06:20:53 +0200
+	id 1Gb8Wx-0006ng-5w
+	for gcvbg-bazaar-ng@m.gmane.org; Sat, 21 Oct 2006 06:32:19 +0200
 Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
 	by esperanza.ubuntu.com with esmtp (Exim 4.60)
 	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GapNF-0007l0-BU; Fri, 20 Oct 2006 09:05:01 +0100
-Received: from bayc1-pasmtp10.bayc1.hotmail.com ([65.54.191.170])
+	id 1GapNX-0007lw-2I; Fri, 20 Oct 2006 09:05:19 +0100
+Received: from bayc1-pasmtp08.bayc1.hotmail.com ([65.54.191.168]
+	helo=BAYC1-PASMTP08.CEZ.ICE)
 	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <seanlkml@sympatico.ca>) id 1GZpVx-0006wI-J9
-	for bazaar-ng@lists.canonical.com; Tue, 17 Oct 2006 15:01:53 +0100
+	(envelope-from <seanlkml@sympatico.ca>) id 1GaLAT-0005ty-2G
+	for bazaar-ng@lists.canonical.com; Thu, 19 Oct 2006 00:49:49 +0100
 X-Originating-IP: [65.93.43.81]
 X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.81]) by
-	BAYC1-PASMTP10.bayc1.hotmail.com over TLS secured channel with
-	Microsoft SMTPSVC(6.0.3790.1830); Tue, 17 Oct 2006 07:05:30 -0700
+Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP08.CEZ.ICE
+	over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830); 
+	Wed, 18 Oct 2006 16:58:25 -0700
 Received: from guru.attic.local ([10.10.10.28])
 	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GZoZq-0005sm-RT; Tue, 17 Oct 2006 09:01:50 -0400
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-Message-Id: <20061017100150.b4919aac.seanlkml@sympatico.ca>
-In-Reply-To: <vpqejt73vln.fsf@ecrins.imag.fr>
+	id 1GaKEL-00036Y-Uc; Wed, 18 Oct 2006 18:49:45 -0400
+To: Charles Duffy <cduffy@spamcop.net>
+Message-Id: <20061018194945.3e5105e7.seanlkml@sympatico.ca>
+In-Reply-To: <eh6dgr$pu8$1@sea.gmane.org>
 X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 17 Oct 2006 14:05:31.0218 (UTC)
-	FILETIME=[4E748B20:01C6F1F5]
-X-Mailman-Approved-At: Fri, 20 Oct 2006 09:04:04 +0100
+X-OriginalArrivalTime: 18 Oct 2006 23:58:25.0859 (UTC)
+	FILETIME=[4D01B930:01C6F311]
+X-Mailman-Approved-At: Fri, 20 Oct 2006 09:04:05 +0100
 X-BeenThere: bazaar-ng@lists.canonical.com
 X-Mailman-Version: 2.1.8
 Precedence: list
@@ -59,27 +60,30 @@ List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
 	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
 Sender: bazaar-ng-bounces@lists.canonical.com
 Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29580>
 
-On Tue, 17 Oct 2006 15:44:36 +0200
-Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+On Wed, 18 Oct 2006 18:31:32 -0500
+Charles Duffy <cduffy@spamcop.net> wrote:
 
-> > How does bzr avoid a merge when you're pushing changes from 3
-> > separate machines?
-> 
-> Err, the same way people have been doing for years ;-). If you don't
-> have local commits, "bzr update" will work in the same way as "cvs
-> update", it keeps your local changes, without recording history. Like
-> "git pull" does if you have uncommited changes I think.
+> Granted, I'm speaking with my IT hat on here rather than my developer 
+> hat -- but plugins are a pretty clear usability win.
 
-Ah, okay.  Well Git can definitely manage this.  Just means you have to
-rebase any local changes before pushing.  This will keep the history
-linear and make sure that no merges are needed in the case you were asking
-about.
+Sure they can be.  But their value I think is overstated, especially
+in an open source project where anyone can grab a copy of the source
+and update it with a trial feature.  This updated copy can be wrapped
+in a nice GUI installer just as easily as any plugin.
 
-So far, it sounds to me like bazaar and git are more alike than they are
-different.  Each have a few commands the other doesn't but all in all
-they sound very similar.  But i'm a Git fanboy so I aint switching
-now ;o)
+Now, I suppose plugins let end users mix and match trial features
+slightly easier, but hopefully your base package isn't so devoid of
+features that this is honestly necessary.
+
+As Petr pointed out, all this comes to Bzr essentially for free
+since it's a part of python.  So be it, but I've yet to hear an
+example where plugins were anything more than a minor convenience
+rather than a fundamental win over the way Git is developing.
+
+For an example, just look how few lines of git were needed to
+implement the essential features of the bzr bundle feature.
+With no plugins or monkey business needed ;o)
 
 Sean
