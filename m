@@ -1,74 +1,131 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: heads-up: git-index-pack in "next" is broken
-Date: Tue, 17 Oct 2006 17:57:03 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610171754040.3962@g5.osdl.org>
-References: <7vy7rfsfqa.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610171134130.1971@xanadu.home> <7vslhnj58e.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610171251210.1971@xanadu.home> <7vbqoake1v.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610171437250.1971@xanadu.home> <20061017233630.72a0aae5.vsu@altlinux.ru>
- <Pine.LNX.4.64.0610171615340.1971@xanadu.home> <Pine.LNX.4.64.0610171339030.3962@g5.osdl.org>
- <Pine.LNX.4.64.0610171706260.1971@xanadu.home> <Pine.LNX.4.64.0610171440080.3962@g5.osdl.org>
- <Pine.LNX.4.64.0610171959070.1971@xanadu.home>
+From: Aaron Bentley <aaron.bentley@utoronto.ca>
+Subject: Re: VCS comparison table
+Date: Tue, 17 Oct 2006 21:00:51 -0400
+Message-ID: <45357CC3.4040507@utoronto.ca>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <Pine.LNX.4.64.0610171605440.3962@g5.osdl.org> <45357411.20500@utoronto.ca> <200610180246.18758.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sergey Vlasov <vsu@altlinux.ru>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 18 02:57:25 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>, Andreas Ericsson <ae@op5.se>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 18 03:01:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GZzkK-0006pq-R8
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 02:57:25 +0200
+	id 1GZzns-0007LR-IP
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 03:01:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751214AbWJRA5W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 20:57:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751215AbWJRA5V
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 20:57:21 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:32390 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751214AbWJRA5V (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 20:57:21 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9I0v9aX013617
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 17 Oct 2006 17:57:10 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9I0v4RH013662;
-	Tue, 17 Oct 2006 17:57:06 -0700
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0610171959070.1971@xanadu.home>
-X-Spam-Status: No, hits=-0.471 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751212AbWJRBBA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 21:01:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751215AbWJRBA7
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 21:00:59 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41]:52422 "EHLO
+	server4.panoramicfeedback.com") by vger.kernel.org with ESMTP
+	id S1751212AbWJRBA7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Oct 2006 21:00:59 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41] helo=[127.0.0.1])
+	by server4.panoramicfeedback.com with esmtp (Exim 3.36 #1 (Debian))
+	id 1GZznh-0006RG-00; Tue, 17 Oct 2006 21:00:54 -0400
+User-Agent: Thunderbird 1.5.0.7 (X11/20060922)
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200610180246.18758.jnareb@gmail.com>
+X-Enigmail-Version: 0.94.0.0
+X-Panometrics-MailScanner: Found to be clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29169>
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-
-On Tue, 17 Oct 2006, Nicolas Pitre wrote:
-> > 
-> > .. and it sorts _differently_ on a big-endian vs little-endian thing, 
-> > doesn't it?
+Jakub Narebski wrote:
+> Aaron Bentley wrote:
+>> Linus Torvalds wrote:
+>>> On Tue, 17 Oct 2006, Aaron Bentley wrote:
+>>>>> Excuse me? What does that "throws away your local commit ordering" mean?
+>>>> Say this is the ordering in branch A:
+>>>>
+>>>> a
+>>>> |
+>>>> b
+>>>> |
+>>>> c
+>>>>
+>>>> Say this is the ordering in branch B:
+>>>>
+>>>> a
+>>>> |
+>>>> b
+>>>> |\
+>>>> d c
+>>>> |/
+>>>> e
+>>>>
+>>>> When A pulls B, it gets the same ordering as B has.  If B did not have e
+>>>> and c, the pull would fail.
+>>> Sure. But that doesn't throw away any local commit ordering. The original
+>>> order (a->b->c) is still very much there.
+>> After the pull, it's no longer the mainline ordering for the branch.  c
+>> is represented a revision that was merged into the branch, while d is
+>> represented as a commit on the mainline of the branch.
 > 
-> Sure.  But who cares?  The sorting is just there to 1) perform binary 
-> searches on the list of deltas based from a given object, and 2) find a 
-> list of all deltas with the same base object.
+> Well, that is another example while generation number is/can be global,
+> any numbering of branches must be local-only.
 
-_I_ care.
+No.  The numbering always follows the leftmost parent.  So each revision
+has a permanent (but non-unique) number.
 
-The new code is messy. It's fragile, and already showed one very 
-fundamental bug which depended on architectures.
+> That doesn't matter...
 
-These things matter. We have had very few bugs in git, and one of the 
-reasons is (I believe) that we haven't had ad-hoc code. I get _very_ 
-nervous when you mix up SHA1 names with somethign totally different 
-without even a flag to say which one it is. That's just nasty. The fact 
-that the code then behaves (and behave_d_) differently on different 
-architectures is just a sign of the problem.
+It has significant UI impact.
 
-"Who cares?" is not a good question to ask for a SCM. 
+>> and the revision numbers can change.
+> 
+> ...but that means that revision numers are totally, absolutely useless.
+> Unless by some miracle of engineering, or adding namespace, they can be
+> made unchangeable.
 
-		Linus
+No, because no one pulls unless they're trying to maintain a mirror of
+the other branch, or else they decide to throw their local history away.
+
+>> Nobody is forced to use your local view.
+> 
+> But if you record "fast-forward merge", you force all people pulling
+> from your repository to have this purely local and without any significant
+> information "I have fetched then" marker.
+
+Even if I agreed that the revision was meaningless, the cost of such a
+revision is miniscule.
+
+>>> In other words, the empty merge is totally semantically empty even in the
+>>> bazaar world. Why does it exist?
+>> It exists because it is useful.  Because it makes the behavior of bzr
+>> merge uniform.  Because in some workflows, commits show that a person
+>> has signed off on a change.
+> 
+> Signing off the fact of fetching changes? For true merge you are signing
+> off the fact that there were no conflicts, or you sign off your conflict
+> resolution.
+
+You sign off on the contents of the revision you fetched.  You say "I
+have reviewed this revision, and approved it."
+
+>> It's not something special-- it's just another commit, like regular
+>> commits, and merge commits.  It would be harder to forbid than it is to
+>> permit.
+> 
+> Actualy the check is very easy.
+
+Agreed.  It's just that not checking is easier still.
+
+Aaron
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFFNXzD0F+nu1YWqI0RAiGvAJsEbPNNlqZ7QCH7EE39YABqEm/BtwCaAxIo
+NHqG4NVZpvymTUlCLYyCqKM=
+=YUdC
+-----END PGP SIGNATURE-----
