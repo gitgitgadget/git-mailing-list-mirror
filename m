@@ -1,88 +1,83 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: VCS comparison table
-Date: Wed, 18 Oct 2006 03:16:27 -0400
-Message-ID: <20061018071627.GC4678@spearce.org>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <Pine.LNX.4.64.0610161625370.3962@g5.osdl.org> <45345AEF.6070107@utoronto.ca> <200610171030.35854.jnareb@gmail.com> <vpqejt76vgz.fsf@ecrins.imag.fr> <BAYC1-PASMTP02ADC5BEF688E61583283CAE0E0@CEZ.ICE> <vpqbqob5euu.fsf@ecrins.imag.fr> <20061018011147.GN20017@pasky.or.cz> <vpqlknem8bi.fsf@ecrins.imag.fr>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: Make the ftplugin right wrt gitdir
+Date: Wed, 18 Oct 2006 10:10:59 +0200
+Organization: Polytechnique.org
+Message-ID: <200610181010.59995.madcoder@debian.org>
+References: <11611319762395-git-send-email-madcoder@debian.org> <11611324463754-git-send-email-madcoder@debian.org> <20061018070239.GD3507@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 18 09:16:53 2006
+Content-Type: multipart/signed;
+  boundary="nextPart5313952.YsHlLi4Xul";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 18 10:11:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ga5fP-00082J-Ri
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 09:16:44 +0200
+	id 1Ga6W6-00020b-Qz
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 10:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750939AbWJRHQk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 03:16:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750944AbWJRHQk
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 03:16:40 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:8174 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1750900AbWJRHQj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Oct 2006 03:16:39 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1Ga5fH-0000A0-07; Wed, 18 Oct 2006 03:16:35 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 49D3720E42A; Wed, 18 Oct 2006 03:16:27 -0400 (EDT)
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-Content-Disposition: inline
-In-Reply-To: <vpqlknem8bi.fsf@ecrins.imag.fr>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932093AbWJRILF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Oct 2006 04:11:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932094AbWJRILF
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 04:11:05 -0400
+Received: from pan.madism.org ([88.191.16.128]:42918 "EHLO hermes.madism.org")
+	by vger.kernel.org with ESMTP id S932093AbWJRILC (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Oct 2006 04:11:02 -0400
+Received: from hermes.madism.org (localhost.localdomain [127.0.0.1])
+	by hermes.madism.org (Postfix) with ESMTP id 33C68B005D;
+	Wed, 18 Oct 2006 10:10:58 +0200 (CEST)
+Received: from hades.madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by hermes.madism.org (Postfix) with ESMTP id 1B0A5B005C;
+	Wed, 18 Oct 2006 10:10:58 +0200 (CEST)
+To: Jeff King <peff@peff.net>
+User-Agent: KMail/1.9.5
+In-Reply-To: <20061018070239.GD3507@coredump.intra.peff.net>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+X-AV-Checked: ClamAV (using ClamSMTP) at pan.madism.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29200>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> Petr Baudis <pasky@suse.cz> writes:
-> 
-> > The origin branch is considered readonly (though Git does
-> > not enforce it) and only mirrors the branch in the remote repository.
-> 
-> By curiosity, what happens if you accidentally commit to it?
+--nextPart5313952.YsHlLi4Xul
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-It will quietly accept the commit.
+Le mer 18 octobre 2006 09:02, Jeff King a =E9crit :
+> On Wed, Oct 18, 2006 at 02:47:25AM +0200, Pierre Habouzit wrote:
+> > sorry for the mess, I'm a bit tired :)
+> > Here is a third patch to fix the plugin to find the git-dir
+> > properly.
+> >
+> > Also add a nice shortcut to quit that buffer.
+>
+> Looks like the patch is missing (more sleep required?).
 
-Later when you attempt to run `git fetch` to download any changes
-from the remote repository to your local origin branch the fetch
-command will fail as it won't be a strict fast-forward due to
-there being changes in origin which aren't in the remote repository
-being downloaded.
+err, the patch is here:=20
+<1161132446703-git-send-email-madcoder@debian.org>
 
-The user can force those changes to be thrown away with `git fetch
---force`, though they probably would want to first examine the
-branch with `git log origin` to see what commits (if any) should
-be saved, and either extract them to patches for reapplication or
-create a holder branch via `git branch holder origin` to allow them
-to later merge the holder branch (or parts thereof) after the fetch
-has forced origin to match the remote repository.
+at least I see it on the list for my part
+=2D-=20
+=B7O=B7  Pierre Habouzit
+=B7=B7O                                                madcoder@debian.org
+OOO                                                http://www.madism.org
 
-So in short by default Git stops and tells the user something fishy
-is going on, but the error message isn't obvious about what that
-is and how they can resolve it easily.
+--nextPart5313952.YsHlLi4Xul
+Content-Type: application/pgp-signature
 
-There has been discussion about marking these branches that we
-know the user fetches into as read-only, to prevent `git commit`
-from actually committing to such a branch (we also have the same
-case with the special bisect branch), but I don't think anyone has
-stepped forward with the complete implementation of that yet.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
 
-Like anything I think people get used to the idea that those branches
-are strictly for fetching and shouldn't be used for anything else.
-There's really no reason to checkout a fetched into branch anyway;
-temporary branches are less than 1 second away with
-`git checkout -b tmp origin` (for example).
+iD8DBQBFNeGTvGr7W6HudhwRAprkAJ9w3BT60+PB6WZly8EZReUgKkXB6gCfTa0t
+yEEpl4uDgYeQEbIUoAsdK9g=
+=hYVc
+-----END PGP SIGNATURE-----
 
--- 
-Shawn.
+--nextPart5313952.YsHlLi4Xul--
