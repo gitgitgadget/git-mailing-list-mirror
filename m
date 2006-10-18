@@ -1,65 +1,52 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Integrating gitweb and git-browser (was: Re: VCS comparison table)
-Date: Wed, 18 Oct 2006 03:52:11 +0200
-Message-ID: <20061018015211.GP20017@pasky.or.cz>
-References: <vpqejt76vgz.fsf@ecrins.imag.fr> <BAYC1-PASMTP02ADC5BEF688E61583283CAE0E0@CEZ.ICE> <vpqbqob5euu.fsf@ecrins.imag.fr> <BAYC1-PASMTP10E107E5EB0F7E69167F41AE0E0@CEZ.ICE> <vpqejt73vln.fsf@ecrins.imag.fr> <BAYC1-PASMTP10F617306F1477E66FA441AE0E0@CEZ.ICE> <vpqlknf10u5.fsf@ecrins.imag.fr> <20061017110655.f7bcf3f1.seanlkml@sympatico.ca> <20061018001455.GI20017@pasky.or.cz> <eh40e1$9g1$1@sea.gmane.org>
+Subject: Re: [PATCH] nice ftplugin for vim, that shows the commited diff in a split'ed buffer.
+Date: Wed, 18 Oct 2006 03:57:04 +0200
+Message-ID: <20061018015704.GQ20017@pasky.or.cz>
+References: <11610450702261-git-send-email-madcoder@debian.org> <200610171238.04372.madcoder@debian.org> <802d21790610170359v3f17438dn8009ae9a55b2405c@mail.gmail.com> <200610171304.39131.madcoder@debian.org> <46d6db660610171448h53de5e40wf55f19d6458127ef@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 18 03:55:55 2006
+X-From: git-owner@vger.kernel.org Wed Oct 18 04:04:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ga0bQ-0003t4-Hw
-	for gcvg-git@gmane.org; Wed, 18 Oct 2006 03:52:35 +0200
+	id 1Ga0gC-0006Gx-9a
+	for gcvg-git@gmane.org; Wed, 18 Oct 2006 03:57:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750823AbWJRBwO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Oct 2006 21:52:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750978AbWJRBwO
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 21:52:14 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:12516 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1750823AbWJRBwN (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 21:52:13 -0400
-Received: (qmail 23775 invoked by uid 2001); 18 Oct 2006 03:52:11 +0200
-To: Jakub Narebski <jnareb@gmail.com>
+	id S1750834AbWJRB5J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Oct 2006 21:57:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750932AbWJRB5I
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Oct 2006 21:57:08 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:25266 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1750834AbWJRB5G (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Oct 2006 21:57:06 -0400
+Received: (qmail 24187 invoked by uid 2001); 18 Oct 2006 03:57:04 +0200
+To: Christian MICHON <christian.michon@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <eh40e1$9g1$1@sea.gmane.org>
+In-Reply-To: <46d6db660610171448h53de5e40wf55f19d6458127ef@mail.gmail.com>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29176>
 
-Dear diary, on Wed, Oct 18, 2006 at 03:36:36AM CEST, I got a letter
-where Jakub Narebski <jnareb@gmail.com> said that...
-> Petr Baudis wrote:
-> 
-> > BTW, I'm thinking about implementing some plugin functionality for
-> > gitweb 
-> 
-> Features support is kind of plugin system for gitweb. But certainly we could
-> split gitweb into modules.
-> 
-> > so that you can add your own views, so that git-browser can 
-> > integrate to it more reasonably. (Currently it has completely different
-> > UI and you have to patch gitweb in order to get the proper links at
-> > proper places.) Sure, git-browser might get fully integrated to gitweb
-> > later but that needs to be done sensitively so that people are not
-> > scared by the horrible javascript blobs, etc.; currently git-browser is
-> > very experimental, and adding it would be quite intrusive.
-> 
-> I was thinking about adding using JavaScript, in shortlog (and perhaps
-> shortlog-extended, i.e. with date and author) views one extra "diagram"
-> column, with width set using JavaScript generated embedded style, and use
-> only part of git-browser that generates diagram to draw it there.
+Dear diary, on Tue, Oct 17, 2006 at 11:48:51PM CEST, I got a letter
+where Christian MICHON <christian.michon@gmail.com> said that...
+> I'd like particularly to know if a git-explorer type of plugin makes
+> sense for (g)vim and would like in this case be part of the team
+> developping it... using git of course :)
 
-Shortlog is paginated and that's not very practical for diagrams, I
-think - you need to gradually extend it instead in that case. But yes,
-keeping the _visual_ difference of git-browser and gitweb as small as
-possible has been the main reason for me to think about integrating it
-more tightly.
+See also
+
+	http://news.gmane.org/find-root.php?message_id=<20051124093322.GA3899@mail.yhbt.net>
+
+Personally, I'd say "just use tig". :-)
+
+If you insist on living instide vim, that particular script comes from
+the age before git-show and git-cat-file -p so it would probably make
+sense to move the bulk of the functionality there.
 
 -- 
 				Petr "Pasky" Baudis
