@@ -1,114 +1,206 @@
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: "stage files" vs "cached files"
-Date: Thu, 19 Oct 2006 16:58:52 +0100
-Message-ID: <4537A0BC.5040301@shadowen.org>
-References: <eh7vl2$unr$1@sea.gmane.org>
+From: "Matthew D. Fuller" <fullermd@over-yonder.net>
+Subject: Re: VCS comparison table
+Date: Thu, 19 Oct 2006 11:01:03 -0500
+Message-ID: <20061019160103.GZ75501@over-yonder.net>
+References: <Pine.LNX.4.64.0610171605440.3962@g5.osdl.org> <45357411.20500@utoronto.ca> <200610180246.18758.jnareb@gmail.com> <45357CC3.4040507@utoronto.ca> <871wp6e7o9.wl%cworth@cworth.org> <45359B2A.1070102@utoronto.ca> <87y7rdd47j.wl%cworth@cworth.org> <20061019091045.GV75501@over-yonder.net> <20061019112759.GA31066@diana.vm.bytemark.co.uk> <20061019114639.GD20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 19 18:01:03 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
+	bazaar-ng@lists.canonical.com, Linus Torvalds <torvalds@osdl.org>,
+	Carl Worth <cworth@cworth.org>, Andreas Ericsson <ae@op5.se>,
+	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 19 18:03:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaaJQ-00018c-Sy
-	for gcvg-git@gmane.org; Thu, 19 Oct 2006 18:00:06 +0200
+	id 1GaaKY-0001Pf-DR
+	for gcvg-git@gmane.org; Thu, 19 Oct 2006 18:01:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946120AbWJSP7b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 19 Oct 2006 11:59:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946139AbWJSP7b
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 11:59:31 -0400
-Received: from hellhawk.shadowen.org ([80.68.90.175]:62479 "EHLO
-	hellhawk.shadowen.org") by vger.kernel.org with ESMTP
-	id S1946120AbWJSP7a (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Oct 2006 11:59:30 -0400
-Received: from localhost ([127.0.0.1])
-	by hellhawk.shadowen.org with esmtp (Exim 4.50)
-	id 1GaaIJ-0000BD-II; Thu, 19 Oct 2006 16:58:55 +0100
-User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
-To: t2a2e9z8ncbs9qg@brefemail.com
-In-Reply-To: <eh7vl2$unr$1@sea.gmane.org>
-X-Enigmail-Version: 0.94.0.0
+	id S1946139AbWJSQBK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Oct 2006 12:01:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946142AbWJSQBJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 12:01:09 -0400
+Received: from ns.centralmiss.com ([206.156.254.79]:40145 "EHLO
+	optimus.centralmiss.com") by vger.kernel.org with ESMTP
+	id S1946139AbWJSQBI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Oct 2006 12:01:08 -0400
+Received: from draco.over-yonder.net (adsl-072-148-013-213.sip.jan.bellsouth.net [72.148.13.213])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by optimus.centralmiss.com (Postfix) with ESMTP id D92F02842A;
+	Thu, 19 Oct 2006 11:01:04 -0500 (CDT)
+Received: by draco.over-yonder.net (Postfix, from userid 100)
+	id AC31C61C52; Thu, 19 Oct 2006 11:01:03 -0500 (CDT)
+To: Petr Baudis <pasky@suse.cz>
+Content-Disposition: inline
+In-Reply-To: <20061019114639.GD20017@pasky.or.cz>
+X-Editor: vi
+X-OS: FreeBSD <http://www.freebsd.org/>
+User-Agent: Mutt/1.5.11-fullermd.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29363>
 
-Jerome Lovy wrote:
-> Hi,
->=20
-> after having read tutorial1+2, I thought the following were more or l=
-ess
-> synonyms: index ~ directory cache ~ staging area
->=20
-> But then I discover that --cache and --staged are two different thing=
-s,
-> notably when using ls-files.
->=20
-> The documentation states indeed:
->  "--cached   Show cached files in the output"
->  "--stage    Show stage files in the output"
->=20
-> I'm a bit confused. Is maybe a "stage file" entry missing in the glos=
-sary?
->=20
-> TIA for clarification/pointer.
-> J=E9r=F4me
+On Thu, Oct 19, 2006 at 01:46:39PM +0200 I heard the voice of
+Petr Baudis, and lo! it spake thus:
+> 
+> Does Bazaar support those?  (I can't really say it's a defect if it
+> doesn't...)
 
-This is not stage as in staging area, its stage as in 'at a cirtain
-stage'.  It refers to files which are in the index but are in conflict.
+By default, merge will refuse to do its thing if there are uncommitted
+changes in the working tree, whether those changes are something
+you've done, or the pending results of a previous merge.  A '--force'
+arg to merge will make it go forward though, so yes, you can merge
+multiple other branches in one merge if you want to.
 
-The cache doesn't just contain an entry for each file.  It contains an
-entry for each file version in a merge situation.  These are referred t=
-o
-as 'stages'.  There is a description in the documentation about how the=
-y
-get pushed 'down' to stage 0 and then are deemed merged (see
-Documentation/core-tutorial.txt).
+Actually, I can kill 2 birds here.  Quick little bictopus merge:
 
-Below is the git ls-files --cached, and --stage output from a repo whic=
-h
-has one file 'bar' which is fine and another 'bar' which has a conflict=
-=2E
+% bzr log --show-ids
+------------------------------------------------------------
+revno: 2
+revision-id: fullermd@over-yonder.net-20061019151856-c3b406b8bcdfb537
+parent: fullermd@over-yonder.net-20061019151437-5b99dff6ed1d76cd
+parent: fullermd@over-yonder.net-20061019151800-2fe41e4949f5e237
+parent: fullermd@over-yonder.net-20061019151807-3d7047e387edcad9
+committer: Matthew Fuller <fullermd@over-yonder.net>
+branch nick: a
+timestamp: Thu 2006-10-19 10:18:56 -0500
+message:
+  merge
+    ------------------------------------------------------------
+    revno: 1.2.1
+    merged: fullermd@over-yonder.net-20061019151800-2fe41e4949f5e237
+    parent: fullermd@over-yonder.net-20061019151437-5b99dff6ed1d76cd
+    committer: Matthew Fuller <fullermd@over-yonder.net>
+    branch nick: b
+    timestamp: Thu 2006-10-19 10:18:00 -0500
+    message:
+      bar
+    ------------------------------------------------------------
+    revno: 1.1.1
+    merged: fullermd@over-yonder.net-20061019151807-3d7047e387edcad9
+    parent: fullermd@over-yonder.net-20061019151437-5b99dff6ed1d76cd
+    committer: Matthew Fuller <fullermd@over-yonder.net>
+    committer: Matthew Fuller <fullermd@over-yonder.net>
+    branch nick: c
+    timestamp: Thu 2006-10-19 10:18:07 -0500
+    message:
+      baz
+------------------------------------------------------------
+revno: 1
+revision-id: fullermd@over-yonder.net-20061019151437-5b99dff6ed1d76cd
+committer: Matthew Fuller <fullermd@over-yonder.net>
+branch nick: a
+timestamp: Thu 2006-10-19 10:14:37 -0500
+message:
+  Foo
 
-  apw@pinky$ git ls-files --cached
-  bar
-  this
-  this
-  this
-  apw@pinky$ git ls-files --stage
-  100644 8dc5f23c673e9c1ac8dd3499f9acab11b093527f 0       bar
-  100644 01e79c32a8c99c557f0757da7cb6d65b3414466d 1       this
-  100644 fbbafbfdaadbff9c7f8db580f91a8ab5a0653704 2       this
-  100644 10c8337d3d240283bdf35af68d17d1319ca069a4 3       this
 
-Note that there is in fact three 'this's in the index.  The first entry
-is bar which is in stage 0 and is merged fine.  'this' however appears
-three times.  1 represents the common parent of the merge (I believe)
-and 2 and 3 represent the conflicting options for that.  The 'this' on
-disk has the mangled version with both sets of changes in, but this
-information can be used to show the actual files in the various forms.
+(I'll refer to revids by the last segment)
 
-  apw@pinky$ git cat-file blob :1:this
-  1
-  2
-  3
-  apw@pinky$ git cat-file blob :2:this
-  1
-  2b
-  3
-  apw@pinky$ git cat-file blob :3:this
-  1
-  2a
-  3
-  apw@pinky$ cat this
-  1
-  <<<<<<< HEAD/this
-  2b
-  =3D=3D=3D=3D=3D=3D=3D
-  2a
-  >>>>>>> c2acfdd8e6a50e571a007744e023c65c7b188dbf/this
-  3
+Note that this also shows the "left-most" parent distinction.  The
+"left-most" parent of revno 2 (c3b406b8bcdfb537) is revno 1
+(5b99dff6ed1d76cd), because that's the last thing I did in THIS
+branch.  That's my 'mainline'; the commits from branch b
+(2fe41e4949f5e237) and c (3d7047e387edcad9) are then additional
+parents of the merge at revno 2.
 
--apw
+The graph for branch a now looks something like (calling the 3
+original commits 'a', 'b', and 'c' and the merge rev 'D'):
+
+  a-.
+  |\ \
+  | b c
+  |/ /
+  D-'
+
+
+The 2fe41e4949f5e237 rev is on branch b's mainline forever, and it has
+a single-digit revno (2 in this case) on branch b, but it's not on
+mine in a.  Now, let's pretend we're branch b, and we want to pick up
+from a.  Because a is a superset of b, we could pull ('fast-forward')
+a.  If we do that, the graph in b will be identical to a (and so 'log'
+will be too).  That, AIUI, is what you'd do in git.
+
+In the bzr methodology we've been discussing, where you want to
+maintain your branch's identity, you'd instead merge from a into b.
+You've got two new revisions to pick up in doing so; the
+3d7047e387edcad9 from branch c, and the merge rev c3b406b8bcdfb537;
+you already have 2fe41e4949f5e237 on your mainline.  So, post-merge,
+the log for b will look like (somewhat trimmed for space):
+
+
+------------------------------------------------------------
+revno: 3
+revision-id: fullermd@over-yonder.net-20061019153827-78d6209cd0f5f2f7
+parent: fullermd@over-yonder.net-20061019151800-2fe41e4949f5e237
+parent: fullermd@over-yonder.net-20061019151856-c3b406b8bcdfb537
+branch nick: b
+    ------------------------------------------------------------
+    revno: 1.1.1
+    merged: fullermd@over-yonder.net-20061019151856-c3b406b8bcdfb537
+    parent: fullermd@over-yonder.net-20061019151437-5b99dff6ed1d76cd
+    parent: fullermd@over-yonder.net-20061019151800-2fe41e4949f5e237
+    parent: fullermd@over-yonder.net-20061019151807-3d7047e387edcad9
+    branch nick: a
+    ------------------------------------------------------------
+    revno: 1.2.1
+    merged: fullermd@over-yonder.net-20061019151807-3d7047e387edcad9
+    parent: fullermd@over-yonder.net-20061019151437-5b99dff6ed1d76cd
+    branch nick: c
+------------------------------------------------------------
+revno: 2
+revision-id: fullermd@over-yonder.net-20061019151800-2fe41e4949f5e237
+parent: fullermd@over-yonder.net-20061019151437-5b99dff6ed1d76cd
+branch nick: b
+------------------------------------------------------------
+revno: 1
+revision-id: fullermd@over-yonder.net-20061019151437-5b99dff6ed1d76cd
+branch nick: a
+
+
+The 2fe41e4949f5e237 which was originally on b's mainline is still on
+the mainline at revno 2.  The graph in b now looks like (adding the
+new 'E' merge commit)[0]:
+
+  a-.
+  |\ \
+  b c |
+  |\|/
+  | D
+  |/ 
+  E
+
+
+Now, the question of "is that merge commit E really necessary, when
+you could just attach D to the end of the graph and create something
+like:
+
+  a-.
+  |\ \
+  b c |
+  |/ /
+  D-'
+
+is perhaps a useful question (and one that there's obviously
+disagreement on).  And it may be a fruitful one to discuss, if we're
+not way off in the weeds already.  But, it's also not QUITE the same
+question as "Is the left-vs-other path distinction meaningful and to
+be preserved?"
+
+
+
+[0] For reference at this point:
+    a: 5b99dff6ed1d76cd
+    b: 2fe41e4949f5e237
+    c: 3d7047e387edcad9
+    D: c3b406b8bcdfb537
+    E: 78d6209cd0f5f2f7
+
+
+-- 
+Matthew Fuller     (MF4839)   |  fullermd@over-yonder.net
+Systems/Network Administrator |  http://www.over-yonder.net/~fullermd/
+           On the Internet, nobody can hear you scream.
