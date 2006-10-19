@@ -1,87 +1,64 @@
-From: "Ramon Diaz-Uriarte" <rdiaz02@gmail.com>
-Subject: Re: VCS comparison table
-Date: Thu, 19 Oct 2006 17:45:02 +0200
-Message-ID: <624934630610190845ocf2818fhd0a9d19bfacf53a0@mail.gmail.com>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	 <Pine.LNX.4.64.0610171605440.3962@g5.osdl.org>
-	 <45357411.20500@utoronto.ca> <200610180246.18758.jnareb@gmail.com>
-	 <45357CC3.4040507@utoronto.ca>
-	 <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>
-	 <4536EC93.9050305@utoronto.ca>
-	 <845b6e870610190002u420118b8ud634bb9594572c48@mail.gmail.com>
-	 <46d6db660610190149x32442596we4112cdd044185a@mail.gmail.com>
-	 <45373E27.3050209@op5.se>
+From: Jerome Lovy <t2a2e9z8ncbs9qg@brefemail.com>
+Subject: "stage files" vs "cached files"
+Date: Thu, 19 Oct 2006 15:45:25 +0200
+Message-ID: <eh7vl2$unr$1@sea.gmane.org>
+Reply-To: t2a2e9z8ncbs9qg@brefemail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Christian MICHON" <christian.michon@gmail.com>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 19 17:45:46 2006
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Thu Oct 19 17:46:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gaa50-0006jO-Fv
-	for gcvg-git@gmane.org; Thu, 19 Oct 2006 17:45:11 +0200
+	id 1Gaa5O-0006nS-OA
+	for gcvg-git@gmane.org; Thu, 19 Oct 2006 17:45:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946130AbWJSPpF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Oct 2006 11:45:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946131AbWJSPpF
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 11:45:05 -0400
-Received: from qb-out-0506.google.com ([72.14.204.237]:48707 "EHLO
-	qb-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1946130AbWJSPpD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Oct 2006 11:45:03 -0400
-Received: by qb-out-0506.google.com with SMTP id p36so23482qba
-        for <git@vger.kernel.org>; Thu, 19 Oct 2006 08:45:02 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=V+pe2Oah9mpZP2UeT9ofR41BDtQg6AjLY+BzhCjfrQyIITxXpGRXvqNrXh0fvCa72UVkmj9U3Naw1C428daB7pKHXYxgn1f4qhYcQnbZcFs7f03Oeju/qlteeZxcbugc7TCeBWv0VMq7NbvVBXTaz/YzRzBs6BbHgrL2gR9iNfw=
-Received: by 10.90.118.10 with SMTP id q10mr117681agc;
-        Thu, 19 Oct 2006 08:45:02 -0700 (PDT)
-Received: by 10.90.72.5 with HTTP; Thu, 19 Oct 2006 08:45:02 -0700 (PDT)
-To: "Andreas Ericsson" <ae@op5.se>
-In-Reply-To: <45373E27.3050209@op5.se>
-Content-Disposition: inline
+	id S1946133AbWJSPpa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 19 Oct 2006 11:45:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946134AbWJSPpa
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 11:45:30 -0400
+Received: from main.gmane.org ([80.91.229.2]:1505 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1946133AbWJSPp3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Oct 2006 11:45:29 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1Gaa4s-0006gp-6P
+	for git@vger.kernel.org; Thu, 19 Oct 2006 17:45:02 +0200
+Received: from 212.11.48.246 ([212.11.48.246])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 19 Oct 2006 17:45:02 +0200
+Received: from t2a2e9z8ncbs9qg by 212.11.48.246 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 19 Oct 2006 17:45:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 212.11.48.246
+User-Agent: Mozilla Thunderbird 1.0.2-6 (X11/20050513)
+X-Accept-Language: en-us, en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29360>
 
-On 10/19/06, Andreas Ericsson <ae@op5.se> wrote:
-> Christian MICHON wrote:
-> > close to 200 post on bzr-git war!
-> > is this the right place (git mailing list) to discuss about future
-> > features of bzr ?
-> >
->
-> Perhaps not, but the tone is friendly (mostly), the patience of the
-> bazaar people seems infinite and lots of people seem to be having fun
-> while at the same time learning a thing or two about a different SCM.
-> Best case scenario, both git and bazaar come out of the discussion as
-> better tools. If there would never be any cross-pollination, git
-> wouldn't have half the features it has today.
->
+Hi,
 
-I fully agree with Andreas: I am just a bzr user (not even a bzr
-developer) and when looking for a decentralized VCS I also looked at
-git and a few others. I think I am learning quite a bit  about bzr,
-git, and VCS in general.
+after having read tutorial1+2, I thought the following were more or les=
+s=20
+synonyms: index ~ directory cache ~ staging area
 
-R.
+But then I discover that --cache and --staged are two different things,=
+=20
+notably when using ls-files.
 
-> --
-> Andreas Ericsson                   andreas.ericsson@op5.se
-> OP5 AB                             www.op5.se
-> Tel: +46 8-230225                  Fax: +46 8-230231
->
->
+The documentation states indeed:
+  "--cached   Show cached files in the output"
+  "--stage    Show stage files in the output"
 
+I'm a bit confused. Is maybe a "stage file" entry missing in the glossa=
+ry?
 
--- 
-Ramon Diaz-Uriarte
-Statistical Computing Team
-Structural Biology and Biocomputing Programme
-Spanish National Cancer Centre (CNIO)
-http://ligarto.org/rdiaz
+TIA for clarification/pointer.
+J=E9r=F4me
