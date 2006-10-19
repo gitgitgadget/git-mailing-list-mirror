@@ -1,74 +1,57 @@
 From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: VCS comparison table
-Date: Thu, 19 Oct 2006 07:33:55 +0200
-Message-ID: <20061019053355.GA9403@artax.karlin.mff.cuni.cz>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <Pine.LNX.4.64.0610171605440.3962@g5.osdl.org> <45357411.20500@utoronto.ca> <200610180246.18758.jnareb@gmail.com> <45357CC3.4040507@utoronto.ca> <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org> <4536EC93.9050305@utoronto.ca>
+Subject: Re: Alternate revno proposal (Was: Re: VCS comparison table)
+Date: Thu, 19 Oct 2006 07:45:56 +0200
+Message-ID: <20061019054556.GB9403@artax.karlin.mff.cuni.cz>
+References: <45346290.6050300@utoronto.ca> <200610171120.09747.jnareb@gmail.com> <1161078035.9020.73.camel@localhost.localdomain> <Pine.LNX.4.64.0610170921540.3962@g5.osdl.org> <1161124078.9020.88.camel@localhost.localdomain> <20061017191838.1c36499b.seanlkml@sympatico.ca> <20061017233305.GG20017@pasky.or.cz> <1161149200.3423.34.camel@localhost.localdomain> <20061018214623.GA32725@artax.karlin.mff.cuni.cz> <eh68va$7er$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, Andreas Ericsson <ae@op5.se>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 19 07:33:58 2006
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 19 07:46:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaQXS-0006wL-9p
-	for gcvg-git@gmane.org; Thu, 19 Oct 2006 07:33:54 +0200
+	id 1GaQjC-0000JD-3D
+	for gcvg-git@gmane.org; Thu, 19 Oct 2006 07:46:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161310AbWJSFdv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Oct 2006 01:33:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161115AbWJSFdv
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 01:33:51 -0400
-Received: from artax.karlin.mff.cuni.cz ([195.113.31.125]:12986 "EHLO
+	id S1030270AbWJSFpv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Oct 2006 01:45:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030303AbWJSFpv
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 01:45:51 -0400
+Received: from artax.karlin.mff.cuni.cz ([195.113.31.125]:62394 "EHLO
 	artax.karlin.mff.cuni.cz") by vger.kernel.org with ESMTP
-	id S1161310AbWJSFdu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Oct 2006 01:33:50 -0400
+	id S1030270AbWJSFpu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Oct 2006 01:45:50 -0400
 Received: by artax.karlin.mff.cuni.cz (Postfix, from userid 17196)
-	id E06854A86; Thu, 19 Oct 2006 07:33:55 +0200 (CEST)
-To: Aaron Bentley <aaron.bentley@utoronto.ca>
+	id A42B54A86; Thu, 19 Oct 2006 07:45:56 +0200 (CEST)
+To: Jakub Narebski <jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <4536EC93.9050305@utoronto.ca>
+In-Reply-To: <eh68va$7er$1@sea.gmane.org>
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29324>
 
-On Wed, Oct 18, 2006 at 11:10:11PM -0400, Aaron Bentley wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+On Thu, Oct 19, 2006 at 12:14:02AM +0200, Jakub Narebski wrote:
+> Jan Hudec wrote:
+> > Comments?
 > 
-> Linus Torvalds wrote:
-> 
-> > For example, what happens is that:
-> >  - you like the simple revision numbers
-> >  - that in turn means that you can never allow a mainline-merge to be done 
-> >    by anybody else than the main maintainer
-> 
-> That's not true of bzr development.  The "main maintainer" that runs the
-> bzr.dev is an email bot.  It's not an integrator-- its work is purely
-> mechanical.  It can't resolve merge conflicts.
+> What about fetching from repository? For revnos you have to assign revno for
+> all commit you have downloaded; now you need only to unpack received pack
+> (or not, if you used --keep option). More work.
 
-The point here is, that because of using the bot, the revnos on bzr.dev
-are indeed stable (and many of the merges are in fact pointless merges
-(ie. merges of revision and it's ancestor)). But if you don't use the
-bot, than doing:
-
-bzr merge mainline
-bzr push mainline
-
-makes your revision the leftmost parent is your revison, not the one
-from "mainline". The fact that bzr treats leftmost parent somewhat
-specially makes people to replace the above with
-
-bzr branch mainline
-cd mainline
-bzr merge feature-branch
-bzr push
-
-which is, well, more complicated (but you see it's not about main
-maintainer -- anybody with write access can push).
+I don't know git internals, so I can't tell for git. For bzr:
+1) You have to add the data to the knits, since the knits are one for
+   each versioned file plus one for inventory and one for revision
+   metadata, so this is just a small addition to that work. In fact the
+   revnos in repository-wide case would be just the indices into the
+   revisions knit (while in the branch-wide there would have to be a
+   special list).
+2) Bzr already generates a special list, revision-history, where it
+   stores a list of mainline branches (in fact it used to store a list
+   of local commits, but now lists the path over leftmost parents).
+   So it already does the work.
 
 --------------------------------------------------------------------------------
                   				- Jan Hudec `Bulb' <bulb@ucw.cz>
