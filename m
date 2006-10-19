@@ -1,67 +1,54 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Nathaniel Smith <njs@pobox.com>
 Subject: Re: VCS comparison table
-Date: Thu, 19 Oct 2006 12:16:33 -0700
-Message-ID: <7vac3sru9a.fsf@assigned-by-dhcp.cox.net>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<Pine.LNX.4.64.0610171605440.3962@g5.osdl.org>
-	<45357411.20500@utoronto.ca> <200610180246.18758.jnareb@gmail.com>
-	<45357CC3.4040507@utoronto.ca>
-	<Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>
-	<4536EC93.9050305@utoronto.ca> <87lkncev90.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0610190757100.3962@g5.osdl.org>
-	<20061019161319.GA75501@over-yonder.net>
-	<Pine.LNX.4.64.0610190948540.3962@g5.osdl.org>
-	<Pine.LNX.4.64.0610191110290.3962@g5.osdl.org>
+Date: Thu, 19 Oct 2006 19:01:50 +0000 (UTC)
+Message-ID: <loom.20061019T205327-196@post.gmane.org>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <45340713.6000707@utoronto.ca> <Pine.LNX.4.64.0610161625370.3962@g5.osdl.org> <200610170155.10536.jnareb@gmail.com> <Pine.LNX.4.64.0610161704240.3962@g5.osdl.org> <45345CBE.8020209@utoronto.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 19 21:16:43 2006
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Oct 19 22:40:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GadNe-0008PU-1T
-	for gcvg-git@gmane.org; Thu, 19 Oct 2006 21:16:38 +0200
+	id 1GaegX-0005ut-JJ
+	for gcvg-git@gmane.org; Thu, 19 Oct 2006 22:40:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946385AbWJSTQf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Oct 2006 15:16:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946389AbWJSTQe
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 15:16:34 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:8618 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1946385AbWJSTQe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Oct 2006 15:16:34 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061019191633.RTPE2704.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 19 Oct 2006 15:16:33 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id cKGc1V01H1kojtg0000000
-	Thu, 19 Oct 2006 15:16:37 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0610191110290.3962@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 19 Oct 2006 11:30:15 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1946408AbWJSUkJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Oct 2006 16:40:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946475AbWJSUkJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 16:40:09 -0400
+Received: from main.gmane.org ([80.91.229.2]:33225 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1946408AbWJSUkH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Oct 2006 16:40:07 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1GaegM-0005tH-Lf
+	for git@vger.kernel.org; Thu, 19 Oct 2006 22:40:03 +0200
+Received: from adsl-66-159-194-130.dslextreme.com ([66.159.194.130])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 19 Oct 2006 22:40:02 +0200
+Received: from njs by adsl-66-159-194-130.dslextreme.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 19 Oct 2006 22:40:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 66.159.194.130 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060406 Firefox/1.5.0.4 (Debian-1.5.dfsg+1.5.0.4-1))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29381>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Aaron Bentley <aaron.bentley <at> utoronto.ca> writes:
+> Bazaar also supports multiple unrelated branches in a repository, as
+> does CVS, SVN (depending how you squint), Arch, and probably Monotone.
 
-> The other big difference is being able to do merges in seconds. The 
-> biggest cost of doing a big merge these days seems to literally be 
-> generating the diffstat of the changes at the end (which is purely a UI 
-> issue, but one that I find so important that I'll happily take the extra 
-> few seconds for that, even if it sometimes effectively doubles the 
-> overhead).
+It's quite common in Monotone.  You could probably do it in Mercurial as well,
+though I don't know that anyone does.  SVK definitely does it (since each user
+has a single repo that's shared by all the projects they work on).
 
-An interesting effect on this is when people have a column for
-merge performance in a SCM comparison table, they would include
-time to run the diffstat as part of the time spent for merging
-when they fill in the number for git, but not for any other SCM.
-
-I know you won't misunderstand me but for the sake of others, I
-should add this: I am not saying diffstat should be optional.
+Trivia-ly yours,
+-- Nathaniel
