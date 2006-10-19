@@ -1,48 +1,49 @@
 From: Sean <seanlkml@sympatico.ca>
-Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 07:38:39 -0400
-Message-ID: <20061017073839.3728d1e7.seanlkml__39722.0723833472$1161335159$gmane$org@sympatico.ca>
+Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
+Date: Thu, 19 Oct 2006 06:40:49 -0400
+Message-ID: <20061019064049.bec89582.seanlkml__16460.7259365313$1161335321$gmane$org@sympatico.ca>
 References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
-	<45345AEF.6070107@utoronto.ca>
-	<200610171030.35854.jnareb@gmail.com>
-	<vpqejt76vgz.fsf@ecrins.imag.fr>
+	<200610172351.17377.jnareb@gmail.com>
+	<4535590C.4000004@utoronto.ca>
+	<200610180057.25411.jnareb@gmail.com>
+	<Pine.LNX.4.64.0610171610270.3962@g5.osdl.org>
+	<20061018053647.GA3507@coredump.intra.peff.net>
+	<Pine.LNX.4.64.0610180739230.3962@g5.osdl.org>
+	<20061018185225.GU20017@pasky.or.cz> <eh76np$trg$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 11:05:54 2006
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 11:08:39 2006
 Return-path: <bazaar-ng-bounces@lists.canonical.com>
 Envelope-to: gcvbg-bazaar-ng@m.gmane.org
 Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaqK8-0005ie-C1
-	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 11:05:52 +0200
+	id 1GaqMk-0006Bd-Rk
+	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 11:08:34 +0200
 Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
 	by esperanza.ubuntu.com with esmtp (Exim 4.60)
 	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GapMg-0007eb-W0; Fri, 20 Oct 2006 09:04:27 +0100
-Received: from bayc1-pasmtp02.bayc1.hotmail.com ([65.54.191.162]
-	helo=BAYC1-PASMTP02.CEZ.ICE)
+	id 1GapNZ-0007ly-LZ; Fri, 20 Oct 2006 09:05:21 +0100
+Received: from bayc1-pasmtp06.bayc1.hotmail.com ([65.54.191.166])
 	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <seanlkml@sympatico.ca>) id 1GZnHP-0005zJ-7G
-	for bazaar-ng@lists.canonical.com; Tue, 17 Oct 2006 12:38:44 +0100
+	(envelope-from <seanlkml@sympatico.ca>) id 1GaVKX-0001Ba-8W
+	for bazaar-ng@lists.canonical.com; Thu, 19 Oct 2006 11:40:57 +0100
 X-Originating-IP: [65.93.43.81]
 X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP02.CEZ.ICE
-	over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830); 
-	Tue, 17 Oct 2006 04:38:41 -0700
+Received: from linux1.attic.local ([65.93.43.81]) by
+	BAYC1-PASMTP06.bayc1.hotmail.com over TLS secured channel with
+	Microsoft SMTPSVC(6.0.3790.1830); Thu, 19 Oct 2006 03:44:01 -0700
 Received: from guru.attic.local ([10.10.10.28])
 	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GZmLI-0005VU-8R; Tue, 17 Oct 2006 06:38:40 -0400
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-Message-Id: <20061017073839.3728d1e7.seanlkml@sympatico.ca>
-In-Reply-To: <vpqejt76vgz.fsf@ecrins.imag.fr>
+	id 1GaUOP-0004Af-Kt; Thu, 19 Oct 2006 05:40:49 -0400
+To: Alexander Belchenko <bialix@ukr.net>
+Message-Id: <20061019064049.bec89582.seanlkml@sympatico.ca>
+In-Reply-To: <eh76np$trg$1@sea.gmane.org>
 X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 17 Oct 2006 11:38:41.0759 (UTC)
-	FILETIME=[CB9BC6F0:01C6F1E0]
-X-Mailman-Approved-At: Fri, 20 Oct 2006 09:04:04 +0100
+X-OriginalArrivalTime: 19 Oct 2006 10:44:01.0828 (UTC)
+	FILETIME=[7D718640:01C6F36B]
+X-Mailman-Approved-At: Fri, 20 Oct 2006 09:04:05 +0100
 X-BeenThere: bazaar-ng@lists.canonical.com
 X-Mailman-Version: 2.1.8
 Precedence: list
@@ -56,60 +57,26 @@ List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
 	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
 Sender: bazaar-ng-bounces@lists.canonical.com
 Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29427>
 
-On Tue, 17 Oct 2006 13:19:08 +0200
-Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+On Thu, 19 Oct 2006 09:46:32 +0300
+Alexander Belchenko <bialix@ukr.net> wrote:
 
-> 1) a working tree without any history information, pointing to some
->    other location for the history itself (a la svn/CVS/...).
->    (this is "light checkout")
+> You probably miss main idea of bzr bundles. It's not just the way to
+> send via e-mail or other appropriate transport the part of repository.
+> It primarily was designed to be human readable as usual diff (i.e.
+> patch). It was designed to solve 2 thing simultaneously:
+> 
+> - be informative for human as usual patch
+> - be consistent for machine.
 
-Git can do this from a local repository, it just can't do it from
-a remote repo (at least over the git native protocol).  However,
-over gitweb you can grab and unpack a tarball from a remote repo.
-In practice this is probably enough support for such a feature.
+Petr already mentioned that the data currently shown in the email
+text isn't really useful.  But it's simple to make it an attachment
+and show a combined diff instead.
 
-> 2) a bound branch. It's not _very_ different from a normal branch, but
->    mostly "commit" behaves differently:
->    - it commits both on the local and the remote branch (equivalent to
->      "commit" + "push", but in a transactional way).
->    - it refuses to commit if you're out of date with the branch you're
->      bound to.
->    (this is "heavy checkout")
-
-This doesn't sound right, at least in the spirit of git.  Git really
-wants to have a local commit which you may or may not push to a
-remote repo at a later time.  There is no upside to forcing it all to
-happen in one step, and a lot of downsides.  Gits focus is to support
-distributed offline development, not requiring a remote repo to be
-available at commit time.
- 
-> In both cases, this has the side effect that you can't commit if the
-> "upstream" branch is read-only. That's not fundamental, but handy.
-
-Again this seems really anti-git.  There is no reason for your local
-branch to be marked read only just because some upstream branch is
-so marked.
-
-> I use it for example to have several "checkouts" of the same branch on
-> different machines. When I commit, bzr tells me "hey, boss, you're out
-> of date, why don't you update first" if I'm out of date. And if commit
-> succeeds, I'm sure it is already commited to the main branch. I'm sure
-> I won't pollute my history with merges which would only be the result
-> of forgetting to update.
-
-This is exactly the same in Git.  You really only ever push upstream
-when your local changes fast forward the remote, (ie. you're up to date).
-Git will warn you if your changes don't fast forward the remote.
- 
-> The more fundamental thing I suppose is that it allows people to work
-> in a centralized way (checkout/commit/update/...), and Bazaar was
-> designed to allow several different workflows, including the
-> centralized one.
-
-While Git really isn't meant to work in a centralized way there's nothing
-preventing such a work flow.  It just requires the use of some surrounding
-infrastructure.
+Although that might just make the email bigger for not a lot of
+gain.  It's easy to use the git command line and gui tools to inspect
+the bundle after importing it into your repository.  And just as
+easy to expunge the bundle afterward if it isn't up to grade.
 
 Sean
