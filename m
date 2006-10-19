@@ -1,90 +1,113 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
 Subject: Re: VCS comparison table
-Date: Thu, 19 Oct 2006 14:33:49 +0200
-Message-ID: <20061019123349.GE20017@pasky.or.cz>
-References: <Pine.LNX.4.64.0610171605440.3962@g5.osdl.org> <45357411.20500@utoronto.ca> <200610180246.18758.jnareb@gmail.com> <45357CC3.4040507@utoronto.ca> <871wp6e7o9.wl%cworth@cworth.org> <45359B2A.1070102@utoronto.ca> <87y7rdd47j.wl%cworth@cworth.org> <20061019091045.GV75501@over-yonder.net> <45375E56.4090106@op5.se> <vpqirigqzpd.fsf@ecrins.imag.fr>
+Date: Thu, 19 Oct 2006 15:44:34 +0200
+Message-ID: <vpqr6x4pghp.fsf@ecrins.imag.fr>
+References: <Pine.LNX.4.64.0610171605440.3962@g5.osdl.org>
+	<45357411.20500@utoronto.ca> <200610180246.18758.jnareb@gmail.com>
+	<45357CC3.4040507@utoronto.ca> <871wp6e7o9.wl%cworth@cworth.org>
+	<45359B2A.1070102@utoronto.ca> <87y7rdd47j.wl%cworth@cworth.org>
+	<20061019091045.GV75501@over-yonder.net> <45375E56.4090106@op5.se>
+	<vpqirigqzpd.fsf@ecrins.imag.fr> <20061019123349.GE20017@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>,
-	"Matthew D. Fuller" <fullermd@over-yonder.net>,
-	bazaar-ng@lists.canonical.com, Linus Torvalds <torvalds@osdl.org>,
-	Carl Worth <cworth@cworth.org>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 19 14:34:03 2006
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 19 15:47:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaX5v-0002kS-QB
-	for gcvg-git@gmane.org; Thu, 19 Oct 2006 14:33:56 +0200
+	id 1GaYEI-0002Ux-DF
+	for gcvg-git@gmane.org; Thu, 19 Oct 2006 15:46:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751523AbWJSMdw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Oct 2006 08:33:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751522AbWJSMdv
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 08:33:51 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:51080 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751408AbWJSMdu (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Oct 2006 08:33:50 -0400
-Received: (qmail 30920 invoked by uid 2001); 19 Oct 2006 14:33:49 +0200
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-Content-Disposition: inline
-In-Reply-To: <vpqirigqzpd.fsf@ecrins.imag.fr>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1161413AbWJSNqS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Oct 2006 09:46:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161418AbWJSNqS
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 09:46:18 -0400
+Received: from imag.imag.fr ([129.88.30.1]:15587 "EHLO imag.imag.fr")
+	by vger.kernel.org with ESMTP id S1161413AbWJSNqN (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Oct 2006 09:46:13 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.6/8.13.6) with ESMTP id k9JDiYgA002153
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 19 Oct 2006 15:44:34 +0200 (CEST)
+Received: from ecrins.imag.fr ([129.88.43.124])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1GaYCI-0005B1-GZ; Thu, 19 Oct 2006 15:44:34 +0200
+Received: from moy by ecrins.imag.fr with local (Exim 4.50)
+	id 1GaYCI-0000Qb-DA; Thu, 19 Oct 2006 15:44:34 +0200
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20061019123349.GE20017@pasky.or.cz> (Petr Baudis's message of "Thu\, 19 Oct 2006 14\:33\:49 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.6 (imag.imag.fr [129.88.30.1]); Thu, 19 Oct 2006 15:44:35 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29347>
 
-Dear diary, on Thu, Oct 19, 2006 at 02:04:14PM CEST, I got a letter
-where Matthieu Moy <Matthieu.Moy@imag.fr> said that...
-> What people call "leftmost ancestor" is the revision which used to be
-> the tip at the time you commited. For example, if you do "bzr diff;
-> bzr commit" the diff shown before is the same as the one got with
-> "bzr diff -r last:1" right after the commit.
+Petr Baudis <pasky@suse.cz> writes:
 
-The lack of parents ordering in Git is directly connected with
-fast-forwarding.
+> The lack of parents ordering in Git is directly connected with
+> fast-forwarding.
 
-Consider
+[...]
 
- repo1   repo2
+>  repo1 repo2
+>
+>    a       a
+>   / \     / \
+>  c   b   c   b
+>   \ /     \ /
+>    m       m
 
-   a       a
-  /       /
- b       c
+Yes, bzr has similar thing too. AIUI, the difference is that git does
+it automatically, while bzr has two commands in its UI, "merge" and
+"pull".
 
-Now repo2 merges with repo1:
+In your case, the "leftmost ancestor" of m is b, because at the time
+it was created, it was commited from b.
 
- repo1   repo2
+One problem with that approach is that from revision m and looking
+backward in history (say, running "bzr log"), you have two ways to go
+backward:
 
-   a       a
-  /       / \
- b       c   b
-          \ /
-           m
+1) Take the history of _your_ commits, and your pull till the point
+   where you've branched.
 
-repo1 tip ('b') is not ancestor of repo2 tip ('c') so a three-way merge
-is done and a new 'm' merge commit is created.
+2) Follow the history taking the leftmost ancestor at each step.
 
-And now repo1 merges with repo2:
+In bzr, the notion of "branch" corresponds to a succession of
+revisions, which are explicitely stored in a file (ls
+.bzr/branch/revision-history), which is what commands like "log"
+follow, and what is used for revision numbering. And this sucession of
+revision must obey (at most) one of the above. In the past, it was 1),
+which means that "pull" (i.e. fast-forward) was only adding revisions
+to a branch. In your scenario, repo1 would get a revision history of
+"a c m" while repo2 would have had "a b m" with the same tip.
 
- repo1   repo2
+Today, the revision history follows leftmost ancestor. One good
+property of this is that revision history is unique for a given
+revision. But the terrible drawback is that "pull" and "push" do not
+/add/ revisions to your revision history, they rewrite the target one
+with the source one. That means I can have
 
-   a       a
-  / \     / \
- c   b   c   b
-  \ /     \ /
-   m       m
+$ bzr log --line
+1: some upstream stuff
+2: started my work
+3: continued my work
 
-Because previous repo1 tip ('b') was ancestor of repo2 tip ('m'), a
-fast-forward happenned and repo1 tip simply moved to 'm'. But this
-"flipped" the development from repo1 POV - you cannot assume anymore
-that the first ("leftmost") parent is special.
+# upstream merges.
+
+$ bzr pull
+$ bzr log --line
+1: some upstream stuff
+2: some other upstream stuff ...
+3: ... commited while I was working
+4: merged from Matthieu this terrible feature
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+Matthieu -- definitely curious to give a real try to git ;-)
