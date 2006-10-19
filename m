@@ -1,59 +1,107 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: VCS comparison table
-Date: Thu, 19 Oct 2006 01:54:15 +0200
-Message-ID: <20061018235415.GA20017@pasky.or.cz>
-References: <453536AE.6060601@utoronto.ca> <200610172301.27101.jnareb@gmail.com> <45354AD0.1020107@utoronto.ca> <BAYC1-PASMTP07AB11A64250AAF683424DAE0E0@CEZ.ICE> <45355CBB.80108@utoronto.ca> <BAYC1-PASMTP01369CD694D75CB61ACCC7AE0E0@CEZ.ICE> <eh64tk$rug$2@sea.gmane.org> <20061018172945.c0c58c38.seanlkml@sympatico.ca> <20061018213703.GE19194@spearce.org> <Pine.LNX.4.63.0610190134040.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
+Date: Wed, 18 Oct 2006 17:07:57 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610181655430.3962@g5.osdl.org>
+References: <20061018053647.GA3507@coredump.intra.peff.net>
+ <Pine.LNX.4.64.0610180739230.3962@g5.osdl.org> <20061018185225.GU20017@pasky.or.cz>
+ <20061018185907.GV20017@pasky.or.cz> <7vy7rd1m4q.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0610181510510.1971@xanadu.home> <20061018191834.GA18829@spearce.org>
+ <Pine.LNX.4.64.0610181525410.1971@xanadu.home> <20061018204626.GA19194@spearce.org>
+ <Pine.LNX.4.64.0610181358200.3962@g5.osdl.org> <20061018214143.GF19194@spearce.org>
+ <7vwt6xxofi.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0610181542160.3962@g5.osdl.org>
+ <Pine.LNX.4.64.0610181910440.1971@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 19 01:54:41 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 19 02:08:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaLFA-0000jV-VJ
-	for gcvg-git@gmane.org; Thu, 19 Oct 2006 01:54:41 +0200
+	id 1GaLSH-0002zI-2N
+	for gcvg-git@gmane.org; Thu, 19 Oct 2006 02:08:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945912AbWJRXyR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 19:54:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945913AbWJRXyR
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 19:54:17 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:30362 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1945912AbWJRXyQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Oct 2006 19:54:16 -0400
-Received: (qmail 3738 invoked by uid 2001); 19 Oct 2006 01:54:15 +0200
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0610190134040.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1945917AbWJSAIJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Oct 2006 20:08:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945918AbWJSAIJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 20:08:09 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:9865 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1945917AbWJSAIH (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Oct 2006 20:08:07 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9J07waX026740
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 18 Oct 2006 17:07:58 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9J07vCi024104;
+	Wed, 18 Oct 2006 17:07:58 -0700
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0610181910440.1971@xanadu.home>
+X-Spam-Status: No, hits=-0.971 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29306>
 
-  Hi,
 
-Dear diary, on Thu, Oct 19, 2006 at 01:38:45AM CEST, I got a letter
-where Johannes Schindelin <Johannes.Schindelin@gmx.de> said that...
-> On Wed, 18 Oct 2006, Shawn Pearce wrote:
+
+On Wed, 18 Oct 2006, Nicolas Pitre wrote:
 > 
-> > Today Git doesn't run natively on Windows.
-> 
-> As I mentioned some time ago, I started a branch on MinGW. It works quite 
-> well for the moment, but it lacks fork() emulation, and glob() emulation. 
-> And I lack the time to continue working on it.
+> If you use builtin-unpack-objects.c from next, you'll be able to 
+> generate the pack index pretty easily as well, as all the needed info is 
+> stored in the obj_list array.  Just need to append objects remaining on 
+> the delta_list array to the end of the pack, sort the obj_list by sha1 
+> and write the index.
 
-  care to publish it somewhere, e.g. on repo.or.cz?
+Actually, I've hit an impasse.
 
-  (P.S., have fun in Prague! Too bad I won't be around over the weekend.
-:-( )
+The index isn't the problem. The problem is actually writing the resultant 
+pack-file itself in one go.
 
-  Thanks,
+The silly thing is, the pack-file contains the number of entries in the 
+header. That's a silly problem, because the _natural_ way to turn a thin 
+pack into a normal pack would be to just add the missing objects from the 
+local store into the resulting pack. But we don't _know_ how many such 
+missing objects there are, until we've gone through the whole source pack. 
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+So you can't easily do a streaming "write the result as you go along" 
+version using that approach.
+
+So there's _another_ way of fixing a thin pack: it's to expand the objects 
+without a base into non-delta objects, and keeping the number of objects 
+in the pack the same. But _again_, we don't actually know which ones to 
+expand until it's too late.
+
+The end result? I can expand them all (I have a patch that does that). Or 
+I could leave as deltas the ones I have already seen the base for in the 
+pack-file (I don't have that yet, but that should be a SMOP). But I'm not 
+very happy with even the latter choice, because it really potentially 
+expands things that didn't _need_ expansion, they just got expanded 
+because we hadn't seen the base object yet.
+
+So I'll happily send my patches to anybody who wants to try (I don't write 
+the index file yet, but it should be easy to add), but I'm getting the 
+feeling that "builtin-unpack-objects.c" is the wrong tool to use for this, 
+because it's very much designed for streaming.
+
+It would probably be better to start from "index-pack.c" instead, which is 
+already a multi-pass thing, and wouldn't have had any of the problems I 
+hit. 
+
+Gaah.
+
+> Pretty trivial indeed.
+
+So it's conceptually totally trivial to rewrite a pack-file as another 
+pack-file, but at least so far, it's turned out to be less trivial in 
+practice (or at least in a single pass, without holding everything in 
+memory, which I definitely do _not_ want to do).
+
+So I'm leaving this for today, and perhaps coming back to it tomorrow with 
+a fresh eye.
+
+			Linus
