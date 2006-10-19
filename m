@@ -1,74 +1,69 @@
 From: Petr Baudis <pasky@suse.cz>
 Subject: Re: VCS comparison table
-Date: Thu, 19 Oct 2006 13:37:31 +0200
-Message-ID: <20061019113731.GC20017@pasky.or.cz>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <Pine.LNX.4.64.0610171605440.3962@g5.osdl.org> <45357411.20500@utoronto.ca> <200610180246.18758.jnareb@gmail.com> <45357CC3.4040507@utoronto.ca> <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org> <4536EC93.9050305@utoronto.ca> <845b6e870610190002u420118b8ud634bb9594572c48@mail.gmail.com>
+Date: Thu, 19 Oct 2006 13:46:39 +0200
+Message-ID: <20061019114639.GD20017@pasky.or.cz>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <Pine.LNX.4.64.0610171605440.3962@g5.osdl.org> <45357411.20500@utoronto.ca> <200610180246.18758.jnareb@gmail.com> <45357CC3.4040507@utoronto.ca> <871wp6e7o9.wl%cworth@cworth.org> <45359B2A.1070102@utoronto.ca> <87y7rdd47j.wl%cworth@cworth.org> <20061019091045.GV75501@over-yonder.net> <20061019112759.GA31066@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Matthew D. Fuller" <fullermd@over-yonder.net>,
+	Carl Worth <cworth@cworth.org>,
+	Aaron Bentley <aaron.bentley@utoronto.ca>,
 	Linus Torvalds <torvalds@osdl.org>,
 	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
 	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 19 13:37:54 2006
+X-From: git-owner@vger.kernel.org Thu Oct 19 13:47:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaWDR-0007FD-9z
-	for gcvg-git@gmane.org; Thu, 19 Oct 2006 13:37:37 +0200
+	id 1GaWMJ-0000tS-18
+	for gcvg-git@gmane.org; Thu, 19 Oct 2006 13:46:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423305AbWJSLhe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Oct 2006 07:37:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423308AbWJSLhe
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 07:37:34 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:17889 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1423305AbWJSLhd (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Oct 2006 07:37:33 -0400
-Received: (qmail 25969 invoked by uid 2001); 19 Oct 2006 13:37:31 +0200
-To: Erik B?gfors <zindar@gmail.com>
+	id S1423311AbWJSLqo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 19 Oct 2006 07:46:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423312AbWJSLqo
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 07:46:44 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:32741 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1423311AbWJSLqn (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Oct 2006 07:46:43 -0400
+Received: (qmail 26926 invoked by uid 2001); 19 Oct 2006 13:46:39 +0200
+To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
 Content-Disposition: inline
-In-Reply-To: <845b6e870610190002u420118b8ud634bb9594572c48@mail.gmail.com>
+In-Reply-To: <20061019112759.GA31066@diana.vm.bytemark.co.uk>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29344>
 
-Dear diary, on Thu, Oct 19, 2006 at 09:02:16AM CEST, I got a letter
-where Erik B?gfors <zindar@gmail.com> said that...
-> bzr's use of revision numbers, doesn't mean it hasn't got unique
-> revision identifiers, and I can't see any reason why it couldn't be
-> used in the same way as git.
+Dear diary, on Thu, Oct 19, 2006 at 01:27:59PM CEST, I got a letter
+where Karl Hasselstr=F6m <kha@treskal.com> said that...
+> Really, every commit. Not even the initial commit of a project is
+> special -- it's just a commit with an empty parent set. And, it's
+> perfectly possible to make a (merge) commit whose parents belong to
+> previously disconnected parts of the DAG. This of course means that
+> it's not even possible to differentiate commits based on which projec=
+t
+> they're part of, since one can create a commit whose parents belong t=
+o
+> different projects.
 
-There is perhaps no "technical" reason, but it's also what the user
-interface is designed around - most probably, using UUIDs instead of
-revnos would be a lot less convenient for bzr people because you
-probably primarily show revnos everywhere and UUIDs only in few special
-places and/or when asked specifically through a command (correct me if
-I'm wrong). Also, do you support "UUID autocompletion" so that you can
-type just the unique UUID prefix instead of the whole thing?
+=46WIW, IIRC the Git project has about 6 initial commits. :-)
 
-> Both are excellent tools, and since git
-> is more specialized (built to support the exact workflow used in
-> kernel development), it's more suited for that exact use.
-> 
-> bzr tries to take a broader view, for example, it does support a
-> centralized workflow if you want one.  Most people don't, but a few
-> might. Because of this, it probably fits the kernel development less
-> good than git.  That's fine I think! I happens to fit my workflow
-> better than git does :)
+BTW, a popular source of horrification in other VCSes are Git's octopus
+merges. (A popular source of horrification in Git are kernel developers
+doing octopus merges of 40 branches at once.) Does Bazaar support those=
+?
+(I can't really say it's a defect if it doesn't...)
 
-I think they are in fact just as flexible (+-epsilon). Git can support
-centralized workflow as well - you have some central repository
-somewhere and all the developers clone it, then pull from it and push to
-it in basically the same way they would use CVS. And it is perhaps
-currently even more used in practice than the "single-man" workflow
-nowadays, as more project are using Git.
+(An octopus merge is a merge of more than two branches at once, in a
+single commit.)
 
--- 
+--=20
 				Petr "Pasky" Baudis
 Stuff: http://pasky.or.cz/
 #!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+$/=3Dunpack('H*',$_);$_=3D`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=3Dpack('H*',/((..)*)$/)
