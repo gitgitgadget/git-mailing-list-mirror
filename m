@@ -1,137 +1,158 @@
-From: "Tim Webster" <tdwebste@gmail.com>
+From: Aaron Bentley <aaron.bentley@utoronto.ca>
 Subject: Re: VCS comparison table
-Date: Thu, 19 Oct 2006 22:57:24 +0800
-Message-ID: <72877ab10610190757u3d2b4df0o204c6ffd73af69b4@mail.gmail.com>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	 <45357411.20500@utoronto.ca> <200610180246.18758.jnareb@gmail.com>
-	 <45357CC3.4040507@utoronto.ca>
-	 <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>
-	 <4536EC93.9050305@utoronto.ca>
-	 <845b6e870610190002u420118b8ud634bb9594572c48@mail.gmail.com>
-	 <46d6db660610190149x32442596we4112cdd044185a@mail.gmail.com>
-	 <45373E27.3050209@op5.se> <vpqwt6wsmb5.fsf@ecrins.imag.fr>
+Date: Thu, 19 Oct 2006 10:58:48 -0400
+Message-ID: <453792A8.1010700@utoronto.ca>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>	<Pine.LNX.4.64.0610171605440.3962@g5.osdl.org>	<45357411.20500@utoronto.ca>	<200610180246.18758.jnareb@gmail.com>	<45357CC3.4040507@utoronto.ca>	<Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>	<4536EC93.9050305@utoronto.ca> <87lkncev90.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Andreas Ericsson" <ae@op5.se>,
-	"Christian MICHON" <christian.michon@gmail.com>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 19 16:57:48 2006
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 19 16:59:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaZKs-0004pU-H7
-	for gcvg-git@gmane.org; Thu, 19 Oct 2006 16:57:30 +0200
+	id 1GaZMI-0005Cj-Km
+	for gcvg-git@gmane.org; Thu, 19 Oct 2006 16:59:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946105AbWJSO51 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Oct 2006 10:57:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946106AbWJSO51
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 10:57:27 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:60562 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1946105AbWJSO50 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Oct 2006 10:57:26 -0400
-Received: by ug-out-1314.google.com with SMTP id o38so476463ugd
-        for <git@vger.kernel.org>; Thu, 19 Oct 2006 07:57:25 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=WWtZ3v0OzbaKagzPolmthaTvpND49ogrGK6wgrcAFey6lf28c2yDup/mM3hMbgkCgUkQeR6z3CTxdvNBHeQuJTHupkxfaAeMI1UeLk9l0d8foLxrcDU/YGSIGcmScETJjx+iZW73h9o8E6rQ7PgTC8zo2hC3XPDE1cTq67zwmGY=
-Received: by 10.82.127.15 with SMTP id z15mr55848buc;
-        Thu, 19 Oct 2006 07:57:24 -0700 (PDT)
-Received: by 10.67.100.9 with HTTP; Thu, 19 Oct 2006 07:57:24 -0700 (PDT)
-To: "Matthieu Moy" <Matthieu.Moy@imag.fr>
-In-Reply-To: <vpqwt6wsmb5.fsf@ecrins.imag.fr>
-Content-Disposition: inline
+	id S1946106AbWJSO6z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Oct 2006 10:58:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946107AbWJSO6z
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 10:58:55 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41]:10475 "EHLO
+	server4.panoramicfeedback.com") by vger.kernel.org with ESMTP
+	id S1946106AbWJSO6y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Oct 2006 10:58:54 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41] helo=[192.168.2.19])
+	by server4.panoramicfeedback.com with esmtp (Exim 3.36 #1 (Debian))
+	id 1GaZMA-0007nO-00; Thu, 19 Oct 2006 10:58:50 -0400
+User-Agent: Debian Thunderbird 1.0.2 (X11/20060830)
+X-Accept-Language: en-us, en
+To: Carl Worth <cworth@cworth.org>
+In-Reply-To: <87lkncev90.wl%cworth@cworth.org>
+X-Enigmail-Version: 0.91.0.0
+X-Panometrics-MailScanner: Found to be clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29355>
 
-On 10/19/06, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> Andreas Ericsson <ae@op5.se> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Carl Worth wrote:
+> On Wed, 18 Oct 2006 23:10:11 -0400, Aaron Bentley wrote:
+> But think about your favorite example of an unhealthy social situation
+> around a software project and a big, nasty fork. Every example I can
+> think of involves some technical distinction that makes one branch
+> more special than another.
 >
-> > Perhaps not, but the tone is friendly (mostly), the patience of the
-> > bazaar people seems infinite and lots of people seem to be having fun
-> > while at the same time learning a thing or two about a different SCM.
-> > Best case scenario, both git and bazaar come out of the discussion as
-> > better tools. If there would never be any cross-pollination, git
-> > wouldn't have half the features it has today.
->
->
+> Now, those situations also involve social problems, and those are even
+> more significant. But the technical blessing of one branch does not
+> help. And I think it contributes to the social problems in many cases.
 
+I'm not as familiar with those details.  The one fork that I know a lot
+about, when Baz (the old Bazaar architecture) forked off from Arch,
+showed me that for each developer branch, one branch must be special.
 
-Thanks everyone for taking time to explain details.
+This is just because it is hard to maintain a branch that applies
+cleanly to two diverging codebases.  So each developer must develop
+against the fork that they want to merge their code into.  If they want
+their code to be applied to the other fork, someone must port it.
 
-However, I don't use SCM for code development. I use it for collaborative
-documentation, white boarding and tracking configurations.
-In fact in my company no one uses SCM for code development.
-Everyone here uses it for collaborative documentation and white boarding.
-Only I use SCM for tracking configurations.
+So I really do feel that special branches are inescapable.
 
-I think of SCMs in terms of an SCM core and SCM tools.
+With bzr, you have the freedom to choose which branch you consider
+special, and change your mind at any time.  There are no technical
+limitations in that regard.
 
-First I want to say every SCM I know of sucks when it comes to tracking
-configurations, simply because they don't record or restore file metadata,
-like perms, ownership, and acl. I don't see recording or restoring
-file metadata as part of the SCM core. I do however feel an SCM core needs to
-have provisions for extended file inventory information. The problem
-with extended file inventory information, it is fs specific. For this reason I
-feel it is essential that the SCM core allow multiple sets of extended file
-inventory information. The SCM tools are responsible, based on the local
-config, for recording metadata and creating extended file inventory,
-translating file metadata of one file system. When tracking configurations
-octopus merges are surprisingly common. If a configuration changed is
-not signed off by a responsible person, it can not be accepted. Doing
-otherwise is simply an invitation to attackers and makes trouble shooting
-far too difficult. Also configuration file in one directory will most often not
-be members of the same repo. For example each file etc in directory would
-members of different repos according to its associated application/pkg.
+> As far as the revision numbers, my impression is that the numbers
+> would be confusing or worthless if I were to use bzr the way I'm
+> currently using git, as they certainly could not remain stable.
 
-Somethings I like the SCM tools to handle. Personally I would like the
-SCM tools to be platform independent. This would ensure that correct
-things happening on ext3 mounted on windows.
-I don't think execute bit belongs in the basic file inventory information.
-Instead I would like to use this replace by a filter in the extended
-file inventory
-indicating what file metadata if any should be recorded or restored.
-When the local SCM tools config has use metadata enable, the filter is used.
-A filter lets the user select file metadata to record/restore such as;
-record ownership, record permissions, record acl.
+They would remain stable if you only used pull to update your origin
+branch, and used merge+commit to update your development branch.
 
-For SCM configuration tracking to function reliably, pulls, pushes and merges
-need to be atomic. Personally I like my servers to pull change updates. And
-I like to push changes I make on local servers to branches. On configuration
-master merge the  branches into groups. When the server pulls changes
-for a particular application/pkg, the following is a list of steps that need to
-occur.
-The SCM tools, perform a pre update step, such as optionally stopping a service
-pull updates and build changes files in a scratch space, than apply
-file metadata,
-unchanged files would be links from the scratch space to the original files,
-verify all files are correct by checking their sha1 or md5,
-atomically move configuration files and scripts to install them,
-perform a post update step,  such as starting or reloading a service.
-The pre update step and the post update are very much like pkg pre and post
-install scripts. The pre update and post update scripts are in fact part of the
-application/pkg configurations files.
+>> In bzr development, it's very rare for anyone's revision numbers to change.
+> 
+> Which just says to me that the bzr developers really are sticking to a
+> centralized model.
 
+I don't see why you're reaching that conclusion.  I'd like to understand
+that better, because Linus seems to be concluding the same thing, and it
+doesn't make sense to me.
 
-Collaborative document editing and white boarding are other requirements.
-odf and svg are xml file formats. I would like to see an efficient
-xml diff as part of the SCM core. Using mime types SCM tools can unzip
-files, bundles, and use mime type information to the SCM core xml
-diff, plain diff
-as required. I think it is essential that the SCM core include
-previsions for multiple
-repo partners. For example this can be used to create fail over star
-scm architecture.
-In collaborative document editing it is often the case where you want to
-compress / summarize some of the change history.
+>> I think you're implying that on a technical level, bzr doesn't support
+>> this.  But it does.  Every published repository has unique identifiers
+>> for every revision on its mainline, and it's exceedingly uncommon for
+>> these to change.
+> 
+> Every argument you make for the number change being uncommon just
+> strengthens the argument that it will be all that more
+> confusing/frustrating when the numbers do change.
 
-We currently use our scm based collaborative document editing as an ad
-hock white
-board, coordinating our commits and updates via IM. :)
-It would be nice if the SCM tools included rss feeds for communicating zip
-patch bundles.
+That doesn't follow.  Just because something is arguably true doesn't
+make it bad.  And in this case, I'm not arguing that it's true, I'm
+saying that it's true, because that is what my experience tells me is true.
+
+> In cairo, for example, we've made a habit of including a revision
+> identifier in our bug tracking system for every commit that resolves a
+> bug.
+
+We do it the other way around: we put a bug number in the commit
+message.  And I personally have been developing a bugtracker that is
+distributed in the same way bzr is; it stores bug data in the source
+tree of a project, so that bug activities follow branches around.
+
+> I like having the assurance that those numbers will survive
+> forever. And it doesn't matter if the repository moves, or the project
+> is forked, or anything else. Those numbers cannot change.
+> 
+> I understand that bzr also has unique identifiers, but it sounds like
+> the tools try to hide them, and people aren't in the habit of using
+> them for things like this. Do bzr developers put revision numbers in
+> their bug trackers? Is there a guarantee they will always be valid?
+
+Yes, we put revnos in our bug trackers.  No, we can't prove that they
+will always be valid.  But there are significant disincentives to
+changing them, so I am quite comfortable assuming they will not change.
+ And the older a revno gets, the less likely it is to change.
+
+On the other hand, I think your revision identifiers are not as
+permanent as you think.
+
+In the first place, it seems fairly common in the Git community to
+rebase.  This process throws away old revisions and creates new
+revisions that are morally equivalent[1].  I don't know whether Git
+fetches unreferenced revisions, but bzr's policy is to fetch only
+revisions referenced in the ancestry DAG of the branch.
+
+In the second place, one must consider the "nuclear launch codes"
+scenario.  In this scenario, someone has committed the codes necessary
+to begin a nuclear attack into their branch.  This is an unlikely event,
+of course, but nuclear launch codes are an extreme example of data that
+absolutely, positively must be completely expunged from the branch.
+Other examples include proprietary code (e.g. if SCO wasn't a bunch of
+charlatans), passwords and obscene or libelous statements.
+
+In a nuclear codes scenario, the revision that introduced the nuclear
+launch codes and all its descendants must be expunged from the
+repository.  You may, perhaps, rebase in order to retain the shape of
+the history, but the revision-ids that you have recorded will be gone.
+
+Aaron
+
+[1] This is a process that I find discomforting, because I consider the
+original revisions to be real, historical data, and I don't like the
+idea of throwing it away.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
+
+iD8DBQFFN5F70F+nu1YWqI0RAhrsAJ9rcqNGv28134eTvbGoxxteOxif3wCfTbaq
+fpD0HNeGgdlMwuJldyzUxRM=
+=9k8r
+-----END PGP SIGNATURE-----
