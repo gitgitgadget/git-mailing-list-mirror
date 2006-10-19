@@ -1,133 +1,68 @@
-From: "Matthew D. Fuller" <fullermd@over-yonder.net>
+From: "J. Bruce Fields" <bfields@fieldses.org>
 Subject: Re: VCS comparison table
-Date: Thu, 19 Oct 2006 12:06:38 -0500
-Message-ID: <20061019170638.GB75501@over-yonder.net>
-References: <45357411.20500@utoronto.ca> <200610180246.18758.jnareb@gmail.com>
-	<45357CC3.4040507@utoronto.ca> <871wp6e7o9.wl%cworth@cworth.org>
-	<45359B2A.1070102@utoronto.ca> <87y7rdd47j.wl%cworth@cworth.org>
-	<20061019091045.GV75501@over-yonder.net>
-	<20061019112759.GA31066@diana.vm.bytemark.co.uk>
-	<20061019114639.GD20017@pasky.or.cz>
-	<20061019160103.GZ75501@over-yonder.net>
+Date: Thu, 19 Oct 2006 13:14:09 -0400
+Message-ID: <20061019171409.GA31671@fieldses.org>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <Pine.LNX.4.64.0610171605440.3962@g5.osdl.org> <45357411.20500@utoronto.ca> <200610180246.18758.jnareb@gmail.com> <45357CC3.4040507@utoronto.ca> <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org> <4536EC93.9050305@utoronto.ca> <87lkncev90.wl%cworth@cworth.org> <453792A8.1010700@utoronto.ca> <8764eg2qaa.wl%cworth@cworth.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: bazaar-ng@lists.canonical.com,
-	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
+Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
 	Linus Torvalds <torvalds@osdl.org>,
-	Carl Worth <cworth@cworth.org>, Andreas Ericsson <ae@op5.se>,
-	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-X-From: bazaar-ng-bounces@lists.canonical.com Thu Oct 19 19:07:17 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+	Jakub Narebski <jnareb@gmail.com>,
+	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 19 19:15:56 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GabM5-0007J6-Uc
-	for gcvbg-bazaar-ng@m.gmane.org; Thu, 19 Oct 2006 19:06:54 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GabM0-000627-N0; Thu, 19 Oct 2006 18:06:48 +0100
-Received: from ns.centralmiss.com ([206.156.254.79]
-	helo=optimus.centralmiss.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <fullermd@over-yonder.net>) id 1GabLw-00061t-KN
-	for bazaar-ng@lists.canonical.com; Thu, 19 Oct 2006 18:06:44 +0100
-Received: from draco.over-yonder.net
-	(adsl-072-148-013-213.sip.jan.bellsouth.net [72.148.13.213])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by optimus.centralmiss.com (Postfix) with ESMTP id 76AE22842A;
-	Thu, 19 Oct 2006 12:06:39 -0500 (CDT)
-Received: by draco.over-yonder.net (Postfix, from userid 100)
-	id 72A7061C52; Thu, 19 Oct 2006 12:06:38 -0500 (CDT)
-To: Petr Baudis <pasky@suse.cz>
+	id 1GabUB-0000qe-Qt
+	for gcvg-git@gmane.org; Thu, 19 Oct 2006 19:15:16 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1946253AbWJSRO1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Oct 2006 13:14:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946256AbWJSRO0
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 13:14:26 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:43659 "EHLO
+	pickle.fieldses.org") by vger.kernel.org with ESMTP
+	id S1946253AbWJSROZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Oct 2006 13:14:25 -0400
+Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
+	(envelope-from <bfields@fieldses.org>)
+	id 1GabT7-0001Uc-Kt; Thu, 19 Oct 2006 13:14:09 -0400
+To: Carl Worth <cworth@cworth.org>
 Content-Disposition: inline
-In-Reply-To: <20061019160103.GZ75501@over-yonder.net>
-X-Editor: vi
-X-OS: FreeBSD <http://www.freebsd.org/>
-User-Agent: Mutt/1.5.11-fullermd.3
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29374>
+In-Reply-To: <8764eg2qaa.wl%cworth@cworth.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29375>
 
-On Thu, Oct 19, 2006 at 11:01:03AM -0500 I heard the voice of
-Matthew D. Fuller, and lo! it spake thus:
->
-> Now, the question of "is that merge commit E really necessary, when
-> you could just attach D to the end of the graph and create something
-> like [...] is perhaps a useful question (and one that there's
-> obviously disagreement on).  And it may be a fruitful one to
-> discuss, if we're not way off in the weeds already.
->
-> But, it's also not QUITE the same question as "Is the left-vs-other
-> path distinction meaningful and to be preserved?"
+On Thu, Oct 19, 2006 at 10:01:33AM -0700, Carl Worth wrote:
+> On Thu, 19 Oct 2006 10:58:48 -0400, Aaron Bentley wrote:
+> > On the other hand, I think your revision identifiers are not as
+> > permanent as you think.
+> >
+> > In the first place, it seems fairly common in the Git community to
+> > rebase.  This process throws away old revisions and creates new
+> > revisions that are morally equivalent[1].
+> 
+> Yes, rebasing does "destroy history" in one sense, (in actual fact, it
+> creates new commits and leaves the old ones around, which may or may
+> not have references to them anymore).
 
-Let me elaborate a little on this.
+Note that the id's are still permanent in this case; they will never
+(module some assumptions about the crypto) be reused.  So a given id
+points at one and only one object, for all time; it's just that we may
+forget what that one object is....
 
-bzr COULD create
+> > In the second place, one must consider the "nuclear launch codes"
+> > scenario.
+> 
+> Sure. And git does provide tools that can do this.
 
->   a-.
->   |\ \
->   b c |
->   |/ /
->   D-'
+So in this case you can certainly lose the launch codes.  But you have
+forever granted everyone a way to determine whether a given guess at the
+launch codes is correct.  (Again, assuming some stuff about SHA1).
 
-instead of
-
->   a-.
->   |\ \
->   b c |
->   |\|/
->   | D
->   |/ 
->   E
-
-for the previously discussed merge, basically duplicating
-'fast-forward' behavior.  It doesn't currently, but it could just as
-well without disturbing the attributes it gains from assigning meaning
-to the left-most parent.  The choice to create E is the result of an
-independent decision from the choice to treat the left path as
-special.
-
-
-What the leftmost discussion impacts is the case of 
-
-    a-.
-    |\ \
-    | b c
-    |/ /
-    D-'
-
-vs
-
-    a-.-.
-     \ \ \
-      b c |
-     / / /
-    D-'-'
-
-Now, the branches are distinct to bzr, but they're not different.  If
-you try to merge one from the other, merge will quite rightly tell you
-there's nothing to do, since you both have all the same revs.  git
-doesn't recognize the distinction at all, of course.  The difference
-is mostly cosmetic.  But, it's a cosmetic difference that bzr devs
-(and users, I venture) find _useful_, which is why it's fought for.
-And everything else seems to follow from that.
-
-If you don't think the distinction is meaningful or useful, you can
-ignore it, and the tool should work just fine.  The main place the
-distinction would show up is in the cosmetics of how "log" looks (and
-probably similarly in any tool that graphically describes ancestry),
-and a custom log output formatter could probably be very easily
-written to obviate even that.
+--b.
