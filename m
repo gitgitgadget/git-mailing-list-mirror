@@ -1,140 +1,87 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
-Date: Wed, 18 Oct 2006 23:01:52 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0610182234070.1971@xanadu.home>
-References: <20061018053647.GA3507@coredump.intra.peff.net>
- <Pine.LNX.4.64.0610180739230.3962@g5.osdl.org>
- <20061018185225.GU20017@pasky.or.cz> <20061018185907.GV20017@pasky.or.cz>
- <7vy7rd1m4q.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610181510510.1971@xanadu.home>
- <20061018191834.GA18829@spearce.org>
- <Pine.LNX.4.64.0610181525410.1971@xanadu.home>
- <20061018204626.GA19194@spearce.org>
- <Pine.LNX.4.64.0610181358200.3962@g5.osdl.org>
- <20061018214143.GF19194@spearce.org> <7vwt6xxofi.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610181542160.3962@g5.osdl.org>
- <Pine.LNX.4.64.0610181910440.1971@xanadu.home>
- <Pine.LNX.4.64.0610181655430.3962@g5.osdl.org>
+From: pclouds@gmail.com
+Subject: [PATCH] Add revspec documentation for ':path', ':[0-3]:path' and git-describe
+Date: Thu, 19 Oct 2006 10:04:55 +0700
+Message-ID: <20061019030455.GA10554@localhost>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>,
-	Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 19 05:02:01 2006
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Thu Oct 19 05:07:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaOAQ-0008RA-26
-	for gcvg-git@gmane.org; Thu, 19 Oct 2006 05:01:58 +0200
+	id 1GaOFl-0000cr-0R
+	for gcvg-git@gmane.org; Thu, 19 Oct 2006 05:07:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423224AbWJSDBy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 23:01:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030294AbWJSDBy
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 23:01:54 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:58209 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1030293AbWJSDBx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Oct 2006 23:01:53 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J7D00CAX4F4D6K3@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 18 Oct 2006 23:01:53 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.64.0610181655430.3962@g5.osdl.org>
-X-X-Sender: nico@xanadu.home
-To: Linus Torvalds <torvalds@osdl.org>
+	id S1030296AbWJSDHN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 18 Oct 2006 23:07:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423230AbWJSDHM
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 23:07:12 -0400
+Received: from py-out-1112.google.com ([64.233.166.181]:34572 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1030294AbWJSDHK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Oct 2006 23:07:10 -0400
+Received: by py-out-1112.google.com with SMTP id n25so617583pyg
+        for <git@vger.kernel.org>; Wed, 18 Oct 2006 20:06:36 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:date:to:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent:from;
+        b=hAw9iQpvwFrUoJaoy4mnXlqww4MvOnIBXr1eqoMK2+f848tTgPLY+dE/s+YS7nCtqrCowfoc8w0wB/33BJXBccppLceIGkRQeoRD3QpD+PSEx35mgzY5EqAZgnU5LQhp2OtR/Jpij8nw5J73fx1coLU1ZiAeMRX5HCTluteI8so=
+Received: by 10.35.9.15 with SMTP id m15mr19051957pyi;
+        Wed, 18 Oct 2006 20:06:35 -0700 (PDT)
+Received: from localhost ( [125.234.255.91])
+        by mx.google.com with ESMTP id 36sm1652432nzk.2006.10.18.20.06.31;
+        Wed, 18 Oct 2006 20:06:35 -0700 (PDT)
+Received: by localhost (sSMTP sendmail emulation); Thu, 19 Oct 2006 10:04:55 +0700
+To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29314>
-
-On Wed, 18 Oct 2006, Linus Torvalds wrote:
-
-> 
-> 
-> On Wed, 18 Oct 2006, Nicolas Pitre wrote:
-> > 
-> > If you use builtin-unpack-objects.c from next, you'll be able to 
-> > generate the pack index pretty easily as well, as all the needed info is 
-> > stored in the obj_list array.  Just need to append objects remaining on 
-> > the delta_list array to the end of the pack, sort the obj_list by sha1 
-> > and write the index.
-> 
-> Actually, I've hit an impasse.
-> 
-> The index isn't the problem. The problem is actually writing the resultant 
-> pack-file itself in one go.
-> 
-> The silly thing is, the pack-file contains the number of entries in the 
-> header. That's a silly problem, because the _natural_ way to turn a thin 
-> pack into a normal pack would be to just add the missing objects from the 
-> local store into the resulting pack. But we don't _know_ how many such 
-> missing objects there are, until we've gone through the whole source pack. 
-> 
-> So you can't easily do a streaming "write the result as you go along" 
-> version using that approach.
-
-Hmmm.... unpack-objects receives a (possibly thin) pack over its stdin.  
-That part has to be streamed.  But its output is currently always 
-written to multiple files as separate objects.  So, while the input 
-comes from a stream, the output doesn't have to.
-
-In that case, why not just write the input directly to a temporary file, 
-append the missing objects, seek back to adjust the object number, and 
-finally run a SHA1_Update() on the whole thing?  This forces you to 
-write everything and then read everything back, but this should not be 
-too bad especially that the written data is likely to still be cached.  
-Once its final sha1sum is written then it just need to be moved with the 
-appropriate name.
-
-> So there's _another_ way of fixing a thin pack: it's to expand the objects 
-> without a base into non-delta objects, and keeping the number of objects 
-> in the pack the same. But _again_, we don't actually know which ones to 
-> expand until it's too late.
-> 
-> The end result? I can expand them all (I have a patch that does that). Or 
-> I could leave as deltas the ones I have already seen the base for in the 
-> pack-file (I don't have that yet, but that should be a SMOP). But I'm not 
-> very happy with even the latter choice, because it really potentially 
-> expands things that didn't _need_ expansion, they just got expanded 
-> because we hadn't seen the base object yet.
-
-Most base objects, well all of them nowadays, are written before their 
-deltas.  So in practice the only objects that will get expanded are the 
-deltas with missing base.   Still it is unfortunate.
-
-> So I'll happily send my patches to anybody who wants to try (I don't write 
-> the index file yet, but it should be easy to add), but I'm getting the 
-> feeling that "builtin-unpack-objects.c" is the wrong tool to use for this, 
-> because it's very much designed for streaming.
-> 
-> It would probably be better to start from "index-pack.c" instead, which is 
-> already a multi-pass thing, and wouldn't have had any of the problems I 
-> hit. 
-
-But index-pack is totally incompatible with any streaming.  It mmap() 
-the whole pack and happily perform random accesses.  So you'd need to 
-write the entire thin pack to disk anyway before it could work on it.  
-This is not really better than the unpack-objects option.  At least 
-unpack-objects is structured to perform work on the fly as data is 
-received.
-
-> Gaah.
-> 
-> > Pretty trivial indeed.
-> 
-> So it's conceptually totally trivial to rewrite a pack-file as another 
-> pack-file, but at least so far, it's turned out to be less trivial in 
-> practice (or at least in a single pass, without holding everything in 
-> memory, which I definitely do _not_ want to do).
-> 
-> So I'm leaving this for today, and perhaps coming back to it tomorrow with 
-> a fresh eye.
-
-I'll have a look at your patches tomorrow as well.  I have many ideas 
-brewing, including randering index-pack obsolete since actually 
-unpack-objects could do it all already (both tools have many concepts in 
-common).
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29315>
 
 
-Nicolas
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Documentation/git-rev-parse.txt |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
+
+As I'm not very good at English, please correct any mistake I made
+
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-pa=
+rse.txt
+index 2f1306c..f8f4920 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -119,11 +119,17 @@ syntax.
+   name the same commit object if there are no other object in
+   your repository whose object name starts with dae86e.
+=20
++* The result of `git-describe`
++
+ * A symbolic ref name.  E.g. 'master' typically means the commit
+   object referenced by $GIT_DIR/refs/heads/master.  If you
+   happen to have both heads/master and tags/master, you can
+   explicitly say 'heads/master' to tell git which one you mean.
+=20
++* A colon at the beginning, followed by path name to specify
++  a file in index. If you want to specify a file in a stage,
++  use expression ':[0-3]:<path>' instead.
++
+ * A suffix '@' followed by a date specification enclosed in a brace
+   pair (e.g. '\{yesterday\}', '\{1 month 2 weeks 3 days 1 hour 1
+   second ago\}' or '\{1979-02-26 18:30:00\}') to specify the value
+@@ -156,6 +162,9 @@ syntax.
+   and dereference the tag recursively until a non-tag object is
+   found.
+=20
++* A suffix ':' followed by path name to specify a specific file
++  in that commit/tag/tree.
++
+ Here is an illustration, by Jon Loeliger.  Both node B and C are
+ a commit parents of commit node A.  Parent commits are ordered
+ left-to-right.
+--=20
+1.4.3.rc2.g0503-dirty
