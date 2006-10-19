@@ -1,7 +1,7 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
-Date: Wed, 18 Oct 2006 17:15:00 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610181711110.3962@g5.osdl.org>
+Date: Thu, 19 Oct 2006 02:31:02 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0610190229270.14200@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <20061018053647.GA3507@coredump.intra.peff.net>
  <Pine.LNX.4.64.0610180739230.3962@g5.osdl.org> <20061018185225.GU20017@pasky.or.cz>
  <20061018185907.GV20017@pasky.or.cz> <7vy7rd1m4q.fsf@assigned-by-dhcp.cox.net>
@@ -12,56 +12,46 @@ References: <20061018053647.GA3507@coredump.intra.peff.net>
  <Pine.LNX.4.64.0610181910440.1971@xanadu.home> <Pine.LNX.4.64.0610181655430.3962@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
+Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
 	Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 19 02:15:17 2006
+X-From: git-owner@vger.kernel.org Thu Oct 19 02:31:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaLZ6-000497-OX
-	for gcvg-git@gmane.org; Thu, 19 Oct 2006 02:15:17 +0200
+	id 1GaLod-0006Z3-Ma
+	for gcvg-git@gmane.org; Thu, 19 Oct 2006 02:31:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945920AbWJSAPM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Oct 2006 20:15:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945922AbWJSAPM
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 20:15:12 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:38538 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1945920AbWJSAPK (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Oct 2006 20:15:10 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9J0F1aX027077
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 18 Oct 2006 17:15:02 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9J0F0W8024293;
-	Wed, 18 Oct 2006 17:15:00 -0700
-To: Nicolas Pitre <nico@cam.org>
+	id S1945922AbWJSAbH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Oct 2006 20:31:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945924AbWJSAbH
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Oct 2006 20:31:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:6347 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1945922AbWJSAbF (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Oct 2006 20:31:05 -0400
+Received: (qmail invoked by alias); 19 Oct 2006 00:31:03 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp010) with SMTP; 19 Oct 2006 02:31:03 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Linus Torvalds <torvalds@osdl.org>
 In-Reply-To: <Pine.LNX.4.64.0610181655430.3962@g5.osdl.org>
-X-Spam-Status: No, hits=-0.971 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29308>
 
-
+Hi,
 
 On Wed, 18 Oct 2006, Linus Torvalds wrote:
-> 
-> So I'll happily send my patches to anybody who wants to try (I don't write 
-> the index file yet, but it should be easy to add), but I'm getting the 
-> feeling that "builtin-unpack-objects.c" is the wrong tool to use for this, 
-> because it's very much designed for streaming.
 
-A potentially even simpler way would probably be to literally just use 
-"git-pack-objects" directly, and just have a very special mode that allows 
-mapping the thin pack as if it was a real pack (ie basically 
-pre-populating a fake pack entry, where the fake part comes from adding 
-the missing objects by hand to the mapping).
+> The silly thing is, the pack-file contains the number of entries in the 
+> header.
 
-So many ways to do it, so little real motivation ;)
+You do not write this to stdout, right? Why not just come back and correct 
+the number of objects? Of course, the SHA1 has to be calculated _after_ 
+that.
 
-		Linus
+Ciao,
+Dscho
