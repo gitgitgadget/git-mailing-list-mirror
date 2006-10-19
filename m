@@ -1,78 +1,89 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Don't segfault if the given SHA1 name is longer than 40 characters
-Date: Wed, 18 Oct 2006 21:13:13 -0700
-Message-ID: <7vwt6xvt7q.fsf@assigned-by-dhcp.cox.net>
-References: <20061019013441.GB9379@localhost>
+Subject: Re: [PATCH] Add revspec documentation for ':path', ':[0-3]:path' and git-describe
+Date: Wed, 18 Oct 2006 21:43:53 -0700
+Message-ID: <7vlkncx6d2.fsf@assigned-by-dhcp.cox.net>
+References: <20061019030455.GA10554@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 19 06:13:24 2006
+X-From: git-owner@vger.kernel.org Thu Oct 19 06:44:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaPHY-00058Q-0d
-	for gcvg-git@gmane.org; Thu, 19 Oct 2006 06:13:24 +0200
+	id 1GaPlJ-0000Ge-7J
+	for gcvg-git@gmane.org; Thu, 19 Oct 2006 06:44:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945975AbWJSENP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 19 Oct 2006 00:13:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945977AbWJSENO
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 00:13:14 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:29633 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1945975AbWJSENO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Oct 2006 00:13:14 -0400
+	id S1030300AbWJSEn4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Oct 2006 00:43:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030299AbWJSEnz
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 00:43:55 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:2244 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S1030300AbWJSEnz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Oct 2006 00:43:55 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao03.cox.net
+          by fed1rmmtao10.cox.net
           (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061019041313.LBTO2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 19 Oct 2006 00:13:13 -0400
+          id <20061019044354.JAPO18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 19 Oct 2006 00:43:54 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id c4Cz1V01a1kojtg0000000
-	Thu, 19 Oct 2006 00:13:00 -0400
+	id c4jg1V00T1kojtg0000000
+	Thu, 19 Oct 2006 00:43:40 -0400
 To: pclouds@gmail.com
-In-Reply-To: <20061019013441.GB9379@localhost> (pclouds@gmail.com's message of
-	"Thu, 19 Oct 2006 08:34:41 +0700")
+In-Reply-To: <20061019030455.GA10554@localhost> (pclouds@gmail.com's message
+	of "Thu, 19 Oct 2006 10:04:55 +0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29319>
 
-pclouds@gmail.com writes:
+> As I'm not very good at English, please correct any mistake I made
 
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  sha1_name.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/sha1_name.c b/sha1_name.c
-> index 9b226e3..6ffee22 100644
-> --- a/sha1_name.c
-> +++ b/sha1_name.c
-> @@ -157,7 +157,7 @@ static int get_short_sha1(const char *na
->  	char canonical[40];
->  	unsigned char res[20];
-> =20
-> -	if (len < MINIMUM_ABBREV)
-> +	if (len < MINIMUM_ABBREV || len > 40)
->  		return -1;
->  	hashclr(res);
->  	memset(canonical, 'x', 40);
+Thanks.  I do not know about English, but I'd move things around
+to group them better.  Most talk about committish but the
+colon-path are about trees and blobs.
 
-Thanks.
-
-The patch is correct, but it needs a better explanation in the
-proposed commit log message than just "Don't segfault".
-
-get_describe_name() can be fed a string foo-gXXX...XXX with a
-very looooooooong hexstring.  It calls get_short_sha1() without
-checking if XXX...XXX part is longer than 40-bytes (in which
-case it cannot be a valid object name).
-
-get_sha1_1() has the same problem.  Given a hexstring longer
-than 40-bytes, it calls the function with it because earlier
-ones such as get_sha1_hex() would reject the input.
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index 2f1306c..412bafb 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -111,7 +111,9 @@ SPECIFYING REVISIONS
+ 
+ A revision parameter typically, but not necessarily, names a
+ commit object.  They use what is called an 'extended SHA1'
+-syntax.
++syntax.  Here are various ways to spell object names.  The
++ones listed near the end of this list are to name trees and
++blobs contained in a commit.
+ 
+ * The full SHA1 object name (40-byte hexadecimal string), or
+   a substring of such that is unique within the repository.
+@@ -119,6 +121,9 @@ syntax.
+   name the same commit object if there are no other object in
+   your repository whose object name starts with dae86e.
+ 
++* An output from `git-describe`; i.e. a closest tag, followed by a
++  dash, a 'g', and an abbreviated object name.
++
+ * A symbolic ref name.  E.g. 'master' typically means the commit
+   object referenced by $GIT_DIR/refs/heads/master.  If you
+   happen to have both heads/master and tags/master, you can
+@@ -156,6 +161,15 @@ syntax.
+   and dereference the tag recursively until a non-tag object is
+   found.
+ 
++* A suffix ':' followed by a path; this names the blob or tree
++  at the given path in the tree-ish object named by the part
++  before the colon.
++
++* A colon, optionally followed by a stage number (0 to 3) and a
++  colon, followed by a path; this names a blob object in the
++  index at the given path.  Missing stage number (and the colon
++  that follows it) names an stage 0 entry.
++
+ Here is an illustration, by Jon Loeliger.  Both node B and C are
+ a commit parents of commit node A.  Parent commits are ordered
+ left-to-right.
