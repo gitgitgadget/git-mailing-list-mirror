@@ -1,172 +1,138 @@
-From: "Adobe Software" <dipleidoscope@workplacelaw.com>
-Subject: New software uploaded by Jessica on Oct 19 20:40:00 MSK 2006
-Date: Thu, 19 Oct 2006 17:59:16 -0900
-Message-ID: <000001c6f3e2$40164e80$0100007f@localhost>
-Content-Type: text/plain;
-    charset="us-ascii"
-    Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Oct 20 02:59:30 2006
+From: Aaron Bentley <aaron.bentley@utoronto.ca>
+Subject: Re: VCS comparison table
+Date: Thu, 19 Oct 2006 21:06:40 -0400
+Message-ID: <45382120.9060702@utoronto.ca>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>	<Pine.LNX.4.64.0610171605440.3962@g5.osdl.org>	<45357411.20500@utoronto.ca>	<200610180246.18758.jnareb@gmail.com>	<45357CC3.4040507@utoronto.ca>	<Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>	<4536EC93.9050305@utoronto.ca>	<87lkncev90.wl%cworth@cworth.org>	<453792A8.1010700@utoronto.ca>	<878xjc2qeb.wl%cworth@cworth.org>	<453803E6.2060309@utoronto.ca> <87ods727pn.wl%cworth@cworth.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 20 03:07:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaijO-0002QK-MA
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 02:59:27 +0200
+	id 1Gair4-0003J9-1w
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 03:07:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946771AbWJTA7U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Oct 2006 20:59:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946773AbWJTA7U
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 20:59:20 -0400
-Received: from cpe-065-185-197-183.carolina.res.rr.com ([65.185.197.183]:24589
-	"helo localhost") by vger.kernel.org with SMTP id S1946771AbWJTA7T
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Oct 2006 20:59:19 -0400
-To: <git@vger.kernel.org>
-X-Priority: 3 (Normal)
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook, Build 10.0.3416
-Importance: Normal
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.150
+	id S1751643AbWJTBHS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Oct 2006 21:07:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751646AbWJTBHR
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 21:07:17 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41]:16777 "EHLO
+	server4.panoramicfeedback.com") by vger.kernel.org with ESMTP
+	id S1751643AbWJTBHQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Oct 2006 21:07:16 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41] helo=[127.0.0.1])
+	by server4.panoramicfeedback.com with esmtp (Exim 3.36 #1 (Debian))
+	id 1Gaiqr-0007La-00; Thu, 19 Oct 2006 21:07:13 -0400
+User-Agent: Thunderbird 1.5.0.7 (X11/20060922)
+To: Carl Worth <cworth@cworth.org>
+In-Reply-To: <87ods727pn.wl%cworth@cworth.org>
+X-Enigmail-Version: 0.94.0.0
+X-Panometrics-MailScanner: Found to be clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 7.0 points;
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4992]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?65.185.197.183>]
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: oemelli.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29397>
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Jessica has uploaded some new software for you!
+Carl Worth wrote:
+> On Thu, 19 Oct 2006 19:01:58 -0400, Aaron Bentley wrote:
 
+> Do you see how "maintain
+> an independent URL namespace for every distributed branch" doesn't
+> encourage much distributed development?
 
-Click here to view available updated software:
-http://new.oemelli.com/?Jessica
+I understand your argument now.  It's nothing to do with numbers per se,
+and all about per-branch namespaces.  Correct?
 
+>>             Additionally, the new mainline can keep a mirror of the
+>> abandoned mainline in its repository, because there are virtually no
+>> additional storage requirements to doing so.
+> 
+> And this part I don't understand. I can understand the mainline
+> storing the revisions, but I don't understand how it could make them
+> accessible by the published revision numbers of the "abandoned"
+> line. And that's the problem.
 
-is ``floppies/root.flp'', which is somewhat special in that it is not
-routing to work.
-archie, you'll have to allow packets coming from ports 191 and 1525
-which does the same thing.
-Contributed by Jordan K. Hubbard <jkhFreeBSD>.
-components made by National Semiconductor, TI, StarTech, and CMD as
-	(512 bytes) of free space there has to be for a remote job to be
-Reported by: Jonathan M. Bresler jmbFreeBSD
-to recreate this file whenever you install additional shared
-	 Here is an example text filter for printers that understand the
-specified with an optional wildcard.	For example, ppp* would match
-hackersFreeBSD>.  Someone will very likely get back in touch with
-set send pack 1024
-A kernel built to the config file below will attach the first SCSI
-o  Block all incoming UDP traffic. There are very few useful services
-	+ 16 * maxusers, so if you set maxusers to one, then you can
-software configuration that follows.
-If you are creating the boot floppy from a UNIX machine, see ``the
-the data to other programs.  This last feature makes cpio(1) and
-Centronics cable between the printer and the computer. The
-	transferred, up to a maximum of 64K.  If the peripheral needs
-8mm tapes are the most common SCSI tape drives; they are the best
-will combine the two (it's too long to fit on the page if I write it
-78:exit
-since it cannot do accounting.  See section ``Filters''.
-have your filter parse the diagnostic output of dvilj or dvips and
-change you are making ONLY affects FreeBSD.  Porting gotchas like
-	make sure each print job ends on a full sheet, so the next job
-	You got the following on paper:
-The configuration file /etc/skey.access can be used to configure
-kernel itself and 2. configuring your kernel to dynamically load the
-rather than display.  Note: This disk image can be used for both
-favorite text editor:
-accept ANY responsibility if someone breaks into your network, even if
-National Semiconductor has made available a program named COMTEST that
-You will need two things: The ``CTM'' program and the initial deltas
-header pages), they would not be able to do so, since every filter's
-sio9 at 0x140-0x147 flags 0x1005 on isa
-printed.  You cannot get away with using the simple output filter,
-can release the bus, it will.  Now all of the signals normally
-6 October 1995.
-#
-	post-install:
-of whether you are using static or dynamic IP addresses.
-o  Clean up the options to CTM, they became confusing and counter
-#
-power devices (like portable computers) sometimes use only +5 VDC and
-detail on serial port configuration for use with such devices.
-ftp.gated.cornell.edu in the directory /pub/gated; I believe the
-In the case of a significant contribution of a large body work, or the
-NS16550AFN, look at the date code on the part, which is a four digit
-passwords and run commands like rcp, rlogin and rsh.
-By striping the Start, Stop and Parity bits, the additional bits of
-restart a hung printer only.
-12.  PPP and SLIP
-is:
-the Internet), you will probably either have to add static routes to
-11.4.1.1.  FreeBSD Version
-11	   set ifaddr x.x.x.x y.y.y.y
-Once masked, the host must specify the direction of the transfer
-SCSI-2, the data is always checked using a separate parity line. In
-minimal corporate presence.  Any and all funds donated (as well as any
-default filter.  LPD expects every printer to be able to print
-host=$2
-for reference purposes (e.g. for reading, not running).  These
-and starting compiling the 'bar' port. What's going on?
-How does the Ports collection work?
-the operating system driver writers. It is by no means as smart as
-	In case of problems, please contact the hostmaster for this
-	printer to the computer is correctly wired for carrier flow
-only two arguments to an output filter:
-	    ON	 OFF  Compression enabled at power-on, no host
-The boot message identifier for this drive is "WANGTEK 6200-HS 4B18"
-gzip -c -best /bin/sh > /mnt/bin/sh
-16550A-based serial ports, you may receive sio ``silo'' errors at 57.6
-10.0.0.1.
-Without Walnut Creek CDROM's almost unprecedented degree of faith in
-high density of data and closely packed tracks that angle across the
-backup tapes (How?  In place of tar xvf /dev/rst0, you might
-senting new-lines.
-investment of work that it is not likely that anyone will get them
-If you cannot find a ftp site that is well-connected to the net, or
-When used without an index argument, all packet counters are cleared.
-Please note that the stable tree endevors, above all, to be fully
-nameserver 158.152.1.193
-To compute the dollar amount due, pac uses the pc capability in the
-knows it must stop placing data on the bus.
-version mismatches), and install them under /compat/linux (i.e.
-represented by a voltage between 0 and +12 VDC.  The transmitter is
-4. Type
-`do-<something>'.  For example, the commands to extract a port are in
-10.4.5.3.2.
-again, with the new df capability for the printer bamboo
-a comment and ignored.  The following sections describe each keyword,
-0x0c write	 Channel 3 starting address
-	The next ten or so lines include support for different kinds of
-into a different part of the tree, that being /sys/gnu or
-ftp.freebsd:pub/FreeBSD/2.0.5-RELEASE/xperimnt/linux-emu/README
-200 y moveto show /y y 18 sub def
-freebsd-chat		   Non-technical items related to the FreeBSD community
-password scrambler, and then provide as a separate add-on library the
-time.  It is a list of `exec:dir' pairs where exec is the name of the
-; put the modem speed here:
-	particular option may be denoted with a leading '!'.
-each machine.  For this we use the ext_srvtab command.  This will
-delete
-17.2.  CTM
-and LUN specified on the corresponding bus.
-then you need to configure a /compat/linux/etc/host.conf file
-performed on all of the control signals so that each device will see
-then send a small program to the printer.	Type
-# cd gnats
-configuration in /sys/i386/boot/netboot/Makefile.  See the comments at
-You will need to alter this script to suit your own needs. It is
-printer filter lprps (see section ``Accommodating Plain Text Jobs on
-15:#5  0xf0101711 in db_command_loop ()
-There is also an administrative command, lpc, described in the section
-S/Key for the first time, or to change your password or seed.  The
-Nearly all printers you can get for a PC today support one or both of
-# make install		[build and install gnats]
-directory, which is also accessible through /sys.  There are a number
-www.freebsd/; otherwise, check the place where you found
-your hardware in a sane manner, keeps only the LKMs required for
+I meant that the active branch and a mirror of the abandoned branch
+could be stored in the same repository, for ease of access.
+
+Bazaar encourages you to stick lots and lots of branches in your
+repository.  They don't even have to be related.  For example, my repo
+contains branches of bzr, bzrtools, Meld, and BazaarInspect.
+
+> It sounds like bzr has numbers like this inside it, (but not nearly as
+> simple as the ones that git has), but that users aren't in the
+> practice of communicating with them. Instead, users communicate with
+> the unstable numbers. And that's a shame from an historical
+> perspective.
+
+I can see where you're coming from, but to me, the trade-off seems
+worthwhile.  Because historical data gets less and less valuable the
+older it gets.  By the time the URL for a branch goes dark, there's
+unlikely to be any reason to refer to one of its revisions at all.
+
+> The original claim that sparked the discussion was that bzr has a
+> "simple namespace" while git does not. We've been talking for quite a
+> while here, and I still don't fully understand how these numbers are
+> generated or what I can expect to happen to the numbers associated
+> with a given revision as that revision moves from one repository to
+> another. It's really not a simple scheme.
+
+When you create a new branch from scratch, the number starts at zero.
+If you copy a branch, you copy its number, too.
+
+Every time you commit, the number is incremented.  If you pull, your
+numbers are adjusted to be identical to those of the branch you pulled from.
+
+Is that really complicated?
+
+> Meanwhile, I have been arguing that the "simple" revision numbers that
+> bzr advertises have restrictions on their utility, (they can only be
+> used with reference to a specific repository, or with reference to
+> another that treats it as canonical). I _think_ I understand the
+> numbers well enough to say that still.
+
+Sure.  It's the "favors centralization" thing that I don't agree with,
+but I now understand your argument.
+
+> Compare that with the git names. The scheme really is easy to
+> understand, (either the new user already understands cryptographic
+> hashes, or else it's as easy as "a long string of digits that git
+> assigns as the name").
+
+In my experience, users who don't understand distributed systems don't
+understand why UUIDS must be used as identifiers.
+
+> The naming in git really is beautiful and beautifully simple.
+
+Well, you've got to admit that those names are at least superficially ugly.
+
+> It's not monotonically increasing from one revision to the next, but
+> I've never found that to be an issue. Of course, we do still use our
+> own "simple" names for versioning the releases and snapshots of
+> software we manage with git, and that's where being able to easily
+> determine "newer" or "older" by simple numerical examination is
+> important. I've honestly never encountered a situation where I was
+> handed two git sha1 sums and wished that I could do the same thing.
+
+What's nice is being able see the revno 753 and knowing that "diff -r
+752..753" will show the changes it introduced.  Checking the revo on a
+branch mirror and knowing how out-of-date it is.
+
+Aaron
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFFOCEf0F+nu1YWqI0RAhgtAJwK4jkWFjjF2iHJb1VyXqgszsHElACff2U7
+olZJiAED80tIS6kgkqFsJps=
+=BkRZ
+-----END PGP SIGNATURE-----
