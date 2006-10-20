@@ -1,72 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: VCS comparison table
-Date: Fri, 20 Oct 2006 13:37:02 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0610201335420.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
- <Pine.LNX.4.64.0610171605440.3962@g5.osdl.org> <45357411.20500@utoronto.ca>
- <200610180246.18758.jnareb@gmail.com> <45357CC3.4040507@utoronto.ca>
- <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org> <4536EC93.9050305@utoronto.ca>
- <87lkncev90.wl%cworth@cworth.org> <453792A8.1010700@utoronto.ca>
- <878xjc2qeb.wl%cworth@cworth.org> <453803E6.2060309@utoronto.ca>
- <87ods727pn.wl%cworth@cworth.org> <45382120.9060702@utoronto.ca>
- <Pine.LNX.4.64.0610192202340.3962@g5.osdl.org> <45387F04.5010101@research.canon.com.au>
- <Pine.LNX.4.63.0610201034170.14200@wbgn013.biozentrum.uni-wuerzburg.de>
- <ehaapb$5t7$3@sea.gmane.org>
+Date: Fri, 20 Oct 2006 13:38:06 +0200
+Organization: At home
+Message-ID: <ehaceq$he7$1@sea.gmane.org>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <45349162.90001@op5.se> <453536AE.6060601@utoronto.ca> <200610172301.27101.jnareb@gmail.com> <45354AD0.1020107@utoronto.ca> <BAYC1-PASMTP07AB11A64250AAF683424DAE0E0@CEZ.ICE> <45355CBB.80108@utoronto.ca> <BAYC1-PASMTP01369CD694D75CB61ACCC7AE0E0@CEZ.ICE> <eh64tk$rug$2@sea.gmane.org> <BAYC1-PASMTP069C473B2E79389E5BFC92AE0F0@CEZ.ICE> <eh6dgr$pu8$1@sea.gmane.org> <Pine.LNX.4.63.0610190144450.14200@wbgn013.biozentrum.uni-wuerzburg.de> <4536DBB1.6050701@spamcop.net> <Pine.LNX.4.63.0610191250400.14200@wbgn013.biozentrum.uni-wuerzburg.de> <45375D16.90204@spamcop.net> <Pine.LNX.4.63.0610191321090.14200@wbgn013.biozentrum.uni-wuerzburg.de> <453761D5.80306@spamcop.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, bazaar-ng@lists.canonical.com
-X-From: git-owner@vger.kernel.org Fri Oct 20 13:37:20 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Fri Oct 20 13:38:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gasgc-0004at-BP
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 13:37:14 +0200
+	id 1Gasho-0004q5-IQ
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 13:38:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422984AbWJTLhH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 07:37:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423099AbWJTLhH
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 07:37:07 -0400
-Received: from mail.gmx.de ([213.165.64.20]:32903 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S1422984AbWJTLhF (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 07:37:05 -0400
-Received: (qmail invoked by alias); 20 Oct 2006 11:37:03 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp033) with SMTP; 20 Oct 2006 13:37:03 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <ehaapb$5t7$3@sea.gmane.org>
-X-Y-GMX-Trusted: 0
+	id S1423099AbWJTLi0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 07:38:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423148AbWJTLiZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 07:38:25 -0400
+Received: from main.gmane.org ([80.91.229.2]:8922 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1423099AbWJTLiY (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 07:38:24 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GashY-0004nC-OL
+	for git@vger.kernel.org; Fri, 20 Oct 2006 13:38:12 +0200
+Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 20 Oct 2006 13:38:12 +0200
+Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 20 Oct 2006 13:38:12 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29451>
 
-Hi,
-
-On Fri, 20 Oct 2006, Jakub Narebski wrote:
+Charles Duffy wrote:
 
 > Johannes Schindelin wrote:
+>>> Shell scripts allow for a fragile system because they could include C
+code
+>>> snippets which they then compile and LD_PRELOAD.
+>>>     
+>>
+>> Well, I do not expect people to misbehave. You do not compile a nasty 
+>> C-program from a shell script _by mistake_.
 > 
-> > On Fri, 20 Oct 2006, Lachlan Patrick wrote:
-> > 
-> >> How does git disambiguate SHA1 hash collisions?
-> > 
-> > It does not. You can fully expect the universe to go down before that 
-> > happens.
->  
-> Or you can compile git with COLLISION_CHECK
-> 
-> >From Makefile:
-> # Define COLLISION_CHECK below if you believe that SHA1's
-> # 1461501637330902918203684832716283019655932542976 hashes do not give you
-> # sufficient guarantee that no collisions between objects will ever happen.
+> You also don't replace bzrlib functionality (in your terms, plumbing) in 
+> a plugin by mistake.
 
-You can document your disbelief.
+Perhaps the cause for not having plugins in GIT (besides the fact that
+it follows OSS + Unix guidelines) is that git is not libified, yet. It
+is "scriptified", i.e. it has many helper programs, and has options for
+pipelining that it is really easy to use in scripts (Cogito, pg, StGit),
+but the libification effort is [only] ongoing.
 
-But it does not change a thing. Since v0.99~653, we do not have any 
-collision check, even if compiled with COLLISION_CHECK.
-
-Ciao,
-Dscho
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
