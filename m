@@ -1,91 +1,71 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: VCS comparison table
-Date: Fri, 20 Oct 2006 15:47:40 +0200
-Message-ID: <20061020134740.GI20017@pasky.or.cz>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <eha9rq$5t7$2@sea.gmane.org> <vpqslhjyxlz.fsf@ecrins.imag.fr> <200610201520.42799.jnareb@gmail.com>
+From: Aaron Bentley <aaron.bentley@utoronto.ca>
+Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
+Date: Fri, 20 Oct 2006 10:03:16 -0400
+Message-ID: <4538D724.5040508@utoronto.ca>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>	<200610172351.17377.jnareb@gmail.com>	<4535590C.4000004@utoronto.ca>	<200610180057.25411.jnareb@gmail.com>	<Pine.LNX.4.64.0610171610270.3962@g5.osdl.org>	<20061018053647.GA3507@coredump.intra.peff.net>	<Pine.LNX.4.64.0610180739230.3962@g5.osdl.org>	<20061018185225.GU20017@pasky.or.cz> <eh76np$trg$1@sea.gmane.org> <BAYC1-PASMTP061F10D0B5AF9F6608134CAE0C0@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 20 15:48:02 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Alexander Belchenko <bialix@ukr.net>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 20 16:03:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gauiw-0007EP-7f
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 15:47:46 +0200
+	id 1Gauy5-0002VG-Rq
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 16:03:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992613AbWJTNrn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 09:47:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992615AbWJTNrn
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 09:47:43 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:2455 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S2992613AbWJTNrm (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 09:47:42 -0400
-Received: (qmail 28151 invoked by uid 2001); 20 Oct 2006 15:47:40 +0200
-To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <200610201520.42799.jnareb@gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S2992616AbWJTODW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 10:03:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992617AbWJTODW
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 10:03:22 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41]:57236 "EHLO
+	server4.panoramicfeedback.com") by vger.kernel.org with ESMTP
+	id S2992616AbWJTODW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Oct 2006 10:03:22 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41] helo=[192.168.2.19])
+	by server4.panoramicfeedback.com with esmtp (Exim 3.36 #1 (Debian))
+	id 1Gauxz-00006Y-00; Fri, 20 Oct 2006 10:03:19 -0400
+User-Agent: Debian Thunderbird 1.0.2 (X11/20060830)
+X-Accept-Language: en-us, en
+To: Sean <seanlkml@sympatico.ca>
+In-Reply-To: <BAYC1-PASMTP061F10D0B5AF9F6608134CAE0C0@CEZ.ICE>
+X-Enigmail-Version: 0.91.0.0
+X-Panometrics-MailScanner: Found to be clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29470>
 
-Dear diary, on Fri, Oct 20, 2006 at 03:20:42PM CEST, I got a letter
-where Jakub Narebski <jnareb@gmail.com> said that...
-> Matthieu Moy wrote:
-> > Jakub Narebski <jnareb@gmail.com> writes:
-> > 
-> > >> If you're interested, it's called "Bugs Everywhere" and it's available here:
-> > >> http://panoramicfeedback.com/opensource/
-> > >> 
-> > >> New VCS backends are welcome :-D
-> > >
-> > > While SCM can (and should be usually) distributed, I think that bugtracker
-> > > has to be centralized.
-> > 
-> > Well, indeed, I think bug _reporting_ should be somehow centralized,
-> > while bug _fixing_ can be decentralized: You fix a bug, you mark it as
-> > fixed, and then the main branch gets the information that the bug is
-> > fixed when the bugfix is merged.
-> 
-> But you don't need much infrastructure for branch fixing. Fix it in
-> repository, and write bug number (you have to have centralized bugtracker
-> for numbers) or bug identifier in commit message. You write (or post-commit
-> hook writes) in bugtracker that bug was fixed in commit <commit-id>.
-> You tell mainline to pull from you. That's all.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Yes but noone did the infrastructure yet. :-) Also, we need a way to
-make it worth smooth, e.g. so that you don't have to download any
-special stuff after cloning a branch - thus the post-commit hook needs
-to be cloned too, but you also need to deal with the security
-implications reasonably. (We would very much like to have "hooks
-cloning" in Git in our in-SUSE usage as well; I didn't get to it yet.)
+Sean wrote:
 
-On a somewhat related note, I was on Microsoft's presentation at my
-university about their Team Foundation Server. And Microsoft's clearly
-aware that SourceSafe was a horrible crap and the version control in TFS
-is much more advanced and even shows some signs of distributiveness (but
-I don't know how much, the presenter did not know details about how it
-works).
+> Petr already mentioned that the data currently shown in the email
+> text isn't really useful.
 
-But their selling point really is the tight integration with bug
-tracking and autobuild system. And it indeed does look pretty nice (when
-you watch it, you might get quite a different perspective when actually
-*using* it ;).
+In Bazaar bundles, the text of the diff is an integral part of the data.
+ It is used to generate the text of all the files in the revision.
 
-You can read my brief notes from the presentation at
+Bazaar bundles were designed to be used on mailing lists.  So you can
+review the changes from the diff, comment on them, and if it seems
+suitable, merge them.
 
-	http://pasky.or.cz/~pasky/cp/tfs-lecture-notes.txt
+> Although that might just make the email bigger for not a lot of
+> gain.
 
-It's a bit of bureaucracy for developers but managers will absolutely
-*adore* it.
+It's my understanding that most changes discussed on lkml are provided
+as a series of patches.  Bazaar bundles are intended as a direct
+replacement for patches in that use case.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+Aaron
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
+
+iD8DBQFFONck0F+nu1YWqI0RAgrHAJ0flmF1wCGYYUSk8f2iy8LuZnkaKQCdFSIo
+JIaKi9S8TzUkhvaWpYYP5AA=
+=MgZo
+-----END PGP SIGNATURE-----
