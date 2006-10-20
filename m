@@ -1,127 +1,120 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
-Date: Fri, 20 Oct 2006 21:14:38 +0200
-Message-ID: <200610202114.39223.jnareb@gmail.com>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<200610201821.34712.jnareb@gmail.com>
-	<20061020181210.GA29843@artax.karlin.mff.cuni.cz>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Signed git-tag doesn't find default key
+Date: Fri, 20 Oct 2006 20:21:58 +0100
+Message-ID: <200610202021.58157.andyparkins@gmail.com>
+References: <200610201004.17263.andyparkins@gmail.com> <Pine.LNX.4.64.0610200922170.3962@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: multipart/signed;
+  boundary="nextPart5961158.4fZmC1e8Yr";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 21:14:53 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 20 21:24:54 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GazpT-0000Mi-2V
-	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 21:14:51 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GazpS-0000Iz-D5; Fri, 20 Oct 2006 20:14:50 +0100
-Received: from ug-out-1314.google.com ([66.249.92.169])
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <jnareb@gmail.com>) id 1GazpJ-0000Ig-1c
-	for bazaar-ng@lists.canonical.com; Fri, 20 Oct 2006 20:14:45 +0100
-Received: by ug-out-1314.google.com with SMTP id p35so730464ugc
-	for <bazaar-ng@lists.canonical.com>;
-	Fri, 20 Oct 2006 12:14:40 -0700 (PDT)
-Received: by 10.66.222.9 with SMTP id u9mr2496985ugg;
-	Fri, 20 Oct 2006 12:14:39 -0700 (PDT)
-Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
-	by mx.google.com with ESMTP id o1sm507347uge.2006.10.20.12.14.38;
-	Fri, 20 Oct 2006 12:14:39 -0700 (PDT)
-To: Jan Hudec <bulb@ucw.cz>
-User-Agent: KMail/1.9.3
-In-Reply-To: <20061020181210.GA29843@artax.karlin.mff.cuni.cz>
+	id 1Gazyz-0002gb-86
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 21:24:41 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S2992725AbWJTTYd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 15:24:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992709AbWJTTYd
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 15:24:33 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:16869 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S2992726AbWJTTYa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Oct 2006 15:24:30 -0400
+Received: by ug-out-1314.google.com with SMTP id z34so714388ugc
+        for <git@vger.kernel.org>; Fri, 20 Oct 2006 12:24:29 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:message-id;
+        b=S6GSfbTCF+StEaXzzXez0Nu6y67RQOJFOiRuEBk5dX4Q16q1xyTj6Q1BWg9z4B80G58iwMg9x3pqy9En7zGNYsBo4v7aLj1gpW/RB0Is3O5ar3TxxAl55BniEhGth/Hy97wr3l0IWD6kdqjaij/tdBJ87XK+V/oO+UdLbD5wAqc=
+Received: by 10.67.27.3 with SMTP id e3mr2500318ugj;
+        Fri, 20 Oct 2006 12:24:25 -0700 (PDT)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id 53sm1776732ugn.2006.10.20.12.24.23;
+        Fri, 20 Oct 2006 12:24:24 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.64.0610200922170.3962@g5.osdl.org>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29527>
+
+--nextPart5961158.4fZmC1e8Yr
+Content-Type: text/plain;
+  charset="ansi_x3.4-1968"
+Content-Transfer-Encoding: quoted-printable
 Content-Disposition: inline
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29526>
 
-Jan Hudec wrote:
+On Friday 2006, October 20 17:32, Linus Torvalds wrote:
 
-> Let's consider following scenario:
-> 
-> (where A$ means working in branch A, B$ means working in branch B and
->  VCT stands for version control tool of choice)
-[...]
-> At this point, I expect the tree to look like this:
-> A$ ls -R
-> .:
-> data/
-> data:
-> hello.txt
-> A$ cat data/hello.txt
-> Hello World!
-[...]
-> Oh, and there is one more complicated case, that I also require to work
-> and that works in Bzr, but did not work in Arch:
-> 
-> ...let's start with the tree at the end of previous example...
-> 
-> A$ VCT mv data greetings
-> A$ VCT commit -m "Renamed the data directory to greetings"
-> B$ echo "Goodbye World!" > data/goodbye.txt
-> B$ VCT add data/goodbye.txt
-> B$ VCT commit -m "Added goodbye message."
-> A$ VCT merge B
+> and then do an "adduid", and then add your UID _without_ the "(Google)" in
+> there, and that should solve all your problems.
 
-(slightly corrected example).
+Yeah, obviously that's one way; and while it doesn't really matter to me, i=
+t=20
+seems poor form that git doesn't work with gpg as it is.  While one could o=
+f=20
+course use the "-u" switch, if that is the answer, then why bother with=20
+having the "-s" switch at all?
 
-A$ git branch B
-A$ git mv data greetings
-A$ git commit -a -m "Renamed the data directory to greetings"
-A$ git checkout B
-B$ echo 'Goodbye World!' > data/goodbye.txt
-B$ git add data/goodbye.txt
-B$ git commit -a -m "Added goodbye message."
-B$ git checkout A
-A$ git pull . B
-Trying really trivial in-index merge...
-fatal: Merge requires file-level merging
-Nope.
-Merging HEAD with 4a8a1a7941f214c6173786b583830b4f74a67c1f
-Merging: 
-96738390ba0b4de5b234059081701badc1c86693 Renamed the data directory to greetings 
-4a8a1a7941f214c6173786b583830b4f74a67c1f Added goodbye message. 
-found 1 common ancestor(s): 
-7cfd8edd06b7cb016856737d8fd98d5d096955b5 Merge branch 'B' into A 
+> You're probably better off with something like
+>
+> 	git var GIT_COMMITTER_IDENT | sed 's/\(.*\)<\(.*\)>\(.*\)/\2/'
 
-Merge made by recursive.
- data/goodbye.txt |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 data/goodbye.txt
+I've actually settled on:
 
-> And now I expect to have tree looking like this:
-> 
-> A$ ls -R
-> .:
-> greetings/
-> greetings:
-> hello.txt
-> goodbye.txt
+: ${username:=3D$(expr "z$tagger" : 'z.*<\(.*\)>')}
 
-So git _fails_ (your expectations) in this case:
-A$ ls -R
-.:
-data  greetings
+In git-tag.sh.
 
-./data:
-goodbye.txt
+> That said, I've never understood why gpg matches on the comment field.
+> Dammit, it _should_ find the key anyway. Stupid program.
 
-./greetings:
-hello.txt
+I think it's doing the right thing unfortunately.  If you search on any part
+ "Andy Parkins"
+ "<andyparkins@gmail.com>"
+ "andyparkins@gmail.com"
+ "andyparkins"
+It finds it fine; the only thing it doesn't find is
+ "Andy Parkins <andyparkins@gmail.com>"
+Which I suppose is fair enough, as it's a fairly specific format to be=20
+searching for.
+
+I'm going to advocate my change of only searching on the email address for=
+=20
+finding the key - there shouldn't be two keys with the same email address=20
+anyway, so there shouldn't be a danger of ambiguity of key.  Also, it deals=
+=20
+with the case when someone has entered a different name in git and in their=
+=20
+gpg UID.  For example, I would think it shouldn't be a problem that I like =
+to=20
+be called "Andy" on the git list, and yet want my key to say "A. D.=20
+Parkins", "Andrew Parkins" or "Sparky McFly".=20
+
+Now, I think I've written my name far, far too many times in this email.
+
+
+Sparky McFly
+=2D-=20
+Dr Andrew Parkins, M Eng (Hons), AMIEE
+andyparkins@gmail.com
+
+--nextPart5961158.4fZmC1e8Yr
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQBFOSHWwQJ9gE9xL20RAhHdAJwJhYgagL6NNunMSgB+aPFiWy+3ZACgn1Ra
+8s7JnTn4Jpht0CdE4rDFTlg=
+=y7W2
+-----END PGP SIGNATURE-----
+
+--nextPart5961158.4fZmC1e8Yr--
