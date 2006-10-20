@@ -1,68 +1,246 @@
-From: Paul Eggert <eggert@CS.UCLA.EDU>
-Subject: Re: [PATCH] Don't use $author_name undefined when $from contains no /\s</.
-Date: Thu, 19 Oct 2006 16:48:14 -0700
-Message-ID: <87pscnj29t.fsf@penguin.cs.ucla.edu>
-References: <87vemgn1s2.fsf@rho.meyering.net>
-	<7vbqo8uvkn.fsf@assigned-by-dhcp.cox.net>
-	<878xjckw7x.fsf@rho.meyering.net>
-	<7vk62wruum.fsf@assigned-by-dhcp.cox.net>
-	<87fydkj8q1.fsf@penguin.cs.ucla.edu>
-	<7vr6x4q9b6.fsf@assigned-by-dhcp.cox.net>
+From: Sasha Khapyorsky <sashak@voltaire.com>
+Subject: Re: [PATCH] git-svnimport.perl: copying directory from original SVN place
+Date: Fri, 20 Oct 2006 02:22:19 +0200
+Message-ID: <20061020002219.GF24676@sashak.voltaire.com>
+References: <20061008213118.GA1367@sashak.voltaire.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, bug-gnu-utils@gnu.org,
-	Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Fri Oct 20 01:48:25 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 20 02:16:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gahce-0003yB-7r
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 01:48:24 +0200
+	id 1Gai46-00081L-Dl
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 02:16:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946677AbWJSXsV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Oct 2006 19:48:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946679AbWJSXsV
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 19:48:21 -0400
-Received: from Kiwi.CS.UCLA.EDU ([131.179.128.19]:29614 "EHLO kiwi.cs.ucla.edu")
-	by vger.kernel.org with ESMTP id S1946677AbWJSXsU (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Oct 2006 19:48:20 -0400
-Received: from penguin.cs.ucla.edu (Debian-exim@Penguin.CS.UCLA.EDU [131.179.64.200])
-	by kiwi.cs.ucla.edu (8.13.7+Sun/8.13.7/UCLACS-6.0) with ESMTP id k9JNmF7U027343;
-	Thu, 19 Oct 2006 16:48:15 -0700 (PDT)
-Received: from eggert by penguin.cs.ucla.edu with local (Exim 4.50)
-	id 1GahcU-0008NC-QD; Thu, 19 Oct 2006 16:48:14 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vr6x4q9b6.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Thu, 19 Oct 2006 14:34:21 -0700")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
+	id S1946735AbWJTAQn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Oct 2006 20:16:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946742AbWJTAQn
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 20:16:43 -0400
+Received: from taurus.voltaire.com ([193.47.165.240]:64799 "EHLO
+	taurus.voltaire.com") by vger.kernel.org with ESMTP
+	id S1946735AbWJTAQm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Oct 2006 20:16:42 -0400
+Received: from sashak ([172.25.5.107]) by taurus.voltaire.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 20 Oct 2006 02:16:39 +0200
+Received: by sashak (sSMTP sendmail emulation); Fri, 20 Oct 2006 02:22:19 +0200
+To: Junio C Hamano <junkio@cox.net>,
+	Matthias Urlichs <smurf@smurf.noris.de>
+Content-Disposition: inline
+In-Reply-To: <20061008213118.GA1367@sashak.voltaire.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-OriginalArrivalTime: 20 Oct 2006 00:16:39.0873 (UTC) FILETIME=[0380C310:01C6F3DD]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29390>
 
-Junio C Hamano <junkio@cox.net> writes:
+Hi guys,
 
-> If "trailing space" highlighting picks up the first column blank
-> in "diff -u" output, that highlighting feature is *broken*.
+On 23:31 Sun 08 Oct     , Sasha Khapyorsky wrote:
+> 
+> When copying whole directory, if source directory is not in already
+> imported tree, try to get it from original SVN location. This happens
+> when source directory is not matched by provided 'trunk' and/or
+> 'tags/branches' templates or when it is not part of specified SVN
+> sub-project.
 
-If the buffer contains arbitrary text, some of which is diff -u output
-and some of which is not, then it it isn't possible in general for the
-highlighting mode to distinguish between the diff -u part and the
-other part.  This sort of thing is fairly common among people who
-email patches and code around, or who generate files containing a
-combination of patches and other things.
+Any news with it?
 
-If the change bothers you a lot, you might want to follow up to
-<http://www.opengroup.org/austin/mailarchives/ag-review/msg02139.html>,
-which proposes the change in question to the POSIX folks.  This change
-is atop the earlier change I proposed to specify "diff -u" format in
-the first place; see
-<http://www.opengroup.org/austin/mailarchives/ag-review/msg02077.html>.
-You can follow up by writing to austin-group-l@opengroup.org and
-citing XCU ERN 103.  You can find a copy of XCU ERN 103 at
-<http://www.opengroup.org/austin/aardvark/latest/xcubug2.txt>;
-look for "Number 103".
+Sasha
 
-Since git uses diff -u format, it would make sense to git to work with
-the upcoming POSIX spec for diff -u, either by adjusting the spec or
-by adjusting git.
+> 
+> Signed-off-by: Sasha Khapyorsky <sashak@voltaire.com>
+> ---
+>  git-svnimport.perl |   93 ++++++++++++++++++++++++++++++----------------------
+>  1 files changed, 54 insertions(+), 39 deletions(-)
+> 
+> diff --git a/git-svnimport.perl b/git-svnimport.perl
+> index 988514e..4ae0eec 100755
+> --- a/git-svnimport.perl
+> +++ b/git-svnimport.perl
+> @@ -193,6 +193,13 @@ sub ignore {
+>  	}
+>  }
+>  
+> +sub dir_list {
+> +	my($self,$path,$rev) = @_;
+> +	my ($dirents,undef,$properties)
+> +	    = $self->{'svn'}->get_dir($path,$rev,undef);
+> +	return $dirents;
+> +}
+> +
+>  package main;
+>  use URI;
+>  
+> @@ -342,35 +349,16 @@ if ($opt_A) {
+>  
+>  open BRANCHES,">>", "$git_dir/svn2git";
+>  
+> -sub node_kind($$$) {
+> -	my ($branch, $path, $revision) = @_;
+> +sub node_kind($$) {
+> +	my ($svnpath, $revision) = @_;
+>  	my $pool=SVN::Pool->new;
+> -	my $kind = $svn->{'svn'}->check_path(revert_split_path($branch,$path),$revision,$pool);
+> +	my $kind = $svn->{'svn'}->check_path($svnpath,$revision,$pool);
+>  	$pool->clear;
+>  	return $kind;
+>  }
+>  
+> -sub revert_split_path($$) {
+> -	my($branch,$path) = @_;
+> -
+> -	my $svnpath;
+> -	$path = "" if $path eq "/"; # this should not happen, but ...
+> -	if($branch eq "/") {
+> -		$svnpath = "$trunk_name/$path";
+> -	} elsif($branch =~ m#^/#) {
+> -		$svnpath = "$tag_name$branch/$path";
+> -	} else {
+> -		$svnpath = "$branch_name/$branch/$path";
+> -	}
+> -
+> -	$svnpath =~ s#/+$##;
+> -	return $svnpath;
+> -}
+> -
+>  sub get_file($$$) {
+> -	my($rev,$branch,$path) = @_;
+> -
+> -	my $svnpath = revert_split_path($branch,$path);
+> +	my($svnpath,$rev,$path) = @_;
+>  
+>  	# now get it
+>  	my ($name,$mode);
+> @@ -413,10 +401,9 @@ sub get_file($$$) {
+>  }
+>  
+>  sub get_ignore($$$$$) {
+> -	my($new,$old,$rev,$branch,$path) = @_;
+> +	my($new,$old,$rev,$path,$svnpath) = @_;
+>  
+>  	return unless $opt_I;
+> -	my $svnpath = revert_split_path($branch,$path);
+>  	my $name = $svn->ignore("$svnpath",$rev);
+>  	if ($path eq '/') {
+>  		$path = $opt_I;
+> @@ -435,7 +422,7 @@ sub get_ignore($$$$$) {
+>  		close $F;
+>  		unlink $name;
+>  		push(@$new,['0644',$sha,$path]);
+> -	} else {
+> +	} elsif (defined $old) {
+>  		push(@$old,$path);
+>  	}
+>  }
+> @@ -480,6 +467,27 @@ sub branch_rev($$) {
+>  	return $therev;
+>  }
+>  
+> +sub expand_svndir($$$);
+> +
+> +sub expand_svndir($$$)
+> +{
+> +	my ($svnpath, $rev, $path) = @_;
+> +	my @list;
+> +	get_ignore(\@list, undef, $rev, $path, $svnpath);
+> +	my $dirents = $svn->dir_list($svnpath, $rev);
+> +	foreach my $p(keys %$dirents) {
+> +		my $kind = node_kind($svnpath.'/'.$p, $rev);
+> +		if ($kind eq $SVN::Node::file) {
+> +			my $f = get_file($svnpath.'/'.$p, $rev, $path.'/'.$p);
+> +			push(@list, $f) if $f;
+> +		} elsif ($kind eq $SVN::Node::dir) {
+> +			push(@list,
+> +			     expand_svndir($svnpath.'/'.$p, $rev, $path.'/'.$p));
+> +		}
+> +	}
+> +	return @list;
+> +}
+> +
+>  sub copy_path($$$$$$$$) {
+>  	# Somebody copied a whole subdirectory.
+>  	# We need to find the index entries from the old version which the
+> @@ -488,8 +496,11 @@ sub copy_path($$$$$$$$) {
+>  	my($newrev,$newbranch,$path,$oldpath,$rev,$node_kind,$new,$parents) = @_;
+>  
+>  	my($srcbranch,$srcpath) = split_path($rev,$oldpath);
+> -	unless(defined $srcbranch) {
+> -		print "Path not found when copying from $oldpath @ $rev\n";
+> +	unless(defined $srcbranch && defined $srcpath) {
+> +		print "Path not found when copying from $oldpath @ $rev.\n".
+> +			"Will try to copy from original SVN location...\n"
+> +			if $opt_v;
+> +		push (@$new, expand_svndir($oldpath, $rev, $path));
+>  		return;
+>  	}
+>  	my $therev = branch_rev($srcbranch, $rev);
+> @@ -503,7 +514,7 @@ sub copy_path($$$$$$$$) {
+>  	}
+>  	print "$newrev:$newbranch:$path: copying from $srcbranch:$srcpath @ $rev\n" if $opt_v;
+>  	if ($node_kind eq $SVN::Node::dir) {
+> -			$srcpath =~ s#/*$#/#;
+> +		$srcpath =~ s#/*$#/#;
+>  	}
+>  	
+>  	my $pid = open my $f,'-|';
+> @@ -582,10 +593,12 @@ sub commit {
+>  		if(defined $oldpath) {
+>  			my $p;
+>  			($parent,$p) = split_path($revision,$oldpath);
+> -			if($parent eq "/") {
+> -				$parent = $opt_o;
+> -			} else {
+> -				$parent =~ s#^/##; # if it's a tag
+> +			if(defined $parent) {
+> +				if($parent eq "/") {
+> +					$parent = $opt_o;
+> +				} else {
+> +					$parent =~ s#^/##; # if it's a tag
+> +				}
+>  			}
+>  		} else {
+>  			$parent = undef;
+> @@ -651,9 +664,10 @@ #	}
+>  				push(@old,$path); # remove any old stuff
+>  			}
+>  			if(($action->[0] eq "A") || ($action->[0] eq "R")) {
+> -				my $node_kind = node_kind($branch,$path,$revision);
+> +				my $node_kind = node_kind($action->[3], $revision);
+>  				if ($node_kind eq $SVN::Node::file) {
+> -					my $f = get_file($revision,$branch,$path);
+> +					my $f = get_file($action->[3],
+> +							 $revision, $path);
+>  					if ($f) {
+>  						push(@new,$f) if $f;
+>  					} else {
+> @@ -668,19 +682,20 @@ #	}
+>  							  \@new, \@parents);
+>  					} else {
+>  						get_ignore(\@new, \@old, $revision,
+> -							   $branch, $path);
+> +							   $path, $action->[3]);
+>  					}
+>  				}
+>  			} elsif ($action->[0] eq "D") {
+>  				push(@old,$path);
+>  			} elsif ($action->[0] eq "M") {
+> -				my $node_kind = node_kind($branch,$path,$revision);
+> +				my $node_kind = node_kind($action->[3], $revision);
+>  				if ($node_kind eq $SVN::Node::file) {
+> -					my $f = get_file($revision,$branch,$path);
+> +					my $f = get_file($action->[3],
+> +							 $revision, $path);
+>  					push(@new,$f) if $f;
+>  				} elsif ($node_kind eq $SVN::Node::dir) {
+>  					get_ignore(\@new, \@old, $revision,
+> -						   $branch,$path);
+> +						   $path, $action->[3]);
+>  				}
+>  			} else {
+>  				die "$revision: unknown action '".$action->[0]."' for $path\n";
+> -- 
+> 1.4.2.3
+> 
