@@ -1,246 +1,102 @@
-From: Sasha Khapyorsky <sashak@voltaire.com>
-Subject: Re: [PATCH] git-svnimport.perl: copying directory from original SVN place
-Date: Fri, 20 Oct 2006 02:22:19 +0200
-Message-ID: <20061020002219.GF24676@sashak.voltaire.com>
-References: <20061008213118.GA1367@sashak.voltaire.com>
+From: Jan Harkes <jaharkes@cs.cmu.edu>
+Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
+Date: Thu, 19 Oct 2006 20:20:32 -0400
+Message-ID: <20061020002032.GA7162@delft.aura.cs.cmu.edu>
+References: <Pine.LNX.4.64.0610181358200.3962@g5.osdl.org> <20061018214143.GF19194@spearce.org> <7vwt6xxofi.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0610181542160.3962@g5.osdl.org> <Pine.LNX.4.64.0610181910440.1971@xanadu.home> <Pine.LNX.4.64.0610181655430.3962@g5.osdl.org> <7vac3tx900.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0610190747060.3962@g5.osdl.org> <20061019160750.GS17794@delft.aura.cs.cmu.edu> <Pine.LNX.4.64.0610190936440.3962@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 20 02:16:52 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 20 02:20:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gai46-00081L-Dl
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 02:16:46 +0200
+	id 1Gai7t-00008B-JQ
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 02:20:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946735AbWJTAQn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Oct 2006 20:16:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946742AbWJTAQn
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 20:16:43 -0400
-Received: from taurus.voltaire.com ([193.47.165.240]:64799 "EHLO
-	taurus.voltaire.com") by vger.kernel.org with ESMTP
-	id S1946735AbWJTAQm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Oct 2006 20:16:42 -0400
-Received: from sashak ([172.25.5.107]) by taurus.voltaire.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 20 Oct 2006 02:16:39 +0200
-Received: by sashak (sSMTP sendmail emulation); Fri, 20 Oct 2006 02:22:19 +0200
-To: Junio C Hamano <junkio@cox.net>,
-	Matthias Urlichs <smurf@smurf.noris.de>
+	id S1946749AbWJTAUg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Oct 2006 20:20:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946751AbWJTAUg
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 20:20:36 -0400
+Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:55000 "EHLO
+	delft.aura.cs.cmu.edu") by vger.kernel.org with ESMTP
+	id S1946749AbWJTAUf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Oct 2006 20:20:35 -0400
+Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 4.63)
+	(envelope-from <jaharkes@cs.cmu.edu>)
+	id 1Gai7k-00071N-5Y; Thu, 19 Oct 2006 20:20:32 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+Mail-Followup-To: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20061008213118.GA1367@sashak.voltaire.com>
+In-Reply-To: <Pine.LNX.4.64.0610190936440.3962@g5.osdl.org>
 User-Agent: Mutt/1.5.13 (2006-08-11)
-X-OriginalArrivalTime: 20 Oct 2006 00:16:39.0873 (UTC) FILETIME=[0380C310:01C6F3DD]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29391>
 
-Hi guys,
-
-On 23:31 Sun 08 Oct     , Sasha Khapyorsky wrote:
+On Thu, Oct 19, 2006 at 09:48:29AM -0700, Linus Torvalds wrote:
+> On Thu, 19 Oct 2006, Jan Harkes wrote:
+> > 
+> > If we find a delta against a base that is not found in our repository we
+> > can keep it as a delta, the base should show up later on in the
+> > thin-pack. Whenever we find a delta against a base that we haven't seen
+> > in the received part of the thin pack, but is available from the
+> > repository we should expand it because there is a chance we may not see
+> > this base in the remainder of the thin-pack.
 > 
-> When copying whole directory, if source directory is not in already
-> imported tree, try to get it from original SVN location. This happens
-> when source directory is not matched by provided 'trunk' and/or
-> 'tags/branches' templates or when it is not part of specified SVN
-> sub-project.
-
-Any news with it?
-
-Sasha
-
+> Yes, indeed. We can also have another heuristic: if we find a delta, and 
+> we haven't seen the object it deltas against, we can still keep it as a 
+> delta IF WE ALSO DON'T ALREADY HAVE THE BASE OBJECT. Because then we know 
+> that the base object has to be there later in the pack (or we have a 
+> dangling delta, which we'll just consider an error).
 > 
-> Signed-off-by: Sasha Khapyorsky <sashak@voltaire.com>
-> ---
->  git-svnimport.perl |   93 ++++++++++++++++++++++++++++++----------------------
->  1 files changed, 54 insertions(+), 39 deletions(-)
-> 
-> diff --git a/git-svnimport.perl b/git-svnimport.perl
-> index 988514e..4ae0eec 100755
-> --- a/git-svnimport.perl
-> +++ b/git-svnimport.perl
-> @@ -193,6 +193,13 @@ sub ignore {
->  	}
->  }
->  
-> +sub dir_list {
-> +	my($self,$path,$rev) = @_;
-> +	my ($dirents,undef,$properties)
-> +	    = $self->{'svn'}->get_dir($path,$rev,undef);
-> +	return $dirents;
-> +}
-> +
->  package main;
->  use URI;
->  
-> @@ -342,35 +349,16 @@ if ($opt_A) {
->  
->  open BRANCHES,">>", "$git_dir/svn2git";
->  
-> -sub node_kind($$$) {
-> -	my ($branch, $path, $revision) = @_;
-> +sub node_kind($$) {
-> +	my ($svnpath, $revision) = @_;
->  	my $pool=SVN::Pool->new;
-> -	my $kind = $svn->{'svn'}->check_path(revert_split_path($branch,$path),$revision,$pool);
-> +	my $kind = $svn->{'svn'}->check_path($svnpath,$revision,$pool);
->  	$pool->clear;
->  	return $kind;
->  }
->  
-> -sub revert_split_path($$) {
-> -	my($branch,$path) = @_;
-> -
-> -	my $svnpath;
-> -	$path = "" if $path eq "/"; # this should not happen, but ...
-> -	if($branch eq "/") {
-> -		$svnpath = "$trunk_name/$path";
-> -	} elsif($branch =~ m#^/#) {
-> -		$svnpath = "$tag_name$branch/$path";
-> -	} else {
-> -		$svnpath = "$branch_name/$branch/$path";
-> -	}
-> -
-> -	$svnpath =~ s#/+$##;
-> -	return $svnpath;
-> -}
-> -
->  sub get_file($$$) {
-> -	my($rev,$branch,$path) = @_;
-> -
-> -	my $svnpath = revert_split_path($branch,$path);
-> +	my($svnpath,$rev,$path) = @_;
->  
->  	# now get it
->  	my ($name,$mode);
-> @@ -413,10 +401,9 @@ sub get_file($$$) {
->  }
->  
->  sub get_ignore($$$$$) {
-> -	my($new,$old,$rev,$branch,$path) = @_;
-> +	my($new,$old,$rev,$path,$svnpath) = @_;
->  
->  	return unless $opt_I;
-> -	my $svnpath = revert_split_path($branch,$path);
->  	my $name = $svn->ignore("$svnpath",$rev);
->  	if ($path eq '/') {
->  		$path = $opt_I;
-> @@ -435,7 +422,7 @@ sub get_ignore($$$$$) {
->  		close $F;
->  		unlink $name;
->  		push(@$new,['0644',$sha,$path]);
-> -	} else {
-> +	} elsif (defined $old) {
->  		push(@$old,$path);
->  	}
->  }
-> @@ -480,6 +467,27 @@ sub branch_rev($$) {
->  	return $therev;
->  }
->  
-> +sub expand_svndir($$$);
-> +
-> +sub expand_svndir($$$)
-> +{
-> +	my ($svnpath, $rev, $path) = @_;
-> +	my @list;
-> +	get_ignore(\@list, undef, $rev, $path, $svnpath);
-> +	my $dirents = $svn->dir_list($svnpath, $rev);
-> +	foreach my $p(keys %$dirents) {
-> +		my $kind = node_kind($svnpath.'/'.$p, $rev);
-> +		if ($kind eq $SVN::Node::file) {
-> +			my $f = get_file($svnpath.'/'.$p, $rev, $path.'/'.$p);
-> +			push(@list, $f) if $f;
-> +		} elsif ($kind eq $SVN::Node::dir) {
-> +			push(@list,
-> +			     expand_svndir($svnpath.'/'.$p, $rev, $path.'/'.$p));
-> +		}
-> +	}
-> +	return @list;
-> +}
-> +
->  sub copy_path($$$$$$$$) {
->  	# Somebody copied a whole subdirectory.
->  	# We need to find the index entries from the old version which the
-> @@ -488,8 +496,11 @@ sub copy_path($$$$$$$$) {
->  	my($newrev,$newbranch,$path,$oldpath,$rev,$node_kind,$new,$parents) = @_;
->  
->  	my($srcbranch,$srcpath) = split_path($rev,$oldpath);
-> -	unless(defined $srcbranch) {
-> -		print "Path not found when copying from $oldpath @ $rev\n";
-> +	unless(defined $srcbranch && defined $srcpath) {
-> +		print "Path not found when copying from $oldpath @ $rev.\n".
-> +			"Will try to copy from original SVN location...\n"
-> +			if $opt_v;
-> +		push (@$new, expand_svndir($oldpath, $rev, $path));
->  		return;
->  	}
->  	my $therev = branch_rev($srcbranch, $rev);
-> @@ -503,7 +514,7 @@ sub copy_path($$$$$$$$) {
->  	}
->  	print "$newrev:$newbranch:$path: copying from $srcbranch:$srcpath @ $rev\n" if $opt_v;
->  	if ($node_kind eq $SVN::Node::dir) {
-> -			$srcpath =~ s#/*$#/#;
-> +		$srcpath =~ s#/*$#/#;
->  	}
->  	
->  	my $pid = open my $f,'-|';
-> @@ -582,10 +593,12 @@ sub commit {
->  		if(defined $oldpath) {
->  			my $p;
->  			($parent,$p) = split_path($revision,$oldpath);
-> -			if($parent eq "/") {
-> -				$parent = $opt_o;
-> -			} else {
-> -				$parent =~ s#^/##; # if it's a tag
-> +			if(defined $parent) {
-> +				if($parent eq "/") {
-> +					$parent = $opt_o;
-> +				} else {
-> +					$parent =~ s#^/##; # if it's a tag
-> +				}
->  			}
->  		} else {
->  			$parent = undef;
-> @@ -651,9 +664,10 @@ #	}
->  				push(@old,$path); # remove any old stuff
->  			}
->  			if(($action->[0] eq "A") || ($action->[0] eq "R")) {
-> -				my $node_kind = node_kind($branch,$path,$revision);
-> +				my $node_kind = node_kind($action->[3], $revision);
->  				if ($node_kind eq $SVN::Node::file) {
-> -					my $f = get_file($revision,$branch,$path);
-> +					my $f = get_file($action->[3],
-> +							 $revision, $path);
->  					if ($f) {
->  						push(@new,$f) if $f;
->  					} else {
-> @@ -668,19 +682,20 @@ #	}
->  							  \@new, \@parents);
->  					} else {
->  						get_ignore(\@new, \@old, $revision,
-> -							   $branch, $path);
-> +							   $path, $action->[3]);
->  					}
->  				}
->  			} elsif ($action->[0] eq "D") {
->  				push(@old,$path);
->  			} elsif ($action->[0] eq "M") {
-> -				my $node_kind = node_kind($branch,$path,$revision);
-> +				my $node_kind = node_kind($action->[3], $revision);
->  				if ($node_kind eq $SVN::Node::file) {
-> -					my $f = get_file($revision,$branch,$path);
-> +					my $f = get_file($action->[3],
-> +							 $revision, $path);
->  					push(@new,$f) if $f;
->  				} elsif ($node_kind eq $SVN::Node::dir) {
->  					get_ignore(\@new, \@old, $revision,
-> -						   $branch,$path);
-> +						   $path, $action->[3]);
->  				}
->  			} else {
->  				die "$revision: unknown action '".$action->[0]."' for $path\n";
-> -- 
-> 1.4.2.3
-> 
+> So yeah, maybe my patch-series is something we can still save.
+
+It looks like you were really close. When we cannot resolve a delta, we
+just write it to the packfile and we don't queue it. If it can be
+resolved we write it as a full object.
+
+The only thing that cannot be reliably tracked is the pack index
+information. The offsets are trivial, but we cannot calculate the SHA1
+for a delta without applying it to it's base, if the base comes later
+the existing code could do it, but if it has already been written to the
+pack we can't easily track back.
+
+And why add all the extra complexity. Running git-index-pack after
+git-update-objects --repack not only generates the correct index without
+a problem, it also serves as an extra consistency check and we keep this
+code isolated from any possible future changes to the index file format.
+
+I'll try to follow this up with 2 patches, one is an almost trivial
+change to your code that makes it write out a pack with all full objects
+and resolvable deltas converted to full objects, any unresolved deltas
+are expected to be relative to some other object in the same pack.
+
+The rewritten pack is indexed correctly even when I run git-update-index
+in a repository that does not contain any of the objects in the thin-pack.
+Ofcourse it also works when the objects are available, but the resulting
+full pack is considerably bigger since we can find a suitable base for
+every delta.
+
+> However, the thing that makes me suspect that it is _not_ saveable, is 
+> this:
+...
+> The answer is: no. It's not trivial. Or rather, it _is_ trivial, but you 
+> have to _remember_ all of the actual data for A, B, C and D all the way to 
+> the end, because only if you have that data in memory can you actually 
+> _recreate_ B, C and D even enough to get their SHA1's (which you need, 
+> just in order to know that the pack is complete, must less to be able to 
+> create a non-delta version in case it hadn't been).
+
+Only if you want to build the index at the same time, we don't need to
+know the SHA1 values for unresolved deltas.
+
+> Anyway, I just pushed the "rewrite-pack" branch to my git repo on 
+> kernel.org, so once it mirrors out, if you really want to try to fix up 
+> the mess I left behind, there it is:
+
+I think I still left quite a bit of the mess unfixed.
+
+Jan
