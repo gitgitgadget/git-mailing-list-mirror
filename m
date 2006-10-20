@@ -1,72 +1,100 @@
-From: David Lang <dlang@digitalinsight.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
-Date: Fri, 20 Oct 2006 10:58:09 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0610201057070.5248@qynat.qvtvafvgr.pbz>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com><eh
- ao3e$2qv$1@sea.gmane.org>  <4538EC8F.7020502@utoronto.ca><200610201821.34712.jnareb@gmail.com>
-  <45390168.6020502@utoronto.ca><20061020172125.GF18019@spearce.org>
- <Pine.LNX.4.64.0610201045550.3962@g5.osdl.org>
+Date: Fri, 20 Oct 2006 10:59:09 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610201049250.3962@g5.osdl.org>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<45390168.6020502@utoronto.ca>
+	<Pine.LNX.4.64.0610201016490.3962@g5.osdl.org>
+	<200610201945.43957.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Aaron Bentley <aaron.bentley@utoronto.ca>,
-	Jakub Narebski <jnareb@gmail.com>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 20 19:58:29 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 19:59:42 2006
+Return-path: <bazaar-ng-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaydS-0007rz-Sr
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 19:58:23 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964828AbWJTR6U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 13:58:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964829AbWJTR6U
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 13:58:20 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:44760 "HELO
-	warden.diginsite.com") by vger.kernel.org with SMTP id S964828AbWJTR6T
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Oct 2006 13:58:19 -0400
-Received: from wlvims02.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Fri, 20 Oct 2006 10:58:19 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Fri, 20 Oct 2006 10:57:59 -0700
-X-X-Sender: dlang@dlang.diginsite.com
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0610201045550.3962@g5.osdl.org>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29512>
+	id 1GayeX-00084P-Po
+	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 19:59:29 +0200
+Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
+	id 1GayeS-0003Sh-TE; Fri, 20 Oct 2006 18:59:24 +0100
+Received: from smtp.osdl.org ([65.172.181.4])
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <torvalds@osdl.org>) id 1GayeI-0003Sb-En
+	for bazaar-ng@lists.canonical.com; Fri, 20 Oct 2006 18:59:18 +0100
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9KHxAaX028332
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 20 Oct 2006 10:59:11 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9KHx9sX028046;
+	Fri, 20 Oct 2006 10:59:10 -0700
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200610201945.43957.jnareb@gmail.com>
+X-Spam-Status: No, hits=-0.973 required=5 tests=AWL,
+	OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
+X-BeenThere: bazaar-ng@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
+List-Post: <mailto:bazaar-ng@lists.canonical.com>
+List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-ng-bounces@lists.canonical.com
+Errors-To: bazaar-ng-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29513>
 
-On Fri, 20 Oct 2006, Linus Torvalds wrote:
 
-> On Fri, 20 Oct 2006, Shawn Pearce wrote:
->>
->> I renamed hundreds of small files in one shot and also did a few
->> hundered adds and deletes of other small XML files.  Git generated
->> a lot of those unrelated adds/deletes as rename/modifies, as their
->> content was very similiar.  Some people involved in the project
->> freaked as the files actually had nothing in common with one
->> another... except for a lot of XML elements (as they shared the
->> same DTD).
->
-> Heh. We can probably tweak the heuristics (one of the _great_ things about
-> content detection is that you can fix it after the fact, unlike the
-> alternative).
->
-> That said, I've personally actually found the content-based similarity
-> analysis to often be quite informative, even when (and perhaps
-> _especially_ when) it ended up showing something that the actual author of
-> the thing didn't intend.
->
-> So yeah, I've seen a few strange cases myself, but they've actually been
-> interesting. Like seeing how much of a file was just a copyright license,
-> and then a file being considered a "copy" just because it didn't actually
-> introduce any real new code.
->
 
-isn't the default to consider them a copy if they are 80% the same, with a 
-command line option to tweak this (IIRC -m, but I could easily be wrong)
+On Fri, 20 Oct 2006, Jakub Narebski wrote:
+> 
+> If I remember correctly, git decided on contents (plus filename)
+> similarity based renames detection because 1), it is more generic
+> as it covers (or can cover) contents moving not only wholesome rename
+> of a file, and 2) because file-id based renames handling works only
+> if you explicitely use SCM command to rename file, which is not the
+> case of non-SCM-aware channel like for example patches (and accepting
+> ordinary patches is important for Linux kernel, the project git was
+> created for).
 
-David Lang
+There are lots of problems with file ID's. One of the more obvious ones is 
+indeed that if you arrive at the same state two different ways (eg patches 
+vs "native SCM"), you end up with two fundmanetally different trees. Even 
+though clearly there was no real difference.
+
+There are other serious problems. For example, file-ID based systems 
+invariably have _huge_ problems with handling two branches deleting and 
+renaming things differently, and we had several issues with that during 
+the BK days (ie two people would move files differently, and ending up 
+with different file ID's for the same path, and merging that inevitably 
+causes problems not just during the merge, but ever after, since one of 
+the file ID's will then have to be "deleted" even though it might be 
+active in one of the branches).
+
+Finally, file-ID based systems fundamentally cannot handle some simple and 
+interesting cases, like partial content movement. We're starting to see 
+git actually being able to track file content moving between files: even 
+when the files themselves didn't move (ie Junio's "git pickaxe" work could 
+do things like that).
+
+And there really aren't as many advantages to tracking renames as people 
+claim. The biggest advantage of tracking renames is to avoid the trap that 
+CVS fell into: being file-ID based _and_ not being able to track the file 
+ID moving is clearly the worst of all worlds.
+
+So for anybody coming from a CVS background, tracking renames explicitly 
+is a _huge_ advantage, which is, I think, why some SCM people have gotten 
+so hung up about them. It's just that if you don't have the file-ID 
+problem in the first place (and git doesn't), then rename tracking doesn't 
+actually make any sense, and only makes things much worse.
+
+			Linus
