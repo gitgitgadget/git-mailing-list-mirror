@@ -1,129 +1,97 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 08:57:23 -0400
-Message-ID: <20061017085723.7542ee6c.seanlkml__20673.2976054356$1161335024$gmane$org@sympatico.ca>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
-	<45345AEF.6070107@utoronto.ca>
-	<200610171030.35854.jnareb@gmail.com>
-	<vpqejt76vgz.fsf@ecrins.imag.fr>
-	<BAYC1-PASMTP02ADC5BEF688E61583283CAE0E0@CEZ.ICE>
-	<vpqbqob5euu.fsf@ecrins.imag.fr>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Signed git-tag doesn't find default key
+Date: Fri, 20 Oct 2006 10:04:17 +0100
+Message-ID: <200610201004.17263.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: multipart/signed;
+  boundary="nextPart1854979.nKghs3WUzX";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 11:03:41 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+X-From: git-owner@vger.kernel.org Fri Oct 20 11:04:29 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaqHt-0005Hj-LA
-	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 11:03:33 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GapN2-0007jq-PH; Fri, 20 Oct 2006 09:04:49 +0100
-Received: from bayc1-pasmtp10.bayc1.hotmail.com ([65.54.191.170])
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <seanlkml@sympatico.ca>) id 1GZoVb-0002ZS-8i
-	for bazaar-ng@lists.canonical.com; Tue, 17 Oct 2006 13:57:30 +0100
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.81]) by
-	BAYC1-PASMTP10.bayc1.hotmail.com over TLS secured channel with
-	Microsoft SMTPSVC(6.0.3790.1830); Tue, 17 Oct 2006 06:01:04 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GZnZU-0005fs-2h; Tue, 17 Oct 2006 07:57:24 -0400
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-Message-Id: <20061017085723.7542ee6c.seanlkml@sympatico.ca>
-In-Reply-To: <vpqbqob5euu.fsf@ecrins.imag.fr>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 17 Oct 2006 13:01:04.0656 (UTC)
-	FILETIME=[4DCE0100:01C6F1EC]
-X-Mailman-Approved-At: Fri, 20 Oct 2006 09:04:04 +0100
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29424>
+	id 1GaqIm-0005Tl-3D
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 11:04:28 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932219AbWJTJEY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 05:04:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932227AbWJTJEY
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 05:04:24 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:21145 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S932219AbWJTJEX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Oct 2006 05:04:23 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so698280ugd
+        for <git@vger.kernel.org>; Fri, 20 Oct 2006 02:04:21 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:message-id;
+        b=ky1FqDjJD94riyYeTw4UAbsOAVQ5vjp0VqTXz28GzS3gGxa0U2cui+Q3CZw76BgJ0d5eNmACZDddvQlcAGUTVpeuoA9rx0wi8RCjE+pWa8scY5Rozi2i1RSClkKPr2u/hXmXnUMFarJi6nb6whJETQMqMQHRMyXrlnqgYxPd8wA=
+Received: by 10.66.222.9 with SMTP id u9mr1544281ugg;
+        Fri, 20 Oct 2006 02:04:21 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id j1sm3556840ugf.2006.10.20.02.04.20;
+        Fri, 20 Oct 2006 02:04:20 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.5
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29425>
 
-On Tue, 17 Oct 2006 14:03:21 +0200
-Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+--nextPart1854979.nKghs3WUzX
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> Anyway, given the price of disk space today, this only makes sense if
-> you have a fast access to the repository (otherwise, you consider your
-> local repository as a cache, and you're ready to pay the disk space
-> price to save your bandwidth). In this case, it's often in your
-> filesystem (local or NFS).
+Hello,
 
-This is most likely the reason that people using Git don't clammor
-more for the ability to work without a local repository.  Disk is cheap
-and it just makes sense the vast majority of the time to have a complete
-copy of the repository yourself.  There are a lot of powerful things
-you can do once you have all that information in your repo.  Not the least
-of which is performing any and all operations while flying on a plane
-or sitting on a park bench.
+I did this:
 
-> I should have said "by default" ... but you have "commit --local" if
-> you want to have a local commit on a bound branch (at this point, I
-> should remind that not all branches are "bound branches". "bzr branch"
-> creates branches similar to git ones).
+$ git tag -s adp-sign-tag
+gpg: skipped "Andy Parkins <andyparkins@gmail.com>": secret key not availab=
+le
+gpg: signing failed: secret key not available
+failed to sign the tag with GPG.
 
-Well, with Git the default is to only commit locally.  Of course, you
-could set your post commit hook to always push it to a remote if
-you wanted to.
+I believe the problem is that I have used the comment field in my key's UID=
+=20
+definition.
 
-> Will, take the example of my bzr setup.
-> 
-> I have one repository, say, $repo.
-> 
-> In it, I have one branch "$repo/bzr.dev" which is an exact mirror of
-> http://bazaar-vcs.org's branch.
-> 
-> I also have branches for patches (occasional in my case) that I'll
-> send to upstream. Say $repo/feature1, $repo/feature2, ...
-> 
-> If, by mistake, I start hacking on bzr.dev itself, I'll be warned at
-> commit time, create a branch, and commit in this new branch. I believe
-> git manages this in a different way, allowing you to commit in this
-> branch, and creating the branch next time you pull. But you know this
-> better than I ;-), I never got time to give a real try to git.
+$ gpg --list-keys andy
+pub   1024D/4F712F6D 2003-08-14
+uid                  Andy Parkins (Google) <andyparkins@gmail.com>
 
-Well, it's just a slight difference in perspective rather than any
-big issue here.  Git treats all repositories as peers, so it would never
-assume that just because one other particular repo has a branch marked
-as read only that it should be marked read only locally.  It lets you
-commit to it, and then push to say a third and fourth repo that are
-writable as well.  In practice this doesn't really cause any
-insurmountable problems.
+So when git-tag looks for "Andy Parkins <andyparkins@gmail.com>"; it's not=
+=20
+found.  The answer is (I think) to search only on the email address when=20
+looking for a key.  I've simply changed git-tag to have
 
-> Yes, but you will have to do a merge at some point, right ? While I'm
-> keeping a purely linear history (not that it is good in the general
-> case, but for "projects" on which I'm the only developper, I find it
-> good. For example, my ${HOME}/etc/).
+username=3D$(git-repo-config user.email)
 
-Well if you're committing changes from multiple different machines,
-how is that different from having say 3 different developers committing
-changes to the central repo?  How does bzr avoid a merge when you're
-pushing changes from 3 separate machines? 
+However, this is clearly wrong as what it actually wants is the committer=20
+email.  Am I safe to simply process the $tagger variable to extract it?
 
-You mentioned that if you try to push and you're not up to date you'll
-be prompted to update (ie. pull from the upstream repo).  When you do such
-a pull do your local changes get rebased on top or is there a merge?   By
-your comments I guess you're saying they're rebased rather than merged, and
-this is how you keep a linear history.  Git can do this easily, but it's
-not done by default.
 
-Sean
+
+Andy
+=2D-=20
+Dr Andy Parkins, M Eng (hons), MIEE
+andyparkins@gmail.com
+
+--nextPart1854979.nKghs3WUzX
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQBFOJERwQJ9gE9xL20RAsu7AJ9O1w71nRwq3F/pey2tb3yuBjhcnQCdEtdc
+nRhAvJiyvlfay0q15Lwrmpw=
+=VLaw
+-----END PGP SIGNATURE-----
+
+--nextPart1854979.nKghs3WUzX--
