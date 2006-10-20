@@ -1,68 +1,64 @@
-From: Lachlan Patrick <loki@research.canon.com.au>
-Subject: Re: VCS comparison table
-Date: Fri, 20 Oct 2006 17:47:16 +1000
-Message-ID: <45387F04.5010101@research.canon.com.au>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>	<Pine.LNX.4.64.0610171605440.3962@g5.osdl.org>	<45357411.20500@utoronto.ca>	<200610180246.18758.jnareb@gmail.com> <45357CC3.4040507@utoronto.ca>	<Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>	<4536EC93.9050305@utoronto.ca>	<87lkncev90.wl%cworth@cworth.org> <453792A8.1010700@utoronto.ca>	<878xjc2qeb.wl%cworth@cworth.org> <453803E6.2060309@utoronto.ca>	<87ods727pn.wl%cworth@cworth.org> <45382120.9060702@utoronto.ca> <Pine.LNX.4.64.0610192202340.3962@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Don't use $author_name undefined when $from contains no /\s</.
+Date: Fri, 20 Oct 2006 00:52:34 -0700
+Message-ID: <7vhcxzpgot.fsf@assigned-by-dhcp.cox.net>
+References: <87vemgn1s2.fsf@rho.meyering.net>
+	<7vbqo8uvkn.fsf@assigned-by-dhcp.cox.net>
+	<878xjckw7x.fsf@rho.meyering.net>
+	<7vk62wruum.fsf@assigned-by-dhcp.cox.net>
+	<87fydkj8q1.fsf@penguin.cs.ucla.edu>
+	<7vr6x4q9b6.fsf@assigned-by-dhcp.cox.net>
+	<87pscnj29t.fsf@penguin.cs.ucla.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 20 09:47:24 2006
+X-From: git-owner@vger.kernel.org Fri Oct 20 09:52:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gap6A-0007gE-Va
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 09:47:23 +0200
+	id 1GapBH-0000Hx-Qk
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 09:52:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992559AbWJTHrU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 03:47:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992560AbWJTHrU
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 03:47:20 -0400
-Received: from a.ns.cisra.com.au ([203.12.173.51]:44017 "EHLO
-	ebenezer.cisra.com.au") by vger.kernel.org with ESMTP
-	id S2992559AbWJTHrT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Oct 2006 03:47:19 -0400
-Received: from jaroslav.research.canon.com.au (edge-aide.cisra.com.au [203.12.173.254])
-	by ebenezer.cisra.com.au (Postfix) with ESMTP id 74A9422243B;
-	Fri, 20 Oct 2006 07:47:16 +0000 (UTC)
-Received: from [10.2.8.174] (HASPRE.research.canon.com.au [10.2.8.174])
-	by jaroslav.research.canon.com.au (Postfix) with ESMTP id 71EB15C041;
-	Fri, 20 Oct 2006 07:47:16 +0000 (UTC)
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-To: bazaar-ng@lists.canonical.com
-In-Reply-To: <Pine.LNX.4.64.0610192202340.3962@g5.osdl.org>
+	id S2992553AbWJTHwg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 03:52:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992556AbWJTHwg
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 03:52:36 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:30354 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S2992553AbWJTHwf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Oct 2006 03:52:35 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061020075235.VSTJ22977.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 20 Oct 2006 03:52:35 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id cXsL1V0081kojtg0000000
+	Fri, 20 Oct 2006 03:52:21 -0400
+To: Paul Eggert <eggert@CS.UCLA.EDU>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29413>
 
-Linus Torvalds wrote:
-> 
-> On Thu, 19 Oct 2006, Aaron Bentley wrote:
->> I understand your argument now.  It's nothing to do with numbers per se,
->> and all about per-branch namespaces.  Correct?
-> 
-> I don't know if that is what Carl's problem is, but yes, to somebody from 
-> the git world, it's totally insane to have the _same_ commit have ten 
-> different names just depending on which branch is was in.
-> 
-> In git-land, the name of a commit is the same in every branch.
+Paul Eggert <eggert@CS.UCLA.EDU> writes:
 
-I've been following the git-vs-bzr discussion, and I'd like to ask a
-question (being new to both bzr and git). How does git disambiguate SHA1
-hash collisions? I think git has an alternative way to name revisions
-(can someone please explain it in more detail, I've seen <ref>~<n>
-mentioned only in passing in this thread). It seems to me collisions are
-a good argument in favour of having two independent naming schemes, so
-that you're not solely relying on hashes being unique.
+> Since git uses diff -u format, it would make sense to git to work with
+> the upcoming POSIX spec for diff -u, either by adjusting the spec or
+> by adjusting git.
 
-A strong argument is that a global namespace based on hashes of data is
-ideal because the names are generated from the data being named, and
-therefore are immutable. Same data => same name for that data, always
-and forever, which is desirable when merging named data from many
-sources. But the converse isn't true: one name does not necessarily map
-to only that data. Have I misunderstood? Is this a problem?
+It is not quite fair to talk as if I still have a choice.
 
-Ta,
-Loki
+Apparently a version of GNU diff that generates new format is
+already in the wild (I've received such a patch which was where
+this thread started).  Whether I like your change or not, the
+damage is already done and its output needs to be dealt with, so
+that we do not break users.
+
+Coding a workaround is not a big deal; the change is simple and
+trivial.  It's just I am somewhat unhappy, having to do a .1
+release immediately after v1.4.3 which took about two months to
+stabilize, although that's not your fault.  Sorry for venting.
