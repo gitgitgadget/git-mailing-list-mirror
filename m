@@ -1,71 +1,70 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 2/2] Remove unused index tracking code.
-Date: Thu, 19 Oct 2006 23:36:19 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0610192324420.1971@xanadu.home>
-References: <1168a0313ac1152d43731965fbbb6d4ccfd865a1.1161301889.git.jaharkes@cs.cmu.edu>
- <20061020002048.GC7162@delft.aura.cs.cmu.edu>
- <Pine.LNX.4.64.0610192058130.1971@xanadu.home>
- <20061020022723.GE7162@delft.aura.cs.cmu.edu>
+From: "Tim Webster" <tdwebste@gmail.com>
+Subject: Re: VCS comparison table
+Date: Fri, 20 Oct 2006 11:40:20 +0800
+Message-ID: <72877ab10610192040u1e531f9dh3462a934b60cbad9@mail.gmail.com>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	 <45357CC3.4040507@utoronto.ca>
+	 <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>
+	 <4536EC93.9050305@utoronto.ca>
+	 <845b6e870610190002u420118b8ud634bb9594572c48@mail.gmail.com>
+	 <46d6db660610190149x32442596we4112cdd044185a@mail.gmail.com>
+	 <45373E27.3050209@op5.se> <vpqwt6wsmb5.fsf@ecrins.imag.fr>
+	 <72877ab10610190757u3d2b4df0o204c6ffd73af69b4@mail.gmail.com>
+	 <vpq7iyw2sg9.fsf@ecrins.imag.fr>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 20 05:36:26 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Christian MICHON" <christian.michon@gmail.com>,
+	"Andreas Ericsson" <ae@op5.se>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 20 05:40:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GalBJ-0000Nx-9Q
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 05:36:25 +0200
+	id 1GalFB-0001ZI-RR
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 05:40:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946156AbWJTDgV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Oct 2006 23:36:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946149AbWJTDgV
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 23:36:21 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:45036 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S1946156AbWJTDgU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Oct 2006 23:36:20 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J7F00A2B0OJKV60@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 19 Oct 2006 23:36:19 -0400 (EDT)
-In-reply-to: <20061020022723.GE7162@delft.aura.cs.cmu.edu>
-X-X-Sender: nico@xanadu.home
-To: Jan Harkes <jaharkes@cs.cmu.edu>
+	id S1946160AbWJTDkW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Oct 2006 23:40:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946173AbWJTDkW
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 23:40:22 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:53568 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1946160AbWJTDkV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Oct 2006 23:40:21 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so657730ugd
+        for <git@vger.kernel.org>; Thu, 19 Oct 2006 20:40:20 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=gEmx1b+LWr0F3w1GrudxwRkeePH2qt2/1hg8RmveC/FCWq8cf9ZXHigx2eiBhIgelGFTwpltb97EhZri+RX4bkmPm/10M47y9BXF+o66ufGuGc6Nqt85s1dijJVLkVJcWPWhZi4WppWuPhP+WyYxg+ePcP9hLrruvSAVwO94KzY=
+Received: by 10.67.121.15 with SMTP id y15mr1193401ugm;
+        Thu, 19 Oct 2006 20:40:20 -0700 (PDT)
+Received: by 10.67.100.9 with HTTP; Thu, 19 Oct 2006 20:40:20 -0700 (PDT)
+To: "Matthieu Moy" <Matthieu.Moy@imag.fr>
+In-Reply-To: <vpq7iyw2sg9.fsf@ecrins.imag.fr>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29407>
 
-On Thu, 19 Oct 2006, Jan Harkes wrote:
+On 10/20/06, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+> "Tim Webster" <tdwebste@gmail.com> writes:
+>
+> > First I want to say every SCM I know of sucks when it comes to tracking
+> > configurations, simply because they don't record or restore file metadata,
+> > like perms, ownership, and acl.
+>
+> That's not a simple matter.
+>
+> Tracking ownership hardly makes sense as soon as you have two
+> developers on the same project. What does it mean to checkout a file
+> belonging to user foo and group bar on a system not having such user
+> and group?
+.
+> That said, it can be interesting to have it, but disabled by default.
 
-> If we see a complete object it will remain complete. If we find a delta,
-> and we have the base in the current repository it will be expanded to a
-> complete object.
-> When we get a delta that doesn't have a base in the
-> current repository it will remain unresolved and is written out as a
-> delta.
-
-But the point of the whole exercice is actually to avoid unresolved 
-deltas.  And you know if you have unresolved deltas only when the whole 
-pack has been processed.
-
-If the base object is not in the repository but it is in the pack 
-_after_ the delta that needs it, you won't have resolved it.  If this is 
-a thin pack with missing base objects for whatever reason you're 
-screwed.
-
-If the delta has its base object in both the repository _and_ in the 
-pack but after the delta then you will have expanded the delta 
-needlessly.
-
-So your solution is suboptimal.
-
-The optimal solution really consists of appending missing base objects 
-to a thin pack in order to make it complete, or error out if those 
-cannot be found.
-
-
-Nicolas
+Yes I agree it should be disabled by default. And enabled based on the
+local settings.
