@@ -1,74 +1,73 @@
-From: Sean <seanlkml@sympatico.ca>
+From: "James Henstridge" <james@jamesh.id.au>
 Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 06:35:49 -0400
-Message-ID: <20061017063549.da130b5f.seanlkml__22659.4742890031$1161331475$gmane$org@sympatico.ca>
+Date: Fri, 20 Oct 2006 16:26:39 +0800
+Message-ID: <a7e835d40610200126y5edc2ad0v8ca0a95655b2e029@mail.gmail.com>
 References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<egr3ud$nqm$1@sea.gmane.org> <45340713.6000707@utoronto.ca>
-	<Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
-	<45345AEF.6070107@utoronto.ca>
-	<BAYC1-PASMTP08A746E5FA6B87BC65BD37AE0E0@CEZ.ICE>
-	<Pine.LNX.4.63.0610171229160.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <egr3ud$nqm$1@sea.gmane.org> <45340713.6000707@utoronto.ca>
+	 <Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
+	 <45345AEF.6070107@utoronto.ca>
+	 <BAYC1-PASMTP08A746E5FA6B87BC65BD37AE0E0@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 10:04:31 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+Cc: "Aaron Bentley" <aaron.bentley@utoronto.ca>,
+	"Linus Torvalds" <torvalds@osdl.org>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org,
+	"Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 20 10:26:47 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GapMW-0002TW-O8
-	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 10:04:16 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GapMV-0007Wv-IX; Fri, 20 Oct 2006 09:04:15 +0100
-Received: from bayc1-pasmtp11.bayc1.hotmail.com ([65.54.191.171]
-	helo=BAYC1-PASMTP11.CEZ.ICE)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <seanlkml@sympatico.ca>) id 1GZmIa-000282-DP
-	for bazaar-ng@lists.canonical.com; Tue, 17 Oct 2006 11:35:52 +0100
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP11.CEZ.ICE
-	over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830); 
-	Tue, 17 Oct 2006 03:44:34 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GZlMT-0005MC-Hv; Tue, 17 Oct 2006 05:35:49 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Message-Id: <20061017063549.da130b5f.seanlkml@sympatico.ca>
-In-Reply-To: <Pine.LNX.4.63.0610171229160.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 17 Oct 2006 10:44:34.0312 (UTC)
-	FILETIME=[3BFAB080:01C6F1D9]
-X-Mailman-Approved-At: Fri, 20 Oct 2006 09:04:03 +0100
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29417>
+	id 1GapiH-0006Po-Cd
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 10:26:46 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932206AbWJTI0m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 04:26:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932205AbWJTI0m
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 04:26:42 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:43783 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S932204AbWJTI0l (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Oct 2006 04:26:41 -0400
+Received: by nf-out-0910.google.com with SMTP id c2so1346560nfe
+        for <git@vger.kernel.org>; Fri, 20 Oct 2006 01:26:40 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=PhbskmHQsnzsY0VsgNztM5DOGzSOsy2Hv1ksaZ5k6KtZ9Z41tst+Ho3mZF+mKFDtUk0oRqttviZ1nIeOZh7LFL5PbbdpyZQO7KZgvaAI1RuCXb04BkMJiUMywwhew+Ofe4R7FFf0uuD3xz//UFVsDTO19IFTHvxpm6gGncZBxyg=
+Received: by 10.82.114.3 with SMTP id m3mr395560buc;
+        Fri, 20 Oct 2006 01:26:39 -0700 (PDT)
+Received: by 10.82.108.1 with HTTP; Fri, 20 Oct 2006 01:26:39 -0700 (PDT)
+To: Sean <seanlkml@sympatico.ca>
+In-Reply-To: <BAYC1-PASMTP08A746E5FA6B87BC65BD37AE0E0@CEZ.ICE>
+Content-Disposition: inline
+X-Google-Sender-Auth: 861e5fa893d42bdb
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29418>
 
-On Tue, 17 Oct 2006 12:30:27 +0200 (CEST)
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+On 17/10/06, Sean <seanlkml@sympatico.ca> wrote:
+> > - - you can use a checkout to maintain a local mirror of a read-only
+> >   branch (I do this with http://bazaar-vcs.com/bzr/bzr.dev).
+>
+> I'm not sure what you mean here.  A bzr checkout doesn't have any history
+> does it?  So it's not a mirror of a branch, but just a checkout of the
+> branch head?
 
-> It would also make things slow as hell. How do you deal with something 
-> like annotate in such a setup?
+There are two forms of checkout: a normal checkout which contains the
+complete history of the branch, and a lightweight checkout, which just
+has a pointer back to the original location of the history.
 
-Some commands like annotate might not make any sense in such a set up.
+In both cases, a "bzr commit" invocation will commit changes to the
+remote location.  In general, you only want to use a lightweight
+checkout when there is a fast reliably connection to the branch (e.g.
+if it is on the local file system, or local network).
 
-But one way to get the same (perhaps even better) feature into git 
-would be to support shallow clones, in which case even annotate would
-continue to work even if somewhat crippled by the lack of a complete
-history.
+Aaron would be talking about a normal (heavyweight) checkout here.
+With a heavyweight checkout, you can do pretty much anything without
+access to the branch.  In contrast, almost all operations on a
+lightweight checkout need access to the branch.
 
-Sean
+James.
