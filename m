@@ -1,129 +1,107 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
-Date: Fri, 20 Oct 2006 13:57:27 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610201333240.3962@g5.osdl.org>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<200610201821.34712.jnareb@gmail.com>
-	<20061020181210.GA29843@artax.karlin.mff.cuni.cz>
-	<200610202047.11291.jnareb@gmail.com>
-	<Pine.LNX.4.64.0610201151130.3962@g5.osdl.org>
-	<45391F1C.80100@utoronto.ca>
-	<Pine.LNX.4.64.0610201231570.3962@g5.osdl.org>
-	<4539318D.9040004@utoronto.ca>
+From: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
+Subject: Re: [PATCH] Use diff3 instead of merge in merge-recursive.
+Date: Fri, 20 Oct 2006 23:11:21 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20061020211121.GB3024@cepheus.pub>
+References: <20061018085949.GA26501@cepheus.pub> <Pine.LNX.4.63.0610181135120.14200@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: bazaar-ng@lists.canonical.com, Jan Hudec <bulb@ucw.cz>,
-	Git Mailing List <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>
-X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 22:57:40 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 20 23:05:29 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gb1Qx-0005R6-Ra
-	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 22:57:40 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1Gb1Qu-0006Oo-MF; Fri, 20 Oct 2006 21:57:36 +0100
-Received: from smtp.osdl.org ([65.172.181.4])
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <torvalds@osdl.org>) id 1Gb1Qp-0006NN-WB
-	for bazaar-ng@lists.canonical.com; Fri, 20 Oct 2006 21:57:32 +0100
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9KKvSaX006871
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 20 Oct 2006 13:57:28 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9KKvRin002139;
-	Fri, 20 Oct 2006 13:57:27 -0700
-To: Aaron Bentley <aaron.bentley@utoronto.ca>
-In-Reply-To: <4539318D.9040004@utoronto.ca>
-X-Spam-Status: No, hits=-0.977 required=5 tests=AWL,
-	OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29540>
+	id 1Gb1YN-0006vC-Ka
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 23:05:20 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S2992599AbWJTVFN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 17:05:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946514AbWJTVFN
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 17:05:13 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:12726 "EHLO
+	atlas.informatik.uni-freiburg.de") by vger.kernel.org with ESMTP
+	id S1030354AbWJTVFL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Oct 2006 17:05:11 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtp (Exim 4.60)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1Gb1YD-0005JD-V8; Fri, 20 Oct 2006 23:05:10 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.6/8.12.11) with ESMTP id k9KL56IN026097;
+	Fri, 20 Oct 2006 23:05:06 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.6/8.12.11/Submit) id k9KL56ko026096;
+	Fri, 20 Oct 2006 23:05:06 +0200 (MEST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Mail-Followup-To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0610181135120.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11+cvs20060403
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29541>
 
-
-
-On Fri, 20 Oct 2006, Aaron Bentley wrote:
+Johannes Schindelin wrote:
+> Hi Uwe,
 > 
-> Agreed.  We start by comparing BASE and OTHER, so all those comparisons
-> are in-memory operations that don't hit disk.  Only for files where BASE
-> and OTHER differ do we even examine the THIS version.
-
-Git just slurps in all three trees. I actually think that the current 
-merge-recursive.c does it the stupid way (ie it expands all trees 
-recursively, regardless of whether it's needed or not), but I should 
-really check with Dscho, since I had nothing to do with that code.
-
-I wrote a tree-level merger that avoided doing the recursive tree reading 
-when the tree-SHA1's matched entirely, and re-doing the latest merge using 
-that took all of 0.037s, because it didn't recursively expand any of the 
-uninteresting trees.
-
-But the default recursive merge was ported from the python script that 
-did it a full tree at a time, so it's comparatively "slow". But it's fast 
-enough (witness the under-1s time ;) that I think the motivation to be 
-smarter about reading the trees was basically not just there, so my 
-"git-merge-tree" thing is languishing as a proof-of-concept.
-
-So right now, git merging itself doesn't even take advantage of the "you 
-can compare two whole directories in one go". We do that all over the 
-place in other situations, though (it's a big reason for why doing a 
-"diff" between different revisions is so fast - you can cut the problem 
-space up and ignore the known-identical parts much faster).
-
-That tree-based data structure turned out to be wonderful. Originally (as 
-in "first weeks of actual git work" in April 2005) git had a flat "file 
-manifest" kind of thing, and that really sucked.  So the data structures 
-are important, and I think we got those right fairly early on.
-
-> We can do a do-nothing kernel merge in < 20 seconds, and that's
-> comparing every single file in the tree.  In Python.  I was aiming for
-> less than 10 seconds, but didn't quite hit it.
-
-Well, so I know I can do that particular actual merge in 0.037 seconds 
-(that's not counting the history traversal to actually find the common 
-parent, which is another 0.01s or more ;), so we should be able to 
-comfortably do the simple merges in less than a tenth of a second. But at 
-some point, apparently nobody just cares.
-
-Of course, this kind of thing depends a lot on developer behaviour. We had 
-some performance bugs that we didn't notice simply because the kernel 
-didn't show any of those patterns, but people using it for other things 
-had slower merges. Sometimes you don't see the problem, just because you 
-end up looking at the wrong pattern for performance.
-
-> > So recursive basically generates the matrix of similarity for the 
-> > new/deleted files, and tries to match them up, and there you have your 
-> > renames - without ever looking at the history of how you ended up where 
-> > you are.
+> On Wed, 18 Oct 2006, Uwe Zeisberger wrote:
 > 
-> So in the simple case, you compare unmatched THIS, OTHER and BASE files
-> to find the renames?
+> > If no error occurs, merge (from rcs 5.7) is nothing but:
+> > 
+> > 	diff3 -E -am -L label1 -L label2 -L label3 file1 file2 file3 > tmpfile
+> > 	cat tmpfile > file1
+> 
+> Interesting.
 
-Right. Some cases are easy: if one of the branches only added files (which 
-is relatively common), that obviously cannot be a rename. So you don't 
-even have to compare all possible combinarions - you know you don't have 
-renames from one branch to the other ;)
+> I wonder if we could streamline the code such that index_fd 
+> is called directly on the output of diff3? Of course, the result has to be 
+> removed when the call to diff3 fails.
+I thought about that, too.  But my primary intention was to get rid of
+'merge', because the Solaris boxes I use from time to time lack merge,
+but have (GNU) diff3[1].  I already had a mental note to look into that.
 
-But I'm not even the authorative person to explain all the details of the 
-current recursive merge, and I might have missed something. Dscho? 
-Fredrik? Anything you want to add?
+If Linus is right that there are systems that have merge but lack diff3,
+then a combined approach is maybe the best?  That is, try diff3 and if
+that is missing, try merge.  (Or the other way round if you prefer.)
 
-			Linus
+OK, I looked a bit deeper into rcs, and it seems to handle the BSD diff3
+case.  So Linus might be right.
+
+BTW, merge -p sends the merged result to stdout instead of overwriting
+the first file given.  That is
+
+	merge -p -L label1 -L label2 -L label3 file1 file2 file3
+
+and (GNU)
+
+	diff3 -E -am -L label1 -L label2 -L label3 file1 file2 file3
+
+are exactly equivalent.
+So if that option of merge is old enough, these are the candidates for
+the "combined approach" (see above).
+
+> > I didn't made any timing tests or further tests for correctness, but I
+> > hope Johannes still has the framework from the time when he converted
+> > the Python script to C?  
+> > 
+> > @Johannes: If so, could you test this patch?
+> 
+> I have to dig a little where I have it, but I think I can give it a try in 
+> a few hours (imagine this lyrics to the melody of the day job blues).
+Seems to be a long blues because you didn't sent any results. :-(
+
+Best regards
+Uwe
+
+[1] They also have a version of diff3 (I guess from BSD) that is not
+suited to be used for merging, at least rcs' merge cannot use it.
+
+-- 
+Uwe Zeisberger
+
+If a lawyer and an IRS agent were both drowning, and you could only save
+one of them, would you go to lunch or read the paper?
