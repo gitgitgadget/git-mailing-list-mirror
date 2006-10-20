@@ -1,84 +1,120 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Jan Hudec <bulb@ucw.cz>
 Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
-Date: Fri, 20 Oct 2006 11:06:09 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610201100070.3962@g5.osdl.org>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<ehao3e$2qv$1@sea.gmane.org> <4538EC8F.7020502@utoronto.ca>
-	<200610201821.34712.jnareb@gmail.com> <45390168.6020502@utoronto.ca>
-	<Pine.LNX.4.64.0610201016490.3962@g5.osdl.org>
-	<45390BAF.5040405@utoronto.ca>
+Date: Fri, 20 Oct 2006 20:12:10 +0200
+Message-ID: <20061020181210.GA29843@artax.karlin.mff.cuni.cz>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <ehao3e$2qv$1@sea.gmane.org> <4538EC8F.7020502@utoronto.ca> <200610201821.34712.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 20:07:55 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 20 20:12:19 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaylS-0001Ey-DK
-	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 20:06:40 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1Gayl9-00041I-Ug; Fri, 20 Oct 2006 19:06:20 +0100
-Received: from smtp.osdl.org ([65.172.181.4])
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <torvalds@osdl.org>) id 1Gayl5-000403-Dh
-	for bazaar-ng@lists.canonical.com; Fri, 20 Oct 2006 19:06:15 +0100
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9KI6BaX028640
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 20 Oct 2006 11:06:11 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9KI6ACD028247;
-	Fri, 20 Oct 2006 11:06:10 -0700
-To: Aaron Bentley <aaron.bentley@utoronto.ca>
-In-Reply-To: <45390BAF.5040405@utoronto.ca>
-X-Spam-Status: No, hits=-0.973 required=5 tests=AWL,
-	OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29514>
+	id 1Gayqp-0002dz-Jr
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 20:12:11 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S2992572AbWJTSMI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 20 Oct 2006 14:12:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992561AbWJTSMI
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 14:12:08 -0400
+Received: from artax.karlin.mff.cuni.cz ([195.113.31.125]:54982 "EHLO
+	artax.karlin.mff.cuni.cz") by vger.kernel.org with ESMTP
+	id S964830AbWJTSME (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Oct 2006 14:12:04 -0400
+Received: by artax.karlin.mff.cuni.cz (Postfix, from userid 17196)
+	id 7E7F14C8C; Fri, 20 Oct 2006 20:12:10 +0200 (CEST)
+To: Jakub Narebski <jnareb@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <200610201821.34712.jnareb@gmail.com>
+User-Agent: Mutt/1.5.9i
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29515>
 
+On Fri, Oct 20, 2006 at 06:21:34PM +0200, Jakub Narebski wrote:
+> Aaron Bentley wrote:
+>=20
+> > =3D=3D=3D added directory =A0// file-id:TREE_ROOT
+>=20
+> Gaaah, so rename detection in bzr is done using file-ids?
+> Linus will tell you the inherent problems with that "solution".
 
+Ok, I tried to read
+http://permalink.gmane.org/gmane.comp.version-control.git/217
 
-On Fri, 20 Oct 2006, Aaron Bentley wrote:
-> > 
-> > Git _definitely_ handles renames, both in everyday life and when merging.
-> 
-> Hmm.  Could you say more here?  The only examples I can think of for
-> handling renames are situations that can be expressed as a merge.
+It's all nice and well, but my question is whether the below cases work
+in git. Yes, they are particular cases, but they are particularly
+important. If they don't, I'd rather have file-id scheme, that is
+limited to just them, but handles them, than something with big plans,
+but nothing working.
 
-So yes, merges are the situation where renames are normally considered a 
-"problem", but it's actually not nearly the most every-day situation at 
-all.
+Let's consider following scenario:
 
-The most common one is actually just showing things as a diff.
+(where A$ means working in branch A, B$ means working in branch B and
+ VCT stands for version control tool of choice)
 
-If you are looking at a code-change, there's an absolutely _huge_ 
-difference if you look at the result as a "delete this huge file" and 
-"create this other huge file" and seeing it as a "move this huge file from 
-here to here, and change a few lines in the process".
+A$ echo Hello Warld! > hello.txt
+A$ VCT add hello.txt
+A$ VCT commit -m "Created greeting"
+$ VCT branch A B
+A$ VCT mkdir data
+A$ VCT mv hello.txt data/
+A$ VCT commit -m "Moved hello.txt to data dir"
+B$ ed hello.txt
+? 1s/Warld/World/
+? wq
+B$ VCT commit -m "Fixed typo in greeting"
+A$ VCT merge B
 
-So the most _important_ part of rename tracking from a user perspective is 
-for the person who walks through somebody elses code history, and wants to 
-know how a certain state came to be. The merges are usually not as big of 
-a deal for the user (although they are clearly the most hairy case for the 
-SCM - which is why SCM people concentrate on merges).
+At this point, I expect the tree to look like this:
+A$ ls -R
+=2E:
+data/
+data:
+hello.txt
+A$ cat data/hello.txt
+Hello World!
 
-			Linus
+The file-id algorithm is not exceptionaly clever, is a bit of
+special-case and all that, but it handles the above case right. And
+while that scenario is just a special case of general moving contents,
+it is:
+1) Very common
+2) Possible to handle in an obviously correct way
+
+It is very important for me that a version control tool I use handles
+this case. If it handles the more general cases, that's nice, but this
+is a must.
+
+Oh, and there is one more complicated case, that I also require to work
+and that works in Bzr, but did not work in Arch:
+
+=2E..let's start with the tree at the end of previous example...
+
+A$ VCT mv data greetings
+A$ VCT commit -m "Renamed the data directory to greetings"
+B$ echo "Goodbye World!" > data/goodbye.txt
+B$ VCT add data/goodbye.txt
+B$ VCT commit -m "Added goodbye message."
+A$ VCT merge B
+
+And now I expect to have tree looking like this:
+
+A$ ls -R
+=2E:
+greetings/
+greetings:
+hello.txt
+goodbye.txt
+
+And note, that it is /not/ required to use file-ids to handle this.
+Darcs handles this just as well with it's patch algebra
+(http://darcs.net/DarcsWiki/PatchTheory) without need of any IDs.
+
+-----------------------------------------------------------------------=
+---------
+                  				- Jan Hudec `Bulb' <bulb@ucw.cz>
