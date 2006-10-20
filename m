@@ -1,129 +1,99 @@
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: Re: VCS comparison table
-Date: Fri, 20 Oct 2006 10:22:20 -0300
-Message-ID: <200610201322.k9KDMKk0011370@laptop13.inf.utfsm.cl>
-References: <aaron.bentley@utoronto.ca>
-Cc: Linus Torvalds <torvalds@osdl.org>, Andreas Ericsson <ae@op5.se>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 15:22:57 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+From: andyparkins@gmail.com
+Subject: (unknown)
+Date: Fri, 20 Oct 2006 14:25:50 +0100
+Message-ID: <E1GauNi-0006un-00@dvr.360vision.com>
+X-From: git-owner@vger.kernel.org Fri Oct 20 15:26:06 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GauKe-0001o6-T8
-	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 15:22:41 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GauKc-0007wK-78; Fri, 20 Oct 2006 14:22:38 +0100
-Received: from inti.inf.utfsm.cl ([200.1.21.155])
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <vonbrand@laptop13.inf.utfsm.cl>) id 1GauKP-0007vF-9N
-	for bazaar-ng@lists.canonical.com; Fri, 20 Oct 2006 14:22:27 +0100
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id k9KDMK1p015527
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 20 Oct 2006 10:22:21 -0300
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1])
-	by laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id k9KDMKk0011370; 
-	Fri, 20 Oct 2006 10:22:20 -0300
-To: Aaron Bentley <aaron.bentley@utoronto.ca>
-In-Reply-To: Message from Aaron Bentley <aaron.bentley@utoronto.ca> 
-	of "Wed, 18 Oct 2006 23:10:11 EDT." <4536EC93.9050305@utoronto.ca> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2
-	(inti.inf.utfsm.cl [200.1.21.155]);
-	Fri, 20 Oct 2006 10:22:21 -0300 (CLST)
-X-Virus-Scanned: ClamAV version 0.88,
-	clamav-milter version 0.87 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29462>
+	id 1GauNo-0002TS-5A
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 15:25:56 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1946198AbWJTNZx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 09:25:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946201AbWJTNZx
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 09:25:53 -0400
+Received: from mail.360visiontechnology.com ([194.70.53.226]:57194 "EHLO
+	369run02s.360vision.com") by vger.kernel.org with ESMTP
+	id S1946198AbWJTNZw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Oct 2006 09:25:52 -0400
+Received: from dvr.360vision.com ([192.189.1.24]) by 369run02s.360vision.com with Microsoft SMTPSVC(5.0.2195.6713);
+	 Fri, 20 Oct 2006 14:28:43 +0100
+Received: from localhost ([127.0.0.1])
+	by dvr.360vision.com with esmtp (Exim 3.36 #1 (Debian))
+	id 1GauNi-0006un-00
+	for <git@vger.kernel.org>; Fri, 20 Oct 2006 14:25:50 +0100
+X-OriginalArrivalTime: 20 Oct 2006 13:28:43.0862 (UTC) FILETIME=[AA01FF60:01C6F44B]
+To: unlisted-recipients:; (no To-header on input)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29463>
 
-Aaron Bentley <aaron.bentley@utoronto.ca> wrote:
-> Linus Torvalds wrote:
+>From 9c128bc4b9b85385b7b98ceae0c89283d70e5d45 Mon Sep 17 00:00:00 2001
+From: Andy Parkins <andyparkins@gmail.com>
+Date: Fri, 20 Oct 2006 14:25:48 +0100
+Subject: [PATCH] Remove git-send-email references from documentation
+To: git@vger.kernel.org
+MIME-Version: 1.0
+X-TUID: 17b00343571b31b8
+X-UID: 99
+X-Length: 1933
+Content-Type: Multipart/Mixed;
+  boundary="Boundary-00=_c5MOFrK5Yix34S1"
+Message-Id: <200610201425.48598.andyparkins@gmail.com>
 
-[...]
+This is a multi-part message in MIME format.
+--Boundary-00=_c5MOFrK5Yix34S1
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-> > The "main trunk matters" mentality (which has deep roots in CVS - don't 
-> > get me wrong, I don't think you're the first one to do this) is 
-> > fundamentally antithetical to truly distributed system, because it 
-> > basically assumes that some maintainer is "more important" than others. 
 
-> Linus, if you got hit by a bus, it would still be a shock, and it would
-> still take time for the Linux world to recover.  Your insights and
-> talent, both technical and social, make you the most important kernel
-> developer.  And it stays that way because you deserve it.  Projects with
-> good leadership don't fork, or if they do, the fork withers and dies
-> pretty quickly.
+git-send-email doesn't exist; so don't refer to it in the documentation.
 
-So? It makes no sense to me to cater only to "successful projects"... most
-projects /aren't/ successful ;-)
+Perhaps git-send-email.perl is meant to do this job?  It runs with an error.
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
+ Documentation/git-format-patch.txt |    2 +-
+ Documentation/git.txt              |    3 ---
+ 2 files changed, 1 insertions(+), 4 deletions(-)
 
-> It is fine to say all branches are equal from a technical perspective.
-> From a social perspective, it's just not true.
+--Boundary-00=_c5MOFrK5Yix34S1
+Content-Type: text/x-patch;
+  name="9c128bc4b9b85385b7b98ceae0c89283d70e5d45.diff"
+Content-Transfer-Encoding: 8bit
+Content-Disposition: inline;
+ filename="9c128bc4b9b85385b7b98ceae0c89283d70e5d45.diff"
 
-Yes, but what matters here is the principle... if branches aren't equal, it
-makes some things unnecessarily hard (i.e., forking, passing maintainership
-over, ...). Sure, they aren't activities that should be actively
-encouraged, but they shouldn't be made harder than necessary either.
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 67425dc..9257030 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -112,7 +112,7 @@ git-format-patch -M -B origin::
+ 
+ See Also
+ --------
+-gitlink:git-am[1], gitlink:git-send-email[1]
++gitlink:git-am[1]
+ 
+ 
+ Author
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 3af6fc6..1f60d3f 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -478,9 +478,6 @@ gitlink:git-request-pull[1]::
+ gitlink:git-rev-parse[1]::
+ 	Pick out and massage parameters.
+ 
+-gitlink:git-send-email[1]::
+-	Send patch e-mails out of "format-patch --mbox" output.
+-
+ gitlink:git-symbolic-ref[1]::
+ 	Read and modify symbolic refs.
+ 
 
-> The scale of Bazaar development is much smaller than the scale of kernel
-> development, so it doesn't make sense to maintain long-term divergent
-> branches like the mm tree.  We do occasionally have long-lived feature
-> branches, though.
-
-Are you saying Bazaar is aimed at small(ish) projects (only)?
-
-> > That special maintainer is the maintainer whose merge-trunk is followed, 
-> > and whose revision numbers don't change when they are merged back.
-
-> In bzr development, it's very rare for anyone's revision numbers to
-> change.
-
-"Very rare" != "never". The "very rare" cases /will/ come back to bite you,
-once you grow accustomed to "hasn't ever happened"
-
-[...]
-
-> > I'll just point out that one of my design goals for git was to make every 
-> > single repository 100% equal. That means that there MUST NOT be a "trunk", 
-> > or a special line of development. There is no "vendor branch".
-
-> I think you're implying that on a technical level, bzr doesn't support
-> this.  But it does.  Every published repository
-
-What makes a "published repository" special, as oposed to my local
-playground?
-
->                                                 has unique identifiers
-> for every revision on its mainline,
-
-Are they different among repositories, even though they came from another
-of the set?
-
->                                     and it's exceedingly uncommon for
-> these to change.
-
-See above.
-
->                   There are special procedures to maintain bzr.dev, but
-> there's nothing technically unique about it.  People develop against
-> bzr.dev rather than my integration branch, because they have
-> non-technical reasons for wanting their changes to be merged into
-> bzr.dev, not my integration branch.
-
-OK.
+--Boundary-00=_c5MOFrK5Yix34S1--
