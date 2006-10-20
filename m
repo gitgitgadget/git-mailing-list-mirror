@@ -1,46 +1,49 @@
-From: Aaron Bentley <aaron.bentley@utoronto.ca>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: VCS comparison table
-Date: Fri, 20 Oct 2006 00:05:35 -0400
-Message-ID: <45384B0F.4040901@utoronto.ca>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>	
-	<45357CC3.4040507@utoronto.ca>	
-	<Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>	
-	<4536EC93.9050305@utoronto.ca>	
-	<845b6e870610190002u420118b8ud634bb9594572c48@mail.gmail.com>	
-	<46d6db660610190149x32442596we4112cdd044185a@mail.gmail.com>	
-	<45373E27.3050209@op5.se> <vpqwt6wsmb5.fsf@ecrins.imag.fr>	
-	<72877ab10610190757u3d2b4df0o204c6ffd73af69b4@mail.gmail.com>	
-	<45379A02.1010105@utoronto.ca>
-	<72877ab10610192014o3a7f66c6v79f94f48615e08f4@mail.gmail.com>
+Date: Thu, 19 Oct 2006 22:05:00 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610192202340.3962@g5.osdl.org>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<Pine.LNX.4.64.0610171605440.3962@g5.osdl.org>
+	<45357411.20500@utoronto.ca>
+	<200610180246.18758.jnareb@gmail.com> <45357CC3.4040507@utoronto.ca>
+	<Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>
+	<4536EC93.9050305@utoronto.ca>
+	<87lkncev90.wl%cworth@cworth.org> <453792A8.1010700@utoronto.ca>
+	<878xjc2qeb.wl%cworth@cworth.org> <453803E6.2060309@utoronto.ca>
+	<87ods727pn.wl%cworth@cworth.org> <45382120.9060702@utoronto.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Christian MICHON <christian.michon@gmail.com>, Andreas Ericsson <ae@op5.se>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andreas Ericsson <ae@op5.se>, Carl Worth <cworth@cworth.org>,
 	bazaar-ng@lists.canonical.com, git@vger.kernel.org,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 06:06:16 2006
+	Jakub Narebski <jnareb@gmail.com>
+X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 07:05:26 2006
 Return-path: <bazaar-ng-bounces@lists.canonical.com>
 Envelope-to: gcvbg-bazaar-ng@m.gmane.org
 Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gale6-0004sx-2h
-	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 06:06:10 +0200
+	id 1GamZP-0003EZ-CE
+	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 07:05:23 +0200
 Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
 	by esperanza.ubuntu.com with esmtp (Exim 4.60)
 	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1Galdj-0006xG-Aa; Fri, 20 Oct 2006 05:05:47 +0100
-Received: from server4.panoramicfeedback.com ([66.216.124.41])
+	id 1GamZG-0000G1-3f; Fri, 20 Oct 2006 06:05:14 +0100
+Received: from smtp.osdl.org ([65.172.181.4])
 	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <aaron.bentley@utoronto.ca>) id 1Galdh-0006x4-3K
-	for bazaar-ng@lists.canonical.com; Fri, 20 Oct 2006 05:05:45 +0100
-Received: from server4.panoramicfeedback.com ([66.216.124.41] helo=[127.0.0.1])
-	by server4.panoramicfeedback.com with esmtp (Exim 3.36 #1 (Debian))
-	id 1GaldZ-0000Ra-00; Fri, 20 Oct 2006 00:05:38 -0400
-User-Agent: Thunderbird 1.5.0.7 (X11/20060922)
-To: Tim Webster <tdwebste@gmail.com>
-In-Reply-To: <72877ab10610192014o3a7f66c6v79f94f48615e08f4@mail.gmail.com>
-X-Enigmail-Version: 0.94.0.0
-X-Panometrics-MailScanner: Found to be clean
+	(envelope-from <torvalds@osdl.org>) id 1GamZB-0000Fu-QV
+	for bazaar-ng@lists.canonical.com; Fri, 20 Oct 2006 06:05:10 +0100
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9K551aX020824
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 19 Oct 2006 22:05:02 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9K550jM007477;
+	Thu, 19 Oct 2006 22:05:01 -0700
+To: Aaron Bentley <aaron.bentley@utoronto.ca>
+In-Reply-To: <45382120.9060702@utoronto.ca>
+X-Spam-Status: No, hits=-0.471 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 X-BeenThere: bazaar-ng@lists.canonical.com
 X-Mailman-Version: 2.1.8
 Precedence: list
@@ -54,41 +57,28 @@ List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
 	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
 Sender: bazaar-ng-bounces@lists.canonical.com
 Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29409>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Tim Webster wrote:
-> On 10/19/06, Aaron Bentley <aaron.bentley@utoronto.ca> wrote:
->> I believe SVN supports recording arbitrary file properties, so it's just
->> a matter of applying those properties to the tree.
+
+On Thu, 19 Oct 2006, Aaron Bentley wrote:
 > 
-> yes svn has arbitrary properties which can be manipulated.
-> They are not really intended for permissions, ownership, and acl.
-> To use the svn properties for this requires adding scm tools.
+> I understand your argument now.  It's nothing to do with numbers per se,
+> and all about per-branch namespaces.  Correct?
 
-Agreed.  I think it's okay to require extra work to set the scm up to
-handle configurations.
+I don't know if that is what Carl's problem is, but yes, to somebody from 
+the git world, it's totally insane to have the _same_ commit have ten 
+different names just depending on which branch is was in.
 
-> Also svn does not allow files in the same directory to live in
-> multiple repos
+In git-land, the name of a commit is the same in every branch.
 
-It would surprise me if many SCMs that support atomic commit also
-support intermixing files from multiple repos in the same directory.
+Do you have something like
 
->> You mean multiple merge sources?
-> 
-> yes, Multiple merge sources is handy for collaborative document editing
+	gitk --all
 
-That's something I'd like for software development, too.
+in your graphical viewers? That one shows _all_ the branches of a 
+repository, and how they relate to each other in git. How do you name your 
+commits in such a viewer, since every branch has a _different_ name for 
+the same commit?
 
-Aaron
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.2 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFFOEsO0F+nu1YWqI0RAo+6AJ9lzF0+O1I8rgkyCOdhsir1gjo0NQCfXEVV
-EIsDmS+eR/7cHKQfmnPJRA4=
-=g5jk
------END PGP SIGNATURE-----
+			Linus
