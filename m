@@ -1,66 +1,54 @@
-From: Seth Falcon <sethfalcon@gmail.com>
-Subject: problem with gitk --all on OSX, unknown option "-state"
-Date: Fri, 20 Oct 2006 07:11:32 -0700
-Message-ID: <m2wt6v9iwb.fsf@ziti.fhcrc.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: VCS comparison table
+Date: Fri, 20 Oct 2006 10:12:22 -0400
+Message-ID: <20061020141222.GA17497@coredump.intra.peff.net>
+References: <200610180246.18758.jnareb@gmail.com> <45357CC3.4040507@utoronto.ca> <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org> <4536EC93.9050305@utoronto.ca> <87lkncev90.wl%cworth@cworth.org> <453792A8.1010700@utoronto.ca> <878xjc2qeb.wl%cworth@cworth.org> <453803E6.2060309@utoronto.ca> <87ods727pn.wl%cworth@cworth.org> <45382120.9060702@utoronto.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Oct 20 16:12:59 2006
+Cc: Carl Worth <cworth@cworth.org>, Linus Torvalds <torvalds@osdl.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 20 16:13:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gav5w-0004MD-QP
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 16:11:33 +0200
+	id 1Gav6r-0004WX-CG
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 16:12:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751705AbWJTOLa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 10:11:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751710AbWJTOL3
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 10:11:29 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:50243 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751705AbWJTOL3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Oct 2006 10:11:29 -0400
-Received: by nf-out-0910.google.com with SMTP id c2so1438163nfe
-        for <git@vger.kernel.org>; Fri, 20 Oct 2006 07:11:28 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:to:subject:from:date:message-id:user-agent:mime-version:content-type;
-        b=OTUhqriq9hd96RbGr9nlzxkCZelRCNiECdPpRG9j2xOYiJPcRIoYKXCpXLHSNDdEtae080ZMQQ4fCNySWYpipfj1IKC0iIIydOfoT6FelfvHWfL+tJ1YIk6hDcK6Ir/O3uBfjygH5L1WNjINsNShOAGHDVpt67jBFNC+R0L/O6I=
-Received: by 10.48.210.20 with SMTP id i20mr368745nfg;
-        Fri, 20 Oct 2006 07:11:27 -0700 (PDT)
-Received: from ziti.fhcrc.org ( [67.171.24.140])
-        by mx.google.com with ESMTP id a24sm1569218nfc.2006.10.20.07.11.26;
-        Fri, 20 Oct 2006 07:11:27 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
+	id S1751714AbWJTOMZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 10:12:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751713AbWJTOMZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 10:12:25 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:29414 "HELO
+	peff.net") by vger.kernel.org with SMTP id S1751712AbWJTOMZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 10:12:25 -0400
+Received: (qmail 25588 invoked from network); 20 Oct 2006 10:12:23 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 20 Oct 2006 10:12:23 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Oct 2006 10:12:22 -0400
+To: Aaron Bentley <aaron.bentley@utoronto.ca>
+Content-Disposition: inline
+In-Reply-To: <45382120.9060702@utoronto.ca>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29473>
 
-Hi,
+On Thu, Oct 19, 2006 at 09:06:40PM -0400, Aaron Bentley wrote:
 
-On OSX (ppc 10.4.8), I'm unable to run gitk --all.  Without arguments,
-gitk seems to work fine.  This is with git version 1.4.2.4.g3453.
-There error message is surprising because the line before has:
+> What's nice is being able see the revno 753 and knowing that "diff -r
+> 752..753" will show the changes it introduced.  Checking the revo on a
+> branch mirror and knowing how out-of-date it is.
 
-    .bar.view entryconf 2 -state normal
+I was accustomed to doing such things in CVS, but I find the git way
+much more pleasant, since I don't have to do any arithmetic:
+  diff d8a60^..d8a60
+(Yes, I am capable of performing subtraction in my head, but I find that
+a "parent-of" operator matches my cognitive model better, especially
+when you get into things like d8a60^2~3).
 
-and there is no complaint there about -state being unknown...
+Does bzr have a similar shorthand for mentioning relative commits?
 
-
-ziti:~/proj/bioc-2.0-git$ gitk --all 
-Error in startup script: unknown option "-state"
-    while executing
-".bar.view entryconf 3 -state normal"
-    invoked from within
-"if {$cmdline_files ne {} || $revtreeargs ne {}} {
-    # create a view for the files/dirs specified on the command line
-    set curview 1
-    set selec..."
-    (file "/Users/seth/scm/bin/gitk" line 6283)
-
-
-Thanks,
-
-+ seth
+-Peff
