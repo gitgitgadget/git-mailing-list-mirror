@@ -1,64 +1,68 @@
-From: Liu Yubao <yubao.liu@gmail.com>
-Subject: hooks--pre-commit: chomp() in cygwin perl does not strip "\r"
-Date: Fri, 20 Oct 2006 14:14:06 +0800
-Message-ID: <4538692E.6030404@gmail.com>
+From: Lachlan Patrick <loki@research.canon.com.au>
+Subject: Re: VCS comparison table
+Date: Fri, 20 Oct 2006 17:47:16 +1000
+Message-ID: <45387F04.5010101@research.canon.com.au>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>	<Pine.LNX.4.64.0610171605440.3962@g5.osdl.org>	<45357411.20500@utoronto.ca>	<200610180246.18758.jnareb@gmail.com> <45357CC3.4040507@utoronto.ca>	<Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>	<4536EC93.9050305@utoronto.ca>	<87lkncev90.wl%cworth@cworth.org> <453792A8.1010700@utoronto.ca>	<878xjc2qeb.wl%cworth@cworth.org> <453803E6.2060309@utoronto.ca>	<87ods727pn.wl%cworth@cworth.org> <45382120.9060702@utoronto.ca> <Pine.LNX.4.64.0610192202340.3962@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Oct 20 08:14:59 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 20 09:47:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ganek-0001hu-Kz
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 08:14:59 +0200
+	id 1Gap6A-0007gE-Va
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 09:47:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992509AbWJTGOw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 02:14:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992510AbWJTGOw
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 02:14:52 -0400
-Received: from wx-out-0506.google.com ([66.249.82.235]:40545 "EHLO
-	wx-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S2992509AbWJTGOv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Oct 2006 02:14:51 -0400
-Received: by wx-out-0506.google.com with SMTP id h28so871241wxd
-        for <git@vger.kernel.org>; Thu, 19 Oct 2006 23:14:51 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
-        b=BbIIMWdZiDP8+4EmQ/Y/UaSPBo50JbG069P7Qq0N8t0i8tg3RcVHekypjLpf1fPXF6GrhzgJe2ZZqn4wOgo9S7DeLn6hTQMe9aPBO8ksw1hF6fGSqXQ9rn3e2ujW7rVHlG2jINpvt7DM3lV6E14cczcnR+EbLOEHvCFJhXbMTl4=
-Received: by 10.90.54.20 with SMTP id c20mr764894aga;
-        Thu, 19 Oct 2006 23:14:51 -0700 (PDT)
-Received: from ?192.168.88.85? ( [221.122.47.70])
-        by mx.google.com with ESMTP id 24sm671163wrl.2006.10.19.23.14.49;
-        Thu, 19 Oct 2006 23:14:50 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.7 (Windows/20060909)
-To: git@vger.kernel.org
+	id S2992559AbWJTHrU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 03:47:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992560AbWJTHrU
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 03:47:20 -0400
+Received: from a.ns.cisra.com.au ([203.12.173.51]:44017 "EHLO
+	ebenezer.cisra.com.au") by vger.kernel.org with ESMTP
+	id S2992559AbWJTHrT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Oct 2006 03:47:19 -0400
+Received: from jaroslav.research.canon.com.au (edge-aide.cisra.com.au [203.12.173.254])
+	by ebenezer.cisra.com.au (Postfix) with ESMTP id 74A9422243B;
+	Fri, 20 Oct 2006 07:47:16 +0000 (UTC)
+Received: from [10.2.8.174] (HASPRE.research.canon.com.au [10.2.8.174])
+	by jaroslav.research.canon.com.au (Postfix) with ESMTP id 71EB15C041;
+	Fri, 20 Oct 2006 07:47:16 +0000 (UTC)
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+To: bazaar-ng@lists.canonical.com
+In-Reply-To: <Pine.LNX.4.64.0610192202340.3962@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29412>
 
-perl v5.8.7 built for cygwin-thread-multi-64int, its chomp() doesn't strip
-trailing "\r" so that pre-commit reports "trailing whitespace" for every line.
-ActiveState Perl v5.8.8 can strip "\r" and "\n" properly.
+Linus Torvalds wrote:
+> 
+> On Thu, 19 Oct 2006, Aaron Bentley wrote:
+>> I understand your argument now.  It's nothing to do with numbers per se,
+>> and all about per-branch namespaces.  Correct?
+> 
+> I don't know if that is what Carl's problem is, but yes, to somebody from 
+> the git world, it's totally insane to have the _same_ commit have ten 
+> different names just depending on which branch is was in.
+> 
+> In git-land, the name of a commit is the same in every branch.
 
-Changing
-	if (/\s$/) {
-to
-	if (/[:blank:]$/) {
-is also ok.
+I've been following the git-vs-bzr discussion, and I'd like to ask a
+question (being new to both bzr and git). How does git disambiguate SHA1
+hash collisions? I think git has an alternative way to name revisions
+(can someone please explain it in more detail, I've seen <ref>~<n>
+mentioned only in passing in this thread). It seems to me collisions are
+a good argument in favour of having two independent naming schemes, so
+that you're not solely relying on hashes being unique.
 
-diff --git a/templates/hooks--pre-commit b/templates/hooks--pre-commit
-index 723a9ef..6a55612
---- a/templates/hooks--pre-commit
-+++ b/templates/hooks--pre-commit
-@@ -54,7 +54,7 @@ perl -e '
-         }
-         if (s/^\+//) {
-             $lineno++;
--           chomp;
-+           s/[\r\n]+$//;
-             if (/\s$/) {
-                 bad_line("trailing whitespace", $_);
-             }
+A strong argument is that a global namespace based on hashes of data is
+ideal because the names are generated from the data being named, and
+therefore are immutable. Same data => same name for that data, always
+and forever, which is desirable when merging named data from many
+sources. But the converse isn't true: one name does not necessarily map
+to only that data. Have I misunderstood? Is this a problem?
+
+Ta,
+Loki
