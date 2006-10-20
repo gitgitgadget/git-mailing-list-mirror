@@ -1,109 +1,81 @@
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: Re: Alternate revno proposal (Was: Re: VCS comparison table)
-Date: Thu, 19 Oct 2006 23:09:49 -0300
-Message-ID: <200610200209.k9K29ncC006935@laptop13.inf.utfsm.cl>
-References: <bulb@ucw.cz>
-Cc: Robert Collins <robertc@robertcollins.net>,
-	Petr Baudis <pasky@suse.cz>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 20 04:11:18 2006
+From: Jan Harkes <jaharkes@cs.cmu.edu>
+Subject: Re: [PATCH 2/2] Remove unused index tracking code.
+Date: Thu, 19 Oct 2006 22:27:23 -0400
+Message-ID: <20061020022723.GE7162@delft.aura.cs.cmu.edu>
+References: <1168a0313ac1152d43731965fbbb6d4ccfd865a1.1161301889.git.jaharkes@cs.cmu.edu> <20061020002048.GC7162@delft.aura.cs.cmu.edu> <Pine.LNX.4.64.0610192058130.1971@xanadu.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 20 04:27:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gajqq-0003Gs-Ui
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 04:11:13 +0200
+	id 1Gak6r-0005Ht-KT
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 04:27:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946824AbWJTCLK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Oct 2006 22:11:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946828AbWJTCLJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 22:11:09 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:56769 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S1946824AbWJTCLH (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Oct 2006 22:11:07 -0400
-Received: from laptop13.inf.utfsm.cl (pc-232-245-83-200.cm.vtr.net [200.83.245.232])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id k9K29pnd002404
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 19 Oct 2006 23:09:52 -0300
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1])
-	by laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id k9K29ncC006935;
-	Thu, 19 Oct 2006 23:09:49 -0300
-To: Jan Hudec <bulb@ucw.cz>
-In-Reply-To: Message from Jan Hudec <bulb@ucw.cz> 
-   of "Wed, 18 Oct 2006 23:46:23 +0200." <20061018214623.GA32725@artax.karlin.mff.cuni.cz> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.21.155]); Thu, 19 Oct 2006 23:09:56 -0300 (CLST)
-X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
+	id S1946834AbWJTC1d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Oct 2006 22:27:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946836AbWJTC1b
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 22:27:31 -0400
+Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:10153 "EHLO
+	delft.aura.cs.cmu.edu") by vger.kernel.org with ESMTP
+	id S1946834AbWJTC1a (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Oct 2006 22:27:30 -0400
+Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 4.63)
+	(envelope-from <jaharkes@cs.cmu.edu>)
+	id 1Gak6V-0001l0-6V; Thu, 19 Oct 2006 22:27:23 -0400
+To: Nicolas Pitre <nico@cam.org>
+Mail-Followup-To: Nicolas Pitre <nico@cam.org>,
+	Linus Torvalds <torvalds@osdl.org>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0610192058130.1971@xanadu.home>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29401>
 
-Jan Hudec <bulb@ucw.cz> wrote:
+On Thu, Oct 19, 2006 at 09:11:10PM -0400, Nicolas Pitre wrote:
+> This patch impose an ordering on REF_DELTA objects that doesn't need to 
+> exist.  Say for example that an OFS_DELTA depends on an object which is 
+> a REF_DELTA object.  With this patch any pack with the base for that 
+> REF_DELTA stored after the OFS_DELTA object will be broken.
 
-[...]
+I don't see where it imposes any ordering.
 
-> Reading this thread I came to think, that the revnos should be assigned
-> to _all_ revisions _available_, in order of when they entered the
-> repository (there are some possible variations I will mention below)
-> 
->  - Such revnos would be purely local, but:
->    - Current revnos are not guaranteed to be the same in different
->      branches either.
->    - They could be done so that mirror has the same revnos as the
->      master.
+If we see a complete object it will remain complete. If we find a delta,
+and we have the base in the current repository it will be expanded to a
+complete object. When we get a delta that doesn't have a base in the
+current repository it will remain unresolved and is written out as a
+delta.
 
-Then they are almost useless (except for people working alone). You need to
-be able to talk about a particular commit with others working independently.
+So the output pack will always contain fewer deltas as the input.
 
->  - They would be easier to use than the dotted ones. What (at least as
->    far as I understand) makes revnos easier to use than revids is, that
->    you can remember few of them for short time while composing some
->    operation. Ie. look up 2 or 3 revisions in the log and than do some
->    command on them. And a 4 to 5-digit number like 10532 is easier to
->    remember than something like 3250.2.45.86.
+btw. I don't really know what OFS_DELTA and REF_DELTA objects are, I
+grepped the source and found no references to either. I can only find
+an OBJ_DELTA.
 
-Probably. In git you can (mostly) get away with partial SHA-1's, BTW.
+But if any of the deltas depend on an object that is not in the thin
+pack, the base has to be available in the current repository and as such
+it will be expanded to a full object, replacing the possibly external
+delta reference with an internal base object. If the base is not found
+in the current repository the base has to be another object in the
+original thin pack so we can write out the delta as is.
 
->  - Their ordering would be an (arbitrary) superset of the partial
->    ordering by descendance, ie. if revision A is ancestor of B, it would
->    always have lower revno.
->    - The intuition that lower revno means older revision would be always
->      valid for related revisions and approximately valid for unrelated
->      ones.
->  - They would be *localy stable*. That is once assigned the revno would
->    always mean the same revision in given branch (as determined by
->    location, not tip).
+There is no before or after decision here. We don't look back in the
+thin pack, and we don't have to look forward either. So I don't
+understand why your example would break or not depending on if the base
+object happens to be before or after the OFS_DELTA.
 
-Tip-relative is extremely useful: I wouldn't normally remember the current
-revision, but I'll probably often be talking about "the change before this
-one" and so on.
+> And to really do thin pack fixing properly we really want to just append 
+> missing base objects at the end of the pack which falls in the broken 
+> case above.
 
->      - This is more than the current scheme can give, since now pull can
->        renumber revisions.
+I guess I'll grep through the mailinglists to try to figure out what
+these OFS and REF deltas are and why they behave so differently
+depending on their order in the pack.
 
-Urgh. Get an update, and all your bearings change?
-
->  - They wouldn't make any branch special, so the objections Linus raised
->    does not apply.
-
-But the original branch /is/ special?
-
->  - They would be the same as subversion and svk, and IIRC mercurial as
->    well, use, so:
->    - They would already be familiar to users comming from those systems.
->    - They are known to be useful that way. In fact for svk it's the only
->      way to refer to revisions and seem to work satisfactorily (though
->      note that svk is not really suitable to ad-hoc topologies).
-
-SVN is /centralized/, there it does make sense talking about (the one and
-only) history. In a distributed system, potentially each has a different
-history, and they are intertwined.
-
-Not at all useful.
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                    Fono: +56 32 2654431
-Universidad Tecnica Federico Santa Maria             +56 32 2654239
-Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
+Jan
