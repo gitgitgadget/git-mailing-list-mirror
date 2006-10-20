@@ -1,66 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: VCS comparison table
-Date: Fri, 20 Oct 2006 16:52:09 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0610201647420.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200610180246.18758.jnareb@gmail.com> <45382120.9060702@utoronto.ca>
- <20061020141222.GA17497@coredump.intra.peff.net> <200610201640.36640.jnareb@gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] Remove git-send-email references from documentation
+Date: Fri, 20 Oct 2006 15:56:37 +0100
+Message-ID: <200610201556.37316.andyparkins@gmail.com>
+References: <200610201425.48598.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>,
-	Aaron Bentley <aaron.bentley@utoronto.ca>,
-	Carl Worth <cworth@cworth.org>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 20 16:53:16 2006
+Content-Type: multipart/signed;
+  boundary="nextPart1275133.hxndMAtdKM";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Oct 20 16:57:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GavjM-0003xY-I6
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 16:52:16 +0200
+	id 1Gavnt-0004p2-90
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 16:56:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992621AbWJTOwN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 10:52:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992627AbWJTOwN
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 10:52:13 -0400
-Received: from mail.gmx.de ([213.165.64.20]:16801 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S2992621AbWJTOwM (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 10:52:12 -0400
-Received: (qmail invoked by alias); 20 Oct 2006 14:52:10 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp043) with SMTP; 20 Oct 2006 16:52:10 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200610201640.36640.jnareb@gmail.com>
-X-Y-GMX-Trusted: 0
+	id S2992634AbWJTO4y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 10:56:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992636AbWJTO4y
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 10:56:54 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:11237 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S2992634AbWJTO4x (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Oct 2006 10:56:53 -0400
+Received: by ug-out-1314.google.com with SMTP id z34so641569ugc
+        for <git@vger.kernel.org>; Fri, 20 Oct 2006 07:56:52 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:message-id;
+        b=W1bWagZL3fQY0Qgeeh1LuGdrs5zIWgVKiqsawIbBBeUvwFzddyKVmZI/07fExHrFlGoF/hKFmZpR9qz/ppB5jBgdf0bWdaosDayvY6lTBtOcH3BNhCRxuCd6ifkarUwsrJst+jCEv8X9CfXC1sLgVTTEYied1pRrm3Og5m0sQec=
+Received: by 10.67.101.10 with SMTP id d10mr1982088ugm;
+        Fri, 20 Oct 2006 07:56:46 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id 5sm1317527ugc.2006.10.20.07.56.40;
+        Fri, 20 Oct 2006 07:56:42 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.5
+In-Reply-To: <200610201425.48598.andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29483>
 
-Hi,
+--nextPart1275133.hxndMAtdKM
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-On Fri, 20 Oct 2006, Jakub Narebski wrote:
+On Friday 2006 October 20 14:25, Andy Parkins wrote:
+> git-send-email doesn't exist; so don't refer to it in the documentation.
 
-> Jeff King wrote:
-> > 
-> > I was accustomed to doing such things in CVS, but I find the git way
-> > much more pleasant, since I don't have to do any arithmetic:
-> >   diff d8a60^..d8a60
-> 
-> By the way "diff d8a60" also works (unless d8a60 is merge commit, in
-> which case you would need "diff -c d8a60" or "diff -m d8a60").
+Please ignore.  I'm a muppet.  I'm using the debian packages for git; and=20
+git-send-email is packaged separately in the git-email package.
 
-I could be wrong, but I have the impression (even after actually testing 
-it) that "git diff d8a60" is equivalent to "git diff d8a60..HEAD", _not_ 
-"git diff d8a60^..d8a60".
 
-IIRC we had a "-p" flag to denote "parent" once upon a time, but that no 
-longer works...
+Andy
+=2D-=20
+Dr Andy Parkins, M Eng (hons), MIEE
+andyparkins@gmail.com
 
-"git-show" is definitely what you want.
+--nextPart1275133.hxndMAtdKM
+Content-Type: application/pgp-signature
 
-Ciao,
-Dscho
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQBFOOOlwQJ9gE9xL20RAh3aAJ9wJn/Fyu7aGrQaPyPeuJU311hrqgCdFMUP
+xEgKcOzQRb4qwZLu2XneCYU=
+=MRSI
+-----END PGP SIGNATURE-----
+
+--nextPart1275133.hxndMAtdKM--
