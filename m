@@ -1,190 +1,155 @@
-From: Aaron Bentley <aaron.bentley@utoronto.ca>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
-Date: Fri, 20 Oct 2006 19:33:38 -0400
-Message-ID: <45395CD2.4020508@utoronto.ca>
-References: <200610180057.25411.jnareb@gmail.com> <Pine.LNX.4.64.0610171610270.3962@g5.osdl.org> <20061018053647.GA3507@coredump.intra.peff.net> <Pine.LNX.4.64.0610180739230.3962@g5.osdl.org> <20061018185225.GU20017@pasky.or.cz> <eh76np$trg$1@sea.gmane.org> <BAYC1-PASMTP061F10D0B5AF9F6608134CAE0C0@CEZ.ICE> <4538D724.5040508@utoronto.ca> <ehao3e$2qv$1@sea.gmane.org> <4538EC8F.7020502@utoronto.ca> <20061020224030.GL20017@pasky.or.cz>
+Date: Fri, 20 Oct 2006 16:59:40 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610201630000.3962@g5.osdl.org>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> 
+ <ehao3e$2qv$1@sea.gmane.org> <4538EC8F.7020502@utoronto.ca> 
+ <200610201821.34712.jnareb@gmail.com>  <20061020181210.GA29843@artax.karlin.mff.cuni.cz>
+  <Pine.LNX.4.64.0610201133260.3962@g5.osdl.org> <1161382416.9241.19.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------090607000304000307000008"
-Cc: Jakub Narebski <jnareb@gmail.com>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 21 01:40:12 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jan Hudec <bulb@ucw.cz>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 21 02:00:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gb3yE-00031q-H5
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 01:40:10 +0200
+	id 1Gb4Ha-0006FB-7Q
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 02:00:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992741AbWJTXkH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 19:40:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992743AbWJTXkH
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 19:40:07 -0400
-Received: from server4.panoramicfeedback.com ([66.216.124.41]:39840 "EHLO
-	server4.panoramicfeedback.com") by vger.kernel.org with ESMTP
-	id S2992741AbWJTXkD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Oct 2006 19:40:03 -0400
-Received: from server4.panoramicfeedback.com ([66.216.124.41] helo=[127.0.0.1])
-	by server4.panoramicfeedback.com with esmtp (Exim 3.36 #1 (Debian))
-	id 1Gb3sR-0007bs-00; Fri, 20 Oct 2006 19:34:11 -0400
-User-Agent: Thunderbird 1.5.0.7 (X11/20060922)
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20061020224030.GL20017@pasky.or.cz>
-X-Enigmail-Version: 0.94.0.0
-X-Panometrics-MailScanner: Found to be clean
+	id S1030205AbWJUAAA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 20:00:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030264AbWJUAAA
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 20:00:00 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:21159 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030205AbWJTX77 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 19:59:59 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9KNxfaX016394
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 20 Oct 2006 16:59:42 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9KNxew0008024;
+	Fri, 20 Oct 2006 16:59:40 -0700
+To: Jeff Licquia <jeff@licquia.org>
+In-Reply-To: <1161382416.9241.19.camel@localhost.localdomain>
+X-Spam-Status: No, hits=-0.366 required=5 tests=AWL,BAD_CREDIT,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29560>
 
-This is a multi-part message in MIME format.
---------------090607000304000307000008
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Petr Baudis wrote:
-> Dear diary, on Fri, Oct 20, 2006 at 05:34:39PM CEST, I got a letter
-> where Aaron Bentley <aaron.bentley@utoronto.ca> said that...
->> -----BEGIN PGP SIGNED MESSAGE-----
->> Hash: SHA1
->>
->> Jakub Narebski wrote:
->>> Aaron Bentley wrote:
->>>> In Bazaar bundles, the text of the diff is an integral part of the data.
->>>> It is used to generate the text of all the files in the revision.
->>>
->>> I thought that the diff was combined diff of changes.
->> It is.  It's a description of how to produce revision X given revision
->> Y, where Y is the last-merged mainline revision.
+On Fri, 20 Oct 2006, Jeff Licquia wrote:
 > 
-> Aha, so by default a bundle can carry just a _single_ revision?
+> After this conflict is resolved, merging from b causes conflicts, while
+> merging from c appears to work fine.  This continues until b merges from
+> a (and resolves a conflict in a similar manner to a), at which time
+> merging/pulling works as you'd expect between the branches.  Whenever b
+> is marked as conflicting before it merges from a, bzr preserves b's
+> changes by moving b's modified file.
 
-No, bundles contain 1 or more revisions.  They contain all the ancestors
-of X that are not ancestors of Y.
+This sounds somewhat like what I think BK did. I'm not sure if BK actually 
+marked it as a conflict or whether BK just warned about "changes to 
+deleted file" or something similar, but it didn't entirely _silently_ 
+throw them away.
 
-Only the diff from X to Y is shown, but the diffs for all other
-revisions are present in the MIME-encoded section.
+But I hope this shows some of the basic problems.
 
-Consider these four revisions in a straight-line ancestry: a, b, c, d.
-'a' is a common ancestor.  b, c and d are the revisions that are missing
-from the target repository.
+The much more _serious_ problem of "file identity" tracking is actually 
+that you can't track partial file movement or file copies sanely. The 
+thing is, tracking things at file boundaries simply is fundamnetally a 
+broken notion, simply because _code_ doesn't get done at file boundaries.
 
-A default bundle will contain
+Both of these things that git can actually do. Admittedly it does not do 
+that in any _released_ version, so you'd have to work with the development 
+branch, and it's a fairly early thing, but currently it can actually 
+notice that our "revision.c" file largely came from the "rev-list.c" file 
+that still exists!
 
-metadata for d
-diff from a -> d in plaintext
-metadata for c
-diff from b -> c in MIME encoding
-metadata for b
-diff from a -> b in MIME encoding
+And btw, that's not just some random feature that happened to get 
+implemented last week. Yes, it actually _did_ get implemented last week, 
+but this was something I outlined when I started git in April of last 
+year, and tried to explain to people WHY TRACKING FILE ID'S ARE WRONG!
 
-To install b, the diff for a->b is applied to a.  To install c, the diff
-for b->c is applied to b.  To install d, the diff for a -> d is applied
-to a.
+You can find me explaining these things to people in April-2005, which 
+should tell you something: the initial revision of "git" was on Thursday, 
+April 7. So the lack of file identity tracking has been controversial from 
+the very beginning, but I was right then, and I'm right now.
 
-Doing a diff from a -> d instead of from c -> d introduces some
-redundancy, of course.  But we do that because we want an overview diff.
+Because the _fact_ is, that as long as you track stuff on a file basis, 
+you're _never_ going to be able to do the things that git alreadt does, 
+and that are very natural.
 
-> That doesn't sound right either, because then it wouldn't make sense to
-> talk about "combined" or "simple" diffs. So I guess sending a bundle
-> really is taking n revisions at your side, bundling them to a single
-> diff and when the other side takes it, it will result in a single
-> revision?
+Here's the real-world example of something that git CAN DO TODAY:
 
-No, it copies the revisions verbatim, and we are careful to avoid data loss.
+ - we used to have a file called "rev-list.c", which did a lot of the 
+   commit history revision traversal, and is the source of the git command 
+   "git rev-list".
 
-> Hmm, but that doesn't sound right either, that's certainly no revolting
-> functionality and seems to be in contradiction with previous bundles
-> description. But if it doesn't squash the changes, I don't see how the
-> combined diff can be integral part of the data. Sorry, I don't get it.
+ - I (and others) extended it a lot, and turned it into a more generic 
+   library interface, so that other commands could traverse the commit 
+   graph on their own, rather than forking and executing "git-rev-list" 
+   and piping the output between them.
 
-It's because there's no other diff in the bundle that produces 'd'.
+ - as a result, the old "rev-list.c" still exists (except it was renamed 
+   to "builtin-rev-list.c" since it's now a builtin command to the main 
+   "git" binary). 
 
->> I've attached an example of what a combined patch-by-patch bundle looks
->> like.
-> 
-> But that's the one there's no UI to select? Or where is the combined
-> diff?
+ - HOWEVER, a lot of the actual code got split into the library file, 
+   called "revision.c", which contains the real smarts of the program.
 
-That is the one that doesn't have UI to select it.  I've attached a
-normal bundle for comparison.
+See? There was a file rename involved (rev-list.c => builtin-rev-list.c), 
+but that actually happened after a lot of the really _interesting_ code 
+had been excised from that file, and put into the new internal library 
+file (revision.c).
 
-Aaron
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.2 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+Now, as a result, in many ways the rename is _much_ less interesting than 
+the question about the history of the code in "revision.c" (because that's 
+really some very core code). And that was never a rename at all. That was 
+just a file create, where a lot of the contents happened to come from a 
+file that continued to exist.
 
-iD8DBQFFOVzR0F+nu1YWqI0RAkACAJ4z2SJZgelZLfhoFKhEZbmvRIXMjACfag+h
-6j+5vvIeHt7xMZOvp6CUcPk=
-=33G4
------END PGP SIGNATURE-----
+Wouldn't you want "annotate" to be able to follow this kind of data 
+movement? Notice how there is no "file" that moved at all. Only code that 
+moved between files.
 
---------------090607000304000307000008
-Content-Type: text/x-patch;
- name="hello-world-default.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="hello-world-default.patch"
+I tell you: as long as you work with "file ID's", you'll always be 
+inferior. You'll never be able to see that some code was copied 
+_partially_ from one file into another. You'll never be able to see an 
+important function moving between file boundaries.
 
-# Bazaar revision bundle v0.8
-#
-# message:
-#   Added 'world'
-# committer: Aaron Bentley <abentley@panoramicfeedback.com>
-# date: Fri 2006-10-20 11:30:21.903000116 -0400
+Unless you work with "git", that is. Because git isn't so _stupid_ as to 
+think that file boundaries matter. Git knows better. The only thing that 
+matters is the actual _data_, and file boundaries are just one way of 
+delimiting that data.
 
-=== added directory  // file-id:TREE_ROOT
-=== added file world // file-id:world-20061020152929-12bknd8mm9mx48as-1
---- /dev/null
-+++ world
-@@ -0,0 +1,1 @@
-+Hello, world
+Just try it out. Get the "next" branch of the git repository (that's the 
+"stable development" branch in git.git - ie it's going to be in the next 
+release and is expected to work, unless some of the more "experimental 
+development" that is in the "pu" branch - pu = proposed updates), compile 
+it, and run
 
-# revision id: abentley@panoramicfeedback.com-20061020153021-b5fcea14e9cd2b34
-# sha1: 6d553e72158aaa76c258d98c15cd24922d171cd9
-# inventory sha1: 64af82c4d81d9d6ad4f33fc734d32c2a1eaa0df5
-# parent ids:
-#   abentley@panoramicfeedback.com-20061020152951-10cff5ff5a51e9a2
-# base id: null:
-# properties:
-#   branch-nick: bar
+	git pickaxe -C revision.c | less -S
 
-# message:
-#   Capitalized
-# committer: Aaron Bentley <abentley@panoramicfeedback.com>
-# date: Fri 2006-10-20 11:29:51.953999996 -0400
+and marvel. Marvel at my shining intelligence (and the small matter of 
+programming, which was all done by Junio, but I'm taking all the credit 
+_anyway_, because *dammit* I talked about this last year when people 
+didn't understand! And besides, I always take all the credit regardless, 
+so what are you whining about? Get off my back!).
 
-=== modified file world // encoding:base64
-LS0tIHdvcmxkCisrKyB3b3JsZApAQCAtMSwxICsxLDEgQEAKLWhlbGxvCitIZWxsbwoK
+More seriously, Junio really did a kick-ass job. I really had nothing at 
+all to do with it, and deserve no real credit. But I _did_ forsee it, and 
+yes, it really is about the fact that git tracks _contents_.
 
-=== modified directory  // last-changed:abentley@panoramicfeedback.com-20061020
-... 152951-10cff5ff5a51e9a2
-# revision id: abentley@panoramicfeedback.com-20061020152951-10cff5ff5a51e9a2
-# sha1: f7b79934bc3b0a944e35168b5df6b106c5b29ebf
-# inventory sha1: 1400d56451752300cc31c9c94ff7ee2188e8ef8c
-# parent ids:
-#   abentley@panoramicfeedback.com-20061020152935-64bde004f622131f
-# properties:
-#   branch-nick: bar
+As somebody smarter that I have said (*): "I'm always right, but this time 
+I'm even more right than usual".
 
-# message:
-#   initial commit
-# committer: Aaron Bentley <abentley@panoramicfeedback.com>
-# date: Fri 2006-10-20 11:29:35.536999941 -0400
+			Linus
 
-=== added directory  // file-id:TREE_ROOT
-=== added file world // file-id:world-20061020152929-12bknd8mm9mx48as-1 // enco
-... ding:base64
-LS0tIC9kZXYvbnVsbAorKysgd29ybGQKQEAgLTAsMCArMSwxIEBACitoZWxsbwoK
-
-# revision id: abentley@panoramicfeedback.com-20061020152935-64bde004f622131f
-# sha1: 0728f761b891b257f0a71e2e360799eec080cd21
-# inventory sha1: e52e030ea40f6bf5da78f4e8eb8efcd072b0930a
-# properties:
-#   branch-nick: bar
-
-
---------------090607000304000307000008--
+(*) Just kidding. It was me. Of course.
