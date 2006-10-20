@@ -1,69 +1,61 @@
 From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: VCS comparison table
-Date: Fri, 20 Oct 2006 12:51:40 +0200
-Organization: At home
-Message-ID: <eha9no$5t7$1@sea.gmane.org>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <Pine.LNX.4.64.0610171605440.3962@g5.osdl.org> <45357411.20500@utoronto.ca> <200610180246.18758.jnareb@gmail.com> <45357CC3.4040507@utoronto.ca> <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org> <4536EC93.9050305@utoronto.ca> <87lkncev90.wl%cworth@cworth.org> <Pine.LNX.4.64.0610190757100.3962@g5.osdl.org> <20061019161319.GA75501@over-yonder.net> <Pine.LNX.4.64.0610190948540.3962@g5.osdl.org> <Pine.LNX.4.64.0610191110290.3962@g5.osdl.org> <7vac3sru9a.fsf@assigned-by-dhcp.cox.net>
+Date: Fri, 20 Oct 2006 13:00:45 +0200
+Message-ID: <200610201300.46361.jnareb@gmail.com>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <87ods727pn.wl%cworth@cworth.org> <45382120.9060702@utoronto.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri Oct 20 12:55:25 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Carl Worth <cworth@cworth.org>, Linus Torvalds <torvalds@osdl.org>,
+	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 20 13:00:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gas28-0003DY-GG
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 12:55:24 +0200
+	id 1Gas7O-0004Q9-Vy
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 13:00:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161041AbWJTKzP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 06:55:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161112AbWJTKzP
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 06:55:15 -0400
-Received: from main.gmane.org ([80.91.229.2]:5043 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1161087AbWJTKzM (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 06:55:12 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1Gas1n-00038S-0d
-	for git@vger.kernel.org; Fri, 20 Oct 2006 12:55:03 +0200
-Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 Oct 2006 12:55:03 +0200
-Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 Oct 2006 12:55:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1422748AbWJTLAq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 20 Oct 2006 07:00:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161126AbWJTLAq
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 07:00:46 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:9010 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1161087AbWJTLAp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Oct 2006 07:00:45 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so713379ugd
+        for <git@vger.kernel.org>; Fri, 20 Oct 2006 04:00:44 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Wfe+T/72aBsM0W6uHBC1+PjqFcW6al2gpjzjWqYwmPeZzUVWAdg0ndJnQ31jzUpub0lSbuor6lvZ3QaouEcv/8ob0A9NKv8TFGvFEGf/VDsqOU5Z0xNi0TQdKehh1y6DlvFINOr9rna6BGJQKMHk6T/q6tfJYClTmuhd5n3OvZA=
+Received: by 10.67.101.8 with SMTP id d8mr1665793ugm;
+        Fri, 20 Oct 2006 04:00:43 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
+        by mx.google.com with ESMTP id j2sm53172ugf.2006.10.20.04.00.43;
+        Fri, 20 Oct 2006 04:00:43 -0700 (PDT)
+To: Aaron Bentley <aaron.bentley@utoronto.ca>
+User-Agent: KMail/1.9.3
+In-Reply-To: <45382120.9060702@utoronto.ca>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29446>
 
-Junio C Hamano wrote:
+Aaron Bentley wrote:
 
-> Linus Torvalds <torvalds@osdl.org> writes:
-> 
->> The other big difference is being able to do merges in seconds. The 
->> biggest cost of doing a big merge these days seems to literally be 
->> generating the diffstat of the changes at the end (which is purely a UI 
->> issue, but one that I find so important that I'll happily take the extra 
->> few seconds for that, even if it sometimes effectively doubles the 
->> overhead).
-> 
-> An interesting effect on this is when people have a column for
-> merge performance in a SCM comparison table, they would include
-> time to run the diffstat as part of the time spent for merging
-> when they fill in the number for git, but not for any other SCM.
+> Bazaar encourages you to stick lots and lots of branches in your
+> repository. =A0They don't even have to be related. =A0For example, my=
+ repo
+> contains branches of bzr, bzrtools, Meld, and BazaarInspect.
 
-So if you want to compare merge performance with other SCM, you should
-either add time to run diffstat for other SCM, or substract time to
-run "git diff-tree --stat".
+GIT encourages you to use separate repositories for unrelated projects.
+And alternates mechanism for related projects (like different Linux
+kernel repositories: Linus, stable, etc.).
 
--- 
+--=20
 Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Poland
