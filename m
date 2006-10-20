@@ -1,102 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: VCS comparison table
-Date: Fri, 20 Oct 2006 13:24:40 +0200
-Organization: At home
-Message-ID: <ehablj$bm4$1@sea.gmane.org>
-References: <Pine.LNX.4.64.0610171605440.3962@g5.osdl.org>
-	<45357411.20500@utoronto.ca> <200610180246.18758.jnareb@gmail.com>
-	<45357CC3.4040507@utoronto.ca> <871wp6e7o9.wl%cworth@cworth.org>
-	<45359B2A.1070102@utoronto.ca> <87y7rdd47j.wl%cworth@cworth.org>
-	<20061019091045.GV75501@over-yonder.net>
-	<45375E56.4090106@op5.se> <vpqirigqzpd.fsf@ecrins.imag.fr>
-	<20061019123349.GE20017@pasky.or.cz>
-	<vpqr6x4pghp.fsf@ecrins.imag.fr> <87ac3s2syi.wl%cworth@cworth.org>
-	<vpq1wp42rd4.fsf@ecrins.imag.fr>
+Date: Fri, 20 Oct 2006 13:37:02 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0610201335420.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+ <Pine.LNX.4.64.0610171605440.3962@g5.osdl.org> <45357411.20500@utoronto.ca>
+ <200610180246.18758.jnareb@gmail.com> <45357CC3.4040507@utoronto.ca>
+ <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org> <4536EC93.9050305@utoronto.ca>
+ <87lkncev90.wl%cworth@cworth.org> <453792A8.1010700@utoronto.ca>
+ <878xjc2qeb.wl%cworth@cworth.org> <453803E6.2060309@utoronto.ca>
+ <87ods727pn.wl%cworth@cworth.org> <45382120.9060702@utoronto.ca>
+ <Pine.LNX.4.64.0610192202340.3962@g5.osdl.org> <45387F04.5010101@research.canon.com.au>
+ <Pine.LNX.4.63.0610201034170.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+ <ehaapb$5t7$3@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: 8Bit
-Cc: git@vger.kernel.org
-X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 13:26:51 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, bazaar-ng@lists.canonical.com
+X-From: git-owner@vger.kernel.org Fri Oct 20 13:37:20 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GasWN-0002Eb-KL
-	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 13:26:39 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GasWB-0000oi-3U; Fri, 20 Oct 2006 12:26:27 +0100
-Received: from main.gmane.org ([80.91.229.2] helo=ciao.gmane.org)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <gcvbg-bazaar-ng@m.gmane.org>) id 1GasVA-0000nk-5E
-	for bazaar-ng@lists.canonical.com; Fri, 20 Oct 2006 12:25:26 +0100
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GasUt-0001pV-PX
-	for bazaar-ng@lists.canonical.com; Fri, 20 Oct 2006 13:25:09 +0200
-Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110])
-	by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-	id 1AlnuQ-0007hv-00
-	for <bazaar-ng@lists.canonical.com>; Fri, 20 Oct 2006 13:25:07 +0200
-Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim 0.1
-	(Debian)) id 1AlnuQ-0007hv-00
-	for <bazaar-ng@lists.canonical.com>; Fri, 20 Oct 2006 13:25:07 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: bazaar-ng@lists.canonical.com
-Followup-To: gmane.comp.version-control.git
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29449>
+	id 1Gasgc-0004at-BP
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 13:37:14 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1422984AbWJTLhH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 07:37:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423099AbWJTLhH
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 07:37:07 -0400
+Received: from mail.gmx.de ([213.165.64.20]:32903 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1422984AbWJTLhF (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 07:37:05 -0400
+Received: (qmail invoked by alias); 20 Oct 2006 11:37:03 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp033) with SMTP; 20 Oct 2006 13:37:03 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <ehaapb$5t7$3@sea.gmane.org>
+X-Y-GMX-Trusted: 0
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29450>
 
-Matthieu Moy wrote:
+Hi,
 
-> Then, one other difference is in the UI. bzr shows you commits in a
-> kind of hierarchical maner, like (fictive example, that's not the real
-> exact format).
+On Fri, 20 Oct 2006, Jakub Narebski wrote:
+
+> Johannes Schindelin wrote:
 > 
-> $ bzr log
-> commiter: upstream@maintainer.com
-> message:
->   merged the work on a feature
->   ------
->   commiter: contributor@site.com
->   message:
->     prepared for feature X
->   ------
->   commiter: contributor@site.com
->   message:
->     implemented feature X
->   ------
->   commiter: contributor@site.com
->   message:
->     added testcase for feature X
-> ------
-> commiter: upstream@maintainer.com
-> message:
->   something else
+> > On Fri, 20 Oct 2006, Lachlan Patrick wrote:
+> > 
+> >> How does git disambiguate SHA1 hash collisions?
+> > 
+> > It does not. You can fully expect the universe to go down before that 
+> > happens.
+>  
+> Or you can compile git with COLLISION_CHECK
 > 
-> No big difference in the model either, but it probably reveals a
-> different vision of what "history" means.
+> >From Makefile:
+> # Define COLLISION_CHECK below if you believe that SHA1's
+> # 1461501637330902918203684832716283019655932542976 hashes do not give you
+> # sufficient guarantee that no collisions between objects will ever happen.
 
-We have in GIT git-show-branch command for that (although it
-has quite strange UI, and shows only title of commit), we
-can do "git log | git name-rev --stdin", or better use graphical
-history viewers like gitk (Tcl/Tk) or qgit (Qt). Graphical history
-viewers are a must with more complicated history. 
+You can document your disbelief.
 
-Bazaar-NG has bzr-gtk.
+But it does not change a thing. Since v0.99~653, we do not have any 
+collision check, even if compiled with COLLISION_CHECK.
+
+Ciao,
+Dscho
