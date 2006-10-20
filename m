@@ -1,50 +1,44 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: VCS comparison table
-Date: Fri, 20 Oct 2006 11:43:15 +0200
-Message-ID: <vpq4ptz2uh8.fsf@ecrins.imag.fr>
+Date: Fri, 20 Oct 2006 11:51:12 +0200
+Message-ID: <200610201151.13199.jnareb@gmail.com>
 References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<45349162.90001@op5.se> <453536AE.6060601@utoronto.ca>
-	<200610172301.27101.jnareb@gmail.com> <45354AD0.1020107@utoronto.ca>
-	<BAYC1-PASMTP07AB11A64250AAF683424DAE0E0@CEZ.ICE>
+	<87ods727pn.wl%cworth@cworth.org>
+	<a7e835d40610191953i467ce853k4b4740bbfdd92936@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 11:44:30 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: bazaar-ng@lists.canonical.com, Linus Torvalds <torvalds@osdl.org>,
+	Carl Worth <cworth@cworth.org>, Andreas Ericsson <ae@op5.se>,
+	git@vger.kernel.org
+X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 11:51:56 2006
 Return-path: <bazaar-ng-bounces@lists.canonical.com>
 Envelope-to: gcvbg-bazaar-ng@m.gmane.org
 Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GaqvU-0004nd-84
-	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 11:44:28 +0200
+	id 1Gar2K-0006ES-4h
+	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 11:51:32 +0200
 Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
 	by esperanza.ubuntu.com with esmtp (Exim 4.60)
 	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GaqvH-0003pE-9F; Fri, 20 Oct 2006 10:44:15 +0100
-Received: from imag.imag.fr ([129.88.30.1])
+	id 1Gar28-0004DR-5E; Fri, 20 Oct 2006 10:51:20 +0100
+Received: from ug-out-1314.google.com ([66.249.92.172])
 	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <Matthieu.Moy@imag.fr>) id 1GaqvF-0003om-0S
-	for bazaar-ng@lists.canonical.com; Fri, 20 Oct 2006 10:44:13 +0100
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.6/8.13.6) with ESMTP id k9K9hGag024795
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 20 Oct 2006 11:43:16 +0200 (CEST)
-Received: from ecrins.imag.fr ([129.88.43.124])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50) id 1GaquK-0004r3-Gr; Fri, 20 Oct 2006 11:43:16 +0200
-Received: from moy by ecrins.imag.fr with local (Exim 4.50)
-	id 1GaquJ-0003rA-SN; Fri, 20 Oct 2006 11:43:15 +0200
-To: Sean <seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP07AB11A64250AAF683424DAE0E0@CEZ.ICE> (Sean's message
-	of "Tue\, 17 Oct 2006 18\:00\:51 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.6
-	(imag.imag.fr [129.88.30.1]);
-	Fri, 20 Oct 2006 11:43:17 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	(envelope-from <jnareb@gmail.com>) id 1Gar20-0004Cz-RD
+	for bazaar-ng@lists.canonical.com; Fri, 20 Oct 2006 10:51:14 +0100
+Received: by ug-out-1314.google.com with SMTP id 36so637230ugg
+	for <bazaar-ng@lists.canonical.com>;
+	Fri, 20 Oct 2006 02:51:12 -0700 (PDT)
+Received: by 10.66.220.17 with SMTP id s17mr1600273ugg;
+	Fri, 20 Oct 2006 02:51:12 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
+	by mx.google.com with ESMTP id p32sm885254ugc.2006.10.20.02.51.10;
+	Fri, 20 Oct 2006 02:51:11 -0700 (PDT)
+To: "James Henstridge" <james@jamesh.id.au>
+User-Agent: KMail/1.9.3
+In-Reply-To: <a7e835d40610191953i467ce853k4b4740bbfdd92936@mail.gmail.com>
+Content-Disposition: inline
 X-BeenThere: bazaar-ng@lists.canonical.com
 X-Mailman-Version: 2.1.8
 Precedence: list
@@ -58,58 +52,113 @@ List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
 	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
 Sender: bazaar-ng-bounces@lists.canonical.com
 Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29433>
 
-Sean <seanlkml@sympatico.ca> writes:
+James Henstridge wrote:
+> On 20/10/06, Carl Worth <cworth@cworth.org> wrote:
+>> On Thu, 19 Oct 2006 19:01:58 -0400, Aaron Bentley wrote:
 
-> On Tue, 17 Oct 2006 17:27:44 -0400
-> Aaron Bentley <aaron.bentley@utoronto.ca> wrote:
->
->> Bzr has plugin autoloading, Protocol plugins, Repository format plugins,
->> and more.  Because Python supports monkey-patching, a plugin can change
->> absolutely anything.
->
-> But really why does any of that matter?  This is the open source world.
-> We don't need plugins to extend features, we just add the feature to
-> the source.  The example I asked about earlier is a case in point. 
-> Apparently in bzr "bisect" was implemented as a plugin, yet in Git it
-> was implemented as a command without any issue at all,
+>>>             Additionally, the new mainline can keep a mirror of the
+>>> abandoned mainline in its repository, because there are virtually no
+>>> additional storage requirements to doing so.
+>>
+>> And this part I don't understand. I can understand the mainline
+>> storing the revisions, but I don't understand how it could make them
+>> accessible by the published revision numbers of the "abandoned"
+>> line. And that's the problem.
+> 
+> With this sort of setup, I would publish my branches in a directory
+> tree like this:
+> 
+>     /repo
+>         /branch1
+>         /branch2
+> 
+> I make "/repo" a Bazaar repository so that it stores the revision data
+> for all branches contained in the directory (the tree contents,
+> revision meta data, etc).
 
-The plugin Vs core feature is not a technical problem. The code for a
-plugin and for a core functionality will roughly be the same, but in a
-different file.
+And here we have a feature which is as far as I see unique to git,
+namely to have persistent branches with _separate namespace_. It means
+that we can have hierarchical branch names (including names like
+"remotes/<remotename>/<branch of remote>", or "jc/diff"), and we don't
+have to guess where repository name ends and branch name begins.
 
-There can be many reasons why you want to implement something as a
-plugin:
+The idea of "branches (and tags) as directories" was if I understand
+it correctly introduced by Subversion, and from what can be seen from
+troubles with git-svn (stemming from the fact that division between
+project name and branch name is the matter of _convention_) at least
+slightly brain-damaged.
+ 
+> The "/repo/branch1" essentially just contains a list of mainline
+> revision IDs that identify the branch.  This could probably be just
+> store the head revision ID, but there are some optimisations that make
+> use of the linear history here.
+> 
+> If the ancestry of "/repo/branch2" is a subset of branch1 (as it might
+> be if the in the case of forked then merged projects), then all its
+> revision data will already be in the repository when branch1 was
+> imported.  The only cost of keeping the branch around (and publishing
+> it) is the list of revision IDs in its mainline history.
+> 
+> For similar reasons, the cost of publishing 20 related Bazaar branches
+> on my web server is generally not 20 times the cost of publishing a
+> single branch.
+> 
+> I understand that you get similar benefits by a GIT repository with
+> multiple head revisions.
 
-* This is project-specific, upstream is not interested (for example,
-  bzr has a plugin to submit a merge request to a robot, it will
-  probably never come in the core).
+You can get similar benefits by a GIT repository with shared object
+database using alternates mechanism. And that is usually preferred
+over storing unrelated branches, i.e. branches pointing to disconnected
+DAG (separate trees in BK terminology) of revision, if that you mean by
+multiple head revisions (because in GIT there is no notion of "mainline"
+branch, only of current (HEAD) branch).
 
-* The feature is not matured enough, so you don't want to merge it in
-  upstream, but you want to make it available to people without
-  patching (for example, "bzr uncommit" was once in the bzrtools
-  plugin, and finally landed in upstream).
 
-* The feature you're adding are only of use to a small subset of
-  users. You don't want to pollute, in particular "bzr help commands"
-  with it, especially not to disturb beginners. I've been arguing in
-  favor of a configuration option to hide commands from "bzr help
-  commands" instead, but nobody seemed interested.
+>>>> But for these communications, revision numbers will not provide
+>>>> historically stable values that can be used.
+>>>
+>>> They certainly can.
+>>>
+>>> The coder says "I've put up a branch at http://example.com/bzr/feature.
+>>>  In revision 5, I started work on feature A.  I finished work in
+>>> revision 6.  But then I had to fix a related bug in revision 7."
+>>
+>> "I've put this branch up" isn't historically stable...
+> 
+> With the repository structure mentioned above, the cost of publishing
+> multiple branches is quite low.  If I continue to work on the project,
+> then there is no particular bandwidth or disk space reasons for me to
+> cut off access to my old branches.
+> 
+> For similar reasons, it doesn't cost me much to mirror other people's
+> related branches if I really care about them.
 
-* Explicit divergent points of view between the implementor of the
-  plugin and upstream. That avoids a fork. I don't remember any such
-  case with bzr.
+But the revision number in this case _changes_. It is from 7 to
+branch:7 but still it changes somewhat.
 
-I'd compare bzr's plugins to Firefox extensions. Geeks used to like
-the big Mozilla-with-tons-of-config-options, but
-Firefox-with-only-the-most-relevant-features is the one which allowed
-a wide adoption by non-geeks. Still, geeks can customize their
-browser, and add features without having to wait for Mozilla Fundation
-to incorporate it in upstream.
+[...]
+>> The naming in git really is beautiful and beautifully simple.
+> 
+> I don't think anyone is saying that universally unique names are bad.
+> But I also don't see a problem with using shorter names that only have
+> meaning in a local scope.
+> 
+> I've noticed some people using abbreviated SHA1 sums with GIT.  Isn't
+> that also a case of trading potential global uniqueness for
+> convenience when working in a local scope?
 
-Now, I don't know git enough to know whether the way it is extensible
-allow all of the above, but bzr's plugin system it quite good at that.
-At the time git was almost exclusively used by the kernel, you didn't
-have all those problems since you targeted only one community, but I
-guess you already had some needs for flexibility.
+Emphasisis on _potential_. SHA1 id abbreviated to 6 characters might
+be not unique in larger project, but for example the chance that
+SHA1 id abbreviated to 7 or 8 characters is not unique is really low.
+
+
+Yet another analogy:
+
+SHA1 identifiers of commits (and not only commits) can be compared
+to Message-Ids of Usenet messages, while revision numbers can be compared
+to Xref number of Usenet message which if I understand correctly is unique
+only for given news server. But Message-Ids cannot be shortened
+meaningfully like SHA1 ids can; newertheless they are used in communication
+without any problems. Even if namespace is not simple ;-)
