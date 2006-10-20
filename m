@@ -1,74 +1,100 @@
-From: David Lang <dlang@digitalinsight.com>
+From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
-Date: Fri, 20 Oct 2006 13:49:53 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0610201345440.5248@qynat.qvtvafvgr.pbz>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> 
- <ehao3e$2qv$1@sea.gmane.org> <4538EC8F.7020502@utoronto.ca> 
- <200610201821.34712.jnareb@gmail.com> <45390168.6020502@utoronto.ca> 
- <20061020172125.GF18019@spearce.org>  <Pine.LNX.4.64.0610201045550.3962@g5.osdl.org>
- <20061020202318.GJ20017@pasky.or.cz>
+Date: Fri, 20 Oct 2006 16:53:05 -0400
+Message-ID: <20061020205305.GG18019@spearce.org>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<ehao3e$2qv$1@sea.gmane.org> <4538EC8F.7020502@utoronto.ca>
+	<200610201821.34712.jnareb@gmail.com>
+	<45390168.6020502@utoronto.ca> <20061020172125.GF18019@spearce.org>
+	<Pine.LNX.4.64.0610201045550.3962@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Shawn Pearce <spearce@spearce.org>,
-	Aaron Bentley <aaron.bentley@utoronto.ca>,
-	Jakub Narebski <jnareb@gmail.com>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 20 22:50:34 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=us-ascii
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 22:53:23 2006
+Return-path: <bazaar-ng-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gb1K5-00041Z-9i
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 22:50:33 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423141AbWJTUua (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 16:50:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030305AbWJTUua
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 16:50:30 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:15048 "HELO
-	warden.diginsite.com") by vger.kernel.org with SMTP
-	id S1030259AbWJTUu3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Oct 2006 16:50:29 -0400
-Received: from wlvims02.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Fri, 20 Oct 2006 13:50:29 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Fri, 20 Oct 2006 13:49:46 -0700
-X-X-Sender: dlang@dlang.diginsite.com
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20061020202318.GJ20017@pasky.or.cz>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29536>
+	id 1Gb1Mm-0004am-LN
+	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 22:53:20 +0200
+Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
+	id 1Gb1Me-0005yH-E9; Fri, 20 Oct 2006 21:53:12 +0100
+Received: from corvette.plexpod.net ([64.38.20.226])
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <spearce@spearce.org>) id 1Gb1Mb-0005yB-So
+	for bazaar-ng@lists.canonical.com; Fri, 20 Oct 2006 21:53:10 +0100
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+	helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1Gb1MR-0000vH-9O; Fri, 20 Oct 2006 16:52:59 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id D22B120FB79; Fri, 20 Oct 2006 16:53:05 -0400 (EDT)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0610201045550.3962@g5.osdl.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse,
+	please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - lists.canonical.com
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-BeenThere: bazaar-ng@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
+List-Post: <mailto:bazaar-ng@lists.canonical.com>
+List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-ng-bounces@lists.canonical.com
+Errors-To: bazaar-ng-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29537>
 
-On Fri, 20 Oct 2006, Petr Baudis wrote:
-
+Linus Torvalds <torvalds@osdl.org> wrote:
+> On Fri, 20 Oct 2006, Shawn Pearce wrote:
+> > 
+> > I renamed hundreds of small files in one shot and also did a few
+> > hundered adds and deletes of other small XML files.  Git generated
+> > a lot of those unrelated adds/deletes as rename/modifies, as their
+> > content was very similiar.  Some people involved in the project
+> > freaked as the files actually had nothing in common with one
+> > another... except for a lot of XML elements (as they shared the
+> > same DTD).
 > 
-> Dear diary, on Fri, Oct 20, 2006 at 07:48:58PM CEST, I got a letter
-> where Linus Torvalds <torvalds@osdl.org> said that...
->> So yeah, I've seen a few strange cases myself, but they've actually been
->> interesting. Like seeing how much of a file was just a copyright license,
->> and then a file being considered a "copy" just because it didn't actually
->> introduce any real new code.
->
-> Well it's certainly "interesting" and fun to see, but is it equally fun
-> to handle mismerges caused by a broken detection?
->
-> I've talked to some people who really didn't mind (or even liked) Git's
-> heuristics when it came to _inspecting_ movement of content, but were
-> really nervous about merge following such heuristics.
+> Heh. We can probably tweak the heuristics (one of the _great_ things about 
+> content detection is that you can fix it after the fact, unlike the 
+> alternative).
+> 
+> That said, I've personally actually found the content-based similarity 
+> analysis to often be quite informative, even when (and perhaps 
+> _especially_ when) it ended up showing something that the actual author of 
+> the thing didn't intend.
+> 
+> So yeah, I've seen a few strange cases myself, but they've actually been 
+> interesting. Like seeing how much of a file was just a copyright license, 
+> and then a file being considered a "copy" just because it didn't actually 
+> introduce any real new code.
 
-remember, git only stores the results. so when you are merging it doesn't even 
-look for renames.
+Aside from that one strange case I just mentioned I've always seen
+the strategy to work very well.  Its never done something I didn't
+expect and I've never seen copies or that I didn't expect to see,
+knowing what the author of the change did.
 
-the only time you get renames is after-the-fact when you ask git for a report 
-about what changed. then (if you enable rename detection) it will tell you what 
-files have changed, and what files look like they may have been renames 
-(possibly with changes). but if you don't ask git to look for renames it won't 
-bother and you can just ignore the concept entirely.
+So even though I had a little bit of trouble with that rename
+situation above I'm _very_ happy with the way Git handles renames.
 
-or if you only want complete renames (as opposed to rename + change) then use 
-the option to tell it that you don't want to consider it a rename unless it's 
-100% the same (or 99%, or whatever satisfies you)
-
-David Lang
+And the truth is that case above really was quite correct: XML is
+very verbose.  When 70% of the file is just required XML to frame
+the other 30% of the file's payload its not surprising that files
+are considered to be similar when they only differ by a little bit
+of payload.
