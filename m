@@ -1,107 +1,168 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
-Date: Fri, 20 Oct 2006 11:30:15 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610201110320.3962@g5.osdl.org>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
- <ehao3e$2qv$1@sea.gmane.org> <4538EC8F.7020502@utoronto.ca>
- <200610201821.34712.jnareb@gmail.com> <45390168.6020502@utoronto.ca>
- <Pine.LNX.4.64.0610201016490.3962@g5.osdl.org> <45390BAF.5040405@utoronto.ca>
- <Pine.LNX.4.64.0610201100070.3962@g5.osdl.org>
+Date: Fri, 20 Oct 2006 20:35:25 +0200
+Message-ID: <200610202035.26227.jnareb@gmail.com>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <200610201821.34712.jnareb@gmail.com> <20061020181210.GA29843@artax.karlin.mff.cuni.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 20 20:30:46 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 20 20:35:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gaz8i-00071U-Sd
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 20:30:41 +0200
+	id 1GazDV-0008B7-PH
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 20:35:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992530AbWJTSa2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 14:30:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992613AbWJTSa2
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 14:30:28 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:23478 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S2992530AbWJTSaZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 14:30:25 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9KIUGaX030063
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 20 Oct 2006 11:30:16 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9KIUFI1029100;
-	Fri, 20 Oct 2006 11:30:15 -0700
-To: Aaron Bentley <aaron.bentley@utoronto.ca>
-In-Reply-To: <Pine.LNX.4.64.0610201100070.3962@g5.osdl.org>
-X-Spam-Status: No, hits=-0.974 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S2992516AbWJTSf2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 20 Oct 2006 14:35:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992682AbWJTSf1
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 14:35:27 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:19177 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S2992516AbWJTSfX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Oct 2006 14:35:23 -0400
+Received: by ug-out-1314.google.com with SMTP id z34so702425ugc
+        for <git@vger.kernel.org>; Fri, 20 Oct 2006 11:35:22 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=DmQapCqGadhYLeRr+lHTNXKr5pApOXGuUB61jOS2fQxk+6mukoqVTx0P3+9qbvX8fAMmBouqYwPNoGQx/3UK/oSkrzQ8KrI4kdGMbsbbKzujJYRDksUvPLb9zWfEasF1i7rXsmDsmXyuaxQOpL3wF3tPMSXvhlrsikn/a2yxrl0=
+Received: by 10.67.105.19 with SMTP id h19mr2401698ugm;
+        Fri, 20 Oct 2006 11:35:22 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
+        by mx.google.com with ESMTP id 28sm1571842ugc.2006.10.20.11.35.20;
+        Fri, 20 Oct 2006 11:35:21 -0700 (PDT)
+To: Jan Hudec <bulb@ucw.cz>
+User-Agent: KMail/1.9.3
+In-Reply-To: <20061020181210.GA29843@artax.karlin.mff.cuni.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29518>
+
+Jan Hudec wrote:
+> On Fri, Oct 20, 2006 at 06:21:34PM +0200, Jakub Narebski wrote:
+> > Aaron Bentley wrote:
+> >=20
+> > > =3D=3D=3D added directory =A0// file-id:TREE_ROOT
+> >=20
+> > Gaaah, so rename detection in bzr is done using file-ids?
+> > Linus will tell you the inherent problems with that "solution".
+>=20
+> Ok, I tried to read
+> http://permalink.gmane.org/gmane.comp.version-control.git/217
+>=20
+> It's all nice and well, but my question is whether the below cases wo=
+rk
+> in git. Yes, they are particular cases, but they are particularly
+> important. If they don't, I'd rather have file-id scheme, that is
+> limited to just them, but handles them, than something with big plans=
+,
+> but nothing working.
+>=20
+> Let's consider following scenario:
+>=20
+> (where A$ means working in branch A, B$ means working in branch B and
+>  VCT stands for version control tool of choice)
+
+1077:jnareb@roke:/tmp/jnareb> mkdir tmp
+1078:jnareb@roke:/tmp/jnareb> cd tmp/
+1079:jnareb@roke:/tmp/jnareb/tmp> git init-db
+defaulting to local storage area
+
+> A$ echo Hello Warld! > hello.txt
+1081:jnareb@roke:/tmp/jnareb/tmp> echo 'Hello Warld!' > hello.txt
+
+> A$ VCT add hello.txt
+1082:jnareb@roke:/tmp/jnareb/tmp> git add hello.txt
+
+> A$ VCT commit -m "Created greeting"
+1083:jnareb@roke:/tmp/jnareb/tmp> git commit -a -m "Created greeting"
+
+(we use here still default branch 'master'. Let us change it to A)
+1084:jnareb@roke:/tmp/jnareb/tmp> git branch A
+1088:jnareb@roke:/tmp/jnareb/tmp> git checkout A
+
+> $ VCT branch A B
+1085:jnareb@roke:/tmp/jnareb/tmp> git branch B A
+(create branch B based on A)
+
+> A$ VCT mkdir data
+1089:jnareb@roke:/tmp/jnareb/tmp> mkdir data
+
+> A$ VCT mv hello.txt data/
+1090:jnareb@roke:/tmp/jnareb/tmp> git mv hello.txt data/
+
+> A$ VCT commit -m "Moved hello.txt to data dir"
+1092:jnareb@roke:/tmp/jnareb/tmp> git commit -a -m "Moved hello.txt to =
+data dir"
+
+> B$ ed hello.txt
+> ? 1s/Warld/World/
+> ? wq
+1094:jnareb@roke:/tmp/jnareb/tmp> ed hello.txt=20
+13
+1s/Warld/World/
+wq
+13
+
+> B$ VCT commit -m "Fixed typo in greeting"
+1096:jnareb@roke:/tmp/jnareb/tmp> git commit -a -m "Fixed typo in greet=
+ing"
+
+> A$ VCT merge B
+1097:jnareb@roke:/tmp/jnareb/tmp> git checkout A
+1098:jnareb@roke:/tmp/jnareb/tmp> git pull . B
+Trying really trivial in-index merge...
+fatal: Merge requires file-level merging
+Nope.
+Merging HEAD with 9de7290d385ec2b0c2ade9b888f6c3a6633ac926
+Merging:=20
+5f0eb04467538f0f1414af85ec6481150107c0b2 Moved hello.txt to data dir=20
+9de7290d385ec2b0c2ade9b888f6c3a6633ac926 Fixed typo in greeting=20
+found 1 common ancestor(s):=20
+f49a520e40143cb9d84b00e9728c5742897c0a22 Created greeting=20
+
+Merge made by recursive.
+ data/hello.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+> At this point, I expect the tree to look like this:
+> A$ ls -R
+1099:jnareb@roke:/tmp/jnareb/tmp> ls -R
+=2E:
+data
+
+=2E/data:
+hello.txt
+
+> A$ cat data/hello.txt
+1100:jnareb@roke:/tmp/jnareb/tmp> cat data/hello.txt=20
+Hello World!
 
 
 
-On Fri, 20 Oct 2006, Linus Torvalds wrote:
-> 
-> So yes, merges are the situation where renames are normally considered a 
-> "problem", but it's actually not nearly the most every-day situation at 
-> all.
+> A$ VCT mv data greetings
+1102:jnareb@roke:/tmp/jnareb/tmp> git mv data greetings
 
-Btw, this is a pet peeve of mine, and it is not at all restricted to 
-the SCM world.
+> A$ VCT commit -m "Renamed the data directory to greetings"
+1105:jnareb@roke:/tmp/jnareb/tmp> git commit -a -m "Renamed the data di=
+rectory to greetings"
 
-In CompSci in general, you see a _lot_ of papers about things that almost 
-don't matter - not because the issues are that important in practice, but 
-because the issues are something small enough to be something you can 
-discuss and explain without having to delve into tons of ugly detail, and 
-because it's something that has a lot of "mental masturbation" associated 
-with it - ie you can discuss it endlessly.
+> B$ echo "Goodbye World!" > data/goodbye.txt
+1106:jnareb@roke:/tmp/jnareb/tmp> git checkout B
+1109:jnareb@roke:/tmp/jnareb/tmp> echo 'Goodbye World!' > data/goodbye.=
+txt
+bash: data/goodbye.txt: There is no such file or directory
+1110:jnareb@roke:/tmp/jnareb/tmp> ls -R
+=2E:
+hello.txt
 
-In the OS world, it's things like schedulers. You find an _inordinate_ 
-number of papers on scheduling, considering that the actual algorithm then 
-tends to be something that can be expressed in a hundred lines of code or 
-so, but it's got quite high "mental masturbatory value" (hereafter called 
-MMV).
-
-Other high-MMV areas are page-out algorithms (never mind that almost all 
-_real_ VM problems are elsewhere) and some zero-copy schemes (never mind 
-that if you actually need to _work_ with the data, zero-copy DMA may 
-actually be much worse because it ends up having bad cache behaviour).
-
-In the SCM world, file renames and merging seem to be the high-MMV things. 
-Never mind that the real issues tend to be elsewhere (like _performance_ 
-when you have a few thousand commits that you want to merge).
-
-For example, in the kernel, I think about half of all merges are what git 
-calls "trivial in-index merges". That's HALF. Being a trivial in-index 
-merge means that there was not a single file-level conflict that even 
-needed a three-way merge, much less any study of the history AT ALL (other 
-than finding the common ancestor, of course).
-
-Of the rest, most by far need some trivial 3-way merging. And the ones 
-that have trouble? In practice, that trivial and maligned 3-way does 
-_better_ than anything more complicated.
-
-Yet, if you actually bother to follow all the discussion on #revctrl and 
-other places, what do you find discussed? Right: various high-MMV issues 
-like "staircase merge" etc crap.
-
-Go to revctrl.org for prime example of this. I think half the stuff is 
-about merge algorithms, some of it is about glossary, and almost none of 
-it is about something as pedestrian and simple as performance and 
-scalability.
-
-(Actually, to be honest, I think some of the #revctrl noise has become 
-better lately. I'm not seeing quite as much theoretical discussion, it may 
-be that as open-source distributed SCM's are getting to be more "real", 
-people start to slowly realize that the masturbatory crap isn't actually 
-what it's all about. So maybe at least this area is getting more about 
-real every-day problems, and less about the theoretical-but-not-very- 
-important issues).
-
-		Linus
+You need to revise your example.
+--=20
+Jakub Narebski
+Poland
