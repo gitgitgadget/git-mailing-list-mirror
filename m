@@ -1,114 +1,96 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Aaron Bentley <aaron.bentley@utoronto.ca>
 Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
-Date: Fri, 20 Oct 2006 12:46:39 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610201231570.3962@g5.osdl.org>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
- <200610201821.34712.jnareb@gmail.com> <20061020181210.GA29843@artax.karlin.mff.cuni.cz>
- <200610202047.11291.jnareb@gmail.com> <Pine.LNX.4.64.0610201151130.3962@g5.osdl.org>
- <45391F1C.80100@utoronto.ca>
+Date: Fri, 20 Oct 2006 16:12:08 -0400
+Message-ID: <45392D98.307@utoronto.ca>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <ehao3e$2qv$1@sea.gmane.org> <4538EC8F.7020502@utoronto.ca> <200610201821.34712.jnareb@gmail.com> <45390168.6020502@utoronto.ca> <Pine.LNX.4.64.0610201016490.3962@g5.osdl.org> <45390BAF.5040405@utoronto.ca> <Pine.LNX.4.64.0610201100070.3962@g5.osdl.org> <Pine.LNX.4.64.0610201110320.3962@g5.osdl.org> <45391DC3.7060002@utoronto.ca> <Pine.LNX.4.64.0610201214530.3962@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, Jan Hudec <bulb@ucw.cz>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 20 21:47:23 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 20 22:12:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gb0Kn-0007yy-K9
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 21:47:13 +0200
+	id 1Gb0jJ-000564-Ra
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 22:12:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992722AbWJTTrJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 15:47:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992727AbWJTTrJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 15:47:09 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:29646 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S2992722AbWJTTrI (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 15:47:08 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9KJkiaX002636
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 20 Oct 2006 12:46:45 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9KJke1H032076;
-	Fri, 20 Oct 2006 12:46:41 -0700
-To: Aaron Bentley <aaron.bentley@utoronto.ca>
-In-Reply-To: <45391F1C.80100@utoronto.ca>
-X-Spam-Status: No, hits=-0.976 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1422831AbWJTUM3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 16:12:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422784AbWJTUM3
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 16:12:29 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41]:47516 "EHLO
+	server4.panoramicfeedback.com") by vger.kernel.org with ESMTP
+	id S1422979AbWJTUM2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Oct 2006 16:12:28 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41] helo=[192.168.2.19])
+	by server4.panoramicfeedback.com with esmtp (Exim 3.36 #1 (Debian))
+	id 1Gb0jA-00054n-00; Fri, 20 Oct 2006 16:12:24 -0400
+User-Agent: Debian Thunderbird 1.0.2 (X11/20060830)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0610201214530.3962@g5.osdl.org>
+X-Enigmail-Version: 0.91.0.0
+X-Panometrics-MailScanner: Found to be clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29531>
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-
-On Fri, 20 Oct 2006, Aaron Bentley wrote:
+Linus Torvalds wrote:
 > 
-> Linus Torvalds wrote:
-> > Git goes one step further: it _really_ doesn't matter about how you got to 
-> > a certain state. Absolutely _none_ of what the commits in between the 
-> > final stages and the common ancestor matter in the least. The only thing 
-> > that matters is what the states at the end-point are.
+> On Fri, 20 Oct 2006, Aaron Bentley wrote:
 > 
-> That's interesting, because I've always thought one of the strengths of
-> file-ids was that you only had to worry about end-points, not how you
-> got there.
+>>>Btw, this is a pet peeve of mine, and it is not at all restricted to 
+>>>the SCM world.
+>>
+>>I guess I don't mind a bit of high-mmv discussion, so long as it doesn't
+>>get in the way of real work.  Polishing these kinds of things seems to
+>>fall in the category of 10% of functionality that takes 90% of effort.
 > 
-> How do you handle renames without looking at the history?
+> 
+> Well, the thing is, that 10% of the functionality usually takes a whole 
+> lot _less_ than 10% of the work.
 
-You first handle all the non-renames that just merge on their own. That 
-takes care of 99.99% of the stuff (and I'm not exaggerating: in the 
-kernel, you have ~21000 files, and most merges don't have a single rename 
-to worry about - and even when you do have them, they tend to be in the 
-"you can count them on one hand" kind of situation).
+I guess this depends on whether you consider the brainstorming and
+discussion to be part of the work of polishing, and I do mean polishing.
+ Getting from something that works 90% of the time to something that
+works 99% of the time can be a questionable expenditure of time and effort.
 
-Then you just look at all the pathnames you _couldn't_ resolve, and that's 
-usually cut down the thing to something where you can literally use a lot 
-of CPU power per file, because now you only have a small number of 
-candidates left.
+> The same is actually true of SCM's too, I'm totally convinced. At least in 
+> git, we really haven't spent _that_ much time on merges, for example. My 
+> original stupid three-way merge was really simple, and I think the way I 
+> introduced "stages" into the git index was really clever, but it was still 
+> a small detail. And it worked surprisingly way.
 
-If you were to use one hundredth of a second per file regardless of file, 
-a stupid per-file merge would take 210 seconds, which is just 
-unacceptable. So you really don't want to do that. You want to merge whole 
-subdirectories in one go (and with git, you can: since the SHA1 of a 
-directory defines _all_ of the contents under it, if the two branches you 
-merge have an identical subdirectory, you don't need to do anything at 
-_all_ about that one. See?).
+I did rewrite our merge code once, but that was because the API was
+quite hard to deal with and made it hard to maintain.  I agree that it's
+important to focus effort on the areas that make a difference.
 
-So instead of trying to be really fast on individual files and doing them 
-one at a time, git makes individual files basically totally free (you 
-literally often don't need to look at them AT ALL). And then for the few 
-files you can't resolve, you can afford to spend more time.
+On the other hand, our "exotic" text merge algorithms have been praised
+by the people who work on Launchpad.  So that's a win.
 
-So say that you spend one second per file-pair because you do complex 
-heuristics etc - you'll still have a merge that is a _lot_ faster than 
-your 210-second one.
+> As an example: I suspect that in git just the CVS importer has gotten 
+> _way_ more attention than merging ever got. Importing from CVS is simply a 
+> much harder problem in practice, and we've probably had more people 
+> working on it (and that's _despite_ the fact that this is one of the areas 
+> where git has successfully re-used other projects that had similar goals: 
+> cvsps, cvs2svn etc). It's hard to "think" about, because a lot of the 
+> problems with importing from CVS are literally all about the details and 
+> the nasty crud. I really think "merging" is _way_ easier.
 
-So recursive basically generates the matrix of similarity for the 
-new/deleted files, and tries to match them up, and there you have your 
-renames - without ever looking at the history of how you ended up where 
-you are.
+Yes, I don't even want to think about CVS when I don't have to.
 
-Btw, that "210 second" merge is not at all unlikely. Some of the SCM's 
-seem to scale much worse than that to big archives, and I've heard people 
-talk about merges that took 20 minutes or more. In contrast, git doing a 
-merge in ~2-3 seconds for the kernel is _normal_.
+Aaron
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
 
-[ In fact, I just re-tested doing my last kernel merge: it took 0.970 
-  seconds, and that was _including_ the diffstat of the result - not 
-  obviously not including the time to fetch the other branch over the 
-  network.
-
-  I don't know if people appreciate how good it is to do a merge of two 
-  21000-file branches in less than a second. It didn't have any renames, 
-  and it only had a single well-defined common parent, but not only is 
-  that the common case, being that fast for the simple case is what 
-  _allows_ you to do well on the complex cases too, because it's what gets 
-  rid of all the files you should _not_ worry about ]
-
-Performance does matter. 
-
-			Linus
+iD8DBQFFOS2Y0F+nu1YWqI0RAiOcAJ0TXmBdiCcvnTzmg+nnF+kayJ25cgCggMFx
+w6xFlFHwPoNm9dt/T4LnmCU=
+=zNuy
+-----END PGP SIGNATURE-----
