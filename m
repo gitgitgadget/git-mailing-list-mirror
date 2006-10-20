@@ -1,8 +1,8 @@
 From: Jan Harkes <jaharkes@cs.cmu.edu>
-Subject: [PATCH 2/2] Remove unused index tracking code.
-Date: Thu, 19 Oct 2006 20:20:48 -0400
-Message-ID: <20061020002048.GC7162@delft.aura.cs.cmu.edu>
-References: <1168a0313ac1152d43731965fbbb6d4ccfd865a1.1161301889.git.jaharkes@cs.cmu.edu>
+Subject: [PATCH 1/2] Pass through unresolved deltas when writing a pack
+Date: Thu, 19 Oct 2006 20:20:40 -0400
+Message-ID: <20061020002040.GB7162@delft.aura.cs.cmu.edu>
+References: <Pine.LNX.4.64.0610190936440.3962@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
@@ -11,20 +11,20 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gai87-0000Ad-Si
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 02:20:56 +0200
+	id 1Gai7z-00009w-SW
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 02:20:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946752AbWJTAUw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Oct 2006 20:20:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946753AbWJTAUw
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 20:20:52 -0400
-Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:56536 "EHLO
+	id S1946751AbWJTAUp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Oct 2006 20:20:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946752AbWJTAUp
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 20:20:45 -0400
+Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:55768 "EHLO
 	delft.aura.cs.cmu.edu") by vger.kernel.org with ESMTP
-	id S1946752AbWJTAUw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Oct 2006 20:20:52 -0400
+	id S1946751AbWJTAUo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Oct 2006 20:20:44 -0400
 Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 4.63)
 	(envelope-from <jaharkes@cs.cmu.edu>)
-	id 1Gai80-000724-NF; Thu, 19 Oct 2006 20:20:48 -0400
+	id 1Gai7t-00071W-0H; Thu, 19 Oct 2006 20:20:41 -0400
 To: Linus Torvalds <torvalds@osdl.org>
 Mail-Followup-To: Linus Torvalds <torvalds@osdl.org>,
 	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
@@ -34,140 +34,35 @@ User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29393>
 
-Tracking the offsets is not that hard, but calculating the sha1 for the
-deltas is tricky, we may have already seen and written out the base we
-need. So it is actually easier to avoid the complexity altogether and
-rely on git-index-pack to rebuild the index. The indexing step is also a
-useful validation whether the final pack contains a base for every delta.
+The resulting pack should be correct if we have the base somewhere else in
+the received pack, if we didn't have the base the received pack would be
+faulty and can't be unpacked as loose objects either.
+
+The internal pack index information is not updated correctly anymore.
 
 Signed-off-by: Jan Harkes <jaharkes@cs.cmu.edu>
 
 ---
- builtin-unpack-objects.c |   57 +++++++++++-----------------------------------
- 1 files changed, 14 insertions(+), 43 deletions(-)
+ builtin-unpack-objects.c |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
 diff --git a/builtin-unpack-objects.c b/builtin-unpack-objects.c
-index b95c93c..3df7938 100644
+index f139308..b95c93c 100644
 --- a/builtin-unpack-objects.c
 +++ b/builtin-unpack-objects.c
-@@ -89,29 +89,6 @@ static void *get_data(unsigned long size
- }
- 
- static struct sha1file *pack_file;
--static unsigned long pack_file_offset;
--
--struct index_entry {
--	unsigned long offset;
--	unsigned char sha1[20];
--};
--
--static unsigned int index_nr, index_alloc;
--static struct index_entry **index_array;
--
--static void add_pack_index(unsigned char *sha1)
--{
--	struct index_entry *entry;
--	int nr = index_nr;
--	if (nr >= index_alloc) {
--		index_alloc = (index_alloc + 64) * 3 / 2;
--		index_array = xrealloc(index_array, index_alloc * sizeof(*index_array));
--	}
--	entry = xmalloc(sizeof(*entry));
--	entry->offset = pack_file_offset;
--	hashcpy(entry->sha1, sha1);
--	index_array[nr++] = entry;
--}
- 
- static void write_pack_delta(const unsigned char *base, const void *delta, unsigned long delta_size)
- {
-@@ -122,11 +99,9 @@ static void write_pack_delta(const unsig
- 	sha1write(pack_file, header, hdrlen);
- 	sha1write(pack_file, base, 20);
- 	datalen = sha1write_compressed(pack_file, delta, delta_size);
--
--	pack_file_offset += hdrlen + 20 + datalen;
- }
- 
--static void write_pack_object(const char *type, const unsigned char *sha1, const void *buf, unsigned long size)
-+static void write_pack_object(const void *buf, unsigned long size, const char *type, const unsigned char *sha1)
- {
- 	unsigned char header[10];
- 	unsigned hdrlen, datalen;
-@@ -134,8 +109,6 @@ static void write_pack_object(const char
- 	hdrlen = encode_header(string_to_type(type, sha1), size, header);
- 	sha1write(pack_file, header, hdrlen);
- 	datalen = sha1write_compressed(pack_file, buf, size);
--
--	pack_file_offset += hdrlen + datalen;
- }
- 
- struct delta_info {
-@@ -160,22 +133,21 @@ static void add_delta_to_list(unsigned c
- 
- static void added_object(unsigned char *sha1, const char *type, void *data, unsigned long size);
- 
--static void write_object(void *buf, unsigned long size, const char *type,
--	unsigned char *base, void *delta, unsigned long delta_size)
-+static void write_object(void *buf, unsigned long size, const char *type)
- {
- 	unsigned char sha1[20];
- 
- 	if (pack_file) {
- 		if (hash_sha1_file(buf, size, type, sha1) < 0)
- 			die("failed to compute object hash");
--		add_pack_index(sha1);
--		if (0 && base)
--			write_pack_delta(base, delta, delta_size);
--		else
--			write_pack_object(type, sha1, buf, size);
--	} else if (write_sha1_file(buf, size, type, sha1) < 0)
--		die("failed to write object");
--	added_object(sha1, type, buf, size);
-+
-+		write_pack_object(buf, size, type, sha1);
-+	} else {
-+		if (write_sha1_file(buf, size, type, sha1) < 0)
-+		    die("failed to write object");
-+
-+		added_object(sha1, type, buf, size);
-+	}
- }
- 
- static void resolve_delta(const char *type, unsigned char *base_sha1,
-@@ -190,7 +162,7 @@ static void resolve_delta(const char *ty
- 			     &result_size);
- 	if (!result)
- 		die("failed to apply delta");
--	write_object(result, result_size, type, base_sha1, delta, delta_size);
-+	write_object(result, result_size, type);
- 	free(delta);
- 	free(result);
- }
-@@ -225,7 +197,7 @@ static void unpack_non_delta_entry(enum 
- 	default: die("bad type %d", kind);
+@@ -246,7 +246,10 @@ static void unpack_delta_entry(unsigned 
  	}
- 	if (!dry_run && buf)
--		write_object(buf, size, type, NULL, NULL, 0);
-+		write_object(buf, size, type);
- 	free(buf);
- }
  
-@@ -334,12 +306,11 @@ static void unpack_all(const char *repac
- 		newhdr.hdr_signature = htonl(PACK_SIGNATURE);
- 		newhdr.hdr_version = htonl(PACK_VERSION);
- 		newhdr.hdr_entries = htonl(nr_objects);
--		
-+
- 		pack_file = sha1create("%s.pack", repack);
- 		sha1write(pack_file, &newhdr, sizeof(newhdr));
--		pack_file_offset = sizeof(newhdr);
+ 	if (!has_sha1_file(base_sha1)) {
+-		add_delta_to_list(base_sha1, delta_data, delta_size);
++		if (pack_file)
++			write_pack_delta(base_sha1, delta_data, delta_size);
++		else
++			add_delta_to_list(base_sha1, delta_data, delta_size);
+ 		return;
  	}
--		
-+
- 
- 	use(sizeof(struct pack_header));
- 	for (i = 0; i < nr_objects; i++)
+ 	base = read_sha1_file(base_sha1, type, &base_size);
 -- 
 1.4.2.1
