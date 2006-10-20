@@ -1,123 +1,182 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
-Date: Fri, 20 Oct 2006 12:31:17 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610201214530.3962@g5.osdl.org>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<ehao3e$2qv$1@sea.gmane.org> <4538EC8F.7020502@utoronto.ca>
-	<200610201821.34712.jnareb@gmail.com> <45390168.6020502@utoronto.ca>
-	<Pine.LNX.4.64.0610201016490.3962@g5.osdl.org>
-	<45390BAF.5040405@utoronto.ca>
-	<Pine.LNX.4.64.0610201100070.3962@g5.osdl.org>
-	<Pine.LNX.4.64.0610201110320.3962@g5.osdl.org>
-	<45391DC3.7060002@utoronto.ca>
+From: "Dmitry V. Levin" <ldv@altlinux.org>
+Subject: [PATCH] git-clone: define die() and use it.
+Date: Fri, 20 Oct 2006 23:38:31 +0400
+Message-ID: <20061020193831.GA24237@nomad.office.altlinux.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 21:32:16 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 20 21:38:43 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gb05u-0004My-Ag
-	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 21:31:52 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1Gb05i-0001V8-KO; Fri, 20 Oct 2006 20:31:38 +0100
-Received: from smtp.osdl.org ([65.172.181.4])
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <torvalds@osdl.org>) id 1Gb05b-0001TL-By
-	for bazaar-ng@lists.canonical.com; Fri, 20 Oct 2006 20:31:32 +0100
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9KJVMaX001763
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 20 Oct 2006 12:31:23 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9KJVHj3031513;
-	Fri, 20 Oct 2006 12:31:19 -0700
-To: Aaron Bentley <aaron.bentley@utoronto.ca>
-In-Reply-To: <45391DC3.7060002@utoronto.ca>
-X-Spam-Status: No, hits=-0.976 required=5 tests=AWL,
-	OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29528>
+	id 1Gb0CX-0005vG-CC
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 21:38:41 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S2992719AbWJTTii (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 15:38:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422823AbWJTTii
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 15:38:38 -0400
+Received: from mh.altlinux.org ([217.16.24.5]:52112 "EHLO mh.altlinux.org")
+	by vger.kernel.org with ESMTP id S1422748AbWJTTih (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 15:38:37 -0400
+Received: from nomad.office.altlinux.org (localhost.localdomain [127.0.0.1])
+	by mh.altlinux.org (Postfix) with ESMTP
+	id B92F4382CE49; Fri, 20 Oct 2006 23:38:31 +0400 (MSD)
+Received: by nomad.office.altlinux.org (Postfix, from userid 501)
+	id 6368817102; Fri, 20 Oct 2006 23:38:31 +0400 (MSD)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29529>
 
+Signed-off-by: Dmitry V. Levin <ldv@altlinux.org>
+---
+ git-clone.sh |   61 +++++++++++++++++++++++-----------------------------------
+ 1 files changed, 24 insertions(+), 37 deletions(-)
 
-
-On Fri, 20 Oct 2006, Aaron Bentley wrote:
-> > 
-> > Btw, this is a pet peeve of mine, and it is not at all restricted to 
-> > the SCM world.
-> 
-> I guess I don't mind a bit of high-mmv discussion, so long as it doesn't
-> get in the way of real work.  Polishing these kinds of things seems to
-> fall in the category of 10% of functionality that takes 90% of effort.
-
-Well, the thing is, that 10% of the functionality usually takes a whole 
-lot _less_ than 10% of the work.
-
-The stuff you can think through (and argue about) tends to be the easy 
-stuff. Exactly because you _can_ think about it abstractly.
-
-The stuff that is actually really hard and time-consuming is the stuff 
-that you find out in practice, and you have to iterate on.
-
-In kernels, for example, it seems like 99% of the effort ends up being 
-hardware-dependent stuff. Getting architecture interfaces right, and 
-getting working drivers. Hotplugging and device management turns out to be 
-a _much_ bigger issue than schedulers or VM page-out has _ever_ been. 
-
-But show me a single paper about them. I'm sure they exist. I'm just 
-saying that they're sure as heck not getting 99% of the attention (or even 
-1% of the attention) in discussions, even though they're definitely 99% of 
-the real everyday work and effort.
-
-(Maybe it's not 99%. Numbers taken out of my nether regions. The point 
-should be clear).
-
-The same is actually true of SCM's too, I'm totally convinced. At least in 
-git, we really haven't spent _that_ much time on merges, for example. My 
-original stupid three-way merge was really simple, and I think the way I 
-introduced "stages" into the git index was really clever, but it was still 
-a small detail. And it worked surprisingly way.
-
-After that merge, people improved it. And "recursive" is a _huge_ 
-improvement, don't get me wrong: it's still entirely a 3-way merge on the 
-file contents, but it now does those 3-way merges in several stages if 
-there are multiple independent common parents, and the rename logic is 
-clearly important.
-
-But if you actually look at how much effort was spent on merging, and how 
-much was spent on just "details in general", I think you'll find merging 
-to be pretty low down the list, even though the recursive merge ended up 
-_also_ getting re-written in C. Perhaps it was one of the bigger 
-_individual_ efforts, but compared to all the work we've continually done 
-on performance and usability, for example, it's been pretty small in the 
-end.
-
-As an example: I suspect that in git just the CVS importer has gotten 
-_way_ more attention than merging ever got. Importing from CVS is simply a 
-much harder problem in practice, and we've probably had more people 
-working on it (and that's _despite_ the fact that this is one of the areas 
-where git has successfully re-used other projects that had similar goals: 
-cvsps, cvs2svn etc). It's hard to "think" about, because a lot of the 
-problems with importing from CVS are literally all about the details and 
-the nasty crud. I really think "merging" is _way_ easier.
-
-			Linus
+diff --git a/git-clone.sh b/git-clone.sh
+index bf54a11..786d65a 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -8,11 +8,15 @@ # Clone a repository into a different di
+ # See git-sh-setup why.
+ unset CDPATH
+ 
+-usage() {
+-	echo >&2 "Usage: $0 [--template=<template_directory>] [--use-separate-remote] [--reference <reference-repo>] [--bare] [-l [-s]] [-q] [-u <upload-pack>] [--origin <name>] [-n] <repo> [<dir>]"
++die() {
++	echo >&2 "$@"
+ 	exit 1
+ }
+ 
++usage() {
++	die "Usage: $0 [--template=<template_directory>] [--use-separate-remote] [--reference <reference-repo>] [--bare] [-l [-s]] [-q] [-u <upload-pack>] [--origin <name>] [-n] <repo> [<dir>]"
++}
++
+ get_repo_base() {
+ 	(cd "$1" && (cd .git ; pwd)) 2> /dev/null
+ }
+@@ -35,11 +39,9 @@ clone_dumb_http () {
+ 		"`git-repo-config --bool http.noEPSV`" = true ]; then
+ 		curl_extra_args="${curl_extra_args} --disable-epsv"
+ 	fi
+-	http_fetch "$1/info/refs" "$clone_tmp/refs" || {
+-		echo >&2 "Cannot get remote repository information.
++	http_fetch "$1/info/refs" "$clone_tmp/refs" ||
++		die "Cannot get remote repository information.
+ Perhaps git-update-server-info needs to be run there?"
+-		exit 1;
+-	}
+ 	while read sha1 refname
+ 	do
+ 		name=`expr "z$refname" : 'zrefs/\(.*\)'` &&
+@@ -143,17 +145,12 @@ while
+ 		'')
+ 		    usage ;;
+ 		*/*)
+-		    echo >&2 "'$2' is not suitable for an origin name"
+-		    exit 1
++		    die "'$2' is not suitable for an origin name"
+ 		esac
+-		git-check-ref-format "heads/$2" || {
+-		    echo >&2 "'$2' is not suitable for a branch name"
+-		    exit 1
+-		}
+-		test -z "$origin_override" || {
+-		    echo >&2 "Do not give more than one --origin options."
+-		    exit 1
+-		}
++		git-check-ref-format "heads/$2" ||
++		    die "'$2' is not suitable for a branch name"
++		test -z "$origin_override" ||
++		    die "Do not give more than one --origin options."
+ 		origin_override=yes
+ 		origin="$2"; shift
+ 		;;
+@@ -169,24 +166,19 @@ do
+ done
+ 
+ repo="$1"
+-if test -z "$repo"
+-then
+-    echo >&2 'you must specify a repository to clone.'
+-    exit 1
+-fi
++test -n "$repo" ||
++    die 'you must specify a repository to clone.'
+ 
+ # --bare implies --no-checkout
+ if test yes = "$bare"
+ then
+ 	if test yes = "$origin_override"
+ 	then
+-		echo >&2 '--bare and --origin $origin options are incompatible.'
+-		exit 1
++		die '--bare and --origin $origin options are incompatible.'
+ 	fi
+ 	if test t = "$use_separate_remote"
+ 	then
+-		echo >&2 '--bare and --use-separate-remote options are incompatible.'
+-		exit 1
++		die '--bare and --use-separate-remote options are incompatible.'
+ 	fi
+ 	no_checkout=yes
+ fi
+@@ -206,7 +198,7 @@ fi
+ dir="$2"
+ # Try using "humanish" part of source repo if user didn't specify one
+ [ -z "$dir" ] && dir=$(echo "$repo" | sed -e 's|/$||' -e 's|:*/*\.git$||' -e 's|.*[/:]||g')
+-[ -e "$dir" ] && echo "$dir already exists." && usage
++[ -e "$dir" ] && die "destination directory '$dir' already exists."
+ mkdir -p "$dir" &&
+ D=$(cd "$dir" && pwd) &&
+ trap 'err=$?; cd ..; rm -rf "$D"; exit $err' 0
+@@ -233,7 +225,7 @@ then
+ 		 cd reference-tmp &&
+ 		 tar xf -)
+ 	else
+-		echo >&2 "$reference: not a local directory." && usage
++		die "reference repository '$reference' is not a local directory."
+ 	fi
+ fi
+ 
+@@ -242,10 +234,8 @@ rm -f "$GIT_DIR/CLONE_HEAD"
+ # We do local magic only when the user tells us to.
+ case "$local,$use_local" in
+ yes,yes)
+-	( cd "$repo/objects" ) || {
+-		echo >&2 "-l flag seen but $repo is not local."
+-		exit 1
+-	}
++	( cd "$repo/objects" ) ||
++		die "-l flag seen but repository '$repo' is not local."
+ 
+ 	case "$local_shared" in
+ 	no)
+@@ -307,18 +297,15 @@ yes,yes)
+ 		then
+ 			clone_dumb_http "$repo" "$D"
+ 		else
+-			echo >&2 "http transport not supported, rebuild Git with curl support"
+-			exit 1
++			die "http transport not supported, rebuild Git with curl support"
+ 		fi
+ 		;;
+ 	*)
+ 		case "$upload_pack" in
+ 		'') git-fetch-pack --all -k $quiet "$repo" ;;
+ 		*) git-fetch-pack --all -k $quiet "$upload_pack" "$repo" ;;
+-		esac >"$GIT_DIR/CLONE_HEAD" || {
+-			echo >&2 "fetch-pack from '$repo' failed."
+-			exit 1
+-		}
++		esac >"$GIT_DIR/CLONE_HEAD" ||
++			die "fetch-pack from '$repo' failed."
+ 		;;
+ 	esac
+ 	;;
+-- 
+1.4.3.GIT
