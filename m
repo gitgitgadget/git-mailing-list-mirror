@@ -1,57 +1,102 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Aaron Bentley <aaron.bentley@utoronto.ca>
 Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
-Date: Fri, 20 Oct 2006 22:23:19 +0200
-Message-ID: <20061020202318.GJ20017@pasky.or.cz>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <ehao3e$2qv$1@sea.gmane.org> <4538EC8F.7020502@utoronto.ca> <200610201821.34712.jnareb@gmail.com> <45390168.6020502@utoronto.ca> <20061020172125.GF18019@spearce.org> <Pine.LNX.4.64.0610201045550.3962@g5.osdl.org>
+Date: Fri, 20 Oct 2006 16:29:01 -0400
+Message-ID: <4539318D.9040004@utoronto.ca>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <200610201821.34712.jnareb@gmail.com> <20061020181210.GA29843@artax.karlin.mff.cuni.cz> <200610202047.11291.jnareb@gmail.com> <Pine.LNX.4.64.0610201151130.3962@g5.osdl.org> <45391F1C.80100@utoronto.ca> <Pine.LNX.4.64.0610201231570.3962@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Aaron Bentley <aaron.bentley@utoronto.ca>,
-	Jakub Narebski <jnareb@gmail.com>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, Jan Hudec <bulb@ucw.cz>,
 	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 20 22:23:26 2006
+X-From: git-owner@vger.kernel.org Fri Oct 20 22:29:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gb0tp-0007GM-46
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 22:23:25 +0200
+	id 1Gb0zt-0008VW-FP
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 22:29:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946475AbWJTUXV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 16:23:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946477AbWJTUXV
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 16:23:21 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:63197 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1946475AbWJTUXV (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 16:23:21 -0400
-Received: (qmail 4576 invoked by uid 2001); 20 Oct 2006 22:23:19 +0200
+	id S1422984AbWJTU3i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 16:29:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423141AbWJTU3i
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 16:29:38 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41]:10397 "EHLO
+	server4.panoramicfeedback.com") by vger.kernel.org with ESMTP
+	id S1422984AbWJTU3h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Oct 2006 16:29:37 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41] helo=[192.168.2.19])
+	by server4.panoramicfeedback.com with esmtp (Exim 3.36 #1 (Debian))
+	id 1Gb0zH-0005Jt-00; Fri, 20 Oct 2006 16:29:03 -0400
+User-Agent: Debian Thunderbird 1.0.2 (X11/20060830)
+X-Accept-Language: en-us, en
 To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0610201045550.3962@g5.osdl.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <Pine.LNX.4.64.0610201231570.3962@g5.osdl.org>
+X-Enigmail-Version: 0.91.0.0
+X-Panometrics-MailScanner: Found to be clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29534>
 
-Dear diary, on Fri, Oct 20, 2006 at 07:48:58PM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> said that...
-> So yeah, I've seen a few strange cases myself, but they've actually been 
-> interesting. Like seeing how much of a file was just a copyright license, 
-> and then a file being considered a "copy" just because it didn't actually 
-> introduce any real new code.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Well it's certainly "interesting" and fun to see, but is it equally fun
-to handle mismerges caused by a broken detection?
+Linus Torvalds wrote:
+> 
+> On Fri, 20 Oct 2006, Aaron Bentley wrote:
+> 
+>>Linus Torvalds wrote:
+>>
+>>>Git goes one step further: it _really_ doesn't matter about how you got to 
+>>>a certain state. Absolutely _none_ of what the commits in between the 
+>>>final stages and the common ancestor matter in the least. The only thing 
+>>>that matters is what the states at the end-point are.
+>>
+>>That's interesting, because I've always thought one of the strengths of
+>>file-ids was that you only had to worry about end-points, not how you
+>>got there.
+>>
+>>How do you handle renames without looking at the history?
+> 
+> 
+> You first handle all the non-renames that just merge on their own.
+> If you were to use one hundredth of a second per file regardless of file, 
+> a stupid per-file merge would take 210 seconds, which is just 
+> unacceptable. So you really don't want to do that.
 
-I've talked to some people who really didn't mind (or even liked) Git's
-heuristics when it came to _inspecting_ movement of content, but were
-really nervous about merge following such heuristics.
+Agreed.  We start by comparing BASE and OTHER, so all those comparisons
+are in-memory operations that don't hit disk.  Only for files where BASE
+and OTHER differ do we even examine the THIS version.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+We can do a do-nothing kernel merge in < 20 seconds, and that's
+comparing every single file in the tree.  In Python.  I was aiming for
+less than 10 seconds, but didn't quite hit it.
+
+> So recursive basically generates the matrix of similarity for the 
+> new/deleted files, and tries to match them up, and there you have your 
+> renames - without ever looking at the history of how you ended up where 
+> you are.
+
+So in the simple case, you compare unmatched THIS, OTHER and BASE files
+to find the renames?
+
+>   I don't know if people appreciate how good it is to do a merge of two 
+>   21000-file branches in less than a second. It didn't have any renames, 
+>   and it only had a single well-defined common parent, but not only is 
+>   that the common case, being that fast for the simple case is what 
+>   _allows_ you to do well on the complex cases too, because it's what gets 
+>   rid of all the files you should _not_ worry about ]
+
+Well, I certainly appreciate that.  I've never worried about the speed
+of text merge algorithms, because you rarely merge very many files.  The
+key is making the tree merge fast.
+
+Aaron
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
+
+iD8DBQFFOTGN0F+nu1YWqI0RAii+AJ0eduC3bYya5Ao8vm1EpBb38tJP4ACeJRYe
+9/D+ahDRJa87NTryc7j3C+U=
+=plWA
+-----END PGP SIGNATURE-----
