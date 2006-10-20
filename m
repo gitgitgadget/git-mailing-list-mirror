@@ -1,138 +1,205 @@
-From: Aaron Bentley <aaron.bentley@utoronto.ca>
-Subject: Re: VCS comparison table
-Date: Thu, 19 Oct 2006 21:06:40 -0400
-Message-ID: <45382120.9060702@utoronto.ca>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>	<Pine.LNX.4.64.0610171605440.3962@g5.osdl.org>	<45357411.20500@utoronto.ca>	<200610180246.18758.jnareb@gmail.com>	<45357CC3.4040507@utoronto.ca>	<Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>	<4536EC93.9050305@utoronto.ca>	<87lkncev90.wl%cworth@cworth.org>	<453792A8.1010700@utoronto.ca>	<878xjc2qeb.wl%cworth@cworth.org>	<453803E6.2060309@utoronto.ca> <87ods727pn.wl%cworth@cworth.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 2/2] Remove unused index tracking code.
+Date: Thu, 19 Oct 2006 21:11:10 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0610192058130.1971@xanadu.home>
+References: <1168a0313ac1152d43731965fbbb6d4ccfd865a1.1161301889.git.jaharkes@cs.cmu.edu>
+ <20061020002048.GC7162@delft.aura.cs.cmu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: Linus Torvalds <torvalds@osdl.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 20 03:07:25 2006
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 20 03:11:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gair4-0003J9-1w
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 03:07:22 +0200
+	id 1Gaiuq-0003kB-Du
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 03:11:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751643AbWJTBHS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Oct 2006 21:07:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751646AbWJTBHR
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 21:07:17 -0400
-Received: from server4.panoramicfeedback.com ([66.216.124.41]:16777 "EHLO
-	server4.panoramicfeedback.com") by vger.kernel.org with ESMTP
-	id S1751643AbWJTBHQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Oct 2006 21:07:16 -0400
-Received: from server4.panoramicfeedback.com ([66.216.124.41] helo=[127.0.0.1])
-	by server4.panoramicfeedback.com with esmtp (Exim 3.36 #1 (Debian))
-	id 1Gaiqr-0007La-00; Thu, 19 Oct 2006 21:07:13 -0400
-User-Agent: Thunderbird 1.5.0.7 (X11/20060922)
-To: Carl Worth <cworth@cworth.org>
-In-Reply-To: <87ods727pn.wl%cworth@cworth.org>
-X-Enigmail-Version: 0.94.0.0
-X-Panometrics-MailScanner: Found to be clean
+	id S1751649AbWJTBLN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Oct 2006 21:11:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751650AbWJTBLN
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Oct 2006 21:11:13 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:60904 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S1751648AbWJTBLM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Oct 2006 21:11:12 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J7E00ACKTYMJSU0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 19 Oct 2006 21:11:11 -0400 (EDT)
+In-reply-to: <20061020002048.GC7162@delft.aura.cs.cmu.edu>
+X-X-Sender: nico@xanadu.home
+To: Jan Harkes <jaharkes@cs.cmu.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29398>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, 19 Oct 2006, Jan Harkes wrote:
 
-Carl Worth wrote:
-> On Thu, 19 Oct 2006 19:01:58 -0400, Aaron Bentley wrote:
-
-> Do you see how "maintain
-> an independent URL namespace for every distributed branch" doesn't
-> encourage much distributed development?
-
-I understand your argument now.  It's nothing to do with numbers per se,
-and all about per-branch namespaces.  Correct?
-
->>             Additionally, the new mainline can keep a mirror of the
->> abandoned mainline in its repository, because there are virtually no
->> additional storage requirements to doing so.
+> Tracking the offsets is not that hard, but calculating the sha1 for the
+> deltas is tricky, we may have already seen and written out the base we
+> need. So it is actually easier to avoid the complexity altogether and
+> rely on git-index-pack to rebuild the index. The indexing step is also a
+> useful validation whether the final pack contains a base for every delta.
 > 
-> And this part I don't understand. I can understand the mainline
-> storing the revisions, but I don't understand how it could make them
-> accessible by the published revision numbers of the "abandoned"
-> line. And that's the problem.
+> Signed-off-by: Jan Harkes <jaharkes@cs.cmu.edu>
 
-I meant that the active branch and a mirror of the abandoned branch
-could be stored in the same repository, for ease of access.
+I don't think it is a good idea.
 
-Bazaar encourages you to stick lots and lots of branches in your
-repository.  They don't even have to be related.  For example, my repo
-contains branches of bzr, bzrtools, Meld, and BazaarInspect.
+After looking at the problem for a while I should side with Linus.  
+unpack-objects is not the proper tool for the job.  The way to go is to 
+make input to index-pack streamable.
 
-> It sounds like bzr has numbers like this inside it, (but not nearly as
-> simple as the ones that git has), but that users aren't in the
-> practice of communicating with them. Instead, users communicate with
-> the unstable numbers. And that's a shame from an historical
-> perspective.
+This patch in particular creates additional restrictions on pack 
+files that were not present before.  And I don't think this is a good 
+thing.
 
-I can see where you're coming from, but to me, the trade-off seems
-worthwhile.  Because historical data gets less and less valuable the
-older it gets.  By the time the URL for a branch goes dark, there's
-unlikely to be any reason to refer to one of its revisions at all.
+This patch impose an ordering on REF_DELTA objects that doesn't need to 
+exist.  Say for example that an OFS_DELTA depends on an object which is 
+a REF_DELTA object.  With this patch any pack with the base for that 
+REF_DELTA stored after the OFS_DELTA object will be broken.
 
-> The original claim that sparked the discussion was that bzr has a
-> "simple namespace" while git does not. We've been talking for quite a
-> while here, and I still don't fully understand how these numbers are
-> generated or what I can expect to happen to the numbers associated
-> with a given revision as that revision moves from one repository to
-> another. It's really not a simple scheme.
+And to really do thin pack fixing properly we really want to just append 
+missing base objects at the end of the pack which falls in the broken 
+case above.
 
-When you create a new branch from scratch, the number starts at zero.
-If you copy a branch, you copy its number, too.
+So this is a NAK from me.
 
-Every time you commit, the number is incremented.  If you pull, your
-numbers are adjusted to be identical to those of the branch you pulled from.
+> ---
+>  builtin-unpack-objects.c |   57 +++++++++++-----------------------------------
+>  1 files changed, 14 insertions(+), 43 deletions(-)
+> 
+> diff --git a/builtin-unpack-objects.c b/builtin-unpack-objects.c
+> index b95c93c..3df7938 100644
+> --- a/builtin-unpack-objects.c
+> +++ b/builtin-unpack-objects.c
+> @@ -89,29 +89,6 @@ static void *get_data(unsigned long size
+>  }
+>  
+>  static struct sha1file *pack_file;
+> -static unsigned long pack_file_offset;
+> -
+> -struct index_entry {
+> -	unsigned long offset;
+> -	unsigned char sha1[20];
+> -};
+> -
+> -static unsigned int index_nr, index_alloc;
+> -static struct index_entry **index_array;
+> -
+> -static void add_pack_index(unsigned char *sha1)
+> -{
+> -	struct index_entry *entry;
+> -	int nr = index_nr;
+> -	if (nr >= index_alloc) {
+> -		index_alloc = (index_alloc + 64) * 3 / 2;
+> -		index_array = xrealloc(index_array, index_alloc * sizeof(*index_array));
+> -	}
+> -	entry = xmalloc(sizeof(*entry));
+> -	entry->offset = pack_file_offset;
+> -	hashcpy(entry->sha1, sha1);
+> -	index_array[nr++] = entry;
+> -}
+>  
+>  static void write_pack_delta(const unsigned char *base, const void *delta, unsigned long delta_size)
+>  {
+> @@ -122,11 +99,9 @@ static void write_pack_delta(const unsig
+>  	sha1write(pack_file, header, hdrlen);
+>  	sha1write(pack_file, base, 20);
+>  	datalen = sha1write_compressed(pack_file, delta, delta_size);
+> -
+> -	pack_file_offset += hdrlen + 20 + datalen;
+>  }
+>  
+> -static void write_pack_object(const char *type, const unsigned char *sha1, const void *buf, unsigned long size)
+> +static void write_pack_object(const void *buf, unsigned long size, const char *type, const unsigned char *sha1)
+>  {
+>  	unsigned char header[10];
+>  	unsigned hdrlen, datalen;
+> @@ -134,8 +109,6 @@ static void write_pack_object(const char
+>  	hdrlen = encode_header(string_to_type(type, sha1), size, header);
+>  	sha1write(pack_file, header, hdrlen);
+>  	datalen = sha1write_compressed(pack_file, buf, size);
+> -
+> -	pack_file_offset += hdrlen + datalen;
+>  }
+>  
+>  struct delta_info {
+> @@ -160,22 +133,21 @@ static void add_delta_to_list(unsigned c
+>  
+>  static void added_object(unsigned char *sha1, const char *type, void *data, unsigned long size);
+>  
+> -static void write_object(void *buf, unsigned long size, const char *type,
+> -	unsigned char *base, void *delta, unsigned long delta_size)
+> +static void write_object(void *buf, unsigned long size, const char *type)
+>  {
+>  	unsigned char sha1[20];
+>  
+>  	if (pack_file) {
+>  		if (hash_sha1_file(buf, size, type, sha1) < 0)
+>  			die("failed to compute object hash");
+> -		add_pack_index(sha1);
+> -		if (0 && base)
+> -			write_pack_delta(base, delta, delta_size);
+> -		else
+> -			write_pack_object(type, sha1, buf, size);
+> -	} else if (write_sha1_file(buf, size, type, sha1) < 0)
+> -		die("failed to write object");
+> -	added_object(sha1, type, buf, size);
+> +
+> +		write_pack_object(buf, size, type, sha1);
+> +	} else {
+> +		if (write_sha1_file(buf, size, type, sha1) < 0)
+> +		    die("failed to write object");
+> +
+> +		added_object(sha1, type, buf, size);
+> +	}
+>  }
+>  
+>  static void resolve_delta(const char *type, unsigned char *base_sha1,
+> @@ -190,7 +162,7 @@ static void resolve_delta(const char *ty
+>  			     &result_size);
+>  	if (!result)
+>  		die("failed to apply delta");
+> -	write_object(result, result_size, type, base_sha1, delta, delta_size);
+> +	write_object(result, result_size, type);
+>  	free(delta);
+>  	free(result);
+>  }
+> @@ -225,7 +197,7 @@ static void unpack_non_delta_entry(enum 
+>  	default: die("bad type %d", kind);
+>  	}
+>  	if (!dry_run && buf)
+> -		write_object(buf, size, type, NULL, NULL, 0);
+> +		write_object(buf, size, type);
+>  	free(buf);
+>  }
+>  
+> @@ -334,12 +306,11 @@ static void unpack_all(const char *repac
+>  		newhdr.hdr_signature = htonl(PACK_SIGNATURE);
+>  		newhdr.hdr_version = htonl(PACK_VERSION);
+>  		newhdr.hdr_entries = htonl(nr_objects);
+> -		
+> +
+>  		pack_file = sha1create("%s.pack", repack);
+>  		sha1write(pack_file, &newhdr, sizeof(newhdr));
+> -		pack_file_offset = sizeof(newhdr);
+>  	}
+> -		
+> +
+>  
+>  	use(sizeof(struct pack_header));
+>  	for (i = 0; i < nr_objects; i++)
+> -- 
+> 1.4.2.1
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
 
-Is that really complicated?
 
-> Meanwhile, I have been arguing that the "simple" revision numbers that
-> bzr advertises have restrictions on their utility, (they can only be
-> used with reference to a specific repository, or with reference to
-> another that treats it as canonical). I _think_ I understand the
-> numbers well enough to say that still.
-
-Sure.  It's the "favors centralization" thing that I don't agree with,
-but I now understand your argument.
-
-> Compare that with the git names. The scheme really is easy to
-> understand, (either the new user already understands cryptographic
-> hashes, or else it's as easy as "a long string of digits that git
-> assigns as the name").
-
-In my experience, users who don't understand distributed systems don't
-understand why UUIDS must be used as identifiers.
-
-> The naming in git really is beautiful and beautifully simple.
-
-Well, you've got to admit that those names are at least superficially ugly.
-
-> It's not monotonically increasing from one revision to the next, but
-> I've never found that to be an issue. Of course, we do still use our
-> own "simple" names for versioning the releases and snapshots of
-> software we manage with git, and that's where being able to easily
-> determine "newer" or "older" by simple numerical examination is
-> important. I've honestly never encountered a situation where I was
-> handed two git sha1 sums and wished that I could do the same thing.
-
-What's nice is being able see the revno 753 and knowing that "diff -r
-752..753" will show the changes it introduced.  Checking the revo on a
-branch mirror and knowing how out-of-date it is.
-
-Aaron
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.2 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFFOCEf0F+nu1YWqI0RAhgtAJwK4jkWFjjF2iHJb1VyXqgszsHElACff2U7
-olZJiAED80tIS6kgkqFsJps=
-=BkRZ
------END PGP SIGNATURE-----
+Nicolas
