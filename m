@@ -1,61 +1,69 @@
-From: Peter Eriksen <s022018@student.dtu.dk>
-Subject: Re: [ANNOUNCE] GIT 1.4.3
-Date: 20 Oct 2006 15:26:04 +0200
-Message-ID: <m3zmbrt8yb.fsf@localhost.localdomain>
-References: <7vejt5xjt9.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: VCS comparison table
+Date: Fri, 20 Oct 2006 15:36:30 +0200
+Message-ID: <20061020133630.GH20017@pasky.or.cz>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <200610201151.13199.jnareb@gmail.com> <a7e835d40610200342ibc56fd9t542a60230ebe0020@mail.gmail.com> <200610201517.26702.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 20 15:29:33 2006
+Cc: James Henstridge <james@jamesh.id.au>,
+	bazaar-ng@lists.canonical.com, Linus Torvalds <torvalds@osdl.org>,
+	Carl Worth <cworth@cworth.org>, Andreas Ericsson <ae@op5.se>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 20 15:36:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GauRC-0003DH-T2
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 15:29:27 +0200
+	id 1GauY8-0004hl-U8
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 15:36:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946221AbWJTN3Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 09:29:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946261AbWJTN3X
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 09:29:23 -0400
-Received: from main.gmane.org ([80.91.229.2]:41920 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1946221AbWJTN3X (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 09:29:23 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GauQs-000389-2N
-	for git@vger.kernel.org; Fri, 20 Oct 2006 15:29:06 +0200
-Received: from cpe.atm2-0-1071147.0x3ef2a7ea.boanxx10.customer.tele.dk ([62.242.167.234])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 Oct 2006 15:29:06 +0200
-Received: from s022018 by cpe.atm2-0-1071147.0x3ef2a7ea.boanxx10.customer.tele.dk with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 Oct 2006 15:29:06 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-Followup-To: gmane.comp.version-control.git
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cpe.atm2-0-1071147.0x3ef2a7ea.boanxx10.customer.tele.dk
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1946420AbWJTNgd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 09:36:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946415AbWJTNgd
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 09:36:33 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:52359 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1946420AbWJTNgd (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 09:36:33 -0400
+Received: (qmail 25887 invoked by uid 2001); 20 Oct 2006 15:36:30 +0200
+To: Jakub Narebski <jnareb@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <200610201517.26702.jnareb@gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29466>
 
-Junio C Hamano <junkio@cox.net> writes:
-
-> The latest feature release GIT 1.4.3 is available at the usual
-> places:
-...
-> ----------------------------------------------------------------
+Dear diary, on Fri, Oct 20, 2006 at 03:17:26PM CEST, I got a letter
+where Jakub Narebski <jnareb@gmail.com> said that...
+> But you can also clone _whole_ repository, _all_ published branches with
 > 
->  .gitignore                                         |   10 +-
->  Documentation/Makefile                             |    4 +-
->  Documentation/asciidoc.conf                        |    1 +
->  Documentation/config.txt                           |   34 +
-...
->  rename contrib/gitview/{gitview.txt => gitview.txt} (74%)
+>    $ cg clone git://git.kernel.org/pub/scm/git/git.git
 
-How does it come to the result, that this is a rename?
+Nope, cg clone will in this case clone the master branch (or whatever
+the remote HEAD points at). cg clone -a is planned but not implemented
+yet. Very soon now, hopefully. :-)
 
-Peter
+> In GIT to work on some repository you don't (like from what I understand
+> in Bazaar-NG) "checkout" some branch (which would automatically copy some
+> data in case of "heavy checkout" or just save some pointer to repository
+> in "lightweight checkout" case). You clone whole repository; well you can
+> select which branches to clone. "Checkout" in GIT terminology means to
+> populate working area with given version (and change in repository which
+> branch is current, usually).
+
+You don't need to, you can switch your working tree between various
+branches.  I think Linus said he does that (or was it Junio?), and I do that
+as well, as well as many others.
+
+A good question would be "when to create another branch and when to
+clone the repository". And I don't think there's any good answer, except
+"when you are comfortable with it". :-) Both approaches have pros/cons.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
