@@ -1,84 +1,136 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: VCS comparison table
-Date: Thu, 19 Oct 2006 22:05:00 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610192202340.3962@g5.osdl.org>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<Pine.LNX.4.64.0610171605440.3962@g5.osdl.org>
-	<45357411.20500@utoronto.ca>
-	<200610180246.18758.jnareb@gmail.com> <45357CC3.4040507@utoronto.ca>
-	<Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>
-	<4536EC93.9050305@utoronto.ca>
-	<87lkncev90.wl%cworth@cworth.org> <453792A8.1010700@utoronto.ca>
-	<878xjc2qeb.wl%cworth@cworth.org> <453803E6.2060309@utoronto.ca>
-	<87ods727pn.wl%cworth@cworth.org> <45382120.9060702@utoronto.ca>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: Alternate revno proposal (Was: Re: VCS comparison table)
+Date: Fri, 20 Oct 2006 07:38:42 +0200
+Message-ID: <20061020053842.GA28219@artax.karlin.mff.cuni.cz>
+References: <20061018214623.GA32725@artax.karlin.mff.cuni.cz> <200610200209.k9K29ncC006935@laptop13.inf.utfsm.cl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andreas Ericsson <ae@op5.se>, Carl Worth <cworth@cworth.org>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 07:05:26 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+Content-Type: text/plain; charset=us-ascii
+Cc: Robert Collins <robertc@robertcollins.net>,
+	Petr Baudis <pasky@suse.cz>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 20 07:38:42 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GamZP-0003EZ-CE
-	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 07:05:23 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GamZG-0000G1-3f; Fri, 20 Oct 2006 06:05:14 +0100
-Received: from smtp.osdl.org ([65.172.181.4])
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <torvalds@osdl.org>) id 1GamZB-0000Fu-QV
-	for bazaar-ng@lists.canonical.com; Fri, 20 Oct 2006 06:05:10 +0100
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9K551aX020824
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 19 Oct 2006 22:05:02 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9K550jM007477;
-	Thu, 19 Oct 2006 22:05:01 -0700
-To: Aaron Bentley <aaron.bentley@utoronto.ca>
-In-Reply-To: <45382120.9060702@utoronto.ca>
-X-Spam-Status: No, hits=-0.471 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29409>
+	id 1Gan5d-0006RM-Ek
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 07:38:41 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S2992498AbWJTFii (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 01:38:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992500AbWJTFii
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 01:38:38 -0400
+Received: from artax.karlin.mff.cuni.cz ([195.113.31.125]:30438 "EHLO
+	artax.karlin.mff.cuni.cz") by vger.kernel.org with ESMTP
+	id S2992498AbWJTFig (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Oct 2006 01:38:36 -0400
+Received: by artax.karlin.mff.cuni.cz (Postfix, from userid 17196)
+	id 8922A4A40; Fri, 20 Oct 2006 07:38:42 +0200 (CEST)
+To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Content-Disposition: inline
+In-Reply-To: <200610200209.k9K29ncC006935@laptop13.inf.utfsm.cl>
+User-Agent: Mutt/1.5.9i
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29410>
 
-
-
-On Thu, 19 Oct 2006, Aaron Bentley wrote:
+On Thu, Oct 19, 2006 at 11:09:49PM -0300, Horst H. von Brand wrote:
+> Jan Hudec <bulb@ucw.cz> wrote:
 > 
-> I understand your argument now.  It's nothing to do with numbers per se,
-> and all about per-branch namespaces.  Correct?
+> [...]
+> 
+> > Reading this thread I came to think, that the revnos should be assigned
+> > to _all_ revisions _available_, in order of when they entered the
+> > repository (there are some possible variations I will mention below)
+> > 
+> >  - Such revnos would be purely local, but:
+> >    - Current revnos are not guaranteed to be the same in different
+> >      branches either.
+> >    - They could be done so that mirror has the same revnos as the
+> >      master.
+> 
+> Then they are almost useless (except for people working alone). You need to
+> be able to talk about a particular commit with others working independently.
 
-I don't know if that is what Carl's problem is, but yes, to somebody from 
-the git world, it's totally insane to have the _same_ commit have ten 
-different names just depending on which branch is was in.
+As they currently are you can't either. Because currently it is
+guaranteed that the revnos will be the same in two branches with the
+same current revision. But when the current revisions differ, the
+numbers may as well.
 
-In git-land, the name of a commit is the same in every branch.
+Moreover currently they can change for the same branch over time, while
+with the alternate proposal they would not, so you could reliably say
+revision 567 on foo.
 
-Do you have something like
+> >  - They would be easier to use than the dotted ones. What (at least as
+> >    far as I understand) makes revnos easier to use than revids is, that
+> >    you can remember few of them for short time while composing some
+> >    operation. Ie. look up 2 or 3 revisions in the log and than do some
+> >    command on them. And a 4 to 5-digit number like 10532 is easier to
+> >    remember than something like 3250.2.45.86.
+> 
+> Probably. In git you can (mostly) get away with partial SHA-1's, BTW.
 
-	gitk --all
+1) Partial sha-1 is still longer (starts being useful at 6 digits,
+   usually you need 8)
+2) Decimal numbers are easier to remember than hexadecimal ones.
+3) The hashes are not oredered.
 
-in your graphical viewers? That one shows _all_ the branches of a 
-repository, and how they relate to each other in git. How do you name your 
-commits in such a viewer, since every branch has a _different_ name for 
-the same commit?
+> >  - Their ordering would be an (arbitrary) superset of the partial
+> >    ordering by descendance, ie. if revision A is ancestor of B, it would
+> >    always have lower revno.
+> >    - The intuition that lower revno means older revision would be always
+> >      valid for related revisions and approximately valid for unrelated
+> >      ones.
+> >  - They would be *localy stable*. That is once assigned the revno would
+> >    always mean the same revision in given branch (as determined by
+> >    location, not tip).
+> 
+> Tip-relative is extremely useful: I wouldn't normally remember the current
+> revision, but I'll probably often be talking about "the change before this
+> one" and so on.
 
-			Linus
+That's however separate issue. Negative numbers are tip-relative and
+there are various prefixes in bzr (like before:, ancestor: etc.) for
+relative revision addressing.
+
+> >      - This is more than the current scheme can give, since now pull can
+> >        renumber revisions.
+> 
+> Urgh. Get an update, and all your bearings change?
+
+Currently yes. Currently pull changes the branch to be a mirror of the
+pulled-from branch, including the way they are numbered.
+
+> >  - They wouldn't make any branch special, so the objections Linus raised
+> >    does not apply.
+> 
+> But the original branch /is/ special?
+
+Some branches are usually special, but which they are may not
+necessarily coincide with the left-parent lineage.
+
+> >  - They would be the same as subversion and svk, and IIRC mercurial as
+> >    well, use, so:
+> >    - They would already be familiar to users comming from those systems.
+> >    - They are known to be useful that way. In fact for svk it's the only
+> >      way to refer to revisions and seem to work satisfactorily (though
+> >      note that svk is not really suitable to ad-hoc topologies).
+> 
+> SVN is /centralized/, there it does make sense talking about (the one and
+> only) history. In a distributed system, potentially each has a different
+
+Did you notice that I also said svk and mercurial? They both *ARE*
+distributed (well, svk has it's limitations, but mercurial really very
+similar to git).
+
+> history, and they are intertwined.
+> 
+> Not at all useful.
+
+There are no global persistent revision numbers in a distributed system.
+There can't be. But numbers with limited scope can still be really
+useful. The question is what that scope should be.
+
+--------------------------------------------------------------------------------
+                  				- Jan Hudec `Bulb' <bulb@ucw.cz>
