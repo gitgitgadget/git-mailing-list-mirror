@@ -1,79 +1,87 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: StGIT and rerere
-Date: Sat, 21 Oct 2006 00:39:09 +0200
-Organization: Dewire
-Message-ID: <200610210039.10215.robin.rosenberg.lists@dewire.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
+Date: Sat, 21 Oct 2006 00:40:30 +0200
+Message-ID: <20061020224030.GL20017@pasky.or.cz>
+References: <200610180057.25411.jnareb@gmail.com> <Pine.LNX.4.64.0610171610270.3962@g5.osdl.org> <20061018053647.GA3507@coredump.intra.peff.net> <Pine.LNX.4.64.0610180739230.3962@g5.osdl.org> <20061018185225.GU20017@pasky.or.cz> <eh76np$trg$1@sea.gmane.org> <BAYC1-PASMTP061F10D0B5AF9F6608134CAE0C0@CEZ.ICE> <4538D724.5040508@utoronto.ca> <ehao3e$2qv$1@sea.gmane.org> <4538EC8F.7020502@utoronto.ca>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Oct 21 00:38:25 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 21 00:40:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gb30P-0008Sx-Kh
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 00:38:21 +0200
+	id 1Gb32a-0000XY-TQ
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 00:40:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992708AbWJTWiS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 18:38:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992887AbWJTWiS
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 18:38:18 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:15704 "EHLO
-	torino.dewire.com") by vger.kernel.org with ESMTP id S2992708AbWJTWiR
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Oct 2006 18:38:17 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by torino.dewire.com (Postfix) with ESMTP id DD5D28028BA
-	for <git@vger.kernel.org>; Sat, 21 Oct 2006 00:35:07 +0200 (CEST)
-Received: from torino.dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 07649-08 for <git@vger.kernel.org>; Sat, 21 Oct 2006 00:35:07 +0200 (CEST)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by torino.dewire.com (Postfix) with ESMTP id 8AB528028AB
-	for <git@vger.kernel.org>; Sat, 21 Oct 2006 00:35:05 +0200 (CEST)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.4
+	id S2992724AbWJTWkd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 18:40:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030368AbWJTWkd
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 18:40:33 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:36588 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1030259AbWJTWkc (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 18:40:32 -0400
+Received: (qmail 17220 invoked by uid 2001); 21 Oct 2006 00:40:30 +0200
+To: Aaron Bentley <aaron.bentley@utoronto.ca>
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+In-Reply-To: <4538EC8F.7020502@utoronto.ca>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29546>
 
-Hi,
+Dear diary, on Fri, Oct 20, 2006 at 05:34:39PM CEST, I got a letter
+where Aaron Bentley <aaron.bentley@utoronto.ca> said that...
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> Jakub Narebski wrote:
+> > Aaron Bentley wrote:
+> >>In Bazaar bundles, the text of the diff is an integral part of the data.
+> >> It is used to generate the text of all the files in the revision.
+> > 
+> > 
+> > I thought that the diff was combined diff of changes.
+> 
+> It is.  It's a description of how to produce revision X given revision
+> Y, where Y is the last-merged mainline revision.
 
-It seems stgit does not use git-rerere, so why not? Any reason other than it
-hasn't been done yet?
+Aha, so by default a bundle can carry just a _single_ revision?
 
-I abuse stgit heavily, by frequently reording patches, which for some patches
-result in re-occuring conflicts. git-rerere seems to be the solution.
+That doesn't sound right either, because then it wouldn't make sense to
+talk about "combined" or "simple" diffs. So I guess sending a bundle
+really is taking n revisions at your side, bundling them to a single
+diff and when the other side takes it, it will result in a single
+revision? That is basically what our merge --squash does.
 
-What's the "rules" for when to invoke rerere? It seems it is mostly automatic 
-in git, but since only the porcelainish commands use it, that means StGIT 
-doesn't.
+Hmm, but that doesn't sound right either, that's certainly no revolting
+functionality and seems to be in contradiction with previous bundles
+description. But if it doesn't squash the changes, I don't see how the
+combined diff can be integral part of the data. Sorry, I don't get it.
 
-So here is what I *think* needs to be done. Seems simple enough.
+> The bundle format can also support sending a single bundles that
+> displays the series of patches, though there's currently no UI to select
+> this.
+..snip..
+> > I was under an impression that user sees only mega-patch of all the
+> > revisions in bundle together, and rest is for machine consumption only.
+> 
+> All of it is for machine consumption.  The MIME-encoded sections are a
+> series of patches.  They're usually MIME-encoded to avoid confusion with
+> the overview patch, but this is optional.
+> 
+> I've attached an example of what a combined patch-by-patch bundle looks
+> like.
 
-stg push, stg pick, stg import, stg goto, stg fold, stg float
-	do what push does and invoke git-rerere at the end whether the push ends with 
-conflicts or not
+But that's the one there's no UI to select? Or where is the combined
+diff?
 
-stg pop
-	nothing, or do I need to remove rr-cache/MERGE_RR, like git-reset does?
-
-stg status --reset, stg push --undo
-	remove rr-cache/MERGE_RR ?
-
-stg refresh
-	do what stgit does normally and then invoke git-rerere
-
-stg resolved:
-	do what stgit does normally and then invoke git-rerere
-
-stg clean, stge delete:
-	remove rr-cache/MERGE_RR ?
-
-Anything else or comments on this list?
-
--- robin
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
