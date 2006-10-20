@@ -1,182 +1,114 @@
-From: "Dmitry V. Levin" <ldv@altlinux.org>
-Subject: [PATCH] git-clone: define die() and use it.
-Date: Fri, 20 Oct 2006 23:38:31 +0400
-Message-ID: <20061020193831.GA24237@nomad.office.altlinux.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
+Date: Fri, 20 Oct 2006 12:46:39 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610201231570.3962@g5.osdl.org>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+ <200610201821.34712.jnareb@gmail.com> <20061020181210.GA29843@artax.karlin.mff.cuni.cz>
+ <200610202047.11291.jnareb@gmail.com> <Pine.LNX.4.64.0610201151130.3962@g5.osdl.org>
+ <45391F1C.80100@utoronto.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 20 21:38:43 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, Jan Hudec <bulb@ucw.cz>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 20 21:47:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gb0CX-0005vG-CC
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 21:38:41 +0200
+	id 1Gb0Kn-0007yy-K9
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 21:47:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992719AbWJTTii (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 15:38:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422823AbWJTTii
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 15:38:38 -0400
-Received: from mh.altlinux.org ([217.16.24.5]:52112 "EHLO mh.altlinux.org")
-	by vger.kernel.org with ESMTP id S1422748AbWJTTih (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 15:38:37 -0400
-Received: from nomad.office.altlinux.org (localhost.localdomain [127.0.0.1])
-	by mh.altlinux.org (Postfix) with ESMTP
-	id B92F4382CE49; Fri, 20 Oct 2006 23:38:31 +0400 (MSD)
-Received: by nomad.office.altlinux.org (Postfix, from userid 501)
-	id 6368817102; Fri, 20 Oct 2006 23:38:31 +0400 (MSD)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
+	id S2992722AbWJTTrJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 15:47:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992727AbWJTTrJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 15:47:09 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:29646 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S2992722AbWJTTrI (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 15:47:08 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9KJkiaX002636
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 20 Oct 2006 12:46:45 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9KJke1H032076;
+	Fri, 20 Oct 2006 12:46:41 -0700
+To: Aaron Bentley <aaron.bentley@utoronto.ca>
+In-Reply-To: <45391F1C.80100@utoronto.ca>
+X-Spam-Status: No, hits=-0.976 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29530>
 
-Signed-off-by: Dmitry V. Levin <ldv@altlinux.org>
----
- git-clone.sh |   61 +++++++++++++++++++++++-----------------------------------
- 1 files changed, 24 insertions(+), 37 deletions(-)
 
-diff --git a/git-clone.sh b/git-clone.sh
-index bf54a11..786d65a 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -8,11 +8,15 @@ # Clone a repository into a different di
- # See git-sh-setup why.
- unset CDPATH
- 
--usage() {
--	echo >&2 "Usage: $0 [--template=<template_directory>] [--use-separate-remote] [--reference <reference-repo>] [--bare] [-l [-s]] [-q] [-u <upload-pack>] [--origin <name>] [-n] <repo> [<dir>]"
-+die() {
-+	echo >&2 "$@"
- 	exit 1
- }
- 
-+usage() {
-+	die "Usage: $0 [--template=<template_directory>] [--use-separate-remote] [--reference <reference-repo>] [--bare] [-l [-s]] [-q] [-u <upload-pack>] [--origin <name>] [-n] <repo> [<dir>]"
-+}
-+
- get_repo_base() {
- 	(cd "$1" && (cd .git ; pwd)) 2> /dev/null
- }
-@@ -35,11 +39,9 @@ clone_dumb_http () {
- 		"`git-repo-config --bool http.noEPSV`" = true ]; then
- 		curl_extra_args="${curl_extra_args} --disable-epsv"
- 	fi
--	http_fetch "$1/info/refs" "$clone_tmp/refs" || {
--		echo >&2 "Cannot get remote repository information.
-+	http_fetch "$1/info/refs" "$clone_tmp/refs" ||
-+		die "Cannot get remote repository information.
- Perhaps git-update-server-info needs to be run there?"
--		exit 1;
--	}
- 	while read sha1 refname
- 	do
- 		name=`expr "z$refname" : 'zrefs/\(.*\)'` &&
-@@ -143,17 +145,12 @@ while
- 		'')
- 		    usage ;;
- 		*/*)
--		    echo >&2 "'$2' is not suitable for an origin name"
--		    exit 1
-+		    die "'$2' is not suitable for an origin name"
- 		esac
--		git-check-ref-format "heads/$2" || {
--		    echo >&2 "'$2' is not suitable for a branch name"
--		    exit 1
--		}
--		test -z "$origin_override" || {
--		    echo >&2 "Do not give more than one --origin options."
--		    exit 1
--		}
-+		git-check-ref-format "heads/$2" ||
-+		    die "'$2' is not suitable for a branch name"
-+		test -z "$origin_override" ||
-+		    die "Do not give more than one --origin options."
- 		origin_override=yes
- 		origin="$2"; shift
- 		;;
-@@ -169,24 +166,19 @@ do
- done
- 
- repo="$1"
--if test -z "$repo"
--then
--    echo >&2 'you must specify a repository to clone.'
--    exit 1
--fi
-+test -n "$repo" ||
-+    die 'you must specify a repository to clone.'
- 
- # --bare implies --no-checkout
- if test yes = "$bare"
- then
- 	if test yes = "$origin_override"
- 	then
--		echo >&2 '--bare and --origin $origin options are incompatible.'
--		exit 1
-+		die '--bare and --origin $origin options are incompatible.'
- 	fi
- 	if test t = "$use_separate_remote"
- 	then
--		echo >&2 '--bare and --use-separate-remote options are incompatible.'
--		exit 1
-+		die '--bare and --use-separate-remote options are incompatible.'
- 	fi
- 	no_checkout=yes
- fi
-@@ -206,7 +198,7 @@ fi
- dir="$2"
- # Try using "humanish" part of source repo if user didn't specify one
- [ -z "$dir" ] && dir=$(echo "$repo" | sed -e 's|/$||' -e 's|:*/*\.git$||' -e 's|.*[/:]||g')
--[ -e "$dir" ] && echo "$dir already exists." && usage
-+[ -e "$dir" ] && die "destination directory '$dir' already exists."
- mkdir -p "$dir" &&
- D=$(cd "$dir" && pwd) &&
- trap 'err=$?; cd ..; rm -rf "$D"; exit $err' 0
-@@ -233,7 +225,7 @@ then
- 		 cd reference-tmp &&
- 		 tar xf -)
- 	else
--		echo >&2 "$reference: not a local directory." && usage
-+		die "reference repository '$reference' is not a local directory."
- 	fi
- fi
- 
-@@ -242,10 +234,8 @@ rm -f "$GIT_DIR/CLONE_HEAD"
- # We do local magic only when the user tells us to.
- case "$local,$use_local" in
- yes,yes)
--	( cd "$repo/objects" ) || {
--		echo >&2 "-l flag seen but $repo is not local."
--		exit 1
--	}
-+	( cd "$repo/objects" ) ||
-+		die "-l flag seen but repository '$repo' is not local."
- 
- 	case "$local_shared" in
- 	no)
-@@ -307,18 +297,15 @@ yes,yes)
- 		then
- 			clone_dumb_http "$repo" "$D"
- 		else
--			echo >&2 "http transport not supported, rebuild Git with curl support"
--			exit 1
-+			die "http transport not supported, rebuild Git with curl support"
- 		fi
- 		;;
- 	*)
- 		case "$upload_pack" in
- 		'') git-fetch-pack --all -k $quiet "$repo" ;;
- 		*) git-fetch-pack --all -k $quiet "$upload_pack" "$repo" ;;
--		esac >"$GIT_DIR/CLONE_HEAD" || {
--			echo >&2 "fetch-pack from '$repo' failed."
--			exit 1
--		}
-+		esac >"$GIT_DIR/CLONE_HEAD" ||
-+			die "fetch-pack from '$repo' failed."
- 		;;
- 	esac
- 	;;
--- 
-1.4.3.GIT
+
+On Fri, 20 Oct 2006, Aaron Bentley wrote:
+> 
+> Linus Torvalds wrote:
+> > Git goes one step further: it _really_ doesn't matter about how you got to 
+> > a certain state. Absolutely _none_ of what the commits in between the 
+> > final stages and the common ancestor matter in the least. The only thing 
+> > that matters is what the states at the end-point are.
+> 
+> That's interesting, because I've always thought one of the strengths of
+> file-ids was that you only had to worry about end-points, not how you
+> got there.
+> 
+> How do you handle renames without looking at the history?
+
+You first handle all the non-renames that just merge on their own. That 
+takes care of 99.99% of the stuff (and I'm not exaggerating: in the 
+kernel, you have ~21000 files, and most merges don't have a single rename 
+to worry about - and even when you do have them, they tend to be in the 
+"you can count them on one hand" kind of situation).
+
+Then you just look at all the pathnames you _couldn't_ resolve, and that's 
+usually cut down the thing to something where you can literally use a lot 
+of CPU power per file, because now you only have a small number of 
+candidates left.
+
+If you were to use one hundredth of a second per file regardless of file, 
+a stupid per-file merge would take 210 seconds, which is just 
+unacceptable. So you really don't want to do that. You want to merge whole 
+subdirectories in one go (and with git, you can: since the SHA1 of a 
+directory defines _all_ of the contents under it, if the two branches you 
+merge have an identical subdirectory, you don't need to do anything at 
+_all_ about that one. See?).
+
+So instead of trying to be really fast on individual files and doing them 
+one at a time, git makes individual files basically totally free (you 
+literally often don't need to look at them AT ALL). And then for the few 
+files you can't resolve, you can afford to spend more time.
+
+So say that you spend one second per file-pair because you do complex 
+heuristics etc - you'll still have a merge that is a _lot_ faster than 
+your 210-second one.
+
+So recursive basically generates the matrix of similarity for the 
+new/deleted files, and tries to match them up, and there you have your 
+renames - without ever looking at the history of how you ended up where 
+you are.
+
+Btw, that "210 second" merge is not at all unlikely. Some of the SCM's 
+seem to scale much worse than that to big archives, and I've heard people 
+talk about merges that took 20 minutes or more. In contrast, git doing a 
+merge in ~2-3 seconds for the kernel is _normal_.
+
+[ In fact, I just re-tested doing my last kernel merge: it took 0.970 
+  seconds, and that was _including_ the diffstat of the result - not 
+  obviously not including the time to fetch the other branch over the 
+  network.
+
+  I don't know if people appreciate how good it is to do a merge of two 
+  21000-file branches in less than a second. It didn't have any renames, 
+  and it only had a single well-defined common parent, but not only is 
+  that the common case, being that fast for the simple case is what 
+  _allows_ you to do well on the complex cases too, because it's what gets 
+  rid of all the files you should _not_ worry about ]
+
+Performance does matter. 
+
+			Linus
