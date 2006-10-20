@@ -1,98 +1,56 @@
-From: andyparkins@gmail.com
-Subject: (unknown)
-Date: Fri, 20 Oct 2006 15:24:42 +0100
-Message-ID: <E1GavIf-0007W5-00@dvr.360vision.com>
-X-From: git-owner@vger.kernel.org Fri Oct 20 16:24:57 2006
+From: Jeff King <peff@peff.net>
+Subject: Re: VCS comparison table
+Date: Fri, 20 Oct 2006 10:31:11 -0400
+Message-ID: <20061020143111.GB17497@coredump.intra.peff.net>
+References: <Pine.LNX.4.64.0610171605440.3962@g5.osdl.org> <45357411.20500@utoronto.ca> <200610180246.18758.jnareb@gmail.com> <45357CC3.4040507@utoronto.ca> <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org> <4536EC93.9050305@utoronto.ca> <87lkncev90.wl%cworth@cworth.org> <453792A8.1010700@utoronto.ca> <8764eg2qaa.wl%cworth@cworth.org> <20061019171409.GA31671@fieldses.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Carl Worth <cworth@cworth.org>,
+	Aaron Bentley <aaron.bentley@utoronto.ca>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 20 16:31:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GavIl-0006pt-FN
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 16:24:47 +0200
+	id 1GavP6-00084U-MX
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 16:31:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992624AbWJTOYo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 10:24:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992626AbWJTOYo
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 10:24:44 -0400
-Received: from mail.360visiontechnology.com ([194.70.53.226]:25454 "EHLO
-	369run02s.360vision.com") by vger.kernel.org with ESMTP
-	id S2992624AbWJTOYn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Oct 2006 10:24:43 -0400
-Received: from dvr.360vision.com ([192.189.1.24]) by 369run02s.360vision.com with Microsoft SMTPSVC(5.0.2195.6713);
-	 Fri, 20 Oct 2006 15:27:35 +0100
-Received: from localhost ([127.0.0.1])
-	by dvr.360vision.com with esmtp (Exim 3.36 #1 (Debian))
-	id 1GavIf-0007W5-00
-	for <git@vger.kernel.org>; Fri, 20 Oct 2006 15:24:42 +0100
-X-OriginalArrivalTime: 20 Oct 2006 14:27:35.0808 (UTC) FILETIME=[E3363000:01C6F453]
-To: unlisted-recipients:; (no To-header on input)
+	id S932243AbWJTObP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 10:31:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750788AbWJTObP
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 10:31:15 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:58320 "HELO
+	peff.net") by vger.kernel.org with SMTP id S1750812AbWJTObO (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 10:31:14 -0400
+Received: (qmail 26909 invoked from network); 20 Oct 2006 10:31:12 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 20 Oct 2006 10:31:12 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Oct 2006 10:31:11 -0400
+To: "J. Bruce Fields" <bfields@fieldses.org>
+Content-Disposition: inline
+In-Reply-To: <20061019171409.GA31671@fieldses.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29477>
 
->From 0e3c0aefc3276bd271553d171ed9bcc52d85230e Mon Sep 17 00:00:00 2001
-From: Andy Parkins <andyparkins@gmail.com>
-Date: Fri, 20 Oct 2006 15:24:40 +0100
-Subject: [PATCH] Use email address only for looking up signing key in git-tag
-MIME-Version: 1.0
-X-TUID: 260426abfb2864ec
-X-Length: 2046
-To: git@vger.kernel.org
-Content-Type: Multipart/Mixed;
-  boundary="Boundary-00=_owNOFStzYauRv42"
-Message-Id: <200610201524.40525.andyparkins@gmail.com>
+On Thu, Oct 19, 2006 at 01:14:09PM -0400, J. Bruce Fields wrote:
 
-This is a multi-part message in MIME format.
---Boundary-00=_owNOFStzYauRv42
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+> > > In the second place, one must consider the "nuclear launch codes"
+> > > scenario.
+> > Sure. And git does provide tools that can do this.
+> 
+> So in this case you can certainly lose the launch codes.  But you have
+> forever granted everyone a way to determine whether a given guess at the
+> launch codes is correct.  (Again, assuming some stuff about SHA1).
 
+In what sense? Yes, you can make a guess if you have stored the SHA1
+that contained the launch codes. But the point is that that particular
+SHA1 is no longer part of the repository. Keeping that SHA1 is no easier
+than just keeping the launch codes in the first place.
 
-I did this:
-
-  $ git tag -s adp-sign-tag
-  gpg: skipped "Andy Parkins <andyparkins@gmail.com>": secret key not 
-available
-  gpg: signing failed: secret key not available
-  failed to sign the tag with GPG.
-
-I believe the problem is that I have used the comment field in my key's UID
-definition.
-
-  $ gpg --list-keys andy
-  pub   1024D/4F712F6D 2003-08-14
-  uid                  Andy Parkins (Google) <andyparkins@gmail.com>
-
-So when git-tag looks for "Andy Parkins <andyparkins@gmail.com>"; it's not
-found.  The answer is (I think) to search only on the email address when
-looking for a key.
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
----
- git-tag.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
---Boundary-00=_owNOFStzYauRv42
-Content-Type: text/x-patch;
-  name="0e3c0aefc3276bd271553d171ed9bcc52d85230e.diff"
-Content-Transfer-Encoding: 8bit
-Content-Disposition: inline;
- filename="0e3c0aefc3276bd271553d171ed9bcc52d85230e.diff"
-
-diff --git a/git-tag.sh b/git-tag.sh
-index a0afa25..6fd98e2 100755
---- a/git-tag.sh
-+++ b/git-tag.sh
-@@ -73,7 +73,7 @@ git-check-ref-format "tags/$name" ||
- object=$(git-rev-parse --verify --default HEAD "$@") || exit 1
- type=$(git-cat-file -t $object) || exit 1
- tagger=$(git-var GIT_COMMITTER_IDENT) || exit 1
--: ${username:=$(expr "z$tagger" : 'z\(.*>\)')}
-+: ${username:=$(expr "z$tagger" : 'z.*<\(.*\)>')}
- 
- trap 'rm -f "$GIT_DIR"/TAG_TMP* "$GIT_DIR"/TAG_FINALMSG "$GIT_DIR"/TAG_EDITMSG' 0
- 
-
---Boundary-00=_owNOFStzYauRv42--
+-Peff
