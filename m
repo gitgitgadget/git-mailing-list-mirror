@@ -1,85 +1,54 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [PATCH 1/2] Simpler way to draw commit graph
-Date: Fri, 20 Oct 2006 13:46:33 +0200
-Message-ID: <e5bfff550610200446o35bac985n3d520066fdbae2bb@mail.gmail.com>
-References: <200610191613.31119.Josef.Weidendorfer@gmx.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 20 14:16:41 2006
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: Re: [ANNOUNCE] GIT 1.4.3
+Date: Fri, 20 Oct 2006 09:31:26 -0300
+Message-ID: <200610201231.k9KCVQjf008998@laptop13.inf.utfsm.cl>
+References: <junkio@cox.net>
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 20 14:31:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GatIj-0003ml-Lo
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 14:16:38 +0200
+	id 1GatXJ-0006pC-Td
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 14:31:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992605AbWJTMQb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 08:16:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992604AbWJTMQb
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 08:16:31 -0400
-Received: from wr-out-0506.google.com ([64.233.184.232]:10660 "EHLO
-	wr-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S2992602AbWJTMQa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Oct 2006 08:16:30 -0400
-Received: by wr-out-0506.google.com with SMTP id i4so44423wra
-        for <git@vger.kernel.org>; Fri, 20 Oct 2006 05:16:29 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KWD3qA5aE0J/y8F/bkiCV/X6nsr5hRTNeV9q9lFGbMjVcC7SlqDWRuYk1syy6auj4YOk14FDw7S60U+PfWSrTwNajHK0v0WTKjktyt3fxXudaIaWEiEikHRt/MxYVk0iZsEOpqLzMzE/I2T5pBzXQrBrZkNyxt0bsaqs7BhajPk=
-Received: by 10.35.76.9 with SMTP id d9mr419543pyl;
-        Fri, 20 Oct 2006 04:46:33 -0700 (PDT)
-Received: by 10.35.42.4 with HTTP; Fri, 20 Oct 2006 04:46:33 -0700 (PDT)
-To: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>
-In-Reply-To: <200610191613.31119.Josef.Weidendorfer@gmx.de>
-Content-Disposition: inline
+	id S964801AbWJTMbc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 08:31:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750744AbWJTMbc
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 08:31:32 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:23265 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S1750726AbWJTMbb (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 08:31:31 -0400
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id k9KCVQ9p011159
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 20 Oct 2006 09:31:26 -0300
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1])
+	by laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id k9KCVQjf008998;
+	Fri, 20 Oct 2006 09:31:26 -0300
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
+   of "Wed, 18 Oct 2006 16:53:22 PDT." <7vejt5xjt9.fsf@assigned-by-dhcp.cox.net> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.19.1]); Fri, 20 Oct 2006 09:31:26 -0300 (CLST)
+X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29457>
 
-On 10/19/06, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
-> For drawing the commit graph, previously every item got a
-> pixmap created and set with item->setPixmap(), which is
-> drawn by the standard implementation of QListView::paintCell().
->
-> Instead, this commit implements drawing of the graph
-> directly in our own ListView::paintCell(). This gets rid of
-> a lot of complex code to reset the pixmap of invisible items
-> which was needed in large repositories before to not allocate
-> huge amounts of memory.
->
-> As we directly draw only the visible cells, it has no
-> influence on performance (especially, as we got rid of
-> pixmaps of invisible items before, and most often had
-> to draw the graph anyway).
->
-> Signed-off-by: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-> ---
->
+Junio C Hamano <junkio@cox.net> wrote:
+> The latest feature release GIT 1.4.3 is available at the usual
+> places:
 
-It looks sane. Thanks, I will apply this week-end.
+[...]
 
->
-> In order to solve this, I looked at the code, and do not understand
-> one thing: Why are you creating pixmaps for the graph, and do
-> draw directly in paintCell() ?
->
+>  rename builtin-cat-file.c => builtin-cat-file.c (0%)
 
-The code to create pixmaps is older then the one to remove not visible pixmaps.
-When I added the latter I missed the opportunity to reformat exsisting code.
-
-> This patch does exactly this, and the next one does cleanup
-> of code which is not used afterwards.
->
-> If you like, I can comeup with a patch to directly draw the lines
-> which would get rid of the original problem.
->
-
-Yes, please.
-
-
-Thanks
-Marco
+Huh?!
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                    Fono: +56 32 2654431
+Universidad Tecnica Federico Santa Maria             +56 32 2654239
+Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
