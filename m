@@ -1,93 +1,79 @@
 From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: VCS comparison table
-Date: Fri, 20 Oct 2006 12:19:48 +0200
-Message-ID: <200610201219.48921.jnareb@gmail.com>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <BAYC1-PASMTP08A746E5FA6B87BC65BD37AE0E0@CEZ.ICE> <a7e835d40610200126y5edc2ad0v8ca0a95655b2e029@mail.gmail.com>
+Date: Fri, 20 Oct 2006 12:32:43 +0200
+Organization: At home
+Message-ID: <eha8k6$uc$1@sea.gmane.org>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <45340713.6000707@utoronto.ca> <Pine.LNX.4.64.0610161625370.3962@g5.osdl.org> <200610170155.10536.jnareb@gmail.com> <Pine.LNX.4.64.0610161704240.3962@g5.osdl.org> <45345CBE.8020209@utoronto.ca> <loom.20061019T205327-196@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Sean <seanlkml@sympatico.ca>,
-	"Aaron Bentley" <aaron.bentley@utoronto.ca>,
-	"Linus Torvalds" <torvalds@osdl.org>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 20 12:19:59 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Fri Oct 20 12:33:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GarTk-0004Gc-5I
-	for gcvg-git@gmane.org; Fri, 20 Oct 2006 12:19:52 +0200
+	id 1Garh2-00074d-6c
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 12:33:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751483AbWJTKTt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 06:19:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751629AbWJTKTt
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 06:19:49 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:34460 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1751483AbWJTKTs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Oct 2006 06:19:48 -0400
-Received: by ug-out-1314.google.com with SMTP id o38so707695ugd
-        for <git@vger.kernel.org>; Fri, 20 Oct 2006 03:19:47 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=ldgcnTScZiylpS7RR5EX9T6j1dXcaNZnXB9EBsypUTBSPj0JRhdWnUsEulTxmUz3lTsrHDw4XLVGj77ItQIVKkiAGvQ1JAMp0qyy69G/MtixRkuRI5oD0diWU/oDqkpz2YQwHVbWlfUYTebQ8f3sWCsukZr/maegDUr6gL4WB2U=
-Received: by 10.66.224.19 with SMTP id w19mr1606800ugg;
-        Fri, 20 Oct 2006 03:19:47 -0700 (PDT)
-Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
-        by mx.google.com with ESMTP id 53sm1144555ugn.2006.10.20.03.19.46;
-        Fri, 20 Oct 2006 03:19:46 -0700 (PDT)
-To: "James Henstridge" <james@jamesh.id.au>
-User-Agent: KMail/1.9.3
-In-Reply-To: <a7e835d40610200126y5edc2ad0v8ca0a95655b2e029@mail.gmail.com>
-Content-Disposition: inline
+	id S1422781AbWJTKda (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 06:33:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422923AbWJTKda
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 06:33:30 -0400
+Received: from main.gmane.org ([80.91.229.2]:6274 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1422781AbWJTKd2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 06:33:28 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Garge-0006xv-L3
+	for git@vger.kernel.org; Fri, 20 Oct 2006 12:33:12 +0200
+Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 20 Oct 2006 12:33:12 +0200
+Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 20 Oct 2006 12:33:12 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29439>
 
-James Henstridge wrote:
-> On 17/10/06, Sean <seanlkml@sympatico.ca> wrote:
-> > > - - you can use a checkout to maintain a local mirror of a read-only
-> > >   branch (I do this with http://bazaar-vcs.com/bzr/bzr.dev).
-> >
-> > I'm not sure what you mean here.  A bzr checkout doesn't have any history
-> > does it?  So it's not a mirror of a branch, but just a checkout of the
-> > branch head?
+Nathaniel Smith wrote:
+
+> Aaron Bentley <aaron.bentley <at> utoronto.ca> writes:
+>
+>> Bazaar also supports multiple unrelated branches in a repository, as
+>> does CVS, SVN (depending how you squint), Arch, and probably Monotone.
 > 
-> There are two forms of checkout: a normal checkout which contains the
-> complete history of the branch, and a lightweight checkout, which just
-> has a pointer back to the original location of the history.
-> 
-> In both cases, a "bzr commit" invocation will commit changes to the
-> remote location.  In general, you only want to use a lightweight
-> checkout when there is a fast reliably connection to the branch (e.g.
-> if it is on the local file system, or local network).
+> It's quite common in Monotone.  You could probably do it in Mercurial as well,
+> though I don't know that anyone does.  SVK definitely does it (since each user
+> has a single repo that's shared by all the projects they work on).
 
-So the "lightweight checkout" is equivalent of "lazy clone" we have
-much discussed on git mailing list about (without any resulting code,
-unfortunately). The point of problem was how to do this fast, without
-need for fast reliable connection to the repository it was cloned from.
-For example if to leave fetched objects in some kind of cache, or even
-in "lightweight checkout"/"lazy clone" repository database.
+I think that GIT separation of root, repository, and branches
+namespaces is why there are so many calls for adding subproject
+support to GIT; people want to change to GIT literally, for example
+putting everything in one large repository.
 
-If repository we do "lightweight checkout"/"lazy clone" from is on
-local file system (perhaps network file system), then we can use
-alternates mechanism (git clone -l -s). That's why "lazy clone" was
-sometimes named "remote alternates".
- 
-> Aaron would be talking about a normal (heavyweight) checkout here.
-> With a heavyweight checkout, you can do pretty much anything without
-> access to the branch.  In contrast, almost all operations on a
-> lightweight checkout need access to the branch.
+In GIT there is no concept of root, like in CVS or SVN. You can
+put repository anywhere. By default GIT looks for repository 
+in current directory or one of its parents; otherwise you have to
+provide location of repository either by using GIT_DIR environment
+variable, or by using --git-dir option to git wrapper.
 
-We have terminology conflict here. Bazaar-NG "pull" and "merge" vs.
-GIT "fetch", "pull" and "merge"; Bazaar-NG "checkout" vs. GIT "clone"
-and "checkout".
+And the branch namespace is totally separate. There are some
+restrictions on branch names (caused by notation GIT uses, for
+example <branch>^ means [first] parent of commit given by <branch>),
+but really few. Branch names can be hierarchical, like "jc/diff".
 
-In GIT "clone" is what is used to copy whole repository, "checkout"
-is what is used to extract given/current branch to [given] working area.
+So there is no "store everything in URL/path" of
+  /root/repo/branch
+notation in GIT.
 -- 
 Jakub Narebski
-Poland
+Warsaw, Poland
+ShadeHawk on #git
