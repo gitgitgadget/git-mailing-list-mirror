@@ -1,70 +1,69 @@
 From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: VCS comparison table
-Date: Fri, 20 Oct 2006 12:44:18 +0200
+Date: Fri, 20 Oct 2006 12:51:40 +0200
 Organization: At home
-Message-ID: <eha99t$uc$3@sea.gmane.org>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>	<45357411.20500@utoronto.ca>
-	<200610180246.18758.jnareb@gmail.com>	<45357CC3.4040507@utoronto.ca>	<Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>	<4536EC93.9050305@utoronto.ca>	<845b6e870610190002u420118b8ud634bb9594572c48@mail.gmail.com>	<46d6db660610190149x32442596we4112cdd044185a@mail.gmail.com>	<45373E27.3050209@op5.se>
-	<vpqwt6wsmb5.fsf@ecrins.imag.fr>
-	<72877ab10610190757u3d2b4df0o204c6ffd73af69b4@mail.gmail.com>
-	<45379A02.1010105@utoronto.ca>
+Message-ID: <eha9no$5t7$1@sea.gmane.org>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <Pine.LNX.4.64.0610171605440.3962@g5.osdl.org> <45357411.20500@utoronto.ca> <200610180246.18758.jnareb@gmail.com> <45357CC3.4040507@utoronto.ca> <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org> <4536EC93.9050305@utoronto.ca> <87lkncev90.wl%cworth@cworth.org> <Pine.LNX.4.64.0610190757100.3962@g5.osdl.org> <20061019161319.GA75501@over-yonder.net> <Pine.LNX.4.64.0610190948540.3962@g5.osdl.org> <Pine.LNX.4.64.0610191110290.3962@g5.osdl.org> <7vac3sru9a.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7Bit
-Cc: git@vger.kernel.org
-X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 20 12:46:52 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+X-From: git-owner@vger.kernel.org Fri Oct 20 12:55:25 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Garta-0001KE-2X
-	for gcvbg-bazaar-ng@m.gmane.org; Fri, 20 Oct 2006 12:46:34 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GartY-0006au-Pc; Fri, 20 Oct 2006 11:46:32 +0100
-Received: from main.gmane.org ([80.91.229.2] helo=ciao.gmane.org)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <gcvbg-bazaar-ng@m.gmane.org>) id 1Garsb-0006ZG-Ny
-	for bazaar-ng@lists.canonical.com; Fri, 20 Oct 2006 11:46:09 +0100
+	id 1Gas28-0003DY-GG
+	for gcvg-git@gmane.org; Fri, 20 Oct 2006 12:55:24 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1161041AbWJTKzP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 06:55:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161112AbWJTKzP
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 06:55:15 -0400
+Received: from main.gmane.org ([80.91.229.2]:5043 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1161087AbWJTKzM (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 06:55:12 -0400
 Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1Gars6-0000xe-Kz
-	for bazaar-ng@lists.canonical.com; Fri, 20 Oct 2006 12:45:03 +0200
+	id 1Gas1n-00038S-0d
+	for git@vger.kernel.org; Fri, 20 Oct 2006 12:55:03 +0200
 Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110])
-	by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-	id 1AlnuQ-0007hv-00
-	for <bazaar-ng@lists.canonical.com>; Fri, 20 Oct 2006 12:45:02 +0200
-Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim 0.1
-	(Debian)) id 1AlnuQ-0007hv-00
-	for <bazaar-ng@lists.canonical.com>; Fri, 20 Oct 2006 12:45:02 +0200
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 20 Oct 2006 12:55:03 +0200
+Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 20 Oct 2006 12:55:03 +0200
 X-Injected-Via-Gmane: http://gmane.org/
-To: bazaar-ng@lists.canonical.com
-Followup-To: gmane.comp.version-control.git
+To: git@vger.kernel.org
 X-Complaints-To: usenet@sea.gmane.org
 X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
 Mail-Copies-To: jnareb@gmail.com
 User-Agent: KNode/0.10.2
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29444>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29445>
 
-Aaron Bentley wrote:
+Junio C Hamano wrote:
 
->> It would be nice if the SCM tools included rss feeds for communicating zip
->> patch bundles.
+> Linus Torvalds <torvalds@osdl.org> writes:
 > 
-> The bzr "webserve" plugin provides rss feeds.
+>> The other big difference is being able to do merges in seconds. The 
+>> biggest cost of doing a big merge these days seems to literally be 
+>> generating the diffstat of the changes at the end (which is purely a UI 
+>> issue, but one that I find so important that I'll happily take the extra 
+>> few seconds for that, even if it sometimes effectively doubles the 
+>> overhead).
+> 
+> An interesting effect on this is when people have a column for
+> merge performance in a SCM comparison table, they would include
+> time to run the diffstat as part of the time spent for merging
+> when they fill in the number for git, but not for any other SCM.
 
-Git "gitweb" (in git.git repo from some time) web interface provides OPML
-and RSS feeds.
+So if you want to compare merge performance with other SCM, you should
+either add time to run diffstat for other SCM, or substract time to
+run "git diff-tree --stat".
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
