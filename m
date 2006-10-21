@@ -1,40 +1,53 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH 0/3] Extend git-branch list output
-Date: Sun, 22 Oct 2006 00:33:21 +0200
-Message-ID: <1161470004894-git-send-email-hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 22 00:33:39 2006
+From: Edgar Toernig <froese@gmx.de>
+Subject: Re: VCS comparison table
+Date: Sun, 22 Oct 2006 00:52:48 +0200
+Message-ID: <20061022005248.168709cb.froese@gmx.de>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<87irie1wvv.wl%cworth@cworth.org>
+	<453A7D7E.8060105@utoronto.ca>
+	<200610212248.37935.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
+	Carl Worth <cworth@cworth.org>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 22 00:53:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbPPJ-0003AE-37
-	for gcvg-git@gmane.org; Sun, 22 Oct 2006 00:33:33 +0200
+	id 1GbPi7-0005AU-0s
+	for gcvg-git@gmane.org; Sun, 22 Oct 2006 00:52:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422838AbWJUWd1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Oct 2006 18:33:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422857AbWJUWd1
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 18:33:27 -0400
-Received: from mail48.e.nsc.no ([193.213.115.48]:6064 "EHLO mail48.e.nsc.no")
-	by vger.kernel.org with ESMTP id S1422838AbWJUWd0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Oct 2006 18:33:26 -0400
-Received: from localhost.localdomain (ti231210a080-7372.bb.online.no [80.213.28.208])
-	by mail48.nsc.no (8.13.8/8.13.5) with ESMTP id k9LMXOmP026850
-	for <git@vger.kernel.org>; Sun, 22 Oct 2006 00:33:24 +0200 (CEST)
-To: git@vger.kernel.org
-X-Mailer: git-send-email 1.4.3.1
+	id S1161504AbWJUWwy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Oct 2006 18:52:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161507AbWJUWwy
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 18:52:54 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59277 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1161508AbWJUWww (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Oct 2006 18:52:52 -0400
+Received: (qmail invoked by alias); 21 Oct 2006 22:52:50 -0000
+Received: from p50900E81.dip0.t-ipconnect.de (EHLO dialup) [80.144.14.129]
+  by mail.gmx.net (mp019) with SMTP; 22 Oct 2006 00:52:50 +0200
+X-Authenticated: #271361
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200610212248.37935.jnareb@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29685>
 
-This patch-series is on top of my previous patch to git-branch.sh
+Jakub Narebski wrote:
+>
+> > My understanding is that ^ is treated as a special metacharacter by some
+> > shells, which is why bzr revision specs are more long-winded.
+> 
+> Which shells?
 
-Shortlog:
- [PATCH 1/3] Make git-branch honor -v when showing remote branches
- [PATCH 2/3] git-branch: Add -w option to adjust branchname column width
- [PATCH 3/3] Update documentation for git-branch
+In the traditional Bourne shell ^ is an alias for the pipe symbol |.
 
-Diffstat:
- Documentation/git-branch.txt |    8 ++++-
- git-branch.sh                |   79 +++++++++++++++++++++++++++--------------
- 2 files changed, 59 insertions(+), 28 deletions(-)
+Ciao, ET.
