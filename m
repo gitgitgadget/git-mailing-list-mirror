@@ -1,86 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: git-merge-recursive, was Re: [ANNOUNCE] Example Cogito Addon -
- cogito-bundle
-Date: Sat, 21 Oct 2006 04:03:18 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0610210359040.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
- <200610201821.34712.jnareb@gmail.com> <20061020181210.GA29843@artax.karlin.mff.cuni.cz>
- <200610202047.11291.jnareb@gmail.com> <Pine.LNX.4.64.0610201151130.3962@g5.osdl.org>
- <45391F1C.80100@utoronto.ca> <Pine.LNX.4.64.0610201231570.3962@g5.osdl.org>
- <4539318D.9040004@utoronto.ca> <Pine.LNX.4.64.0610201333240.3962@g5.osdl.org>
+From: Al Viro <viro@ftp.linux.org.uk>
+Subject: Re: [ANNOUNCE] GIT 1.4.3
+Date: Sat, 21 Oct 2006 03:12:35 +0100
+Message-ID: <20061021021235.GA29920@ftp.linux.org.uk>
+References: <7vejt5xjt9.fsf@assigned-by-dhcp.cox.net> <7v4ptylfvw.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0610201709430.3962@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
-	Jakub Narebski <jnareb@gmail.com>, Jan Hudec <bulb@ucw.cz>,
-	bazaar-ng@lists.canonical.com,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Oct 21 04:03:32 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 21 04:12:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gb6Cq-0004R3-Se
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 04:03:25 +0200
+	id 1Gb6Lu-0005NL-UH
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 04:12:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992772AbWJUCDV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 22:03:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992790AbWJUCDV
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 22:03:21 -0400
-Received: from mail.gmx.de ([213.165.64.20]:19160 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S2992772AbWJUCDU (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 22:03:20 -0400
-Received: (qmail invoked by alias); 21 Oct 2006 02:03:18 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp042) with SMTP; 21 Oct 2006 04:03:18 +0200
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S1030377AbWJUCMk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 22:12:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030378AbWJUCMk
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 22:12:40 -0400
+Received: from zeniv.linux.org.uk ([195.92.253.2]:61606 "EHLO
+	ZenIV.linux.org.uk") by vger.kernel.org with ESMTP id S1030377AbWJUCMj
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Oct 2006 22:12:39 -0400
+Received: from viro by ZenIV.linux.org.uk with local (Exim 4.52 #1 (Red Hat Linux))
+	id 1Gb6Lj-0003Li-5z; Sat, 21 Oct 2006 03:12:35 +0100
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0610201333240.3962@g5.osdl.org>
-X-Y-GMX-Trusted: 0
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0610201709430.3962@g5.osdl.org>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29576>
 
-
-
-On Fri, 20 Oct 2006, Linus Torvalds wrote:
-
-> On Fri, 20 Oct 2006, Aaron Bentley wrote:
+On Fri, Oct 20, 2006 at 05:14:39PM -0700, Linus Torvalds wrote:
+> 
+> 
+> On Fri, 20 Oct 2006, Junio C Hamano wrote:
 > > 
-> > Agreed.  We start by comparing BASE and OTHER, so all those comparisons
-> > are in-memory operations that don't hit disk.  Only for files where BASE
-> > and OTHER differ do we even examine the THIS version.
+> > I am considering the following to address irritation some people
+> > (including me, actually) are experiencing with this change when
+> > viewing a small (or no) diff.  Any objections?
 > 
-> Git just slurps in all three trees. I actually think that the current 
-> merge-recursive.c does it the stupid way (ie it expands all trees 
-> recursively, regardless of whether it's needed or not), but I should 
-> really check with Dscho, since I had nothing to do with that code.
+> Not from me. I use "git diff" just to check that the tree is empty, and 
+> the fact that it now throws me into an empty pager is irritating.
 
-AFAIR yes, it does the dumb thing, namely it does not take advantage of 
-trees being identical when their SHA1s are identical.
+Speaking of irritations...  There is a major (and AFAICS fixable)
+suckitude in git-cherry.  Basically, what it does is
+	* use git-rev-list to find commits on our branches
+	* do git-diff-tree -p for each commit
+	* do git-patch-id on each delta
+	* compare sets.
+For one thing, there are better ways to do set comparison than creating
+a file for each element in one set and going through another checking
+if corresponding files exist (join(1) and sort(1) or just use perl hashes).
+That one is annoying on journalling filesystems (a lot of files being
+created, read and removed - fsckloads of disk traffic), but it's actually
+not the worst problem.
 
-This will be a _tremendous_ speed-up.
+Far more annoying is that we keep recalculating git-diff-tree -p | git-patch-id
+again and again; try to do git cherry on a dozen short branches forked at
+2.6.18 and you'll see the damn thing recalculated a dozen of times for
+each commit from 2.6.18 to current.  It's not cheap, to put it mildly.
 
-> > > So recursive basically generates the matrix of similarity for the 
-> > > new/deleted files, and tries to match them up, and there you have your 
-> > > renames - without ever looking at the history of how you ended up where 
-> > > you are.
-> > 
-> > So in the simple case, you compare unmatched THIS, OTHER and BASE files
-> > to find the renames?
-> 
-> Right. Some cases are easy: if one of the branches only added files (which 
-> is relatively common), that obviously cannot be a rename. So you don't 
-> even have to compare all possible combinarions - you know you don't have 
-> renames from one branch to the other ;)
-> 
-> But I'm not even the authorative person to explain all the details of the 
-> current recursive merge, and I might have missed something. Dscho? 
-> Fredrik? Anything you want to add?
+git-rev-list ^v2.6.18 HEAD|while read i; do git-diff-tree -p $i; done |git-patch-id >/dev/null
 
-Not me. Only that there is much potential for optimization (meaning 
-performance, not the basic algorithm).
+out of hot cache on 2GHz amd64 box (Athlon 64 3400+) takes 3 minutes of
+wall time.  Repeat that for each branch and it's starting to get old very
+fast.
 
-Ciao,
-Dscho
+Note that we are calculating a function of commit; it _never_ changes.
+Even if we don't just calculate and memorize it at commit time, a cache
+somewhere under .git would speed the things up a lot...
