@@ -1,112 +1,67 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH] make cg-commit --review restore original tree state afterwards
-Date: Sat, 21 Oct 2006 22:40:37 +1300
-Message-ID: <4539EB15.3050405@vilain.net>
-References: <20061021014723.B8E9C13810D@magnus.utsl.gen.nz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] Syntax highlighting for combined diff
+Date: Sat, 21 Oct 2006 02:41:35 -0700
+Message-ID: <7vfydigg4w.fsf@assigned-by-dhcp.cox.net>
+References: <ehbq0k$24l$1@sea.gmane.org>
+	<7vslhigld7.fsf@assigned-by-dhcp.cox.net>
+	<200610211049.56477.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 21 11:41:10 2006
+X-From: git-owner@vger.kernel.org Sat Oct 21 11:41:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbDLo-0002ex-CQ
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 11:41:08 +0200
+	id 1GbDMM-0002kt-8E
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 11:41:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992896AbWJUJk5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Oct 2006 05:40:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992887AbWJUJk5
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 05:40:57 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:27615 "EHLO
-	magnus.utsl.gen.nz") by vger.kernel.org with ESMTP id S1030388AbWJUJk4
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Oct 2006 05:40:56 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id 1A5A313810F; Sat, 21 Oct 2006 22:40:53 +1300 (NZDT)
-Received: from [127.0.0.1] (longdrop.magnus.utsl.gen.nz [192.168.253.12])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id 6DA9813810B;
-	Sat, 21 Oct 2006 22:40:48 +1300 (NZDT)
-User-Agent: Thunderbird 1.5.0.4 (X11/20060615)
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20061021014723.B8E9C13810D@magnus.utsl.gen.nz>
-X-Enigmail-Version: 0.94.0.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S2992887AbWJUJlh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Oct 2006 05:41:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992897AbWJUJlh
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 05:41:37 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:53997 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S2992887AbWJUJlg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Oct 2006 05:41:36 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061021094135.LLAY2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 21 Oct 2006 05:41:35 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id cxhL1V00x1kojtg0000000
+	Sat, 21 Oct 2006 05:41:21 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200610211049.56477.jnareb@gmail.com> (Jakub Narebski's message
+	of "Sat, 21 Oct 2006 10:49:56 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29597>
 
-Ok, I ruined the error message.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-This could also do with some enhancement; if you edit hunks of the
-patch, then the numbers in the hunks could be updated so as to not make
-the patch abort.  Also, if it does abort you should get the option of
-undoing everything, or editing the patch again...
+> Do I understand code correctly, and the last '+' or '-'
+> in the parents column means?
+>
+>         for (i = 0; i < ecbdata->nparents && len; i++) {
+>                 if (line[i] == '-')
+>                         color = DIFF_FILE_OLD;
+>                 else if (line[i] == '+')
+>                         color = DIFF_FILE_NEW;
+>         }
+>
+> Anyone who wrote this code, could you answer me, please?
 
-Will try again with this another time.
+The "up to ecbdata->nparents" is Johannes in cd112ce.  But you
+are looking at a wrong code, I am afraid, if your original
+question was about the combined format (there is a comment about
+the codepath dealing only with two-way diffs by Johannes, above
+the part you quoted).  The output for combined diff is coming
+from combine-diff.c:dump_sline().
 
-Sam.
-
-Sam Vilain wrote:
-> If you delete hunks from the patch that 'cg-commit -p' shows you, then
-> they are lost 'forever'.  Let's put back everything how it was
-> beforehand instead.
-> ---
->  cg-commit |   25 +++++++++++++++++--------
->  1 files changed, 17 insertions(+), 8 deletions(-)
-> 
-> diff --git a/cg-commit b/cg-commit
-> index 01a4eb7..81b3619 100755
-> --- a/cg-commit
-> +++ b/cg-commit
-> @@ -568,18 +568,16 @@ else
->  fi
->  rm "$LOGMSG2"
->  
-> +pine_for_darcs() {
-> +	die "unable to revert the new patch; the original patch is available in $PATCH, your edited patch is available in $PATCH2, your log message is in $LOGMSG, your working copy is in undefined state now and the world is about to end in ten minutes, have a nice day"
-> +}
-> +
->  if [ "$review" ]; then
->  	if ! cmp -s "$PATCH" "$PATCH2"; then
->  		echo "Reverting the original patch..."
-> -		if ! cg-patch -R < "$PATCH"; then
-> -			die "unable to revert the original patch; the original patch is available in $PATCH, your edited patch is available in $PATCH2, your log message is in $LOGMSG, your working copy is in undefined state now and the world is about to end in ten minutes, have a nice day"
-> -		fi
-> +		cg-patch -R < "$PATCH" || pine_for_darcs
->  		echo "Applying the edited patch..."
-> -		if ! cg-patch < "$PATCH2"; then
-> -			# FIXME: Do something better to alleviate this situation.
-> -			# At least restore the tree to the original state.
-> -			die "unable to apply the edited patch; the original patch is available in $PATCH, your edited patch is available in $PATCH2, your log message is in $LOGMSG, your working copy is in undefined state now and the world is about to end in five minutes, have a nice day"
-> -		fi
-> +		cg-patch < "$PATCH2" || pine_for_darcs
->  	fi
->  fi
->  
-> @@ -625,6 +623,17 @@ if [ "$amend" ]; then
->  fi
->  
->  treeid="$(git-write-tree ${missingok})"
-> +
-> +if [ "$review" ]; then
-> +        if ! cmp -s "$PATCH" "$PATCH2"; then
-> +                echo "Reverting the new patch..."
-> +                cg-patch -R < "$PATCH2" || pine_for_darcs
-> +                echo "Applying the old patch..."
-> +                cg-patch < "$PATCH" || pine_for_darcs
-> +        fi
-> +fi
-> +
-> +
->  [ "$treeid" ] || die "git-write-tree failed"
->  if [ ! "$force" ] && [ ! "$merging" ] && [ "$oldhead" ] &&
->     [ "$treeid" = "$(cg-object-id -t)" ]; then
+Combined diff output logic pretty much guarantees that you never
+will see plus and minus on the same line.
