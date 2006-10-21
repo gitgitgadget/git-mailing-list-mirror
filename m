@@ -1,55 +1,60 @@
-From: Jan Hudec <bulb@ucw.cz>
+From: "Matthew D. Fuller" <fullermd@over-yonder.net>
 Subject: Re: VCS comparison table
-Date: Sat, 21 Oct 2006 14:30:27 +0200
-Message-ID: <20061021123027.GB29843@artax.karlin.mff.cuni.cz>
-References: <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org> <4536EC93.9050305@utoronto.ca> <845b6e870610190002u420118b8ud634bb9594572c48@mail.gmail.com> <46d6db660610190149x32442596we4112cdd044185a@mail.gmail.com> <45373E27.3050209@op5.se> <vpqwt6wsmb5.fsf@ecrins.imag.fr> <72877ab10610190757u3d2b4df0o204c6ffd73af69b4@mail.gmail.com> <45379A02.1010105@utoronto.ca> <72877ab10610192014o3a7f66c6v79f94f48615e08f4@mail.gmail.com> <45384B0F.4040901@utoronto.ca>
+Date: Sat, 21 Oct 2006 07:30:48 -0500
+Message-ID: <20061021123048.GK75501@over-yonder.net>
+References: <45357411.20500@utoronto.ca> <845b6e870610190002u420118b8ud634bb9594572c48@mail.gmail.com> <46d6db660610190149x32442596we4112cdd044185a@mail.gmail.com> <45373E27.3050209@op5.se> <eha926$uc$2@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tim Webster <tdwebste@gmail.com>,
-	Christian MICHON <christian.michon@gmail.com>,
-	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Sat Oct 21 14:30:30 2006
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 21 14:30:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbFze-0007dT-IH
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 14:30:26 +0200
+	id 1GbG06-0007ga-OY
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 14:30:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161472AbWJUMaW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Oct 2006 08:30:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161473AbWJUMaW
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 08:30:22 -0400
-Received: from artax.karlin.mff.cuni.cz ([195.113.31.125]:31408 "EHLO
-	artax.karlin.mff.cuni.cz") by vger.kernel.org with ESMTP
-	id S1161472AbWJUMaV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Oct 2006 08:30:21 -0400
-Received: by artax.karlin.mff.cuni.cz (Postfix, from userid 17196)
-	id 983CA4955; Sat, 21 Oct 2006 14:30:27 +0200 (CEST)
-To: Aaron Bentley <aaron.bentley@utoronto.ca>
+	id S1161473AbWJUMav (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Oct 2006 08:30:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161474AbWJUMav
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 08:30:51 -0400
+Received: from ns.centralmiss.com ([206.156.254.79]:33520 "EHLO
+	optimus.centralmiss.com") by vger.kernel.org with ESMTP
+	id S1161473AbWJUMau (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Oct 2006 08:30:50 -0400
+Received: from draco.over-yonder.net (adsl-072-148-013-213.sip.jan.bellsouth.net [72.148.13.213])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by optimus.centralmiss.com (Postfix) with ESMTP id 4D09B2842F;
+	Sat, 21 Oct 2006 07:30:49 -0500 (CDT)
+Received: by draco.over-yonder.net (Postfix, from userid 100)
+	id C09BB61C52; Sat, 21 Oct 2006 07:30:48 -0500 (CDT)
+To: Jakub Narebski <jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <45384B0F.4040901@utoronto.ca>
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <eha926$uc$2@sea.gmane.org>
+X-Editor: vi
+X-OS: FreeBSD <http://www.freebsd.org/>
+User-Agent: Mutt/1.5.11-fullermd.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29606>
 
-On Fri, Oct 20, 2006 at 12:05:35AM -0400, Aaron Bentley wrote:
-> Tim Webster wrote:
-> > Also svn does not allow files in the same directory to live in
-> > multiple repos
+On Fri, Oct 20, 2006 at 12:40:11PM +0200 I heard the voice of
+Jakub Narebski, and lo! it spake thus:
 > 
-> It would surprise me if many SCMs that support atomic commit also
-> support intermixing files from multiple repos in the same directory.
+> I'd like to put ComparisonWithBazaarNG page on GitWiki
+> (http://git.or.cz/gitwiki/) some time soon,
 
-In fact I think svk would. You would have to switch them by setting
-an environment variable, but it's probably doable. That is because
-unlike other version control systems, it does not store the information
-about checkout in the checkout, but in the central directory and that
-can be set. I don't know git well enough to tell whether git could do
-the same by setting GIT_DIR.
+This is a good idea; I think we've plowed a lot of ground in this
+thread that would be useful to document somewhere easily
+referenceable.  I've thought a few times while going through these
+mails of putting some of the material up on the Bazaar wiki.  I'm not
+really the best person to try and sort it out, but I may try and put
+together some notes at least.
 
---------------------------------------------------------------------------------
-                  				- Jan Hudec `Bulb' <bulb@ucw.cz>
+
+-- 
+Matthew Fuller     (MF4839)   |  fullermd@over-yonder.net
+Systems/Network Administrator |  http://www.over-yonder.net/~fullermd/
+           On the Internet, nobody can hear you scream.
