@@ -1,78 +1,86 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: "=?ISO-8859-1?Q?Erik_B=E5gfors?=" <zindar@gmail.com>
 Subject: Re: VCS comparison table
-Date: Sat, 21 Oct 2006 18:13:56 +0200
-Message-ID: <200610211813.57374.jnareb@gmail.com>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <453656F8.3000504@utoronto.ca> <20061021155624.GF29843@artax.karlin.mff.cuni.cz>
+Date: Sat, 21 Oct 2006 18:19:54 +0200
+Message-ID: <845b6e870610210919i6d086654g3881343e6a3c9f84@mail.gmail.com>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	 <Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
+	 <45345AEF.6070107@utoronto.ca> <200610171030.35854.jnareb@gmail.com>
+	 <vpqejt76vgz.fsf@ecrins.imag.fr>
+	 <20061017073839.3728d1e7.seanlkml@sympatico.ca>
+	 <20061021141328.GE29843@artax.karlin.mff.cuni.cz>
+	 <BAYC1-PASMTP116A2EE9056E50B25534D5AE020@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	bazaar-ng@lists.canonical.com, Linus Torvalds <torvalds@osdl.org>,
-	Andreas Ericsson <ae@op5.se>, Petr Baudis <pasky@suse.cz>,
-	Carl Worth <cworth@cworth.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 21 18:13:54 2006
+Cc: "Jan Hudec" <bulb@ucw.cz>, "Linus Torvalds" <torvalds@osdl.org>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org,
+	"Matthieu Moy" <Matthieu.Moy@imag.fr>,
+	"Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 21 18:29:43 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbJTu-0007Kt-58
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 18:13:54 +0200
+	id 1GbJjC-0001Ww-C0
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 18:29:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992784AbWJUQNu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Oct 2006 12:13:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992785AbWJUQNu
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 12:13:50 -0400
-Received: from hu-out-0506.google.com ([72.14.214.225]:46774 "EHLO
-	hu-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S2992784AbWJUQNt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Oct 2006 12:13:49 -0400
-Received: by hu-out-0506.google.com with SMTP id 28so575139hub
-        for <git@vger.kernel.org>; Sat, 21 Oct 2006 09:13:47 -0700 (PDT)
+	id S1423355AbWJUQ30 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Oct 2006 12:29:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423359AbWJUQ30
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 12:29:26 -0400
+Received: from zeus2.kernel.org ([204.152.191.36]:21951 "EHLO zeus2.kernel.org")
+	by vger.kernel.org with ESMTP id S1423358AbWJUQ3Z (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Oct 2006 12:29:25 -0400
+Received: from py-out-1112.google.com (py-out-1112.google.com [64.233.166.182])
+	by zeus2.kernel.org (8.13.7/8.13.1) with ESMTP id k9LGTAr7011657
+	for <git@vger.kernel.org>; Sat, 21 Oct 2006 16:29:23 GMT
+Received: by py-out-1112.google.com with SMTP id z74so41927pyg
+        for <git@vger.kernel.org>; Sat, 21 Oct 2006 09:27:02 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
-        b=n3EjrL1+qxE733wEZ7TXZbMO1SerUOcOm4PqndHn8327BpENev+y4csCU4K+4okd0gKZnBDxPOKU3fji+VNC2s2KnGi4cj/rJHi11tx4LxyYESH1Ony68mqq9uy4oNDzeN5HW+IVy6I5+/p0ibufFpBuGxtbnHXlsLRx2ToIriI=
-Received: by 10.67.93.7 with SMTP id v7mr3574855ugl;
-        Sat, 21 Oct 2006 09:13:47 -0700 (PDT)
-Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
-        by mx.google.com with ESMTP id e34sm39605ugd.2006.10.21.09.13.46;
-        Sat, 21 Oct 2006 09:13:47 -0700 (PDT)
-To: Jan Hudec <bulb@ucw.cz>
-User-Agent: KMail/1.9.3
-In-Reply-To: <20061021155624.GF29843@artax.karlin.mff.cuni.cz>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=I2V6J3d2L7xAq50TjRyQrDDNwshDrcwZWiBq26q8XIIvtxT9tQNZCxD/PMhZtw14O0SOPBTqHMcObUcfMjYHEbXTM1TzsjxAf9/AjizwYZnek7kzyg6eAFg43bxST6KGosN8qqZbeh6BC5WJCEuBQTTyGjGouusmQJ+ne5paqFY=
+Received: by 10.35.88.18 with SMTP id q18mr2979143pyl;
+        Sat, 21 Oct 2006 09:19:54 -0700 (PDT)
+Received: by 10.35.116.4 with HTTP; Sat, 21 Oct 2006 09:19:54 -0700 (PDT)
+To: Sean <seanlkml@sympatico.ca>
+In-Reply-To: <BAYC1-PASMTP116A2EE9056E50B25534D5AE020@CEZ.ICE>
 Content-Disposition: inline
+X-Virus-Scanned: ClamAV 0.88.4/2061/Sat Oct 21 09:05:13 2006 on zeus2.kernel.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29630>
 
-Jan Hudec wrote:
+On 10/21/06, Sean <seanlkml@sympatico.ca> wrote:
+> On Sat, 21 Oct 2006 16:13:28 +0200
+> Jan Hudec <bulb@ucw.cz> wrote:
+>
+> > Bzr is meant to be used in both ways, depending on user's choice.
+> > Therefore it comes with that infrastructure and you can choose whether
+> > you want to use it or not.
+>
+> From what we've read on this thread, bzr appears to be biased towards
+> working with a central repo.  That is the model that supports the use of
+> revnos etc that the bzr folks are so fond of.   However Git is perfectly
+> capable of being used in any number of models, including centralized.
+> Git just doesn't make the mistake of training new users into using
+> features that are only stable in a limited number of those models.
 
-> Also programmers usually don't develop even the single logical step as a
-> single commit. Instead they they also commit to backup their work,
+This is just plain wrong.
 
-In git you can backup your work on temporary branch; besides there
-is git commit --amend to correct last commit.
+bzr is a fully decentralized VCS. I've read this thread for quite some
+time now and I really cannot understand why people come to this
+conclusion.
 
-> when they try something they think they may in future return, when they
-> need to continue on another computer and so on. And these commits are
-> generally not logical steps. Also the steps are often not in a logical
-> order. Therefore showing diff for each commit in the bundle often does
-> not make sense.
+However, if you do want to work centralized, bzr has commands that
+fits that workflow really good.
 
-That is why before sending patch series based on some feature branch,
-you should at least rebase the branch on top of current work, to ensure
-that the series would apply cleanly.
 
-If feature branch/patch series needs cleanup (going from "answer" to
-"solution" http://lkml.org/lkml/2005/4/7/176), i.e. patch (commit)
-reordering, joining two patches into one, patch splitting, you can
-use git-cherry-pick, git-cherry-pick --no-commit and git commit --amend
-combination, or git-format-patch, patch editing and reordering, and git-am.
-Or just use StGit or pg.
+/Erik
 
 -- 
-Jakub Narebski
-Poland
+google talk/jabber. zindar@gmail.com
+SIP-phones: sip:erik_bagfors@gizmoproject.com
+sip:17476714687@proxy01.sipphone.com
