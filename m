@@ -1,75 +1,93 @@
-From: Sean <seanlkml@sympatico.ca>
+From: Jeff King <peff@peff.net>
 Subject: Re: VCS comparison table
-Date: Sat, 21 Oct 2006 15:02:33 -0400
-Message-ID: <20061021150233.c29e11c5.seanlkml__32740.957910619$1161457371$gmane$org@sympatico.ca>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<egr3ud$nqm$1@sea.gmane.org> <45340713.6000707@utoronto.ca>
-	<Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
-	<45345AEF.6070107@utoronto.ca>
-	<BAYC1-PASMTP08A746E5FA6B87BC65BD37AE0E0@CEZ.ICE>
-	<4535345C.6090905@utoronto.ca>
-	<20061021185825.GC29927@artax.karlin.mff.cuni.cz>
+Date: Sat, 21 Oct 2006 15:19:49 -0400
+Message-ID: <20061021191949.GA8096@coredump.intra.peff.net>
+References: <45357CC3.4040507@utoronto.ca> <87irie1wvv.wl%cworth@cworth.org> <20061021130111.GL75501@over-yonder.net> <200610211608.18895.jnareb@gmail.com> <20061021181149.GM75501@over-yonder.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-X-From: bazaar-ng-bounces@lists.canonical.com Sat Oct 21 21:02:48 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, bazaar-ng@lists.canonical.com,
+	Linus Torvalds <torvalds@osdl.org>,
+	Carl Worth <cworth@cworth.org>, Andreas Ericsson <ae@op5.se>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 21 21:19:59 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbM7M-0000rv-J5
-	for gcvbg-bazaar-ng@m.gmane.org; Sat, 21 Oct 2006 21:02:48 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GbM7L-0001yG-4Y; Sat, 21 Oct 2006 20:02:47 +0100
-Received: from bayc1-pasmtp08.bayc1.hotmail.com ([65.54.191.168]
-	helo=BAYC1-PASMTP08.CEZ.ICE)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <seanlkml@sympatico.ca>) id 1GbM7B-0001yA-0p
-	for bazaar-ng@lists.canonical.com; Sat, 21 Oct 2006 20:02:38 +0100
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP08.CEZ.ICE
-	over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830); 
-	Sat, 21 Oct 2006 12:11:17 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GbLB3-0002EI-VE; Sat, 21 Oct 2006 14:02:33 -0400
-To: Jan Hudec <bulb@ucw.cz>
-Message-Id: <20061021150233.c29e11c5.seanlkml@sympatico.ca>
-In-Reply-To: <20061021185825.GC29927@artax.karlin.mff.cuni.cz>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 21 Oct 2006 19:11:18.0062 (UTC)
-	FILETIME=[AFADC4E0:01C6F544]
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29660>
+	id 1GbMNv-0003NZ-DW
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 21:19:55 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1422833AbWJUTTw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Oct 2006 15:19:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422686AbWJUTTw
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 15:19:52 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:25069 "HELO
+	peff.net") by vger.kernel.org with SMTP id S1422833AbWJUTTv (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Oct 2006 15:19:51 -0400
+Received: (qmail 31072 invoked from network); 21 Oct 2006 15:19:50 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 21 Oct 2006 15:19:50 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 21 Oct 2006 15:19:49 -0400
+To: "Matthew D. Fuller" <fullermd@over-yonder.net>
+Content-Disposition: inline
+In-Reply-To: <20061021181149.GM75501@over-yonder.net>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29661>
 
-On Sat, 21 Oct 2006 20:58:25 +0200
-Jan Hudec <bulb@ucw.cz> wrote:
+On Sat, Oct 21, 2006 at 01:11:49PM -0500, Matthew D. Fuller wrote:
 
-> In bzr this was already discussed and the storage supports so called
-> "ghost" revisions, whose existence is known, but not their data. There
-> are even repositories around that contain them (created by converting
-> data from arch), but to my best knowledge there is no user interface to
-> create branches or checkouts with partial data.
+> Maybe that's what you mean by 'centralization'; each branch is central
+> to itself.  That seems a pretty useless definition, though.  In my
+> mind, actually, it's MORE distributed; my branch remains my branch,
+> and your branch remains your branch, and the difference doesn't keep
+> us from working together and moving changes back and forth.  Forcing
+> my branch to become your branch sounds a lot more "centralized" to me.
+> 
+> Now, we can discuss THAT distinction.  I'm not _opposed_ to git's
 
-In Git the same functionality can be achieved with so called shallow-
-clones.  Unfortunately, they've only been discussed and not yet
-implemented.
+OK, let's discuss. :)
 
-Sean
+I think the concept of "my" branch doesn't make any sense in git.
+Everyone is working collectively on a DAG of the history, and we all
+have pointers into the DAG. Something is "my" branch in the sense that I
+have a repository with a pointer into the DAG, but then again, so do N
+other people. I control my pointer, but that's it.
+
+So don't think of it as "git throws away branch identity" as much as
+"git never cared about branch identity in the first place, and doesn't
+think it's relevant."
+
+Now, there are presumably advantages and disadvantages to these
+approaches. I like the fact that I can prepare a repository from
+scratch, import it from cvs, copy it, push it, or do whatever I like,
+and the end result is always exactly the same (revids included). With
+your model, on the other hand, it seems the advantages are that in many
+cases you can do things like distributed revnos.
+
+> agree on branch identity, it's completely pointless to keep yakking
+> about revnos, because they're a direct CONSEQUENCE of that difference
+> in mental model.  See?  They're an EFFECT, not a CAUSE.  If bzr didn't
+> have revnos, I'd STILL want my branch to keep its identity.  You could
+> name the mainline revisions after COLORS if you wanted, and I'd still
+> want my branch to keep its identity.  Aren't we through rehashing the
+> same discussion about the EFFECTS?
+
+I agree completely.
+
+> > 2. But the preferred git workflow is to have two branches in each of
+> > two clones. The 'origin' branch where you fetch changes from other
+> > repository (so called "tracking branch") and you don't commit your
+> > changes to [...]
+> 
+> Funny, since this reads to me EXACTLY like the bzr flow of "upstream
+> branch I pull" and "my branch I merge from upstream" that's getting
+> kvetched around...
+
+The difference, I think, is that it's easier in git to move the upstream
+around: you simply start fetching from a different place. I'm not clear
+on how that works in bzr (if it invalidates revnos or has other side
+effects).
+
+-Peff
