@@ -1,68 +1,84 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
-Date: Sat, 21 Oct 2006 12:34:31 +0200
-Message-ID: <200610211234.31967.jnareb@gmail.com>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <200610211036.44679.jnareb@gmail.com> <vpq64eeyo8v.fsf@ecrins.imag.fr>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] Syntax highlighting for combined diff
+Date: Sat, 21 Oct 2006 03:40:43 -0700
+Message-ID: <7v4ptygdec.fsf@assigned-by-dhcp.cox.net>
+References: <ehbq0k$24l$1@sea.gmane.org> <200610211049.56477.jnareb@gmail.com>
+	<7vfydigg4w.fsf@assigned-by-dhcp.cox.net>
+	<200610211202.00314.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 21 12:34:33 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 21 12:40:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbEBU-0001FA-MY
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 12:34:33 +0200
+	id 1GbEHa-00021N-6d
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 12:40:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992920AbWJUKeZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Oct 2006 06:34:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992917AbWJUKeZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 06:34:25 -0400
-Received: from hu-out-0506.google.com ([72.14.214.232]:19388 "EHLO
-	hu-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S2992920AbWJUKeZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Oct 2006 06:34:25 -0400
-Received: by hu-out-0506.google.com with SMTP id 28so523439hub
-        for <git@vger.kernel.org>; Sat, 21 Oct 2006 03:34:23 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Jlizp7Sj2qfCR6t89A9E2IQfN5bNur9kLIt2hzGvjLM3uuBYyLLjH7u1fgsvuScAHesEFSSH9ITOZPhg/Z6M/SVD0t13TSOA+I0DJTiRjnuOIwiqcmlKEvrhUuV2xp0EQJWAV0LnX+qH2eUxgs6Zl4dfyYcqLjWfZq53Fa8M5xU=
-Received: by 10.66.224.3 with SMTP id w3mr3615628ugg;
-        Sat, 21 Oct 2006 03:34:23 -0700 (PDT)
-Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
-        by mx.google.com with ESMTP id 28sm2355068ugc.2006.10.21.03.34.22;
-        Sat, 21 Oct 2006 03:34:23 -0700 (PDT)
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-User-Agent: KMail/1.9.3
-In-Reply-To: <vpq64eeyo8v.fsf@ecrins.imag.fr>
-Content-Disposition: inline
+	id S2992927AbWJUKko (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Oct 2006 06:40:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992930AbWJUKko
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 06:40:44 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:46842 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S2992927AbWJUKko (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Oct 2006 06:40:44 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061021104043.DDNR16798.fed1rmmtao09.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 21 Oct 2006 06:40:43 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id cygU1V0041kojtg0000000
+	Sat, 21 Oct 2006 06:40:29 -0400
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200610211202.00314.jnareb@gmail.com> (Jakub Narebski's message
+	of "Sat, 21 Oct 2006 12:02:00 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29602>
 
-Matthieu Moy wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Another relevant difference between a patch and a bundle is that the
-> bundles knows its ancestor, so, when you apply the bundle, it builds
-> the new revision with exact patching. If you need a merge, then it
-> will happen exactly in the same way as a merge between two branches
-> (ie. three-way merge for example).
+> Junio C Hamano wrote:
+>> Jakub Narebski <jnareb@gmail.com> writes:
+>> 
+>> > Do I understand code correctly, and the last '+' or '-'
+>> > in the parents column means?
+>> >
+>> >         for (i = 0; i < ecbdata->nparents && len; i++) {
+>> >                 if (line[i] == '-')
+>> >                         color = DIFF_FILE_OLD;
+>> >                 else if (line[i] == '+')
+>> >                         color = DIFF_FILE_NEW;
+>> >         }
+>> >
+>> > Anyone who wrote this code, could you answer me, please?
+>> 
+>> The "up to ecbdata->nparents" is Johannes in cd112ce.  But you
+>> are looking at a wrong code, I am afraid, if your original
+>> question was about the combined format (there is a comment about
+>> the codepath dealing only with two-way diffs by Johannes, above
+>> the part you quoted).  The output for combined diff is coming
+>> from combine-diff.c:dump_sline().
+>
+> I was asking both about combined diff format, and how it is colored
+> by git-diff --color, to add colored combined diff output to gitweb.
 
-By the way, if patch send via email is git enchanced patch, with
-[shortened] sha1 of blobs (file contents), and our repository has
-the blob the patch is supposedly to apply to (but for example line
-of development moved forwards) we can request via --3way command
-option to git-am to fall back on 3-way merge if the patch doesn't
-apply cleanly.
+I was answering about both.  dump_sline() implements both format
+and coloring.
 
-It is not as powerfull as merge of branches, but it is sufficient
-in most cases. And in other cases you have to resolve conflict by
-hand, anyway; git-rerere (which records resolving of conflicts and
-reuses them) can help there.
--- 
-Jakub Narebski
-Poland
+> Any other ideas how combined commitdiff should look like in gitweb?
+
+Combined or no combined, one thing that mildly irritates me
+sometimes is that there does not seem to be an easy and obvious
+way to do a rough equivalent of typing SPACE repeatedly while
+viewing "git log -p".
+
+In other words, I think it would be a nice addition to have "go
+to commitdiff page of this parent" links near the top on the
+commitdiff page.
