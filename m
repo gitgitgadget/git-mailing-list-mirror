@@ -1,93 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: VCS comparison table
-Date: Sat, 21 Oct 2006 15:19:49 -0400
-Message-ID: <20061021191949.GA8096@coredump.intra.peff.net>
-References: <45357CC3.4040507@utoronto.ca> <87irie1wvv.wl%cworth@cworth.org> <20061021130111.GL75501@over-yonder.net> <200610211608.18895.jnareb@gmail.com> <20061021181149.GM75501@over-yonder.net>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
+Date: Sat, 21 Oct 2006 21:20:38 +0200
+Message-ID: <20061021192038.GD29927@artax.karlin.mff.cuni.cz>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<20061020225917.GA30584@coredump.intra.peff.net>
+	<20061021174056.GA29927@artax.karlin.mff.cuni.cz>
+	<200610211951.43495.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, bazaar-ng@lists.canonical.com,
-	Linus Torvalds <torvalds@osdl.org>,
-	Carl Worth <cworth@cworth.org>, Andreas Ericsson <ae@op5.se>,
+Cc: Jeff King <peff@peff.net>, bazaar-ng@lists.canonical.com,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 21 21:19:59 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+X-From: bazaar-ng-bounces@lists.canonical.com Sat Oct 21 21:20:40 2006
+Return-path: <bazaar-ng-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbMNv-0003NZ-DW
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 21:19:55 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422833AbWJUTTw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Oct 2006 15:19:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422686AbWJUTTw
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 15:19:52 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:25069 "HELO
-	peff.net") by vger.kernel.org with SMTP id S1422833AbWJUTTv (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Oct 2006 15:19:51 -0400
-Received: (qmail 31072 invoked from network); 21 Oct 2006 15:19:50 -0400
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 21 Oct 2006 15:19:50 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 21 Oct 2006 15:19:49 -0400
-To: "Matthew D. Fuller" <fullermd@over-yonder.net>
+	id 1GbMOc-0003Uf-DG
+	for gcvbg-bazaar-ng@m.gmane.org; Sat, 21 Oct 2006 21:20:38 +0200
+Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
+	id 1GbMOb-0002ll-In; Sat, 21 Oct 2006 20:20:37 +0100
+Received: from artax.karlin.mff.cuni.cz ([195.113.31.125])
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <jhud7196@artax.karlin.mff.cuni.cz>)
+	id 1GbMOW-0002kY-9E
+	for bazaar-ng@lists.canonical.com; Sat, 21 Oct 2006 20:20:32 +0100
+Received: by artax.karlin.mff.cuni.cz (Postfix, from userid 17196)
+	id AC9274A86; Sat, 21 Oct 2006 21:20:38 +0200 (CEST)
+To: Jakub Narebski <jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20061021181149.GM75501@over-yonder.net>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29661>
+In-Reply-To: <200610211951.43495.jnareb@gmail.com>
+User-Agent: Mutt/1.5.9i
+X-BeenThere: bazaar-ng@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
+List-Post: <mailto:bazaar-ng@lists.canonical.com>
+List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-ng-bounces@lists.canonical.com
+Errors-To: bazaar-ng-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29662>
 
-On Sat, Oct 21, 2006 at 01:11:49PM -0500, Matthew D. Fuller wrote:
-
-> Maybe that's what you mean by 'centralization'; each branch is central
-> to itself.  That seems a pretty useless definition, though.  In my
-> mind, actually, it's MORE distributed; my branch remains my branch,
-> and your branch remains your branch, and the difference doesn't keep
-> us from working together and moving changes back and forth.  Forcing
-> my branch to become your branch sounds a lot more "centralized" to me.
+On Sat, Oct 21, 2006 at 07:51:43PM +0200, Jakub Narebski wrote:
+> Jan Hudec wrote:
 > 
-> Now, we can discuss THAT distinction.  I'm not _opposed_ to git's
-
-OK, let's discuss. :)
-
-I think the concept of "my" branch doesn't make any sense in git.
-Everyone is working collectively on a DAG of the history, and we all
-have pointers into the DAG. Something is "my" branch in the sense that I
-have a repository with a pointer into the DAG, but then again, so do N
-other people. I control my pointer, but that's it.
-
-So don't think of it as "git throws away branch identity" as much as
-"git never cared about branch identity in the first place, and doesn't
-think it's relevant."
-
-Now, there are presumably advantages and disadvantages to these
-approaches. I like the fact that I can prepare a repository from
-scratch, import it from cvs, copy it, push it, or do whatever I like,
-and the end result is always exactly the same (revids included). With
-your model, on the other hand, it seems the advantages are that in many
-cases you can do things like distributed revnos.
-
-> agree on branch identity, it's completely pointless to keep yakking
-> about revnos, because they're a direct CONSEQUENCE of that difference
-> in mental model.  See?  They're an EFFECT, not a CAUSE.  If bzr didn't
-> have revnos, I'd STILL want my branch to keep its identity.  You could
-> name the mainline revisions after COLORS if you wanted, and I'd still
-> want my branch to keep its identity.  Aren't we through rehashing the
-> same discussion about the EFFECTS?
-
-I agree completely.
-
-> > 2. But the preferred git workflow is to have two branches in each of
-> > two clones. The 'origin' branch where you fetch changes from other
-> > repository (so called "tracking branch") and you don't commit your
-> > changes to [...]
+> > Besides I start to think that it should be actually possible to solve
+> > this case with the git-style approach. I have to state beforehand, that
+> > I don't know how the most recent git algorithm works, but I imagine
+> > there is some kind of 'brackets' saying the text is in a given file. Now
+> > if those 'brackets' were not flat, but nested, ie. instead of saying
+> > 'this is in foo/bar' it would say 'this is in bar is in foo', the
+> > difference when renaming directory would only affect the 'outer bracket'
+> > and therefore merge correctly with adding content inside it.
 > 
-> Funny, since this reads to me EXACTLY like the bzr flow of "upstream
-> branch I pull" and "my branch I merge from upstream" that's getting
-> kvetched around...
+> You mean, to consider "contents" of a directory union of contents
+> of files and directories it contains, and then use the same "rename
+> detection" algorithm as for files?
 
-The difference, I think, is that it's easier in git to move the upstream
-around: you simply start fetching from a different place. I'm not clear
-on how that works in bzr (if it invalidates revnos or has other side
-effects).
+Yes, something like that.
 
--Peff
+--------------------------------------------------------------------------------
+                  				- Jan Hudec `Bulb' <bulb@ucw.cz>
