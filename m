@@ -1,77 +1,89 @@
-From: Sean <seanlkml@sympatico.ca>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: VCS comparison table
-Date: Sat, 21 Oct 2006 18:06:53 -0400
-Message-ID: <BAYC1-PASMTP03CB0610A4C02971F3CE7FAE020@CEZ.ICE>
-References: <45357CC3.4040507@utoronto.ca>
-	<87irie1wvv.wl%cworth@cworth.org>
-	<20061021130111.GL75501@over-yonder.net>
-	<200610211608.18895.jnareb@gmail.com>
-	<20061021181149.GM75501@over-yonder.net>
-	<20061021191949.GA8096@coredump.intra.peff.net>
-	<20061021214629.GO75501@over-yonder.net>
+Date: Sun, 22 Oct 2006 00:25:31 +0200
+Message-ID: <200610220025.32108.jnareb@gmail.com>
+References: <45357CC3.4040507@utoronto.ca> <20061021191949.GA8096@coredump.intra.peff.net> <20061021214629.GO75501@over-yonder.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-	bazaar-ng@lists.canonical.com, Linus Torvalds <torvalds@osdl.org>,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, bazaar-ng@lists.canonical.com,
+	Linus Torvalds <torvalds@osdl.org>,
 	Carl Worth <cworth@cworth.org>, Andreas Ericsson <ae@op5.se>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 22 00:07:09 2006
+X-From: git-owner@vger.kernel.org Sun Oct 22 00:25:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbOzc-000072-S7
-	for gcvg-git@gmane.org; Sun, 22 Oct 2006 00:07:01 +0200
+	id 1GbPHa-0002Lf-3r
+	for gcvg-git@gmane.org; Sun, 22 Oct 2006 00:25:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161129AbWJUWG5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Oct 2006 18:06:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161490AbWJUWG5
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 18:06:57 -0400
-Received: from bayc1-pasmtp03.bayc1.hotmail.com ([65.54.191.163]:64262 "EHLO
-	BAYC1-PASMTP03.bayc1.hotmail.com") by vger.kernel.org with ESMTP
-	id S1161129AbWJUWG4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Oct 2006 18:06:56 -0400
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP03.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sat, 21 Oct 2006 15:06:56 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GbO3S-0002TL-0C; Sat, 21 Oct 2006 17:06:54 -0400
+	id S1161135AbWJUWZY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 21 Oct 2006 18:25:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161058AbWJUWZX
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 18:25:23 -0400
+Received: from hu-out-0506.google.com ([72.14.214.224]:50143 "EHLO
+	hu-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1422838AbWJUWZW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Oct 2006 18:25:22 -0400
+Received: by hu-out-0506.google.com with SMTP id 28so645764hub
+        for <git@vger.kernel.org>; Sat, 21 Oct 2006 15:25:21 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=SwH+Crzwh8T2LIFMVMVmfo1/PBsM8VtnrOQKftmCqcIrOBLw8hBkeLNuhZ5Rh2jX5F5vffenZ6XvEvctm9f0v+RAHT0GS9aUVwkMuzEkiJtAnTHVV2m53M0otjzwtCoOVaICOeEih13GewRJBQ7mXoI2L7GTtf1QE6yjHA0mJcg=
+Received: by 10.66.221.19 with SMTP id t19mr4572438ugg;
+        Sat, 21 Oct 2006 15:25:20 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
+        by mx.google.com with ESMTP id 20sm266103uga.2006.10.21.15.25.19;
+        Sat, 21 Oct 2006 15:25:20 -0700 (PDT)
 To: "Matthew D. Fuller" <fullermd@over-yonder.net>
-Message-Id: <20061021180653.d3152616.seanlkml@sympatico.ca>
+User-Agent: KMail/1.9.3
 In-Reply-To: <20061021214629.GO75501@over-yonder.net>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 21 Oct 2006 22:06:56.0562 (UTC) FILETIME=[391D4120:01C6F55D]
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29680>
 
-On Sat, 21 Oct 2006 16:46:29 -0500
-"Matthew D. Fuller" <fullermd@over-yonder.net> wrote:
+Matthew D. Fuller wrote:
 
+[cut]
 > Obviously, this is a totally foreign mentality to git, and that's
-> great because it seems to work for you.  I can see advantages to it,
+> great because it seems to work for you. =A0I can see advantages to it=
+,
 > and I can conceive of situations where I might want that behavior.
 > But, in my day-to-day VCS use, I don't hit them, which is why I keep
 > typing 'bzr' instead of 'git' when I annoyingly need to type 'cvs'.
 
-It's not completely foreign, it's one of the things you can use the
-git reflog feature to record.  It's just that it's utterly clear in
-Git that this is a local feature and is never replicated as part
-of the distributed data.
+Well, not exactly. If you are interested in your changes, i.e. commits=20
+generated by you, you can (with new git) filter commits by author name,
+e.g. 'git log --author=3D"$(git repo-config --get user.email)"'. If you
+are interested in commits which you entered into repository, you can
+(with new git) filter commits by commiter.
 
-> Depends on what you're fetching.  You can always tell 'bzr pull' a new
-> URL to look from.  If it's a later version of the 'same' branch, it'll
-> just update.  If it's a 'different' branch (a branch that's a superset
-> of your current branch/set-of-revisions, but with a different
-> 'mainline' path through the revisions counts as 'different' here),
-> pull will complain and require a --overwrite to do the deed.
+If you are interested in history of your branch, you can enable reflog
+for this branch. This is of course totally local information, and=20
+doesn't get propagated. It records things like commits, merges,=20
+rebasing, starting branch anew, amending commits etc. Because it
+is separate from branch and DAG of revisions, we can do fast-forward
+and have identical DAG while having information about local history.
 
-This is where the git model is clearly superior and allows a true
-distributed model.  Because there is no concept of a "mainline"
-(except locally via reflog) you can always merge with anyone
-participating in the DAG without having to overwrite or lose ordering.
+Besides git users are used to refer to graphical history viewers,
+including gitk (Tcl/Tk, in git repository), qgit (Qt), gitview (GTK+, i=
+n=20
+contrib/, less popular), git-show-branch (core git, strange UI, command=
+=20
+line), tig (ncurses) for more complicated cases.
 
-Sean
+
+I wonder if searching for one's own commits isn't the sign that
+the project is of one-main-developer size (i.e. small project,
+without large number of distributed contributors). I think in large=20
+project you rather ask of history of specified file, of specified part=20
+of project (specified directory), ask about why certain change was=20
+introduced etc.
+
+--=20
+Jakub Narebski
+Poland
