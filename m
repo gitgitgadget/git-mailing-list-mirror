@@ -1,121 +1,106 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: git-imap-send and "From "
-Date: Sat, 21 Oct 2006 17:51:17 +0100
-Message-ID: <200610211751.21581.andyparkins@gmail.com>
+From: Aaron Bentley <aaron.bentley@utoronto.ca>
+Subject: Re: VCS comparison table
+Date: Sat, 21 Oct 2006 12:56:27 -0400
+Message-ID: <453A513B.1070006@utoronto.ca>
+References: <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>	<4536EC93.9050305@utoronto.ca>	<845b6e870610190002u420118b8ud634bb9594572c48@mail.gmail.com>	<46d6db660610190149x32442596we4112cdd044185a@mail.gmail.com>	<45373E27.3050209@op5.se>
+	<vpqwt6wsmb5.fsf@ecrins.imag.fr>	<72877ab10610190757u3d2b4df0o204c6ffd73af69b4@mail.gmail.com>	<45379A02.1010105@utoronto.ca>	<72877ab10610192014o3a7f66c6v79f94f48615e08f4@mail.gmail.com>	<45384B0F.4040901@utoronto.ca>	<20061021123027.GB29843@artax.karlin.mff.cuni.cz>
+	<ehd5u7$c5g$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2712745.WpOKToVMBM";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Oct 21 18:55:47 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: bazaar-ng-bounces@lists.canonical.com Sat Oct 21 18:56:50 2006
+Return-path: <bazaar-ng-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbK8B-0005o6-HW
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 18:55:32 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993137AbWJUQyY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Oct 2006 12:54:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993156AbWJUQyG
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 12:54:06 -0400
-Received: from ug-out-1314.google.com ([66.249.92.169]:53226 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S2993147AbWJUQxw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Oct 2006 12:53:52 -0400
-Received: by ug-out-1314.google.com with SMTP id o38so955790ugd
-        for <git@vger.kernel.org>; Sat, 21 Oct 2006 09:53:51 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:message-id;
-        b=oMMuG8VWpeMbn6HvUFkQn5VxcoA4AC+Tp2CriqTB0sIf3byUA6YSiSIdmD1taKvw2QK2eV/3MWiJQ/DKC+LGK9rNTaIBwCPFKhVb0kR4EwVz7vTtXa7eeZedazFDgESoqzfGz9pJBTImww/8vRcYCFsUtLZPHLg5797OuJZTqfI=
-Received: by 10.66.222.9 with SMTP id u9mr4067155ugg;
-        Sat, 21 Oct 2006 09:53:51 -0700 (PDT)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id q1sm1577942uge.2006.10.21.09.53.50;
-        Sat, 21 Oct 2006 09:53:51 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.5
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29635>
+	id 1GbK9R-00062e-DR
+	for gcvbg-bazaar-ng@m.gmane.org; Sat, 21 Oct 2006 18:56:49 +0200
+Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
+	id 1GbK9F-0002Pp-QX; Sat, 21 Oct 2006 17:56:37 +0100
+Received: from server4.panoramicfeedback.com ([66.216.124.41])
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <aaron.bentley@utoronto.ca>) id 1GbK9D-0002Pj-IY
+	for bazaar-ng@lists.canonical.com; Sat, 21 Oct 2006 17:56:35 +0100
+Received: from server4.panoramicfeedback.com ([66.216.124.41] helo=[127.0.0.1])
+	by server4.panoramicfeedback.com with esmtp (Exim 3.36 #1 (Debian))
+	id 1GbK97-0001rW-00; Sat, 21 Oct 2006 12:56:29 -0400
+User-Agent: Thunderbird 1.5.0.7 (X11/20060922)
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <ehd5u7$c5g$1@sea.gmane.org>
+X-Enigmail-Version: 0.94.0.0
+X-Panometrics-MailScanner: Found to be clean
+X-BeenThere: bazaar-ng@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
+List-Post: <mailto:bazaar-ng@lists.canonical.com>
+List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-ng-bounces@lists.canonical.com
+Errors-To: bazaar-ng-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29636>
 
---nextPart2712745.WpOKToVMBM
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hello,
+Jakub Narebski wrote:
+> Jan Hudec wrote:
+> 
+>> On Fri, Oct 20, 2006 at 12:05:35AM -0400, Aaron Bentley wrote:
+>>> Tim Webster wrote:
+>>>> Also svn does not allow files in the same directory to live in
+>>>> multiple repos
+>>> It would surprise me if many SCMs that support atomic commit also
+>>> support intermixing files from multiple repos in the same directory.
+>> In fact I think svk would. You would have to switch them by setting
+>> an environment variable, but it's probably doable. That is because
+>> unlike other version control systems, it does not store the information
+>> about checkout in the checkout, but in the central directory and that
+>> can be set. I don't know git well enough to tell whether git could do
+>> the same by setting GIT_DIR.
+> 
+> You can very simply embed one "clothed" repository into another in GIT,
+> like shown below
+> 
+>   project/.git
+>   project/subdir/
+>   project/subdir/file
+>   project/subproject/
+>   project/subproject/.git
+>   project/subproject/file
+>   ...
+> 
+> It depends on circumstances if one wants files belonging to subdirectory
+> be ignored by top repository. You would want to ignore .git/ directory,
+> though.
 
-I've been playing around with git; made some simple patches for git and=20
-thought I would forward them to the mailing list.  I did this using
+Any SCM worth its salt should support that.  AIUI, that's not what Tim
+wants.  He wants to intermix files from different repos in the same
+directory.
 
-git-format-patch --stdout --signoff -M -B | git-imap-send
+i.e.
 
-With the following in .gitconfig and courier-imap as the IMAP server.
+project/file-1
+project/file-2
+project/.git-1
+project/.git-2
 
-[imap]
-  Folder =3D "INBOX.Drafts"
-  Tunnel =3D "ssh -q mailhost /usr/bin/imapd ./Maildir 2> /dev/null"
+So file-1 would be in the .git-1 repository, but file-2 would be in the
+.git-2 repository.
 
-This appeared to work as expected.  A nicely formatted patch appeared in my=
-=20
-drafts mailbox for checking and sending; which I did.  However, those email=
-s=20
-caused a few problems; like:
-
-"Can you please not send your emails to "unlisted recipients?"  It
-breaks my mail filtering and your mails don't end up going to my "git"
-folder."
-
-As far as I knew, I hadn't done this.  The email looked fine when I checked=
- it=20
-in KMail.  So, I went back and had a look at the raw source of the patch=20
-email that I'd sent and found this:
-
-=46rom 0e3c0aefc3276bd271553d171ed9bcc52d85230e Mon Sep 17 00:00:00 2001
-=46rom: Andy Parkins <andyparkins@gmail.com>
-Date: Fri, 20 Oct 2006 15:24:40 +0100
-Subject: [PATCH] Use email address only for looking up signing key in git-t=
-ag
-
-It's that first line that's the problem.  It was generated by git-format-pa=
-tch=20
-of course, however, I assume that it was intended to be stripped on the way=
-=20
-to the IMAP server.  So,
-
- * Courier's /usr/bin/imapd should have stripped it and didn't
- * git-imap-send shouldn't have sent it
-
-Can anyone help me out with which it should be?  Or point me at the relevan=
-t=20
-RFC?
-
-While I was poking around I found that git is hard coded with
-
-printf("From %s Mon Sep 17 00:00:00 2001\n", sha1);
-
-Was it intentional that the date be hard coded like that?
-
-
-Andy
-=2D-=20
-Dr Andrew Parkins, M Eng (Hons), AMIEE
-andyparkins@gmail.com
-
---nextPart2712745.WpOKToVMBM
-Content-Type: application/pgp-signature
-
+Aaron
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
-iD8DBQBFOlAJwQJ9gE9xL20RAiTvAKCaJX6uiJKH0nbMfSZUamrQ4C3AdACglmL+
-mH497bk5aQgPxXwj6K9PVcw=
-=CSFv
+iD8DBQFFOlE70F+nu1YWqI0RAvNcAJ0Rd6ovGoBNtKxcPNOrMH1yc+bzWQCfQlqT
+hREsUmCBAW8mIYzfzdnqZqU=
+=unGE
 -----END PGP SIGNATURE-----
-
---nextPart2712745.WpOKToVMBM--
