@@ -1,53 +1,56 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [ANNOUNCE] GIT 1.4.3
-Date: Fri, 20 Oct 2006 20:47:54 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0610202046420.12418@xanadu.home>
-References: <7vejt5xjt9.fsf@assigned-by-dhcp.cox.net>
- <7v4ptylfvw.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 21 02:48:08 2006
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: Re: Signed git-tag doesn't find default key
+Date: Fri, 20 Oct 2006 21:52:08 -0300
+Message-ID: <200610210052.k9L0q88T005342@laptop13.inf.utfsm.cl>
+References: <andyparkins@gmail.com>
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 21 02:52:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gb51s-00083b-2c
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 02:48:03 +0200
+	id 1Gb56C-0002MW-0s
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 02:52:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992761AbWJUArz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 20:47:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992762AbWJUArz
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 20:47:55 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:19888 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP
-	id S2992761AbWJUArz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Oct 2006 20:47:55 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0J7G00410NJUSV40@VL-MO-MR003.ip.videotron.ca>; Fri,
- 20 Oct 2006 20:47:54 -0400 (EDT)
-In-reply-to: <7v4ptylfvw.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
-To: Junio C Hamano <junkio@cox.net>
+	id S2992762AbWJUAwZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 20:52:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992763AbWJUAwZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 20:52:25 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:12433 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S2992762AbWJUAwY (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 20:52:24 -0400
+Received: from laptop13.inf.utfsm.cl (pc-232-245-83-200.cm.vtr.net [200.83.245.232])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id k9L0qARS016090
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 20 Oct 2006 21:52:10 -0300
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1])
+	by laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id k9L0q88T005342;
+	Fri, 20 Oct 2006 21:52:08 -0300
+To: Andy Parkins <andyparkins@gmail.com>
+In-Reply-To: Message from Andy Parkins <andyparkins@gmail.com> 
+   of "Fri, 20 Oct 2006 20:21:58 BST." <200610202021.58157.andyparkins@gmail.com> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.21.155]); Fri, 20 Oct 2006 21:52:10 -0300 (CLST)
+X-Virus-Scanned: ClamAV version 0.88, clamav-milter version 0.87 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29568>
 
-On Fri, 20 Oct 2006, Junio C Hamano wrote:
+Andy Parkins <andyparkins@gmail.com> wrote:
 
-> Junio C Hamano <junkio@cox.net> writes:
-> 
-> >  - git-diff paginates its output to the tty by default.  If this
-> >    irritates you, using LESS=RF might help.
-> 
-> I am considering the following to address irritation some people
-> (including me, actually) are experiencing with this change when
-> viewing a small (or no) diff.  Any objections?
+[...]
 
-I think this is an excellent idea.
+> I'm going to advocate my change of only searching on the email address
+> for finding the key - there shouldn't be two keys with the same email
+> address anyway, so there shouldn't be a danger of ambiguity of key.
 
-
-Nicolas
+There very well might be... say you have a key for signing git stuff,
+another one for emailing, another one for signing RPMs you create, ... I
+believe that is the idea of the GPG comment field, precisely.
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                    Fono: +56 32 2654431
+Universidad Tecnica Federico Santa Maria             +56 32 2654239
+Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
