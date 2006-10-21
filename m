@@ -1,80 +1,88 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
-Date: Sat, 21 Oct 2006 09:56:27 +0200
-Message-ID: <vpqk62uhzkk.fsf@ecrins.imag.fr>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: VCS comparison table
+Date: Sat, 21 Oct 2006 10:27:05 +0200
+Organization: At home
+Message-ID: <ehclkf$v3e$1@sea.gmane.org>
 References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<200610172351.17377.jnareb@gmail.com> <4535590C.4000004@utoronto.ca>
-	<200610180057.25411.jnareb@gmail.com>
-	<Pine.LNX.4.64.0610171610270.3962@g5.osdl.org>
-	<20061018053647.GA3507@coredump.intra.peff.net>
-	<Pine.LNX.4.64.0610180739230.3962@g5.osdl.org>
-	<20061018185225.GU20017@pasky.or.cz> <eh76np$trg$1@sea.gmane.org>
-	<BAYC1-PASMTP061F10D0B5AF9F6608134CAE0C0@CEZ.ICE>
-	<4538D724.5040508@utoronto.ca> <ehao3e$2qv$1@sea.gmane.org>
+	<200610171030.35854.jnareb@gmail.com>
+	<vpqejt76vgz.fsf@ecrins.imag.fr>
+	<200610171345.32313.jnareb@gmail.com>
+	<20061017080702.615a3b2f.seanlkml__27953.817000571$1161408618$gmane$org@sympatico.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 21 09:57:41 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Transfer-Encoding: 7Bit
+Cc: git@vger.kernel.org
+X-From: bazaar-ng-bounces@lists.canonical.com Sat Oct 21 10:28:29 2006
+Return-path: <bazaar-ng-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbBjc-00076s-Hg
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 09:57:37 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992829AbWJUH5V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Oct 2006 03:57:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992865AbWJUH5V
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 03:57:21 -0400
-Received: from imag.imag.fr ([129.88.30.1]:49652 "EHLO imag.imag.fr")
-	by vger.kernel.org with ESMTP id S2992829AbWJUH5V (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Oct 2006 03:57:21 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.6/8.13.6) with ESMTP id k9L7uSEO019000
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 21 Oct 2006 09:56:28 +0200 (CEST)
-Received: from ecrins.imag.fr ([129.88.43.124])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1GbBiW-0005uA-2t; Sat, 21 Oct 2006 09:56:28 +0200
-Received: from moy by ecrins.imag.fr with local (Exim 4.50)
-	id 1GbBiV-0005wR-Vw; Sat, 21 Oct 2006 09:56:28 +0200
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <ehao3e$2qv$1@sea.gmane.org> (Jakub Narebski's message of "Fri\, 20 Oct 2006 16\:56\:47 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.6 (imag.imag.fr [129.88.30.1]); Sat, 21 Oct 2006 09:56:28 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29589>
+	id 1GbCDU-0001yr-2k
+	for gcvbg-bazaar-ng@m.gmane.org; Sat, 21 Oct 2006 10:28:28 +0200
+Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
+	id 1GbCDF-00081n-2M; Sat, 21 Oct 2006 09:28:13 +0100
+Received: from main.gmane.org ([80.91.229.2] helo=ciao.gmane.org)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <gcvbg-bazaar-ng@m.gmane.org>) id 1GbCC9-0007xp-FB
+	for bazaar-ng@lists.canonical.com; Sat, 21 Oct 2006 09:27:05 +0100
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GbCC8-0001qP-3K
+	for bazaar-ng@lists.canonical.com; Sat, 21 Oct 2006 10:27:04 +0200
+Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110])
+	by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+	id 1AlnuQ-0007hv-00
+	for <bazaar-ng@lists.canonical.com>; Sat, 21 Oct 2006 10:27:04 +0200
+Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim 0.1
+	(Debian)) id 1AlnuQ-0007hv-00
+	for <bazaar-ng@lists.canonical.com>; Sat, 21 Oct 2006 10:27:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: bazaar-ng@lists.canonical.com
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
+X-BeenThere: bazaar-ng@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
+List-Post: <mailto:bazaar-ng@lists.canonical.com>
+List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-ng-bounces@lists.canonical.com
+Errors-To: bazaar-ng-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29590>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Sean wrote:
 
->> It's my understanding that most changes discussed on lkml are provided
->> as a series of patches.  Bazaar bundles are intended as a direct
->> replacement for patches in that use case.
->
-> As _series_ of patches. You have git-format-patch + git-send-email
-> to format and send them, git-am to apply them (as patches, not as branch).
->
-> I was under an impression that user sees only mega-patch of all the
-> revisions in bundle together, and rest is for machine consumption only.
+> On Tue, 17 Oct 2006 13:45:31 +0200
+> Jakub Narebski <jnareb@gmail.com> wrote:
+> 
+>> Git cannot do that remotely (with exception of git-tar-tree/git-archive 
+>> which has --remote option), yet. But you can get contents of a file 
+>> (with "git cat-file -p [<revision>:|:<stage>:]<filename>"), list 
+>> directory (with "git ls-tree <tree-ish>") and compare files or 
+>> directories (git diff family of commands) without need for working 
+>> directory.
+> 
+> Interesting, I didn't know about the --remote option.  So in fact as long
+> as the remote has enabled upload-tar then anyone can do a "light
+> checkout". 
 
-Nothing prevents you from using series of bundles.
+Not exactly. "Light checkout" (aka "lazy one-branch clone") in bzr
+contains also info about the repository it came from, and has some
+metadata that you can commit to it locally. git tar-tree --remote
+just gets snapshot. 
 
-A bundle for a single revision looks like a patch with a few comments
-on top and bottom. _If_ you have several revisions in your patch, you
-get the diff as human readable, and the intermediate revisions as
-MIME-encoded.
+> However, it appears that kernel.org for instance doesn't enable this
+> feature. 
 
-For big changes, people do send several bundles.
-
-So, a bundle is a direct replacement for a patch, not for series of
-patches.
-
--- 
-Matthieu
+One can get snapshot from gitweb... if gitweb is new enough and
+has this feature enabled (it is enabled by default). Again not
+the case of kernel.org
