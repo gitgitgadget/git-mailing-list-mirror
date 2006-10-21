@@ -1,60 +1,80 @@
-From: Andreas Schwab <schwab@suse.de>
-Subject: Re: [ANNOUNCE] GIT 1.4.3
-Date: Sat, 21 Oct 2006 11:53:34 +0200
-Message-ID: <jeu01yvvtt.fsf@sykes.suse.de>
-References: <7vejt5xjt9.fsf@assigned-by-dhcp.cox.net>
-	<7v4ptylfvw.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0610201709430.3962@g5.osdl.org>
-	<20061021002251.GO20017@pasky.or.cz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Syntax highlighting for combined diff
+Date: Sat, 21 Oct 2006 12:02:00 +0200
+Message-ID: <200610211202.00314.jnareb@gmail.com>
+References: <ehbq0k$24l$1@sea.gmane.org> <200610211049.56477.jnareb@gmail.com> <7vfydigg4w.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 21 11:53:45 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 21 12:02:18 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbDXy-0004Lu-08
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 11:53:42 +0200
+	id 1GbDg9-0005YB-RL
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 12:02:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992908AbWJUJxh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 21 Oct 2006 05:53:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992909AbWJUJxh
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 05:53:37 -0400
-Received: from cantor2.suse.de ([195.135.220.15]:23177 "EHLO mx2.suse.de")
-	by vger.kernel.org with ESMTP id S2992908AbWJUJxg (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Oct 2006 05:53:36 -0400
-Received: from Relay1.suse.de (mail2.suse.de [195.135.221.8])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mx2.suse.de (Postfix) with ESMTP id 1C73120F69;
-	Sat, 21 Oct 2006 11:53:35 +0200 (CEST)
-To: Petr Baudis <pasky@suse.cz>
-X-Yow: Did you move a lot of KOREAN STEAK KNIVES this trip, Dingy?
-In-Reply-To: <20061021002251.GO20017@pasky.or.cz> (Petr Baudis's message of
-	"Sat, 21 Oct 2006 02:22:51 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.50 (gnu/linux)
+	id S2992910AbWJUKCF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Oct 2006 06:02:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030388AbWJUKCF
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 06:02:05 -0400
+Received: from hu-out-0506.google.com ([72.14.214.224]:15525 "EHLO
+	hu-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1030387AbWJUKCD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Oct 2006 06:02:03 -0400
+Received: by hu-out-0506.google.com with SMTP id 28so519053hub
+        for <git@vger.kernel.org>; Sat, 21 Oct 2006 03:02:01 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Z6hxigPZpxUUrgPSy3WYDWptyyoH8hdwBhQddr79hrKZjFg/pPZHv2j++IXfrlVchE0e81IfN0Wg946DQLogQz6ZFLONs6baZ9vkuTh6uJLQzAH6EzXON7fkuGCH/8JiHws8OMbWMcEkQSz9RVSL8yC5TUA6ag6F4V/yP+MpZ8M=
+Received: by 10.67.91.6 with SMTP id t6mr3592452ugl;
+        Sat, 21 Oct 2006 03:02:01 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
+        by mx.google.com with ESMTP id 32sm2536092ugf.2006.10.21.03.02.00;
+        Sat, 21 Oct 2006 03:02:01 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vfydigg4w.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29599>
 
-Petr Baudis <pasky@suse.cz> writes:
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > Do I understand code correctly, and the last '+' or '-'
+> > in the parents column means?
+> >
+> >         for (i = 0; i < ecbdata->nparents && len; i++) {
+> >                 if (line[i] == '-')
+> >                         color = DIFF_FILE_OLD;
+> >                 else if (line[i] == '+')
+> >                         color = DIFF_FILE_NEW;
+> >         }
+> >
+> > Anyone who wrote this code, could you answer me, please?
+> 
+> The "up to ecbdata->nparents" is Johannes in cd112ce.  But you
+> are looking at a wrong code, I am afraid, if your original
+> question was about the combined format (there is a comment about
+> the codepath dealing only with two-way diffs by Johannes, above
+> the part you quoted).  The output for combined diff is coming
+> from combine-diff.c:dump_sline().
 
-> (I personally consider alternate screen an abomination. It would be s=
-o
-> nice if the terminal emulators would just make it optional.)
+I was asking both about combined diff format, and how it is colored
+by git-diff --color, to add colored combined diff output to gitweb.
 
-$ xterm -rm "*titeInhibit: true"
+> Combined diff output logic pretty much guarantees that you never
+> will see plus and minus on the same line.
 
-Andreas.
+That's enough for me.
 
---=20
-Andreas Schwab, SuSE Labs, schwab@suse.de
-SuSE Linux Products GmbH, Maxfeldstra=DFe 5, 90409 N=FCrnberg, Germany
-PGP key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
-ED5
-"And now for something completely different."
+Any other ideas how combined commitdiff should look like in gitweb?
+-- 
+Jakub Narebski
+Poland
