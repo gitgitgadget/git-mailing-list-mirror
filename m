@@ -1,102 +1,98 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: VCS comparison table
-Date: Sat, 21 Oct 2006 17:56:24 +0200
-Message-ID: <20061021155624.GF29843@artax.karlin.mff.cuni.cz>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <87zmbucs86.wl%cworth@cworth.org> <45359F36.6050609@utoronto.ca> <200610181120.49749.jnareb@gmail.com> <453656F8.3000504@utoronto.ca>
+From: Sergey Vlasov <vsu@altlinux.ru>
+Subject: Re: less -F ubuntu dapper.
+Date: Sat, 21 Oct 2006 20:01:10 +0400
+Message-ID: <20061021200110.6aef96a4.vsu@altlinux.ru>
+References: <cc723f590610210623sbee2075i5f2fd441cceb84ae@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	bazaar-ng@lists.canonical.com, Linus Torvalds <torvalds@osdl.org>,
-	Andreas Ericsson <ae@op5.se>, Petr Baudis <pasky@suse.cz>,
-	Carl Worth <cworth@cworth.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 21 17:56:29 2006
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg="PGP-SHA1";
+ boundary="Signature=_Sat__21_Oct_2006_20_01_10_+0400_v4Ts/nM8XkX0XX_a"
+Cc: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Oct 21 18:03:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbJCw-0004iK-4b
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 17:56:22 +0200
+	id 1GbJJK-0005jX-Le
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 18:03:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993118AbWJUP4T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Oct 2006 11:56:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993120AbWJUP4T
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 11:56:19 -0400
-Received: from artax.karlin.mff.cuni.cz ([195.113.31.125]:18112 "EHLO
-	artax.karlin.mff.cuni.cz") by vger.kernel.org with ESMTP
-	id S2993118AbWJUP4S (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Oct 2006 11:56:18 -0400
-Received: by artax.karlin.mff.cuni.cz (Postfix, from userid 17196)
-	id 384BD48E4; Sat, 21 Oct 2006 17:56:24 +0200 (CEST)
-To: Aaron Bentley <aaron.bentley@utoronto.ca>
-Content-Disposition: inline
-In-Reply-To: <453656F8.3000504@utoronto.ca>
-User-Agent: Mutt/1.5.9i
+	id S2993124AbWJUQCx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Oct 2006 12:02:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993127AbWJUQCx
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 12:02:53 -0400
+Received: from [213.177.124.23] ([213.177.124.23]:34014 "EHLO procyon.home")
+	by vger.kernel.org with ESMTP id S2993124AbWJUQCw (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Oct 2006 12:02:52 -0400
+Received: by procyon.home (Postfix, from userid 500)
+	id 1AFAA4BA52; Sat, 21 Oct 2006 20:01:13 +0400 (MSD)
+To: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+In-Reply-To: <cc723f590610210623sbee2075i5f2fd441cceb84ae@mail.gmail.com>
+X-Mailer: Sylpheed version 2.2.6 (GTK+ 2.10.2; x86_64-alt-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29628>
 
-On Wed, Oct 18, 2006 at 12:31:52PM -0400, Aaron Bentley wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> Jakub Narebski wrote:
-> > Aaron Bentley wrote:
-> > 
-> >>Carl Worth wrote:
-> >>>There are even more important reasons to prefer a series of
-> >>>micro-commits over a mega-patch than just ease of merging.
-> >>
-> >>A bundle isn't a mega-patch.  It contains all the source revisions.  So
-> >>when you merge or pull it, you get all the original revisions in your
-> >>repository.
-> > 
-> > 
-> > But what patch reviewer see is a mega-patch showing the changeset
-> > of a whole "bundle", isn't it?
-> > [...]
-> 
-> Yes.  Carl was saying that, aside from the issue of what a reviewer
-> sees, a bundle is bad for other reasons.  I am saying those other
-> reasons don't apply.  I wasn't addressing the issue of what a reviewer sees.
-> 
-> To me, seeing the individual patches is like reading a book where every
-> page has a different word on it, and so it's hard to put it together
-> into a full sentence.  I'm not saying my way is The Right Way, just my
-> personal preference.
-> 
-> For larger pieces of work, we try to split them up into logical units,
-> and merge those units independently.
-> 
-> The Bundle format can also support a patch-by-patch output, but we don't
-> have UI to select that.
+--Signature=_Sat__21_Oct_2006_20_01_10_+0400_v4Ts/nM8XkX0XX_a
+Content-Type: text/plain; charset=US-ASCII
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-As for what the reviewer wants to see, I think it depends on what kind
-of code it is. Kernel code is complex and does not have (at least I have
-not heared of) unit-tests, so short patches are preferable for review.
-And since C is of the more verbose languages, short patches mean
-spliting them up into several pieces.
+On Sat, 21 Oct 2006 18:53:35 +0530 Aneesh Kumar wrote:
 
-On the other hand bzr has unit-tests and python is less verbose, so the
-single patch for a feature is not so big and is manageable. The patches
-to bzr still come in logical steps, but usually one step per feature is
-enough.
+> -F option for less in ubuntu Dapper is broken. It doesn't display
+> anyting if the file can be displayed in one page.
 
-Also programmers usually don't develop even the single logical step as a
-single commit. Instead they they also commit to backup their work,
-when they try something they think they may in future return, when they
-need to continue on another computer and so on. And these commits are
-generally not logical steps. Also the steps are often not in a logical
-order. Therefore showing diff for each commit in the bundle often does
-not make sense.
+Same here in ALT Linux (less-382-alt2).  The problem appears only
+when the terminal supports alternate screen, and less uses it.
 
-So there is one bundle per logical step and therefore has a summary
-diff. Individual bundles for individual steps are preferable anyway,
-since the maintainer may decide to accept just some of them.  A tool to
-generate a series of bundles (either each with just one commit or each
-with several commits) would be possible, just noone was interested
-enough to do it yet.
+BTW, try this (needs bash or zsh):
 
---------------------------------------------------------------------------------
-                  				- Jan Hudec `Bulb' <bulb@ucw.cz>
+  (for ((i=3D0; i < 20; ++i)) do echo $i; sleep 0.1; done) | less -F
+
+You'll see that the text appears on the screen while the loop
+outputs it, but disappears once the output finishes.  If you use
+"less -FX" instead, the text will not disappear, but in this case
+less will not use the alternate screen, which is inconvenient when
+the text is large (e.g., when you browse the text, parts of it
+will be put into the scrollback buffer).
+
+Because less must start displaying the text immediately after it
+got some data, it cannot decide whether to use the alternate
+screen depending on the text size.  Therefore, if you want to use
+the -F option on a terminal with alternate screen, you need to
+turn off the alternate screen support with -X.  But less cannot do
+this automatically, because it does not really know about the
+alternate screen (the -X option disables termcap initialization
+and deinitialization strings, which can do arbitrary things, and
+may actually be required on some obscure terminals).
+
+It should be possible to add yet another option to less to make it
+initially display the text on the alternate screen, and on EOF, if
+the text fits on the screen, turn off the alternate screen,
+_redisplay the text_ and exit.  However, this option will have
+even more assumptions about the terminal than -X (if the terminal
+does not turn on alternate screen in its termcap initialization
+string, there will be a horrible mess on screen), and you will get
+flicker when the text is displayed multiple times.
+
+> Because of this the recent chages to
+> 96a035d1db9082d244867033020d0ceb571cf94e results in commands
+> like git show not showing the changes.
+
+Adding the -X option might break some terminals (and will irritate
+users which used alternate screen before), so apparently the only
+way to fix this breakage is to remove the -F option again...
+
+--Signature=_Sat__21_Oct_2006_20_01_10_+0400_v4Ts/nM8XkX0XX_a
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQFFOkRJW82GfkQfsqIRAjhHAJ44wHlYDYTdgjZCIm0dARhXaTEFWQCfZGU2
+sUa4VHLrKhK3RS2toL+UJ4c=
+=Zh1J
+-----END PGP SIGNATURE-----
+
+--Signature=_Sat__21_Oct_2006_20_01_10_+0400_v4Ts/nM8XkX0XX_a--
