@@ -1,56 +1,121 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: less -F ubuntu dapper.
-Date: Sat, 21 Oct 2006 09:47:06 -0700
-Message-ID: <453A4F0A.9000003@gmail.com>
-References: <cc723f590610210623sbee2075i5f2fd441cceb84ae@mail.gmail.com> <20061021200110.6aef96a4.vsu@altlinux.ru>
-Reply-To: Git Mailing List <git@vger.kernel.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: git-imap-send and "From "
+Date: Sat, 21 Oct 2006 17:51:17 +0100
+Message-ID: <200610211751.21581.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: multipart/signed;
+  boundary="nextPart2712745.WpOKToVMBM";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: Sergey Vlasov <vsu@altlinux.ru>,
-	Aneesh Kumar <aneesh.kumar@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 21 18:47:28 2006
+X-From: git-owner@vger.kernel.org Sat Oct 21 18:55:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbK0M-0004OS-31
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 18:47:26 +0200
+	id 1GbK8B-0005o6-HW
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 18:55:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993132AbWJUQrW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Oct 2006 12:47:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993133AbWJUQrW
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 12:47:22 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:54230 "EHLO
+	id S2993137AbWJUQyY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Oct 2006 12:54:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993156AbWJUQyG
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 12:54:06 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:53226 "EHLO
 	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S2993132AbWJUQrV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Oct 2006 12:47:21 -0400
-Received: by ug-out-1314.google.com with SMTP id o38so955074ugd
-        for <git@vger.kernel.org>; Sat, 21 Oct 2006 09:47:20 -0700 (PDT)
+	id S2993147AbWJUQxw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Oct 2006 12:53:52 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so955790ugd
+        for <git@vger.kernel.org>; Sat, 21 Oct 2006 09:53:51 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=GNfoFp9FMPI/PxcRT4W5qAOdmSlPHd7SFWtQx5zdeWg6ByIdXyh7nT1JSMqbziBV6TPNqC9wo012/Y1vb+fsaYIcbtrY+mf56/NFw/FzIJY/6DoWa2gXQak13gdaMfx4lJWuolMa4nmbIb90n0ZrNf48VCtnuFV8KK3frTuxZXo=
-Received: by 10.78.149.13 with SMTP id w13mr4156905hud;
-        Sat, 21 Oct 2006 09:47:19 -0700 (PDT)
-Received: from ?10.0.0.6? ( [67.20.86.181])
-        by mx.google.com with ESMTP id 15sm793448hui.2006.10.21.09.47.18;
-        Sat, 21 Oct 2006 09:47:19 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060911)
-To: Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <20061021200110.6aef96a4.vsu@altlinux.ru>
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:message-id;
+        b=oMMuG8VWpeMbn6HvUFkQn5VxcoA4AC+Tp2CriqTB0sIf3byUA6YSiSIdmD1taKvw2QK2eV/3MWiJQ/DKC+LGK9rNTaIBwCPFKhVb0kR4EwVz7vTtXa7eeZedazFDgESoqzfGz9pJBTImww/8vRcYCFsUtLZPHLg5797OuJZTqfI=
+Received: by 10.66.222.9 with SMTP id u9mr4067155ugg;
+        Sat, 21 Oct 2006 09:53:51 -0700 (PDT)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id q1sm1577942uge.2006.10.21.09.53.50;
+        Sat, 21 Oct 2006 09:53:51 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29635>
 
-Sergey Vlasov wrote:
-> On Sat, 21 Oct 2006 18:53:35 +0530 Aneesh Kumar wrote:
-> 
->> -F option for less in ubuntu Dapper is broken. It doesn't display
->> anyting if the file can be displayed in one page.
-> 
-> Same here in ALT Linux (less-382-alt2).  The problem appears only
-> when the terminal supports alternate screen, and less uses it.
+--nextPart2712745.WpOKToVMBM
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Suse 9.3 has the same problem.
+Hello,
+
+I've been playing around with git; made some simple patches for git and=20
+thought I would forward them to the mailing list.  I did this using
+
+git-format-patch --stdout --signoff -M -B | git-imap-send
+
+With the following in .gitconfig and courier-imap as the IMAP server.
+
+[imap]
+  Folder =3D "INBOX.Drafts"
+  Tunnel =3D "ssh -q mailhost /usr/bin/imapd ./Maildir 2> /dev/null"
+
+This appeared to work as expected.  A nicely formatted patch appeared in my=
+=20
+drafts mailbox for checking and sending; which I did.  However, those email=
+s=20
+caused a few problems; like:
+
+"Can you please not send your emails to "unlisted recipients?"  It
+breaks my mail filtering and your mails don't end up going to my "git"
+folder."
+
+As far as I knew, I hadn't done this.  The email looked fine when I checked=
+ it=20
+in KMail.  So, I went back and had a look at the raw source of the patch=20
+email that I'd sent and found this:
+
+=46rom 0e3c0aefc3276bd271553d171ed9bcc52d85230e Mon Sep 17 00:00:00 2001
+=46rom: Andy Parkins <andyparkins@gmail.com>
+Date: Fri, 20 Oct 2006 15:24:40 +0100
+Subject: [PATCH] Use email address only for looking up signing key in git-t=
+ag
+
+It's that first line that's the problem.  It was generated by git-format-pa=
+tch=20
+of course, however, I assume that it was intended to be stripped on the way=
+=20
+to the IMAP server.  So,
+
+ * Courier's /usr/bin/imapd should have stripped it and didn't
+ * git-imap-send shouldn't have sent it
+
+Can anyone help me out with which it should be?  Or point me at the relevan=
+t=20
+RFC?
+
+While I was poking around I found that git is hard coded with
+
+printf("From %s Mon Sep 17 00:00:00 2001\n", sha1);
+
+Was it intentional that the date be hard coded like that?
+
+
+Andy
+=2D-=20
+Dr Andrew Parkins, M Eng (Hons), AMIEE
+andyparkins@gmail.com
+
+--nextPart2712745.WpOKToVMBM
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQBFOlAJwQJ9gE9xL20RAiTvAKCaJX6uiJKH0nbMfSZUamrQ4C3AdACglmL+
+mH497bk5aQgPxXwj6K9PVcw=
+=CSFv
+-----END PGP SIGNATURE-----
+
+--nextPart2712745.WpOKToVMBM--
