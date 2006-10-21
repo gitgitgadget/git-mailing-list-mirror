@@ -1,156 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Sean <seanlkml@sympatico.ca>
 Subject: Re: VCS comparison table
-Date: Sat, 21 Oct 2006 22:48:37 +0200
-Message-ID: <200610212248.37935.jnareb@gmail.com>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <87irie1wvv.wl%cworth@cworth.org> <453A7D7E.8060105@utoronto.ca>
+Date: Sat, 21 Oct 2006 16:53:13 -0400
+Message-ID: <BAYC1-PASMTP07D0D16EAA6ABADDAD39B1AE020@CEZ.ICE>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	<Pine.LNX.4.64.0610171605440.3962@g5.osdl.org>
+	<45357411.20500@utoronto.ca>
+	<200610180246.18758.jnareb@gmail.com>
+	<45357CC3.4040507@utoronto.ca>
+	<Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>
+	<4536EC93.9050305@utoronto.ca>
+	<87lkncev90.wl%cworth@cworth.org>
+	<453792A8.1010700@utoronto.ca>
+	<878xjc2qeb.wl%cworth@cworth.org>
+	<453803E6.2060309@utoronto.ca>
+	<87ods727pn.wl%cworth@cworth.org>
+	<45382120.9060702@utoronto.ca>
+	<87irie1wvv.wl%cworth@cworth.org>
+	<453A7D7E.8060105@utoronto.ca>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: Carl Worth <cworth@cworth.org>, Linus Torvalds <torvalds@osdl.org>,
+	Jakub Narebski <jnareb@gmail.com>,
 	Andreas Ericsson <ae@op5.se>, bazaar-ng@lists.canonical.com,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 21 22:48:34 2006
+X-From: git-owner@vger.kernel.org Sat Oct 21 22:53:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbNlg-00088q-By
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 22:48:32 +0200
+	id 1GbNqI-00009L-VE
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 22:53:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161025AbWJUUs3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Oct 2006 16:48:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751751AbWJUUs3
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 16:48:29 -0400
-Received: from qb-out-0506.google.com ([72.14.204.224]:54848 "EHLO
-	qb-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1751748AbWJUUs2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Oct 2006 16:48:28 -0400
-Received: by qb-out-0506.google.com with SMTP id p36so292146qba
-        for <git@vger.kernel.org>; Sat, 21 Oct 2006 13:48:27 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Zy3P/oHcXon/4drON6PSAfDRvT9wGydlT/i7UVLSG81nD1bRdfzI7va/MIqODJnoNuAJKutMOiylSVeCEVllu4tl9xw6nU2BTPEZz5984sLSLYIVQvpFCR1u5H7tq18m4kZbfd9/4F5SKYJR0iRKcEDf+k+0BQ/fV9qsvLsPSps=
-Received: by 10.66.216.6 with SMTP id o6mr4443202ugg;
-        Sat, 21 Oct 2006 13:48:27 -0700 (PDT)
-Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
-        by mx.google.com with ESMTP id w40sm296560ugc.2006.10.21.13.48.26;
-        Sat, 21 Oct 2006 13:48:26 -0700 (PDT)
+	id S1161026AbWJUUxQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Oct 2006 16:53:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751758AbWJUUxQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 16:53:16 -0400
+Received: from bayc1-pasmtp07.bayc1.hotmail.com ([65.54.191.167]:41761 "EHLO
+	BAYC1-PASMTP07.CEZ.ICE") by vger.kernel.org with ESMTP
+	id S1751751AbWJUUxP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Oct 2006 16:53:15 -0400
+X-Originating-IP: [65.93.43.81]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP07.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sat, 21 Oct 2006 13:59:04 -0700
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with esmtp (Exim 4.43)
+	id 1GbMu9-0002OO-F1; Sat, 21 Oct 2006 15:53:13 -0400
 To: Aaron Bentley <aaron.bentley@utoronto.ca>
-User-Agent: KMail/1.9.3
+Message-Id: <20061021165313.dba67497.seanlkml@sympatico.ca>
 In-Reply-To: <453A7D7E.8060105@utoronto.ca>
-Content-Disposition: inline
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 21 Oct 2006 20:59:05.0046 (UTC) FILETIME=[BE4D3760:01C6F553]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29672>
 
-Aaron Bentley wrote:
-> Carl Worth wrote:
+On Sat, 21 Oct 2006 16:05:18 -0400
+Aaron Bentley <aaron.bentley@utoronto.ca> wrote:
 
->> I'm noticing another terminology conflict here. The notion of "branch"
->> in bzr is obviously very different than in git. For example the bzr
->> man page has a sentence beginning with "if there is already a branch
->> at the location but it has no working tree". I'm still not sure
->> exactly what a bzr branch is, but it's clearly something different
->> from a git branch, (which is absolutely nothing more than a name
->> referencing a particular commit object).
-> 
-> I got the impression there was also a local ordering of revisions.  Is
-> that wrong?
+> Our experience really is that it does work.
 
-No, there is no such thing like local ordering of revisions.
+Of course it works as long as you accept the implicit requirements of
+supporting them and ignore the cases where they change out from
+underneath the user.  But as soon as users want to embrace distributive
+models where there isn't a central shared repo, at best revno's are
+unhelpful and at worst they are counterproductive.  The proof of this
+is that if revno's were sufficient bzr wouldn't need revid's.
 
-Each revision (commit) has link to its parent(s). Branch technically
-is just a reference to a particular commit object. The commit itself
-gives us sub-DAG of DAG of whole history, the DAG of all parents of
-said commit. Such lineage of commit pointed by branch is conceptually
-a branch; i.e. branch is DAG of development (not line of development,
-as there is no special meaning of first parent).
+Since the utility provided by revno's seems so minimal even in the
+case where they do work, Git simply doesn't bother with them.  And
+"our" experience is that Git really does work well without them.
 
-You can have (in git repository) also reflog, which records values
-of branch-as-reference, or branch tip of branch-as-named-lineage.
-But for example fetch and fast-forward 5 commits in history is
-recorded as single event, single change in reflog.
- 
-> A Bazaar branch is a directory inside a repository that contains:
->  - a name referencing a particular revision
->  - (optional) the location of the default branch to pull/merge from
->  - (optional) the location of the default branch to push to
->  - (optional) the policy for GPG signing
->  - (optional) an alternate committer-id to use for this branch
->  - (optional) a nickname for the branch
->  - other configuration options
-Erm, wasn't revno to revid mapping also part of bzr "branch"?
-
-We store configuration per repository, not per branch, although
-there is some branch specific configuration.
-
-[...]
-> This layout is an imitation of Git, as I understand it:
-> Repository:
-> ~/repo
-> 
-> Branches:
-> ~/repo/origin
-> ~/repo/master
-> 
-> Workingtree:
-> ~/repo
-
-Workingtree:
-~/
-
-if I understand notation correctly.
-
->> One, it intrudes on my branch namespace, (note that
->> in many commands above I have to use things like "../b" where I'd like
->> to just name my branch "b".
-> 
-> While "bzr merge ../b" is a minor inconvenience, I think that "bzr merge
-> http://bazaar-vcs.org/bzr/bzr.dev" is a big win.
-
-Gaah, it's even more inconvenient. Certainly more than using name
-of branch itself, like in git.
- 
->> Two, it prevents bzr from having any
->> notion of "all branches" in places where git takes advantage of it,
->> (such as git-clone and "gitk --all").
-> 
-> No, it doesn't.  Bazaar can easily list all the branches in a
-> repository, just by starting with the repository root, and recursing
-> through all the subdirectories, looking for branches.
-
-Is there a command to list all branches in bzr? Is there a command
-to copy (clone in SCM jargon) whole repository with all branches?
- 
-> That said, we do have mentality that branches, not repositories, are
-> what's important to users in day-to-day use.
-
-Thats opposite to git view. In git, working area is associated with
-repository (clone of repository), not branch. We copy whole repositories
-(sometimes only part of repository), not branches.
-
->>> What's nice is being able see the revno 753 and knowing that "diff -r
->>> 752..753" will show the changes it introduced.  Checking the revo on a
->>> branch mirror and knowing how out-of-date it is.
->>
->> With git I get to see a revision number of b62710d4 and know that
->> "diff b62710d4^ b62710d4" will show its changes, though much more
->> likely just "show b62710d4". I really cannot fathom a place where
->> arithmetic on revision numbers does something useful that git revision
->> specifications don't do just as easily. Anybody have an example for
->> me?
-> 
-> My understanding is that ^ is treated as a special metacharacter by some
-> shells, which is why bzr revision specs are more long-winded.
-
-Which shells? If I understand it '^' was chosen (for example as
-NOT operator for specify sub-DAG instead of '!') because of no problems
-for shell expansion. And considering that many git commands are/were
-written in shell, one certainly would notice that.
-
--- 
-Jakub Narebski
-Poland
+Sean
