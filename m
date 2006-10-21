@@ -1,63 +1,53 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [RFC] Syntax highlighting for combined diff
-Date: Sat, 21 Oct 2006 02:35:41 +0200
-Organization: At home
-Message-ID: <ehbq0k$24l$1@sea.gmane.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [ANNOUNCE] GIT 1.4.3
+Date: Fri, 20 Oct 2006 20:47:54 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0610202046420.12418@xanadu.home>
+References: <7vejt5xjt9.fsf@assigned-by-dhcp.cox.net>
+ <7v4ptylfvw.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sat Oct 21 02:36:38 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 21 02:48:08 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gb4qZ-0004PM-4j
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 02:36:19 +0200
+	id 1Gb51s-00083b-2c
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 02:48:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992756AbWJUAgQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 20:36:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992758AbWJUAgQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 20:36:16 -0400
-Received: from main.gmane.org ([80.91.229.2]:8888 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S2992756AbWJUAgP (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 20:36:15 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Gb4qR-0004NQ-Ja
-	for git@vger.kernel.org; Sat, 21 Oct 2006 02:36:12 +0200
-Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 21 Oct 2006 02:36:11 +0200
-Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 21 Oct 2006 02:36:11 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S2992761AbWJUArz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 20:47:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992762AbWJUArz
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 20:47:55 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:19888 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP
+	id S2992761AbWJUArz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Oct 2006 20:47:55 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0J7G00410NJUSV40@VL-MO-MR003.ip.videotron.ca>; Fri,
+ 20 Oct 2006 20:47:54 -0400 (EDT)
+In-reply-to: <7v4ptylfvw.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29567>
 
-Linus Torvalds wrote in "Re: VCS comparison table"
+On Fri, 20 Oct 2006, Junio C Hamano wrote:
 
-> And "gitweb" does consider the first parent special, since it shows diffs 
-> against that one (although I've argued that it probably shouldn't, and 
-> that there should be some way to show branches against arbitrary parents)
+> Junio C Hamano <junkio@cox.net> writes:
+> 
+> >  - git-diff paginates its output to the tty by default.  If this
+> >    irritates you, using LESS=RF might help.
+> 
+> I am considering the following to address irritation some people
+> (including me, actually) are experiencing with this change when
+> viewing a small (or no) diff.  Any objections?
 
-So the question is how to color combined diff format (what should be syntax
-highlighting for combined diff format). If branches columns have only
-pluses we use the same color as for adding line in ordinary diff; if
-branches column consist only of minuses we use the same color as for
-removing line in ordinary diff. Can there be mixture of plusses and
-minuses? How git-diff --color solves this?
+I think this is an excellent idea.
 
-Should we in gitweb output change color slightly depending on number of
-plusses or minuses?
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+
+Nicolas
