@@ -1,75 +1,80 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: VCS comparison table
-Date: Sat, 21 Oct 2006 10:32:28 +0200
-Organization: At home
-Message-ID: <ehcluh$v3e$2@sea.gmane.org>
-References: <Pine.LNX.4.64.0610171605440.3962@g5.osdl.org> <vpqirigqzpd.fsf@ecrins.imag.fr> <20061019123349.GE20017@pasky.or.cz> <200610201350.12273.jnareb@gmail.com> <7vlknalgne.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0610201702580.3962@g5.osdl.org> <7vy7rajwyn.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0610201818210.3962@g5.osdl.org> <7vfydijw5x.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0610201854350.3962@g5.osdl.org>
+Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
+Date: Sat, 21 Oct 2006 10:36:44 +0200
+Message-ID: <200610211036.44679.jnareb@gmail.com>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <ehao3e$2qv$1@sea.gmane.org> <vpqk62uhzkk.fsf@ecrins.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sat Oct 21 10:35:14 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 21 10:36:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbCK0-0002hT-5l
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 10:35:12 +0200
+	id 1GbCLX-0002um-4W
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 10:36:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992789AbWJUIfH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Oct 2006 04:35:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161195AbWJUIfH
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 04:35:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:7660 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1161193AbWJUIfE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Oct 2006 04:35:04 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1GbCJq-0002gc-0J
-	for git@vger.kernel.org; Sat, 21 Oct 2006 10:35:02 +0200
-Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 21 Oct 2006 10:35:01 +0200
-Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 21 Oct 2006 10:35:01 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1161193AbWJUIgo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Oct 2006 04:36:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161195AbWJUIgo
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 04:36:44 -0400
+Received: from hu-out-0506.google.com ([72.14.214.232]:27237 "EHLO
+	hu-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1161193AbWJUIgn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Oct 2006 04:36:43 -0400
+Received: by hu-out-0506.google.com with SMTP id 28so507042hub
+        for <git@vger.kernel.org>; Sat, 21 Oct 2006 01:36:42 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=OsJIF6iUgX7v4Vjz94MIwOSkeSwhSRmmS0DD9mDpqK5a/KMJlNKEVUK7ScYHpRgjhoit8iiu1GqFMnlXNcsRLbwh8YMjRr0IsRs2kCStxhtCBviUOod1+2qsAEqRwzALaJljMl9cXdHmIjM0Qw2yyugJlvXWxfpnigV8NkldAO8=
+Received: by 10.66.220.17 with SMTP id s17mr3485548ugg;
+        Sat, 21 Oct 2006 01:36:42 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
+        by mx.google.com with ESMTP id e1sm1553086ugf.2006.10.21.01.36.41;
+        Sat, 21 Oct 2006 01:36:41 -0700 (PDT)
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+User-Agent: KMail/1.9.3
+In-Reply-To: <vpqk62uhzkk.fsf@ecrins.imag.fr>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29592>
 
-Linus Torvalds wrote:
-
-> On Fri, 20 Oct 2006, Junio C Hamano wrote:
->> 
->> I was not talking about "git pull".  I was talking about "git
->> show".
+Matthieu Moy wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
 > 
-> Duh. I don't know why I misread that.
+>>> It's my understanding that most changes discussed on lkml are provided
+>>> as a series of patches.  Bazaar bundles are intended as a direct
+>>> replacement for patches in that use case.
+>>
+>> As _series_ of patches. You have git-format-patch + git-send-email
+>> to format and send them, git-am to apply them (as patches, not as branch).
+>>
+>> I was under an impression that user sees only mega-patch of all the
+>> revisions in bundle together, and rest is for machine consumption only.
 > 
-> Yeah, that makes no sense at all. I _think_ "git show" should be the same 
-> thing as a single-entry "git log -p".
+> Nothing prevents you from using series of bundles.
+> 
+> A bundle for a single revision looks like a patch with a few comments
+> on top and bottom. _If_ you have several revisions in your patch, you
+> get the diff as human readable, and the intermediate revisions as
+> MIME-encoded.
+> 
+> For big changes, people do send several bundles.
+> 
+> So, a bundle is a direct replacement for a patch, not for series of
+> patches.
 
-Huh?
+Ah, that explains this. So why people use bundles instead of patches
+(with some metainfo like commit message)? And do bzr have command to
+apply in correct ordering series of bundles send either chain replied
+to (each patch in the series is reply to previous patch) or being
+replies to patchseries introductory message?
 
-$ git show ff49fae6a547e5c70117970e01c53b64d983cd10
-commit ff49fae6a547e5c70117970e01c53b64d983cd10
-Merge: 7ad4ee7... 75f9007... 14eab2b... 0b35995... eee4609...
-[...]
-diff --cc Makefile
-index 36b9e06,68ae43b,66c8b4b,66c8b4b,09f60bb..a2f2f7c
-[...]
-
-"git show" doesn't prefer first parent: it uses compact combined
-(that is the meaning of --cc, isn't it?) format for merges.
-
-git version 1.4.2.1
 -- 
 Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Poland
