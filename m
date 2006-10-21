@@ -1,140 +1,83 @@
-From: "Matthew D. Fuller" <fullermd@over-yonder.net>
-Subject: Re: VCS comparison table
-Date: Sat, 21 Oct 2006 13:11:49 -0500
-Message-ID: <20061021181149.GM75501@over-yonder.net>
-References: <45357CC3.4040507@utoronto.ca> <87irie1wvv.wl%cworth@cworth.org> <20061021130111.GL75501@over-yonder.net> <200610211608.18895.jnareb@gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: git-imap-send and "From "
+Date: Sat, 21 Oct 2006 19:11:54 +0100
+Message-ID: <200610211911.54920.andyparkins@gmail.com>
+References: <200610211751.21581.andyparkins@gmail.com> <20061021175519.GA7432@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: bazaar-ng@lists.canonical.com, Linus Torvalds <torvalds@osdl.org>,
-	Carl Worth <cworth@cworth.org>, Andreas Ericsson <ae@op5.se>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 21 20:11:55 2006
+Content-Type: multipart/signed;
+  boundary="nextPart2508538.fE6HqaS7pl";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Oct 21 20:14:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbLK7-0001mt-Gj
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 20:11:55 +0200
+	id 1GbLMe-0002Er-DM
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 20:14:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422691AbWJUSLw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 21 Oct 2006 14:11:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423355AbWJUSLw
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 14:11:52 -0400
-Received: from ns.centralmiss.com ([206.156.254.79]:58071 "EHLO
-	optimus.centralmiss.com") by vger.kernel.org with ESMTP
-	id S1422691AbWJUSLv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Oct 2006 14:11:51 -0400
-Received: from draco.over-yonder.net (adsl-072-148-013-213.sip.jan.bellsouth.net [72.148.13.213])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by optimus.centralmiss.com (Postfix) with ESMTP id 35CB42842A;
-	Sat, 21 Oct 2006 13:11:50 -0500 (CDT)
-Received: by draco.over-yonder.net (Postfix, from userid 100)
-	id A4D7961C52; Sat, 21 Oct 2006 13:11:49 -0500 (CDT)
-To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <200610211608.18895.jnareb@gmail.com>
-X-Editor: vi
-X-OS: FreeBSD <http://www.freebsd.org/>
-User-Agent: Mutt/1.5.11-fullermd.3
+	id S964800AbWJUSO3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Oct 2006 14:14:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964773AbWJUSO3
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 14:14:29 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:6118 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S964800AbWJUSO2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Oct 2006 14:14:28 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so964319ugd
+        for <git@vger.kernel.org>; Sat, 21 Oct 2006 11:14:27 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:message-id;
+        b=oT99HVevLRTK1xf8y1lSQ6PWas3nWp6s6WWnopT6WwSWViSxn1rDPsPzJCJBTRDFv46ohNrSkLNAY+K45ej0uovL2JH1+NlQ+zl27wjEi7qaRGYy0d7osiQCYBCOpiPh+FGkdnK/6Yj4NbSC6+y4mBmrmTTelhlm6AsidIcc7AY=
+Received: by 10.66.224.19 with SMTP id w19mr4161089ugg;
+        Sat, 21 Oct 2006 11:14:26 -0700 (PDT)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id u1sm1619995uge.2006.10.21.11.14.25;
+        Sat, 21 Oct 2006 11:14:26 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.5
+In-Reply-To: <20061021175519.GA7432@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29650>
 
-On Sat, Oct 21, 2006 at 04:08:18PM +0200 I heard the voice of
-Jakub Narebski, and lo! it spake thus:
-> Dnia sobota 21. pa=C5=BAdziernika 2006 15:01, Matthew D. Fuller napis=
-a=C5=82:
-> >=20
-> > I think we're getting into scratched-record-mode on this.
->
->  [....]
+--nextPart2508538.fE6HqaS7pl
+Content-Type: text/plain;
+  charset="ansi_x3.4-1968"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Thank you for demonstrating my point   8-}
+On Saturday 2006, October 21 18:55, Jeff King wrote:
 
+> git-imap-send shouldn't be sending it. The IMAP protocol works with
+> RFC822 messages, not mboxes.
 
-> When two clones of the same repository (in git terminology), or two
-> "branches" (in bzr terminology), used by different people, cannot be
-> totally equivalent that is centralization bias.
+I grabbed the latest git; and started looking at fixing it.  It looks fixed=
+ to=20
+me; a quick "git log imap-send.c" found me commit=20
+e0b0830726286287744cc9e1a629a534bbe75452; which already fixes this problem.
 
-This is obviously some new meaning of "centralization" bearing no
-resemblance whatsoever to how I understand the word.
-
-In git, apparently, you don't give a crap about a branch's identity
-(alternately expressible as "it has none"), and so you throw it away
-all the time.  Given that, revnos even if git had them would never be
-of ANY use to you, so it's no wonder you have no use for the notion.
-
-I DO give a crap about my branchs' identities.  I WANT them to retain
-them.  If I have 8 branches, they have 8 identities.  When I merge one
-into another, I don't WANT it to lose its identity.  When I merge a
-branch that's a strict superset of second into that second, I don't
-WANT the second branch to turn into a copy of the first.  If I wanted
-that, I'd just use the second branch, or make another copy of it.  I
-don't WANT to copy it.  I just want to merge the changes in, and keep
-on with my branch's current identity.
-
-Maybe that's what you mean by 'centralization'; each branch is central
-to itself.  That seems a pretty useless definition, though.  In my
-mind, actually, it's MORE distributed; my branch remains my branch,
-and your branch remains your branch, and the difference doesn't keep
-us from working together and moving changes back and forth.  Forcing
-my branch to become your branch sounds a lot more "centralized" to me.
+Goodness I love git :-)
 
 
-Now, we can discuss THAT distinction.  I'm not _opposed_ to git's
-model per se, and I can think of a lot of cases where it's be really
-handy.  But those aren't most of my cases.  And as long as we don't
-agree on branch identity, it's completely pointless to keep yakking
-about revnos, because they're a direct CONSEQUENCE of that difference
-in mental model.  See?  They're an EFFECT, not a CAUSE.  If bzr didn't
-have revnos, I'd STILL want my branch to keep its identity.  You could
-name the mainline revisions after COLORS if you wanted, and I'd still
-want my branch to keep its identity.  Aren't we through rehashing the
-same discussion about the EFFECTS?
+Andy
 
+=2D-=20
+Dr Andrew Parkins, M Eng (Hons), AMIEE
+andyparkins@gmail.com
 
-> > It refers both to the conceptual entity ("a line of development"
-> > roughly, much like what 'branch' means in git and VCS in general),
-> > and to the physical location (directory, URL)
->=20
-> I'd rather use other name then. Perhaps "forks" for physical
-> "branch", i.e. branch metadata (like revno to revid mapping) +
-> object repository or pointer to it + optionally working area/working
-> files.=20
+--nextPart2508538.fE6HqaS7pl
+Content-Type: application/pgp-signature
 
-It's the same name in bzr because branches are their location, not
-their 'name'.  Every branch always has a location, and every location
-refers to a branch (well, as long as it's a location that's meaningful
-to bzr; "/etc/passwd" is a location, but it's nothing to do with bzr,
-so it's not a branch.  Don't dawdle in irrelevancies).
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
 
+iD8DBQBFOmLqwQJ9gE9xL20RAsKrAKDGWdNY4OuKKomOZVImPlbRpyoodwCgyepy
+Gy0OmF9Ij5cfVOvnw5IxFmg=
+=2SwS
+-----END PGP SIGNATURE-----
 
-> And you say that bzr is not biased towards centralization? In git
-> you can just pull (fetch) to check if there were any changes, and if
-> there were not you don't get useless marker-merges.
-
-If I don't tell you my branch has something in it ready to grab, you
-shouldn't merge it.  It probably won't work, and is quite likely to
-set your computer on fire, slaughter and fillet your pet goldfish, and
-make demons fly out of your nose.  If you wanna get stuck with all my
-incomplete WIP, let's just use a CVS module and be done with it.
-
-
-> 2. But the preferred git workflow is to have two branches in each of
-> two clones. The 'origin' branch where you fetch changes from other
-> repository (so called "tracking branch") and you don't commit your
-> changes to [...]
-
-=46unny, since this reads to me EXACTLY like the bzr flow of "upstream
-branch I pull" and "my branch I merge from upstream" that's getting
-kvetched around...
-
-
-
---=20
-Matthew Fuller     (MF4839)   |  fullermd@over-yonder.net
-Systems/Network Administrator |  http://www.over-yonder.net/~fullermd/
-           On the Internet, nobody can hear you scream.
+--nextPart2508538.fE6HqaS7pl--
