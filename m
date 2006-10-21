@@ -1,77 +1,138 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: VCS comparison table
-Date: Sat, 21 Oct 2006 10:23:46 -0400
-Message-ID: <20061021102346.9cd3abce.seanlkml__45117.5057831735$1161440669$gmane$org@sympatico.ca>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
-	<45345AEF.6070107@utoronto.ca>
-	<200610171030.35854.jnareb@gmail.com>
-	<vpqejt76vgz.fsf@ecrins.imag.fr>
-	<20061017073839.3728d1e7.seanlkml@sympatico.ca>
-	<20061021141328.GE29843@artax.karlin.mff.cuni.cz>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [ANNOUNCE] GIT 1.4.3
+Date: Sat, 21 Oct 2006 16:29:38 +0200
+Message-ID: <453A2ED2.1000709@lsrfire.ath.cx>
+References: <7vejt5xjt9.fsf@assigned-by-dhcp.cox.net> <7v4ptylfvw.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0610201709430.3962@g5.osdl.org> <20061021021235.GA29920@ftp.linux.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: bazaar-ng-bounces@lists.canonical.com Sat Oct 21 16:24:27 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 21 16:30:41 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbHls-0007eC-MG
-	for gcvbg-bazaar-ng@m.gmane.org; Sat, 21 Oct 2006 16:24:20 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GbHlb-0003YU-Tv; Sat, 21 Oct 2006 15:24:04 +0100
-Received: from bayc1-pasmtp11.bayc1.hotmail.com ([65.54.191.171]
-	helo=BAYC1-PASMTP11.CEZ.ICE)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <seanlkml@sympatico.ca>) id 1GbHlO-0003Y3-78
-	for bazaar-ng@lists.canonical.com; Sat, 21 Oct 2006 15:23:53 +0100
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP11.CEZ.ICE
-	over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830); 
-	Sat, 21 Oct 2006 07:32:38 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GbGpG-0001kU-Ph; Sat, 21 Oct 2006 09:23:46 -0400
-To: Jan Hudec <bulb@ucw.cz>
-Message-Id: <20061021102346.9cd3abce.seanlkml@sympatico.ca>
-In-Reply-To: <20061021141328.GE29843@artax.karlin.mff.cuni.cz>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 21 Oct 2006 14:32:38.0468 (UTC)
-	FILETIME=[C2063040:01C6F51D]
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29617>
+	id 1GbHrv-0000SY-NX
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 16:30:36 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S2993091AbWJUOac convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 21 Oct 2006 10:30:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993092AbWJUOac
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 10:30:32 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:65484
+	"EHLO neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S2993091AbWJUOac (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Oct 2006 10:30:32 -0400
+Received: from [10.0.1.3] (p508E7012.dip.t-dialin.net [80.142.112.18])
+	by neapel230.server4you.de (Postfix) with ESMTP id C52C31B00C;
+	Sat, 21 Oct 2006 16:30:29 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.7 (Windows/20060909)
+To: Al Viro <viro@ftp.linux.org.uk>
+In-Reply-To: <20061021021235.GA29920@ftp.linux.org.uk>
+X-Enigmail-Version: 0.94.0.0
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29618>
 
-On Sat, 21 Oct 2006 16:13:28 +0200
-Jan Hudec <bulb@ucw.cz> wrote:
+Al Viro schrieb:
+> Speaking of irritations...  There is a major (and AFAICS fixable)
+> suckitude in git-cherry.
 
-> Bzr is meant to be used in both ways, depending on user's choice.
-> Therefore it comes with that infrastructure and you can choose whether
-> you want to use it or not.
+[...]
 
->From what we've read on this thread, bzr appears to be biased towards
-working with a central repo.  That is the model that supports the use of
-revnos etc that the bzr folks are so fond of.   However Git is perfectly
-capable of being used in any number of models, including centralized.
-Git just doesn't make the mistake of training new users into using
-features that are only stable in a limited number of those models.
+> For one thing, there are better ways to do set comparison than creati=
+ng
+> a file for each element in one set and going through another checking
+> if corresponding files exist (join(1) and sort(1) or just use perl ha=
+shes).
 
-Sean
+[...]
+
+> Note that we are calculating a function of commit; it _never_ changes=
+=2E
+> Even if we don't just calculate and memorize it at commit time, a cac=
+he
+> somewhere under .git would speed the things up a lot...
+
+How about this patch?  It does away with using temporary files and inst=
+ead
+creates persistent cache files under .git/patch-ids/.  It is a very stu=
+pid
+cache layout: file name =3D commit SHA1, file contents =3D patch ID.  P=
+erhaps
+it needs fan-out directories like .git/objects/ has before it can be
+considered for merge.
+
+The set compare is stupid, too, but at least it is in-shell now, using =
+a
+space separated list and the is_in function.
+
+And the cache file creation is not safe for multiple parallel git-cherr=
+y's.
+
+It survives "make test" and is otherwise untested.  Care to test drive
+this prototype? :-D
+
+Thanks,
+Ren=E9
+
+
+diff --git a/git-cherry.sh b/git-cherry.sh
+index 8832573..c88afc3 100755
+--- a/git-cherry.sh
++++ b/git-cherry.sh
+@@ -46,18 +46,29 @@ # not that the order in inup matters...
+ inup=3D`git-rev-list ^$ours $upstream` &&
+ ours=3D`git-rev-list $ours ^$limit` || exit
+=20
+-tmp=3D.cherry-tmp$$
+-patch=3D$tmp-patch
+-mkdir $patch
+-trap "rm -rf $tmp-*" 0 1 2 3 15
++is_in() {
++	what=3D"$1"
++	while [ $# -gt 1 ]; do
++		shift
++		[ "$what" =3D "$1" ] && return 0
++	done
++	return 1
++}
+=20
++# prime patch-ID cache
++PATCH_ID_CACHE=3D"$GIT_DIR/patch-ids"
++mkdir -p "$PATCH_ID_CACHE"
++for commit in $inup $ours; do
++	[ -f "$PATCH_ID_CACHE/$commit" ] && continue
++	set x `git-diff-tree -p $commit | git-patch-id`
++	echo "$2" >"$PATCH_ID_CACHE/$commit"
++done
++
++ids_inup=3D
+ for c in $inup
+ do
+-	git-diff-tree -p $c
+-done | git-patch-id |
+-while read id name
+-do
+-	echo $name >>$patch/$id
++	read id <"$PATCH_ID_CACHE/$c"
++	ids_inup=3D"$ids_inup $id"
+ done
+=20
+ LF=3D'
+@@ -66,10 +77,10 @@ LF=3D'
+ O=3D
+ for c in $ours
+ do
+-	set x `git-diff-tree -p $c | git-patch-id`
+-	if test "$2" !=3D ""
++	read id <"$PATCH_ID_CACHE/$c"
++	if test "$id" !=3D ""
+ 	then
+-		if test -f "$patch/$2"
++		if is_in $id $ids_inup
+ 		then
+ 			sign=3D-
+ 		else
