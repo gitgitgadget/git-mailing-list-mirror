@@ -1,10 +1,9 @@
 From: Sean <seanlkml@sympatico.ca>
 Subject: Re: VCS comparison table
 Date: Sat, 21 Oct 2006 15:02:33 -0400
-Message-ID: <BAYC1-PASMTP0816D1AFF1061427F862A3AE020@CEZ.ICE>
+Message-ID: <20061021150233.c29e11c5.seanlkml__32740.957910619$1161457371$gmane$org@sympatico.ca>
 References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<egr3ud$nqm$1@sea.gmane.org>
-	<45340713.6000707@utoronto.ca>
+	<egr3ud$nqm$1@sea.gmane.org> <45340713.6000707@utoronto.ca>
 	<Pine.LNX.4.64.0610161625370.3962@g5.osdl.org>
 	<45345AEF.6070107@utoronto.ca>
 	<BAYC1-PASMTP08A746E5FA6B87BC65BD37AE0E0@CEZ.ICE>
@@ -13,30 +12,29 @@ References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
-	Linus Torvalds <torvalds@osdl.org>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 21 21:02:47 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: Linus Torvalds <torvalds@osdl.org>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+X-From: bazaar-ng-bounces@lists.canonical.com Sat Oct 21 21:02:48 2006
+Return-path: <bazaar-ng-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbM7F-0000r0-3q
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 21:02:41 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422792AbWJUTCh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Oct 2006 15:02:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422793AbWJUTCh
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 15:02:37 -0400
-Received: from bayc1-pasmtp08.bayc1.hotmail.com ([65.54.191.168]:38936 "EHLO
-	BAYC1-PASMTP08.CEZ.ICE") by vger.kernel.org with ESMTP
-	id S1422792AbWJUTCg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Oct 2006 15:02:36 -0400
+	id 1GbM7M-0000rv-J5
+	for gcvbg-bazaar-ng@m.gmane.org; Sat, 21 Oct 2006 21:02:48 +0200
+Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
+	id 1GbM7L-0001yG-4Y; Sat, 21 Oct 2006 20:02:47 +0100
+Received: from bayc1-pasmtp08.bayc1.hotmail.com ([65.54.191.168]
+	helo=BAYC1-PASMTP08.CEZ.ICE)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <seanlkml@sympatico.ca>) id 1GbM7B-0001yA-0p
+	for bazaar-ng@lists.canonical.com; Sat, 21 Oct 2006 20:02:38 +0100
 X-Originating-IP: [65.93.43.81]
 X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP08.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sat, 21 Oct 2006 12:11:17 -0700
+Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP08.CEZ.ICE
+	over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830); 
+	Sat, 21 Oct 2006 12:11:17 -0700
 Received: from guru.attic.local ([10.10.10.28])
 	by linux1.attic.local with esmtp (Exim 4.43)
 	id 1GbLB3-0002EI-VE; Sat, 21 Oct 2006 14:02:33 -0400
@@ -44,10 +42,22 @@ To: Jan Hudec <bulb@ucw.cz>
 Message-Id: <20061021150233.c29e11c5.seanlkml@sympatico.ca>
 In-Reply-To: <20061021185825.GC29927@artax.karlin.mff.cuni.cz>
 X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 21 Oct 2006 19:11:18.0062 (UTC) FILETIME=[AFADC4E0:01C6F544]
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+X-OriginalArrivalTime: 21 Oct 2006 19:11:18.0062 (UTC)
+	FILETIME=[AFADC4E0:01C6F544]
+X-BeenThere: bazaar-ng@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
+List-Post: <mailto:bazaar-ng@lists.canonical.com>
+List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-ng-bounces@lists.canonical.com
+Errors-To: bazaar-ng-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29660>
 
 On Sat, 21 Oct 2006 20:58:25 +0200
 Jan Hudec <bulb@ucw.cz> wrote:
