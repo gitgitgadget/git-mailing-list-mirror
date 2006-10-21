@@ -1,89 +1,58 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: VCS comparison table
-Date: Wed, 18 Oct 2006 19:49:45 -0400
-Message-ID: <20061018194945.3e5105e7.seanlkml__29789.188996847$1161405144$gmane$org@sympatico.ca>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<45349162.90001@op5.se> <453536AE.6060601@utoronto.ca>
-	<200610172301.27101.jnareb@gmail.com>
-	<45354AD0.1020107@utoronto.ca>
-	<BAYC1-PASMTP07AB11A64250AAF683424DAE0E0@CEZ.ICE>
-	<45355CBB.80108@utoronto.ca>
-	<BAYC1-PASMTP01369CD694D75CB61ACCC7AE0E0@CEZ.ICE>
-	<eh64tk$rug$2@sea.gmane.org>
-	<BAYC1-PASMTP069C473B2E79389E5BFC92AE0F0@CEZ.ICE>
-	<eh6dgr$pu8$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [ANNOUNCE] GIT 1.4.3
+Date: Fri, 20 Oct 2006 22:29:37 -0700
+Message-ID: <7vbqo6i6da.fsf@assigned-by-dhcp.cox.net>
+References: <7vejt5xjt9.fsf@assigned-by-dhcp.cox.net>
+	<7v4ptylfvw.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0610201709430.3962@g5.osdl.org>
+	<20061021021235.GA29920@ftp.linux.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: bazaar-ng-bounces@lists.canonical.com Sat Oct 21 06:32:21 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 21 07:29:45 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gb8Wx-0006ng-5w
-	for gcvbg-bazaar-ng@m.gmane.org; Sat, 21 Oct 2006 06:32:19 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GapNX-0007lw-2I; Fri, 20 Oct 2006 09:05:19 +0100
-Received: from bayc1-pasmtp08.bayc1.hotmail.com ([65.54.191.168]
-	helo=BAYC1-PASMTP08.CEZ.ICE)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <seanlkml@sympatico.ca>) id 1GaLAT-0005ty-2G
-	for bazaar-ng@lists.canonical.com; Thu, 19 Oct 2006 00:49:49 +0100
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP08.CEZ.ICE
-	over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830); 
-	Wed, 18 Oct 2006 16:58:25 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GaKEL-00036Y-Uc; Wed, 18 Oct 2006 18:49:45 -0400
-To: Charles Duffy <cduffy@spamcop.net>
-Message-Id: <20061018194945.3e5105e7.seanlkml@sympatico.ca>
-In-Reply-To: <eh6dgr$pu8$1@sea.gmane.org>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 18 Oct 2006 23:58:25.0859 (UTC)
-	FILETIME=[4D01B930:01C6F311]
-X-Mailman-Approved-At: Fri, 20 Oct 2006 09:04:05 +0100
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29580>
+	id 1Gb9QV-0006j9-8U
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 07:29:43 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S2992796AbWJUF3j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Oct 2006 01:29:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992826AbWJUF3j
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 01:29:39 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:45745 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S2992796AbWJUF3i (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Oct 2006 01:29:38 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061021052938.DMKQ6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 21 Oct 2006 01:29:38 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id ctVP1V00K1kojtg0000000
+	Sat, 21 Oct 2006 01:29:23 -0400
+To: Al Viro <viro@ftp.linux.org.uk>
+In-Reply-To: <20061021021235.GA29920@ftp.linux.org.uk> (Al Viro's message of
+	"Sat, 21 Oct 2006 03:12:35 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29581>
 
-On Wed, 18 Oct 2006 18:31:32 -0500
-Charles Duffy <cduffy@spamcop.net> wrote:
+Al Viro <viro@ftp.linux.org.uk> writes:
 
-> Granted, I'm speaking with my IT hat on here rather than my developer 
-> hat -- but plugins are a pretty clear usability win.
+> Speaking of irritations...  There is a major (and AFAICS fixable)
+> suckitude in git-cherry.  Basically, what it does is...
 
-Sure they can be.  But their value I think is overstated, especially
-in an open source project where anyone can grab a copy of the source
-and update it with a trial feature.  This updated copy can be wrapped
-in a nice GUI installer just as easily as any plugin.
+Yeah, that sucks big time.  I never realized there are people
+who still are using it, though. git-format-patch used to use it,
+but the version was retired exactly five months ago, and there
+is no in-tree users anymore.
 
-Now, I suppose plugins let end users mix and match trial features
-slightly easier, but hopefully your base package isn't so devoid of
-features that this is honestly necessary.
-
-As Petr pointed out, all this comes to Bzr essentially for free
-since it's a part of python.  So be it, but I've yet to hear an
-example where plugins were anything more than a minor convenience
-rather than a fundamental win over the way Git is developing.
-
-For an example, just look how few lines of git were needed to
-implement the essential features of the bzr bundle feature.
-With no plugins or monkey business needed ;o)
-
-Sean
+I guess we could separate out the revision filtering logic in
+builtin-log.c:cmd_format_patch() and implement git-cherry as a
+new built-in.
