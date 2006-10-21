@@ -1,99 +1,55 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
-Date: Sat, 21 Oct 2006 19:40:56 +0200
-Message-ID: <20061021174056.GA29927@artax.karlin.mff.cuni.cz>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <ehao3e$2qv$1@sea.gmane.org> <4538EC8F.7020502@utoronto.ca> <200610201821.34712.jnareb@gmail.com> <20061020181210.GA29843@artax.karlin.mff.cuni.cz> <20061020225917.GA30584@coredump.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: VCS comparison table
+Date: Sat, 21 Oct 2006 19:41:07 +0200
+Message-ID: <200610211941.07635.jnareb@gmail.com>
+References: <45357CC3.4040507@utoronto.ca> <845b6e870610210931r19aaaac3y3dfd0d9c4af8ed40@mail.gmail.com> <200610211859.03420.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 21 19:41:01 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Matthew D. Fuller" <fullermd@over-yonder.net>,
+	bazaar-ng@lists.canonical.com, "Carl Worth" <cworth@cworth.org>,
+	"Andreas Ericsson" <ae@op5.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 21 19:41:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbKq6-00056W-MX
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 19:40:55 +0200
+	id 1GbKqE-00057v-Cc
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 19:41:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423355AbWJURkv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Oct 2006 13:40:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423366AbWJURkv
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 13:40:51 -0400
-Received: from artax.karlin.mff.cuni.cz ([195.113.31.125]:9417 "EHLO
-	artax.karlin.mff.cuni.cz") by vger.kernel.org with ESMTP
-	id S1423355AbWJURkv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Oct 2006 13:40:51 -0400
-Received: by artax.karlin.mff.cuni.cz (Postfix, from userid 17196)
-	id 9503349B7; Sat, 21 Oct 2006 19:40:56 +0200 (CEST)
-To: Jeff King <peff@peff.net>
+	id S1423368AbWJURk7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Oct 2006 13:40:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423369AbWJURk7
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 13:40:59 -0400
+Received: from qb-out-0506.google.com ([72.14.204.226]:18253 "EHLO
+	qb-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1423368AbWJURk6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Oct 2006 13:40:58 -0400
+Received: by qb-out-0506.google.com with SMTP id p36so282066qba
+        for <git@vger.kernel.org>; Sat, 21 Oct 2006 10:40:57 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=XwdDcqPmprqCqXyxtP4nER2+FS5i+KvqDmd03ht3vlJoqb6A6tnm4Ua+flBrqYOMKm6oykyhoUv6TFUJdog6V8Mp9lwuCxDu5taI1ggX5Wby5UUhssCnsOYrzkJ7BKzGC76U6fywEazr3mKOROwKwziq6aahq1HbQXtk/qyk3AA=
+Received: by 10.67.93.6 with SMTP id v6mr4122538ugl;
+        Sat, 21 Oct 2006 10:40:56 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
+        by mx.google.com with ESMTP id 50sm21974ugb.2006.10.21.10.40.56;
+        Sat, 21 Oct 2006 10:40:56 -0700 (PDT)
+To: "Erik =?iso-8859-1?q?B=E5gfors?=" <zindar@gmail.com>
+User-Agent: KMail/1.9.3
+In-Reply-To: <200610211859.03420.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20061020225917.GA30584@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29644>
 
-On Fri, Oct 20, 2006 at 06:59:17PM -0400, Jeff King wrote:
-> On Fri, Oct 20, 2006 at 08:12:10PM +0200, Jan Hudec wrote:
-> 
-> > At this point, I expect the tree to look like this:
-> > A$ ls -R
-> > .:
-> > data/
-> > data:
-> > hello.txt
-> > A$ cat data/hello.txt
-> > Hello World!
-> 
-> Git does what you expect here.
-> 
-> > A$ VCT mv data greetings
-> > A$ VCT commit -m "Renamed the data directory to greetings"
-> > B$ echo "Goodbye World!" > data/goodbye.txt
-> > B$ VCT add data/goodbye.txt
-> > B$ VCT commit -m "Added goodbye message."
-> > A$ VCT merge B
-> > 
-> > And now I expect to have tree looking like this:
-> > 
-> > A$ ls -R
-> > .:
-> > greetings/
-> > greetings:
-> > hello.txt
-> > goodbye.txt
-> 
-> Git does not do what you expect here. It notes that files moved, but it
-> does not have a concept of directories moving.  Git could, even without
-> file-ids or special patch types, figure out what happened by noting that
-> every file in data/ was renamed to its analogue in greetings/, and infer
-> that previously non-existant files in data/ should also be moved to
-> greetings/.
-> 
-> However, I'm not sure that I personally would prefer that behavior. In
-> some cases you might actually WANT data/goodbye.txt, and in some other
-> cases a conflict might be more appropriate. In any case, I would rather
-> the SCM do the simple and predictable thing (which I consider to be
-> creating data/goodbye.txt) rather than be clever and wrong (even if it's
-> only wrong a small percentage of the time).
-> 
-> In short, git doesn't do what you expect, but I'm not convinced that
-> it's a bug or lack of feature, and not simply a difference in desired
-> behavior.
+Note: instead of symlinking .git/objects/ objects database,
+you can simply set and export GIT_OBJECT_DIRECTORY environment
+variable.
 
-I still consider it a bug, but different problems of the file-id
-solution have already been described in this thread that I consider bugs
-as well.
-
-Besides I start to think that it should be actually possible to solve
-this case with the git-style approach. I have to state beforehand, that
-I don't know how the most recent git algorithm works, but I imagine
-there is some kind of 'brackets' saying the text is in a given file. Now
-if those 'brackets' were not flat, but nested, ie. instead of saying
-'this is in foo/bar' it would say 'this is in bar is in foo', the
-difference when renaming directory would only affect the 'outer bracket'
-and therefore merge correctly with adding content inside it.
-
---------------------------------------------------------------------------------
-                  				- Jan Hudec `Bulb' <bulb@ucw.cz>
+-- 
+Jakub Narebski
+Poland
