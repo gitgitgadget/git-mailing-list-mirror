@@ -1,74 +1,63 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [ANNOUNCE] GIT 1.4.3
-Date: Fri, 20 Oct 2006 17:31:21 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610201728031.3962@g5.osdl.org>
-References: <7vejt5xjt9.fsf@assigned-by-dhcp.cox.net> <7v4ptylfvw.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0610201709430.3962@g5.osdl.org> <20061021002251.GO20017@pasky.or.cz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFC] Syntax highlighting for combined diff
+Date: Sat, 21 Oct 2006 02:35:41 +0200
+Organization: At home
+Message-ID: <ehbq0k$24l$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 21 02:31:53 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sat Oct 21 02:36:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gb4m2-0002ln-FS
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 02:31:39 +0200
+	id 1Gb4qZ-0004PM-4j
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 02:36:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161177AbWJUAbb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Oct 2006 20:31:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161173AbWJUAbb
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 20:31:31 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:17836 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1161159AbWJUAba (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 20:31:30 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9L0VMaX017951
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 20 Oct 2006 17:31:22 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9L0VLPX008877;
-	Fri, 20 Oct 2006 17:31:21 -0700
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20061021002251.GO20017@pasky.or.cz>
-X-Spam-Status: No, hits=-0.981 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S2992756AbWJUAgQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Oct 2006 20:36:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992758AbWJUAgQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Oct 2006 20:36:16 -0400
+Received: from main.gmane.org ([80.91.229.2]:8888 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S2992756AbWJUAgP (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Oct 2006 20:36:15 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Gb4qR-0004NQ-Ja
+	for git@vger.kernel.org; Sat, 21 Oct 2006 02:36:12 +0200
+Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 21 Oct 2006 02:36:11 +0200
+Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 21 Oct 2006 02:36:11 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29566>
 
+Linus Torvalds wrote in "Re: VCS comparison table"
 
+> And "gitweb" does consider the first parent special, since it shows diffs 
+> against that one (although I've argued that it probably shouldn't, and 
+> that there should be some way to show branches against arbitrary parents)
 
-On Sat, 21 Oct 2006, Petr Baudis wrote:
->
-> > That said, "LESS=FRS" doesn't really help that much. It still clears the 
-> > screen. Using "LESS=FRSX" fixes that, but the alternate display sequence 
-> > is actually nice _if_ the pager is used.
-> 
-> Hmm, what terminal emulator do you use? The reasonable ones should
-> restore the original screen. At least xterm does, and I *think*
-> gnome-terminal does too (although I'm too lazy to boot up my notebook
-> and confirm).
+So the question is how to color combined diff format (what should be syntax
+highlighting for combined diff format). If branches columns have only
+pluses we use the same color as for adding line in ordinary diff; if
+branches column consist only of minuses we use the same color as for
+removing line in ordinary diff. Can there be mixture of plusses and
+minuses? How git-diff --color solves this?
 
-Not xterm, at least.
-
-Not gnome-terminal either, for that matter.
-
-I just tried.
-
-	LESS=FRS git diff
-
-clears the screen and leaves the thing at the end.
-
-	LESS=FRSX git diff
-
-works fine, but for people who _like_ the alternate screens (and I do, 
-once I really use a pager) it also disables the alternate screen.
-
-It might depend on the termcap, of course. I'm running FC5.
-
-		Linus
+Should we in gitweb output change color slightly depending on number of
+plusses or minuses?
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
