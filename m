@@ -1,88 +1,80 @@
-From: "=?ISO-8859-1?Q?Erik_B=E5gfors?=" <zindar@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: VCS comparison table
-Date: Sat, 21 Oct 2006 19:33:08 +0200
-Message-ID: <845b6e870610211033h4b9d2667u6498fc7461473997@mail.gmail.com>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<200610171030.35854.jnareb@gmail.com> <vpqejt76vgz.fsf@ecrins.imag.fr>
-	<20061017073839.3728d1e7.seanlkml@sympatico.ca>
-	<20061021141328.GE29843@artax.karlin.mff.cuni.cz>
-	<BAYC1-PASMTP116A2EE9056E50B25534D5AE020@CEZ.ICE>
-	<845b6e870610210919i6d086654g3881343e6a3c9f84@mail.gmail.com>
-	<BAYC1-PASMTP01706CD2FCBE923333A0CBAE020@CEZ.ICE>
-	<845b6e870610210935y2a97398enf18e17c41f123907@mail.gmail.com>
-	<BAYC1-PASMTP04FAD1FBB91BA4C07A5E79AE020@CEZ.ICE>
+Date: Sat, 21 Oct 2006 10:38:50 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610211035170.3962@g5.osdl.org>
+References: <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org> <4536EC93.9050305@utoronto.ca>
+ <845b6e870610190002u420118b8ud634bb9594572c48@mail.gmail.com>
+ <46d6db660610190149x32442596we4112cdd044185a@mail.gmail.com> <45373E27.3050209@op5.se>
+ <vpqwt6wsmb5.fsf@ecrins.imag.fr> <72877ab10610190757u3d2b4df0o204c6ffd73af69b4@mail.gmail.com>
+ <45379A02.1010105@utoronto.ca> <72877ab10610192014o3a7f66c6v79f94f48615e08f4@mail.gmail.com>
+ <45384B0F.4040901@utoronto.ca> <20061021123027.GB29843@artax.karlin.mff.cuni.cz>
+ <ehd5u7$c5g$1@sea.gmane.org> <453A513B.1070006@utoronto.ca>
+ <Pine.LNX.4.64.0610211007320.3962@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: quoted-printable
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, bazaar-ng@lists.canonical.com,
-	Linus Torvalds <torvalds@osdl.org>, Jan Hudec <bulb@ucw.cz>,
-	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-X-From: bazaar-ng-bounces@lists.canonical.com Sat Oct 21 19:33:24 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 21 19:39:02 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbKiq-0003Qv-6Q
-	for gcvbg-bazaar-ng@m.gmane.org; Sat, 21 Oct 2006 19:33:24 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GbKip-0004pc-A1; Sat, 21 Oct 2006 18:33:23 +0100
-Received: from py-out-1112.google.com ([64.233.166.181])
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <zindar@gmail.com>) id 1GbKib-0004pS-JV
-	for bazaar-ng@lists.canonical.com; Sat, 21 Oct 2006 18:33:09 +0100
-Received: by py-out-1112.google.com with SMTP id f25so68294pyf
-	for <bazaar-ng@lists.canonical.com>;
-	Sat, 21 Oct 2006 10:33:08 -0700 (PDT)
-Received: by 10.35.119.8 with SMTP id w8mr3067323pym;
-	Sat, 21 Oct 2006 10:33:08 -0700 (PDT)
-Received: by 10.35.116.4 with HTTP; Sat, 21 Oct 2006 10:33:08 -0700 (PDT)
-To: Sean <seanlkml@sympatico.ca>
-In-Reply-To: <BAYC1-PASMTP04FAD1FBB91BA4C07A5E79AE020@CEZ.ICE>
-Content-Disposition: inline
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29641>
-
-On 10/21/06, Sean <seanlkml@sympatico.ca> wrote:
-> On Sat, 21 Oct 2006 18:35:18 +0200
-> "Erik B=E5gfors" <zindar@gmail.com> wrote:
->
->
-> > So... I do agree that revnos might not fit perfectly in at all times.
-> > But that they automatically mean that bzr is not a decentralized VCS,
-> > I strongly disagree with.  They are just one part of the equation.
->
-> Whoe are you strongly disagreeing with?  Nobody said it wasn't a
-> decentralized VCS.  But there is a _clear_ bias towards using it
-> with a central server.
+	id 1GbKoI-0004dx-2F
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 19:39:02 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S2993114AbWJURi6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Oct 2006 13:38:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993118AbWJURi6
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 13:38:58 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:17838 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S2993114AbWJURi5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Oct 2006 13:38:57 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9LHcpaX031617
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 21 Oct 2006 10:38:51 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9LHco7o028836;
+	Sat, 21 Oct 2006 10:38:50 -0700
+To: Aaron Bentley <aaron.bentley@utoronto.ca>
+In-Reply-To: <Pine.LNX.4.64.0610211007320.3962@g5.osdl.org>
+X-Spam-Status: No, hits=-0.481 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29642>
 
 
-Ok, I take that back :)
 
-When I think "centralized" I think "everyone must commit to a central
-repository"... which is not what we are talking about here...
+On Sat, 21 Oct 2006, Linus Torvalds wrote:
+> 
+> 	# Tell people we want to work with ".git-1"
+> 	export GIT_DIR=.git-1
 
-/Erik
-ps. Sean, your mailer does something wierd with my last name in the
-to-field, so I can't just hit "reply" without removing my name
-first...
+Actually, I think Jakub's approach is better: you'd be better off doing 
+this as
 
-/Erik
+	alias git-1="git --git-dir=.git-1"
+	alias git-2="git --git-dir=.git-2"
 
---=20
-google talk/jabber. zindar@gmail.com
-SIP-phones: sip:erik_bagfors@gizmoproject.com
-sip:17476714687@proxy01.sipphone.com
+and now you should be able to just do
+
+	git-1 diff
+
+(or any other git command) and
+
+	git-2 diff
+
+and can happily share the same directory and mix git commands without 
+changing an environment variable all the time.
+
+That would still be insane, but it wouldn't likely be _quite_ as confusing 
+(or error-prone in case you forgot to switch the variable).
+
+			Linus
+
+PS. I'd still _not_ suggest doing this. It should _work_, but I mean - 
+really..
