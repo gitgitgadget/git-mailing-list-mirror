@@ -1,69 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: VCS comparison table
-Date: Fri, 20 Oct 2006 22:49:21 -0700
-Message-ID: <7vzmbqgqvy.fsf@assigned-by-dhcp.cox.net>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<Pine.LNX.4.64.0610171605440.3962@g5.osdl.org>
-	<45357411.20500@utoronto.ca> <200610180246.18758.jnareb@gmail.com>
-	<45357CC3.4040507@utoronto.ca>
-	<Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>
-	<4536EC93.9050305@utoronto.ca> <87lkncev90.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0610190757100.3962@g5.osdl.org>
-	<20061019161319.GA75501@over-yonder.net>
-	<Pine.LNX.4.64.0610190948540.3962@g5.osdl.org>
-	<Pine.LNX.4.64.0610191110290.3962@g5.osdl.org>
-	<vpqlknc3zmn.fsf@ecrins.imag.fr>
-	<Pine.LNX.4.64.0610191258290.3962@g5.osdl.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [PATCH 2/2] Remove dead code after direct graph drawing
+Date: Sat, 21 Oct 2006 08:35:46 +0200
+Message-ID: <e5bfff550610202335rcb83ea8mf7ec2dd79ec6dd90@mail.gmail.com>
+References: <200610191613.19142.Josef.Weidendorfer@gmx.de>
+	 <200610200111.26259.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 21 07:49:39 2006
+X-From: git-owner@vger.kernel.org Sat Oct 21 08:37:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gb9je-0000eC-NC
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 07:49:31 +0200
+	id 1GbAUK-0006a8-O6
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 08:37:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992828AbWJUFtX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Oct 2006 01:49:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932246AbWJUFtX
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 01:49:23 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:18357 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932222AbWJUFtW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Oct 2006 01:49:22 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061021054922.IFSF2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 21 Oct 2006 01:49:22 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id ctp71V00Q1kojtg0000000
-	Sat, 21 Oct 2006 01:49:07 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0610191258290.3962@g5.osdl.org> (Linus Torvalds's
-	message of "Thu, 19 Oct 2006 13:47:53 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751746AbWJUGhi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Oct 2006 02:37:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751749AbWJUGhi
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 02:37:38 -0400
+Received: from zeus1.kernel.org ([204.152.191.4]:23730 "EHLO zeus1.kernel.org")
+	by vger.kernel.org with ESMTP id S1751746AbWJUGhi (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Oct 2006 02:37:38 -0400
+Received: from py-out-1112.google.com (py-out-1112.google.com [64.233.166.178])
+	by zeus1.kernel.org (8.13.7/8.13.1) with ESMTP id k9L6bOxn001499
+	for <git@vger.kernel.org>; Sat, 21 Oct 2006 06:37:37 GMT
+Received: by py-out-1112.google.com with SMTP id z74so119867pyg
+        for <git@vger.kernel.org>; Fri, 20 Oct 2006 23:35:46 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=epT8MLPy+0Ojy7NwPiNjhM2kQ6OzV3sd/oeUxnIDvagXxb689q3Me8AwmAm0TsHmcqLhs6c0ONwHlvmTibVNfMj0gWCK/EGzN/CbMS2mcqAEyEuHowXckuILzRYitP2D6cSgHL2wsDhFttXrgqu1QoZtrkubO1GoDi1OzINtZFI=
+Received: by 10.35.119.8 with SMTP id w8mr2124887pym;
+        Fri, 20 Oct 2006 23:35:46 -0700 (PDT)
+Received: by 10.35.42.4 with HTTP; Fri, 20 Oct 2006 23:35:46 -0700 (PDT)
+To: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>
+In-Reply-To: <200610200111.26259.Josef.Weidendorfer@gmx.de>
+Content-Disposition: inline
+X-Virus-Scanned: ClamAV 0.88.4/2060/Fri Oct 20 19:45:33 2006 on zeus1.kernel.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29586>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Josef,
 
-> For example, while git now does "annotate" (or "blame"), it's not 
-> lightning fast, and I simply don't care. Doing a
->
-> 	git blame kernel/sched.c
->
-> takes about three seconds for me, and that's on a pretty good machine (and 
-> on the kernel tree, which for me is always in the cache ;).
+ I think ther's a leak somewhere.
 
-ll.6041-6091 of that file is blamed to arch/ia64/kernel/domain.c
-by pickaxe -C (attributed to commit 2.6.12-rc2) while blame says
-they are brought in by commit 9c1cfa, which says "Move the ia64
-domain setup code to the generic code".  I am slowly realizing
-that comparing the output from blame and pickaxe might be a good
-way to study the project history.
+Checking memory use with ksysguard is see memory use going up
+scrolling up and down also on the same revisions list view subset.
+
+I'm not sure it depends on your patch though.
+
+Marco
