@@ -1,74 +1,73 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: VCS comparison table
-Date: Tue, 17 Oct 2006 08:07:02 -0400
-Message-ID: <20061017080702.615a3b2f.seanlkml__27953.817000571$1161408618$gmane$org@sympatico.ca>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<200610171030.35854.jnareb@gmail.com>
-	<vpqejt76vgz.fsf@ecrins.imag.fr>
-	<200610171345.32313.jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [ANNOUNCE] GIT 1.4.3.1
+Date: Fri, 20 Oct 2006 22:32:19 -0700
+Message-ID: <7v4ptyi68s.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: bazaar-ng-bounces@lists.canonical.com Sat Oct 21 07:30:15 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 21 07:32:31 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gb9Qy-0006n4-Ap
-	for gcvbg-bazaar-ng@m.gmane.org; Sat, 21 Oct 2006 07:30:12 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GapMp-0007i3-01; Fri, 20 Oct 2006 09:04:36 +0100
-Received: from bayc1-pasmtp04.bayc1.hotmail.com ([65.54.191.164])
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <seanlkml@sympatico.ca>) id 1GZnir-0007Gg-I6
-	for bazaar-ng@lists.canonical.com; Tue, 17 Oct 2006 13:07:06 +0100
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.81]) by
-	BAYC1-PASMTP04.bayc1.hotmail.com over TLS secured channel with
-	Microsoft SMTPSVC(6.0.3790.1830); Tue, 17 Oct 2006 05:07:04 -0700
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GZmmk-0005Yn-MB; Tue, 17 Oct 2006 07:07:02 -0400
-To: Jakub Narebski <jnareb@gmail.com>
-Message-Id: <20061017080702.615a3b2f.seanlkml@sympatico.ca>
-In-Reply-To: <200610171345.32313.jnareb@gmail.com>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 17 Oct 2006 12:07:04.0288 (UTC)
-	FILETIME=[C2651600:01C6F1E4]
-X-Mailman-Approved-At: Fri, 20 Oct 2006 09:04:04 +0100
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29582>
+	id 1Gb9T9-00076P-07
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 07:32:27 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S2992826AbWJUFcX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 21 Oct 2006 01:32:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932246AbWJUFcX
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 01:32:23 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:58870 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S932222AbWJUFcW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Oct 2006 01:32:22 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061021053221.ZAT22409.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 21 Oct 2006 01:32:21 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id ctY51V0011kojtg0000000
+	Sat, 21 Oct 2006 01:32:05 -0400
+To: git@vger.kernel.org
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29583>
 
-On Tue, 17 Oct 2006 13:45:31 +0200
-Jakub Narebski <jnareb@gmail.com> wrote:
+The latest maintenance release GIT 1.4.3.1 is available at the
+usual places:
 
-> Git cannot do that remotely (with exception of git-tar-tree/git-archive 
-> which has --remote option), yet. But you can get contents of a file 
-> (with "git cat-file -p [<revision>:|:<stage>:]<filename>"), list 
-> directory (with "git ls-tree <tree-ish>") and compare files or 
-> directories (git diff family of commands) without need for working 
-> directory.
+  http://www.kernel.org/pub/software/scm/git/
 
-Interesting, I didn't know about the --remote option.  So in fact as long
-as the remote has enabled upload-tar then anyone can do a "light checkout".
-However, it appears that kernel.org for instance doesn't enable this feature.
+  git-1.4.3.1.tar.{gz,bz2}			(tarball)
+  git-htmldocs-1.4.3.1.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.4.3.1.tar.{gz,bz2}		(preformatted docs)
+  RPMS/$arch/git-*-1.4.3.1-1.$arch.rpm	(RPM)
 
-Sean
-  
+This is primarily to work around changes in the recent GNU diff output
+format.  Also it contains irritation fix for "git diff" which now
+paginates its output by default.
+
+----------------------------------------------------------------
+
+Changes since v1.4.3 are as follows:
+
+Junio C Hamano (1):
+      pager: default to LESS=3DFRS
+
+Lars Hjemli (1):
+      Fix typo in show-index.c
+
+Linus Torvalds (1):
+      git-apply: prepare for upcoming GNU diff -u format change.
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (2):
+      Reject hexstring longer than 40-bytes in get_short_sha1()
+      Add revspec documentation for ':path', ':[0-3]:path' and git-desc=
+ribe
+
+Nicolas Pitre (1):
+      reduce delta head inflated size
