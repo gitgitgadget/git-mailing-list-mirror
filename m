@@ -1,70 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: VCS comparison table
-Date: Sat, 21 Oct 2006 19:03:57 +0200
-Message-ID: <200610211903.57655.jnareb@gmail.com>
-References: <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org> <ehd5u7$c5g$1@sea.gmane.org> <453A513B.1070006@utoronto.ca>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [RFC] separate .git from working directory
+Date: Sun, 22 Oct 2006 00:08:00 +0700
+Message-ID: <fcaeb9bf0610211008t9da13a5m71105d0ddd031bae@mail.gmail.com>
+References: <fcaeb9bf0610110623q365d3ffcw9ba9e11936d03a9d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 21 19:03:55 2006
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Oct 21 19:08:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbKGG-00075e-QZ
-	for gcvg-git@gmane.org; Sat, 21 Oct 2006 19:03:53 +0200
+	id 1GbKKj-0007kd-ST
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 19:08:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993139AbWJURDt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 21 Oct 2006 13:03:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993160AbWJURDt
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 13:03:49 -0400
-Received: from qb-out-0506.google.com ([72.14.204.232]:51822 "EHLO
-	qb-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S2993139AbWJURDs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Oct 2006 13:03:48 -0400
-Received: by qb-out-0506.google.com with SMTP id p36so279211qba
-        for <git@vger.kernel.org>; Sat, 21 Oct 2006 10:03:47 -0700 (PDT)
+	id S2993160AbWJURIH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Oct 2006 13:08:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993163AbWJURIH
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 13:08:07 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:9508 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S2993160AbWJURIC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Oct 2006 13:08:02 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so957508ugd
+        for <git@vger.kernel.org>; Sat, 21 Oct 2006 10:08:01 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=fbOixSCP/ZsUGhK9FSEr1gb+cNA4VuX7ENPlDSiDE3T8zDTGlCE5X3MZkpuqe+rpZaD+KvI5MLpA2XUIAZqvMN4TvQZb6ZAQsR2Wz3TOJ2yReLmevxmfTdk1Yji1+pOk1hvX67vvB7rSRV7B5i+ZgyXvWmQtj+S5KalHNYtS4Dk=
-Received: by 10.66.216.20 with SMTP id o20mr4033786ugg;
-        Sat, 21 Oct 2006 10:03:47 -0700 (PDT)
-Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
-        by mx.google.com with ESMTP id 34sm101213uga.2006.10.21.10.03.46;
-        Sat, 21 Oct 2006 10:03:47 -0700 (PDT)
-To: Aaron Bentley <aaron.bentley@utoronto.ca>
-User-Agent: KMail/1.9.3
-In-Reply-To: <453A513B.1070006@utoronto.ca>
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HrfSdvLaphYjFW1WjnAIvnoFLTgNTVnU7A6YBVwTJWLEoCFhhYCcWxaohAS0zxva4+8e/QCDBTaPkotlRvdQJCM3/ZunXiIc2Y2dc0UUXzOxyp4Ok+4/6HjzdM8kqiwob/al4+6mUFcYJvyHbRd7tjfX+uXMV1713Dctpaj5MME=
+Received: by 10.78.200.3 with SMTP id x3mr4127564huf;
+        Sat, 21 Oct 2006 10:08:01 -0700 (PDT)
+Received: by 10.78.100.8 with HTTP; Sat, 21 Oct 2006 10:08:00 -0700 (PDT)
+To: git@vger.kernel.org
+In-Reply-To: <fcaeb9bf0610110623q365d3ffcw9ba9e11936d03a9d@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29639>
 
-Aaron Bentley wrote:
-> AIUI, that's not what Tim  wants. =A0He wants to intermix files from
-> different repos in the same directory.
->=20
-> i.e.
->=20
-> project/file-1
-> project/file-2
-> project/.git-1
-> project/.git-2
->=20
-> So file-1 would be in the .git-1 repository, but file-2 would be
-> in the .git-2 repository.
+Hi,
+After reading a post in VCS comparison thread mentioning /etc example.
+I think some of my patches might be useful for some users. They are
+two patches, tp/gitlink~1 and tp/gitlink~2 in git-pclouds.git on
+repo.or.cz.
+The implementation is a bit differerent from what I proposed. The
+.gitdir file (I named it .gitlink  though) contains an alternative
+name for .git dir. It would be more obvious with the following
+example:
 
-Possible (as I said), although it would screw up automatic repository=20
-detection. So you would have to say "git --git-dir=3D.git-1 commit -a"
-or "GIT_DIR=3D.git-2 git log -p; git diff; ...", i.e. specify repo
-for each command.
+The standard layout:
 
-Of course you would have to hide repositories from each other,
-and probably it would be better to hide files provided by other
-repository.
---=20
-Jakub Narebski
-Poland
+a/.git
+a/file
+a/b/.git
+a/b/file
+
+The new layout:
+
+a/.git
+a/.git-b (it is actually a/b/.git)
+a/file
+a/b/.gitlink (whose content is ".git-b")
+a/b/file
+
+With this I can move all .git directories to the top directory (or
+just parent directories). In /etc example, it can create a less
+cluttered directory structure. I do not submit these patches to git.
+It needs more work IMO.
+-- 
+Duy
