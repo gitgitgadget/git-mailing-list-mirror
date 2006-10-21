@@ -1,106 +1,165 @@
-From: Aaron Bentley <aaron.bentley@utoronto.ca>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: VCS comparison table
-Date: Sat, 21 Oct 2006 12:56:27 -0400
-Message-ID: <453A513B.1070006@utoronto.ca>
-References: <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>	<4536EC93.9050305@utoronto.ca>	<845b6e870610190002u420118b8ud634bb9594572c48@mail.gmail.com>	<46d6db660610190149x32442596we4112cdd044185a@mail.gmail.com>	<45373E27.3050209@op5.se>
-	<vpqwt6wsmb5.fsf@ecrins.imag.fr>	<72877ab10610190757u3d2b4df0o204c6ffd73af69b4@mail.gmail.com>	<45379A02.1010105@utoronto.ca>	<72877ab10610192014o3a7f66c6v79f94f48615e08f4@mail.gmail.com>	<45384B0F.4040901@utoronto.ca>	<20061021123027.GB29843@artax.karlin.mff.cuni.cz>
-	<ehd5u7$c5g$1@sea.gmane.org>
+Date: Sat, 21 Oct 2006 18:59:02 +0200
+Message-ID: <200610211859.03420.jnareb@gmail.com>
+References: <45357CC3.4040507@utoronto.ca> <200610211608.18895.jnareb@gmail.com> <845b6e870610210931r19aaaac3y3dfd0d9c4af8ed40@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: bazaar-ng-bounces@lists.canonical.com Sat Oct 21 18:56:50 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Matthew D. Fuller" <fullermd@over-yonder.net>,
+	bazaar-ng@lists.canonical.com,
+	"Linus Torvalds" <torvalds@osdl.org>,
+	"Carl Worth" <cworth@cworth.org>, "Andreas Ericsson" <ae@op5.se>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 21 18:59:14 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbK9R-00062e-DR
-	for gcvbg-bazaar-ng@m.gmane.org; Sat, 21 Oct 2006 18:56:49 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GbK9F-0002Pp-QX; Sat, 21 Oct 2006 17:56:37 +0100
-Received: from server4.panoramicfeedback.com ([66.216.124.41])
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <aaron.bentley@utoronto.ca>) id 1GbK9D-0002Pj-IY
-	for bazaar-ng@lists.canonical.com; Sat, 21 Oct 2006 17:56:35 +0100
-Received: from server4.panoramicfeedback.com ([66.216.124.41] helo=[127.0.0.1])
-	by server4.panoramicfeedback.com with esmtp (Exim 3.36 #1 (Debian))
-	id 1GbK97-0001rW-00; Sat, 21 Oct 2006 12:56:29 -0400
-User-Agent: Thunderbird 1.5.0.7 (X11/20060922)
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <ehd5u7$c5g$1@sea.gmane.org>
-X-Enigmail-Version: 0.94.0.0
-X-Panometrics-MailScanner: Found to be clean
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29636>
+	id 1GbKBa-0006PW-8E
+	for gcvg-git@gmane.org; Sat, 21 Oct 2006 18:59:03 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S2993138AbWJUQ65 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 21 Oct 2006 12:58:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161502AbWJUQ65
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 12:58:57 -0400
+Received: from qb-out-0506.google.com ([72.14.204.232]:23630 "EHLO
+	qb-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1161498AbWJUQ64 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Oct 2006 12:58:56 -0400
+Received: by qb-out-0506.google.com with SMTP id p36so278899qba
+        for <git@vger.kernel.org>; Sat, 21 Oct 2006 09:58:55 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=GPAcDspCx9BC/eBCChvjjBmawhKyWNBForOsoNcomIyFpdIlTKcwRvDB8eMLwcbgYKHOQ2y1XjXo3ZU5nl3ZPEcIiwEmww/mThBk3nR+zwtby1jyKtmipmxshWGSLKTxfHMuVeJEJhSNL7YxE58mwzsk7N7E3huFK5ZtRt7hsNA=
+Received: by 10.67.119.13 with SMTP id w13mr4086789ugm;
+        Sat, 21 Oct 2006 09:58:54 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
+        by mx.google.com with ESMTP id 39sm89697ugb.2006.10.21.09.58.52;
+        Sat, 21 Oct 2006 09:58:53 -0700 (PDT)
+To: "Erik =?iso-8859-1?q?B=E5gfors?=" <zindar@gmail.com>
+User-Agent: KMail/1.9.3
+In-Reply-To: <845b6e870610210931r19aaaac3y3dfd0d9c4af8ed40@mail.gmail.com>
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29637>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Erik B=E5gfors wrote:
+> Jakub Narebski wrote:
+>>
+>> There _are_ terminology conflicts. For example bzr "branch" is rough=
+ly
+>> equivalent to one-branch git "repository";
+>=20
+> Agreed.
+>=20
+>> bzr "repository" is just
+>> collection of branches sharing common storage,
+>
+> Agreed
 
-Jakub Narebski wrote:
-> Jan Hudec wrote:
-> 
->> On Fri, Oct 20, 2006 at 12:05:35AM -0400, Aaron Bentley wrote:
->>> Tim Webster wrote:
->>>> Also svn does not allow files in the same directory to live in
->>>> multiple repos
->>> It would surprise me if many SCMs that support atomic commit also
->>> support intermixing files from multiple repos in the same directory.
->> In fact I think svk would. You would have to switch them by setting
->> an environment variable, but it's probably doable. That is because
->> unlike other version control systems, it does not store the information
->> about checkout in the checkout, but in the central directory and that
->> can be set. I don't know git well enough to tell whether git could do
->> the same by setting GIT_DIR.
-> 
-> You can very simply embed one "clothed" repository into another in GIT,
-> like shown below
-> 
->   project/.git
->   project/subdir/
->   project/subdir/file
->   project/subproject/
->   project/subproject/.git
->   project/subproject/file
->   ...
-> 
-> It depends on circumstances if one wants files belonging to subdirectory
-> be ignored by top repository. You would want to ignore .git/ directory,
-> though.
+What is worse (in comparing git with bzr) that there are no exact
+equivalents. For example bzr "branch" is something between git
+repository (clone of repository) and git branch. Bazaar-NG "repository"
+is something like multi-branch git repository, but also like collection
+of git repositories sharing object database.
+=20
+>> which is similar to set
+>> of git "repositories" with .git/objects/ linked to common object
+>> repository (storage area) or appropriately set alternates file
+>> (although that is not common usage in git, and for example you would
+>> have to be carefull with running git-prune); bzr "lightweight checko=
+ut"
+>> is equivalent to nonexistent "lazy clone"/"remote alternates" discus=
+sed
+>> on git mailing list but not implemented because of performance
+>> concerns; bzr "normal checkout" is I think similar to git "shared
+>> clone" (but shared clone is limited to repositories on the same
+>> filesystem); bzr "heavyweight checkout" is roughly equivalent to
+>> one-branch-only "clone" in git or cg (cg =3D Cogito).
+>=20
+> This is wrong. There are two kinds of checkouts
+> lightweight.. and "normal/heavyweight".
+>=20
+> I think you are getting this a little wrong, and I think the reason i=
+s
+> that you are thinking of repositories, while in bzr you normally thin=
+k
+> of branches.
 
-Any SCM worth its salt should support that.  AIUI, that's not what Tim
-wants.  He wants to intermix files from different repos in the same
-directory.
+As I said: conflict of concepts. And perhaps philosophies.
 
-i.e.
+> For example, I think (correct me if I'm wrong) that if I have a git
+> repository of a upstream linux-repo (Linus' for example).  I guess
+> I'll use "pull" to keep my copy up to date with the upstream repo? If
+> I then would like to hack something special, I would "clone" the repo
+> and get a new repo and that's where I do my work.  Is that correct?
 
-project/file-1
-project/file-2
-project/.git-1
-project/.git-2
+Not exactly.
 
-So file-1 would be in the .git-1 repository, but file-2 would be in the
-.git-2 repository.
+To work for example on Linus' version of Linux kernel you clone upstrea=
+m
+linux-repo git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux=
+-2.6.git
+Working area is associated with repository in Git, not with "branch" li=
+ke
+in Bazaar-NG. In default configuration 'master' (main) branch of cloned
+repository (in the case of Linus' public repo it is the only branch)
+corresponds to 'origin' branch in your repository.
 
-Aaron
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.2 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+Now you can work on 'master' branch, putting your changes there. git-fe=
+tch
+will update 'origin' branch to the current version of 'master' branch o=
+f
+cloned repo; git-pull will additionally merge into 'master', i.e. merge
+new changes into your work.
 
-iD8DBQFFOlE70F+nu1YWqI0RAvNcAJ0Rd6ovGoBNtKxcPNOrMH1yc+bzWQCfQlqT
-hREsUmCBAW8mIYzfzdnqZqU=
-=unGE
------END PGP SIGNATURE-----
+Now if you want to hack something special, that you prefer to use separ=
+ate
+branch for, you don't need to clone repository anew (although you could=
+,
+using --local --shared to reduce cost of cloning) but it is enough to
+create new branch in your repository. You can very easily switch betwee=
+n
+branches using the same working area (in bzr it would probably mean=20
+"branch checkout" to the same directory).
+
+> In bzr you never (well...)  clone a full repository, but you clone on=
+e
+
+It's a pity... for example you usually want to have access to both
+stable ('master') and development ('next') branches, perhaps
+also to fixes ('maint') and beta stage development ('pu') branches.
+In bzr it is a bit work (to correctly setup "repository"), in git
+it is one command.
+
+> line-of-development (a branch).  So "bzr branch"  is always a
+> "one-branch-only "clone" in git or cg".
+
+More or less.
+
+> "bzr checkout" is a "bzr branch" followed by a setting saying
+> "whenever you commit here, commit in the master branch also".
+
+Git doesn't have exact equivalent here. For "bzr checkout" on
+the same system, it is similar to setting common object repository;
+for remote "bzr checkout" it might be approximated by hooks which
+would push changes to remote repository (although we would have
+to implement some transaction/journal framework).
+
+> "bzr checkout --lightweight" is a way to get only a snapshot of the
+> working tree out of a branch. Whenever you commit, it's done in the
+> remote branch.
+
+Yes, but with "bzr checkout --lightweight" you get also pointer
+to remote branch where to commit changes. Git doesn't have something
+like that, at least not for remote remote branch; mostly because of
+poor performance or need for fast and constant network connection
+to source branch.
+
+--=20
+Jakub Narebski
+Poland
