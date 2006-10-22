@@ -1,77 +1,112 @@
-From: "Matthew D. Fuller" <fullermd@over-yonder.net>
+From: "=?ISO-8859-1?Q?Erik_B=E5gfors?=" <zindar@gmail.com>
 Subject: Re: VCS comparison table
-Date: Sun, 22 Oct 2006 09:56:58 -0500
-Message-ID: <20061022145658.GV75501@over-yonder.net>
-References: <1161487417.9241.220.camel@localhost.localdomain> <20061021233014.d4525a1d.seanlkml@sympatico.ca> <20061022100028.GQ75501@over-yonder.net> <20061022074422.50dcbee6.seanlkml@sympatico.ca> <20061022130322.GS75501@over-yonder.net> <20061022092845.233deb43.seanlkml@sympatico.ca> <20061022133336.GT75501@over-yonder.net> <20061022094041.77c06cc7.seanlkml@sympatico.ca> <20061022135702.GU75501@over-yonder.net> <20061022102454.b9dea693.seanlkml@sympatico.ca>
+Date: Sun, 22 Oct 2006 16:48:11 +0200
+Message-ID: <845b6e870610220748q681984e8ld371c64a37b99544@mail.gmail.com>
+References: <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>
+	 <453A7D7E.8060105@utoronto.ca>
+	 <20061022074513.GF29927@artax.karlin.mff.cuni.cz>
+	 <200610221105.26421.jnareb@gmail.com>
+	 <845b6e870610220256u39d3d06wefd4f71851670812@mail.gmail.com>
+	 <87zmbozau2.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 22 16:57:09 2006
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Jakub Narebski" <jnareb@gmail.com>, "Jan Hudec" <bulb@ucw.cz>,
+	bazaar-ng@lists.canonical.com,
+	"Linus Torvalds" <torvalds@osdl.org>,
+	"Andreas Ericsson" <ae@op5.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 22 17:02:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gbel5-0000kR-Ni
-	for gcvg-git@gmane.org; Sun, 22 Oct 2006 16:57:04 +0200
+	id 1Gbeq6-0001Yr-6L
+	for gcvg-git@gmane.org; Sun, 22 Oct 2006 17:02:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751091AbWJVO5A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Oct 2006 10:57:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751121AbWJVO5A
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 10:57:00 -0400
-Received: from ns.centralmiss.com ([206.156.254.79]:40902 "EHLO
-	optimus.centralmiss.com") by vger.kernel.org with ESMTP
-	id S1751091AbWJVO47 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Oct 2006 10:56:59 -0400
-Received: from draco.over-yonder.net (adsl-072-148-013-213.sip.jan.bellsouth.net [72.148.13.213])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by optimus.centralmiss.com (Postfix) with ESMTP id 0BCE22842F;
-	Sun, 22 Oct 2006 09:56:59 -0500 (CDT)
-Received: by draco.over-yonder.net (Postfix, from userid 100)
-	id 6401E61C52; Sun, 22 Oct 2006 09:56:58 -0500 (CDT)
-To: Sean <seanlkml@sympatico.ca>
+	id S1751090AbWJVPCL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 22 Oct 2006 11:02:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751138AbWJVPCL
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 11:02:11 -0400
+Received: from nz-out-0102.google.com ([64.233.162.199]:39402 "EHLO
+	nz-out-0102.google.com") by vger.kernel.org with ESMTP
+	id S1751090AbWJVPCK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Oct 2006 11:02:10 -0400
+Received: by nz-out-0102.google.com with SMTP id z3so484701nzf
+        for <git@vger.kernel.org>; Sun, 22 Oct 2006 08:02:09 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=RaMZ6kTAze4GFwvcQAYSQnWMV/VkQqw+sR3sPni7nNtN6PFiJfHZ1ZU+3OFBlp0XgLwvqA815iirFugH+zBbccJHi0AO4lNR8jq7/JJ+JHmdJbnNlzUYh57Tuxv+wzq6tNgsp6X691MJmrqlOmMiFtIf6t+YVOOjHbRkyiAMjhw=
+Received: by 10.35.18.4 with SMTP id v4mr4740000pyi;
+        Sun, 22 Oct 2006 07:48:12 -0700 (PDT)
+Received: by 10.35.116.4 with HTTP; Sun, 22 Oct 2006 07:48:11 -0700 (PDT)
+To: "Carl Worth" <cworth@cworth.org>
+In-Reply-To: <87zmbozau2.wl%cworth@cworth.org>
 Content-Disposition: inline
-In-Reply-To: <20061022102454.b9dea693.seanlkml@sympatico.ca>
-X-Editor: vi
-X-OS: FreeBSD <http://www.freebsd.org/>
-User-Agent: Mutt/1.5.11-fullermd.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29759>
 
-On Sun, Oct 22, 2006 at 10:24:54AM -0400 I heard the voice of
-Sean, and lo! it spake thus:
-> 
-> Light goes on.  Okay.  So a bzr "branch" is only ever editable on a
-> single machine.  So there is no distributed development on top of a
-> bzr "branch".  Everyone else just has read-only copies of it.
+Thanks for this mail, this makes me happy to see. The tools are pretty
+much the same but have some different view on how to do things..
 
-Ah!  Yes, that's exactly[0] right.  Mark up another of those "so
-obvious we never think to state it" thought-patterns   :|
+On 10/22/06, Carl Worth <cworth@cworth.org> wrote:
+>
+>         git log --no-merges mainline..featureA
+>
+> The mainline..featureA syntax literally just means:
+>
+>         the set of commits that are reachable by featureA
+>         and excluding the set of commits reachable by mainline
+>
+> It's an extraordinarily powerful thing to say, and its exactly what
+> you want here. And it's more than a "show mainline" thing, since
+> theses sets of commits can consist of arbitrarily complex DAG
+> subsets. This syntax is just a really useful way to slice up the DAG.
+>
+> And this syntax is almost universally accepted by git commands. so yo=
+u
+> can visualize a chunk of the DAG with:
+>
+>         gitk mainline..featureA
+>
+> Or export it as patches with:
+>
+>         git format-patch mainline..featureA
+>
+> I haven't been able to find something similar in bzr yet. Does it
+> exist?
+
+If I understand you correctly, you'll get the same thing with "bzr miss=
+ing".
+
+$ bzr missing ../mainline/
+You have 1 extra revision(s):
+------------------------------------------------------------
+revno: 2
+committer: Erik B=E5gfors <erik@bagfors.nu>
+branch nick: newbranch
+timestamp: Sun 2006-10-22 16:43:10 +0200
+message:
+  hepp
 
 
-Distributed development proper only happens on 'projects', not
-branches.  In practice, we say "we're all working on branch X", in the
-sense that we use it as a base to work from and intend to merge our
-stuff into it, but strictly speaking we're all working on our own
-branches that just merge from/into X from time to time.
+You are missing 1 revision(s):
+------------------------------------------------------------
+revno: 2
+committer: Erik B=E5gfors <erik@bagfors.nu>
+branch nick: mainline
+timestamp: Sun 2006-10-22 16:42:53 +0200
+message:
+  hej
 
-That's also why we use the phrases "merge from" and "merge to", rather
-than "merge WITH".  Of course, where possible, we could 'fast-forward'
-to X rather than merge from it, at which point we'd then momentarily
-have exactly X, but culturally we don't seem to like doing that.
+You can also run "bzr missing" with "--theirs-only" or "--mine-only"
+to get only one way.
 
+To get the patches you can run "bzr bundle ../mainline", but then
+we're back to the discussion that it currently gives a "big patch" for
+viewing, but when you merge it, you get each revision separately.
 
-
-[0] There are a few very special-case exceptions, notably around the
-'checkout' concept or where people are very carefully manually
-maintaining sync, but they're irrelevant in this case; and they ARE
-star-pattern developments that could be said to be 'centralized'.  Now
-I grok where that's coming from.
-
-
--- 
-Matthew Fuller     (MF4839)   |  fullermd@over-yonder.net
-Systems/Network Administrator |  http://www.over-yonder.net/~fullermd/
-           On the Internet, nobody can hear you scream.
+/Erik
