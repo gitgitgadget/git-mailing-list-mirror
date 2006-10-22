@@ -1,159 +1,82 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH 3/3] Teach git-branch -v and -w options
-Date: Sun, 22 Oct 2006 21:55:52 +0200
-Message-ID: <8c5c35580610221255n521e84e2u8594016297c6cf87@mail.gmail.com>
-References: <1161516626749-git-send-email-hjemli@gmail.com>
-	 <11615166273819-git-send-email-hjemli@gmail.com>
-	 <7vmz7o5eki.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: VCS comparison table
+Date: Sun, 22 Oct 2006 21:57:15 +0200
+Message-ID: <200610222157.16086.jnareb@gmail.com>
+References: <45357CC3.4040507@utoronto.ca> <200610212141.51829.jnareb@gmail.com> <1161544685.22276.127.camel@zepto.home.zettazebra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Sun Oct 22 21:56:16 2006
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: "Matthew D. Fuller" <fullermd@over-yonder.net>,
+	Andreas Ericsson <ae@op5.se>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Carl Worth <cworth@cworth.org>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 22 21:57:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbjQT-0003FZ-K7
-	for gcvg-git@gmane.org; Sun, 22 Oct 2006 21:56:05 +0200
+	id 1GbjRU-0003SD-Lx
+	for gcvg-git@gmane.org; Sun, 22 Oct 2006 21:57:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751212AbWJVT4A convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 22 Oct 2006 15:56:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751218AbWJVT4A
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 15:56:00 -0400
-Received: from nf-out-0910.google.com ([64.233.182.191]:11698 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S1751212AbWJVTz7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Oct 2006 15:55:59 -0400
-Received: by nf-out-0910.google.com with SMTP id c2so2136760nfe
-        for <git@vger.kernel.org>; Sun, 22 Oct 2006 12:55:57 -0700 (PDT)
+	id S1751222AbWJVT5F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Oct 2006 15:57:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751227AbWJVT5E
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 15:57:04 -0400
+Received: from qb-out-0506.google.com ([72.14.204.236]:9903 "EHLO
+	qb-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1751222AbWJVT5C (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Oct 2006 15:57:02 -0400
+Received: by qb-out-0506.google.com with SMTP id p36so366233qba
+        for <git@vger.kernel.org>; Sun, 22 Oct 2006 12:57:01 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=LgbDI4DU1b8yI5UxuV6r18JOpeVMax8/ruThpzxDmsmXrhtgx/4e/+9/Yn79hDrbBc92lmu8d6khK/4NxrgYhrOjBRZTm+5IuddovY92rXggCy1i8HJTHYyJ6c2EXkqe0a7lh65B2Lhguu8heR58FOFLVUKoLEnsdnxMS7DFWvg=
-Received: by 10.82.101.3 with SMTP id y3mr1146276bub;
-        Sun, 22 Oct 2006 12:55:57 -0700 (PDT)
-Received: by 10.82.171.10 with HTTP; Sun, 22 Oct 2006 12:55:52 -0700 (PDT)
-To: git@vger.kernel.org
-In-Reply-To: <7vmz7o5eki.fsf@assigned-by-dhcp.cox.net>
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=OOMf8jpDfW3Tm/en8W37nkAiTrrzfbBJqkB/oaCXmP7Qlmb3lkrKZ5WM1YuWT481JQCibknDuCTxzDQ4bJ1/Gm3RSZaTpfiDAbMumo1qXigaJbKVJGth2m/MfTu2VpTVeI470gCTOS57s7OsHwhdpjJASIpdbtfOZ/B7WMim0+4=
+Received: by 10.66.221.19 with SMTP id t19mr6063097ugg;
+        Sun, 22 Oct 2006 12:57:00 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
+        by mx.google.com with ESMTP id b23sm1258705ugd.2006.10.22.12.57.00;
+        Sun, 22 Oct 2006 12:57:00 -0700 (PDT)
+To: David Clymer <david@zettazebra.com>
+User-Agent: KMail/1.9.3
+In-Reply-To: <1161544685.22276.127.camel@zepto.home.zettazebra.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29781>
 
-On 10/22/06, Junio C Hamano <junkio@cox.net> wrote:
-> If you are going in this direction, probably you would want to
-> refactor 2/3 a bit differently, so that you do not have to
-> duplicate the same printf for local and remote cases?
->
+David Clymer wrote:
+> Bzr: Branches and all shared history may be stored locally in disparate
+> locations, and all VCS functions are available locally.
 
-I actually did, but then abandoned it since it would change the output
-for remote branches (two spaces indent). I didn't want to cause any
-regressions :-)
+Branches in bzr are both one-source (one head) DAG (of parents), and
+the "mainline" i.e. track of commits commited in this branch-as-place.
+Bazaar-NG tries to keep both information in DAG by using first parent
+to mark commits on current branch-as-place.
 
-But if that's ok, my abandoned patch contained this:
+Additionally bzr by default uses revnos, numbering commits on branch,
+which needs maintaining mainline identity for revnos not to change
+even for one branch-as-place.
 
-@@ -48,14 +48,35 @@ If you are sure you want to delete it, r
-    exit 0
- }
-
--ls_remote_branches () {
--    git-rev-parse --symbolic --all |
--    sed -ne 's|^refs/\(remotes/\)|\1|p' |
--    sort
--}
--+width=3D20
-+sedmatch=3D"^refs/heads/"
-+sedsubst=3D
-+verbose=3D
- force=3D
- create_log=3D
-+
-+ls_refs () {
-+       git-rev-parse --symbolic --all |
-+       sed -ne "s|$sedmatch|$sedsubst|p" |
-+       sort |
-+       while read ref
-+       do
-+               if test "$headref" =3D "$ref"
-+               then
-+                       pfx=3D'*'
-+               else
-+                       pfx=3D' '
-+               fi
-+               if test "$verbose" =3D "yes"
-+               then
-+                       log=3D$(git-log --max-count=3D1 --pretty=3Donel=
-ine $ref)
-+                       printf "%s %-*s %s\n" "$pfx" "$width" "$ref" "$=
-log"
-+               else
-+                       echo "$pfx $ref"
-+               fi
-+       done
-+}
-+
- while case "$#,$1" in 0,*) break ;; *,-*) ;; *) break ;; esac
- do
-       case "$1" in
-@@ -64,8 +85,8 @@ do
-               exit
-               ;;
-       -r)
--               ls_remote_branches
--               exit
-+               sedmatch=3D"^refs/\(remotes/\)"
-+               sedsubst=3D"\1"
-               ;;
-       -f)
-               force=3D"$1"
-@@ -73,6 +94,13 @@ do
-       -l)
-               create_log=3D"yes"
-               ;;
-+       -v)
-+               verbose=3D"yes"
-+               ;;
-+       -w)
-+               shift
-+               width=3D$1
-+               ;;
-       --)
-               shift
-               break
-@@ -86,18 +114,7 @@ done
-
- case "$#" in
- 0)
--       git-rev-parse --symbolic --branches |
--       sort |
--       while read ref
--       do
--               if test "$headref" =3D "$ref"
--               then
--                       pfx=3D'*'
--               else
--                       pfx=3D' '
--               fi
--               echo "$pfx $ref"
--       done
-+       ls_refs
-       exit 0 ;;
- 1)
-       head=3DHEAD ;;
+This leads to the need to use "merge" if you want to maintain revnos
+unchanged, and "pull" if you are not interested in that.
 
 
-And then I added -a and -t (for "all" and "tags", obviously), and felt
-I went over the top :-)
+Git correctly realizes that mainline identity is local information,
+and instead of trying to save local information in DAG which is shared,
+it uses reflog.
 
-Btw: in the meantime, Kristian H=F8gsberg pointed me to an earlier
-thread regarding making git-branch a builtin, which I'm going to look
-at tonight.
+[That's of course totally biased view.]
+ 
+> Git: Same thing, except that all shared history must also be identically
+> ordered.
+That is the EFFECT of preferring fast-forward over preserving
+"first parent is my branch" property. So the RESULT is that
+shared history is identically ordered.
 
-So many options, so little time :-)
-
-I'm open for suggestions/preferences etc...
-
---
-larsh
+-- 
+Jakub Narebski
+Poland
