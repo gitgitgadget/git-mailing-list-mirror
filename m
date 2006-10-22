@@ -1,68 +1,46 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Commit-ish shortcut for immediate parent range
-Date: Sun, 22 Oct 2006 11:25:13 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610221117570.3962@g5.osdl.org>
-References: <200610221548.42048.andyparkins@gmail.com>
- <Pine.LNX.4.64.0610221017180.3962@g5.osdl.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [PATCH 0/2] Two minor fixes for vc-git
+Date: Sun, 22 Oct 2006 20:41:08 +0200
+Message-ID: <20061022184108.4093.65651.stgit@localhost>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: quoted-printable
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 22 20:30:39 2006
+X-From: git-owner@vger.kernel.org Sun Oct 22 20:46:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gbi5i-000413-RI
-	for gcvg-git@gmane.org; Sun, 22 Oct 2006 20:30:35 +0200
+	id 1GbiLA-00070C-1e
+	for gcvg-git@gmane.org; Sun, 22 Oct 2006 20:46:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750700AbWJVSaT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Oct 2006 14:30:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750747AbWJVSaT
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 14:30:19 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:49384 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750700AbWJVSaS (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Oct 2006 14:30:18 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9MIPEaX017904
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 22 Oct 2006 11:25:14 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9MIPDFW029670;
-	Sun, 22 Oct 2006 11:25:13 -0700
-To: Andy Parkins <andyparkins@gmail.com>
-In-Reply-To: <Pine.LNX.4.64.0610221017180.3962@g5.osdl.org>
-X-Spam-Status: No, hits=-0.479 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750806AbWJVSq3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Oct 2006 14:46:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750815AbWJVSq3
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 14:46:29 -0400
+Received: from mxfep02.bredband.com ([195.54.107.73]:3048 "EHLO
+	mxfep02.bredband.com") by vger.kernel.org with ESMTP
+	id S1750806AbWJVSq2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Oct 2006 14:46:28 -0400
+Received: from ironport2.bredband.com ([195.54.107.84] [195.54.107.84])
+          by mxfep02.bredband.com with ESMTP
+          id <20061022184626.TOCN2091.mxfep02.bredband.com@ironport2.bredband.com>
+          for <git@vger.kernel.org>; Sun, 22 Oct 2006 20:46:26 +0200
+Received: from ua-83-227-180-148.cust.bredbandsbolaget.se (HELO yoghurt.hemma.treskal.com) ([83.227.180.148])
+  by ironport2.bredband.com with ESMTP; 22 Oct 2006 20:46:26 +0200
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by yoghurt.hemma.treskal.com (Postfix) with ESMTP id 1B8544C010;
+	Sun, 22 Oct 2006 20:46:26 +0200 (CEST)
+To: Alexandre Julliard <julliard@winehq.org>
+User-Agent: StGIT/0.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29771>
 
+I'm a total newbie when it comes to elisp, so you may want to take
+these with a pinch of salt. But vc-git was quite broken for me without
+this fix, so I guess _something_ has to be done about it ...
 
-
-On Sun, 22 Oct 2006, Linus Torvalds wrote:
-> 
-> So the thing to do is just
-> 
-> 	git show 3435fdb4c
-> 
-> and be happy.
-
-Btw, if you really _only_ want the diff, you can do either
-
-	git-diff-tree -p 3435fdb4c
-
-which is the traditional "core" command for this. Somewhat sadly, I don't 
-think we have a way to actually turn _off_ the description printing, so 
-while you can turn off the _diff_ with "-s", the best you can do wrt the 
-commit message is probably to use "--pretty=oneline" to cut it down to a 
-single line.
-
-I wonder if we should have a "--pretty=none" thing, so that you can use 
-the "higher-level" git commands without seeing the log message.
-
-Hmm..
-
-			Linus
+--=20
+Karl Hasselstr=C3=B6m, kha@treskal.com
+      www.treskal.com/kalle
