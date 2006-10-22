@@ -1,74 +1,71 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Jeff Licquia <jeff@licquia.org>
 Subject: Re: VCS comparison table
-Date: Sun, 22 Oct 2006 02:22:28 +0200
-Message-ID: <200610220222.29009.jnareb@gmail.com>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <Pine.LNX.4.64.0610211655130.3962@g5.osdl.org> <845b6e870610211713m413afd28tcdf24934df25d3f5@mail.gmail.com>
+Date: Sat, 21 Oct 2006 20:46:45 -0400
+Message-ID: <1161478005.9241.210.camel@localhost.localdomain>
+References: <45357CC3.4040507@utoronto.ca>
+	<Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>
+	<4536EC93.9050305@utoronto.ca> <87lkncev90.wl%cworth@cworth.org>
+	<453792A8.1010700@utoronto.ca> <878xjc2qeb.wl%cworth@cworth.org>
+	<453803E6.2060309@utoronto.ca> <87ods727pn.wl%cworth@cworth.org>
+	<45382120.9060702@utoronto.ca> <87irie1wvv.wl%cworth@cworth.org>
+	<20061021130111.GL75501@over-yonder.net>
+	<87ac3p1jn7.wl%cworth@cworth.org>
+	<1161472030.9241.174.camel@localhost.localdomain>
+	<20061021192539.4a00cc3e.seanlkml@sympatico.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Linus Torvalds" <torvalds@osdl.org>, Sean <seanlkml@sympatico.ca>,
-	"Jan Hudec" <bulb@ucw.cz>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org, "Matthieu Moy" <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Sun Oct 22 02:22:27 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: bazaar-ng-bounces@lists.canonical.com Sun Oct 22 02:47:16 2006
+Return-path: <bazaar-ng-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbR6g-0007RJ-3K
-	for gcvg-git@gmane.org; Sun, 22 Oct 2006 02:22:26 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422838AbWJVAWT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 21 Oct 2006 20:22:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422853AbWJVAWT
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Oct 2006 20:22:19 -0400
-Received: from hu-out-0506.google.com ([72.14.214.225]:43058 "EHLO
-	hu-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1422838AbWJVAWS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Oct 2006 20:22:18 -0400
-Received: by hu-out-0506.google.com with SMTP id 28so661358hub
-        for <git@vger.kernel.org>; Sat, 21 Oct 2006 17:22:17 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=F0oQvy0ZriAKF+s7UMNAVBpD3xahFfwLK2IYh8rAP2s2qPqUYyGKgZnfudZeb2xggiwy6amlik7ImogFnC9HD6ashkSpPnTdrQo1Gt+3HOYn7WCOknvpc0Id0yL1IZxNNouxDEiNGj8QiNuxxpMjQ/JP+4x9QpDaX6bmEUKZ8Uk=
-Received: by 10.67.89.5 with SMTP id r5mr4639088ugl;
-        Sat, 21 Oct 2006 17:22:16 -0700 (PDT)
-Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
-        by mx.google.com with ESMTP id j2sm1964303ugf.2006.10.21.17.22.16;
-        Sat, 21 Oct 2006 17:22:16 -0700 (PDT)
-To: "Erik =?iso-8859-1?q?B=E5gfors?=" <zindar@gmail.com>
-User-Agent: KMail/1.9.3
-In-Reply-To: <845b6e870610211713m413afd28tcdf24934df25d3f5@mail.gmail.com>
-Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29698>
+	id 1GbRUY-00058P-99
+	for gcvbg-bazaar-ng@m.gmane.org; Sun, 22 Oct 2006 02:47:06 +0200
+Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
+	id 1GbRUO-0002g6-NL; Sun, 22 Oct 2006 01:46:56 +0100
+Received: from jeffindy.licquia.org ([216.37.46.185])
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <jeff@licquia.org>) id 1GbRUH-0002fU-IP
+	for bazaar-ng@lists.canonical.com; Sun, 22 Oct 2006 01:46:49 +0100
+Received: from server1.internal.licquia.org (unknown [192.168.50.3])
+	by jeffindy.licquia.org (Postfix) with ESMTP id 8BB6A6FD88;
+	Sat, 21 Oct 2006 20:46:48 -0400 (EDT)
+Received: from localhost.localdomain (unknown [192.168.52.6])
+	by server1.internal.licquia.org (Postfix) with ESMTP id 053EE980DA;
+	Sat, 21 Oct 2006 20:46:47 -0400 (EDT)
+Received: by localhost.localdomain (Postfix, from userid 1000)
+	id DEF7A4E4025; Sat, 21 Oct 2006 20:46:45 -0400 (EDT)
+To: Sean <seanlkml@sympatico.ca>
+In-Reply-To: <20061021192539.4a00cc3e.seanlkml@sympatico.ca>
+X-Mailer: Evolution 2.6.3 
+X-BeenThere: bazaar-ng@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
+List-Post: <mailto:bazaar-ng@lists.canonical.com>
+List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-ng-bounces@lists.canonical.com
+Errors-To: bazaar-ng-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29699>
 
-Erik B=E5gfors wrote:
+On Sat, 2006-10-21 at 19:25 -0400, Sean wrote:
+> Now the opinion of the bzr people is that it doesn't matter and that for
+> all important cases it works well enough.  If all the people who don't like
+> the look of sha1's self select bzr, so be it, but that doesn't change the
+> fundamental argument.
 
->> So I sound like I care, but at the same time, I realize very well th=
-at
->> when coming from a totally centralized world, the details we're argu=
-ing
->> are _so_ not important.
->=20
-> I have to agree. Personally I think both git, bzr and mercurial are
-> all VERY nice systems. =A0If they weren't all started about the same
-> time, I doubt we would have all three.
+Which opinion is this?  The opinion that old-style local revnos aren't a
+big deal, or that new-style dotted revnos aren't a big deal?
 
-If I understand correctly bzr came to life much earlier than Monotone,
-Mercurial and Git but it was in beta stages very long. Bazaar-NG
-"repositories" to group bunch of "branches" seems inspoted by hg or git=
-=2E
-Git (and probably Mercurial) was inspired both by BitKeeper and Monoton=
-e.
-Monotone started to be reasonable fast around time when Git and Mercuri=
-al
-came to be.
-
-P.S. I'd like very much to see "history of SCM", with links denoting
-borrowing of ideas, similar to the "history of UNIX" graphs...
---=20
-Jakub Narebski
-Poland
+I suspect you're conflating the two, and interpreting certainty for the
+former as certainty for the latter.  Though I don't mind being
+corrected.
