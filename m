@@ -1,84 +1,137 @@
-From: "Matthew D. Fuller" <fullermd@over-yonder.net>
+From: "=?ISO-8859-1?Q?Erik_B=E5gfors?=" <zindar@gmail.com>
 Subject: Re: VCS comparison table
-Date: Sun, 22 Oct 2006 05:00:28 -0500
-Message-ID: <20061022100028.GQ75501@over-yonder.net>
-References: <45382120.9060702@utoronto.ca> <87irie1wvv.wl%cworth@cworth.org> <20061021130111.GL75501@over-yonder.net> <87ac3p1jn7.wl%cworth@cworth.org> <1161472030.9241.174.camel@localhost.localdomain> <20061021192539.4a00cc3e.seanlkml@sympatico.ca> <1161478005.9241.210.camel@localhost.localdomain> <20061021212645.2f9ba751.seanlkml@sympatico.ca> <1161487417.9241.220.camel@localhost.localdomain> <20061021233014.d4525a1d.seanlkml@sympatico.ca>
+Date: Sun, 22 Oct 2006 11:56:32 +0200
+Message-ID: <845b6e870610220256u39d3d06wefd4f71851670812@mail.gmail.com>
+References: <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>
+	<453A7D7E.8060105@utoronto.ca>
+	<20061022074513.GF29927@artax.karlin.mff.cuni.cz>
+	<200610221105.26421.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff Licquia <jeff@licquia.org>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 22 12:00:37 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
+Cc: bazaar-ng@lists.canonical.com, Linus Torvalds <torvalds@osdl.org>,
+	Andreas Ericsson <ae@op5.se>, Carl Worth <cworth@cworth.org>,
+	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
+X-From: bazaar-ng-bounces@lists.canonical.com Sun Oct 22 12:07:22 2006
+Return-path: <bazaar-ng-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gba8A-0000zH-JS
-	for gcvg-git@gmane.org; Sun, 22 Oct 2006 12:00:34 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932321AbWJVKAb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Oct 2006 06:00:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932322AbWJVKAb
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 06:00:31 -0400
-Received: from ns.centralmiss.com ([206.156.254.79]:29397 "EHLO
-	optimus.centralmiss.com") by vger.kernel.org with ESMTP
-	id S932321AbWJVKAa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Oct 2006 06:00:30 -0400
-Received: from draco.over-yonder.net (adsl-072-148-013-213.sip.jan.bellsouth.net [72.148.13.213])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by optimus.centralmiss.com (Postfix) with ESMTP id 543532842F;
-	Sun, 22 Oct 2006 05:00:29 -0500 (CDT)
-Received: by draco.over-yonder.net (Postfix, from userid 100)
-	id C548F61C5A; Sun, 22 Oct 2006 05:00:28 -0500 (CDT)
-To: Sean <seanlkml@sympatico.ca>
+	id 1GbaEk-0001se-2O
+	for gcvbg-bazaar-ng@m.gmane.org; Sun, 22 Oct 2006 12:07:22 +0200
+Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
+	id 1GbaE5-0004dr-Dv; Sun, 22 Oct 2006 11:06:42 +0100
+Received: from py-out-1112.google.com ([64.233.166.181])
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <zindar@gmail.com>) id 1GbaDq-0004d0-GN
+	for bazaar-ng@lists.canonical.com; Sun, 22 Oct 2006 11:06:26 +0100
+Received: by py-out-1112.google.com with SMTP id f25so126114pyf
+	for <bazaar-ng@lists.canonical.com>;
+	Sun, 22 Oct 2006 03:06:25 -0700 (PDT)
+Received: by 10.35.9.15 with SMTP id m15mr4370888pyi;
+	Sun, 22 Oct 2006 02:56:32 -0700 (PDT)
+Received: by 10.35.116.4 with HTTP; Sun, 22 Oct 2006 02:56:31 -0700 (PDT)
+To: "Jakub Narebski" <jnareb@gmail.com>
+In-Reply-To: <200610221105.26421.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20061021233014.d4525a1d.seanlkml@sympatico.ca>
-X-Editor: vi
-X-OS: FreeBSD <http://www.freebsd.org/>
-User-Agent: Mutt/1.5.11-fullermd.3
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29714>
+X-BeenThere: bazaar-ng@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
+List-Post: <mailto:bazaar-ng@lists.canonical.com>
+List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-ng-bounces@lists.canonical.com
+Errors-To: bazaar-ng-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29715>
 
-On Sat, Oct 21, 2006 at 11:30:14PM -0400 I heard the voice of
-Sean, and lo! it spake thus:
-> On Sat, 21 Oct 2006 23:23:37 -0400
-> Jeff Licquia <jeff@licquia.org> wrote:
-> > 
-> > OK.  So you are conflating the two.  Could someone who isn't
-> > comment?
-> 
-> No, actually i'm not.  Single revno's or your dotted revno's _both_
-> have the same property.
+> For example git encourages using many short and longer-lived feature
+> branches; I don't see bzr encouraging this workflow.
 
-I think Jeff's actually meaning the other way around.  We're confident
-through experience of the utility of the single revnos.  We're NOT (at
-least, I'm not) so convinced of the utility and usability of the
-dotted ones; they haven't gone through the crucible of experience yet.
+Why not? I think it really does.  And due to the fact that merges are
+merges and will show up as such, I think it's very suitable for
+feature branches.
 
-During the dotted-decimal discussion, I favored numbering from the
-merge point (rather than the ancestral point) for a lot of the same
-reasons brought up here.  e.g., the log-ish output would look
-something like:
+In fact, in the bzr development of bzr itself.  All commits are done
+in feature branches and then merged into bzr.dev (the main "trunk" of
+bzr) when they are considered stable.
 
-200
-199
- 199.3
- 199.2
- 199.1
-198
-[...]
+Consider the following
+bzr branch mainline featureA
+cd featureA
+hack hack; bzr commit -m 'f1'; hack hack bzr commit -m f2; etc
+No I want to merge in mainline again
+bzr merge ../mainline; bzr commit -m merge
+hack hack; bzr commit -m f3; hack hack bzr commit -m f4; etc
 
-See <https://lists.ubuntu.com/archives/bazaar-ng/2006q3/017773.html>
-for instance.
+right now, I would have something line this in the branch log
+-----------------------------------------------------------------
+committer: Erik B=E5gfors <erik@bagfors.nu>
+branch nick: featureA
+message:
+   f4
+-----------------------------------------------------------------
+committer: Erik B=E5gfors <erik@bagfors.nu>
+branch nick: featureA
+message:
+   f3
+----------------------------------------------------------------
+committer: Erik B=E5gfors <erik@bagfors.nu>
+branch nick: featureA
+message:
+   merge
+      -----------------------------------------------------------------
+      committer: Foo Bar <foo@bar.com>
+      branch nick: mainline
+      message:
+         something done in mainline
+      -----------------------------------------------------------------
+      committer: Foo Bar <foo@bar.com>
+      branch nick: mainline
+      message:
+         something else done in mainline
+-----------------------------------------------------------------
+committer: Erik B=E5gfors <erik@bagfors.nu>
+branch nick: featureA
+message:
+   f2
+-----------------------------------------------------------------
+committer: Erik B=E5gfors <erik@bagfors.nu>
+branch nick: featureA
+message:
+   f1
 
-Of course, now we have them, and they  number from ancestors.  So
-after that's in a couple releases, we'll get to see how it works in
-practice.
+In this view,I can easily see what was part of this feature branch,
+because the committs that belongs to the feature branch are not
+indented, and they have a "branch nick" of "featureA".  I can also
+easily see what comes from other branches.
 
+I can also run bzr log with --line or --short which shows you only the
+commits made in this branch and not the once that are merged in.  So
+with --line I would get something line
+Erik B=E5gfors 2006-10-19 f4
+Erik B=E5gfors 2006-10-19 f3
+Erik B=E5gfors 2006-10-19 merge
+Erik B=E5gfors 2006-10-19 f2
+Erik B=E5gfors 2006-10-19 f1
 
--- 
-Matthew Fuller     (MF4839)   |  fullermd@over-yonder.net
-Systems/Network Administrator |  http://www.over-yonder.net/~fullermd/
-           On the Internet, nobody can hear you scream.
+Which will give me a good view of what has been done in this feature
+branch only.
+
+If I understand it correctly, in git, you don't really know what has
+been committed as part of this branch/repo, and what has been
+committed in another branch/repo (this is my understanding from
+reading this thread, I might be wrong, feel free to correct me again
+:) )
+
+/Erik
+--=20
+google talk/jabber. zindar@gmail.com
+SIP-phones: sip:erik_bagfors@gizmoproject.com
+sip:17476714687@proxy01.sipphone.com
