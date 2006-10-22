@@ -1,312 +1,217 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [PATCH 1/2] New stg command: assimilate
-Date: Sun, 22 Oct 2006 15:08:02 +0200
-Message-ID: <20061022130802.17015.50188.stgit@localhost>
-References: <20061022130559.17015.51385.stgit@localhost>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: quoted-printable
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 22 15:09:31 2006
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: VCS comparison table
+Date: Sun, 22 Oct 2006 15:23:59 +0200
+Message-ID: <200610221524.00408.jnareb@gmail.com>
+References: <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org> <200610221105.26421.jnareb@gmail.com> <845b6e870610220256u39d3d06wefd4f71851670812@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Jan Hudec" <bulb@ucw.cz>, bazaar-ng@lists.canonical.com,
+	"Linus Torvalds" <torvalds@osdl.org>,
+	"Carl Worth" <cworth@cworth.org>, "Andreas Ericsson" <ae@op5.se>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 22 15:23:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gbd4r-0002Bj-0V
-	for gcvg-git@gmane.org; Sun, 22 Oct 2006 15:09:21 +0200
+	id 1GbdIv-0004Hs-0n
+	for gcvg-git@gmane.org; Sun, 22 Oct 2006 15:23:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751804AbWJVNJM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Oct 2006 09:09:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751803AbWJVNJM
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 09:09:12 -0400
-Received: from mxfep02.bredband.com ([195.54.107.73]:42396 "EHLO
-	mxfep02.bredband.com") by vger.kernel.org with ESMTP
-	id S1751802AbWJVNJJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Oct 2006 09:09:09 -0400
-Received: from ironport2.bredband.com ([195.54.107.84] [195.54.107.84])
-          by mxfep02.bredband.com with ESMTP
-          id <20061022130907.QLMA2091.mxfep02.bredband.com@ironport2.bredband.com>
-          for <git@vger.kernel.org>; Sun, 22 Oct 2006 15:09:07 +0200
-Received: from ua-83-227-180-148.cust.bredbandsbolaget.se (HELO yoghurt.hemma.treskal.com) ([83.227.180.148])
-  by ironport2.bredband.com with ESMTP; 22 Oct 2006 15:09:05 +0200
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by yoghurt.hemma.treskal.com (Postfix) with ESMTP id ED5964CBCE;
-	Sun, 22 Oct 2006 15:08:02 +0200 (CEST)
-To: Catalin Marinas <catalin.marinas@gmail.com>
-In-Reply-To: <20061022130559.17015.51385.stgit@localhost>
-User-Agent: StGIT/0.11
+	id S1750878AbWJVNXt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 22 Oct 2006 09:23:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750889AbWJVNXs
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 09:23:48 -0400
+Received: from hu-out-0506.google.com ([72.14.214.233]:923 "EHLO
+	hu-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1750878AbWJVNXr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Oct 2006 09:23:47 -0400
+Received: by hu-out-0506.google.com with SMTP id 28so797052hub
+        for <git@vger.kernel.org>; Sun, 22 Oct 2006 06:23:46 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=TjZykctOaJstgI+9kyoXG7G0pMmS50AK4+JXHAUMnbwDjXOoeQ25DSHW7gqkjsUFEySixPZVAKv8lJvU+f431TAoFBHXka1aDuBLm32VC989HgqzkaGVSodF5thPhZnX1H0LvUdF+VlfsnywqZB68QrVU6lXEnk43+8+DuFHoms=
+Received: by 10.66.216.6 with SMTP id o6mr5422944ugg;
+        Sun, 22 Oct 2006 06:23:45 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
+        by mx.google.com with ESMTP id j2sm2538500ugf.2006.10.22.06.23.44;
+        Sun, 22 Oct 2006 06:23:45 -0700 (PDT)
+To: "Erik =?utf-8?q?B=C3=A5gfors?=" <zindar@gmail.com>
+User-Agent: KMail/1.9.3
+In-Reply-To: <845b6e870610220256u39d3d06wefd4f71851670812@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29741>
 
-From: Karl Hasselstr=C3=B6m <kha@treskal.com>
+Erik B=C3=A5gfors wrote:
+> Jakub Nar=C4=99bski wrote:
 
-Introduce an "assimilate" command, with no options. It takes any GIT
-commits committed on top of your StGIT patch stack and converts them
-into StGIT patches.
+>> For example git encourages using many short and longer-lived feature
+>> branches; I don't see bzr encouraging this workflow.
+>=20
+> Why not? I think it really does.  And due to the fact that merges are
+> merges and will show up as such, I think it's very suitable for
+> feature branches.
 
-Also change the error message when an StGIT command can't do its job
-because there are GIT commits on top of the stack. Instead of
-recommending "refresh -f", which is a destructive operation, recommend
-"assimilate", which is not.
+I think I haven't properly explained what "feature branch" means.
+"Feature branch" is short (or medium) lived branch, created for
+development of one isolated feature. When feature is in stable
+stage, we merge feature branch and forget about it. We are not
+interested in the fact that given feature was developed on given
+branch. BTW. for example in published git.git repository are
+only available in the form of "digest" 'pu' (proposed updates)
+branch.
 
-NOTE: "assimilate" currently refuses to work its magic if it
-encounters a merge commit. This is reasonable, since merge commits
-can't (yet) be represented as StGIT patches. However, it would be
-possible (and well-defined) to replace the merge commit with a regular
-commit on the branch with the same end result (tree object),
-discarding all the parents that aren't on our branch. But this would
-take a substantial amount of code, and is of dubious value, so for now
-"assimilate" just cries bloody murder if it finds a merge.
+I guess what you are talking about are long lived "development
+branches" (like git.git 'maint', 'master', 'next' and 'pu' branches),
+or perhaps long lived another user's clone of given git repository.
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
----
+Git considers having clones of given repository totally equivalent,
+and having fast-forward property more important than remembering
+"which branch (which clone) has this commit came from" or at least
+"this commit is from this (current) branch-clone".
 
- stgit/commands/assimilate.py |   96 ++++++++++++++++++++++++++++++++++++++=
-++++
- stgit/commands/common.py     |    8 ++--
- stgit/git.py                 |    3 +
- stgit/main.py                |    3 +
- stgit/stack.py               |   28 +++++++++---
- 5 files changed, 126 insertions(+), 12 deletions(-)
+You have graphical history viewers (bzr has it's own: bzr-gtk),
+committer and author info, and reflog if enabled if you really,
+really need this kind of information.=20
+=20
+> In fact, in the bzr development of bzr itself.  All commits are done
+> in feature branches and then merged into bzr.dev (the main "trunk" of
+> bzr) when they are considered stable.
+>=20
+> Consider the following
+> bzr branch mainline featureA
+Which if I remember correctly (at least by default) needs and generates
+new working tree.
 
-diff --git a/stgit/commands/assimilate.py b/stgit/commands/assimilate.py
-new file mode 100644
-index 0000000..2c0ec56
---- /dev/null
-+++ b/stgit/commands/assimilate.py
-@@ -0,0 +1,96 @@
-+# -*- coding: utf-8 -*-
-+
-+__copyright__ =3D """
-+Copyright (C) 2006, Karl Hasselstr=C3=B6m <kha@treskal.com>
-+
-+This program is free software; you can redistribute it and/or modify
-+it under the terms of the GNU General Public License version 2 as
-+published by the Free Software Foundation.
-+
-+This program is distributed in the hope that it will be useful,
-+but WITHOUT ANY WARRANTY; without even the implied warranty of
-+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+GNU General Public License for more details.
-+
-+You should have received a copy of the GNU General Public License
-+along with this program; if not, write to the Free Software
-+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-+"""
-+
-+import sys, os
-+from optparse import OptionParser, make_option
-+
-+from stgit.commands.common import *
-+from stgit.utils import *
-+from stgit import stack, git
-+
-+help =3D 'StGIT-ify any GIT commits made on top of your StGIT stack'
-+usage =3D """%prog
-+
-+If you have made GIT commits on top of your stack of StGIT patches,
-+many StGIT commands will refuse to work. This command converts any
-+such commits to StGIT patches, preserving their contents.
-+
-+Only GIT commits with exactly one parent can be assimilated; in other
-+words, if you have committed a merge on top of your stack, this
-+command cannot help you."""
-+
-+options =3D []
-+
-+def func(parser, options, args):
-+    """Assimilate a number of patches.
-+    """
-+
-+    def nothing_to_do():
-+        print 'No commits to assimilate'
-+
-+    top_patch =3D crt_series.get_current_patch()
-+    if not top_patch:
-+        return nothing_to_do()
-+
-+    victims =3D []
-+    victim =3D git.get_commit(git.get_head())
-+    while victim.get_id_hash() !=3D top_patch.get_top():
-+        victims.append(victim)
-+        parents =3D victim.get_parents()
-+        if not parents:
-+            raise CmdException, 'Commit %s has no parents, aborting' % vic=
-tim
-+        elif len(parents) > 1:
-+            raise CmdException, 'Commit %s is a merge, aborting' % victim
-+        victim =3D git.get_commit(parents[0])
-+
-+    if not victims:
-+        return nothing_to_do()
-+
-+    if crt_series.get_protected():
-+        raise CmdException(
-+            'This branch is protected. Modification is not permitted')
-+
-+    patch2name =3D {}
-+    name2patch =3D {}
-+    def name_taken(name):
-+        return patchname in name2patch or crt_series.patch_exists(patchnam=
-e)
-+    for victim in victims:
-+        patchname =3D make_patch_name(victim.get_log())
-+        if not patchname:
-+            patchname =3D 'patch'
-+        if name_taken(patchname):
-+            suffix =3D 0
-+            while name_taken('%s-%d' % (patchname, suffix)):
-+                suffix +=3D 1
-+            patchname =3D '%s-%d' % (patchname, suffix)
-+        patch2name[victim] =3D patchname
-+        name2patch[patchname] =3D victim
-+
-+    for victim in reversed(victims):
-+        print ('Creating patch "%s" from commit %s'
-+               % (patch2name[victim], victim))
-+        aname, amail, adate =3D name_email_date(victim.get_author())
-+        cname, cmail, cdate =3D name_email_date(victim.get_committer())
-+        crt_series.new_patch(
-+            patch2name[victim],
-+            can_edit =3D False, before_existing =3D False, refresh =3D Fal=
-se,
-+            top =3D victim.get_id_hash(), bottom =3D victim.get_parent(),
-+            message =3D victim.get_log(),
-+            author_name =3D aname, author_email =3D amail, author_date =3D=
- adate,
-+            committer_name =3D cname, committer_email =3D cmail)
-diff --git a/stgit/commands/common.py b/stgit/commands/common.py
-index bf8481e..1ea6025 100644
---- a/stgit/commands/common.py
-+++ b/stgit/commands/common.py
-@@ -113,10 +113,10 @@ def check_local_changes():
-=20
- def check_head_top_equal():
-     if not crt_series.head_top_equal():
--        raise CmdException, \
--              'HEAD and top are not the same. You probably committed\n' \
--              '  changes to the tree outside of StGIT. If you know what yo=
-u\n' \
--              '  are doing, use the "refresh -f" command'
-+        raise CmdException(
-+            'HEAD and top are not the same. You probably committed\n'
-+            '  changes to the tree outside of StGIT. To bring them\n'
-+            '  into StGIT, use the "assimilate" command')
-=20
- def check_conflicts():
-     if os.path.exists(os.path.join(basedir.get(), 'conflicts')):
-diff --git a/stgit/git.py b/stgit/git.py
-index 43bdc7e..42b0d12 100644
---- a/stgit/git.py
-+++ b/stgit/git.py
-@@ -79,6 +79,9 @@ class Commit:
-     def get_log(self):
-         return self.__log
-=20
-+    def __str__(self):
-+        return self.get_id_hash()
-+
- # dictionary of Commit objects, used to avoid multiple calls to git
- __commits =3D dict()
-=20
-diff --git a/stgit/main.py b/stgit/main.py
-index e9cc6cd..de35ca8 100644
---- a/stgit/main.py
-+++ b/stgit/main.py
-@@ -30,6 +30,7 @@ from stgit.commands.common import *
- # The commands
- import stgit.commands.add
- import stgit.commands.applied
-+import stgit.commands.assimilate
- import stgit.commands.branch
- import stgit.commands.delete
- import stgit.commands.diff
-@@ -70,6 +71,7 @@ #
- commands =3D {
-     'add':      stgit.commands.add,
-     'applied':  stgit.commands.applied,
-+    'assimilate': stgit.commands.assimilate,
-     'branch':   stgit.commands.branch,
-     'delete':   stgit.commands.delete,
-     'diff':     stgit.commands.diff,
-@@ -113,6 +115,7 @@ repocommands =3D (
-     )
- stackcommands =3D (
-     'applied',
-+    'assimilate',
-     'clean',
-     'commit',
-     'float',
-diff --git a/stgit/stack.py b/stgit/stack.py
-index 93a3d4e..e50f189 100644
---- a/stgit/stack.py
-+++ b/stgit/stack.py
-@@ -350,9 +350,17 @@ class Series:
-         """
-         return Patch(name, self.__patch_dir, self.__refs_dir)
-=20
-+    def get_current_patch(self):
-+        """Return a Patch object representing the topmost patch, or
-+        None if there is no such patch."""
-+        crt =3D self.get_current()
-+        if not crt:
-+            return None
-+        return Patch(crt, self.__patch_dir, self.__refs_dir)
-+
-     def get_current(self):
--        """Return a Patch object representing the topmost patch
--        """
-+        """Return the name of the topmost patch, or None if there is
-+        no such patch."""
-         if os.path.isfile(self.__current_file):
-             name =3D read_string(self.__current_file)
-         else:
-@@ -414,6 +422,11 @@ class Series:
-         """
-         return name in self.get_unapplied()
-=20
-+    def patch_exists(self, name):
-+        """Return true if there is a patch with the given name, false
-+        otherwise."""
-+        return self.__patch_applied(name) or self.__patch_applied(name)
-+
-     def __begin_stack_check(self):
-         """Save the current HEAD into .git/refs/heads/base if the stack
-         is empty
-@@ -433,12 +446,11 @@ class Series:
-     def head_top_equal(self):
-         """Return true if the head and the top are the same
-         """
--        crt =3D self.get_current()
-+        crt =3D self.get_current_patch()
-         if not crt:
-             # we don't care, no patches applied
-             return True
--        return git.get_head() =3D=3D Patch(crt, self.__patch_dir,
--                                       self.__refs_dir).get_top()
-+        return git.get_head() =3D=3D crt.get_top()
-=20
-     def is_initialised(self):
-         """Checks if series is already initialised
-@@ -688,7 +700,7 @@ class Series:
-                   top =3D None, bottom =3D None,
-                   author_name =3D None, author_email =3D None, author_date=
- =3D None,
-                   committer_name =3D None, committer_email =3D None,
--                  before_existing =3D False):
-+                  before_existing =3D False, refresh =3D True):
-         """Creates a new patch
-         """
-         if self.__patch_applied(name) or self.__patch_unapplied(name):
-@@ -741,8 +753,8 @@ class Series:
-         else:
-             append_string(self.__applied_file, patch.get_name())
-             self.__set_current(name)
--
--            self.refresh_patch(cache_update =3D False, log =3D 'new')
-+            if refresh:
-+                self.refresh_patch(cache_update =3D False, log =3D 'new')
-=20
-     def delete_patch(self, name):
-         """Deletes a patch
+> cd featureA
+> hack hack; bzr commit -m 'f1'; hack hack bzr commit -m f2; etc
+> No I want to merge in mainline again
+> bzr merge ../mainline; bzr commit -m merge
+> hack hack; bzr commit -m f3; hack hack bzr commit -m f4; etc
+
+As it clarified during this long discussion, bzr "branches" are
+something between git branches and one-branch [local] clones.
+Can you for example create branch starting from an arbitrary revision,
+not only tip of branch?
+
+The above sequence of operations can be done in (at least) two differen=
+t
+ways in git.
+
+Less used:
+ $ cd /somewhere/else
+ $ git clone -l -s <mainrepo>/.git featureA
+ $ cd featureA
+ $ hack; hack; git commit -a -m "f1"; hack; hack; git commit -a -m "f2"=
+; etc  =20
+ $ cd <mainrepo>
+ $ git pull /somewhere/else/featureA/.git
+ (this does commit and merge)
+
+But more common used is:
+ $ git branch featureA mainline
+ $ git checkout featureA
+ $ hack; hack; git commit -a -m "f1"; hack; hack; git commit -a -m "f2"=
+; etc
+ $ git checkout mainline
+ $ git pull . featureA
+ (although this would fast-forward in this example)
+
+> right now, I would have something line this in the branch log
+> -----------------------------------------------------------------
+> committer: Erik B=C3=A5gfors <erik@bagfors.nu>
+> branch nick: featureA
+> message:
+>    f4
+> -----------------------------------------------------------------
+> committer: Erik B=C3=A5gfors <erik@bagfors.nu>
+> branch nick: featureA
+> message:
+>    f3
+> ----------------------------------------------------------------
+> committer: Erik B=C3=A5gfors <erik@bagfors.nu>
+> branch nick: featureA
+> message:
+>    merge
+>       ---------------------------------------------------------------=
+--
+>       committer: Foo Bar <foo@bar.com>
+>       branch nick: mainline
+>       message:
+>          something done in mainline
+>       ---------------------------------------------------------------=
+--
+>       committer: Foo Bar <foo@bar.com>
+>       branch nick: mainline
+>       message:
+>          something else done in mainline
+The automatic merge message takes care of this, if we enable
+merge.summary config option. For example:
+
+commit 2c8a02263c13c6e1891e9e338eb40a4286b613e5
+Merge: 2492932... 87b787a...
+Author: Jakub Narebski <jnareb@gmail.com>
+Date:   Sat Oct 21 13:23:19 2006 +0200
+
+    Merge branch 'master' of git://git.kernel.org/pub/scm/git/git
+   =20
+    * 'master' of git://git.kernel.org/pub/scm/git/git:
+      git-clone: define die() and use it.
+      Fix typo in show-index.c
+      pager: default to LESS=3DFRS
+
+
+Another example, this time of "octopus" merge.
+
+commit ff49fae6a547e5c70117970e01c53b64d983cd10
+Merge: 7ad4ee7... 75f9007... 14eab2b... 0b35995... eee4609...
+Author: Junio C Hamano <junkio@cox.net>
+Date:   Fri Oct 20 18:56:14 2006 -0700
+
+    Merge branches 'jc/diff', 'jc/diff-apply-patch', 'jc/read-tree' and=
+ 'pb/web' into pu
+   =20
+    * jc/diff:
+      para walk wip
+      para-walk: walk n trees, index and working tree in parallel
+   =20
+    * jc/diff-apply-patch:
+      git-diff/git-apply: make diff output a bit friendlier to GNU patc=
+h (part 2)
+   =20
+    * jc/read-tree:
+      merge: loosen overcautious "working file will be lost" check.
+   =20
+    * pb/web:
+      gitweb: Show project README if available
+
+That said we couldn't do that in abovementioned example
+as it is simple case of fast-forward. We have above messages
+for "true merges" of two _diverging_ lines of development,
+and we could use similar format for "git log". In practice
+we rather use history viewers: gitk, qgit, tig, git-show-branch.
+
+=46or example:
+$ git show-branch origin next
+! [origin] git-clone: define die() and use it.
+ ! [next] Merge branch 'master' into next
+--
+ - [next] Merge branch 'master' into next
+++ [origin] git-clone: define die() and use it.
+
+> If I understand it correctly, in git, you don't really know what has
+> been committed as part of this branch/repo, and what has been
+> committed in another branch/repo (this is my understanding from
+> reading this thread, I might be wrong, feel free to correct me again
+> :) )
+
+You can browse reflog to get to know which changes were commited
+as part of this repo, and which came from other repo (other clone
+of this repo).
+--=20
+Jakub Narebski
+Poland
