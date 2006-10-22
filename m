@@ -1,74 +1,52 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
 Subject: Re: VCS comparison table
-Date: Sun, 22 Oct 2006 17:50:42 +0200
-Message-ID: <200610221750.42662.jnareb@gmail.com>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
-	<egr3ud$nqm$1@sea.gmane.org>
-	<20061016035326.GA8654@hope.sourcefrog.net>
+Date: Sun, 22 Oct 2006 18:02:27 +0200
+Message-ID: <20061022160227.GP20017@pasky.or.cz>
+References: <45357CC3.4040507@utoronto.ca> <20061021191949.GA8096@coredump.intra.peff.net> <20061021214629.GO75501@over-yonder.net> <200610220025.32108.jnareb@gmail.com> <1161474168.9241.188.camel@localhost.localdomain> <8764ed1b7z.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: bazaar-ng-bounces@lists.canonical.com Sun Oct 22 17:51:07 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff Licquia <jeff@licquia.org>, Jakub Narebski <jnareb@gmail.com>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 22 18:02:44 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbfbM-0001Am-OP
-	for gcvbg-bazaar-ng@m.gmane.org; Sun, 22 Oct 2006 17:51:04 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1Gbfb4-0005Cc-Kw; Sun, 22 Oct 2006 16:50:46 +0100
-Received: from hu-out-0506.google.com ([72.14.214.224])
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <jnareb@gmail.com>) id 1Gbfar-0005Bm-Qt
-	for bazaar-ng@lists.canonical.com; Sun, 22 Oct 2006 16:50:34 +0100
-Received: by hu-out-0506.google.com with SMTP id 27so867492hub
-	for <bazaar-ng@lists.canonical.com>;
-	Sun, 22 Oct 2006 08:50:33 -0700 (PDT)
-Received: by 10.67.30.6 with SMTP id h6mr4178960ugj;
-	Sun, 22 Oct 2006 08:50:31 -0700 (PDT)
-Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
-	by mx.google.com with ESMTP id e1sm175501ugf.2006.10.22.08.50.31;
-	Sun, 22 Oct 2006 08:50:31 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20061016035326.GA8654@hope.sourcefrog.net>
+	id 1GbfmZ-000315-EP
+	for gcvg-git@gmane.org; Sun, 22 Oct 2006 18:02:39 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751124AbWJVQCd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Oct 2006 12:02:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751121AbWJVQCd
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 12:02:33 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:53148 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1751124AbWJVQCb (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Oct 2006 12:02:31 -0400
+Received: (qmail 2103 invoked by uid 2001); 22 Oct 2006 18:02:27 +0200
+To: Carl Worth <cworth@cworth.org>
 Content-Disposition: inline
-To: Undisclosed.Recipients: ;
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29763>
+In-Reply-To: <8764ed1b7z.wl%cworth@cworth.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29764>
 
-On 14 Oct 2006, Jakub Narebski <jnareb@gmail.com> wrote:
-> Jon Smirl wrote:
-> 
->> It refers to this comparison chart between source control systems.
->> http://bazaar-vcs.org/RcsComparisons
-> 
-> It is quite obvious that comparison of programs of given type (SMC)
-> on some program site (Bazaar-NG) is usually biased towards said program,
-> perhaps unconsciously: by emphasizing the features which were important
-> for developers of said program.
+Dear diary, on Sun, Oct 22, 2006 at 01:49:04AM CEST, I got a letter
+where Carl Worth <cworth@cworth.org> said that...
+> Almost none of the power of git is exposed by gitweb. It's really not
+> worth comparing. (Now a gitweb-alike that provided all the kinds of
+> very easy browsing and filtering of the history like gitk and git
+> might be nice to have.)
 
-There are also clashes with SCM terminology used differently by different
-projects, which are sometimes couled with differences in philosophy,
-and sometimes by different undestanding of given name.
+http://repo.or.cz/git-browser/by-commit.html?r=linux-2.6.git
 
-For example "lightweight checkouts" and "normal/heavyweight checkout"
-are from what I gather, is supporting "CVS/centralized model" and
-"disconnected CVS model" (i.e. we can commit changes locally with
-no network access, and we save local changes), at least when we
-do "checkout" remotely and not on one local filesystem out-of-the-box.
+It could use plenty of improvement, though.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
