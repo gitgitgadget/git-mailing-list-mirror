@@ -1,88 +1,88 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: "Matthew D. Fuller" <fullermd@over-yonder.net>
 Subject: Re: VCS comparison table
-Date: Sun, 22 Oct 2006 15:51:54 +0200
-Organization: At home
-Message-ID: <ehft1f$9le$1@sea.gmane.org>
-References: <4536EC93.9050305@utoronto.ca> <87lkncev90.wl%cworth@cworth.org> <453792A8.1010700@utoronto.ca> <878xjc2qeb.wl%cworth@cworth.org> <453803E6.2060309@utoronto.ca> <87ods727pn.wl%cworth@cworth.org> <45382120.9060702@utoronto.ca> <87irie1wvv.wl%cworth@cworth.org> <20061021130111.GL75501@over-yonder.net> <87ac3p1jn7.wl%cworth@cworth.org> <20061022124635.GR75501@over-yonder.net>
+Date: Sun, 22 Oct 2006 08:57:02 -0500
+Message-ID: <20061022135702.GU75501@over-yonder.net>
+References: <1161478005.9241.210.camel@localhost.localdomain> <20061021212645.2f9ba751.seanlkml@sympatico.ca> <1161487417.9241.220.camel@localhost.localdomain> <20061021233014.d4525a1d.seanlkml@sympatico.ca> <20061022100028.GQ75501@over-yonder.net> <20061022074422.50dcbee6.seanlkml@sympatico.ca> <20061022130322.GS75501@over-yonder.net> <20061022092845.233deb43.seanlkml@sympatico.ca> <20061022133336.GT75501@over-yonder.net> <20061022094041.77c06cc7.seanlkml@sympatico.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: bazaar-ng@lists.canonical.com
-X-From: git-owner@vger.kernel.org Sun Oct 22 15:52:02 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 22 15:57:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gbdk8-0008T1-8P
-	for gcvg-git@gmane.org; Sun, 22 Oct 2006 15:52:00 +0200
+	id 1GbdpA-0000qA-NI
+	for gcvg-git@gmane.org; Sun, 22 Oct 2006 15:57:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750945AbWJVNv5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 22 Oct 2006 09:51:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751811AbWJVNv5
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 09:51:57 -0400
-Received: from main.gmane.org ([80.91.229.2]:25739 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1750945AbWJVNv4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Oct 2006 09:51:56 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Gbdjw-0008RS-Kk
-	for git@vger.kernel.org; Sun, 22 Oct 2006 15:51:48 +0200
-Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 22 Oct 2006 15:51:48 +0200
-Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 22 Oct 2006 15:51:48 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-Followup-To: gmane.comp.version-control.git
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1750921AbWJVN5F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Oct 2006 09:57:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751811AbWJVN5F
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 09:57:05 -0400
+Received: from ns.centralmiss.com ([206.156.254.79]:10228 "EHLO
+	optimus.centralmiss.com") by vger.kernel.org with ESMTP
+	id S1750921AbWJVN5E (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Oct 2006 09:57:04 -0400
+Received: from draco.over-yonder.net (adsl-072-148-013-213.sip.jan.bellsouth.net [72.148.13.213])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by optimus.centralmiss.com (Postfix) with ESMTP id 582E22842A;
+	Sun, 22 Oct 2006 08:57:03 -0500 (CDT)
+Received: by draco.over-yonder.net (Postfix, from userid 100)
+	id C83D861C57; Sun, 22 Oct 2006 08:57:02 -0500 (CDT)
+To: Sean <seanlkml@sympatico.ca>
+Content-Disposition: inline
+In-Reply-To: <20061022094041.77c06cc7.seanlkml@sympatico.ca>
+X-Editor: vi
+X-OS: FreeBSD <http://www.freebsd.org/>
+User-Agent: Mutt/1.5.11-fullermd.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29748>
 
-Matthew D. Fuller wrote:
+On Sun, Oct 22, 2006 at 09:40:41AM -0400 I heard the voice of
+Sean, and lo! it spake thus:
+> 
+> The fact is that once you start distributing them to other
+> repositories you CAN NOT GUARANTEE their stability.
 
-> =A0 It can also be useful in looking at cases where you don't
-> =A0 necessarily have the tool. =A0Compare putting CVS's rcsid tags in
-> =A0 strings in the source. =A0static const char *rcsid =3D "$Id"; and=
- the
-> =A0 like. =A0Then you can use 'ident' on the compiled binaries to see=
- the
-> =A0 revs of files in them. =A0If somebody says "foo.c has a bug in 1.=
-34,
-> =A0 fixed in 1.37", I can without any VCS interaction just look at th=
-e
-> =A0 compiled binary and tell whether I'm prior to the bug, have the b=
-ug,
-> =A0 or after the fix. =A0If the binary is known to be compiled from a
-> =A0 particular branch, a tree-wide revno tells me that too. =A0A revi=
-d
-> =A0 (even one containing a date) won't tell me that; I'll have to fin=
-d
-> =A0 the tool and a copy of the tree and find out if my rev contains t=
-hat
-> =A0 other rev.
+Terminology.  When those revisions get distributed to other BRANCHES,
+their stability is forfeit.  We know.  We don't care.  We only care
+about the numbers on ONE BRANCH.
 
-We use signed tags for tagging official releases (e.g. v1.4.0 tag),
-and we use "git describe" output to be embedded during build time
-in resulting binary. For example my current output of git-describe
-on my clone of git repository is:
 
- $ git describe=20
- v1.4.3.1-g2c8a022
+> Those number may already be used by _HIS_ branch and when he tries
+> to get _YOUR_ branch.. there is a conflict.
 
-Git project does this, gitweb does this, Linux kernel does this.
-This is quite coarse grained, i.e. you know ahich released version
-it is after, but you need git tools (or access to git tools via
-gitweb) to check if it is after or before the fix.
+Terminology again.  When he has his branch and gets my branches, he
+has two branches, mine and his, side by side, and the numbers in his
+'my' branch still correspond to the numbers in my 'my' branch.  When
+he merges the REVISIONS from my branch into his, my numbers have no
+meaning on his side (there's not a 'conflict' because numbers don't
+get copied, they get derived).
 
-Of course that is when you run GIT version of tool...
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+
+> So while you may not have seen a problem yourself,
+
+You keep insisting that there's a PROBLEM here.  You're right, I don't
+see one.  I KNOW the numbers only refer to a branch, I KNOW that when
+you're talking about a different branch the numbers are meaningless,
+and I'm perfectly fine with that because referring to revisions on *A*
+branch is exactly what I USE the numbers for.
+
+There doesn't have to be a 'central' branch, nor is there any wish for
+such to be.  Any given revno only refers to *A* branch, it doesn't
+have to be central to a darn thing.  HEAD in git only has meaning in
+the context of *A* branch (and even 'worse', only refers to that
+branch at a specific time[0]), but you'll keep on using it every day
+anyway I wager.
+
+
+
+[0] See again particular term of art "branch".
+
+
+-- 
+Matthew Fuller     (MF4839)   |  fullermd@over-yonder.net
+Systems/Network Administrator |  http://www.over-yonder.net/~fullermd/
+           On the Internet, nobody can hear you scream.
