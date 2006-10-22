@@ -1,83 +1,78 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Commit-ish shortcut for immediate parent range
-Date: Sun, 22 Oct 2006 15:48:35 +0100
-Message-ID: <200610221548.42048.andyparkins@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: VCS comparison table
+Date: Sun, 22 Oct 2006 16:55:11 +0200
+Message-ID: <200610221655.11598.jnareb@gmail.com>
+References: <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org> <845b6e870610220256u39d3d06wefd4f71851670812@mail.gmail.com> <87zmbozau2.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart21515191.1E9f57hqxU";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Oct 22 16:51:29 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Erik =?iso-8859-1?q?B=E5gfors?=" <zindar@gmail.com>,
+	"Jan Hudec" <bulb@ucw.cz>, bazaar-ng@lists.canonical.com,
+	"Linus Torvalds" <torvalds@osdl.org>,
+	"Andreas Ericsson" <ae@op5.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 22 16:55:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbefW-0008IQ-Fm
-	for gcvg-git@gmane.org; Sun, 22 Oct 2006 16:51:18 +0200
+	id 1GbejE-0000PU-DA
+	for gcvg-git@gmane.org; Sun, 22 Oct 2006 16:55:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750700AbWJVOvP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Oct 2006 10:51:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750852AbWJVOvP
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 10:51:15 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:12806 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1750700AbWJVOvP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Oct 2006 10:51:15 -0400
-Received: by ug-out-1314.google.com with SMTP id o38so1056081ugd
-        for <git@vger.kernel.org>; Sun, 22 Oct 2006 07:51:13 -0700 (PDT)
+	id S1751067AbWJVOzF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 22 Oct 2006 10:55:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750858AbWJVOzF
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 10:55:05 -0400
+Received: from qb-out-0506.google.com ([72.14.204.236]:47007 "EHLO
+	qb-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1751093AbWJVOzC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Oct 2006 10:55:02 -0400
+Received: by qb-out-0506.google.com with SMTP id f29so439699qba
+        for <git@vger.kernel.org>; Sun, 22 Oct 2006 07:55:01 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:message-id;
-        b=rsAsgK11CQMddT0K0PRjo9KkfjNty+e3BVO+cYQ/8NFEhIQnBDAKfLRudjKRnkbcS6dxxDL55vtxtVk5C+mh3qU4PQHYs5zEnMSoESznMCva8EyVVPu5jMk3rHXzepxizGBIEUeOo8QCg8YUg0BZhBmD9RudJsy7sWlfmk42Qv8=
-Received: by 10.67.91.6 with SMTP id t6mr5576032ugl;
-        Sun, 22 Oct 2006 07:51:13 -0700 (PDT)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id e33sm1164780ugd.2006.10.22.07.51.13;
-        Sun, 22 Oct 2006 07:51:13 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.5
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=azh4PIyuM8ytVH0MSS1Rpk//9n0JccH7cHgV1C/+JVD5+HUdPN2A9qV864VtYGf3bIX0LXcqvzqj+BYbbPkwRFhY3PuTkSORMPEnPFXLOCdd+PMK+rN4I/4CzKFbb5dC9hbHANiUhunqyoVbzJiEjVRkrquLUKnDQbp7fCft/LU=
+Received: by 10.67.21.11 with SMTP id y11mr5537838ugi;
+        Sun, 22 Oct 2006 07:55:00 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
+        by mx.google.com with ESMTP id 32sm1251506ugf.2006.10.22.07.55.00;
+        Sun, 22 Oct 2006 07:55:00 -0700 (PDT)
+To: Carl Worth <cworth@cworth.org>
+User-Agent: KMail/1.9.3
+In-Reply-To: <87zmbozau2.wl%cworth@cworth.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29756>
 
---nextPart21515191.1E9f57hqxU
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Carl Worth wrote:
+> Erik B=E5gfors wrote:
+>> If I understand it correctly, in git, you don't really know what has
+>> been committed as part of this branch/repo, and what has been
+>> committed in another branch/repo (this is my understanding from
+>> reading this thread, I might be wrong, feel free to correct me again
+>> :) )
+>=20
+> You're correct that git doesn't _store_ any sort of "branch ownership=
+"
+> in the commit object. But this is a huge feature. It avoids a lot of
+> the things in bzr that look so bizarre to people coming from git.
 
-Hello,
+Because "branch ownership" is obvously local, we have reflog, which is
+local and not propagated. Reflog uses the following format
 
-Git's commit-ish is very powerful.  I was wondering however, if there was a=
+ oldsha1 SP newsha1 SP committer TAB reason LF
+
+where reason might be "commit: <commit description/title/subject>"
+or "commit (amend): <commit description>", "am: <commit=20
+description>" (applied mail patch), "reset --hard HEAD^" (dropped
+top commit), "branch: Created from origin^0", or "pull origin: In-index=
 =20
-shortcut for (for example)?
+merge".
 
- git-diff 3435fdb4c^..3435fdb4c
-
-That is - the short range of a particular commit's parent to that commit; l=
-ike
-
- git-diff 3435fdb4c!
-
-Or similar.
-
-
-Andy
-=2D-=20
-Dr Andrew Parkins, M Eng (Hons), AMIEE
-andyparkins@gmail.com
-
---nextPart21515191.1E9f57hqxU
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iD8DBQBFO4TJwQJ9gE9xL20RApowAJ47TYM/4OO8rNys8Qm3ik6xRy3jCACggCpT
-ZOZKAg2hQvnS+VcdiKN7JJo=
-=wUCk
------END PGP SIGNATURE-----
-
---nextPart21515191.1E9f57hqxU--
+We have not yet tools to examine reflog (e.g. change committer
+info with it's timestamp to human readable format) yet.
+--=20
+Jakub Narebski
+Poland
