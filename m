@@ -1,119 +1,168 @@
 From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [PATCH 2/2] QP-encode email body
-Date: Sun, 22 Oct 2006 14:49:37 +0200
-Message-ID: <20061022124937.14051.37985.stgit@localhost>
-References: <20061022124551.14051.25145.stgit@localhost>
+Subject: [PATCH 1/2] Regression test for "stg delete"
+Date: Sun, 22 Oct 2006 14:58:11 +0200
+Message-ID: <20061022125811.15194.63337.stgit@localhost>
+References: <20061022125337.15194.64831.stgit@localhost>
 Content-Type: text/plain; charset=utf-8; format=fixed
 Content-Transfer-Encoding: quoted-printable
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 22 14:49:48 2006
+X-From: git-owner@vger.kernel.org Sun Oct 22 14:58:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gbclr-0007hB-2W
-	for gcvg-git@gmane.org; Sun, 22 Oct 2006 14:49:43 +0200
+	id 1Gbcu8-0000Rj-Ak
+	for gcvg-git@gmane.org; Sun, 22 Oct 2006 14:58:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750808AbWJVMtk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Oct 2006 08:49:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750797AbWJVMtj
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 08:49:39 -0400
-Received: from mxfep02.bredband.com ([195.54.107.73]:24000 "EHLO
-	mxfep02.bredband.com") by vger.kernel.org with ESMTP
-	id S1750838AbWJVMtj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Oct 2006 08:49:39 -0400
-Received: from ironport2.bredband.com ([195.54.107.84] [195.54.107.84])
-          by mxfep02.bredband.com with ESMTP
-          id <20061022124937.QHTU2091.mxfep02.bredband.com@ironport2.bredband.com>
-          for <git@vger.kernel.org>; Sun, 22 Oct 2006 14:49:37 +0200
+	id S1751787AbWJVM6O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Oct 2006 08:58:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751786AbWJVM6O
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 08:58:14 -0400
+Received: from mxfep04.bredband.com ([195.54.107.79]:24514 "EHLO
+	mxfep04.bredband.com") by vger.kernel.org with ESMTP
+	id S1751787AbWJVM6N (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Oct 2006 08:58:13 -0400
+Received: from ironport.bredband.com ([195.54.107.82] [195.54.107.82])
+          by mxfep04.bredband.com with ESMTP
+          id <20061022125811.QUTO8360.mxfep04.bredband.com@ironport.bredband.com>
+          for <git@vger.kernel.org>; Sun, 22 Oct 2006 14:58:11 +0200
 Received: from ua-83-227-180-148.cust.bredbandsbolaget.se (HELO yoghurt.hemma.treskal.com) ([83.227.180.148])
-  by ironport2.bredband.com with ESMTP; 22 Oct 2006 14:49:37 +0200
+  by ironport.bredband.com with ESMTP; 22 Oct 2006 14:58:11 +0200
 Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by yoghurt.hemma.treskal.com (Postfix) with ESMTP id 595B14C010;
-	Sun, 22 Oct 2006 14:49:37 +0200 (CEST)
+	by yoghurt.hemma.treskal.com (Postfix) with ESMTP id 69B554C010;
+	Sun, 22 Oct 2006 14:58:11 +0200 (CEST)
 To: Catalin Marinas <catalin.marinas@gmail.com>
-In-Reply-To: <20061022124551.14051.25145.stgit@localhost>
+In-Reply-To: <20061022125337.15194.64831.stgit@localhost>
 User-Agent: StGIT/0.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29729>
 
 From: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
-Some mail servers dislike the 8bit transfer encoding, so use
-quoted-printable instead.
+NOTE: The subtest that attempts to delete a patch in another branch
+currently fails, because there's a bug in "delete".
 
 Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 ---
 
- stgit/commands/mail.py |   16 +++++++++-------
- 1 files changed, 9 insertions(+), 7 deletions(-)
+ t/t1600-delete.sh |  109 +++++++++++++++++++++++++++++++++++++++++++++++++=
+++++
+ 1 files changed, 109 insertions(+), 0 deletions(-)
 
-diff --git a/stgit/commands/mail.py b/stgit/commands/mail.py
-index b661308..885d5e9 100644
---- a/stgit/commands/mail.py
-+++ b/stgit/commands/mail.py
-@@ -15,7 +15,7 @@ along with this program; if not, write t
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
- """
-=20
--import sys, os, re, time, datetime, smtplib, email.Header, email.Utils
-+import sys, os, re, time, datetime, quopri, smtplib, email.Header, email.U=
-tils
- from optparse import OptionParser, make_option
-=20
- from stgit.commands.common import *
-@@ -253,7 +253,7 @@ def __build_extra_headers():
-     """Build extra headers like content-type etc.
-     """
-     headers  =3D 'Content-Type: text/plain; charset=3Dutf-8; format=3Dfixe=
-d\n'
--    headers +=3D 'Content-Transfer-Encoding: 8bit\n'
-+    headers +=3D 'Content-Transfer-Encoding: quoted-printable\n'
-     headers +=3D 'User-Agent: StGIT/%s\n' % version.version
-=20
-     return headers
-@@ -425,9 +425,9 @@ def encode_header(s, enc):
-     else:
-         return s
-=20
--def encode_headers(msg, enc):
--    """rfc2047-encode the headers of msg, assuming it is encoded in
--    enc."""
-+def encode_message(msg, enc):
-+    """rfc2047-encode the headers of msg, and quoted-printable-encode
-+    the body. msg is assumed to be encoded in enc."""
-     in_header =3D True
-     lines =3D []
-     for line in msg.splitlines(True):
-@@ -436,6 +436,8 @@ def encode_headers(msg, enc):
-                 line =3D encode_header(line, enc)
-             else:
-                 in_header =3D False
-+        else:
-+            line =3D quopri.encodestring(line)
-         lines.append(line)
-     return ''.join(lines)
-=20
-@@ -497,7 +499,7 @@ def func(parser, options, args):
-                 raise CmdException, 'No cover message template file found'
-=20
-         msg_id =3D email.Utils.make_msgid('stgit')
--        msg =3D encode_headers(__build_cover(tmpl, total_nr, msg_id, optio=
-ns),
-+        msg =3D encode_message(__build_cover(tmpl, total_nr, msg_id, optio=
-ns),
-                              'UTF-8')
-         from_addr, to_addr_list =3D __parse_addresses(msg)
-=20
-@@ -524,7 +526,7 @@ def func(parser, options, args):
-=20
-     for (p, patch_nr) in zip(patches, range(1, len(patches) + 1)):
-         msg_id =3D email.Utils.make_msgid('stgit')
--        msg =3D encode_headers(__build_message(tmpl, p, patch_nr, total_nr,
-+        msg =3D encode_message(__build_message(tmpl, p, patch_nr, total_nr,
-                                              msg_id, ref_id, options), 'UT=
-F-8')
-         from_addr, to_addr_list =3D __parse_addresses(msg)
-=20
+diff --git a/t/t1600-delete.sh b/t/t1600-delete.sh
+new file mode 100644
+index 0000000..e22e624
+--- /dev/null
++++ b/t/t1600-delete.sh
+@@ -0,0 +1,109 @@
++#!/bin/sh
++# Copyright (c) 2006 Karl Hasselstr=C3=B6m
++test_description=3D'Test the delete command.'
++=2E ./test-lib.sh
++
++test_expect_success \
++    'Initialize the StGIT repository' \
++    'stg init'
++
++test_expect_success \
++    'Create a patch' \
++    '
++    stg new foo -m foo &&
++    echo foo > foo.txt &&
++    stg add foo.txt &&
++    stg refresh
++    '
++
++test_expect_success \
++    'Try to delete a non-existing patch' \
++    '
++    [ $(stg applied | wc -l) -eq 1 ] &&
++    ! stg delete bar &&
++    [ $(stg applied | wc -l) -eq 1 ]
++    '
++
++test_expect_success \
++    'Try to delete the topmost patch while dirty' \
++    '
++    echo dirty >> foo.txt &&
++    [ $(stg applied | wc -l) -eq 1 ] &&
++    ! stg delete foo &&
++    [ $(stg applied | wc -l) -eq 1 ] &&
++    git reset --hard
++    '
++
++test_expect_success \
++    'Delete the topmost patch' \
++    '
++    [ $(stg applied | wc -l) -eq 1 ] &&
++    stg delete foo &&
++    [ $(stg applied | wc -l) -eq 0 ]
++    '
++
++test_expect_success \
++    'Create an unapplied patch' \
++    '
++    stg new foo -m foo &&
++    echo foo > foo.txt &&
++    stg add foo.txt &&
++    stg refresh &&
++    stg pop
++    '
++
++test_expect_success \
++    'Delete an unapplied patch' \
++    '
++    [ $(stg unapplied | wc -l) -eq 1 ] &&
++    stg delete foo &&
++    [ $(stg unapplied | wc -l) -eq 0 ]
++    '
++
++test_expect_success \
++    'Create two patches' \
++    '
++    stg new foo -m foo &&
++    echo foo > foo.txt &&
++    stg add foo.txt &&
++    stg refresh &&
++    stg new bar -m bar &&
++    echo bar > bar.txt &&
++    stg add bar.txt &&
++    stg refresh
++    '
++
++test_expect_success \
++    'Try to delete a non-topmost applied patch' \
++    '
++    [ $(stg applied | wc -l) -eq 2 ] &&
++    ! stg delete foo &&
++    [ $(stg applied | wc -l) -eq 2 ]
++    '
++
++test_expect_success \
++    'Create another branch, and put one patch in each branch' \
++    '
++    stg branch --create br &&
++    stg new baz -m baz &&
++    echo baz > baz.txt &&
++    stg add baz.txt &&
++    stg refresh &&
++    stg branch master &&
++    stg new baz -m baz &&
++    echo baz > baz.txt &&
++    stg add baz.txt &&
++    stg refresh
++    '
++
++test_expect_success \
++    'Delete a patch in another branch' \
++    '
++    [ $(stg applied | wc -l) -eq 3 ] &&
++    [ $(stg applied -b br | wc -l) -eq 1 ] &&
++    stg delete -b br baz &&
++    [ $(stg applied | wc -l) -eq 3 ] &&
++    [ $(stg applied -b br | wc -l) -eq 0 ]
++    '
++
++test_done
