@@ -1,73 +1,92 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH 1/4] gitweb: Whitespace cleanup - tabs are for indent, spaces are for align (2)
-Date: Sun, 22 Oct 2006 16:36:44 -0700 (PDT)
-Message-ID: <20061022233644.82685.qmail@web31806.mail.mud.yahoo.com>
-References: <Pine.LNX.4.64.0610221359090.3962@g5.osdl.org>
-Reply-To: ltuikov@yahoo.com
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Add "next" link to commitdiff view
+Date: Mon, 23 Oct 2006 01:41:54 +0200
+Message-ID: <200610230141.54413.jnareb@gmail.com>
+References: <200610230037.57183.jnareb@gmail.com> <7vd58k0wmx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 23 01:36:55 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 23 01:41:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gbms8-00065u-Nd
-	for gcvg-git@gmane.org; Mon, 23 Oct 2006 01:36:53 +0200
+	id 1Gbmwo-0006oA-9L
+	for gcvg-git@gmane.org; Mon, 23 Oct 2006 01:41:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750743AbWJVXgq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Oct 2006 19:36:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750764AbWJVXgp
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 19:36:45 -0400
-Received: from web31806.mail.mud.yahoo.com ([68.142.207.69]:4246 "HELO
-	web31806.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S1750743AbWJVXgp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Oct 2006 19:36:45 -0400
-Received: (qmail 82687 invoked by uid 60001); 22 Oct 2006 23:36:44 -0000
+	id S1750849AbWJVXlj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Oct 2006 19:41:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750861AbWJVXlj
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 19:41:39 -0400
+Received: from hu-out-0506.google.com ([72.14.214.236]:32449 "EHLO
+	hu-out-0506.google.com") by vger.kernel.org with ESMTP
+	id S1750849AbWJVXli (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Oct 2006 19:41:38 -0400
+Received: by hu-out-0506.google.com with SMTP id 28so916154hub
+        for <git@vger.kernel.org>; Sun, 22 Oct 2006 16:41:37 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=Uci5toQYh74jvIEVomuzStagSMJfpm3b8Jnb9WBxsZBMjEnSOd0hRqnBqQXiqxffRpOSg77av0Z4LTooNtqkPYSV38nNWzLAOJ0N5lUIQZUvWI+Ota3uMqpQCXWw1ImqxC3K5Q3sja1Rsyv3AoKCeLT6wBUxOTk+QN9D1tl2k3U=  ;
-Received: from [71.80.233.118] by web31806.mail.mud.yahoo.com via HTTP; Sun, 22 Oct 2006 16:36:44 PDT
-To: Linus Torvalds <torvalds@osdl.org>,
-	Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <Pine.LNX.4.64.0610221359090.3962@g5.osdl.org>
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=PtZnrgKT3iLXG7e6T40HZ8vO+8IDBEudm61oUD7f/29HG3qcFCHq534WpT9eeykWlVEMx4DD9dpqWoO+G/XLznk3PpaOzZmPCR0eFjAIzNMPQYqXN8LA/HIUtQQbpJvb9jURgwgjbXqvnGhMCWD1fa3L/ZhBjuxzGVTqSLsQPyQ=
+Received: by 10.66.244.10 with SMTP id r10mr6328465ugh;
+        Sun, 22 Oct 2006 16:41:36 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
+        by mx.google.com with ESMTP id p32sm1489350ugc.2006.10.22.16.41.36;
+        Sun, 22 Oct 2006 16:41:36 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vd58k0wmx.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29808>
 
---- Linus Torvalds <torvalds@osdl.org> wrote:
-> On Sun, 22 Oct 2006, Jakub Narebski wrote:
-> > 
-> > To be true I do those "whitespace cleanup" patches when I notice
-> > that something is mis-aligned for _my_ tab width (2 spaces).
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
 > 
-> Oh, wow.
+>> Add a kind of "next" view in the bottom part of navigation bar for
+>> "commitdiff" view.
+>>
+>> For commitdiff between two commits:
+>>   (from: _commit_)
+Perhaps we should use "(from: _commit_ to: _commit_)" here...
+
+>> For commitdiff for one single parent commit:
+>>   (parent: _commit_)
+>> For commitdiff for one merge commit
+>>   (merge: _commit_ _commit_ ...)
+>> For commitdiff for root (parentless) commit
+>>   (initial)
+>> where _link_ denotes hyperlink. SHA1 is shortened to 7 characters on
+>> display, everything is perhaps unnecessary esc_html on display.
+>>
+>> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 > 
-> You have clearly been damaged by some nasty GNU coding style or similar.
-> 
-> Please immediately turn tabs into 8 character hard-tabs, and read the 
-> kernel Documentation/CodingStyle document.
-> 
-> After that, you may have to go to some detox unit to purge yourself of the 
-> habit of 2-character indents, and I realize it will be hard and you'll 
-> feel like shit for a while, but you'll be a better person for it.
-> 
-> It's like kicking a bad drug habit. It may be painful for a while, and you 
-> might wistfully think back on the "happy days" when things went by in a 
-> haze of unclear indentations, but really, it's worth it.
+> Would it even be necessary to use any SHA-1 name in these cases,
+> I wonder.  Would it make the page less useful if we replace all
+> of the above _commit_ with a fixed string, say, "parent"?
 
-Funny, but true.
+I decided on using _shortened_ SHA1 because I didn't like neither 
+"(parent parent ...) " nor "(parent1 parent2 ...)" for merges. Perhaps 
+I should have used 8-characters abbreviation, like in git_blame2.
+And I was inspired by git-show output for merges:
 
-One way to do it is:
+ commit ff49fae6a547e5c70117970e01c53b64d983cd10
+ Merge: 7ad4ee7... 75f9007... 14eab2b... 0b35995... eee4609...
 
-(defun my-perl-mode ()
-  (setq perl-indent-level 8)
-  (setq perl-continued-statement-offset 8)
-)
+> I always hated gitweb diffs that prefix each filepair with their
+> full 40-byte SHA-1 blob object names.  It just adds noise to the
+> output without adding any meaningful information.
 
-(add-hook 'perl-mode-hook 'my-perl-mode)
+I always thought about this only as a (somewhat sophisticated) separator 
+marking where individual patch (patch for given files) begin. And
+a place to click (non-hidden link) for blob before and after. Please 
+remember that this gitweb diff header was from the times where we 
+didn't have difftree in commitdiff view.
 
-     Luben
+-- 
+Jakub Narebski
+Poland
