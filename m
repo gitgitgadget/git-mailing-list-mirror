@@ -1,76 +1,97 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: VCS comparison table
-Date: Sun, 22 Oct 2006 22:06:13 +0200
-Message-ID: <200610222206.13973.jnareb@gmail.com>
-References: <45357CC3.4040507@utoronto.ca> <200610212141.51829.jnareb@gmail.com> <1161544685.22276.127.camel@zepto.home.zettazebra.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Commit-ish shortcut for immediate parent range
+Date: Sun, 22 Oct 2006 21:17:45 +0100
+Message-ID: <200610222117.45766.andyparkins@gmail.com>
+References: <200610221548.42048.andyparkins@gmail.com> <Pine.LNX.4.64.0610221017180.3962@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: multipart/signed;
+  boundary="nextPart1703573.4MdI1Whr0W";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: "Matthew D. Fuller" <fullermd@over-yonder.net>,
-	Andreas Ericsson <ae@op5.se>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Carl Worth <cworth@cworth.org>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 22 22:06:10 2006
+Cc: Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Sun Oct 22 22:20:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gbja9-000536-7W
-	for gcvg-git@gmane.org; Sun, 22 Oct 2006 22:06:05 +0200
+	id 1Gbjny-0007e5-DO
+	for gcvg-git@gmane.org; Sun, 22 Oct 2006 22:20:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751283AbWJVUGA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Oct 2006 16:06:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751287AbWJVUGA
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 16:06:00 -0400
-Received: from qb-out-0506.google.com ([72.14.204.236]:13550 "EHLO
-	qb-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1751283AbWJVUF7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Oct 2006 16:05:59 -0400
-Received: by qb-out-0506.google.com with SMTP id p36so366842qba
-        for <git@vger.kernel.org>; Sun, 22 Oct 2006 13:05:58 -0700 (PDT)
+	id S1750821AbWJVUUS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Oct 2006 16:20:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750920AbWJVUUS
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 16:20:18 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:4636 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1750821AbWJVUUQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Oct 2006 16:20:16 -0400
+Received: by ug-out-1314.google.com with SMTP id o38so1100637ugd
+        for <git@vger.kernel.org>; Sun, 22 Oct 2006 13:20:15 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=pKSh8tuBqm0ppizivlLWGsSh4hzV1KL1zAX4ooP15AmzETzidXRZBWyCvz/HiLCrac7b9lu3AXZ99dvZZdRthDhwmb2M5WF8y7/wuGB7DsENbXV/3VHwP/PemzkadN92hyfW2V/Hz/ewgsP132EYY0Vn0dutbT4MjNXza/6x9eo=
-Received: by 10.66.242.20 with SMTP id p20mr6015716ugh;
-        Sun, 22 Oct 2006 13:05:58 -0700 (PDT)
-Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
-        by mx.google.com with ESMTP id i39sm1843175ugd.2006.10.22.13.05.57;
-        Sun, 22 Oct 2006 13:05:57 -0700 (PDT)
-To: David Clymer <david@zettazebra.com>
-User-Agent: KMail/1.9.3
-In-Reply-To: <1161544685.22276.127.camel@zepto.home.zettazebra.com>
-Content-Disposition: inline
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:message-id;
+        b=fn8HX+m4pA5IWIMXCZeCzQsmMb34C69oEwt61iEFgY8l6wiHku+10UMz3tJXCX4fnOoJI70NIkCjtVeYxx9xqco9toBL6T04QnMqXJoCbq+JQaVNaPl4O5smeK526+ffNWA4bV66ROaiGaCHGLBWiIDqZUjS+sTDz0MkfJR2sv0=
+Received: by 10.66.252.4 with SMTP id z4mr6034448ugh;
+        Sun, 22 Oct 2006 13:20:15 -0700 (PDT)
+Received: from ?192.168.7.102? ( [82.0.29.64])
+        by mx.google.com with ESMTP id u1sm3039386uge.2006.10.22.13.20.14;
+        Sun, 22 Oct 2006 13:20:15 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.64.0610221017180.3962@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29783>
 
-David Clymer wrote:
-> 1. revnos don't work because they don't serve the same purpose as revids
-> or git's SHA1 commit ids.
-Revnos works only locally, or in star-topology configuration. They have
-some consequences: treating first parent specially, need for merges
-instead of fast-forward even if fast-forward would be applicable,
-two different "fetch" operators: "pull" (which uses revids on the
-pulled side) and "merge" (which preserves revids on pullee side).
+--nextPart1703573.4MdI1Whr0W
+Content-Type: text/plain;
+  charset="ansi_x3.4-1968"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> 2. bzr does not support fully distributed development because revnos
-> "don't work" as stated in #1.
-Bazaar is biased towards centralized/star-topology development if we
-want to use revids. In fully distributed configuration there is no
-"simple namespace".
+On Sunday 2006, October 22 18:25, Linus Torvalds wrote:
 
-> 3. Ok, bzr does support distributed development, I just say it doesn't
-> because I think revids are ugly.
-I think that bzr revids are uglier that git commit-ids.
+> Umm. That's not actually a very sensible operation. It's only sensible in
+> the special case of "diff", and for that special case, what we do is to
+> actually just say that the _command_ is special, not the range.
+>
+> It's called "git show".
 
-If on the pros side of bzr is "simple namespace", you must remember that
-it is simple namespace only for not fully distributed development. The
-pros of "simple namespace" with cons of "merge" vs "pull" and centralization
-required for uniqueness of revids.
--- 
-Jakub Narebski
-Poland
+You're entirely correct, that that is what I was looking for in that=20
+particular case.  However, the reason I raised it as a question was that I=
+=20
+was poking around with git (which I'm enjoying immensely by the way - it=20
+really is as perfect an SCM as I have ever used) and in short succession did
+
+git-diff X^..X
+git-log X^..X
+git-format-patch X^..X
+
+I imagined that I would eventually stumble on other git commands where I wo=
+uld=20
+want to do this operation again.  I'm sure I will have picked an incorrect=
+=20
+command in each case, however, they all did exactly what I wanted so I=20
+stopped looking for the "right" command :-)
+
+
+Andy
+
+=2D-=20
+Dr Andrew Parkins, M Eng (Hons), AMIEE
+andyparkins@gmail.com
+
+--nextPart1703573.4MdI1Whr0W
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQBFO9HpwQJ9gE9xL20RAr6qAJ9UVuY1uWNN488DUEl7/WfKnshYvwCg0DZl
+RdwJGQh23ZIkjU1DcW/FPMA=
+=CWcw
+-----END PGP SIGNATURE-----
+
+--nextPart1703573.4MdI1Whr0W--
