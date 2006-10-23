@@ -1,67 +1,69 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: VCS comparison table
-Date: Mon, 23 Oct 2006 16:24:30 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610231623340.3962@g5.osdl.org>
-References: <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>  <453A7D7E.8060105@utoronto.ca>
-  <20061022074513.GF29927@artax.karlin.mff.cuni.cz>  <200610221105.26421.jnareb@gmail.com>
-  <845b6e870610220256u39d3d06wefd4f71851670812@mail.gmail.com> 
- <87zmbozau2.wl%cworth@cworth.org>  <20061022185350.GW75501@over-yonder.net>
-  <Pine.LNX.4.64.0610231018410.3962@g5.osdl.org>  <20061023222131.GB17019@over-yonder.net>
- <ehjgli$lft$1@sea.gmane.org> <845b6e870610231614y681e64eu33bb0806f530c742@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Make git-branch a builtin
+Date: Mon, 23 Oct 2006 16:44:08 -0700
+Message-ID: <7vfydewqbb.fsf@assigned-by-dhcp.cox.net>
+References: <11616396262982-git-send-email-hjemli@gmail.com>
+	<20061023215506.GB8344@spearce.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="21872808-1726897703-1161645870=:3962"
-Cc: Jakub Narebski <jnareb@gmail.com>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 24 01:25:00 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 24 01:44:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gc99v-00022u-No
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 01:24:44 +0200
+	id 1Gc9T1-0004m3-7j
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 01:44:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932331AbWJWXYk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Oct 2006 19:24:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752062AbWJWXYk
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 19:24:40 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:19345 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1752019AbWJWXYj (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Oct 2006 19:24:39 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9NNOXaX014106
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 23 Oct 2006 16:24:33 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9NNOUqg010855;
-	Mon, 23 Oct 2006 16:24:31 -0700
-To: =?ISO-8859-1?Q?Erik_B=E5gfors?= <zindar@gmail.com>
-In-Reply-To: <845b6e870610231614y681e64eu33bb0806f530c742@mail.gmail.com>
-X-Spam-Status: No, hits=-0.479 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932321AbWJWXoL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Oct 2006 19:44:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932325AbWJWXoL
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 19:44:11 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:60877 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932321AbWJWXoJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Oct 2006 19:44:09 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061023234409.BRVO6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 23 Oct 2006 19:44:09 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id dzjs1V01f1kojtg0000000
+	Mon, 23 Oct 2006 19:43:53 -0400
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20061023215506.GB8344@spearce.org> (Shawn Pearce's message of
+	"Mon, 23 Oct 2006 17:55:06 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29902>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Shawn Pearce <spearce@spearce.org> writes:
 
---21872808-1726897703-1161645870=:3962
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+> Lars Hjemli <hjemli@gmail.com> wrote:
+> [snip]
+>> ---
+>>  Makefile         |    3 +-
+>>  builtin-branch.c |  217 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>>  builtin.h        |    1 +
+>>  git-branch.sh    |  131 --------------------------------
+>>  git.c            |    1 +
+>>  5 files changed, 221 insertions(+), 132 deletions(-)
+> [snip]
+>> diff --git a/git-branch.sh b/git-branch.sh
+>> deleted file mode 100755
+>> index 4379a07..0000000
+>> --- a/git-branch.sh
+>> +++ /dev/null
+>> @@ -1,131 +0,0 @@
+> [snip 131 lines]
+>
+> Aside from compatability with non-Git tools...
+>
+> Wouldn't it make more sense to just include the full SHA1 of the
+> file we are deleting rather than the entire 131 line negative diff?
 
-
-
-On Tue, 24 Oct 2006, Erik Bågfors wrote:
-> 
-> I don't see any problem doing a "gitk --all" equivalent in bzr.
-
-The problem? How do you show a commit that is _common_ to two branches, 
-but has different revision names in them?
-
-Do you _finally_ see what is so wrong with this whole per-branch naming?
-
-		Linus
---21872808-1726897703-1161645870=:3962--
+How would you do "git apply -R" on something like that?
