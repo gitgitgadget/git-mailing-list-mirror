@@ -1,92 +1,102 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Add "next" link to commitdiff view
-Date: Mon, 23 Oct 2006 01:41:54 +0200
-Message-ID: <200610230141.54413.jnareb@gmail.com>
-References: <200610230037.57183.jnareb@gmail.com> <7vd58k0wmx.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] threeway_merge: if file will not be touched, leave it
+ alone
+Date: Mon, 23 Oct 2006 02:48:14 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0610230228340.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+ <200610201821.34712.jnareb@gmail.com> <20061020181210.GA29843@artax.karlin.mff.cuni.cz>
+ <200610202047.11291.jnareb@gmail.com> <Pine.LNX.4.64.0610201151130.3962@g5.osdl.org>
+ <45391F1C.80100@utoronto.ca> <Pine.LNX.4.64.0610201231570.3962@g5.osdl.org>
+ <4539318D.9040004@utoronto.ca> <Pine.LNX.4.64.0610201333240.3962@g5.osdl.org>
+ <Pine.LNX.4.63.0610210359040.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v4ptyjttb.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0610222301080.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vlkn80wv2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 23 01:41:46 2006
+X-From: git-owner@vger.kernel.org Mon Oct 23 02:48:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gbmwo-0006oA-9L
-	for gcvg-git@gmane.org; Mon, 23 Oct 2006 01:41:42 +0200
+	id 1GbnzI-00027U-N3
+	for gcvg-git@gmane.org; Mon, 23 Oct 2006 02:48:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750849AbWJVXlj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Oct 2006 19:41:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750861AbWJVXlj
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 19:41:39 -0400
-Received: from hu-out-0506.google.com ([72.14.214.236]:32449 "EHLO
-	hu-out-0506.google.com") by vger.kernel.org with ESMTP
-	id S1750849AbWJVXli (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Oct 2006 19:41:38 -0400
-Received: by hu-out-0506.google.com with SMTP id 28so916154hub
-        for <git@vger.kernel.org>; Sun, 22 Oct 2006 16:41:37 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=PtZnrgKT3iLXG7e6T40HZ8vO+8IDBEudm61oUD7f/29HG3qcFCHq534WpT9eeykWlVEMx4DD9dpqWoO+G/XLznk3PpaOzZmPCR0eFjAIzNMPQYqXN8LA/HIUtQQbpJvb9jURgwgjbXqvnGhMCWD1fa3L/ZhBjuxzGVTqSLsQPyQ=
-Received: by 10.66.244.10 with SMTP id r10mr6328465ugh;
-        Sun, 22 Oct 2006 16:41:36 -0700 (PDT)
-Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
-        by mx.google.com with ESMTP id p32sm1489350ugc.2006.10.22.16.41.36;
-        Sun, 22 Oct 2006 16:41:36 -0700 (PDT)
+	id S1750989AbWJWAsR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Oct 2006 20:48:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751002AbWJWAsR
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 20:48:17 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57800 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S1750984AbWJWAsQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Oct 2006 20:48:16 -0400
+Received: (qmail invoked by alias); 23 Oct 2006 00:48:14 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp034) with SMTP; 23 Oct 2006 02:48:14 +0200
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vd58k0wmx.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+In-Reply-To: <7vlkn80wv2.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29809>
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
->> Add a kind of "next" view in the bottom part of navigation bar for
->> "commitdiff" view.
->>
->> For commitdiff between two commits:
->>   (from: _commit_)
-Perhaps we should use "(from: _commit_ to: _commit_)" here...
+Hi,
 
->> For commitdiff for one single parent commit:
->>   (parent: _commit_)
->> For commitdiff for one merge commit
->>   (merge: _commit_ _commit_ ...)
->> For commitdiff for root (parentless) commit
->>   (initial)
->> where _link_ denotes hyperlink. SHA1 is shortened to 7 characters on
->> display, everything is perhaps unnecessary esc_html on display.
->>
->> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-> 
-> Would it even be necessary to use any SHA-1 name in these cases,
-> I wonder.  Would it make the page less useful if we replace all
-> of the above _commit_ with a fixed string, say, "parent"?
+On Sun, 22 Oct 2006, Junio C Hamano wrote:
 
-I decided on using _shortened_ SHA1 because I didn't like neither 
-"(parent parent ...) " nor "(parent1 parent2 ...)" for merges. Perhaps 
-I should have used 8-characters abbreviation, like in git_blame2.
-And I was inspired by git-show output for merges:
+> Complaining when no_anc_exists means that threeway_merge() is deciding 
+> that the merge result should have the path in this case.
 
- commit ff49fae6a547e5c70117970e01c53b64d983cd10
- Merge: 7ad4ee7... 75f9007... 14eab2b... 0b35995... eee4609...
+Two points:
 
-> I always hated gitweb diffs that prefix each filepair with their
-> full 40-byte SHA-1 blob object names.  It just adds noise to the
-> output without adding any meaningful information.
+- you are correct for at least the case of choosing the merge strategy 
+"theirs". (Which does not exist yet.)
 
-I always thought about this only as a (somewhat sophisticated) separator 
-marking where individual patch (patch for given files) begin. And
-a place to click (non-hidden link) for blob before and after. Please 
-remember that this gitweb diff header was from the times where we 
-didn't have difftree in commitdiff view.
+- in merge-recursive.c:process_entry() (which is called on _all_ unmerged 
+entries after threeway merge), "Case A" reads "deleted in one branch". 
+Reading the code again, I believe there is a bug, which should be fixed by
 
--- 
-Jakub Narebski
-Poland
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 2ba43ae..9f6538a 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1005,9 +1005,10 @@ static int process_entry(const char *pat
+ 		    (!a_sha && sha_eq(b_sha, o_sha))) {
+ 			/* Deleted in both or deleted in one and
+ 			 * unchanged in the other */
+-			if (a_sha)
++			if (!a_sha) {
+ 				output("Removing %s", path);
+-			remove_file(1, path);
++				remove_file(1, path);
++			}
+ 		} else {
+ 			/* Deleted in one and changed in the other */
+ 			clean_merge = 0;
+
+Note that not only it groups the call to output() and remove_file(), which 
+matches the expectation, but also changes the condition to "!a_sha", 
+meaning that the file is deleted in branch "a", but existed in the merge 
+base, where it is identical to what is in branch "b".
+
+Of course, this assumes that even in the recursive case, branch "a" is to 
+be preferred over branch "b". (If I still remember correctly, then branch 
+"a" is either the current head, or the temporary recursive merge, so this 
+would make sense to me.)
+
+So, after applying this patchlet, merge-recursive (more precisely: the 
+function process_entry()) should behave correctly with the change to 
+unpack-trees.c you have in pu, i.e. the change that drops that 
+verify_absent() call to the floor.
+
+However, I could use some additional optical lobes here.
+
+Ciao,
+Dscho
+
+P.S.: Maybe I was wrong on my earlier assessment, that merge-recursive 
+does not optimize the "subtrees have identical SHA1s" case. This should be 
+handled pretty well by the call to unpack_trees() with threeway merge.
