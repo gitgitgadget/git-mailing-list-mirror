@@ -1,62 +1,77 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: renames in StGIT
-Date: Mon, 23 Oct 2006 17:47:06 +0100
-Message-ID: <b0943d9e0610230947j79449a4dm8736f480f039c230@mail.gmail.com>
-References: <20061022013943.GA16341@diana.vm.bytemark.co.uk>
+From: David Lang <dlang@digitalinsight.com>
+Subject: Re: VCS comparison table
+Date: Mon, 23 Oct 2006 09:57:45 -0700 (PDT)
+Message-ID: <Pine.LNX.4.63.0610230943230.7756@qynat.qvtvafvgr.pbz>
+References: <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>  <453A7D7E.8060105@utoronto.ca>
+  <20061022074513.GF29927@artax.karlin.mff.cuni.cz>  <200610221105.26421.jnareb@gmail.com>
+  <845b6e870610220256u39d3d06wefd4f71851670812@mail.gmail.com> 
+ <87zmbozau2.wl%cworth@cworth.org> <20061022185350.GW75501@over-yonder.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 23 18:48:24 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Carl Worth <cworth@cworth.org>,
+	Erik =?iso-8859-1?Q?B=E5gfors?= <zindar@gmail.com>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 23 18:59:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gc2xl-0003lZ-6t
-	for gcvg-git@gmane.org; Mon, 23 Oct 2006 18:47:45 +0200
+	id 1Gc38o-0006Um-RZ
+	for gcvg-git@gmane.org; Mon, 23 Oct 2006 18:59:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932160AbWJWQrm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 23 Oct 2006 12:47:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932179AbWJWQrm
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 12:47:42 -0400
-Received: from py-out-1112.google.com ([64.233.166.180]:65116 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S932160AbWJWQrl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Oct 2006 12:47:41 -0400
-Received: by py-out-1112.google.com with SMTP id z74so84415pyg
-        for <git@vger.kernel.org>; Mon, 23 Oct 2006 09:47:08 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KKi8YgJclEu0J8QtakT1X0aCK/Idory7qHf7DjnE3qCTFoNzyk0XhpRilqPLigMXSKDvPYwcHQ8vHBi0XuPTAt8biO1tSGdnuh02OJDw9R9IzhWIbZxpTVO61INeOu8J619FEmO8seIzfZi/L18F0ZYIAXMGMI7aFmYn5hr0aPw=
-Received: by 10.35.60.15 with SMTP id n15mr6894231pyk;
-        Mon, 23 Oct 2006 09:47:07 -0700 (PDT)
-Received: by 10.35.103.18 with HTTP; Mon, 23 Oct 2006 09:47:06 -0700 (PDT)
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-In-Reply-To: <20061022013943.GA16341@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S932184AbWJWQ7H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Oct 2006 12:59:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932193AbWJWQ7G
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 12:59:06 -0400
+Received: from warden-p.diginsite.com ([208.29.163.248]:15291 "HELO
+	warden.diginsite.com") by vger.kernel.org with SMTP id S932184AbWJWQ7D
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Oct 2006 12:59:03 -0400
+Received: from wlvims02.diginsite.com by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Mon, 23 Oct 2006 09:59:03 -0700
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Mon, 23 Oct 2006 09:58:29 -0700
+X-X-Sender: dlang@dlang.diginsite.com
+To: "Matthew D. Fuller" <fullermd@over-yonder.net>
+In-Reply-To: <20061022185350.GW75501@over-yonder.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29847>
 
-On 22/10/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> It doesn't seem like StGIT uses any of git's rename tracking stuff.
-> Specifically, pushing patches doesn't seem to use rename-aware
-> merging, and there is no way to tell diff to detect renames and
-> copies.
+>> This special treatment influences or directly causes many of the
+>> things in bzr that we've been discussing:
+>  [...]
+>> I've been arguing that all of these impacts are dubious. But I can
+>> understand that a bzr user hearing arguments against them might fear
+>> that they would lose the ability to be able to see a view of commits
+>> that "belong" to a particular branch.
+>
+> Dead center.
+>
+>
+>> The mainline..featureA syntax literally just means:
+>>
+>> 	the set of commits that are reachable by featureA
+>> 	and excluding the set of commits reachable by mainline
+>
+> From what I can gather from this, though, that means that when I merge
+> stuff from featureA into mainline (and keep on with other stuff in
+> featureA), I'll no longer be able to see those older commits from this
+> command.  And I'll see merged revisions from branches other than
+> mainline (until they themselves get merged into mainline), correct?
+> It sounds more like a 'bzr missing --mine-only' than looking down a
+> mainline in log...
 
-They are indeed not supported by StGIT. One of the reasons is that the
-push operation would probably take (much) longer (I haven't looked at
-the algorithm in detail but some comments in the git-diff
-documentation suggest that this is very expensive). Another reason is
-that I (used to) send patches to people not using GIT and therefore
-renames in the diff output were not welcomed.
+one thing you are missing 'mainline' in this git command is not saying 
+'everything that's in the 'main' published branch'. it's saying 'everything 
+reachable by the tag 'mainline'
 
-> Should this perhaps be an item in the TODO list?
+so when you branched off for your feature development you could set a tag that 
+says 'branchpoint' and no matter what gets merged in mainline after that you can 
+always do branchpoint..featureA and find what you've done.
 
-Only if it doesn't drastically affect the performance.
+that being said, mainline..featureA is also extremely useful, it tells you what 
+development stuff you have done that have not yet been merged into mainline
 
---=20
-Catalin
+David Lang
