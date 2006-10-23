@@ -1,86 +1,72 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: prune/prune-packed
-Date: Sun, 22 Oct 2006 20:27:49 -0700
-Message-ID: <7vvembzp6y.fsf@assigned-by-dhcp.cox.net>
-References: <20061022035919.GA4420@fieldses.org>
-	<7vy7r954k7.fsf@assigned-by-dhcp.cox.net>
-	<20061022231422.GA9375@fieldses.org>
-	<20061023005336.GA12932@fieldses.org> <453C1A35.70504@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Commit-ish shortcut for immediate parent range
+Date: Sun, 22 Oct 2006 20:33:00 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610222029390.3962@g5.osdl.org>
+References: <200610221548.42048.andyparkins@gmail.com>
+ <Pine.LNX.4.64.0610221017180.3962@g5.osdl.org> <200610222117.45766.andyparkins@gmail.com>
+ <Pine.LNX.4.64.0610221331571.3962@g5.osdl.org> <ehgoii$1ap$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 23 05:28:07 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 23 05:33:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GbqTl-0005I6-EG
-	for gcvg-git@gmane.org; Mon, 23 Oct 2006 05:27:58 +0200
+	id 1GbqYq-00074A-9N
+	for gcvg-git@gmane.org; Mon, 23 Oct 2006 05:33:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751359AbWJWD1v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Oct 2006 23:27:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751365AbWJWD1v
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 23:27:51 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:54736 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1751359AbWJWD1u (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Oct 2006 23:27:50 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061023032750.KYQI12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 22 Oct 2006 23:27:50 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id dfTZ1V00h1kojtg0000000
-	Sun, 22 Oct 2006 23:27:34 -0400
-To: gitzilla@gmail.com
-In-Reply-To: <453C1A35.70504@gmail.com> (A. Large Angry's message of "Sun, 22
-	Oct 2006 18:26:13 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751134AbWJWDdJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Oct 2006 23:33:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751373AbWJWDdI
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 23:33:08 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:12260 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751134AbWJWDdF (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Oct 2006 23:33:05 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9N3X1aX011294
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 22 Oct 2006 20:33:02 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9N3X0r4010014;
+	Sun, 22 Oct 2006 20:33:01 -0700
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <ehgoii$1ap$1@sea.gmane.org>
+X-Spam-Status: No, hits=-0.479 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29814>
 
-A Large Angry SCM <gitzilla@gmail.com> writes:
 
-> J. Bruce Fields wrote:
->> Junio C Hamano <junkio@cox.net> writes:
->>> I am considering the following to address irritation some people
->>> (including me, actually) are experiencing with this change when
->>> viewing a small (or no) diff.  Any objections?
->>
->> So for me, if I run
->>
->> 	less -FRS file
->>
->> where "file" is less than a page, I see nothing happen whatsoever.
->>
->> At a guess, maybe it's clearing the screen, displaying the file, the
->> restoring, all before I see anything happen?
->
-> Junio,
->
-> How about reverting this change? From the reports here, is causing
-> problems on a number of different distributions.
 
-Hmmm.  I thought I was using gnome-terminal as well, but I
-always work in screen and did not see this problem.
+On Sun, 22 Oct 2006, Jakub Narebski wrote:
+> 
+> BTW. what does "recursive diff" mean (in git)?
 
-Sorry, but you are right and Linus is more right.  How about
-doing FRSX.
+For projects with subdirectories (and git itself has almost none), the 
+default "raw, nonrecursive" diff looks something like this:
 
-diff --git a/pager.c b/pager.c
-index 8bd33a1..4587fbb 100644
---- a/pager.c
-+++ b/pager.c
-@@ -50,7 +50,7 @@ void setup_pager(void)
- 	close(fd[0]);
- 	close(fd[1]);
- 
--	setenv("LESS", "FRS", 0);
-+	setenv("LESS", "FRSX", 0);
- 	run_pager(pager);
- 	die("unable to execute pager '%s'", pager);
- 	exit(255);
+	f8829caee311207afbc882794bdc5aa0db5caf33
+	:040000 040000 db7ae247da2ede4d0f932b86771424534d2960b8 9033be5eb62db6fd778793f9f51e28734bb3d9f8 M      arch
+	:040000 040000 c96e5293819986ae7c13a8ef779c5f2066b9575f 5950afceabd99053964778b49df19ba794a21b75 M      include
+
+while the same commit with "raw, recursive" looks like
+
+	f8829caee311207afbc882794bdc5aa0db5caf33
+	:100644 100644 88b72c9a84957f2ac787ccf83fa46c4dbb0818d2 2de4d3c367a2c2da9adb6bcf29b5105c46c01f78 M      arch/mips/mm/init.c
+	:100644 100644 4bdaa05f485b446e0d66587015cbd8378abf4a69 4a61e624b0ecfcd921a560d426e92e1df2df1de2 M      arch/mips/mm/pgtable-32.c
+	:100644 100644 44b5e97fff65f75286fdd15f33c2bcf40841082a 8d600d307d5ddb3f617ffc34929ea98d4613b4a7 M      arch/mips/mm/pgtable-64.c
+	:100644 100644 9ab59e2bb23368530fa67c95af0d6ab2c4f7fe8f e3c9925876a3ce4eb80ec67937362cd7d014ad2f M      include/asm-mips/cacheflush.h
+	:100644 100644 6959bdb59310b096ec7797e0a31c78fde5aa9afc 02c8a13fc894838b27336ae42fbb542f87132e01 M      include/asm-mips/fixmap.h
+
+ie the "recursive" diff will recurse into subdirectories.
+
+A _patch_ is always recursive (you cannot make a patch-like diff for just 
+the "tree entry", only for actual blobs), so you can only see this 
+difference for raw git SHA1 diffs.
+
+		Linus
