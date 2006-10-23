@@ -1,98 +1,99 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: [PATCH] Use column indexes in git-cvsserver where necessary.
-Date: Mon, 23 Oct 2006 01:09:35 -0400
-Message-ID: <20061023050934.GA25018@spearce.org>
+From: Matthew Hannigan <mlh@zip.com.au>
+Subject: Re: VCS comparison table
+Date: Mon, 23 Oct 2006 15:19:32 +1000
+Message-ID: <20061023051932.GA8625@evofed.localdomain>
+References: <72877ab10610190757u3d2b4df0o204c6ffd73af69b4@mail.gmail.com> <45379A02.1010105@utoronto.ca> <72877ab10610192014o3a7f66c6v79f94f48615e08f4@mail.gmail.com> <45384B0F.4040901@utoronto.ca> <20061021123027.GB29843@artax.karlin.mff.cuni.cz> <ehd5u7$c5g$1@sea.gmane.org> <453A513B.1070006@utoronto.ca> <Pine.LNX.4.64.0610211007320.3962@g5.osdl.org> <72877ab10610220049i602ab936m11181f1a2daf2aee@mail.gmail.com> <Pine.LNX.4.64.0610220926170.3962@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 23 07:10:11 2006
+Cc: Tim Webster <tdwebste@gmail.com>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 23 07:16:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gbs4Z-0001o4-KR
-	for gcvg-git@gmane.org; Mon, 23 Oct 2006 07:10:04 +0200
+	id 1GbsAL-0002Xa-Ma
+	for gcvg-git@gmane.org; Mon, 23 Oct 2006 07:16:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751502AbWJWFJs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Oct 2006 01:09:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751504AbWJWFJs
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 01:09:48 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:58560 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1751502AbWJWFJr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Oct 2006 01:09:47 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1Gbs4B-0005lO-2G; Mon, 23 Oct 2006 01:09:39 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 1863A20FB79; Mon, 23 Oct 2006 01:09:35 -0400 (EDT)
-To: martyn@catalyst.net.nz, martin@catalyst.net.nz,
-	Junio C Hamano <junkio@cox.net>
+	id S1751374AbWJWFP6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Oct 2006 01:15:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751506AbWJWFP6
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 01:15:58 -0400
+Received: from mail22.syd.optusnet.com.au ([211.29.133.160]:29057 "EHLO
+	mail22.syd.optusnet.com.au") by vger.kernel.org with ESMTP
+	id S1751374AbWJWFP5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Oct 2006 01:15:57 -0400
+Received: from evofed.localdomain (c211-30-60-241.belrs1.nsw.optusnet.com.au [211.30.60.241])
+	by mail22.syd.optusnet.com.au (8.12.11/8.12.11) with ESMTP id k9N5FZu1018404;
+	Mon, 23 Oct 2006 15:15:35 +1000
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <Pine.LNX.4.64.0610220926170.3962@g5.osdl.org>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29818>
 
-Tonight I found a git-cvsserver instance spending a lot of time in
-disk IO while trying to process operations against a Git repository
-with >30,000 objects contained in it.
+On Sun, Oct 22, 2006 at 10:12:00AM -0700, Linus Torvalds wrote:
+> [ ... ]
+> 
+>    Again, the way to solve this would tend to be to have a few helper 
+>    scripts that use regular file-contents that _describe_ these things to 
+>    do "realdiff" and "install".
+> 
+> In other words, for at least three _totally_ different reasons, you really 
+> don't want to do tracking/development directly in /etc, but you want to 
+> have a buffer zone to do it. And once you have that, you might as well do 
+> _that_ as the repository, and just add a few specialty commands (let's 
+> call them "plugins" to make everybody happy) to do the special things.
 
-Blowing away my SQLLite database and rebuilding all tables with
-indexes on the attributes that git-cvsserver frequently runs queries
-against seems to have resolved the issue quite nicely.
+Damn you stole my idea!  I had this scheme brewing in my head too,
+with some slight variations:
 
-Since the indexes shouldn't hurt performance on small repositories
-and always helps on larger repositories we should just always create
-them when creating the revision storage tables.
+> 	# copy the data, set up a PERMISSIONS file to track extra info
+> 	sudo cp /etc/group /etc/passwd /etc/shadow .
+> 	sudo chown user:user *
+> 	cat <<EOF > PERMISSIONS
+> 	group root:root 0644
+> 	passwd root:root 0644
+> 	shadow root:root 0400
+> 	EOF
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- git-cvsserver.perl |   14 +++++++++++++-
- 1 files changed, 13 insertions(+), 1 deletions(-)
+You may want one perms/metadata file per real file (file.meta?) with contents
+like:
+	owner root
+	group root
+	perms u=r,go=
 
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index 08ad831..8817f8b 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -2118,9 +2118,17 @@ sub new
-                 mode       TEXT NOT NULL
-             )
-         ");
-+        $self->{dbh}->do("
-+            CREATE INDEX revision_ix1
-+            ON revision (name,revision)
-+        ");
-+        $self->{dbh}->do("
-+            CREATE INDEX revision_ix2
-+            ON revision (name,commithash)
-+        ");
-     }
- 
--    # Construct the revision table if required
-+    # Construct the head table if required
-     unless ( $self->{tables}{head} )
-     {
-         $self->{dbh}->do("
-@@ -2134,6 +2142,10 @@ sub new
-                 mode       TEXT NOT NULL
-             )
-         ");
-+        $self->{dbh}->do("
-+            CREATE INDEX head_ix1
-+            ON head (name)
-+        ");
-     }
- 
-     # Construct the properties table if required
--- 
-1.4.3.g4e51
+for possibly easier to digest diff output. You could omit "don't care" variables.
+You could still have one overarching file (DEFAULT.meta) for defaults.  Also, you
+may want to track the implied umask instead of the real perms.
+
+You could also track the pathname, (e.g. path /etc/group, path /etc/inet/hosts) so you
+didn't have to match the structure of the working tree to the actual destination.
+
+> And again, I'm not going to even claim that the above two "plugins" are 
+> the right ones (maybe you want other operations too to interact with the 
+> "real" installed files),  [ ... ]
+
+Yes, there are other very useful transformations possible.  One example is to
+split the /etc/group file into a series of files, each named after the group,
+with contents the sorted list of members.  Again, this is useful for 'diff' and
+any SCM. It's important that it's a lossless transformation in both
+directions; you may want to scan the destination and make sure
+your base revision matches it before 'git install'.
+
+> Btw: none of this is really "git-specific". The above tells you how to do 
+> local "git plugins", and it's obviously fairly trivial, but I suspect any 
+> SCM can be used in this manner.
+
+Indeed, the essential thing about this is you're representing any
+system modification as a text diff, so it makes sense for any
+SCM.  In fact the 'plugin' for any SCM would be 95% the same code.
+
+This might also be useful for SCMs that don't handle symlinks
+natively.
+
+--
+Matt Hannigan
