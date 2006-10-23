@@ -1,64 +1,50 @@
 From: "Martin Langhoff (CatalystIT)" <martin@catalyst.net.nz>
-Subject: Re: [PATCH] Use column indexes in git-cvsserver where necessary.
-Date: Mon, 23 Oct 2006 19:02:01 +1300
-Message-ID: <453C5AD9.4030008@catalyst.net.nz>
-References: <20061023050934.GA25018@spearce.org>
+Subject: Re: [PATCH] cvsserver: fix "cvs diff" in a subdirectory
+Date: Mon, 23 Oct 2006 19:11:35 +1300
+Message-ID: <453C5D17.4010209@catalyst.net.nz>
+References: <Pine.LNX.4.63.0610110032560.14200@wbgn013.biozentrum.uni-wuerzburg.de> <7vslhvy8bo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: martyn@catalyst.net.nz, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 23 08:02:16 2006
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Martyn Smith <martyn@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Mon Oct 23 08:11:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gbst5-0008NT-6y
-	for gcvg-git@gmane.org; Mon, 23 Oct 2006 08:02:15 +0200
+	id 1Gbt2L-0001K7-Qx
+	for gcvg-git@gmane.org; Mon, 23 Oct 2006 08:11:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751547AbWJWGCL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Oct 2006 02:02:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751554AbWJWGCL
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 02:02:11 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:42408 "EHLO
+	id S1751569AbWJWGLq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Oct 2006 02:11:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751572AbWJWGLq
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 02:11:46 -0400
+Received: from godel.catalyst.net.nz ([202.78.240.40]:28110 "EHLO
 	mail1.catalyst.net.nz") by vger.kernel.org with ESMTP
-	id S1751547AbWJWGCJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Oct 2006 02:02:09 -0400
+	id S1751569AbWJWGLp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Oct 2006 02:11:45 -0400
 Received: from 121-73-4-156.cable.telstraclear.net ([121.73.4.156] helo=[192.168.0.5])
 	by mail1.catalyst.net.nz with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
 	(Exim 4.50)
-	id 1Gbsss-0008BN-P7; Mon, 23 Oct 2006 19:02:02 +1300
+	id 1Gbt29-0000Oq-CV; Mon, 23 Oct 2006 19:11:37 +1300
 User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.7.12) Gecko/20050915
 X-Accept-Language: en-us, en
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20061023050934.GA25018@spearce.org>
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vslhvy8bo.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29820>
 
-Shawn Pearce wrote:
-> Tonight I found a git-cvsserver instance spending a lot of time in
-> disk IO while trying to process operations against a Git repository
-> with >30,000 objects contained in it.
-> 
-> Blowing away my SQLLite database and rebuilding all tables with
-> indexes on the attributes that git-cvsserver frequently runs queries
-> against seems to have resolved the issue quite nicely.
-> 
-> Since the indexes shouldn't hurt performance on small repositories
-> and always helps on larger repositories we should just always create
-> them when creating the revision storage tables.
- >
- > Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+Junio C Hamano wrote:
 
-Ack.
+> Will park this and the "U for update, M for modified" patch in
+> "pu", waiting for acks from actual git-cvsserver users.  It
+> feels it is safe enough change, so with an Ack from Mart[yi]n
+> it may be woth having it in 1.4.3
 
-I am thinking we need a lightweight schema versioning mechanism to 
-decide whether the DB schema needs changes such as this. Too much work 
-for this though. ;-)
-
-We have a simple one in Moodle I could port when the time comes.
+Late late Ack. Sorry about the delay. I see it's in master already ;-)
 
 cheers,
 
