@@ -1,48 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Checking for "diff.color." should come before "diff.color"
-Date: Mon, 23 Oct 2006 16:29:53 -0400
-Message-ID: <20061023202952.GC31068@coredump.intra.peff.net>
-References: <200610232051.17396.andyparkins@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] xdiff/xemit.c (xdl_find_func): Elide trailing white
+ space in a context header.
+Date: Mon, 23 Oct 2006 13:49:37 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610231347490.3962@g5.osdl.org>
+References: <87y7r63hq6.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 23 22:30:33 2006
+X-From: git-owner@vger.kernel.org Mon Oct 23 22:50:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gc6RH-00070p-G5
-	for gcvg-git@gmane.org; Mon, 23 Oct 2006 22:30:27 +0200
+	id 1Gc6ka-0003V7-El
+	for gcvg-git@gmane.org; Mon, 23 Oct 2006 22:50:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751226AbWJWUaA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Oct 2006 16:30:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751359AbWJWU37
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 16:29:59 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:11689 "HELO
-	peff.net") by vger.kernel.org with SMTP id S1751382AbWJWU3z (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Oct 2006 16:29:55 -0400
-Received: (qmail 9065 invoked from network); 23 Oct 2006 16:28:57 -0400
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 23 Oct 2006 16:28:57 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Oct 2006 16:29:53 -0400
-To: Andy Parkins <andyparkins@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <200610232051.17396.andyparkins@gmail.com>
+	id S1751401AbWJWUuU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Oct 2006 16:50:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751429AbWJWUuU
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 16:50:20 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:22230 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751401AbWJWUuT (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Oct 2006 16:50:19 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9NKndaX005962
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 23 Oct 2006 13:49:40 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9NKnbVc005648;
+	Mon, 23 Oct 2006 13:49:38 -0700
+To: Jim Meyering <jim@meyering.net>
+In-Reply-To: <87y7r63hq6.fsf@rho.meyering.net>
+X-Spam-Status: No, hits=-2.477 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29877>
 
-On Mon, Oct 23, 2006 at 08:51:17PM +0100, Andy Parkins wrote:
 
-> In git_diff_ui_config() the strncmp() for "diff.color" would have
-> matched for "diff.color.", so "diff.color." configs would never be
-> processed.
 
-No, it's a strcmp for "diff.color", so it must match exactly. The code
-is fine.
+On Mon, 23 Oct 2006, Jim Meyering wrote:
+>
+> This removes trailing blanks from git-generated diff headers
+> the same way a similar patch did that for GNU diff:
 
-Are you experiencing some bug, or was this just from poking through the
-code?
+NO!
 
--Peff
+This is _wrong_
+
+You should only remove the space IF IT IS THE ONLY THING ON THE WHOLE 
+LINE!
+
+You must not remove white-space in general.
+
+So the patch should check something like
+
+	if (len == 1 && rec[0] == ' ')
+		len = 0;
+
+and not like you did it.
+
+Otherwise the patch will simply not even _apply_.
+
+		Linus
