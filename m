@@ -1,96 +1,90 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] git-cherry should show "+" instead of "-" and vice versa
-Date: Mon, 23 Oct 2006 21:22:10 +0100
-Message-ID: <200610232122.17268.andyparkins@gmail.com>
-References: <200610232003.08861.andyparkins@gmail.com> <20061023193326.GS20017@pasky.or.cz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: VCS comparison table
+Date: Mon, 23 Oct 2006 22:29:16 +0200
+Message-ID: <200610232229.17426.jnareb@gmail.com>
+References: <45357CC3.4040507@utoronto.ca> <453CF966.7000308@utoronto.ca> <20061023200648.GB31068@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1226891.VFH5bCT3WI";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Oct 23 22:24:57 2006
+Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
+	James Henstridge <james@jamesh.id.au>,
+	bazaar-ng@lists.canonical.com,
+	"Matthew D. Fuller" <fullermd@over-yonder.net>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Andreas Ericsson <ae@op5.se>, Carl Worth <cworth@cworth.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 23 22:29:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gc6Lt-0005h7-QN
-	for gcvg-git@gmane.org; Mon, 23 Oct 2006 22:24:54 +0200
+	id 1Gc6Pu-0006fJ-7u
+	for gcvg-git@gmane.org; Mon, 23 Oct 2006 22:29:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750928AbWJWUYv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Oct 2006 16:24:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751034AbWJWUYv
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 16:24:51 -0400
-Received: from ug-out-1314.google.com ([66.249.92.169]:18043 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1750928AbWJWUYu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Oct 2006 16:24:50 -0400
-Received: by ug-out-1314.google.com with SMTP id q2so1499169uge
-        for <git@vger.kernel.org>; Mon, 23 Oct 2006 13:24:48 -0700 (PDT)
+	id S1751175AbWJWU26 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Oct 2006 16:28:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751202AbWJWU26
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 16:28:58 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:24473 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751175AbWJWU25 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Oct 2006 16:28:57 -0400
+Received: by nf-out-0910.google.com with SMTP id c2so2526592nfe
+        for <git@vger.kernel.org>; Mon, 23 Oct 2006 13:28:56 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:message-id;
-        b=SbGE1oiC5JBTfxxfNqpHhIpgm3NyxhQFixV43eJNF5aVJHYbvUf588Br/QbJ/m5HKKwoh0RRHi4hmB6dH5V4AiijgKh7piZQhtQfNYUf2Y6xBMnPwEGnzIILr045/VseIvjMTjMyNWKec/gzABee3b+gx8F15+0cI6ZV1MZvjU4=
-Received: by 10.78.127.3 with SMTP id z3mr536303huc;
-        Mon, 23 Oct 2006 13:24:47 -0700 (PDT)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id 36sm1502430huc.2006.10.23.13.24.47;
-        Mon, 23 Oct 2006 13:24:47 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.5
-In-Reply-To: <20061023193326.GS20017@pasky.or.cz>
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=j9EO4mQFCe6nerYaAUzdYphAakVPQiYNXznjrV8BmHTROWO4IvSEODcewCXXpkutKJzUfbIbLsgxxcVHxuExLmNPPChlQo38wL0unmP0Zd1eWLPQfOrK53+QXV7JFEpn2YgqGbI/BH40saQplgDdgeLRNGHFKY5nCJW35O3Ho/s=
+Received: by 10.49.10.3 with SMTP id n3mr7490949nfi;
+        Mon, 23 Oct 2006 13:28:55 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
+        by mx.google.com with ESMTP id q27sm2571446nfc.2006.10.23.13.28.54;
+        Mon, 23 Oct 2006 13:28:55 -0700 (PDT)
+To: Jeff King <peff@peff.net>
+User-Agent: KMail/1.9.3
+In-Reply-To: <20061023200648.GB31068@coredump.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29875>
 
---nextPart1226891.VFH5bCT3WI
-Content-Type: text/plain;
-  charset="ansi_x3.4-1968"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Mon, 23 Oct 2006, Jeff King wrote:
+> On Mon, Oct 23, 2006 at 01:18:30PM -0400, Aaron Bentley wrote:
+> 
+>> And, unlike git, Bazaar branches are all independent entities[1], and
+> [...]
+>> [1] The fact that they may share storage is not important to the model.
 
-On Monday 2006, October 23 20:33, Petr Baudis wrote:
+By the way, git repositories (remember that working area in bzr is
+associated with branch, and in git with repository) can share storage,
+either sharing only immutable "old history" (part of DAG) via 
+$GIT_DIR/objects/info/alternates file or GIT_ALTERNATE_OBJECT_DIRECTORIES
+environment variable, or via having shared commit object database
+via symlinking $GIT_DIR/objects directory or via setting 
+GIT_OBJECT_DIRECTORY variable. 
 
-> Did the documentation ever get fixed or noone cared enough? ;-)
+Git doesn't support latter fully out of the box (you must be careful
+with prune) but on the other side bzr doesn't support cloning whole
+repository.
+  
+> It all Just Works because there _isn't_ any branch information. It's
+> simply a pointer into the DAG, so if I have the right parts of the DAG
+> (which git is careful to make sure of), I can just make a pointer, and I
+> have absolutely zero connection to wherever the DAG came from.
 
-My patch makes git-cherry match the documentation.
+Well, with exception of reflog, which is local to repository
+(and doesn't get propagated).
+ 
+>> they each have a URL.
+> 
+> In cogito, branches can each have a URL, but git-clone doesn't have a
+> way (that I know of) to clone only a subset of branches. It would be
+> fairly trivial to implement, I think.
 
-Personally I think that the documentation is correct.  git-cherry is, to me=
-,=20
-terribly useful.  I've got a few patches in my own branch and it's very=20
-useful to be able to check to see if those emailed patches have been accept=
-ed=20
-upstream with a simple
+On the other side Cogito doesn't have way to clone all the branches.
 
-git-cherry -v upstream
-
-Which makes it natural to see
- "-" =3D patch not in upstream
- "+" =3D patch in upstream
-
-I read the thread you pointed at, and didn't really understand what the dow=
-ner=20
-on git-cherry was, or why the patch wasn't accepted.  Have I misunderstood=
-=20
-something?
-
-
-
-Andy
-=2D-=20
-Dr Andrew Parkins, M Eng (Hons), AMIEE
-andyparkins@gmail.com
-
---nextPart1226891.VFH5bCT3WI
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iD8DBQBFPSR5wQJ9gE9xL20RAvCBAKDLFMDZ2VMrEswVItOHIM9VrQhWFACg213i
-6xSqMBs4MYwolxXbOmhinbQ=
-=d5yo
------END PGP SIGNATURE-----
-
---nextPart1226891.VFH5bCT3WI--
+-- 
+Jakub Narebski
+Poland
