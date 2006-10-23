@@ -1,95 +1,103 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: prune/prune-packed
-Date: Mon, 23 Oct 2006 20:39:55 +0200
-Message-ID: <20061023183955.GR20017@pasky.or.cz>
-References: <20061022035919.GA4420@fieldses.org> <7vy7r954k7.fsf@assigned-by-dhcp.cox.net> <20061022231422.GA9375@fieldses.org> <20061023005336.GA12932@fieldses.org> <453C1A35.70504@gmail.com> <7vvembzp6y.fsf@assigned-by-dhcp.cox.net>
+From: Jelmer Vernooij <jelmer@samba.org>
+Subject: Re: VCS comparison table
+Date: Mon, 23 Oct 2006 20:44:12 +0200
+Organization: Samba Team
+Message-ID: <1161629052.27312.13.camel@charis.lan.vernstok.nl>
+References: <45357CC3.4040507@utoronto.ca>
+	 <200610232021.55625.jnareb@gmail.com>
+	 <1161628001.27312.8.camel@charis.lan.vernstok.nl>
+	 <200610232031.12399.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitzilla@gmail.com, "J. Bruce Fields" <bfields@fieldses.org>,
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-nZr6ccTmzerpnNZZaBeV"
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	James Henstridge <james@jamesh.id.au>,
+	bazaar-ng@lists.canonical.com,
+	"Matthew D. Fuller" <fullermd@over-yonder.net>,
+	Andreas Ericsson <ae@op5.se>, Carl Worth <cworth@cworth.org>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 23 20:40:52 2006
+X-From: git-owner@vger.kernel.org Mon Oct 23 20:45:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gc4ih-00056X-8j
-	for gcvg-git@gmane.org; Mon, 23 Oct 2006 20:40:20 +0200
+	id 1Gc4n2-0006D5-3Z
+	for gcvg-git@gmane.org; Mon, 23 Oct 2006 20:44:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965011AbWJWSj6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Oct 2006 14:39:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965014AbWJWSj6
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 14:39:58 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:56002 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S965011AbWJWSj5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Oct 2006 14:39:57 -0400
-Received: (qmail 7117 invoked by uid 2001); 23 Oct 2006 20:39:55 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vvembzp6y.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S965020AbWJWSoo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Oct 2006 14:44:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965021AbWJWSoo
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 14:44:44 -0400
+Received: from smtp-vbr17.xs4all.nl ([194.109.24.37]:30225 "EHLO
+	smtp-vbr17.xs4all.nl") by vger.kernel.org with ESMTP
+	id S965020AbWJWSon (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Oct 2006 14:44:43 -0400
+Received: from rhonwyn.vernstok.nl (a62-251-123-16.adsl.xs4all.nl [62.251.123.16])
+	by smtp-vbr17.xs4all.nl (8.13.8/8.13.8) with ESMTP id k9NIiXiF013852;
+	Mon, 23 Oct 2006 20:44:33 +0200 (CEST)
+	(envelope-from jelmer@samba.org)
+Received: from localhost (localhost [127.0.0.1])
+	by rhonwyn.vernstok.nl (Postfix) with ESMTP id B402A39A3C1;
+	Mon, 23 Oct 2006 20:44:24 +0200 (CEST)
+Received: from rhonwyn.vernstok.nl ([127.0.0.1])
+	by localhost (rhonwyn.vernstok.nl [127.0.0.1]) (amavisd-new, port 10024)
+	with SMTP id 29184-01; Mon, 23 Oct 2006 20:44:05 +0200 (CEST)
+Received: from charis.vernstok.nl (charis.vernstok.nl [IPv6:2001:7b8:37b:1:210:dcff:fecb:a9e3])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(Client did not present a certificate)
+	by rhonwyn.vernstok.nl (Postfix) with ESMTP id 4E05A39A3B8;
+	Mon, 23 Oct 2006 20:44:05 +0200 (CEST)
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200610232031.12399.jnareb@gmail.com>
+X-Mailer: Evolution 2.6.3 
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29858>
 
-Dear diary, on Mon, Oct 23, 2006 at 05:27:49AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> A Large Angry SCM <gitzilla@gmail.com> writes:
-> 
-> > J. Bruce Fields wrote:
-> >> Junio C Hamano <junkio@cox.net> writes:
-> >>> I am considering the following to address irritation some people
-> >>> (including me, actually) are experiencing with this change when
-> >>> viewing a small (or no) diff.  Any objections?
-> >>
-> >> So for me, if I run
-> >>
-> >> 	less -FRS file
-> >>
-> >> where "file" is less than a page, I see nothing happen whatsoever.
-> >>
-> >> At a guess, maybe it's clearing the screen, displaying the file, the
-> >> restoring, all before I see anything happen?
-> >
-> > Junio,
-> >
-> > How about reverting this change? From the reports here, is causing
-> > problems on a number of different distributions.
-> 
-> Hmmm.  I thought I was using gnome-terminal as well, but I
-> always work in screen and did not see this problem.
-> 
-> Sorry, but you are right and Linus is more right.  How about
-> doing FRSX.
 
-I should like that solution more since I hate the alternate screen, but
-I actually don't, since it should be left at the user's will whether to
-use the alternate screen or not, and Git shouldn't change the default on
-whim. Git is trying to be too smart here, and I think it's more annoying
-to override what the user is used to than having to by default press q.
+--=-nZr6ccTmzerpnNZZaBeV
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Yes, the user can always override Git by setting own $LESS, but that
-means another explicit action at the user's side is required and they
-don't receive any further cool flags we might stick in there later.
-(BTW, I don't think this is right either. In Cogito, I do
+On Mon, 2006-10-23 at 20:31 +0200, Jakub Narebski wrote:
+> Jelmer Vernooij wrote:
+> >> By the way, I wonder if accidentally identical revisions
+> >> (see example for accidental clean merge on revctrl.org)
+> >> would get the same revision id in bzr. In git they would.
+>=20
+> > They won't. The revision id is made up of the committers email address,
+> > a timestamp and a bunch of random data. It wouldn't be hard to switch
+> > using checksums as revids instead, but I don't think there are any plan=
+s
+> > in that direction.
+> The place for timestamp and commiter info is in the revision metadata
+> (in commit object in git). Not in revision id. Unless you think that
+> "accidentally the same" doesn't happen...
+The revision id isn't parsed by bzr. It's just a unique identifier that
+is generated at commit-time and is currently created by concatenating
+those three fields. It can be anything you like. The bzr-svn plugin for
+example creates revision ids in the form
+svn:REVNUM@REPOS_UUID-BRANCHPATH and bzr-git uses git:GITREVID. Nothing
+will break if bzr would start using a different format.
 
-	LESS="$myflags$LESS"
+Cheers,
 
-unless $CG_LESS is set, in which case I do
+Jelmer
 
-	LESS="$CG_LESS".
+--=20
+Jelmer Vernooij <jelmer@samba.org> - http://samba.org/~jelmer/
 
-So people like Jens who have LESS set still get sensible behaviour from
-Cogito _and_ they don't loose the ability to override Cogito's less
-flags.)
+--=-nZr6ccTmzerpnNZZaBeV
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
 
-BTW, I think not seeing output of paged commands is a major problem,
-this should probably warrant another bugfix release.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+iD8DBQBFPQ18Pa9Uoh7vUnYRAjvFAJ9h5S9rmNKQujp03i3If0a/Ywx30wCgjXmT
+WIGoQy9KIILh198H+4I50ps=
+=dhez
+-----END PGP SIGNATURE-----
+
+--=-nZr6ccTmzerpnNZZaBeV--
