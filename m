@@ -1,77 +1,84 @@
-From: David Lang <dlang@digitalinsight.com>
+From: Aaron Bentley <aaron.bentley@utoronto.ca>
 Subject: Re: VCS comparison table
-Date: Mon, 23 Oct 2006 09:57:45 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0610230943230.7756@qynat.qvtvafvgr.pbz>
-References: <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>  <453A7D7E.8060105@utoronto.ca>
-  <20061022074513.GF29927@artax.karlin.mff.cuni.cz>  <200610221105.26421.jnareb@gmail.com>
-  <845b6e870610220256u39d3d06wefd4f71851670812@mail.gmail.com> 
- <87zmbozau2.wl%cworth@cworth.org> <20061022185350.GW75501@over-yonder.net>
+Date: Mon, 23 Oct 2006 13:18:30 -0400
+Message-ID: <453CF966.7000308@utoronto.ca>
+References: <45357CC3.4040507@utoronto.ca>	<200610222206.13973.jnareb@gmail.com>	<1161604564.22276.173.camel@zepto.home.zettazebra.com>	<200610231454.06355.jnareb@gmail.com> <a7e835d40610230801m4ac92409gbddcf66dcd1bb429@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Carl Worth <cworth@cworth.org>,
-	Erik =?iso-8859-1?Q?B=E5gfors?= <zindar@gmail.com>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 23 18:59:26 2006
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, bazaar-ng@lists.canonical.com,
+	"Matthew D. Fuller" <fullermd@over-yonder.net>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Andreas Ericsson <ae@op5.se>, Carl Worth <cworth@cworth.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 23 19:19:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gc38o-0006Um-RZ
-	for gcvg-git@gmane.org; Mon, 23 Oct 2006 18:59:11 +0200
+	id 1Gc3S8-0002Dh-6I
+	for gcvg-git@gmane.org; Mon, 23 Oct 2006 19:19:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932184AbWJWQ7H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Oct 2006 12:59:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932193AbWJWQ7G
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 12:59:06 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:15291 "HELO
-	warden.diginsite.com") by vger.kernel.org with SMTP id S932184AbWJWQ7D
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Oct 2006 12:59:03 -0400
-Received: from wlvims02.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Mon, 23 Oct 2006 09:59:03 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Mon, 23 Oct 2006 09:58:29 -0700
-X-X-Sender: dlang@dlang.diginsite.com
-To: "Matthew D. Fuller" <fullermd@over-yonder.net>
-In-Reply-To: <20061022185350.GW75501@over-yonder.net>
+	id S932190AbWJWRSv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Oct 2006 13:18:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932192AbWJWRSv
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 13:18:51 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41]:8663 "EHLO
+	server4.panoramicfeedback.com") by vger.kernel.org with ESMTP
+	id S932190AbWJWRSu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Oct 2006 13:18:50 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41] helo=[192.168.2.19])
+	by server4.panoramicfeedback.com with esmtp (Exim 3.36 #1 (Debian))
+	id 1Gc3Rk-0007Kw-00; Mon, 23 Oct 2006 13:18:44 -0400
+User-Agent: Debian Thunderbird 1.0.2 (X11/20060830)
+X-Accept-Language: en-us, en
+To: James Henstridge <james@jamesh.id.au>
+In-Reply-To: <a7e835d40610230801m4ac92409gbddcf66dcd1bb429@mail.gmail.com>
+X-Enigmail-Version: 0.91.0.0
+X-Panometrics-MailScanner: Found to be clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29848>
 
->> This special treatment influences or directly causes many of the
->> things in bzr that we've been discussing:
->  [...]
->> I've been arguing that all of these impacts are dubious. But I can
->> understand that a bzr user hearing arguments against them might fear
->> that they would lose the ability to be able to see a view of commits
->> that "belong" to a particular branch.
->
-> Dead center.
->
->
->> The mainline..featureA syntax literally just means:
->>
->> 	the set of commits that are reachable by featureA
->> 	and excluding the set of commits reachable by mainline
->
-> From what I can gather from this, though, that means that when I merge
-> stuff from featureA into mainline (and keep on with other stuff in
-> featureA), I'll no longer be able to see those older commits from this
-> command.  And I'll see merged revisions from branches other than
-> mainline (until they themselves get merged into mainline), correct?
-> It sounds more like a 'bzr missing --mine-only' than looking down a
-> mainline in log...
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-one thing you are missing 'mainline' in this git command is not saying 
-'everything that's in the 'main' published branch'. it's saying 'everything 
-reachable by the tag 'mainline'
+James Henstridge wrote:
+> Why do you continue to repeat this argument?  No one is claiming that
+> a revision number by itself, as Bazaar uses them, is a global
+> identifier.  In fact, we keep on saying that they only have meaning in
+> the context of a branch.
 
-so when you branched off for your feature development you could set a tag that 
-says 'branchpoint' and no matter what gets merged in mainline after that you can 
-always do branchpoint..featureA and find what you've done.
+And, unlike git, Bazaar branches are all independent entities[1], and
+they each have a URL.
 
-that being said, mainline..featureA is also extremely useful, it tells you what 
-development stuff you have done that have not yet been merged into mainline
+So:
 
-David Lang
+http://code.aaronbentley.com/bzrrepo/bzr.ab 1695
+
+is a name for
+
+abentley@panoramicfeedback.com-20060927202832-9795d0528e311e31
+
+And it does not depend on any other branch, especially not bzr.dev
+
+Since:
+1. anyone with write access to the urls can create them
+2. anyone with read access to the urls can read them
+3. the maintainers of the mainline have no control over them
+   (except as provided by 1)
+
+these identifiers are not centralized.
+
+Aaron
+
+[1] The fact that they may share storage is not important to the model.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
+
+iD8DBQFFPPlm0F+nu1YWqI0RAlmLAJ9cpw5X7UXQ82EmoIeUrKzEaFbhdACfZPsS
+CRJ69XWi7XAWJRi7Fgt9ICU=
+=WrV9
+-----END PGP SIGNATURE-----
