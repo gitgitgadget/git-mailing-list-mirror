@@ -1,138 +1,86 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make git-branch a builtin
-Date: Mon, 23 Oct 2006 15:34:00 -0700
-Message-ID: <7vk62qwtk7.fsf@assigned-by-dhcp.cox.net>
-References: <11616396262982-git-send-email-hjemli@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFC/PATCH] gitweb: Add "all parents" (-m) view to commitdiff
+Date: Tue, 24 Oct 2006 00:35:23 +0200
+Message-ID: <200610240035.23963.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, krh@redhat.com
-X-From: git-owner@vger.kernel.org Tue Oct 24 00:34:15 2006
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Oct 24 00:35:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gc8Mx-0002Hl-QN
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 00:34:08 +0200
+	id 1Gc8O5-0002Za-GQ
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 00:35:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752009AbWJWWeE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Oct 2006 18:34:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752051AbWJWWeE
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 18:34:04 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:18652 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S1752009AbWJWWeB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Oct 2006 18:34:01 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061023223401.PGRA18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 23 Oct 2006 18:34:01 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id dyZk1V00Y1kojtg0000000
-	Mon, 23 Oct 2006 18:33:45 -0400
-To: Lars Hjemli <hjemli@gmail.com>
-In-Reply-To: <11616396262982-git-send-email-hjemli@gmail.com> (Lars Hjemli's
-	message of "Mon, 23 Oct 2006 23:40:26 +0200, Mon, 23 Oct 2006 23:27:45
-	+0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751526AbWJWWfJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Oct 2006 18:35:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752053AbWJWWfI
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 18:35:08 -0400
+Received: from nf-out-0910.google.com ([64.233.182.189]:54773 "EHLO
+	nf-out-0910.google.com") by vger.kernel.org with ESMTP
+	id S1751526AbWJWWfH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Oct 2006 18:35:07 -0400
+Received: by nf-out-0910.google.com with SMTP id c2so2559423nfe
+        for <git@vger.kernel.org>; Mon, 23 Oct 2006 15:35:05 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=l+Lvt3vs0CQXsHjCE1vKSRLHayLY39eQampvgMe27nliLboKmKO0LJ7v5vPynZIRRFgELhqoyq9S5/Tqui17U81b7cby/GugUO/AN03nPe1wUHwQ9cRIXk8JM8NjWGwb7cjZqOTiqb6QpC55cRF+L928FXhNhYHTalw1cCnZ2us=
+Received: by 10.49.80.12 with SMTP id h12mr7544431nfl;
+        Mon, 23 Oct 2006 15:35:00 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
+        by mx.google.com with ESMTP id k9sm2884002nfc.2006.10.23.15.35.00;
+        Mon, 23 Oct 2006 15:35:00 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29894>
 
-Lars Hjemli <hjemli@gmail.com> writes:
+Add "all parents" view/link to commitdiff, which uses '-m' to show
+diff to all parents of a merge commit.
 
-> This replaces git-branch.sh with builtin-branch.c
+This is instead of having link "combined" to combined (-c) or compact
+combined (--cc) diff for a merge commit, till we have syntax
+highlighting for combined diff.
 
-> +static const char builtin_branch_usage[] =
-> +"git-branch [(-d | -D) <branchname>] | [[-f] <branchname> [<start-point>]] | -r";
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |   11 ++++++++++-
+ 1 files changed, 10 insertions(+), 1 deletions(-)
 
-Probably needs a matching change to your recent clean-up here.
-
-> +static int append_ref(const char *refname, const unsigned char *sha1, int flags, 
-> +		void *cb_data)
-> +{
-> +	if (ref_index >= ref_alloc) {
-> +		ref_alloc = ref_alloc > 0 ? ref_alloc * 2 : 16;
-> +		ref_list = xrealloc(ref_list, ref_alloc * sizeof(char *));
-> +	}
-
-It would be more consistent to use alloc_nr() from cache.h here
-unless you have a specific need for allocation growing pattern,
-which you don't.  Other parts of the system even just grows by
-one and let xrealloc() (and in turn underlying realloc()) take
-care of the optimization of repeated reallocations, which may
-also be fine.
-
-> +static void create_branch(const char *name, const char *start,
-> +			  int force, int reflog)
-> +{
-> +	struct ref_lock *lock;
-> +	unsigned char sha1[20];
-> +	char ref[PATH_MAX], msg[PATH_MAX + 20];
-> +
-> +	snprintf(ref, sizeof ref, "refs/heads/%s", name);
-> +	if (check_ref_format(ref))
-> +		die("'%s' is not a valid branch name.", name);
-> +
-> +	if (resolve_ref(ref, sha1, 1, NULL)) {
-> +		if (!force)
-> +			die("A branch named '%s' already exists.", name);
-> +		else if (!strcmp(head, name))
-> +			die("Cannot force update the current branch.");
-> +	}
-> +
-> +	if (get_sha1(start, sha1))
-> +		die("Not a valid branch point: '%s'.", start);
-> +
-> +	lock = lock_any_ref_for_update(ref, NULL);
-> +	if (!lock)
-> +		die("Failed to lock ref for update: %s.", strerror(errno));
-
-This is not enough.  "$2^0" in git-branch.sh makes sure the
-"start" specified dereferences to a commit object, and object
-name we use to initialize the new branch is of the commit object
-(IOW, test your code with "git branch new v1.0.0" and make sure
-"git rev-parse new" returns the commit object not the tag that
-points at it).
-
-> +		
-> +	if (reflog){
-
-Style; (1) remove trailing TAB on the empty line; (2) one SP
-between ')' and '{' please.
-
-> diff --git a/builtin.h b/builtin.h
-> index 9683a7c..144d299 100644
-> --- a/builtin.h
-> +++ b/builtin.h
-> @@ -15,6 +15,7 @@ extern int write_tree(unsigned char *sha
->  extern int cmd_add(int argc, const char **argv, const char *prefix);
->  extern int cmd_annotate(int argc, const char **argv, const char *prefix);
->  extern int cmd_apply(int argc, const char **argv, const char *prefix);
-> +extern int cmd_branch(int argc, const char **argv, const char *prefix);
->  extern int cmd_archive(int argc, const char **argv, const char *prefix);
->  extern int cmd_cat_file(int argc, const char **argv, const char *prefix);
->  extern int cmd_checkout_index(int argc, const char **argv, const char *prefix);
-
-Style; order them alphabetically please...
-
-> diff --git a/git.c b/git.c
-> index 308252a..671b212 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -222,6 +222,7 @@ static void handle_internal_command(int 
->  		{ "annotate", cmd_annotate, },
->  		{ "apply", cmd_apply },
->  		{ "archive", cmd_archive },
-> +		{ "branch", cmd_branch },
->  		{ "cat-file", cmd_cat_file, RUN_SETUP },
->  		{ "checkout-index", cmd_checkout_index, RUN_SETUP },
->  		{ "check-ref-format", cmd_check_ref_format },
-
-In other words, match this.
-
-We may someday want to do binary search into the command list,
-and before that happens we should make sure this list is really
-ordered.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 255487d..84b4abb 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3289,7 +3289,7 @@ sub git_commitdiff {
+ 			                       hash=>$hash, hash_parent=>$hash_parent)},
+ 			        "raw");
+ 
+-		if (defined $hash_parent) {
++		if (defined $hash_parent && substr($hash_parent, 0, 1) ne '-') {
+ 			# commitdiff with two commits given
+ 			$formats_nav .=
+ 				' (' .
+@@ -3310,6 +3310,15 @@ sub git_commitdiff {
+ 				')';
+ 		} else {
+ 			# merge commit
++			$formats_nav .= ' | ';
++			if (defined $hash_parent && $hash_parent eq '-m') {
++				$formats_nav .= 'all parents';
++			} else {
++				$formats_nav .=
++									$cgi->a({-href => href(action=>"commitdiff",
++					                       hash=>$hash, hash_parent=>'-m')},
++					        'all parents');
++			}
+ 			$formats_nav .=
+ 				' (' .
+ 				join(' ', map {
+-- 
+1.4.2.1
