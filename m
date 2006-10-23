@@ -1,117 +1,87 @@
-From: Josh Triplett <josh@freedesktop.org>
-Subject: Re: [RFC] git-split: Split the history of a git repository by subdirectories
- and ranges
-Date: Mon, 23 Oct 2006 13:52:40 -0700
-Message-ID: <453D2B98.8010903@freedesktop.org>
-References: <451A30E4.50801@freedesktop.org> <7vlko5d3bx.fsf@assigned-by-dhcp.cox.net> <453C96C9.4010005@freedesktop.org> <Pine.LNX.4.64.0610230846420.3962@g5.osdl.org> <453D17B5.6070203@freedesktop.org> <Pine.LNX.4.64.0610231237080.3962@g5.osdl.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] Checking for "diff.color." should come before "diff.color"
+Date: Mon, 23 Oct 2006 21:52:48 +0100
+Message-ID: <200610232152.48543.andyparkins@gmail.com>
+References: <200610232051.17396.andyparkins@gmail.com> <20061023202952.GC31068@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig6B5A170B603450864FD86BE5"
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 23 22:53:25 2006
+Content-Type: multipart/signed;
+  boundary="nextPart1462915.XGHW7DPcdB";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Oct 23 22:55:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gc6nC-0004Bo-WA
-	for gcvg-git@gmane.org; Mon, 23 Oct 2006 22:53:09 +0200
+	id 1Gc6pX-0004gR-Dm
+	for gcvg-git@gmane.org; Mon, 23 Oct 2006 22:55:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750725AbWJWUxC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Oct 2006 16:53:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750996AbWJWUxB
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 16:53:01 -0400
-Received: from mail8.sea5.speakeasy.net ([69.17.117.10]:16305 "EHLO
-	mail8.sea5.speakeasy.net") by vger.kernel.org with ESMTP
-	id S1750725AbWJWUxA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Oct 2006 16:53:00 -0400
-Received: (qmail 10862 invoked from network); 23 Oct 2006 20:52:59 -0000
-Received: from dsl093-040-092.pdx1.dsl.speakeasy.net (HELO [192.168.0.121]) (josh@[66.93.40.92])
-          (envelope-sender <josh@freedesktop.org>)
-          by mail8.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
-          for <torvalds@osdl.org>; 23 Oct 2006 20:52:59 -0000
-User-Agent: Thunderbird 1.5.0.7 (X11/20060927)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0610231237080.3962@g5.osdl.org>
-X-Enigmail-Version: 0.94.0.0
+	id S1751049AbWJWUz2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Oct 2006 16:55:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751429AbWJWUz2
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 16:55:28 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:43318 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1751049AbWJWUz1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Oct 2006 16:55:27 -0400
+Received: by ug-out-1314.google.com with SMTP id q2so1507568uge
+        for <git@vger.kernel.org>; Mon, 23 Oct 2006 13:55:26 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:message-id;
+        b=ssOyV/grzDNdWBsnRYDLkC9fkzAvyXCoPammdxeO1bIc6QoKvE0t7OO/p7dCTJ4W/+eNuyRAUzFLPMqy3lulLY0aPEkaUf1tnU+3T70anxOiaxfUSjqoFy5Q/f3zoIAb9o6wdDFbMmybmmmbaQuB3JSDywvj7vEmWqqeOC/cLtU=
+Received: by 10.78.204.20 with SMTP id b20mr8051255hug;
+        Mon, 23 Oct 2006 13:55:25 -0700 (PDT)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id 30sm13023hub.2006.10.23.13.55.24;
+        Mon, 23 Oct 2006 13:55:24 -0700 (PDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.5
+In-Reply-To: <20061023202952.GC31068@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29879>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig6B5A170B603450864FD86BE5
-Content-Type: text/plain; charset=ISO-8859-1
+--nextPart1462915.XGHW7DPcdB
+Content-Type: text/plain;
+  charset="ansi_x3.4-1968"
 Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Linus Torvalds wrote:
-> On Mon, 23 Oct 2006, Josh Triplett wrote:
->  - The nice one that doesn't throw away potentially interesting=20
->    duplicate paths to reach the same end result. We don't have this one=
-,=20
->    so no git commands do this yet.
->=20
->    The way to do this one would be "--full-history", but then removing =
-all=20
->    parents that are "redundant". In other words, for any merge that=20
->    remains (because of the --full-history), check if one parent is a fu=
-ll=20
->    superset of another one, and if so, remove the "dominated" parent,=20
->    which simplifies the merge. Continue until nothing can be simplified=
+On Monday 2006, October 23 21:29, Jeff King wrote:
+
+> No, it's a strcmp for "diff.color", so it must match exactly. The code
+> is fine.
+
+Oops.  Yep.  So far I'm zero for five on my git patches - not doing too wel=
+l=20
+am I?  :-)
+
+> Are you experiencing some bug, or was this just from poking through the
+> code?
+
+Nah; poking around only.  I'm playing with git using the git repository.  I=
 =20
->    any more.
->=20
->    This would _usually_ end up giving the same graph as the "extreme"=20
->    simplification, but if there were two branches that really _did_=20
->    generate the same end result using different commits, they'd remain =
-in=20
->    the end result.
->=20
-> The problem with the "nice one" is that it's expensive as hell. There m=
-ay=20
-> be clever tricks to make it less so, though. But I think it's the=20
-> RightThing(tm) to do, at least as an option for when you really want to=
-=20
-> see a reasonable history that still contains everything that is relevan=
-t.
-
-So, if a commit has more than one parent (a merge), you want to
-eliminate any parents that end up as ancestors to other parents in the
-merge (including if their head has the same commit ID), but not
-eliminate multiple parents with different head commits but the same tree
-object?  That seems simple enough; I *think* git-split actually already
-does that, though I haven't actually tested that particular case.  If
-git log eliminates all but one of the parents with different commits but
-the same tree, I believe the commit sequence generated by git-split will
-differ from that of git log in that case, by including all such parents.
-
-I do agree that the behavior you describe seems like the best
-simplification, and I don't think the alternative you describe as
-"extreme simplification" makes any sense at all (picking a parent
-arbitrarily), nor does it seem any simpler to generate; either way, you
-still have to figure out if one parent has another as an ancestor, while
-the additional "extreme simplification" just *adds* a comparison of tree
-hashes.
-
-Or have I misunderstood the case you have concerns about?  Why would the
-"nice" format incur additional cost?
-
-- Josh Triplett
+have a feeling it's making me noisy and annoying.
 
 
+Andy
 
---------------enig6B5A170B603450864FD86BE5
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+=2D-=20
+Dr Andrew Parkins, M Eng (Hons), AMIEE
+andyparkins@gmail.com
+
+--nextPart1462915.XGHW7DPcdB
+Content-Type: application/pgp-signature
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.5 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
-iD8DBQFFPSuoGJuZRtD+evsRAtOdAJ4tHqin4jein970HNpJzFmMfkQT0ACeIAAw
-KznUTmVNvvKUg3yr2BsDBCs=
-=zfUh
+iD8DBQBFPSugwQJ9gE9xL20RApsYAJ90bWvgbF5LialJZlMt9ZcYVQse3gCcCzm9
+p+ND6IsYriWoMKj16V0Vw88=
+=fXaH
 -----END PGP SIGNATURE-----
 
---------------enig6B5A170B603450864FD86BE5--
+--nextPart1462915.XGHW7DPcdB--
