@@ -1,89 +1,73 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] Checking for "diff.color." should come before "diff.color"
-Date: Mon, 23 Oct 2006 22:03:40 +0100
-Message-ID: <200610232203.40510.andyparkins@gmail.com>
-References: <200610232051.17396.andyparkins@gmail.com> <7vk62qydvu.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFC] git-split: Split the history of a git repository by
+ subdirectories and ranges
+Date: Mon, 23 Oct 2006 14:06:49 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610231402560.3962@g5.osdl.org>
+References: <451A30E4.50801@freedesktop.org> <7vlko5d3bx.fsf@assigned-by-dhcp.cox.net>
+ <453C96C9.4010005@freedesktop.org> <Pine.LNX.4.64.0610230846420.3962@g5.osdl.org>
+ <453D17B5.6070203@freedesktop.org> <Pine.LNX.4.64.0610231237080.3962@g5.osdl.org>
+ <453D2B98.8010903@freedesktop.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2598344.glPyTUzYdk";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Oct 23 23:07:45 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 23 23:07:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gc6zy-0007EA-Vy
-	for gcvg-git@gmane.org; Mon, 23 Oct 2006 23:06:20 +0200
+	id 1Gc70h-0007Tc-UV
+	for gcvg-git@gmane.org; Mon, 23 Oct 2006 23:07:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751703AbWJWVGP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Oct 2006 17:06:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751941AbWJWVGP
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 17:06:15 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:57717 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1751703AbWJWVGP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Oct 2006 17:06:15 -0400
-Received: by ug-out-1314.google.com with SMTP id q2so1510501uge
-        for <git@vger.kernel.org>; Mon, 23 Oct 2006 14:06:13 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:message-id;
-        b=SLI6w2Bhj9dStON9PGUrGu1GdTku3o7Z6W7+OvWfrZxoEk9nPVbQnD8IU0yXakOJE9FTtlmIxk/LLke7b5C6cgj3tVrTk36Q6omB6P1zda4ZZjAuHIo+7ikjsLzt8HHDQ0LApGcsrf6bqTb8aiYtl7HXijsXkFTGINCVaEB/lpM=
-Received: by 10.78.160.2 with SMTP id i2mr8082440hue;
-        Mon, 23 Oct 2006 14:06:13 -0700 (PDT)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id 30sm24759hue.2006.10.23.14.06.12;
-        Mon, 23 Oct 2006 14:06:13 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vk62qydvu.fsf@assigned-by-dhcp.cox.net>
+	id S1751999AbWJWVHB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Oct 2006 17:07:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752002AbWJWVHA
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 17:07:00 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:39386 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1751999AbWJWVHA (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Oct 2006 17:07:00 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9NL6oaX007044
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 23 Oct 2006 14:06:51 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9NL6n4p006362;
+	Mon, 23 Oct 2006 14:06:50 -0700
+To: Josh Triplett <josh@freedesktop.org>
+In-Reply-To: <453D2B98.8010903@freedesktop.org>
+X-Spam-Status: No, hits=-0.978 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29881>
-
---nextPart2598344.glPyTUzYdk
-Content-Type: text/plain;
-  charset="ansi_x3.4-1968"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-
-On Monday 2006, October 23 21:29, Junio C Hamano wrote:
-> Andy Parkins <andyparkins@gmail.com> writes:
-> > In git_diff_ui_config() the strncmp() for "diff.color" would have match=
-ed
-> > for "diff.color.", so "diff.color." configs would never be processed.
->
-> A test case that demonstrates the breakage without the patch
-> would be nice. Could you come up with a two-patch series that
-> is:
-
-No need.  Jeff King already caught the fact that my patch is unnecessary.  =
-I=20
-withdraw it.
-
-Sorry to keep bothering you all with these non-entity patches.  I really am=
-=20
-only trying to help :-)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29882>
 
 
-Andy
 
-=2D-=20
-Dr Andrew Parkins, M Eng (Hons), AMIEE
-andyparkins@gmail.com
+On Mon, 23 Oct 2006, Josh Triplett wrote:
+> 
+> Or have I misunderstood the case you have concerns about?  Why would the
+> "nice" format incur additional cost?
 
---nextPart2598344.glPyTUzYdk
-Content-Type: application/pgp-signature
+Try it. The default "extreme" simplification is a _hell_ of a lot faster 
+than doing the full history.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
+	[torvalds@g5 linux]$ time git-rev-list --full-history --parents HEAD -- kernel/sched.c >/dev/null
 
-iD8DBQBFPS4swQJ9gE9xL20RAr1UAKCYFtIclsuKmchKapBxgZFFtqRedACfeYhT
-n97EktiZF9REbdnHOxiiX0A=
-=bLUE
------END PGP SIGNATURE-----
+	real    0m4.660s
+	user    0m4.612s
+	sys     0m0.044s
 
---nextPart2598344.glPyTUzYdk--
+	[torvalds@g5 linux]$ time git-rev-list --parents HEAD -- kernel/sched.c >/dev/null
+	
+	real    0m1.684s
+	user    0m1.680s
+	sys     0m0.004s
+
+and the "nice" thing will be much slower still: just trying to figure out 
+whether a commit is a parent of another commit is expensive. Doing so for 
+_each_ merge is more expensive still. I think it's O(n^3), but what do I 
+know..
+
+			Linus
