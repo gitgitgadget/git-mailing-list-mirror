@@ -1,88 +1,95 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: VCS comparison table
-Date: Mon, 23 Oct 2006 11:34:18 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610231124170.3962@g5.osdl.org>
-References: <45357CC3.4040507@utoronto.ca> <200610231953.19605.jnareb@gmail.com>
- <Pine.LNX.4.64.0610231103460.3962@g5.osdl.org> <200610232021.55625.jnareb@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: prune/prune-packed
+Date: Mon, 23 Oct 2006 20:39:55 +0200
+Message-ID: <20061023183955.GR20017@pasky.or.cz>
+References: <20061022035919.GA4420@fieldses.org> <7vy7r954k7.fsf@assigned-by-dhcp.cox.net> <20061022231422.GA9375@fieldses.org> <20061023005336.GA12932@fieldses.org> <453C1A35.70504@gmail.com> <7vvembzp6y.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
-	James Henstridge <james@jamesh.id.au>,
-	bazaar-ng@lists.canonical.com,
-	"Matthew D. Fuller" <fullermd@over-yonder.net>,
-	Andreas Ericsson <ae@op5.se>, Carl Worth <cworth@cworth.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: gitzilla@gmail.com, "J. Bruce Fields" <bfields@fieldses.org>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 23 20:35:36 2006
+X-From: git-owner@vger.kernel.org Mon Oct 23 20:40:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gc4dn-0003nY-UP
-	for gcvg-git@gmane.org; Mon, 23 Oct 2006 20:35:16 +0200
+	id 1Gc4ih-00056X-8j
+	for gcvg-git@gmane.org; Mon, 23 Oct 2006 20:40:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965008AbWJWSe4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Oct 2006 14:34:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965009AbWJWSe4
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 14:34:56 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:5274 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965008AbWJWSez (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Oct 2006 14:34:55 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9NIYKaX029967
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 23 Oct 2006 11:34:23 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9NIYIi9001037;
-	Mon, 23 Oct 2006 11:34:19 -0700
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200610232021.55625.jnareb@gmail.com>
-X-Spam-Status: No, hits=-0.477 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965011AbWJWSj6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Oct 2006 14:39:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965014AbWJWSj6
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 14:39:58 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:56002 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S965011AbWJWSj5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Oct 2006 14:39:57 -0400
+Received: (qmail 7117 invoked by uid 2001); 23 Oct 2006 20:39:55 +0200
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vvembzp6y.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29857>
 
-
-
-On Mon, 23 Oct 2006, Jakub Narebski wrote:
+Dear diary, on Mon, Oct 23, 2006 at 05:27:49AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> A Large Angry SCM <gitzilla@gmail.com> writes:
 > 
-> By the way, I wonder if accidentally identical revisions
-> (see example for accidental clean merge on revctrl.org)
-> would get the same revision id in bzr. In git they would.
+> > J. Bruce Fields wrote:
+> >> Junio C Hamano <junkio@cox.net> writes:
+> >>> I am considering the following to address irritation some people
+> >>> (including me, actually) are experiencing with this change when
+> >>> viewing a small (or no) diff.  Any objections?
+> >>
+> >> So for me, if I run
+> >>
+> >> 	less -FRS file
+> >>
+> >> where "file" is less than a page, I see nothing happen whatsoever.
+> >>
+> >> At a guess, maybe it's clearing the screen, displaying the file, the
+> >> restoring, all before I see anything happen?
+> >
+> > Junio,
+> >
+> > How about reverting this change? From the reports here, is causing
+> > problems on a number of different distributions.
+> 
+> Hmmm.  I thought I was using gnome-terminal as well, but I
+> always work in screen and did not see this problem.
+> 
+> Sorry, but you are right and Linus is more right.  How about
+> doing FRSX.
 
-git can have no "accidentally identical revisions". They'd have to be 
-purposefully done, but yes, they'd obviously (on purpose) get the same 
-revision name if that's the case.
+I should like that solution more since I hate the alternate screen, but
+I actually don't, since it should be left at the user's will whether to
+use the alternate screen or not, and Git shouldn't change the default on
+whim. Git is trying to be too smart here, and I think it's more annoying
+to override what the user is used to than having to by default press q.
 
-You may think of tree (not commit) identity, where git on purpose names 
-trees the same regardless of how you got to them. So on a _tree_ level, 
-you are always supposed to get the same result regardless of how you 
-import things (ie two people importing the same tar-ball should always get 
-exactly the same tree ID).
+Yes, the user can always override Git by setting own $LESS, but that
+means another explicit action at the user's side is required and they
+don't receive any further cool flags we might stick in there later.
+(BTW, I don't think this is right either. In Cogito, I do
 
-But the actual commit names are identical only if the same people are 
-claimed to have authored (and committed) them at the same time - so it's 
-definitely not "accidental" if the commits are called the same: they 
-really _are_ the same.
+	LESS="$myflags$LESS"
 
-Btw, I think you misunderstand the term "accidental clean merge". It means 
-that two identical changes on two branches will merge without conflicts 
-being reported.
+unless $CG_LESS is set, in which case I do
 
-A merge algorithm that doesn't do "accidental clean merge" is totally 
-broken. The accidental clean merge is a usability requirement for pretty 
-much anything - you often have two branches doing the same thing (possibly 
-for different reasons - two people independently found the same bug that 
-showed itself in two different ways - so they may even think that they 
-are fixing different issues, and may have written totally different 
-changelogs to explain the bug, but the solution is identical and should 
-obviously merge cleanly).
+	LESS="$CG_LESS".
 
-So "accidental clean merge" may _sound_ like something bad, but it's 
-actually a seriously good property (it's really just a special case of 
-"convergence" - again, that's a good thing).
+So people like Jens who have LESS set still get sensible behaviour from
+Cogito _and_ they don't loose the ability to override Cogito's less
+flags.)
 
-		Linus
+BTW, I think not seeing output of paged commands is a major problem,
+this should probably warrant another bugfix release.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
