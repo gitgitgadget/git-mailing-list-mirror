@@ -1,73 +1,73 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: VCS comparison table
-Date: Mon, 23 Oct 2006 11:04:48 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610231103460.3962@g5.osdl.org>
-References: <45357CC3.4040507@utoronto.ca>
-	<a7e835d40610230801m4ac92409gbddcf66dcd1bb429@mail.gmail.com>
-	<453CF966.7000308@utoronto.ca> <200610231953.19605.jnareb@gmail.com>
+Date: Mon, 23 Oct 2006 20:21:53 +0200
+Message-ID: <200610232021.55625.jnareb@gmail.com>
+References: <45357CC3.4040507@utoronto.ca> <200610231953.19605.jnareb@gmail.com> <Pine.LNX.4.64.0610231103460.3962@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: James Henstridge <james@jamesh.id.au>, bazaar-ng@lists.canonical.com,
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Aaron Bentley <aaron.bentley@utoronto.ca>,
+	James Henstridge <james@jamesh.id.au>,
+	bazaar-ng@lists.canonical.com,
 	"Matthew D. Fuller" <fullermd@over-yonder.net>,
 	Andreas Ericsson <ae@op5.se>, Carl Worth <cworth@cworth.org>,
 	git@vger.kernel.org
-X-From: bazaar-ng-bounces@lists.canonical.com Mon Oct 23 20:07:19 2006
-Return-path: <bazaar-ng-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from esperanza.ubuntu.com ([82.211.81.173])
+X-From: git-owner@vger.kernel.org Mon Oct 23 20:22:38 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gc4CH-00058y-AW
-	for gcvbg-bazaar-ng@m.gmane.org; Mon, 23 Oct 2006 20:06:49 +0200
-Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1Gc4C0-0001jS-BJ; Mon, 23 Oct 2006 19:06:32 +0100
-Received: from smtp.osdl.org ([65.172.181.4])
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <torvalds@osdl.org>) id 1Gc4Bv-0001gv-6D
-	for bazaar-ng@lists.canonical.com; Mon, 23 Oct 2006 19:06:29 +0100
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9NI5AaX027988
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 23 Oct 2006 11:05:14 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9NI4n5j032378;
-	Mon, 23 Oct 2006 11:04:55 -0700
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200610231953.19605.jnareb@gmail.com>
-X-Spam-Status: No, hits=-0.477 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
-X-BeenThere: bazaar-ng@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
-List-Post: <mailto:bazaar-ng@lists.canonical.com>
-List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
-	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-ng-bounces@lists.canonical.com
-Errors-To: bazaar-ng-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29852>
+	id 1Gc4Qg-0000Te-RB
+	for gcvg-git@gmane.org; Mon, 23 Oct 2006 20:21:43 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S964994AbWJWSVj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Oct 2006 14:21:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964993AbWJWSVj
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 14:21:39 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:43890 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S964995AbWJWSVg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Oct 2006 14:21:36 -0400
+Received: by ug-out-1314.google.com with SMTP id q2so1464273uge
+        for <git@vger.kernel.org>; Mon, 23 Oct 2006 11:21:36 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=EGnsey7up1FpTw6c5AlH70+U49Frs47QtPdY0FVFnYP0d3ITRqJXD24L7qMpAc29mpBS8PzUIsW7xgMmdMPEbDFsprSSVseqm/OPAb7aC5ShGTZqVYH+FgVomfT4uSSzuL6QpzSxQpZWak2LdvaymZxJ+psYP2kytT1ZrwWT7N4=
+Received: by 10.67.27.3 with SMTP id e3mr7811189ugj;
+        Mon, 23 Oct 2006 11:21:35 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
+        by mx.google.com with ESMTP id x37sm1221258ugc.2006.10.23.11.21.34;
+        Mon, 23 Oct 2006 11:21:35 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: KMail/1.9.3
+In-Reply-To: <Pine.LNX.4.64.0610231103460.3962@g5.osdl.org>
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29853>
 
-
-
-On Mon, 23 Oct 2006, Jakub Narebski wrote:
+Linus Torvalds wrote:
 > 
-> Besides, you need [constant] network access for this mapping.
+> On Mon, 23 Oct 2006, Jakub Narebski wrote:
+>> 
+>> Besides, you need [constant] network access for this mapping.
+> 
+> I _think_ that Aaron was trying to say that
+> 
+> 	abentley@panoramicfeedback.com-20060927202832-9795d0528e311e31
+> 
+> is always constant, so you can use that.
+> 
+> Of course, nobody will ever do that, because in practice they're not 
+> shown, the same way the "true" BK revision names were never shown and thus 
+> never really used.
 
-I _think_ that Aaron was trying to say that
-
-	abentley@panoramicfeedback.com-20060927202832-9795d0528e311e31
-
-is always constant, so you can use that.
-
-Of course, nobody will ever do that, because in practice they're not 
-shown, the same way the "true" BK revision names were never shown and thus 
-never really used.
-
-		Linus
+By the way, I wonder if accidentally identical revisions
+(see example for accidental clean merge on revctrl.org)
+would get the same revision id in bzr. In git they would.
+-- 
+Jakub Narebski
+Poland
