@@ -1,84 +1,111 @@
-From: Aaron Bentley <aaron.bentley@utoronto.ca>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: VCS comparison table
-Date: Mon, 23 Oct 2006 13:18:30 -0400
-Message-ID: <453CF966.7000308@utoronto.ca>
-References: <45357CC3.4040507@utoronto.ca>	<200610222206.13973.jnareb@gmail.com>	<1161604564.22276.173.camel@zepto.home.zettazebra.com>	<200610231454.06355.jnareb@gmail.com> <a7e835d40610230801m4ac92409gbddcf66dcd1bb429@mail.gmail.com>
+Date: Mon, 23 Oct 2006 10:29:53 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610231018410.3962@g5.osdl.org>
+References: <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org> <453A7D7E.8060105@utoronto.ca>
+ <20061022074513.GF29927@artax.karlin.mff.cuni.cz> <200610221105.26421.jnareb@gmail.com>
+ <845b6e870610220256u39d3d06wefd4f71851670812@mail.gmail.com>
+ <87zmbozau2.wl%cworth@cworth.org> <20061022185350.GW75501@over-yonder.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, bazaar-ng@lists.canonical.com,
-	"Matthew D. Fuller" <fullermd@over-yonder.net>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Andreas Ericsson <ae@op5.se>, Carl Worth <cworth@cworth.org>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 23 19:19:51 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Carl Worth <cworth@cworth.org>,
+	=?ISO-8859-1?Q?Erik_B=E5gfors?= <zindar@gmail.com>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 23 19:30:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gc3S8-0002Dh-6I
-	for gcvg-git@gmane.org; Mon, 23 Oct 2006 19:19:09 +0200
+	id 1Gc3cp-0004lS-OH
+	for gcvg-git@gmane.org; Mon, 23 Oct 2006 19:30:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932190AbWJWRSv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Oct 2006 13:18:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932192AbWJWRSv
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 13:18:51 -0400
-Received: from server4.panoramicfeedback.com ([66.216.124.41]:8663 "EHLO
-	server4.panoramicfeedback.com") by vger.kernel.org with ESMTP
-	id S932190AbWJWRSu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Oct 2006 13:18:50 -0400
-Received: from server4.panoramicfeedback.com ([66.216.124.41] helo=[192.168.2.19])
-	by server4.panoramicfeedback.com with esmtp (Exim 3.36 #1 (Debian))
-	id 1Gc3Rk-0007Kw-00; Mon, 23 Oct 2006 13:18:44 -0400
-User-Agent: Debian Thunderbird 1.0.2 (X11/20060830)
-X-Accept-Language: en-us, en
-To: James Henstridge <james@jamesh.id.au>
-In-Reply-To: <a7e835d40610230801m4ac92409gbddcf66dcd1bb429@mail.gmail.com>
-X-Enigmail-Version: 0.91.0.0
-X-Panometrics-MailScanner: Found to be clean
+	id S932201AbWJWRaH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Oct 2006 13:30:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932202AbWJWRaH
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 13:30:07 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:8686 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932201AbWJWRaF (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Oct 2006 13:30:05 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9NHTtaX025386
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 23 Oct 2006 10:29:56 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9NHTrrm031308;
+	Mon, 23 Oct 2006 10:29:54 -0700
+To: "Matthew D. Fuller" <fullermd@over-yonder.net>
+In-Reply-To: <20061022185350.GW75501@over-yonder.net>
+X-Spam-Status: No, hits=-0.477 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29849>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-James Henstridge wrote:
-> Why do you continue to repeat this argument?  No one is claiming that
-> a revision number by itself, as Bazaar uses them, is a global
-> identifier.  In fact, we keep on saying that they only have meaning in
-> the context of a branch.
 
-And, unlike git, Bazaar branches are all independent entities[1], and
-they each have a URL.
+On Sun, 22 Oct 2006, Matthew D. Fuller wrote:
+> 
+> > This special treatment influences or directly causes many of the
+> > things in bzr that we've been discussing:
+>   [...]
+> > I've been arguing that all of these impacts are dubious. But I can
+> > understand that a bzr user hearing arguments against them might fear
+> > that they would lose the ability to be able to see a view of commits
+> > that "belong" to a particular branch.
+> 
+> Dead center.
 
-So:
+The thing that the bzr people don't seem to realize is that their choice 
+of revision naming has serious side effects, some of them really 
+technical, and limiting.
 
-http://code.aaronbentley.com/bzrrepo/bzr.ab 1695
+I already briought this up once, and I suspect that the bzr people simply 
+DID NOT UNDERSTAND the question:
 
-is a name for
+ - how do you do the git equivalent of "gitk --all"
 
-abentley@panoramicfeedback.com-20060927202832-9795d0528e311e31
+which is just another reason why "branch-local" revision naming is simply 
+stupid and has real _technical_ problems.
 
-And it does not depend on any other branch, especially not bzr.dev
+I really suspect that a lot of people can't see further than their own 
+feet, and don't understand the subtle indirect problems that branch-local 
+naming causes. 
 
-Since:
-1. anyone with write access to the urls can create them
-2. anyone with read access to the urls can read them
-3. the maintainers of the mainline have no control over them
-   (except as provided by 1)
+For example, how long does it take to do an arbitrary "undo" (ie forcing a 
+branch to an earlier state) in a project with tens of thousands of 
+commits? That's actually a really important operation, and yes, 
+performance does matter. It's something that you do a lot when you do 
+things like "bisect" (which I used to approximate with BK by hand, and 
+yes, re-weaving the branch history was apparently a big part of why it 
+took _minutes_ to do sometimes).
 
-these identifiers are not centralized.
+Again, this is something that people don't expect to have _anything_ to do 
+with revision numbering, but the fact is, it's a big part of the picture. 
+If you have branch-local revision numbering, you need to renumber all 
+revisions on events like this, and even if it is "just" re-creatigng the 
+revno->"real ID" cache, it's actually an expensive operation exactly 
+because it's going to be at least linear in history.
 
-Aaron
+One of the git design requirements was that no operation should _ever_ 
+need to be linear in history size, because it becomes a serious limiter of 
+scalability at some point. We were seeing some of those issues with BK, 
+which is why I cared.
 
-[1] The fact that they may share storage is not important to the model.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
+So in git, doing things like jumping back and forth in history is O(1). 
+Always (with a really low constant cost too). Of course, checking out the 
+end result is then roughly O(n), but even there "n" is the size of the 
+_changes_, not number of revisions or number of files.
 
-iD8DBQFFPPlm0F+nu1YWqI0RAlmLAJ9cpw5X7UXQ82EmoIeUrKzEaFbhdACfZPsS
-CRJ69XWi7XAWJRi7Fgt9ICU=
-=WrV9
------END PGP SIGNATURE-----
+(And there are obviously operations that _are_ O(revision history), the 
+most trivial one being anything that visualizes all of history - but they 
+depend on the size of history not because the operation itself gets more 
+expensive, but because the dataset increases).
+
+The whole confusing between "bzr pull" and "bzr merge" is another 
+_technical_ sign of why branch-local revision numbers are a mistake. 
+
+			Linus
