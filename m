@@ -1,68 +1,117 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] xdiff/xemit.c (xdl_find_func): Elide trailing white
- space in a context header.
-Date: Mon, 23 Oct 2006 13:49:37 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610231347490.3962@g5.osdl.org>
-References: <87y7r63hq6.fsf@rho.meyering.net>
+From: Josh Triplett <josh@freedesktop.org>
+Subject: Re: [RFC] git-split: Split the history of a git repository by subdirectories
+ and ranges
+Date: Mon, 23 Oct 2006 13:52:40 -0700
+Message-ID: <453D2B98.8010903@freedesktop.org>
+References: <451A30E4.50801@freedesktop.org> <7vlko5d3bx.fsf@assigned-by-dhcp.cox.net> <453C96C9.4010005@freedesktop.org> <Pine.LNX.4.64.0610230846420.3962@g5.osdl.org> <453D17B5.6070203@freedesktop.org> <Pine.LNX.4.64.0610231237080.3962@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 23 22:50:48 2006
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig6B5A170B603450864FD86BE5"
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 23 22:53:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gc6ka-0003V7-El
-	for gcvg-git@gmane.org; Mon, 23 Oct 2006 22:50:25 +0200
+	id 1Gc6nC-0004Bo-WA
+	for gcvg-git@gmane.org; Mon, 23 Oct 2006 22:53:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751401AbWJWUuU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Oct 2006 16:50:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751429AbWJWUuU
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 16:50:20 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:22230 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751401AbWJWUuT (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Oct 2006 16:50:19 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9NKndaX005962
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 23 Oct 2006 13:49:40 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9NKnbVc005648;
-	Mon, 23 Oct 2006 13:49:38 -0700
-To: Jim Meyering <jim@meyering.net>
-In-Reply-To: <87y7r63hq6.fsf@rho.meyering.net>
-X-Spam-Status: No, hits=-2.477 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750725AbWJWUxC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Oct 2006 16:53:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750996AbWJWUxB
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 16:53:01 -0400
+Received: from mail8.sea5.speakeasy.net ([69.17.117.10]:16305 "EHLO
+	mail8.sea5.speakeasy.net") by vger.kernel.org with ESMTP
+	id S1750725AbWJWUxA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Oct 2006 16:53:00 -0400
+Received: (qmail 10862 invoked from network); 23 Oct 2006 20:52:59 -0000
+Received: from dsl093-040-092.pdx1.dsl.speakeasy.net (HELO [192.168.0.121]) (josh@[66.93.40.92])
+          (envelope-sender <josh@freedesktop.org>)
+          by mail8.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <torvalds@osdl.org>; 23 Oct 2006 20:52:59 -0000
+User-Agent: Thunderbird 1.5.0.7 (X11/20060927)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0610231237080.3962@g5.osdl.org>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29878>
+
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig6B5A170B603450864FD86BE5
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+
+Linus Torvalds wrote:
+> On Mon, 23 Oct 2006, Josh Triplett wrote:
+>  - The nice one that doesn't throw away potentially interesting=20
+>    duplicate paths to reach the same end result. We don't have this one=
+,=20
+>    so no git commands do this yet.
+>=20
+>    The way to do this one would be "--full-history", but then removing =
+all=20
+>    parents that are "redundant". In other words, for any merge that=20
+>    remains (because of the --full-history), check if one parent is a fu=
+ll=20
+>    superset of another one, and if so, remove the "dominated" parent,=20
+>    which simplifies the merge. Continue until nothing can be simplified=
+=20
+>    any more.
+>=20
+>    This would _usually_ end up giving the same graph as the "extreme"=20
+>    simplification, but if there were two branches that really _did_=20
+>    generate the same end result using different commits, they'd remain =
+in=20
+>    the end result.
+>=20
+> The problem with the "nice one" is that it's expensive as hell. There m=
+ay=20
+> be clever tricks to make it less so, though. But I think it's the=20
+> RightThing(tm) to do, at least as an option for when you really want to=
+=20
+> see a reasonable history that still contains everything that is relevan=
+t.
+
+So, if a commit has more than one parent (a merge), you want to
+eliminate any parents that end up as ancestors to other parents in the
+merge (including if their head has the same commit ID), but not
+eliminate multiple parents with different head commits but the same tree
+object?  That seems simple enough; I *think* git-split actually already
+does that, though I haven't actually tested that particular case.  If
+git log eliminates all but one of the parents with different commits but
+the same tree, I believe the commit sequence generated by git-split will
+differ from that of git log in that case, by including all such parents.
+
+I do agree that the behavior you describe seems like the best
+simplification, and I don't think the alternative you describe as
+"extreme simplification" makes any sense at all (picking a parent
+arbitrarily), nor does it seem any simpler to generate; either way, you
+still have to figure out if one parent has another as an ancestor, while
+the additional "extreme simplification" just *adds* a comparison of tree
+hashes.
+
+Or have I misunderstood the case you have concerns about?  Why would the
+"nice" format incur additional cost?
+
+- Josh Triplett
 
 
 
-On Mon, 23 Oct 2006, Jim Meyering wrote:
->
-> This removes trailing blanks from git-generated diff headers
-> the same way a similar patch did that for GNU diff:
+--------------enig6B5A170B603450864FD86BE5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-NO!
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
-This is _wrong_
+iD8DBQFFPSuoGJuZRtD+evsRAtOdAJ4tHqin4jein970HNpJzFmMfkQT0ACeIAAw
+KznUTmVNvvKUg3yr2BsDBCs=
+=zfUh
+-----END PGP SIGNATURE-----
 
-You should only remove the space IF IT IS THE ONLY THING ON THE WHOLE 
-LINE!
-
-You must not remove white-space in general.
-
-So the patch should check something like
-
-	if (len == 1 && rec[0] == ' ')
-		len = 0;
-
-and not like you did it.
-
-Otherwise the patch will simply not even _apply_.
-
-		Linus
+--------------enig6B5A170B603450864FD86BE5--
