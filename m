@@ -1,64 +1,90 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] git-cherry should show "+" instead of "-" and vice versa
-Date: Mon, 23 Oct 2006 21:33:26 +0200
-Message-ID: <20061023193326.GS20017@pasky.or.cz>
-References: <200610232003.08861.andyparkins@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 23 21:33:49 2006
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: [PATCH] Fix regression tests on Cygwin
+Date: Mon, 23 Oct 2006 21:34:33 +0200
+Message-ID: <11616320733093-git-send-email-hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 23 21:35:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gc5YC-0001iM-66
-	for gcvg-git@gmane.org; Mon, 23 Oct 2006 21:33:32 +0200
+	id 1Gc5ZL-0001yh-R7
+	for gcvg-git@gmane.org; Mon, 23 Oct 2006 21:34:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751054AbWJWTd3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Oct 2006 15:33:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751851AbWJWTd2
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 15:33:28 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:64165 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1751054AbWJWTd2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Oct 2006 15:33:28 -0400
-Received: (qmail 12204 invoked by uid 2001); 23 Oct 2006 21:33:26 +0200
-To: Andy Parkins <andyparkins@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <200610232003.08861.andyparkins@gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751851AbWJWTek (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Oct 2006 15:34:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752002AbWJWTek
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 15:34:40 -0400
+Received: from mail42.e.nsc.no ([193.213.115.42]:57599 "EHLO mail42.e.nsc.no")
+	by vger.kernel.org with ESMTP id S1751851AbWJWTek (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Oct 2006 15:34:40 -0400
+Received: from localhost.localdomain (ti231210a080-7372.bb.online.no [80.213.28.208])
+	by mail42.nsc.no (8.13.8/8.13.5) with ESMTP id k9NJYa5P023581
+	for <git@vger.kernel.org>; Mon, 23 Oct 2006 21:34:38 +0200 (CEST)
+To: git@vger.kernel.org
+X-Mailer: git-send-email 1.4.3.1.g1688
+Date: Mon, 23 Oct 2006 21:01:50 +0200
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29868>
 
-Dear diary, on Mon, Oct 23, 2006 at 09:03:08PM CEST, I got a letter
-where Andy Parkins <andyparkins@gmail.com> said that...
-> In git-cherry.sh:
-> 
->   if test -f "$patch/$2"
->   then
->     sign=-
->   else
->     sign=+
->   fi
-> 
-> Documentation says 'If the change seems to be in the upstream, it is shown on
-> the standard output with prefix "+"', however the above does the reverse.  
-> When
-> the file $patch/$2 exists it is because the patch /is/ in upstream so the sign
-> should be "+".
-> Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+On Cygwin, "make test" failes due to missing ".exe" a couple of places.
 
-See also
+This fixes it, in a somewhat ugly way....
 
-	http://news.gmane.org/find-root.php?message_id=<Pine.LNX.4.58.0608071328200.22971@kivilampi-30.cs.helsinki.fi>
+Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+---
+ t/t0000-basic.sh |    9 ++++++++-
+ t/test-lib.sh    |   10 +++++++++-
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
-Did the documentation ever get fixed or noone cared enough? ;-)
-
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index 2c9bbb5..41d53be 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -25,7 +25,14 @@ # or have too old python without subproc
+ # out before running any tests.  Also catch the bogosity of trying
+ # to run tests without building while we are at it.
+ 
+-../git >/dev/null
++X=
++uname=$(uname -o)
++if test "$uname" = "Cygwin"
++then
++	X=".exe"
++fi
++
++../git$X >/dev/null
+ if test $? != 1
+ then
+ 	echo >&2 'You do not seem to have built git yet.'
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 2488e6e..8a64f6e 100755
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -43,6 +43,14 @@ case $(echo $GIT_TRACE |tr "[A-Z]" "[a-z
+ 		;;
+ esac
+ 
++X=
++uname=$(uname -o)
++if test "$uname" = "Cygwin"
++then
++	X=".exe"
++fi
++
++
+ # Each test should start with something like this, after copyright notices:
+ #
+ # test_description='Description of this test...
+@@ -175,7 +183,7 @@ test_create_repo () {
+ 	repo="$1"
+ 	mkdir "$repo"
+ 	cd "$repo" || error "Cannot setup test environment"
+-	"$GIT_EXEC_PATH/git" init-db --template=$GIT_EXEC_PATH/templates/blt/ 2>/dev/null ||
++	"$GIT_EXEC_PATH/git$X" init-db --template=$GIT_EXEC_PATH/templates/blt/ 2>/dev/null ||
+ 	error "cannot run git init-db -- have you built things yet?"
+ 	mv .git/hooks .git/hooks-disabled
+ 	cd "$owd"
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+1.4.3.1.g1688
