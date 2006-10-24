@@ -1,97 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: updating only changed files source directory?
-Date: Tue, 24 Oct 2006 12:13:38 +0200
-Message-ID: <200610241213.38558.jnareb@gmail.com>
-References: <ehjqgf$ggb$1@sea.gmane.org> <ehkgfs$af6$1@sea.gmane.org> <453DE1F5.5010803@xs4all.nl>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: renames in StGIT
+Date: Tue, 24 Oct 2006 11:25:07 +0100
+Message-ID: <b0943d9e0610240325v5bc23078w7fc977e091e99779@mail.gmail.com>
+References: <20061022013943.GA16341@diana.vm.bytemark.co.uk>
+	 <b0943d9e0610230947j79449a4dm8736f480f039c230@mail.gmail.com>
+	 <20061023125344.f82426ad.seanlkml@sympatico.ca>
+	 <20061024081732.GA29265@diana.vm.bytemark.co.uk>
+	 <b0943d9e0610240148s15d6ec5ch6114360a603fcd71@mail.gmail.com>
+	 <20061024091620.GB29265@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 24 12:13:23 2006
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sean <seanlkml@sympatico.ca>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 24 12:25:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcJHa-0002Eu-7o
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 12:13:18 +0200
+	id 1GcJTd-0004fS-TM
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 12:25:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965127AbWJXKNP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Oct 2006 06:13:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965128AbWJXKNP
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 06:13:15 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:63465 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S965127AbWJXKNO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Oct 2006 06:13:14 -0400
-Received: by ug-out-1314.google.com with SMTP id 32so158270ugm
-        for <git@vger.kernel.org>; Tue, 24 Oct 2006 03:13:13 -0700 (PDT)
+	id S1030267AbWJXKZm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006 06:25:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030270AbWJXKZm
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 06:25:42 -0400
+Received: from py-out-1112.google.com ([64.233.166.182]:41109 "EHLO
+	py-out-1112.google.com") by vger.kernel.org with ESMTP
+	id S1030267AbWJXKZl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 06:25:41 -0400
+Received: by py-out-1112.google.com with SMTP id z74so163092pyg
+        for <git@vger.kernel.org>; Tue, 24 Oct 2006 03:25:07 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=naytn/JoaZ1fKtfOoBtU/9pfYaJE2XUW2Tf/iL7m8zCNfX55DsBce4lCx2d0xGoQWi/OqYWITi/nqL0nlWc+VllW/kfiLB9FD1pUNjgDf7aB5+tDmhFVhgrw8Xj1zyb3lN8+CHbE7q37HfSFZl0l7ZRMLU7VbxxB9Vn6MvK5D/8=
-Received: by 10.67.119.13 with SMTP id w13mr8567730ugm;
-        Tue, 24 Oct 2006 03:13:13 -0700 (PDT)
-Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
-        by mx.google.com with ESMTP id c1sm369041ugf.2006.10.24.03.13.12;
-        Tue, 24 Oct 2006 03:13:13 -0700 (PDT)
-To: Han-Wen Nienhuys <hanwen@xs4all.nl>
-User-Agent: KMail/1.9.3
-In-Reply-To: <453DE1F5.5010803@xs4all.nl>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VlflButpLhiP1WeYPzNcRpOu6XYBZnOnduNcpa7RbsT9xHfQU/UnyD2yzxfhcFcPfFsurGmFsmL36blD4W1jAlgBe8uC5bR8R/xgNkI2qJMynMsN7Wm0QJWZHXIbnF/oSG31zZYzpx8yFuJisKBA8kAg7oTUZrRWfzeIK1XNPqg=
+Received: by 10.35.83.6 with SMTP id k6mr8552411pyl;
+        Tue, 24 Oct 2006 03:25:07 -0700 (PDT)
+Received: by 10.35.103.18 with HTTP; Tue, 24 Oct 2006 03:25:07 -0700 (PDT)
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+In-Reply-To: <20061024091620.GB29265@diana.vm.bytemark.co.uk>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29961>
 
-Han-Wen Nienhuys wrote:
-> Jakub Narebski escreveu:
->> Han-Wen Nienhuys wrote:
->> 
->> I see that you are using fairly low level commands (plumbing commands)
->>  
->>>    git-http-fetch -a <branch>  <url>
->>>    wget <url>/refs/head/<branch>    ## dump to <myrepo>/refs/head/<branch>
->> 
->> instead of setting $GIT_DIR/remotes/origin file and using "git fetch".
->> BTW. "git fetch" will not update branch you are on, unless --update-head-ok
->> option is used.
-> 
-> I tried fetch, but was put off by the warnings because I didn't have 
-> --update-head-ok. Using lowlevel commands is my way of making sure that 
-> Git doesn't assume it needs to do anything intelligent.
+On 24/10/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 2006-10-24 09:48:44 +0100, Catalin Marinas wrote:
+> > Step 3 above is handled per file by the
+> > stgit.gitmergeonefile.merge() function. This is the place where we
+> > should have the rename detection. Since, the majority of the patche=
+s
+> > don't rename files and, in most cases, the push finishes at step 2,
+> > it is probably safe to extend this function and the users won't
+> > notice a speed difference.
+> >
+> > I'll add it to the TODO list.
+>
+> Sounds good. I had a feeling it ought to be basically free in the
+> majority of cases, so I'm glad to learn I'm right. :-)
 
-You can either have additional branch which is not tracking branch
-(you don't fetch into this branch), and on which you are always on,
-called for example 'check-out' (and which can be used for git-reset
-solution to checking out files to external directory), and use
-git-fetch without --update-head-ok, or (if the repository is bare
-repository, without working area) use --update-head-ok.
- 
->>>    git --git-dir <myrepo> read-tree <committish>
->>>
->>>    cd <srcdir>
->>>    git --git-dir <myrepo> checkout-index -a -f
->> 
->> instead of 
->>      git --git-dir=<myrepo> checkout <branch>
->> (-f is Force a re-read of everything)
+Might be even simpler for 'push' but I need to do more tests - instead
+of calling git-read-tree in git.merge(), just call git-merge-recursive
+which handles renames and it's fully tested. My simple test detected
+renames when pushing patches (both rename in base and rename in
+patch). I still have to do some tweaking and write proper tests (and
+probably make it less verbose).
 
-git-checkout-index(1):
-
-       -f|--force
-              forces overwrite of existing files
-
-So probably you would get what you want if you lose '-f'.
-
-> Yes, however,
-> 
->    git checkout
-> 
-> changes the state of the repository, which is something I want to prevent.
-
-Well, git-reset also changes state of repository, but it changes only
-the branch we have created exactly for this purpose.
--- 
-Jakub Narebski
-Poland
+--=20
+Catalin
