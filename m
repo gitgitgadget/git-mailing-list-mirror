@@ -1,74 +1,90 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Pushing vs. alternates
-Date: Tue, 24 Oct 2006 10:33:34 -0700
-Message-ID: <7vmz7lhb4h.fsf@assigned-by-dhcp.cox.net>
-References: <20061024035335.GW20017@pasky.or.cz>
-	<7vmz7muvqu.fsf@assigned-by-dhcp.cox.net>
-	<20061024112028.GY20017@pasky.or.cz>
-	<7vzmblhc3y.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [ANNOUNCE] repo.or.cz now supports "project forks"
+Date: Tue, 24 Oct 2006 19:39:43 +0200
+Message-ID: <20061024173943.GF20017@pasky.or.cz>
+References: <20061024045201.GX20017@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 24 19:34:19 2006
+X-From: git-owner@vger.kernel.org Tue Oct 24 19:40:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcQ9k-00027q-Lv
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 19:33:41 +0200
+	id 1GcQFi-0003pj-Vs
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 19:39:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161111AbWJXRdg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Oct 2006 13:33:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161115AbWJXRdg
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 13:33:36 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:16619 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1161111AbWJXRdg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Oct 2006 13:33:36 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061024173335.GYNB12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 24 Oct 2006 13:33:35 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id eHZJ1V00X1kojtg0000000
-	Tue, 24 Oct 2006 13:33:19 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <7vzmblhc3y.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Tue, 24 Oct 2006 10:12:17 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161114AbWJXRjq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Oct 2006 13:39:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161112AbWJXRjq
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 13:39:46 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:19678 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1161114AbWJXRjp (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 13:39:45 -0400
+Received: (qmail 17932 invoked by uid 2001); 24 Oct 2006 19:39:43 +0200
+To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20061024045201.GX20017@pasky.or.cz>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29995>
 
-Junio C Hamano <junkio@cox.net> writes:
+Dear diary, on Tue, Oct 24, 2006 at 06:52:01AM CEST, I got a letter
+where Petr Baudis <pasky@suse.cz> said that...
+>   FYI, the http://repo.or.cz/ public Git hosting now supports project
+> forking, which basically means that if you've done something cool to an
+> existing project and want to publish your work, you can create a "fork"
+> of the project on repo.or.cz and it will group nicely together in gitweb
+> and users will be hinted about the possibility to use --reference when
+> cloning your changes; also, repo.or.cz disk space will be conserved
+> thanks to the alternates mechanism. ;-)
+> 
+>   The other main goal aside gitweb grouping wasn't achieved yet though -
+> greatly reduced push times. Hey, pushing Git to a new repository takes
+> inordinate amount of time (actually also mostly because all the objects are
+> unpacked on the remote side, which is silly as well), I didn't try pushing
+> Linux kernel to a fresh repository but it'll likely take ages. The idea
+> would be to make git-receive-pack take alternates into account when
+> announcing what commits does the server side have, but someone will need
+> to code up a patch for that...
 
->> Well, I would send haves for the alternate repository anyway,...
->
-> While I agree it would be an optimization if it worked, there is
-> one conceptual problem here though, coming from old warts.  It's
-> not alternate "repository" but it is alternate object store.
-> There is no guarantee that refs/ directory that is next to the
-> objects/ alternate points at is related to that object store,
-> for historical reasons (i.e. we have separate GIT_DIR and
-> GIT_OBJECT_DIRECTORIES).
+  BTW, someone asked me why not stuff it in branches in the same
+directory, and it's a valid question. It's been my original plan (and I
+might still implement it sometimes since it makes sense in some
+situations) but after I formulated it at #git I realized that it's
+really a no-go for the general case.
 
-Having said that, I am not opposed to the idea of using refs/
-next to objects/ your alternate points at.  Certainly I would
-not have any objection (heck I would even volunteer to code it
-myself if only to see how much we can save) if we did not have
-GIT_OBJECT_DIRECTORY in the system (i.e. if we had a guarantee
-from the beginning that objects/ directory that is next to refs/
-*must* be related).  So I am Ok with this change, but I would
-feel better if we add a few sentences to repository-layout.txt
-that warns about the (technically new although it is very likely
-that violating it would not have been useful at all) restriction.
+  The plan was to have "personal mob-branches", mob/$login/*. Anyone can
+make any branch in the mob/$login namespace in any project. But I didn't
+feel like implementing it for now, because:
 
-I suspect we could do the same for fetching in principle,
-e.g. when you track Linus's and a subsystem maintainer's trees
-and these two repositories are linked with alternates at your
-end.  Fetching into your copy of Linus's and then fetching into
-your copy of subsystem would be optimized the same way if you
-send refs/ from the alternates as HAVEs, right?
+	* git-clone / cg-clone -a would clone even the potential gazillion
+	  of mob/$login branches any weirdo can create
+
+	* You get own heads namespace but own tags namespace would be
+	  I think more inconvenient since you tend to refere to tags
+	  much more often than to branches (if you even have one than
+	  one branch) and having to write mob/mynameisverylong/xyzzy-1.2.3.4
+	  is, er...
+
+	* One of the big points of forks is that you can fork even
+	  mirrored projects. If you start to create branches in mirrored
+	  projects, you can get into very ugly problems when by a chance
+	  the mirrored project gets such a branch as well
+
+  One sad consequence is that graphiclog does not include the forked
+projects, OTOH perhaps its view would be way too cluttered if it did,
+and I want to optimize for a large number of forks. So it would be more
+sensible if someone (hint, hint) patched git-browser in a way so that
+forked projects include the "forkee"'s refs in the view as well, in
+addition to own refs. And perhaps a more general notion for this in the
+Git world would be interesting.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
