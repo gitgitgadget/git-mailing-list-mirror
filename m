@@ -1,73 +1,122 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: renames in StGIT
-Date: Tue, 24 Oct 2006 10:17:32 +0200
-Message-ID: <20061024081732.GA29265@diana.vm.bytemark.co.uk>
-References: <20061022013943.GA16341@diana.vm.bytemark.co.uk> <b0943d9e0610230947j79449a4dm8736f480f039c230@mail.gmail.com> <20061023125344.f82426ad.seanlkml@sympatico.ca>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: VCS comparison table
+Date: Tue, 24 Oct 2006 10:37:10 +0200
+Message-ID: <200610241037.11001.jnareb@gmail.com>
+References: <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org> <46a038f90610231739x5beffc90u33c6a81f461974ec@mail.gmail.com> <845b6e870610240052l70ad72f4ma30065f151828dfd@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 24 10:18:25 2006
+Cc: "Martin Langhoff" <martin.langhoff@gmail.com>,
+	"Linus Torvalds" <torvalds@osdl.org>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 24 10:37:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcHUA-0004tS-Cm
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 10:18:10 +0200
+	id 1GcHmH-0000Wh-Vo
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 10:36:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030208AbWJXIRx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006 04:17:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030214AbWJXIRx
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 04:17:53 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:18702 "EHLO
-	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
-	id S1030213AbWJXIRu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Oct 2006 04:17:50 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1GcHTY-0007ei-00; Tue, 24 Oct 2006 09:17:32 +0100
-To: Sean <seanlkml@sympatico.ca>
+	id S1030213AbWJXIgt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006 04:36:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030217AbWJXIgt
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 04:36:49 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:24793 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S1030213AbWJXIgs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Oct 2006 04:36:48 -0400
+Received: by ug-out-1314.google.com with SMTP id 32so147795ugm
+        for <git@vger.kernel.org>; Tue, 24 Oct 2006 01:36:45 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=QZDof2nE+/OI4HQSXK7Th5Ewle/+xtiSSKmhYK2als1UY31L09Xw7Z7cV1KzsQzF044yB+X2YibEP7Bt6jBL8+odl2qQcQqtEv2Pr9HGP9UgKx+DDHikcmFrfg53NhLNc103AIiOXwzTq86YFDk7qicI9XgloalEsupvAJwWW/U=
+Received: by 10.66.232.10 with SMTP id e10mr7976493ugh;
+        Tue, 24 Oct 2006 01:36:45 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
+        by mx.google.com with ESMTP id e33sm344371ugd.2006.10.24.01.36.45;
+        Tue, 24 Oct 2006 01:36:45 -0700 (PDT)
+To: "Erik =?iso-8859-1?q?B=E5gfors?=" <zindar@gmail.com>
+User-Agent: KMail/1.9.3
+In-Reply-To: <845b6e870610240052l70ad72f4ma30065f151828dfd@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20061023125344.f82426ad.seanlkml@sympatico.ca>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29944>
 
-On 2006-10-23 12:53:44 -0400, Sean wrote:
+Erik B=E5gfors wrote:
+> I think this disussion is getting out of hand.
+>=20
+> There are a few things that are being discussed
+> 1. Revnos are bad/good
+> 2. treating "leftmost" parrent special is bad/good
+> 3. plugins are useless/useful
+> 4. And now, storing branch information should be done manually (if
+> wanted) and not automatically.
+>=20
+> 1. I don't really care, I haven't seen any confusion based on it, but
+> I don't have a very strong opinion about it either.
 
-> On Mon, 23 Oct 2006 17:47:06 +0100
-> "Catalin Marinas" <catalin.marinas@gmail.com> wrote:
->
-> > On 22/10/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> >
-> > > Should this perhaps be an item in the TODO list?
-> >
-> > Only if it doesn't drastically affect the performance.
->
-> There are some situation where it would be really quite handy. The
-> performance of the human having to hand resolve a failed push
-> because of renames is often worse ;o) If it does become a
-> performance problem, perhaps you could make it an optional parameter
-> to "stg push".
+To use revnos[*1*] you have to have branch as path through DAG. Bzr doe=
+s
+that by treating first parent special, which leads to empty merges
+in fast-forward case.
 
-Yes, this is my opinion too, both for patch generation and pushing.
-Having it always on is a bad idea at least for patch generation for
-obvious reasons, and may be a bad idea for pushing for performance
-reasons, but I definitely think there should be a flag to enable it.
-There are situations when you know your upstream can read git patches,
-and being able to retry a failed push with rename detection instead of
-having to resolve the conflict manually could save lots of time, as
-Sean said. Besides, Linus is always bragging about how fast git
-merging is, and we all trust Linus, right? :-)
+Using revnos as implemented in bzr leads to some (perhaps unforeseen)
+consequences.
 
-An optional flag is already available for the very handy "check if
-patch was merged upstream" feature, and it's definitely the right
-thing to do there. (Though I end up always using that flag even when I
-know my patches aren't in upstream, since the extra cost is barely
-noticeable.)
+[*1*] Meaning that revnos won't change on you.
 
+> 2. This is something I do care about. =A0For me, this is the only
+> logical way of doing it. It might be because I am used to it now, but
+> when I started to look at bzr/hg/git/darcs/etc, I just got a so much
+> more clear view of the history when running a standard log command,
+> that it was one of the first things that attracted me to bzr. This is
+> just a user talking.
+
+Git has reflog for when you are interested in branch tip history
+(which also stores "reason" for branch tip change: pull, amending
+a commit, rebase,...). Git doesn't unfortunately have git-ref-log
+command (or --ref option to git-log) to display reflog in user friendly=
+=20
+format.
+
+Git users are used to use graphical history viewers (mainly gitk and=20
+qgit, but there is also gitview, tig and git-browser) more to have=20
+clear view of history, view that log cannot provide.
+
+That said I _thing_ that caring about "branch identity" is just=20
+something you are used to, perhaps because bzr doesn't have wonderfull=20
+git log limiting specifiers aka. builtin git log searching (a..b,=20
+a...b, --max-count, -- <path>, --committer, --grep etc.).
+
+> There might be technical reasons why it's better to not do it, but fo=
+r
+> me it works the way I expect, therefore I'm happy
+
+I think it would be better to maintain "branch identity" separately and=
+=20
+not in DAG, but that might have other problems I have not seen.
+
+> 3. This is just silly
+
+I think the discussion/arguments were twofold.=20
+
+=46irst, Bazaar-NG has plugin infrastructure "for free" because it is=20
+written in Python, which allows modules loading and monkey-patching.=20
+Git core is written in C, and git is not yet fully libified.
+
+Second, all that can be done with plugins except for core changes can b=
+e=20
+done in Git writing scripts (this also allows for fast prototyping).=20
+All except core changes can be done writing few lines in C, but you=20
+have to compile against some version of Git, and don't have advantages=20
+of bultin command; git is OSS project.
+
+> 4. No comment.
+
+Storing branch information could be done automatically on demand ;-)
 --=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Jakub Narebski
+Poland
