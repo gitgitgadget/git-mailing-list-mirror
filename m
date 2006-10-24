@@ -1,122 +1,97 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH] Git-branch: fix regression and style issues
-Date: Tue, 24 Oct 2006 01:51:03 +0200
-Message-ID: <11616474633074-git-send-email-hjemli@gmail.com>
-References: <7vk62qwtk7.fsf@assigned-by-dhcp.cox.net>
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 24 01:51:41 2006
+From: Simon Arlott <simon@arlott.org>
+Subject: git.kernel.org disconnects when git-1.3.3 tries to pull changes
+Date: Tue, 24 Oct 2006 01:03:10 +0100
+Message-ID: <453D583E.3010601@simon.arlott.org.uk>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="------------enig609489218A2FF108540DAF7D"
+X-From: git-owner@vger.kernel.org Tue Oct 24 02:03:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gc9Zf-0005mO-R6
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 01:51:20 +0200
+	id 1Gc9lQ-00087b-Up
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 02:03:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932337AbWJWXvO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Oct 2006 19:51:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932339AbWJWXvO
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 19:51:14 -0400
-Received: from mail45.e.nsc.no ([193.213.115.45]:19193 "EHLO mail45.e.nsc.no")
-	by vger.kernel.org with ESMTP id S932337AbWJWXvN (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Oct 2006 19:51:13 -0400
-Received: from localhost.localdomain (ti231210a080-7372.bb.online.no [80.213.28.208])
-	by mail45.nsc.no (8.13.8/8.13.5) with ESMTP id k9NNp46X014421;
-	Tue, 24 Oct 2006 01:51:04 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
-X-Mailer: git-send-email 1.4.3.1.g4604-dirty
-In-Reply-To: <7vk62qwtk7.fsf@assigned-by-dhcp.cox.net>
-Date: Tue, 24 Oct 2006 01:45:46 +0200
+	id S932345AbWJXADZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Oct 2006 20:03:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932348AbWJXADZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 20:03:25 -0400
+Received: from blackhole.arlott.org.uk ([84.92.75.21]:16334 "EHLO
+	blackhole.arlott.org.uk") by vger.kernel.org with ESMTP
+	id S932345AbWJXADZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Oct 2006 20:03:25 -0400
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=exim; d=arlott.org;
+	h=Received:Message-ID:Date:From:User-Agent:MIME-Version:To:Subject:X-Enigmail-Version:OpenPGP:Content-Type;
+	b=KHqHFXn6KiM85IzD2IMqkM2qsCmbt914SGfaWc7rU5X+LM+IRoOfILfBzCdUpFaRh7LO9Z5p+lHY5yOFs0cZB1Gvh3k0kffZj7wP/ojzdOmjDu24FcwfwgeVedBRRGpc;
+Received: from redrum.lp0.eu ([2001:4bd0:1000:0:202:44ff:fe50:91af]:44590 ident=byte)
+	by blackhole.arlott.org.uk with esmtps (TLSv1:AES256-SHA:256)
+	id 1Gc9lJ-0005Cm-6f
+	for git@vger.kernel.org; Tue, 24 Oct 2006 01:03:22 +0100
+User-Agent: Thunderbird 1.5.0.5 (X11/20060819)
+To: git@vger.kernel.org
+X-Enigmail-Version: 0.94.0.0
+OpenPGP: id=89C93563
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29904>
 
-This is on top of my previuos patch to builtin-branch.c
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig609489218A2FF108540DAF7D
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
----
- builtin-branch.c |   17 ++++++++---------
- builtin.h        |    2 +-
- 2 files changed, 9 insertions(+), 10 deletions(-)
+$ git --version
+git version 1.3.3
 
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 3105efd..ffc2db0 100755
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -11,7 +11,7 @@ #include "commit.h"
- #include "builtin.h"
- 
- static const char builtin_branch_usage[] =
--"git-branch [(-d | -D) <branchname>] | [[-f] <branchname> [<start-point>]] | -r";
-+"git-branch (-d | -D) <branchname> | [-l] [-f] <branchname> [<start-point>] | [-r]";
- 
- 
- static const char *head;
-@@ -74,7 +74,7 @@ static void delete_branches(int argc, co
- 			printf("Error deleting branch '%s'\n", argv[i]);
- 		else
- 			printf("Deleted branch %s.\n", argv[i]);
--			
-+
- 		free(name);
- 	}
- }
-@@ -82,11 +82,11 @@ static void delete_branches(int argc, co
- static int ref_index, ref_alloc;
- static char **ref_list;
- 
--static int append_ref(const char *refname, const unsigned char *sha1, int flags, 
-+static int append_ref(const char *refname, const unsigned char *sha1, int flags,
- 		void *cb_data)
- {
- 	if (ref_index >= ref_alloc) {
--		ref_alloc = ref_alloc > 0 ? ref_alloc * 2 : 16;
-+		ref_alloc = alloc_nr(ref_alloc);
- 		ref_list = xrealloc(ref_list, ref_alloc * sizeof(char *));
- 	}
- 
-@@ -137,14 +137,14 @@ static void create_branch(const char *na
- 			die("Cannot force update the current branch.");
- 	}
- 
--	if (get_sha1(start, sha1))
-+	if (get_sha1(mkpath("%s^0", start), sha1))
- 		die("Not a valid branch point: '%s'.", start);
- 
- 	lock = lock_any_ref_for_update(ref, NULL);
- 	if (!lock)
- 		die("Failed to lock ref for update: %s.", strerror(errno));
--		
--	if (reflog){
-+
-+	if (reflog) {
- 		log_all_ref_updates = 1;
- 		snprintf(msg, sizeof msg, "branch: Created from %s", start);
- 	}
-@@ -199,9 +199,8 @@ int cmd_branch(int argc, const char **ar
- 		die("Failed to resolve HEAD as a valid ref.");
- 	if (strncmp(head, "refs/heads/", 11))
- 		die("HEAD not found below refs/heads!");
--		
- 	head += 11;
--	
-+
- 	if (delete)
- 		delete_branches(argc - i, argv + i, force_delete);
- 	else if (i == argc)
-diff --git a/builtin.h b/builtin.h
-index 144d299..9b4749f 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -15,8 +15,8 @@ extern int write_tree(unsigned char *sha
- extern int cmd_add(int argc, const char **argv, const char *prefix);
- extern int cmd_annotate(int argc, const char **argv, const char *prefix);
- extern int cmd_apply(int argc, const char **argv, const char *prefix);
--extern int cmd_branch(int argc, const char **argv, const char *prefix);
- extern int cmd_archive(int argc, const char **argv, const char *prefix);
-+extern int cmd_branch(int argc, const char **argv, const char *prefix);
- extern int cmd_cat_file(int argc, const char **argv, const char *prefix);
- extern int cmd_checkout_index(int argc, const char **argv, const char *prefix);
- extern int cmd_check_ref_format(int argc, const char **argv, const char *prefix);
--- 
-1.4.3.1.g4604-dirty
+$ git pull
+fatal: unexpected EOF
+Fetch failure: git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/lin=
+ux-2.6.git/
+
+[pid 14283] write(3, "0046git-upload-pack /pub/scm/linux/kernel/git/torva=
+lds/linux-2.6.git/\n", 70) =3D 70
+
+$ nc -vv git.kernel.org git
+DNS fwd/rev mismatch: zeus-pub.kernel.org !=3D zeus-pub1.kernel.org
+DNS fwd/rev mismatch: zeus-pub.kernel.org !=3D zeus-pub2.kernel.org
+zeus-pub.kernel.org [204.152.191.5] 9418 (git) open
+0046git-upload-pack /pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
+ sent 70, rcvd 0
+$
+
+<pasky> the difference seems to be just that newer git version sends a ho=
+st information
+<pasky> anyway, this isn't supposed to happen
+<pasky> could you mail the mailing list, please?
+
+--=20
+Simon Arlott
+
+
+--------------enig609489218A2FF108540DAF7D
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+
+iQIVAwUBRT1YRqRtx1WjQ8ihAQo05A/+JaS79rsOKkVVR6EjMuDEjb+TFD2CH3iR
+Hb+6X47O1bGxmhBej1vbqkrusuW8f0Q987FgpBF51yi6TjfUYXpi3aAMlH4jurNB
+3eLeYa9cPIEz8Qshj+f831TXgqQg45cYRcqkbIsNXHH769ujiq4s1piAmyvrHLgq
+viwZA5NLlHCJTvK6zw31kqVamVLnd/DoGzOLxyFr9QBrmntrstm+VSMiuBn2RiP8
+Rr9kQWjUg1K7pyhKqbJfH3Q9kZ5vLN1xvRlB2+8Z1gy+DgYUHqOF8q/M3QXft/jp
+qSkPEUHo1IF5Mrip/2CJY9vD5Z2/tv1sJY0DHBIlPBorAfDrneUe+Jgk6AvvweMG
+YhZKO4+GtR/lO8m+/Ghk3pODCZpxXRirNybOop8PSzlc8b/jSXX/lELT7FSKhzVK
+pPjlEJP7bO29ysb3H0N1gE64vl15L7JVB/80vP3as6LiVTxzr1dLjDyM4nPwXpBr
+QWEueT4APvp6ECp5b5bLX8qJ/CjT1uczFfpf+WmB0ejQQ0IW67eP9/3o7OiEDlpD
+YGYoVhJxYawOjchVALeDUs1upSWHxsvDGaxGd+ZspMzKzyKn1mGSBKDMYCp2Hsuu
+w5JW4HvPGJG+BFAo2z24dhwRQDxeDo1xhNXXOG1rm/D73Je5x605KUVFguQbDDWv
+Uz5bJWAl0Fg=
+=Z1KD
+-----END PGP SIGNATURE-----
+
+--------------enig609489218A2FF108540DAF7D--
