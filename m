@@ -1,101 +1,104 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [ANNOUNCE] GIT 1.4.3.2
-Date: Mon, 23 Oct 2006 23:27:07 -0700
-Message-ID: <7vd58irzyc.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: VCS comparison table
+Date: Mon, 23 Oct 2006 23:31:06 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610232318200.3962@g5.osdl.org>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+ <45349162.90001@op5.se> <453536AE.6060601@utoronto.ca> <200610172301.27101.jnareb@gmail.com>
+ <45354AD0.1020107@utoronto.ca> <BAYC1-PASMTP07AB11A64250AAF683424DAE0E0@CEZ.ICE>
+ <vpq4ptz2uh8.fsf@ecrins.imag.fr> <453DAC87.8050203@research.canon.com.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 24 08:27:22 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 24 08:31:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcFko-00006A-PX
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 08:27:15 +0200
+	id 1GcFor-0000s6-Ng
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 08:31:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752075AbWJXG1K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006 02:27:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752085AbWJXG1K
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 02:27:10 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:49071 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1752075AbWJXG1I convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 02:27:08 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061024062708.RYNF16798.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 24 Oct 2006 02:27:08 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id e6TB1V00a1kojtg0000000
-	Tue, 24 Oct 2006 02:27:12 -0400
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752088AbWJXGbX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Oct 2006 02:31:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752089AbWJXGbW
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 02:31:22 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:28555 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1752088AbWJXGbV (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 02:31:21 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9O6V7aX001206
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 23 Oct 2006 23:31:08 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9O6V6M1022026;
+	Mon, 23 Oct 2006 23:31:07 -0700
+To: Lachlan Patrick <loki@research.canon.com.au>
+In-Reply-To: <453DAC87.8050203@research.canon.com.au>
+X-Spam-Status: No, hits=-0.479 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29932>
 
-The latest maintenance release GIT 1.4.3.2 is available at the
-usual places:
 
-  http://www.kernel.org/pub/software/scm/git/
 
-  git-1.4.3.2.tar.{gz,bz2}			(tarball)
-  git-htmldocs-1.4.3.2.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.4.3.2.tar.{gz,bz2}		(preformatted docs)
-  RPMS/$arch/git-*-1.4.3.2-1.$arch.rpm	(RPM)
+On Tue, 24 Oct 2006, Lachlan Patrick wrote:
+> 
+> Can I ask the git folks what Sean meant in the above about a 'command'.
+> Are you talking about shell scripts? Is 'git' the only program you need?
 
-This is primarily to fix two rather embarrasing breakage
-discovered post 1.4.3.1 release.
+Historically, "git" was _only_ a wrapper program. When you did
 
- - The pager change to default to LESS=3DFRS exposed problem with less
-   that switches to alternate screen, shows its output and then switche=
-s
-   back immediately from the alternate screen afterwards -- which means
-   the user would not have a chance to see _anything_.
+	git log
 
- - Older upload-pack protocol clients did not pass host=3D and recent
-   git-daemon change to support virtual hosting did not handle this
-   correctly (although it attempted to do so, the check was borked).
+it just executed the real program called "git-log", which was often a 
+shell-script. That was just so that things could easily be extended, and 
+you could use shell-script for simple one-liner things, and native C for 
+more "core" stuff.
 
-----------------------------------------------------------------
+For example, "git log" used to be a one-line shell-script that just did
 
-Changes since v1.4.3.1 are as follows:
+	git-rev-list --pretty HEAD | LESS=-S ${PAGER:-less}
 
-Alexandre Julliard (1):
-      prune-packed: Fix uninitialized variable.
+but it ended up being a lot more capable, and eventually just rewritten 
+as an internal command..
 
-J. Bruce Fields (1):
-      Make prune also run prune-packed
+These days, most of the simple things like "git log" are all built into 
+the "git" program, although for anything not built in, it still acts as 
+just a wrapper, which allows not only random functionality to still be 
+written in shell (or sometimes perl), but also ends up being the simplest 
+possible plug-in mechanism: you can define your own commands by just 
+writing a shell-script thing, calling it "git-mycommand", installing it in 
+the proper place, and it ends up being accessible as "git mycommand".
 
-Jakub Narebski (2):
-      gitweb: Whitespace cleanup - tabs are for indent, spaces are for =
-align (2)
-      gitweb: Do not esc_html $basedir argument to git_print_tree_entry
+That allows for easy prototyping in your language of choice.
 
-Jim Meyering (2):
-      git-clone: honor --quiet
-      xdiff/xemit.c (xdl_find_func): Elide trailing white space in a co=
-ntext header.
+> AFAIK, 'bzr' is the sole program in Bazaar, and everything is done with
+> command line options to bzr. Is that true of git? To what extent is git
+> tied to a [programmable] shell? I've heard someone say there's no
+> Windows version of git for some reason, can someone elaborate?
 
-Junio C Hamano (2):
-      pager: default to LESS=3DFRSX not LESS=3DFRS
-      daemon: do not die on older clients.
+Almost all of "core" git is pure C, which unlike something like python or 
+perl obviously tends to have a fair amount of system issues. That said, 
+much of it really is fairly portable, so doing the built-in git stuff 
+should _largely_ work even natively under Windows with some effort.
 
-Karl Hasselstr=F8m (1):
-      git-vc: better installation instructions
+The problem ends up being that few enough people seem to develop under 
+Windows, and the cygwin port works better (because it handles a number of 
+the portability issues and also handles the scripts that are still shell). 
+Those two issues seem to mean that not a lot of effort has been put into 
+aiming for a native windows binary (or into moving away from shell 
+scripts).
 
-Lars Hjemli (1):
-      Fix usagestring for git-branch
+Most of the shell scripts really are fairly simple. So if somebody 
+_really_ wanted to, it would probably not be hard to spend some effort to 
+either just write them as C and turn them into built-ins, or porting them 
+to some other scripting language.
 
-Petr Baudis (1):
-      gitweb: Fix setting $/ in parse_commit()
+Of course, most Windows users don't seem to really want a command line 
+interface at all. IDE integration would appear to be more interesting to 
+some people.
 
-Rene Scharfe (1):
-      git-merge: show usage if run without arguments
-
-Santi B=E9jar (1):
-      Documentation for the [remote] config
+		Linus
