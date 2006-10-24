@@ -1,67 +1,72 @@
-From: Erik Mouw <erik@harddisk-recovery.com>
+From: Tobias Toedter <t.toedter@gmx.net>
 Subject: Re: Question about commit message conventions
-Date: Tue, 24 Oct 2006 16:08:56 +0200
-Organization: Harddisk-recovery.com
-Message-ID: <20061024140856.GH5639@harddisk-recovery.com>
-References: <200610241549.48238.t.toedter@gmx.net>
+Date: Tue, 24 Oct 2006 16:14:01 +0200
+Message-ID: <200610241614.07030.t.toedter@gmx.net>
+References: <200610241549.48238.t.toedter@gmx.net> <ehl6n6$6jn$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 24 16:10:20 2006
+Content-Type: multipart/signed;
+  boundary="nextPart1417011.MOjQ0hG7FC";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Oct 24 16:15:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcMy6-00027B-Mv
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 16:09:27 +0200
+	id 1GcN2o-0003Lm-WC
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 16:14:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030223AbWJXOJA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Oct 2006 10:09:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030238AbWJXOJA
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 10:09:00 -0400
-Received: from dtp.xs4all.nl ([80.126.206.180]:12707 "HELO abra2.bitwizard.nl")
-	by vger.kernel.org with SMTP id S1030223AbWJXOI7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 10:08:59 -0400
-Received: (qmail 28179 invoked from network); 24 Oct 2006 16:08:56 +0200
-Received: from unknown (HELO zurix.bitwizard.nl) (192.168.234.26)
-  by abra2.bitwizard.nl with SMTP; 24 Oct 2006 16:08:56 +0200
-Received: from erik by zurix.bitwizard.nl with local (Exim 3.36 #1 (Debian))
-	id 1GcMxc-0002PF-00; Tue, 24 Oct 2006 16:08:56 +0200
-To: Tobias Toedter <t.toedter@gmx.net>
-Content-Disposition: inline
-In-Reply-To: <200610241549.48238.t.toedter@gmx.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S965147AbWJXOOP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Oct 2006 10:14:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965150AbWJXOOP
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 10:14:15 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40845 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S965147AbWJXOOO (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 10:14:14 -0400
+Received: (qmail invoked by alias); 24 Oct 2006 14:14:12 -0000
+Received: from d034248.adsl.hansenet.de (EHLO homer.local) [80.171.34.248]
+  by mail.gmx.net (mp019) with SMTP; 24 Oct 2006 16:14:12 +0200
+X-Authenticated: #7842102
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.1
+In-Reply-To: <ehl6n6$6jn$1@sea.gmane.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29979>
 
-On Tue, Oct 24, 2006 at 03:49:44PM +0200, Tobias Toedter wrote:
-> although I've read the documentation of git very carefully, I could not find 
-> anything related to certain commit message conventions. It would be great 
-> if someone here could explain a few things, maybe this could be added to 
-> the wiki afterwards (<http://git.or.cz/gitwiki/CommitMessageConventions>).
-> 
-> First of all, what's the intended use of the "Signed-off-by:" lines? Does it 
-> make sense to add my name there, even when I'm listed as the author or 
-> committer of a commit? I thought that they are intended mostly to note the 
-> approval of other developers.
+--nextPart1417011.MOjQ0hG7FC
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-See Documentation/SubmittingPatches. You basically say you have the
-right to submit the patch.
+On Tuesday 24 October 2006 16:08, Jakub Narebski wrote:
+> Tobias Toedter wrote:
+> > although I've read the documentation of git very carefully
+[...]=20
+> From Documentation/SubmittingPatches:
 
-> On the other hand, concerning the approval of other developers, what's the 
-> difference between "Signed-off-by:" and "Acked-by:"? Are there any 
-> more "*-by:" fields that are in use?
+D'oh! Thanks.
 
-Acked-by is usually used when someone (not the upstream maintainer the
-patch was send to) agrees with the patch. I.e.: (s)he says the content
-of the patch is OK without actually acknowledging something about the
-right to submit.
+Regards,
+Tobias
 
+=2D-=20
+Tobias Toedter   | "I don't care to belong to a club that accepts people
+Hamburg, Germany | like me as members." -- Groucho Marx
 
-Erik
+--nextPart1417011.MOjQ0hG7FC
+Content-Type: application/pgp-signature
 
--- 
-+-- Erik Mouw -- www.harddisk-recovery.com -- +31 70 370 12 90 --
-| Lab address: Delftechpark 26, 2628 XH, Delft, The Netherlands
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQBFPh+uCqqEJ0Fs8twRArHTAJ9AEO4IVEhdBZdEjHZxgszjAsuRuACgnT+7
+f/d8MxQ/kLuBDr7CbPcONzs=
+=ZsJb
+-----END PGP SIGNATURE-----
+
+--nextPart1417011.MOjQ0hG7FC--
