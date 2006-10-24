@@ -1,98 +1,76 @@
-From: Jelmer Vernooij <jelmer@samba.org>
-Subject: Re: VCS comparison table
-Date: Tue, 24 Oct 2006 11:30:33 +0200
-Message-ID: <20061024093033.GA23906@rhonwyn.vernstok.nl>
-References: <20061022074513.GF29927@artax.karlin.mff.cuni.cz> <200610221105.26421.jnareb@gmail.com> <845b6e870610220256u39d3d06wefd4f71851670812@mail.gmail.com> <87zmbozau2.wl%cworth@cworth.org> <20061022185350.GW75501@over-yonder.net> <Pine.LNX.4.64.0610231018410.3962@g5.osdl.org> <20061023222131.GB17019@over-yonder.net> <ehjgli$lft$1@sea.gmane.org> <845b6e870610231614y681e64eu33bb0806f530c742@mail.gmail.com> <Pine.LNX.4.64.0610231623340.3962@g5.osdl.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: A note from the maintainer
+Date: Tue, 24 Oct 2006 11:37:23 +0200
+Organization: At home
+Message-ID: <ehkmrn$385$1@sea.gmane.org>
+References: <7vk62qhy4k.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="vkogqOf2sHV7VnPd"
-Cc: Erik B?gfors <zindar@gmail.com>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 24 11:31:38 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Tue Oct 24 11:38:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcId3-0003KA-1o
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 11:31:25 +0200
+	id 1GcIjO-0004Zl-HM
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 11:38:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965096AbWJXJbV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Oct 2006 05:31:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965104AbWJXJbV
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 05:31:21 -0400
-Received: from smtp-vbr10.xs4all.nl ([194.109.24.30]:38158 "EHLO
-	smtp-vbr10.xs4all.nl") by vger.kernel.org with ESMTP
-	id S965096AbWJXJbU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Oct 2006 05:31:20 -0400
-Received: from rhonwyn.vernstok.nl (a62-251-123-16.adsl.xs4all.nl [62.251.123.16])
-	by smtp-vbr10.xs4all.nl (8.13.8/8.13.8) with ESMTP id k9O9V1uF062730;
-	Tue, 24 Oct 2006 11:31:01 +0200 (CEST)
-	(envelope-from jelmer@rhonwyn.vernstok.nl)
-Received: from localhost (localhost [127.0.0.1])
-	by rhonwyn.vernstok.nl (Postfix) with ESMTP id EB09B39A3B8;
-	Tue, 24 Oct 2006 11:30:50 +0200 (CEST)
-Received: from rhonwyn.vernstok.nl ([127.0.0.1])
-	by localhost (rhonwyn.vernstok.nl [127.0.0.1]) (amavisd-new, port 10024)
-	with SMTP id 23664-05; Tue, 24 Oct 2006 11:30:33 +0200 (CEST)
-Received: by rhonwyn.vernstok.nl (Postfix, from userid 1000)
-	id 364F739A3C1; Tue, 24 Oct 2006 11:30:33 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0610231623340.3962@g5.osdl.org>
-X-Operating-System: Linux rhonwyn.vernstok.nl 2.6.15-27-server
-User-Agent: Mutt/1.5.11
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1030254AbWJXJh4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006 05:37:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030255AbWJXJhz
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 05:37:55 -0400
+Received: from main.gmane.org ([80.91.229.2]:33950 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1030254AbWJXJhz (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 05:37:55 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GcIj2-0004Vp-1I
+	for git@vger.kernel.org; Tue, 24 Oct 2006 11:37:36 +0200
+Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Oct 2006 11:37:36 +0200
+Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Oct 2006 11:37:36 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29955>
 
+Junio C Hamano wrote:
 
---vkogqOf2sHV7VnPd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> * Mailing list.
+>=20
+> The development is primarily done on this mailing list you are
+> reading right now.
+>=20
+> If you have patches, please send them to the list, following
+> Documentation/SubmittingPatches.
+>=20
+> The list is available at various public sites as well:
+>=20
+> =A0=A0=A0=A0=A0=A0=A0=A0http://news.gmane.org/gmane.comp.version-cont=
+rol.git
+> =A0=A0=A0=A0=A0=A0=A0=A0http://marc.theaimsgroup.com/?l=3Dgit
 
-On Mon, Oct 23, 2006 at 04:24:30PM -0700, Linus Torvalds wrote:
-> On Tue, 24 Oct 2006, Erik B?gfors wrote:
-> > I don't see any problem doing a "gitk --all" equivalent in bzr.
-> The problem? How do you show a commit that is _common_ to two branches,=
-=20
-> but has different revision names in them?
-It'll have the same revision name. The revision no's will be
-different, sure, but that's not a problem.
+It is also available via GMane NNTP (mail to news) interface as
 
-> Do you _finally_ see what is so wrong with this whole per-branch naming?
-revnos are the only naming bit that is branch-specific.
+  nntp://news.gmane.org/gmane.comp.version-control.git
 
-I guess one way of looking at revnos is to regard them completely as a=20
-command-line ui thing.  They're not explicitly stored anywhere on
-disk but just an easy way for users to refer to revisions on a
-per-branch basis.=20
+so you can read it using your favourite news reader, without need
+to be subscribed to mailing list.
 
-The graphical frontends to bzr, for example, don't know about revno's but=
-=20
-only about revids.
-
-Cheers,
-
-Jelmer
-
+It is better to send patches via email, not via news as 1.) news reader=
+ are
+more likely to munge whitespace, 2) mail<->news gateway might munge
+whitespace on it's own, though.
 --=20
-Jelmer Vernooij <jelmer@samba.org> - http://jelmer.vernstok.nl/
-Currently playing:=20
-
---vkogqOf2sHV7VnPd
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.2 (GNU/Linux)
-
-iD8DBQFFPd05Pa9Uoh7vUnYRAlwwAKCHGkYxoaSpRI+lbTx7iga/t9QTEwCeMJCw
-kiDJKfApWcAPxM/xuTvYMpo=
-=2y2N
------END PGP SIGNATURE-----
-
---vkogqOf2sHV7VnPd--
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
