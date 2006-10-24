@@ -1,107 +1,68 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 2/1 (amend)] gitweb: Use fixed string for "next" link in commitdiff view
-Date: Tue, 24 Oct 2006 11:04:18 +0200
-Message-ID: <200610241104.18517.jnareb@gmail.com>
-References: <200610230037.57183.jnareb@gmail.com> <200610240008.08325.jnareb@gmail.com> <20061023232117.GV20017@pasky.or.cz>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: renames in StGIT
+Date: Tue, 24 Oct 2006 11:16:20 +0200
+Message-ID: <20061024091620.GB29265@diana.vm.bytemark.co.uk>
+References: <20061022013943.GA16341@diana.vm.bytemark.co.uk> <b0943d9e0610230947j79449a4dm8736f480f039c230@mail.gmail.com> <20061023125344.f82426ad.seanlkml@sympatico.ca> <20061024081732.GA29265@diana.vm.bytemark.co.uk> <b0943d9e0610240148s15d6ec5ch6114360a603fcd71@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 24 11:04:55 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sean <seanlkml@sympatico.ca>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 24 11:16:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcIDH-0006Go-Jq
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 11:04:48 +0200
+	id 1GcIOg-0000Fd-U5
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 11:16:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030243AbWJXJD5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Oct 2006 05:03:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030244AbWJXJD4
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 05:03:56 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:61484 "EHLO
-	ug-out-1314.google.com") by vger.kernel.org with ESMTP
-	id S1030243AbWJXJDz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Oct 2006 05:03:55 -0400
-Received: by ug-out-1314.google.com with SMTP id 32so150640ugm
-        for <git@vger.kernel.org>; Tue, 24 Oct 2006 02:03:52 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Sxvc8TYsr3SkaI3RqpnLZeBTh8lsmiRHx7zNKKedFBggbqmnirA0XC8IhGra+3MtApm+KEWKv/qiuaWfhVsg/u4hlklWiGMZXAEewobPcjULPW4IVtxSb3FA6t4bCkMsDoFkSlj+03QxWnb0w2ZvqSprGwz/UNaldZMl0szqEF8=
-Received: by 10.66.244.10 with SMTP id r10mr8468763ugh;
-        Tue, 24 Oct 2006 02:03:52 -0700 (PDT)
-Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
-        by mx.google.com with ESMTP id e33sm377322ugd.2006.10.24.02.03.52;
-        Tue, 24 Oct 2006 02:03:52 -0700 (PDT)
-To: Petr Baudis <pasky@suse.cz>
-User-Agent: KMail/1.9.3
-In-Reply-To: <20061023232117.GV20017@pasky.or.cz>
+	id S1030208AbWJXJQb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006 05:16:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965122AbWJXJQb
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 05:16:31 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:52238 "EHLO
+	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
+	id S965121AbWJXJQa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Oct 2006 05:16:30 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1GcIOS-0007v8-00; Tue, 24 Oct 2006 10:16:20 +0100
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <b0943d9e0610240148s15d6ec5ch6114360a603fcd71@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29950>
 
-Use fixed string instead of shortened SHA1 identifier of commit
-as a name for "mext" link in commitdiff view.
+On 2006-10-24 09:48:44 +0100, Catalin Marinas wrote:
 
-While at it make sure that we don't mistake option for a second
-commit.
+> Actually, it might not be a big performance impact. For diff
+> generation in the export and mail commands, we should have a flag.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/gitweb.perl |   17 +++++++----------
- 1 files changed, 7 insertions(+), 10 deletions(-)
+Agreed.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 4241d5c..9c81214 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3289,17 +3289,14 @@ sub git_commitdiff {
- 			                       hash=>$hash, hash_parent=>$hash_parent)},
- 			        "raw");
- 
--		if (defined $hash_parent) {
-+		if (defined $hash_parent && $hash_parent !~ m/^-/) {
- 			# commitdiff with two commits given
--			my $hash_parent_short = $hash_parent;
--			if ($hash_parent =~ m/^[0-9a-fA-F]{40}$/) {
--				$hash_parent_short = substr($hash_parent, 0, 7);
--			}
-+			# second "commit" is not in fact diff option
- 			$formats_nav .=
--				' (from: ' .
-+				' (' .
- 				$cgi->a({-href => href(action=>"commitdiff",
- 				                       hash=>$hash_parent)},
--				        esc_html($hash_parent_short)) .
-+				        'from') .
- 				')';
- 		} elsif (!$co{'parent'}) {
- 			# --root commitdiff
-@@ -3307,10 +3304,10 @@ sub git_commitdiff {
- 		} elsif (scalar @{$co{'parents'}} == 1) {
- 			# single parent commit
- 			$formats_nav .=
--				' (parent: ' .
-+				' (' .
- 				$cgi->a({-href => href(action=>"commitdiff",
- 				                       hash=>$co{'parent'})},
--				        esc_html(substr($co{'parent'}, 0, 7))) .
-+				        'parent') .
- 				')';
- 		} else {
- 			# merge commit
-@@ -3319,7 +3316,7 @@ sub git_commitdiff {
- 				join(' ', map {
- 					$cgi->a({-href => href(action=>"commitdiff",
- 					                       hash=>$_)},
--					        esc_html(substr($_, 0, 7)));
-+					        'parent');
- 				} @{$co{'parents'}} ) .
- 				')';
- 		}
--- 
-1.4.2.1
+> The push operation might not need a flag since it will only checks
+> renames if all the other operations failed. A push with merge
+> detection has the steps below (if one succeeds, push is finished):
+>
+> 1. check (exact) patch merges by reverse-applying the diff
+> 2. apply the diff with git-diff | git-apply since this is faster
+>    than a three-way merge
+> 3. try a three-way merge between head, bottom and top
+>
+> Step 3 above is handled per file by the
+> stgit.gitmergeonefile.merge() function. This is the place where we
+> should have the rename detection. Since, the majority of the patches
+> don't rename files and, in most cases, the push finishes at step 2,
+> it is probably safe to extend this function and the users won't
+> notice a speed difference.
+>
+> I'll add it to the TODO list.
+
+Sounds good. I had a feeling it ought to be basically free in the
+majority of cases, so I'm glad to learn I'm right. :-)
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
