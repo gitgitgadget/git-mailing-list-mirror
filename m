@@ -1,63 +1,71 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Pushing vs. alternates
-Date: Tue, 24 Oct 2006 13:20:28 +0200
-Message-ID: <20061024112028.GY20017@pasky.or.cz>
-References: <20061024035335.GW20017@pasky.or.cz> <7vmz7muvqu.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] gitweb: Make search type a popup menu
+Date: Tue, 24 Oct 2006 13:27:27 +0200
+Message-ID: <20061024112727.GZ20017@pasky.or.cz>
+References: <20061024031546.2877.51620.stgit@rover> <ehkfis$6da$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 24 13:20:37 2006
+X-From: git-owner@vger.kernel.org Tue Oct 24 13:27:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcKKh-000746-II
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 13:20:35 +0200
+	id 1GcKRQ-0008O2-HG
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 13:27:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030301AbWJXLUa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Oct 2006 07:20:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030309AbWJXLUa
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 07:20:30 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:22920 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1030301AbWJXLU3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 07:20:29 -0400
-Received: (qmail 20374 invoked by uid 2001); 24 Oct 2006 13:20:28 +0200
-To: Junio C Hamano <junkio@cox.net>
+	id S1030318AbWJXL13 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Oct 2006 07:27:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030326AbWJXL13
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 07:27:29 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:908 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1030318AbWJXL12 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 07:27:28 -0400
+Received: (qmail 20928 invoked by uid 2001); 24 Oct 2006 13:27:27 +0200
+To: Jakub Narebski <jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vmz7muvqu.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <ehkfis$6da$1@sea.gmane.org>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29964>
 
-Dear diary, on Tue, Oct 24, 2006 at 07:29:45AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> Petr Baudis <pasky@ucw.cz> writes:
+Dear diary, on Tue, Oct 24, 2006 at 09:33:12AM CEST, I got a letter
+where Jakub Narebski <jnareb@gmail.com> said that...
+> Petr Baudis wrote:
 > 
-> >   I don't have time to code that myself right now, so I'm just tossing
-> > an idea around - pushing to a directory with alternates set up should
-> > avoid sending objects that are already in the alternate object database.
+> > This makes the multiple search types actually usable by the user;
+> > if you don't read the gitweb source, you don't even have an idea
+> > that you can write things like that there.
 > 
-> That is probably only relevant for the first time, since
-> subsequent pushes have refs from its own repository that tracks
-> the tips of branches that was pushed for the last time.
+> This is I think good change, although I'm not sure if I like changing
+> using search operators to using additional CGI parameter.
+> 
+> Having help page for search is _certainly_ very good change. Perhaps
+> we should put it out-of-line, not embedded? Just a thought...
 
-Well, I would send haves for the alternate repository anyway, since: you
-push your kernel branch, half a year passes, you merge with new
-development and want to push again; you really do not want to push
-everything that happenned over the last half a year. And sending the
-extra haves shouldn't hurt, right?
+You mean out-of-file? I've pondered it but I think this is simpler than
+having yet another external file with yet another configuration option,
+and the help file is not anyway likely something you will want to
+customize per-site.
 
-> And first time usage when you are initializing the repository
-> with alternates, you have direct access to that repository
-> (that's how you can set up alternates), you can as easily do the
-> initial fetch/clone as well at that time.
+> This patch changes search box into something similar to Google
+> "Advanced Search". Yet Google "Advanced Search" box generates search
+> query using search operators. Search operators are just more powerfull.
+> I know that gitweb doesn't use this power now (it uses only one operator,
+> first if I remember correctly), but we can do this in the future
+> (e.g. searching for both author and specified string in commit message,
+> or searching for given author OR given committer). Well, we can always
+> change it back...
 
-I don't understand this paragraph. This mail is about pushing, not
-fetch/clone. You can only push if your login access is reduced to
-git-shell, and something external could've set up your alternates.
+Well, yes, that's something we can do when we actually implement the
+operators, but I think doing it this way is less powerful, but much more
+*useful* since users not familiar with gitweb will have an actual idea
+on how to use it, and gitweb is something that will have 90% of users
+not familiar with it. So perhaps have an "extended" search type which
+will accept the keywords?
 
 -- 
 				Petr "Pasky" Baudis
