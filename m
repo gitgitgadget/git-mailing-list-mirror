@@ -1,71 +1,113 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git.kernel.org disconnects when git-1.3.3 tries to pull changes
-Date: Mon, 23 Oct 2006 18:23:34 -0700
-Message-ID: <7vbqo2wlpl.fsf@assigned-by-dhcp.cox.net>
-References: <453D583E.3010601@simon.arlott.org.uk>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: updating only changed files source directory?
+Date: Tue, 24 Oct 2006 03:33:18 +0200
+Message-ID: <ehjqgf$ggb$1@sea.gmane.org>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 24 03:23:41 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Oct 24 03:40:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcB12-0000sz-3G
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 03:23:40 +0200
+	id 1GcBHG-0003dk-EH
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 03:40:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964896AbWJXBXg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Oct 2006 21:23:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964900AbWJXBXf
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 21:23:35 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:30371 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S964896AbWJXBXf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Oct 2006 21:23:35 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
-          id <20061024012334.CTJZ16798.fed1rmmtao09.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 23 Oct 2006 21:23:34 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id e1PJ1V00U1kojtg0000000
-	Mon, 23 Oct 2006 21:23:18 -0400
-To: Simon Arlott <simon@arlott.org>
-In-Reply-To: <453D583E.3010601@simon.arlott.org.uk> (Simon Arlott's message of
-	"Tue, 24 Oct 2006 01:03:10 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S964982AbWJXBkR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Oct 2006 21:40:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964985AbWJXBkR
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Oct 2006 21:40:17 -0400
+Received: from main.gmane.org ([80.91.229.2]:51846 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964982AbWJXBkP (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Oct 2006 21:40:15 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1GcBGr-0003au-VL
+	for git@vger.kernel.org; Tue, 24 Oct 2006 03:40:03 +0200
+Received: from muurbloem.xs4all.nl ([213.84.26.127])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Oct 2006 03:40:01 +0200
+Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Oct 2006 03:40:01 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
+User-Agent: Thunderbird 1.5.0.7 (X11/20061008)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29912>
 
-Yes, this is a recent breakage.  Thanks for bringing it up.
 
-We need at least a fix like this in 'maint'.
+Hello there,
 
-diff --git a/daemon.c b/daemon.c
-index ad84928..e66bb80 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -450,6 +450,8 @@ void fill_in_extra_table_entries(struct 
- 	 * Replace literal host with lowercase-ized hostname.
- 	 */
- 	hp = interp_table[INTERP_SLOT_HOST].value;
-+	if (!hp)
-+		return;
- 	for ( ; *hp; hp++)
- 		*hp = tolower(*hp);
- 
-@@ -544,8 +546,10 @@ #endif
- 		loginfo("Extended attributes (%d bytes) exist <%.*s>",
- 			(int) pktlen - len,
- 			(int) pktlen - len, line + len + 1);
--	if (len && line[len-1] == '\n')
-+	if (len && line[len-1] == '\n') {
- 		line[--len] = 0;
-+		pktlen--;
-+	}
- 
- 	/*
- 	 * Initialize the path interpolation table for this connection.
+I'm just starting out with GIT.  Initially, I want to use experiment 
+with integrating it into our binary builder structure for LilyPond.
+
+The binary builder roughly does this:
+
+  1. get source code updates from a server to a single, local
+     repository. This is currently a git repository that is that
+     tracks our CVS server.
+
+  2. copy latest commit from a branch to separate source directory.
+     This copy should only update files that changed.
+
+  3. Incrementally compile from that source directory
+
+The binary builder does this for several branches and several
+platforms of the project. Due to parallel compilation, it might even
+be possible that different branches of are being checked out
+concurrently from a single repository.
+
+For a VCS, this is slightly nonstandard use, as we don't do any work
+in the working dir, we just compile from it, but have many working
+directories.
+
+
+I have some questions and remarks
+
+* Is there a command analogous to git-clone for updating a repository?
+Right now, I'm using a combination of
+
+   git-http-fetch -a <branch>  <url>
+   wget <url>/refs/head/<branch>    ## dump to <myrepo>/refs/head/<branch>
+
+for all branches I want to know about.  I was looking for a command
+that would update the heads of all branches.
+
+
+* Why is the order of args in git-http-fetch inconsistent with the
+order in git-fetch? in fetch, the repository comes first, in
+http-fetch, it comes last
+
+
+* How do I update a source directory?
+
+I can do the following
+
+   git --git-dir <myrepo> read-tree <committish>
+
+   cd <srcdir>
+   git --git-dir <myrepo> checkout-index -a -f
+
+Unfortunately, this touches all files, which messes up the timestamps
+triggering needless recompilation. How can I make checkout-index only
+touch files that have changed?  Or alternatively,  make checkout-index
+remember timestamps on files that didn't change?
+
+Of course, I can store the commitish of the last version of the
+srcdir, and apply the diff between both to the source directory, but 
+that seems somewhat convoluted. Is there a better way?
+
+
+* As far as I can see, there is no reason to have only one index in a
+git repository. Why isn't it possible to specify an alternate
+index-file with an option similar to --git-dir ?
+
+
+-- 
+  Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
