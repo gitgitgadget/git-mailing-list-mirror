@@ -1,126 +1,101 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: VCS comparison table
-Date: Tue, 24 Oct 2006 02:23:48 -0400
-Message-ID: <20061024062348.GA9947@spearce.org>
-References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com> <45349162.90001@op5.se> <453536AE.6060601@utoronto.ca> <200610172301.27101.jnareb@gmail.com> <45354AD0.1020107@utoronto.ca> <BAYC1-PASMTP07AB11A64250AAF683424DAE0E0@CEZ.ICE> <vpq4ptz2uh8.fsf@ecrins.imag.fr> <453DAC87.8050203@research.canon.com.au>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [ANNOUNCE] GIT 1.4.3.2
+Date: Mon, 23 Oct 2006 23:27:07 -0700
+Message-ID: <7vd58irzyc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 24 08:24:09 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 24 08:27:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcFhm-0007yw-Kl
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 08:24:07 +0200
+	id 1GcFko-00006A-PX
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 08:27:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752066AbWJXGXz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Oct 2006 02:23:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752069AbWJXGXz
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 02:23:55 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:28381 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S1752066AbWJXGXy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Oct 2006 02:23:54 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GcFhV-0001JS-Ah; Tue, 24 Oct 2006 02:23:49 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 53A5B21269E; Tue, 24 Oct 2006 02:23:48 -0400 (EDT)
-To: Lachlan Patrick <loki@research.canon.com.au>
-Content-Disposition: inline
-In-Reply-To: <453DAC87.8050203@research.canon.com.au>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752075AbWJXG1K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006 02:27:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752085AbWJXG1K
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 02:27:10 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:49071 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1752075AbWJXG1I convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 02:27:08 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061024062708.RYNF16798.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 24 Oct 2006 02:27:08 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id e6TB1V00a1kojtg0000000
+	Tue, 24 Oct 2006 02:27:12 -0400
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29931>
 
-Lachlan Patrick <loki@research.canon.com.au> wrote:
-> Can I ask the git folks what Sean meant in the above about a 'command'.
-> Are you talking about shell scripts? Is 'git' the only program you need?
+The latest maintenance release GIT 1.4.3.2 is available at the
+usual places:
 
-'git' is actually two things:
+  http://www.kernel.org/pub/software/scm/git/
 
-  1) Its a wrapper command which executes 'git-foo' if you call it
-     with 'foo' as its first parameter.  It searches for 'git-foo'
-     in the GIT_EXEC_PATH environment variable, which has a default
-     set at compile time, usually to the directory you are going to
-     install Git into.
+  git-1.4.3.2.tar.{gz,bz2}			(tarball)
+  git-htmldocs-1.4.3.2.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.4.3.2.tar.{gz,bz2}		(preformatted docs)
+  RPMS/$arch/git-*-1.4.3.2-1.$arch.rpm	(RPM)
 
-  2) Its most of the core Git plumbing.  There are currently around 48
-     'builtin' commands.  These are things which 'git' knows how to do
-     without executing another program.  If you look at the installation
-     these 48 builtin commands are just hardlinks back to 'git'.  For
-     example 'git-update-index' is really just a hardlink back to 'git'
-     and 'git' knows to perform the update index logic when its called
-     as either 'git-update-index' or as 'git update-index'.
+This is primarily to fix two rather embarrasing breakage
+discovered post 1.4.3.1 release.
 
-We're moving more towards #2, but there are still a large number
-of commands which fall into #1.
- 
-> AFAIK, 'bzr' is the sole program in Bazaar, and everything is done with
-> command line options to bzr. Is that true of git?
+ - The pager change to default to LESS=3DFRS exposed problem with less
+   that switches to alternate screen, shows its output and then switche=
+s
+   back immediately from the alternate screen afterwards -- which means
+   the user would not have a chance to see _anything_.
 
-No.  In Git at least half of the things Git can do are not builtin to
-'git' and thus require exec()'ing an external program (e.g. git-fetch).
-However these often appear as though they are command line options to
-'git' as 'git fetch' just means exec 'git-fetch' (by #1 above).
+ - Older upload-pack protocol clients did not pass host=3D and recent
+   git-daemon change to support virtual hosting did not handle this
+   correctly (although it attempted to do so, the check was borked).
 
-On the other hand there are a wide range of tools which are more or
-less the same thing, just with different options applied to them.
-All of the diff programs, log, whatchanged, show - these are all
-just variations on a theme.  Their individual implementations are
-very tiny as they all use the same library code.
+----------------------------------------------------------------
 
-> To what extent is git
-> tied to a [programmable] shell?
+Changes since v1.4.3.1 are as follows:
 
-Git is still very much tied to a shell.  For example 'git commit'
-is really the shell script 'git-commit'.  This is a rather long
-shell script and it does a lot of things for the user; not having
-it would make Git useless to for most people.  It also has not been
-rewritten in C.  There is a roadmap however to convert it to C to
-help remove the programmable shell requirement and people have been
-slowly performing the (rather tedious) conversion work.
+Alexandre Julliard (1):
+      prune-packed: Fix uninitialized variable.
 
-> I've heard someone say there's no
-> Windows version of git for some reason, can someone elaborate?
+J. Bruce Fields (1):
+      Make prune also run prune-packed
 
-Git runs on Cygwin.  But there's no native Win32 (without Cygwin)
-version of Git because:
+Jakub Narebski (2):
+      gitweb: Whitespace cleanup - tabs are for indent, spaces are for =
+align (2)
+      gitweb: Do not esc_html $basedir argument to git_print_tree_entry
 
- - Git uses POSIX APIs and expects POSIX behavior from the OS its
-   running on.  Without a compatability layer to make Windows act
-   like UNIX Git won't run.  Cygwin happens to be a really good
-   compatability layer.
+Jim Meyering (2):
+      git-clone: honor --quiet
+      xdiff/xemit.c (xdl_find_func): Elide trailing white space in a co=
+ntext header.
 
- - Git requires a Bourne shell for many of its important tools,
-   such as 'git commit'.  Windows lacks such a program, at least
-   out of the box, but its in Cygwin.
+Junio C Hamano (2):
+      pager: default to LESS=3DFRSX not LESS=3DFRS
+      daemon: do not die on older clients.
 
- - Git relies on a helper program called 'merge' to perform three
-   way file merges.  This tool may or may not be ported to native
-   Win32 (I don't know) but it is in Cygwin.
+Karl Hasselstr=F8m (1):
+      git-vc: better installation instructions
 
- - Git requires some libraries for certain features, such as libexpat
-   or libcurl.  I don't know if these are available for native Win32
-   but they are available on Cygwin.
+Lars Hjemli (1):
+      Fix usagestring for git-branch
 
- - Windows isn't the primary target platform for many of the Git
-   contributors.  Some consider the fact that it even runs there
-   at all a minor miracle, and that's only possible due to the hard
-   work the Cygwin folks have done.
+Petr Baudis (1):
+      gitweb: Fix setting $/ in parse_commit()
 
- - ... I'm sure there's other reasons ...
+Rene Scharfe (1):
+      git-merge: show usage if run without arguments
 
--- 
-Shawn.
+Santi B=E9jar (1):
+      Documentation for the [remote] config
