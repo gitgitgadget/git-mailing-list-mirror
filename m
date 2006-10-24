@@ -1,86 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 4/5] gitweb: Default to $hash_base or HEAD for $hash in "commit" and "commitdiff"
-Date: Sat, 18 Nov 2006 23:35:41 +0100
-Message-ID: <11638893462704-git-send-email-jnareb@gmail.com>
-References: <1163889342877-git-send-email-jnareb@gmail.com>
-NNTP-Posting-Date: Sat, 18 Nov 2006 22:34:53 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: git-fetch not working?
+Date: Tue, 24 Oct 2006 21:00:45 +0100
+Message-ID: <200610242100.52671.andyparkins@gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+  boundary="nextPart2523439.rL9G6X0b20";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 24 Oct 2006 20:03:58 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=VRFH+AQb4O2W2pXRVGwpalJAI/7JQYBf0URZathCZslo637AIncu8Zbb8AuaXUe7vu7nR5MAtjR0cpDT9djuqBYGDjCdL4eoa/gdk6M9OD6x4rfSNc2sH28gxaeiSXSkos+pZdHVT3hd5f+IuwwmZemSlzK0sGq786KFfjfhatk=
-X-Mailer: git-send-email 1.4.3.4
-In-Reply-To: <1163889342877-git-send-email-jnareb@gmail.com>
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:message-id;
+        b=obYjtFJ4bkVPhDsJnRy/mzF7y6J6VVRviu9MxFXz7u4fD6Oj5w0o0hEMmyru7+miKtIKPyzG9T9cbV4iOc8mzDY7qrHqNOU9uJ3+TJJ9XbtkAJGRBImv5LU6QX5KTpZTxiD8jkxlt35i+CjbxO6GtqxeBSJK9AocFsq8KM8IGSM=
+User-Agent: KMail/1.9.5
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30009>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlYlf-0001jk-2C for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 23:34:35 +0100
+ esmtp (Exim 4.43) id 1GcSUm-0003NZ-P9 for gcvg-git@gmane.org; Tue, 24 Oct
+ 2006 22:03:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755274AbWKRWeZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
- 17:34:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755275AbWKRWeY
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 17:34:24 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:12050 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1755274AbWKRWeV
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 17:34:21 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so953027ugc for
- <git@vger.kernel.org>; Sat, 18 Nov 2006 14:34:21 -0800 (PST)
-Received: by 10.67.99.1 with SMTP id b1mr5177230ugm.1163889260912; Sat, 18
- Nov 2006 14:34:20 -0800 (PST)
-Received: from roke.D-201 ( [81.190.24.209]) by mx.google.com with ESMTP id
- b35sm2288919ugd.2006.11.18.14.34.20; Sat, 18 Nov 2006 14:34:20 -0800 (PST)
-Received: from roke.D-201 (localhost.localdomain [127.0.0.1]) by roke.D-201
- (8.13.4/8.13.4) with ESMTP id kAIMZkfv015359; Sat, 18 Nov 2006 23:35:47 +0100
-Received: (from jnareb@localhost) by roke.D-201 (8.13.4/8.13.4/Submit) id
- kAIMZkWa015358; Sat, 18 Nov 2006 23:35:46 +0100
+ S1161219AbWJXUDa (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006
+ 16:03:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161223AbWJXUDa
+ (ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 16:03:30 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:30568 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1161219AbWJXUD3
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 16:03:29 -0400
+Received: by ug-out-1314.google.com with SMTP id 32so313136ugm for
+ <git@vger.kernel.org>; Tue, 24 Oct 2006 13:03:28 -0700 (PDT)
+Received: by 10.67.119.9 with SMTP id w9mr8069268ugm; Tue, 24 Oct 2006
+ 13:03:26 -0700 (PDT)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
+ mx.google.com with ESMTP id 59sm1161557ugf.2006.10.24.13.03.25; Tue, 24 Oct
+ 2006 13:03:26 -0700 (PDT)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Set $hash parameter to $hash_base || "HEAD" if it is not set (if it is
-not true to be more exact). This allows [hand-edited] URLs with 'action'
-"commit" or "commitdiff" but without 'hash' parameter.
+--nextPart2523439.rL9G6X0b20
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-If there is 'h' (hash) parameter provided, then gitweb tries
-to use this. HEAD is used _only_ if nether hash, nor hash_base
-are provided, i.e. for URL like below
-  URL?p=project.git;a=commit
-i.e. without neither 'h' nor 'hb'.
+Hello,
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/gitweb.perl |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+$ cat .git/remotes/origin=20
+URL: git://git.kernel.org/pub/scm/git/git.git
+Pull: refs/heads/master:refs/heads/up/master
+Pull: refs/heads/next:refs/heads/up/next
+Pull: refs/heads/maint:refs/heads/up/maint
+Pull: +refs/heads/pu:refs/heads/up/pu
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index eadaa31..5875ba0 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3450,6 +3450,7 @@ sub git_log {
- }
- 
- sub git_commit {
-+	$hash ||= $hash_base || "HEAD";
- 	my %co = parse_commit($hash);
- 	if (!%co) {
- 		die_error(undef, "Unknown commit object");
-@@ -3727,6 +3728,7 @@ sub git_blobdiff_plain {
- 
- sub git_commitdiff {
- 	my $format = shift || 'html';
-+	$hash ||= $hash_base || "HEAD";
- 	my %co = parse_commit($hash);
- 	if (!%co) {
- 		die_error(undef, "Unknown commit object");
--- 
-1.4.3.4
+$ git fetch
+fatal: unexpected EOF
+=46ailed to find remote refs
+
+$ ping -c1 git.kernel.org
+PING zeus-pub.kernel.org (204.152.191.5) 56(84) bytes of data.
+64 bytes from zeus-pub1.kernel.org (204.152.191.5): icmp_seq=3D1 ttl=3D54 t=
+ime=3D182=20
+ms
+
+Am I doing something wrong?
+
+
+Andy
+=2D-=20
+Dr Andrew Parkins, M Eng (Hons), AMIEE
+andyparkins@gmail.com
+
+--nextPart2523439.rL9G6X0b20
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQBFPnD0wQJ9gE9xL20RAiJQAKCSrY/yNbQqvYQCSC6uysNcqf8JSACaA7eD
+7DrXGnkOVPADdiDNn7JvcaM=
+=5b5j
+-----END PGP SIGNATURE-----
+
