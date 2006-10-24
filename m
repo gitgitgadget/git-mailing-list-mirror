@@ -1,84 +1,84 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: VCS comparison table
-Date: Mon, 23 Oct 2006 22:42:23 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610232239220.3962@g5.osdl.org>
-References: <200610221105.26421.jnareb@gmail.com>
- <845b6e870610220256u39d3d06wefd4f71851670812@mail.gmail.com>
- <87zmbozau2.wl%cworth@cworth.org> <20061022185350.GW75501@over-yonder.net>
- <Pine.LNX.4.64.0610231018410.3962@g5.osdl.org> <20061023222131.GB17019@over-yonder.net>
- <ehjgli$lft$1@sea.gmane.org> <845b6e870610231614y681e64eu33bb0806f530c742@mail.gmail.com>
- <Pine.LNX.4.64.0610231623340.3962@g5.osdl.org> <20061024002657.GD17019@over-yonder.net>
- <20061024003834.GE17019@over-yonder.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] Make git-branch a builtin
+Date: Tue, 24 Oct 2006 01:44:08 -0400
+Message-ID: <20061024054408.GA9724@spearce.org>
+References: <11616396262982-git-send-email-hjemli@gmail.com> <20061023215506.GB8344@spearce.org> <7vfydewqbb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org,
-	=?ISO-8859-1?Q?Erik_B=E5gfors?= <zindar@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 24 07:42:47 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 24 07:44:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcF3g-0001GS-AF
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 07:42:40 +0200
+	id 1GcF5D-0001TB-EF
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 07:44:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752066AbWJXFme (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Oct 2006 01:42:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752069AbWJXFme
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 01:42:34 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:385 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1752066AbWJXFmd (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 01:42:33 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9O5gPaX031276
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 23 Oct 2006 22:42:25 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9O5gNY7021006;
-	Mon, 23 Oct 2006 22:42:24 -0700
-To: "Matthew D. Fuller" <fullermd@over-yonder.net>
-In-Reply-To: <20061024003834.GE17019@over-yonder.net>
-X-Spam-Status: No, hits=-0.479 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.95__
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1752069AbWJXFoM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Oct 2006 01:44:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752070AbWJXFoM
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 01:44:12 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:34009 "EHLO
+	corvette.plexpod.net") by vger.kernel.org with ESMTP
+	id S1752069AbWJXFoL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Oct 2006 01:44:11 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GcF57-0007Su-SG; Tue, 24 Oct 2006 01:44:09 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 7D9F421269E; Tue, 24 Oct 2006 01:44:08 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vfydewqbb.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29925>
 
-
-
-On Mon, 23 Oct 2006, Matthew D. Fuller wrote:
-
-> On Mon, Oct 23, 2006 at 07:26:57PM -0500 I heard the voice of
-> Matthew D. Fuller, and lo! it spake thus:
-> > On Mon, Oct 23, 2006 at 04:24:30PM -0700 I heard the voice of
-> > Linus Torvalds, and lo! it spake thus:
-> > > 
-> > > The problem? How do you show a commit that is _common_ to two
-> > > branches, but has different revision names in them?
-> > 
-> > Why would you?
+Junio C Hamano <junkio@cox.net> wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
 > 
-> I beg your pardon; that was awful ambiguous of me.  I meant "In such a
-> case, where the whole purpose of what you're doing is to you're look
-> at multiple branches to see relationships between them, why WOULD you
-> be using branch-local identifiers for revisions at all?"
+> > Lars Hjemli <hjemli@gmail.com> wrote:
+> > [snip]
+> >> ---
+> >>  Makefile         |    3 +-
+> >>  builtin-branch.c |  217 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+> >>  builtin.h        |    1 +
+> >>  git-branch.sh    |  131 --------------------------------
+> >>  git.c            |    1 +
+> >>  5 files changed, 221 insertions(+), 132 deletions(-)
+> > [snip]
+> >> diff --git a/git-branch.sh b/git-branch.sh
+> >> deleted file mode 100755
+> >> index 4379a07..0000000
+> >> --- a/git-branch.sh
+> >> +++ /dev/null
+> >> @@ -1,131 +0,0 @@
+> > [snip 131 lines]
+> >
+> > Aside from compatability with non-Git tools...
+> >
+> > Wouldn't it make more sense to just include the full SHA1 of the
+> > file we are deleting rather than the entire 131 line negative diff?
+> 
+> How would you do "git apply -R" on something like that?
 
-Well, I would use the globally unique ones, certainly. It's the only thing 
-that makes sense.
+Uh, you have the full SHA1 in the index line.  So you just have to
+reattach that blob to the named path...  pretty simple actually.
 
-However, I'd also argue that once you start doing that, _mixing_ the 
-globally unique and stable ones and the "simple" ones is a mistake: you'd 
-be better off having told your users to use the global ones from the very 
-beginning, and trying to make _those_ as simple to use as possible.
+Of course this is yet another code path in apply and as Petr pointed
+out on this same thread its nice to know what you are deleting so
+you can compare it to what else is changing in the same patch... so
+this suggestion of mine is probably just a waste of bytes.
 
-Because once you start using both, you're just going to confuse your users 
-horribly, and they'll consider the globally unique one really irritating, 
-because they're used to using something totally different in most other 
-contexts.
-
-Using the _same_ names everywhere is just better. 
-
-		Linus
+-- 
+Shawn.
