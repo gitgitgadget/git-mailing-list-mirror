@@ -1,82 +1,81 @@
-From: Tobias Toedter <t.toedter@gmx.net>
-Subject: Question about commit message conventions
-Date: Tue, 24 Oct 2006 15:49:44 +0200
-Message-ID: <200610241549.48238.t.toedter@gmx.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Question about commit message conventions
+Date: Tue, 24 Oct 2006 16:08:02 +0200
+Organization: At home
+Message-ID: <ehl6n6$6jn$1@sea.gmane.org>
+References: <200610241549.48238.t.toedter@gmx.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2888093.YRmCuZOLDL";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Oct 24 15:50:06 2006
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue Oct 24 16:10:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcMfG-0005fo-38
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 15:49:58 +0200
+	id 1GcMy2-00027B-8Z
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 16:09:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965145AbWJXNty (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Oct 2006 09:49:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965146AbWJXNty
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 09:49:54 -0400
-Received: from mail.gmx.net ([213.165.64.20]:30907 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S965145AbWJXNtx (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 09:49:53 -0400
-Received: (qmail invoked by alias); 24 Oct 2006 13:49:52 -0000
-Received: from d034248.adsl.hansenet.de (EHLO homer.local) [80.171.34.248]
-  by mail.gmx.net (mp035) with SMTP; 24 Oct 2006 15:49:52 +0200
-X-Authenticated: #7842102
+	id S1030238AbWJXOJG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Oct 2006 10:09:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030318AbWJXOJG
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 10:09:06 -0400
+Received: from main.gmane.org ([80.91.229.2]:28864 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1030262AbWJXOJD (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 10:09:03 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GcMx7-0001qS-At
+	for git@vger.kernel.org; Tue, 24 Oct 2006 16:08:25 +0200
+Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Oct 2006 16:08:25 +0200
+Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Oct 2006 16:08:25 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-User-Agent: KMail/1.9.1
-X-Y-GMX-Trusted: 0
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29977>
 
---nextPart2888093.YRmCuZOLDL
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Tobias Toedter wrote:
 
-Hi,
+> Hi,
+> 
+> although I've read the documentation of git very carefully, I could not find 
+> anything related to certain commit message conventions. It would be great 
+> if someone here could explain a few things, maybe this could be added to 
+> the wiki afterwards (<http://git.or.cz/gitwiki/CommitMessageConventions>).
+> 
+> First of all, what's the intended use of the "Signed-off-by:" lines? Does it 
+> make sense to add my name there, even when I'm listed as the author or 
+> committer of a commit? I thought that they are intended mostly to note the 
+> approval of other developers.
+> 
+> On the other hand, concerning the approval of other developers, what's the 
+> difference between "Signed-off-by:" and "Acked-by:"? Are there any 
+> more "*-by:" fields that are in use?
 
-although I've read the documentation of git very carefully, I could not fin=
-d=20
-anything related to certain commit message conventions. It would be great=20
-if someone here could explain a few things, maybe this could be added to=20
-the wiki afterwards (<http://git.or.cz/gitwiki/CommitMessageConventions>).
+>From Documentation/SubmittingPatches:
 
-=46irst of all, what's the intended use of the "Signed-off-by:" lines? Does=
- it=20
-make sense to add my name there, even when I'm listed as the author or=20
-committer of a commit? I thought that they are intended mostly to note the=
-=20
-approval of other developers.
+(6) Sign your work
+[...]
+The sign-off is a simple line at the end of the explanation for
+the patch, which certifies that you wrote it or otherwise have
+the right to pass it on as a open-source patch.
 
-On the other hand, concerning the approval of other developers, what's the=
-=20
-difference between "Signed-off-by:" and "Acked-by:"? Are there any=20
-more "*-by:" fields that are in use?
 
-Regards,
-Tobias
+"Acked-by:" is used to notify that patch was accepted by somebody,
+which usually is maintainer of part affected by patch.
 
-=2D-=20
-Tobias Toedter   | "I don't care to belong to a club that accepts people
-Hamburg, Germany | like me as members." -- Groucho Marx
-
---nextPart2888093.YRmCuZOLDL
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iD8DBQBFPhn8CqqEJ0Fs8twRAk47AKCAI33bXCz2YKRyoPKu7AKnZ083bACglb/A
-710wH3Obzb/Kp+/We8ejg28=
-=68G1
------END PGP SIGNATURE-----
-
---nextPart2888093.YRmCuZOLDL--
+I have seen exactly on "Cheered-on-by:", and there are probably some
+"Noticed-by:" there.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
