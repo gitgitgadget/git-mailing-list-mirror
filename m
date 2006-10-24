@@ -1,66 +1,87 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: VCS comparison table
-Date: Tue, 24 Oct 2006 20:25:53 +0200
-Organization: At home
-Message-ID: <ehllqj$bee$1@sea.gmane.org>
-References: <20061022074513.GF29927@artax.karlin.mff.cuni.cz> <200610221105.26421.jnareb@gmail.com> <845b6e870610220256u39d3d06wefd4f71851670812@mail.gmail.com> <87zmbozau2.wl%cworth@cworth.org> <20061022185350.GW75501@over-yonder.net> <Pine.LNX.4.64.0610231018410.3962@g5.osdl.org> <20061023222131.GB17019@over-yonder.net> <Pine.LNX.4.64.0610231534010.3962@g5.osdl.org> <20061024002622.GC17019@over-yonder.net> <Pine.LNX.4.63.0610240853160.10841@qynat.qvtvafvgr.pbz> <20061024163458.GH17019@over-yonder.net> <Pine.LNX.4.63.0610241038060.10841@qynat.qvtvafvgr.pbz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/1] gitweb: Use fixed string for "next" link in commitdiff view
+Date: Tue, 24 Oct 2006 11:27:47 -0700
+Message-ID: <7viri9h8m4.fsf@assigned-by-dhcp.cox.net>
+References: <200610230037.57183.jnareb@gmail.com>
+	<7vd58k0wmx.fsf@assigned-by-dhcp.cox.net>
+	<200610240008.08325.jnareb@gmail.com>
+	<20061024114923.GD20017@pasky.or.cz>
+	<7vu01thbvb.fsf@assigned-by-dhcp.cox.net>
+	<20061024172627.GU18879@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-Cc: bazaar-ng@lists.canonical.com
-X-From: git-owner@vger.kernel.org Tue Oct 24 20:26:44 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 24 20:28:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcQyb-0006bB-Ev
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 20:26:13 +0200
+	id 1GcR0C-0006wr-Fx
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 20:27:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161142AbWJXS0J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Oct 2006 14:26:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161146AbWJXS0J
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 14:26:09 -0400
-Received: from main.gmane.org ([80.91.229.2]:14720 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1161142AbWJXS0H (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 14:26:07 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GcQyA-0006Uu-Do
-	for git@vger.kernel.org; Tue, 24 Oct 2006 20:25:46 +0200
-Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 24 Oct 2006 20:25:46 +0200
-Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 24 Oct 2006 20:25:46 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-Followup-To: gmane.comp.version-control.git
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1161146AbWJXS1t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Oct 2006 14:27:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161147AbWJXS1t
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 14:27:49 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:9166 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1161146AbWJXS1s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Oct 2006 14:27:48 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061024182748.YIAN13992.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 24 Oct 2006 14:27:48 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id eJTX1V00R1kojtg0000000
+	Tue, 24 Oct 2006 14:27:32 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20061024172627.GU18879@pasky.or.cz> (Petr Baudis's message of
+	"Tue, 24 Oct 2006 19:26:27 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29998>
 
-David Lang wrote:
+Petr Baudis <pasky@suse.cz> writes:
 
-> 1. Centralized: all commits must go to one repository, connectivity
-> required to check-in 
+> On Tue, Oct 24, 2006 at 07:17:28PM CEST, Junio C Hamano wrote:
+>> Petr Baudis <pasky@suse.cz> writes:
+>> 
+>> >> > Would it even be necessary to use any SHA-1 name in these cases,
+>> >> > I wonder.  Would it make the page less useful if we replace all
+>> >> > of the above _commit_ with a fixed string, say, "parent"?
+>> >
+>> > I really disagree here - what's the point of not using SHA-1? The extra
+>> > string carries zero information in comparison with the previous state
+>> > and I just can't see how it *improves* stuff. If you're walking in a
+>> > maze and making marks on walls, it's still more useful if you have
+>> > corridors named by "A", "B", "C", "D" on junctions if you sometimes want
+>> > to walk back to the marked corridors.
+>> 
+>> I think people would recognize A B C D as names but not 40- or
+>> 8- hexadecimal letters.
+>
+> 40-digit hex numbers is insane, I agree. But at least I personally tend
+> to recognize 8-digit hex numbers when dancing around them intensively
+> for a few minutes. Besides, it can be just "now I took the 8c5 way",
+> which is much easier to train your neurons too than "now I took the
+> fourth, uh, or was it the fifth parent? one, two, three, four, fifth...
+> hmm, what's in the statusbar?".
+>
+> My point is that this does not improve the situation, and some people
+> (me) think it makes it worse, so what's the point of the change?
+>
+>> I do not care much either way, actually, but I think it might
+>> make more sense to use abbreviated object names.  On the other
+>> hand it may be Ok to have full 40 letters depending on the
+>> layout (e.g. the set of merge parents are shown on a single line
+>> in which case it would not fit, etc.).
+>
+> Yes, I'm all for abbreviated names, but I'm against just writing
+> "parent" everywhere.
 
-Bazaar-NG "light checkouts" implements this. Git doesn't support this
-topology, and probably wouldn't.
-
-1.5. Disconnected centralized. Like centralized, but you can work (perhaps
-limited to what you can do) even without connection to central server.
-Minimally you have to be able to commit changes locally, if central server
-is not available. Bzr "normal/heavyweight checkouts" are [roughly] abot
-this. Git "lazy clone" proposal is about similar thing; you can get git to
-support this model (although without space savings) with full 
-clone + hooks.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Fully agreed.  Please make it so, if you so are inclined,
+perhaps between you and Jakub?
