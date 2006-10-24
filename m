@@ -1,114 +1,97 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: VCS comparison table
-Date: Tue, 24 Oct 2006 23:11:32 +1300
-Message-ID: <46a038f90610240311n29d0561ek7dc52dc3d34c2f76@mail.gmail.com>
-References: <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>
-	 <87zmbozau2.wl%cworth@cworth.org>
-	 <20061022185350.GW75501@over-yonder.net>
-	 <Pine.LNX.4.64.0610231018410.3962@g5.osdl.org>
-	 <20061023222131.GB17019@over-yonder.net> <ehjgli$lft$1@sea.gmane.org>
-	 <845b6e870610231614y681e64eu33bb0806f530c742@mail.gmail.com>
-	 <Pine.LNX.4.64.0610231623340.3962@g5.osdl.org>
-	 <46a038f90610231739x5beffc90u33c6a81f461974ec@mail.gmail.com>
-	 <845b6e870610240052l70ad72f4ma30065f151828dfd@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: updating only changed files source directory?
+Date: Tue, 24 Oct 2006 12:13:38 +0200
+Message-ID: <200610241213.38558.jnareb@gmail.com>
+References: <ehjqgf$ggb$1@sea.gmane.org> <ehkgfs$af6$1@sea.gmane.org> <453DE1F5.5010803@xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Linus Torvalds" <torvalds@osdl.org>,
-	"Jakub Narebski" <jnareb@gmail.com>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 24 12:11:55 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 24 12:13:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcJG2-0001xm-0F
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 12:11:42 +0200
+	id 1GcJHa-0002Eu-7o
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 12:13:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030236AbWJXKLi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006 06:11:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965127AbWJXKLi
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 06:11:38 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:4304 "EHLO
-	nf-out-0910.google.com") by vger.kernel.org with ESMTP
-	id S965126AbWJXKLh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 06:11:37 -0400
-Received: by nf-out-0910.google.com with SMTP id c2so165971nfe
-        for <git@vger.kernel.org>; Tue, 24 Oct 2006 03:11:35 -0700 (PDT)
+	id S965127AbWJXKNP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Oct 2006 06:13:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965128AbWJXKNP
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 06:13:15 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:63465 "EHLO
+	ug-out-1314.google.com") by vger.kernel.org with ESMTP
+	id S965127AbWJXKNO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Oct 2006 06:13:14 -0400
+Received: by ug-out-1314.google.com with SMTP id 32so158270ugm
+        for <git@vger.kernel.org>; Tue, 24 Oct 2006 03:13:13 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IJKZf0Fx/LlUHxU2ZXpFfH7SXfaIOV2aYZqHsm5XWK/PLRh2hHcE7blEdwWBZw9zrKRPvJ0wmylDKHk2eFD0UuwVYhzbWgDOAwikg3m7K8KzBHp52T4Sc4SJ94RowWzRg8azp+f8t8TszxxX5TILTdDjRU/RHRTuUcbzDlkjo1g=
-Received: by 10.48.48.13 with SMTP id v13mr890873nfv;
-        Tue, 24 Oct 2006 03:11:32 -0700 (PDT)
-Received: by 10.49.11.5 with HTTP; Tue, 24 Oct 2006 03:11:32 -0700 (PDT)
-To: "=?ISO-8859-1?Q?Erik_B=E5gfors?=" <zindar@gmail.com>
-In-Reply-To: <845b6e870610240052l70ad72f4ma30065f151828dfd@mail.gmail.com>
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=naytn/JoaZ1fKtfOoBtU/9pfYaJE2XUW2Tf/iL7m8zCNfX55DsBce4lCx2d0xGoQWi/OqYWITi/nqL0nlWc+VllW/kfiLB9FD1pUNjgDf7aB5+tDmhFVhgrw8Xj1zyb3lN8+CHbE7q37HfSFZl0l7ZRMLU7VbxxB9Vn6MvK5D/8=
+Received: by 10.67.119.13 with SMTP id w13mr8567730ugm;
+        Tue, 24 Oct 2006 03:13:13 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110])
+        by mx.google.com with ESMTP id c1sm369041ugf.2006.10.24.03.13.12;
+        Tue, 24 Oct 2006 03:13:13 -0700 (PDT)
+To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+User-Agent: KMail/1.9.3
+In-Reply-To: <453DE1F5.5010803@xs4all.nl>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29960>
 
-On 10/24/06, Erik B=E5gfors <zindar@gmail.com> wrote:
-> It's Erik :)
+Han-Wen Nienhuys wrote:
+> Jakub Narebski escreveu:
+>> Han-Wen Nienhuys wrote:
+>> 
+>> I see that you are using fairly low level commands (plumbing commands)
+>>  
+>>>    git-http-fetch -a <branch>  <url>
+>>>    wget <url>/refs/head/<branch>    ## dump to <myrepo>/refs/head/<branch>
+>> 
+>> instead of setting $GIT_DIR/remotes/origin file and using "git fetch".
+>> BTW. "git fetch" will not update branch you are on, unless --update-head-ok
+>> option is used.
+> 
+> I tried fetch, but was put off by the warnings because I didn't have 
+> --update-head-ok. Using lowlevel commands is my way of making sure that 
+> Git doesn't assume it needs to do anything intelligent.
 
-Sorry Erik!
+You can either have additional branch which is not tracking branch
+(you don't fetch into this branch), and on which you are always on,
+called for example 'check-out' (and which can be used for git-reset
+solution to checking out files to external directory), and use
+git-fetch without --update-head-ok, or (if the repository is bare
+repository, without working area) use --update-head-ok.
+ 
+>>>    git --git-dir <myrepo> read-tree <committish>
+>>>
+>>>    cd <srcdir>
+>>>    git --git-dir <myrepo> checkout-index -a -f
+>> 
+>> instead of 
+>>      git --git-dir=<myrepo> checkout <branch>
+>> (-f is Force a re-read of everything)
 
-> Let's make one thing clear.  Revnos are NOT stored with the revision,
-> they are not "names" of the revision.  They are basically just
-> shortcuts to specific revisions, that only makes sence in the context
-> of a branch.
+git-checkout-index(1):
 
-My bad. The revnos examples discussed looked quite Arch-like. As Arch
-took them seriously, I thought bzr did too.
+       -f|--force
+              forces overwrite of existing files
 
-Probably quite a few people here thought as much, and got hot under
-the t-shirt about it ;-)
+So probably you would get what you want if you lose '-f'.
 
-Now, the thing about they shorthand is that we have quite a few means
-of using shorthand in GIT that don't rely on revnos. We have the whole
-^branchname stuff. And when you are looking at gitk it's pretty
-obvious which are your recent "local" commits.
+> Yes, however,
+> 
+>    git checkout
+> 
+> changes the state of the repository, which is something I want to prevent.
 
-
-=2E..
-
-
-> 2. treating "leftmost" parrent special is bad/good
-
-> 2. This is something I do care about.  For me, this is the only
-> logical way of doing it. It might be because I am used to it now, but
-> when I started to look at bzr/hg/git/darcs/etc, I just got a so much
-> more clear view of the history when running a standard log command,
-> that it was one of the first things that attracted me to bzr. This is
-> just a user talking.
-> There might be technical reasons why it's better to not do it, but fo=
-r
-> me it works the way I expect, therefore I'm happy
-
-Can you give us a quick example of why you got such a clearer picture?
-
-> 3. plugins are useless/useful
-
-Hmmmm. It's more of a unix/C/pipes tradition vs dynamically typed &
-compiled scripting language tradition.
-
-> 4. And now, storing branch information should be done manually (if
-> wanted) and not automatically.
-
-> 4. No comment.
-
-Probably not. But if someone is using branchnames to identify "lines
-of work" and hoping that metadata will remain attached there, it's
-probably a bad long-term approach.
-
-But following what you said earlier about that info being transient
-and "local", then I was 200% wrong, and thinking of Arch/Bazaar usage
-patterns.
-
-cheers,
-
-
-martin
+Well, git-reset also changes state of repository, but it changes only
+the branch we have created exactly for this purpose.
+-- 
+Jakub Narebski
+Poland
