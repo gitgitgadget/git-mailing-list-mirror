@@ -1,72 +1,96 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: renames in StGIT
-Date: Tue, 24 Oct 2006 11:25:07 +0100
-Message-ID: <b0943d9e0610240325v5bc23078w7fc977e091e99779@mail.gmail.com>
-References: <20061022013943.GA16341@diana.vm.bytemark.co.uk>
-	 <b0943d9e0610230947j79449a4dm8736f480f039c230@mail.gmail.com>
-	 <20061023125344.f82426ad.seanlkml@sympatico.ca>
-	 <20061024081732.GA29265@diana.vm.bytemark.co.uk>
-	 <b0943d9e0610240148s15d6ec5ch6114360a603fcd71@mail.gmail.com>
-	 <20061024091620.GB29265@diana.vm.bytemark.co.uk>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: VCS comparison table
+Date: Tue, 24 Oct 2006 12:27:03 +0200
+Organization: At home
+Message-ID: <ehkpos$ga1$1@sea.gmane.org>
+References: <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org> <453A7D7E.8060105@utoronto.ca> <20061022074513.GF29927@artax.karlin.mff.cuni.cz> <200610221105.26421.jnareb@gmail.com> <845b6e870610220256u39d3d06wefd4f71851670812@mail.gmail.com> <87zmbozau2.wl%cworth@cworth.org> <20061022185350.GW75501@over-yonder.net> <Pine.LNX.4.64.0610231018410.3962@g5.osdl.org> <20061023222131.GB17019@over-yonder.net> <vpq64eakpnh.fsf@ecrins.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
+Content-Type: text/plain; charset=iso-8859-2
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sean <seanlkml@sympatico.ca>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 24 12:25:51 2006
+Cc: bazaar-ng@lists.canonical.com
+X-From: git-owner@vger.kernel.org Tue Oct 24 12:27:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcJTd-0004fS-TM
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 12:25:46 +0200
+	id 1GcJUq-0004vX-4n
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 12:27:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030267AbWJXKZm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006 06:25:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030270AbWJXKZm
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 06:25:42 -0400
-Received: from py-out-1112.google.com ([64.233.166.182]:41109 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1030267AbWJXKZl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 06:25:41 -0400
-Received: by py-out-1112.google.com with SMTP id z74so163092pyg
-        for <git@vger.kernel.org>; Tue, 24 Oct 2006 03:25:07 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VlflButpLhiP1WeYPzNcRpOu6XYBZnOnduNcpa7RbsT9xHfQU/UnyD2yzxfhcFcPfFsurGmFsmL36blD4W1jAlgBe8uC5bR8R/xgNkI2qJMynMsN7Wm0QJWZHXIbnF/oSG31zZYzpx8yFuJisKBA8kAg7oTUZrRWfzeIK1XNPqg=
-Received: by 10.35.83.6 with SMTP id k6mr8552411pyl;
-        Tue, 24 Oct 2006 03:25:07 -0700 (PDT)
-Received: by 10.35.103.18 with HTTP; Tue, 24 Oct 2006 03:25:07 -0700 (PDT)
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-In-Reply-To: <20061024091620.GB29265@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S1030270AbWJXK05 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006 06:26:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030272AbWJXK05
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 06:26:57 -0400
+Received: from main.gmane.org ([80.91.229.2]:2983 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1030270AbWJXK04 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 06:26:56 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GcJUe-0004t8-AT
+	for git@vger.kernel.org; Tue, 24 Oct 2006 12:26:48 +0200
+Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Oct 2006 12:26:48 +0200
+Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Oct 2006 12:26:48 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29962>
 
-On 24/10/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> On 2006-10-24 09:48:44 +0100, Catalin Marinas wrote:
-> > Step 3 above is handled per file by the
-> > stgit.gitmergeonefile.merge() function. This is the place where we
-> > should have the rename detection. Since, the majority of the patche=
-s
-> > don't rename files and, in most cases, the push finishes at step 2,
-> > it is probably safe to extend this function and the users won't
-> > notice a speed difference.
-> >
-> > I'll add it to the TODO list.
+Matthieu Moy wrote:
+> "Matthew D. Fuller" <fullermd@over-yonder.net> writes:
+>=20
+>>> For example, how long does it take to do an arbitrary "undo" (ie
+>>> forcing a branch to an earlier state) [...]
+>>
+>> I don't understand the thrust of this, either. =A0As I understand th=
+e
+>> operation you're talking about, it doesn't have anything to do with =
+a
+>> branch; you'd just be whipping the working tree around to different
+>> versions. =A0That should be O(diff) on any modern VCS.
+
+> There are two things to do:
 >
-> Sounds good. I had a feeling it ought to be basically free in the
-> majority of cases, so I'm glad to learn I'm right. :-)
+> * Mark the tree as corresponding to a different revision in the past.
+[...]
+> * Then, do the "merge" to make your tree up to date. You can hardly d=
+o
+> =A0 faster than git and its unpacked format, but this is at the cost =
+of
+> =A0 disk space. But as you say, in almost any modern VCS, that's
+> =A0 O(diff). In a space-efficient format, that's just the tradeoff yo=
+u
+> =A0 make between full copies of a file and delta-compression.
 
-Might be even simpler for 'push' but I need to do more tests - instead
-of calling git-read-tree in git.merge(), just call git-merge-recursive
-which handles renames and it's fully tested. My simple test detected
-renames when pushing patches (both rename in base and rename in
-patch). I still have to do some tweaking and write proper tests (and
-probably make it less verbose).
+Actually, this would be "checkout" (in git terminology), i.e. overwriti=
+ng
+the files which differ in current revision, and the revision we rewind =
+(do
+undo) to. (That's of course simplification omitting for example removin=
+g
+and creating files.) Which would be O(changed files) which is lower bou=
+nd
+and cannot be faster. Finding which files changed is also O(changed fil=
+es),
+with a little bit of O(directory depth) in git, with very small constan=
+t.
 
+And even in the case of packed format, it wouldn't be O(diff)/O(history=
+),
+but O(delta length) where delta length is maximum length of delta chain
+in pack, by default set to 10. Well, constant is a bit larges because g=
+it
+additionally gzip-compresses (even in loose, i.e. unpacked format).
 --=20
-Catalin
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
