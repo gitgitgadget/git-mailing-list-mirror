@@ -1,68 +1,177 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: renames in StGIT
-Date: Tue, 24 Oct 2006 11:16:20 +0200
-Message-ID: <20061024091620.GB29265@diana.vm.bytemark.co.uk>
-References: <20061022013943.GA16341@diana.vm.bytemark.co.uk> <b0943d9e0610230947j79449a4dm8736f480f039c230@mail.gmail.com> <20061023125344.f82426ad.seanlkml@sympatico.ca> <20061024081732.GA29265@diana.vm.bytemark.co.uk> <b0943d9e0610240148s15d6ec5ch6114360a603fcd71@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: A note from the maintainer
+Date: Tue, 24 Oct 2006 02:16:43 -0700
+Message-ID: <7vk62qhy4k.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sean <seanlkml@sympatico.ca>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 24 11:16:41 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue Oct 24 11:17:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcIOg-0000Fd-U5
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 11:16:35 +0200
+	id 1GcIOu-0000IP-Px
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 11:16:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030208AbWJXJQb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006 05:16:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965122AbWJXJQb
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 05:16:31 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:52238 "EHLO
-	diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP
-	id S965121AbWJXJQa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Oct 2006 05:16:30 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1GcIOS-0007v8-00; Tue, 24 Oct 2006 10:16:20 +0100
-To: Catalin Marinas <catalin.marinas@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0610240148s15d6ec5ch6114360a603fcd71@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S965121AbWJXJQp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Oct 2006 05:16:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965122AbWJXJQp
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 05:16:45 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:974 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S965121AbWJXJQo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Oct 2006 05:16:44 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061024091644.IRWZ13992.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 24 Oct 2006 05:16:44 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id e9Go1V0031kojtg0000000
+	Tue, 24 Oct 2006 05:16:48 -0400
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29951>
 
-On 2006-10-24 09:48:44 +0100, Catalin Marinas wrote:
+Since there seem to be many new people on the git list, I
+thought it might be worthwhile to talk about how git.git is
+managed, and how you can work with it.
 
-> Actually, it might not be a big performance impact. For diff
-> generation in the export and mail commands, we should have a flag.
+* Mailing list.
 
-Agreed.
+The development is primarily done on this mailing list you are
+reading right now.
 
-> The push operation might not need a flag since it will only checks
-> renames if all the other operations failed. A push with merge
-> detection has the steps below (if one succeeds, push is finished):
->
-> 1. check (exact) patch merges by reverse-applying the diff
-> 2. apply the diff with git-diff | git-apply since this is faster
->    than a three-way merge
-> 3. try a three-way merge between head, bottom and top
->
-> Step 3 above is handled per file by the
-> stgit.gitmergeonefile.merge() function. This is the place where we
-> should have the rename detection. Since, the majority of the patches
-> don't rename files and, in most cases, the push finishes at step 2,
-> it is probably safe to extend this function and the users won't
-> notice a speed difference.
->
-> I'll add it to the TODO list.
+If you have patches, please send them to the list, following
+Documentation/SubmittingPatches.
 
-Sounds good. I had a feeling it ought to be basically free in the
-majority of cases, so I'm glad to learn I'm right. :-)
+The list is available at various public sites as well:
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+	http://news.gmane.org/gmane.comp.version-control.git
+	http://marc.theaimsgroup.com/?l=git
+
+Many active members of development community hang around on #git
+IRC channel as well.  Its log is available at:
+
+	http://colabti.de/irclogger/irclogger_logs/git
+
+[jc: Does anybody know a shortcut for "Today's" page on this
+ site?  It irritates me having to click the latest link on this
+ page to get to the latest]
+
+
+* Repositories and branches.
+
+My public git.git repository is at:
+
+	git://git.kernel.org/pub/scm/git/git.git/
+
+It is mirrored at Pasky's repo.or.cz as well.
+
+There are three branches in git.git repository that are not
+about the source tree of git: "todo", "html" and "man".  The
+first one is meant to contain TODO list for me, but I am not
+good at maintaining such a list so it is not as often updated as
+I would have liked.  It also contains some helper scripts I
+use to maintain it.
+
+The "html" and "man" are autogenerated documentation from the
+tip of the "master" branch; the tip of "html" is extracted to be
+visible at kernel.org at:
+
+	http://www.kernel.org/pub/software/scm/git/docs/
+
+The script to auto-maintain these two documentation branches are
+found in "todo" branch as dodoc.sh script, if you are interested.
+
+There are four branches in git.git repository that track the
+source tree of git: "master", "maint", "next", and "pu".
+
+The "master" branch is meant to contain what are reasonably
+tested and ready to be used in a production setting.  There
+could occasionally be minor breakages or brown paper bag bugs
+but they are not expected to be anything major.  Every now and
+then, a "feature release" is cut from the tip of this branch and
+they typically are named with three dotted decimal digits.  The
+last such release was v1.4.3 done on Oct 18th.
+
+Whenever a feature release is made, "maint" branch is forked off
+from "master" at that point.  Obvious, safe and urgent fixes
+after a feature release are applied to this branch and
+maintenance releases are cut from it.  The maintenance releases
+are typically named with four dotted decimal, named after the
+feature release they are updates to; the last such release was
+v1.4.3.2 was done tonight.  Usually new development will never
+go to this branch.  This branch is also pulled into "master" to
+propagate the fixes forward.
+
+A trivial and safe enhancement goes directly on top of "master".
+A new development, either initiated by myself or more often you
+found your own itch to scratch, does not usually happen on
+"master", however.  Instead, it is forked into a separate topic
+branch from the tip of "master", and first tested in isolation;
+I may make minimum fixups at this point.  Usually there are a
+handful such topic branches that are running ahead of "master"
+in git.git repository.  I do not publish the tip of these
+branches in my public repository, however, partly to keep the
+number of branches that downstream developers need to worry
+about and primarily because I am lazy.
+
+I judge the quality of topic branches, taking advices from the
+mailing list discussions.  Some of them start out as "good idea
+but obviously is broken in some areas (e.g. breaks the existing
+testsuite)" and then with some more work (either by the original
+contributor or help from other people on the list) becomes "more
+or less done and can now be tested by wider audience".  Luckily,
+most of them start out in the latter, better shape.
+
+The "next" branch is to merge and test topic branches in the
+latter category with "master".  In general it should always
+contain the tip of "master".  They may not be quite production
+ready, but are expected to work more or less without major
+breakage.  I usually use "next" version of git for my own work.
+"next" is where new and exciting things take place.
+
+The above three branches, "master", "maint" and "next" are never
+rewound, so you should be able to safely track them (that means
+the topics that have been merged into "next" are not rebased).
+
+The "pu" (proposed updates) branch bundles all the remaining
+topic branches.  The topic branches and "pu" are subject to
+rebasing in general.  Especially "pu" is almost always rewound
+to the tip of "next" and reconstructed to contain the remaining
+topic branches.  What this means is that immediately after
+cloning from git.git, it is advisable to mark "pu" in your
+remotes/origin that it does not necessarily fast-forwards, like
+this:
+
+	$ cat .git/remotes/origin
+        URL: git://git.kernel.org/pub/scm/git/git.git
+        Pull: refs/heads/master:refs/heads/origin
+        Pull: refs/heads/maint:refs/heads/maint
+        Pull: refs/heads/next:refs/heads/next
+        Pull: +refs/heads/pu:refs/heads/pu
+
+When a topic that was in "pu" proves to be in testable shape, it
+graduates to "next".  This is done by:
+
+	git checkout next
+        git pull . that-topic-branch
+
+Sometimes, an idea that looked promising turns out to be not so
+hot and the topic can be dropped from "pu" in such a case.
+
+A topic that is in "next" is _expected_ to be tweaked and fixed
+to perfection before it is merged to "master".  It is done by:
+
+	git checkout master
+        git pull . that-topic-branch
+        git branch -d that-topic-branch
+
+However, being in "next" is not a guarantee to appear in the
+next release (being in "master" _is_ such a guarantee), or even
+in _any_ future release.  There even was a case that a topic
+needed a few reverting before graduating to "master".
