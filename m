@@ -1,158 +1,113 @@
 From: "=?ISO-8859-1?Q?Erik_B=E5gfors?=" <zindar@gmail.com>
 Subject: Re: VCS comparison table
-Date: Tue, 24 Oct 2006 09:52:36 +0200
-Message-ID: <845b6e870610240052l70ad72f4ma30065f151828dfd@mail.gmail.com>
-References: <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org>
-	 <845b6e870610220256u39d3d06wefd4f71851670812@mail.gmail.com>
-	 <87zmbozau2.wl%cworth@cworth.org>
-	 <20061022185350.GW75501@over-yonder.net>
-	 <Pine.LNX.4.64.0610231018410.3962@g5.osdl.org>
-	 <20061023222131.GB17019@over-yonder.net> <ehjgli$lft$1@sea.gmane.org>
-	 <845b6e870610231614y681e64eu33bb0806f530c742@mail.gmail.com>
-	 <Pine.LNX.4.64.0610231623340.3962@g5.osdl.org>
-	 <46a038f90610231739x5beffc90u33c6a81f461974ec@mail.gmail.com>
+Date: Tue, 24 Oct 2006 09:31:07 +0200
+Message-ID: <845b6e870610240031x66c6b942u54ee0d357725fae1@mail.gmail.com>
+References: <20061022074513.GF29927@artax.karlin.mff.cuni.cz>
+	<87zmbozau2.wl%cworth@cworth.org>
+	<20061022185350.GW75501@over-yonder.net>
+	<Pine.LNX.4.64.0610231018410.3962@g5.osdl.org>
+	<20061023222131.GB17019@over-yonder.net> <ehjgli$lft$1@sea.gmane.org>
+	<845b6e870610231614y681e64eu33bb0806f530c742@mail.gmail.com>
+	<Pine.LNX.4.64.0610231623340.3962@g5.osdl.org>
+	<20061024002657.GD17019@over-yonder.net>
+	<87y7r6zgic.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Linus Torvalds" <torvalds@osdl.org>,
-	"Jakub Narebski" <jnareb@gmail.com>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 24 09:52:50 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org, "Matthew D. Fuller" <fullermd@over-yonder.net>,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: bazaar-ng-bounces@lists.canonical.com Tue Oct 24 09:59:41 2006
+Return-path: <bazaar-ng-bounces@lists.canonical.com>
+Envelope-to: gcvbg-bazaar-ng@m.gmane.org
+Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcH5W-0007wY-2G
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 09:52:42 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752109AbWJXHwj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006 03:52:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752110AbWJXHwj
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 03:52:39 -0400
-Received: from py-out-1112.google.com ([64.233.166.179]:14277 "EHLO
-	py-out-1112.google.com") by vger.kernel.org with ESMTP
-	id S1752109AbWJXHwh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 03:52:37 -0400
-Received: by py-out-1112.google.com with SMTP id z74so123561pyg
-        for <git@vger.kernel.org>; Tue, 24 Oct 2006 00:52:37 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=XYRNdvuA5skCefpung5x2NVIvN7NUwD6HF4yH69IIMVz+2jDNEU8CXJzKgzI6YzLypLkzIkziWYMx8YiVBZl7DphPIjL7BiNHIhZPrSazwhYmkipSKtoYDdITvovJP2VANSbXNUfDqmznHqEHPlgngFDXpisBlbayZRD3UHShzM=
-Received: by 10.35.66.12 with SMTP id t12mr8366514pyk;
-        Tue, 24 Oct 2006 00:52:36 -0700 (PDT)
-Received: by 10.35.116.4 with HTTP; Tue, 24 Oct 2006 00:52:36 -0700 (PDT)
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90610231739x5beffc90u33c6a81f461974ec@mail.gmail.com>
+	id 1GcHCC-0000oU-PY
+	for gcvbg-bazaar-ng@m.gmane.org; Tue, 24 Oct 2006 09:59:37 +0200
+Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
+	id 1GcHC3-0006Wb-3w; Tue, 24 Oct 2006 08:59:27 +0100
+Received: from py-out-1112.google.com ([64.233.166.179])
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <zindar@gmail.com>) id 1GcHC0-0006WG-PY
+	for bazaar-ng@lists.canonical.com; Tue, 24 Oct 2006 08:59:24 +0100
+Received: by py-out-1112.google.com with SMTP id f25so14570pyf
+	for <bazaar-ng@lists.canonical.com>;
+	Tue, 24 Oct 2006 00:59:24 -0700 (PDT)
+Received: by 10.35.119.8 with SMTP id w8mr8323711pym;
+	Tue, 24 Oct 2006 00:31:07 -0700 (PDT)
+Received: by 10.35.116.4 with HTTP; Tue, 24 Oct 2006 00:31:07 -0700 (PDT)
+To: "Carl Worth" <cworth@cworth.org>
+In-Reply-To: <87y7r6zgic.wl%cworth@cworth.org>
 Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29941>
+X-BeenThere: bazaar-ng@lists.canonical.com
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: bazaar-ng discussion <bazaar-ng.lists.canonical.com>
+List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=unsubscribe>
+List-Archive: <https://lists.ubuntu.com/archives/bazaar-ng>
+List-Post: <mailto:bazaar-ng@lists.canonical.com>
+List-Help: <mailto:bazaar-ng-request@lists.canonical.com?subject=help>
+List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
+	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
+Sender: bazaar-ng-bounces@lists.canonical.com
+Errors-To: bazaar-ng-bounces@lists.canonical.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29942>
 
-On 10/24/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> On 10/24/06, Linus Torvalds <torvalds@osdl.org> wrote:
-> > On Tue, 24 Oct 2006, Erik B=E5gfors wrote:
-> > >
-> > > I don't see any problem doing a "gitk --all" equivalent in bzr.
+On 10/24/06, Carl Worth <cworth@cworth.org> wrote:
+> On Mon, 23 Oct 2006 19:26:57 -0500, "Matthew D. Fuller" wrote:
 > >
-> > The problem? How do you show a commit that is _common_ to two branc=
-hes,
-> > but has different revision names in them?
+> > On Mon, Oct 23, 2006 at 04:24:30PM -0700 I heard the voice of
+> > Linus Torvalds, and lo! it spake thus:
+> > >
+> > > The problem? How do you show a commit that is _common_ to two
+> > > branches, but has different revision names in them?
+> >
+> > Why would you?
 >
-> Eric,
+> Assume you've got two long-lived branches and one periodically gets
+> merged into the other one. The combined history might look as follows
+> (more recent commits first):
+>
+>  f   g
+>  |   |
+>  d   e
+>  |\ /
+>  b c
+>  |/
+>  a
+>
+> The point is that it is extremely nice to be able to visualize things
+> that way. Say I've got a "dev" branch that points at f and a "stable"
+> branch that points at g. With this, a command like:
+>
+>         gitk dev stable
+>
+> would result in a picture just like the above. Can a similar figure be
+> made with bzr? Or only the following two separate pictures:
 
-It's Erik :)
+The above picture can easily be created with bzr if you have a
+utility/plugin that does it. There is none that does it yet, but there
+are no problems doing one.
 
-> coming from an Arch background, I understand the whole per-branch
-> commitids approach. After using GIT for a while, you start realising
-> that it tries to pin down things in the wrong place.
->
-> This is specially visible if you run `gitk --all` before and after a
-> merge. Or on a project with many merges (if you can, get a checkout o=
-f
-> git itself, and browse its history with gitk).
->
-> Before the merge, you see
->
->  --o--o--o--o
->     \
->      \--o--o
->
-> and after
->
->  --o--o--o--o
->     \        \
->      \--o--o--o
->
-> Now, after it's merged somewhere, both commits are part of its
-> history, regardless of where they come from. And it is very clear if
-> two branches have been merging and remerging.
->
-> Where a commit originated does not matter. And fancy
-> repo-and-branch-centric names get in the way. A lot. And they re
-> mostly meaningless as soon as you put what matters in the commit
-> message. Which means that that bit of metadata that you are hoping
-> that the revno keeps "indirectly" isn't lost on cherry picking.
+Of course, in such a context revision numbers have no use.  But see,
+revision numbers is not mandatory in bzr, so that's not a problem.
 
-Let's make one thing clear.  Revnos are NOT stored with the revision,
-they are not "names" of the revision.  They are basically just
-shortcuts to specific revisions, that only makes sence in the context
-of a branch.
+I haven't really had a need for such a tool, but I do see where it can
+be very useful to have.
 
-As human beings this is something we are very used to in everyday
-life. I don't always call my friends with firstname and surname, I
-just use first name or even "mate".  As long as it's clear who I'm
-talking about in that contect.  If there are multiple people with the
-same first name, then we might have to use the surname as well.
-
-Same with bzr. In the context of a branch, revnos works as shortcuts
-to the revision id.  In the context of multiple branches, they don't.
-
-I think they do serve a good purpose but I don't really think that we
-absolutely need them either.
-
-> I guess that's where I used to find revnos useful as they contained
-> some basic metadata. With bzr it seems to be author-repo-branch where
-> branch is hopefully "line of work" but all of that can be (and should
-> be) in the commit message.
+>  f    g
+>  |    |
+>  d    e
+>  |\   |
+>  b c  c
+>  |/   |
+>  a    a
 >
-> You can see similar info in the first part of the commit message for
-> most git-hosted projects. It'll say something like
->
->    cvsserver: fix the frobnicator to be sequential
->
-> which means that at that point, you could be working in a branch
-> called fix-this-fscking-thing-attempt524" and no-one would know ;-)
->
-> And in a few years (even months) time, that bit of metadata you were
-> hoping to keep is totally irrelevant. What you have in the commit
-> message remains relevant and useful.
 
-I'm not even going to try to understand the argument here as they are
-about a totally different thing and doesn't make any sense to me.
-
-I think this disussion is getting out of hand.
-
-There are a few things that are being discussed
-1. Revnos are bad/good
-2. treating "leftmost" parrent special is bad/good
-3. plugins are useless/useful
-4. And now, storing branch information should be done manually (if
-wanted) and not automatically.
-
-1. I don't really care, I haven't seen any confusion based on it, but
-I don't have a very strong opinion about it either.
-2. This is something I do care about.  For me, this is the only
-logical way of doing it. It might be because I am used to it now, but
-when I started to look at bzr/hg/git/darcs/etc, I just got a so much
-more clear view of the history when running a standard log command,
-that it was one of the first things that attracted me to bzr. This is
-just a user talking.
-There might be technical reasons why it's better to not do it, but for
-me it works the way I expect, therefore I'm happy
-3. This is just silly
-4. No comment.
+This is what you would get if you visualize the two separate branches,
+and not the common repository.
 
 /Erik
