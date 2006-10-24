@@ -1,76 +1,74 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH 2/1] gitweb: Use fixed string for "next" link in commitdiff view
-Date: Tue, 24 Oct 2006 19:26:27 +0200
-Message-ID: <20061024172627.GU18879@pasky.or.cz>
-References: <200610230037.57183.jnareb@gmail.com> <7vd58k0wmx.fsf@assigned-by-dhcp.cox.net> <200610240008.08325.jnareb@gmail.com> <20061024114923.GD20017@pasky.or.cz> <7vu01thbvb.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Pushing vs. alternates
+Date: Tue, 24 Oct 2006 10:33:34 -0700
+Message-ID: <7vmz7lhb4h.fsf@assigned-by-dhcp.cox.net>
+References: <20061024035335.GW20017@pasky.or.cz>
+	<7vmz7muvqu.fsf@assigned-by-dhcp.cox.net>
+	<20061024112028.GY20017@pasky.or.cz>
+	<7vzmblhc3y.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 24 19:27:02 2006
+X-From: git-owner@vger.kernel.org Tue Oct 24 19:34:19 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcQ2q-0000NF-9d
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 19:26:32 +0200
+	id 1GcQ9k-00027q-Lv
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 19:33:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030441AbWJXR03 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Oct 2006 13:26:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030444AbWJXR03
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 13:26:29 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:41622 "EHLO machine.or.cz")
-	by vger.kernel.org with ESMTP id S1030441AbWJXR03 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 13:26:29 -0400
-Received: (qmail 16056 invoked by uid 2001); 24 Oct 2006 19:26:27 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vu01thbvb.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1161111AbWJXRdg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Oct 2006 13:33:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161115AbWJXRdg
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 13:33:36 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:16619 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1161111AbWJXRdg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Oct 2006 13:33:36 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP
+          id <20061024173335.GYNB12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 24 Oct 2006 13:33:35 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id eHZJ1V00X1kojtg0000000
+	Tue, 24 Oct 2006 13:33:19 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <7vzmblhc3y.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Tue, 24 Oct 2006 10:12:17 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29994>
 
-On Tue, Oct 24, 2006 at 07:17:28PM CEST, Junio C Hamano wrote:
-> Petr Baudis <pasky@suse.cz> writes:
-> 
-> >> > Would it even be necessary to use any SHA-1 name in these cases,
-> >> > I wonder.  Would it make the page less useful if we replace all
-> >> > of the above _commit_ with a fixed string, say, "parent"?
-> >
-> > I really disagree here - what's the point of not using SHA-1? The extra
-> > string carries zero information in comparison with the previous state
-> > and I just can't see how it *improves* stuff. If you're walking in a
-> > maze and making marks on walls, it's still more useful if you have
-> > corridors named by "A", "B", "C", "D" on junctions if you sometimes want
-> > to walk back to the marked corridors.
-> 
-> I think people would recognize A B C D as names but not 40- or
-> 8- hexadecimal letters.
+Junio C Hamano <junkio@cox.net> writes:
 
-40-digit hex numbers is insane, I agree. But at least I personally tend
-to recognize 8-digit hex numbers when dancing around them intensively
-for a few minutes. Besides, it can be just "now I took the 8c5 way",
-which is much easier to train your neurons too than "now I took the
-fourth, uh, or was it the fifth parent? one, two, three, four, fifth...
-hmm, what's in the statusbar?".
+>> Well, I would send haves for the alternate repository anyway,...
+>
+> While I agree it would be an optimization if it worked, there is
+> one conceptual problem here though, coming from old warts.  It's
+> not alternate "repository" but it is alternate object store.
+> There is no guarantee that refs/ directory that is next to the
+> objects/ alternate points at is related to that object store,
+> for historical reasons (i.e. we have separate GIT_DIR and
+> GIT_OBJECT_DIRECTORIES).
 
-My point is that this does not improve the situation, and some people
-(me) think it makes it worse, so what's the point of the change?
+Having said that, I am not opposed to the idea of using refs/
+next to objects/ your alternate points at.  Certainly I would
+not have any objection (heck I would even volunteer to code it
+myself if only to see how much we can save) if we did not have
+GIT_OBJECT_DIRECTORY in the system (i.e. if we had a guarantee
+from the beginning that objects/ directory that is next to refs/
+*must* be related).  So I am Ok with this change, but I would
+feel better if we add a few sentences to repository-layout.txt
+that warns about the (technically new although it is very likely
+that violating it would not have been useful at all) restriction.
 
-> I do not care much either way, actually, but I think it might
-> make more sense to use abbreviated object names.  On the other
-> hand it may be Ok to have full 40 letters depending on the
-> layout (e.g. the set of merge parents are shown on a single line
-> in which case it would not fit, etc.).
-
-Yes, I'm all for abbreviated names, but I'm against just writing
-"parent" everywhere.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
-lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
+I suspect we could do the same for fetching in principle,
+e.g. when you track Linus's and a subsystem maintainer's trees
+and these two repositories are linked with alternates at your
+end.  Fetching into your copy of Linus's and then fetching into
+your copy of subsystem would be optimized the same way if you
+send refs/ from the alternates as HAVEs, right?
