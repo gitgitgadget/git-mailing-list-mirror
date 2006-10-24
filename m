@@ -1,96 +1,67 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: VCS comparison table
-Date: Tue, 24 Oct 2006 12:27:03 +0200
-Organization: At home
-Message-ID: <ehkpos$ga1$1@sea.gmane.org>
-References: <Pine.LNX.4.64.0610172014250.3962@g5.osdl.org> <453A7D7E.8060105@utoronto.ca> <20061022074513.GF29927@artax.karlin.mff.cuni.cz> <200610221105.26421.jnareb@gmail.com> <845b6e870610220256u39d3d06wefd4f71851670812@mail.gmail.com> <87zmbozau2.wl%cworth@cworth.org> <20061022185350.GW75501@over-yonder.net> <Pine.LNX.4.64.0610231018410.3962@g5.osdl.org> <20061023222131.GB17019@over-yonder.net> <vpq64eakpnh.fsf@ecrins.imag.fr>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Pushing vs. alternates
+Date: Tue, 24 Oct 2006 13:20:28 +0200
+Message-ID: <20061024112028.GY20017@pasky.or.cz>
+References: <20061024035335.GW20017@pasky.or.cz> <7vmz7muvqu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: bazaar-ng@lists.canonical.com
-X-From: git-owner@vger.kernel.org Tue Oct 24 12:27:04 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 24 13:20:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcJUq-0004vX-4n
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 12:27:00 +0200
+	id 1GcKKh-000746-II
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 13:20:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030270AbWJXK05 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006 06:26:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030272AbWJXK05
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 06:26:57 -0400
-Received: from main.gmane.org ([80.91.229.2]:2983 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1030270AbWJXK04 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 06:26:56 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GcJUe-0004t8-AT
-	for git@vger.kernel.org; Tue, 24 Oct 2006 12:26:48 +0200
-Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 24 Oct 2006 12:26:48 +0200
-Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 24 Oct 2006 12:26:48 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-Followup-To: gmane.comp.version-control.git
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1030301AbWJXLUa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Oct 2006 07:20:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030309AbWJXLUa
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 07:20:30 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:22920 "EHLO machine.or.cz")
+	by vger.kernel.org with ESMTP id S1030301AbWJXLU3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 07:20:29 -0400
+Received: (qmail 20374 invoked by uid 2001); 24 Oct 2006 13:20:28 +0200
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vmz7muvqu.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29963>
 
-Matthieu Moy wrote:
-> "Matthew D. Fuller" <fullermd@over-yonder.net> writes:
->=20
->>> For example, how long does it take to do an arbitrary "undo" (ie
->>> forcing a branch to an earlier state) [...]
->>
->> I don't understand the thrust of this, either. =A0As I understand th=
-e
->> operation you're talking about, it doesn't have anything to do with =
-a
->> branch; you'd just be whipping the working tree around to different
->> versions. =A0That should be O(diff) on any modern VCS.
+Dear diary, on Tue, Oct 24, 2006 at 07:29:45AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> Petr Baudis <pasky@ucw.cz> writes:
+> 
+> >   I don't have time to code that myself right now, so I'm just tossing
+> > an idea around - pushing to a directory with alternates set up should
+> > avoid sending objects that are already in the alternate object database.
+> 
+> That is probably only relevant for the first time, since
+> subsequent pushes have refs from its own repository that tracks
+> the tips of branches that was pushed for the last time.
 
-> There are two things to do:
->
-> * Mark the tree as corresponding to a different revision in the past.
-[...]
-> * Then, do the "merge" to make your tree up to date. You can hardly d=
-o
-> =A0 faster than git and its unpacked format, but this is at the cost =
-of
-> =A0 disk space. But as you say, in almost any modern VCS, that's
-> =A0 O(diff). In a space-efficient format, that's just the tradeoff yo=
-u
-> =A0 make between full copies of a file and delta-compression.
+Well, I would send haves for the alternate repository anyway, since: you
+push your kernel branch, half a year passes, you merge with new
+development and want to push again; you really do not want to push
+everything that happenned over the last half a year. And sending the
+extra haves shouldn't hurt, right?
 
-Actually, this would be "checkout" (in git terminology), i.e. overwriti=
-ng
-the files which differ in current revision, and the revision we rewind =
-(do
-undo) to. (That's of course simplification omitting for example removin=
-g
-and creating files.) Which would be O(changed files) which is lower bou=
-nd
-and cannot be faster. Finding which files changed is also O(changed fil=
-es),
-with a little bit of O(directory depth) in git, with very small constan=
-t.
+> And first time usage when you are initializing the repository
+> with alternates, you have direct access to that repository
+> (that's how you can set up alternates), you can as easily do the
+> initial fetch/clone as well at that time.
 
-And even in the case of packed format, it wouldn't be O(diff)/O(history=
-),
-but O(delta length) where delta length is maximum length of delta chain
-in pack, by default set to 10. Well, constant is a bit larges because g=
-it
-additionally gzip-compresses (even in loose, i.e. unpacked format).
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+I don't understand this paragraph. This mail is about pushing, not
+fetch/clone. You can only push if your login access is reduced to
+git-shell, and something external could've set up your alternates.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+lK[d2%Sa2/d0$^Ixp"|dc`;s/\W//g;$_=pack('H*',/((..)*)$/)
