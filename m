@@ -1,74 +1,69 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] Make git-branch a builtin
-Date: Tue, 24 Oct 2006 02:55:48 -0400
-Message-ID: <20061024065548.GB9947@spearce.org>
-References: <11616396262982-git-send-email-hjemli@gmail.com> <20061023215506.GB8344@spearce.org> <7vfydewqbb.fsf@assigned-by-dhcp.cox.net> <20061024054408.GA9724@spearce.org> <7vy7r6qkmg.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Make search type a popup menu
+Date: Tue, 24 Oct 2006 09:33:12 +0200
+Organization: At home
+Message-ID: <ehkfis$6da$1@sea.gmane.org>
+References: <20061024031546.2877.51620.stgit@rover>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 24 08:56:14 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue Oct 24 09:33:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcGCo-0005Oj-Tb
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 08:56:12 +0200
+	id 1GcGmb-000490-G1
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 09:33:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932392AbWJXGzz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Oct 2006 02:55:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932369AbWJXGzz
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 02:55:55 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:47328 "EHLO
-	corvette.plexpod.net") by vger.kernel.org with ESMTP
-	id S932392AbWJXGzy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Oct 2006 02:55:54 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GcGCU-00031f-Ih; Tue, 24 Oct 2006 02:55:50 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id D12CE21269E; Tue, 24 Oct 2006 02:55:48 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vy7r6qkmg.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752096AbWJXHdF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Oct 2006 03:33:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752101AbWJXHdF
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 03:33:05 -0400
+Received: from main.gmane.org ([80.91.229.2]:30403 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1752096AbWJXHdD (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 03:33:03 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GcGmO-000475-L3
+	for git@vger.kernel.org; Tue, 24 Oct 2006 09:32:56 +0200
+Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Oct 2006 09:32:56 +0200
+Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Oct 2006 09:32:56 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29939>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Shawn Pearce <spearce@spearce.org> writes:
-> 
-> >> > Wouldn't it make more sense to just include the full SHA1 of the
-> >> > file we are deleting rather than the entire 131 line negative diff?
-> >> 
-> >> How would you do "git apply -R" on something like that?
-> >
-> > Uh, you have the full SHA1 in the index line.  So you just have to
-> > reattach that blob to the named path...  pretty simple actually.
-> 
-> Bzzzt; wrong answer.
-> 
-> Think of a future when you can shallowly clone near the tip of
-> git repository that does not have shell-script git-branch.sh
-> anymore.  You cannot expect to already have the preimage of the
-> patch in such a case.  You would still want to be able to revert
-> the change with "git apply -R".
+Petr Baudis wrote:
 
-Yet another valid argument for having the data needed for the
-preimage available.
+> This makes the multiple search types actually usable by the user;
+> if you don't read the gitweb source, you don't even have an idea
+> that you can write things like that there.
 
-I've already agreed with Petr that having the data there is probably
-better than not.  Now I'm also agreeing with you.  There is little
-need to beat a dead horse.  :-)
+This is I think good change, although I'm not sure if I like changing
+using search operators to using additional CGI parameter.
 
+Having help page for search is _certainly_ very good change. Perhaps
+we should put it out-of-line, not embedded? Just a thought...
+
+This patch changes search box into something similar to Google
+"Advanced Search". Yet Google "Advanced Search" box generates search
+query using search operators. Search operators are just more powerfull.
+I know that gitweb doesn't use this power now (it uses only one operator,
+first if I remember correctly), but we can do this in the future
+(e.g. searching for both author and specified string in commit message,
+or searching for given author OR given committer). Well, we can always
+change it back...
 -- 
-Shawn.
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
