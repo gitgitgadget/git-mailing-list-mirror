@@ -1,72 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: cloning the kernel - why long time in "Resolving 313037 deltas"
-Date: Tue, 19 Dec 2006 03:32:42 -0500
-Message-ID: <20061219083242.GF2511@spearce.org>
-References: <86r6uw9azn.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181625140.18171@xanadu.home> <86hcvs984c.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181414200.3479@woody.osdl.org> <8664c896xv.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181511260.3479@woody.osdl.org> <Pine.LNX.4.64.0612181906450.18171@xanadu.home> <20061219051108.GA29405@thunk.org> <20061219063930.GA2511@spearce.org> <Pine.LNX.4.64.0612182248420.3479@woody.osdl.org>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH] gitweb: Show project's README.html if available
+Date: Tue, 24 Oct 2006 12:09:03 -0700 (PDT)
+Message-ID: <524029.7339.qm@web31812.mail.mud.yahoo.com>
+References: <20061024113057.GA20017@pasky.or.cz>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 19 Dec 2006 08:33:04 +0000 (UTC)
-Cc: Theodore Tso <tytso@mit.edu>, Nicolas Pitre <nico@cam.org>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Tue, 24 Oct 2006 19:09:32 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0612182248420.3479@woody.osdl.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=V79aExxE4W5XDnyRiHM8GZloYTnsRPJjznL+/4htMu/tLyF1AXc+2ZQlPKXRIzRkW1BSA384RvIwDECAu1FDy73thnBXDl4OL/FP+Jb0QlkRBBDKcZpWxJXkZuuSF2XQ5tTgiZMTI7Is68RVcAuRM41IvzhTKJmd9T1xt8tVFcI=  ;
+X-YMail-OSG: hDA8A_8VM1laqYiV_7R5irgz4PvBW_6sRZOef8Pj
+In-Reply-To: <20061024113057.GA20017@pasky.or.cz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30001>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GwaPE-0003o4-PP for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 09:33:01 +0100
+ esmtp (Exim 4.43) id 1GcReE-0007j9-LK for gcvg-git@gmane.org; Tue, 24 Oct
+ 2006 21:09:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932662AbWLSIc6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 03:32:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932657AbWLSIc5
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 03:32:57 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:58050 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932663AbWLSIc5 (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
- 03:32:57 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GwaOz-0006hA-0M; Tue, 19 Dec 2006 03:32:45 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 843FD20FB65; Tue, 19 Dec 2006 03:32:42 -0500 (EST)
-To: Linus Torvalds <torvalds@osdl.org>
+ S1161188AbWJXTJJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006
+ 15:09:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161190AbWJXTJJ
+ (ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 15:09:09 -0400
+Received: from web31812.mail.mud.yahoo.com ([68.142.207.75]:26495 "HELO
+ web31812.mail.mud.yahoo.com") by vger.kernel.org with SMTP id
+ S1161188AbWJXTJI (ORCPT <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006
+ 15:09:08 -0400
+Received: (qmail 7449 invoked by uid 60001); 24 Oct 2006 19:09:03 -0000
+Received: from [64.215.88.90] by web31812.mail.mud.yahoo.com via HTTP; Tue,
+ 24 Oct 2006 12:09:03 PDT
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> wrote:
-> On Tue, 19 Dec 2006, Shawn Pearce wrote:
+--- Petr Baudis <pasky@suse.cz> wrote:
+> > Why not instead re-submit a patch implementing what was discussed
+> > in this thread bearing the same name:
 > > 
-> > Why isn't git-index-pack doing the same?  Is there some hidden glitch
-> > in some OS somewhere that has a problem with overmapping a file and
-> > appending into it via write()?  I've done that on Mac OS X, Linux,
-> > BSDi, Solaris...  never had a problem.
+> > http://marc.theaimsgroup.com/?t=116044914900001&r=1&w=2
 > 
-> It works on modern systems, but at least old HPUX versions had 
-> non-coherent mmap() and write(), and POSIX does not guarantee it. And if 
-> you ever want to port to Windows, I don't think you should do it.
+> This implements
 > 
-> Anyway, try the pread() version first, see if that fixes the OS X problem.
+> 	http://marc.theaimsgroup.com/?l=git&m=116047939517299&w=2
+> 
+> I see no other ideas I could take there except various naming proposals
+> and perhaps using File::Copy but I'll wait until someone does a
+> gitweb-wide change for the latter.
+> 
+> I don't really care _what_ name it bears, but I'd like to have it
+> included. :-)
 
-It does.  Without pread() (aka stock 'next') it takes me over an
-hour to index a pack of linux-2.6.  With pread() its 1m6s to run
-index-pack on the same pack file.  The indexes are (of course)
-identically produced.
+People have suggested that this functionality be folded into the
+"Description" column, where the description printed is the
+first line of the description file "description" and if clicked
+on, it shows the whole "descrption" file.
 
--- 
+    Luben
