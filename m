@@ -1,69 +1,53 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jon Masters <jcm@redhat.com>
-Subject: Re: error: Can't lock ref
-Date: Mon, 11 Dec 2006 11:35:59 -0500
-Message-ID: <1165854959.13260.27.camel@jcm.boston.redhat.com>
-References: <457D0F97.6050801@jonmasters.org>  <457D2013.4060908@op5.se>
+From: Gerrit Pape <pape@smarden.org>
+Subject: git-*arch* in git-arch rpm
+Date: Tue, 24 Oct 2006 20:02:11 +0000
+Message-ID: <20061024200211.17221.qmail@9f622d681978b5.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 11 Dec 2006 16:31:52 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 24 Oct 2006 20:02:03 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <457D2013.4060908@op5.se>
-X-Mailer: Evolution 2.8.0 (2.8.0-7.fc6) 
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34013>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gto4D-0005C7-9I for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 17:31:49 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30008>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GcSTB-0002yh-Qg for gcvg-git@gmane.org; Tue, 24 Oct
+ 2006 22:01:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937105AbWLKQbp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
- 11:31:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936365AbWLKQbp
- (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 11:31:45 -0500
-Received: from mx1.redhat.com ([66.187.233.31]:41343 "EHLO mx1.redhat.com"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S937105AbWLKQbo
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec 2006 11:31:44 -0500
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com
- [172.16.52.254]) by mx1.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id
- kBBGVf9o013336; Mon, 11 Dec 2006 11:31:41 -0500
-Received: from pobox.surrey.redhat.com (pobox.surrey.redhat.com
- [172.16.10.17]) by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id
- kBBGVeO6031725; Mon, 11 Dec 2006 11:31:40 -0500
-Received: from [172.16.81.77] (jcm.boston.redhat.com [172.16.81.77]) by
- pobox.surrey.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id
- kBBGVdlI009982; Mon, 11 Dec 2006 16:31:39 GMT
-To: Andreas Ericsson <ae@op5.se>
+ S1161218AbWJXUBu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006
+ 16:01:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161219AbWJXUBu
+ (ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 16:01:50 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:53408 "HELO
+ a.mx.smarden.org") by vger.kernel.org with SMTP id S1161218AbWJXUBu (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 16:01:50 -0400
+Received: (qmail 17222 invoked by uid 1000); 24 Oct 2006 20:02:11 -0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Mon, 2006-12-11 at 10:08 +0100, Andreas Ericsson wrote:
-> Jon Masters wrote:
-> > Hi folks,
-> > 
-> > I've just pushed up a packed git repo:
-> > 
-> > http://www.kerneltools.org/pub/downloads/module-init-tools/devel/module-init-tools.git 
-> > 
-> > 
-> > Attempting to clone this repo using http generates the error in 
-> > $subject. Brief searching via Google suggests this is an appache 
-> > permissions problem - anyone got a trivially obvious apache config fix 
-> > before I go trawling through to figure out what's up?
+Hi, there're two programs in the git-arch rpm that shouldn't be there:
 
-> What does your apache error log say?
-
-That's just the thing - nothing. I get what looks like a good access in
-the access log, but then that error - I can play around, but I know
-others have discovered this to be some "known" apache problem. So, I'm
-hoping someone knows what that is, before I start debugging it.
-
-Jon.
+ $ rpm -qlp git-arch-1.4.3.2-1.i386.rpm 
+ /usr/bin/git-archimport
+ /usr/bin/git-archive
+ /usr/bin/git-upload-archive
+ /usr/share/doc/git-arch-1.4.3.2
+ /usr/share/doc/git-arch-1.4.3.2/git-archimport.html
+ /usr/share/doc/git-arch-1.4.3.2/git-archimport.txt
+ /usr/share/doc/git-arch-1.4.3.2/git-archive.html
+ /usr/share/doc/git-arch-1.4.3.2/git-archive.txt
+ /usr/share/doc/git-arch-1.4.3.2/git-upload-archive.html
+ /usr/share/doc/git-arch-1.4.3.2/git-upload-archive.txt
+ /usr/share/man/man1/git-archimport.1.gz
+ /usr/share/man/man1/git-archive.1.gz
+ /usr/share/man/man1/git-upload-archive.1.gz
+ $ 
 
