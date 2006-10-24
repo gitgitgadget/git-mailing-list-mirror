@@ -1,90 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: fetching packs and storing them as packs
-Date: Thu, 26 Oct 2006 22:41:49 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0610262230080.11384@xanadu.home>
-References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home>
- <4540CA0C.6030300@tromer.org> <Pine.LNX.4.64.0610261105200.12418@xanadu.home>
- <45413209.2000905@tromer.org> <Pine.LNX.4.64.0610262038320.11384@xanadu.home>
- <20061027014229.GA28407@spearce.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] gitweb: Show project's README.html if available
+Date: Tue, 24 Oct 2006 21:19:15 +0200
+Message-ID: <20061024191915.GV18879@pasky.or.cz>
+References: <20061024113057.GA20017@pasky.or.cz> <524029.7339.qm@web31812.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Fri, 27 Oct 2006 02:42:09 +0000 (UTC)
-Cc: Eran Tromer <git2eran@tromer.org>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 24 Oct 2006 19:19:53 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <20061027014229.GA28407@spearce.org>
-X-X-Sender: nico@xanadu.home
+Content-Disposition: inline
+In-Reply-To: <524029.7339.qm@web31812.mail.mud.yahoo.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30003>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdHfX-0006e8-4Z for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 04:42:03 +0200
+ esmtp (Exim 4.43) id 1GcRo2-0001ZW-MH for gcvg-git@gmane.org; Tue, 24 Oct
+ 2006 21:19:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161469AbWJ0CmA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 22:42:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161446AbWJ0CmA
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 22:42:00 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:21376 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S1161441AbWJ0Cl7
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 22:41:59 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J7R004MGWTPQNS0@VL-MH-MR001.ip.videotron.ca> for git@vger.kernel.org; Thu,
- 26 Oct 2006 22:41:50 -0400 (EDT)
-To: Shawn Pearce <spearce@spearce.org>
+ S1751472AbWJXTTT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006
+ 15:19:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751798AbWJXTTT
+ (ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 15:19:19 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:18104 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1751472AbWJXTTS (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 15:19:18 -0400
+Received: (qmail 29044 invoked by uid 2001); 24 Oct 2006 21:19:15 +0200
+To: Luben Tuikov <ltuikov@yahoo.com>
 Sender: git-owner@vger.kernel.org
 
-On Thu, 26 Oct 2006, Shawn Pearce wrote:
-
-> Nicolas Pitre <nico@cam.org> wrote:
-> > On Fri, 27 Oct 2006, Eran Tromer wrote:
-> > 
-> > > Hi,
+On Tue, Oct 24, 2006 at 09:09:03PM CEST, Luben Tuikov wrote:
+> --- Petr Baudis <pasky@suse.cz> wrote:
+> > > Why not instead re-submit a patch implementing what was discussed
+> > > in this thread bearing the same name:
 > > > 
-> > > On 2006-10-26 17:08, Nicolas Pitre wrote:
-> > > > On Thu, 26 Oct 2006, Eran Tromer wrote:
-> > > >> This creates a race condition w.r.t. "git repack -a -d", similar to the
-> > > >> existing race condition between "git fetch --keep" and
-> > > >> "git repack -a -d". There's a point in time where the new pack is stored
-> > > >> but not yet referenced, and if "git repack -a -d" runs at that point it
-> > > >> will eradicate the pack. When the heads are finally updated, you get a
-> > > >> corrupted repository.
-> > > > 
-> > > > And how is it different from receiving a pack through git-unpack-objects 
-> > > > where lots of loose objects are created, and git-repack -a -d removing 
-> > > > those unconnected loose objects before the heads are updated?
-> > > 
-> > > git-repack -a -d does not touch unconnected loose objects.
-> > > It removes only unconnected packed objects.
+> > > http://marc.theaimsgroup.com/?t=116044914900001&r=1&w=2
 > > 
-> > Right.
+> > This implements
 > > 
-> > > Only git-prune removes unconnected loose objects, and that's documented
-> > > as unsafe.
+> > 	http://marc.theaimsgroup.com/?l=git&m=116047939517299&w=2
 > > 
-> > Well, the race does exist.  Don't do repack -a -d at the same time then.
+> > I see no other ideas I could take there except various naming proposals
+> > and perhaps using File::Copy but I'll wait until someone does a
+> > gitweb-wide change for the latter.
+> > 
+> > I don't really care _what_ name it bears, but I'd like to have it
+> > included. :-)
 > 
-> This is an issue for "central" repositories that people push into
-> and which might be getting repacked according to a cronjob.
-> 
-> Unfortunately I don't have a solution.  I tried to come up with
-> one but didn't.  :-)
+> People have suggested that this functionality be folded into the
+> "Description" column, where the description printed is the
+> first line of the description file "description" and if clicked
+> on, it shows the whole "descrption" file.
 
-Just continue to explode received packs into loose objects then.  It is 
-that simple.  I said there were advantages and inconvenients to both 
-methods. This one is a nice example.
+Please look at the mail the mail I referred was a reply to:
 
-I won't repack from a cron job, so I don't expect to run a repack and a 
-fetch at the same time on my private repositories.  I therefore don't 
-care about that race and so is the case for the vast majority of users.
+	http://marc.theaimsgroup.com/?l=git&m=116047773825208&w=2
 
-
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
