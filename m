@@ -1,72 +1,93 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: fix symlink-to-file changes when using command-line svn 1.4.0
-Date: Tue, 24 Oct 2006 02:50:37 -0700
-Message-ID: <20061024095037.GA15936@soma>
-References: <20061018085948.GA27357@cepheus.pub>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: updating only changed files source directory?
+Date: Tue, 24 Oct 2006 11:50:45 +0200
+Message-ID: <453DE1F5.5010803@xs4all.nl>
+References: <ehjqgf$ggb$1@sea.gmane.org> <ehkgfs$af6$1@sea.gmane.org>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 24 11:50:53 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Oct 24 11:51:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GcIvj-0006rB-Ew
-	for gcvg-git@gmane.org; Tue, 24 Oct 2006 11:50:44 +0200
+	id 1GcIw0-0006vE-HV
+	for gcvg-git@gmane.org; Tue, 24 Oct 2006 11:51:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030261AbWJXJuk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Oct 2006 05:50:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030262AbWJXJuk
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 05:50:40 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:59854 "EHLO hand.yhbt.net")
-	by vger.kernel.org with ESMTP id S1030261AbWJXJuj (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 05:50:39 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id B80EF7DC09D;
-	Tue, 24 Oct 2006 02:50:37 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 24 Oct 2006 02:50:37 -0700
-To: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>,
-	Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <20061018085948.GA27357@cepheus.pub>
-User-Agent: Mutt/1.5.12-2006-07-14
+	id S1030264AbWJXJuq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Oct 2006 05:50:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030266AbWJXJuq
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 05:50:46 -0400
+Received: from main.gmane.org ([80.91.229.2]:44931 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1030264AbWJXJuo (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 05:50:44 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GcIvi-0006qz-Ha
+	for git@vger.kernel.org; Tue, 24 Oct 2006 11:50:42 +0200
+Received: from muurbloem.xs4all.nl ([213.84.26.127])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Oct 2006 11:50:42 +0200
+Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Oct 2006 11:50:42 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
+User-Agent: Thunderbird 1.5.0.7 (X11/20061008)
+In-Reply-To: <ehkgfs$af6$1@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/29957>
 
-I incorrectly thought this was hopelessly broken in svn 1.4.0,
-but now it's just broken in that the old method didn't work.  It
-looks like svn propdel and svn propset must be used now and the
-(imho) more obvious svn rm --force && svn add no longer works.
+Jakub Narebski escreveu:
+> Han-Wen Nienhuys wrote:
+> 
+>> I have some questions and remarks
+> 
+> I see that you are using fairly low level commands (plumbing commands)
+>  
+>>    git-http-fetch -a <branch>  <url>
+>>    wget <url>/refs/head/<branch>    ## dump to <myrepo>/refs/head/<branch>
+> 
+> instead of setting $GIT_DIR/remotes/origin file and using "git fetch".
+> BTW. "git fetch" will not update branch you are on, unless --update-head-ok
+> option is used.
 
-make -C t full-svn-test should now work
+I tried fetch, but was put off by the warnings because I didn't have 
+--update-head-ok. Using lowlevel commands is my way of making sure that 
+Git doesn't assume it needs to do anything intelligent.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- git-svn.perl |    9 ++++++---
- 1 files changed, 6 insertions(+), 3 deletions(-)
+>>    git --git-dir <myrepo> read-tree <committish>
+>>
+>>    cd <srcdir>
+>>    git --git-dir <myrepo> checkout-index -a -f
+> 
+> instead of 
+>      git --git-dir=<myrepo> checkout <branch>
+> (-f is Force a re-read of everything)
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 54d2356..37ecc51 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -1501,10 +1501,13 @@ sub svn_checkout_tree {
- 			apply_mod_line_blob($m);
- 			svn_check_prop_executable($m);
- 		} elsif ($m->{chg} eq 'T') {
--			sys(qw(svn rm --force),$m->{file_b});
--			apply_mod_line_blob($m);
--			sys(qw(svn add), $m->{file_b});
- 			svn_check_prop_executable($m);
-+			apply_mod_line_blob($m);
-+			if ($m->{mode_a} =~ /^120/ && $m->{mode_b} !~ /^120/) {
-+				sys(qw(svn propdel svn:special), $m->{file_b});
-+			} else {
-+				sys(qw(svn propset svn:special *),$m->{file_b});
-+			}
- 		} elsif ($m->{chg} eq 'A') {
- 			svn_ensure_parent_path( $m->{file_b} );
- 			apply_mod_line_blob($m);
+Yes, however,
+
+   checkout
+
+changes the state of the repository, which is something I want to prevent.
+
+>> * As far as I can see, there is no reason to have only one index in a
+>> git repository. Why isn't it possible to specify an alternate
+>> index-file with an option similar to --git-dir ?
+> 
+> --git-dir is alternative to setting GIT_DIR. You can use GIT_INDEX_FILE
+> to specify alternate index file. Documented in git(7), section
+> "ENVIRONMENT VARIABLES".
+
+Silly me, I overlooked in the manpage. Note that it is standard to put 
+the environment section at the end of the manpage. Right now it's 
+somewhere in the middle.
+
+
 -- 
-1.4.3.2.g125940
+  Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
