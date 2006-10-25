@@ -4,80 +4,124 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: linux@horizon.com
-Subject: Re: [DRAFT] Branching and merging with git
-Date: 17 Nov 2006 19:13:55 -0500
-Message-ID: <20061118001355.23488.qmail@science.horizon.com>
-References: <20061117182157.GC11882@fieldses.org>
-NNTP-Posting-Date: Sat, 18 Nov 2006 00:14:35 +0000 (UTC)
-Cc: git@vger.kernel.org, linux@horizon.com
+From: David Rientjes <rientjes@cs.washington.edu>
+Subject: Re: VCS comparison table
+Date: Wed, 25 Oct 2006 02:19:15 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64N.0610250157470.3467@attu1.cs.washington.edu>
+References: <453536AE.6060601@utoronto.ca> <200610172301.27101.jnareb@gmail.com>
+ <45354AD0.1020107@utoronto.ca> <BAYC1-PASMTP07AB11A64250AAF683424DAE0E0@CEZ.ICE>
+ <vpq4ptz2uh8.fsf@ecrins.imag.fr> <453DAC87.8050203@research.canon.com.au>
+ <Pine.LNX.4.64.0610232318200.3962@g5.osdl.org>
+ <Pine.LNX.4.64N.0610232336010.30334@attu2.cs.washington.edu>
+ <Pine.LNX.4.64.0610240812410.3962@g5.osdl.org>
+ <Pine.LNX.4.64N.0610241300450.8112@attu4.cs.washington.edu>
+ <20061025084810.GA26618@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 25 Oct 2006 09:19:46 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Lachlan Patrick <loki@research.canon.com.au>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061117182157.GC11882@fieldses.org>
+X-Authentication-Warning: attu1.cs.washington.edu: rientjes owned process doing -bs
+In-Reply-To: <20061025084810.GA26618@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30039>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlDqo-0008N4-3s for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 01:14:30 +0100
+ esmtp (Exim 4.43) id 1Gcev5-0004Gh-W0 for gcvg-git@gmane.org; Wed, 25 Oct
+ 2006 11:19:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1756088AbWKRAN6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 19:13:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756089AbWKRAN6
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 19:13:58 -0500
-Received: from science.horizon.com ([192.35.100.1]:36423 "HELO
- science.horizon.com") by vger.kernel.org with SMTP id S1756088AbWKRAN5 (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 19:13:57 -0500
-Received: (qmail 23489 invoked by uid 1000); 17 Nov 2006 19:13:55 -0500
-To: bfields@fieldses.org, tytso@mit.edu
+ S1423059AbWJYJT2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 05:19:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423150AbWJYJT2
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 05:19:28 -0400
+Received: from mx1.cs.washington.edu ([128.208.5.52]:63119 "EHLO
+ mx1.cs.washington.edu") by vger.kernel.org with ESMTP id S1423059AbWJYJT1
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 05:19:27 -0400
+Received: from attu1.cs.washington.edu (attu1.cs.washington.edu
+ [128.208.1.137]) by mx1.cs.washington.edu (8.13.7/8.13.7/1.6) with ESMTP id
+ k9P9JGlw018538 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
+ verify=NOT); Wed, 25 Oct 2006 02:19:16 -0700 (envelope-from
+ rientjes@cs.washington.edu)
+Received: from localhost (rientjes@localhost) by attu1.cs.washington.edu
+ (8.13.7/8.13.7/Submit/1.2) with ESMTP id k9P9JFkP004681; Wed, 25 Oct 2006
+ 02:19:15 -0700 (envelope-from rientjes@cs.washington.edu)
+To: Jeff King <peff@peff.net>
 Sender: git-owner@vger.kernel.org
 
-I'm working on incorporating all of the comments I've received, so
-thank you all!
+On Wed, 25 Oct 2006, Jeff King wrote:
 
-(BTW, the reason I didn't document git-describe is that I didn't
-know about it!  You fixed the latter, so I'll fix the former.)
+> I don't understand how converting shell scripts to C has any impact
+> whatsoever on the usage of git. The plumbing shell scripts didn't go
+> away; you can still call them and they behave identically.
+> 
+> Is there some specific change in functionality that you're lamenting?
+> 
 
+No, my criticism is against the added complexity which makes the 
+modification of git increasingly difficult with every new release.  It's a 
+pretty limited use case of the entire package, I'm sure, but one of the 
+major advantages that I saw in git early on was the ability to tailor it 
+to your own personal needs very easily with some simple shell knowledge 
+and enough C that was required at the time.
 
-I'm glad if others like it, but I was really scratching my own
-itch.  I'm still wrapping my head around how to work with git, and
-writing this was my own learning experience.
+> Some C->shell conversions may have made the code "longer and less
+> traceable." However, many of those conversions caused the code to be
+> shorter (because communication between C functions is simpler than going
+> over pipes, and because anything involving a data structure more complex
+> than a string is difficult in the shell) and more robust (fewer
+> opportunities for quoting/parsing errors, and none of the shell gotchas
+> like missing the error code in "foo | bar").
+> 
 
-Even writing it out in full rather than as rougher notes wasn't
-an entirely unselfish act; it ensures:
-1) I don't leave some important assumption unstated; that's the
-   type most likely to be wrong, and
-2) If I can get it good enough to post publicly, I'll get all the
-   experts to fact-check it for me.
+You're ignoring the advantageous nature of the shell with regard to git.  
+The shell is so much better prepared to deal with information managers by 
+nature than the C programming language.  It's not a matter of shorter 
+code, per se, it's about the developer's ability to make small changes to 
+the operation of the information manager on demand to tailor to his or her 
+_current_ needs.  For any experienced shell programmer it is so much 
+easier to go in and change an option or pipe to a different command or 
+comment out a simple shell command in a .sh file than editing the C code.  
+And sometimes it's necessary to have several different variations of that 
+command which is very easy with slightly renamed .sh files instead of 
+adding on more and more flags to commands that have become so complex at 
+this point that it's difficult to know the basics of how to manage a 
+project.
 
+This all became very obvious when the tutorials came out on "how to use 
+git in 20 commands or less" effectively.  These tutorials shouldn't need 
+to exist with an information manager that started as a quick, efficient, 
+and _simple_ project.  You're treating git development in the same light 
+as you treat Linux development; let's be honest and say that 99% of the 
+necessary git functionality was there almost a year ago and ever since 
+nothing of absolute necessity has been added that serious developers care 
+about in a revision control system.  Look at LKML, nobody is waiting on 
+these new releases and upgrading to them when they're announced.  And this 
+is the community that git has _targeted_.  Most other projects don't care 
+about the syntactics of sign-off lines and acked-by lines and format-patch 
+like the git community does.
 
-As for the target audience, it's basically someone who's read git(1)
-and knows what a VCS is supposed to do, but has a CVS/SVN mindset.
-The emphasis is on branching and merging because that's the big
-"mental mode" difference in the way that git works.
+> Do you have any specific reason to believe that the git code is of worse
+> quality now than it was before?
+> 
 
+Absolutely.  I think I've actually documented that fairly well.  Back in 
+the day git was a very concise, well-written package.  Today, a tour 
+through the source code for the latest release leaves a lot to be desired 
+for any serious C programmer.
 
-For anyone else documenting git, I recommend describing "what if I
-make a mistake" early.  It was a bit of a revelation to realize
-that there's not much point to "git pull --no-commit" because
-it's so easy to undo.
+> Is there something you used to do with git that you no longer can? Is
+> there a reason you can't ignore the newer commands?
+> 
 
+Functionality wise, no.  But in terms of being able to _customize_ my 
+version of git depending on how I want to use it, I've lost hope on the 
+whole idea.  It's a shame too because it appears as though the original 
+vision was one of efficiency and simplicity.  I would say that git-1.2.4 
+is my package of preference with some slight tweaking in the branching 
+department.
 
-Just a couple of questions:
+I really do miss the old git.
 
-We seem to have developed a consensus on the desirability of allowing
-HEAD to point outside refs/heads, postponing the check until
-commit/merge time.  (At least, junkio and Linus seemed to like it.)
-
-I proposed it, so I get to write it, but you notice I have a whole
-section on how to work around the lack of that feature, so if someone
-feels like picking up the baton while I'm still writing docs, it would
-simplify things.
-
-
-I'd like to learn more about the zillion options to git-log.
-If people feel like sharing useful incantations, it would be
-be very helpful to give a concrete example of its usefulness,
-preferably within the git history itself.
-
-(Are there any octopus merges in git's history?  If not, could I ask
