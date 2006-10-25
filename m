@@ -1,82 +1,60 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Thu, 7 Dec 2006 11:58:23 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612071152410.3615@woody.osdl.org>
-References: <45744FA3.7020908@zytor.com> <Pine.LNX.4.64.0612061847190.3615@woody.osdl.org>
- <45778AA3.7080709@zytor.com> <Pine.LNX.4.64.0612061940170.3615@woody.osdl.org>
- <4577A84C.3010601@zytor.com> <Pine.LNX.4.64.0612070953290.3615@woody.osdl.org>
- <45785697.1060001@zytor.com> <Pine.LNX.4.64.0612071052560.3615@woody.osdl.org>
- <457868AA.2030605@zytor.com> <Pine.LNX.4.64.0612071121410.3615@woody.osdl.org>
- <20061207193903.GE12143@spearce.org>
+From: "Tuncer Ayaz" <tuncer.ayaz@gmail.com>
+Subject: [PATCH] git-fetch.sh printed protocol fix
+Date: Wed, 25 Oct 2006 12:03:06 +0200
+Message-ID: <4ac8254d0610250303n60a6006bsa4d77aba7255485f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 7 Dec 2006 19:59:13 +0000 (UTC)
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Kernel Org Admin <ftpadmin@kernel.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 25 Oct 2006 10:03:42 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061207193903.GE12143@spearce.org>
-X-MIMEDefang-Filter: osdl$Revision: 1.162 $
-X-Scanned-By: MIMEDefang 2.36
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=rhRzAjH5PTi2MfFt6P82QmXeBAGmlQI8D2DXdUKuPsOQRJZLfY9IpF/6lJsjYkr7EVPTGeaqnZkio7GvAgKERhU5qeerXf2Dl1zMfPvGC+/eOocSG3sIsIuY4xPeQIvNSoirSLzrWHRwYRXzFLlKm2BD4KPCizLrVXNHBrO+rMI=
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33624>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsPOf-0002ga-DP for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 20:59:09 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30046>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gcfbi-0004R4-Fm for gcvg-git@gmane.org; Wed, 25 Oct
+ 2006 12:03:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1163252AbWLGT7G (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 14:59:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163248AbWLGT7F
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 14:59:05 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:33633 "EHLO smtp.osdl.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1163252AbWLGT7E
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006 14:59:04 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB7JwOID013228
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Thu, 7
- Dec 2006 11:58:25 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB7JwNxg023614; Thu, 7 Dec
- 2006 11:58:24 -0800
-To: Shawn Pearce <spearce@spearce.org>
+ S1423179AbWJYKDQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 06:03:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423180AbWJYKDP
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 06:03:15 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:58489 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1423179AbWJYKDI
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 06:03:08 -0400
+Received: by ug-out-1314.google.com with SMTP id 32so49424ugm for
+ <git@vger.kernel.org>; Wed, 25 Oct 2006 03:03:07 -0700 (PDT)
+Received: by 10.78.204.1 with SMTP id b1mr151720hug; Wed, 25 Oct 2006
+ 03:03:06 -0700 (PDT)
+Received: by 10.78.106.14 with HTTP; Wed, 25 Oct 2006 03:03:06 -0700 (PDT)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+As a feature I wished for (ftp:// support in git-fetch) was added in 1.4.3
+I tested that feature and found a minor logging issue. The mini-patch
+below fixes that.  AFAIK the pattern expansion feature I've used should
+be available in any current /bin/sh. If not we will have to find another
+way to print the protocol part of the used fetch URL.
 
-
-On Thu, 7 Dec 2006, Shawn Pearce wrote:
-> 
-> AFAIK it doesn't have such an option, for basically the reason
-> you describe.  I worked on a project which had much more difficult
-> to answer queries than gitweb and were also very popular.  Yes,
-> the system died under any load, no matter how much money was thrown
-> at it.  :-)
-> 
-> > That said, from some of the other horrors I've heard about, "stupid" may 
-> > be just scratching at the surface.
-> 
-> It is.  :-)
-
-Gaah. That's just stupid. This is such a _basic_ issue for caching ("if 
-concurrent requests come in, only handle _one_ and give everybody the same 
-result") that I claim that any cache that doesn't handle it isn't a cache 
-at all, but a total disaster written by incompetent people.
-
-Sure, you may want to disable it for certain kinds of truly dynamic 
-content, but that doesn't mean you shouldn't be able to do it at all.
-
-Does anybody who is web-server clueful know if there is some simple 
-front-end (squid?) that is easy to set up and can just act as a caching 
-proxy in front of such an incompetent server?
-
-Or maybe there is some competent Apache module, not just the default 
-mod_cache (which is what I assume kernel.org uses now)?
-
+--- git-core-1.4.3.2/git-fetch.sh	2006-10-24 07:29:47.000000000 +0200
++++ git-core-1.4.3.2.tma/git-fetch.sh	2006-10-25 11:44:34.000000000 +0200
+@@ -310,7 +310,7 @@
+ 	  done
+  	  expr "z$head" : "z$_x40\$" >/dev/null ||
+ 	      die "Failed to fetch $remote_name from $remote"
+-	  echo >&2 Fetching "$remote_name from $remote" using http
++	  echo >&2 Fetching "$remote_name from $remote" using ${remote%%:*}
+ 	  git-http-fetch -v -a "$head" "$remote/" || exit
+ 	  ;;
