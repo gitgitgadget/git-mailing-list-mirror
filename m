@@ -4,79 +4,69 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] clarify some error messages wrt unknown object types
-Date: Wed, 20 Dec 2006 13:34:05 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0612201328160.18171@xanadu.home>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: (unknown)
+Date: Wed, 25 Oct 2006 18:16:59 -0400
+Message-ID: <20061025221659.GC10140@spearce.org>
+References: <E1Gck2K-0003H4-00@dvr.360vision.com> <200610251610.02446.andyparkins@gmail.com> <7vods0b5rk.fsf@assigned-by-dhcp.cox.net> <200610252303.07900.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Wed, 20 Dec 2006 18:34:24 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 25 Oct 2006 22:17:25 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-X-Sender: nico@xanadu.home
+Content-Disposition: inline
+In-Reply-To: <200610252303.07900.andyparkins@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34953>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gx6Gf-0004Jz-ML for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 19:34:18 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30109>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gcr3c-0004yP-Jj for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 00:17:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030265AbWLTSeJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 13:34:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030270AbWLTSeJ
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 13:34:09 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:44928 "EHLO
- relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1030265AbWLTSeI (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
- 13:34:08 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0JAL00JVV4WTXI80@VL-MO-MR003.ip.videotron.ca> for git@vger.kernel.org; Wed,
- 20 Dec 2006 13:34:05 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S964838AbWJYWRG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 18:17:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964843AbWJYWRF
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 18:17:05 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:8072 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S964838AbWJYWRC
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 18:17:02 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gcr3L-000869-7X; Wed, 25 Oct 2006 18:16:51 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 5423621269E; Wed, 25 Oct 2006 18:16:59 -0400 (EDT)
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-If ever new object types are added for future extensions then better 
-have current git version report them as "unknown" instead of 
-"corrupted".
+Andy Parkins <andyparkins@gmail.com> wrote:
+> On Wednesday 2006, October 25 19:38, Junio C Hamano wrote:
+> 
+> > > I did try that, but then the branches don't appear in git branch.  I
+> > > still like that they exist.
+> >
+> > "git branch -r" perhaps.
+> 
+> That's pretty good.  It makes things like
+> 
+>   git-log remotes/origin/master..master
+> 
+> A bit long winded, but it's certainly what I asked for.
+> 
+> You guys really have thought of everything.
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
+Try the bash completion support in contrib/completion.  If you
+are using the bash shell it does branch name completions for most
+commands, including both sides of the '..' in log there.  At this
+point I can't use Git without it.
 
----
-
-diff --git a/index-pack.c b/index-pack.c
-index 6d6c92b..35be3e9 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -268,7 +268,7 @@ static void *unpack_raw_entry(struct object_entry *obj, union delta_base *delta_
- 	case OBJ_TAG:
- 		break;
- 	default:
--		bad_object(obj->offset, "bad object type %d", obj->type);
-+		bad_object(obj->offset, "unknown object type %d", obj->type);
- 	}
- 	obj->hdr_size = consumed_bytes - obj->offset;
- 
-diff --git a/sha1_file.c b/sha1_file.c
-index 63f416b..1c4df5b 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1013,7 +1013,7 @@ void packed_object_info_detail(struct packed_git *p,
- 	for (;;) {
- 		switch (kind) {
- 		default:
--			die("corrupted pack file %s containing object of kind %d",
-+			die("pack %s contains unknown object type %d",
- 			    p->pack_name, kind);
- 		case OBJ_COMMIT:
- 		case OBJ_TREE:
-@@ -1063,7 +1063,7 @@ static int packed_object_info(struct packed_git *p, unsigned long offset,
- 		strcpy(type, type_names[kind]);
- 		break;
- 	default:
--		die("corrupted pack file %s containing object of kind %d",
-+		die("pack %s contains unknown object type %d",
- 		    p->pack_name, kind);
- 	}
+-- 
