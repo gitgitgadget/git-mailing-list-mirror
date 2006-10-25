@@ -1,86 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Blake <ebb9@byu.net>
-Subject: feature request - cg up as synonym for cg update
-Date: Sat, 25 Nov 2006 22:19:45 -0700
-Message-ID: <456923F1.8060209@byu.net>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [PATCH] Fix regression tests on Cygwin
+Date: Wed, 25 Oct 2006 08:39:36 +0200
+Message-ID: <8c5c35580610242339r7c2501dh7165dea49965632b@mail.gmail.com>
+References: <11616320733093-git-send-email-hjemli@gmail.com>
+	 <Pine.LNX.4.63.0610241653020.2106@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <7vwt6pdn46.fsf@assigned-by-dhcp.cox.net>
+	 <7vods1dmnu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 26 Nov 2006 05:22:05 +0000 (UTC)
+NNTP-Posting-Date: Wed, 25 Oct 2006 06:39:55 +0000 (UTC)
+Cc: git@vger.kernel.org,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.8) Gecko/20061025 Thunderbird/1.5.0.8 Mnenhy/0.7.4.666
-X-Enigmail-Version: 0.94.1.2
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=mCkwVpqdgvrUj2ykdW6gTAEgv4q4q1AcUXpa2Ms7HxpkA6Tr2s0c0HbREeZu7Kfv2V2w+LfvB6N4cPVtbgLC2aRp/l22Bn5hdxsyOKea/iJ/8sIosRxxppXFsR6rAfZCZZjkrEVyw/tZSgiM6sKe0v1VdeufeySMpqJU4r3Mr7E=
+In-Reply-To: <7vods1dmnu.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30035>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoCSk-0002ci-B1 for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 06:21:58 +0100
+ esmtp (Exim 4.43) id 1GccQQ-0000Tg-RX for gcvg-git@gmane.org; Wed, 25 Oct
+ 2006 08:39:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967297AbWKZFVl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
- 00:21:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935241AbWKZFVl
- (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 00:21:41 -0500
-Received: from alnrmhc12.comcast.net ([204.127.225.92]:60567 "EHLO
- alnrmhc12.comcast.net") by vger.kernel.org with ESMTP id S935240AbWKZFVl
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 00:21:41 -0500
-Received: from [192.168.0.103]
- (c-24-10-241-225.hsd1.ut.comcast.net[24.10.241.225]) by comcast.net
- (alnrmhc12) with ESMTP id <20061126052140b1200mum3ve>; Sun, 26 Nov 2006
- 05:21:40 +0000
-To: git@vger.kernel.org
+ S1423059AbWJYGjj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 02:39:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423062AbWJYGjj
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 02:39:39 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:40589 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1423059AbWJYGji
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 02:39:38 -0400
+Received: by nf-out-0910.google.com with SMTP id c2so490488nfe for
+ <git@vger.kernel.org>; Tue, 24 Oct 2006 23:39:37 -0700 (PDT)
+Received: by 10.82.142.9 with SMTP id p9mr29458bud; Tue, 24 Oct 2006 23:39:36
+ -0700 (PDT)
+Received: by 10.82.171.10 with HTTP; Tue, 24 Oct 2006 23:39:36 -0700 (PDT)
+To: "Junio C Hamano" <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 10/25/06, Junio C Hamano <junkio@cox.net> wrote:
+> Junio C Hamano <junkio@cox.net> writes:
+>
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >
+> >> On Mon, 23 Oct 2006, Lars Hjemli wrote:
+> >>
+> >>> On Cygwin, "make test" failes due to missing ".exe" a couple of places.
+> >>
+> >> Last time I made "test" on cygwin, it did not complain.
+> >
+> > Same here (W2k, fairly up-to-date git, installed on local NTFS
+> > disk).
 
-Coming from a CVS background, I am used to typing 'cvs up' instead of 'cvs
- update', and was surprised when 'cg up' didn't work as an obvious
-counterpart.  According to 'cvs --help-synonyms', the complete list of
-CVS's short synonyms:
+Well, then it's probably my cygwin-environment that is broken (make
+test used to work for me too...)
 
-$ cvs --help-synonyms
-CVS command synonyms are:
-        add          ad new
-        admin        adm rcs
-        annotate     ann
-        checkout     co get
-        commit       ci com
-        diff         di dif
-        export       exp ex
-        history      hi his
-        import       im imp
-        log          lo
-        login        logon lgn
-        rannotate    rann ra
-        rdiff        patch pa
-        release      re rel
-        remove       rm delete
-        rlog         rl
-        rtag         rt rfreeze
-        status       st stat
-        tag          ta freeze
-        update       up upd
-        version      ve ver
+Sorry for the noise
 
-Many of these could probably be usefully implemented in cg, as one more
-step for making life easy for converts from CVS to cogito.
-
-- --
-Life is short - so eat dessert first!
-
-Eric Blake             ebb9@byu.net
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (Cygwin)
-Comment: Public key at home.comcast.net/~ericblake/eblake.gpg
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFFaSPw84KuGfSFAYARAtOHAJ9DFlOC23HSWCq7qbVwU+KuT6uIMwCgsWgJ
-byVaSGuoaA6JWx9hi6y85y8=
-=n12u
+--
