@@ -1,104 +1,81 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 21:31:13 +0100
-Message-ID: <200611152131.14883.Josef.Weidendorfer@gmx.de>
-References: <87k61yt1x2.wl%cworth@cworth.org> <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org> <ejfm6c$bu4$1@sea.gmane.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Combined diff format documentation
+Date: Thu, 26 Oct 2006 01:45:16 +0200
+Organization: At home
+Message-ID: <ehost8$go7$1@sea.gmane.org>
+References: <ehoo2k$1g6$1@sea.gmane.org> <7vejswkoi4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-2
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Wed, 15 Nov 2006 20:31:47 +0000 (UTC)
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>,
-	Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>
+NNTP-Posting-Date: Wed, 25 Oct 2006 23:44:56 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #352111
-User-Agent: KMail/1.9.3
-In-Reply-To: <ejfm6c$bu4$1@sea.gmane.org>
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 29
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30126>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkRPn-0000Ug-UC for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 21:31:24 +0100
+ esmtp (Exim 4.43) id 1GcsQW-0004Xn-LN for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 01:44:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030980AbWKOUbU convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006 15:31:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030680AbWKOUbU
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 15:31:20 -0500
-Received: from mail.gmx.de ([213.165.64.20]:8416 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1030980AbWKOUbT convert rfc822-to-8bit (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 15:31:19 -0500
-Received: (qmail invoked by alias); 15 Nov 2006 20:31:17 -0000
-Received: from p5496A980.dip0.t-ipconnect.de (EHLO noname) [84.150.169.128]
- by mail.gmx.net (mp030) with SMTP; 15 Nov 2006 21:31:17 +0100
-To: Jakub Narebski <jnareb@gmail.com>
+ S964828AbWJYXot convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006 19:44:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751705AbWJYXot
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 19:44:49 -0400
+Received: from main.gmane.org ([80.91.229.2]:31172 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1751116AbWJYXos (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 19:44:48 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GcsQP-0004Wx-Ao for git@vger.kernel.org; Thu, 26 Oct 2006 01:44:45 +0200
+Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Thu, 26 Oct 2006 01:44:45 +0200
+Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 26 Oct 2006
+ 01:44:45 +0200
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Wednesday 15 November 2006 19:28, you wrote:
-> Linus Torvalds wrote:
+Junio C Hamano wrote:
+
+>> =A0 =A0BTW. it is not mentioned in documentation that git diff uses =
+hunk section
+>> =A0 =A0indicator, and what regexp/expression it uses (and is it conf=
+igurable).
+>> =A0 =A0Not described in documentation.
 >=20
-> > But the fact is, git isn't really that hard to work out, and the co=
-mmands=20
-> > aren't that complicated. There's no reason to rename them. We do ha=
-ve=20
-> > other problems:
-> >=20
-> > =A0- default branch selection for merging is broken (it should defi=
-nitely=20
-> > =A0 =A0take the current branch into account). When I do "git pull" =
-with no=20
-> > =A0 =A0branch specification, and I happen to be on a branch that is=
- associated=20
-> > =A0 =A0with something else than "master" in the remote, I shouldn't=
- merge with=20
-> > =A0 =A0master.
->=20
-> This problem is _slightly_ migitated by branch.<name>.merge config va=
-riable.
-> Slightly because you have to specify branch to merge, instead of forb=
-idding
-> merge if you are not on specific branch (and you don't override it).
+> If you mean by "hunk section indicator" the output similar to
+> GNU diff -p option, I think it is not worth mentioning and we
+> are not ready to mention it yet (we have not etched the
+> expression in stone). =A0Nobody jumped up and down to say it needs
+> to be configurable, so it is left undocumented more or less
+> deliberately.
 
-We should change this.
+By the way, I have just checked that combined diff format doesn't have
+(for unknown reason) "which section" indicator in chunk header.
+Compare
+$ git diff-tree -p -m fec9ebf16c948bcb4a8b88d0173ee63584bcde76
+and
+$ git diff-tree -p -c fec9ebf16c948bcb4a8b88d0173ee63584bcde76
+(this is the source of example combined diff format in diff-formats.txt
+which I've found via
+$ git rev-list --parents HEAD -- describe.c | grep " .* "
+i.e. finding all merges which included changes to describe.c; there
+are only two such commits).
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
-The problem is that whatever is the first Pull line in remotes config g=
-ets
-merged by default into current branch, which most often is not the righ=
-t
-thing to do.
-
-Often, I find myself doing "git branch" just to make sure that I am on
-"master", so that a following pull does not do a bogus merge.
-
-Can we please disable this behavior, e.g. by allowing a fake first
-Pull line like "Pull: (not-for-merge)" to prohibit any merge?
-
-This even could be written by default in git-clone somewhere in the fut=
-ure,
-and we suddenly get the behavior of pull being symmetric to push - at l=
-east
-by default. And still, it is fully compatible to existing repositories.
-
-To make pull do the right thing, we _have_ to configure branch.<name>.m=
-erge
-whenever we create a new branch (which matters for git-clone, too).
-
-Josef
-
->=20
-> > =A0- I agree that having to create temporary branches to just look =
-at a tag=20
-> > =A0 =A0that you don't want to actually develop on is just unnecessa=
-rily=20
-> > =A0 =A0bothersome.
->=20
-> Agreed.
