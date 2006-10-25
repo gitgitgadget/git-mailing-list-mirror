@@ -1,54 +1,65 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Marko Macek <marko.macek@gmx.net>
-Subject: Re: Some tips for doing a CVS importer
-Date: Sun, 26 Nov 2006 17:11:36 +0100
-Message-ID: <4569BCB8.9030809@gmx.net>
-References: <9e4733910611201349s4d08b984g772c64982f148bfa@mail.gmail.com>	 <46a038f90611201503m6a63ec8ct347026c635190108@mail.gmail.com>	 <9e4733910611201537h30b6c9f4oee9d8df75284c284@mail.gmail.com>	 <46a038f90611201629o39f11f42ye07b86159360b66e@mail.gmail.com>	 <9e4733910611201753m392b5defpb3eb295a075be789@mail.gmail.com>	 <456969DA.6090702@gmx.net> <9e4733910611260735g2b18e9d1p51a0dca153282cc7@mail.gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Fix bad usage of mkpath in builtin-branch.sh
+Date: Tue, 24 Oct 2006 21:00:14 -0700
+Message-ID: <7vac3lf3jl.fsf@assigned-by-dhcp.cox.net>
+References: <1161655176461-git-send-email-hjemli@gmail.com>
+	<7vlkn6qkh2.fsf@assigned-by-dhcp.cox.net>
+	<20061024113806.GB20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 26 Nov 2006 16:15:54 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 25 Oct 2006 04:00:31 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #420190
-User-Agent: Thunderbird 1.5.0.7 (X11/20060909)
-Original-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <9e4733910611260735g2b18e9d1p51a0dca153282cc7@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <20061024113806.GB20017@pasky.or.cz> (Petr Baudis's message of
+	"Tue, 24 Oct 2006 13:38:06 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30028>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoMfT-0000ZL-Ix for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 17:15:48 +0100
+ esmtp (Exim 4.43) id 1GcZwD-0004C3-71 for gcvg-git@gmane.org; Wed, 25 Oct
+ 2006 06:00:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934383AbWKZQPh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
- 11:15:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934391AbWKZQPh
- (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 11:15:37 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41190 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S934383AbWKZQPh (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 11:15:37 -0500
-Received: (qmail invoked by alias); 26 Nov 2006 16:15:34 -0000
-Received: from BSN-77-45-79.dial-up.dsl.siol.net (EHLO [192.168.2.7])
- [193.77.45.79] by mail.gmx.net (mp009) with SMTP; 26 Nov 2006 17:15:34 +0100
-To: Jon Smirl <jonsmirl@gmail.com>
+ S1422913AbWJYEAR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 00:00:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161339AbWJYEAR
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 00:00:17 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:18099 "EHLO
+ fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1161338AbWJYEAP
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 00:00:15 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao05.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061025040015.SPIX12909.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>; Wed, 25
+ Oct 2006 00:00:15 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id eTzx1V06t1kojtg0000000 Tue, 24 Oct 2006
+ 23:59:58 -0400
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-Jon Smirl wrote:
+Petr Baudis <pasky@suse.cz> writes:
 
-> Another note for doing a converter. When combining things into change
-> sets, for git import the comments in the branches should not be mixed
-> between branches and the trunk when detecting change set. Git doesn't
-> allow simultaneous commits to the trunk and branches.
+> Dear diary, on Tue, Oct 24, 2006 at 08:46:49AM CEST, I got a letter
+> where Junio C Hamano <junkio@cox.net> said that...
+>> Lars Hjemli <hjemli@gmail.com> writes:
+>> 
+>> > diff --git a/builtin-branch.c b/builtin-branch.c
+>> > index ffc2db0..f86bf68 100755
+>> 
+>> I've already fixed up this perm-mode breakage (and other
+>> breakages, possibly) so when I am done with these patches
+>> tonight please resync with me.
+>
+> I have made my fair share of inadverent mode changes as well (I don't
+> even know how that *happenned*), and I don't seem to be alone; since
+> this is something you are doing only rarely anyway, perhaps we should
+> try to make mode changes more visible?
 
-Yup, this is the current problem I'm facing now. Even for CVS->SVN conversion,
-I don't want to see multi-branch commits.
-
+Well we already do and that's how I noticed.
