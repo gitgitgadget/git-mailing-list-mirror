@@ -1,66 +1,67 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>
-Subject: [PATCH] Use git-rev-parse --git-dir to determine GIT_DIR
-Date: Thu, 30 Nov 2006 17:45:43 +0100
-Message-ID: <20061130164543.GA11073@xp.machine.xx>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: (unknown)
+Date: Wed, 25 Oct 2006 15:16:52 -0700
+Message-ID: <7v1wowm46j.fsf@assigned-by-dhcp.cox.net>
+References: <E1Gck2K-0003H4-00@dvr.360vision.com>
+	<200610251610.02446.andyparkins@gmail.com>
+	<7vods0b5rk.fsf@assigned-by-dhcp.cox.net>
+	<200610252303.07900.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 30 Nov 2006 16:47:13 +0000 (UTC)
-Cc: Paul Mackerras <paulus@samba.org>
+NNTP-Posting-Date: Wed, 25 Oct 2006 22:17:02 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Mail-Followup-To: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <200610252303.07900.andyparkins@gmail.com> (Andy Parkins's
+	message of "Wed, 25 Oct 2006 23:03:07 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30108>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gpp3e-0006qX-Sj for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 17:46:48 +0100
+ esmtp (Exim 4.43) id 1Gcr3R-0004s6-LP for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 00:16:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759270AbWK3Qqo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 11:46:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759271AbWK3Qqo
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 11:46:44 -0500
-Received: from matlock.hofmann.stw.uni-erlangen.de ([131.188.24.35]:38542
- "HELO mail.hofmann.stw.uni-erlangen.de") by vger.kernel.org with SMTP id
- S1759270AbWK3Qqn (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006
- 11:46:43 -0500
-Received: (qmail 8114 invoked by uid 0); 30 Nov 2006 16:46:40 -0000
-Received: from ho135.hofmann.stw.uni-erlangen.de (HELO localhost)
- (p.b@hofmann.stw.uni-erlangen.de@172.17.27.135) by
- mail.hofmann.stw.uni-erlangen.de with SMTP; 30 Nov 2006 16:46:40 -0000
-To: git@vger.kernel.org
+ S964836AbWJYWQy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 18:16:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964837AbWJYWQy
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 18:16:54 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:13494 "EHLO
+ fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S964836AbWJYWQx
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 18:16:53 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao02.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061025221653.XXMK12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>; Wed, 25
+ Oct 2006 18:16:53 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id emGb1V00a1kojtg0000000 Wed, 25 Oct 2006
+ 18:16:36 -0400
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Signed-off-by: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>
----
- gitk |    7 +------
- 1 files changed, 1 insertions(+), 6 deletions(-)
+Andy Parkins <andyparkins@gmail.com> writes:
 
-diff --git a/gitk b/gitk
-index ab383b3..60f8212 100755
---- a/gitk
-+++ b/gitk
-@@ -8,12 +8,7 @@ exec wish "$0" -- "$@"
- # either version 2, or (at your option) any later version.
- 
- proc gitdir {} {
--    global env
--    if {[info exists env(GIT_DIR)]} {
--	return $env(GIT_DIR)
--    } else {
--	return ".git"
--    }
-+    return [exec git rev-parse --git-dir]
- }
- 
- proc start_rev_list {view} {
--- 
-1.4.3.3
+> On Wednesday 2006, October 25 19:38, Junio C Hamano wrote:
+>
+>> > I did try that, but then the branches don't appear in git branch.  I
+>> > still like that they exist.
+>>
+>> "git branch -r" perhaps.
+>
+> That's pretty good.  It makes things like
+>
+>   git-log remotes/origin/master..master
+>
+> A bit long winded, but it's certainly what I asked for.
+
+"git log remotes/origin..master" perhaps?
+
+The point being, remotes/origin when origin is a directory that
+has HEAD that points at something, it stands for
+remotes/origin/HEAD.
