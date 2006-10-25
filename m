@@ -2,115 +2,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 4/n] gitweb: Secure against commit-ish/tree-ish with the same name as path
-Date: Wed, 01 Nov 2006 17:01:51 -0800
-Message-ID: <7vac3awtj4.fsf@assigned-by-dhcp.cox.net>
-References: <200610301953.01875.jnareb@gmail.com>
-	<200610311753.20711.jnareb@gmail.com>
-	<7vejsoovxu.fsf@assigned-by-dhcp.cox.net>
-	<200611010140.56834.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git-fetch not working?
+Date: Wed, 25 Oct 2006 13:37:09 +0200
+Organization: At home
+Message-ID: <ehni83$l7g$1@sea.gmane.org>
+References: <200610242100.52671.andyparkins@gmail.com> <20061024205428.GI20017@pasky.or.cz> <453E8133.8020707@zytor.com> <20061025111150.GK20017@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 2 Nov 2006 01:02:05 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Wed, 25 Oct 2006 11:37:36 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 45
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30052>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfQxx-0005AA-J2 for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 02:01:57 +0100
+ esmtp (Exim 4.43) id 1Gch4O-00022U-MJ for gcvg-git@gmane.org; Wed, 25 Oct
+ 2006 13:37:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752433AbWKBBBy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
- 20:01:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752620AbWKBBBy
- (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 20:01:54 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:16579 "EHLO
- fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP id S1752433AbWKBBBx
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 20:01:53 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao09.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061102010152.QIDG16798.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>; Wed, 1
- Nov 2006 20:01:52 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id hd1w1V00a1kojtg0000000 Wed, 01 Nov 2006
- 20:01:57 -0500
-To: Jakub Narebski <jnareb@gmail.com>
+ S1423299AbWJYLhJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 07:37:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423303AbWJYLhJ
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 07:37:09 -0400
+Received: from main.gmane.org ([80.91.229.2]:38289 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1423299AbWJYLhH (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 07:37:07 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gch3y-0001xi-Va for git@vger.kernel.org; Wed, 25 Oct 2006 13:36:52 +0200
+Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Wed, 25 Oct 2006 13:36:50 +0200
+Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 25 Oct 2006
+ 13:36:50 +0200
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Petr Baudis wrote:
 
->> [PATCH/RFC 1/n] gitweb: Better git-unquoting and gitweb-quoting of p...
+> Dear diary, on Tue, Oct 24, 2006 at 11:10:11PM CEST, I got a letter
+> where "H. Peter Anvin" <hpa@zytor.com> said that...
+>> Petr Baudis wrote:
+>> >  nope, I'm getting it as well (hey I know about broken git.kernel.org
+>> >in an hour at most now because of the repo.or.cz cronjobs ;) -
+>> >git-daemon at the kernel.org machines seems to be broken.
+>> >
 >> 
->> Marked preliminary, perhaps need some discussion and rerolling
->> but I haven't looked at it.
->
-> I'm not sure if without this patch (well, the unquote part) gitweb
-> can work with filenames which git quotes using escape sequences,
+>> Nope, just tripping the load limit.  git1.kernel.org has had loads over 
+>> 400 today.  Oddly enough, the load on git2.kernel.org is in the low
+>> teens. 
 
-I am reasonably sure it wouldn't, and it sounded like you wanted
-to fix it better than the preliminary one, so I think we are in
-agreement.
+Shouldn't git.kernel.org distribute load?
+ 
+> Hmm, interesting. Just to make sure, is that because of git-daemon or
+> something else? :-)
 
->> [PATCH 2/n] gitweb: Use '&iquot;' instead of '?' in esc_path
->> 
->> Discussed; we agreed that showing byte values in different
->> colors is preferable.  Waiting for re-roll.
->
-> The problem with using text color or background color is that
-> the filenames tends to be shown with different color and background
-> color: "tree" view, parts of difftree, parts of diff header, etc.
-> Perhaps text-decoration: overline;? Just kidding...
+Today (with git version 1.4.2.1):
 
-Use of overstrike may actually not be a bad thing.  It _is_
-unusual situation after all.
+998:jnareb@roke:~/git> git pull origin
+fatal: read error (Connection reset by peer)
+Fetch failure: git://git.kernel.org/pub/scm/git/git.git
 
->> [PATCH 3/n] gitweb: Use 's' regexp modifier to secure against filena...
->> 
->> I looked at it although haven't said anything yet.  Probably a
->> safe and good change but I wonder how LF at the end of the line
->> matches /...(.+)$/s pattern; iow, if we do not use -z does it
->> still do the right thing?  Otherwise I suspect you would perhaps
->> need to chomp?
->
-> We always pass chomped lines. First chunk is unnecessary (we care only
-> for type), without second "tree" view look strange for files with
-> embedded newline in filename.
+1000:jnareb@roke:~/git> time git pull origin-http
+Fetching refs/heads/master from http://git.kernel.org/pub/scm/git/git.git using http
+Fetching refs/heads/pu from http://git.kernel.org/pub/scm/git/git.git using http
+Fetching refs/heads/man from http://git.kernel.org/pub/scm/git/git.git using http
+Fetching refs/heads/html from http://git.kernel.org/pub/scm/git/git.git using http
+Fetching refs/heads/next from http://git.kernel.org/pub/scm/git/git.git using http
+Fetching refs/heads/todo from http://git.kernel.org/pub/scm/git/git.git using http
+Fetching refs/heads/maint from http://git.kernel.org/pub/scm/git/git.git using http
+Already up-to-date.
 
-The codepath affected by the first chunk does not chomp, which
-was what I was referring to.  So in the meantime will apply only
-the second hunk.
+real    8m0.369s
+user    0m0.984s
+sys     0m0.800s
 
->> [PATCH 4/n] gitweb: Secure against commit-ish/tree-ish with the same...
->> 
->> Good fix and even improves readability; will apply after
->> dropping -- from ls-tree args.
 
-I just applied this.  I'll be pushing out a "master" update
-sometime today, and do not expect to be able to get to your "n
-turned out to be ten" series, so it might be worthwhile to
-reroll the remaining bits that you still care about on top of
-what I push out tonight to make sure we are on the same page.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
-Preferably:
-
- - you should avoid making a series out of more-or-less
-   unrelated things;
-
- - if you are doing related things in one series, do not send
-   half-baked early parts out until you are finished and are
-   confident with it.  If you do not know how many patches you
-   need to complete that logically single topic yet, that is a
-   sure sign that you are not done.  Instead, finish writing and
-   testing it, and if your test finds an earlier mistake,
-   especially a trivial one, go back and fix it in the earlier
-   patch in the series.  Everybody makes mistakes so fixing up
-   before submission is a norm, and other people do not have to
-   be forced to see your "oops" in the development history.
-
-Thanks.
