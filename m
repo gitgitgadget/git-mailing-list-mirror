@@ -1,82 +1,149 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] git-pull: refuse default merge without branch.*.merge
-Date: Sat, 16 Dec 2006 01:36:32 -0800
-Message-ID: <7v3b7gji73.fsf@assigned-by-dhcp.cox.net>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net>
-	<7vfybgjj7k.fsf@assigned-by-dhcp.cox.net>
+From: Matthew Wilcox <matthew@wil.cx>
+Subject: git-merge-subordinate
+Date: Wed, 25 Oct 2006 09:50:10 -0600
+Message-ID: <20061025155009.GD5591@parisc-linux.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 16 Dec 2006 09:36:46 +0000 (UTC)
+NNTP-Posting-Date: Wed, 25 Oct 2006 15:50:50 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34597>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvVyG-0001yc-T1 for gcvg-git@gmane.org; Sat, 16 Dec
- 2006 10:36:45 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30068>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gcl1F-0001cz-B2 for gcvg-git@gmane.org; Wed, 25 Oct
+ 2006 17:50:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965351AbWLPJge (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
- 04:36:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965352AbWLPJge
- (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 04:36:34 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:34698 "EHLO
- fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S965351AbWLPJgd (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
- 04:36:33 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061216093632.SRGA22053.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>; Sat, 16
- Dec 2006 04:36:32 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id zMbs1V00F1kojtg0000000; Sat, 16 Dec 2006
- 04:35:53 -0500
+ S1161364AbWJYPuN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 11:50:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751870AbWJYPuM
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 11:50:12 -0400
+Received: from palinux.external.hp.com ([192.25.206.14]:46223 "EHLO
+ mail.parisc-linux.org") by vger.kernel.org with ESMTP id S1751707AbWJYPuK
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 11:50:10 -0400
+Received: by mail.parisc-linux.org (Postfix, from userid 26919) id
+ 56BFE494006; Wed, 25 Oct 2006 09:50:10 -0600 (MDT)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Everybody hated the pull behaviour of merging the first branch
-listed on remotes/* file (or remote.*.fetch config) into the
-current branch.  This finally corrects that UI wart by
-forbidding "git pull" without an explicit branch name on the
-command line or branch.$current.merge for the current branch.
 
-The matching change to git-clone was made to prepare the default
-branch.*.merge entry for the primary branch some time ago.
+Linus doesn't like seeing unnecessary merges in his tree.  I'm not a huge
+fan of them either.  Wouldn't it be nice if we had a merge method that
+did a merge without creating a merge?  I call it git-merge-subordinate
+(since my tree is subordinate to the tree I'm pulling from).  I suppose
+you could call it 'slave' if you want to be more pithy.  Anyway, this
+is a first attempt, and it's totally cargo-cult programming; I make no
+claim that I understand what I'm doing.  But it does seem to work.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+While working on it, I found a small bug in git-merge.  When
+no_trivial_merge_strategies has more than one component, setting
+index_merge to f doesn't work.  So first, here's the patch to git-merge
+adding support for 'subordinate':
 
----
-Junio C Hamano <junkio@cox.net> writes:
+--- /usr/bin/git-merge	2006-07-29 15:47:09.000000000 -0600
++++ /home/willy/bin/git-merge	2006-10-25 09:21:00.000000000 -0600
+@@ -9,15 +9,15 @@
+ LF='
+ '
+ 
+-all_strategies='recursive octopus resolve stupid ours'
++all_strategies='recursive octopus resolve stupid subordinate ours'
+ default_twohead_strategies='recursive'
+ default_octopus_strategies='octopus'
+-no_trivial_merge_strategies='ours'
++no_trivial_merge_strategies='subordinate ours'
+ use_strategies=
+ 
+ index_merge=t
+ if test ""; then
+-	all_strategies='resolve octopus stupid ours'
++	all_strategies='resolve octopus stupid subordinate ours'
+ 	default_twohead_strategies='resolve'
+ fi
+ 
+@@ -154,12 +154,15 @@
+ 
+ for s in $use_strategies
+ do
+-	case " $s " in
+-	*" $no_trivial_merge_strategies "*)
+-		index_merge=f
+-		break
+-		;;
+-	esac
++	for t in $no_trivial_merge_strategies
++	do
++		case "$s" in
++		"$t")
++			index_merge=f
++			break
++			;;
++		esac
++	done
+ done
+ 
+ case "$#" in
 
-> We could also lose the "primary branch" mapping at the
-> beginning, but that has to wait until we implement the "forbid
-> 'git pull' when we do not have branch.$current.merge for the
-> current branch" policy we earlier discussed.  That should also
-> be in v1.5.0
 
-  And this does exactly that.
+And now, here's the extremely lame git-merge-subordinate script.
 
- git-parse-remote.sh |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+#!/bin/sh
+#
+# Copyright (c) 2005 Linus Torvalds
+# Copyright (c) 2005 Junio C Hamano
+#
+# Resolve two trees, using enhancd multi-base read-tree.
 
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index 6ae534b..7cd79c2 100755
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -144,7 +144,8 @@ canon_refs_list_for_fetch () {
- 			curr_branch=$(git-symbolic-ref HEAD | \
- 			    sed -e 's|^refs/heads/||')
- 			merge_branches=$(git-repo-config \
--			    --get-all "branch.${curr_branch}.merge")
-+			    --get-all "branch.${curr_branch}.merge") ||
-+			merge_branches=.this.would.never.match.any.ref.
- 		fi
- 		set x $(expand_refs_wildcard "$@")
- 		shift
+# The first parameters up to -- are merge bases; the rest are heads.
+bases= head= remotes= sep_seen=
+for arg
+do
+	case ",$sep_seen,$head,$arg," in
+	*,--,)
+		sep_seen=yes
+		;;
+	,yes,,*)
+		head=$arg
+		;;
+	,yes,*)
+		remotes="$remotes$arg "
+		;;
+	*)
+		bases="$bases$arg "
+		;;
+	esac
+done
+
+# Give up if we are given more than two remotes -- not handling octopus.
+case "$remotes" in
+?*' '?*)
+	exit 2 ;;
+esac
+
+# Give up if this is a baseless merge.
+if test '' = "$bases"
+then
+	exit 2
+fi
+
+git-rebase $remotes || exit 2
+if result_tree=$(git-write-tree  2>/dev/null)
+then
+	exit 0
+else
+	echo "Simple merge failed, trying Automatic merge."
+	if git-merge-index -o git-merge-one-file -a
+	then
+		exit 0
+	else
+		exit 1
+	fi
+fi
