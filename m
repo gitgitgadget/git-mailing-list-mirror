@@ -1,50 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: git reset --soft a merged commit
-Date: Mon, 6 Nov 2006 11:48:49 +0700
-Message-ID: <fcaeb9bf0611052048r11816e76p88d568e3478c354b@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Hanging fetches
+Date: Wed, 25 Oct 2006 18:25:56 +0200
+Message-ID: <20061025162556.GL20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 6 Nov 2006 04:49:15 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 25 Oct 2006 16:28:10 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=c+Z6s7gOgCfGmRbyHZOndr7tri8ZCmZot+WT5+fI/ruPK/YlmA+N29/Km0GgqToaBFeTuDIxWy97KTdGt48y6G0uS0C3woS2g5tC5ZKqI04f6TwjDnJwKnCRy2UzyMeFcdknd1WQYZ9LQjpmQoxiIUuD5tCRxk+xhVjeQPoKRqo=
 Content-Disposition: inline
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30073>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgwQ3-00036L-3X for gcvg-git@gmane.org; Mon, 06 Nov
- 2006 05:49:11 +0100
+ esmtp (Exim 4.43) id 1GclZq-00085g-Et for gcvg-git@gmane.org; Wed, 25 Oct
+ 2006 18:26:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423498AbWKFEsx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
- 23:48:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423499AbWKFEsx
- (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 23:48:53 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:55593 "EHLO
- nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1423498AbWKFEsw
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 23:48:52 -0500
-Received: by nf-out-0910.google.com with SMTP id c2so605509nfe for
- <git@vger.kernel.org>; Sun, 05 Nov 2006 20:48:50 -0800 (PST)
-Received: by 10.78.128.11 with SMTP id a11mr6238234hud.1162788529828; Sun, 05
- Nov 2006 20:48:49 -0800 (PST)
-Received: by 10.78.100.8 with HTTP; Sun, 5 Nov 2006 20:48:49 -0800 (PST)
+ S932242AbWJYQZ6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 12:25:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932448AbWJYQZ6
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 12:25:58 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:20887 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S932242AbWJYQZ6 (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 12:25:58 -0400
+Received: (qmail 16764 invoked by uid 2001); 25 Oct 2006 18:25:56 +0200
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi,
-I did "git reset --soft HEAD~1" where HEAD is a merged commit and
-committed again (nothing changed).  The new commit was not recorded as
-a merged commit. Is it intentional?
+  Hi,
+
+  due to the problem with kernel.org, I have a somewhat ugly situation
+on repo.or.cz now:
+
+root     16370  0.0  0.0  2112  732 ?        S    16:47   0:00  \_ /USR/SBIN/CRON
+repo     16371  0.0  0.0  2776 1236 ?        Ss   16:47   0:00      \_ /bin/bash /home/repo/repomgr/updatecheck.sh
+repo     16377  0.0  0.0  2776  648 ?        S    16:47   0:00          \_ /bin/bash /home/repo/repomgr/updatecheck.sh
+repo     17685  0.0  0.0  2780 1252 ?        S    16:47   0:00              \_ /bin/bash /home/repo/repomgr/update.sh linux-2.6
+repo     17689  0.0  0.0  2872 1372 ?        S    16:47   0:00                  \_ /bin/sh /home/pasky/bin/git-fetch -f -u -k --mirror-all
+pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+repo     17702  0.0  0.0  2872  720 ?        S    16:47   0:00                      \_ /bin/sh /home/pasky/bin/git-fetch -f -u -k --mirror-org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+repo     17703  0.0  0.0  2872  644 ?        S    16:47   0:00                          \_ /bin/sh /home/pasky/bin/git-fetch -f -u -k --mirnel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+repo     17704  0.0  0.0  2836 1328 ?        S    16:47   0:00                          |   \_ /bin/sh /home/pasky/bin/git-ls-remote git://m/linux/kernel/git/torvalds/linux-2.6.git
+repo     17716  0.0  0.0  2836  616 ?        S    16:47   0:00                          |       \_ /bin/sh /home/pasky/bin/git-ls-remote gib/scm/linux/kernel/git/torvalds/linux-2.6.git
+repo     17717  0.0  0.0  2956  940 ?        S    16:47   0:00                          |       |   \_ git-peek-remote git //git.kernel.org/git/torvalds/linux-2.6.git
+repo     17718  0.0  0.0 27488  552 ?        S    16:47   0:00                          |       \_ sort -t ? -k 2
+repo     17719  0.0  0.0  2836  592 ?        S    16:47   0:00                          |       \_ /bin/sh /home/pasky/bin/git-ls-remote gib/scm/linux/kernel/git/torvalds/linux-2.6.git
+repo     17705  0.0  0.0  2872  628 ?        S    16:47   0:00                          \_ /bin/sh /home/pasky/bin/git-fetch -f -u -k --mirnel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+
+  It's 18:24 now and peek-remote is hanging in a read(). My question is,
+will this *ever* time out, and when? :) Perhaps the timeouts should be
+adjusted to a more reasonable value, or implemented if they are missing
+altogether, but I'm not sure what would be the best way to go about it -
+alarm()? What value would be reasonable?
+
+  Thanks,
 
 -- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
