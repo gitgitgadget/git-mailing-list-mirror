@@ -4,76 +4,82 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: fork0@t-online.de (Alex Riesen)
-Subject: git-blame: handling of revisions and filenames
-Date: Wed, 15 Nov 2006 22:52:25 +0100
-Message-ID: <20061115215225.GA4595@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] xdiff: Do not consider lines starting by # hunkworthy
+Date: Tue, 24 Oct 2006 17:16:28 -0700
+Message-ID: <7vmz7lfdwj.fsf@assigned-by-dhcp.cox.net>
+References: <20061025000708.2753.74523.stgit@machine.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 15 Nov 2006 21:52:52 +0000 (UTC)
+NNTP-Posting-Date: Wed, 25 Oct 2006 00:16:48 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-ID: GoSYY0ZJoenBxUqMPl0U6Rf9oEv0u27E1XRoBWSgysDMiuzMPfOeUX
-X-TOI-MSGID: d46a4bb8-79d8-4057-8823-240d290f2d42
+In-Reply-To: <20061025000708.2753.74523.stgit@machine.or.cz> (Petr Baudis's
+	message of "Wed, 25 Oct 2006 02:07:08 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30018>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkSgY-0000kU-6R for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 22:52:47 +0100
+ esmtp (Exim 4.43) id 1GcWRd-0006IR-D4 for gcvg-git@gmane.org; Wed, 25 Oct
+ 2006 02:16:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161771AbWKOVwn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 16:52:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161774AbWKOVwn
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 16:52:43 -0500
-Received: from mailout05.sul.t-online.com ([194.25.134.82]:9189 "EHLO
- mailout05.sul.t-online.com") by vger.kernel.org with ESMTP id
- S1161771AbWKOVwm (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006
- 16:52:42 -0500
-Received: from fwd26.aul.t-online.de  by mailout05.sul.t-online.com with smtp
-  id 1GkSgP-0006yk-03; Wed, 15 Nov 2006 22:52:37 +0100
-Received: from tigra.home
- (GoSYY0ZJoenBxUqMPl0U6Rf9oEv0u27E1XRoBWSgysDMiuzMPfOeUX@[84.163.116.204]) by
- fwd26.sul.t-online.de with esmtp id 1GkSgF-1V8d3Q0; Wed, 15 Nov 2006 22:52:27
- +0100
-Received: from steel.home (steel.home [192.168.1.2]) by tigra.home (Postfix)
- with ESMTP id 9F4B0277AF; Wed, 15 Nov 2006 22:52:26 +0100 (CET)
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian)) id
- 1GkSgD-0003rv-Ny; Wed, 15 Nov 2006 22:52:25 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1422852AbWJYAQa (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006
+ 20:16:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422859AbWJYAQa
+ (ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 20:16:30 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:5289 "EHLO
+ fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S1422852AbWJYAQ3
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 20:16:29 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao02.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061025001629.ZGQK12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>; Tue, 24
+ Oct 2006 20:16:29 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id eQGC1V0021kojtg0000000 Tue, 24 Oct 2006
+ 20:16:12 -0400
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-I noticed that there is no safe way to give a revision to git-blame:
-it can always be interpreted as an existing file:
- - "git blame rev -- file.txt" can fail if "rev" is a file
- - "git blame rev^0 -- file.txt" can file there is a "rev^0" file
-   (happens if you type too fast with a tool not designed for keyboard)
- - "git blame file.txt rev" is ambiguos too, for the same reasons.
+Petr Baudis <pasky@suse.cz> writes:
 
-I did the simple patch (below) to resolve at least the very first one,
-just because that is how git-rev-list does it.
-But if all forms of git-blame command line are expected to live, a
-more serious surgery of the argv[] handling code needed.
-And I afraid the patch has a small chance of crashing: I don't check
-if there is enough space in argv (don't actually even know how to),
-so Junio, please do not apply it (it passes blame tests, though).
-I also suspect git-blame is not the only command using revision
-machinery which has the same problem, so this message is more like a
-discussion starter.
+> This will be probably controversial but in my personal experience, the
+> amount of time this is the right thing to do because of #defines is negligible
+> compared to amount of time it is wrong, especially because of #ifs and #endifs
+> in the middle of functions and also because of comments at the line start when
+> it concerns non-C files.
+>
+> Signed-off-by: Petr Baudis <pasky@suse.cz>
+> ---
+>
+>  xdiff/xemit.c |    3 +--
+>  1 files changed, 1 insertions(+), 2 deletions(-)
+>
+> diff --git a/xdiff/xemit.c b/xdiff/xemit.c
+> index 714c563..4f20075 100644
+> --- a/xdiff/xemit.c
+> +++ b/xdiff/xemit.c
+> @@ -86,8 +86,7 @@ static void xdl_find_func(xdfile_t *xf, 
+>  		if (len > 0 &&
+>  		    (isalpha((unsigned char)*rec) || /* identifier? */
+>  		     *rec == '_' ||	/* also identifier? */
+> -		     *rec == '(' ||	/* lisp defun? */
+> -		     *rec == '#')) {	/* #define? */
+> +		     *rec == '(')) {	/* #define? */
+>  			if (len > sz)
+>  				len = sz;
+>  			if (len && rec[len - 1] == '\n')
 
-diff --git a/builtin-blame.c b/builtin-blame.c
-index 066dee7..83c8905 100644
---- a/builtin-blame.c
-+++ b/builtin-blame.c
-@@ -1787,6 +1787,7 @@ int cmd_blame(int argc, const char **arg
-        /* Now we got rev and path.  We do not want the path pruning
-         * but we may want "bottom" processing.
-         */
-+       argv[unk++] = "--";
-        argv[unk] = NULL;
- 
-        init_revisions(&revs, NULL);
+I'd either omit the opening parenthesis or fix the comment ;-).
+
+More seriously, I'd rather just match default GNU diff behaviour
+to use isalpha, underscore or '$'.  I do not particularly like
+to have '$' but I feel it is the easiest to match a prior art in
+cases like this because I do not have to defend my position when
+somebody says "Why do you include '#'???  It makes no sense!".
+Since I do not care too much about it, being able to just say
+"Well we match what GNU diff does by default." is a good thing.
+
+
+
