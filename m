@@ -1,116 +1,94 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-1.3 required=3.0 tests=AWL,BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's in git.git (stable)
-Date: Fri, 15 Dec 2006 16:26:33 +0100
-Organization: At home
-Message-ID: <eluemi$gc0$1@sea.gmane.org>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612140959.19209.andyparkins@gmail.com> <7v7iwu93rv.fsf@assigned-by-dhcp.cox.net> <200612141136.59041.andyparkins@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Fri, 15 Dec 2006 15:24:50 +0000 (UTC)
+	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_BCC,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: andyparkins@gmail.com
+Subject: (unknown)
+Date: Wed, 25 Oct 2006 15:49:35 +0100
+Message-ID: <E1Gck4V-0003If-00@dvr.360vision.com>
+NNTP-Posting-Date: Wed, 25 Oct 2006 14:49:51 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 66
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+X-OriginalArrivalTime: 25 Oct 2006 14:52:35.0411 (UTC) FILETIME=[351C3230:01C6F845]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34514>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvEvS-0000mE-D8 for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 16:24:42 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30060>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gck4b-0006Xt-AM for gcvg-git@gmane.org; Wed, 25 Oct
+ 2006 16:49:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752734AbWLOPYk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 10:24:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752735AbWLOPYj
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 10:24:39 -0500
-Received: from main.gmane.org ([80.91.229.2]:38495 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1752734AbWLOPYj
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006 10:24:39 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GvEvF-0001CR-Tb for git@vger.kernel.org; Fri, 15 Dec 2006 16:24:29 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 15 Dec 2006 16:24:29 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 15 Dec 2006
- 16:24:29 +0100
-To: git@vger.kernel.org
+ S932251AbWJYOth (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 10:49:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932390AbWJYOth
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 10:49:37 -0400
+Received: from mail.360visiontechnology.com ([194.70.53.226]:47895 "EHLO
+ 369run02s.360vision.com") by vger.kernel.org with ESMTP id S932251AbWJYOth
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 10:49:37 -0400
+Received: from dvr.360vision.com ([192.189.1.24]) by 369run02s.360vision.com
+ with Microsoft SMTPSVC(5.0.2195.6713); Wed, 25 Oct 2006 15:52:35 +0100
+Received: from localhost ([127.0.0.1]) by dvr.360vision.com with esmtp (Exim
+ 3.36 #1 (Debian)) id 1Gck4V-0003If-00 for <git@vger.kernel.org>; Wed, 25 Oct
+ 2006 15:49:35 +0100
+To: unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins wrote:
+From cf13955d13b8b6a86dd1f6340565e16500b3cf38 Mon Sep 17 00:00:00 2001
+From: Andy Parkins <andyparkins@gmail.com>
+Date: Wed, 25 Oct 2006 15:49:34 +0100
+Subject: [PATCH] Minor grammar fixes for git-diff-index.txt
+To: git@vger.kernel.org
+X-TUID: c63a7eaedc72a5ce
+X-UID: 129
+X-Length: 2247
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Message-Id: <200610251549.34193.andyparkins@gmail.com>
 
-By the way, could you use slightly smaller number of columns? TIA.
+"what you are going to commit is" doesn't need the "is" and does need a comma.
 
-> On Thursday 2006 December 14 10:21, Junio C Hamano wrote:
+"can trivially see" is an unecessary split infinitive and "easily" is a more
+appropriate adverb.
 
->> But you never communicate with your own git repository using the
->> SHA-1 object names when talking about commits you made recently
-> 
-> How's this then:
-> 
-> $ git commit
-> $ git commit
-> $ git commit
-> $ git reset HEAD^^^
-> 
-> "AGGGHHHHHH!  I meant HEAD^^"
-> 
-> At this point I start running "git-prune -n | grep commit" and some liberal 
-> use of git-show to try and find the hash of the object so I can do
-> 
-> $ git reset --hard HASH_OF_OBJECT_I_STUPIDLY_ORPHANED
+"case where you" should be "case were you" as it's the past tense form of the
+verb "to be", rather than a location (I think :-) ).
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
+ Documentation/git-diff-index.txt |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-That is what reflog is for. By the way, is core.logAllRefUpdates set
-to "true" (or "heads") by default now?
-
-Although I'm not against
-
-  $ git commit -v
-  Revision XXXXXXXXXXXXXXXXXX successfully added.
+diff --git a/Documentation/git-diff-index.txt 
+b/Documentation/git-diff-index.txt
+index 9cd43f1..ad1e903 100644
+--- a/Documentation/git-diff-index.txt
++++ b/Documentation/git-diff-index.txt
+@@ -54,7 +54,7 @@ If '--cached' is specified, it allows yo
  
-Notice -v/-verbose option.
-
->> So I do not think "git commit" is a valid example.  I also agree
->> with Shawn that "git add" that says 6781 files were added is
->> pointless.
-> 
-> Okay.
-
-And git-add has -v option (although not --verbose).
-
->>> I've always thought that programs that needed an expert/beginner split
->>> were badly designed.
->>
->> There probably is a truth in that.  Let's not add verbosity
->> unnecessarily.
-> 
-> My habit is always to be overly verbose in program output; however, I realise 
-> that not everybody likes that.  None of these things cause me any difficulty 
-> in my use of git.  However, my Dad also is an engineer, but he's not so 
-> comfortable with VCS; for him almost every part of git is a mystery.  
-> Commands that run and don't say anything are confusing because he didn't 
-> really know what they were /meant/ to do; he's just got a set of recipes that 
-> he knows to type.  He's probably an extreme case, and not a good model for 
-> typical user - on the other hand, I would say that if he can use it, then it 
-> is officially newbie-friendly. :-)
-
-It would be nice to have some generic place in git config to specify
-default options to git commands (at least for interactive shell). It
-cannot be done using aliases. Perhaps defaults.<command> config variable?
-
+ For example, let's say that you have worked on your working directory, 
+updated
+ some files in the index and are ready to commit. You want to see exactly
+-*what* you are going to commit is without having to write a new tree
++*what* you are going to commit, without having to write a new tree
+ object and compare it that way, and to do that, you just do
+ 
+ 	git-diff-index --cached HEAD
+@@ -68,11 +68,11 @@ matches my working directory. But doing 
+   -100644 blob    4161aecc6700a2eb579e842af0b7f22b98443f74        commit.c
+   +100644 blob    4161aecc6700a2eb579e842af0b7f22b98443f74        
+git-commit.c
+ 
+-You can trivially see that the above is a rename.
++You can see easily that the above is a rename.
+ 
+ In fact, "git-diff-index --cached" *should* always be entirely equivalent to
+ actually doing a "git-write-tree" and comparing that. Except this one is much
+-nicer for the case where you just want to check where you are.
++nicer for the case were you just want to check where you are.
+ 
+ So doing a "git-diff-index --cached" is basically very useful when you are
+ asking yourself "what have I already marked for being committed, and 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+1.4.2.3
