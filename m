@@ -2,53 +2,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: [RFC] Teach git-branch howto rename a branch
-Date: Mon, 27 Nov 2006 00:56:34 +0100
-Message-ID: <200611270056.35053.Josef.Weidendorfer@gmx.de>
-References: <1164409429445-git-send-email-hjemli@gmail.com>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Fix bad usage of mkpath in builtin-branch.sh
+Date: Thu, 26 Oct 2006 00:43:13 +0200
+Message-ID: <20061025224313.GM20017@pasky.or.cz>
+References: <1161655176461-git-send-email-hjemli@gmail.com> <7vlkn6qkh2.fsf@assigned-by-dhcp.cox.net> <20061024113806.GB20017@pasky.or.cz> <7vac3lf3jl.fsf@assigned-by-dhcp.cox.net> <7vslhddmtu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 27 Nov 2006 00:04:06 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 25 Oct 2006 22:43:39 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #352111
-User-Agent: KMail/1.9.3
-In-Reply-To: <1164409429445-git-send-email-hjemli@gmail.com>
 Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+In-Reply-To: <7vslhddmtu.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30116>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoTyR-0006sV-2f for gcvg-git@gmane.org; Mon, 27 Nov
- 2006 01:03:51 +0100
+ esmtp (Exim 4.43) id 1GcrSx-0001q9-6Q for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 00:43:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755277AbWK0AD3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
- 19:03:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755310AbWK0AD3
- (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 19:03:29 -0500
-Received: from mail.gmx.net ([213.165.64.20]:21474 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1755277AbWK0AD2 (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 19:03:28 -0500
-Received: (qmail invoked by alias); 26 Nov 2006 23:56:36 -0000
-Received: from p5496967F.dip0.t-ipconnect.de (EHLO noname) [84.150.150.127]
- by mail.gmx.net (mp040) with SMTP; 27 Nov 2006 00:56:36 +0100
-To: Lars Hjemli <hjemli@gmail.com>
+ S965242AbWJYWnQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 18:43:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965243AbWJYWnQ
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 18:43:16 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:50846 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S965242AbWJYWnP (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 18:43:15 -0400
+Received: (qmail 24162 invoked by uid 2001); 26 Oct 2006 00:43:13 +0200
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Saturday 25 November 2006 00:03, Lars Hjemli wrote:
-> This adds a '--rename' option to git branch. If specified, branch
-> creation becomes branch renaming.
+Dear diary, on Wed, Oct 25, 2006 at 06:46:37AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> Junio C Hamano <junkio@cox.net> writes:
+> 
+> > Petr Baudis <pasky@suse.cz> writes:
+> >
+> >> I have made my fair share of inadverent mode changes as well (I don't
+> >> even know how that *happenned*), and I don't seem to be alone; since
+> >> this is something you are doing only rarely anyway, perhaps we should
+> >> try to make mode changes more visible?
+> >
+> > Well we already do and that's how I noticed.
+> 
+> Ah, sorry, I think I misunderstood you.
+> Did you mean something like this?
+> 
+> diff --git a/git-commit.sh b/git-commit.sh
+> index 5b1cf85..8bae734 100755
+> --- a/git-commit.sh
+> +++ b/git-commit.sh
+> @@ -629,4 +629,7 @@ if test -x "$GIT_DIR"/hooks/post-commit
+>  then
+>  	"$GIT_DIR"/hooks/post-commit
+>  fi
+> +
+> +test "$ret" = 0 && git-diff-tree --summary --root --no-commit-id HEAD
+> +
+>  exit "$ret"
 
-This probably also should rename all config keys
- branch.<oldname>.*
-into
- branch.<newname>.*
+Yes, this might be a good idea, although after the commit is perhaps too
+late.
 
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
