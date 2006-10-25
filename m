@@ -1,82 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
-Date: Tue, 28 Nov 2006 14:23:51 +0100
-Organization: At home
-Message-ID: <ekhd5q$qb1$1@sea.gmane.org>
-References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home> <7vk61gcnzl.fsf@assigned-by-dhcp.cox.net> <7vd5786opj.fsf@assigned-by-dhcp.cox.net> <200611281400.37191.Josef.Weidendorfer@gmx.de>
+From: "Matthew D. Fuller" <fullermd@over-yonder.net>
+Subject: Re: VCS comparison table
+Date: Tue, 24 Oct 2006 19:27:13 -0500
+Message-ID: <20061025002713.GN17019@over-yonder.net>
+References: <845b6e870610220256u39d3d06wefd4f71851670812@mail.gmail.com> <87zmbozau2.wl%cworth@cworth.org> <20061022185350.GW75501@over-yonder.net> <Pine.LNX.4.64.0610231018410.3962@g5.osdl.org> <20061023222131.GB17019@over-yonder.net> <Pine.LNX.4.64.0610231534010.3962@g5.osdl.org> <20061024002622.GC17019@over-yonder.net> <Pine.LNX.4.63.0610240853160.10841@qynat.qvtvafvgr.pbz> <20061024163458.GH17019@over-yonder.net> <Pine.LNX.4.63.0610241038060.10841@qynat.qvtvafvgr.pbz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Tue, 28 Nov 2006 13:23:46 +0000 (UTC)
+NNTP-Posting-Date: Wed, 25 Oct 2006 00:27:35 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 32
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0610241038060.10841@qynat.qvtvafvgr.pbz>
+X-Editor: vi
+X-OS: FreeBSD <http://www.freebsd.org/>
+User-Agent: Mutt/1.5.11-fullermd.3
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30021>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gp2ve-00014o-07 for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 14:23:18 +0100
+ esmtp (Exim 4.43) id 1GcWc3-0007pP-Uo for gcvg-git@gmane.org; Wed, 25 Oct
+ 2006 02:27:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758662AbWK1NXP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 08:23:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758663AbWK1NXP
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 08:23:15 -0500
-Received: from main.gmane.org ([80.91.229.2]:25799 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1758662AbWK1NXO (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 08:23:14 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gp2us-0000r4-Tf for git@vger.kernel.org; Tue, 28 Nov 2006 14:22:31 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Tue, 28 Nov 2006 14:22:30 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 28 Nov 2006
- 14:22:30 +0100
-To: git@vger.kernel.org
+ S1422869AbWJYA1R (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006
+ 20:27:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422865AbWJYA1Q
+ (ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 20:27:16 -0400
+Received: from ns.centralmiss.com ([206.156.254.79]:973 "EHLO
+ optimus.centralmiss.com") by vger.kernel.org with ESMTP id S1422869AbWJYA1P
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 20:27:15 -0400
+Received: from draco.over-yonder.net
+ (adsl-072-148-013-213.sip.jan.bellsouth.net [72.148.13.213]) (using TLSv1
+ with cipher ADH-AES256-SHA (256/256 bits)) (No client certificate requested)
+ by optimus.centralmiss.com (Postfix) with ESMTP id 5D0952842F; Tue, 24 Oct
+ 2006 19:27:14 -0500 (CDT)
+Received: by draco.over-yonder.net (Postfix, from userid 100) id BB00C61C57;
+ Tue, 24 Oct 2006 19:27:13 -0500 (CDT)
+To: David Lang <dlang@digitalinsight.com>
 Sender: git-owner@vger.kernel.org
 
-Josef Weidendorfer wrote:
-
-> On Tuesday 28 November 2006 07:59, Junio C Hamano wrote:
->> Once I am done, I can ask "git diff" and expect it to show my
->> local changes I have no intention of committing for now
->> ...
->> 
->> And at that point, I trust "git commit" to do the right thing --
->> the damn thing I just checked with "git diff --cached" _is_ what
->> will be committed.
+On Tue, Oct 24, 2006 at 11:03:20AM -0700 I heard the voice of
+David Lang, and lo! it spake thus:
 > 
-> I think the difference behavior between "git commit" and "git diff" is
-> a little bit confusing.
-> 
-> Currently, we have
-> * "git diff" shows what "git commit -a" would commit
-> * "git diff --cached" shows what "git commit" would commit
-> 
-> IMHO, "git diff" should show what's in the staging area,
-> and we should introduce "git diff -a" as a way to see the full
-> changes.
+> it sounded like you were saying that the way to get the slices of
+> the DAG was to use branches in bzr. [...]
 
-I see it in other way. "git diff" tells us if a tree has changed wrt. what
-would be committed. It is not a preview of commit.
+I'm not entirely sure I understand what you mean here, but I think
+you're saying "Nobody's written the code in bzr to show arbitrary
+slices of the DAG", which is true TTBOMK.
 
-Also, as of now the version without additional option is a fastest one, both
-for diff and for commit.
+
+> everyone agrees that bzr supports the Star topology. Most people
+> (including bzr people) seem to agree that currently bzr does not
+> support the Distributed topology.
+
+I think this statement arouses so much grumbling because (a) bzr does
+support such a lot better than often seems implied, (b) where it
+doesn't, the changes needed to do so are relatively minor (often
+merely cosmetic), and (c) disagreement over whether some of the
+qualifications included for 'distributed' are really fundamental.
+
+
+> it's just fine for bzr to not support all possible topologies,
+
+I think there's a real intent for bzr TO support at least all common
+topologies.  I'll buy that current development has focused more on
+[relatively] simple topologies than the more wildly complex ones.  I
+look forward to more addressing of the less common cases as the tool
+matures, and I think a lot of this thread will be good material to
+work with as that happens.  It's just the suggestion that providing
+fruit for simple topologies _necessarily_ prejudices against complex
+ones that I find so onerous.
+
+
+> (besides everyone understanding each other)
+
+That's a good enough reason for me.  Before this thread, I wasn't
+interested in using git.  I'm still not, but now I understand much
+better /why/ I'm not.  And when (I'm sure it'll happen sooner or
+later) some project I follow picks up using git, I'll have enough
+grounding in the tool's mental model to work with it when I have to.
+
+
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+Matthew Fuller     (MF4839)   |  fullermd@over-yonder.net
+Systems/Network Administrator |  http://www.over-yonder.net/~fullermd/
