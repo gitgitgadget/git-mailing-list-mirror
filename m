@@ -4,88 +4,80 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 1/4] Make Series::patch_applied public.
-Date: Fri, 24 Nov 2006 00:16:44 +0100
-Message-ID: <20061123231632.9769.72003.stgit@gandelf.nowhere.earth>
-References: <20061123230721.9769.38403.stgit@gandelf.nowhere.earth>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: updating only changed files source directory?
+Date: Wed, 25 Oct 2006 13:58:50 +0200
+Message-ID: <453F517A.7060000@xs4all.nl>
+References: <ehjqgf$ggb$1@sea.gmane.org> <Pine.LNX.4.64.0610241435420.9789@iabervon.org>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 23 Nov 2006 23:17:58 +0000 (UTC)
-Cc: GIT list <git@vger.kernel.org>
+NNTP-Posting-Date: Wed, 25 Oct 2006 11:58:56 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061123230721.9769.38403.stgit@gandelf.nowhere.earth>
-User-Agent: StGIT/0.11
+User-Agent: Thunderbird 1.5.0.7 (X11/20061008)
+Original-Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <Pine.LNX.4.64.0610241435420.9789@iabervon.org>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30053>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnNpI-0001fQ-8U for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 00:17:52 +0100
+ esmtp (Exim 4.43) id 1GchP9-0005el-H9 for gcvg-git@gmane.org; Wed, 25 Oct
+ 2006 13:58:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934250AbWKWXRr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
- 18:17:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934251AbWKWXRr
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 18:17:47 -0500
-Received: from smtp5-g19.free.fr ([212.27.42.35]:49628 "EHLO
- smtp5-g19.free.fr") by vger.kernel.org with ESMTP id S934250AbWKWXRq (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 18:17:46 -0500
-Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
- [81.57.214.146]) by smtp5-g19.free.fr (Postfix) with ESMTP id CE0FF279D0;
- Fri, 24 Nov 2006 00:17:45 +0100 (CET)
-Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch) by
- bylbo.nowhere.earth with esmtp (Exim 4.62) (envelope-from
- <ydirson@altern.org>) id 1GnNpF-0002sw-MW; Fri, 24 Nov 2006 00:17:49 +0100
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S1423327AbWJYL6k (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 07:58:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423331AbWJYL6k
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 07:58:40 -0400
+Received: from smtp-vbr17.xs4all.nl ([194.109.24.37]:65030 "EHLO
+ smtp-vbr17.xs4all.nl") by vger.kernel.org with ESMTP id S1423327AbWJYL6j
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 07:58:39 -0400
+Received: from [192.168.123.187] (muurbloem.xs4all.nl [213.84.26.127])
+ (authenticated bits=0) by smtp-vbr17.xs4all.nl (8.13.8/8.13.8) with ESMTP id
+ k9PBwZXX066867; Wed, 25 Oct 2006 13:58:36 +0200 (CEST) (envelope-from
+ hanwen@xs4all.nl)
+To: Daniel Barkalow <barkalow@iabervon.org>
 Sender: git-owner@vger.kernel.org
 
+Daniel Barkalow escreveu:
+>> I'm just starting out with GIT.  Initially, I want to use experiment with
+>> integrating it into our binary builder structure for LilyPond.
+>>
+>> The binary builder roughly does this:
+>>
+>>  1. get source code updates from a server to a single, local
+>>     repository. This is currently a git repository that is that
+>>     tracks our CVS server.
+>>
+>>  2. copy latest commit from a branch to separate source directory.
+>>     This copy should only update files that changed.
+>>
+>>  3. Incrementally compile from that source directory
+> 
+> The terminology in the git world is, I think, a little different from what 
+> you expect. We call the thing that contains all of the tracked information 
+> (what you're calling the repository) the "object database"; what we call 
 
+yes, you hit the nail on the head.
 
+> referencing an external one. So you need a repository for each source 
+> directory (because it keeps track of what commit is currently in the 
+> source directory), but it doesn't need to have its own complete object 
+> database, which is what you're trying to share between all of them.
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+OK. This makes sense; thanks for this pointer.
 
- stgit/stack.py |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+How can I set the object database?  I found GIT_OBJECT_DIRECTORY, but 
+can I write a config file entry for that?
 
-diff --git a/stgit/stack.py b/stgit/stack.py
-index a477e7d..49cfebb 100644
---- a/stgit/stack.py
-+++ b/stgit/stack.py
-@@ -417,7 +417,7 @@ class Series:
-     def __patch_is_current(self, patch):
-         return patch.get_name() == read_string(self.__current_file)
- 
--    def __patch_applied(self, name):
-+    def patch_applied(self, name):
-         """Return true if the patch exists in the applied list
-         """
-         return name in self.get_applied()
-@@ -430,7 +430,7 @@ class Series:
-     def patch_exists(self, name):
-         """Return true if there is a patch with the given name, false
-         otherwise."""
--        return self.__patch_applied(name) or self.__patch_unapplied(name)
-+        return self.patch_applied(name) or self.__patch_unapplied(name)
- 
-     def __begin_stack_check(self):
-         """Save the current HEAD into .git/refs/heads/base if the stack
-@@ -713,7 +713,7 @@ class Series:
-                   before_existing = False, refresh = True):
-         """Creates a new patch
-         """
--        if self.__patch_applied(name) or self.__patch_unapplied(name):
-+        if self.patch_applied(name) or self.__patch_unapplied(name):
-             raise StackException, 'Patch "%s" already exists' % name
- 
-         if not message and can_edit:
-@@ -773,7 +773,7 @@ class Series:
- 
-         if self.__patch_is_current(patch):
-             self.pop_patch(name)
--        elif self.__patch_applied(name):
-+        elif self.patch_applied(name):
-             raise StackException, 'Cannot remove an applied patch, "%s", ' \
-                   'which is not current' % name
+> built it in that directory. You fetch into the single bare repository 
+> from upstream, and then pull into each source directory from the bare 
+> repository; this will do the minimal update to the contents of the source 
+> directory automatically.
+
+yes, this works. Thanks!
+
+-- 
