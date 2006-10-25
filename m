@@ -4,59 +4,58 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 2/3] More config examples.
-Date: Thu, 30 Nov 2006 01:27:23 +0100
-Message-ID: <20061130002723.21981.11262.stgit@gandelf.nowhere.earth>
-References: <20061130002304.21981.67797.stgit@gandelf.nowhere.earth>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-NNTP-Posting-Date: Thu, 30 Nov 2006 00:29:11 +0000 (UTC)
-Cc: GIT list <git@vger.kernel.org>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: Bugreport: core-tutorial example outdated?
+Date: Wed, 25 Oct 2006 13:24:08 -0400
+Message-ID: <20061025172408.GC26279@fieldses.org>
+References: <453F9BA5.3020104@anagramm.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 25 Oct 2006 17:24:34 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061130002304.21981.67797.stgit@gandelf.nowhere.earth>
-User-Agent: StGIT/0.11
+Content-Disposition: inline
+In-Reply-To: <453F9BA5.3020104@anagramm.de>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30081>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpZmS-0002Pj-QX for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 01:28:01 +0100
+ esmtp (Exim 4.43) id 1GcmUA-0002Di-JA for gcvg-git@gmane.org; Wed, 25 Oct
+ 2006 19:24:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967727AbWK3A1z (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
- 19:27:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967728AbWK3A1z
- (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 19:27:55 -0500
-Received: from smtp5-g19.free.fr ([212.27.42.35]:33734 "EHLO
- smtp5-g19.free.fr") by vger.kernel.org with ESMTP id S967727AbWK3A1y (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 19:27:54 -0500
-Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
- [81.57.214.146]) by smtp5-g19.free.fr (Postfix) with ESMTP id 89E63279CB;
- Thu, 30 Nov 2006 01:27:53 +0100 (CET)
-Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch) by
- bylbo.nowhere.earth with esmtp (Exim 4.62) (envelope-from
- <ydirson@altern.org>) id 1GpZn3-0006B0-4N; Thu, 30 Nov 2006 01:28:37 +0100
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S932271AbWJYRYL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 13:24:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932272AbWJYRYK
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 13:24:10 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:39040 "EHLO
+ pickle.fieldses.org") by vger.kernel.org with ESMTP id S932271AbWJYRYJ (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 13:24:09 -0400
+Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
+ (envelope-from <bfields@fieldses.org>) id 1GcmU4-0000zz-DF; Wed, 25 Oct 2006
+ 13:24:08 -0400
+To: Clemens Koller <clemens.koller@anagramm.de>
 Sender: git-owner@vger.kernel.org
 
+On Wed, Oct 25, 2006 at 07:15:17PM +0200, Clemens Koller wrote:
+> Hi there!
+> 
+> I just studied
+> http://www.kernel.org/pub/software/scm/git/docs/core-tutorial.html
+> to get more into the details of git. But the following commands:
+> 
+> $ git-cat-file -t 557db03de997c86a4a028e1ebd3a1ceb225be238
+> $ git-cat-file "blob" 557db03
+> 
+> just bring up a
+> 
+> fatal: Not a valid object name 557db03de
+> 
+> I guess the documentation is slightly outdated and might need a fix.
 
+Works for me.  The precise names there depend on the files you create
+being byte-for-byte identical to the ones created by the echo commands
+in the tutorial.  If yours aren't identical, then you should just use
+the names that the previous ls command instead.
 
-
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
-
- examples/stgitrc |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/examples/stgitrc b/examples/stgitrc
-index cc6e910..9ed2988 100644
---- a/examples/stgitrc
-+++ b/examples/stgitrc
-@@ -32,6 +32,7 @@
- 
- # this value overrides the default PAGER environment variable
- #pager: ~/share/stgit/contrib/diffcol.sh
-+#pager: filterdiff --annotate | colordiff | less -FRX
- 
- # GIT pull command (should take the same arguments as git-pull)
