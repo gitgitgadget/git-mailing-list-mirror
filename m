@@ -1,93 +1,60 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git and bzr
-Date: Thu, 30 Nov 2006 11:19:23 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611301111310.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <45357CC3.4040507@utoronto.ca> <20061026101038.GA13310@coredump.intra.peff.net>
- <877iyne4dm.fsf@alplog.fr> <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org>
- <456B7C6A.80104@webdrake.net> <845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com>
- <ekhaeg$etk$1@sea.gmane.org> <Pine.LNX.4.63.0611281433270.30004@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0611280754050.30076@woody.osdl.org> <456C7592.6020700@ableton.com>
- <ekhtnt$rkk$1@sea.gmane.org> <456C9DFF.1040407@onlinehome.de>
- <456CA981.4010808@onlinehome.de> <Pine.LNX.4.64.0611281346490.4244@woody.osdl.org>
- <456CB197.2030201@onlinehome.de> <Pine.LNX.4.64.0611281413310.4244@woody.osdl.org>
- <Pine.LNX.4.63.0611291149440.30004@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0611290922410.3513@woody.osdl.org> <456DD76C.4010902@gmx.net>
- <Pine.LNX.4.64.0611291235590.3513@woody.osdl.org> <87bqmpvlxf.wl%cworth@cworth.org>
- <456E8147.9070304@gmx.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] document the <tree ish> <file> blob reference syntax
+Date: Wed, 25 Oct 2006 13:13:29 -0700
+Message-ID: <7vy7r4nogm.fsf@assigned-by-dhcp.cox.net>
+References: <38fafea491402334df335c486270ebe9@pinky>
+	<7vwt6ob5zc.fsf@assigned-by-dhcp.cox.net>
+	<453FBDAA.50305@shadowen.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 30 Nov 2006 10:19:37 +0000 (UTC)
-Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org,
-	bazaar-ng@lists.canonical.com
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 25 Oct 2006 20:13:49 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <456E8147.9070304@gmx.net>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <453FBDAA.50305@shadowen.org> (Andy Whitcroft's message of "Wed,
+	25 Oct 2006 20:40:26 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30099>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gpj0s-0003KF-6o for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 11:19:30 +0100
+ esmtp (Exim 4.43) id 1Gcp82-00061b-NU for gcvg-git@gmane.org; Wed, 25 Oct
+ 2006 22:13:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933843AbWK3KT1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 05:19:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934363AbWK3KT1
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 05:19:27 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33477 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S933843AbWK3KT0 (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 05:19:26 -0500
-Received: (qmail invoked by alias); 30 Nov 2006 10:19:24 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp042) with SMTP; 30 Nov 2006 11:19:24 +0100
-To: Raimund Bauer <ray007@gmx.net>
+ S965224AbWJYUNc (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 16:13:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965219AbWJYUNb
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 16:13:31 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:42999 "EHLO
+ fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S1030205AbWJYUNb
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 16:13:31 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao04.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061025201330.SESY22409.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>; Wed, 25
+ Oct 2006 16:13:30 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id ekDC1V00n1kojtg0000000 Wed, 25 Oct 2006
+ 16:13:13 -0400
+To: Andy Whitcroft <apw@shadowen.org>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Andy Whitcroft <apw@shadowen.org> writes:
 
-On Thu, 30 Nov 2006, Raimund Bauer wrote:
+>> +For a more complete list of ways to spell object names, see
+>> +"SPECIFYING REVISIONS" section in gitlink:git-rev-parse[1].
+>> +
+>
+> That section seems to have more compresensive descriptions of the
+> various definitions of commit-ish, but not a tree-ish.  Specifically,
+> there is no mentions of tree-ish:file
 
-> * Carl Worth wrote, On 30.11.2006 01:05:
-> > Let's help people do exactly that by making the behavior of "git
-> > commit -a" be the default for "git commit".
-> >   
-> Maybe we could do that _only_ if the index matches HEAD, and otherwise keep
-> current behavior?
-> So people who don't care about the index won't get tripped up, and when you do
-> have a dirty index, you get told about it?
+  164 * A suffix ':' followed by a path; this names the blob or tree
+  165   at the given path in the tree-ish object named by the part
+  166   before the colon.
 
-So many people spoke for it, it's time I crash the wedding.
-
-From a usability viewpoint, it is a horrible convention. The user has to 
-remember too much of the side effects to handle the commit operation. 
-The function of the program would no longer be dependent on the command 
-line arguments and your config, but _also_ on something as volatile as 
-the index.
-
-You would literally end up asking "did I change the index?" _everytime_ 
-before you commit.
-
-And remember, even a simple "git add" changes the index! (Why it does is 
-brutally clear once you grasp the concept of the staging area.)
-
-Worse, doing a "git commit --amend" should _not_ automatically add "-a" 
-_even_ if the index matches the HEAD, since it is quite possible that you 
-had a typo in the message you want to fix up. And quite possibly other 
-options would not want that either.
-
-But here's an idea: tell the user that she has to tell git-commit which 
-files she wants committed. Yes! That's it. Just tell it the friggin' 
-files. And if you are a lazy bum, and want to commit _all_ modified 
-files, git has a nice shortcut for ya: "-a".
-
-Ciao,
-Dscho
