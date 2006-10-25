@@ -4,68 +4,50 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Adjust t5510 to put remotes in config
-Date: Mon, 18 Dec 2006 14:42:03 -0800
-Message-ID: <7vvek8vnb8.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0612171545390.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7v7iwox59i.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0612182325550.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH 1/2] New stg command: assimilate
+Date: Wed, 25 Oct 2006 18:32:31 +0200
+Message-ID: <20061025163231.GA30478@diana.vm.bytemark.co.uk>
+References: <20061022130559.17015.51385.stgit@localhost> <20061022130802.17015.50188.stgit@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 18 Dec 2006 22:42:14 +0000 (UTC)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Wed, 25 Oct 2006 16:33:37 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.63.0612182325550.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Mon, 18 Dec 2006 23:28:33 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <20061022130802.17015.50188.stgit@localhost>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30075>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GwRBQ-0001rM-Vv for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 23:42:09 +0100
+ esmtp (Exim 4.43) id 1GclgE-0000qS-Kr for gcvg-git@gmane.org; Wed, 25 Oct
+ 2006 18:32:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754663AbWLRWmG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
- 17:42:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754668AbWLRWmF
- (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 17:42:05 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:61018 "EHLO
- fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1754663AbWLRWmE (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
- 17:42:04 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao09.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061218224204.BHYG18767.fed1rmmtao09.cox.net@fed1rmimpo01.cox.net>; Mon, 18
- Dec 2006 17:42:04 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id 0NhN1W01M1kojtg0000000; Mon, 18 Dec 2006
- 17:41:23 -0500
-To: git@vger.kernel.org
+ S1423161AbWJYQcf convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006 12:32:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423163AbWJYQcf
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 12:32:35 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:43538 "EHLO
+ diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1423161AbWJYQce
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 12:32:34 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
+ (Debian)) id 1Gclg7-00081o-00; Wed, 25 Oct 2006 17:32:31 +0100
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 2006-10-22 15:08:02 +0200, Karl Hasselstr=F6m wrote:
 
-> Hi,
->
-> On Mon, 18 Dec 2006, Junio C Hamano wrote:
->
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> 
->> > Since .git/remotes/ is no longer created by default, t5510 failed.
->> 
->> Does not reproduce for me.
->
-> I just checked out a fresh copy of 'next'. It still fails. The culprit is 
-> 61dde8f91672ab362f3cfd3af8d6d09d448d4ffe, which removes the line
->
-> 		mkdir -p "$GIT_DIR/remotes" &&
->
-> which is line 372 in the parent of that commit.
+> +    def name_taken(name):
+> +        return patchname in name2patch or crt_series.patch_exists(pa=
+tchname)
 
-Hmmmmm.
+I just realized, by means of an infinite loop, that "patchname" should
+be replaced with just "name" in the body of this function. Would you
+like me to resend the patch?
 
-But git-clone runs git-init-db and we ship an empty remotes
-directory still as part of the templates.  Why would removal of
-that line matter?
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
