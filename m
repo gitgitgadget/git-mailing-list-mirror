@@ -1,75 +1,94 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Some tips for doing a CVS importer
-Date: Tue, 21 Nov 2006 15:05:08 -0500
-Message-ID: <20061121200508.GB22461@spearce.org>
-References: <9e4733910611201349s4d08b984g772c64982f148bfa@mail.gmail.com> <46a038f90611201503m6a63ec8ct347026c635190108@mail.gmail.com> <9e4733910611201537h30b6c9f4oee9d8df75284c284@mail.gmail.com> <46a038f90611201629o39f11f42ye07b86159360b66e@mail.gmail.com> <87vel9y5x6.wl%cworth@cworth.org> <9e4733910611201740i348302e6r84c3c27dc27e5954@mail.gmail.com> <20061121063934.GA3332@spearce.org> <456359E2.8010403@cc.jyu.fi>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] git-split: Split the history of a git repository by subdirectories and ranges
+Date: Tue, 24 Oct 2006 17:10:17 -0700
+Message-ID: <7vu01tfe6u.fsf@assigned-by-dhcp.cox.net>
+References: <451A30E4.50801@freedesktop.org>
+	<7vlko5d3bx.fsf@assigned-by-dhcp.cox.net>
+	<453C96C9.4010005@freedesktop.org>
+	<Pine.LNX.4.64.0610230846420.3962@g5.osdl.org>
+	<453D17B5.6070203@freedesktop.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 21 Nov 2006 20:05:56 +0000 (UTC)
-Cc: Jon Smirl <jonsmirl@gmail.com>, Carl Worth <cworth@cworth.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+NNTP-Posting-Date: Wed, 25 Oct 2006 00:10:36 +0000 (UTC)
+Cc: Josh Triplett <josh@freedesktop.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <456359E2.8010403@cc.jyu.fi>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <453D17B5.6070203@freedesktop.org> (Josh Triplett's message of
+	"Mon, 23 Oct 2006 12:27:49 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30017>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gmbs3-0006Mn-QI for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 21:05:32 +0100
+ esmtp (Exim 4.43) id 1GcWLf-0005NK-QI for gcvg-git@gmane.org; Wed, 25 Oct
+ 2006 02:10:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031377AbWKUUFU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 15:05:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031379AbWKUUFU
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 15:05:20 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:7146 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1031377AbWKUUFS
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 15:05:18 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Gmbra-00076e-2n; Tue, 21 Nov 2006 15:05:02 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 3AEBF20FB09; Tue, 21 Nov 2006 15:05:08 -0500 (EST)
-To: lamikr <lamikr@cc.jyu.fi>
+ S1161295AbWJYAKU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006
+ 20:10:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161298AbWJYAKU
+ (ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 20:10:20 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:4484 "EHLO
+ fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP id S1161295AbWJYAKS
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 20:10:18 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao09.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061025001018.GYNA16798.fed1rmmtao09.cox.net@fed1rmimpo01.cox.net>; Tue, 24
+ Oct 2006 20:10:18 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id eQA11V00E1kojtg0000000 Tue, 24 Oct 2006
+ 20:10:01 -0400
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-lamikr <lamikr@cc.jyu.fi> wrote:
-> Shawn Pearce wrote:
-> >   - No GUI.
-> >   
-> QGIT allows using some commands. I plan to try out the GIT eclipse
-> plugin in near future myself.
-> This mail list have some discussion and download link to it's repo in
-> archives.
-> (title: Java GIT/Eclipse GIT version 0.1.1, )
+Josh Triplett <josh@freedesktop.org> writes:
 
-I'm the author of that plugin.  :-)
+> Linus Torvalds wrote:
+>> 
+>> And yes, that's done by the core revision parsing code, so when you do
+>> 
+>> 	git log --full-history --parents -- $project
+>> 
+>> you do get the rewritten parent output (of course, it's not actually 
+>> _simplified_, so you get a fair amount of duplicate parents etc which 
+>> you'd still have to simplify and which don't do anything at all).
+>> 
+>> Without the "--full-history", you get a simplified history, but it's 
+>> likely to be _too_ simplified for your use, since it will not only 
+>> collapse multiple identical parents, it will also totally _remove_ parents 
+>> that don't introduce any new content.
+>
+> Considering that git-split does exactly that (remove parents that don't
+> introduce new content, assuming they changed things outside the
+> subtree), that might actually work for us.  I just checked, and the
+> output of "git log --parents -- $project" on one of my repositories
+> seems to show the same sequence of commits as git log --parents on the
+> head commit printed by git-split $project (apart from the rewritten
+> sha1s), including elimination of irrelevant merges.
 
-Its not even capable of making a commit yet.  The underling plumbing
-(aka jgit) can make commits but the Eclipse GUI has no function to
-actually invoke that plumbing and make a commit to the repository.
+So one potential action item that came out from this discussion
+for me is to either modify --pretty=raw (or add --pretty=rawish)
+that gives the rewritten parents instead of real parents?  With
+that, you can drop the code to simplify ancestry by hand in your
+loop, and also you do not have to do the grafts inforamation
+yourself either?
 
-The Eclipse plugin has apparently been a low priority for me.
-I haven't worked on it very recently.  Robin Rosenburg has supposedly
-gotten the revision compare interface to work, but its slow as a
-duck in November due to jgit's pack reading code not running as
-fast as it should.
- 
--- 
+If that is the case I'd be very happy.
+
+The only thing left for us to decide is if reporting the true
+parenthood like the current --pretty=raw makes sense (if so we
+need to keep it and introduce --pretty=rawfish).
+
+The only in-tree user of --pretty=raw seems to be git-svn but it
+only looks at path-unlimited log/rev-list from one given commit,
+so the only difference between dumping what is recorded in the
+commit object and listing what parents we _think_ the commit has
+is what we read from grafts.  I think we are safe to just "fix"
+the behaviour of --pretty=raw
+
+Comments?
