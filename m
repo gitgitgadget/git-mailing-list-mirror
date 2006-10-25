@@ -1,90 +1,81 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/5] allow cloning a repository "shallowly"
-Date: Wed, 15 Nov 2006 11:57:38 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611151153490.13772@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0610302009160.26682@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v4pt21oe9.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0611141145390.13772@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vpsbpzzse.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: VCS comparison table
+Date: Thu, 26 Oct 2006 00:29:17 +0200
+Organization: At home
+Message-ID: <ehooeo$1g6$2@sea.gmane.org>
+References: <453DAC87.8050203@research.canon.com.au> <Pine.LNX.4.64.0610232318200.3962@g5.osdl.org> <Pine.LNX.4.64N.0610232336010.30334@attu2.cs.washington.edu> <Pine.LNX.4.64.0610240812410.3962@g5.osdl.org> <Pine.LNX.4.64N.0610241300450.8112@attu4.cs.washington.edu> <20061025084810.GA26618@coredump.intra.peff.net> <Pine.LNX.4.64N.0610250157470.3467@attu1.cs.washington.edu> <20061025094900.GA26989@coredump.intra.peff.net> <453F6B7A.60805@op5.se> <Pine.LNX.4.63.0610251450040.1754@qynat.qvtvafvgr.pbz> <20061025221531.GB10140@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 15 Nov 2006 10:57:58 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Wed, 25 Oct 2006 22:29:21 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vpsbpzzse.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 31
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30112>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkISe-0007ZW-GA for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 11:57:45 +0100
+ esmtp (Exim 4.43) id 1GcrFK-0007Xf-5B for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 00:29:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966784AbWKOK5l (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 05:57:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966785AbWKOK5l
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 05:57:41 -0500
-Received: from mail.gmx.de ([213.165.64.20]:40390 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S966784AbWKOK5k (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 05:57:40 -0500
-Received: (qmail invoked by alias); 15 Nov 2006 10:57:39 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp046) with SMTP; 15 Nov 2006 11:57:39 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S965240AbWJYW3K (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 18:29:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965241AbWJYW3K
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 18:29:10 -0400
+Received: from main.gmane.org ([80.91.229.2]:54226 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S965240AbWJYW3I (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 18:29:08 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GcrF1-0007UN-NF for git@vger.kernel.org; Thu, 26 Oct 2006 00:28:57 +0200
+Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Thu, 26 Oct 2006 00:28:55 +0200
+Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 26 Oct 2006
+ 00:28:55 +0200
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Shawn Pearce wrote:
 
-On Tue, 14 Nov 2006, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> David Lang <dlang@digitalinsight.com> wrote:
+>> a quick lesson on program nameing
+>> 
+>> On Wed, 25 Oct 2006, Andreas Ericsson wrote:
+>> 
+>> >I'm personally all for a rewrite of the necessary commands in C ("commit" 
+>> >comes to mind), but as many others, I have no personal interest in doing 
+>> >the actual work. I'm fairly certain that once we get it working natively 
+>> >on windows with some decent performance, windows hackers will pick up the 
+>> >ball and write "wingit", which will be a log viewer and GUI thing for
+>>              ^^^^^^
+>> 
+>> how many other people read this as 'wing it' rather then 'win git'? ;-)
 > 
-> >> I understand "no need making it shallow", but I am not sure if a
-> >> non-NULL return from lookup_object() tells us that.
-> >
-> > You are probably right, how about has_sha1_file()?
-> >
-> >> I think register_shallow() can take commits that are already shallow() 
-> >> so maybe we can remove this "if() continue"?
-> >
-> > Yes, it can, but that is not necessarily correct: since .git/shallow is 
-> > constructed from the registered shallow commits, we would make a commit 
-> > shallow which is really not shallow.
-> >
-> > So, how about
-> >
-> >> > +				if (lookup_object(sha1) || has_sha1_file(sha1))
-> >> > +					continue;
+> Yes, that's certainly a less than optimal name...
 > 
-> If I understand the code correctly, this loop is reading what
-> the other side thinks your shallows should be (based on your
-> earlier "deepen" request or if this is initial fetch based on
-> your depth).  Even if we already have that object, if that
-> object _is_ shallow on our end, don't we need to keep it marked
-> as shallow?  Will we get ancestors of this commit from the other
-> end (and "shallow" lines for some of them to properly cauterize
-> the chain)?
+> What about gitk?  Is it "gi tk" or "git k" ?  This has actually
+> been the source of much local debate.  :-)
 
-My thinking was: if we have that object already, and it is _not_ marked as 
-shallow, we probably have either all its ancestors, or at least all 
-ancestors up until shallow commit(s).
+You can always use CamelCase, i.e. WinGit or WinGIT (or wgit,
+but this is also silly).
 
-Thinking about it again, it seems very fragile: on purpose, we only trust 
-to have the objects which are reachable by at least one ref, so that an 
-interrupted fetch does not corrupt the repository.
+Cute names are taken: CoGITo, gitk, qgit (GTK+ history viewer is gitview,
+not ggit, curiously ;-) and tig.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
-So yes, I agree, that "if() continue;" should go away. Even if all of a 
-sudden, commits we already have are no longer reachable.
-
-Ciao,
-Dscho
