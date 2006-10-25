@@ -1,78 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: tracking separate branches with RSS
-Date: Tue, 14 Nov 2006 01:44:36 +0100
-Message-ID: <ejb3hh$nvr$1@sea.gmane.org>
-Reply-To: hanwen@xs4all.nl
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: (unknown)
+Date: Wed, 25 Oct 2006 23:03:07 +0100
+Message-ID: <200610252303.07900.andyparkins@gmail.com>
+References: <E1Gck2K-0003H4-00@dvr.360vision.com> <200610251610.02446.andyparkins@gmail.com> <7vods0b5rk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 14 Nov 2006 00:44:52 +0000 (UTC)
+NNTP-Posting-Date: Wed, 25 Oct 2006 22:05:57 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 31
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=j2OtDCHrJ9Nfs4nZOqAntxcINngCnKXCHUzhMLhlOdPtYiA1rf3vxdoRSzY1YC/nkZ1Bxb5iEaSgow4/YD0/fzFR0mro2iT91Y+FTYEo7O7YbC3TM0VulN+a1l8NcEOw3ULfTmFZZj7+1U3PJdweqGaIuyMaQf7OH03mkoUj35U=
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vods0b5rk.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30106>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GjmPw-0001Dm-LP for gcvg-git@gmane.org; Tue, 14 Nov
- 2006 01:44:49 +0100
+ esmtp (Exim 4.43) id 1GcqsW-0002uP-W0 for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 00:05:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933276AbWKNAop (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006
- 19:44:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933278AbWKNAop
- (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 19:44:45 -0500
-Received: from main.gmane.org ([80.91.229.2]:40589 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S933277AbWKNAoo (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 19:44:44 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GjmPo-0001CL-C5 for git@vger.kernel.org; Tue, 14 Nov 2006 01:44:40 +0100
-Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
- esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Tue, 14 Nov 2006 01:44:40 +0100
-Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
- id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 14 Nov 2006 01:44:40
- +0100
+ S1751705AbWJYWFi (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 18:05:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751724AbWJYWFi
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 18:05:38 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:9572 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1751705AbWJYWFh
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 18:05:37 -0400
+Received: by ug-out-1314.google.com with SMTP id 32so234906ugm for
+ <git@vger.kernel.org>; Wed, 25 Oct 2006 15:05:36 -0700 (PDT)
+Received: by 10.67.24.13 with SMTP id b13mr1672313ugj; Wed, 25 Oct 2006
+ 15:05:36 -0700 (PDT)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
+ mx.google.com with ESMTP id 30sm2827031ugf.2006.10.25.15.05.35; Wed, 25 Oct
+ 2006 15:05:35 -0700 (PDT)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+On Wednesday 2006, October 25 19:38, Junio C Hamano wrote:
 
-Hello,
+> > I did try that, but then the branches don't appear in git branch.  I
+> > still like that they exist.
+>
+> "git branch -r" perhaps.
 
-I think that the shortlog / RSS support in gitweb is really neat. 
-However, it seems to track only the master branch.
+That's pretty good.  It makes things like
 
-In our repository (http://git.sv.gnu.org/gitweb/?p=lilypond.git;a=summary),
-we track two completely disparate branches in one repository: we have 
-both the project and the website for the project in branches
+  git-log remotes/origin/master..master
 
-   master
+A bit long winded, but it's certainly what I asked for.
 
-and
+You guys really have thought of everything.
 
-   web/master
 
-Unfortunately,  I don't seem to get any updates in my RSS reader when I 
-push something  to web/master. Would it be possible have a separate feed 
-for each branch?  I tried looking at the gitweb script, but my perl-fu 
-is too weak to figure out how to pass an argument from the URL into a 
-git_rss() to replace  the
-
-   git_get_head_hash($project)
-
-call.
-
-A second possibility -less desirable, but better than nothing- is to 
-have commits from all branches show up in the shortlog and the RSS feed.
-
+Andy
 -- 
-  Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
+Dr Andrew Parkins, M Eng (Hons), AMIEE
