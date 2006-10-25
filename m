@@ -1,94 +1,84 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [ANNOUNCE] CGit v0.1-pre
-Date: Sun, 10 Dec 2006 17:04:15 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612101653420.12500@woody.osdl.org>
-References: <8c5c35580612101542n72d300c7o106e53e219670510@mail.gmail.com>
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,
+	SUBJ_ALL_CAPS shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: [ANNOUNCE] GIT 1.4.3.3
+Date: Wed, 25 Oct 2006 15:45:27 -0700
+Message-ID: <7v7iyokoag.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Mon, 11 Dec 2006 01:04:49 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 25 Oct 2006 22:45:38 +0000 (UTC)
+Cc: linux-kernel@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <8c5c35580612101542n72d300c7o106e53e219670510@mail.gmail.com>
-X-MIMEDefang-Filter: osdl$Revision: 1.162 $
-X-Scanned-By: MIMEDefang 2.36
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33970>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtZar-0000Du-Ol for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 02:04:34 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30119>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GcrV7-0002Km-HR for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 00:45:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1762627AbWLKBEW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 20:04:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762632AbWLKBEW
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 20:04:22 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:55620 "EHLO smtp.osdl.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1762627AbWLKBEV
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 20:04:21 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBB14GID003635
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sun, 10
- Dec 2006 17:04:19 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBB14Frr008985; Sun, 10 Dec
- 2006 17:04:16 -0800
-To: Lars Hjemli <hjemli@gmail.com>
+ S965247AbWJYWpa (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 18:45:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965249AbWJYWpa
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 18:45:30 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:27792 "EHLO
+ fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S965248AbWJYWp3
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 18:45:29 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao04.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061025224528.JWX22409.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>; Wed, 25
+ Oct 2006 18:45:28 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id emlA1V00h1kojtg0000000 Wed, 25 Oct 2006
+ 18:45:11 -0400
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+The latest maintenance release GIT 1.4.3.3 is available at the
+usual places:
 
+  http://www.kernel.org/pub/software/scm/git/
 
-On Mon, 11 Dec 2006, Lars Hjemli wrote:
-> 
-> For a quick summary of the cache algorithm, the project README is here:
-> 
->  http://hjemli.net/git/cgit/view/?id=5917c37ce30b3f0a374c9fa376955f51f1d7bfbf
+  git-1.4.3.3.tar.{gz,bz2}			(tarball)
+  git-htmldocs-1.4.3.3.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.4.3.3.tar.{gz,bz2}		(preformatted docs)
+  RPMS/$arch/git-*-1.4.3.3-1.$arch.rpm	(RPM)
 
-Your pseudo-algorithm is dubious:
+Sorry to be doing three follow-up releases in a row.  This is
+primarily fix the partitioning of programs in generated RPM.  If
+you are installing all of git it does not matter, but by mistake
+we were placing git-archive into git-arch subpackage, which
+meant that you need to install tla only to use git-tar-tree and
+git-archive --format=zip.
 
-		name = generate_cache_name(request);
-	top:
-		if (!exists(name)) {
-			if (lock_cache(name)) {
-				generate_cache(request, name);
-				unlock_cache(name);
-			} else {
-				sched_yield();
-				goto top;
-			}
-		} else if (expired(name)) {
-			if (lock_cache(name)) {
-				generate_cache(request, name);
-				unlock_cache(name);
-			}
-		}
-		print_file(name);
+Thanks for Gerrit for noticing and reporting it, although he is
+from Debian camp ;-).
 
+----------------------------------------------------------------
 
-You really should have:
+Changes since v1.4.3.2 are as follows:
 
-	if (!exists) {
-		if (!lock)
-			delay-and-repeat;
-		/* RETEST exists _after_ getting the lock */
-		if (!exists) {
-			generate into lock-file
-			mv lockfile exists;
-		} else {
-			rm lockfile
-		}
-	}
+Eric Wong (1):
+      git-svn: fix symlink-to-file changes when using command-line svn 1.4.0
 
-because you really want to re-check the existence after you got the lock, 
-otherwise you would race with somebody else that got the lock, generated 
-the data, and then unlocked (and you got the lock _after_ the data was 
-generated, so now you generate it unnecessarily).
+Gerrit Pape (1):
+      Set $HOME for selftests
 
-As a side note: how do you release your caches? 
+Junio C Hamano (5):
+      Documentation: note about contrib/.
+      RPM package re-classification.
+      Refer to git-rev-parse:Specifying Revisions from git.txt
+      Update cherry documentation.
+      Documentation/SubmittingPatches: 3+1 != 6
+
+Petr Baudis (1):
+      xdiff: Match GNU diff behaviour when deciding hunk comment worthiness of lines
+
+Tuncer Ayaz (1):
+      git-fetch.sh printed protocol fix
 
