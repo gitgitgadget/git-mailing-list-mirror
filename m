@@ -1,63 +1,58 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: should git download missing objects?
-Date: Tue, 14 Nov 2006 21:08:27 +0100
-Message-ID: <20061114200827.GI7201@pasky.or.cz>
-References: <ej7fgp$8ca$1@sea.gmane.org> <7vwt60bggs.fsf@assigned-by-dhcp.cox.net> <20061113194532.GA4547@steel.home> <20061113195414.GD17244@spearce.org> <20061113200358.GF7201@pasky.or.cz> <7vac2v6qru.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Fix regression tests on Cygwin
+Date: Tue, 24 Oct 2006 21:40:25 -0700
+Message-ID: <7vwt6pdn46.fsf@assigned-by-dhcp.cox.net>
+References: <11616320733093-git-send-email-hjemli@gmail.com>
+	<Pine.LNX.4.63.0610241653020.2106@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 14 Nov 2006 20:09:10 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Wed, 25 Oct 2006 04:40:36 +0000 (UTC)
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <7vac2v6qru.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <Pine.LNX.4.63.0610241653020.2106@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Tue, 24 Oct 2006 16:53:36 +0200
+	(CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30030>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gk4a8-0002X2-JW for gcvg-git@gmane.org; Tue, 14 Nov
- 2006 21:08:33 +0100
+ esmtp (Exim 4.43) id 1GcaZ4-0000zl-Ie for gcvg-git@gmane.org; Wed, 25 Oct
+ 2006 06:40:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966298AbWKNUI3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
- 15:08:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966303AbWKNUI3
- (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 15:08:29 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:39125 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S966298AbWKNUI3 (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 15:08:29 -0500
-Received: (qmail 15617 invoked by uid 2001); 14 Nov 2006 21:08:27 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1422880AbWJYEk1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 00:40:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422957AbWJYEk1
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 00:40:27 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:63392 "EHLO
+ fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1422880AbWJYEk0
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 00:40:26 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061025044026.UKXG22977.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Wed, 25
+ Oct 2006 00:40:26 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id eUg91V0051kojtg0000000 Wed, 25 Oct 2006
+ 00:40:09 -0400
+To: Lars Hjemli <hjemli@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On Mon, Nov 13, 2006 at 09:22:13PM CET, Junio C Hamano wrote:
-> Petr Baudis <pasky@suse.cz> writes:
-> 
-> > ... Junio, what's its life
-> > expectancy? I guess this usage scenario is something to take into
-> > account when thinking about removing it, I know that I wanted to get rid
-> > of it in the past but now my opinion is changing.
-> 
-> It uses the same commit walker semantics and mechanism so I do
-> not think it is too much burden to carry it, but I'd rather have
-> something that works over git native protocol if we really care
-> about this.  People without ssh access needs to be able to
-> recover over git:// protocol.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Even though I obviously agree with the above, it would be useful to have
-the flag even though git:// (which is apparently harder to get right
-than the others) is not supported. After all, most repositories I've
-seen that are available over git:// are available over HTTP as well.
+> On Mon, 23 Oct 2006, Lars Hjemli wrote:
+>
+>> On Cygwin, "make test" failes due to missing ".exe" a couple of places.
+>
+> Last time I made "test" on cygwin, it did not complain.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+Same here (W2k, fairly up-to-date git, installed on local NTFS
+disk).
+
