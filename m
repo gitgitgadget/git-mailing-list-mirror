@@ -1,70 +1,98 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: git-grep misses an instance of a string (after conflict)
-Date: Sun, 26 Nov 2006 15:53:58 +0100
-Message-ID: <ekc9q7$36e$1@sea.gmane.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [PATCH qgit] Change also tag marks when changing graph size
+Date: Wed, 25 Oct 2006 04:20:12 +0200
+Message-ID: <200610250420.12324.Josef.Weidendorfer@gmx.de>
+References: <e5bfff550610240947i30bc3fc0x49710e4cbb0f0556@mail.gmail.com> <200610242041.22230.Josef.Weidendorfer@gmx.de> <e5bfff550610241245r73b594ftf2cd39f4194b5411@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Sun, 26 Nov 2006 14:54:32 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 25 Oct 2006 02:20:24 +0000 (UTC)
+Cc: "Git Mailing List" <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 24
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: at00d01-adsl-194-118-045-019.nextranet.at
-User-Agent: KNode/0.10.2
+X-Authenticated: #352111
+User-Agent: KMail/1.9.3
+In-Reply-To: <e5bfff550610241245r73b594ftf2cd39f4194b5411@mail.gmail.com>
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30027>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoLOi-00085E-Ha for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 15:54:24 +0100
+ esmtp (Exim 4.43) id 1GcYNQ-0005uw-5I for gcvg-git@gmane.org; Wed, 25 Oct
+ 2006 04:20:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935404AbWKZOyU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
- 09:54:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935406AbWKZOyU
- (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 09:54:20 -0500
-Received: from main.gmane.org ([80.91.229.2]:28900 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S935404AbWKZOyT (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 09:54:19 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GoLOV-00082S-6L for git@vger.kernel.org; Sun, 26 Nov 2006 15:54:11 +0100
-Received: from at00d01-adsl-194-118-045-019.nextranet.at ([194.118.45.19]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Sun, 26 Nov 2006 15:54:11 +0100
-Received: from johannes.sixt by at00d01-adsl-194-118-045-019.nextranet.at
- with local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Sun, 26 Nov 2006 15:54:11 +0100
-To: git@vger.kernel.org
+ S1422882AbWJYCUR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006
+ 22:20:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422880AbWJYCUQ
+ (ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 22:20:16 -0400
+Received: from mail.gmx.de ([213.165.64.20]:53194 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1422877AbWJYCUP (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 22:20:15 -0400
+Received: (qmail invoked by alias); 25 Oct 2006 02:20:13 -0000
+Received: from p5496B314.dip0.t-ipconnect.de (EHLO noname) [84.150.179.20] by
+ mail.gmx.net (mp006) with SMTP; 25 Oct 2006 04:20:13 +0200
+To: "Marco Costalba" <mcostalba@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-I've roughly had the following sequence of operations on a particular file
-in my project:
+On Tuesday 24 October 2006 21:45, Marco Costalba wrote:
+> Quoting from your last e-mail:
+> "The new painting code regroups the drawing commands in
+> multiple switch-statements to prepare for far simpler code
+> with booleans for different elements, and not one type only."
+> 
+> Indeed it's not clear to me what the above line means exactly, it just
+> smells like there is something more cooking.
 
-1. git-cherry-pick a commit, which resulted in a conflict in in that file
-2. edit the file to insert a particular string (which wasn't there before)
-3. then:
+Ah, yes ;-)
 
-$ git-grep getSibling -- kdbg/exprwnd.h    # this file had a conflict
-$ grep getSibling -- kdbg/exprwnd.h       
-    { return static_cast<VarTree*>(getSibling()); }
-$ git-update-index kdbg/exprwnd.h
-$ git-grep getSibling -- kdbg/exprwnd.h       
-kdbg/exprwnd.h:    { return static_cast<VarTree*>(getSibling()); }
+Currently, the drawing code knows how a full part of the graph
+should be drawn, with circle, rects, lines.
+Now, with direct drawing, this "knowledge" can be moved to graph
+layout time, which can generate info whether a circle or rect should
+be drawn. Making drawing a little bit faster, and simpler.
 
-As you can see, the first git-grep doesn't find the string, but after the
-update-index, it does find it.
+I am not sure if it is worth it, but this way, the drawing code could
+be the same e.g. for different graph drawing algorithms (like gitk).
 
-This is unexpected behavior, in particular since the manual page talks about
-git-grep to search the working tree. I understand that the conflict may
-have influenced the behavior, but the manual page is not in line with the
-behavior. Am I missing something?
+> > Now that everything is drawn directly, the question is what to do with
+> > the new flexibility. E.g. we _could_ implement different
+> > graph drawing algorithms next to the original qgit one,
+> > e.g. mimicking gitk.
+> 
+> One little secret of current algorithm is that it just needs to know
+> the "state" of previous revision graph to calculate the next one. (see
+> Git::updateLanes() and lanes.cpp), it's a kind of a "rasterized" graph
+> drawing, i.e. line by line.
+> 
+> I didn't studied gitk in deep but it seems a little bit less simpler.
+> Anyway if you are interested it's for sure worth trying ;-)
 
--- Hannes
+I will have a look.
 
+Current qgit layout gets really extremely wide e.g. with the kernel.
+
+Some ideas:
+* Put lanes to the right if possible
+* If a branch has no commit for more than e.g. 50 entries, it's better to
+draw an arrow and get rid of the lane at all.
+By clicking on an arrow head, we could rearrange the commit ordering
+a little bit so that commits on the given branch move in a way that
+we always see the context on this branch.
+* Collapsing parts of the graph into mega-commits, e.g.
+ - straight commit lines
+ - short topic branches forking from and merging into a branch
+
+Josef
+
+> 
+>   Marco
+> 
