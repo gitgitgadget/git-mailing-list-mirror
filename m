@@ -4,66 +4,49 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] Teach receive-pack how to keep pack files when unpacklooseobjects = 0.
-Date: Tue, 31 Oct 2006 01:56:35 -0500
-Message-ID: <20061031065635.GC7375@spearce.org>
-References: <20061030223615.GH5775@spearce.org> <7vlkmxtmln.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0610302258400.11384@xanadu.home> <7v7iyhrsoi.fsf@assigned-by-dhcp.cox.net> <20061031063941.GB7375@spearce.org> <7vwt6hq8nu.fsf@assigned-by-dhcp.cox.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: (unknown)
+Date: Wed, 25 Oct 2006 17:31:21 +0200
+Message-ID: <20061025153121.GA29291@diana.vm.bytemark.co.uk>
+References: <E1Gck2K-0003H4-00@dvr.360vision.com> <ehntnv$b1k$1@sea.gmane.org> <200610251610.02446.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 31 Oct 2006 06:56:45 +0000 (UTC)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Wed, 25 Oct 2006 15:32:08 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <7vwt6hq8nu.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <200610251610.02446.andyparkins@gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30067>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GenYA-0006tv-Cb for gcvg-git@gmane.org; Tue, 31 Oct
- 2006 07:56:42 +0100
+ esmtp (Exim 4.43) id 1Gckj4-0006Fs-6G for gcvg-git@gmane.org; Wed, 25 Oct
+ 2006 17:31:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422828AbWJaG4j (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
- 01:56:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422825AbWJaG4j
- (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 01:56:39 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:14540 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1422828AbWJaG4i
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 01:56:38 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GenY4-0000w8-RE; Tue, 31 Oct 2006 01:56:36 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 792E420FB0C; Tue, 31 Oct 2006 01:56:35 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S932206AbWJYPb0 convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006 11:31:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750818AbWJYPb0
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 11:31:26 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:58897 "EHLO
+ diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1750726AbWJYPbZ
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 11:31:25 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
+ (Debian)) id 1Gckiv-0007g2-00; Wed, 25 Oct 2006 16:31:21 +0100
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Shawn Pearce <spearce@spearce.org> writes:
-> 
-> >> Because that approach assumes recieve-pack and unpack-objects
-> >> and index-pack are from the same vintage (otherwise your
-> >> receive-pack would need to have a way to see if unpack-objects
-> >> and index-pack would grok --pack_header argument), we could even
-> >> get away without passing the pack version if we wanted to.
-> >...
-> > BTW I think we do need to pass the pack version in the option.
-> 
-> We are in agreement; I mentioned "we could ... if we wanted to"
-> because I wanted to see if you are paying attention ;-).
+On 2006-10-25 16:10:02 +0100, Andy Parkins wrote:
 
-Hah.  Trying to keep me on my toes aren't you.  :-)
+> My apologies to everyone for the constant noise I keep dumping on
+> the list. I promise I'm trying really hard to be good.
 
-I almost have the change finished. I'll send it before I go to bed.
+I always try sending the patch to myself first, since something almost
+always goes wrong on the first try. This helps against most problems,
+but certainly not all. :-)
 
--- 
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
