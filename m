@@ -1,66 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] xdl_merge(): fix and simplify conflict handling
-Date: Tue, 5 Dec 2006 23:27:44 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612052327210.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <456FD461.4080002@saville.com> <Pine.LNX.4.64.0611302330000.3695@woody.osdl.org>
- <456FDF24.1070001@saville.com> <Pine.LNX.4.64.0612012018490.3476@woody.osdl.org>
- <7vejri20mf.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612021131140.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <4575B32F.5060108@ramsay1.demon.co.uk> <Pine.LNX.4.64.0612051023460.3542@woody.osdl.org>
- <Pine.LNX.4.63.0612051949290.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vac22glzz.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612052209030.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vvekqf0yh.fsf@assigned-by-dhcp.cox.net> <el4rko$aqe$1@sea.gmane.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: VCS comparison table
+Date: Wed, 25 Oct 2006 14:41:23 +0200
+Message-ID: <453F5B73.2050504@op5.se>
+References: <20061022074513.GF29927@artax.karlin.mff.cuni.cz>	 <87zmbozau2.wl%cworth@cworth.org>	 <20061022185350.GW75501@over-yonder.net>	 <Pine.LNX.4.64.0610231018410.3962@g5.osdl.org>	 <20061023222131.GB17019@over-yonder.net> <ehjgli$lft$1@sea.gmane.org>	 <845b6e870610231614y681e64eu33bb0806f530c742@mail.gmail.com>	 <Pine.LNX.4.64.0610231623340.3962@g5.osdl.org>	 <20061024002657.GD17019@over-yonder.net>	 <87y7r6zgic.wl%cworth@cworth.org> <845b6e870610241451x578efe9n77017f3a9404e81c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 5 Dec 2006 22:47:12 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Wed, 25 Oct 2006 12:41:52 +0000 (UTC)
+Cc: Carl Worth <cworth@cworth.org>,
+	"Matthew D. Fuller" <fullermd@over-yonder.net>,
+	Linus Torvalds <torvalds@osdl.org>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <el4rko$aqe$1@sea.gmane.org>
-X-Y-GMX-Trusted: 0
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <845b6e870610241451x578efe9n77017f3a9404e81c@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33382>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Grj43-0001GD-Sj for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 23:47:04 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30056>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gci4a-0005Gv-Qn for gcvg-git@gmane.org; Wed, 25 Oct
+ 2006 14:41:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936890AbWLEWq6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 17:46:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936892AbWLEWq6
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 17:46:58 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54517 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S936890AbWLEWq5
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 17:46:57 -0500
-Received: (qmail invoked by alias); 05 Dec 2006 22:27:45 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp018) with SMTP; 05 Dec 2006 23:27:45 +0100
-To: Jakub Narebski <jnareb@gmail.com>
+ S964796AbWJYMl3 convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006 08:41:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964802AbWJYMl3
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 08:41:29 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:58815 "EHLO
+ smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S964796AbWJYMl2 (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 08:41:28 -0400
+Received: by smtp-gw1.op5.se (Postfix, from userid 588) id 30D2F6BCDB; Wed,
+ 25 Oct 2006 14:41:27 +0200 (CEST)
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id 99FB96BD3B; Wed, 25 Oct 2006 14:41:23 +0200 (CEST)
+To: =?ISO-8859-15?Q?Erik_B=E5gfors?= <zindar@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Erik B=E5gfors wrote:
+>=20
+> Creates the picture you can see at
+> http://erik.bagfors.nu/bzr-plugins/dotrepo.png
+>=20
 
-On Tue, 5 Dec 2006, Jakub Narebski wrote:
+Looking at this picture, I found a very annoying thing with bzr's=20
+revids: For commits from the same author on the same day, they don't=20
+differ in the beginning, making all of them, at a glance, look the same=
+=2E=20
+I got a headache just trying to figure out how to read them. It might b=
+e=20
+worth looking into in the future, especially if you decide to show them=
+=20
+to the users.
 
-> Junio C Hamano wrote:
-> 
-> > Looking at some other cases after applying your patch, I noticed
-> > that I really like one thing that your version does over what
-> > RCS merge does.
-> 
-> Is it with "try harder" option?
+Perhaps it's just my git eyes being used to seeing the first 4 chars=20
+(which is all I normally look at) being different for each different=20
+commit, but having to look up the near-end of the string to find the=20
+actual difference in bzr's revids was actually a quite painful experien=
+ce.
 
-Yes, it uses the XDL_MERGE_ZEALOUS option.
-
-Ciao,
-Dscho
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
