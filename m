@@ -1,72 +1,61 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
-Date: Thu, 30 Nov 2006 23:25:52 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611302324370.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7virgzuf38.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0611282322320.9647@xanadu.home> <7vr6vmsnly.fsf@assigned-by-dhcp.cox.net>
- <87ejrlvn7r.wl%cworth@cworth.org> <7vodqpn3t4.fsf@assigned-by-dhcp.cox.net>
- <7vk61dn2yj.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0611300310520.30004@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0611291859070.3513@woody.osdl.org> <456EBBE7.8030404@op5.se>
- <Pine.LNX.4.64.0611300749560.3513@woody.osdl.org> <20061130164046.GB17715@thunk.org>
- <Pine.LNX.4.64.0611300903080.3513@woody.osdl.org> <Pine.LNX.4.64.0611301229290.9647@xanadu.home>
- <87irgwu6e6.wl%cworth@cworth.org> <87hcwgu5t1.wl%cworth@cworth.org>
- <Pine.LNX.4.64.0611301132350.3513@woody.osdl.org> <Pine.LNX.4.64.0611301521320.9647@xanadu.home>
- <Pine.LNX.4.64.0611301253380.3513@woody.osdl.org> <eknhjr$nce$1@sea.gmane.org>
- <878xhsty3t.wl%cworth@cworth.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: VCS comparison table
+Date: Wed, 25 Oct 2006 14:50:37 -0700
+Message-ID: <7viri8m5ea.fsf@assigned-by-dhcp.cox.net>
+References: <453536AE.6060601@utoronto.ca>
+	<200610172301.27101.jnareb@gmail.com> <45354AD0.1020107@utoronto.ca>
+	<BAYC1-PASMTP07AB11A64250AAF683424DAE0E0@CEZ.ICE>
+	<vpq4ptz2uh8.fsf@ecrins.imag.fr>
+	<453DAC87.8050203@research.canon.com.au>
+	<Pine.LNX.4.64.0610232318200.3962@g5.osdl.org>
+	<Pine.LNX.4.64N.0610232336010.30334@attu2.cs.washington.edu>
+	<Pine.LNX.4.64.0610240812410.3962@g5.osdl.org>
+	<Pine.LNX.4.64N.0610241300450.8112@attu4.cs.washington.edu>
+	<20061025084810.GA26618@coredump.intra.peff.net>
+	<7v3b9cnlx7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 30 Nov 2006 22:26:24 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 25 Oct 2006 21:51:08 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <878xhsty3t.wl%cworth@cworth.org>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <7v3b9cnlx7.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Wed, 25 Oct 2006 14:08:20 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30104>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpuLs-0005Wq-NC for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 23:25:58 +0100
+ esmtp (Exim 4.43) id 1GcqeC-0008S4-4z for gcvg-git@gmane.org; Wed, 25 Oct
+ 2006 23:50:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031567AbWK3WZz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 17:25:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031568AbWK3WZz
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 17:25:55 -0500
-Received: from mail.gmx.net ([213.165.64.20]:8136 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1031567AbWK3WZy (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 17:25:54 -0500
-Received: (qmail invoked by alias); 30 Nov 2006 22:25:52 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp034) with SMTP; 30 Nov 2006 23:25:52 +0100
-To: Carl Worth <cworth@cworth.org>
+ S1751319AbWJYVuo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 17:50:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751322AbWJYVuo
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 17:50:44 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:42685 "EHLO
+ fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S1751319AbWJYVun
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 17:50:43 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao03.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061025215042.UKRD2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>; Wed, 25
+ Oct 2006 17:50:42 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id elqR1V00F1kojtg0000000 Wed, 25 Oct 2006
+ 17:50:25 -0400
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Junio C Hamano <junkio@cox.net> writes:
 
-On Thu, 30 Nov 2006, Carl Worth wrote:
+>  - Learn the itches David and other people have, that the
+>    current git Porcelain-ish does not scratch well, and enrich
+>    Documentation/technical with real-world working scripts built
+>    around plumbing.
 
-> It might even make sense to invent one more name for the case where
-> the user wants to inform git that a file has been edited and that git
-> should accept the new contents. It's the sort of "note that file is
-> edited" operation that could be recommended to the user with "add; fix
-> typo; commit" confusion.
-
-I suggest "commit". How about this: after editing the file, you tell git 
-that you finished editing it by doing
-
-	git commit the-edited-file.txt
-
-Hmmm?
-
-Ciao,
-Dscho
+I meant "Documentation/howto"; sorry for the noise.
