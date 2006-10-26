@@ -1,72 +1,51 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: (unknown)
-Date: Wed, 25 Oct 2006 18:16:59 -0400
-Message-ID: <20061025221659.GC10140@spearce.org>
-References: <E1Gck2K-0003H4-00@dvr.360vision.com> <200610251610.02446.andyparkins@gmail.com> <7vods0b5rk.fsf@assigned-by-dhcp.cox.net> <200610252303.07900.andyparkins@gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH 1/3] make =?iso-8859-1?Q?index-?=
+	=?iso-8859-1?Q?p=E2ck?= able to complete thin packs
+Date: Thu, 26 Oct 2006 11:38:44 +0200
+Message-ID: <20061026093844.GE13780@diana.vm.bytemark.co.uk>
+References: <Pine.LNX.4.64.0610252323100.12418@xanadu.home> <7vr6wvr1ca.fsf@assigned-by-dhcp.cox.net> <ehppbg$phq$1@sea.gmane.org> <20061026091925.GD13780@diana.vm.bytemark.co.uk> <7vpscfo1z1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 25 Oct 2006 22:17:25 +0000 (UTC)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 26 Oct 2006 09:39:08 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <200610252303.07900.andyparkins@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <7vpscfo1z1.fsf@assigned-by-dhcp.cox.net>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30170>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gcr3c-0004yP-Jj for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 00:17:09 +0200
+ esmtp (Exim 4.43) id 1Gd1hP-0003SJ-RD for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 11:38:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964838AbWJYWRG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 18:17:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964843AbWJYWRF
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 18:17:05 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:8072 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S964838AbWJYWRC
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 18:17:02 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Gcr3L-000869-7X; Wed, 25 Oct 2006 18:16:51 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 5423621269E; Wed, 25 Oct 2006 18:16:59 -0400 (EDT)
-To: Andy Parkins <andyparkins@gmail.com>
+ S1423018AbWJZJix convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006 05:38:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423026AbWJZJiw
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 05:38:52 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:53516 "EHLO
+ diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1423018AbWJZJiw
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 05:38:52 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
+ (Debian)) id 1Gd1hF-0003wd-00; Thu, 26 Oct 2006 10:38:45 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> wrote:
-> On Wednesday 2006, October 25 19:38, Junio C Hamano wrote:
-> 
-> > > I did try that, but then the branches don't appear in git branch.  I
-> > > still like that they exist.
-> >
-> > "git branch -r" perhaps.
-> 
-> That's pretty good.  It makes things like
-> 
->   git-log remotes/origin/master..master
-> 
-> A bit long winded, but it's certainly what I asked for.
-> 
-> You guys really have thought of everything.
+On 2006-10-26 02:33:54 -0700, Junio C Hamano wrote:
 
-Try the bash completion support in contrib/completion.  If you
-are using the bash shell it does branch name completions for most
-commands, including both sides of the '..' in log there.  At this
-point I can't use Git without it.
+> Sorry for an earlier hiccup.
 
--- 
+Without the occasional hiccup we wouldn't have any itches to scratch,
+and there would be no progress. :-)
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
