@@ -2,74 +2,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] merge-recursive: configurable 'merge' program
-Date: Tue, 5 Dec 2006 15:48:01 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612051540230.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20061204235647.9BA8B139B0E@magnus.utsl.gen.nz>
- <200612051123.33210.jnareb@gmail.com> <Pine.LNX.4.63.0612051459380.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <200612051526.12636.jnareb@gmail.com>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 3/3] mimic unpack-objects when --stdin is used with index-pack
+Date: Thu, 26 Oct 2006 00:55:03 -0700
+Message-ID: <7vmz7jqzoo.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0610252330320.12418@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 5 Dec 2006 14:48:17 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 26 Oct 2006 07:59:51 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <200612051526.12636.jnareb@gmail.com>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <Pine.LNX.4.64.0610252330320.12418@xanadu.home> (Nicolas Pitre's
+	message of "Wed, 25 Oct 2006 23:31:53 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33346>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Grbae-00017X-RY for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 15:48:13 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30147>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gd09O-0003hO-RM for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 09:59:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S968220AbWLEOsF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 09:48:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968225AbWLEOsF
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 09:48:05 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36433 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S968220AbWLEOsE
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 09:48:04 -0500
-Received: (qmail invoked by alias); 05 Dec 2006 14:48:01 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp046) with SMTP; 05 Dec 2006 15:48:01 +0100
-To: Jakub Narebski <jnareb@gmail.com>
+ S1752032AbWJZH7V (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 03:59:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752034AbWJZH7V
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 03:59:21 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:19452 "EHLO
+ fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S1752032AbWJZH7V
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 03:59:21 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao12.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061026075503.FWCH18180.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>; Thu, 26
+ Oct 2006 03:55:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id evum1V02G1kojtg0000000 Thu, 26 Oct 2006
+ 03:54:46 -0400
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Nicolas Pitre <nico@cam.org> writes:
 
-On Tue, 5 Dec 2006, Jakub Narebski wrote:
+> It appears that git-unpack-objects writes the last part of the input
+> buffer to stdout after the pack has been parsed.  This looks a bit
+> suspicious since the last fill() might have filled the buffer up to
+> the 4096 byte limit and more data might still be pending on stdin,
+> but since this is about being a drop-in replacement for unpack-objects
+> let's simply duplicate the same behavior for now.
 
-> Hmmm... is there a way to pass merge.tool / merge.onefile program the 
-> info if it is invoked in final stage (here it is nice to invoke 
-> graphical merge tool to resolve conflicts in working area before 
-> commiting merge result) and in recursive stage (here it would be better 
-> to leave conflict markers to be resolved later)?
-
-In a sense, you get that information: "merge" is called as
-
-$ merge -L new1 -L orig -L new2 fnew1 forig fnew2
-
-where few1 is the filename of the _temporary_ file, and new1 is the name 
-that should be displayed instead. For every but the final stage, new1 
-begins with "Temporary merge branch".
-
-> Hmmm... would it be possible to use xdl_merge() for recursion, and 
-> graphical merge tool for result? <Checks out earlier discussion>. I 
-> think yes, because of exposing xdl_merge() in git-merge-onefile...
-
-In "next", only git-merge-recursive is converted to use xdl_merge(), and 
-it did not use git-merge-one-file to begin with. Since this is a shell 
-script (with a different syntax than merge), it would have to be converted 
-to a C builtin first. But feasible: git-merge-one-file takes 7 parameters, 
-the first 3 being SHA1s or empty strings. "merge" takes 3 filenames, with 
-possibly up to three "-L <name>" pairs before them.
-
-Ciao,
-Dscho
+This seems to break t5300 when applied on top of everything
+else.  The other two numbered patches are Ok.
