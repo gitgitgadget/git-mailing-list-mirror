@@ -4,53 +4,81 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: What's in git.git
-Date: Wed, 08 Nov 2006 16:02:56 -0800
-Message-ID: <7virhpqyfj.fsf@assigned-by-dhcp.cox.net>
-References: <7v8ximwrm3.fsf@assigned-by-dhcp.cox.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: VCS comparison table
+Date: Thu, 26 Oct 2006 07:13:39 -0400
+Message-ID: <20061026111338.GA15179@coredump.intra.peff.net>
+References: <20061021130111.GL75501@over-yonder.net> <453F2FF8.2080903@op5.se> <200610251146.06116.jnareb@gmail.com> <a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com> <87slhcz8zh.wl%cworth@cworth.org> <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com> <7vu01ro20b.fsf@assigned-by-dhcp.cox.net> <a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com> <20061026101038.GA13310@coredump.intra.peff.net> <877iyne4dm.fsf@alplog.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 9 Nov 2006 00:03:18 +0000 (UTC)
+NNTP-Posting-Date: Thu, 26 Oct 2006 11:13:53 +0000 (UTC)
+Cc: James Henstridge <james@jamesh.id.au>,
+	Junio C Hamano <junkio@cox.net>,
+	bazaar-ng@lists.canonical.com,
+	"Matthew D. Fuller" <fullermd@over-yonder.net>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Carl Worth <cworth@cworth.org>, Andreas Ericsson <ae@op5.se>,
+	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7v8ximwrm3.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Tue, 07 Nov 2006 19:21:24 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <877iyne4dm.fsf@alplog.fr>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30188>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhxNk-0004MV-TG for gcvg-git@gmane.org; Thu, 09 Nov
- 2006 01:03:03 +0100
+ esmtp (Exim 4.43) id 1Gd3BB-0001kB-7i for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 13:13:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161764AbWKIAC6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
- 19:02:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161773AbWKIAC5
- (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 19:02:57 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:12529 "EHLO
- fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP id S1161764AbWKIAC5
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 19:02:57 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao12.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061109000256.ZFKH20344.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>; Wed, 8
- Nov 2006 19:02:56 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id kQ321V0071kojtg0000000; Wed, 08 Nov 2006
- 19:03:02 -0500
-To: git@vger.kernel.org
+ S1752119AbWJZLNm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 07:13:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752139AbWJZLNm
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 07:13:42 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:15510
+ "HELO peff.net") by vger.kernel.org with SMTP id S1752119AbWJZLNl (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 07:13:41 -0400
+Received: (qmail 12143 invoked from network); 26 Oct 2006 07:12:45 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2) by
+ 66-23-211-5.clients.speedfactory.net with SMTP; 26 Oct 2006 07:12:45 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Oct
+ 2006 07:13:39 -0400
+To: Vincent Ladeuil <v.ladeuil@alplog.fr>
 Sender: git-owner@vger.kernel.org
 
-Sorry, I made a mistake of pushing out git-pickaxe before making
-it take over git-blame.  So I will fix it up by renaming it to
-git-blame.
+On Thu, Oct 26, 2006 at 12:52:05PM +0200, Vincent Ladeuil wrote:
 
-That is, unless there are too many people whose fingers have
-already been trained to type "git-pickaxe" from 'next'
-experience (you can obviously count me as one of these people).
-In which case I will keep git-pickaxe as a backward compatible
-synonym just like we still have git-annotate.
+> Ok, so git make a distinction between the commit (code created by
+> someone) and the tree (code only).
 
-It might also make sense to eventually remove the other synonym
-git-annotate but that would be a longer term issue and should be
-handled separately.
+Yes (a commit is a tree, zero or more parents, commit message, and
+author/committer info).
+
+> Commits are defined by their parents.
+
+Partially, yes.
+
+> Trees are defined by their content only ?
+
+Yes.
+
+> Calculate a sha1 representing the content (or the content of the
+> diff from parent) of all the files and dirs in the tree ?  Or
+> from the sha1s of the files and dirs themselves recursively based
+> on sha1s of the files and dirs they contain ?
+
+Recursively. Each tree is an ordered list of 4-tuples: pathname, type,
+sha1, mode. If the type is "blob" then the sha1 is the hash of the file
+contents. If the type is "tree" then the sha1 is the id of a sub-tree.
+The id of a tree is the sha1 hash of the data structure.
+
+> I ask because the later seems to provide some nice effects
+> similar to what makes BDD
+> (http://en.wikipedia.org/wiki/Binary_decision_diagram) so
+> efficient: you can compare graphs of any complexity or size in
+> O(1) by just comparing their signatures.
+
+Yes, if two trees' hashes compare equal, they contain the same data. I
+believe we are not currently using this optimization to find merge
+differences, but there was some discussion earlier this week about doing
+so.
+
