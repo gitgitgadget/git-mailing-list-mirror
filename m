@@ -1,89 +1,78 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 21 Nov 2006 20:32:48 +0100
-Message-ID: <20061121193248.GJ20736@admingilde.org>
-References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org> <7v7ixp20za.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org> <20061120232507.GH12285@fieldses.org> <20061120233333.GD20736@admingilde.org> <20061121180127.GB27221@fieldses.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Check git base URLs before generating URL from it
+Date: Thu, 26 Oct 2006 12:26:44 +0200
+Message-ID: <200610261226.44960.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="va4/JQ6j8/8uipEp"
-NNTP-Posting-Date: Tue, 21 Nov 2006 19:33:03 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 26 Oct 2006 10:26:50 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=CMgkDVFZp3kg2zJKDhdKsLlB6jFxORkKqMaYvS6khnaSoi4ULM2mi0PEHZrrx24rkQPwHoAuWnRDRcvMKXoeWhfSWHAdv64ZfhLnN4bX4E2Sq00YjDC83k7AHPoSggThnwrMELALrjdfQm24tXENw7qKjVyBHjbXb5vyv4PRcYY=
+User-Agent: KMail/1.9.3
 Content-Disposition: inline
-In-Reply-To: <20061121180127.GB27221@fieldses.org>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30181>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmbMU-0006Cv-0u for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 20:32:54 +0100
+ esmtp (Exim 4.43) id 1Gd2Rg-0003d0-8c for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 12:26:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031333AbWKUTcv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 14:32:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031334AbWKUTcv
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 14:32:51 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:14484 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S1031333AbWKUTcu
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 14:32:50 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1GmbMO-0005Yn-PI; Tue, 21 Nov 2006 20:32:48 +0100
-To: "J. Bruce Fields" <bfields@fieldses.org>
+ S1422942AbWJZK0N (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 06:26:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422931AbWJZK0N
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 06:26:13 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:64106 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1422942AbWJZK0L
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 06:26:11 -0400
+Received: by ug-out-1314.google.com with SMTP id 32so323703ugm for
+ <git@vger.kernel.org>; Thu, 26 Oct 2006 03:26:10 -0700 (PDT)
+Received: by 10.66.224.19 with SMTP id w19mr2515549ugg; Thu, 26 Oct 2006
+ 03:26:09 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110]) by
+ mx.google.com with ESMTP id e1sm3560885ugf.2006.10.26.03.26.09; Thu, 26 Oct
+ 2006 03:26:09 -0700 (PDT)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+Check if each of git base URLs in @git_base_url_list is true before
+appending "/$project" to it to generate project URL.
 
---va4/JQ6j8/8uipEp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This fixes the error that for default configuration for gitweb in
+Makefile, with GITWEB_BASE_URL empty (and "++GITWEB_BASE_URL++" being
+"" in gitweb.cgi), we had URL of "/$project" in the summary view.
 
-On Tue, Nov 21, 2006 at 01:01:27PM -0500, J. Bruce Fields wrote:
-> On Tue, Nov 21, 2006 at 12:33:34AM +0100, Martin Waitz wrote:
-> > On Mon, Nov 20, 2006 at 06:25:07PM -0500, J. Bruce Fields wrote:
-> > > Would it also be possible to allow the "Tree:" line in the commit obj=
-ect
-> > > to refer to a commit, or does the root of the project need to be a
-> > > special case?
-> >=20
-> > this would then be something like the branch-archival proposal.
->=20
-> Do you have any pointers to previous discussion?  (A couple obvious
-> searches don't turn up anything for me.)
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+I don't think that anybody would want base URL of "0".
 
-Aug 04 Eric W. Biederman    [RFC][PATCH] Branch history
+ gitweb/gitweb.perl |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-I really think that using subprojects can be used for this workflow, too.
-But adding a submodule directly to the root is not really possible,
-we'd have to use special user interfaces for that, even when the
-git-core might be able to handle it.
-But what might be possible is to have one toplevel history-tracking
-repository in e.g. ~/src and then add all the repositories you work
-with as a submodule.  Whenever you want to record the history of
-some project, you can simply commit it to ~/src.
-
---=20
-Martin Waitz
-
---va4/JQ6j8/8uipEp
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFY1Rgj/Eaxd/oD7IRAgxMAJ9Et/iW0pXO/F8aHiaTtJym9ant6QCfS5N9
-v87Q5LagD+pHIgxhmiLIwxE=
-=Irpg
------END PGP SIGNATURE-----
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 35a9afb..0d2ea72 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2516,7 +2516,8 @@ sub git_summary {
+ 	# or make project git URL from git base URL and project name
+ 	my $url_tag = "URL";
+ 	my @url_list = git_get_project_url_list($project);
+-	@url_list = map { "$_/$project" } @git_base_url_list unless @url_list;
++	@url_list = map { $_ ? "$_/$project" : () }
++		@git_base_url_list unless @url_list;
+ 	foreach my $git_url (@url_list) {
+ 		next unless $git_url;
+ 		print "<tr><td>$url_tag</td><td>$git_url</td></tr>\n";
+-- 
+1.4.3.3
