@@ -1,78 +1,156 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Add an option to href() to return full URL
-Date: Thu, 9 Nov 2006 19:56:55 +0100
-Message-ID: <200611091956.56069.jnareb@gmail.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: [PATCH] Documentation: updates to "Everyday GIT"
+Date: Wed, 25 Oct 2006 22:43:47 -0400
+Message-ID: <20061026024347.GB534@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 9 Nov 2006 18:56:28 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 26 Oct 2006 02:44:07 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=ZKY5LBAwdTzF9tYwW253qwkZpMOTb4fgWV9gPZ+uMMRVW15Liepv7CRFgC83X098rdK61aqmQsGnnEpg/VdbtS7cCc/Vo4OR1FDPAS8JYxyPCygJ8fd+i3MVTI8tAgGI3O6U/h1qYeZmiQeA0PMNrbBwmvPj0lVzA9MIfiCbEw0=
-User-Agent: KMail/1.9.3
 Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30131>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GiF4S-0005Z5-7Z for gcvg-git@gmane.org; Thu, 09 Nov
- 2006 19:56:16 +0100
+ esmtp (Exim 4.43) id 1GcvDl-0005Wg-BY for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 04:43:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754353AbWKIS4M (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 9 Nov 2006
- 13:56:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754704AbWKIS4M
- (ORCPT <rfc822;git-outgoing>); Thu, 9 Nov 2006 13:56:12 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:47399 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1754353AbWKIS4L
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Nov 2006 13:56:11 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so309320ugc for
- <git@vger.kernel.org>; Thu, 09 Nov 2006 10:56:09 -0800 (PST)
-Received: by 10.66.243.4 with SMTP id q4mr1886472ugh.1163098569120; Thu, 09
- Nov 2006 10:56:09 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id 5sm1142648ugc.2006.11.09.10.56.08; Thu, 09 Nov
- 2006 10:56:08 -0800 (PST)
-To: git@vger.kernel.org
+ S932224AbWJZCnt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 22:43:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932253AbWJZCnt
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 22:43:49 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:33990 "EHLO
+ pickle.fieldses.org") by vger.kernel.org with ESMTP id S932224AbWJZCns (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 22:43:48 -0400
+Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
+ (envelope-from <bfields@fieldses.org>) id 1GcvDf-0003B3-7W; Wed, 25 Oct 2006
+ 22:43:47 -0400
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-href() subroutine by default generates absolute URL (generated using
-CGI::url(-absolute=>1), and saved in $my_uri) using $my_uri as base;
-add an option to generate full URL using $my_url as base.
+Remove the introduction: I think it should be obvious why
+we have this.  (And if it isn't obvious then we've got other
+problems.)
 
-New feature usage: href(..., -full=>1)
+Replace reference to git whatchanged by git log.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+Miscellaneous style and grammar fixes.
+
+Signed-off-by: J. Bruce Fields <bfields@citi.umich.edu>
 ---
-This is in preparation for git_rss cleanup (to use href), and further
-per-branch (per-head) RSS feeds.
+ Documentation/everyday.txt |   43 ++++++++++++-------------------------------
+ 1 files changed, 12 insertions(+), 31 deletions(-)
 
- gitweb/gitweb.perl |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 8313517..f3fe4bf 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -459,7 +459,8 @@ exit;
+diff --git a/Documentation/everyday.txt b/Documentation/everyday.txt
+index b935c18..99e24a4 100644
+--- a/Documentation/everyday.txt
++++ b/Documentation/everyday.txt
+@@ -1,22 +1,7 @@
+ Everyday GIT With 20 Commands Or So
+ ===================================
  
- sub href(%) {
- 	my %params = @_;
--	my $href = $my_uri;
-+	# default is to use -absolute url() i.e. $my_uri
-+	my $href = $params{-full} ? $my_url : $my_uri;
+-GIT suite has over 100 commands, and the manual page for each of
+-them discusses what the command does and how it is used in
+-detail, but until you know what command should be used in order
+-to achieve what you want to do, you cannot tell which manual
+-page to look at, and if you know that already you do not need
+-the manual.
+-
+-Does that mean you need to know all of them before you can use
+-git?  Not at all.  Depending on the role you play, the set of
+-commands you need to know is slightly different, but in any case
+-what you need to learn is far smaller than the full set of
+-commands to carry out your day-to-day work.  This document is to
+-serve as a cheat-sheet and a set of pointers for people playing
+-various roles.
+-
+-<<Basic Repository>> commands are needed by people who has a
++<<Basic Repository>> commands are needed by people who have a
+ repository --- that is everybody, because every working tree of
+ git is a repository.
  
- 	# XXX: Warning: If you touch this, check the search form for updating,
- 	# too.
+@@ -25,28 +10,27 @@ essential for anybody who makes a commit
+ works alone.
+ 
+ If you work with other people, you will need commands listed in
+-<<Individual Developer (Participant)>> section as well.
++the <<Individual Developer (Participant)>> section as well.
+ 
+-People who play <<Integrator>> role need to learn some more
++People who play the <<Integrator>> role need to learn some more
+ commands in addition to the above.
+ 
+ <<Repository Administration>> commands are for system
+-administrators who are responsible to care and feed git
+-repositories to support developers.
++administrators who are responsible for the care and feeding
++of git repositories.
+ 
+ 
+ Basic Repository[[Basic Repository]]
+ ------------------------------------
+ 
+-Everybody uses these commands to feed and care git repositories.
++Everybody uses these commands to maintain git repositories.
+ 
+   * gitlink:git-init-db[1] or gitlink:git-clone[1] to create a
+     new repository.
+ 
+-  * gitlink:git-fsck-objects[1] to validate the repository.
++  * gitlink:git-fsck-objects[1] to check the repository for errors.
+ 
+-  * gitlink:git-prune[1] to garbage collect cruft in the
+-    repository.
++  * gitlink:git-prune[1] to remove unused objects in the repository.
+ 
+   * gitlink:git-repack[1] to pack loose objects for efficiency.
+ 
+@@ -78,8 +62,8 @@ Repack a small project into single pack.
+ $ git prune
+ ------------
+ +
+-<1> pack all the objects reachable from the refs into one pack
+-and remove unneeded other packs
++<1> pack all the objects reachable from the refs into one pack,
++then remove the other packs.
+ 
+ 
+ Individual Developer (Standalone)[[Individual Developer (Standalone)]]
+@@ -93,9 +77,6 @@ following commands.
+ 
+   * gitlink:git-log[1] to see what happened.
+ 
+-  * gitlink:git-whatchanged[1] to find out where things have
+-    come from.
+-
+   * gitlink:git-checkout[1] and gitlink:git-branch[1] to switch
+     branches.
+ 
+@@ -120,7 +101,7 @@ following commands.
+ Examples
+ ~~~~~~~~
+ 
+-Extract a tarball and create a working tree and a new repository to keep track of it.::
++Use a tarball as a starting point for a new repository:
+ +
+ ------------
+ $ tar zxf frotz.tar.gz
+@@ -203,7 +184,7 @@ Clone the upstream and work on it.  Feed
+ $ edit/compile/test; git commit -a -s <1>
+ $ git format-patch origin <2>
+ $ git pull <3>
+-$ git whatchanged -p ORIG_HEAD.. arch/i386 include/asm-i386 <4>
++$ git log -p ORIG_HEAD.. arch/i386 include/asm-i386 <4>
+ $ git pull git://git.kernel.org/pub/.../jgarzik/libata-dev.git ALL <5>
+ $ git reset --hard ORIG_HEAD <6>
+ $ git prune <7>
 -- 
-1.4.3.4
+1.4.3.2
