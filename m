@@ -1,62 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] xdiff: Do not consider lines starting by # hunkworthy
-Date: Wed, 25 Oct 2006 02:07:08 +0200
-Message-ID: <20061025000708.2753.74523.stgit@machine.or.cz>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-NNTP-Posting-Date: Wed, 25 Oct 2006 00:07:25 +0000 (UTC)
-Cc: <git@vger.kernel.org>
+X-Spam-Status: No, score=-1.5 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RCVD_NUMERIC_HELO,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Jerome Lovy <t2a2e9z8ncbs9qg@brefemail.com>
+Subject: Rationale for the "Never commit to the right side of a Pull line"
+ rule
+Date: Thu, 26 Oct 2006 18:47:43 +0200
+Message-ID: <ehqp1u$j4$1@sea.gmane.org>
+Reply-To: t2a2e9z8ncbs9qg@brefemail.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 26 Oct 2006 16:52:15 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: StGIT/0.11
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 20
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 212.11.48.246
+User-Agent: Mozilla Thunderbird 1.0.2-6 (X11/20050513)
+X-Accept-Language: en-us, en
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30237>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcWIj-0004uA-Lb for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 02:07:22 +0200
+ esmtp (Exim 4.43) id 1Gd8SO-0005y5-9l for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 18:51:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422765AbWJYAHL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006
- 20:07:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422814AbWJYAHL
- (ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 20:07:11 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:51644 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1422765AbWJYAHJ (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 20:07:09 -0400
-Received: (qmail 2763 invoked from network); 25 Oct 2006 02:07:08 +0200
-Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1) by localhost
- with SMTP; 25 Oct 2006 02:07:08 +0200
-To: Junio C Hamano <junkio@cox.net>
+ S1423490AbWJZQvt convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006 12:51:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423492AbWJZQvt
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 12:51:49 -0400
+Received: from main.gmane.org ([80.91.229.2]:31717 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1423490AbWJZQvs (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 12:51:48 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gd8S7-0005ty-Mp for git@vger.kernel.org; Thu, 26 Oct 2006 18:51:36 +0200
+Received: from 212.11.48.246 ([212.11.48.246]) by main.gmane.org with esmtp
+ (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 26
+ Oct 2006 18:51:35 +0200
+Received: from t2a2e9z8ncbs9qg by 212.11.48.246 with local (Gmexim 0.1
+ (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 26 Oct 2006
+ 18:51:35 +0200
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-This will be probably controversial but in my personal experience, the
-amount of time this is the right thing to do because of #defines is negligible
-compared to amount of time it is wrong, especially because of #ifs and #endifs
-in the middle of functions and also because of comments at the line start when
-it concerns non-C files.
+Hi,
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+Could someone please point me to / give me the rationale for the "Never=
+=20
+commit to the right side of a Pull line" rule ?
 
- xdiff/xemit.c |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
+I found the rule in the second Note of the git-fetch man-page (eg=20
+http://www.kernel.org/pub/software/scm/git/docs/git-fetch.html).
 
-diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-index 714c563..4f20075 100644
---- a/xdiff/xemit.c
-+++ b/xdiff/xemit.c
-@@ -86,8 +86,7 @@ static void xdl_find_func(xdfile_t *xf, 
- 		if (len > 0 &&
- 		    (isalpha((unsigned char)*rec) || /* identifier? */
- 		     *rec == '_' ||	/* also identifier? */
--		     *rec == '(' ||	/* lisp defun? */
--		     *rec == '#')) {	/* #define? */
-+		     *rec == '(')) {	/* #define? */
- 			if (len > sz)
- 				len = sz;
+It's been taken over in _bold letters_ by X.Org/freedesktop.org in thei=
+r=20
+"UsingGit" document (http://freedesktop.org/wiki/UsingGit).
+
+In both places though, I don't see any explanation, but rather a=20
+commandment ;-) . Am I missing the ovious ?
+
+My candid thoughts: to me the practice recommended here seems=20
+subjectively "cleaner" indeed, but is it objectively better or even=20
+essential? Why?
+
+TIA
+J=E9r=F4me
