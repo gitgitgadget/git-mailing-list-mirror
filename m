@@ -4,73 +4,56 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Davide Libenzi <davidel@xmailserver.org>
-Subject: Re: your mail
-Date: Wed, 22 Nov 2006 12:16:58 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611221208430.27569@alien.or.mcafeemobile.com>
-References: <Pine.LNX.4.63.0611212316080.26827@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] git-svnimport: support for partial imports
+Date: Thu, 26 Oct 2006 12:54:28 +0200
+Message-ID: <20061026105428.GA16372@diana.vm.bytemark.co.uk>
+References: <20061025225026.GA13031@sashak.voltaire.com> <20061026084710.GC13780@diana.vm.bytemark.co.uk> <20061026103120.GA15502@sashak.voltaire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 22 Nov 2006 20:17:40 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 26 Oct 2006 10:54:57 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Matthias Urlichs <smurf@smurf.noris.de>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-AuthUser: davidel@xmailserver.org
-X-X-Sender: davide@alien.or.mcafeemobile.com
-In-Reply-To: <Pine.LNX.4.63.0611212316080.26827@wbgn013.biozentrum.uni-wuerzburg.de>
-X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
-X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
+Content-Disposition: inline
+In-Reply-To: <20061026103120.GA15502@sashak.voltaire.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30185>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmyX3-0000yi-HM for gcvg-git@gmane.org; Wed, 22 Nov
- 2006 21:17:22 +0100
+ esmtp (Exim 4.43) id 1Gd2sk-0007Xv-B1 for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 12:54:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1756990AbWKVURR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
- 15:17:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756992AbWKVURR
- (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 15:17:17 -0500
-Received: from x35.xmailserver.org ([69.30.125.51]:28115 "EHLO
- x35.xmailserver.org") by vger.kernel.org with ESMTP id S1756989AbWKVURQ
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 15:17:16 -0500
-Received: from alien.or.mcafeemobile.com by x35.xmailserver.org with [XMail
- 1.23 ESMTP Server] id <S200309> for <git@vger.kernel.org> from
- <davidel@xmailserver.org>; Wed, 22 Nov 2006 12:16:59 -0800
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1423237AbWJZKyj convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006 06:54:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423239AbWJZKyj
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 06:54:39 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:35341 "EHLO
+ diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1423237AbWJZKyi
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 06:54:38 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
+ (Debian)) id 1Gd2sW-0004GT-00; Thu, 26 Oct 2006 11:54:28 +0100
+To: Sasha Khapyorsky <sashak@voltaire.com>
 Sender: git-owner@vger.kernel.org
 
-On Tue, 21 Nov 2006, Johannes Schindelin wrote:
+On 2006-10-26 12:31:20 +0200, Sasha Khapyorsky wrote:
 
-> [PATCH] xdiff: add xdl_merge()
-> 
-> This new function implements the functionality of RCS merge, but
-> in-memory. It returns < 0 on error, otherwise the number of conflicts.
-> 
-> Finding the conflicting lines can be a very expensive task. You can
-> control the eagerness of this algorithm:
-> 
-> - a level value of 0 means that all overlapping changes are treated
->   as conflicts,
-> - a value of 1 means that if the overlapping changes are identical,
->   it is not treated as a conflict.
-> - If you set level to 2, overlapping changes will be analyzed, so that
->   almost identical changes will not result in huge conflicts. Rather,
->   only the conflicting lines will be shown inside conflict markers.
-> 
-> With each increasing level, the algorithm gets slower, but more accurate.
-> Note that the code for level 2 depends on the simple definition of
-> mmfile_t specific to git, and therefore it will be harder to port that
-> to LibXDiff.
+> On 10:47 Thu 26 Oct, Karl Hasselstr=F6m wrote:
 
-Johannes, at the moment I'm chased by a huge storm of never ending emails, 
-so I won't be able to follow up this one soon. A smart 3-way merge is in 
-my plans for LibXDiff though.
-There is quite some nice code around, that does pretty smart tricks and 
-goes down to resolve sub-hunk non-trivial conflicts. You may want to take 
-a look at that code too.
+> > Isn't this already doable with "-T trunk/path/to/our/project -t
+> > tags/path/to/our/project -b branches/path/to/our/project"?
+>
+> In such case git-svnimport will not be able to resolve branches and
+> tags names - note that actual SVN paths are:
+>
+>   branches/<branch-name>/path/to/our/project
+>   tags/<tag-name>/path/to/our/project
 
+Aahh, right. I didn't think of that.
 
-
-- Davide
-
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
