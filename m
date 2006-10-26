@@ -1,72 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: git and "dumb protocols"
-Date: Thu, 02 Nov 2006 10:42:57 +0000
-Message-ID: <4549CBB1.7010005@shadowen.org>
-References: <vpqu01i16g8.fsf@ecrins.imag.fr>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's in git.git
+Date: Thu, 26 Oct 2006 14:17:10 +0200
+Message-ID: <200610261417.10842.jnareb@gmail.com>
+References: <7vk62npipb.fsf@assigned-by-dhcp.cox.net> <ehpu4t$ch2$1@sea.gmane.org> <20061026120824.GO20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 2 Nov 2006 10:44:16 +0000 (UTC)
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 26 Oct 2006 12:17:45 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
-In-Reply-To: <vpqu01i16g8.fsf@ecrins.imag.fr>
-X-Enigmail-Version: 0.94.0.0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=M438nGIIpiC10ei4K2aB4HHunCE0pxrgJPLyyVMP3ugB4P1+qSOa+DQL1MwDHzov+z7KLisdFDHQ2rkTnoH+WXJ0BvXLzB2p8wQ00ASUbNS610TfxV2+Bn4kDz5zO5tAYgLAWShxTX5xICAAZEHD9nj85ADkcKTEo0cD1Axeubk=
+User-Agent: KMail/1.9.3
+In-Reply-To: <20061026120824.GO20017@pasky.or.cz>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30201>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gfa2r-0005wJ-It for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 11:43:37 +0100
+ esmtp (Exim 4.43) id 1Gd4A1-0003qw-IR for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 14:16:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752819AbWKBKnf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
- 05:43:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752818AbWKBKnf
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 05:43:35 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:61706 "EHLO
- hellhawk.shadowen.org") by vger.kernel.org with ESMTP id S1752819AbWKBKne
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 05:43:34 -0500
-Received: from localhost ([127.0.0.1]) by hellhawk.shadowen.org with esmtp
- (Exim 4.50) id 1Gfa2C-000400-1S for git@vger.kernel.org; Thu, 02 Nov 2006
- 10:42:56 +0000
-To: git@vger.kernel.org
+ S1423352AbWJZMQe convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006 08:16:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423354AbWJZMQe
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 08:16:34 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:12631 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1423352AbWJZMQd
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 08:16:33 -0400
+Received: by ug-out-1314.google.com with SMTP id 32so344266ugm for
+ <git@vger.kernel.org>; Thu, 26 Oct 2006 05:16:32 -0700 (PDT)
+Received: by 10.66.220.17 with SMTP id s17mr2685714ugg; Thu, 26 Oct 2006
+ 05:16:32 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110]) by
+ mx.google.com with ESMTP id q1sm3710207uge.2006.10.26.05.16.31; Thu, 26 Oct
+ 2006 05:16:32 -0700 (PDT)
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-Matthieu Moy wrote:
-> Hi,
-> 
-> Is it possible with git to push to a server on which git is not
-> installed, and if so, how?
-> 
->>From the man page of git, sftp doesn't seem supported, and ssh://
-> complains about git-receive-pack not being installed on the server.
-> 
-> The man page documents a rsync:// protocol, but
-> 
-> $ git push rsync://some.location.com/
-> fatal: I don't handle protocol 'rsync'
-> $ 
-> 
-> What am I missing?
+Dnia czwartek 26. pa=BCdziernika 2006 14:08, Petr Baudis napisa=B3:
+> Dear diary, on Thu, Oct 26, 2006 at 11:12:36AM CEST, I got a letter
+> where Jakub Narebski <jnareb@gmail.com> said that...
+>> This unfortunately means that I cannot test gitweb based on 'master'
+>> branch using _released_ git core, git version 1.4.3.3, as it doesn't=
+ have
+>> git-for-each-ref nor git-show-ref.
+>>=20
+>> BTW. do people often use latest gitweb with older git binaries? Shou=
+ld
+>> we try to wait for core feature to mature to released version before=
+ using
+>> it in gitweb? Or perhaps we should add some kind of version checking=
+, and
+>> provide workrounds, e.g. using $ENV{GIT_DIR} if git core doesn't sup=
+port
+>> --git-dir option, pathlimit filtering using git-rev-list piped to=20
+>> git-diff-tree --stdin in git_history if there is no --full-history
+>> option, show always HEAD activity if there is no git-for-each-ref
+>> etc.; well the latest we can do without checking for git core versio=
+n, just
+>>=20
+>>         if -x qx($GIT --exec-path)/git-for-each-ref
+>=20
+> I can't imagine a situation where you would _want_ to use latest gitw=
+eb
+> but refuse to use older git binaries - can you explain why do you wan=
+t
+> to do that?
 
-To push only makes sense when you have git installed at the receiving
-end.  It is the interaction between the source and destination git
-instances which renders the push an effective optimisation.
+Theoretically? I could have Perl installed, have installed tools Git
+requires to use but not have installed tools Git require to compile.
+Hence forced to use pre-compiled binaries.
+=20
+But that is not my situation.
 
-If you are using rsync, then you can just rsync the whole repository out
-and what is out there is as valid as your own copy.  Of course a repack
-will make the whole thing changed and you'll pay on the next rsync.
+> If you don't want to install the latest master systemwide, that's
+> reasonable, but you can just keep the latest master for the gitweb
+> script and/or your personal use.
 
-git is designed with this use model involved, you 'git
-update-server-info' then rsync the repo in-toto out to your http server
-and it can be fetch'ed from (all be it less efficiently) by another
-client.  All without any requirement for anything other than passive
-data delivery at the server end.  Great if you don't have shell access etc.
-
--apw
+Well, I'd use compiled 'master' version of git for gitweb, then...
+--=20
+Jakub Narebski
