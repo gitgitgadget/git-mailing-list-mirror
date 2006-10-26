@@ -1,162 +1,169 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Sam Vilain <sam@vilain.net>
-Subject: [PATCH 1/5] git-svn: make test for SVK mirror path import
-Date: Tue, 05 Dec 2006 16:17:38 +1100
-Message-ID: <20061205051738.16552.8987.stgit@localhost>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-NNTP-Posting-Date: Tue, 5 Dec 2006 05:22:36 +0000 (UTC)
-Cc: git@vger.kernel.org
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] Make git-cherry handle root trees
+Date: Thu, 26 Oct 2006 18:52:39 +0200
+Message-ID: <4540E7D7.1000208@lsrfire.ath.cx>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 26 Oct 2006 16:53:29 +0000 (UTC)
+Cc: Git Mailing List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: StGIT/0.10
+User-Agent: Thunderbird 1.5.0.7 (Windows/20060909)
+X-Enigmail-Version: 0.94.0.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33301>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrSlC-0001ly-4E for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 06:22:30 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30238>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gd8Tq-0006DA-9k for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 18:53:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967997AbWLEFW1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 00:22:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967636AbWLEFW1
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 00:22:27 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:59223 "EHLO
- magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S937347AbWLEFWY (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
- 00:22:24 -0500
-Received: by magnus.utsl.gen.nz (Postfix, from userid 1003) id 656ED139B0C;
- Tue,  5 Dec 2006 18:22:18 +1300 (NZDT)
-To: Eric Wong <normalperson@yhbt.net>
+ S1423488AbWJZQxT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 12:53:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423491AbWJZQxT
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 12:53:19 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de
+ ([217.172.187.230]:26814 "EHLO neapel230.server4you.de") by vger.kernel.org
+ with ESMTP id S1423488AbWJZQxS (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26
+ Oct 2006 12:53:18 -0400
+Received: from [10.0.1.3] (p508E46C3.dip.t-dialin.net [80.142.70.195]) by
+ neapel230.server4you.de (Postfix) with ESMTP id DD282802B; Thu, 26 Oct 2006
+ 18:53:16 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-From:  <sam@vilain.net>
+This patch on top of 'next' makes built-in git-cherry handle root
+commits.
 
-A manual test that sets up a repository that looks like an SVK depot,
-and then imports it to check that it looks like we mirrored the
-'original' source.
+It moves the static function log-tree.c::diff_root_tree() to
+tree-diff.c and makes it more similar to diff_tree_sha1() by
+shuffling around arguments and factoring out the call to
+log_tree_diff_flush().  Consequently the name is changed to
+diff_root_tree_sha1().  It is a version of diff_tree_sha1() that
+compares the empty tree (= root tree) against a single 'real' tree.
 
-There is also a minor modification to the git-svn test library shell
-file which sets a variable for the subversion repository's filesystem
-path.
+This function is then used in get_patch_id() to compute patch IDs
+for initial commits instead of SEGFAULTing, as the current code
+does if confronted with parentless commits.
+
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 ---
 
- t/lib-git-svn.sh                   |    3 -
- t/t9107-git-svn-svk-mirrorpaths.sh |   92 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 93 insertions(+), 2 deletions(-)
+Example for testing: 'git-cherry v0.99.1 v0.99.2' in the git repo
+hits root trees.
 
-diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
-index 63c6703..dffd1fb 100644
---- a/t/lib-git-svn.sh
-+++ b/t/lib-git-svn.sh
-@@ -45,6 +45,5 @@ else
- 	svnadmin create "$svnrepo"
- fi
+ builtin-log.c |    7 +++++--
+ diff.h        |    2 ++
+ log-tree.c    |   26 ++++----------------------
+ tree-diff.c   |   18 ++++++++++++++++++
+ 4 files changed, 29 insertions(+), 24 deletions(-)
+
+diff --git a/builtin-log.c b/builtin-log.c
+index fc5e476..fedb013 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -171,8 +171,11 @@ static void reopen_stdout(struct commit
+ static int get_patch_id(struct commit *commit, struct diff_options *options,
+ 		unsigned char *sha1)
+ {
+-	diff_tree_sha1(commit->parents->item->object.sha1, commit->object.sha1,
+-			"", options);
++	if (commit->parents)
++		diff_tree_sha1(commit->parents->item->object.sha1,
++		               commit->object.sha1, "", options);
++	else
++		diff_root_tree_sha1(commit->object.sha1, "", options);
+ 	diffcore_std(options);
+ 	return diff_flush_patch_id(options, sha1);
+ }
+diff --git a/diff.h b/diff.h
+index ce3058e..ac7b21c 100644
+--- a/diff.h
++++ b/diff.h
+@@ -102,6 +102,8 @@ extern int diff_tree(struct tree_desc *t
+ 		     const char *base, struct diff_options *opt);
+ extern int diff_tree_sha1(const unsigned char *old, const unsigned char *new,
+ 			  const char *base, struct diff_options *opt);
++extern int diff_root_tree_sha1(const unsigned char *new, const char *base,
++                               struct diff_options *opt);
  
-+rawsvnrepo="$svnrepo"
- svnrepo="file://$svnrepo"
+ struct combine_diff_path {
+ 	struct combine_diff_path *next;
+diff --git a/log-tree.c b/log-tree.c
+index fbe1399..8787df5 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -252,26 +252,6 @@ int log_tree_diff_flush(struct rev_info
+ 	return 1;
+ }
+ 
+-static int diff_root_tree(struct rev_info *opt,
+-			  const unsigned char *new, const char *base)
+-{
+-	int retval;
+-	void *tree;
+-	struct tree_desc empty, real;
 -
+-	tree = read_object_with_reference(new, tree_type, &real.size, NULL);
+-	if (!tree)
+-		die("unable to read root tree (%s)", sha1_to_hex(new));
+-	real.buf = tree;
 -
-diff --git a/t/t9107-git-svn-svk-mirrorpaths.sh b/t/t9107-git-svn-svk-mirrorpaths.sh
-new file mode 100755
-index 0000000..130e786
---- /dev/null
-+++ b/t/t9107-git-svn-svk-mirrorpaths.sh
-@@ -0,0 +1,92 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2006 Eric Wong
-+#
+-	empty.buf = "";
+-	empty.size = 0;
+-	retval = diff_tree(&empty, &real, base, &opt->diffopt);
+-	free(tree);
+-	log_tree_diff_flush(opt);
+-	return retval;
+-}
+-
+ static int do_diff_combined(struct rev_info *opt, struct commit *commit)
+ {
+ 	unsigned const char *sha1 = commit->object.sha1;
+@@ -297,8 +277,10 @@ static int log_tree_diff(struct rev_info
+ 	/* Root commit? */
+ 	parents = commit->parents;
+ 	if (!parents) {
+-		if (opt->show_root_diff)
+-			diff_root_tree(opt, sha1, "");
++		if (opt->show_root_diff) {
++			diff_root_tree_sha1(sha1, "", &opt->diffopt);
++			log_tree_diff_flush(opt);
++		}
+ 		return !opt->loginfo;
+ 	}
+ 
+diff --git a/tree-diff.c b/tree-diff.c
+index 7e2f4f0..37d235e 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -215,6 +215,24 @@ int diff_tree_sha1(const unsigned char *
+ 	return retval;
+ }
+ 
++int diff_root_tree_sha1(const unsigned char *new, const char *base, struct diff_options *opt)
++{
++	int retval;
++	void *tree;
++	struct tree_desc empty, real;
 +
-+test_description='git-svn on SVK mirror paths'
-+. ./lib-git-svn.sh
++	tree = read_object_with_reference(new, tree_type, &real.size, NULL);
++	if (!tree)
++		die("unable to read root tree (%s)", sha1_to_hex(new));
++	real.buf = tree;
 +
-+if test -n "$GIT_SVN_NO_LIB" && test "$GIT_SVN_NO_LIB" -ne 0
-+then
-+	echo 'Skipping: only implemented with SVN libraries'
-+	test_done
-+	exit 0
-+fi
++	empty.size = 0;
++	empty.buf = "";
++	retval = diff_tree(&empty, &real, base, opt);
++	free(tree);
++	return retval;
++}
 +
-+# ok, people who don't have SVK installed probably don't care about
-+# this test.
-+
-+# we set up the repository manually, because even if SVK is installed
-+# it is difficult to use it in a way that is idempotent.
-+
-+# we are not yet testing merge tickets..
-+
-+uuid=b00bface-b1ff-c0ff-f0ff-b0bafe775e1e 
-+url=https://really.slow.server.com/foobar 
-+
-+test_expect_success 'initialize repo' "
-+	echo '#!/bin/sh' > $rawsvnrepo/hooks/pre-revprop-change &&
-+	echo 'exit 0' >> $rawsvnrepo/hooks/pre-revprop-change &&
-+	chmod +x $rawsvnrepo/hooks/pre-revprop-change &&
-+
-+	mkdir import &&
-+	cd import &&
-+	mkdir local &&
-+	echo hello > local/readme &&
-+	svn import -m 'random local work' . $svnrepo &&
-+	cd .. &&
-+
-+	svn co $svnrepo wc &&
-+	cd wc &&
-+	mkdir -p mirror/foobar &&
-+        svn add mirror &&
-+	svn ps svm:source $url mirror/foobar &&
-+	svn ps svm:uuid $uuid mirror/foobar &&
-+	svn ps svm:mirror mirror/foobar . &&
-+	svn commit -m 'setup mirror/foobar as mirror of upstream' &&
-+	svn ps -r 2 --revprop svm:headrev $uuid:0 $svnrepo &&
-+
-+        mkdir mirror/foobar/trunk
-+	echo hello, world > mirror/foobar/trunk/readme &&
-+	svn add mirror/foobar/trunk &&
-+	svn commit -m 'first upstream revision' &&
-+	svn ps -r 3 --revprop svm:headrev $uuid:1 $svnrepo &&
-+
-+	svn up &&
-+        svn mkdir mirror/foobar/branches &&
-+	svn cp mirror/foobar/trunk mirror/foobar/branches/silly &&
-+        svn commit -m 'make branch for silliness' &&
-+	svn ps -r 4 --revprop svm:headrev $uuid:2 $svnrepo &&
-+
-+	svn up &&
-+	echo random untested feature >> mirror/foobar/trunk/readme &&
-+	svn commit -m 'add a c00l feature to trunk' &&
-+	svn ps -r 5 --revprop svm:headrev $uuid:3 $svnrepo &&
-+
-+	svn up &&
-+	echo bug fix >> mirror/foobar/branches/silly/readme &&
-+	svn commit -m 'fix a bug' &&
-+	svn ps -r 6 --revprop svm:headrev $uuid:4 $svnrepo &&
-+
-+        svn mkdir mirror/foobar/tags &&
-+	svn cp mirror/foobar/branches/silly mirror/foobar/tags/blah-1.0 &&
-+        svn commit -m 'make a release' &&
-+	svn ps -r 7 --revprop svm:headrev $uuid:5 $svnrepo &&
-+
-+	cd ..
-+	"
-+
-+test_expect_success 'multi-init an SVK mirror path' "git-svn multi-init -t tags -b branches $svnrepo/mirror/foobar"
-+
-+test_expect_success 'multi-fetch an SVK mirror path' "git-svn multi-fetch"
-+
-+test_expect_success 'got tag history OK' "test \`git-log --pretty=oneline remotes/tags/blah-1.0 | wc -l \` = 3"
-+
-+test_expect_success 're-wrote git-svn-id URL' "git-show HEAD | grep git-svn-id: | fgrep $url"
-+test_expect_success 're-wrote git-svn-id UUID' "git-show HEAD | grep git-svn-id: | fgrep $uuid"
-+test_expect_success 're-wrote git-svn-id revision' "git-show HEAD | grep git-svn-id: | fgrep '@3'"
-+test_expect_success 're-wrote author e-mail domain UUID' "test \`git-show --pretty=fuller HEAD | grep '<.*@.*>' | fgrep $uuid | wc -l\` = 2"
-+
-+test_debug 'gitk --all &'
-+
-+test_done
+ static int count_paths(const char **paths)
+ {
