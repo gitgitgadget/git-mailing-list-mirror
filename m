@@ -4,62 +4,56 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Thu, 07 Dec 2006 15:56:43 -0800
-Message-ID: <4578AA3B.7040401@zytor.com>
-References: <Pine.LNX.4.64.0612061847190.3615@woody.osdl.org> <45778AA3.7080709@zytor.com> <Pine.LNX.4.64.0612061940170.3615@woody.osdl.org> <4577A84C.3010601@zytor.com> <Pine.LNX.4.64.0612070953290.3615@woody.osdl.org> <45785697.1060001@zytor.com> <Pine.LNX.4.64.0612071052560.3615@woody.osdl.org> <457868AA.2030605@zytor.com> <20061207193012.GA84678@dspnet.fr.eu.org> <4578722E.9030402@zytor.com> <20061207235039.GA423@dspnet.fr.eu.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: an option to make "git-diff Z A" prints Z's diff before A's
+Date: Thu, 26 Oct 2006 10:42:21 +0200
+Message-ID: <20061026084221.GB13780@diana.vm.bytemark.co.uk>
+References: <871wowzx15.fsf@rho.meyering.net> <7vd58g9pfs.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 7 Dec 2006 23:57:37 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Kernel Org Admin <ftpadmin@kernel.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 26 Oct 2006 08:42:45 +0000 (UTC)
+Cc: Jim Meyering <jim@meyering.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
-In-Reply-To: <20061207235039.GA423@dspnet.fr.eu.org>
-X-Virus-Scanned: ClamAV 0.88.6/2301/Thu Dec  7 07:20:18 2006 on terminus.zytor.com
-X-Virus-Status: Clean
+Content-Disposition: inline
+In-Reply-To: <7vd58g9pfs.fsf@assigned-by-dhcp.cox.net>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33650>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsT7K-0003Z3-1W for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 00:57:30 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30153>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gd0os-00029z-2T for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 10:42:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1164018AbWLGX51 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 18:57:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1164017AbWLGX51
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 18:57:27 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:47654 "EHLO
- terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S1164018AbWLGX50 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 18:57:26 -0500
-Received: from [10.0.6.0] (yardgnome.c2micro.com [69.104.58.50])
- (authenticated bits=0) by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id
- kB7NukhQ005585 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
- verify=NO); Thu, 7 Dec 2006 15:56:47 -0800
-To: Olivier Galibert <galibert@pobox.com>
+ S965246AbWJZImb convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006 04:42:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965254AbWJZImb
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 04:42:31 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:14092 "EHLO
+ diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S965246AbWJZIma
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 04:42:30 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
+ (Debian)) id 1Gd0of-0003cO-00; Thu, 26 Oct 2006 09:42:21 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Olivier Galibert wrote:
-> On Thu, Dec 07, 2006 at 11:57:34AM -0800, H. Peter Anvin wrote:
->> Olivier Galibert wrote:
->>> On Thu, Dec 07, 2006 at 11:16:58AM -0800, H. Peter Anvin wrote:
->>>> Unfortunately, the most common queries are also extremely expensive.
->>> Do you have a top-ten of queries ?  That would be the ones to optimize
->>> for.
->> The front page, summary page of each project, and the RSS feed for each 
->> project.
-> 
-> Hmmm, maybe you could have the summaries and rss feed generated on
-> push, which could also generate elementary files with lines of the
-> front page.  That would make these top offenders static page serving.
-> 
+On 2006-10-25 12:16:07 -0700, Junio C Hamano wrote:
 
-There are a lot of things which "could be done" given the proper cache 
-infrastructure and gitweb support.
+> The thing is, "git diff -- Z A" does *not* mean:
+>
+>       I know I have a file called Z and a file called A; please give
+>       diff for these files.
+>
+> What it means is:
+>
+>       Please give me the diff as usual, but I care about paths that
+>       match these patterns, Z or A.
 
+A related question: is there a way to limit the path to Z, but
+excluding Z/B? That is, I'm interested in the changes in Z, but not
+the changes in its subdirectory B.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
