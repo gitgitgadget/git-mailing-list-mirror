@@ -1,81 +1,94 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [RFC] git-gui: A commit / fetch / push interface
-Date: Wed, 8 Nov 2006 00:55:11 -0500
-Message-ID: <20061108055511.GD28498@spearce.org>
-References: <20061107083603.GB9622@spearce.org> <17745.3287.358673.265578@cargo.ozlabs.ibm.com> <45516F21.9070901@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: (unknown)
+Date: Thu, 26 Oct 2006 08:35:35 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610260825040.3962@g5.osdl.org>
+References: <E1Gck2K-0003H4-00@dvr.360vision.com> <7v1wowm46j.fsf@assigned-by-dhcp.cox.net>
+ <7vwt6okpgr.fsf@assigned-by-dhcp.cox.net> <200610261522.44433.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 8 Nov 2006 05:55:25 +0000 (UTC)
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 26 Oct 2006 15:36:56 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <45516F21.9070901@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <200610261522.44433.Josef.Weidendorfer@gmx.de>
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30228>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhgPC-0005B0-3k for gcvg-git@gmane.org; Wed, 08 Nov
- 2006 06:55:22 +0100
+ esmtp (Exim 4.43) id 1Gd7HD-00082w-1q for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 17:36:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754331AbWKHFzR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
- 00:55:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754334AbWKHFzQ
- (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 00:55:16 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:44228 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1754331AbWKHFzP
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 00:55:15 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GhgP3-0001JY-EJ; Wed, 08 Nov 2006 00:55:13 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- B678620E487; Wed,  8 Nov 2006 00:55:11 -0500 (EST)
-To: Liu Yubao <yubao.liu@gmail.com>
+ S1423563AbWJZPgL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 11:36:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423575AbWJZPgL
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 11:36:11 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:18821 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1423563AbWJZPgJ (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 11:36:09 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9QFZbPo025966
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Thu, 26
+ Oct 2006 08:35:37 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9QFZZJW018570; Thu, 26 Oct
+ 2006 08:35:36 -0700
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Liu Yubao <yubao.liu@gmail.com> wrote:
-> Paul Mackerras wrote:
-> >Shawn Pearce writes:
-> >
-> >>I liked it and wanted to start making it available to some folks I
-> >>work with who are more comfortable with the mouse than they are with
-> >>the keyboard.  At first I tried fixing a few of the outstanding bugs
-> >>in gitool but I eventually wound up rewriting the thing from scratch.
-> >
-> >Cool!
-> >
-> >>I have posted a repository with the source on pasky's service:
-> >>
-> >>	http://repo.or.cz/w/git-gui.git
-> >
-> >Shouldn't the "w" be "r" there?  It gave me an error "Can't lock ref"
-> >with the "w".
->
-> This it a gitweb URL, not a repos URL for 'git clone', you can only view
-> it in web browser.
 
-Too bad pasky doesn't have the magic mapping setup in the webserver
-so they are one and the same.  :-)
 
-I linked to the gitweb rather than the repository as I figured
-people might want to read the history, or since it was just one
-blob download it right from the webpage rather than cloning the
-repository.  But given that this is the git mailing list most people
-probably would have expected to clone it instead...
+On Thu, 26 Oct 2006, Josef Weidendorfer wrote:
 
--- 
+> On Thursday 26 October 2006 00:20, Junio C Hamano wrote:
+> > Heh, I spoke too fast.
+> > 
+> > 	"git log origin..master"
+> > 
+> > If you do not have none of .git/origin
+> 
+> Really? I thought refs are always looked up in ".git/refs" only?
+
+Yes and no.
+
+The "iterate over all refs" code only ever looks in the "refs" 
+subdirectory, so when you _list_ refs, they won't ever be shown unless 
+they are there. That affects a lot of programs (like "git ls-remote").
+
+Also, a symlink-ref has to point into "refs/" or it is considered invalid.
+
+But, there are two extra rules:
+
+ - ".git/HEAD" is obviously special, and will show up separately even for 
+   things like "git ls-remote", so even processes that _list_ things will 
+   show it.
+
+ - when you do a named lookup, stuff directly in ".git" will take 
+   precedence over EVERYTHING, even if it is never listed. So for example, 
+   if you have a branch named HEAD in .git/refs/heads/HEAD, it doesn't 
+   matter. Your ".git/HEAD" will still be looked up first.
+
+   Similarly, other "special heads", like ORIG_HEAD or MERGE_HEAD will be 
+   looked up in .git, even though they will never be listed by anything.
+
+So the "refs/" requirement is a real requirement for a "true ref", but it 
+is still overruled by the rule that we have special refs in $GIT_DIR that 
+always take precedence.
+
+This also means, for example, that you can always give the "full" refname 
+for lookup, ie
+
+	git-rev-parse refs/heads/master
+
+works, because that's the "full path" from the ".git" subdirectory. If we 
+only ever looked things up inside "refs", you'd have to use 
+"heads/master".
+
