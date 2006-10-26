@@ -4,88 +4,68 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Restore a single file in the index back to HEAD
-Date: Fri, 27 Oct 2006 04:15:45 -0400
-Message-ID: <20061027081545.GF29057@spearce.org>
-References: <200610261641.11239.andyparkins@gmail.com> <81b0412b0610260842x52413570k3971bcdc54b3ccb5@mail.gmail.com> <200610270827.17659.andyparkins@gmail.com> <20061027073834.GC29057@spearce.org> <4541BE8E.5050605@op5.se>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: VCS comparison table
+Date: Thu, 26 Oct 2006 13:24:44 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0610261320080.12418@xanadu.home>
+References: <45354AD0.1020107@utoronto.ca>
+ <"BAYC1-PASMTP07AB11A64250AAF683424 DAE0E0"@CEZ.ICE>
+ <vpq4ptz2uh8.fsf@ecrins.imag.fr> <453DAC87.8050203@research.canon.com.au>
+ <Pine.LNX.4.64N.0610232336010.30334@attu2.cs.washington.edu>
+ <"Pin e.LNX.4.64.0610240812410.3962"@g5.osdl.org>
+ <"Pine.LNX.4.64N.0610241300450.811 2"@attu4.cs.washington.edu>
+ <20061025084810.GA26618@coredump.intra.peff.net>
+ <Pine.LNX.4.64N.0610250157470.3467@attu1.cs.washington.edu>
+ <"20061025094900.G A26989"@coredump.intra.peff.net>
+ <Pine.LNX.4.64N.0610250954380.31053@attu2.cs.washington.edu>
+ <454098EC.8040406@op5.se> <Pine.LNX.4.64.0610261247420.12418@xanadu.home>
+ <Pine.LNX.4.63.0610261003290.2424@qynat.qvtvafvgr.pbz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 27 Oct 2006 08:16:09 +0000 (UTC)
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Thu, 26 Oct 2006 17:25:13 +0000 (UTC)
+Cc: Andreas Ericsson <ae@op5.se>,
+	David Rientjes <rientjes@cs.washington.edu>,
+	Jeff King <peff@peff.net>, Linus Torvalds <torvalds@osdl.org>,
+	Lachlan Patrick <loki@research.canon.com.au>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <4541BE8E.5050605@op5.se>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-reply-to: <Pine.LNX.4.63.0610261003290.2424@qynat.qvtvafvgr.pbz>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30246>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdMsa-0000gX-MG for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 10:15:53 +0200
+ esmtp (Exim 4.43) id 1Gd8yR-0003ZM-Sh for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 19:25:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946239AbWJ0IPt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 04:15:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946242AbWJ0IPt
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 04:15:49 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:187 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1946239AbWJ0IPt
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 04:15:49 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GdMsj-0002H2-8d; Fri, 27 Oct 2006 04:16:01 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 541E820E45B; Fri, 27 Oct 2006 04:15:45 -0400 (EDT)
-To: Andreas Ericsson <ae@op5.se>
+ S1423676AbWJZRYs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 13:24:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423684AbWJZRYs
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 13:24:48 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:34010 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S1423676AbWJZRYp
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 13:24:45 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J7R009Z9718U9I0@VL-MH-MR002.ip.videotron.ca> for git@vger.kernel.org; Thu,
+ 26 Oct 2006 13:24:45 -0400 (EDT)
+To: David Lang <dlang@digitalinsight.com>
 Sender: git-owner@vger.kernel.org
 
-Andreas Ericsson <ae@op5.se> wrote:
-> Shawn Pearce wrote:
-> >Andy Parkins <andyparkins@gmail.com> wrote:
-> >>However, it led me to wonder what the inverse of git-update-index is.
-> >
-> >git-update-index  :-)
-> >
-> >You can use something like:
-> >
-> >    git ls-tree HEAD oops/file1 | git update-index --index-info 
-> >
-> >to restore the index state of oops/file1.
-> >
-> >
-> >Which leads us to the always interesting, fun and exciting:
-> >
-> >    git ls-tree -r HEAD | git update-index --index-info 
-> >
-> >which will undo everything except 'git add' from the index, as
-> >ls-tree -r is listing everything in the last commit.
-> >
+On Thu, 26 Oct 2006, David Lang wrote:
+
+> On Thu, 26 Oct 2006, Nicolas Pitre wrote:
 > 
-> ... and also shows The Power of the Pipe, which Daniel@google was 
-> missing in recent versions of git. ;-)
+> > The pack index is actually limited to 32-bits meaning it can cope with
+> > packs no larger than 4G.
 > 
-> Btw, this is most definitely not a documented thing and requires a bit 
-> of core git knowledge, so perhaps the "shell-scripts were good for 
-> hackers to learn what to pipe where" really *is* a very important point.
+> the offset within a pack for the starting location of an object cannot be
+> larger then 4G.
 
-Agreed.
+To be more exact, yes.  But I don't think we'll ever consider use 
+scenarios with packs > 4G with the current index format.  There is 
+simply no point.
 
-I learned that trick while studying the update-index source code
-and tried to wrap my tiny little head around the various formats
---index-info accepts and how that code automatically guesses the
-correct format.  :-)
 
-Though I have to admit I wipped up a little test repository just
-to make sure what I was writing in the email worked properly;
-I can't say I've done it myself too many times in the past...
-
--- 
