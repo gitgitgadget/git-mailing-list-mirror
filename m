@@ -1,68 +1,78 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: What's cooking in git.git (topics)
-Date: Mon, 18 Dec 2006 00:09:05 -0800
-Message-ID: <7vac1l1v8e.fsf@assigned-by-dhcp.cox.net>
-References: <7vodq3a136.fsf@assigned-by-dhcp.cox.net>
-	<200612172341.27709.andyparkins@gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: (unknown)
+Date: Thu, 26 Oct 2006 08:14:04 +0100
+Message-ID: <200610260814.05957.andyparkins@gmail.com>
+References: <E1Gck2K-0003H4-00@dvr.360vision.com> <7v1wowm46j.fsf@assigned-by-dhcp.cox.net> <7vwt6okpgr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 18 Dec 2006 08:09:24 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 26 Oct 2006 07:14:28 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=CQe6RddClsVvcQstwnGhjY5QLYUe1NctJLAv7ZiDVZ04Hiy/QCuHgeWni7lzhAHH0lAf7n9WH4IwTQHHG5cLo5KLpC3VeEXPuOBA1RelrcSbtRjfkTjc8FlhrB8FjUPZD3YVYFybJLU+42ztSX3vVQeKYIiQuJ1bW925aX7KwXA=
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vwt6okpgr.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34726>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwDYi-0002Yg-AQ for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 09:09:16 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30143>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GczRP-0005qe-IO for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 09:14:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753469AbWLRIJH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
- 03:09:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753493AbWLRIJH
- (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 03:09:07 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:54996 "EHLO
- fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1753469AbWLRIJG (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
- 03:09:06 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061218080906.BIVR16632.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Mon, 18
- Dec 2006 03:09:06 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id 089J1W0031kojtg0000000; Mon, 18 Dec 2006
- 03:09:18 -0500
-To: Andy Parkins <andyparkins@gmail.com>
+ S1751758AbWJZHOM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 03:14:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751757AbWJZHOM
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 03:14:12 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:45531 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1751759AbWJZHOL
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 03:14:11 -0400
+Received: by ug-out-1314.google.com with SMTP id 32so298556ugm for
+ <git@vger.kernel.org>; Thu, 26 Oct 2006 00:14:10 -0700 (PDT)
+Received: by 10.66.232.10 with SMTP id e10mr2283387ugh; Thu, 26 Oct 2006
+ 00:14:10 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id 53sm29314ugd.2006.10.26.00.14.09; Thu, 26 Oct 2006 00:14:09 -0700
+ (PDT)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> writes:
 
-> On Saturday 2006, December 16 23:10, Junio C Hamano wrote:
+> > "git log remotes/origin..master" perhaps?
+> >
+> > The point being, remotes/origin when origin is a directory that
+> > has HEAD that points at something, it stands for
+> > remotes/origin/HEAD.
 >
->>    * revisions recorded in the reflog can be pruned out,
->>      rendering some entries in reflog useless.
+> Heh, I spoke too fast.
 >
-> Can I suggest that it should be fine to prune reflog entries but that the act 
-> of pruning be a log entry itself?
+> 	"git log origin..master"
+>
+> If you do not have none of .git/origin, .git/refs/origin,
+> .git/refs/tags/origin, .git/refs/heads/origin, nor
+> .git/refs/remotes/origin, then .git/refs/remotes/origin/HEAD is
+> what "origin" means (see get_sha1_basic() in sha1_name.c).
 
-I do not understand.  What would that "pruning event" log entry
-would say?
+Again: you guys have thought of everything.
 
-By definition each reflog entry says "it was pointing at this
-object before, and it was changed by this user to point at that
-object at this time and the reason for the change was this".
+I believe then, that my problem is that I didn't find this written anywhere - 
+would it be useful if I were to write a Documentation/ file about 
+commit-ish/tree-ish that covered these issues?  Have I overlooked the 
+existence of such a file already?
 
-I personally do not think recording "at this point these things
-were pruned" makes _any_ sense whatsoever --- if you care about
-the pruned objects that simply means you pruned them before you
-are ready to lose them.  But even if for whatever reason you
-choose to log that anyway, I have a feeling that that record
-does not belong to the reflog itself.
 
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
