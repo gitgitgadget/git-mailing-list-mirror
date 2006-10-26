@@ -1,75 +1,75 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: Creating new repos
-Date: Fri, 27 Oct 2006 09:29:10 -0300
-Message-ID: <200610271229.k9RCTARu016773@laptop13.inf.utfsm.cl>
-NNTP-Posting-Date: Fri, 27 Oct 2006 12:30:34 +0000 (UTC)
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Rationale for the "Never commit to the right side of a Pull
+ line" rule
+Date: Thu, 26 Oct 2006 10:11:50 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0610261003590.3962@g5.osdl.org>
+References: <ehqp1u$j4$1@sea.gmane.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 26 Oct 2006 17:12:36 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
-X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
+In-Reply-To: <ehqp1u$j4$1@sea.gmane.org>
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30241>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdQq2-0001nH-L8 for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 14:29:31 +0200
+ esmtp (Exim 4.43) id 1Gd8lx-0001FI-0Q for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 19:12:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946256AbWJ0M3N (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 08:29:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752155AbWJ0M3N
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 08:29:13 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:39048 "EHLO
- inti.inf.utfsm.cl") by vger.kernel.org with ESMTP id S1752154AbWJ0M3M (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 08:29:12 -0400
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
- by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id k9RCTAc4010322
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO) for
- <git@vger.kernel.org>; Fri, 27 Oct 2006 09:29:10 -0300
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1]) by
- laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id k9RCTARu016773 for
- <git@vger.kernel.org>; Fri, 27 Oct 2006 09:29:10 -0300
-To: git@vger.kernel.org
+ S1423504AbWJZRLz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 13:11:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423514AbWJZRLz
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 13:11:55 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:22434 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1423504AbWJZRLy (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 13:11:54 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9QHBpPo032555
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Thu, 26
+ Oct 2006 10:11:51 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9QHBoTY021607; Thu, 26 Oct
+ 2006 10:11:50 -0700
+To: Jerome Lovy <t2a2e9z8ncbs9qg@brefemail.com>
 Sender: git-owner@vger.kernel.org
 
-I'm trying to set up git repos for remote access here. I set up git-daemon
-and got it working (some older repositories do work fine), but now:
 
-  $ mkdir /var/scm/user/SomeRepo.git
-  $ cd /var/scm/user/SomeRepo.git
-  $ git --bare init-db
-  $ touch git-daemon-export-ok
 
-All OK, but then, from a remote machine:
+On Thu, 26 Oct 2006, Jerome Lovy wrote:
+> 
+> Could someone please point me to / give me the rationale for the "Never commit
+> to the right side of a Pull line" rule ?
 
-  $ git clone git://git-server/user/SomeRepo.git
-  fatal: no matching remote head
-  fetch-pack from 'git://git-server/user/Test.git' failed.
+It's not a technical rule per se.
 
-The empty repo created by init-db should be cloneable, so as to get the ball
-rolling easily.
+It's just a way to avoid what will almost inevitably otherwise be a 
+horribly horribly confusing situation.
 
-You can't push into such an empty repository either.
+I say "almost inevitably", because if you really have worked with git 
+enough, and understand how it works on a very fundamental level, there are 
+actually no problems at all with doing so, and maybe you could have 
+perfectly fine reasons to break the rule, and commit to a branch that is 
+officially "maintained in another repository" and then push it out.
 
-Any suggestion of how to set up a server into which users can create their
-own repos /without/ giving out full shell accounts?
+But it's a good rule in general, just because it makes a certain common 
+workflow explicit. In fact, we really probably should start to always use 
+the "refs/remote/origin/HEAD" kind of syntax by default, where you can't 
+even _switch_ to the branch maintained in the remote repository, because 
+it's not a real branch locally.
 
-Also, the behaviour of git-daemon is different when using git or ssh+git,
-you need to give the full path for the later but not the former (given
---base-path=/var/scm):
+So normally you should consider the "origin" branch to be a pointer to 
+WHAT YOU FETCHED LAST - and that implies that you shouldn't commit to it, 
+because then it loses that meaning (now it's "what you fetched last and 
+then committed your own work on top of", which is something totally 
+different).
 
-  git://git-server/user/Test.git
-  ssh+git://git-server/var/scm/user/Test.git
-
-Is this intentional?
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                    Fono: +56 32 2654431
-Universidad Tecnica Federico Santa Maria             +56 32 2654239
-Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
