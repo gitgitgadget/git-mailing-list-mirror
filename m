@@ -1,128 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC] git-add update with all-0 object
-Date: Thu, 30 Nov 2006 14:46:23 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611301431420.3513@woody.osdl.org>
-References: <Pine.LNX.4.64.0611301634080.20138@iabervon.org>
+From: "Matthew D. Fuller" <fullermd@over-yonder.net>
+Subject: Re: VCS comparison table
+Date: Thu, 26 Oct 2006 07:12:53 -0500
+Message-ID: <20061026121253.GE17019@over-yonder.net>
+References: <20061023222131.GB17019@over-yonder.net> <Pine.LNX.4.64.0610231534010.3962@g5.osdl.org> <20061024002622.GC17019@over-yonder.net> <Pine.LNX.4.63.0610240853160.10841@qynat.qvtvafvgr.pbz> <20061024163458.GH17019@over-yonder.net> <Pine.LNX.4.63.0610241038060.10841@qynat.qvtvafvgr.pbz> <20061025002713.GN17019@over-yonder.net> <Pine.LNX.4.63.0610251459160.1754@qynat.qvtvafvgr.pbz> <20061025235306.GD17019@over-yonder.net> <45408A53.10400@op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 30 Nov 2006 22:47:19 +0000 (UTC)
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 26 Oct 2006 12:13:31 +0000 (UTC)
+Cc: David Lang <dlang@digitalinsight.com>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0611301634080.20138@iabervon.org>
-X-MIMEDefang-Filter: osdl$Revision: 1.161 $
-X-Scanned-By: MIMEDefang 2.36
+Content-Disposition: inline
+In-Reply-To: <45408A53.10400@op5.se>
+X-Editor: vi
+X-OS: FreeBSD <http://www.freebsd.org/>
+User-Agent: Mutt/1.5.11-fullermd.3
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30199>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gpufq-0000Vb-2C for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 23:46:34 +0100
+ esmtp (Exim 4.43) id 1Gd46V-000386-TL for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 14:13:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031605AbWK3Wqb (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 17:46:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031606AbWK3Wqa
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 17:46:30 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:5778 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1031605AbWK3Wqa (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 17:46:30 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAUMkOjQ017098
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Thu, 30
- Nov 2006 14:46:24 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAUMkND6022630; Thu, 30 Nov
- 2006 14:46:24 -0800
-To: Daniel Barkalow <barkalow@iabervon.org>
+ S1423299AbWJZMM4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 08:12:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423352AbWJZMM4
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 08:12:56 -0400
+Received: from ns.centralmiss.com ([206.156.254.79]:61950 "EHLO
+ optimus.centralmiss.com") by vger.kernel.org with ESMTP id S1423299AbWJZMMz
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 08:12:55 -0400
+Received: from draco.over-yonder.net
+ (adsl-072-148-013-213.sip.jan.bellsouth.net [72.148.13.213]) (using TLSv1
+ with cipher ADH-AES256-SHA (256/256 bits)) (No client certificate requested)
+ by optimus.centralmiss.com (Postfix) with ESMTP id 455212842A; Thu, 26 Oct
+ 2006 07:12:54 -0500 (CDT)
+Received: by draco.over-yonder.net (Postfix, from userid 100) id CD06C61C5E;
+ Thu, 26 Oct 2006 07:12:53 -0500 (CDT)
+To: Andreas Ericsson <ae@op5.se>
 Sender: git-owner@vger.kernel.org
 
-
-
-On Thu, 30 Nov 2006, Daniel Barkalow wrote:
+On Thu, Oct 26, 2006 at 12:13:39PM +0200 I heard the voice of
+Andreas Ericsson, and lo! it spake thus:
+> Matthew D. Fuller wrote:
+> >
+> >In git, this is a non-issue because you don't get to CHOOSE which
+> >way to work.
 > 
-> I think the more obvious behavior is to have it record the fact that you 
-> want to have the path tracked, but require one of the usual updating 
-> mechanisms to get a particular content into the index.
+> Yes they do.
 
-While this certainly matches the git model better than just automatically 
-taking whatever state exist at commit time (you instead introduce it as a 
-special "empty state" case), I don't think you really want it.
+Not where I was going with that section of the mail; I was looking at
+just the merge vs fast-forward distinction.  In git, you don't get to
+choose; in bzr you do.
 
-Why? 
 
-Two reasons:
-
- - you're still left with all the same issues (ie you do need to use "git 
-   commit -a" because that is simply fundamental, and if you don't, "git 
-   commit" now causes an ERROR, which is just illogical - you just added 
-   the data!)
-
-   So it's simply better to just tell people "git add" adds the whole 
-   state. Explain to them that git doesn't track "filenames", it tracks 
-   state, and when you do a "git add", it really adds the _data_ and the 
-   permissions too.
-
-   Really, if you didn't come from years of broken SCM's, you'd think that 
-   it's _natural_ that when you add a file for tracking, you add its 
-   contents too. It's not that git is surprising or unnatural, it's that 
-   CVS is.
-
- - you generally really don't want to see "git diff" show you the big diff 
-   for a new creation. You only think you do, but trust me, you generally 
-   don't. It's the same thing as with doing merges - keeping the 
-   automerged state in the index is actually nice, because it means that 
-   the default "git diff" can just shut the heck up about the things that 
-   may be the _bulk_ of the change, but it's not the interesting part.
-
-So I would suggest that if people are irritated with "git diff" for 
-example not showing newly added files AT ALL, then the solution to that 
-isn't that they should be added as "empty" or "all zeroes". We do have 
-other state bits in the index already (we need them for marking things as 
-being unmerged etc), and if the problem is that you want to see that you 
-have a pending add, it's easy enough to have "git add" always set a bit 
-saying "this file is new".
-
-A normal "read tree object" would populate index entries with that bit 
-cleared, and so it would be possible to have
-
-	git add file.c
-	git diff
-
-show something like
-
-	diff --git a/file.c b/file.c
-	added file <mode> <sha1>
-
-rather than show the whole big diff (which I _really_ don't think you want 
-to see, and which is actually against the whole point, which is that you 
-add _content_ to the index, and "git diff" will always show you the stuff 
-that is _not_ added to the index yet).
-
-(Of course, if you _also_ had changed it between the "git add" and the 
-"git diff", you'd get both the "added file <mode> <sha1>" _and_ the diff 
-that is the diff between the thing you added, and the status it has now).
-
-So showing a real diff after "git add" would really be wrong. The index 
-really is important. But if it's _only_ an issue of worrying about seeing 
-added files at all, we can add a "people comfort" bit to do that.
-
-(Quite frankly, I don't think it's worthwhile. I really think this is a 
-documentation issue. Make people understand that "git add" adds the 
-contents too, and that git never tracks filenames on their own at all).
-
-So it is always going to be true that
-
-	git add file
-	echo New line >> file
-	git commit
-
-must commit the old contents of the file. That really _does_ follow from 
-the whole "track contents" model. Anything that doesn't do this is 
-fundamnetally broken, and has broken the notion of what "git add" means.
-
+-- 
+Matthew Fuller     (MF4839)   |  fullermd@over-yonder.net
+Systems/Network Administrator |  http://www.over-yonder.net/~fullermd/
