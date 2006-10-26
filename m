@@ -1,94 +1,63 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Using GIT to store /etc (Or: How to make GIT store all file permission bits)
-Date: Sun, 10 Dec 2006 19:26:32 +0100
-Message-ID: <200612101926.33307.jnareb@gmail.com>
-References: <787BE48C-1808-4A33-A368-5E8A3F00C787@mac.com> <elh91b$v6r$1@sea.gmane.org> <A52817B6-0265-4164-8E5D-334AF92DC267@mac.com>
+Subject: Re: [PATCH] gitweb: Check git base URLs before generating URL from it
+Date: Thu, 26 Oct 2006 19:39:12 +0200
+Organization: At home
+Message-ID: <ehqrqm$co1$1@sea.gmane.org>
+References: <200610261226.44960.jnareb@gmail.com> <7vr6wvkn66.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sun, 10 Dec 2006 18:24:37 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Thu, 26 Oct 2006 17:39:49 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=ce1fny0L1jgcOD0lTjgzZPZzZurmCoQhCggIWzS/Lo/bC+nav1utjBGSnvupEkA0DW7n1EoBP7ERuC+OqSO9Hn3KxEYUAvINPn+LEQbS+Msjj7dsTkRCfR1ubpue5gdlYptYfQCoMDSm6RBHD01DJFUR/1822VLbci4hm62x7lc=
-User-Agent: KMail/1.9.3
-In-Reply-To: <A52817B6-0265-4164-8E5D-334AF92DC267@mac.com>
-Content-Disposition: inline
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 13
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33913>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtTLm-0002NI-NY for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 19:24:35 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30251>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gd9CK-0006Le-2e for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 19:39:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1762335AbWLJSYU convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006 13:24:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762334AbWLJSYU
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 13:24:20 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:6501 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1762332AbWLJSYU (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec
- 2006 13:24:20 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1136629uga for
- <git@vger.kernel.org>; Sun, 10 Dec 2006 10:24:18 -0800 (PST)
-Received: by 10.66.255.7 with SMTP id c7mr8599374ugi.1165775058436; Sun, 10
- Dec 2006 10:24:18 -0800 (PST)
-Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107]) by
- mx.google.com with ESMTP id 24sm6016777ugf.2006.12.10.10.24.17; Sun, 10 Dec
- 2006 10:24:18 -0800 (PST)
-To: Kyle Moffett <mrmacman_g4@mac.com>
+ S1161218AbWJZRjQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 13:39:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161227AbWJZRjQ
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 13:39:16 -0400
+Received: from main.gmane.org ([80.91.229.2]:2767 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1161218AbWJZRjP (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 13:39:15 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gd9Bu-0006Gj-IB for git@vger.kernel.org; Thu, 26 Oct 2006 19:38:55 +0200
+Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Thu, 26 Oct 2006 19:38:54 +0200
+Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 26 Oct 2006
+ 19:38:54 +0200
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Kyle Moffett wrote:
-> On Dec 10, 2006, at 10:30:00, Jakub Narebski wrote:
->> Jeff Garzik wrote:
->>>
->>> I actively use git to version, store and distribute an exim mail =A0
->>> configuration across six servers. =A0So far my solution has been a =
-=A0
->>> 'fix perms' script, or using the file perm checking capabilities =A0
->>> of cfengine.
->>
->> Fix perms' script used on a checkout hook is a best idea I think.
->=20
-> Hmm, unfortunately that has problems with security-related race =A0
-> conditions when used directly for /etc. =A0Think about what happens =A0
-> with "/etc/shadow" in that case, for example. =A0(/etc/.git is of =A0
-> course 0700) =A0I'm sure there are others where non-root daemons get =
-=A0
-> unhappy when they get an inotify event and their config files have =A0
-> suddenly become root:root:0600. =A0I also want to be able to "cd /etc=
- =A0
-> && git status" to see what changed after running "apt-get update" or =
-=A0
-> maybe fiddling in SWAT or webmin, so a makefile which installs into /=
-=20
-> etc won't quite solve it either. =A0It would also be nice to see when=
- =A0
-> things change the permissions on files in /etc, or even bind-mount an=
- =A0
-> append-only volume over /etc/.git/objects to provide additional data =
-=A0
-> security.
+Junio C Hamano wrote:
 
-The idea is to not store /etc in git directly, but use import/export
-scripts, which for example saves permissions and ownership in some
-file also tracked by git on import, and restores correct permissions
-on export. That is what I remember from this discussion. This of course
-means that you would have to write your own porcelain...
+> Wouldn't this be simpler and more to the point, I wonder?
 
-What about mentioned in other email IsiSetup?
+> -our @git_base_url_list = ("++GITWEB_BASE_URL++");
+> +our @git_base_url_list = grep { $_ ne '' } ("++GITWEB_BASE_URL++");
 
---=20
+Yes, that would be cartainly better.
+-- 
 Jakub Narebski
 Warsaw, Poland
+ShadeHawk on #git
+
