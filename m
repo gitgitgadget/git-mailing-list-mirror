@@ -1,107 +1,178 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: an option to make "git-diff Z A" prints Z's diff before A's
-Date: Wed, 25 Oct 2006 12:16:07 -0700
-Message-ID: <7vd58g9pfs.fsf@assigned-by-dhcp.cox.net>
-References: <871wowzx15.fsf@rho.meyering.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] diff-format.txt: Combined diff format documentation supplement
+Date: Thu, 26 Oct 2006 05:44:49 +0200
+Message-ID: <200610260544.50614.jnareb@gmail.com>
+References: <ehoo2k$1g6$1@sea.gmane.org> <7vejswkoi4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 25 Oct 2006 19:16:21 +0000 (UTC)
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 26 Oct 2006 03:44:30 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <871wowzx15.fsf@rho.meyering.net> (Jim Meyering's message of
-	"Wed, 25 Oct 2006 09:15:18 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=nmZ2r/LON5MUJW/BIryYbbY7QLqYjrknsx/mYnDbcNUwGt6WE6do6uyhnwl0Jyn+AX8l9ZxJAlpjnQzQyYC2hU4zSh7tYoinAV7/fxVHRmv5Mf1tEKNzWXjBXUka0GcrQ7fPldwdpEv/xmaQx6YBADk873kEmUH/0e4D22NyymU=
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vejswkoi4.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30136>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcoEb-0004Xk-5I for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 21:16:17 +0200
+ esmtp (Exim 4.43) id 1GcwAK-0007ns-OK for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 05:44:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964798AbWJYTQN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 15:16:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964817AbWJYTQN
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 15:16:13 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:32165 "EHLO
- fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S964798AbWJYTQL
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 15:16:11 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao03.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061025191610.NONL2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>; Wed, 25
- Oct 2006 15:16:10 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id ejFt1V00b1kojtg0000000 Wed, 25 Oct 2006
- 15:15:54 -0400
-To: Jim Meyering <jim@meyering.net>
+ S1422916AbWJZDoR convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006 23:44:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422910AbWJZDoR
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 23:44:17 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:58058 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1422916AbWJZDoQ
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 23:44:16 -0400
+Received: by ug-out-1314.google.com with SMTP id 32so280482ugm for
+ <git@vger.kernel.org>; Wed, 25 Oct 2006 20:44:15 -0700 (PDT)
+Received: by 10.67.117.2 with SMTP id u2mr2046520ugm; Wed, 25 Oct 2006
+ 20:44:14 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110]) by
+ mx.google.com with ESMTP id g30sm17953ugd.2006.10.25.20.44.14; Wed, 25 Oct
+ 2006 20:44:14 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Jim Meyering <jim@meyering.net> writes:
+Update example combined diff format to the current version
+$ git diff-tree -p -c fec9ebf16c948bcb4a8b88d0173ee63584bcde76
+and provide complete first chunk in example.
 
-> In a recent patch set I prepared, I placed the names of the
-> more relevant files at the front of the list given to "git-diff".
->...
-> I know about the -O<orderfile> option, and it can make git-diff do
-> what I want, but only if I first create a separate file containing
-> the names that I'm already providing to git-diff in the very same order.
->
-> Is there an easier way?
+Document combined diff format headers: how "diff header" look like,
+which of "extended diff headers" are used with combined diff and how
+they look like, differences in two-line from-file/to-file header from
+non-combined diff format, chunk header format.
 
-No, not right now.
+It should be noted that combined diff format was designed for quick
+_content_ inspection and renames would work correctly to pick which
+blobs from each tree to compare but otherwise not reflected in the
+output (the pathnames are not shown).
 
-> If not, would you be amenable to a new option enabling this behavior
-> without requiring a temporary file?
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Junio C Hamano napisa=B3:
+> Patches to documentation would be easier to comment on and more
+> productive, I guess.
 
-The thing is, "git diff -- Z A" does *not* mean:
+So here you have. It should perhaps get review on validity by someone
+well versed in the combined diff generation code. There are some guesse=
+s
+here...
 
-	I know I have a file called Z and a file called A;
-	please give diff for these files.
+It compiles, but the output was not inspected.
 
-What it means is:
 
-	Please give me the diff as usual, but I care about paths
-	that match these patterns, Z or A.
+ Documentation/diff-format.txt |   70 +++++++++++++++++++++++++++++++++=
++++++---
+ 1 files changed, 65 insertions(+), 5 deletions(-)
 
-So "git diff -- Documentation" names all changed files in that
-directory; you could also spell it "Documentation/" for clarity.
+diff --git a/Documentation/diff-format.txt b/Documentation/diff-format.=
+txt
+index 617d8f5..0d04b03 100644
+--- a/Documentation/diff-format.txt
++++ b/Documentation/diff-format.txt
+@@ -156,18 +156,78 @@ to produce 'combined diff', which looks=20
+=20
+ ------------
+ diff --combined describe.c
+-@@@ +98,7 @@@
+-   return (a_date > b_date) ? -1 : (a_date =3D=3D b_date) ? 0 : 1;
++index fabadb8,cc95eb0..4866510
++--- a/describe.c
+++++ b/describe.c
++@@@ -98,20 -98,12 +98,20 @@@
++  	return (a_date > b_date) ? -1 : (a_date =3D=3D b_date) ? 0 : 1;
+   }
+-
++ =20
+ - static void describe(char *arg)
+  -static void describe(struct commit *cmit, int last_one)
+ ++static void describe(char *arg, int last_one)
+   {
+- +     unsigned char sha1[20];
+- +     struct commit *cmit;
++ +	unsigned char sha1[20];
++ +	struct commit *cmit;
++  	struct commit_list *list;
++  	static int initialized =3D 0;
++  	struct commit_name *n;
++ =20
++ +	if (get_sha1(arg, sha1) < 0)
++ +		usage(describe_usage);
++ +	cmit =3D lookup_commit_reference(sha1);
++ +	if (!cmit)
++ +		usage(describe_usage);
++ +
++  	if (!initialized) {
++  		initialized =3D 1;
++  		for_each_ref(get_name);
+ ------------
+=20
++1.   It is preceded with a "git diff" header, that looks like
++     this (when '-c' option is used):
++
++       diff --combined fileM
++
++     or like this (when '--cc' option is used):
++
++       diff --c fileM
++
++2.   It is followed by one or more extended header lines
++     (we assume here that we have merge with two parents):
++
++       index <hash>,<hash>..<hash>
++       mode <mode>,<mode>..<mode>
++       new file mode <mode>
++
++     The "mode <mode>,<mode>..<mode>" appears only if at least
++     one of the <mode> is diferent from the rest. Extended headers
++     with information about detected contents movement (renames
++     and copying detection) are designed to work with diff of two
++     <tree-ish> and are not used by combined diff format. Currently
++     combined diff format cannot show files which were removed
++     by merge, so "deleted file mode <mode>,<mode>" is never used.
++
++3.   It is followed by two-line from-file/to-file header
++
++       --- a/fileM
++       +++ b/fileM
++
++     Contrary to two-line header for traditional 'unified' diff
++     format, and similar to filenames in ordinary "diff header",
++     /dev/null is not used for creation combined diff.
++
++4.   Chunk header format is modified to prevent people from
++     accidentally feeding it to 'patch -p1'. Combined diff format
++     was created for review of merge commit changes, and was not
++     meant for apply. The change is similar to the change in the
++     extended 'index' header
++
++       @@@ <from-file-range> <from-file-range> <to-file-range> @@@
++
++     It might be not obvious that we have number of parents + 1
++     '@' characters in chunk header for combined diff format.
++
+ Unlike the traditional 'unified' diff format, which shows two
+ files A and B with a single column that has `-` (minus --
+ appears in A but removed in B), `+` (plus -- missing in A but
+--=20
+1.4.2.1
 
-git-diff traverses two tree-like things (either tree-vs-tree,
-tree-vs-index, or tree-vs-working tree) in parallel in the
-canonical order, but skips comparing paths that do not match the
-list of patterns you gave on the command line.  While it does
-so, we do not record which pattern caused the path to be
-included in the output anywhere, so there currently is no way to
-tell which ones matched an earlier pattern and which ones
-matched a later one.
 
-If somebody wants to do this, the place to modify would be the
-following:
 
- - add a new parameter, "int match_number", to change_fn_t and
-   add_remove_fn_t functions, and add a new member to struct
-   diff_filepair to record it.
-
- - update all callers of diff_addremove, diff_change, and
-   diff_unmerge to pass which pathspec the user gave on the
-   command line matched the path to be included (in your example
-   if both Z and A were directory, file Z/foo gets number 1 and
-   file A/bar gets number 2).
-
- - update diff_addremove, diff_change and diff_unmerge to pass
-   that match_number to diff_queue(), and make diff_queue()
-   record the number in the new diff_filepair it creates.
-
- - in places where an existing filepair is split into two and
-   two existing filepairs are merged into one (e.g. "break" and
-   "rename"), make sure match_number is propagated sensibly from
-   the original filepairs to the modified ones.
-
- - in diffcore_std(), if orderfile is not in use, use the
-   match_number to sort the queued filepairs.
-
+--=20
+Jakub Narebski
