@@ -1,69 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-svn: fix dcommit losing changes when out-of-date from svn
-Date: Thu, 09 Nov 2006 02:00:18 -0800
-Message-ID: <7vfyctkki5.fsf@assigned-by-dhcp.cox.net>
-References: <455277A6.2000404@midwinter.com>
-	<20061109091937.GA22853@localdomain>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH (resend)] gitweb: Use --no-commit-id in git_commit and git_commitdiff
+Date: Thu, 26 Oct 2006 11:37:11 +0200
+Message-ID: <200610261137.12211.jnareb@gmail.com>
+References: <200610261050.21214.jnareb@gmail.com> <7vejsvpi4d.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 9 Nov 2006 10:00:35 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 26 Oct 2006 09:37:00 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061109091937.GA22853@localdomain> (Eric Wong's message of
-	"Thu, 9 Nov 2006 01:19:37 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=bkES5XRK/e1kFUFnOTxUWJwSxi93n7x5qvhHFWHCZW344U5/rj9Vxo703qlKR2T7q1MhgtBT1osAq84Z294igQ3F3VFTjlFDlxgKVbyJbm1q9GmVkmhyi/IL4iJNM1oanqbZbiu+27b8Gdb2ET8XPstpueILbxNAGHL0WJlTUk8=
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vejsvpi4d.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30169>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gi6hs-0007L8-1f for gcvg-git@gmane.org; Thu, 09 Nov
- 2006 11:00:25 +0100
+ esmtp (Exim 4.43) id 1Gd1fO-00036D-FU for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 11:36:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754774AbWKIKAU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 9 Nov 2006
- 05:00:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754777AbWKIKAU
- (ORCPT <rfc822;git-outgoing>); Thu, 9 Nov 2006 05:00:20 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:14811 "EHLO
- fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1754774AbWKIKAT
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Nov 2006 05:00:19 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061109100018.YUDD27894.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>; Thu, 9
- Nov 2006 05:00:18 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id ka0P1V00N1kojtg0000000; Thu, 09 Nov 2006
- 05:00:24 -0500
-To: Eric Wong <normalperson@yhbt.net>, Steven Grimm <koreth@midwinter.com>
+ S1422976AbWJZJgi (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 05:36:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422961AbWJZJgi
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 05:36:38 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:18096 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1422976AbWJZJgh
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 05:36:37 -0400
+Received: by ug-out-1314.google.com with SMTP id 32so316806ugm for
+ <git@vger.kernel.org>; Thu, 26 Oct 2006 02:36:36 -0700 (PDT)
+Received: by 10.67.103.7 with SMTP id f7mr2429764ugm; Thu, 26 Oct 2006
+ 02:36:34 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110]) by
+ mx.google.com with ESMTP id k2sm3032162ugf.2006.10.26.02.36.33; Thu, 26 Oct
+ 2006 02:36:34 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Eric Wong <normalperson@yhbt.net> writes:
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > Use --no-commit-id option to git-diff-tree command in git_commit and
+> > git_commitdiff to filter out commit ID output that git-diff-tree adds
+> > when called with only one <tree-ish> (not only for --stdin). Remove
+> > filtering commit IDs from git-diff-tree output.
+> >
+> > This option is in git since at least v1.0.0, so make use of it.
+> 
+> *BLUSH*
+> 
+> I think we would need something like this, if only for
+> completeness.
+> 
+> -- >8 --
+> [PATCH] combine-diff: honour --no-commit-id
+> 
+> Somehow we forgot to look at no_commit_id flag in these
+> codepaths.
 
-> There was a bug in dcommit (and commit-diff) which caused deltas
-> to be generated against the latest version of the changed file
-> in a repository, and not the revision we are diffing (the tree)
-> against locally.
->
-> This bug can cause recent changes to the svn repository to be
-> silently clobbered by git-svn if our repository is out-of-date.
->
-> Thanks to Steven Grimm for noticing the bug.
->
-> The (few) people using the commit-diff command are now required
-> to use the -r/--revision argument.  dcommit usage is unchanged.
->
-> Signed-off-by: Eric Wong <normalperson@yhbt.net>
-
-Thanks both for your clear problem report and quick resolution
-of the issue.
-
-Steven, I do not interact with real svn repository myself so I
-can only judge from the test in this patch and Steven's test
-case, so it would be more assuring for me if you can confirm it
-fixes the issue for you.
+It's good that I haven't started coding support for combined commitdiff
+in gitweb, as I would probably wonder why the code doesn't work ;-)
+-- 
+Jakub Narebski
