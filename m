@@ -1,81 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Fri, 1 Dec 2006 14:43:11 +0100
-Message-ID: <20061201134311.GV18810@admingilde.org>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611281335.38728.andyparkins@gmail.com> <20061129160355.GF18810@admingilde.org> <200611292000.23778.andyparkins@gmail.com> <20061130170625.GH18810@admingilde.org> <456F29A2.1050205@op5.se> <45701A24.5060500@b-i-t.de> <20061201121110.GP18810@admingilde.org> <45702C50.9050307@b-i-t.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] diff-format.txt: Combined diff format documentation supplement
+Date: Wed, 25 Oct 2006 23:15:36 -0700
+Message-ID: <7vac3jk3g7.fsf@assigned-by-dhcp.cox.net>
+References: <ehoo2k$1g6$1@sea.gmane.org>
+	<7vejswkoi4.fsf@assigned-by-dhcp.cox.net>
+	<200610260544.50614.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="niUlcCfh/sMBwTxc"
-NNTP-Posting-Date: Fri, 1 Dec 2006 13:43:30 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 26 Oct 2006 06:15:45 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <45702C50.9050307@b-i-t.de>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <200610260544.50614.jnareb@gmail.com> (Jakub Narebski's message
+	of "Thu, 26 Oct 2006 05:44:49 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30140>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq8fb-000091-C8 for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 14:43:15 +0100
+ esmtp (Exim 4.43) id 1GcyWj-00074k-E1 for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 08:15:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031489AbWLANnM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 08:43:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031498AbWLANnM
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 08:43:12 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:51623 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S1031489AbWLANnM
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 08:43:12 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1Gq8fX-0006BH-78; Fri, 01 Dec 2006 14:43:11 +0100
-To: sf <sf@b-i-t.de>
+ S1423427AbWJZGPi (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 02:15:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423428AbWJZGPi
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 02:15:38 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:31170 "EHLO
+ fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S1423427AbWJZGPi
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 02:15:38 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao04.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061026061537.XCOS22409.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>; Thu, 26
+ Oct 2006 02:15:37 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id euFK1V00V1kojtg0000000 Thu, 26 Oct 2006
+ 02:15:20 -0400
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+Jakub Narebski <jnareb@gmail.com> writes:
 
---niUlcCfh/sMBwTxc
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> So here you have. It should perhaps get review on validity by someone
+> well versed in the combined diff generation code. There are some guesses
+> here...
 
-hoi :)
+Thanks.
 
-On Fri, Dec 01, 2006 at 02:21:20PM +0100, sf wrote:
-> I just had a short (really short) look at your work. My impression is=20
-> that your repository setup is much too complicated.
+I guess review by the original author would be good enough;
+this is entirely my code -- it was done while Linus and gang
+was having fun in NZ, if I recall correctly ;-).
 
-Well, I'm not really satisfied with the UI part.
-What exactly do you find complicated?
+> It compiles, but the output was not inspected.
 
-> As I proposed elsewhere: For submodules to work you only need to allow=20
-> commits in tree objects (that is what your implementation requires as=20
-> well). Everything else is in the tools. Much simpler.
-
-I do not quite get your point.
-The core of my work allows to put commits into tree objects.
-Then there is some more (but not quite finished) work to make the tools
-work together with submodules.  So no, not everything is there yet.
-
---=20
-Martin Waitz
-
---niUlcCfh/sMBwTxc
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFcDFvj/Eaxd/oD7IRAkAsAJ0UJe2dBsptMkSE/G7gbDf8nWe03gCeKDPI
-V2QXHZmKFCHmjPNXbzx1B00=
-=so2r
------END PGP SIGNATURE-----
-
+I've done minimal asciidoc mark-up fixes.  Troff man output look
+horrible but that is not limited to this man page -- it looks
+quite wrong whenever numbered list with displayed examples are
+used.
