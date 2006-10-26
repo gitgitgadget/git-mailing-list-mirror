@@ -1,64 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 1/4] xdl_merge(): set mode to 0 when refining conflicts
-Date: Thu, 30 Nov 2006 00:23:31 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611300021490.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_06_12,HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Eran Tromer <git2eran@tromer.org>
+Subject: Re: fetching packs and storing them as packs
+Date: Thu, 26 Oct 2006 16:45:32 +0200
+Message-ID: <4540CA0C.6030300@tromer.org>
+References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 29 Nov 2006 23:23:47 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 26 Oct 2006 22:10:59 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-X-Y-GMX-Trusted: 0
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 28
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: line108-16.adsl.actcom.co.il
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.7) Gecko/20060913 Fedora/1.5.0.7-1.fc5 Thunderbird/1.5.0.7 Mnenhy/0.7.4.0
+In-Reply-To: <Pine.LNX.4.64.0610252333540.12418@xanadu.home>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30265>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpYm9-0004Ib-LF for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 00:23:38 +0100
+ esmtp (Exim 4.43) id 1GdDQr-0000ci-6S for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 00:10:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758957AbWK2XXe (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
- 18:23:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758974AbWK2XXe
- (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 18:23:34 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55961 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1758957AbWK2XXd (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 18:23:33 -0500
-Received: (qmail invoked by alias); 29 Nov 2006 23:23:32 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp040) with SMTP; 30 Nov 2006 00:23:32 +0100
-To: Davide Libenzi <davidel@xmailserver.org>, git@vger.kernel.org,
- junkio@cox.net
+ S1945961AbWJZWKe (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 18:10:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945962AbWJZWKd
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 18:10:33 -0400
+Received: from main.gmane.org ([80.91.229.2]:40398 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1945961AbWJZWKd (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 18:10:33 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43) id
+ 1GdDQL-0000T7-SN for git@vger.kernel.org; Fri, 27 Oct 2006 00:10:06 +0200
+Received: from line108-16.adsl.actcom.co.il ([192.117.108.16]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Fri, 27 Oct 2006 00:10:05 +0200
+Received: from git2eran by line108-16.adsl.actcom.co.il with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 27 Oct 2006
+ 00:10:05 +0200
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+On 2006-10-26 05:44, Nicolas Pitre wrote:
+> diff --git a/receive-pack.c b/receive-pack.c
+> index 1fcf3a9..7f6dc49 100644
+> --- a/receive-pack.c
+> +++ b/receive-pack.c
+> @@ -7,7 +7,7 @@
+>  
+>  static const char receive_pack_usage[] = "git-receive-pack <git-dir>";
+>  
+> -static const char *unpacker[] = { "unpack-objects", NULL };
+> +static const char *unpacker[] = { "index-pack", "-v", "--stdin", "--fix-thin", NULL };
+>  
+>  static int report_status;
 
-mode == 0 means "conflict", and just because a conflict has been
-split does not mean that the latter half is no conflict.
+This creates a race condition w.r.t. "git repack -a -d", similar to the
+existing race condition between "git fetch --keep" and
+"git repack -a -d". There's a point in time where the new pack is stored
+but not yet referenced, and if "git repack -a -d" runs at that point it
+will eradicate the pack. When the heads are finally updated, you get a
+corrupted repository.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+(That's for the shell implementation of git-repack, at least. I assume
+the new builtin preserves the old semantics.)
 
----
- xdiff/xmerge.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+Since people run the supposedly safe "git repack -a -d" on regular
+basis, this is going to bite.
 
-diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
-index 04f2795..7b85aa5 100644
---- a/xdiff/xmerge.c
-+++ b/xdiff/xmerge.c
-@@ -228,6 +228,7 @@ static int xdl_refine_conflicts(xdfenv_t
- 			m2->next = m->next;
- 			m->next = m2;
- 			m = m2;
-+			m->mode = 0;
- 			m->i1 = xscr->i1 + i1;
- 			m->chg1 = xscr->chg1;
- 			m->i2 = xscr->i2 + i2;
--- 
-1.4.4.g5aac-dirty
+  Eran
