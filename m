@@ -1,66 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's in git.git (stable)
-Date: Sat, 16 Dec 2006 00:22:29 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612160020590.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612140959.19209.andyparkins@gmail.com>
- <7v7iwu93rv.fsf@assigned-by-dhcp.cox.net> <200612141136.59041.andyparkins@gmail.com>
- <eluemi$gc0$1@sea.gmane.org> <Pine.LNX.4.64.0612151029080.18171@xanadu.home>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: What's in git.git
+Date: Thu, 26 Oct 2006 14:08:24 +0200
+Message-ID: <20061026120824.GO20017@pasky.or.cz>
+References: <7vk62npipb.fsf@assigned-by-dhcp.cox.net> <ehpu4t$ch2$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Fri, 15 Dec 2006 23:22:53 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 26 Oct 2006 12:08:40 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.64.0612151029080.18171@xanadu.home>
-X-Y-GMX-Trusted: 0
+Content-Disposition: inline
+In-Reply-To: <ehpu4t$ch2$1@sea.gmane.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34573>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvMO2-0000y8-W5 for gcvg-git@gmane.org; Sat, 16 Dec
- 2006 00:22:43 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30198>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gd42A-0002OW-9C for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 14:08:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030367AbWLOXWd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 18:22:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030379AbWLOXWd
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 18:22:33 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57357 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1030367AbWLOXWc
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006 18:22:32 -0500
-Received: (qmail invoked by alias); 15 Dec 2006 23:22:30 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp039) with SMTP; 16 Dec 2006 00:22:30 +0100
-To: Nicolas Pitre <nico@cam.org>
+ S1423336AbWJZMI1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 08:08:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423329AbWJZMI0
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 08:08:26 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:3529 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1423336AbWJZMI0 (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 08:08:26 -0400
+Received: (qmail 8046 invoked by uid 2001); 26 Oct 2006 14:08:24 +0200
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
-
-On Fri, 15 Dec 2006, Nicolas Pitre wrote:
-
-> On Fri, 15 Dec 2006, Jakub Narebski wrote:
+Dear diary, on Thu, Oct 26, 2006 at 11:12:36AM CEST, I got a letter
+where Jakub Narebski <jnareb@gmail.com> said that...
+> This unfortunately means that I cannot test gitweb based on 'master'
+> branch using _released_ git core, git version 1.4.3.3, as it doesn't have
+> git-for-each-ref nor git-show-ref.
 > 
-> > It would be nice to have some generic place in git config to specify
-> > default options to git commands (at least for interactive shell). It
-> > cannot be done using aliases. Perhaps defaults.<command> config variable?
+> BTW. do people often use latest gitweb with older git binaries? Should
+> we try to wait for core feature to mature to released version before using
+> it in gitweb? Or perhaps we should add some kind of version checking, and
+> provide workrounds, e.g. using $ENV{GIT_DIR} if git core doesn't support
+> --git-dir option, pathlimit filtering using git-rev-list piped to 
+> git-diff-tree --stdin in git_history if there is no --full-history
+> option, show always HEAD activity if there is no git-for-each-ref
+> etc.; well the latest we can do without checking for git core version, just
 > 
-> I would say the alias facility has to be fixed then.
-> 
-> In bash you can alias "ls" to "ls -l" and it just works.
+>         if -x qx($GIT --exec-path)/git-for-each-ref
 
-So, why not use bash aliases?
+I can't imagine a situation where you would _want_ to use latest gitweb
+but refuse to use older git binaries - can you explain why do you want
+to do that?
 
-Frankly, what git aliases try to achieve is a little bit different from 
-bash aliases. Bash knows exactly when a command is interactive, and has a 
-clear advantage there. Git _cannot_ know.
+If you don't want to install the latest master systemwide, that's
+reasonable, but you can just keep the latest master for the gitweb
+script and/or your personal use.
 
-Ciao,
-Dscho
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
