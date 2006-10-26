@@ -6,83 +6,74 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [PATCH] merge-recursive: add/add really is modify/modify with an empty base
-Date: Thu, 14 Dec 2006 11:31:38 +0000
-Message-ID: <b0943d9e0612140331q4c3a32e2l361fd04375f091d7@mail.gmail.com>
-References: <20061207101707.GA19139@spearce.org>
-	 <Pine.LNX.4.63.0612100056090.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <Pine.LNX.4.63.0612100114440.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7vmz5w5tuw.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0612122347590.2807@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7vvekgog0r.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0612130402300.2807@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7vvekgl2z2.fsf@assigned-by-dhcp.cox.net>
-	 <b0943d9e0612131401s6cde6d0du5e3c6d2e34bfbbb2@mail.gmail.com>
-	 <Pine.LNX.4.63.0612140045430.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: =?ISO-8859-1?Q?Re:_[PATCH_1/3]_make_index-p=E2?= =?ISO-8859-1?Q?ck_able_to_complete_thin_packs?=
+Date: Thu, 26 Oct 2006 12:52:15 +0100
+Message-ID: <b0943d9e0610260452m675b4229g73bca8e65ca009f9@mail.gmail.com>
+References: <Pine.LNX.4.64.0610252323100.12418@xanadu.home>
+	 <7vr6wvr1ca.fsf@assigned-by-dhcp.cox.net> <ehppbg$phq$1@sea.gmane.org>
+	 <20061026091925.GD13780@diana.vm.bytemark.co.uk>
+	 <tnxac3j4c6c.fsf@arm.com>
+	 <20061026105841.GB16372@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 14 Dec 2006 11:32:01 +0000 (UTC)
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 26 Oct 2006 11:52:37 +0000 (UTC)
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=e9HCzXVwTFnDu6Hyb+ssujhrNLG8LYsHoCeWnw9FQqWMS7euwL+gebR0P5BpuCkYCvknHE7fxwJt2ERWfAVyQJHFydaeoc8omfMziSSOZ4McbQvvX7SqX+m/Y+gpQ7PJOsSQOShtDu0mSayqJTeqm8ncThPml+fGog4kuTcgY8o=
-In-Reply-To: <Pine.LNX.4.63.0612140045430.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+        b=Iw5ufhbkkIPqkbF8w+ei/ovtsI56HWdYNj1MzvuhUH7mskzNsKW6Ph4kXbhnND4x9nti+7HwS4WG4cmesP78FSTIqGdACoK5N+/2Oqqj88o1BCtBdATuSBIyum3xQAw7adR2+Co4DjxIu1Dp1wTbV3keTXopteSREVDu7LmOiEg=
+In-Reply-To: <20061026105841.GB16372@diana.vm.bytemark.co.uk>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34319>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Guooh-0005z5-Fx for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 12:31:59 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30195>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gd3md-000887-Ci for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 13:52:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932635AbWLNLbl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 06:31:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932640AbWLNLbl
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 06:31:41 -0500
-Received: from nz-out-0506.google.com ([64.233.162.237]:4882 "EHLO
- nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S932635AbWLNLbj (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
- 2006 06:31:39 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so231287nze for
- <git@vger.kernel.org>; Thu, 14 Dec 2006 03:31:38 -0800 (PST)
-Received: by 10.65.54.9 with SMTP id g9mr1382788qbk.1166095898528; Thu, 14
- Dec 2006 03:31:38 -0800 (PST)
-Received: by 10.65.126.2 with HTTP; Thu, 14 Dec 2006 03:31:38 -0800 (PST)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+ S1423026AbWJZLwY convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006 07:52:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423105AbWJZLwY
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 07:52:24 -0400
+Received: from py-out-1112.google.com ([64.233.166.183]:27417 "EHLO
+ py-out-1112.google.com") by vger.kernel.org with ESMTP id S1423026AbWJZLwX
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006
+ 07:52:23 -0400
+Received: by py-out-1112.google.com with SMTP id z74so312102pyg for
+ <git@vger.kernel.org>; Thu, 26 Oct 2006 04:52:22 -0700 (PDT)
+Received: by 10.35.79.3 with SMTP id g3mr3148469pyl; Thu, 26 Oct 2006
+ 04:52:15 -0700 (PDT)
+Received: by 10.35.103.18 with HTTP; Thu, 26 Oct 2006 04:52:14 -0700 (PDT)
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
 Sender: git-owner@vger.kernel.org
 
-On 13/12/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> xdl_merge(), as Git uses it, tries harder to find the true conflicts. So,
-> if the files actually differ in only one line, just this line will be
-> shown as conflict.
+On 26/10/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 2006-10-26 11:13:47 +0100, Catalin Marinas wrote:
+> > Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> > > On 2006-10-26 09:50:48 +0200, Jakub Narebski wrote:
+> > > > That said, git-am should understand QP with coding in mail
+> > > > headers.
+> > >
+> > > I really hope it does, since I just patched StGIT to generate suc=
+h
+> > > headers. (Out of pure vanity -- I don't want my name mangled!)
+> >
+> > It looks like it does, that's how I applied some of your patches
+> > ('stg import' doesn't understand them).
+>
+> Hmm. So now I know why you haven't taken my "stg email" patches. I
+> guess I'll have to fix 'stg import' then. :-)
 
-I gave the latest GIT a try and it works OK with StGIT.
+That's one of the reasons (and I didn't have time to document myself
+before giving a proper reply). The other is that Gnus (and gmail)
+doesn't display the messages properly - it shows a lot of "=3D20". Is i=
+t
+possible not to affect the body (or make it optional)? People only
+using "patch" to apply the diffs would have problems with this
+encoding.
 
-This new merge looks much better than diff3 (or rcs merge) because it
-only shows the true conflicts.
-
-What it the relation between git-merge-recursive and "git-read-tree
--m" (if any)? I currently still use "git-read-tree -m" for some merges
-because of the speed gain due to the --agressive option (really
-noticeable when picking a patch from an older branch). Probably
-git-merge-recursive cannot implement this since it needs to track
-deletion/additions for rename detection.
-
-Are there any other things to be aware if I completely replace the
-"git-read-tree + diff3" with git-merge-recursive?
-
-One nice addition to git-merge-recursive (probably only useful to
-StGIT) would be more meaningful labeling of the conflict regions,
-passed via a command line similar to the "diff3 -L" option. StGIT
-generates "patched", "current" and "ancestor" labels with diff3.
-
-Yet another nice feature would be the ancestor region (which diff3
-doesn't add either but it gets added by emacs'
-ediff-merge-files-with-ancestor function if you use the interactive
-merge with StGIT).
-
--- 
+--=20
