@@ -1,83 +1,58 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: git and "dumb protocols"
-Date: Thu, 02 Nov 2006 13:04:16 +0100
-Message-ID: <vpq4ptixdfj.fsf@ecrins.imag.fr>
-References: <vpqu01i16g8.fsf@ecrins.imag.fr>
-	<20061102104848.GH20017@pasky.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 2 Nov 2006 12:05:35 +0000 (UTC)
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: Re: VCS comparison table
+Date: Wed, 25 Oct 2006 22:06:08 -0300
+Message-ID: <200610260106.k9Q168ik006648@laptop13.inf.utfsm.cl>
+References: <pasky@suse.cz>
+NNTP-Posting-Date: Thu, 26 Oct 2006 01:06:28 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Mail-Followup-To: git@vger.kernel.org
-In-Reply-To: <20061102104848.GH20017@pasky.or.cz> (Petr Baudis's message of "Thu\, 2 Nov 2006 11\:48\:48 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.6 (imag.imag.fr [129.88.30.1]); Thu, 02 Nov 2006 13:04:24 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+In-Reply-To: Message from Petr Baudis <pasky@suse.cz> 
+   of "Thu, 26 Oct 2006 00:44:28 +0200." <20061025224428.GN20017@pasky.or.cz> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.1.3 (inti.inf.utfsm.cl [200.1.19.1]); Wed, 25 Oct 2006 22:06:11 -0300 (CLST)
+X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30128>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfbK2-0005OA-CT for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 13:05:27 +0100
+ esmtp (Exim 4.43) id 1GcthP-00075e-Ny for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 03:06:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752132AbWKBMFU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
- 07:05:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752135AbWKBMFT
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 07:05:19 -0500
-Received: from imag.imag.fr ([129.88.30.1]:63420 "EHLO imag.imag.fr") by
- vger.kernel.org with ESMTP id S1752132AbWKBMFN (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 07:05:13 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52]) by
- imag.imag.fr (8.13.6/8.13.6) with ESMTP id kA2C4LUP003389
- (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO) for
- <git@vger.kernel.org>; Thu, 2 Nov 2006 13:04:24 +0100 (CET)
-Received: from ecrins.imag.fr ([129.88.43.124]) by mail-veri.imag.fr with
- esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.50) id 1GfbIu-0000Vl-JL for
- git@vger.kernel.org; Thu, 02 Nov 2006 13:04:16 +0100
-Received: from moy by ecrins.imag.fr with local (Exim 4.50) id
- 1GfbIu-0004pJ-G6 for git@vger.kernel.org; Thu, 02 Nov 2006 13:04:16 +0100
-To: git@vger.kernel.org
+ S1422657AbWJZBGU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 21:06:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422778AbWJZBGU
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 21:06:20 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:15496 "EHLO
+ inti.inf.utfsm.cl") by vger.kernel.org with ESMTP id S1422657AbWJZBGT (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 21:06:19 -0400
+Received: from laptop13.inf.utfsm.cl (pc-232-245-83-200.cm.vtr.net
+ [200.83.245.232]) by inti.inf.utfsm.cl (8.13.7/8.13.1) with ESMTP id
+ k9Q16Agt013508 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
+ verify=NO); Wed, 25 Oct 2006 22:06:11 -0300
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1]) by
+ laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id k9Q168ik006648; Wed, 25
+ Oct 2006 22:06:09 -0300
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-Petr Baudis <pasky@suse.cz> writes:
+Petr Baudis <pasky@suse.cz> wrote:
+> Dear diary, on Thu, Oct 26, 2006 at 12:29:17AM CEST, I got a letter
+> where Jakub Narebski <jnareb@gmail.com> said that...
+> > Cute names are taken: CoGITo, gitk, qgit (GTK+ history viewer is gitview,
+> > not ggit, curiously ;-) and tig.
+> 
+> wit?
 
->   yes, you can push using HTTP DAV - just push to an HTTP URL; make sure
-> you have git-http-push compiled, it is sometimes not compiled because it
-> unfortunately adds dependencies on couple of more libraries.
-
-That's great. I don't need this right now, but having worked behind a
-firewall + proxy, I know how appreciable it is to push with DAV ;-).
-
->   I think a patch that would add support for pushing over sftp or some
-> other dumb protocol would be welcome. One problem is with proper locking
-> of ref updates (not sure how well would sftp cope with that), another is
-> that you will need to do git-update-server-info's job on the server
-> side.
-
-It should be possible (but not implemented AAUI) also to generate the
-additional info of git-update-server-info on the client, isn't it?
-
->   If you already have SSH access to the server, why not compile Git
-> there and install it to your $HOME, though?
-
-I'll probably do, but my concern is broader than that. I like the
-ability to use almost any webhosting service for my revision control.
-GNU Arch was quite good at that, bzr is also (doesn't support webdav
-very well yet, but read-only-HTTP, sftp and ftp are there), so I'd
-like git to do the same.
-
-And yes, there are tons of reasons not to install git on the server.
-In particular, the fact that I'm not root there, and too lazy to do
-more than "aptitude install git" with pleasure ;-).
-
+Wig. 
 -- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                    Fono: +56 32 2654431
+Universidad Tecnica Federico Santa Maria             +56 32 2654239
