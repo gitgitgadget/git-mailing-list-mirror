@@ -4,62 +4,66 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] Teach receive-pack how to keep pack files when unpacklooseobjects = 0.
-Date: Tue, 31 Oct 2006 01:33:12 -0500
-Message-ID: <20061031063312.GA7375@spearce.org>
-References: <20061030223615.GH5775@spearce.org> <7vu01ltnfs.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: merge-recursive, was Re: What's in git.git
+Date: Thu, 26 Oct 2006 09:23:28 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0610260921550.12418@xanadu.home>
+References: <7vk62npipb.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0610261114520.3286@wbgn013.biozentrum.uni-wuerzburg.de>
+ <ehputm$ch2$3@sea.gmane.org> <7vlkn3o1w1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 31 Oct 2006 06:33:28 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Thu, 26 Oct 2006 13:23:47 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <7vu01ltnfs.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-reply-to: <7vlkn3o1w1.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30213>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GenBa-0003dr-8c for gcvg-git@gmane.org; Tue, 31 Oct
- 2006 07:33:23 +0100
+ esmtp (Exim 4.43) id 1Gd5Cm-0006yY-Nz for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 15:23:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422794AbWJaGdT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
- 01:33:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422798AbWJaGdT
- (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 01:33:19 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:56009 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1422794AbWJaGdS
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 01:33:18 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GenBU-00086h-9r; Tue, 31 Oct 2006 01:33:16 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 6A95B20FB0C; Tue, 31 Oct 2006 01:33:13 -0500 (EST)
+ S1423510AbWJZNXa (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 09:23:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423511AbWJZNX3
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 09:23:29 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:33639 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S1423510AbWJZNX3
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 09:23:29 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J7Q007DOVV48F70@VL-MO-MR002.ip.videotron.ca> for git@vger.kernel.org; Thu,
+ 26 Oct 2006 09:23:28 -0400 (EDT)
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Until this is resolved, I feel there should be some way to
-> control the behaviour, so while I agree with the general
-> direction, I think the patch to revert the sender's wish should
-> come at the end.
- 
-I disagree, but I'm not the maintainer.  :-)
+On Thu, 26 Oct 2006, Junio C Hamano wrote:
 
-I reverted it before making my changes as I was editing the same
-lines as c7740a modified.  Therefore reverting c7740a after my
-changes would no longer be a clean revert, making it slightly
-harder to actuallly do the revert as you would need to manually
-fix up receive-pack.c.
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > Johannes Schindelin wrote:
+> >
+> >> BTW what happened to the builtin shortlog? It is the last Perl script I 
+> >> use regularly... (should make people happy who are stuck with Activision 
+> >> Perl...)
+> >
+> > BTW. both Perl version and builtin shorlog have email->real name translation
+> > table built in. In Perl script version it is in __DATA__ section, and we
+> > could update it using Inline::Files module, in C version it was in table.
+> > But in fact this list is project specific. Shouldn't we make it customizable
+> > (::sigh::, yet another file in $GIT_DIR...).
+> 
+> It already reads from .mailmap which could be tracked as part of
+> the sources (if it is project specific it would be better if it
+> can be shared among members).
 
--- 
+The C version was missing that support if I remember right.
+
+Actually I think that the email table should be removed out of the tool 
+entirely and always read from .mailmap instead.
+
+
