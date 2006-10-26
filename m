@@ -1,55 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git and "dumb protocols"
-Date: Thu, 2 Nov 2006 11:51:57 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611021151340.1670@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <vpqu01i16g8.fsf@ecrins.imag.fr>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 2 Nov 2006 10:53:38 +0000 (UTC)
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: [PATCH (again)] Fix show-ref usagestring
+Date: Thu, 26 Oct 2006 21:39:05 +0200
+Message-ID: <11618915452882-git-send-email-hjemli@gmail.com>
+NNTP-Posting-Date: Thu, 26 Oct 2006 19:39:30 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <vpqu01i16g8.fsf@ecrins.imag.fr>
-X-Y-GMX-Trusted: 0
+X-Mailer: git-send-email 1.4.3.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30260>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfaBO-0008CM-7q for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 11:52:27 +0100
+ esmtp (Exim 4.43) id 1GdB4L-0003I2-Ul for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 21:39:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752822AbWKBKwA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
- 05:52:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752821AbWKBKwA
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 05:52:00 -0500
-Received: from mail.gmx.de ([213.165.64.20]:47760 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1752822AbWKBKv7 (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 05:51:59 -0500
-Received: (qmail invoked by alias); 02 Nov 2006 10:51:57 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp042) with SMTP; 02 Nov 2006 11:51:57 +0100
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
+ S1422847AbWJZTjK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 15:39:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422886AbWJZTjK
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 15:39:10 -0400
+Received: from mail48.e.nsc.no ([193.213.115.48]:27900 "EHLO
+ mail48.e.nsc.no") by vger.kernel.org with ESMTP id S1422847AbWJZTjJ (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 15:39:09 -0400
+Received: from localhost.localdomain (ti231210a080-7372.bb.online.no
+ [80.213.28.208]) by mail48.nsc.no (8.13.8/8.13.5) with ESMTP id
+ k9QJd6Ab027729; Thu, 26 Oct 2006 21:39:06 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+This describes the abbreviation possibilities for git-show-ref
 
-On Thu, 2 Nov 2006, Matthieu Moy wrote:
+Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+---
 
-> Is it possible with git to push to a server on which git is not
-> installed, and if so, how?
+Hopefully I can finally get it right :-)
 
-See
 
-http://www.kernel.org/git/gitweb.cgi?p=git/git.git;a=blob;h=ba191569af9501117322e1881160226a74867007;hb=html;f=howto/setup-git-server-over-http.txt
+ builtin-show-ref.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Hth,
-Dscho
+diff --git a/builtin-show-ref.c b/builtin-show-ref.c
+index f2912e8..59ac46b 100644
+--- a/builtin-show-ref.c
++++ b/builtin-show-ref.c
+@@ -3,7 +3,7 @@ #include "refs.h"
+ #include "object.h"
+ #include "tag.h"
+ 
+-static const char show_ref_usage[] = "git show-ref [-q|--quiet] [--verify] [-h|--head] [-d|--dereference] [-s|--hash] [--tags] [--heads] [--] [pattern*]";
++static const char show_ref_usage[] = "git show-ref [-q|--quiet] [--verify] [-h|--head] [-d|--dereference] [-s|--hash[=<length>]] [--abbrev[=<length>]] [--tags] [--heads] [--] [pattern*]";
+ 
+ static int deref_tags = 0, show_head = 0, tags_only = 0, heads_only = 0,
+ 	found_match = 0, verify = 0, quiet = 0, hash_only = 0, abbrev = 0;
+-- 
+1.4.3.2
