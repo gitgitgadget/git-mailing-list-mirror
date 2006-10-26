@@ -1,70 +1,58 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: git-fetch fails with error code 128
-Date: Thu, 14 Dec 2006 18:19:21 -0500
-Message-ID: <20061214231921.GG26202@spearce.org>
-References: <200612142308.45376.andyparkins@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 14 Dec 2006 23:19:31 +0000 (UTC)
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: [PATCH] Fix show-ref usagestring
+Date: Thu, 26 Oct 2006 20:56:11 +0200
+Message-ID: <11618889712606-git-send-email-hjemli@gmail.com>
+NNTP-Posting-Date: Thu, 26 Oct 2006 18:57:01 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <200612142308.45376.andyparkins@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Mailer: git-send-email 1.4.3.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34434>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuzrM-0000QJ-CE for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 00:19:28 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30258>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GdAP2-0003hw-CA for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 20:56:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751850AbWLNXTZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 18:19:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751849AbWLNXTZ
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 18:19:25 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:41448 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751850AbWLNXTY (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 18:19:24 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Guzr7-0007PB-Da; Thu, 14 Dec 2006 18:19:13 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- CE05E20FB65; Thu, 14 Dec 2006 18:19:21 -0500 (EST)
-To: Andy Parkins <andyparkins@gmail.com>
+ S1161366AbWJZS43 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 14:56:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423726AbWJZS43
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 14:56:29 -0400
+Received: from mail48.e.nsc.no ([193.213.115.48]:39649 "EHLO
+ mail48.e.nsc.no") by vger.kernel.org with ESMTP id S1423724AbWJZS42 (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 14:56:28 -0400
+Received: from localhost.localdomain (ti231210a080-7372.bb.online.no
+ [80.213.28.208]) by mail48.nsc.no (8.13.8/8.13.5) with ESMTP id
+ k9QIuDHI013334; Thu, 26 Oct 2006 20:56:13 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> wrote:
-> $ git fetch
-> remote: Generating pack...
-> remote: Done counting 189146 objects.
-> remote: Result has 186566 objects.
-> remote: Deltifying 186566 objects.
-> remote:  100% (186566/186566) done
-> Unpacking 186566 objects
-> fatal: failed to apply delta
-> fatal: unpack-objects died with error code 128
-> Fetch failure: /home/andyp/projects/temp/.git
-> 
-> What does that mean?  I ran fsck --full on the source repository, but it's 
-> made no difference.
+This describes the abbreviation possibilities for git-show-ref
 
-Bad voodoo.  What does 'git fetch -k' do?  It uses slightly
-different code for handling the deltas...
+Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+---
+ builtin-show-ref.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
+diff --git a/builtin-show-ref.c b/builtin-show-ref.c
+index f2912e8..297343b 100644
+--- a/builtin-show-ref.c
++++ b/builtin-show-ref.c
+@@ -3,7 +3,7 @@ #include "refs.h"
+ #include "object.h"
+ #include "tag.h"
+ 
+-static const char show_ref_usage[] = "git show-ref [-q|--quiet] [--verify] [-h|--head] [-d|--dereference] [-s|--hash] [--tags] [--heads] [--] [pattern*]";
++static const char show_ref_usage[] = "git show-ref [-q|--quiet] [--verify] [-h|--head] [-d|--dereference] [-s|--hash[=<length>]|--abbrev[=<length>]] [--tags] [--heads] [--] [pattern*]";
+ 
+ static int deref_tags = 0, show_head = 0, tags_only = 0, heads_only = 0,
+ 	found_match = 0, verify = 0, quiet = 0, hash_only = 0, abbrev = 0;
 -- 
+1.4.3.2
