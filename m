@@ -1,130 +1,101 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make git-clone --use-separate-remote the default
-Date: Thu, 23 Nov 2006 21:47:21 -0800
-Message-ID: <7vzmahe6qe.fsf@assigned-by-dhcp.cox.net>
-References: <20061123225835.30071.99265.stgit@machine.or.cz>
-	<7vejrtiwqd.fsf@assigned-by-dhcp.cox.net>
-	<20061123234203.GN7201@pasky.or.cz>
-	<7vlkm1hf57.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH (resend)] gitweb: Use --no-commit-id in git_commit and git_commitdiff
+Date: Thu, 26 Oct 2006 10:50:20 +0200
+Message-ID: <200610261050.21214.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 24 Nov 2006 05:47:36 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 26 Oct 2006 08:50:46 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vlkm1hf57.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Thu, 23 Nov 2006 16:17:24 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=rQyf7UXt/sa28WtC2zdGvs/vkLYwuz5BN7o0wYjDCs1Oj5jq4jOZFTLEenK2kjCd/yugV+vxyi4oTM7shQ8lsLHOvNqgrPhT78X2tIaMbs6fVK/iMAjzxOtpQeNI1ESmFbj/8ThtgQw/vbVpfpaZPjsd4NjitQt2uLVLuJNoMBU=
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30156>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnTuK-0006sk-F7 for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 06:47:28 +0100
+ esmtp (Exim 4.43) id 1Gd0wW-0003MV-PO for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 10:50:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934430AbWKXFrZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
- 00:47:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934431AbWKXFrZ
- (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 00:47:25 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:36241 "EHLO
- fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S934430AbWKXFrY
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 00:47:24 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061124054722.LACW9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Fri, 24
- Nov 2006 00:47:22 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id qVnV1V00W1kojtg0000000; Fri, 24 Nov 2006
- 00:47:30 -0500
-To: Petr Baudis <pasky@suse.cz>
+ S1751758AbWJZItr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 04:49:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751932AbWJZItr
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 04:49:47 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:62229 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1751758AbWJZItq
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 04:49:46 -0400
+Received: by ug-out-1314.google.com with SMTP id 32so310289ugm for
+ <git@vger.kernel.org>; Thu, 26 Oct 2006 01:49:44 -0700 (PDT)
+Received: by 10.67.101.10 with SMTP id d10mr2356565ugm; Thu, 26 Oct 2006
+ 01:49:43 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110]) by
+ mx.google.com with ESMTP id m4sm2977348ugc.2006.10.26.01.49.43; Thu, 26 Oct
+ 2006 01:49:43 -0700 (PDT)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+Use --no-commit-id option to git-diff-tree command in git_commit and
+git_commitdiff to filter out commit ID output that git-diff-tree adds
+when called with only one <tree-ish> (not only for --stdin). Remove
+filtering commit IDs from git-diff-tree output.
 
-> I agree --bare should continue to be a "snapshot mirror"; I am
-> not advocating for the removal of the internal implementation
-> detail such as $use_separate_remote variable.
->
-> However, I think having one sane behaviour is the right thing to
-> do for a clone that prepares a repository with a working tree
-> (including the one made with -n option, which only means "do not
-> do the check-out immediately after cloning" for such a
-> repository).
+This option is in git since at least v1.0.0, so make use of it.
 
-Just to let you know, I'll take the patch almost as is (even
-with the --use-immingled-remote), except with a slight rewording
-in the documentation to warn people that the backward
-compatibility option will be removed before the next major
-release.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |   11 ++++-------
+ 1 files changed, 4 insertions(+), 7 deletions(-)
 
-However, this simple command fails:
-
-	$ git push $URL master
-
-if the target repository $URL is made with use-separate-remote.
-
-This is because 'master' matches more than one on the remote
-side (heads/master and remotes/origin/master) which triggers
-"Hey, that's ambiguous, make yourself clear which one you mean!"
-check.  This breaks t5400 test.  We could "fix" the test to make
-it more explicit, but that is just a workaround.
-
-I think the send-pack/receive-pack pair needs to be taught that
-an unadorned branch name 'master' never matches anything under
-refs/remotes. This means that it would require an explicit
-refspec heads/master:remotes/origin/master in order to pudate
-refs under refs/remotes on the remote side with a push.  I do
-not think that is a big problem, because the normal patch-flow
-for shared repository workflow is:
-
-	remote			local
-
-		      (fecth)
-	heads/master	--->	remotes/origin/master ---.
-							 | (merge)
-	heads/master	<---	heads/master	      <--'
-
-and pushing into remotes/origin/* is not a norm.
-
-The function to fix is connect.c::match_explicit_refs() and I
-_think_ making connect.c::count_refspec_match() not to consider
-'foo' to match 'refs/remotes/origin/foo' (but still keeping it
-to match 'refs/heads/foo' or 'refs/tags/foo') is enough to make
-this happen.
-
-This brings up two related issues.  Currently we automatically
-prepare "Pull: refs/heads/$branch:refs/remotes/origin/$branch"
-for all branches that exists at the remote site when a clone
-happens.  Andy Parkins has a patch to allow a glob pattern to be
-there, like this [*1*]:
-
-	Pull: refs/heads/*:refs/remotes/origin/*
-
-which makes sense, and we might want to have this as the default
-after the clone [*2*].
-
-Another is if we might want to add "Push: " entry in the default
-after the clone.  I am a bit reluctant to make the default setup
-too specific to CVS style "central shared repo" workflow, but
-any stupid default would not suit people with truly distributed
-workflow anyway, so it might be fine.
-
-[Footnotes]
-
-*1* I rewrote the patch because I wanted to deal with the
-    fallout from recent packed-refs work at the same time.  So bugs
-    in the counter-proposal patch is mine while the credit for the
-    initiative and the idea goes to Andy.
-
-*2* I think the fetch wildcarding has an issue with what remote
-    head to merge when used with "git pull".  I think it should
-    use the one that is pointed at by refs/remotes/origin/HEAD,
-    but there is no code for that yet.  Hints, hints...
-
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index d7034b4..35a9afb 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3133,14 +3133,12 @@ sub git_commit {
+ 	if (!defined $parent) {
+ 		$parent = "--root";
+ 	}
+-	open my $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts, $parent, $hash
++	open my $fd, "-|", git_cmd(), "diff-tree", '-r', "--no-commit-id",
++		@diff_opts, $parent, $hash
+ 		or die_error(undef, "Open git-diff-tree failed");
+ 	my @difftree = map { chomp; $_ } <$fd>;
+ 	close $fd or die_error(undef, "Reading git-diff-tree failed");
+ 
+-	# filter out commit ID output
+-	@difftree = grep(!/^[0-9a-fA-F]{40}$/, @difftree);
+-
+ 	# non-textual hash id's can be cached
+ 	my $expires;
+ 	if ($hash =~ m/^[0-9a-fA-F]{40}$/) {
+@@ -3453,15 +3451,14 @@ sub git_commitdiff {
+ 	my @difftree;
+ 	if ($format eq 'html') {
+ 		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
++			"--no-commit-id",
+ 			"--patch-with-raw", "--full-index", $hash_parent, $hash
+ 			or die_error(undef, "Open git-diff-tree failed");
+ 
+ 		while (chomp(my $line = <$fd>)) {
+ 			# empty line ends raw part of diff-tree output
+ 			last unless $line;
+-			# filter out commit ID output
+-			push @difftree, $line
+-				unless $line =~ m/^[0-9a-fA-F]{40}$/;
++			push @difftree, $line;
+ 		}
+ 
+ 	} elsif ($format eq 'plain') {
+-- 
+1.4.3.3
