@@ -1,100 +1,137 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Combined diff format documentation
-Date: Wed, 25 Oct 2006 15:40:51 -0700
-Message-ID: <7vejswkoi4.fsf@assigned-by-dhcp.cox.net>
-References: <ehoo2k$1g6$1@sea.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Slight visual improvements to commitdiff view
+Date: Thu, 26 Oct 2006 18:13:11 +0200
+Message-ID: <200610261813.12567.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 25 Oct 2006 22:41:15 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 26 Oct 2006 16:12:54 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <ehoo2k$1g6$1@sea.gmane.org> (Jakub Narebski's message of "Thu,
-	26 Oct 2006 00:22:49 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=rCvFM6PAuBLi8EYERSlxlPV8qnRHolNdqomGfL2DBOHlTGORdL0rvzl8uvmzBbxf/9BDdd8Hh4E06W/jzWvZbYpaOoDgjRFIhhE+5NjGwEh8s0pusJomA9lhpBa91kEJCc5yfPTDMLWtftJ0BaJWo/eBzvE0ZH3RDp5fLTVjroc=
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30232>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcrQf-0001HR-FW for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 00:40:58 +0200
+ esmtp (Exim 4.43) id 1Gd7qR-0006hP-2K for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 18:12:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965105AbWJYWkx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 18:40:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965170AbWJYWkx
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 18:40:53 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:58054 "EHLO
- fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S965105AbWJYWkx
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 18:40:53 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao06.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061025224052.LEGT6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>; Wed, 25
- Oct 2006 18:40:52 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id emgb1V0071kojtg0000000 Wed, 25 Oct 2006
- 18:40:35 -0400
-To: Jakub Narebski <jnareb@gmail.com>
+ S1423597AbWJZQMg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 12:12:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423595AbWJZQMf
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 12:12:35 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:61982 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1161421AbWJZQMf
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 12:12:35 -0400
+Received: by ug-out-1314.google.com with SMTP id 32so411874ugm for
+ <git@vger.kernel.org>; Thu, 26 Oct 2006 09:12:33 -0700 (PDT)
+Received: by 10.67.103.7 with SMTP id f7mr3107313ugm; Thu, 26 Oct 2006
+ 09:12:33 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110]) by
+ mx.google.com with ESMTP id 30sm798943ugf.2006.10.26.09.12.32; Thu, 26 Oct
+ 2006 09:12:33 -0700 (PDT)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.css  |   14 +++++++++++++-
+ gitweb/gitweb.perl |   15 +++++++++------
+ 2 files changed, 22 insertions(+), 7 deletions(-)
 
-> 1. "git diff" header which looked like this
-> 2. the "index" extended header line changes from
-> 3. The "rename/copy" headers seems to be never present; see below.
->...
-
-Thanks for starting this.  Your observation is correct.  It was
-pretty much designed for quick _content_ inspection and renames
-would work correctly to pick which blobs from each tree to
-compare but otherwise not reflected in the output (the pathnames
-are not shown as far as I know).  We could probably add it if
-some users need it.
-
-> 5. Hunk header is also modified: in ordinary diff we have
-> ...
->    It might be not obvoious that we have (number of parents + 1) '@'
->    characters in chunk header for combined dif format.
-
-Correct.  This was done to prevent people from accidentally
-feeding it to "patch -p1".  In other words, we wanted to make it
-so obvious that it is _not_ a patch.
-
-There may be more information in "git log -- combine-diff.c"
-output that ought to be collected into the documentation, and
-now might be a good time to do so, given that that part of the
-system is fairly stable and has not changed for quite some time
-in git timescale.
-
->    BTW. it is not mentioned in documentation that git diff uses hunk section
->    indicator, and what regexp/expression it uses (and is it configurable).
->    Not described in documentation.
-
-If you mean by "hunk section indicator" the output similar to
-GNU diff -p option, I think it is not worth mentioning and we
-are not ready to mention it yet (we have not etched the
-expression in stone).  Nobody jumped up and down to say it needs
-to be configurable, so it is left undocumented more or less
-deliberately.
-
-> 6. Documentation/diff-format.txt explains combined and condensed combined
->    format quite well, although it doesn't tell us if we can have plusses and
->    minuses together in one line...
-
-But you already know the answer to that question, since you
-asked me a few days ago ;-).
-
-Patches to documentation would be easier to comment on and more
-productive, I guess.
-
-> Below there are following diffs: with first parent, merge (with all parents)
-> with renames detection, combined, combined with rename detection. Is it all
-> expected?
-
-Yes.  I do not see anything obviously unexpected in your output.
-
+diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
+index 0eda982..cb2c627 100644
+--- a/gitweb/gitweb.css
++++ b/gitweb/gitweb.css
+@@ -114,7 +114,7 @@ div.log_link {
+ 	width: 136px;
+ }
+ 
+-div.list_head {
++div.diff_tree_head {
+ 	padding: 6px 8px 4px;
+ 	border: solid #d9d8d1;
+ 	border-width: 1px 0px 0px;
+@@ -128,6 +128,18 @@ div.author_date {
+ 	font-style: italic;
+ }
+ 
++div.commitdiff_log {
++	padding: 8px;
++	border: solid #d9d8d1;
++	border-width: 0px 0px 1px 0px;
++}
++
++div.patchset {
++	padding-top: 8px;
++	border: solid #d9d8d1;
++	border-width: 1px 0px 0px 0px;
++}
++
+ a.list {
+ 	text-decoration: none;
+ 	color: #000000;
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 0d2ea72..a33cae1 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1844,11 +1844,11 @@ sub git_print_tree_entry {
+ sub git_difftree_body {
+ 	my ($difftree, $hash, $parent) = @_;
+ 
+-	print "<div class=\"list_head\">\n";
+ 	if ($#{$difftree} > 10) {
++		print "<div class=\"list_head\">\n";
+ 		print(($#{$difftree} + 1) . " files changed:\n");
++		print "</div>\n";
+ 	}
+-	print "</div>\n";
+ 
+ 	print "<table class=\"diff_tree\">\n";
+ 	my $alternate = 1;
+@@ -2055,7 +2055,8 @@ sub git_patchset_body {
+ 
+ 			# for now, no extended header, hence we skip empty patches
+ 			# companion to	next LINE if $in_header;
+-			if ($diffinfo->{'from_id'} eq $diffinfo->{'to_id'}) { # no change
++			if ($diffinfo->{'from_id'} eq $diffinfo->{'to_id'}) {
++				# no change, empty patch
+ 				$in_header = 1;
+ 				next LINE;
+ 			}
+@@ -3486,13 +3487,15 @@ sub git_commitdiff {
+ 		git_print_page_nav('commitdiff','', $hash,$co{'tree'},$hash, 
+$formats_nav);
+ 		git_print_header_div('commit', esc_html($co{'title'}) . $ref, $hash);
+ 		git_print_authorship(\%co);
+-		print "<div class=\"page_body\">\n";
++
+ 		if (@{$co{'comment'}} > 1) {
+-			print "<div class=\"log\">\n";
++			print "<div class=\"commitdiff_log\">\n";
+ 			git_print_log($co{'comment'}, -final_empty_line=> 1, -remove_title 
+=> 1);
+-			print "</div>\n"; # class="log"
++			print "</div>\n"; # class="commitdiff_log"
+ 		}
+ 
++		print "<div class=\"page_body\">\n";
++
+ 	} elsif ($format eq 'plain') {
+ 		my $refs = git_get_references("tags");
+ 		my $tagname = git_get_rev_name_tags($hash);
+-- 
+1.4.3.3
