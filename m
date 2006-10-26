@@ -1,70 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Seth Falcon <sethfalcon@gmail.com>
-Subject: Re: git-svn: why fetching files is so slow
-Date: Fri, 24 Nov 2006 09:10:39 -0800
-Message-ID: <m2odqwlqi8.fsf@ziti.fhcrc.org>
-References: <loom.20061124T143148-286@post.gmane.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: StGit-enabled bash-prompt
+Date: Thu, 26 Oct 2006 23:17:29 +0200
+Organization: Dewire
+Message-ID: <200610262317.30209.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 24 Nov 2006 17:10:48 +0000 (UTC)
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 26 Oct 2006 21:17:06 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:to:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        b=h2+SEsJBYpM4gGD02nQrDHejJbrps2+yRLv89/Hi/LTsWjTrw9wJhC1N0PNEHGty4nLWYr2qHTFHjWAZxIoP0WCc373Dm2vFKstDn2kGbBkRr/KBjQHXVZcJQH9rtSP/yAMPUXK7QoMeMLk2pL+e8KzqIQd3zRKpktHdLy55Ang=
-In-Reply-To: <loom.20061124T143148-286@post.gmane.org> (pazu@pazu.com.br's message of "Fri, 24 Nov 2006 13:36:35 +0000 (UTC)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
+User-Agent: KMail/1.9.4
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30262>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GneZT-0007Wo-JA for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 18:10:40 +0100
+ esmtp (Exim 4.43) id 1GdCaS-0005Y7-Nh for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 23:16:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757799AbWKXRKg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
- 12:10:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757807AbWKXRKg
- (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 12:10:36 -0500
-Received: from nz-out-0102.google.com ([64.233.162.206]:12781 "EHLO
- nz-out-0102.google.com") by vger.kernel.org with ESMTP id S1757799AbWKXRKf
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 12:10:35 -0500
-Received: by nz-out-0102.google.com with SMTP id s1so479469nze for
- <git@vger.kernel.org>; Fri, 24 Nov 2006 09:10:35 -0800 (PST)
-Received: by 10.64.84.3 with SMTP id h3mr1287226qbb.1164388234960; Fri, 24
- Nov 2006 09:10:34 -0800 (PST)
-Received: from ziti.fhcrc.org ( [67.171.24.140]) by mx.google.com with ESMTP
- id f17sm18005649qba.2006.11.24.09.10.34; Fri, 24 Nov 2006 09:10:34 -0800
- (PST)
+ S1423675AbWJZVQY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 17:16:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423677AbWJZVQY
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 17:16:24 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:43834 "EHLO
+ torino.dewire.com") by vger.kernel.org with ESMTP id S1423675AbWJZVQX (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 17:16:23 -0400
+Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
+ (Postfix) with ESMTP id 756DE802C09 for <git@vger.kernel.org>; Thu, 26 Oct
+ 2006 23:13:08 +0200 (CEST)
+Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 15607-10 for
+ <git@vger.kernel.org>; Thu, 26 Oct 2006 23:13:08 +0200 (CEST)
+Received: from [10.9.0.2] (unknown [10.9.0.2]) by torino.dewire.com (Postfix)
+ with ESMTP id 32ACC802677 for <git@vger.kernel.org>; Thu, 26 Oct 2006
+ 23:13:06 +0200 (CEST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Pazu <pazu@pazu.com.br> writes:
-> ... compared to the standalone svn client. I'm working with repositories over
-> the internet, using not-so-fast links, but still, a svn checkout takes somewhere
-> around 5 to 10 minutes, while git-svn fetch takes at least 10 times that just to
-> fetch the initial revision. Later fetches also take *a lot* more time than a svn
-> update would.
+Hi,
 
-[warning: I _think_ this is how it works, but not 100% sure]
-When you use git-svn to fetch from an svn repository, you make a
-separate request for each commit that occurred on the remote svn
-repos.  When you use the svn client, it only needs to compute and
-download one delta .
+I added the following snippet to my .bashrc to help me keep track of what 
+patch I'm working on.  I got annoyed at typing stg top/stg series all the 
+time.
 
-If you are not already using the Perl SVN bindings (you will need to
-build svn from source), you should give them a try.  They are much
-faster.
+This changes the bash prompt to include the current git branch and the top 
+stgit patch to the prompt.
 
-My experience has often been the opposite, but I think that is because
-I work with an svn repository where I track a directory that has many
-many subdirs.  The svn working copy traversal is so slow that even
-with the extra network overhead, git + git-svn ends up being faster
-for fetch (and much faster for any local operation).
+Of course you will read and understand this code. I don't know how good an 
+idea it is to use the DEBUG trap this way.
+
+NO WARRANTY (as always)
+
+-- robin
+
+if [ "$PS1" ]; then
+    function stgtag
+    {
+        br=$(stg branch 2>/dev/null)
+        top=$(stg top 2>/dev/null)
+        if [[ -n "$br$top" ]];then
+            echo " [$top@$br] "
+        fi
+    }
+    trap 'PS1="\u@\h$(stgtag)\w]\$ "' DEBUG
 
