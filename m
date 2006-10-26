@@ -4,73 +4,75 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: [BUG] daemon.c blows up on OSX
-Date: 20 Dec 2006 17:08:45 -0800
-Message-ID: <8664c6xdgi.fsf@blue.stonehenge.com>
-References: <7vmz5ib8eu.fsf@assigned-by-dhcp.cox.net>
-	<86vek6z0k2.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0612201412250.3576@woody.osdl.org>
-	<86irg6yzt1.fsf_-_@blue.stonehenge.com>
-	<7vr6uu6w8e.fsf@assigned-by-dhcp.cox.net>
-	<86ejquyz4v.fsf@blue.stonehenge.com>
-	<86ac1iyyla.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0612201502090.3576@woody.osdl.org>
-	<86wt4mximh.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0612201524230.3576@woody.osdl.org>
-	<caf068570612201636g75180138r223aef7c42f69a50@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: VCS comparison table
+Date: Thu, 26 Oct 2006 17:25:31 -0400
+Message-ID: <20061026212531.GB15941@coredump.intra.peff.net>
+References: <20061024002622.GC17019@over-yonder.net> <Pine.LNX.4.63.0610240853160.10841@qynat.qvtvafvgr.pbz> <20061024163458.GH17019@over-yonder.net> <Pine.LNX.4.63.0610241038060.10841@qynat.qvtvafvgr.pbz> <20061025002713.GN17019@over-yonder.net> <Pine.LNX.4.63.0610251459160.1754@qynat.qvtvafvgr.pbz> <20061025235306.GD17019@over-yonder.net> <45408A53.10400@op5.se> <ehq78n$ec7$1@sea.gmane.org> <4540A1FE.4050300@ableton.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 21 Dec 2006 01:10:31 +0000 (UTC)
-Cc: "Linus Torvalds" <torvalds@osdl.org>,
-	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+NNTP-Posting-Date: Thu, 26 Oct 2006 21:25:44 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-x-mayan-date: Long count = 12.19.13.16.7; tzolkin = 8 Manik; haab = 0 Kankin
-In-Reply-To: <caf068570612201636g75180138r223aef7c42f69a50@mail.gmail.com>
-Original-Lines: 20
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+Content-Disposition: inline
+In-Reply-To: <4540A1FE.4050300@ableton.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34997>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GxCS3-0006Y1-UE for gcvg-git@gmane.org; Thu, 21 Dec
- 2006 02:10:28 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30263>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GdCjJ-0007TI-O6 for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 23:25:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161111AbWLUBJW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 20:09:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161118AbWLUBJL
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 20:09:11 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:13759 "EHLO
- blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1161109AbWLUBIr (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
- 20:08:47 -0500
-Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
- (Postfix) with ESMTP id 4D7FA8EBA4; Wed, 20 Dec 2006 17:08:46 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
- (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
- 02191-01-82; Wed, 20 Dec 2006 17:08:45 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001) id 98ACA8F5FB;
- Wed, 20 Dec 2006 17:08:45 -0800 (PST)
-To: "Terje Sten Bjerkseth" <terje@bjerkseth.org>
+ S1945894AbWJZVZe (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 17:25:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945899AbWJZVZe
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 17:25:34 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:41690
+ "HELO peff.net") by vger.kernel.org with SMTP id S1945894AbWJZVZe (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 17:25:34 -0400
+Received: (qmail 19810 invoked from network); 26 Oct 2006 17:24:37 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2) by
+ 66-23-211-5.clients.speedfactory.net with SMTP; 26 Oct 2006 17:24:37 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Oct
+ 2006 17:25:31 -0400
+To: Nicholas Allen <allen@ableton.com>
 Sender: git-owner@vger.kernel.org
 
->>>>> "Terje" == Terje Sten Bjerkseth <terje@bjerkseth.org> writes:
+On Thu, Oct 26, 2006 at 01:54:38PM +0200, Nicholas Allen wrote:
 
+> I would have thought that supports renames would also involve flagging a 
+> conflict when merging a file that has been renamed on 2 separate 
+> branches. ie 2 branches rename the file to different names and then one 
+> branch is merged into the other. In this situation, the user should be 
+> told of a rename conflict. Bzr supports this as far as I know. Not sure 
+> about git though as I have never used it.
 
-Terje> +#ifndef __APPLE_CC__
-Terje>  #define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD
-Terje> needs 600 for S_ISLNK() */
-Terje>  #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
-Terje> +#endif
-Terje>  #define _GNU_SOURCE
-Terje>  #define _BSD_SOURCE
-Terje> -
+It works as you expect:
 
-I tried the moral equivalent of that, and it failed to compile many
-other things then.  So that's not it.
+$ git-init-db
+$ touch foo
+$ git-add foo
+$ git-commit -m foo
+Committing initial tree 4d5fcadc293a348e88f777dc0920f11e7d71441c
+$ git-checkout -b other
+$ git-mv foo bar
+$ git-commit -m bar
+$ git-checkout master
+$ git-mv foo baz
+$ git-commit -m baz$a
+$ git-pull . other
+Trying really trivial in-index merge...
+fatal: Merge requires file-level merging
+Nope.
+Merging HEAD with 5a1dfd32c56a24d0ef06f0e71d731fcd49d5dc6e
+Merging:
+76ac76ee3ce890d43648ebc009d278dc81a327e0 baz
+5a1dfd32c56a24d0ef06f0e71d731fcd49d5dc6e bar
+found 1 common ancestor(s):
+c9e7e95de6fdbb2af06ea44cc60d1ac1a63eaad6 foo
+CONFLICT (rename/rename): Rename foo->baz in branch HEAD rename foo->bar
+in 5a1dfd32c56a24d0ef06f0e71d731fcd49d5dc6e
+Automatic merge failed; fix conflicts and then commit the result.
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
