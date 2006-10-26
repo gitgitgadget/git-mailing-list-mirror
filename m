@@ -4,128 +4,115 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: VCS comparison table
-Date: Fri, 27 Oct 2006 13:41:56 +0200
-Message-ID: <4541F084.2020802@op5.se>
-References: <200610270202.k9R22Wxf004208@laptop13.inf.utfsm.cl>	 <4541D291.5020205@op5.se> <8fe92b430610270349k36a39250i7173282aa81c04e7@mail.gmail.com>
+From: Catalin Marinas <catalin.marinas@arm.com>
+Subject: Re: StGIT and rerere
+Date: Thu, 26 Oct 2006 17:34:12 +0100
+Message-ID: <tnxu01r2fzv.fsf@arm.com>
+References: <200610210039.10215.robin.rosenberg.lists@dewire.com>
+Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 27 Oct 2006 11:43:04 +0000 (UTC)
-Cc: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>, git@vger.kernel.org,
-	bazaar-ng@lists.canonical.com
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 26 Oct 2006 16:35:15 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <8fe92b430610270349k36a39250i7173282aa81c04e7@mail.gmail.com>
+In-Reply-To: <200610210039.10215.robin.rosenberg.lists@dewire.com> (Robin
+ Rosenberg's message of "Sat, 21 Oct 2006 00:39:09 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 26 Oct 2006 16:34:14.0573 (UTC) FILETIME=[92E835D0:01C6F91C]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30235>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdQ6A-0008AZ-SO for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 13:42:07 +0200
+ esmtp (Exim 4.43) id 1Gd8Bm-0002Gt-PJ for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 18:34:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751744AbWJ0LmB (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 07:42:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751777AbWJ0LmB
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 07:42:01 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:37842 "EHLO
- smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751744AbWJ0LmA (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 07:42:00 -0400
-Received: by smtp-gw1.op5.se (Postfix, from userid 588) id 8F49D6BE78; Fri,
- 27 Oct 2006 13:41:58 +0200 (CEST)
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id 810E36BE51; Fri, 27 Oct 2006 13:41:56 +0200 (CEST)
-To: Jakub Narebski <jnareb@gmail.com>
+ S1161434AbWJZQe3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 12:34:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161436AbWJZQe3
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 12:34:29 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:20909 "EHLO
+ cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP id
+ S1161434AbWJZQe2 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006
+ 12:34:28 -0400
+Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.255.63]) by
+ cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id k9QGYEQb006451;
+ Thu, 26 Oct 2006 17:34:14 +0100 (BST)
+Received: from localhost.localdomain ([10.1.255.211]) by
+ cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0); Thu, 26 Oct 2006
+ 17:34:14 +0100
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski wrote:
-> On 10/27/06, Andreas Ericsson <ae@op5.se> wrote:
->> Horst H. von Brand wrote:
->>> Jakub Narebski <jnareb@gmail.com> wrote:
->>>
->>> [...]
->>>
->>>> I'd rather split "Supports Renames" into engine part (does SCM
->>>> remember/detect that rename took place _as_ rename, not remember/detect
->>>> it as copiying+deletion; something other than rename) and user 
->>>> interface
->>>> part: can user easily deal with renames (this includes merging and
-> viewing file
->>>> history).
->>>
->>> I think that what to tool does in its guts is completely irrelevant, 
->>> what
->>> is important is what the user sees. Sadly, it seems hard to describe
->>> exactly what is meant/wanted here.
->>
->> Agreed. I'd rather make the definition "Can users, after a rename has
->> taken place, follow the history of the file-contents across renames?".
->> Mainly because this is clearly unambiguous, doesn't involve
->> implementation details and only weighs what really counts: User-visible
->> capabilities.
-> 
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+> It seems stgit does not use git-rerere, so why not? Any reason other
+> than it hasn't been done yet?
 
-[...]
+I didn't know it exists. I've been thinking at a way to avoid
+duplicating the conflict fixing but haven't got to any results. This
+looks like a good idea.
 
-> But equally important for user is another question related to
-> "Supporting Renames".
-> Namely detection of renames during merge and detection of conflict 
-> during merge
-> is what I would consider minimal "Merge Renames Support". Causing 
-> information
-> to be lost is having no "Merge Renames Support". To have "Yes" in this
-> column SCM
-> have to resolve conflict at least in obvious cases, and "Yes!" if it
-> can remember
-> resolution of merge conflict involving renames ;-).
-> 
+> I abuse stgit heavily, by frequently reording patches, which for
+> some patches result in re-occuring conflicts. git-rerere seems to be
+> the solution.
 
-True.
+My problem was with maintaining a public branch where re-basing
+patches is not welcomed but I would still like to use StGIT in my
+development branch. When pulling from upstream in my devel branch, I
+get conflicts in some patches. The problem is that I get the same
+conflicts in the patches already merged in the public branch where the
+patches were previously checked in.
 
->> IMNSHO, I'd rather have all the features in the list be along the lines
->> of "Can users/admins/random-boon do X?" and instead of "yes/no" list the
->> number of commands/the amount of time required to achieve the desired
->> effect. This would set a clear limit and put most terminology issues out
->> of the way.
-> 
-> This would make the comparison table less clear, unfortunately.
-> 
+Another case is several branches with common patches that generate
+conflicts.
 
-True that. Perhaps just stick with Yes/No and have a timing table to 
-compare merge times, multi-parent merge times and stuff like that.
+> What's the "rules" for when to invoke rerere? It seems it is mostly
+> automatic in git, but since only the porcelainish commands use it,
+> that means StGIT doesn't.
 
-> 
->>> [...]
->>>
->>>> 19. Ease of Use. Hmmm... I don't know for Git. I personally find it 
->>>> very
->>>> easy to use, but I have not much experiences with other SCM. I 
->>>> wonder why
->>>> Bazaar has "No" there...
->>>
->>> Extremely subjective. Easy to learn doesn't cut it either.
->>
->> This one just needs to go. Could possibly be replaced with "Has
->> tutorial/documentation online" or some such. No SCM is really intuitive
->> to users that haven't experienced any of them before, so the only thing
->> that really matters is how much documentation one can find online and
->> how up-to-date it is.
-> 
-> For example SCM can be easy to use but at the cost of simplifications
-> and limited useness.
-> 
-> On the other side basic concept behind some SCM might be more
-> or less understandable...
+It could probably be invoked by stgit.git.merge() if the git-read-tree
+(and maybe the diff3 merge) failed (BTW, I replaced git-read-tree with
+git-recursive-merge in my local tree and seems to detect renames
+properly; I'll push it once I'm convinced there are no problems).
 
-Yes, but it will always be based on personal opinion and that's why it 
-can never be measured in an unbiased way. It would be like playing 
-Trivial Pursuit and getting the question "Which 20'th century author 
-wrote the best books?". There's actually two problems with that 
-question, but the important one is that it can't be answered correctly 
-in this wonderful world we live in where everyone has their own opinion.
+Note, however, that I haven't looked at how git-rerere works and I
+might have misunderstood its functionality.
+
+> So here is what I *think* needs to be done. Seems simple enough.
+>
+> stg push, stg pick, stg import, stg goto, stg fold, stg float do
+> what push does and invoke git-rerere at the end whether the push
+> ends with conflicts or not
+
+the git.merge() function handles all the merges.
+
+> stg pop
+> 	nothing, or do I need to remove rr-cache/MERGE_RR, like
+> git-reset does?
+
+I think pop shouldn't do anything.
+
+> stg status --reset, stg push --undo
+> 	remove rr-cache/MERGE_RR ?
+
+Yes (not sure for push --undo).
+
+> stg refresh
+> 	do what stgit does normally and then invoke git-rerere
+
+Why should it invoke git-rerere? This just creates a commit. Or is it
+needed for storing rerere ids?
+
+> stg resolved:
+> 	do what stgit does normally and then invoke git-rerere
+
+No need to call rerere here since resolved is an StGIT-only function,
+it doesn't affect the repository (it just unmarks the conflict files
+so that stgit allows you to refresh).
+
+> stg clean, stge delete:
+> 	remove rr-cache/MERGE_RR ?
+
+That's not needed. Delete can act like pop for the top patch.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
