@@ -4,71 +4,72 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Locked down (but still shared) repositories
-Date: Thu, 7 Dec 2006 14:17:30 -0500
-Message-ID: <20061207191730.GA12143@spearce.org>
-References: <20061207113539.GA10781@spearce.org> <Pine.LNX.4.63.0612071640160.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Aaron Bentley <aaron.bentley@utoronto.ca>
+Subject: Re: VCS comparison table
+Date: Thu, 26 Oct 2006 11:13:43 -0400
+Message-ID: <4540D0A7.90706@utoronto.ca>
+References: <20061022185350.GW75501@over-yonder.net>	<Pine.LNX.4.64.0610231018410.3962@g5.osdl.org>	<20061023222131.GB17019@over-yonder.net>	<Pine.LNX.4.64.0610231534010.3962@g5.osdl.org>	<20061024002622.GC17019@over-yonder.net>	<Pine.LNX.4.63.0610240853160.10841@qynat.qvtvafvgr.pbz>	<20061024163458.GH17019@over-yonder.net>	<Pine.LNX.4.63.0610241038060.10841@qynat.qvtvafvgr.pbz>	<20061025002713.GN17019@over-yonder.net>	<Pine.LNX.4.63.0610251459160.1754@qynat.qvtvafvgr.pbz>	<20061025235306.GD17019@over-yonder.net>	<45408A53.10400@op5.se> <4540BC6B.1050009@utoronto.ca> <ehqeja$d5j$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 7 Dec 2006 19:17:51 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 26 Oct 2006 15:14:34 +0000 (UTC)
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0612071640160.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+User-Agent: Debian Thunderbird 1.0.2 (X11/20060830)
+X-Accept-Language: en-us, en
+In-Reply-To: <ehqeja$d5j$1@sea.gmane.org>
+X-Enigmail-Version: 0.91.0.0
+X-Panometrics-MailScanner: Found to be clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33607>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsOkW-0004WG-W2 for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 20:17:41 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30225>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gd6w2-0003H5-Di for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 17:14:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1163215AbWLGTRf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 14:17:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163218AbWLGTRe
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 14:17:34 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:34010 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1163215AbWLGTRe (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 14:17:34 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GsOkH-0002NC-BA; Thu, 07 Dec 2006 14:17:25 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 6359620FB6E; Thu,  7 Dec 2006 14:17:30 -0500 (EST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1423555AbWJZPOQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 11:14:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423556AbWJZPOQ
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 11:14:16 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41]:44720 "EHLO
+ server4.panoramicfeedback.com") by vger.kernel.org with ESMTP id
+ S1423555AbWJZPOP (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006
+ 11:14:15 -0400
+Received: from server4.panoramicfeedback.com ([66.216.124.41]
+ helo=[192.168.2.19]) by server4.panoramicfeedback.com with esmtp (Exim 3.36
+ #1 (Debian)) id 1Gd6vc-0002Bi-00; Thu, 26 Oct 2006 11:13:56 -0400
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Thu, 7 Dec 2006, Shawn Pearce wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Jakub Narebski wrote:
+> Aaron Bentley wrote:
+>>There is very little difference between this:
+>>
+>>http://example.com/mywebpage#5
+>>
+>>And this:
+>>
+>>http://example.com/mybranch 5
+>>
+>>In fact, we've been planning to unify them into one identifier.
 > 
-> > For various auditing reasons the repositories need to be tightly
-> > controlled.  That is the following cannot be permitted:
-> > 
-> > [...]
 > 
-> How about just one such user? After all, you already have this user: the 
-> repo owner. Of course, people have to push via ssh, even on the same 
-> machine.
+> Well, then it is not much simpler than 8-chars sha1. And sha1 is more
+> decentralized, because you can use it when you don't have access to net,
+> and when the _central_ revno server is down.
 
-How do I know which SSH key the client used to connect?  Remember I'm
-looking at the real uid to determine who is performing the operation.
-In the situation you describe everyone looks the same to the
-update hook...
+What do you mean by _central_ revno server?  example.com?  Does that
+also apply to google.com?
 
-For (probably stupid) reasons the server is the commerial F-Secure
-SSH server, btw.  So OpenSSH based things wouldn't apply.  And best
-that I can tell, F-Secure SSH won't tell me which key was used
-to authenticate.
+Aaron
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
 
--- 
+iD8DBQFFQNCc0F+nu1YWqI0RAlslAJ0XJ8Fezxyn5Ty1oAcgAo4LdQEAvQCfbWk+
+vVTmHwIuhyd7lhAxMm2uMZ8=
+=c4pE
