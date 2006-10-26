@@ -1,55 +1,57 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: *
 X-Spam-ASN: AS24867 82.211.80.0/20
-X-Spam-Status: No, score=1.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=1.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_RECEIVED,MSGID_FROM_MTA_HEADER
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Path: news.gmane.org!not-for-mail
-From: "James Henstridge" <james@jamesh.id.au>
+From: Vincent Ladeuil <v.ladeuil@alplog.fr>
 Newsgroups: gmane.comp.version-control.bazaar-ng.general,gmane.comp.version-control.git
 Subject: Re: VCS comparison table
-Date: Wed, 25 Oct 2006 18:08:22 +0800
-Message-ID: <a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>
-References: <45357CC3.4040507@utoronto.ca>
-	<20061021130111.GL75501@over-yonder.net> <453F2FF8.2080903@op5.se>
+Date: Thu, 26 Oct 2006 14:33:32 +0200
+Message-ID: <87u01r9rz7.fsf@alplog.fr>
+References: <20061021130111.GL75501@over-yonder.net> <453F2FF8.2080903@op5.se>
 	<200610251146.06116.jnareb@gmail.com>
+	<a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>
+	<87slhcz8zh.wl%cworth@cworth.org>
+	<a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>
+	<7vu01ro20b.fsf@assigned-by-dhcp.cox.net>
+	<a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>
+	<20061026101038.GA13310@coredump.intra.peff.net>
+	<877iyne4dm.fsf@alplog.fr>
+	<20061026111338.GA15179@coredump.intra.peff.net>
 NNTP-Posting-Host: main.gmane.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Trace: sea.gmane.org 1161770924 4041 80.91.229.2 (25 Oct 2006 10:08:44 GMT)
+Content-Type: text/plain; charset=us-ascii
+X-Trace: sea.gmane.org 1161866066 27810 80.91.229.2 (26 Oct 2006 12:34:26 GMT)
 X-Complaints-To: usenet@sea.gmane.org
-NNTP-Posting-Date: Wed, 25 Oct 2006 10:08:44 +0000 (UTC)
-Cc: bazaar-ng@lists.canonical.com,
-	"Matthew D. Fuller" <fullermd@over-yonder.net>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Carl Worth <cworth@cworth.org>, Andreas Ericsson <ae@op5.se>,
-	git@vger.kernel.org
-Original-X-From: bazaar-ng-bounces@lists.canonical.com Wed Oct 25 12:08:42 2006
+NNTP-Posting-Date: Thu, 26 Oct 2006 12:34:26 +0000 (UTC)
+Cc: , bazaar-ng@lists.canonical.com, git@vger.kernel.org
+Original-X-From: bazaar-ng-bounces@lists.canonical.com Thu Oct 26 14:34:20 2006
 Return-path: <bazaar-ng-bounces@lists.canonical.com>
 Envelope-to: gcvbg-bazaar-ng@m.gmane.org
 Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gcfga-0005Ii-5G
-	for gcvbg-bazaar-ng@m.gmane.org; Wed, 25 Oct 2006 12:08:36 +0200
+	id 1Gd4Qm-0006xC-VX
+	for gcvbg-bazaar-ng@m.gmane.org; Thu, 26 Oct 2006 14:33:57 +0200
 Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
 	by esperanza.ubuntu.com with esmtp (Exim 4.60)
 	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GcfgO-0001Ak-QP; Wed, 25 Oct 2006 11:08:24 +0100
-Received: from nf-out-0910.google.com ([64.233.182.189])
-	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <james.henstridge@gmail.com>) id 1GcfgN-0001AZ-CS
-	for bazaar-ng@lists.canonical.com; Wed, 25 Oct 2006 11:08:23 +0100
-Received: by nf-out-0910.google.com with SMTP id l37so548346nfc
-	for <bazaar-ng@lists.canonical.com>;
-	Wed, 25 Oct 2006 03:08:23 -0700 (PDT)
-Received: by 10.82.101.3 with SMTP id y3mr50527bub;
-	Wed, 25 Oct 2006 03:08:22 -0700 (PDT)
-Received: by 10.82.108.1 with HTTP; Wed, 25 Oct 2006 03:08:22 -0700 (PDT)
-To: "Jakub Narebski" <jnareb@gmail.com>
-In-Reply-To: <200610251146.06116.jnareb@gmail.com>
-Content-Disposition: inline
-X-Google-Sender-Auth: 6ff3f703b7a3c7be
+	id 1Gd4Qe-0002Ch-0q; Thu, 26 Oct 2006 13:33:50 +0100
+Received: from [217.167.26.75] (helo=srv-mail.altest.fr)
+	by esperanza.ubuntu.com with smtp (Exim 4.60)
+	(envelope-from <v.ladeuil@alplog.fr>) id 1Gd4QS-0002Ah-4a
+	for bazaar-ng@lists.canonical.com; Thu, 26 Oct 2006 13:33:36 +0100
+Received: from dune.altest.fr ([10.0.0.145]) by srv-mail.altest.fr with
+	Microsoft SMTPSVC(6.0.3790.1830); Thu, 26 Oct 2006 14:33:32 +0200
+Received: by dune.altest.fr (Postfix, from userid 1000)
+	id 831A3E9F2; Thu, 26 Oct 2006 14:33:32 +0200 (CEST)
+To: Jeff King <peff@peff.net>
+In-Reply-To: <20061026111338.GA15179@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 26 Oct 2006 07:13:39 -0400")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 26 Oct 2006 12:33:32.0483 (UTC)
+	FILETIME=[F2C02930:01C6F8FA]
 X-BeenThere: bazaar-ng@lists.canonical.com
 X-Mailman-Version: 2.1.8
 Precedence: list
@@ -63,35 +65,48 @@ List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
 	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
 Original-Sender: bazaar-ng-bounces@lists.canonical.com
 Errors-To: bazaar-ng-bounces@lists.canonical.com
-Xref: news.gmane.org gmane.comp.version-control.bazaar-ng.general:18749 gmane.comp.version-control.git:30047
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30047>
+Xref: news.gmane.org gmane.comp.version-control.bazaar-ng.general:18835 gmane.comp.version-control.git:30204
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30204>
 X-Mailing-List: git@vger.kernel.org
 
-On 25/10/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> Andreas Ericsson wrote:
-> > This is new to me. At work, we merge our toy repositories back and forth
-> > between devs only. There is no central repo at all. Does this mean that
-> > each merge would add one extra commit per time the one I'm merging with
-> > has merged with me?
->
-> From what I understand, "bzr merge" will create one extra commit to
-> preserve the "first parent is my branch" feature. "bzr pull" will do
-> fast-forward if your DAG is proper subset of pulled branch/repository
-> DAG, but at the cost that it would change your revno to revision mapping
-> to those of the pulled repository.
+>>>>> "Jeff" == Jeff King <peff@peff.net> writes:
 
-Actually, "bzr merge" does not create any commits on the branch -- you
-need to run "bzr commit" afterwards (possibly after resolving
-conflicts).  The control files for the working tree record a pending
-merge, which gets recorded when you get round to the commit.
+    Jeff> On Thu, Oct 26, 2006 at 12:52:05PM +0200, Vincent Ladeuil wrote:
+    >> Ok, so git make a distinction between the commit (code created by
+    >> someone) and the tree (code only).
 
-So you can easily check if there were any tree changes resulting from the merge.
+    Jeff> Yes (a commit is a tree, zero or more parents, commit message, and
+    Jeff> author/committer info).
 
-If there aren't, or you made the merge by mistake, you can make a call
-to "bzr revert" to clean things up without ever having created a new
-revision.
+The parents of a tree are also trees or can/must they be commits ?
 
-James.
+    >> Commits are defined by their parents.
+
+    Jeff> Partially, yes.
+
+I buy that this "partially" means "the other parts are irrelevant
+to this discussion".
+
+    >> Trees are defined by their content only ?
+
+    Jeff> Yes.
+
+So it is possible that : starting from a tree T,
+
+- I make a patch A,
+- you make the patch B,
+- A and B are equal (stop watching above my shoulder please, or what is me ?),
+- we both commit,
+- we pull changes from each other repository.
+
+We will end up with a tree T2 with a hash corresponding to both
+T+A and T+B, but each of us will have a different commit id CA
+and CB both pointing to T2, did I get it ?
+
+    Vincent
+
+
+
 
 
 
