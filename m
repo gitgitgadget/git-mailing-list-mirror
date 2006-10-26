@@ -4,51 +4,53 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Fri, 01 Dec 2006 11:42:56 +0100
-Message-ID: <20061201104256.GQ12463MdfPADPa@greensroom.kotnet.org>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net>
- <200612010919.06030.andyparkins@gmail.com>
- <20061201095751.GK18810@admingilde.org>
- <200612011029.28059.andyparkins@gmail.com>
-Reply-To: skimo@liacs.nl
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Combined diff format documentation
+Date: Wed, 25 Oct 2006 20:04:30 -0700
+Message-ID: <7vmz7jkcap.fsf@assigned-by-dhcp.cox.net>
+References: <junkio@cox.net>
+	<200610260148.k9Q1mr99007511@laptop13.inf.utfsm.cl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Fri, 1 Dec 2006 10:43:09 +0000 (UTC)
-Cc: git@vger.kernel.org, Martin Waitz <tali@admingilde.org>
+NNTP-Posting-Date: Thu, 26 Oct 2006 03:04:54 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <200612011029.28059.andyparkins@gmail.com>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+In-Reply-To: <200610260148.k9Q1mr99007511@laptop13.inf.utfsm.cl> (Horst H. von
+	Brand's message of "Wed, 25 Oct 2006 22:48:53 -0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30132>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq5rB-0005hz-CV for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 11:43:01 +0100
+ esmtp (Exim 4.43) id 1GcvY3-0008AK-8S for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 05:04:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936187AbWLAKm6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 05:42:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936209AbWLAKm6
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 05:42:58 -0500
-Received: from smtp18.wxs.nl ([195.121.247.9]:42935 "EHLO smtp18.wxs.nl") by
- vger.kernel.org with ESMTP id S936187AbWLAKm6 (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 05:42:58 -0500
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl
- [84.81.90.170]) by smtp18.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built
- Jul 14 2004)) with SMTP id <0J9L000ASCFK19@smtp18.wxs.nl> for
- git@vger.kernel.org; Fri, 01 Dec 2006 11:42:57 +0100 (CET)
-Received: (qmail 20062 invoked by uid 500); Fri, 01 Dec 2006 10:42:56 +0000
-To: Andy Parkins <andyparkins@gmail.com>
+ S1422850AbWJZDEh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
+ 23:04:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422862AbWJZDEh
+ (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 23:04:37 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:24294 "EHLO
+ fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S1422850AbWJZDEh
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 23:04:37 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao06.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061026030436.WVRW6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>; Wed, 25
+ Oct 2006 23:04:36 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id er4K1V0041kojtg0000000 Wed, 25 Oct 2006
+ 23:04:19 -0400
+To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
 Sender: git-owner@vger.kernel.org
 
-On Fri, Dec 01, 2006 at 10:29:26AM +0000, Andy Parkins wrote:
-> I notice though that you avoided my question: what does YOUR submodule object 
-> contain?
+"Horst H. von Brand" <vonbrand@inf.utfsm.cl> writes:
 
-He showed it to you in the example.  The "submodule object" is the COMMIT
-of the submodule itself.
+>> Correct.  This was done to prevent people from accidentally
+>> feeding it to "patch -p1".  In other words, we wanted to make it
+>> so obvious that it is _not_ a patch.
+>
+> It isn't, really... perhaps it should be made /more/ obvious (not use @ but
+> e.g. &, ...)?
 
+Eh, sorry, what I meant was "obvious to the tool", so "patch"
+would take notice.
