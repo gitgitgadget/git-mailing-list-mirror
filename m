@@ -4,76 +4,74 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 1/1] Bypass expensive content comparsion during rename detection.
-Date: Thu, 14 Dec 2006 05:07:46 -0500
-Message-ID: <20061214100746.GA31191@spearce.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: VCS comparison table
+Date: Thu, 26 Oct 2006 13:25:59 +0200
+Message-ID: <45409B47.8090402@op5.se>
+References: <453536AE.6060601@utoronto.ca>	<200610172301.27101.jnareb@gmail.com> <45354AD0.1020107@utoronto.ca>	<BAYC1-PASMTP07AB11A64250AAF683424DAE0E0@CEZ.ICE>	<vpq4ptz2uh8.fsf@ecrins.imag.fr>	<453DAC87.8050203@research.canon.com.au>	<Pine.LNX.4.64.0610232318200.3962@g5.osdl.org>	<Pine.LNX.4.64N.0610232336010.30334@attu2.cs.washington.edu>	<Pine.LNX.4.64.0610240812410.3962@g5.osdl.org>	<Pine.LNX.4.64N.0610241300450.8112@attu4.cs.washington.edu>	<20061025084810.GA26618@coredump.intra.peff.net> <7v3b9cnlx7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 14 Dec 2006 10:08:00 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 26 Oct 2006 11:26:32 +0000 (UTC)
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	bazaar-ng@lists.canonical.com, Linus Torvalds <torvalds@osdl.org>,
+	Lachlan Patrick <loki@research.canon.com.au>,
+	David Rientjes <rientjes@cs.washington.edu>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <7v3b9cnlx7.fsf@assigned-by-dhcp.cox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34298>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GunVM-0003ES-5p for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 11:07:56 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30192>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gd3NB-0003rN-2T for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 13:26:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751838AbWLNKHx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 05:07:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751822AbWLNKHx
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 05:07:53 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:33299 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751838AbWLNKHw (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 05:07:52 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GunVD-0002sC-IM; Thu, 14 Dec 2006 05:07:48 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- BBAB020FB65; Thu, 14 Dec 2006 05:07:46 -0500 (EST)
+ S1752142AbWJZL0F (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 07:26:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752145AbWJZL0F
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 07:26:05 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:47243 "EHLO
+ smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1752142AbWJZL0C (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 07:26:02 -0400
+Received: by smtp-gw1.op5.se (Postfix, from userid 588) id 45FE86BE17; Thu,
+ 26 Oct 2006 13:26:01 +0200 (CEST)
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id B87D86BD3A; Thu, 26 Oct 2006 13:25:59 +0200 (CEST)
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-When comparing file contents during the second loop through a rename
-detection attempt we can skip the expensive byte-by-byte comparsion
-if both source and destination files have valid SHA1 values.  This
-improves performance by avoiding either an expensive open/mmap to
-read the working tree copy, or an expensive inflate of a blob object.
+Junio C Hamano wrote:
+> 
+>  - Learn the itches David and other people have, that the
+>    current git Porcelain-ish does not scratch well, and enrich
+>    Documentation/technical with real-world working scripts built
+>    around plumbing.
+> 
 
-Unfortunately we still have to at least initialize the sizes of the
-source and destination files even if the SHA1 values don't match.
-Failing to initialize the sizes causes a number of test cases to fail
-and start reporting different copy/rename behavior than was expected.
+Isn't this how git has been developed since day one, more or less? If a 
+command is missing, it gets added as a shell-script. I agree with you on 
+the "pipes from this sent here does this, and look how useful it is" 
+lectures are gone since many commands were rewritten. Otoh, they're gone 
+because they now instead provide examples on how to interface with the 
+libified parts of git, so it's not a loss per se, just a switch in what 
+it teaches.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- diffcore-rename.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+I also agree with David that shell is much more fun to muck around with 
+and prototype in, because you see results to much faster. However, since 
+our plumbing is so rock-solid (and getting extended with --stdin options 
+to more and more commands), I see no reason why we shouldn't have a "how 
+to extend git" with the old shell-based porcelain scripts up somewhere 
+at the web. Perhaps it would kill two birds with one stone and increase 
+the addition of new utilities to git, while at the same time keeping the 
+already rewritten commands in C.
 
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 57a74b6..91fa2be 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -109,6 +109,8 @@ static int is_exact_match(struct diff_filespec *src,
- 		return 0;
- 	if (src->size != dst->size)
- 		return 0;
-+	if (src->sha1_valid && dst->sha1_valid)
-+	    return !hashcmp(src->sha1, dst->sha1);
- 	if (diff_populate_filespec(src, 0) || diff_populate_filespec(dst, 0))
- 		return 0;
- 	if (src->size == dst->size &&
+Btw, the old shell-versions still work with the new plumbing (well, 
+mostly anyways). They just have problems with filenames and revisions 
+with spaces and special chars and things like that, same as they've 
+always had.
+
 -- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
