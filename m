@@ -4,97 +4,52 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Bruno Haible <bruno@clisp.org>
-Subject: git: how to produce context diffs?
-Date: Mon, 27 Nov 2006 15:16:30 +0100
-Message-ID: <200611271516.30425.bruno@clisp.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: VCS comparison table
+Date: Thu, 26 Oct 2006 07:15:49 -0400
+Message-ID: <20061026111549.GA15211@coredump.intra.peff.net>
+References: <453F2FF8.2080903@op5.se> <200610251146.06116.jnareb@gmail.com> <a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com> <87slhcz8zh.wl%cworth@cworth.org> <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com> <7vu01ro20b.fsf@assigned-by-dhcp.cox.net> <a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com> <20061026101038.GA13310@coredump.intra.peff.net> <877iyne4dm.fsf@alplog.fr> <20061026111338.GA15179@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 27 Nov 2006 14:20:40 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 26 Oct 2006 11:16:02 +0000 (UTC)
+Cc: James Henstridge <james@jamesh.id.au>,
+	Junio C Hamano <junkio@cox.net>,
+	bazaar-ng@lists.canonical.com,
+	"Matthew D. Fuller" <fullermd@over-yonder.net>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Carl Worth <cworth@cworth.org>, Andreas Ericsson <ae@op5.se>,
+	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.1
 Content-Disposition: inline
-X-OriginalArrivalTime: 27 Nov 2006 14:20:08.0282 (UTC) FILETIME=[2429A3A0:01C7122F]
+In-Reply-To: <20061026111338.GA15179@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30189>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GohKw-0005SV-Gt for gcvg-git@gmane.org; Mon, 27 Nov
- 2006 15:19:59 +0100
+ esmtp (Exim 4.43) id 1Gd3DH-0002BU-0m for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 13:15:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758238AbWK0OTz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 09:19:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758243AbWK0OTz
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 09:19:55 -0500
-Received: from ftp.ilog.fr ([81.80.162.195]:38841 "EHLO ftp.ilog.fr") by
- vger.kernel.org with ESMTP id S1758238AbWK0OTy (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 09:19:54 -0500
-Received: from laposte.ilog.fr (cerbere-qfe0 [81.80.162.193]) by ftp.ilog.fr
- (8.13.1/8.13.1) with ESMTP id kAREJndr029498; Mon, 27 Nov 2006 15:19:49 +0100
-Received: from marbore.ilog.biz (marbore.ilog.biz [172.17.2.61]) by
- laposte.ilog.fr (8.13.1/8.13.1) with ESMTP id kAREJiUg024868; Mon, 27 Nov
- 2006 15:19:44 +0100
-Received: from honolulu.ilog.fr ([172.16.15.37]) by marbore.ilog.biz with
- Microsoft SMTPSVC(6.0.3790.1830); Mon, 27 Nov 2006 15:20:08 +0100
-Received: by honolulu.ilog.fr (Postfix, from userid 1001) id 916F33F420; Mon,
- 27 Nov 2006 15:16:30 +0100 (CET)
-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+ S1752140AbWJZLPw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 07:15:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752143AbWJZLPw
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 07:15:52 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:23446
+ "HELO peff.net") by vger.kernel.org with SMTP id S1752140AbWJZLPv (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 07:15:51 -0400
+Received: (qmail 12248 invoked from network); 26 Oct 2006 07:14:55 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2) by
+ 66-23-211-5.clients.speedfactory.net with SMTP; 26 Oct 2006 07:14:55 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Oct
+ 2006 07:15:49 -0400
+To: Vincent Ladeuil <v.ladeuil@alplog.fr>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+On Thu, Oct 26, 2006 at 07:13:39AM -0400, Jeff King wrote:
 
-Is this a bug in git-diff? The git-diff-files.html says:
+> Yes (a commit is a tree, zero or more parents, commit message, and
+> author/committer info).
 
-  " When the environment variable GIT_EXTERNAL_DIFF is not set ...
-    For example, if you prefer context diff:
-    GIT_DIFF_OPTS=-c git-diff-index -p HEAD  "
-
-This doesn't work for me with git-1.4.4:
-
-$ unset GIT_EXTERNAL_DIFF
-$ export GIT_DIFF_OPTS=-c
-$ git-diff-index -p HEAD
-diff --git a/configure.ac b/configure.ac
-index 74901dc..d222ded 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -1,5 +1,5 @@
- dnl Process this file with autoconf to produce a configure script.
--AC_INIT(hello, 2.1.1, bug-gnu-hello@gnu.org)
-+AC_INIT(hello, 2.1.2, bug-gnu-hello@gnu.org)
- AC_CONFIG_SRCDIR([src/hello.c])
- 
- AC_PREREQ(2.52)
-
-Expected output:
-
-$ git-diff-index -p HEAD
-index 74901dc..d222ded 100644
-diff --git a/configure.ac b/configure.ac
-*** a/configure.ac
---- b/configure.ac
-***************
-*** 1,5 ****
-  dnl Process this file with autoconf to produce a configure script.
-! AC_INIT(hello, 2.1.1, bug-gnu-hello@gnu.org)
-  AC_CONFIG_SRCDIR([src/hello.c])
-  
-  AC_PREREQ(2.52)
---- 1,5 ----
-  dnl Process this file with autoconf to produce a configure script.
-! AC_INIT(hello, 2.1.2, bug-gnu-hello@gnu.org)
-  AC_CONFIG_SRCDIR([src/hello.c])
-  
-  AC_PREREQ(2.52)
-
-
-(Really, while I find -u diffs fine for tiny changes, I find them unreadable
-for rewrites of larger blocks, and cannot live without -c for these.)
-
-When I look at diff.c around
-       const char *diffopts = getenv("GIT_DIFF_OPTS");
-it appears that only unified diffs are supported??
+Sorry, I should clarify: a commit is a _tree id_, zero or more _parent
+ids_, commit message, etc.
 
