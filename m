@@ -4,50 +4,57 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add support to git-branch to show local and remote branches
-Date: Tue, 21 Nov 2006 13:14:29 -0800
-Message-ID: <7vwt5owlhm.fsf@assigned-by-dhcp.cox.net>
-References: <200611211931.24868.andyparkins@gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH 1/2] New stg command: assimilate
+Date: Thu, 26 Oct 2006 10:32:36 +0200
+Message-ID: <20061026083236.GA13780@diana.vm.bytemark.co.uk>
+References: <20061022130559.17015.51385.stgit@localhost> <20061022130802.17015.50188.stgit@localhost> <20061025163231.GA30478@diana.vm.bytemark.co.uk> <b0943d9e0610250941jfd5d11fk467ab586773ba205@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 21 Nov 2006 21:14:50 +0000 (UTC)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 26 Oct 2006 08:32:59 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200611211931.24868.andyparkins@gmail.com> (Andy Parkins's
-	message of "Tue, 21 Nov 2006 19:31:24 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0610250941jfd5d11fk467ab586773ba205@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30151>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gmcws-00074h-Qm for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 22:14:35 +0100
+ esmtp (Exim 4.43) id 1Gd0fT-0000Xz-T7 for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 10:32:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161334AbWKUVOb (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 16:14:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161346AbWKUVOb
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 16:14:31 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:48037 "EHLO
- fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1161334AbWKUVOa
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 16:14:30 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061121211429.SIBJ20330.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Tue, 21
- Nov 2006 16:14:29 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id pZEc1V0131kojtg0000000; Tue, 21 Nov 2006
- 16:14:37 -0500
-To: Andy Parkins <andyparkins@gmail.com>
+ S965239AbWJZIcj convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006 04:32:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965241AbWJZIcj
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 04:32:39 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:9228 "EHLO
+ diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S965239AbWJZIcj
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 04:32:39 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
+ (Debian)) id 1Gd0fE-0003ae-00; Thu, 26 Oct 2006 09:32:36 +0100
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> writes:
+On 2006-10-25 17:41:50 +0100, Catalin Marinas wrote:
 
-> Instead of storing a list of refnames in append_ref, a list of
-> structures is created.  Each of these stores the refname and a
-> symbolic constant representing its type.
+> On 25/10/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+>
+> > I just realized, by means of an infinite loop, that "patchname"
+> > should be replaced with just "name" in the body of this function.
+> > Would you like me to resend the patch?
+>
+> I can do it, no need to resend. I'll push the patch tonight and you
+> can check it (I also fixed the "reversed" call as it is not
+> available in my Python implementation).
 
-Thanks.  I'll drop the one in 'pu' and will replace with this
-patch but with style fixes and keeping the documentation updates
-from there.
+Aahh, I avoided using set() (and had to settle for a decidedly less
+elegant dict-with-arbitrary-values) precisely so that the code
+wouldn't require Python 2.4, but reversed() is also a new feature of
+2.4.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
