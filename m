@@ -4,59 +4,50 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Olivier Galibert <galibert@pobox.com>
-Subject: Re: On removing files and "git-rm is pointless"
-Date: Mon, 4 Dec 2006 17:04:29 +0100
-Message-ID: <20061204160429.GA8512@dspnet.fr.eu.org>
-References: <87odqm2ppv.wl%cworth@cworth.org> <Pine.LNX.4.64.0612020919400.3476@woody.osdl.org> <4571DB40.6020800@vilain.net> <Pine.LNX.4.64.0612022246310.2630@xanadu.home> <7vd570q888.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0612040737120.3476@woody.osdl.org>
+From: Andy Whitcroft <apw@shadowen.org>
+Subject: Re: What's in git.git
+Date: Thu, 26 Oct 2006 18:27:39 +0100
+Message-ID: <4540F00B.9070504@shadowen.org>
+References: <7vk62npipb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 4 Dec 2006 16:04:49 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>,
-	git@vger.kernel.org, Carl Worth <cworth@cworth.org>,
-	Sam Vilain <sam@vilain.net>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 26 Oct 2006 17:29:02 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0612040737120.3476@woody.osdl.org>
-User-Agent: Mutt/1.4.2.2i
+User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
+In-Reply-To: <7vk62npipb.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.94.0.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33200>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrGJ7-0007wl-VU for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 17:04:42 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30248>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gd921-0004FO-1k for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 19:28:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937054AbWLDQEc (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 11:04:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937053AbWLDQEc
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 11:04:32 -0500
-Received: from dspnet.fr.eu.org ([213.186.44.138]:3687 "EHLO
- dspnet.fr.eu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S937054AbWLDQEa (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006
- 11:04:30 -0500
-Received: by dspnet.fr.eu.org (Postfix, from userid 1007) id CB9A1A376B; Mon,
-  4 Dec 2006 17:04:29 +0100 (CET)
-To: Linus Torvalds <torvalds@osdl.org>
+ S1423570AbWJZR2T (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 13:28:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423698AbWJZR2S
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 13:28:18 -0400
+Received: from hellhawk.shadowen.org ([80.68.90.175]:47119 "EHLO
+ hellhawk.shadowen.org") by vger.kernel.org with ESMTP id S1423570AbWJZR2R
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 13:28:17 -0400
+Received: from localhost ([127.0.0.1]) by hellhawk.shadowen.org with esmtp
+ (Exim 4.50) id 1Gd911-00032o-LW; Thu, 26 Oct 2006 18:27:39 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-<pet_peeve>
+Junio C Hamano wrote:
 
-On Mon, Dec 04, 2006 at 07:42:26AM -0800, Linus Torvalds wrote:
-> (And obviously, for all the normal reasons, if the index or HEAD doesn't 
-> match, the error message should be helpful and also explicitly mention the 
-> "-f" flag. Somehing like
-> 
-> 	file 'x' does not match HEAD or has been staged for changes.
-> 	Will not remove. Use '-f' to force removal.
+>   I did not hear any comments on the left-right stuff; perhaps
+>   it is not needed, or it is not useful as its current shape (it
+>   could be enhanced to say which starting commits each of the
+>   commit is reachable from, by borrowing much of show-branch
+>   code).
 
-And you wouldn't tell which, you stupid computer?
-
-I hate when error messages go "there is a problem that may be x, y or
-z.  You can figure out which one yourself.".
-
-Incidentally, splitting the message would allow you to add a "use git
-diff x" or a "use git diff --cached x to see the differences" message.
-
-</pet_peeve>
+That was the stuff which kinda did cherry in rev-list.  It seemed to
+produce interesting output, but nothing I couldn't do with cherry.
+Still interesting tho.  The sort of thing that if it was in there
+someone would find a use for, think lazers.
 
