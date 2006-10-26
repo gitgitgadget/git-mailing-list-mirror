@@ -1,73 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Marco Roeland <marco.roeland@xs4all.nl>
-Subject: Re: cloning the kernel - why long time in "Resolving 313037 deltas"
-Date: Tue, 19 Dec 2006 08:52:56 +0100
-Message-ID: <20061219075256.GA30448@fiberbit.xs4all.nl>
-References: <Pine.LNX.4.64.0612181625140.18171@xanadu.home> <86hcvs984c.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181414200.3479@woody.osdl.org> <8664c896xv.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181511260.3479@woody.osdl.org> <Pine.LNX.4.64.0612181906450.18171@xanadu.home> <20061219051108.GA29405@thunk.org> <20061219063930.GA2511@spearce.org> <Pine.LNX.4.64.0612182248420.3479@woody.osdl.org> <20061219072607.GD2511@spearce.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: =?ISO-8859-1?Q?Re:_[PATCH_1/3]_make_index-p=E2?= =?ISO-8859-1?Q?ck_able_to_complete_thin_packs?=
+Date: Thu, 26 Oct 2006 12:57:50 +0100
+Message-ID: <b0943d9e0610260457m780dd7d4t95fe36130cbdf551@mail.gmail.com>
+References: <Pine.LNX.4.64.0610252323100.12418@xanadu.home>
+	 <7vr6wvr1ca.fsf@assigned-by-dhcp.cox.net> <ehppbg$phq$1@sea.gmane.org>
+	 <20061026091925.GD13780@diana.vm.bytemark.co.uk>
+	 <tnxac3j4c6c.fsf@arm.com>
+	 <20061026105841.GB16372@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-NNTP-Posting-Date: Tue, 19 Dec 2006 08:39:32 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, Theodore Tso <tytso@mit.edu>,
-	Nicolas Pitre <nico@cam.org>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 26 Oct 2006 11:58:16 +0000 (UTC)
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 2766 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Dec 2006 03:39:15 EST
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Hk1u/Q/c4phr1WrVsyUXFw2zZcHrRmYJHOA3RiESHXw7rw4WPUCti8wfpetPfP1Qob9pdYPRzco2rGWDgKkwvvzTPGtzr19zNyjTv6KqlB1Zv+vrXwtkzsz+QDT9Q9YwCVtO++qCyk+FNt4iNomkxaUdNP+/6p3MKdRsmFrXq6s=
+In-Reply-To: <20061026105841.GB16372@diana.vm.bytemark.co.uk>
 Content-Disposition: inline
-In-Reply-To: <20061219072607.GD2511@spearce.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30197>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GwaVM-0004bX-2h for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 09:39:20 +0100
+ esmtp (Exim 4.43) id 1Gd3rz-0000fi-In for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 13:58:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932668AbWLSIjR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 03:39:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932672AbWLSIjQ
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 03:39:16 -0500
-Received: from fiberbit.xs4all.nl ([213.84.224.214]:44053 "EHLO
- fiberbit.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S932668AbWLSIjQ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
- 03:39:16 -0500
-Received: from marco by fiberbit.xs4all.nl with local (Exim 4.63)
- (envelope-from <marco.roeland@xs4all.nl>) id 1GwZmS-0007zk-IJ; Tue, 19 Dec
- 2006 08:52:56 +0100
-To: Shawn Pearce <spearce@spearce.org>
+ S1423276AbWJZL54 convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006 07:57:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423295AbWJZL54
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 07:57:56 -0400
+Received: from py-out-1112.google.com ([64.233.166.177]:40485 "EHLO
+ py-out-1112.google.com") by vger.kernel.org with ESMTP id S1423276AbWJZL5z
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006
+ 07:57:55 -0400
+Received: by py-out-1112.google.com with SMTP id z74so312931pyg for
+ <git@vger.kernel.org>; Thu, 26 Oct 2006 04:57:55 -0700 (PDT)
+Received: by 10.35.99.17 with SMTP id b17mr3158629pym; Thu, 26 Oct 2006
+ 04:57:50 -0700 (PDT)
+Received: by 10.35.103.18 with HTTP; Thu, 26 Oct 2006 04:57:50 -0700 (PDT)
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
 Sender: git-owner@vger.kernel.org
 
-On Tuesday December 19th 2006 at 02:26 Shawn Pearce wrote:
+On 26/10/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 2006-10-26 11:13:47 +0100, Catalin Marinas wrote:
+> > Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> > > On 2006-10-26 09:50:48 +0200, Jakub Narebski wrote:
+> > > > That said, git-am should understand QP with coding in mail
+> > > > headers.
+> > >
+> > > I really hope it does, since I just patched StGIT to generate suc=
+h
+> > > headers. (Out of pure vanity -- I don't want my name mangled!)
+> >
+> > It looks like it does, that's how I applied some of your patches
+> > ('stg import' doesn't understand them).
+>
+> Hmm. So now I know why you haven't taken my "stg email" patches. I
+> guess I'll have to fix 'stg import' then. :-)
 
-> [git-index-pack limping along on Mac OS X]
-> 
-> ActivityMonitor is showing that I'm spending 94% CPU in the kernel,
-> which is just insane.  Clearly Mac OS X's kernel cannot gracefully
-> handle what git-index-pack is currently doing.
+That's one of the reasons (and I didn't have time to document myself
+before giving a proper reply). The other is that Gnus (and gmail)
+doesn't display the messages properly - it shows a lot of "=3D20". Is i=
+t
+possible not to affect the body (or make it optional)? People only
+using "patch" to apply the diffs would have problems with this
+encoding.
 
-A bit off topic but it might help people diagnose and test different
-strategies.
-
-The equivalent of "oprofile" on Mac OS X is a tool called "shark" from
-Apple itself. It's very nice actually.
-
-It's in the CHUD (Computer Hardware Understanding
-Developer Tools) package. More information at
-http://developer.apple.com/tools/performance and it is free as in beer.
-;-)
-
-Also the OpenSSL version on Mac OS X is rather old and compiled as
-32-bit application. OpenSSL is one of the few userspace packages that
-_really_ benefits tremendously from being compiled as 64-bit. It might
-explain a bit of the enormous performance difference in this case. But
-only profiling (perhaps with the help of "shark") will tell of course...
-
-The kernel git repository isn't very handy on the Mac HFS+ filesystem,
-due to it being case-insensitive, but I suppose it won't influence
-git-index-pack.
--- 
+--=20
