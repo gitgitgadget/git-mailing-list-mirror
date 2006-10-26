@@ -1,79 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-explain
-Date: Wed, 6 Dec 2006 00:37:52 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612060033540.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200612031701.15594.alan@chandlerfamily.org.uk>
- <Pine.LNX.4.64.0612031024480.3476@woody.osdl.org> <7v1wngwws6.fsf@assigned-by-dhcp.cox.net>
- <7vwt57j94c.fsf_-_@assigned-by-dhcp.cox.net> <el3ibq$9kn$2@sea.gmane.org>
- <46a038f90612051500w44438f70y3c7d1c99998d16bb@mail.gmail.com>
- <7vslfudjsa.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Petr Baudis <pasky@suse.cz>
+Subject: git-shortlog mailmap
+Date: Thu, 26 Oct 2006 14:34:24 +0200
+Message-ID: <20061026123424.GQ20017@pasky.or.cz>
+References: <7vk62npipb.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0610261114520.3286@wbgn013.biozentrum.uni-wuerzburg.de> <ehputm$ch2$3@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 5 Dec 2006 23:38:06 +0000 (UTC)
-Cc: Martin Langhoff <martin.langhoff@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 26 Oct 2006 12:35:36 +0000 (UTC)
+Cc: torvalds@osdl.org, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vslfudjsa.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+Content-Disposition: inline
+In-Reply-To: <ehputm$ch2$3@sea.gmane.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33389>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrjrM-0007lL-J0 for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 00:38:00 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30205>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gd4Rv-00079t-DS for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 14:35:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752629AbWLEXh5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 18:37:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756677AbWLEXh5
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 18:37:57 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45233 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1752629AbWLEXh4
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 18:37:56 -0500
-Received: (qmail invoked by alias); 05 Dec 2006 23:37:54 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp019) with SMTP; 06 Dec 2006 00:37:54 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1423464AbWJZMe1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 08:34:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423466AbWJZMe1
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 08:34:27 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:28906 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1423464AbWJZMe0 (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 08:34:26 -0400
+Received: (qmail 10797 invoked by uid 2001); 26 Oct 2006 14:34:24 +0200
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+I think I've complained about this in the past, but can't find the mail.
 
-On Tue, 5 Dec 2006, Junio C Hamano wrote:
-
-> "Martin Langhoff" <martin.langhoff@gmail.com> writes:
+Dear diary, on Thu, Oct 26, 2006 at 11:25:50AM CEST, I got a letter
+where Jakub Narebski <jnareb@gmail.com> said that...
+> Johannes Schindelin wrote:
 > 
-> > I like what it does too... but why not as part of git-status?
+> > BTW what happened to the builtin shortlog? It is the last Perl script I 
+> > use regularly... (should make people happy who are stuck with Activision 
+> > Perl...)
 > 
-> The biggest reason was that it is a demonstration of concepts,
-> not replacement of anything.  Maybe "git status" can be replaced
-> with something like that if people worked on it enough.
+> BTW. both Perl version and builtin shorlog have email->real name translation
+> table built in. In Perl script version it is in __DATA__ section, and we
+> could update it using Inline::Files module, in C version it was in table.
+> But in fact this list is project specific. Shouldn't we make it customizable
+> (::sigh::, yet another file in $GIT_DIR...).
 
-Okay, so what do people need? This is evidently a question for people who 
-are not intimately familiar with the core of Git. So, where are you 
-newbies when we need you? Speak up!
+I really dislike the fact that we _do_ this mapping at all, this seems
+so much a totally wrong point at which to do it. The information tracked
+in Git is still wrong and all the tools except shortlog still display it
+wrong - why should shortlog in particular be special? Why don't we do
+this at the git-am time instead?
 
-Surely, you hit a wall on the road, where you really wanted to ask "git 
-wtf"?
+And overally, things would be simpler if people would just require the
+author name to be recorded in the mail properly when applying the patch;
+AIUI at least in case of the kernel this mapping shouldn't really be
+needed anymore anyway since with the signoff protocol, you already
+require all the contributors to reveal their realnames in signoffs?
+People can then as well just write that in their from headers as well.
+Linus?
 
-> The current use of "git status" inside "git commit" needs to be revamped 
-> if we pursue this further, though.  Because one of the points the "what 
-> state is this repository in" check "explain" does is to define what 
-> operations are sensible in each state, and most likely in many state it 
-> would not make _any_ sense to run "git commit" (say, in the middle of 
-> "bisect").
+So what about making git-am by default refuse to apply patches with
+missing author realnames?
 
-That is right, but it is only a matter of having a command line switch to 
-suppress what you do not need for the commit message. After all, "status" 
-really should tell you about the status of the working directory. The fact 
-that we have the _same_ script for "commit" and "status" is no excuse!
-
-Ciao,
-Dscho
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
