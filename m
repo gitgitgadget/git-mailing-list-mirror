@@ -1,157 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Documentation/git-commit: rewrite to make it more end-user friendly.
-Date: Sat, 09 Dec 2006 13:59:14 -0800
-Message-ID: <7vpsas91e5.fsf@assigned-by-dhcp.cox.net>
-References: <7vy7pik51b.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0612082141260.2630@xanadu.home>
-	<7vd56tei20.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0612091517010.2630@xanadu.home>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] diff-format.txt: Expand information about pathnames quoting in patch format
+Date: Thu, 26 Oct 2006 21:03:30 +0200
+Message-ID: <200610262103.31058.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 9 Dec 2006 21:59:48 +0000 (UTC)
-Cc: git@vger.kernel.org, "J. Bruce Fields" <bfields@fieldses.org>
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 26 Oct 2006 19:03:37 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0612091517010.2630@xanadu.home> (Nicolas Pitre's
-	message of "Sat, 09 Dec 2006 16:15:42 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=GGDfTYDNjaZNDqHnnTen/9NYY8SPMgCThKnfpB4p5Vjkij3q9Qnkf68SLdFTOwmz61sJs9SaFnz0lTuVoSIe7h4cMbUUrEleZj3NM2hSXogWrA3Zkt2l+h5goUYt/dF/3p+iqG+5+r9g2p4UtAtUXhNuHtAUeG8sSPvpsU7CVP4=
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33840>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtAEL-0007nk-Lc for gcvg-git@gmane.org; Sat, 09 Dec
- 2006 22:59:38 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30259>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GdAVV-00055v-U8 for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 21:03:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758519AbWLIV71 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
- 16:59:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758682AbWLIV71
- (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 16:59:27 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:59923 "EHLO
- fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1758519AbWLIV7P (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006
- 16:59:15 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061209215914.BYFZ22053.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>; Sat, 9
- Dec 2006 16:59:14 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id wlzR1V0081kojtg0000000; Sat, 09 Dec 2006
- 16:59:25 -0500
-To: Nicolas Pitre <nico@cam.org>
+ S1423724AbWJZTC6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 15:02:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423679AbWJZTC6
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 15:02:58 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:16427 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1423724AbWJZTC5
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 15:02:57 -0400
+Received: by ug-out-1314.google.com with SMTP id 32so462005ugm for
+ <git@vger.kernel.org>; Thu, 26 Oct 2006 12:02:55 -0700 (PDT)
+Received: by 10.66.252.4 with SMTP id z4mr3383056ugh; Thu, 26 Oct 2006
+ 12:02:55 -0700 (PDT)
+Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110]) by
+ mx.google.com with ESMTP id 32sm956556ugf.2006.10.26.12.02.55; Thu, 26 Oct
+ 2006 12:02:55 -0700 (PDT)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre <nico@cam.org> writes:
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ Documentation/diff-format.txt |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
->> +Note that the contents of the paths that resolved cleanly by a
->> +conflicted merge are automatically staged for the next commit;
->> +you still need to explicitly identify what you want in the
->> +resulting commit using one of the above methods before
->> +recording the merge commit.
->
-> Like I said in another mail,...IMHO the merge 
-> example included further down should be sufficient information wrt 
-> committing a merge.
-
-You are right --- removed.
-
->>  -o|--only::
->> -	Commit only the files specified on the command line.
->> -	This format cannot be used during a merge, nor when the
->> -	index and the latest commit does not match on the
->> -	specified paths to avoid confusion.
->> +	Commit only the files specified on the command line;
->> +	this is the default when pathnames are given on the
->> +	command line, so you usually do not have to give this
->> +	option.  This format cannot be used during a merge.
->
-> Is there some value in keeping this option documented?  What about 
-> removing it (the documentation not the option)?
-
-True, although the description of <files>... need to be
-clarified if we do this.
-
->> +When recording your own work, the contents of modified files in
->> +your working tree are temporarily stored to a staging area
->> +called the "index" with gitlink:git-add[1].  Removal
->
-> I like the way the index is introduced at this point.
-
-Credit owed to JBF.
-
-> I'd add (with links):
->
-> SEE ALSO
-> --------
-> git-add, git-rm, git-mv, git-merge, git-commit-tree
-
-Done.
-
-Attached is an incremental patch on top of what you commented
-on.
-
--- >8 --
-
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 8fe42cb..20a2cb3 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -34,12 +34,6 @@ methods:
-    changes from all known files i.e. files that have already been committed
-    before, and perform the actual commit.
+diff --git a/Documentation/diff-format.txt b/Documentation/diff-format.txt
+index ed4ebcb..f980ecf 100644
+--- a/Documentation/diff-format.txt
++++ b/Documentation/diff-format.txt
+@@ -146,6 +146,9 @@ the file that rename/copy produces, resp
  
--Note that the contents of the paths that resolved cleanly by a
--conflicted merge are automatically staged for the next commit;
--you still need to explicitly identify what you want in the
--resulting commit using one of the above methods before
--recording the merge commit.
--
- The gitlink:git-status[1] command can be used to obtain a
- summary of what is included by any of the above for the next
- commit by giving the same set of parameters you would give to
-@@ -119,19 +113,15 @@ but can be used to amend a merge commit.
- 	as well.  This is usually not what you want unless you
- 	are concluding a conflicted merge.
- 
---o|--only::
--	Commit only the files specified on the command line;
--	this is the default when pathnames are given on the
--	command line, so you usually do not have to give this
--	option.  This format cannot be used during a merge.
--
- \--::
- 	Do not interpret any more arguments as options.
- 
- <file>...::
--	Files to be committed.  The meaning of these is
--	different between `--include` and `--only`.  Without
--	either, it defaults `--only` semantics.
-+	When files are given on the command line, the command
-+	commits the contents of the named files, without
-+	recording the changes already staged.  The contents of
-+	these files are also staged for the next commit on top
-+	of what have been staged before.
+ 3.  TAB, LF, and backslash characters in pathnames are
+     represented as `\t`, `\n`, and `\\`, respectively.
++    If there is need to quote pathname then the whole
++    pathname is put in double quotes, and quote characters
++    in pathname are represented as `\"`.
  
  
- EXAMPLES
-@@ -240,6 +230,15 @@ This command can run `commit-msg`, `pre-commit`, and
- `post-commit` hooks.  See link:hooks.html[hooks] for more
- information.
- 
-+
-+SEE ALSO
-+--------
-+gitlink:git-add[1],
-+gitlink:git-rm[1],
-+gitlink:git-mv[1],
-+gitlink:git-merge[1],
-+gitlink:git-commit-tree[1]
-+
- Author
- ------
- Written by Linus Torvalds <torvalds@osdl.org> and
+ combined diff format
+-- 
+1.4.3.3
