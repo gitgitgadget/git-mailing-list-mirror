@@ -1,93 +1,63 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sun, 3 Dec 2006 07:29:16 +0100
-Message-ID: <20061203062916.GY18810@admingilde.org>
-References: <20061130170625.GH18810@admingilde.org> <200612020017.44275.Josef.Weidendorfer@gmx.de> <20061202202428.GT18810@admingilde.org> <200612030155.09630.Josef.Weidendorfer@gmx.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: merge-recursive, was Re: What's in git.git
+Date: Thu, 26 Oct 2006 02:35:42 -0700
+Message-ID: <7vlkn3o1w1.fsf@assigned-by-dhcp.cox.net>
+References: <7vk62npipb.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0610261114520.3286@wbgn013.biozentrum.uni-wuerzburg.de>
+	<ehputm$ch2$3@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="cy0BeJHB1CR/AQ7b"
-NNTP-Posting-Date: Sun, 3 Dec 2006 06:29:30 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, sf <sf@b-i-t.de>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 26 Oct 2006 09:35:52 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <200612030155.09630.Josef.Weidendorfer@gmx.de>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <ehputm$ch2$3@sea.gmane.org> (Jakub Narebski's message of "Thu,
+	26 Oct 2006 11:25:50 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30168>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gqkqo-0000KQ-E4 for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 07:29:23 +0100
+ esmtp (Exim 4.43) id 1Gd1eN-0002wX-Bj for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 11:35:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936673AbWLCG3T (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
- 01:29:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936675AbWLCG3T
- (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 01:29:19 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:30139 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S936673AbWLCG3S (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 01:29:18 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1Gqkqi-00016e-Vg; Sun, 03 Dec 2006 07:29:17 +0100
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+ S1422960AbWJZJfo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 05:35:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422966AbWJZJfo
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 05:35:44 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:60905 "EHLO
+ fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1422960AbWJZJfn
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 05:35:43 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao07.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061026093542.WXUO28934.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>; Thu, 26
+ Oct 2006 05:35:42 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id exbR1V0071kojtg0000000 Thu, 26 Oct 2006
+ 05:35:25 -0400
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+Jakub Narebski <jnareb@gmail.com> writes:
 
---cy0BeJHB1CR/AQ7b
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Johannes Schindelin wrote:
+>
+>> BTW what happened to the builtin shortlog? It is the last Perl script I 
+>> use regularly... (should make people happy who are stuck with Activision 
+>> Perl...)
+>
+> BTW. both Perl version and builtin shorlog have email->real name translation
+> table built in. In Perl script version it is in __DATA__ section, and we
+> could update it using Inline::Files module, in C version it was in table.
+> But in fact this list is project specific. Shouldn't we make it customizable
+> (::sigh::, yet another file in $GIT_DIR...).
 
-hoi :)
-
-On Sun, Dec 03, 2006 at 01:55:08AM +0100, Josef Weidendorfer wrote:
-> On Saturday 02 December 2006 21:24, Martin Waitz wrote:
-> > On Sat, Dec 02, 2006 at 12:17:44AM +0100, Josef Weidendorfer wrote:
-> > > After some thinking, a submodule namespace even is important for chec=
-king
-> > > out only parts of a supermodule, exactly because the root of a submod=
-ule
-> > > potentially can change at every commit.
-> >=20
-> > have you ever thought about the idea that the location may be an
-> > important thing to consider for your decision.
->=20
-> Which decision, for what? Sorry, I do not understand.
-
-to check out, or not to check out.
-
-> What should such a general partial tree support look like? I suppose you
-> want to configure paths which should not be checked out. As long as you
-> say that a given submodule always has to exist at a given path, you are
-> right: then, you can say: "Please, do not check out this submodule" which
-> is the same as "Do not check out this path".=20
-
-You could say something like "do not check out anything below "test/".
-If then some submodule moves from "test/foo" to "build/foo", it will be
-checked out, because this module is now not only used for testing, but
-is needed for building in the new version of the supermodule.
-
---=20
-Martin Waitz
-
---cy0BeJHB1CR/AQ7b
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFcm68j/Eaxd/oD7IRAl1CAJ4p7WpTQOSehAEMnLfzEoS8tl9F/ACfcCzj
-YTk48P7CwW/5toA+w+VOmWo=
-=tiVq
------END PGP SIGNATURE-----
-
+It already reads from .mailmap which could be tracked as part of
+the sources (if it is project specific it would be better if it
+can be shared among members).
