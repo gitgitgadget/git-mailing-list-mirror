@@ -2,59 +2,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: git-show, was Re: What's in git.git (stable)
-Date: Thu, 14 Dec 2006 08:59:18 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612140855400.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612132237.10051.andyparkins@gmail.com>
- <7vk60vbcfz.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612140113340.3635@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0612132231050.18171@xanadu.home> <7vy7pb9eit.fsf@assigned-by-dhcp.cox.net>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: stg mail
+Date: Thu, 26 Oct 2006 16:06:15 +0200
+Message-ID: <20061026140615.GA19268@diana.vm.bytemark.co.uk>
+References: <Pine.LNX.4.64.0610252323100.12418@xanadu.home> <7vr6wvr1ca.fsf@assigned-by-dhcp.cox.net> <ehppbg$phq$1@sea.gmane.org> <20061026091925.GD13780@diana.vm.bytemark.co.uk> <tnxac3j4c6c.fsf@arm.com> <20061026105841.GB16372@diana.vm.bytemark.co.uk> <b0943d9e0610260457m780dd7d4t95fe36130cbdf551@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 14 Dec 2006 08:01:19 +0000 (UTC)
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 26 Oct 2006 14:06:54 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vy7pb9eit.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0610260457m780dd7d4t95fe36130cbdf551@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34283>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GulWf-0005Xk-QJ for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 09:01:10 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30221>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gd5sE-0006yI-Q9 for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 16:06:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751913AbWLNH70 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 02:59:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751915AbWLNH7Z
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 02:59:25 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36287 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1751908AbWLNH7U
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006 02:59:20 -0500
-Received: (qmail invoked by alias); 14 Dec 2006 07:59:19 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp028) with SMTP; 14 Dec 2006 08:59:19 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1161415AbWJZOGT convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006 10:06:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161414AbWJZOGT
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 10:06:19 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:27919 "EHLO
+ diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1161405AbWJZOGS
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 10:06:18 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
+ (Debian)) id 1Gd5s8-00057E-00; Thu, 26 Oct 2006 15:06:16 +0100
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+On 2006-10-26 12:57:50 +0100, Catalin Marinas wrote:
 
-On Wed, 13 Dec 2006, Junio C Hamano wrote:
+> On 26/10/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+>
+> > Hmm. So now I know why you haven't taken my "stg email" patches. I
+> > guess I'll have to fix 'stg import' then. :-)
+>
+> That's one of the reasons (and I didn't have time to document myself
+> before giving a proper reply). The other is that Gnus (and gmail)
+> doesn't display the messages properly - it shows a lot of "=3D20".
 
-> One minor issue we may need to decide is what to do when show is
-> given a tag object.  Personally I think the current behaviour of
-> dereferencing it to commit is fine (people who want to see the
-> tag can always do 'git-verify-tag -v').
+Hmm, this sounds like a mistake in my code, since one would expect
+those two to be able to handle QP-encoded bodies properly. In fact, if
+they didn't, all mails from me would look like that to you, since mutt
+seems to QP-encode mails that I send.
 
-How about adding the command line option "--tag" to git-show, which makes 
-it only show that tag. I'd also vote for a "--verbose|-v" flag to show the 
-contents of the tag _before_ showing the referenced object.
+I only viewed the mails in mutt, and they looked fine there.
 
-Ciao,
-Dscho
+> Is it possible not to affect the body (or make it optional)?
+
+The vger mail server breaks 8bit encoded mails (which was what stg
+mail generated previously), at least if they don't stick to ascii. So
+if the body contains non-ascii stuff (such as my name in the sign-off
+line), we do need the encoding. I could certainly do the QP-encoding
+conditionally on there being non-ascii characters, though, and use
+7bit or whatever it's called otherwise.
+
+> People only using "patch" to apply the diffs would have problems
+> with this encoding.
+
+People feeding the raw email to patch would have this problem, yes.
+But with the "8bit" encoding not working on all mail servers, there is
+no way around this for non-ascii patches. But as I said, we certainly
+could avoid QP-encoding pure ascii patches.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
