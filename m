@@ -1,115 +1,67 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] Teach bash the new features of 'git show'.
-Date: Fri, 15 Dec 2006 02:20:03 -0500
-Message-ID: <20061215072003.GA28031@spearce.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/3] make =?ISO-8859-2?Q?index=2Dp=E2ck?= able to complete thin packs
+Date: Thu, 26 Oct 2006 09:50:48 +0200
+Organization: At home
+Message-ID: <ehppbg$phq$1@sea.gmane.org>
+References: <Pine.LNX.4.64.0610252323100.12418@xanadu.home> <7vr6wvr1ca.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 15 Dec 2006 07:20:24 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 26 Oct 2006 07:51:08 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 16
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34474>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gv7Mb-00011w-Tv for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 08:20:14 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30146>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gd00r-0002Sj-By for gcvg-git@gmane.org; Thu, 26 Oct
+ 2006 09:50:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751222AbWLOHUJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 02:20:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751259AbWLOHUJ
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 02:20:09 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:59236 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751222AbWLOHUI (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
- 02:20:08 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Gv7MT-0006y0-IB; Fri, 15 Dec 2006 02:20:05 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- E8F3B20FB65; Fri, 15 Dec 2006 02:20:03 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S1751932AbWJZHus convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006 03:50:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751870AbWJZHus
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 03:50:48 -0400
+Received: from main.gmane.org ([80.91.229.2]:60397 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1751932AbWJZHur (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 03:50:47 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gd00Y-0002Nn-2W for git@vger.kernel.org; Thu, 26 Oct 2006 09:50:34 +0200
+Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Thu, 26 Oct 2006 09:50:34 +0200
+Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 26 Oct 2006
+ 09:50:34 +0200
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Now that 'git show' accepts ref:path as an argument to specify a
-tree or blob we should use the same completion logic as we support
-for cat-file's object identifier.
+Junio C Hamano wrote:
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- contrib/completion/git-completion.bash |   24 +++++++++++++++++++++---
- 1 files changed, 21 insertions(+), 3 deletions(-)
+>=20
+>     From: Nicolas Pitre <nico@cam.org>
+>     Subject: =3D?UTF-8?Q?=3D5BPATCH_1=3D2F3=3D5D_make_index-p=3DC3=3D=
+A2ck_able_to_comp?=3D
+>      =3D?UTF-8?Q?lete_thin_packs?=3D
+>=20
+> Is this a new trick or something?
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 9c4d23a..234cd09 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -752,6 +752,24 @@ _git_reset ()
- 	COMPREPLY=($(compgen -W "$opt $(__git_refs)" -- "$cur"))
- }
- 
-+_git_show ()
-+{
-+	local cur="${COMP_WORDS[COMP_CWORD]}"
-+	case "$cur" in
-+	--pretty=*)
-+		COMPREPLY=($(compgen -W "
-+			oneline short medium full fuller email raw
-+			" -- "${cur##--pretty=}"))
-+		return
-+		;;
-+	--*)
-+		COMPREPLY=($(compgen -W "--pretty=" -- "$cur"))
-+		return
-+		;;
-+	esac
-+	__git_complete_file
-+}
-+
- _git ()
- {
- 	local i c=1 command __git_dir
-@@ -802,7 +820,7 @@ _git ()
- 	rebase)      _git_rebase ;;
- 	repo-config) _git_repo_config ;;
- 	reset)       _git_reset ;;
--	show)        _git_log ;;
-+	show)        _git_show ;;
- 	show-branch) _git_log ;;
- 	whatchanged) _git_log ;;
- 	*)           COMPREPLY=() ;;
-@@ -839,7 +857,7 @@ complete -o default -o nospace -F _git_push git-push
- complete -o default            -F _git_rebase git-rebase
- complete -o default            -F _git_repo_config git-repo-config
- complete -o default            -F _git_reset git-reset
--complete -o default            -F _git_log git-show
-+complete -o default -o nospace -F _git_show git-show
- complete -o default -o nospace -F _git_log git-show-branch
- complete -o default -o nospace -F _git_log git-whatchanged
- 
-@@ -861,7 +879,7 @@ complete -o default            -F _git_merge_base git-merge-base.exe
- complete -o default            -F _git_name_rev git-name-rev.exe
- complete -o default -o nospace -F _git_push git-push.exe
- complete -o default            -F _git_repo_config git-repo-config
--complete -o default -o nospace -F _git_log git-show.exe
-+complete -o default -o nospace -F _git_show git-show.exe
- complete -o default -o nospace -F _git_log git-show-branch.exe
- complete -o default -o nospace -F _git_log git-whatchanged.exe
- fi
--- 
+I see \hat{a} (or \^{a}) in "index-pack" (index-p=E2ck) in subject.
+That said, git-am should understand QP with coding in mail headers.
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
