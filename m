@@ -1,62 +1,75 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/5] support fetching into a shallow repository
-Date: Tue, 14 Nov 2006 09:42:34 -0800
-Message-ID: <7vu011zzzp.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0610302008520.26682@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vac2u1oee.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0611141140530.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: prune/prune-packed
+Date: Fri, 27 Oct 2006 16:19:57 -0500
+Message-ID: <1161983997.2426.422.camel@cashmere.sps.mot.com>
+References: <20061022035919.GA4420@fieldses.org>
+	 <7vy7r954k7.fsf@assigned-by-dhcp.cox.net>
+	 <20061022231422.GA9375@fieldses.org> <20061023005336.GA12932@fieldses.org>
+	 <453C1A35.70504@gmail.com>  <7vvembzp6y.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 14 Nov 2006 17:42:48 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 27 Oct 2006 21:29:10 +0000 (UTC)
+Cc: gitzilla@gmail.com, "J. Bruce Fields" <bfields@fieldses.org>,
+	Git List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.63.0611141140530.13772@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Tue, 14 Nov 2006 11:43:31 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <7vvembzp6y.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30347>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gk2Ix-0006xU-Pi for gcvg-git@gmane.org; Tue, 14 Nov
- 2006 18:42:40 +0100
+ esmtp (Exim 4.43) id 1GdZEO-0000OY-Mf for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 23:27:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755464AbWKNRmg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
- 12:42:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755466AbWKNRmg
- (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 12:42:36 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:64171 "EHLO
- fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S1755464AbWKNRmf
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 12:42:35 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao11.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061114174235.BPZA296.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>; Tue, 14
- Nov 2006 12:42:35 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id mhih1V00F1kojtg0000000; Tue, 14 Nov 2006
- 12:42:41 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1752485AbWJ0V1J (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
+ 17:27:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752487AbWJ0V1J
+ (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 17:27:09 -0400
+Received: from az33egw01.freescale.net ([192.88.158.102]:11771 "EHLO
+ az33egw01.freescale.net") by vger.kernel.org with ESMTP id S1752485AbWJ0V1H
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 17:27:07 -0400
+Received: from az33smr02.freescale.net (az33smr02.freescale.net
+ [10.64.34.200]) by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id
+ k9RLR2lx004272; Fri, 27 Oct 2006 14:27:02 -0700 (MST)
+Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2]) by
+ az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id k9RLR0Vk017892; Fri, 27
+ Oct 2006 16:27:01 -0500 (CDT)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Sun, 2006-10-22 at 22:27, Junio C Hamano wrote:
 
->> I think the "commit = p->item" part is trying to do a tail
->> recursion optimization, but this is a bit too clever to my
->> liking (at first I mistook that the code forgot to re-point p at
->> its parents list and incrementing cur_depth).
->
-> I take it as a compliment ;-)
->
-> Seriously again, would you like me to add a comment, or rather do away 
-> with the tail recursion optimization? It is not a huge optimization 
-> anyway. Maybe a cleverer way would be to use an object_array instead of a 
-> commit_list?
+> Sorry, but you are right and Linus is more right.  How about
+> doing FRSX.
+> 
+> diff --git a/pager.c b/pager.c
+> index 8bd33a1..4587fbb 100644
+> --- a/pager.c
+> +++ b/pager.c
+> @@ -50,7 +50,7 @@ void setup_pager(void)
+>  	close(fd[0]);
+>  	close(fd[1]);
+>  
+> -	setenv("LESS", "FRS", 0);
+> +	setenv("LESS", "FRSX", 0);
+>  	run_pager(pager);
+>  	die("unable to execute pager '%s'", pager);
+>  	exit(255);
 
-Leaving it as a compliment is just fine.
+I'm a little confused by all this because I
+set the LESS environment variable by myself
+already.  And I use the value that I like.
+Why change it or override the user's settings
+like this?  Or did I miss something?
+
+Thanks,
+jdl
+
