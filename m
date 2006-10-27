@@ -1,64 +1,61 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Pazu <pazu@pazu.com.br>
-Subject: Re: Ignoring local changes
-Date: Thu, 14 Dec 2006 14:55:32 -0200
-Message-ID: <9e7ab7380612140855p1f4ee6c1l5ef24c4d1d169da6@mail.gmail.com>
-References: <loom.20061214T171948-279@post.gmane.org> <45817F8A.3050701@op5.se>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: fetching packs and storing them as packs
+Date: Fri, 27 Oct 2006 16:38:54 +0200
+Message-ID: <20061027143854.GC20017@pasky.or.cz>
+References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home> <4540CA0C.6030300@tromer.org> <Pine.LNX.4.64.0610261105200.12418@xanadu.home> <45413209.2000905@tromer.org> <Pine.LNX.4.64.0610262038320.11384@xanadu.home> <20061027014229.GA28407@spearce.org> <45417205.6020805@tromer.org> <20061027030054.GB28407@spearce.org> <Pine.LNX.4.64.0610271022240.11384@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 14 Dec 2006 16:55:55 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 27 Oct 2006 14:43:16 +0000 (UTC)
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Eran Tromer <git2eran@tromer.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=SF1c+peQ6oQH1imgZ2V666n8g9Kjuxph9MKQgqVKOQyb4GV4oRLCYBdOA7K2de4A/3r/kh9NeyLOeG5Bh8BTpt76EXjTl4VI6DX0DT8DD9eV2xwP1PTONVmX1BTaNv8pp3T51xMgyOECTkA10NXVjoukiPL9u+So1ZcyXpGhKVo=
-In-Reply-To: <45817F8A.3050701@op5.se>
 Content-Disposition: inline
-X-Google-Sender-Auth: 55f88748a0ef92b7
+In-Reply-To: <Pine.LNX.4.64.0610271022240.11384@xanadu.home>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34371>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Guts9-0003No-Dv for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 17:55:53 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30329>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GdSrj-00019F-V2 for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 16:39:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932850AbWLNQzf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 11:55:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932860AbWLNQzf
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 11:55:35 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:41499 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S932850AbWLNQze (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
- 2006 11:55:34 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so887371nfa for
- <git@vger.kernel.org>; Thu, 14 Dec 2006 08:55:32 -0800 (PST)
-Received: by 10.49.34.11 with SMTP id m11mr1023671nfj.1166115332559; Thu, 14
- Dec 2006 08:55:32 -0800 (PST)
-Received: by 10.48.216.13 with HTTP; Thu, 14 Dec 2006 08:55:32 -0800 (PST)
-To: "Andreas Ericsson" <ae@op5.se>
+ S1752229AbWJ0Oi5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
+ 10:38:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752231AbWJ0Oi5
+ (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 10:38:57 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:64914 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1752229AbWJ0Oi4 (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 10:38:56 -0400
+Received: (qmail 14031 invoked by uid 2001); 27 Oct 2006 16:38:54 +0200
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-2006/12/14, Andreas Ericsson <ae@op5.se>:
+Dear diary, on Fri, Oct 27, 2006 at 04:27:05PM CEST, I got a letter
+where Nicolas Pitre <nico@cam.org> said that...
+> On Thu, 26 Oct 2006, Shawn Pearce wrote:
+> > OK so the repository won't get corrupted but the repack would be
+> > forced to abort.
+> 
+> Maybe this is the best way out?  Abort git-repack with "a fetch is in 
+> progress -- retry later".  No one will really suffer if the repack has 
+> to wait for the next scheduled cron job, especially if the fetch doesn't 
+> explode packs into loose objects anymore.
 
-> Correction: I just tested this, and while git-add won't touch the file,
-> git-update-index will, and git-status still shows it as modified.
+I don't really like this that much. Big projects can have 10 commits per
+hour on average, and they also take potentially long time to repack, so
+you might get to never really repack them.
 
-Yes, and that's exactly my problems. There are a number of
-modified/removed files in my working copy that were previously added
-to the repository, and git-status shows them as modified/removed, even
-when they're listed in .gitignore or .git/info/exclude
-
-> This feels like a bug to me.
-
-Dunno, sounds like this is by design. I acknowledge that my situation
-is unusual, and most often, you'll want to always track a file once
-it's been added to the repository.
-
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
