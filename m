@@ -1,243 +1,102 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] git-merge: make it usable as the first class UI
-Date: Mon, 20 Nov 2006 02:17:46 -0800
-Message-ID: <7vu00u4e2d.fsf@assigned-by-dhcp.cox.net>
-References: <7vy7q67tf2.fsf@assigned-by-dhcp.cox.net>
-	<20061120024308.18620.qmail@science.horizon.com>
-	<7v8xi67qhq.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Creating new repos
+Date: Fri, 27 Oct 2006 14:39:18 +0200
+Message-ID: <20061027123918.GB20017@pasky.or.cz>
+References: <200610271229.k9RCTARu016773@laptop13.inf.utfsm.cl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 20 Nov 2006 10:18:02 +0000 (UTC)
-Cc: linux@horizon.com
+NNTP-Posting-Date: Fri, 27 Oct 2006 12:40:00 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <200610271229.k9RCTARu016773@laptop13.inf.utfsm.cl>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30326>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gm6Dn-00066h-M7 for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 11:17:52 +0100
+ esmtp (Exim 4.43) id 1GdQzi-0003z4-LD for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 14:39:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965591AbWKTKRs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 05:17:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965613AbWKTKRs
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 05:17:48 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:28819 "EHLO
- fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP id S965591AbWKTKRr
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 05:17:47 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao12.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061120101747.RSUC21630.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>; Mon, 20
- Nov 2006 05:17:47 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id oyHJ1V00F1kojtg0000000; Mon, 20 Nov 2006
- 05:17:19 -0500
-To: git@vger.kernel.org
+ S1750864AbWJ0MjV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
+ 08:39:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750863AbWJ0MjU
+ (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 08:39:20 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:49620 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1750800AbWJ0MjU (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 08:39:20 -0400
+Received: (qmail 2220 invoked by uid 2001); 27 Oct 2006 14:39:18 +0200
+To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+Dear diary, on Fri, Oct 27, 2006 at 02:29:10PM CEST, I got a letter
+where "Horst H. von Brand" <vonbrand@inf.utfsm.cl> said that...
+> I'm trying to set up git repos for remote access here. I set up git-daemon
+> and got it working (some older repositories do work fine), but now:
+> 
+>   $ mkdir /var/scm/user/SomeRepo.git
+>   $ cd /var/scm/user/SomeRepo.git
+>   $ git --bare init-db
+>   $ touch git-daemon-export-ok
+> 
+> All OK, but then, from a remote machine:
+> 
+>   $ git clone git://git-server/user/SomeRepo.git
+>   fatal: no matching remote head
+>   fetch-pack from 'git://git-server/user/Test.git' failed.
+> 
+> The empty repo created by init-db should be cloneable, so as to get the ball
+> rolling easily.
 
-> So if we rename the current "git merge" to "git-merge--record"
-> (or any name "git pull" uses internally to record the merge
-> commit), and make "git merge" a synonym to "git pull .", and
-> give a command line option -m to "git pull" to _affect_ the
-> resulting merge message, I would think everybody would become
-> quite happy.  It means:
->
->  - People can say "git merge this-branch" (which is internally
->    translated to "git pull . this-branch");
->
->  - People can say "git pull -m 'I am doing this merge for such
->    and such reason' $URL $branch" to _include_ that message in
->    the resulting merge commit;
->
->  - The same can be said about "git merge -m 'comment' $branch".
->
-> I said _affect_ and _include_ in the above because I suspect
-> that most of the time you do not want to _replace_ the
-> autogenerated part ("Merge branch of repo", and if you are
-> pulling from your subordinate trees the merge summary message as
-> well).
+Well there's really nothing to clone, so it's tough. :-) What would such
+a clone be supposed to do? It has no branches to record as belonging to
+origin, and note that Git's git-clone is long-term broken in the sense
+that it won't pick new branches as they appear in the remote
+repository. So a clone of an empty repository would be useless anyway.
 
-I did a moral equivalent of the above without renaming the
-command "git merge" and will be pushing the result out in "pu"
-shortly.
+> You can't push into such an empty repository either.
 
-The following is for commenting only -- it depends on an earlier
-patch in "pu".
+This is supposed to work. What error do you get?
 
--- >8 --
-[PATCH] git-merge: make it usable as the first class UI
+> Any suggestion of how to set up a server into which users can create their
+> own repos /without/ giving out full shell accounts?
 
-This teaches the oft-requested syntax
+Sure:
 
-	git merge $commit
+	http://repo.or.cz/w/repo.git
 
-to implement merging the named commit to the current branch.
-This hopefully would make "git merge" usable as the first class
-UI instead of being a mere backend for "git pull".
+But it may be quite an overkill for you. ;-)
 
-Most notably, $commit above can be any committish, so you can
-say for example:
+If you want them to be able to do it over ssh, you would need to provide
+a trusted tool which would manage the repository setup, that means not
+only doing init-db, but also managing the export-ok files, description
+file, you'd likely want to enable the post-update hook (but probably not
+any other hook or let the user edit it since at that point you've given
+him full shell access), etc. And the tool would have to be carefully
+reviewed since it's security-critical.
 
-	git merge js/shortlog~2
+> Also, the behaviour of git-daemon is different when using git or ssh+git,
+> you need to give the full path for the later but not the former (given
+> --base-path=/var/scm):
+> 
+>   git://git-server/user/Test.git
+>   ssh+git://git-server/var/scm/user/Test.git
+> 
+> Is this intentional?
 
-to merge early part of a topic branch without merging the rest
-of it.
+git+ssh has nothing to do with git-daemon, it's executing other git
+commands remotely.
 
-A custom merge message can be given with the new --message=<msg>
-parameter.  The message is prepended in front of the usual
-"Merge ..." message autogenerated with fmt-merge-message.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- Documentation/git-merge.txt |   18 +++++++++---
- git-merge.sh                |   61 ++++++++++++++++++++++++++++++++++++++-----
- 2 files changed, 67 insertions(+), 12 deletions(-)
-
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index bebf30a..e2954aa 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -8,12 +8,14 @@ git-merge - Grand Unified Merge Driver
- 
- SYNOPSIS
- --------
--'git-merge' [-n] [--no-commit] [-s <strategy>]... <msg> <head> <remote> <remote>...
--
-+[verse]
-+'git-merge' [-n] [--no-commit] [--squash] [-s <strategy>]...
-+	[--reflog-action=<action>]
-+	-m=<msg> <remote> <remote>...
- 
- DESCRIPTION
- -----------
--This is the top-level user interface to the merge machinery
-+This is the top-level interface to the merge machinery
- which drives multiple merge strategy scripts.
- 
- 
-@@ -27,13 +29,19 @@ include::merge-options.txt[]
- 	to give a good default for automated `git-merge` invocations.
- 
- <head>::
--	our branch head commit.
-+	Our branch head commit.  This has to be `HEAD`, so new
-+	syntax does not require it
- 
- <remote>::
--	other branch head merged into our branch.  You need at
-+	Other branch head merged into our branch.  You need at
- 	least one <remote>.  Specifying more than one <remote>
- 	obviously means you are trying an Octopus.
- 
-+--reflog-action=<action>::
-+	This is used internally when `git-pull` calls this command
-+	to record that the merge was created by `pull` command
-+	in the `ref-log` entry that results from the merge.
-+
- include::merge-strategies.txt[]
- 
- 
-diff --git a/git-merge.sh b/git-merge.sh
-index 84c3acf..25deb1e 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -3,7 +3,8 @@
- # Copyright (c) 2005 Junio C Hamano
- #
- 
--USAGE='[-n] [--no-commit] [--squash] [-s <strategy>]... <merge-message> <head> <remote>+'
-+USAGE='[-n] [--no-commit] [--squash] [-s <strategy>] [--reflog-action=<action>] [-m=<merge-message>] <commit>+'
-+
- . git-sh-setup
- 
- LF='
-@@ -92,7 +93,7 @@ finish () {
- 
- case "$#" in 0) usage ;; esac
- 
--rloga=
-+rloga= have_message=
- while case "$#" in 0) break ;; esac
- do
- 	case "$1" in
-@@ -125,17 +126,63 @@ do
- 	--reflog-action=*)
- 		rloga=`expr "z$1" : 'z-[^=]*=\(.*\)'`
- 		;;
-+	-m=*|--m=*|--me=*|--mes=*|--mess=*|--messa=*|--messag=*|--message=*)
-+		merge_msg=`expr "z$1" : 'z-[^=]*=\(.*\)'`
-+		have_message=t
-+		;;
-+	-m|--m|--me|--mes|--mess|--messa|--messag|--message)
-+		shift
-+		case "$#" in
-+		1)	usage ;;
-+		esac
-+		merge_msg="$1"
-+		have_message=t
-+		;;
- 	-*)	usage ;;
- 	*)	break ;;
- 	esac
- 	shift
- done
- 
--merge_msg="$1"
--shift
--head_arg="$1"
--head=$(git-rev-parse --verify "$1"^0) || usage
--shift
-+# This could be traditional "merge <msg> HEAD <commit>..."  and the
-+# way we can tell it is to see if the second token is HEAD, but some
-+# people might have misused the interface and used a committish that
-+# is the same as HEAD there instead.  Traditional format never would
-+# have "-m" so it is an additional safety measure to check for it.
-+
-+if test -z "$have_message" &&
-+	second_token=$(git-rev-parse --verify "$2^0" 2>/dev/null) &&
-+	head_commit=$(git-rev-parse --verify "HEAD" 2>/dev/null) &&
-+	test "$second_token" = "$head_commit"
-+then
-+	merge_msg="$1"
-+	shift
-+	head_arg="$1"
-+	shift
-+else
-+	# We are invoked directly as the first-class UI.
-+	head_arg=HEAD
-+
-+	# All the rest are the commits being merged; prepare
-+	# the standard merge summary message to be appended to
-+	# the given message.  If remote is invalid we will die
-+	# later in the common codepath so we discard the error
-+	# in this loop.
-+	merge_name=$(for remote
-+		do
-+			rh=$(git-rev-parse --verify "$remote"^0 2>/dev/null)
-+			if git show-ref -q --verify "refs/heads/$remote"
-+			then
-+				what=branch
-+			else
-+				what=commit
-+			fi
-+			echo "$rh		$what '$remote'"
-+		done | git-fmt-merge-msg
-+	)
-+	merge_msg="${merge_msg:+$merge_msg$LF$LF}$merge_name"
-+fi
-+head=$(git-rev-parse --verify "$head_arg"^0) || usage
- 
- # All the rest are remote heads
- test "$#" = 0 && usage ;# we need at least one remote head.
 -- 
-1.4.4.gbacc
-
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
