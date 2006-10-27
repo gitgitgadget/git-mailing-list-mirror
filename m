@@ -1,97 +1,131 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Salikh Zakirov <salikh@gmail.com>
-Subject: Re: [PATCH] Make git-clone --use-separate-remote the default
-Date: Sat, 25 Nov 2006 02:28:02 +0300
-Message-ID: <ek7v61$k89$1@sea.gmane.org>
-References: <20061123225835.30071.99265.stgit@machine.or.cz>	<7vejrtiwqd.fsf@assigned-by-dhcp.cox.net>	<20061123234203.GN7201@pasky.or.cz>	<7vlkm1hf57.fsf@assigned-by-dhcp.cox.net>	<7vzmahe6qe.fsf@assigned-by-dhcp.cox.net>	<7vpsbde4fy.fsf@assigned-by-dhcp.cox.net> <ek6glc$pn$1@sea.gmane.org> <7vslg9axzv.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Peter Baumann" <peter.baumann@gmail.com>
+Subject: [BUG] git-cvsexportcommit doesn't handle added directories
+Date: Fri, 27 Oct 2006 11:38:59 +0200
+Message-ID: <802d21790610270238l31042731t80313c8f467a1a55@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 24 Nov 2006 23:45:23 +0000 (UTC)
+NNTP-Posting-Date: Fri, 27 Oct 2006 09:39:54 +0000 (UTC)
+Cc: "Martin Langhoff" <martin@catalyst.net.nz>,
+	"Yann Dirson" <ydirson@altern.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 48
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 466.dialup.orc.ru
-User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
-In-Reply-To: <7vslg9axzv.fsf@assigned-by-dhcp.cox.net>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=hR6o0XD+xBtoCfmy3i/SEjtbzZkW8QYxTJ5sJL/BzRJio+troDEYjI5H3vOLFnGklD5Um/JSBrsO8qNV85sLtEidnrYAvp2gY77cylC2Yr53IZnZ+GNTbMnkKgqZnVEb+P1P0AtKH6dbIwyDCALfMLehCMVvA6ypyh7xMQOJwSA=
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30316>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnkjO-0004mI-7I for gcvg-git@gmane.org; Sat, 25 Nov
- 2006 00:45:18 +0100
+ esmtp (Exim 4.43) id 1GdOBa-00014i-Jd for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 11:39:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933777AbWKXXpI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
- 18:45:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934190AbWKXXpH
- (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 18:45:07 -0500
-Received: from main.gmane.org ([80.91.229.2]:27858 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S933777AbWKXXpE (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 18:45:04 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43) id
- 1Gnkj8-0004jh-B8 for git@vger.kernel.org; Sat, 25 Nov 2006 00:45:02 +0100
-Received: from 466.dialup.orc.ru ([212.48.131.210]) by main.gmane.org with
- esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Sat, 25 Nov 2006 00:45:02 +0100
-Received: from salikh by 466.dialup.orc.ru with local (Gmexim 0.1 (Debian))
- id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sat, 25 Nov 2006 00:45:02
- +0100
+ S1422753AbWJ0JjD (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
+ 05:39:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946269AbWJ0JjC
+ (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 05:39:02 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:4414 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1946270AbWJ0JjA
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 05:39:00 -0400
+Received: by ug-out-1314.google.com with SMTP id 22so554483uga for
+ <git@vger.kernel.org>; Fri, 27 Oct 2006 02:38:59 -0700 (PDT)
+Received: by 10.78.157.8 with SMTP id f8mr4170104hue; Fri, 27 Oct 2006
+ 02:38:59 -0700 (PDT)
+Received: by 10.78.162.18 with HTTP; Fri, 27 Oct 2006 02:38:59 -0700 (PDT)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
-> The way this command:
-> 
-> 	git push $remote $src:$dst
-> 
-> is handled is:
-> 
->  (0) send-pack gets ls-remote equivalent from the remote.  This
->      tells us the set of refs the remote has and the value of
->      each of them.
-> 
->  (1) $src can be a ref that is resolved locally the usual way.
->      You could have any valid SHA-1 expression (e.g. HEAD~6).
+There is a problem in git-cvsexportcommit if I add a directory with some new
+files in git. It dies in safe_pipe_capture().
 
->  (2) $dst is compared with the list of refs that the remote
->      has, and unique match is found.
+Analysis:
 
-I think that remote matching semantics is confusing, and the following change
-would make understanding easier.
+foreach my $f (@afiles) {
+    # This should return only one value
+    my @status = grep(m/^File/,  safe_pipe_capture('cvs', '-q', 'status' ,$f));
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    #    OK. Here it tries to run "cvs -q status src/newdirectory/newfile"
+    [...]
+}
 
-I was understanding the manual incorrectly for a long time until you've
-explained its true meaning today (thanks!).
+[...]
 
-As a side effect, making 'git push repo master' unambiguously expanded
-to 'git push repo refs/heads/master:refs/heads/master' will make
-the syntax 'git push repo tag v1' unneeded at all, because it would be
-exactly the same as 'git push repo v1'
-(expanded to 'git push repo refs/tags/v1:refs/tags/v1').
+# An alternative to `command` that allows input to be passed as an array
+# to work around shell problems with weird characters in arguments
+# if the exec returns non-zero we die
+sub safe_pipe_capture {
+    my @output;
+    if (my $pid = open my $child, '-|') {
+        @output = (<$child>);
+        print "before close\n";
+        close $child or die join(' ',@_).": x$!x y$?y";
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         #   I changed it to see which error will be printed
+        print "after close\n";
+    } else {
+        exec(@_) or die "$! $?"; # exec() can fail the executable can't be found
+    }
+    return wantarray ? @output : join('',@output);
+}
 
---- connect.c
-+++ connect.c
-@@ -277,6 +277,16 @@ static int match_explicit_refs(struct re
-                              rs[i].src);
-                        break;
-                }
-+               if (!strcmp(rs[i].src,rs[i].dst)) {
-+                       /* src refspec is the same as dst,
-+                        * take the remote refpath exactly the same
-+                        * as existing local reference
-+                        */
-+                       int len = strlen(matched_src->name) + 1;
-+                       matched_dst = xcalloc(1, sizeof(*dst) + len);
-+                       memcpy(matched_dst->name, matched_src->name, len);
-+                       link_dst_tail(matched_dst, dst_tail);
-+               } else
-                switch (count_refspec_match(rs[i].dst, dst, &matched_dst)) {
-                case 1:
-                        break;
+
+Output:
+[...]
+siprbaum@faui40a.informatik.uni-erlangen.de's password:
+cvs [status aborted]: no such directory `src/newdir'
+before close
+cvs -q status src/newdir/newfile.java: xx y256y at
+/home/peter/src/git-cvsexportcommit.perl line 317.
+                                      ^^^^^
+Don't be confused about the wrong line number. I have some other stuff
+(formating
+the commit message in a special way) in there but I can confirm that the script
+dies at the close of the pipe.
+
+Running from a shell the command manually:
+
+  xp:~/project/$ cvs -q status src/newdir/newfile
+  siprbaum@faui40a.informatik.uni-erlangen.de's password:
+  cvs [status aborted]: no such directory `src/newdir'
+  xp:~/project/$ echo $?
+  1
+
+
+Excerpt from the "perldoc -f close"
+
+  [...]
+  If the file handle came from a piped open, "close" will additionally
+return false if
+  one of the other system calls involved fails, or if the program
+exits with non-zero
+  status.  (If the only problem was that the program exited non-zero, $! will be
+  set to 0.)  Closing a pipe also waits for the process executing on the pipe to
+  complete, in case you want to look at the output of the pipe afterwards, and
+  implicitly puts the exit status value of that command into $?.
+
+  Prematurely closing the read end of a pipe (i.e. before the process
+writing to it
+  at the other end has closed it) will result in a SIGPIPE being
+delivered to the
+  writer. If the other end can't handle that, be sure to read all the
+data before
+  closing the pipe.
+
+So according to the manpage $! should be set to 0, because
+"cvs -q status src/newdir/newfile" exits with errorcode 1 as shown above.
+
+Could this have something todo that I have to use ssh to connect to the repo?
+(CVSROOT=:extssh:siprbaum@faui40a.informatik.uni-erlangen.de:/path/to/repo)
+
+Any ideas?
+
+Greetings,
