@@ -2,57 +2,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Cleaning up git user-interface warts
-Date: Tue, 14 Nov 2006 22:30:56 +0100
-Organization: At home
-Message-ID: <ejdcg5$4fl$1@sea.gmane.org>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home> <87bqn9u43s.wl%cworth@cworth.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH (amend)] gitweb: Slight visual improvements to commitdiff view
+Date: Fri, 27 Oct 2006 03:47:40 +0200
+Message-ID: <20061027014740.GV20017@pasky.or.cz>
+References: <200610270150.40100.jnareb@gmail.com> <780488.44315.qm@web31803.mail.mud.yahoo.com> <7vu01qilg1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Tue, 14 Nov 2006 21:30:34 +0000 (UTC)
+NNTP-Posting-Date: Fri, 27 Oct 2006 01:50:52 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	ltuikov@yahoo.com
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 8
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+Content-Disposition: inline
+In-Reply-To: <7vu01qilg1.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30271>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gk5rK-00036l-A8 for gcvg-git@gmane.org; Tue, 14 Nov
- 2006 22:30:22 +0100
+ esmtp (Exim 4.43) id 1GdGoy-0001rk-Mt for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 03:47:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966367AbWKNVaR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
- 16:30:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966368AbWKNVaR
- (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 16:30:17 -0500
-Received: from main.gmane.org ([80.91.229.2]:48108 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S966367AbWKNVaP (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 16:30:15 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gk5r2-00033A-Ah for git@vger.kernel.org; Tue, 14 Nov 2006 22:30:04 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Tue, 14 Nov 2006 22:30:04 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 14 Nov 2006
- 22:30:04 +0100
-To: git@vger.kernel.org
+ S1946100AbWJ0Brm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 21:47:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946101AbWJ0Brm
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 21:47:42 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:44423 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1946100AbWJ0Brl (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 21:47:41 -0400
+Received: (qmail 7914 invoked by uid 2001); 27 Oct 2006 03:47:40 +0200
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-The git interface refactoring should be I think the cause for git 2.0.0
-release...
+Dear diary, on Fri, Oct 27, 2006 at 03:42:06AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> Luben Tuikov <ltuikov@yahoo.com> writes:
+> 
+> > --- Jakub Narebski <jnareb@gmail.com> wrote:
+> > ...
+> >> Those changes might wait for proper refactoring of gitweb CSS (having 
+> >> for example 8px padding in one place only).
+> >
+> > Excellent!  I'd like this explanation to be part of the
+> > commit message if that patchset is committed to git.git.
+> 
+> I'd like that kind of explanation with the patch in a single
+> message when it is ready to be applied, too.
+> 
+> I'll leave it up to you guys to decide if CSS refactoring should
+> go in first (I personally feel it probably is the case, in which
+> case this patch would need to be rebased I suspect).
+
+We don't have any such patch, do we? So let anyone doing that patch take
+this one into account and merge in whatever we have, I'd say.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
