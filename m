@@ -4,91 +4,58 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Grzegorz Kulewski <kangur@polcom.net>
-Subject: starting completly new repository
-Date: Sat, 25 Mar 2006 22:06:42 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0603252148550.14361@alpha.polcom.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH (amend)] gitweb: Slight visual improvements to commitdiff view
+Date: Thu, 26 Oct 2006 18:42:06 -0700
+Message-ID: <7vu01qilg1.fsf@assigned-by-dhcp.cox.net>
+References: <200610270150.40100.jnareb@gmail.com>
+	<780488.44315.qm@web31803.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-NNTP-Posting-Date: Sat, 25 Mar 2006 21:07:20 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 27 Oct 2006 02:01:01 +0000 (UTC)
+Cc: git@vger.kernel.org, ltuikov@yahoo.com
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Virus-Scanned: amavisd-new at alpha
+In-Reply-To: <780488.44315.qm@web31803.mail.mud.yahoo.com> (Luben Tuikov's
+	message of "Thu, 26 Oct 2006 17:39:14 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/18000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30274>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1FNFya-00069k-Ii for gcvg-git@gmane.org; Sat, 25 Mar
- 2006 22:07:12 +0100
+ esmtp (Exim 4.43) id 1GdGjd-0001WZ-Vc for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 03:42:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751351AbWCYVGu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Mar 2006
- 16:06:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751415AbWCYVGt
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Mar 2006 16:06:49 -0500
-Received: from alpha.polcom.net ([83.143.162.52]:57067 "EHLO
- alpha.polcom.net") by vger.kernel.org with ESMTP id S1751351AbWCYVGs (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 25 Mar 2006 16:06:48 -0500
-Received: from localhost (localhost [127.0.0.1]) by alpha.polcom.net
- (Postfix) with ESMTP id 533271D053 for <git@vger.kernel.org>; Sat, 25 Mar
- 2006 22:06:46 +0100 (CET)
-Received: from alpha.polcom.net ([127.0.0.1]) by localhost (alpha
- [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 02117-15 for
- <git@vger.kernel.org>; Sat, 25 Mar 2006 22:06:42 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1]) by alpha.polcom.net
- (Postfix) with ESMTP id 2F89E1A8B3 for <git@vger.kernel.org>; Sat, 25 Mar
- 2006 22:06:42 +0100 (CET)
-To: git@vger.kernel.org
+ S1946097AbWJ0BmK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 21:42:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946098AbWJ0BmK
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 21:42:10 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:40439 "EHLO
+ fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S1946097AbWJ0BmH
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 21:42:07 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao11.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061027014206.RKUS13992.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>; Thu, 26
+ Oct 2006 21:42:06 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id fDho1V00Q1kojtg0000000 Thu, 26 Oct 2006
+ 21:41:49 -0400
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
-First sorry if it is anwsered somewhere in the docs, but I am just 
-(slowly) learning how to use git and reading the documentation. Any 
-pointers to some article or tutorial that anwsers my questions will be 
-appreciated.
+> --- Jakub Narebski <jnareb@gmail.com> wrote:
+> ...
+>> Those changes might wait for proper refactoring of gitweb CSS (having 
+>> for example 8px padding in one place only).
+>
+> Excellent!  I'd like this explanation to be part of the
+> commit message if that patchset is committed to git.git.
 
-What I am trying to do is to construct several repositories for the 
-following work order:
+I'd like that kind of explanation with the patch in a single
+message when it is ready to be applied, too.
 
-1. There is some remote repo that is the main repository (call it main). 
-It lives in some server and geneerally only one or two persons can push 
-into it. All others can only pull from it.
-
-2. Everybody has his own repo derived from main and she/he can make 
-patches and send it to everybody else. One person is responsible for 
-taking the patches and pushing them into main.
-
-I need this set up fast and want to know how to do it. What I tried is 
-basically:
-
-(on the server)
-mkdir main
-git-init-db
-touch .git/git-daemon-export-ok
-
-(on my computer)
-git-clone git://host/main main
-
-But it looks like I must first do some commit on the server? But I can not 
-make empty commit just to have things started? Or maybe there is some 
-other way...
-
-Also I wonder if I can do push over git protocol or I must use real ssh 
-account on the server? This is not clear from the docs... At least not for 
-me. How should I set up my repo (on my computer) to be able to push 
-commits into main repo?
-
-Also what should I set up additionally? How can I easily set author name 
-and email for each repo? What is the difference between author and 
-commiter and how should I set this up here?
-
-Is there any documentation about git config file? Can I set author name, 
-email and preffered editor in it or must I use environment?
-
-Is there some irc channel for asking dumb questions as above and having 
-them anwsered fast or should I use this mailing list?
-
-
-Thanks in advance,
-
-Grzegorz Kulewski
+I'll leave it up to you guys to decide if CSS refactoring should
+go in first (I personally feel it probably is the case, in which
+case this patch would need to be rebased I suspect).
