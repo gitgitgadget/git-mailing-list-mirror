@@ -1,83 +1,55 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Fri, 1 Dec 2006 13:12:34 +0100
-Message-ID: <20061201121234.GQ18810@admingilde.org>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611292000.23778.andyparkins@gmail.com> <20061130170625.GH18810@admingilde.org> <200612010902.51264.andyparkins@gmail.com> <20061201110032.GL18810@admingilde.org> <45701B8D.1030508@b-i-t.de>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="9pS2hy4/DrI8BQlq"
-NNTP-Posting-Date: Fri, 1 Dec 2006 12:12:43 +0000 (UTC)
-Cc: git@vger.kernel.org
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: Generating docu in 1.4.3.3.g01929
+Date: Fri, 27 Oct 2006 14:26:53 -0300
+Message-ID: <200610271726.k9RHQr0F024712@laptop13.inf.utfsm.cl>
+NNTP-Posting-Date: Fri, 27 Oct 2006 17:57:30 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <45701B8D.1030508@b-i-t.de>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.21.155]); Fri, 27 Oct 2006 14:26:53 -0300 (CLST)
+X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30338>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq7Fu-0002nr-Pb for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 13:12:39 +0100
+ esmtp (Exim 4.43) id 1GdVTw-0005Zr-0b for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 19:27:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030898AbWLAMMg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 07:12:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030903AbWLAMMg
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 07:12:36 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:53738 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S1030898AbWLAMMf
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 07:12:35 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1Gq7Fq-0005Lq-Q2; Fri, 01 Dec 2006 13:12:34 +0100
-To: sf <sf@b-i-t.de>
+ S1752343AbWJ0R04 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
+ 13:26:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752347AbWJ0R04
+ (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 13:26:56 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:33684 "EHLO
+ inti.inf.utfsm.cl") by vger.kernel.org with ESMTP id S1752343AbWJ0R0z (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 13:26:55 -0400
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
+ by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id k9RHQref025546
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO) for
+ <git@vger.kernel.org>; Fri, 27 Oct 2006 14:26:53 -0300
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1]) by
+ laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id k9RHQr0F024712 for
+ <git@vger.kernel.org>; Fri, 27 Oct 2006 14:26:53 -0300
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+I'm getting lots of these after today's pull:
 
---9pS2hy4/DrI8BQlq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-hoi :)
-
-On Fri, Dec 01, 2006 at 01:09:49PM +0100, sf wrote:
-> Martin Waitz wrote:
-> ...
-> >So you not only store your submodule HEAD commit in the supermodule when=
-=20
-> >you
-> >do commit to the supermodule, it also means that your submodule HEAD
-> >will be updated when you update your supermodule.
->=20
-> Why the magic? The typical workflow in git is
->=20
-> 1. You work on a branch, i.e. edit and commit and so on.
-> 2. At some point, you decide to share the work you did on that branch=20
-> (e-mail a patch, merge into another branch, push upstream or let it by=20
-> pulled by upstream)
-
-3. Other people want to use your new work.
-
---=20
-Martin Waitz
-
---9pS2hy4/DrI8BQlq
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFcBwyj/Eaxd/oD7IRApRSAJ4vGIfv4BEeSHFdhwWNs/CLWYfjAACdFTkU
-wRRcYBA5eKfyLEbuqBsl10I=
-=vQW2
------END PGP SIGNATURE-----
-
+asciidoc -b docbook -d manpage -f asciidoc.conf git-daemon.txt
+xmlto -m callouts.xsl man git-daemon.xml
+error : unterminated entity reference                
+error : unterminated entity reference                
+error : unterminated entity reference             ...
+error : unterminated entity reference                
+error : unterminated entity reference                
+Writing git-daemon.1 for refentry
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                    Fono: +56 32 2654431
+Universidad Tecnica Federico Santa Maria             +56 32 2654239
