@@ -2,70 +2,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH (take 3)] gitweb: Use git-show-ref instead of git-peek-remote
-Date: Sat, 25 Nov 2006 12:08:00 +0100
-Message-ID: <200611251208.01047.jnareb@gmail.com>
-References: <7vhcwoa3mx.fsf@assigned-by-dhcp.cox.net> <11644507284105-git-send-email-jnareb@gmail.com> <7v7ixj3izw.fsf@assigned-by-dhcp.cox.net>
+From: Eran Tromer <git2eran@tromer.org>
+Subject: Re: fetching packs and storing them as packs
+Date: Fri, 27 Oct 2006 06:03:23 +0200
+Message-ID: <4541850B.8060608@tromer.org>
+References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home> <4540CA0C.6030300@tromer.org> <Pine.LNX.4.64.0610261105200.12418@xanadu.home> <45413209.2000905@tromer.org> <Pine.LNX.4.64.0610262038320.11384@xanadu.home> <20061027014229.GA28407@spearce.org> <45417205.6020805@tromer.org> <20061027030054.GB28407@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 25 Nov 2006 11:06:31 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Fri, 27 Oct 2006 04:04:40 +0000 (UTC)
+Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=gPWpGh+FXaJrI/pexA3esdW24cca7ciI6M6FLfOgHjjVnQRh7et/3w6K/klzxQdQA3OZ2QOnZt8RtxBjygBJq8ZIll8iyYVy21GGUTNtUSlREs/y5Hm6gPgfdDQbR8CB8Clj9XHyMs2V6C8TkgBqLn99tlAGZFBeW9XgwqdSnTI=
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v7ixj3izw.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.7) Gecko/20060913 Fedora/1.5.0.7-1.fc5 Thunderbird/1.5.0.7 Mnenhy/0.7.4.0
+In-Reply-To: <20061027030054.GB28407@spearce.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30287>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnvMY-0003RS-9c for gcvg-git@gmane.org; Sat, 25 Nov
- 2006 12:06:26 +0100
+ esmtp (Exim 4.43) id 1GdIxG-00080I-Pt for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 06:04:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935152AbWKYLGX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 06:06:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757919AbWKYLGX
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 06:06:23 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:31360 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1757918AbWKYLGW
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 06:06:22 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so830086uga for
- <git@vger.kernel.org>; Sat, 25 Nov 2006 03:06:20 -0800 (PST)
-Received: by 10.67.119.9 with SMTP id w9mr8852843ugm.1164452780452; Sat, 25
- Nov 2006 03:06:20 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id e1sm16030278ugf.2006.11.25.03.06.20; Sat, 25 Nov
- 2006 03:06:20 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
+ S1161484AbWJ0EEV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
+ 00:04:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423484AbWJ0EEV
+ (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 00:04:21 -0400
+Received: from line108-16.adsl.actcom.co.il ([192.117.108.16]:17538 "EHLO
+ lucian.tromer.org") by vger.kernel.org with ESMTP id S1161485AbWJ0EEU (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 00:04:20 -0400
+Received: from [192.168.4.6] ([192.168.4.6]) by lucian.tromer.org
+ (8.13.7/8.12.11) with ESMTP id k9R43cvo031074; Fri, 27 Oct 2006 06:03:39
+ +0200
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
->> While at it make git_get_references return hash in list context,
->> and reference to hash (as it used to do) in scalar and void contexts.
-> 
-> Why did you have to add this?  Generally, context sensitive
-> returns make the program much harder to maintain, because it
-> forces the call sites to be extremely careful to choose between
-> "my ($foo) = func()" vs "my $foo = func()", and people who later
-> call the function inevitably make mistakes.
-> 
-> So unless there is a compelling reason, I'd rather not see more
-> "wantarray" in the program.
+Hi,
 
-O.K. I have browsed through gitweb, and I see that we almost always
-want the hashref, not hash (for passing further).
+On 2006-10-27 05:00, Shawn Pearce wrote:
+>> Change git-repack to follow references under $GIT_DIR/tmp/refs/ too.
+>> To receive or fetch a pack:
+>> 1. Add references to the new heads in
+>>    `mktemp $GIT_DIR/tmp/refs/XXXXXX`.
+>> 2. Put the new .pack under $GIT_DIR/objects/pack/.
+>> 3. Put the new .idx under $GIT_DIR/objects/pack/.
+>> 4. Update the relevant heads under $GIT_DIR/refs/.
+>> 5. Delete the references from step 1.
 
--- 
-Jakub Narebski
+> That was actually my (and also Sean's) solution.  Except I would
+> put the temporary refs as "$GIT_DIR/refs/ref_XXXXXX" as this is
+> less code to change and its consistent with how temporary loose
+> objects are created.
+
+If you do that, other programs (e.g., anyone who uses rev-list --all)
+may try to walk those heads or consider them available before the pack
+is really there. The point about $GIT_DIR/tmp/refs is that only programs
+meddling with physical packs (git-fetch, git-receive-pack, git-repack)
+will know about it.
+
+
+> What happens when the incoming pack (steps #2 and #3) takes 15
+> minutes to upload (slow ADSL modem, lots of objects) and the
+> background repack process sees those temporary refs and starts
+> trying to include those objects?  It can't walk the DAG that those
+> refs point at because the objects aren't in the current repository.
+> 
+>>From what I know of that code the pack-objects process will fail to
+> find the object pointed at by the ref, rescan the packs directory,
+> find no new packs, look for the object again, and abort over the
+> "corruption".
+
+Good point. Then I guess we'll need to change git-repack to ignore
+missing objects if they're referenced from $GIT_DIR/tmp/refs but not
+from $GIT_DIR/refs. Ugly, but shouldn't be too hard.
+
+
