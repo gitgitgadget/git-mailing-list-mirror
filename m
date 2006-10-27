@@ -4,160 +4,98 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] make 'git add' a first class user friendly interface to
- the index
-Date: Sun, 03 Dec 2006 00:03:56 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0612022335350.2630@xanadu.home>
-References: <Pine.LNX.4.64.0612011444310.9647@xanadu.home>
- <7vpsb36yem.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: fetching packs and storing them as packs
+Date: Thu, 26 Oct 2006 23:00:54 -0400
+Message-ID: <20061027030054.GB28407@spearce.org>
+References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home> <4540CA0C.6030300@tromer.org> <Pine.LNX.4.64.0610261105200.12418@xanadu.home> <45413209.2000905@tromer.org> <Pine.LNX.4.64.0610262038320.11384@xanadu.home> <20061027014229.GA28407@spearce.org> <45417205.6020805@tromer.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Sun, 3 Dec 2006 05:04:07 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 27 Oct 2006 03:01:20 +0000 (UTC)
+Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <7vpsb36yem.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+Content-Disposition: inline
+In-Reply-To: <45417205.6020805@tromer.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30283>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqjWE-0006mU-R5 for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 06:04:03 +0100
+ esmtp (Exim 4.43) id 1GdHy1-0001mJ-FM for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 05:01:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424951AbWLCFD6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
- 00:03:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424954AbWLCFD6
- (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 00:03:58 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:58534 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S1424951AbWLCFD5
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 00:03:57 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J9O004AZM2KQMK0@VL-MH-MR001.ip.videotron.ca> for git@vger.kernel.org; Sun,
- 03 Dec 2006 00:03:56 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S1161441AbWJ0DBF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 23:01:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161475AbWJ0DBF
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 23:01:05 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:48280 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1161441AbWJ0DBC
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 23:01:02 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GdHxc-0008HN-VT; Thu, 26 Oct 2006 23:00:45 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 0135E20E45B; Thu, 26 Oct 2006 23:00:54 -0400 (EDT)
+To: Eran Tromer <git2eran@tromer.org>
 Sender: git-owner@vger.kernel.org
 
-On Fri, 1 Dec 2006, Junio C Hamano wrote:
-
-> > +Contrary to other SCMs, with GIT you have to explicitly "add" all the
-> > +changed file content you want to commit together to form a changeset
-> > +with the 'add' command before using the 'commit' command.
+Eran Tromer <git2eran@tromer.org> wrote:
+> > Unfortunately I don't have a solution.  I tried to come up with
+> > one but didn't.  :-)
 > 
-> ... "before a new commit is made"; it is not an offence to leave
-> local changes outside the index.  Staging such changes to all
-> files is done using the "-a" flag and that is done "before a new
-> commit is made", but not "before using the 'commit' command" --
-> it is done at the same time.
-
-Sorry but I don't think this is a good idea to tell that.  At least not 
-here.  Opening all the possibilities too fast at once is a good way to 
-create distrust.  Let's focus on what the user needs to know about the 
-add command only.  
-
-The newbie that becomes not so newbie aftera while will deduce that he 
-actually _can_ leave local changes outside the index and he'll go "wow, 
-that is cool!" especially if he deduce this by himself.  And that 
-deduction will happen in time while using the tool when the opportunity 
-for leaving local changes outside the index arises which is a much 
-better way to grasp the power of the index than by just being told about 
-it.
-
-AS to the commit -a ... I think it is better to refer to the commit man 
-page once it has been refactored with the writeup you posted yourself 
-and simply direct the user with "You may also have a look at the 
-git-commit documentation for alternative ways to add content to a 
-commit."
-
-> > +This is not only for adding new files.  Even modified files must be
-> > +added to the set of changes about to be committed. This command can
-> > +be performed multiple times before a commit. The 'git status' command
-> > +will give you a summary of what is included for the next commit.
-> > +
-> > +Note: don't forget to 'add' a file again if you modified it after the
-> > +first 'add' and before 'commit'. Otherwise only the previous added
-> > +state of that file will be committed. This is because git tracks
-> > +content, so what you're really 'add'ing to the commit is the *content*
-> > +of the file in the state it is in when you 'add' it. Of course there are
-> > +legitimate usage cases for not updating an already added file content
-> > +in order to commit a previous file state, but in this case you better
-> > +know what you're doing.
+> Here's one way to do it.
+> Change git-repack to follow references under $GIT_DIR/tmp/refs/ too.
+> To receive or fetch a pack:
+> 1. Add references to the new heads in
+>    `mktemp $GIT_DIR/tmp/refs/XXXXXX`.
+> 2. Put the new .pack under $GIT_DIR/objects/pack/.
+> 3. Put the new .idx under $GIT_DIR/objects/pack/.
+> 4. Update the relevant heads under $GIT_DIR/refs/.
+> 5. Delete the references from step 1.
 > 
-> May be we could hint the reader that a faster-to-type
-> alternative exists here.  Perhaps...
+> This is repack-safe and never corrupts the repo. The worst-case failure
+> mode is if you die before cleaning the refs from $GIT_DIR/tmp/refs. That
+> may mean some packed objects will never be removed by "repack -a -d"
+> even if they lose all references from $GIT_DIR/refs, so do "tmpwatch -m
+> 240 $GIT_DIR/tmp/refs" to take care of that.
 
-Perhaps not.
+That was actually my (and also Sean's) solution.  Except I would
+put the temporary refs as "$GIT_DIR/refs/ref_XXXXXX" as this is
+less code to change and its consistent with how temporary loose
+objects are created.
 
-> > +GIt tracks content not files
-> 
-> s/I/i/
+Unfortunately it does not completely work.
 
-Yup
+What happens when the incoming pack (steps #2 and #3) takes 15
+minutes to upload (slow ADSL modem, lots of objects) and the
+background repack process sees those temporary refs and starts
+trying to include those objects?  It can't walk the DAG that those
+refs point at because the objects aren't in the current repository.
 
-> > +But here's a twist. If you do 'git commit <file1> <file2> ...' then only
-> > +the  changes belonging to those explicitly specified files will be
-> > +committed, entirely bypassing the current "added" changes. Those "added"
-> > +changes will still remain available for a subsequent commit though.
-> > +
-> > +There is a twist about that twist: if you do 'git commit -i <file>...'
-> > +then the commit will consider changes to those specified files _including_
-> > +all "added" changes so far.
-> > +
-> 
-> I think there is another twist more deserving of mention than -i twist.
+From what I know of that code the pack-objects process will fail to
+find the object pointed at by the ref, rescan the packs directory,
+find no new packs, look for the object again, and abort over the
+"corruption".
 
-Actually I removed the -i twist entirely.  It is simply too much for the 
-context of the tutorial and it is of no advantage for a newbie to even 
-know that -i exists just yet.
-
-> If you jump the index using --only, what is committed with that
-> commit becomes part of what is staged for the commit after that,
-> and in order to prevent data loss, we disallow this sequence:
-> 
-> 	$ git checkout
-> 	$ edit foo
->         $ git add foo ;# your new add to update the existing entry.
-> 	$ edit foo
->         $ git commit foo
-> 
-> If we did not have the second edit (the behaviour is the same if
-> we did not have "git add foo" there), this commit:
-> 
->  * commits the changes to 'foo' (not because you staged it
->    earlier with 'git add', but only because you said "commit
->    foo" to invoke the '--only' semantics), obviously;
-> 
->  * updates 'foo' in the index to what was committed.
-> 
-> So if we allowed the above sequence to succeed, we would commit
-> the result of the second edit, and after the commit, the index
-> would have the result of the second edit.  We would lose the
-> state the user wanted to keep in the index while this commit
-> jumped the index, and that is why we disallow it.
-
-Great.  This is perfectly fine behavior.  But I think this definitely 
-doesn't belong in the tutorial.  the probability for a newbie to perform 
-the above sequence is rather low, and even then the explanation belongs 
-in the failure message not in the tutorial.  It can be as short as 
-"Please see git-commit man page and look for xyz for explanation about 
-this failure" if the inline explanation would be too long.
-
-> > +But for instance it is best to only remember 'git add' + 'git commit'
-> > +and/or 'git commit -a'.
-> > +
-> > +No special command is required when removing a file; just remove it,
-> > +then tell `commit` about the file as usual.
-> 
-> I wonder if this sequence should do the same as "git rm -f foo":
-> 
-> 	$ /bin/rm foo
->         $ git add foo
-
-Well I think Linus' suggestions about git-rm are really sane.  When 
-git-rm has been updated then it could be mentioned here, along with 
-git-mv.  In the mean time I simply removed that paragraph.
+OK so the repository won't get corrupted but the repack would be
+forced to abort.
 
 
+Another issue I just thought about tonight is we may need a
+count-packs utility that like count-objects lists the number
+of active packs and their total size.  If we start hanging onto
+every pack we receive over the wire the pack directory is going to
+grow pretty fast and we'll need a way to tell us when its time to
+`repack -a -d`.
+
+-- 
