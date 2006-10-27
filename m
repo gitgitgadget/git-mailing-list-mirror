@@ -4,57 +4,50 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: fork0@t-online.de (Alex Riesen)
-Subject: Re: Merge branch to directory of other branch.
-Date: Mon, 6 Nov 2006 22:49:01 +0100
-Message-ID: <20061106214901.GA25623@steel.home>
-References: <1d592d70611061001n6d6f7aa8tbd34a45c5d968eab@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: gitweb.cgi and git instaweb
+Date: Fri, 27 Oct 2006 12:32:11 +0200
+Message-ID: <20061027103211.GA20017@pasky.or.cz>
+References: <ehr00n$vbe$1@sea.gmane.org> <45419F75.6060103@gmail.com> <7v8xj2i6hb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 6 Nov 2006 21:49:44 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Fri, 27 Oct 2006 10:32:31 +0000 (UTC)
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <1d592d70611061001n6d6f7aa8tbd34a45c5d968eab@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-ID: XKfPavZB8e1gs9Kkfr0+Ebinz4p+99rUMuemOy6aRzICsKAwIuyKrQ
-X-TOI-MSGID: 722fd9e6-d51c-4d1c-891f-74c713d40b48
+In-Reply-To: <7v8xj2i6hb.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30322>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhCLI-00083L-IG for gcvg-git@gmane.org; Mon, 06 Nov
- 2006 22:49:22 +0100
+ esmtp (Exim 4.43) id 1GdP0d-0002xZ-1L for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 12:32:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753208AbWKFVtP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
- 16:49:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753785AbWKFVtP
- (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 16:49:15 -0500
-Received: from mailout02.sul.t-online.com ([194.25.134.17]:55970 "EHLO
- mailout02.sul.t-online.com") by vger.kernel.org with ESMTP id
- S1753208AbWKFVtO (ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006
- 16:49:14 -0500
-Received: from fwd30.aul.t-online.de  by mailout02.sul.t-online.com with smtp
-  id 1GhCLA-0004sd-05; Mon, 06 Nov 2006 22:49:12 +0100
-Received: from tigra.home
- (XKfPavZB8e1gs9Kkfr0+Ebinz4p+99rUMuemOy6aRzICsKAwIuyKrQ@[84.163.92.120]) by
- fwd30.sul.t-online.de with esmtp id 1GhCL2-1EJ4S00; Mon, 6 Nov 2006 22:49:04
- +0100
-Received: from steel.home (steel.home [192.168.1.2]) by tigra.home (Postfix)
- with ESMTP id E79F6277AF; Mon,  6 Nov 2006 22:49:03 +0100 (CET)
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian)) id
- 1GhCKz-0006gZ-90; Mon, 06 Nov 2006 22:49:01 +0100
-To: Kirill Shutemov <k.shutemov@gmail.com>
+ S1946372AbWJ0KcN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
+ 06:32:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946371AbWJ0KcN
+ (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 06:32:13 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:34764 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1946372AbWJ0KcN (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 06:32:13 -0400
+Received: (qmail 24090 invoked by uid 2001); 27 Oct 2006 12:32:11 +0200
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Kirill Shutemov, Mon, Nov 06, 2006 19:01:02 +0100:
-> I have one branch with full content and other branch with one
-> directory from first branch. How can I merge this branches?
+Dear diary, on Fri, Oct 27, 2006 at 09:05:20AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> said that...
+> Removing the extraneous undef would also be a good idea,
+> wouldn't it?
 
-Assuming they are related:
+25746   F Oct 26 Petr Baudis     ( 0.9K) [PATCH] gitweb: Fix up bogus $stylesheet declarations
 
-    git checkout -b merged full
-    git pull . one-directory
+?
 
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
