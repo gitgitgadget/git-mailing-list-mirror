@@ -4,90 +4,92 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Alan Chandler <alan@chandlerfamily.org.uk>
-Subject: Re: Struggling with tangled
-Date: Wed, 22 Nov 2006 19:15:58 +0000
-Message-ID: <200611221915.59073.alan@chandlerfamily.org.uk>
-References: <E1GmpTj-000235-2n@home.chandlerfamily.org.uk> <ek1aj0$u09$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: fetching packs and storing them as packs
+Date: Fri, 27 Oct 2006 11:56:14 -0700
+Message-ID: <7vy7r1egfl.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home>
+	<4540CA0C.6030300@tromer.org>
+	<Pine.LNX.4.64.0610261105200.12418@xanadu.home>
+	<45413209.2000905@tromer.org>
+	<Pine.LNX.4.64.0610262038320.11384@xanadu.home>
+	<20061027014229.GA28407@spearce.org> <45417205.6020805@tromer.org>
+	<20061027030054.GB28407@spearce.org>
+	<Pine.LNX.4.64.0610271022240.11384@xanadu.home>
+	<20061027143854.GC20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 22 Nov 2006 19:16:59 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 27 Oct 2006 19:03:51 +0000 (UTC)
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Eran Tromer <git2eran@tromer.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.5
-In-Reply-To: <ek1aj0$u09$1@sea.gmane.org>
-Content-Disposition: inline
+In-Reply-To: <20061027143854.GC20017@pasky.or.cz> (Petr Baudis's message of
+	"Fri, 27 Oct 2006 16:38:54 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30340>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmxZs-0003YY-9a for gcvg-git@gmane.org; Wed, 22 Nov
- 2006 20:16:12 +0100
+ esmtp (Exim 4.43) id 1GdWsd-0004ei-03 for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 20:56:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1756692AbWKVTQE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
- 14:16:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756694AbWKVTQE
- (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 14:16:04 -0500
-Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk
- ([82.44.22.127]:32923 "EHLO home.chandlerfamily.org.uk") by vger.kernel.org
- with ESMTP id S1756692AbWKVTQB (ORCPT <rfc822;git@vger.kernel.org>); Wed, 22
- Nov 2006 14:16:01 -0500
-Received: from kanger.home ([192.168.0.21]) by home.chandlerfamily.org.uk
- with esmtp (Exim 4.63) (envelope-from <alan@chandlerfamily.org.uk>) id
- 1GmxZf-0003Fm-II for git@vger.kernel.org; Wed, 22 Nov 2006 19:15:59 +0000
-To: git@vger.kernel.org
+ S1752421AbWJ0S4U (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
+ 14:56:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752416AbWJ0S4T
+ (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 14:56:19 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:40687 "EHLO
+ fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1752410AbWJ0S4Q
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 14:56:16 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061027185615.UGBO18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Fri, 27
+ Oct 2006 14:56:15 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id fWvx1V00V1kojtg0000000 Fri, 27 Oct 2006
+ 14:55:58 -0400
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-On Wednesday 22 November 2006 11:01, Jakub Narebski wrote:
-> Alan Chandler wrote:
-...
-> > 2) Some files get completely munged with conflict resolution markers
-> > every few lines.  Is there a simple way to say "don't use this file, but
-> > use the [stage2/stage3] sources of the merge". (ie one of the original
-> > inputs to the merge - and if so, which one is which)
+Petr Baudis <pasky@suse.cz> writes:
+
+> Dear diary, on Fri, Oct 27, 2006 at 04:27:05PM CEST, I got a letter
+> where Nicolas Pitre <nico@cam.org> said that...
+>> On Thu, 26 Oct 2006, Shawn Pearce wrote:
+>> > OK so the repository won't get corrupted but the repack would be
+>> > forced to abort.
+>> 
+>> Maybe this is the best way out?  Abort git-repack with "a fetch is in 
+>> progress -- retry later".  No one will really suffer if the repack has 
+>> to wait for the next scheduled cron job, especially if the fetch doesn't 
+>> explode packs into loose objects anymore.
 >
-> "git cat-file -p :<stage>: <filename> > <filename>", where stage = 1 means
-> version from the ancestor, stage = 2 means version from the HEAD (from the
-> base), and stage = 3 means version from the remote/other branch (from the
-> branch being rebased).
+> I don't really like this that much. Big projects can have 10 commits per
+> hour on average, and they also take potentially long time to repack, so
+> you might get to never really repack them.
 
-Just a comment for the list.  There have been lots of documentation ideas 
-floating around recently.  One thing that could be done is to cross reference 
-the key sections in the man pages somewhat.  I read the man page for 
-git-cat-file, and that just says the non flag parameter is <object> and its 
-an SHA1.
+One question about that statistics is if the frequency of 10
+commits per hour is 10 pushes into the central repository per
+hour or 10 commits distributed all over the world in dozens of
+developers' repositories.
 
-Once I saw this, I was puzzled and eventually found a reference to in in 
-git-rev-parse.
+Even if the number is 10 pushes into the central repository per
+hour, I do not see it as a big problem in practice from the
+workflow point of view.  Even people sticking to their CVS
+workflow to have a central repository model are gaining big time
+from being able to keep working disconnected by switching to git
+using the shared repository mode, and it should not be a big
+deal if the central repository master shuts down pushes into the
+repository for N minutes a day for scheduled repacking.  So it
+could be that a more practical way out is to say "'repack -a -d'
+and 'prune' are to be run when things are quiescent".
 
+A cron job for the scheduled repack/prune can set a flag
+(repository wide lockfile or something) to ask new push/fetch to
+wait and come back later, and we could set up a pre-* hooks for
+push/fetch to notice it.  While push/fetch processes that have
+already been started can still interfere, as long as they cause
+repack/prune to fail the "deletion" part, eventually outstanding
+push/fetch will die out and the cron job will have that
+quiescent window.
 
->
-> > 3) I sometime hit a merge conflict in a file which I know will actually
-> > be deleted at the tip of the topic I am rebasing.  Is there a way at this
-> > point to just tell the conflict resolution to say make this file go away.
->
-> "git rm <filename>" plus "git update-index <filename>" doesn't work?
-
-Well I _thought_ I tried git-update-index --remove and that hadn't worked.
-
->
-> > 4) I repeat the question I asked in a thread above.  What is the --merge
-> > switch on git-rebase actually do.  The man page starts talking about
-> > merge strategies, but there already is a -s switch for that.
->
-> "git rebase" uses "git format-patch" + "git-am --3way" machinery by
-> default. The --merge option makes it use merge machinery instead (similar
-> to the way "git checkout -m" uses merge strategy IIRC).
-
-Yes but ...
-
-... what does that mean in usage terms?
-
-Why would I want to use one rather than the other?
-
-
-
--- 
-Alan Chandler
