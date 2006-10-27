@@ -1,75 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH 1/2] Allow users to require source branch on git-checkout -b.
-Date: Fri, 8 Dec 2006 10:39:31 -0500
-Message-ID: <20061208153931.GA14378@fieldses.org>
-References: <20061207100152.GA12966@spearce.org> <7vlkljsd1k.fsf@assigned-by-dhcp.cox.net> <20061207195715.GG12143@spearce.org> <7v64cns8nf.fsf@assigned-by-dhcp.cox.net> <20061207214053.GC31035@fieldses.org> <20061207215914.GC12502@spearce.org> <20061208044516.GC5939@fieldses.org> <20061208055938.GB13999@spearce.org> <7vac1yoq3r.fsf@assigned-by-dhcp.cox.net>
+From: Ben Clifford <benc@hawaga.org.uk>
+Subject: Re: StGit-enabled bash-prompt
+Date: Fri, 27 Oct 2006 10:01:15 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0610270957020.9123@dildano.hawaga.org.uk>
+References: <200610262317.30209.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 8 Dec 2006 15:39:48 +0000 (UTC)
-Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Fri, 27 Oct 2006 10:02:57 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <7vac1yoq3r.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Authentication-Warning: dildano.hawaga.org.uk: benc owned process doing -bs
+In-Reply-To: <200610262317.30209.robin.rosenberg.lists@dewire.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33701>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gshp5-0007T9-M9 for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 16:39:40 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30320>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GdOXq-0005Vx-Qj for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 12:02:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1425575AbWLHPjh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 10:39:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1425579AbWLHPjg
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 10:39:36 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:56669 "EHLO
- pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1425575AbWLHPjg (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006
- 10:39:36 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
- (envelope-from <bfields@fieldses.org>) id 1Gshoy-0003sg-0E; Fri, 08 Dec 2006
- 10:39:32 -0500
-To: Junio C Hamano <junkio@cox.net>
+ S1946306AbWJ0KCV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
+ 06:02:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946307AbWJ0KCV
+ (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 06:02:21 -0400
+Received: from [81.187.211.37] ([81.187.211.37]:34447 "EHLO
+ dildano.hawaga.org.uk") by vger.kernel.org with ESMTP id S1946306AbWJ0KCV
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 06:02:21 -0400
+Received: from dildano.hawaga.org.uk (dildano.hawaga.org.uk [127.0.0.1]) by
+ dildano.hawaga.org.uk (8.13.6/8.13.6/Debian-1) with ESMTP id k9RA1Fi0016801;
+ Fri, 27 Oct 2006 10:01:15 GMT
+Received: from localhost (benc@localhost) by dildano.hawaga.org.uk
+ (8.13.6/8.13.6/Submit) with ESMTP id k9RA1Frf016797; Fri, 27 Oct 2006
+ 10:01:15 GMT
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
 Sender: git-owner@vger.kernel.org
 
-On Thu, Dec 07, 2006 at 10:31:52PM -0800, Junio C Hamano wrote:
-> Shawn Pearce <spearce@spearce.org> writes:
-> 
-> >> But my main complaint is just that I wouldn't want to see the behavior
-> >> of defaulting to HEAD--behavior which is simple, easy to explain, and
-> >> shared by most other git commands--by something significantly more
-> >> complicated.  That's more a complaint about Junio's suggestion than
-> >> yours, though.
-> >
-> > True, defaulting to HEAD is something that is done almost everywhere.
-> > Changing it for `git checkout -b` may surprise a lot of people,
-> > almost as much as --index vs. --cached.
-> 
-> I did not mean to change the default to something other than
-> HEAD depending on the configuration.
 
-Right, I understand that behavior in existing repositories is not
-changed...
+On Thu, 26 Oct 2006, Robin Rosenberg wrote:
 
-> > (3) otherwise, it barfs if you do not give an explicit
-> >     branch-point.
-> 
-> ... but a newly created repositories would have an
-> allowbranchbydefault entry on "master" (and only on "master"),
-> which means new people would be prevented from making mistakes
-> when on a non-master branch 'foo':
+> Of course you will read and understand this code. I don't know how good an 
+> idea it is to use the DEBUG trap this way.
 
-... my concern is the default behavior on newly created repositories,
-which (unless I've misunderstood) would become more complicated.
+I set my prompt without using it, with something approximating this
+being defined in my .bash_profile. I think the use of ' instead of " 
+causes evaluation of __prompt_githead be delayed until the prompt is 
+displayed.
 
-> But I do not deeply care about this.
 
-OK.  Me neither, to be honest.
+  PS1='$(__prompt_githead) '$PS1
 
+  __prompt_githead() {
+  PS_GIT=$(git-symbolic-ref HEAD 2>/dev/null) || exit
+  echo -n " $(basename $PS_GIT)" 
+  }
+
+-- 
