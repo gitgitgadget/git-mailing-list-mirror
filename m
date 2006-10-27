@@ -1,90 +1,63 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: git bug? + question
-Date: Sat, 4 Nov 2006 00:03:06 -0500
-Message-ID: <20061104050305.GA9003@spearce.org>
-References: <buoejsme6ho.fsf@dhapc248.dev.necel.com> <7v4pthmew1.fsf@assigned-by-dhcp.cox.net> <20061102224549.499610d1.seanlkml@sympatico.ca> <20061103203610.GB7585@spearce.org> <20061103162422.b0bf105e.seanlkml@sympatico.ca>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH qgit] Remove obsoleted includes
+Date: Fri, 27 Oct 2006 03:51:21 +0200
+Message-ID: <20061027015121.GW20017@pasky.or.cz>
+References: <e5bfff550610261147t61de387bqc591624aaa3b1282@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 4 Nov 2006 05:03:31 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, Miles Bader <miles@gnu.org>,
-	git@vger.kernel.org,
-	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+NNTP-Posting-Date: Fri, 27 Oct 2006 02:06:31 +0000 (UTC)
+Cc: Git Mailing List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <20061103162422.b0bf105e.seanlkml@sympatico.ca>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <e5bfff550610261147t61de387bqc591624aaa3b1282@mail.gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30275>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgDgk-0002k9-8t for gcvg-git@gmane.org; Sat, 04 Nov
- 2006 06:03:26 +0100
+ esmtp (Exim 4.43) id 1GdGsY-00028G-9t for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 03:51:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753584AbWKDFDO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
- 00:03:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753583AbWKDFDO
- (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 00:03:14 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:62941 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1751925AbWKDFDN
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 00:03:13 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GgDgR-00058P-Ig; Sat, 04 Nov 2006 00:03:07 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 93ECC20E491; Sat,  4 Nov 2006 00:03:06 -0500 (EST)
-To: Sean <seanlkml@sympatico.ca>
+ S1946102AbWJ0BvX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 21:51:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946104AbWJ0BvX
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 21:51:23 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:38321 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1946102AbWJ0BvW (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 21:51:22 -0400
+Received: (qmail 8277 invoked by uid 2001); 27 Oct 2006 03:51:21 +0200
+To: Marco Costalba <mcostalba@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Sean <seanlkml@sympatico.ca> wrote:
-> On Fri, 3 Nov 2006 15:36:10 -0500
-> Shawn Pearce <spearce@spearce.org> wrote:
+Dear diary, on Thu, Oct 26, 2006 at 08:47:08PM CEST, I got a letter
+where Marco Costalba <mcostalba@gmail.com> said that...
+> Also small code cleanup
 > 
-> > > Maybe even going as far as automatically creating a local branch
-> > > for each remote branch on clone is worth considering.
-> > 
-> > Nack.
-> > 
-> > I work with a workflow where our central repository has 2 important
-> > branches (vmtip and vmvt), and a bunch of transient developer
-> > topic branches (e.g. sp/foo).  We only have a master branch in this
-> > repository so that git-clone will clone it without choking during
-> > the clone.  Users tend to do immediately after a clone:
-> > 
-> > 	git branch -D master
-> > 	git branch -D origin
-> > 	git branch -D ... other topic branches not interested in ...
-> > 	edit .git/remotes/origin ... delete topic branches ...
+> Signed-off-by: Marco Costalba <mcostalba@gmail.com>
+
+(It's whitespace-damaged.)
+
+> ---
 > 
-> I think your Nack was a little rash here.  The feature would be quite
-> useful to work flows other than yours.  It sounds like what _you_ want
-> is a feature to select branches when cloning rather than the current
-> default of cloning all.  That would stop your developers having to 
-> delete branches and editing .git/remotes/origin immediately
-> after cloning.
+> Still unable to push to public repo :(
 
-After reading your reply you are probably correct.  I can see there
-may be workflows that want every remote branch also created as a
-local branch.
+Hey, we're using this beautiful distributed version control system,
+aren't we? :-) We could make use of it being fully distributed for once,
+too - you can push to any other public repo until the original one
+becomes available.
 
-I could certainly live with a command line option to clone, e.g.:
-
-	git clone --only vmdvt,vmtip user@host:/path...
-
-So yes, my 'Nack' may have been a little too rash.
+There's e.g. repo.or.cz. ;-)
 
 -- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
