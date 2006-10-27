@@ -2,87 +2,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git-commit: select which files to commit while editing the commit message
-Date: Fri, 08 Dec 2006 20:32:47 +0100
-Organization: At home
-Message-ID: <elcegl$qfh$1@sea.gmane.org>
-References: <loom.20061208T131919-178@post.gmane.org> <7vpsaui4cn.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Restore a single file in the index back to HEAD
+Date: Fri, 27 Oct 2006 03:38:34 -0400
+Message-ID: <20061027073834.GC29057@spearce.org>
+References: <200610261641.11239.andyparkins@gmail.com> <81b0412b0610260842x52413570k3971bcdc54b3ccb5@mail.gmail.com> <200610270827.17659.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Fri, 8 Dec 2006 19:31:43 +0000 (UTC)
+NNTP-Posting-Date: Fri, 27 Oct 2006 07:39:01 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 38
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+Content-Disposition: inline
+In-Reply-To: <200610270827.17659.andyparkins@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33726>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GslRU-0000hD-Qn for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 20:31:33 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30298>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GdMIg-0001LP-4M for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 09:38:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1426151AbWLHTao (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 14:30:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1426153AbWLHTao
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 14:30:44 -0500
-Received: from main.gmane.org ([80.91.229.2]:37123 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1426151AbWLHTan
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 14:30:43 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GslQc-0001Qo-4a for git@vger.kernel.org; Fri, 08 Dec 2006 20:30:38 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 08 Dec 2006 20:30:38 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 08 Dec 2006
- 20:30:38 +0100
-To: git@vger.kernel.org
+ S1946216AbWJ0Him (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
+ 03:38:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946218AbWJ0Him
+ (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 03:38:42 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:49078 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1946216AbWJ0Him
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 03:38:42 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GdMIn-0000Kc-V7; Fri, 27 Oct 2006 03:38:54 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ AAC9A20E45B; Fri, 27 Oct 2006 03:38:34 -0400 (EDT)
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
+Andy Parkins <andyparkins@gmail.com> wrote:
+> However, it led me to wonder what the inverse of git-update-index is.
 
-> Pazu <pazu@pazu.com.br> writes:
-> 
->> # Please enter the commit message for your changes.
->> # (Comment lines starting with '#' will not be included)
->> # On branch refs/heads/next
->> # Updated but not checked in:
->> #   (will commit)
->> #
->> #    modified:   perl/Makefile
->> #    modified:   var.c
->>
->> Here's where the magic would happen. Removing the line "modified: var.c" would
->> remove var.c from this commit. Of course, the template message should be
->> modified to tell the user he can do that.
->>
->> So, what do you think about this?
-> 
-> Personally, I would refuse to use such a modified git, because
-> often the first thing I would do in the commit log buffer is
-> check the listed files and remove the '# ...' lines while
-> typing.  I do not want that to affect the set of changes I
-> staged in any way.
-> 
-> But maybe that is just me.
+git-update-index  :-)
 
-I was to raise the same objection. 
+You can use something like:
 
-But this can be solved by using magic _only_ if the template with exception
-of "modified:" lines matches, and if there is at least one file
-in "modified:" section.
+    git ls-tree HEAD oops/file1 | git update-index --index-info 
+
+to restore the index state of oops/file1.
+
+
+Which leads us to the always interesting, fun and exciting:
+
+    git ls-tree -r HEAD | git update-index --index-info 
+
+which will undo everything except 'git add' from the index, as
+ls-tree -r is listing everything in the last commit.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
