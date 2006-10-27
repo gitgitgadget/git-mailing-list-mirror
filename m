@@ -1,67 +1,58 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: Suggestion: drop 'g' in git-describe suffix
-Date: Thu, 02 Nov 2006 01:47:12 +0000
-Message-ID: <45494E20.1000503@shadowen.org>
-References: <eibh94$t7n$1@sea.gmane.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: latest git and git.kernel.org
+Date: Fri, 27 Oct 2006 10:19:47 +0200
+Message-ID: <4541C123.8000203@op5.se>
+References: <ehqvgs$sla$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 2 Nov 2006 01:52:18 +0000 (UTC)
+NNTP-Posting-Date: Fri, 27 Oct 2006 08:20:18 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
-In-Reply-To: <eibh94$t7n$1@sea.gmane.org>
-X-Enigmail-Version: 0.94.0.0
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <ehqvgs$sla$1@sea.gmane.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30307>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfRgO-0005RH-5t for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 02:47:53 +0100
+ esmtp (Exim 4.43) id 1GdMwV-0001Vs-Gv for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 10:19:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752458AbWKBBrt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
- 20:47:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752463AbWKBBrt
- (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 20:47:49 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:29449 "EHLO
- hellhawk.shadowen.org") by vger.kernel.org with ESMTP id S1752458AbWKBBrt
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 20:47:49 -0500
-Received: from localhost ([127.0.0.1]) by hellhawk.shadowen.org with esmtp
- (Exim 4.50) id 1GfRfj-0002xo-Bo; Thu, 02 Nov 2006 01:47:11 +0000
-To: hanwen@xs4all.nl
+ S1946244AbWJ0ITw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
+ 04:19:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946245AbWJ0ITw
+ (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 04:19:52 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:64199 "EHLO
+ smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1946244AbWJ0ITv (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 04:19:51 -0400
+Received: by smtp-gw1.op5.se (Postfix, from userid 588) id 651FC6BE7B; Fri,
+ 27 Oct 2006 10:19:50 +0200 (CEST)
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id 651B16BE7A; Fri, 27 Oct 2006 10:19:47 +0200 (CEST)
+To: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Han-Wen Nienhuys wrote:
+Aneesh Kumar K.V wrote:
+> I am getting lot of errors with git.kernel.org in the last few days. Is 
+> it something to do with the latest git client that i am using or due to 
+> issues with git.kernel.org ?
 > 
-> hi,
-> 
-> the convention to use a 'g' in the output of git-describe, eg.
-> 
->   [lilydev@haring lilypond]$ git describe --abbrev=39
->   lilypond_2_9_7-g47778d2297276484c861fc7536da13feb2d5fe8
-> 
-> 
-> is confusing: the g is also a hex digit, and without reading the manual
-> carefully, you'd think this is the commit g4777.
-> 
-> Proposal: why not use
-> 
->   tag#sha1
-> 
-> or some other non-hex character.
 
-g is not a hex digit, hex is 0-f ??
+I'm seeing the same, but only against git.kernel.org. repo.or.cz works 
+fine for my, so I've switched to pulling the git repo from there 
+instead. I guess this is an enforced resource policy on kernel.org. I 
+believe the inetd rules there have limits on how many concurrent 
+connections it allows the git-daemon to handle. For example, I often get 
+to pull the actual objects, but it then fails to fetch the tags because 
+of "Unexpected EOF. Connection closed" thingie.
 
-In current versions of git, this whole string is also a valid name for
-the commit ie you can do the following:
-
-	git show lilypond_2_9_7-g47778d2297276484c861fc7536da13feb2d5fe8
-
--apw
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
