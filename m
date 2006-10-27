@@ -1,65 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Why perl-Git RPM doesn't come with Git.pm docs (with Git.3pm.gz)?
-Date: Thu, 26 Oct 2006 12:07:32 +0200
-Organization: At home
-Message-ID: <ehq1bs$n0a$1@sea.gmane.org>
+From: Eran Tromer <git2eran@tromer.org>
+Subject: Re: fetching packs and storing them as packs
+Date: Fri, 27 Oct 2006 04:42:13 +0200
+Message-ID: <45417205.6020805@tromer.org>
+References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home> <4540CA0C.6030300@tromer.org> <Pine.LNX.4.64.0610261105200.12418@xanadu.home> <45413209.2000905@tromer.org> <Pine.LNX.4.64.0610262038320.11384@xanadu.home> <20061027014229.GA28407@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Thu, 26 Oct 2006 10:07:30 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 27 Oct 2006 02:43:50 +0000 (UTC)
+Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 16
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.7) Gecko/20060913 Fedora/1.5.0.7-1.fc5 Thunderbird/1.5.0.7 Mnenhy/0.7.4.0
+In-Reply-To: <20061027014229.GA28407@spearce.org>
+X-Enigmail-Version: 0.94.1.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30282>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd28v-0000XM-Gy for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 12:07:21 +0200
+ esmtp (Exim 4.43) id 1GdHh7-000717-7i for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 04:43:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423118AbWJZKHM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 06:07:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423126AbWJZKHM
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 06:07:12 -0400
-Received: from main.gmane.org ([80.91.229.2]:24737 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1423118AbWJZKHL (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 06:07:11 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gd28i-0000VV-SP for git@vger.kernel.org; Thu, 26 Oct 2006 12:07:08 +0200
-Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Thu, 26 Oct 2006 12:07:08 +0200
-Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 26 Oct 2006
- 12:07:08 +0200
-To: git@vger.kernel.org
+ S1946132AbWJ0CnL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 22:43:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946117AbWJ0CnL
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 22:43:11 -0400
+Received: from line108-16.adsl.actcom.co.il ([192.117.108.16]:17627 "EHLO
+ lucian.tromer.org") by vger.kernel.org with ESMTP id S1946132AbWJ0CnJ (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 22:43:09 -0400
+Received: from [192.168.4.6] ([192.168.4.6]) by lucian.tromer.org
+ (8.13.7/8.12.11) with ESMTP id k9R2gUeY030415; Fri, 27 Oct 2006 04:42:36
+ +0200
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-I have just installed git 1.4.3.3, compiling it from source rpm (SRPMS)
-because I have Fedora Core 4 based distribution (Aurox 11.1) and i386 rpm
-is built for Fedora Core 5 via rpmbuild --rebuild, and I do wonder why
-perl-Git module has only
-  /usr/lib/perl5/vendor_perl/5.8.6/Git.pm
-in it, and doesn't have Git.pm documentation
-  /usr/share/man/man3/Git.3pm.gz
+On 2006-10-27 03:42, Shawn Pearce wrote:
+> Nicolas Pitre <nico@cam.org> wrote:
+>> On Fri, 27 Oct 2006, Eran Tromer wrote:
+>> Well, the race does exist.  Don't do repack -a -d at the same time then.
+> 
+> This is an issue for "central" repositories that people push into
+> and which might be getting repacked according to a cronjob.
 
-I'm also curious wy I had to install perl-Error (Error module), if
-I compiled git myself. Ahhh... I see, perl(Error) is in BuildRequires
-in git.spec (BuildRequires?).
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+AFAICT, the bottom line of the "Re: auto-packing on kernel.org? please?"
+thread last October was "sure, go ahead".
 
+
+> Unfortunately I don't have a solution.  I tried to come up with
+> one but didn't.  :-)
+
+Here's one way to do it.
+Change git-repack to follow references under $GIT_DIR/tmp/refs/ too.
+To receive or fetch a pack:
+1. Add references to the new heads in
+   `mktemp $GIT_DIR/tmp/refs/XXXXXX`.
+2. Put the new .pack under $GIT_DIR/objects/pack/.
+3. Put the new .idx under $GIT_DIR/objects/pack/.
+4. Update the relevant heads under $GIT_DIR/refs/.
+5. Delete the references from step 1.
+
+This is repack-safe and never corrupts the repo. The worst-case failure
+mode is if you die before cleaning the refs from $GIT_DIR/tmp/refs. That
+may mean some packed objects will never be removed by "repack -a -d"
+even if they lose all references from $GIT_DIR/refs, so do "tmpwatch -m
+240 $GIT_DIR/tmp/refs" to take care of that.
+
+  Eran
