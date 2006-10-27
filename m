@@ -1,63 +1,91 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [ANNOUNCE] CGit v0.1-pre
-Date: Mon, 11 Dec 2006 12:59:30 +0100
-Message-ID: <8c5c35580612110359h6a8d0727ib669d773560e97f0@mail.gmail.com>
-References: <8c5c35580612101542n72d300c7o106e53e219670510@mail.gmail.com>
-	 <Pine.LNX.4.64.0612101653420.12500@woody.osdl.org>
-	 <8c5c35580612110033y4f6260c9xffeaf4457f4ead21@mail.gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Restore a single file in the index back to HEAD
+Date: Fri, 27 Oct 2006 04:15:45 -0400
+Message-ID: <20061027081545.GF29057@spearce.org>
+References: <200610261641.11239.andyparkins@gmail.com> <81b0412b0610260842x52413570k3971bcdc54b3ccb5@mail.gmail.com> <200610270827.17659.andyparkins@gmail.com> <20061027073834.GC29057@spearce.org> <4541BE8E.5050605@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 11 Dec 2006 11:59:42 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 27 Oct 2006 08:16:09 +0000 (UTC)
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GHgBME7qgrhq4axmKD0XJBgSi8MMIXRNEllTNz70JRqR/aXge3U+9v9Bl44uuMiTd0HEB0l3Op8dydiVRdyCyyktMIVWtbb8igKLu/bO6xSR8F889Q7WDf0Ave48KK4ztrR/Bx+hLzQWk4w18dF0bxYO9Hx1NwrCLwJPWqf/md8=
-In-Reply-To: <8c5c35580612110033y4f6260c9xffeaf4457f4ead21@mail.gmail.com>
 Content-Disposition: inline
+In-Reply-To: <4541BE8E.5050605@op5.se>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33996>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gtjon-0007xk-Jk for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 12:59:37 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30306>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GdMsa-0000gX-MG for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 10:15:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1762853AbWLKL7d (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
- 06:59:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762854AbWLKL7d
- (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 06:59:33 -0500
-Received: from nf-out-0910.google.com ([64.233.182.187]:17763 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1762853AbWLKL7c (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec
- 2006 06:59:32 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1977057nfa for
- <git@vger.kernel.org>; Mon, 11 Dec 2006 03:59:31 -0800 (PST)
-Received: by 10.82.167.5 with SMTP id p5mr964871bue.1165838370628; Mon, 11
- Dec 2006 03:59:30 -0800 (PST)
-Received: by 10.82.171.10 with HTTP; Mon, 11 Dec 2006 03:59:30 -0800 (PST)
-To: "Linus Torvalds" <torvalds@osdl.org>
+ S1946239AbWJ0IPt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
+ 04:15:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946242AbWJ0IPt
+ (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 04:15:49 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:187 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1946239AbWJ0IPt
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 04:15:49 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GdMsj-0002H2-8d; Fri, 27 Oct 2006 04:16:01 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 541E820E45B; Fri, 27 Oct 2006 04:15:45 -0400 (EDT)
+To: Andreas Ericsson <ae@op5.se>
 Sender: git-owner@vger.kernel.org
 
-On 12/11/06, Lars Hjemli <hjemli@gmail.com> wrote:
-> Anyway, I must say I find it rather unlikely for these cases to occur
-> (frequently) in real life.
+Andreas Ericsson <ae@op5.se> wrote:
+> Shawn Pearce wrote:
+> >Andy Parkins <andyparkins@gmail.com> wrote:
+> >>However, it led me to wonder what the inverse of git-update-index is.
+> >
+> >git-update-index  :-)
+> >
+> >You can use something like:
+> >
+> >    git ls-tree HEAD oops/file1 | git update-index --index-info 
+> >
+> >to restore the index state of oops/file1.
+> >
+> >
+> >Which leads us to the always interesting, fun and exciting:
+> >
+> >    git ls-tree -r HEAD | git update-index --index-info 
+> >
+> >which will undo everything except 'git add' from the index, as
+> >ls-tree -r is listing everything in the last commit.
+> >
+> 
+> ... and also shows The Power of the Pipe, which Daniel@google was 
+> missing in recent versions of git. ;-)
+> 
+> Btw, this is most definitely not a documented thing and requires a bit 
+> of core git knowledge, so perhaps the "shell-scripts were good for 
+> hackers to learn what to pipe where" really *is* a very important point.
 
-*blush*
+Agreed.
 
-Of course this will happen in real life, I just needed to think about
-it for a while (it just depends on the _size_ of the thundering hurd,
-right?)
+I learned that trick while studying the update-index source code
+and tried to wrap my tiny little head around the various formats
+--index-info accepts and how that code automatically guesses the
+correct format.  :-)
 
-Anyway, it's fixed (I think) and pushed out
+Though I have to admit I wipped up a little test repository just
+to make sure what I was writing in the email worked properly;
+I can't say I've done it myself too many times in the past...
 
 -- 
