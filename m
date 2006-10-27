@@ -1,73 +1,61 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 1/3] Apply obvious numerical cast for stupid C compilers.
-Date: Sun, 5 Nov 2006 00:35:44 -0500
-Message-ID: <20061105053544.GA4193@spearce.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Restore a single file in the index back to HEAD
+Date: Fri, 27 Oct 2006 09:01:22 +0100
+Message-ID: <200610270901.25091.andyparkins@gmail.com>
+References: <200610261641.11239.andyparkins@gmail.com> <200610270827.17659.andyparkins@gmail.com> <20061027073834.GC29057@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 5 Nov 2006 05:36:07 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 27 Oct 2006 08:02:45 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=W/RWB8PXWdrNlr9v4CvwGss0imzFIfX7Pyox2//ZUVJzVwJ68VMdEu6Gp4w8591aFxqg+byr9hy5kpmwck6zqBxpuM5Tm8kaZPpVz/D1ukenUROGnCiY7S3QEXEFdlzwiYIhUWkNQB+iQXlICCqzF4EoQ/m810BBdn102g9Ting=
+User-Agent: KMail/1.9.5
+In-Reply-To: <20061027073834.GC29057@spearce.org>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30302>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Ggafi-0004Gw-VA for gcvg-git@gmane.org; Sun, 05 Nov
- 2006 06:35:55 +0100
+ esmtp (Exim 4.43) id 1GdMfY-0006G3-O3 for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 10:02:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030254AbWKEFfv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
- 00:35:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030257AbWKEFfu
- (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 00:35:50 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:33988 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1030254AbWKEFfu
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 00:35:50 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Ggafa-0003X0-3e; Sun, 05 Nov 2006 00:35:46 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- B199020E491; Sun,  5 Nov 2006 00:35:44 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S1946236AbWJ0IBb (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
+ 04:01:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946235AbWJ0IBb
+ (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 04:01:31 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:35577 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1946236AbWJ0IBa
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 04:01:30 -0400
+Received: by ug-out-1314.google.com with SMTP id 32so619391ugm for
+ <git@vger.kernel.org>; Fri, 27 Oct 2006 01:01:29 -0700 (PDT)
+Received: by 10.66.224.19 with SMTP id w19mr4497775ugg; Fri, 27 Oct 2006
+ 01:01:29 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id x33sm182359ugc.2006.10.27.01.01.28; Fri, 27 Oct 2006 01:01:29 -0700
+ (PDT)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-At least one (older) version of the Solaris C compiler won't allow
-'unsigned long x = -1' without explicitly casting -1 to a type of
-unsigned long.  As annoying as it may be to explicitly perform the
-cast the compiler is right; -1 is not an unsigned value.
+On Friday 2006 October 27 08:38, Shawn Pearce wrote:
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- builtin-apply.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+>     git ls-tree HEAD oops/file1 | git update-index --index-info
+>     git ls-tree -r HEAD | git update-index --index-info
 
-diff --git a/builtin-apply.c b/builtin-apply.c
-index db7cdce..d7b3cea 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -43,7 +43,7 @@ static int apply_verbosely;
- static int no_add;
- static int show_index_info;
- static int line_termination = '\n';
--static unsigned long p_context = -1;
-+static unsigned long p_context = (unsigned long)-1;
- static const char apply_usage[] =
- "git-apply [--stat] [--numstat] [--summary] [--check] [--index] [--cached] [--apply] [--no-add] [--index-info] [--allow-binary-replacement] [--reverse] [--reject] [--verbose] [-z] [-pNUM] [-CNUM] [--whitespace=<nowarn|warn|error|error-all|strip>] <patch>...";
- 
+Absolute gold.  Exactly what I wanted.  Thanks so much.
+
+
+Andy
 -- 
-1.4.3.3.g9621
+Dr Andy Parkins, M Eng (hons), MIEE
