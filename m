@@ -1,80 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Ignacio Arenaza <iarenuno@eteo.mondragon.edu>
-Subject: Re: [PATCH] git-cvsimport: add suport for CVS pserver method 
-	HTTP/1.x proxying
-Date: Sat, 25 Nov 2006 13:43:19 +0100
-Message-ID: <67d57b7l3s.fsf@poseidon.eteo.mondragon.edu>
-References: <11642344172790-git-send-email-iarenuno@eteo.mondragon.edu> 
-	<7v64d5keke.fsf@assigned-by-dhcp.cox.net><45661C36.9010101@catalyst.net.nz>
-	<7vlkm1ix7b.fsf@assigned-by-dhcp.cox.net><46a038f90611231552x3e33eec4w7863c
-	e6a1d a5781b@mail.gmail.com><7v7ixlhesv.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: fetching packs and storing them as packs
+Date: Thu, 26 Oct 2006 20:50:12 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0610262038320.11384@xanadu.home>
+References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home>
+ <4540CA0C.6030300@tromer.org> <Pine.LNX.4.64.0610261105200.12418@xanadu.home>
+ <45413209.2000905@tromer.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sat, 25 Nov 2006 12:43:48 +0000 (UTC)
-Cc: "Martin Langhoff" <martin.langhoff@gmail.com>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Fri, 27 Oct 2006 01:13:16 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7v7ixlhesv.fsf@assigned-by-dhcp.cox.net> (Junio C. 
-	Hamano'smessage of "Thu, 23 Nov 2006 16:24:48 -0800")
-User-Agent: Gnus/5.1002 (Gnus v5.10.2) Emacs/21.4 (gnu/linux)
-X-imss-version: 2.044
-X-imss-result: Passed
-X-imss-scores: Clean:99.90000 C:2 M:3 S:5 R:5
-X-imss-settings: Baseline:1 C:1 M:1 S:1 R:1 (0.0000 0.0000)
+In-reply-to: <45413209.2000905@tromer.org>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30269>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gnwse-0002TR-VT for gcvg-git@gmane.org; Sat, 25 Nov
- 2006 13:43:41 +0100
+ esmtp (Exim 4.43) id 1GdFvN-0000Av-Sq for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 02:50:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966535AbWKYMn2 convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006 07:43:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966537AbWKYMn2
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 07:43:28 -0500
-Received: from mx.eteo.mondragon.edu ([193.146.78.131]:13518 "EHLO
- mx.eteo.mondragon.edu") by vger.kernel.org with ESMTP id S966535AbWKYMn1
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 07:43:27 -0500
-Received: by mx.eteo.mondragon.edu (Postfix, from userid 1001) id B8E36B6AF;
- Sat, 25 Nov 2006 13:43:23 +0100 (CET)
-Received: from poseidon.eteo.mondragon.edu (poseidon.eteo.mondragon.edu
- [172.31.3.4]) by mx.eteo.mondragon.edu (Postfix) with ESMTP id 0260CB6AE;
- Sat, 25 Nov 2006 13:43:19 +0100 (CET)
-Received: from poseidon.eteo.mondragon.edu (localhost [127.0.0.1]) by
- localhost.eteo.mondragon.edu (Postfix) with ESMTP id CC5082FDB2; Sat, 25 Nov
- 2006 13:43:19 +0100 (CET)
-Received: by poseidon.eteo.mondragon.edu (Postfix, from userid 1072)id 
- B2DA62FD06; Sat, 25 Nov 2006 13:43:19 +0100 (CET)
-To: Junio C Hamano <junkio@cox.net>
+ S1423733AbWJ0AuO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
+ 20:50:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423736AbWJ0AuO
+ (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 20:50:14 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:49579 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S1423733AbWJ0AuN
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 20:50:13 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J7R0043XRNOQNI0@VL-MH-MR001.ip.videotron.ca> for git@vger.kernel.org; Thu,
+ 26 Oct 2006 20:50:12 -0400 (EDT)
+To: Eran Tromer <git2eran@tromer.org>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+On Fri, 27 Oct 2006, Eran Tromer wrote:
 
->>> It is more about HTTP proxying and it is my understanding that
->>> response to CONNECT method request has that empty line after the
->>> successful (2xx) response line and zero or more response
->>> headers.  The code is still wrong; it does not have a loop to
->>> discard the potential response headers that come before the
->>> empty line the code we are discussing discards.
+> Hi,
+> 
+> On 2006-10-26 17:08, Nicolas Pitre wrote:
+> > On Thu, 26 Oct 2006, Eran Tromer wrote:
+> >> This creates a race condition w.r.t. "git repack -a -d", similar to the
+> >> existing race condition between "git fetch --keep" and
+> >> "git repack -a -d". There's a point in time where the new pack is stored
+> >> but not yet referenced, and if "git repack -a -d" runs at that point it
+> >> will eradicate the pack. When the heads are finally updated, you get a
+> >> corrupted repository.
+> > 
+> > And how is it different from receiving a pack through git-unpack-objects 
+> > where lots of loose objects are created, and git-repack -a -d removing 
+> > those unconnected loose objects before the heads are updated?
+> 
+> git-repack -a -d does not touch unconnected loose objects.
+> It removes only unconnected packed objects.
 
-I don't have the original message from Junio where he asks where the
-proxy behaviour is officially specified (as the draft has expired long
-ago), so I'll answer it here.
+Right.
 
-There is a comment in the code that says the relevant RFC is 2817,
-sections 5.2 and 5.3.
+> Only git-prune removes unconnected loose objects, and that's documented
+> as unsafe.
 
-Saludos. I=F1aki.
+Well, the race does exist.  Don't do repack -a -d at the same time then.
 
---=20
-School of Management
-Mondragon University
-20560 O=F1ati - Spain
-+34 943 718009 (ext. 225)
+This race should be adressed somehow if it is really a problem.  Now 
+that I've used index-pack in place of unpack-objects for a while, I 
+don't think I'll want to go back.  It is simply faster to fetch, faster 
+to checkout, faster to repack, wastes less disk space, etc.
+
 
