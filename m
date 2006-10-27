@@ -2,154 +2,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Workflow example for remote repository use of GIT
-Date: Tue, 28 Nov 2006 17:18:09 +0100
-Organization: At home
-Message-ID: <ekhncj$1be$1@sea.gmane.org>
-References: <89b129c60611280708x10a9c42fia23e6b7770971838@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/3] make =?iso-8859-1?Q?index-p=E2ck?= able to complete
+ thin packs
+Date: Fri, 27 Oct 2006 15:28:55 -0700
+Message-ID: <7vmz7hcs0o.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0610252323100.12418@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Tue, 28 Nov 2006 16:18:15 +0000 (UTC)
+NNTP-Posting-Date: Fri, 27 Oct 2006 22:29:03 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 105
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30351>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gp5eM-0004cG-0C for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 17:17:38 +0100
+ esmtp (Exim 4.43) id 1GdaCB-0006v2-Rr for gcvg-git@gmane.org; Sat, 28 Oct
+ 2006 00:29:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935722AbWK1QRE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 11:17:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935724AbWK1QRD
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 11:17:03 -0500
-Received: from main.gmane.org ([80.91.229.2]:62398 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S935722AbWK1QRB (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 11:17:01 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gp5da-0004Nk-MU for git@vger.kernel.org; Tue, 28 Nov 2006 17:16:50 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Tue, 28 Nov 2006 17:16:50 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 28 Nov 2006
- 17:16:50 +0100
-To: git@vger.kernel.org
+ S1750820AbWJ0W25 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
+ 18:28:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750826AbWJ0W25
+ (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 18:28:57 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:55454 "EHLO
+ fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S1750820AbWJ0W24
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 18:28:56 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao02.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061027222855.NNMN12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>; Fri, 27
+ Oct 2006 18:28:55 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id faUd1V00j1kojtg0000000 Fri, 27 Oct 2006
+ 18:28:38 -0400
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-Sean Kelley wrote:
+Nicolas Pitre <nico@cam.org> writes:
 
-> I have been trying to set-up a workflow for developers in my group
-> using GIT. I came up with this simplified flow.  Do you all see any
-> problems with this approach?
-> 
-> Thanks,
-> 
-> Sean
-> 
-> 
-> 
-> Always work out of master
-> 
->   git checkout master
+> +static void fix_unresolved_deltas(int nr_unresolved)
+> +{
+> +	struct delta_entry **sorted_by_pos;
+> +	int i, n = 0;
+> +
+> +	/*
+> +	 * Since many unresolved deltas may well be themselves base objects
+> +	 * for more unresolved deltas, we really want to include the
+> +	 * smallest number of base objects that would cover as much delta
+> +	 * as possible by picking the
+> +	 * trunc deltas first, allowing for other deltas to resolve without
+> +	 * additional base objects.  Since most base objects are to be found
+> +	 * before deltas depending on them, a good heuristic is to start
+> +	 * resolving deltas in the same order as their position in the pack.
+> +	 */
+> +	sorted_by_pos = xmalloc(nr_unresolved * sizeof(*sorted_by_pos));
+>  	for (i = 0; i < nr_deltas; i++) {
+> -		if (deltas[i].obj->real_type == OBJ_REF_DELTA ||
+> -		    deltas[i].obj->real_type == OBJ_OFS_DELTA)
+> -			die("pack has unresolved deltas");
+> +		if (objects[deltas[i].obj_no].real_type != OBJ_REF_DELTA)
+> +			continue;
+> +		sorted_by_pos[n++] = &deltas[i];
+>  	}
+>
+> +	qsort(sorted_by_pos, n, sizeof(*sorted_by_pos), delta_pos_compare);
+> +
+> +	for (i = 0; i < n; i++) {
+> +		struct delta_entry *d = sorted_by_pos[i];
+> +		void *data;
+> +		unsigned long size;
+> +		char type[10];
+> +		enum object_type obj_type;
+> +		int j, first, last;
+> +
+> +		if (objects[d->obj_no].real_type != OBJ_REF_DELTA)
+> +			continue;
 
-This conflicts a bit with later "Create a topic branch" statement.
-The statement should be I think twofold: "Never work out of tracking
-branches" (if you use separate remotes, git takes care of that for
-yourself), and for typical workflow "Always work out of master
-or merge changes into master".
- 
-This of course deopends on the structure of your repo. For example,
-how many development branches are there. Git repository uses four
-development branches: 'maint' (maintenance, stable, bugfixes),
-'master' (trunk, main development, stable), 'next' (development)
-and 'pu' (proposed updates, a kind of topic branch digest).
+Just for the sake of my own sanity checking,...
 
-> Getting The Latest Upstream Code into master
-> 
->   git pull origin master
-
-It always is "merge into current branch".
-
-Please read what this mean in git-pull(1):
-
-    ?  A parameter <ref> without a colon is equivalent  to  <ref>:  when
-       pulling/fetching,  so  it  merges  <ref>  into the current branch
-       without storing the remote branch anywhere locally.
-
-So what "git pull origin master" do is to fetch _single_ remote branch
-'master' from remote (repository) 'origin' _without_ storing it anywhere
-locally (with separate remotes it would be 'remotes/origin/master',
-without separate remotes it would be 'origin'), and merge it into _current_
-branch.
-
-What you usually want to do, when you are on branch "master", is
-
-  git pull origin
-
-or even
-
-  git pull
-
-> Create a topic branch for your development work
-> 
->   git checkout -b <new topic branch name>
-
-One might want to create topic branch off other commit than HEAD,
-using
-
-  git checkout -b <new topic branch name> <branch point>
-
-> Do your development in the topic branch
-> 
->   edit/debug/test
-> 
-> Committing Changes
-> 
->   git commit -a
-
-Depending on your project policy, it might be "git commit -a -s",
-i.e. add signoff line.
-
-> Switch back to master
-> 
->   git checkout master
-> 
-> Update the master branch from origin again
-> 
->   git pull origin master
-
-The same comment as above.
-
-By the way, this is _not_ CVS, you can merge your topic branch first,
-_then_ pull from origin.
-
-> Now Merge your topic branch
-> 
->   git pull . <topic branch to merge into current branch>
-
-I'd point out that '.' means current repository here.
-
-> How do I push my changes to the original repository?
-> 
->   git push origin master
-
-Probably (and better) just "git push origin" if everything is set up
-correctly.
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+Is it because base objects of OFS_DELTA _must_ exist in the same
+pack (even when --thin) that we do not have to worry about them
+in this function?
