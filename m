@@ -5,50 +5,42 @@ X-Spam-Status: No, score=1.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_RECEIVED,MSGID_FROM_MTA_HEADER
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Path: news.gmane.org!not-for-mail
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+From: Petr Baudis <pasky@suse.cz>
 Newsgroups: gmane.comp.version-control.bazaar-ng.general,gmane.comp.version-control.git
 Subject: Re: VCS comparison table
-Date: Thu, 26 Oct 2006 23:02:32 -0300
-Message-ID: <200610270202.k9R22Wxf004208@laptop13.inf.utfsm.cl>
-References: <jnareb@gmail.com>
+Date: Fri, 27 Oct 2006 04:08:42 +0200
+Message-ID: <20061027020842.GZ20017@pasky.or.cz>
+References: <ehq78n$ec7$1@sea.gmane.org>
+	<200610270202.k9R22Wxf004208@laptop13.inf.utfsm.cl>
 NNTP-Posting-Host: main.gmane.org
-X-Trace: sea.gmane.org 1161914920 19441 80.91.229.2 (27 Oct 2006 02:08:40 GMT)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+X-Trace: sea.gmane.org 1161915107 19938 80.91.229.2 (27 Oct 2006 02:11:47 GMT)
 X-Complaints-To: usenet@sea.gmane.org
-NNTP-Posting-Date: Fri, 27 Oct 2006 02:08:40 +0000 (UTC)
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
-Original-X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 27 04:08:38 2006
+NNTP-Posting-Date: Fri, 27 Oct 2006 02:11:47 +0000 (UTC)
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>
+Original-X-From: bazaar-ng-bounces@lists.canonical.com Fri Oct 27 04:11:43 2006
 Return-path: <bazaar-ng-bounces@lists.canonical.com>
 Envelope-to: gcvbg-bazaar-ng@m.gmane.org
 Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GdH4X-00068J-Ak
-	for gcvbg-bazaar-ng@m.gmane.org; Fri, 27 Oct 2006 04:03:49 +0200
+	id 1GdH9n-0007h0-TC
+	for gcvbg-bazaar-ng@m.gmane.org; Fri, 27 Oct 2006 04:09:15 +0200
 Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
 	by esperanza.ubuntu.com with esmtp (Exim 4.60)
 	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GdH3j-0003Ps-NN; Fri, 27 Oct 2006 03:02:59 +0100
-Received: from inti.inf.utfsm.cl ([200.1.21.155])
+	id 1GdH9Z-0003cV-Gg; Fri, 27 Oct 2006 03:09:02 +0100
+Received: from w241.dkm.cz ([62.24.88.241] helo=machine.or.cz)
 	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <vonbrand@laptop13.inf.utfsm.cl>) id 1GdH3g-0003PY-Lw
-	for bazaar-ng@lists.canonical.com; Fri, 27 Oct 2006 03:02:57 +0100
-Received: from laptop13.inf.utfsm.cl (pc-232-245-83-200.cm.vtr.net
-	[200.83.245.232])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id k9R22lfZ030210
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 26 Oct 2006 23:02:50 -0300
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1])
-	by laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id k9R22Wxf004208; 
-	Thu, 26 Oct 2006 23:02:41 -0300
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: Message from Jakub Narebski <jnareb@gmail.com> 
-	of "Thu, 26 Oct 2006 13:48:15 +0200." <ehq78n$ec7$1@sea.gmane.org> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2
-	(inti.inf.utfsm.cl [200.1.21.155]);
-	Thu, 26 Oct 2006 23:02:50 -0300 (CLST)
-X-Virus-Scanned: ClamAV version 0.88.5,
-	clamav-milter version 0.88.5 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
+	(envelope-from <pasky@machine.or.cz>) id 1GdH9H-0003c7-4G
+	for bazaar-ng@lists.canonical.com; Fri, 27 Oct 2006 03:08:47 +0100
+Received: (qmail 9876 invoked by uid 2001); 27 Oct 2006 04:08:42 +0200
+To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Content-Disposition: inline
+In-Reply-To: <200610270202.k9R22Wxf004208@laptop13.inf.utfsm.cl>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 X-BeenThere: bazaar-ng@lists.canonical.com
 X-Mailman-Version: 2.1.8
 Precedence: list
@@ -62,49 +54,32 @@ List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
 	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
 Original-Sender: bazaar-ng-bounces@lists.canonical.com
 Errors-To: bazaar-ng-bounces@lists.canonical.com
-Xref: news.gmane.org gmane.comp.version-control.bazaar-ng.general:18867 gmane.comp.version-control.git:30276
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30276>
+Xref: news.gmane.org gmane.comp.version-control.bazaar-ng.general:18868 gmane.comp.version-control.git:30279
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30279>
 X-Mailing-List: git@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> wrote:
+Dear diary, on Fri, Oct 27, 2006 at 04:02:32AM CEST, I got a letter
+where "Horst H. von Brand" <vonbrand@inf.utfsm.cl> said that...
+> Jakub Narebski <jnareb@gmail.com> wrote:
+> > 7. Checkouts (as a noun). This probably read "Support Centralized and
+> > Disconnected Centralized Workflow" but that is perhaps too wordy. Git would
+> > have "No" for "Centralized"
+> 
+> Why? We could all agree that some repository is "central" and all push/pull
+> there. Or send patches by mail (or apply them via ssh). Sure, it's not CVS,
+> but...
 
-[...]
+An ability to configure the tool so that the centralized workflow is
+_enforced_ may be important for managers. It's stupid, but it's what is
+meant there, I think.
 
-> I'd rather split "Supports Renames" into engine part (does SCM
-> remember/detect that rename took place _as_ rename, not remember/detect it
-> as copiying+deletion; something other than rename) and user interface part:
-> can user easily deal with renames (this includes merging and viewing file
-> history).
+> > 19. Ease of Use. Hmmm... I don't know for Git. I personally find it very
+> > easy to use, but I have not much experiences with other SCM. I wonder why
+> > Bazaar has "No" there...
+> 
+> Extremely subjective. Easy to learn doesn't cut it either.
 
-I think that what to tool does in its guts is completely irrelevant, what
-is important is what the user sees. Sadly, it seems hard to describe
-exactly what is meant/wanted here.
+I don't think this column makes sense at all. I swear I've seen
+*several* people that claimed GNU Arch was easy to learn/use for them!
 
-[...]
-
-> 7. Checkouts (as a noun). This probably read "Support Centralized and
-> Disconnected Centralized Workflow" but that is perhaps too wordy. Git would
-> have "No" for "Centralized"
-
-Why? We could all agree that some repository is "central" and all push/pull
-there. Or send patches by mail (or apply them via ssh). Sure, it's not CVS,
-but...
-
-[...]
-
-> 13. Plugins. I would put "Somewhat" here, or "Scriptable" in the "Somewhat"
-> or "?" background color for Git. And add note that it is easy to script up
-> porcelanish command, and to add another merge strategy. There also was
-> example plugin infrastructure for Cogito, so I'd opt for "Someahwt"
-> marking.
-
-Mostly an implementation detail for "extensible"...
-
-[...]
-
-> 19. Ease of Use. Hmmm... I don't know for Git. I personally find it very
-> easy to use, but I have not much experiences with other SCM. I wonder why
-> Bazaar has "No" there...
-
-Extremely subjective. Easy to learn doesn't cut it either.
 
