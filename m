@@ -4,99 +4,128 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: svn versus git
-Date: Fri, 15 Dec 2006 10:14:18 -0800
-Message-ID: <7v3b7hxc05.fsf@assigned-by-dhcp.cox.net>
-References: <200612151519.kBFFJSYn012227@laptop13.inf.utfsm.cl>
-	<4582C233.1000706@op5.se>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: VCS comparison table
+Date: Fri, 27 Oct 2006 13:41:56 +0200
+Message-ID: <4541F084.2020802@op5.se>
+References: <200610270202.k9R22Wxf004208@laptop13.inf.utfsm.cl>	 <4541D291.5020205@op5.se> <8fe92b430610270349k36a39250i7173282aa81c04e7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 15 Dec 2006 18:14:48 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 27 Oct 2006 11:43:04 +0000 (UTC)
+Cc: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>, git@vger.kernel.org,
+	bazaar-ng@lists.canonical.com
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <4582C233.1000706@op5.se> (Andreas Ericsson's message of "Fri, 15
-	Dec 2006 16:41:39 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <8fe92b430610270349k36a39250i7173282aa81c04e7@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34536>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvHZt-0001Tc-P6 for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 19:14:38 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30324>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GdQ6A-0008AZ-SO for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 13:42:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753119AbWLOSOV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 13:14:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753120AbWLOSOV
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 13:14:21 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:51103 "EHLO
- fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1753119AbWLOSOU (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
- 13:14:20 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061215181419.XCMT16632.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Fri, 15
- Dec 2006 13:14:19 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id z6EX1V00U1kojtg0000000; Fri, 15 Dec 2006
- 13:14:31 -0500
-To: Andreas Ericsson <ae@op5.se>
+ S1751744AbWJ0LmB (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
+ 07:42:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751777AbWJ0LmB
+ (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 07:42:01 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:37842 "EHLO
+ smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1751744AbWJ0LmA (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 07:42:00 -0400
+Received: by smtp-gw1.op5.se (Postfix, from userid 588) id 8F49D6BE78; Fri,
+ 27 Oct 2006 13:41:58 +0200 (CEST)
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id 810E36BE51; Fri, 27 Oct 2006 13:41:56 +0200 (CEST)
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Andreas Ericsson <ae@op5.se> writes:
-
->>> The number in front is octal mode of a file or directory. "blob"
->>> is a file (or symbolic link), "tree" is a directory, all of this
->>> can be found in git(7).
+Jakub Narebski wrote:
+> On 10/27/06, Andreas Ericsson <ae@op5.se> wrote:
+>> Horst H. von Brand wrote:
+>>> Jakub Narebski <jnareb@gmail.com> wrote:
+>>>
+>>> [...]
+>>>
+>>>> I'd rather split "Supports Renames" into engine part (does SCM
+>>>> remember/detect that rename took place _as_ rename, not remember/detect
+>>>> it as copiying+deletion; something other than rename) and user 
+>>>> interface
+>>>> part: can user easily deal with renames (this includes merging and
+> viewing file
+>>>> history).
+>>>
+>>> I think that what to tool does in its guts is completely irrelevant, 
+>>> what
+>>> is important is what the user sees. Sadly, it seems hard to describe
+>>> exactly what is meant/wanted here.
 >>
->> I don't want to come through as rude, but that you can find the explanation
->> somewhere (and as an old(ish) Unix/git hand you know (or should be able to
->> guess easily) what it means) doesn't help the _newbie_ confronted with this
->> gibberish one iota.
->
-> I think it would help if we could write out things ls-style though and
-> I'm all for axing the SHA1 (I don't even think the SHA1 of specific
-> files of a tree can be *used* for anything), so the above would be
->
-> -rw-r--r-- Makefile
->
-> which most newbies should grok fairly quickly.
+>> Agreed. I'd rather make the definition "Can users, after a rename has
+>> taken place, follow the history of the file-contents across renames?".
+>> Mainly because this is clearly unambiguous, doesn't involve
+>> implementation details and only weighs what really counts: User-visible
+>> capabilities.
+> 
 
-'ls-tree' is a plumbing and existing scripts (not limited to
-what are in git.git) use it to extract object names from
-arbitrary trees.  It's output format will NOT change.
+[...]
 
-The honest position to take on "svn list" question is "we do not
-have a counterpart for that command".
+> But equally important for user is another question related to
+> "Supporting Renames".
+> Namely detection of renames during merge and detection of conflict 
+> during merge
+> is what I would consider minimal "Merge Renames Support". Causing 
+> information
+> to be lost is having no "Merge Renames Support". To have "Yes" in this
+> column SCM
+> have to resolve conflict at least in obvious cases, and "Yes!" if it
+> can remember
+> resolution of merge conflict involving renames ;-).
+> 
 
-Now, I happen to think "getting list of all paths in one
-particular revision" is not a very useful operation from the end
-user's point of view.  One possible use is to get such a list
-from multiple revisions and compare them with "comm -3", but
-that is obviously useless in the context of git.  You can do
-that with "diff --name-status --diff-filter=AD" without doing
-ls-tree yourself.
+True.
 
-But if "ls $commit" is still interesting at end-user level,
-probably we would need a Porcelain to let users do so.
+>> IMNSHO, I'd rather have all the features in the list be along the lines
+>> of "Can users/admins/random-boon do X?" and instead of "yes/no" list the
+>> number of commands/the amount of time required to achieve the desired
+>> effect. This would set a clear limit and put most terminology issues out
+>> of the way.
+> 
+> This would make the comparison table less clear, unfortunately.
+> 
 
-Johannes recently made
+True that. Perhaps just stick with Yes/No and have a timing table to 
+compare merge times, multi-parent merge times and stuff like that.
 
-	$ git show $commit^{tree}
+> 
+>>> [...]
+>>>
+>>>> 19. Ease of Use. Hmmm... I don't know for Git. I personally find it 
+>>>> very
+>>>> easy to use, but I have not much experiences with other SCM. I 
+>>>> wonder why
+>>>> Bazaar has "No" there...
+>>>
+>>> Extremely subjective. Easy to learn doesn't cut it either.
+>>
+>> This one just needs to go. Could possibly be replaced with "Has
+>> tutorial/documentation online" or some such. No SCM is really intuitive
+>> to users that haven't experienced any of them before, so the only thing
+>> that really matters is how much documentation one can find online and
+>> how up-to-date it is.
+> 
+> For example SCM can be easy to use but at the cost of simplifications
+> and limited useness.
+> 
+> On the other side basic concept behind some SCM might be more
+> or less understandable...
 
-to do the name-only variant.
+Yes, but it will always be based on personal opinion and that's why it 
+can never be measured in an unbiased way. It would be like playing 
+Trivial Pursuit and getting the question "Which 20'th century author 
+wrote the best books?". There's actually two problems with that 
+question, but the important one is that it can't be answered correctly 
+in this wonderful world we live in where everyone has their own opinion.
 
-If people actually do "ls-tree --name-only" (or ls-tree
---like-ls-l) often, we might want to be even easier:
-
-	$ git show --ls $commit
-
-or even:
-
-	$ git ls $commit
-
-or even:
-
-	[alias] ls = ls-tree --name-only
-
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
