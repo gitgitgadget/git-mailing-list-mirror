@@ -1,63 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Add builtin merge-file, a minimal replacement for RCS merge
-Date: Wed, 06 Dec 2006 16:30:08 +0100
-Organization: At home
-Message-ID: <el6nhv$58n$1@sea.gmane.org>
-References: <Pine.LNX.4.63.0612061609430.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Restore a single file in the index back to HEAD
+Date: Fri, 27 Oct 2006 10:08:46 +0200
+Message-ID: <4541BE8E.5050605@op5.se>
+References: <200610261641.11239.andyparkins@gmail.com> <81b0412b0610260842x52413570k3971bcdc54b3ccb5@mail.gmail.com> <200610270827.17659.andyparkins@gmail.com> <20061027073834.GC29057@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Wed, 6 Dec 2006 15:28:30 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 27 Oct 2006 08:09:46 +0000 (UTC)
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 13
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <20061027073834.GC29057@spearce.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33474>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gryh9-0002wD-1n for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 16:28:27 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30304>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GdMlr-0007gn-8W for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 10:08:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935412AbWLFP2Z (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 10:28:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935757AbWLFP2Y
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 10:28:24 -0500
-Received: from main.gmane.org ([80.91.229.2]:34207 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S935412AbWLFP2W
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 10:28:22 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Grygt-00086s-NT for git@vger.kernel.org; Wed, 06 Dec 2006 16:28:11 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Wed, 06 Dec 2006 16:28:11 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 06 Dec 2006
- 16:28:11 +0100
-To: git@vger.kernel.org
+ S1946241AbWJ0IIv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
+ 04:08:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946244AbWJ0IIv
+ (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 04:08:51 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:36551 "EHLO
+ smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1946241AbWJ0IIt (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 04:08:49 -0400
+Received: by smtp-gw1.op5.se (Postfix, from userid 588) id C041B6BE79; Fri,
+ 27 Oct 2006 10:08:48 +0200 (CEST)
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id 276D26BE76; Fri, 27 Oct 2006 10:08:47 +0200 (CEST)
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin wrote:
+Shawn Pearce wrote:
+> Andy Parkins <andyparkins@gmail.com> wrote:
+>> However, it led me to wonder what the inverse of git-update-index is.
+> 
+> git-update-index  :-)
+> 
+> You can use something like:
+> 
+>     git ls-tree HEAD oops/file1 | git update-index --index-info 
+> 
+> to restore the index state of oops/file1.
+> 
+> 
+> Which leads us to the always interesting, fun and exciting:
+> 
+>     git ls-tree -r HEAD | git update-index --index-info 
+> 
+> which will undo everything except 'git add' from the index, as
+> ls-tree -r is listing everything in the last commit.
+> 
 
-> merge-file has the same syntax as RCS merge, but supports only the
-> "-L" option.
+... and also shows The Power of the Pipe, which Daniel@google was 
+missing in recent versions of git. ;-)
 
-Would it be hard to add "-p / --stdout" options, and "-q / --quiet" option?
-I understand that non-standard output format options are rather out of
-question...
+Btw, this is most definitely not a documented thing and requires a bit 
+of core git knowledge, so perhaps the "shell-scripts were good for 
+hackers to learn what to pipe where" really *is* a very important point.
+
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
