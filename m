@@ -4,82 +4,67 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [PATCH] Bash snippet to show branch and patch in bash prompt
-Date: Mon, 30 Oct 2006 11:59:27 +0100
-Message-ID: <20061030105926.14328.55180.stgit@lathund.dewire.com>
-References: <4545CC6F.90001@tromer.org>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-NNTP-Posting-Date: Mon, 30 Oct 2006 10:58:26 +0000 (UTC)
-Cc: Eran Tromer <git2eran@tromer.org>, git@vger.kernel.org
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] Documentation: add upload-archive service to git-daemon.
+Date: Fri, 27 Oct 2006 06:59:18 +0200
+Message-ID: <20061027065918.23f33855.chriscool@tuxfamily.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 27 Oct 2006 04:52:30 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Virus-Scanned: amavisd-new at localhost.localdomain
-In-Reply-To: <4545CC6F.90001@tromer.org>
-User-Agent: StGIT/0.10
-X-Virus-Scanned: by amavisd-new at dewire.com
+X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.8.20; i486-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30290>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GeUqS-0002oH-84 for gcvg-git@gmane.org; Mon, 30 Oct
- 2006 11:58:20 +0100
+ esmtp (Exim 4.43) id 1GdJhg-0007dj-W6 for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 06:52:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161243AbWJ3K6R (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 05:58:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161246AbWJ3K6R
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 05:58:17 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:42798 "EHLO
- torino.dewire.com") by vger.kernel.org with ESMTP id S1161243AbWJ3K6Q (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 05:58:16 -0500
-Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
- (Postfix) with ESMTP id 136118030A5; Mon, 30 Oct 2006 11:54:59 +0100 (CET)
-Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
- [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 29639-10; Mon, 30 Oct
- 2006 11:54:58 +0100 (CET)
-Received: from lathund.dewire.com (unknown [10.9.0.5]) by torino.dewire.com
- (Postfix) with ESMTP id A96E28030A1; Mon, 30 Oct 2006 11:54:58 +0100 (CET)
-Received: from localhost (lathund.dewire.com [127.0.0.1]) by
- lathund.dewire.com (Postfix) with ESMTP id 3712F28E71; Mon, 30 Oct 2006
- 11:59:31 +0100 (CET)
-Received: from lathund.dewire.com ([127.0.0.1]) by localhost
- (lathund.dewire.com [127.0.0.1]) (amavisd-new, port 10025) with LMTP id
- ViV+E++5QWQx; Mon, 30 Oct 2006 11:59:27 +0100 (CET)
-Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1]) by
- lathund.dewire.com (Postfix) with ESMTP id 727AA28E10; Mon, 30 Oct 2006
- 11:59:27 +0100 (CET)
-To: Catalin Marinas <catalin.marinas@arm.com>
+ S1423641AbWJ0EwW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
+ 00:52:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423642AbWJ0EwW
+ (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 00:52:22 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:8679 "EHLO
+ smtp3-g19.free.fr") by vger.kernel.org with ESMTP id S1423641AbWJ0EwV (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 00:52:21 -0400
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net
+ [82.243.130.161]) by smtp3-g19.free.fr (Postfix) with SMTP id 6C8D149EEC;
+ Fri, 27 Oct 2006 06:52:20 +0200 (CEST)
+To: Junio Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
+This patch minimaly documents the upload-archive service,
+hoping that someone with better knowledge will improve upon.
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
+ Documentation/git-daemon.txt |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
- contrib/stgbashprompt.sh |   18 ++++++++++++++++++
- 1 files changed, 18 insertions(+), 0 deletions(-)
-
-diff --git a/contrib/stgbashprompt.sh b/contrib/stgbashprompt.sh
-new file mode 100755
-index 0000000..a79561e
---- /dev/null
-+++ b/contrib/stgbashprompt.sh
-@@ -0,0 +1,18 @@
-+# include this in your bashrc or copy to /etc/bash_completions.d
+diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+index 4b2ea2d..a72ed39 100644
+--- a/Documentation/git-daemon.txt
++++ b/Documentation/git-daemon.txt
+@@ -37,6 +37,8 @@ from `git-fetch`, `git-ls-remote`, and `
+ This is ideally suited for read-only updates, i.e., pulling from
+ git repositories.
+ 
++An `upload-archive` also exists to serve `git-archive`.
 +
-+if [ "$PS1" ]; then
-+    # trap 'PS1="\u@\h [$(stg top)] \w]\$ "' DEBUG
-+    function stgtag
-+    {
-+	git_dir=$(git-rev-parse --git-dir 2> /dev/null)
-+	ref=$(git-symbolic-ref HEAD 2> /dev/null)
-+	br=${ref/refs\/heads\//}
-+	top=$(cat $git_dir/patches/$br/current 2>/dev/null)
-+	if [[ -n "$br$top" ]];then
-+	    echo "[$top@$br]"
-+	    return
-+	fi
-+    }
-+    PS1='\u@\h$(stgtag)\w\$ '
+ OPTIONS
+ -------
+ --strict-paths::
+@@ -155,6 +157,9 @@ upload-pack::
+ 	disable it by setting `daemon.uploadpack` configuration
+ 	item to `false`.
+ 
++upload-archive::
++	This serves `git-archive --remote`. 
 +
+ EXAMPLES
+ --------
+ git-daemon as inetd server::
+-- 
