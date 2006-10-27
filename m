@@ -1,73 +1,80 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: VCS comparison table
-Date: Thu, 26 Oct 2006 14:18:53 +0200
-Organization: At home
-Message-ID: <ehq924$llq$1@sea.gmane.org>
-References: <20061023222131.GB17019@over-yonder.net> <Pine.LNX.4.64.0610231534010.3962@g5.osdl.org> <20061024002622.GC17019@over-yonder.net> <Pine.LNX.4.63.0610240853160.10841@qynat.qvtvafvgr.pbz> <20061024163458.GH17019@over-yonder.net> <Pine.LNX.4.63.0610241038060.10841@qynat.qvtvafvgr.pbz> <20061025002713.GN17019@over-yonder.net> <Pine.LNX.4.63.0610251459160.1754@qynat.qvtvafvgr.pbz> <20061025235306.GD17019@over-yonder.net> <45408A53.10400@op5.se> <20061026121253.GE17019@over-yonder.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: fetching packs and storing them as packs
+Date: Fri, 27 Oct 2006 10:27:05 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0610271022240.11384@xanadu.home>
+References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home>
+ <4540CA0C.6030300@tromer.org> <Pine.LNX.4.64.0610261105200.12418@xanadu.home>
+ <45413209.2000905@tromer.org> <Pine.LNX.4.64.0610262038320.11384@xanadu.home>
+ <20061027014229.GA28407@spearce.org> <45417205.6020805@tromer.org>
+ <20061027030054.GB28407@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Thu, 26 Oct 2006 12:20:46 +0000 (UTC)
-Cc: bazaar-ng@lists.canonical.com
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Fri, 27 Oct 2006 14:28:19 +0000 (UTC)
+Cc: Eran Tromer <git2eran@tromer.org>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Followup-To: gmane.comp.version-control.git
-Original-Lines: 21
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-reply-to: <20061027030054.GB28407@spearce.org>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30328>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd4Cb-0004Ly-Sp for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 14:19:18 +0200
+ esmtp (Exim 4.43) id 1GdSgJ-0006Fd-KU for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 16:27:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423360AbWJZMTO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 08:19:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423354AbWJZMTO
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 08:19:14 -0400
-Received: from main.gmane.org ([80.91.229.2]:34992 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1423360AbWJZMTN (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 08:19:13 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gd4CF-0004Hz-7n for git@vger.kernel.org; Thu, 26 Oct 2006 14:18:55 +0200
-Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Thu, 26 Oct 2006 14:18:55 +0200
-Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 26 Oct 2006
- 14:18:55 +0200
-To: git@vger.kernel.org
+ S1752212AbWJ0O1J (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
+ 10:27:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752218AbWJ0O1I
+ (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 10:27:08 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:27627 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S1752212AbWJ0O1H
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 10:27:07 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J7S00ANCTH5WD00@VL-MO-MR003.ip.videotron.ca> for git@vger.kernel.org; Fri,
+ 27 Oct 2006 10:27:06 -0400 (EDT)
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Matthew D. Fuller wrote:
+On Thu, 26 Oct 2006, Shawn Pearce wrote:
 
-> On Thu, Oct 26, 2006 at 12:13:39PM +0200 I heard the voice of
-> Andreas Ericsson, and lo! it spake thus:
->> Matthew D. Fuller wrote:
->>>
->>>In git, this is a non-issue because you don't get to CHOOSE which
->>>way to work.
->> 
->> Yes they do.
+> Unfortunately it does not completely work.
 > 
-> Not where I was going with that section of the mail; I was looking at
-> just the merge vs fast-forward distinction.  In git, you don't get to
-> choose; in bzr you do.
+> What happens when the incoming pack (steps #2 and #3) takes 15
+> minutes to upload (slow ADSL modem, lots of objects) and the
+> background repack process sees those temporary refs and starts
+> trying to include those objects?  It can't walk the DAG that those
+> refs point at because the objects aren't in the current repository.
+> 
+> From what I know of that code the pack-objects process will fail to
+> find the object pointed at by the ref, rescan the packs directory,
+> find no new packs, look for the object again, and abort over the
+> "corruption".
+> 
+> OK so the repository won't get corrupted but the repack would be
+> forced to abort.
 
-You can get similar workflow in git using 'origin'/'master' pair, I think.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Maybe this is the best way out?  Abort git-repack with "a fetch is in 
+progress -- retry later".  No one will really suffer if the repack has 
+to wait for the next scheduled cron job, especially if the fetch doesn't 
+explode packs into loose objects anymore.
+
+> Another issue I just thought about tonight is we may need a
+> count-packs utility that like count-objects lists the number
+> of active packs and their total size.  If we start hanging onto
+> every pack we receive over the wire the pack directory is going to
+> grow pretty fast and we'll need a way to tell us when its time to
+> `repack -a -d`.
+
+Sure.  Although the pack count is going to grow much less rapidly.  
+Think of one pack per fetch instead of many many objects per fetch.
+
 
