@@ -1,208 +1,78 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH/RFC] Implemented glob support in pull refspecs
-Date: Wed, 22 Nov 2006 22:13:44 +0000
-Message-ID: <200611222213.44336.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: prune/prune-packed
+Date: Fri, 27 Oct 2006 14:55:13 -0700
+Message-ID: <7vy7r1ctku.fsf@assigned-by-dhcp.cox.net>
+References: <20061022035919.GA4420@fieldses.org>
+	<7vy7r954k7.fsf@assigned-by-dhcp.cox.net>
+	<20061022231422.GA9375@fieldses.org>
+	<20061023005336.GA12932@fieldses.org> <453C1A35.70504@gmail.com>
+	<7vvembzp6y.fsf@assigned-by-dhcp.cox.net>
+	<1161983997.2426.422.camel@cashmere.sps.mot.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 22 Nov 2006 22:16:41 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 27 Oct 2006 21:55:59 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        b=I2Mcg41u5VZXLWbafZniHNlEnedkMstgfIuBRmA4BNHe0OlRiYZOL3xJJ1U78/ZAQnBplszUlgEBAhR5OSJDFATQXB065SYfh4ov+FJry3ZAm1pCgBf71OvexBpTZebEXF8mxz7a7+Rr3uJ29zBJkxkgqBpU+nR0LsNI1v61vgA=
-X-TUID: b058e8d06bd74ea5
-X-UID: 167
-X-Length: 5107
-Content-Disposition: inline
+In-Reply-To: <1161983997.2426.422.camel@cashmere.sps.mot.com> (Jon Loeliger's
+	message of "Fri, 27 Oct 2006 16:19:57 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30350>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gn0OP-0006cl-2v for gcvg-git@gmane.org; Wed, 22 Nov
- 2006 23:16:34 +0100
+ esmtp (Exim 4.43) id 1GdZfc-0007fW-4b for gcvg-git@gmane.org; Fri, 27 Oct
+ 2006 23:55:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757073AbWKVWQ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
- 17:16:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757079AbWKVWQ3
- (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 17:16:29 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:2654 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1757068AbWKVWQ2
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 17:16:28 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so311630uga for
- <git@vger.kernel.org>; Wed, 22 Nov 2006 14:16:26 -0800 (PST)
-Received: by 10.67.119.9 with SMTP id w9mr4097769ugm.1164233786162; Wed, 22
- Nov 2006 14:16:26 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
- mx.google.com with ESMTP id 24sm12196784ugf.2006.11.22.14.16.25; Wed, 22 Nov
- 2006 14:16:26 -0800 (PST)
-To: git@vger.kernel.org
+ S1750705AbWJ0VzQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
+ 17:55:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750706AbWJ0VzQ
+ (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 17:55:16 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:665 "EHLO
+ fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1750705AbWJ0VzO
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 17:55:14 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao07.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061027215514.SHQT28934.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>; Fri, 27
+ Oct 2006 17:55:14 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id fZuv1V00S1kojtg0000000 Fri, 27 Oct 2006
+ 17:54:56 -0400
+To: Jon Loeliger <jdl@freescale.com>
 Sender: git-owner@vger.kernel.org
 
-git-ls-remote is now called early on and the list categorised into heads and
-tags.  Any time a refspec has a "*" in the remote part, the git-ls-remote head
-list is searched for matches against that refspec.  If found then the part of
-the remote ref that matches the "*" is substituted into the local part of the
-refspec.
+Jon Loeliger <jdl@freescale.com> writes:
 
-This allows refspecs like
- refs/heads/*:refs/remotes/origin/*
-Which will ensure that all branches on the remote are created locally.
+> On Sun, 2006-10-22 at 22:27, Junio C Hamano wrote:
+>
+>> Sorry, but you are right and Linus is more right.  How about
+>> doing FRSX.
+>> 
+>> diff --git a/pager.c b/pager.c
+>> index 8bd33a1..4587fbb 100644
+>> --- a/pager.c
+>> +++ b/pager.c
+>> @@ -50,7 +50,7 @@ void setup_pager(void)
+>>  	close(fd[0]);
+>>  	close(fd[1]);
+>>  
+>> -	setenv("LESS", "FRS", 0);
+>> +	setenv("LESS", "FRSX", 0);
+>>  	run_pager(pager);
+>>  	die("unable to execute pager '%s'", pager);
+>>  	exit(255);
+>
+> I'm a little confused by all this because I
+> set the LESS environment variable by myself
+> already.  And I use the value that I like.
+> Why change it or override the user's settings
+> like this?  Or did I miss something?
 
-Note, no local branch will be deleted, so if it is deleted upstream it will
-remain in the local repository.
+This is about "if user does not set it, use this default".
 
-As an added bonus, because the output of git-ls-remote is now stored, the other
-calls to it for tag processing are replaced with simple accesses to the
-previously stored remote tag list
-
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
----
-The problem with this patch is that I had to disable the safety check 
-in git-parse-remote.sh to allow the "*" in the refspec.  I'm not sure what
-the appropriate place to put that call now is?  Perhaps after the expansion
-of the globbed refspecs?
-
- git-fetch.sh        |   77 +++++++++++++++++++++++++++++++++++++++++++++-----
- git-parse-remote.sh |   10 +++---
- 2 files changed, 74 insertions(+), 13 deletions(-)
-
-diff --git a/git-fetch.sh b/git-fetch.sh
-index eb32476..1875fe9 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -224,6 +224,24 @@ case "$update_head_ok" in
- 	;;
- esac
- 
-+# Prefetch the remote list and categorise it into tags and heads
-+remotereflist=$(git-ls-remote $upload_pack "$remote")
-+remoteheads=
-+remotetags=
-+for ref in $remotereflist
-+do
-+	# Convert the tab to a comma so that the case below works
-+	ref=$(echo $ref | sed -e "s/\t/,/")
-+	case $ref in
-+	*,refs/heads/*)
-+		remoteheads="$remoteheads$ref$LF"
-+		;;
-+	*,refs/tags/*)
-+		remotetags="$remotetags$ref$LF"
-+		;;
-+	esac
-+done
-+
- # If --tags (and later --heads or --all) is specified, then we are
- # not talking about defaults stored in Pull: line of remotes or
- # branches file, and just fetch those and refspecs explicitly given.
-@@ -232,12 +250,9 @@ esac
- reflist=$(get_remote_refs_for_fetch "$@")
- if test "$tags"
- then
--	taglist=`IFS="	" &&
--		  (
--			git-ls-remote $upload_pack --tags "$remote" ||
--			echo fail ouch
--		  ) |
--	          while read sha1 name
-+	taglist=`IFS="," &&
-+		  echo -n $remotetags |
-+	      while read sha1 name
- 		  do
- 			case "$sha1" in
- 			fail)
-@@ -263,6 +278,52 @@ then
- 	fi
- fi
- 
-+# Expand any refspecs that contain "*"
-+newreflist=
-+for refspec in $reflist
-+do
-+	remotename=$(expr "z$refspec" : 'z\([^:]*\):')
-+	localname=$(expr "z$refspec" : 'z[^:]*:\(.*\)')
-+	if gotglob=$(expr "z$remotename" : 'zrefs/.*/\*$')
-+	then
-+		# If this is a glob-containing ref, then expand it using every
-+		# matching remote head
-+		for remoteref in $remoteheads
-+		do
-+			# remoteheads stores the heads with the hashes still present
-+			remoteref=$(expr "$remoteref" : "$_x40,\\(.*\\)")
-+
-+			# For example, if
-+			#  remotename = refs/heads/*
-+			#  localname = refs/remotes/up/*
-+			# Then we find a potential remote head of
-+			#  remoteref = refs/heads/branchname
-+
-+			# First see if it matches the remotename glob
-+			case $remoteref in
-+			$remotename)
-+				# So we know remoteref is the going to be the remote
-+				# in the new fetch line, however we need to substitute the
-+				# "*" in the local part to get the local name
-+				# First we manufacture the regexps to do the work
-+				remotereg=$(echo $remotename | sed -e 's/\*/\\(.*\\)/')
-+				remotebranch=$(expr "$remoteref" : "$remotereg")
-+				# Now substitute this into the localname
-+				localref=$(echo $localname | sed -e "s|\\*|$remotebranch|")
-+				# And construct the new refspec
-+				newreflist="$newreflist$remoteref:$localref$LF"
-+				;;
-+			esac
-+
-+		done
-+	else
-+		# Non glob refs just get copied literally
-+		newreflist="$newreflist$ref$LF"
-+	fi
-+done
-+reflist=$newreflist
-+
-+
- fetch_main () {
-   reflist="$1"
-   refs=
-@@ -430,8 +491,8 @@ case "$no_tags$tags" in
- 	*:refs/*)
- 		# effective only when we are following remote branch
- 		# using local tracking branch.
--		taglist=$(IFS=" " &&
--		git-ls-remote $upload_pack --tags "$remote" |
-+		taglist=$(IFS="," &&
-+		echo -n $remotetags |
- 		sed -n	-e 's|^\('"$_x40"'\)	\(refs/tags/.*\)^{}$|\1 \2|p' \
- 			-e 's|^\('"$_x40"'\)	\(refs/tags/.*\)$|\1 \2|p' |
- 		while read sha1 name
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index c325ef7..e541144 100755
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -145,11 +145,11 @@ canon_refs_list_for_fetch () {
- 		*) local="refs/heads/$local" ;;
- 		esac
- 
--		if local_ref_name=$(expr "z$local" : 'zrefs/\(.*\)')
--		then
--		   git-check-ref-format "$local_ref_name" ||
--		   die "* refusing to create funny ref '$local_ref_name' locally"
--		fi
-+#		if local_ref_name=$(expr "z$local" : 'zrefs/\(.*\)')
-+#		then
-+#		   git-check-ref-format "$local_ref_name" ||
-+#		   die "* refusing to create funny ref '$local_ref_name' locally"
-+#		fi
- 		echo "${dot_prefix}${force}${remote}:${local}"
- 	done
- }
--- 
-1.4.3.5
