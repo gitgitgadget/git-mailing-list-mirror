@@ -1,92 +1,105 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
-Date: Thu, 30 Nov 2006 16:21:56 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611301618490.3513@woody.osdl.org>
-References: <7virgzuf38.fsf@assigned-by-dhcp.cox.net> <7vr6vmsnly.fsf@assigned-by-dhcp.cox.net>
- <87ejrlvn7r.wl%cworth@cworth.org> <7vodqpn3t4.fsf@assigned-by-dhcp.cox.net>
- <7vk61dn2yj.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0611300310520.30004@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0611291859070.3513@woody.osdl.org> <456EBBE7.8030404@op5.se>
- <Pine.LNX.4.64.0611300749560.3513@woody.osdl.org> <20061130164046.GB17715@thunk.org>
- <Pine.LNX.4.64.0611300903080.3513@woody.osdl.org> <Pine.LNX.4.64.0611301229290.9647@xanadu.home>
- <87irgwu6e6.wl%cworth@cworth.org> <87hcwgu5t1.wl%cworth@cworth.org>
- <Pine.LNX.4.64.0611301132350.3513@woody.osdl.org> <Pine.LNX.4.64.0611301521320.9647@xanadu.home>
- <7vhcwgiqer.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611301624430.9647@xanadu.home>
- <7vlklsfsgz.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611301520370.3513@woody.osdl.org>
- <873b80tqvv.wl%cworth@cworth.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: fetching packs and storing them as packs
+Date: Fri, 27 Oct 2006 21:09:34 -0700
+Message-ID: <7vd58daxoh.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home>
+	<4540CA0C.6030300@tromer.org>
+	<Pine.LNX.4.64.0610271310450.3849@g5.osdl.org>
+	<7v3b99e87c.fsf@assigned-by-dhcp.cox.net>
+	<20061028034206.GA14044@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Fri, 1 Dec 2006 00:22:48 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>,
-	Theodore Tso <tytso@mit.edu>, Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 28 Oct 2006 04:09:59 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <873b80tqvv.wl%cworth@cworth.org>
-X-MIMEDefang-Filter: osdl$Revision: 1.161 $
-X-Scanned-By: MIMEDefang 2.36
+In-Reply-To: <20061028034206.GA14044@spearce.org> (Shawn Pearce's message of
+	"Fri, 27 Oct 2006 23:42:06 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30361>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpwAq-0004ug-Or for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 01:22:41 +0100
+ esmtp (Exim 4.43) id 1GdfVr-0008CZ-3A for gcvg-git@gmane.org; Sat, 28 Oct
+ 2006 06:09:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031642AbWLAAWi (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 19:22:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031644AbWLAAWi
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 19:22:38 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:21943 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1031642AbWLAAWh (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 19:22:37 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB10LwjQ021979
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Thu, 30
- Nov 2006 16:21:59 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB10LuU4025664; Thu, 30 Nov
- 2006 16:21:57 -0800
-To: Carl Worth <cworth@cworth.org>
+ S1751431AbWJ1EJg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
+ 00:09:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751440AbWJ1EJg
+ (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 00:09:36 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:4244 "EHLO
+ fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S1751431AbWJ1EJf
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006 00:09:35 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao01.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061028040935.QRFR6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>; Sat, 28
+ Oct 2006 00:09:35 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id fg9G1V00l1kojtg0000000 Sat, 28 Oct 2006
+ 00:09:17 -0400
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
+Shawn Pearce <spearce@spearce.org> writes:
+
+> So a reader-writer lock is preferred over
+> a non-locking solution such as I posted in
+> http://article.gmane.org/gmane.comp.version-control.git/30288 ?
+
+If you mean these two in your message to be "solution":
+
+   So the receive-pack process becomes:
+
+     a. Create temporary pack file in $GIT_DIR/objects/pack_XXXXX.
+     b. Create temporary index file in $GIT_DIR/objects/index_XXXXX.
+     c. Write pack and index.
+     d. Move pack to $GIT_DIR/objects/pack/...
+     e. Move index to $GIT_DIR/objects/pack...
+     f. Update refs.
+     g. Arrange for new pack and index to be considered active.
+
+   And the repack -a -d process becomes:
+
+     1. List all active packs and store in memory.
+     2. Repack only loose objects and objects contained in active packs.
+     3. Move new pack and idx into $GIT_DIR/objects/pack/...
+     4. Arrange for new pack and idx to be considered active.
+     5. Delete active packs found by step #1.
+
+I am not so sure how it solves anything at all.
+
+The race is about this sequence:
+
+      - git-receive-pack is spawned from remove git-send-pack;
+        it lets "index-pack --stdin --fatten" to keep the pack.
+
+      - index-pack does its magic and moves the pack and idx
+        to their final location;
+
+      - "repack -a -d" is started by somebody else; it first
+        remembers all the existing packs; it does the usual
+        repacking-into-one.
+
+      - git-receive-pack that invoked the index-pack waits for
+        index-pack to finish, and then updates the refs;
+
+      - "repack -a -d" is done repacking; removes the packs
+        that existed when it checked earlier.
+
+Now, I am not sure what your plan to "arrange for new pack and
+idx to be considered active" is.  Care to explain?
+
+There is a tricky constraints imposed on us by (arguably broken)
+commit walkers in that it relies on the (arguably broken)
+sha1_file.c:sha1_pack_name() interface, so naming historical
+ones $GIT_OBJECT_DIR/pack/hist-X{40}.pack would not work; we
+would need to fix commit walkers for that first.
 
 
-On Thu, 30 Nov 2006, Carl Worth wrote:
-> >
-> > So you can do
-> >
-> > 	echo a > file-a
-> > 	echo b > file-b
-> > 	git add file-a file-b
-> >
-> > 	git commit file-a
-> 
-> But, wait a second. What if I do my typo fix to file-a in between that
-> "git add" and the "git commit". Why should "git commit" insist so
-> vehemently on committing the _old_ state of file-a while "git commit
-> file-a" so happily commits the _new_ state?
-
-Because that's what "git commit filename" means.
-
-It means "commit the changes to this file".
-
-> I'm really not seeing conceptual consistency to what "commit <files>"
-> does compared to "commit".
-
-Exactly what the command says. "git commit" says "commit everything I've 
-told you to commit". While "git commit filename" says "commit the changes 
-that I've made to this file".
-
-Yes, they are two totally different cases, but nobody sane can claim that 
-it is strange. Exactly _because_ you explicitly list the filename, that 
-also means that you want the file content AT THAT TIME. If you don't list 
-the filename, you obviously must be talking about committing something you 
-did earlier.
 
