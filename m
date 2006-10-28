@@ -1,70 +1,68 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-add --interactive (wip)
-Date: Tue, 12 Dec 2006 21:34:33 -0800
-Message-ID: <7v1wn4mk9i.fsf@assigned-by-dhcp.cox.net>
-References: <360959.72234.qm@web31809.mail.mud.yahoo.com>
-	<200612111147.44964.Josef.Weidendorfer@gmx.de>
-	<7vwt4wpytm.fsf@assigned-by-dhcp.cox.net>
-	<200612130415.59038.Josef.Weidendorfer@gmx.de>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] Add git-count-packs, like git-count-objects.
+Date: Sat, 28 Oct 2006 02:51:43 -0400
+Message-ID: <20061028065143.GA14607@spearce.org>
+References: <20061028040056.GA14191@spearce.org> <7v8xj1axlm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 13 Dec 2006 05:35:07 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Sat, 28 Oct 2006 06:52:04 +0000 (UTC)
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <7v8xj1axlm.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34182>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuMle-0007Md-6z for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 06:34:58 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30368>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gdi2t-0000ho-1i for gcvg-git@gmane.org; Sat, 28 Oct
+ 2006 08:51:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964938AbWLMFez (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 00:34:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964941AbWLMFez
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 00:34:55 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:53132 "EHLO
- fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S964938AbWLMFey (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
- 00:34:54 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao04.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061213053434.PAIA7494.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>; Wed, 13
- Dec 2006 00:34:34 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id y5Zv1V00S1kojtg0000000; Wed, 13 Dec 2006
- 00:33:56 -0500
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+ S1751600AbWJ1Gvw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
+ 02:51:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751876AbWJ1Gvw
+ (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 02:51:52 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:18829 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1751600AbWJ1Gvv
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006 02:51:51 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gdi2i-0001pV-QK; Sat, 28 Oct 2006 02:51:44 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ BBEBE20E45B; Sat, 28 Oct 2006 02:51:43 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
+> 
+> > Now that we are starting to save packs rather than unpacking into
+> > loose objects its nice to have a way to list the number of current
+> > packs and their total size.  This can help the user in deciding
+> > when its time to run `git repack -a -d`.
+> 
+> Why not just do "ls -lh $GIT_OBJECT_DIR/pack/pack-*.pack"???
 
-> No. It currently is starting to get useful. With the ability
-> to temporarily store away a dirty state of the working directory,
-> it really could become very good.
+Because whatever we decide to use to make a pack 'active' may not
+be that simple.
 
-Hmm, a way to easily stash away local changes and restoring
-would lead to a system where you can easily stash and unstash
-multiple snapshots and switch between them, and such a model
-sounds vaguely familiar...
+Whatever.  It was clearly a very tiny patch put together quickly
+before dinner tonight, perhaps not worth including at this point.
+Lets see what comes out of the other pack oriented discussion first.
 
->> > Just as a sidenote: after deciding to not apply hunks, you
->> > lose them in this WIP, as you will find nothing in "unstaged" mode
->> > afterwards :-(
->> 
->> I do not understand this part.  You can 'revert' to match the
->> index to HEAD and run 'patch' to pick what you want again.
->
-> I lost my changes in the working directory; there was nothing to
-> pick again any more.
-
-That's worrysome.  By design, "git add" should not touch working
-tree at all (only read from there), so if you find cases that
-violates it that should be fixed; please let me know.
+-- 
