@@ -4,99 +4,62 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Cleaning up git user-interface warts
-Date: Thu, 16 Nov 2006 08:30:55 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611160824040.3349@woody.osdl.org>
-References: <87k61yt1x2.wl%cworth@cworth.org> <Pine.LNX.4.64.0611142306090.2591@xanadu.home>
- <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org> <200611151858.51833.andyparkins@gmail.com>
- <Pine.LNX.4.64.0611151111250.3349@woody.osdl.org>
- <f2b55d220611151139v66fba16ax97ce6b9966b33ce7@mail.gmail.com>
- <Pine.LNX.4.64.0611151203450.3349@woody.osdl.org> <Pine.LNX.4.64.0611151516360.2591@xanadu.home>
- <Pine.LNX.4.64.0611151226590.3349@woody.osdl.org> <20061116042639.GA23026@thunk.org>
- <455C5079.3010701@op5.se>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: fetching packs and storing them as packs
+Date: Sat, 28 Oct 2006 11:34:07 -0700
+Message-ID: <7vk62k9tnk.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home>
+	<4540CA0C.6030300@tromer.org>
+	<Pine.LNX.4.64.0610271310450.3849@g5.osdl.org>
+	<7v3b99e87c.fsf@assigned-by-dhcp.cox.net>
+	<20061028034206.GA14044@spearce.org>
+	<Pine.LNX.4.64.0610272109500.3849@g5.osdl.org>
+	<7vwt6l9etn.fsf@assigned-by-dhcp.cox.net>
+	<20061028072146.GB14607@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 16 Nov 2006 16:32:50 +0000 (UTC)
-Cc: Theodore Tso <tytso@mit.edu>, Nicolas Pitre <nico@cam.org>,
-	"Michael K. Edwards" <medwards.linux@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 28 Oct 2006 18:34:21 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <455C5079.3010701@op5.se>
-X-MIMEDefang-Filter: osdl$Revision: 1.156 $
-X-Scanned-By: MIMEDefang 2.36
+In-Reply-To: <20061028072146.GB14607@spearce.org> (Shawn Pearce's message of
+	"Sat, 28 Oct 2006 03:21:46 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30385>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gkk9Q-0005A6-TQ for gcvg-git@gmane.org; Thu, 16 Nov
- 2006 17:31:49 +0100
+ esmtp (Exim 4.43) id 1Gdt0X-0006Sd-W6 for gcvg-git@gmane.org; Sat, 28 Oct
+ 2006 20:34:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030701AbWKPQbl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
- 11:31:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030712AbWKPQbl
- (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 11:31:41 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:39101 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1030701AbWKPQbl (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 11:31:41 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAGGV1oZ011466
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Thu, 16
- Nov 2006 08:31:02 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAGGUu3F029699; Thu, 16 Nov
- 2006 08:30:58 -0800
-To: Andreas Ericsson <ae@op5.se>
+ S1751334AbWJ1SeK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
+ 14:34:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751344AbWJ1SeK
+ (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 14:34:10 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:22934 "EHLO
+ fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S1751334AbWJ1SeI
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006 14:34:08 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061028183408.OLOG22409.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Sat, 28
+ Oct 2006 14:34:08 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id fuaB1V0431kojtg0000000 Sat, 28 Oct 2006
+ 14:34:12 -0400
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
+Shawn Pearce <spearce@spearce.org> writes:
 
+> I take this above statement to mean that you answered your own
+> question about how my sequence is able to resolve the race condition?
 
-On Thu, 16 Nov 2006, Andreas Ericsson wrote:
-> 
-> * Mentioning git-fetch before git-pull in all documentation newborn gitizens
-> are likely to come across.
+Yes.  I needed more thought after I asked that question.
 
-However, I also think it might make sense to talk about the _simple_ form 
-of "git pull" first.
+>...
+> Why not just use create a new flag file?
+>
+> Lets say that a pack X is NOT eligible to be repacked if
+> "$GIT_DIR/objects/pack/pack-X.keep" exists.
 
-The form I use is actually a lot simpler (conceptually) than the "short" 
-form.
-
-When you do
-
-	git pull <reponame> <branchname>
-
-there are very few things that can confuse you (although trying to do it 
-without a current branch at all is apparently one such thing ;). 
-
-There are no local branches to worry about, and there aren't any issues 
-about what the default repository or branchname on the remote side would 
-be either.
-
-So in many ways, if you use this format, you simply never have to worry. 
-You may have to _type_ a bit more, so it's not the short or concise 
-format, but it sure is the _simple_ format. There simply isn't anything to 
-be confused about.
-
-And yes, I actually tend to use this even for project that I don't develop 
-on, partly because the defaults for the short and concise formats are bad. 
-For example, I follow the "modesetting" branch on the xorg intel graphics 
-driver tree, and because I'm always on that branch, what I do is
-
-	git pull origin modesetting
-
-which works correctly (while "git pull" would _not_ have done the right 
-thing: it would have picked the right repository, but it would have picked 
-the "master" branch of that repository, not the "modesetting" branch).
-
-And notice how I don't do _any_ development there, I just follow that 
-branch. The "merge" will obviously always be a fast-forward, but that's 
-exactly what I want. 
-
-> Most git-users aren't Linus, and for every successful project the 
-> maintainers are outnumbered 100 to 1 by the contributors.
-
-Well, as mentioned, I think even for non-developers, doing pulls with 
-explicit branchnames is actually perfectly sane.
-
+I like it.
