@@ -1,70 +1,63 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: merge-recursive, was Re: What's in git.git
-Date: Thu, 26 Oct 2006 02:26:31 -0700
-Message-ID: <7v3b9bpgvs.fsf@assigned-by-dhcp.cox.net>
-References: <7vk62npipb.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0610261114520.3286@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Eran Tromer <git2eran@tromer.org>
+Subject: Re: fetching packs and storing them as packs
+Date: Sun, 29 Oct 2006 00:31:10 +0200
+Message-ID: <4543DA2E.9030300@tromer.org>
+References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home> <4540CA0C.6030300@tromer.org> <Pine.LNX.4.64.0610271310450.3849@g5.osdl.org> <7v3b99e87c.fsf@assigned-by-dhcp.cox.net> <20061028034206.GA14044@spearce.org> <Pine.LNX.4.64.0610272109500.3849@g5.osdl.org> <7vwt6l9etn.fsf@assigned-by-dhcp.cox.net> <20061028072146.GB14607@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 26 Oct 2006 09:26:42 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 28 Oct 2006 22:33:10 +0000 (UTC)
+Cc: Shawn Pearce <spearce@spearce.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.63.0610261114520.3286@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Thu, 26 Oct 2006 11:18:23 +0200
-	(CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.7) Gecko/20060913 Fedora/1.5.0.7-1.fc5 Thunderbird/1.5.0.7 Mnenhy/0.7.4.0
+In-Reply-To: <20061028072146.GB14607@spearce.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30401>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd1VU-0001Rw-NG for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 11:26:37 +0200
+ esmtp (Exim 4.43) id 1Gdwjc-0002gB-Dm for gcvg-git@gmane.org; Sun, 29 Oct
+ 2006 00:33:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422910AbWJZJ0d (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 05:26:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422927AbWJZJ0d
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 05:26:33 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:41351 "EHLO
- fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S1422910AbWJZJ0c
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 05:26:32 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao04.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061026092632.CTGA22409.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>; Thu, 26
- Oct 2006 05:26:32 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id exSE1V00E1kojtg0000000 Thu, 26 Oct 2006
- 05:26:14 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S964899AbWJ1Wbq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
+ 18:31:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964901AbWJ1Wbq
+ (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 18:31:46 -0400
+Received: from line108-16.adsl.actcom.co.il ([192.117.108.16]:36031 "EHLO
+ lucian.tromer.org") by vger.kernel.org with ESMTP id S964899AbWJ1Wbq (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006 18:31:46 -0400
+Received: from [192.168.4.6] ([192.168.4.6]) by lucian.tromer.org
+ (8.13.7/8.12.11) with ESMTP id k9SMVTaB003629; Sun, 29 Oct 2006 00:31:32
+ +0200
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi Shawn,
 
-> On Thu, 26 Oct 2006, Junio C Hamano wrote:
->
->>   We'd still need more work on merge-recursive to fix the
->>   overcautious "working file will be overwritten by merge" --
->>   this is really needed for usability.
->
-> I am sorry, but I do not have the time to wrap my head around this for at 
-> least another week. It seems to be a complicated problem (not the fix, 
-> mind you, but the side effects you have to think of!), and I stupidly 
-> started to play with shallow clones when I knew I had no time already.
+On 2006-10-28 09:21, Shawn Pearce wrote:
+> Lets say that a pack X is NOT eligible to be repacked if
+> "$GIT_DIR/objects/pack/pack-X.keep" exists.
+> 
+> Thus we want to have the new ".keep" file for historical packs and
+> incoming receive-pack between steps c and g.  In the former case
+> the historical pack is already "very large" and thus one additional
+> empty file to indicate we want to retain that pack as-is is trivial
+> overhead (relatively speaking); in the latter case the lifespan of
+> the file is relatively short and thus any overhead associated with it
+> on the local filesystem is free (it may never even hit the platter).
 
-No need to worry nor feel pressure; it's all volunteer work and
-we do this for fun.
+Sounds perfect.
 
-> BTW what happened to the builtin shortlog? It is the last Perl script I 
-> use regularly... (should make people happy who are stuck with Activision 
-> Perl...)
+It would be nice to have whoever creates a pack-*.keep file put
+something useful as the content of the file, so we'll know what to clean
+up after abnormal termination:
 
-Yeah, I was wondering about it too, when I was looking for
-something readily mergeable to "next" today.  I must have
-misplaced it.
+$ grep -l ^git-receive-pack $GIT_DIR/objects/pack/pack-*.keep
+
 
