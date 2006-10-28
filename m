@@ -1,75 +1,52 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Sam Vilain <sam@vilain.net>
-Subject: [PATCH 2/5] git-svn: let libsvn_ls_fullurl return properties too
-Date: Tue, 05 Dec 2006 16:17:38 +1100
-Message-ID: <20061205051738.16552.59004.stgit@localhost>
-References: <20061205051738.16552.8987.stgit@localhost>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-NNTP-Posting-Date: Tue, 5 Dec 2006 05:22:47 +0000 (UTC)
-Cc: git@vger.kernel.org
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add git-count-packs, like git-count-objects.
+Date: Fri, 27 Oct 2006 21:11:17 -0700
+Message-ID: <7v8xj1axlm.fsf@assigned-by-dhcp.cox.net>
+References: <20061028040056.GA14191@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 28 Oct 2006 04:11:42 +0000 (UTC)
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061205051738.16552.8987.stgit@localhost>
-User-Agent: StGIT/0.10
+In-Reply-To: <20061028040056.GA14191@spearce.org> (Shawn Pearce's message of
+	"Sat, 28 Oct 2006 00:00:56 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33304>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrSlS-0001nh-0s for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 06:22:46 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30362>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GdfXW-0000Cv-Ej for gcvg-git@gmane.org; Sat, 28 Oct
+ 2006 06:11:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S968366AbWLEFWa (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 00:22:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967723AbWLEFWa
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 00:22:30 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:44777 "EHLO
- magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S937349AbWLEFWY (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
- 00:22:24 -0500
-Received: by magnus.utsl.gen.nz (Postfix, from userid 1003) id 731201380C2;
- Tue,  5 Dec 2006 18:22:18 +1300 (NZDT)
-To: Eric Wong <normalperson@yhbt.net>
+ S1751726AbWJ1ELT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
+ 00:11:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751738AbWJ1ELT
+ (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 00:11:19 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:20889 "EHLO
+ fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1751725AbWJ1ELS
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006 00:11:18 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061028041118.TAYW22977.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Sat, 28
+ Oct 2006 00:11:18 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id fgAz1V00c1kojtg0000000 Sat, 28 Oct 2006
+ 00:11:00 -0400
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-From: Sam Vilain <sam@vilain.net>
+Shawn Pearce <spearce@spearce.org> writes:
 
-Allow an extra parameter to be passed to the libsvn_ls_fullurl
-function to collect and return the properties of the URL being listed.
----
+> Now that we are starting to save packs rather than unpacking into
+> loose objects its nice to have a way to list the number of current
+> packs and their total size.  This can help the user in deciding
+> when its time to run `git repack -a -d`.
 
- git-svn.perl |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 3891122..93cfcc4 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -3321,18 +3321,19 @@ sub libsvn_commit_cb {
- 
- sub libsvn_ls_fullurl {
- 	my $fullurl = shift;
-+	my $want_props = shift;
- 	my $ra = libsvn_connect($fullurl);
--	my @ret;
-+	my (@ret, @props);
- 	my $pool = SVN::Pool->new;
- 	my $r = defined $_revision ? $_revision : $ra->get_latest_revnum;
--	my ($dirent, undef, undef) = $ra->get_dir('', $r, $pool);
-+	my ($dirent, undef, $props) = $ra->get_dir('', $r, $pool);
- 	foreach my $d (keys %$dirent) {
- 		if ($dirent->{$d}->kind == $SVN::Node::dir) {
- 			push @ret, "$d/"; # add '/' for compat with cli svn
- 		}
- 	}
- 	$pool->clear;
--	return @ret;
-+	return ($want_props ? (\@ret, $props) : @ret);
- }
- 
- 
+Why not just do "ls -lh $GIT_OBJECT_DIR/pack/pack-*.pack"???
