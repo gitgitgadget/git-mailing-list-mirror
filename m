@@ -1,138 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [DRAFT] Branching and merging with git
-Date: Fri, 17 Nov 2006 13:21:57 -0500
-Message-ID: <20061117182157.GC11882@fieldses.org>
-References: <20061116221701.4499.qmail@science.horizon.com> <20061117153246.GA20065@thunk.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Generating docu in 1.4.3.3.g01929
+Date: Fri, 27 Oct 2006 22:45:51 -0700
+Message-ID: <7vr6wt9enk.fsf@assigned-by-dhcp.cox.net>
+References: <20061027154433.da9b29d7.seanlkml@sympatico.ca>
+	<200610272312.k9RNCo2Q002623@laptop13.inf.utfsm.cl>
+	<BAYC1-PASMTP04E0376BEE45F9A676DB03AE050@CEZ.ICE>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 17 Nov 2006 18:22:16 +0000 (UTC)
-Cc: linux@horizon.com, git@vger.kernel.org
+NNTP-Posting-Date: Sat, 28 Oct 2006 05:46:05 +0000 (UTC)
+Cc: git@vger.kernel.org, "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061117153246.GA20065@thunk.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <BAYC1-PASMTP04E0376BEE45F9A676DB03AE050@CEZ.ICE>
+	(seanlkml@sympatico.ca's message of "Sat, 28 Oct 2006 00:24:54 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30366>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gl8Ll-0008Bd-VX for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 19:22:06 +0100
+ esmtp (Exim 4.43) id 1Gdh12-0007rH-9l for gcvg-git@gmane.org; Sat, 28 Oct
+ 2006 07:45:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750732AbWKQSWB (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 13:22:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751893AbWKQSWB
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 13:22:01 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:5102 "EHLO
- pickle.fieldses.org") by vger.kernel.org with ESMTP id S1750732AbWKQSWA
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 13:22:00 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
- (envelope-from <bfields@fieldses.org>) id 1Gl8Ld-0005I8-NR; Fri, 17 Nov 2006
- 13:21:57 -0500
-To: Theodore Tso <tytso@mit.edu>
+ S1751846AbWJ1Fpx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
+ 01:45:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751850AbWJ1Fpx
+ (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 01:45:53 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:58767 "EHLO
+ fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S1751846AbWJ1Fpw
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006 01:45:52 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao06.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061028054551.RRFI6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>; Sat, 28
+ Oct 2006 01:45:51 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id fhlZ1V00Q1kojtg0000000 Sat, 28 Oct 2006
+ 01:45:34 -0400
+To: Sean <seanlkml@sympatico.ca>
 Sender: git-owner@vger.kernel.org
 
-On Fri, Nov 17, 2006 at 10:32:46AM -0500, Theodore Tso wrote:
-> Personally, I think this information is actually more important to an
-> end-user than the current "part two" of the tutorial, which discusses
-> the object database and the index file.  Perhaps this should be "part
-> 2", and the object database and index file should become "part 3"?  
+Sean <seanlkml@sympatico.ca> writes:
 
-Yeah, the really difficult problem here is figuring out how to organize
-the documentation.  There are a few needs:
+>> > Can't reproduce this here on master or on next with:
+>> >  asciidoc-7.1.2-0 and xmlto-0.0.18-13.1
+>> > Maybe this is an Asciidoc 8 issue, are you using it?
+>> 
+>> Fedora rawhide i386, with:
+>> 
+>>   asciidoc-7.0.2-3.fc6
+>>   xmlto-0.0.18-13.1
+>> 
+>> Perhaps too old, not too new...
+>
+> Can't imagine that it's too old.  You may have to bisect to figure
+> out what the culprit is. :o/
 
-	1. Quick-start/task-based documentation
-		- We want to "sell" git to the beginning user by getting
-		  them up and running as quickly as possible.
-		- We need to help people with some limited needs--
-		  testers who just need to download the latest linux git
-		  tree, or bisect, or whatever.
-		- It's also a fun way to demonstrate the richness of
-		  some git features (e.g. history explanation).
-	2. Conceptual background
-		- People need to understand the commit graph, branches,
-		  merging, the index file (gack), pack files, etc.--some of
-		  that can be put off a little while, some of it can't.
-	3. Reference documentation
+Eh, do you mean bisecting asciidoc?  I am not seeing the problem
+with these on a freshly installed FC6:
 
-The man pages do most of #3, but maybe they could be better organized--I
-think people aren't finding stuff there that they should be.
+Name   : asciidoc
+Arch   : noarch
+Version: 7.0.2
+Release: 3.fc6
 
-Numbers 1 and 2 are scattered around git(7), the two-part tutorial, the
-git-core tutorial, etc.
-
-> It might also be a good to consider moving some of the "discussion"
-> portion the top-level git(7) man page into the object database and
-> index file discussion.  Right now, the best way to introduce git's
-> concepts (IMHO), is to start with the part 1 of the tutorial, then go
-> into the your draft branch/merging with git, then the current part 2
-> of the tutorial, and then direct folks to read the "discussion"
-> section of git(7).  Only then do they really have enough background
-> understanding of the fundamental concepts of git that they won't get
-> confused when they start talking to other git users, on the git
-> mailing list, for example.
-> 
-> It would be nice if there was an easy way to direct users through the
-> documentation in a way which makes good pedagogical sense.  Right now,
-> one of the reasons why life gets hard for new users is that the
-> current tutorials aren't enough for them to really undersatnd what's
-> going on at a conceptual level.  And if users start using "everyday
-> git" as a crutch, without the right background concepts, the human
-> brain naturally tries to intuit what's happening in the background,
-> but without reading the background docs, git is different enough that
-> they will probably get it wrong, which means more stuff that they have
-> to unlearn later.  
-
-I agree.  Unfortunately, people who need to use git but aren't
-study-the-manual-first types *are* going to just dive in whether we want
-them to or not, so we have to make it easy for them to pick up what they
-need as they go.
-
-How about this as a strawman "git user's manual" outline:
-
-	I. Quick-start: drawn from the tutorial part I and everyday.txt?
-
-	II. Basic git concepts, drawn from "discussion" in git(7) (the
-	README), tutorial part II, this branching-and-merging tutorial, etc.:
-
-		1. The commit graph and the object database
-		2. References
-		3. Fetching and pulling, remotes
-		4. The index file
-
-	III. Using git: 
-
-		1. History exploration
-		2. merge resolution
-		3. pack files, fsck, repository maintenance
-		4. pushing, setting up a public repo
-
-	IV. Advanced examples: drawn from the howto directories,
-	    cvs-migration.txt,...
-
-		1. More complicated commandline magic, scripting
-		   (history exploration with git-rev-list, etc.)
-		2. History re-writing: cherry-picking, rebasing,...
-		3. Setting up a shared public repo?
-		4. Migration to/from other SCM's.
-
-	IV. Technical details: core-tutorial.txt, plumbing, code tours, etc.
-
-Chapter II is the prerequisite for everything else, so a lot of thought
-has to be given to treating exactly what's necessary there and no more.
-Maybe more of it could be mixed into chapter I.
-
-It has to be readable in order by the 10% of people who actually like to
-read manuals, and easy to pick up in the middle for the 90% who will
-just dive into the section they were told they need to read to
-understand some particular problem.
-
-In particular, ideally only I and II would really be sequential, and
-the rest would be readable in any order.
-
+Name   : xmlto
+Arch   : i386
+Version: 0.0.18
+Release: 13.1
