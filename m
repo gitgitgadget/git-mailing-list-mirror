@@ -4,81 +4,77 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git and bzr
-Date: Fri, 01 Dec 2006 10:55:28 +0100
-Message-ID: <456FFC10.7060703@op5.se>
-References: <ekhtnt$rkk$1@sea.gmane.org> <456C9DFF.1040407@onlinehome.de> <456CA981.4010808@onlinehome.de> <Pine.LNX.4.64.0611281346490.4244@woody.osdl.org> <456CB197.2030201@onlinehome.de> <Pine.LNX.4.64.0611281413310.4244@woody.osdl.org> <Pine.LNX.4.63.0611291149440.30004@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0611290922410.3513@woody.osdl.org> <456DD76C.4010902@gmx.net> <456ECDAF.4050102@op5.se> <20061130200122.GD10999@thunk.org> <ekndmb$7e9$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: Add "next" link to commitdiff view
+Date: Sat, 28 Oct 2006 12:00:49 -0700
+Message-ID: <7vzmbg8dum.fsf@assigned-by-dhcp.cox.net>
+References: <200610230037.57183.jnareb@gmail.com>
+	<200610281810.36892.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 1 Dec 2006 09:56:00 +0000 (UTC)
-Cc: git@vger.kernel.org, bazaar-ng@lists.canonical.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Sat, 28 Oct 2006 19:01:31 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <ekndmb$7e9$1@sea.gmane.org>
+In-Reply-To: <200610281810.36892.jnareb@gmail.com> (Jakub Narebski's message
+	of "Sat, 28 Oct 2006 18:10:36 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30386>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq57L-0002fI-Bq for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 10:55:39 +0100
+ esmtp (Exim 4.43) id 1GdtQO-0003S7-7j for gcvg-git@gmane.org; Sat, 28 Oct
+ 2006 21:00:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759299AbWLAJzf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 04:55:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759297AbWLAJzf
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 04:55:35 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:60554 "EHLO
- smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1759299AbWLAJze (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 04:55:34 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id 6D9506BCC2; Fri,  1 Dec 2006 10:55:30 +0100 (CET)
+ S964851AbWJ1TAw convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006 15:00:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964853AbWJ1TAw
+ (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 15:00:52 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:54773 "EHLO
+ fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP id S964851AbWJ1TAv
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006
+ 15:00:51 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao09.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061028190050.FPN16798.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>; Sat, 28
+ Oct 2006 15:00:50 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id fv0u1V00V1kojtg0000000 Sat, 28 Oct 2006
+ 15:00:55 -0400
 To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski wrote:
-> Theodore Tso wrote:
-> 
->>        * When no <ent> is given, the working tree and the index file
->>           is compared, using git-diff-files.
-> 
->  *  When no <tree-ish> is given, the working tree and  the  index  file  are
->     compared, using git-diff-files.
-> 
-> Use more modern git.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-More modern git (pull'ed 10 minutes ago) has this, at least when cut 
-from Documentation/git-diff.txt:
----%<---%<---%<---
-SYNOPSIS
---------
-'git-diff' [ --diff-options ] <tree-ish>{0,2} [<path>...]
+> Jakub Narebski wrote:
+>> Add a kind of "next" view in the bottom part of navigation bar for
+>> "commitdiff" view.
+>>=20
+>> For commitdiff between two commits:
+>> =A0 (from: _commit_)
+>> For commitdiff for one single parent commit:
+>> =A0 (parent: _commit_)
+>> For commitdiff for one merge commit
+>> =A0 (merge: _commit_ _commit_ ...)
+>> For commitdiff for root (parentless) commit
+>> =A0 (initial)
+>> where _link_ denotes hyperlink. SHA1 is shortened to 7 characters on
+>> display, everything is perhaps unnecessary esc_html on display.
+>>=20
+>> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+>> ---
+>>=20
+>> Junio (and others), is it what you wanted? The idea was to change
+>> "commitdiff" view only in minimal way, and preserve similarity
+>> to "commit" format.
+>
+> Any reasons not to accept this patch?
 
-DESCRIPTION
------------
-Show changes between two trees, a tree and the working tree, a
-tree and the index file, or the index file and the working tree.
-The combination of what is compared with what is determined by
-the number of trees given to the command.
+Nothing other than it was lost in the noise (I am partly
+responsible for) that followed the patch.
 
-* When no <tree-ish> is given, the working tree and the index
-   file are compared, using `git-diff-files`.
+	Message-ID: <200610230037.57183.jnareb@gmail.com>
 
-* When one <tree-ish> is given, the working tree and the named
-   tree are compared, using `git-diff-index`.  The option
-   `--index` can be given to compare the index file and
-   the named tree.
-   `--cached` is a deprecated alias for `--index`. It's use is
-   discouraged.
-
-* When two <tree-ish>s are given, these two trees are compared
-   using `git-diff-tree`.
----%<---%<---%<---
-
-This needs an update, I think. I'll look into it on sunday if no-one's 
-beaten me to it.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
+Who acked this in the discussion?  I'd like to add "Acked-by:"
+for them when I make the commit.
