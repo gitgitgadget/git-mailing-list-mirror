@@ -5,77 +5,51 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/2] Allow '-' in config variable names
-Date: Mon, 30 Oct 2006 19:02:27 -0800
-Message-ID: <7vfyd5rxvg.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0610300823250.25218@g5.osdl.org>
-	<7vodrtv2wy.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] gitweb: Move git_get_last_activity subroutine earlier
+Date: Sat, 28 Oct 2006 13:57:59 -0700
+Message-ID: <7v3b986tuw.fsf@assigned-by-dhcp.cox.net>
+References: <200610281943.40456.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 31 Oct 2006 03:02:39 +0000 (UTC)
+NNTP-Posting-Date: Sat, 28 Oct 2006 20:58:16 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vodrtv2wy.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Mon, 30 Oct 2006 14:45:17 -0800")
+In-Reply-To: <200610281943.40456.jnareb@gmail.com> (Jakub Narebski's message
+	of "Sat, 28 Oct 2006 19:43:40 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30398>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GejtY-0004a4-GR for gcvg-git@gmane.org; Tue, 31 Oct
- 2006 04:02:32 +0100
+ esmtp (Exim 4.43) id 1GdvFm-0000sJ-5O for gcvg-git@gmane.org; Sat, 28 Oct
+ 2006 22:58:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965466AbWJaDC3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 22:02:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752026AbWJaDC2
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 22:02:28 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:61857 "EHLO
- fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1752025AbWJaDC2
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 22:02:28 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
+ S964827AbWJ1U6B (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
+ 16:58:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964828AbWJ1U6B
+ (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 16:58:01 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:36505 "EHLO
+ fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S964827AbWJ1U6A
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006 16:58:00 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
  (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061031030227.KHAH18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Mon, 30
- Oct 2006 22:02:27 -0500
+ <20061028205800.IZIJ6077.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Sat, 28
+ Oct 2006 16:58:00 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id gr271V00R1kojtg0000000 Mon, 30 Oct 2006
- 22:02:08 -0500
-To: Linus Torvalds <torvalds@osdl.org>
+ fed1rmimpo02.cox.net with bizsmtp id fwy41V00D1kojtg0000000 Sat, 28 Oct 2006
+ 16:58:04 -0400
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Linus Torvalds <torvalds@osdl.org> writes:
->
->> I need this in order to allow aliases of the same form as "ls-tree", 
->> "rev-parse" etc, so that I can use
->>
->> 	[alias]
->> 		my-cat=--paginate cat-file -p
->>
->> to add a "git my-cat" command.
->
-> I do not have problem with this (and would perhaps also want to
-> add '_' to keychar set), but people who envisioned parsing
-> config from scripts (i.e. Perly git) might prefer if we stayed
-> within alnum, since I'd suspect then they may be able to reuse
-> existing .ini parsers.  I do not much care about that myself,
-> but I am bringing it up just in case other people might.
->
-> Other than that, this sounds nice.
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+> ---
+> Good test for git-pickaxe (git-blame2).
 
-One thing I forgot to add.  Just like we downcase what user has
-written in config file, it might make sense to also remove '-'
-(and if we add '_' to keychar set, that one as well) to when
-canonicalizing the key value.  That way, somewhat awkward long
-configuration variables we currently have can be written more
-readably, e.g. repack.use-delta-base-offset
+"git pickaxe -M v1.4.3.. -- gitweb/gitweb.perl" finds copies by
+you just fine (It is interesting to compare it with output
+without -M), thanks.
 
-Likes, dislikes?  It is not strictly needed, since we can do
-CamelCase as well in the configuration file.
 
-> By the way, everybody seems to do "alias.xxx = -p cat-file -p"
-> (I have it as "git less").  Maybe we would want to make a
-> built-in alias for that?
-
-Seconds?
