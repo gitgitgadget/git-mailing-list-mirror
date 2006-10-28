@@ -1,81 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make git-clone --use-separate-remote the default
-Date: Thu, 23 Nov 2006 16:17:24 -0800
-Message-ID: <7vlkm1hf57.fsf@assigned-by-dhcp.cox.net>
-References: <20061123225835.30071.99265.stgit@machine.or.cz>
-	<7vejrtiwqd.fsf@assigned-by-dhcp.cox.net>
-	<20061123234203.GN7201@pasky.or.cz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Documentation: Update information about <format> in git-for-each-ref
+Date: Sat, 28 Oct 2006 23:23:57 +0200
+Message-ID: <200610282323.57797.jnareb@gmail.com>
+References: <200610281930.05889.jnareb@gmail.com> <7vslh86uz9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 24 Nov 2006 00:17:39 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 28 Oct 2006 21:24:28 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061123234203.GN7201@pasky.or.cz> (Petr Baudis's message of
-	"Fri, 24 Nov 2006 00:42:03 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=bQeQYQ+4pP+AVKNGvAwDkEIAN20CHFVU6+s74uhyk7KgyY+BIiYXd/LDBVn9CrfVuBL5pcU5gio14SwMhR0ZqK1anZWkpiYbWFZBaPjDtgCbpzvMOSC1VGN9luozfpU4dqRMfpDzoHQYCEa7Jgd1/7eKxEZP3xsWpp8iyGhO/ws=
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vslh86uz9.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30399>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnOl2-0002Ld-N9 for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 01:17:33 +0100
+ esmtp (Exim 4.43) id 1Gdvf5-00067M-Uw for gcvg-git@gmane.org; Sat, 28 Oct
+ 2006 23:24:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757523AbWKXAR1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
- 19:17:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757524AbWKXAR0
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 19:17:26 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:4798 "EHLO
- fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S1757523AbWKXAR0
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 19:17:26 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao11.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061124001725.FKMM296.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>; Thu, 23
- Nov 2006 19:17:25 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id qQHZ1V0071kojtg0000000; Thu, 23 Nov 2006
- 19:17:33 -0500
-To: Petr Baudis <pasky@suse.cz>
+ S964869AbWJ1VYL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
+ 17:24:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964867AbWJ1VYL
+ (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 17:24:11 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:28939 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S964852AbWJ1VYJ
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006 17:24:09 -0400
+Received: by ug-out-1314.google.com with SMTP id 32so915517ugm for
+ <git@vger.kernel.org>; Sat, 28 Oct 2006 14:24:08 -0700 (PDT)
+Received: by 10.67.93.6 with SMTP id v6mr1739805ugl; Sat, 28 Oct 2006
+ 14:24:08 -0700 (PDT)
+Received: from host-81-190-18-116.torun.mm.pl ( [81.190.18.116]) by
+ mx.google.com with ESMTP id l33sm1029057ugc.2006.10.28.14.24.07; Sat, 28 Oct
+ 2006 14:24:07 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Petr Baudis <pasky@suse.cz> writes:
+Junio C Hamano wrote:
+> [PATCH] for-each-ref: epoch and epochdate
+> 
+> This adds "epoch" (which is parallel to "tagger" or "committer")
+> and "epochdate" (corresponds to "taggerdate" and
+> "committerdate").
+> 
+> As other "date" fields, "epochdate" sorts numerically
+> and displays human readably
 
->> Even though I fully agree that use-separate-remotes should be
->> the default, to the point that I think we do not even
->> need a backward compatibility option.  People who want to use
->> traditional layout for simple one-remote-branch-only project
->> would not suffer anyway because 'origin' still means origin in
->> the new layout (refs/remotes/origin/HEAD).
->
-> I don't know, we still at least need to keep the functionality for
-> --bare.
+I was thinking about having only "epochdate" (corresponding to either 
+"taggerdate" or "committerdate"), only named "epoch". There is I think 
+no need for field which would be "tagger" or "committer", and 
+especially not named "epoch" ;-).
 
-I agree --bare should continue to be a "snapshot mirror"; I am
-not advocating for the removal of the internal implementation
-detail such as $use_separate_remote variable.
+Otherwise looks fine, thanks a lot.
 
-However, I think having one sane behaviour is the right thing to
-do for a clone that prepares a repository with a working tree
-(including the one made with -n option, which only means "do not
-do the check-out immediately after cloning" for such a
-repository).
 
-The traditional layout is slightly simpler for a project with
-the simplest needs (that is, a single upstream repository that
-has a single 'master' branch), but I do think even that is not
-an advantage anymore.
-
-With the separate-remote layout, git-fetch would still fetch and
-update the "origin" (although that is now remotes/origin/master
-which is pointed at by remotes/origin/HEAD) and the user can
-still refer to it with "origin".  Commands "git-pull origin",
-"git-pull . origin", and "git-merge origin" all will continue to
-work the same way as before for such a project as in the
-traditional layout, and that is why I think we do not need
-backward compatibility flag in this case.
+BTW. I had to translate
++       if (strcmp(who, "tagger") && strcmp(who, "committer"))
+to
++       if (strcmp(who, "tagger") == 0 || strcmp(who, "committer") == 0)
+to understand it. But this is probably my lack of contact with such
+C idioms.
+-- 
+Jakub Narebski
