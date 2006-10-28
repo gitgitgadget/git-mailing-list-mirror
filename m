@@ -1,231 +1,187 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH] Add support to git-branch to show local and remote branches
-Date: Tue, 21 Nov 2006 19:31:24 +0000
-Message-ID: <200611211931.24868.andyparkins@gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: [PATCH] Add git-count-packs, like git-count-objects.
+Date: Sat, 28 Oct 2006 00:00:56 -0400
+Message-ID: <20061028040056.GA14191@spearce.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 21 Nov 2006 19:34:33 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 28 Oct 2006 04:01:37 +0000 (UTC)
+Cc: Nicolas Pitre <nico@cam.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        b=R9TNlPyz+v/kTfepDwj8jujQxaQvDTIZtzjKlStSra/TMrmTEUCpYClPz/dn6051yy1Yf/BOKwzhZ8Fog4+7ANkp62dQ26FtQBguxcdWHbIjYrryqcymLuvX+xhu4wqY44py+JO2lT3bCdkM1pzt5ZOosFqf2i6L9+3R8tGz4FE=
-X-TUID: 9c4d6ea179dd7b99
-X-UID: 166
-X-Length: 5564
 Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30360>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmbNs-0006YO-0l for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 20:34:20 +0100
+ esmtp (Exim 4.43) id 1GdfNs-00066l-I5 for gcvg-git@gmane.org; Sat, 28 Oct
+ 2006 06:01:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031336AbWKUTeR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 14:34:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031335AbWKUTeR
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 14:34:17 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:47627 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1031336AbWKUTeP
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 14:34:15 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so1626245ugc for
- <git@vger.kernel.org>; Tue, 21 Nov 2006 11:34:13 -0800 (PST)
-Received: by 10.67.27.3 with SMTP id e3mr1748195ugj.1164137652213; Tue, 21
- Nov 2006 11:34:12 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
- mx.google.com with ESMTP id u6sm10553395uge.2006.11.21.11.34.10; Tue, 21 Nov
- 2006 11:34:11 -0800 (PST)
-To: git@vger.kernel.org
+ S1751706AbWJ1EBE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
+ 00:01:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751711AbWJ1EBE
+ (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 00:01:04 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:52714 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1751706AbWJ1EBD
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006 00:01:03 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GdfNS-00034d-Vl; Sat, 28 Oct 2006 00:00:59 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 9A3AB20E45B; Sat, 28 Oct 2006 00:00:56 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Instead of storing a list of refnames in append_ref, a list of structures is
-created.  Each of these stores the refname and a symbolic constant representing
-its type.
+Now that we are starting to save packs rather than unpacking into
+loose objects its nice to have a way to list the number of current
+packs and their total size.  This can help the user in deciding
+when its time to run `git repack -a -d`.
 
-The creation of the list is filtered based on a command line switch; no switch
-means "local branches only", "-r" means "remote branches only" (as they always
-did); but now "-a" means "local branches or remote branches".
+In the future when we actually start to support historical packs
+vs. active packs we probably should be reporting by default on the
+number of active packs and ignoring the historical packs.
 
-As a side effect, the list is now not global, but allocated in print_ref_list()
-where it used.
-
-Also a memory leak is plugged, the memory allocated during the list creation
-was never freed.  This is now done in the new function, tidy_ref_list()
-
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- builtin-branch.c |   97 +++++++++++++++++++++++++++++++++++++++++++----------
- 1 files changed, 78 insertions(+), 19 deletions(-)
+ .gitignore                        |    1 +
+ Documentation/git-count-packs.txt |   29 +++++++++++++++++++++++++++++
+ Makefile                          |    1 +
+ builtin-count-packs.c             |   29 +++++++++++++++++++++++++++++
+ builtin.h                         |    1 +
+ git.c                             |    1 +
+ 6 files changed, 62 insertions(+), 0 deletions(-)
 
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 368b68e..9e0be22 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -11,7 +11,7 @@
- #include "builtin.h"
- 
- static const char builtin_branch_usage[] =
--"git-branch (-d | -D) <branchname> | [-l] [-f] <branchname> [<start-point>] | [-r]";
-+"git-branch (-d | -D) <branchname> | [-l] [-f] <branchname> [<start-point>] | [-r] | [-a]";
- 
- 
- static const char *head;
-@@ -79,46 +79,100 @@ static void delete_branches(int argc, co
- 	}
- }
- 
--static int ref_index, ref_alloc;
--static char **ref_list;
-+#define REF_UNKNOWN_TYPE    0x00
-+#define REF_LOCAL_BRANCH    0x01
-+#define REF_REMOTE_BRANCH   0x02
-+#define REF_TAG             0x04
+diff --git a/.gitignore b/.gitignore
+index b670877..31be347 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -23,6 +23,7 @@ git-commit
+ git-commit-tree
+ git-convert-objects
+ git-count-objects
++git-count-packs
+ git-cvsexportcommit
+ git-cvsimport
+ git-cvsserver
+diff --git a/Documentation/git-count-packs.txt b/Documentation/git-count-packs.txt
+new file mode 100644
+index 0000000..1420241
+--- /dev/null
++++ b/Documentation/git-count-packs.txt
+@@ -0,0 +1,29 @@
++git-count-packs(1)
++====================
 +
-+struct ref_item {
-+	char *name;
-+	unsigned int kind;
-+};
++NAME
++----
++git-count-packs - Reports on packs
 +
-+struct ref_list {
-+	int index, alloc;
-+	struct ref_item *list;
-+	int kinds;
-+};
- 
- static int append_ref(const char *refname, const unsigned char *sha1, int flags,
- 		void *cb_data)
- {
--	if (ref_index >= ref_alloc) {
--		ref_alloc = alloc_nr(ref_alloc);
--		ref_list = xrealloc(ref_list, ref_alloc * sizeof(char *));
-+	struct ref_list *ref_list = (struct ref_list*)(cb_data);
-+	struct ref_item *newitem;
-+	int kind = REF_UNKNOWN_TYPE;
++SYNOPSIS
++--------
++'git-count-packs'
 +
-+	/* Detect kind */
-+	if (!strncmp(refname, "refs/heads/", 11)) {
-+		kind = REF_LOCAL_BRANCH;
-+		refname += 11;
-+	} else if (!strncmp(refname, "refs/remotes/", 13)) {
-+		kind = REF_REMOTE_BRANCH;
-+		refname += 13;
-+	} else if (!strncmp(refname, "refs/tags/", 10)) {
-+		kind = REF_TAG;
-+		refname += 10;
-+	}
++DESCRIPTION
++-----------
++This counts the number of pack files and disk space consumed by
++them, to help you decide when it is a good time to repack.
 +
-+	/* Don't add types the caller doesn't want */
-+	if ((kind & ref_list->kinds) == 0)
-+		return 0;
 +
-+	/* Resize buffer */
-+	if (ref_list->index >= ref_list->alloc) {
-+		ref_list->alloc = alloc_nr(ref_list->alloc);
-+		ref_list->list = xrealloc(ref_list->list,
-+				ref_list->alloc * sizeof(struct ref_item));
- 	}
- 
--	ref_list[ref_index++] = xstrdup(refname);
-+	/* Record the new item */
-+	newitem = &(ref_list->list[ref_list->index++]);
-+	newitem->name = xstrdup(refname);
-+	newitem->kind = kind;
- 
- 	return 0;
- }
- 
-+static void tidy_ref_list( struct ref_list *ref_list )
++Author
++------
++Written by Shawn O. Pearce <spearce@spearce.org>
++
++Documentation
++--------------
++Documentation by Shawn O. Pearce.
++
++GIT
++---
++Part of the gitlink:git[7] suite
++
+diff --git a/Makefile b/Makefile
+index 2d62efb..b7fd558 100644
+--- a/Makefile
++++ b/Makefile
+@@ -275,6 +275,7 @@ BUILTIN_OBJS = \
+ 	builtin-check-ref-format.o \
+ 	builtin-commit-tree.o \
+ 	builtin-count-objects.o \
++	builtin-count-packs.o \
+ 	builtin-diff.o \
+ 	builtin-diff-files.o \
+ 	builtin-diff-index.o \
+diff --git a/builtin-count-packs.c b/builtin-count-packs.c
+new file mode 100644
+index 0000000..f5a5940
+--- /dev/null
++++ b/builtin-count-packs.c
+@@ -0,0 +1,29 @@
++/*
++ * Builtin "git count-packs".
++ *
++ * Copyright (c) 2006 Shawn Pearce
++ */
++
++#include "cache.h"
++#include "builtin.h"
++
++static const char count_packs_usage[] = "git-count-packs";
++
++int cmd_count_packs(int ac, const char **av, const char *prefix)
 +{
-+	int i;
-+	for (i = 0; i < ref_list->index; i++) {
-+		free( ref_list->list[i].name );
-+	}
-+	free( ref_list->list );
-+}
++	struct packed_git *p;
++	unsigned long packs = 0, pack_size = 0;
 +
- static int ref_cmp(const void *r1, const void *r2)
- {
-+	struct ref_item *c1 = (struct ref_item*)(r1),
-+					*c2 = (struct ref_item*)(r2);
-+	if( c1->kind != c2->kind )
-+		return c1->kind - c2->kind;
- 	return strcmp(*(char **)r1, *(char **)r2);
- }
- 
--static void print_ref_list(int remote_only)
-+static void print_ref_list( int kinds )
- {
- 	int i;
- 	char c;
-+	struct ref_list ref_list;
- 
--	if (remote_only)
--		for_each_remote_ref(append_ref, NULL);
--	else
--		for_each_branch_ref(append_ref, NULL);
-+	memset( &ref_list, 0, sizeof( ref_list ) );
-+	ref_list.kinds = kinds;
-+	for_each_ref(append_ref, &ref_list);
- 
--	qsort(ref_list, ref_index, sizeof(char *), ref_cmp);
-+	qsort(ref_list.list, ref_list.index, sizeof(struct ref_item), ref_cmp);
- 
--	for (i = 0; i < ref_index; i++) {
-+	for (i = 0; i < ref_list.index; i++) {
- 		c = ' ';
--		if (!strcmp(ref_list[i], head))
-+		if (ref_list.list[i].kind == REF_LOCAL_BRANCH &&
-+				!strcmp(ref_list.list[i].name, head))
- 			c = '*';
- 
--		printf("%c %s\n", c, ref_list[i]);
-+		printf("%c %s\n", c, ref_list.list[i].name );
- 	}
++	if (!ac)
++		usage(count_packs_usage);
 +
-+	tidy_ref_list( &ref_list );
- }
- 
- static void create_branch(const char *name, const char *start,
-@@ -160,8 +214,9 @@ static void create_branch(const char *na
- 
- int cmd_branch(int argc, const char **argv, const char *prefix)
- {
--	int delete = 0, force_delete = 0, force_create = 0, remote_only = 0;
-+	int delete = 0, force_delete = 0, force_create = 0;
- 	int reflog = 0;
-+	int kinds = REF_LOCAL_BRANCH;
- 	int i;
- 
- 	git_config(git_default_config);
-@@ -189,7 +244,11 @@ int cmd_branch(int argc, const char **ar
- 			continue;
- 		}
- 		if (!strcmp(arg, "-r")) {
--			remote_only = 1;
-+			kinds = REF_REMOTE_BRANCH;
++	prepare_packed_git();
++	for (p = packed_git; p; p = p->next) {
++		if (!p->pack_local)
 +			continue;
-+		}
-+		if (!strcmp(arg, "-a")) {
-+			kinds = REF_REMOTE_BRANCH | REF_LOCAL_BRANCH;
- 			continue;
- 		}
- 		if (!strcmp(arg, "-l")) {
-@@ -209,7 +268,7 @@ int cmd_branch(int argc, const char **ar
- 	if (delete)
- 		delete_branches(argc - i, argv + i, force_delete);
- 	else if (i == argc)
--		print_ref_list(remote_only);
-+		print_ref_list(kinds);
- 	else if (i == argc - 1)
- 		create_branch(argv[i], head, force_create, reflog);
- 	else if (i == argc - 2)
++		packs++;
++		pack_size += p->pack_size / (1024 * 1024);
++	}
++	printf("%lu packs, %lu megabytes\n", packs, pack_size);
++	return 0;
++}
+diff --git a/builtin.h b/builtin.h
+index 708a2f2..410577e 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -22,6 +22,7 @@ extern int cmd_checkout_index(int argc,
+ extern int cmd_check_ref_format(int argc, const char **argv, const char *prefix);
+ extern int cmd_commit_tree(int argc, const char **argv, const char *prefix);
+ extern int cmd_count_objects(int argc, const char **argv, const char *prefix);
++extern int cmd_count_packs(int argc, const char **argv, const char *prefix);
+ extern int cmd_diff_files(int argc, const char **argv, const char *prefix);
+ extern int cmd_diff_index(int argc, const char **argv, const char *prefix);
+ extern int cmd_diff(int argc, const char **argv, const char *prefix);
+diff --git a/git.c b/git.c
+index 6475847..9ad0f01 100644
+--- a/git.c
++++ b/git.c
+@@ -227,6 +227,7 @@ static void handle_internal_command(int
+ 		{ "check-ref-format", cmd_check_ref_format },
+ 		{ "commit-tree", cmd_commit_tree, RUN_SETUP },
+ 		{ "count-objects", cmd_count_objects, RUN_SETUP },
++		{ "count-packs", cmd_count_packs, RUN_SETUP },
+ 		{ "diff", cmd_diff, RUN_SETUP | USE_PAGER },
+ 		{ "diff-files", cmd_diff_files, RUN_SETUP },
+ 		{ "diff-index", cmd_diff_index, RUN_SETUP },
 -- 
-1.4.3.5
+1.4.3.3.g7d63
