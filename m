@@ -1,148 +1,136 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: sizeof(struct ...)
-Date: Thu, 23 Nov 2006 13:43:45 +0100
-Message-ID: <45659781.5050005@lsrfire.ath.cx>
-References: <20061123101609.1711.qmail@8b73034525b1a6.315fe32.mid.smarden.org>
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "=?ISO-8859-1?Q?Ilpo_J=E4rvinen?=" <ilpo.jarvinen@helsinki.fi>
+Subject: [PATCH v2] Fixes "stg goto `stg top`" to no-op & adds test
+Date: Sat, 28 Oct 2006 13:52:42 +0300 (EEST)
+Message-ID: <Pine.LNX.4.64.0610281348270.27259@kivilampi-30.cs.helsinki.fi>
+References: <Pine.LNX.4.64.0610280156320.26765@kivilampi-30.cs.helsinki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 23 Nov 2006 12:44:03 +0000 (UTC)
+Content-Type: MULTIPART/MIXED; BOUNDARY="-696243703-1384546302-1162032762=:27259"
+NNTP-Posting-Date: Sat, 28 Oct 2006 10:52:56 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
-In-Reply-To: <20061123101609.1711.qmail@8b73034525b1a6.315fe32.mid.smarden.org>
+X-X-Sender: ijjarvin@kivilampi-30.cs.helsinki.fi
+In-Reply-To: <Pine.LNX.4.64.0610280156320.26765@kivilampi-30.cs.helsinki.fi>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30371>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnDvn-00046M-RV for gcvg-git@gmane.org; Thu, 23 Nov
- 2006 13:43:56 +0100
+ esmtp (Exim 4.43) id 1Gdlo6-0005s1-Ui for gcvg-git@gmane.org; Sat, 28 Oct
+ 2006 12:52:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755783AbWKWMnw convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006 07:43:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757359AbWKWMnw
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 07:43:52 -0500
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de
- ([217.172.187.230]:27017 "EHLO neapel230.server4you.de") by vger.kernel.org
- with ESMTP id S1755783AbWKWMnv (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23
- Nov 2006 07:43:51 -0500
-Received: from [10.0.1.4] (p508E51A7.dip.t-dialin.net [80.142.81.167]) by
- neapel230.server4you.de (Postfix) with ESMTP id 3FF583C00F; Thu, 23 Nov 2006
- 13:43:50 +0100 (CET)
-To: Gerrit Pape <pape@smarden.org>
+ S1752118AbWJ1Kwp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
+ 06:52:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752115AbWJ1Kwp
+ (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 06:52:45 -0400
+Received: from courier.cs.helsinki.fi ([128.214.9.1]:16080 "EHLO
+ mail.cs.helsinki.fi") by vger.kernel.org with ESMTP id S1752118AbWJ1Kwo
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006 06:52:44 -0400
+Received: from kivilampi-30.cs.helsinki.fi (kivilampi-30.cs.helsinki.fi
+ [128.214.9.42]) (AUTH: PLAIN cs-relay, TLS: TLSv1/SSLv3,256bits,AES256-SHA)
+ by mail.cs.helsinki.fi with esmtp; Sat, 28 Oct 2006 13:52:43 +0300 id
+ 000AFDE8.4543367B.0000028F
+Received: by kivilampi-30.cs.helsinki.fi (Postfix, from userid 50795) id
+ A143DEAE9D; Sat, 28 Oct 2006 13:52:42 +0300 (EEST)
+Received: from localhost (localhost [127.0.0.1]) by
+ kivilampi-30.cs.helsinki.fi (Postfix) with ESMTP id 821E0EAE9C; Sat, 28 Oct
+ 2006 13:52:42 +0300 (EEST)
+To: catalin.marinas@gmail.com
 Sender: git-owner@vger.kernel.org
 
-Gerrit Pape schrieb:
-> Hi, I don't think we can rely on sizeof(struct ...) to be the exact s=
-ize
-> of the struct as defined.  As the selftests show, archive-zip doesn't
-> work correctly on Debian/arm
->=20
->  http://buildd.debian.org/fetch.cgi?&pkg=3Dgit-core&ver=3D1%3A1.4.4-1=
-&arch=3Darm&stamp=3D1164122355&file=3Dlog
->=20
-> It's because sizeof(struct zip_local_header) is 32, zip_dir_header 48=
-,
-> and zip_dir_trailer 24, breaking the zip files.  Compiling with
-> -fpack-struct seemed to break other things, so I for now I ended up w=
-ith
-> this (not so nice) workaround.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Hm, yes, this use sizeof() is not strictly correct.  But I'd very much
-like to keep being lazy and let the compiler to do the summing.  How
-about this patch instead?  Does it work for you, Gerrit?
+---696243703-1384546302-1162032762=:27259
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
-Thanks,
-Ren=E9
+Please forgive me that didn't read the test metadata through while 
+producing the last patch. This time also it should be correct...
 
+StGIT tried to access index that is not valid when goto'ing to
+the current patch. Adds also a test for it.
 
- archive-zip.c |   24 ++++++++++++++++++------
- 1 files changed, 18 insertions(+), 6 deletions(-)
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@helsinki.fi>
+---
+ stgit/commands/common.py |   17 ++++++++++-------
+ t/t1600-goto-top.sh      |   32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 42 insertions(+), 7 deletions(-)
 
-diff --git a/archive-zip.c b/archive-zip.c
-index ae5572a..4caaec4 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -35,6 +35,7 @@ struct zip_local_header {
- 	unsigned char size[4];
- 	unsigned char filename_length[2];
- 	unsigned char extra_length[2];
-+	unsigned char _end[0];
- };
-=20
- struct zip_dir_header {
-@@ -55,6 +56,7 @@ struct zip_dir_header {
- 	unsigned char attr1[2];
- 	unsigned char attr2[4];
- 	unsigned char offset[4];
-+	unsigned char _end[0];
- };
-=20
- struct zip_dir_trailer {
-@@ -66,8 +68,18 @@ struct zip_dir_trailer {
- 	unsigned char size[4];
- 	unsigned char offset[4];
- 	unsigned char comment_length[2];
-+	unsigned char _end[0];
- };
-=20
-+/*
-+ * On ARM, padding is added at the end of the struct, so a simple
-+ * sizeof(struct ...) reports two bytes more than the payload size
-+ * we're interested in.
-+ */
-+#define ZIP_LOCAL_HEADER_SIZE	offsetof(struct zip_local_header, _end)
-+#define ZIP_DIR_HEADER_SIZE	offsetof(struct zip_dir_header, _end)
-+#define ZIP_DIR_TRAILER_SIZE	offsetof(struct zip_dir_trailer, _end)
+diff --git a/stgit/commands/common.py b/stgit/commands/common.py
+index 1ea6025..88b1b94 100644
+--- a/stgit/commands/common.py
++++ b/stgit/commands/common.py
+@@ -200,16 +200,19 @@ def pop_patches(patches, keep = False):
+     """Pop the patches in the list from the stack. It is assumed that
+     the patches are listed in the stack reverse order.
+     """
+-    p = patches[-1]
+-    if len(patches) == 1:
+-        print 'Popping patch "%s"...' % p,
++    if len(patches) == 0:
++        print 'nothing to push/pop'
+     else:
+-        print 'Popping "%s" - "%s" patches...' % (patches[0], p),
+-    sys.stdout.flush()
++        p = patches[-1]
++        if len(patches) == 1:
++            print 'Popping patch "%s"...' % p,
++        else:
++            print 'Popping "%s" - "%s" patches...' % (patches[0], p),
++        sys.stdout.flush()
+ 
+-    crt_series.pop_patch(p, keep)
++        crt_series.pop_patch(p, keep)
+ 
+-    print 'done'
++        print 'done'
+ 
+ def parse_patches(patch_args, patch_list):
+     """Parse patch_args list for patch names in patch_list and return
+diff --git a/t/t1600-goto-top.sh b/t/t1600-goto-top.sh
+new file mode 100755
+index 0000000..618ebc7
+--- /dev/null
++++ b/t/t1600-goto-top.sh
+@@ -0,0 +1,32 @@
++#!/bin/sh
++#
++# Copyright (c) 2006 Ilpo Järvinen
++#
 +
- static void copy_le16(unsigned char *dest, unsigned int n)
- {
- 	dest[0] =3D 0xff & n;
-@@ -211,7 +223,7 @@ static int write_zip_entry(const unsigne
- 	}
-=20
- 	/* make sure we have enough free space in the dictionary */
--	direntsize =3D sizeof(struct zip_dir_header) + pathlen;
-+	direntsize =3D ZIP_DIR_HEADER_SIZE + pathlen;
- 	while (zip_dir_size < zip_dir_offset + direntsize) {
- 		zip_dir_size +=3D ZIP_DIRECTORY_MIN_SIZE;
- 		zip_dir =3D xrealloc(zip_dir, zip_dir_size);
-@@ -234,8 +246,8 @@ static int write_zip_entry(const unsigne
- 	copy_le16(dirent.attr1, 0);
- 	copy_le32(dirent.attr2, attr2);
- 	copy_le32(dirent.offset, zip_offset);
--	memcpy(zip_dir + zip_dir_offset, &dirent, sizeof(struct zip_dir_heade=
-r));
--	zip_dir_offset +=3D sizeof(struct zip_dir_header);
-+	memcpy(zip_dir + zip_dir_offset, &dirent, ZIP_DIR_HEADER_SIZE);
-+	zip_dir_offset +=3D ZIP_DIR_HEADER_SIZE;
- 	memcpy(zip_dir + zip_dir_offset, path, pathlen);
- 	zip_dir_offset +=3D pathlen;
- 	zip_dir_entries++;
-@@ -251,8 +263,8 @@ static int write_zip_entry(const unsigne
- 	copy_le32(header.size, uncompressed_size);
- 	copy_le16(header.filename_length, pathlen);
- 	copy_le16(header.extra_length, 0);
--	write_or_die(1, &header, sizeof(struct zip_local_header));
--	zip_offset +=3D sizeof(struct zip_local_header);
-+	write_or_die(1, &header, ZIP_LOCAL_HEADER_SIZE);
-+	zip_offset +=3D ZIP_LOCAL_HEADER_SIZE;
- 	write_or_die(1, path, pathlen);
- 	zip_offset +=3D pathlen;
- 	if (compressed_size > 0) {
-@@ -282,7 +294,7 @@ static void write_zip_trailer(const unsi
- 	copy_le16(trailer.comment_length, sha1 ? 40 : 0);
-=20
- 	write_or_die(1, zip_dir, zip_dir_offset);
--	write_or_die(1, &trailer, sizeof(struct zip_dir_trailer));
-+	write_or_die(1, &trailer, ZIP_DIR_TRAILER_SIZE);
- 	if (sha1)
- 		write_or_die(1, sha1_to_hex(sha1), 40);
++test_description='Test goto to the current patch.
++
++'
++
++. ./test-lib.sh
++
++test_expect_success \
++	'Initialize the StGIT repository' \
++	'stg init
++'
++
++test_expect_success \
++	'Create the first patch' \
++	'
++	stg new foo -m "Foo Patch" &&
++	echo foo > test &&
++	stg add test &&
++	stg refresh
++	'
++
++test_expect_success \
++	'Goto current patch' \
++	'
++	stg goto `stg top`
++	'
++
++test_done
+-- 
+1.4.2
+
