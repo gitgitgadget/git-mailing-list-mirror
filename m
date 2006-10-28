@@ -1,62 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git and bzr
-Date: Thu, 30 Nov 2006 10:35:59 +0100
-Organization: At home
-Message-ID: <ekm8ig$usu$1@sea.gmane.org>
-References: <45357CC3.4040507@utoronto.ca> <456E8147.9070304@gmx.net> <fcaeb9bf0611300101s51a53b75lc7e771b067ba6e33@mail.gmail.com> <200611300930.33537.alan@chandlerfamily.org.uk>
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: Generating docu in 1.4.3.3.g01929
+Date: Sat, 28 Oct 2006 00:24:54 -0400
+Message-ID: <BAYC1-PASMTP04E0376BEE45F9A676DB03AE050@CEZ.ICE>
+References: <20061027154433.da9b29d7.seanlkml@sympatico.ca>
+	<200610272312.k9RNCo2Q002623@laptop13.inf.utfsm.cl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Thu, 30 Nov 2006 09:35:08 +0000 (UTC)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 28 Oct 2006 04:26:37 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 12
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+X-Originating-IP: [65.93.43.81]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Original-Message-Id: <20061028002454.b11fdbe6.seanlkml@sympatico.ca>
+In-Reply-To: <200610272312.k9RNCo2Q002623@laptop13.inf.utfsm.cl>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 28 Oct 2006 04:24:56.0321 (UTC) FILETIME=[05C85710:01C6FA49]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32713>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpiJb-0008H3-Oq for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 10:34:48 +0100
+ esmtp (Exim 4.43) id 1Gdfl2-0003YO-9e for gcvg-git@gmane.org; Sat, 28 Oct
+ 2006 06:25:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932875AbWK3Jeo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 04:34:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932934AbWK3Jeo
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 04:34:44 -0500
-Received: from main.gmane.org ([80.91.229.2]:2778 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S932875AbWK3Jen (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 04:34:43 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GpiJE-0008A7-FQ for git@vger.kernel.org; Thu, 30 Nov 2006 10:34:24 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Thu, 30 Nov 2006 10:34:24 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 30 Nov 2006
- 10:34:24 +0100
-To: git@vger.kernel.org
+ S1751769AbWJ1EY5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
+ 00:24:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751777AbWJ1EY5
+ (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 00:24:57 -0400
+Received: from bayc1-pasmtp04.bayc1.hotmail.com ([65.54.191.164]:49318 "EHLO
+ BAYC1-PASMTP04.bayc1.hotmail.com") by vger.kernel.org with ESMTP id
+ S1751769AbWJ1EY4 (ORCPT <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006
+ 00:24:56 -0400
+Received: from linux1.attic.local ([65.93.43.81]) by
+ BAYC1-PASMTP04.bayc1.hotmail.com over TLS secured channel with Microsoft
+ SMTPSVC(6.0.3790.1830); Fri, 27 Oct 2006 21:24:56 -0700
+Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
+ esmtp (Exim 4.43) id 1GdeoY-0007Fk-DC; Fri, 27 Oct 2006 23:24:54 -0400
+To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
 Sender: git-owner@vger.kernel.org
 
-Alan Chandler wrote:
+On Fri, 27 Oct 2006 20:12:50 -0300
+"Horst H. von Brand" <vonbrand@inf.utfsm.cl> wrote:
 
-> And if you are not sure which you have done then presumably you do what you do 
-> now, or git commit -a or git commit -i as you need.
+> > > asciidoc -b docbook -d manpage -f asciidoc.conf git-daemon.txt
+> > > xmlto -m callouts.xsl man git-daemon.xml
+> > > error : unterminated entity reference                
+> > > error : unterminated entity reference                
+> > > error : unterminated entity reference             ...
+> > > error : unterminated entity reference                
+> > > error : unterminated entity reference                
+> > > Writing git-daemon.1 for refentry
+> > 
+> > Can't reproduce this here on master or on next with:
+> >  asciidoc-7.1.2-0 and xmlto-0.0.18-13.1
+> > Maybe this is an Asciidoc 8 issue, are you using it?
+> 
+> Fedora rawhide i386, with:
+> 
+>   asciidoc-7.0.2-3.fc6
+>   xmlto-0.0.18-13.1
+> 
+> Perhaps too old, not too new...
 
-By the way, short option -i is not --index but --include (i.e. commit
-both changes in index and files mentioned on command line). Perhaps -I?
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Can't imagine that it's too old.  You may have to bisect to figure
+out what the culprit is. :o/
 
