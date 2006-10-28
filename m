@@ -4,72 +4,68 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: SEGV when lookup_* returns NULL
-Date: Mon, 27 Nov 2006 22:13:15 +0100
-Message-ID: <20061127211315.GC18810@admingilde.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's in git.git "next"
+Date: Fri, 27 Oct 2006 19:09:20 -0700
+Message-ID: <7vr6wtb38v.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="DKU6Jbt7q3WqK7+M"
-NNTP-Posting-Date: Mon, 27 Nov 2006 21:13:26 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 28 Oct 2006 02:13:21 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30358>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gonmy-0007I1-Lw for gcvg-git@gmane.org; Mon, 27 Nov
- 2006 22:13:21 +0100
+ esmtp (Exim 4.43) id 1GdddZ-0004wo-2E for gcvg-git@gmane.org; Sat, 28 Oct
+ 2006 04:09:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758583AbWK0VNR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 16:13:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758584AbWK0VNR
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 16:13:17 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:459 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S1758583AbWK0VNQ
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 16:13:16 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1Gonmt-0001F7-AO for git@vger.kernel.org; Mon, 27 Nov 2006 22:13:15 +0100
+ S1751606AbWJ1CJW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
+ 22:09:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751611AbWJ1CJW
+ (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 22:09:22 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:11731 "EHLO
+ fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S1751606AbWJ1CJV
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 22:09:21 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao11.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061028020920.DSOL13992.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>; Fri, 27
+ Oct 2006 22:09:20 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id fe921V00S1kojtg0000000 Fri, 27 Oct 2006
+ 22:09:03 -0400
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+I've fixed up merge-recursive not to warn "working file will be
+clobbered" when unneeded, and merged it to "next" tonight.  This
+is a usability fix but if done incorrectly we can break a safety
+valve.
 
---DKU6Jbt7q3WqK7+M
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The "next" version changes behaviour from the traditional one
+when (1) paths that are untracked in our branch exists in the
+common ancestor and the other branch we merge into our branch,
+(2) the other branch did not make any changes to these paths,
+and (3) the working tree has these paths as untracked files.
 
-hoi :)
+Under this condition, 3-way merge decides the path should not
+exist in the result.  This has not been changed (and shouldn't
+be).  But what is being fixed is what "should not exist" means.
+We used to say "we have that path in our working tree, which
+will be lost by the merge, so we won't merge".  Which was
+perhaps safer but was inconvenient.  The corrected behaviour
+should be "the path is not tracked in our branch, and the result
+of the merge won't have it tracked either, and we will leave
+those untracked working tree files as they were".
 
-When trying to an unmodified GIT on a repository with submodules
-it segfaults a lot.
+I added a handful tests to t6022 to catch potential breakages,
+and the code still passes them, but that does not mean it is
+perfect.  If the program refuses to proceed when it can, you
+found a safer breakage I do not worry too much about.  If the
+program overwrites or loses an untracked working tree file as a
+result of the merge, then that means the updated merge-recursive
+relaxed the check too much.
 
-All the lookup_{blob,tree,commit} functions check that the object
-really is of the requested type and return NULL otherwise.
-However this NULL pointer is not checked in the calling functions.
-
-Should we make lookup_* to just die when invoked on another object-type?
-Or modify all the callers?
-Is there a sane error-handling strategy besides dying in this case?
-Really checking all the return values in the whole chain would be
-a lot of work.
-
---=20
-Martin Waitz
-
---DKU6Jbt7q3WqK7+M
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFa1Tqj/Eaxd/oD7IRAjNtAJ940+c/Z5AvGk/gx2lTCXd5oFYNmgCfccvQ
-ph2T49HvIMnLfao8Hx7HfAk=
-=OUCc
------END PGP SIGNATURE-----
-
+So please handle this with a bit of extra care than usual; I'd
+appreciate extra sets of eyeballs to sanity check.
