@@ -1,191 +1,409 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] Allow hand-editing of patches before sending
-Date: Sun, 5 Nov 2006 20:04:00 +0100
-Message-ID: <20061105190400.GC25259@diana.vm.bytemark.co.uk>
-References: <b0943d9e0611020232x1e343bbco9451c8183c84d68@mail.gmail.com> <20061102113631.GA30507@diana.vm.bytemark.co.uk> <b0943d9e0611030139i7be9569bh4a29596a768e82a3@mail.gmail.com> <20061103095859.GC16721@diana.vm.bytemark.co.uk> <20061103100142.GD16721@diana.vm.bytemark.co.uk> <454B30E4.8000909@shadowen.org> <454B4C43.2040607@shadowen.org> <Pine.LNX.4.64.0611031034520.25218@g5.osdl.org> <20061105114353.GB19707@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0611050831250.25218@g5.osdl.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH/RFC (take 2)] gitweb: New improved patchset view
+Date: Mon, 30 Oct 2006 00:51:37 +0100
+Message-ID: <200610300051.37896.jnareb@gmail.com>
+References: <200610291122.30852.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sun, 5 Nov 2006 19:04:27 +0000 (UTC)
-Cc: Andy Whitcroft <apw@shadowen.org>,
-	Catalin Marinas <catalin.marinas@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 29 Oct 2006 23:52:10 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=F0ShejQjT46KHqhS7+J0Jcg8syaYRDXdXOfa+ErU6ZYMX2neaD3bRvNUCIOayN+n+wfhkMEk8Q6ItFjAEHs5QbX9RzOdwQWw/kjely44/912z/zUMGAUR++TswmWSpHjbdQfqTuG3G8bh3zhercLiy+oy3qCWPZuvN2et62uvrk=
+User-Agent: KMail/1.9.3
+In-Reply-To: <200610291122.30852.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0611050831250.25218@g5.osdl.org>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30474>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgnHy-0008Q0-Dr for gcvg-git@gmane.org; Sun, 05 Nov
- 2006 20:04:14 +0100
+ esmtp (Exim 4.43) id 1GeKRL-0002Fx-S7 for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 00:51:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161523AbWKETEJ convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006 14:04:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161526AbWKETEJ
- (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 14:04:09 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:55302 "EHLO
- diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1161523AbWKETEH
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 14:04:07 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1GgnHk-0006fo-00; Sun, 05 Nov 2006 19:04:00 +0000
-To: Linus Torvalds <torvalds@osdl.org>
+ S1030458AbWJ2Xvj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 18:51:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030459AbWJ2Xvj
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 18:51:39 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:14364 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1030458AbWJ2Xvi
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 18:51:38 -0500
+Received: by ug-out-1314.google.com with SMTP id 32so1027177ugm for
+ <git@vger.kernel.org>; Sun, 29 Oct 2006 15:51:37 -0800 (PST)
+Received: by 10.67.93.6 with SMTP id v6mr3223970ugl; Sun, 29 Oct 2006
+ 15:51:37 -0800 (PST)
+Received: from host-81-190-18-116.torun.mm.pl ( [81.190.18.116]) by
+ mx.google.com with ESMTP id 59sm2558564ugf.2006.10.29.15.51.36; Sun, 29 Oct
+ 2006 15:51:37 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-05 08:44:13 -0800, Linus Torvalds wrote:
+Replace "gitweb diff header" with its full sha1 of blobs and replace
+it by "git diff" header and extended diff header. Change also somewhat
+highlighting of diffs.
 
-> On Sun, 5 Nov 2006, Karl Hasselstr=F6m wrote:
->
-> > So the right thing to do would be to teach StGIT to generate
-> > 8bit-encoded output, and trust the SMTP transfer path do mangle it
-> > correctly? (Hmm. No, since StGIT talks directly with the first
-> > SMTP server in the chain, it needs to be able to QP-encode the
-> > mail itself if necessary -- but it should seldom be necessary,
-> > then.)
->
-> Right. You could even just consider it an error if the mailserver
-> doesn't reply to EHLO with 8BITMIME, I really think it's that rare.
+Changes:
+* "gitweb diff header" which looked for example like below:
+    file:_<sha1 before>_ -> file:_<sha1 after>_
+  where 'file' is file type and '<sha1>' is full sha1 of blob is
+  changed to
+    diff --git _a/<file before>_ _b/<file after>_
+  In both cases links are visible and use default link style. If file
+  is added, a/<file> is not hyperlinked, if file is deleted, b/<file>
+  is not hyperlinked.
+* there is added "extended diff header", with <path> and <hash>
+  hyperlinked (and <hash> shortened to 7 characters), and <mode>
+  explained: '<mode>' is extended to '<mode> (<file type>)'.
+* <file> hyperlinking should work also when <file> is originally
+  quoted. For now we present filename quoted. This needed changes to
+  parse_difftree_raw_line subroutine. And doesn't work: perhaps
+  unquote is broken.
+* from-file/to-file two-line header lines have slightly darker color
+  than removed/added lines.
+* chunk header has now delicate line above for easier finding chunk
+  boundary, and top margin of 1px.
 
-Makes sense (unless the Python SMTP library can do this for us -- it
-would be impolite to refuse then).
+WORK IN PROGRESS: might not work (and actually doesn't work correctly)
+for strange filenames, i.e. filenames contaning either metacharacters
+or having TAB, LF, backslash or doublequote in them.
 
-> > In that case, the problem with the current implementation (without
-> > my patch applied) is likely to be that it fails to provide the
-> > headers needed for the SMTP path to be able to transform it
-> > losslessly.
->
-> I _think_ it should be sufficient to just set the Content-Type and
-> Content-Transfer-Encoding to say something like "text/plain;
-> charset=3DUTF8" and "8bit" respectively. But somebody who know the
-> SMTP rules better should check.
+Code should be much more clean, by the way.
 
-These are the headers that StGIT uses without my patch -- that is, the
-headers used to get that error message:
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.css  |   46 +++++++++++---
+ gitweb/gitweb.perl |  178 +++++++++++++++++++++++++++++++++-------------------
+ 2 files changed, 151 insertions(+), 73 deletions(-)
 
-  Content-Type: text/plain; charset=3Dutf-8; format=3Dfixed
-  Content-Transfer-Encoding: 8bit
-
-Which is obviously not good enough for some picky part of the SMTP
-chain.
-
-> HOWEVER:
->
-> >   Received: (majordomo@vger.kernel.org) by vger.kernel.org via list=
-expand
-> >           id S1750700AbWJVMCV (ORCPT <rfc822;kha-list-git@hemma.tre=
-skal.com>);
-> >           Sun, 22 Oct 2006 08:02:21 -0400
-> >   X-Warning: Original message contained 8-bit characters, however d=
-uring
-> >              the SMTP transport session the receiving system did no=
-t announce
-> >              capability of receiving 8-bit SMTP (RFC 1651-1653), an=
-d as this
-> >              message does not have MIME headers (RFC 2045-2049) to =
-enable
-> >              encoding change, we had very little choice.
->
-> This does seem to say that somebody didn't even announce 8-bit
-> capability in the first place. That's a zmailer error message, and
-> it does imply that somebody was running a bad server.
->
-> That said, _if_ your message had had the proper mime-type
-> specifiers, then zmailer would happily have QP-converted the message
-> for you, so everything would have been fine.
-
-E-mail seems to be like driving. You can't just follow the rules, you
-also have to be careful to make allowances for those who don't. :-(
-
-Well, it added these headers:
-
-  MIME-Version: 1.0
-  Content-Transfer-Encoding: QUOTED-PRINTABLE
-  Content-Type: TEXT/PLAIN; charset=3DISO-8859-1
-
-Maybe MIME-Version was the only thing missing? I'll have to try.
-
-> > The mail server (vger talking to itself, if the Received: headers
-> > were added in order) complained that there were no MIME headers,
-> > so it had to guess the charset.
->
-> vger itself? Strange.
-
-It looks that way, but I don't know enough about mail servers to be
-very certain. The complete header of the message (in my git list
-mailbox) is this:
-
-=46rom git-owner@vger.kernel.org Sun Oct 22 14:02:35 2006
-Received: from vger.kernel.org ([209.132.176.167])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1Gbc2E-0005lw-00
-	for <kha-list-git@hemma.treskal.com>; Sun, 22 Oct 2006 13:02:35 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750700AbWJVMCV (ORCPT <rfc822;kha-list-git@hemma.treskal.com>);
-	Sun, 22 Oct 2006 08:02:21 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had =
-to
-	   write these MIME-headers with our local system default value.
-MIME-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Content-Type: TEXT/PLAIN; charset=3DISO-8859-1
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751780AbW=
-JVMCV
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 08:02:21 -0400
-Received: from mxfep01.bredband.com ([195.54.107.70]:50054 "EHLO
-	mxfep01.bredband.com") by vger.kernel.org with ESMTP
-	id S1750700AbWJVMCU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Oct 2006 08:02:20 -0400
-Received: from ironport2.bredband.com ([195.54.107.84] [195.54.107.84])
-          by mxfep01.bredband.com with ESMTP
-          id <20061022120218.PHVT953.mxfep01.bredband.com@ironport2.bre=
-dband.com>
-          for <git@vger.kernel.org>; Sun, 22 Oct 2006 14:02:18 +0200
-Received: from ua-83-227-180-148.cust.bredbandsbolaget.se (HELO yoghurt=
-=2Ehemma.treskal.com) ([83.227.180.148])
-  by ironport2.bredband.com with ESMTP; 22 Oct 2006 14:02:18 +0200
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by yoghurt.hemma.treskal.com (Postfix) with ESMTP id 1DFDF4C010;
-	Sun, 22 Oct 2006 14:02:18 +0200 (CEST)
-=46rom:	Karl =3D?utf-8?q?Hasselstr=3DC3=3DB6m?=3D <kha@treskal.com>
-Subject: [PATCH] RFC2047-encode email headers
-Date:	Sun, 22 Oct 2006 14:02:17 +0200
-To:	Catalin Marinas <catalin.marinas@gmail.com>
-Cc:	git@vger.kernel.org
-Message-Id: <20061022120217.7650.23715.stgit@localhost>
-User-Agent: StGIT/0.11
-Sender:	git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List:	git@vger.kernel.org
-X-Envelope-Username: kha-list-git
-X-Bogosity: Ham, tests=3Dbogofilter, spamicity=3D0.000000, version=3D0.=
-94.4
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on=20
-	diana.vm.bytemark.co.uk
-X-Spam-Level:=20
-X-Spam-Status: No, score=3D-0.3 required=3D5.0 tests=3DAWL,FORGED_RCVD_=
-HELO=20
-	autolearn=3Ddisabled version=3D3.0.3
-X-Already-Filtered-By: kha@treskal.com, 2006-10-22 13:02:44 +0100
-Status: RO
-X-Status: A
-Content-Length: 4148
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
+diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
+index 83d900d..3aeceed 100644
+--- a/gitweb/gitweb.css
++++ b/gitweb/gitweb.css
+@@ -303,6 +303,33 @@ td.mode {
+ 	font-family: monospace;
+ }
+ 
++
++div.diff.header,
++div.diff.extended_header {
++	white-space: normal;
++}
++
++div.diff.header {
++	font-weight: bold;
++
++	background-color: #edece6;
++
++	margin-top: 4px;
++	padding: 4px 0px 2px 0px;
++	border: solid #d9d8d1;
++	border-width: 1px 0px 1px 0px;
++}
++
++div.diff.extended_header,
++div.diff.extended_header a.list {
++	color: #777777;
++}
++
++div.diff.extended_header {
++	background-color: #f6f5ee;
++	padding: 2px 0px 2px 0px;
++}
++
+ div.diff a.list {
+ 	text-decoration: none;
+ }
+@@ -312,31 +339,34 @@ div.diff a.list:hover {
+ }
+ 
+ div.diff.to_file a.list,
+-div.diff.to_file,
++div.diff.to_file {
++	color: #007000;
++}
++
+ div.diff.add {
+ 	color: #008800;
+ }
+ 
+ div.diff.from_file a.list,
+-div.diff.from_file,
++div.diff.from_file {
++	color: #aa0000;
++}
++
+ div.diff.rem {
+ 	color: #cc0000;
+ }
+ 
+ div.diff.chunk_header {
+ 	color: #990099;
++	border: dotted #ffbbff;
++	border-width: 1px 0px 0px 0px;
++	margin-top: 1px;
+ }
+ 
+ div.diff.incomplete {
+ 	color: #cccccc;
+ }
+ 
+-div.diff_info {
+-	font-family: monospace;
+-	color: #000099;
+-	background-color: #edece6;
+-	font-style: italic;
+-}
+ 
+ div.index_include {
+ 	border: solid #d9d8d1;
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index cbab3c9..a5a140c 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1255,9 +1255,12 @@ sub parse_difftree_raw_line {
+ 		$res{'status'} = $5;
+ 		$res{'similarity'} = $6;
+ 		if ($res{'status'} eq 'R' || $res{'status'} eq 'C') { # renamed or copied
+-			($res{'from_file'}, $res{'to_file'}) = map { unquote($_) } split("\t", $7);
++			($res{'from_file_raw'}, $res{'to_file_raw'}) = split("\t", $7);
++			$res{'from_file'} = unquote($res{'from_file_raw'});
++			$res{'to_file'}   = unquote($res{'to_file_raw'});
+ 		} else {
+-			$res{'file'} = unquote($7);
++			$res{'file_raw'} = $7;
++			$res{'file'} = unquote($res{'file_raw'});
+ 		}
+ 	}
+ 	# 'c512b523472485aef4fff9e57b229d9d243c967f'
+@@ -2023,7 +2026,9 @@ sub git_patchset_body {
+ 	my $patch_idx = 0;
+ 	my $in_header = 0;
+ 	my $patch_found = 0;
++	my $skip_patch = 0;
+ 	my $diffinfo;
++	my (%from, %to);
+ 
+ 	print "<div class=\"patchset\">\n";
+ 
+@@ -2033,6 +2038,8 @@ sub git_patchset_body {
+ 
+ 		if ($patch_line =~ m/^diff /) { # "git diff" header
+ 			# beginning of patch (in patchset)
++			$skip_patch = 0;
++
+ 			if ($patch_found) {
+ 				# close previous patch
+ 				print "</div>\n"; # class="patch"
+@@ -2042,96 +2049,137 @@ sub git_patchset_body {
+ 			}
+ 			print "<div class=\"patch\" id=\"patch". ($patch_idx+1) ."\">\n";
+ 
++			# read and prepare patch information
+ 			if (ref($difftree->[$patch_idx]) eq "HASH") {
++				# pre-parsed (or generated by hand)
+ 				$diffinfo = $difftree->[$patch_idx];
+ 			} else {
+ 				$diffinfo = parse_difftree_raw_line($difftree->[$patch_idx]);
+ 			}
++			if ($diffinfo->{'status'} ne "A") { # not new (added) file
++				$from{'name'} = $diffinfo->{'from_file_raw'} || $diffinfo->{'file_raw'};
++				 # because of "a/file" not a/"file"
++				$from{'quoted'} = ($from{'name'} =~ s/^"(.*)"$/$1/);
++
++				my $file = $diffinfo->{'from_file'} || $diffinfo->{'file'};
++				$from{'href'} = href(action=>"blob", hash_base=>$hash_parent,
++				                     hash=>$diffinfo->{'from_id'}, file_name=>$file);
++			}
++			if ($diffinfo->{'status'} ne "D") { # not deleted file
++				$to{'name'} = $diffinfo->{'to_file_raw'} || $diffinfo->{'file_raw'};
++				# because of "b/file" not b/"file"
++				$to{'quoted'} = ($to{'name'} =~ s/^"(.*)"$/$1/);
++
++				my $file = $diffinfo->{'to_file'} || $diffinfo->{'file'};
++				$to{'href'} = href(action=>"blob", hash_base=>$hash,
++				                   hash=>$diffinfo->{'to_id'}, file_name=>$file);
++			}
+ 			$patch_idx++;
+ 
+ 			# for now we skip empty patches
+ 			if ($diffinfo->{'from_id'} eq $diffinfo->{'to_id'}) {
+ 				# no change, empty patch
+ 				$in_header = 1;
++				$skip_patch = 0;
+ 				next LINE;
+ 			}
+ 
+-			if ($diffinfo->{'status'} eq "A") { # added
+-				print "<div class=\"diff_info\">" . file_type($diffinfo->{'to_mode'}) . ":" .
+-				      $cgi->a({-href => href(action=>"blob", hash_base=>$hash,
+-				                             hash=>$diffinfo->{'to_id'}, file_name=>$diffinfo->{'file'})},
+-				              $diffinfo->{'to_id'}) . " (new)" .
+-				      "</div>\n"; # class="diff_info"
+-
+-			} elsif ($diffinfo->{'status'} eq "D") { # deleted
+-				print "<div class=\"diff_info\">" . file_type($diffinfo->{'from_mode'}) . ":" .
+-				      $cgi->a({-href => href(action=>"blob", hash_base=>$hash_parent,
+-				                             hash=>$diffinfo->{'from_id'}, file_name=>$diffinfo->{'file'})},
+-				              $diffinfo->{'from_id'}) . " (deleted)" .
+-				      "</div>\n"; # class="diff_info"
+-
+-			} elsif ($diffinfo->{'status'} eq "R" || # renamed
+-			         $diffinfo->{'status'} eq "C" || # copied
+-			         $diffinfo->{'status'} eq "2") { # with two filenames (from git_blobdiff)
+-				print "<div class=\"diff_info\">" .
+-				      file_type($diffinfo->{'from_mode'}) . ":" .
+-				      $cgi->a({-href => href(action=>"blob", hash_base=>$hash_parent,
+-				                             hash=>$diffinfo->{'from_id'}, file_name=>$diffinfo->{'from_file'})},
+-				              $diffinfo->{'from_id'}) .
+-				      " -> " .
+-				      file_type($diffinfo->{'to_mode'}) . ":" .
+-				      $cgi->a({-href => href(action=>"blob", hash_base=>$hash,
+-				                             hash=>$diffinfo->{'to_id'}, file_name=>$diffinfo->{'to_file'})},
+-				              $diffinfo->{'to_id'});
+-				print "</div>\n"; # class="diff_info"
+-
+-			} else { # modified, mode changed, ...
+-				print "<div class=\"diff_info\">" .
+-				      file_type($diffinfo->{'from_mode'}) . ":" .
+-				      $cgi->a({-href => href(action=>"blob", hash_base=>$hash_parent,
+-				                             hash=>$diffinfo->{'from_id'}, file_name=>$diffinfo->{'file'})},
+-				              $diffinfo->{'from_id'}) .
+-				      " -> " .
+-				      file_type($diffinfo->{'to_mode'}) . ":" .
+-				      $cgi->a({-href => href(action=>"blob", hash_base=>$hash,
+-				                             hash=>$diffinfo->{'to_id'}, file_name=>$diffinfo->{'file'})},
+-				              $diffinfo->{'to_id'});
+-				print "</div>\n"; # class="diff_info"
++			# print "git diff" header
++			if ($from{'name'}) {
++				my $from_link = $cgi->a({-href => $from{'href'}, -class => "path"},
++				                        'a/' . esc_html($from{'name'}));
++				my ($q, $qq) = $from{'quoted'} ? ('"', '&quot;') : ('', '');
++				$patch_line =~ s|${q}a/\Q$from{'name'}\E${q}|${qq}$from_link${qq}|;
++			} else {
++				# at least one of %from and %to must be set
++				$patch_line =~ s|(["]?a/\Q$to{'name'}\E["]?)|esc_html($1)|e;
++			}
++			if ($to{'name'}) {
++				my $to_link = $cgi->a({-href => $to{'href'}, -class => "path"},
++				                      'b/' . esc_html($to{'name'}));
++				my ($q, $qq) = $to{'quoted'} ? ('"', '&quot;') : ('', '');
++				$patch_line =~ s|${q}b/\Q$to{'name'}\E${q}$|${qq}$to_link${qq}|;
++			} else {
++				# at least one of %from and %to must be set
++				$patch_line =~ s|(["]?b/\Q$from{'name'}\E["]?)$|esc_html($1)|e;
+ 			}
+ 
+-			#print "<div class=\"diff extended_header\">\n";
++			print "<div class=\"diff header\">$patch_line</div>\n";
++			print "<div class=\"diff extended_header\">\n";
+ 			$in_header = 1;
+ 			next LINE;
++		} else {
++			next LINE if $skip_patch;
+ 		} # start of patch in patchset
+ 
++		if ($in_header) {
++			if ($patch_line !~ m/^---/) {
++				# match <path>
++				if ($patch_line =~ m!^(copy|rename) from ! && $from{'name'}) {
++					my $qq = $from{'quoted'} ? '&quot;' : '';
++					my $from_link = $cgi->a({-href=>$from{'href'},-class=>"list"},
++					                        esc_html($from{'name'}));
++					$patch_line =~ s!from .*$!from $qq$from_link$qq!;
++				}
++				if ($patch_line =~ m!^(copy|rename) to ! && $to{'name'}) {
++					my $qq = $to{'quoted'} ? '&quot;' : '';
++					my $to_link = $cgi->a({-href=>$to{'href'},-class=>"list"},
++					                      esc_html($to{'name'}));
++					$patch_line =~ s!to .*$!to $qq$to_link$qq!;
++				}
++				# match <mode>
++				if ($patch_line =~ m/\s(\d{6})$/) {
++					$patch_line .= '<span class="info"> (' . file_type($1) . ')</span>';
++				}
++				# match <hash>
++				if ($patch_line =~ m/^index/) {
++					my ($from_link, $to_link);
++					if ($from{'href'}) {
++						$from_link = $cgi->a({-href=>$from{'href'},-class=>"list"},
++						                     substr($diffinfo->{'from_id'},0,7));
++					} else {
++						$from_link = '0' x 7;
++					}
++					if ($to{'href'}) {
++						$to_link = $cgi->a({-href=>$to{'href'},-class=>"list"},
++						                   substr($diffinfo->{'to_id'},0,7));
++					} else {
++						$to_link = '0' x 7;
++					}
++					my ($from_id, $to_id) = ($diffinfo->{'from_id'}, $diffinfo->{'to_id'});
++					$patch_line =~ s!$from_id\.\.$to_id!$from_link..$to_link!;
++				}
++				print $patch_line . "<br/>\n";
+ 
+-		if ($in_header && $patch_line =~ m/^---/) {
+-			#print "</div>\n"; # class="diff extended_header"
+-			$in_header = 0;
++			} else {
++				#$patch_line =~ m/^---/;
++				print "</div>\n"; # class="diff extended_header"
++				$in_header = 0;
++
++				if ($from{'name'}) {
++					my $qq = $from{'quoted'} ? '&quot;' : '';
++					my $from_link = $cgi->a({-href=>$from{'href'},-class=>"list"},
++					                        esc_html($from{'name'}));
++					$patch_line =~ s!["]?a/.*$!${qq}a/$from_link${qq}!;
++				}
++				print "<div class=\"diff from_file\">$patch_line</div>\n";
+ 
+-			my $file = $diffinfo->{'from_file'};
+-			$file  ||= $diffinfo->{'file'};
+-			$file = $cgi->a({-href => href(action=>"blob", hash_base=>$hash_parent,
+-			                               hash=>$diffinfo->{'from_id'}, file_name=>$file),
+-			                -class => "list"}, esc_html($file));
+-			$patch_line =~ s|a/.*$|a/$file|g;
+-			print "<div class=\"diff from_file\">$patch_line</div>\n";
++				$patch_line = <$fd>;
++				chomp $patch_line;
+ 
+-			$patch_line = <$fd>;
+-			chomp $patch_line;
++				#$patch_line =~ m/^+++/;
++				if ($to{'name'}) {
++					my $qq = $to{'quoted'} ? '&quot;' : '';
++					my $from_link = $cgi->a({-href=>$to{'href'},-class=>"list"},
++					                        esc_html($to{'name'}));
++					$patch_line =~ s!["]?b/.*$!${qq}b/$from_link${qq}!;
++				}
++				print "<div class=\"diff to_file\">$patch_line</div>\n";
+ 
+-			#$patch_line =~ m/^+++/;
+-			$file    = $diffinfo->{'to_file'};
+-			$file  ||= $diffinfo->{'file'};
+-			$file = $cgi->a({-href => href(action=>"blob", hash_base=>$hash,
+-			                               hash=>$diffinfo->{'to_id'}, file_name=>$file),
+-			                -class => "list"}, esc_html($file));
+-			$patch_line =~ s|b/.*|b/$file|g;
+-			print "<div class=\"diff to_file\">$patch_line</div>\n";
++			}
+ 
+ 			next LINE;
+ 		}
+-		next LINE if $in_header;
+ 
+ 		print format_diff_line($patch_line);
+ 	}
+-- 
+1.4.3.3
