@@ -1,77 +1,87 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's in git.git
-Date: Sun, 19 Nov 2006 16:17:17 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611191547460.13772@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v64dcbdgb.fsf@assigned-by-dhcp.cox.net> <7v1wo0bb4z.fsf@assigned-by-dhcp.cox.net>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: master and origin
+Date: Sun, 29 Oct 2006 15:19:44 -0800 (PST)
+Message-ID: <118164.43697.qm@web31807.mail.mud.yahoo.com>
+References: <4d8e3fd30610291329n7fe59873r87cbee9ccbd4b720@mail.gmail.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sun, 19 Nov 2006 15:17:35 +0000 (UTC)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Sun, 29 Oct 2006 23:19:53 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7v1wo0bb4z.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=RDM4DkaUOcCX2RtGymgIRnFsgLw01V2MJ//fzU74EUGFxo2RHmsnUiRBbzJ57QMXYZhTIX0mYALh0o0lgMLlcCPDfcj21Uugvo/VBO9WwnqI1Z5/PNEeRJOeCbMVlsPJQkcRe8zVW2YBQ8gh55bl83rRCs0LOZaFoT/+QnDnQns=  ;
+X-YMail-OSG: RmeUtzAVM1loOm2bHy8cyZeVDzx6TGQ6sKHVicxnyUSQdW8kAwDoaZdf1uGsTCTrPYiRz4hZ5k70jItzWCRscdga1mw2PWGdXfOTjNZ3nfrNxvIbuhktSzSLZ.EGUDxxoAkkRbf6_oI-
+In-Reply-To: <4d8e3fd30610291329n7fe59873r87cbee9ccbd4b720@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30472>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GloQE-0004jW-Gd for gcvg-git@gmane.org; Sun, 19 Nov
- 2006 16:17:30 +0100
+ esmtp (Exim 4.43) id 1GeJwS-0001uv-Pe for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 00:19:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1756713AbWKSPRV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006
- 10:17:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756714AbWKSPRV
- (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 10:17:21 -0500
-Received: from mail.gmx.net ([213.165.64.20]:27085 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1756713AbWKSPRU (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 10:17:20 -0500
-Received: (qmail invoked by alias); 19 Nov 2006 15:17:18 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp017) with SMTP; 19 Nov 2006 16:17:18 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1030430AbWJ2XTp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 18:19:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030434AbWJ2XTp
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 18:19:45 -0500
+Received: from web31807.mail.mud.yahoo.com ([68.142.207.70]:1148 "HELO
+ web31807.mail.mud.yahoo.com") by vger.kernel.org with SMTP id
+ S1030430AbWJ2XTp (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006
+ 18:19:45 -0500
+Received: (qmail 43706 invoked by uid 60001); 29 Oct 2006 23:19:44 -0000
+Received: from [71.80.233.118] by web31807.mail.mud.yahoo.com via HTTP; Sun,
+ 29 Oct 2006 15:19:44 PST
+To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>, Jakub Narebski
+ <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
-
-On Sat, 18 Nov 2006, Junio C Hamano wrote:
-
-> Junio C Hamano <junkio@cox.net> writes:
+--- Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> wrote:
 > 
-> >  - 'pu' has the shallow clone WIP and a half-finished rewrite of
-> >    git branch in C, both by Johannes.  Both needs a bit more
-> >    polishing and confidence building before going into 'next',
-> >    and given the recent discussion of enhancing branch
-> >    management for pulls/pushes, it might be easier to drop the
-> >    latter for now.
-> 
-> OOPS; sorry but the latter half is entirely untrue.  What's
-> there is half-done git-shortlog.  Scratch everything about
-> branch management please.
+> So in this case, there is a difference between doing my local
+> development under master or myownlocalbranch. Right?
+> I mean, if I do my own development under master and I pull, the master
+> branch will include origin and my local changes. Corret?
+> While if I work in my local branch the datas are not modified with a
+> pull, because pull will update only the local copy of the remote
+> branch. Correct?
 
-IMHO -shortlog needs support to read .mailmap, and maybe nods to throw out 
-the built-in mailmap which is totally specific to the Linux kernel 
-development.
+Following GIT's working flow isn't that much different than
+other SCM's workflow.
 
-As for shallow clone support: I am a bit underwhelmed by the enthusiasm 
-to test this thing by the people I thought would be most interested. It 
-really could be the case that it is not needed at all.
+Leave master and origin branches alone.  Imagine they are your
+local copy of that imaginary "root" repo.
 
-Just for the record, though: AFAICT the shallow stuff is lacking support 
-for at least pushing from/into shallow repos and it should avoid making a 
-commit shallow unnecessarily. And quite likely there are a few thinkos in 
-it, so it would not hurt having more test cases (notably of things I did 
-not think of), and some bad-ass testing with huge amounts of commits and 
-files which were added/modified identically in different commits.
+If you want to do development, create your own branch off of
+master at some point, say HEAD, using git-branch, call it my-branch.
 
-Ciao,
-Dscho
+Then do your development in my-branch, occasionally pulling from
+master, all the while you update master on a regular basis
+from the remote repo.  That pull into my-branch would schedule
+the merge for you and if it cannot auto-merge, it will leave it
+up to you do _resolve_ and then commit.  Eventually
+you get into the habit of following the same commands in the
+same steps.
 
+Note the key words here: pull, merge, commit.  Pull and merge is
+is done by git-pull, and if there's things to resolve you do that
+manually, in most simplistic ways.
+
+If you're coming from another SCM, picking up git is a snap.
+I think the only "hurdle" coming from another SCM especially
+centralized is the decentralized nature of git.
+
+Reading git-fetch, git-pull documentation very carefully
+should clear things up.
+
+     Luben
