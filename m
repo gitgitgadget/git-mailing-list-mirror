@@ -1,70 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: svn versus git
-Date: Sat, 16 Dec 2006 07:26:58 +0700
-Message-ID: <fcaeb9bf0612151626k1442daa9ib2bf90f7563c4835@mail.gmail.com>
-References: <200612132200.41420.andyparkins@gmail.com>
-	 <fcaeb9bf0612140832v1c80bf7dgd61897111292d31@mail.gmail.com>
-	 <Pine.LNX.4.63.0612141754420.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <fcaeb9bf0612140910t6aff44e1m9570b20850a41b87@mail.gmail.com>
-	 <Pine.LNX.4.63.0612150118190.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <fcaeb9bf0612150726o40527552l8b3564ddcc3adb94@mail.gmail.com>
-	 <Pine.LNX.4.63.0612152115000.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <Pine.LNX.4.63.0612152117390.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7v64ccomdc.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0612151736470.18171@xanadu.home>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: fetching packs and storing them as packs
+Date: Sun, 29 Oct 2006 01:21:46 -0400
+Message-ID: <20061029052146.GA3847@spearce.org>
+References: <20061028034206.GA14044@spearce.org> <Pine.LNX.4.64.0610272109500.3849@g5.osdl.org> <7vwt6l9etn.fsf@assigned-by-dhcp.cox.net> <20061028072146.GB14607@spearce.org> <20061028084001.GC14607@spearce.org> <7vfyd88d6s.fsf@assigned-by-dhcp.cox.net> <20061029035025.GC3435@spearce.org> <7vejsr68y9.fsf@assigned-by-dhcp.cox.net> <20061029043818.GA3650@spearce.org> <7v3b9766rc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 16 Dec 2006 00:27:08 +0000 (UTC)
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 29 Oct 2006 05:21:59 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=LXNsPByS0BPUbW5oPFBhQBHc6DG3J16PLBrFwFe0qDYYzVOsfQmoDHrhWplinVrs6DOtVVns4UlN/nvpP9riTPJMtHu+d4osbWOdkvJphosinXgf02+iw0svajAuaXmMs/GQhclOAtqQ+E60a1lJ/v0VrGW/yTW66qmC3g+zfT8=
-In-Reply-To: <Pine.LNX.4.64.0612151736470.18171@xanadu.home>
 Content-Disposition: inline
+In-Reply-To: <7v3b9766rc.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34579>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvNOJ-0007HS-Ok for gcvg-git@gmane.org; Sat, 16 Dec
- 2006 01:27:04 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30415>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Ge37K-00071i-N4 for gcvg-git@gmane.org; Sun, 29 Oct
+ 2006 06:21:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030472AbWLPA1A (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 19:27:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030473AbWLPA1A
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 19:27:00 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:62459 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1030472AbWLPA07 (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec
- 2006 19:26:59 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so961729uga for
- <git@vger.kernel.org>; Fri, 15 Dec 2006 16:26:58 -0800 (PST)
-Received: by 10.78.136.9 with SMTP id j9mr512797hud.1166228818110; Fri, 15
- Dec 2006 16:26:58 -0800 (PST)
-Received: by 10.78.100.8 with HTTP; Fri, 15 Dec 2006 16:26:58 -0800 (PST)
-To: "Nicolas Pitre" <nico@cam.org>
+ S965019AbWJ2FVv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 01:21:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965023AbWJ2FVv
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 01:21:51 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:38878 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S965019AbWJ2FVv
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 01:21:51 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Ge37Y-0005rJ-0m; Sun, 29 Oct 2006 01:22:08 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 8582920E45B; Sun, 29 Oct 2006 01:21:46 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On 12/16/06, Nicolas Pitre <nico@cam.org> wrote:
-> On Fri, 15 Dec 2006, Junio C Hamano wrote:
->
-> >  * we add 'git ls' command to give Porcelain-ish access to
-> >    ls-tree and ls-files.
->
-> That seems the most sensible to me.
+Junio C Hamano <junkio@cox.net> wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
+> >> Then we can make "pack-objects --unpacked" to pretend the ones
+> >> with corresponding .volatile as if the objects in them are
+> >> loose, without breaking backward compatibility.
+> >
+> > Currently I'm changing --unpacked= to match without needing quoting.
+> > I'm allowing it to match an exact pack name or if it starts with
+> > "pack-" and matches the last 50 ("pack-X{40}.pack") of the pack name.
+> 
+> I think is a very sane thing to do (I should have done that from
+> the beginning).  I do not like "the last 50", but I do not have
+> objection to make it take either full path or just the filename
+> under objects/pack/ (so not "the last 50" but "filename w/o
+> slash").
 
-I agree.
+OK.  I coded it with the last 50 but will rewrite that commit
+without as the code is slightly shorter that way.  :-)
 
 -- 
