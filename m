@@ -1,56 +1,87 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [PATCH] Install git-sh-setup.sh into $(prefix)/share/git-core. Call with explicit path.
-Date: Sat, 9 Dec 2006 02:11:03 +0700
-Message-ID: <fcaeb9bf0612081111h53699ecbr5fb72e17526993d5@mail.gmail.com>
-References: <elc6g3$v1m$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Merging five months of Linux kernel history
+Date: Sun, 29 Oct 2006 12:34:53 -0800
+Message-ID: <7vhcxm274i.fsf@assigned-by-dhcp.cox.net>
+References: <20061029193228.GR26271@lug-owl.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 8 Dec 2006 19:11:13 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 29 Oct 2006 20:35:03 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=T8fIsvJIz6G1jXiasGRAAwEfLiFL7iX5mR/l+gOyqk12hoXx1xSc4wxTQW4kP3Mnbt5O4KeJsbMDZz4kYFaJ4gjDwUqDtUlmzRpCa1zrsOEZFQjid27tDQyB958TTVBczEa5bBGIcJtMozxBhKVpNa/clPUOItrNVQspc1Z3gv0=
-In-Reply-To: <elc6g3$v1m$1@sea.gmane.org>
-Content-Disposition: inline
+In-Reply-To: <20061029193228.GR26271@lug-owl.de> (Jan-Benedict Glaw's message
+	of "Sun, 29 Oct 2006 20:32:28 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33721>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gsl7n-0006d7-Dl for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 20:11:11 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30456>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GeHMw-0006ll-AK for gcvg-git@gmane.org; Sun, 29 Oct
+ 2006 21:35:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967775AbWLHTLH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 14:11:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968827AbWLHTLG
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 14:11:06 -0500
-Received: from wr-out-0506.google.com ([64.233.184.231]:32019 "EHLO
- wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S967775AbWLHTLF (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec
- 2006 14:11:05 -0500
-Received: by wr-out-0506.google.com with SMTP id i7so1112490wra for
- <git@vger.kernel.org>; Fri, 08 Dec 2006 11:11:05 -0800 (PST)
-Received: by 10.78.201.15 with SMTP id y15mr1787637huf.1165605063332; Fri, 08
- Dec 2006 11:11:03 -0800 (PST)
-Received: by 10.78.118.16 with HTTP; Fri, 8 Dec 2006 11:11:03 -0800 (PST)
-To: git@vger.kernel.org
+ S1030195AbWJ2Uez (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 15:34:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030197AbWJ2Uez
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 15:34:55 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:4228 "EHLO
+ fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S1030195AbWJ2Uez
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 15:34:55 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao03.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061029203454.NUOS2704.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>; Sun, 29
+ Oct 2006 15:34:54 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id gLay1V00c1kojtg0000000 Sun, 29 Oct 2006
+ 15:34:58 -0500
+To: Jan-Benedict Glaw <jbglaw@lug-owl.de>
 Sender: git-owner@vger.kernel.org
 
-On 12/9/06, Han-Wen Nienhuys <hanwen@xs4all.nl> wrote:
->
-> git-sh-setup isn't a 'normal' binary, in that it should be called by
-> bash only and not run in a subshell. Therefore, it should not be installed
-> in a executable directory, but rather in $prefix/share/git-core/
+Jan-Benedict Glaw <jbglaw@lug-owl.de> writes:
 
-Executables should not go to $prefix/share I think. Maybe $prefix/libexec?
-BTW, I think you touched a larger issue: plumbling/porcelain separation.
--- 
+> Hi!
+>
+> Due to a move to a new flat and other reasons, I wasn't able to
+> do daily merges from Linus's tree into our vax-linux tree.
+> My time situation has improved and I want to merge all the new
+> and shiny stuff, but it seems a straight "git pull" isn't the
+> best way to do that.
+>
+> What I'd actually love to do is to go through all commits since the
+> last merge and pull/accept/cherry-pick then one by one.  That way I'll
+> learn about new stuff. I'll specifically see generic changes that
+> imply arch-specific stuff, things I'll need to implement later on.
+>
+> Is there any sane way to cluse such a large gap?  I don't mind looking
+> through tenthousands of commits, as long as I get a chance to spot
+> "important" ones.
+
+I think the best way is:
+
+	git pull
+        git log ORIG_HEAD..
+
+The latter would give your ten thousands of commits to inspect.
+
+If the pull results in a conflict, then
+
+	git pull
+	git log --merge
+
+	... fix conflicts ...
+	git commit
+        git log ORIG_HEAD..
+
+Since ORIG_HEAD is transient, and you probably would want to
+revisit the list of these ten thousands of commits later, it
+might make sense to do
+
+	git tag WHERE_WE_WERE
+
+before "git pull" in either case.
+
