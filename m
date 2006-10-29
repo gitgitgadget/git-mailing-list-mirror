@@ -1,93 +1,67 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Using GIT to store /etc (Or: How to make GIT store all file
- permission bits)
-Date: Wed, 13 Dec 2006 13:10:01 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0612131156500.20138@iabervon.org>
-References: <787BE48C-1808-4A33-A368-5E8A3F00C787@mac.com>
- <Pine.LNX.4.64.0612111837210.20138@iabervon.org> <8900B938-1360-4A67-AB15-C9E84255107B@mac.com>
+From: "Matthew D. Fuller" <fullermd@over-yonder.net>
+Subject: Re: VCS comparison table
+Date: Sun, 29 Oct 2006 12:24:54 -0600
+Message-ID: <20061029182454.GT17019@over-yonder.net>
+References: <200610270202.k9R22Wxf004208@laptop13.inf.utfsm.cl> <4541D291.5020205@op5.se> <20061027144656.GA32451@fieldses.org> <m3mz7gheoe.fsf@iny.iki.fi> <ehvnal$tjg$1@sea.gmane.org> <m3fyd77gsn.fsf@iny.iki.fi> <ei2563$m1u$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 13 Dec 2006 18:16:53 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 29 Oct 2006 18:25:25 +0000 (UTC)
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Dec 2006 13:16:42 EST
-In-Reply-To: <8900B938-1360-4A67-AB15-C9E84255107B@mac.com>
+Content-Disposition: inline
+In-Reply-To: <ei2563$m1u$1@sea.gmane.org>
+X-Editor: vi
+X-OS: FreeBSD <http://www.freebsd.org/>
+User-Agent: Mutt/1.5.11-fullermd.3
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34228>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuYet-0003ty-D1 for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 19:16:47 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30436>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GeFLO-00026R-MS for gcvg-git@gmane.org; Sun, 29 Oct
+ 2006 19:25:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932556AbWLMSQo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 13:16:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932652AbWLMSQo
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 13:16:44 -0500
-Received: from iabervon.org ([66.92.72.58]:4151 "EHLO iabervon.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932556AbWLMSQn
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006 13:16:43 -0500
-Received: (qmail 29606 invoked by uid 1000); 13 Dec 2006 13:10:01 -0500
-Received: from localhost (sendmail-bs@127.0.0.1) by localhost with SMTP; 13
- Dec 2006 13:10:01 -0500
-To: Kyle Moffett <mrmacman_g4@mac.com>
+ S965319AbWJ2SY5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 13:24:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965325AbWJ2SY5
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 13:24:57 -0500
+Received: from ns.centralmiss.com ([206.156.254.79]:11971 "EHLO
+ optimus.centralmiss.com") by vger.kernel.org with ESMTP id S965323AbWJ2SY4
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 13:24:56 -0500
+Received: from draco.over-yonder.net
+ (adsl-072-148-013-213.sip.jan.bellsouth.net [72.148.13.213]) (using TLSv1
+ with cipher ADH-AES256-SHA (256/256 bits)) (No client certificate requested)
+ by optimus.centralmiss.com (Postfix) with ESMTP id C984228430; Sun, 29 Oct
+ 2006 12:24:54 -0600 (CST)
+Received: by draco.over-yonder.net (Postfix, from userid 100) id 44F5E61C52;
+ Sun, 29 Oct 2006 12:24:54 -0600 (CST)
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On Tue, 12 Dec 2006, Kyle Moffett wrote:
+On Sun, Oct 29, 2006 at 01:01:07PM +0100 I heard the voice of
+Jakub Narebski, and lo! it spake thus:
+> 
+> Branch-centric and repo-centric SCM promote different workflows,
+> namely parallel uncommited work on few development branches for
+> branch-centric SCM, one-change per-commit multiple temporary and
+> feature branches for repo-centric SCM.
 
-> Hmm, ok.  It would seem to be a reasonable requirement that if you want to
-> change any of the "preserve_*_attributes" config options you need to blow away
-> and recreate your index, no?  I would probably change the underlying index
-> format pretty completely and stick a new version tag inside it.
+I don't think that follows at all.
 
-You should be able to promote an insufficient-version index to a 
-new-version index that's needs to be refreshed for every entry. (And then 
-update-index would take care of the necessary rewrite-everything in the 
-normal way). But I suspect that the right thing is to require that the 
-repository be created with a "commits-include-directories-not-trees" flag, 
-and this means that you always use the extra-detailed index, and the 
-options only affect what information is filtered out in transit between 
-the directory object and the index. Having more information in the index 
-is merely a potential waste of space, not a correctness issue (we have 
-extra information for trees in the index now, remember); it just means 
-that there are more things that will cause git to reread the file, rather 
-than declaring it unchanged with a stat().
 
-For that matter, it may be best for the directory objects to record what 
-information in them is real, and keep the "what's content" mask in the 
-index as well. If it changes over the history of a repository, you want to 
-correctly interpret the historical commits.
+> Do you really often compile and run other branch while developing on
+> other?
 
-> Ok, seems straightforward enough.  One other thing that crossed my mind was
-> figuring out how to handle hardlinks.  The simplest solution would be to add
-> an extra layer of indirection between the "file inode" and the "file data".
-> Instead of your directory pointing to a "file-data" blob and "file-attributes"
-> object, it would point to an "file-inode" object with embedded attribute data
-> and a pointer to the file contents blob.
->
-> I remember reading some discussions from the early days of GIT about how that
-> was considered and discarded because the extra overhead wouldn't give any real
-> tangible benefit.  On the other hand for something like /etc the added
-> benefits of tracking extended attributes and hardlinks might outweigh the cost
-> of a bunch of extra objects in the database.  A bit of care with the
-> construction of the index file should make it sufficiently efficient for
-> day-to-day usage.
+Yes.  And I do the same with older revisions along a given branch too,
+where is where [lightweight] checkouts come in handy.
 
-I was thinking this could be internal to the directory object, but you 
-probably want to support hardlinks shared between dentries in different 
-directory objects, so you're probably right that this makes sense. 
 
-Alternatively, you could use a single "directory" object for the whole 
-state (including subdirectories), making hardlinks out of the object 
-clearly impossible, or you could use some scheme for sharing 
-sub-"directory" objects that would imply that hardlinks are within an 
-object (the hard part here is finding things when their locations aren't 
-predictable by name).
-
-	-Daniel
+-- 
+Matthew Fuller     (MF4839)   |  fullermd@over-yonder.net
+Systems/Network Administrator |  http://www.over-yonder.net/~fullermd/
