@@ -1,55 +1,81 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,BODY_URI_ONLY,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Kir Kolyshkin <kir@openvz.org>
-Subject: Re: [PATCH] gitweb: make HTML links out of http/https URLs in changelogs
-Date: Wed, 22 Nov 2006 12:00:05 +0300
-Message-ID: <45641195.2000804@openvz.org>
-References: <4563777C.4050108@openvz.org> <20061122000655.GJ7201@pasky.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=KOI8-R; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 22 Nov 2006 09:00:27 +0000 (UTC)
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [StGIT PATCH] Bash snippet to show branch and patch in bash prompt
+Date: Mon, 30 Oct 2006 00:37:45 +0100
+Message-ID: <20061029233745.24899.1470.stgit@lathund.dewire.com>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
+NNTP-Posting-Date: Sun, 29 Oct 2006 23:36:46 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061109)
-In-Reply-To: <20061122000655.GJ7201@pasky.or.cz>
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0rc6 (sacred.ru [62.205.161.221]); Wed, 22 Nov 2006 11:57:37 +0300 (MSK)
+X-Virus-Scanned: amavisd-new at localhost.localdomain
+User-Agent: StGIT/0.10
+X-Virus-Scanned: by amavisd-new at dewire.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30473>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gmnxr-0002Jk-Bw for gcvg-git@gmane.org; Wed, 22 Nov
- 2006 10:00:19 +0100
+ esmtp (Exim 4.43) id 1GeKCk-0006Nn-HE for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 00:36:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161982AbWKVJAP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
- 04:00:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161998AbWKVJAO
- (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 04:00:14 -0500
-Received: from [62.205.161.221] ([62.205.161.221]:19400 "EHLO sacred.ru") by
- vger.kernel.org with ESMTP id S1161995AbWKVJAN (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 04:00:13 -0500
-Received: from [10.1.11.22] (darnet.ru [213.152.157.70] (may be forged))
- (authenticated bits=0) by sacred.ru (8.13.7/8.13.7) with ESMTP id
- kAM8vZIx032663 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
- verify=NO); Wed, 22 Nov 2006 11:57:36 +0300
-To: Petr Baudis <pasky@suse.cz>
+ S1030431AbWJ2Xgg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 18:36:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030452AbWJ2Xgg
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 18:36:36 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:13855 "EHLO
+ torino.dewire.com") by vger.kernel.org with ESMTP id S1030431AbWJ2Xgf (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 18:36:35 -0500
+Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
+ (Postfix) with ESMTP id 339328030A5; Mon, 30 Oct 2006 00:33:18 +0100 (CET)
+Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 23306-07; Mon, 30 Oct
+ 2006 00:33:17 +0100 (CET)
+Received: from lathund.dewire.com (unknown [10.9.0.2]) by torino.dewire.com
+ (Postfix) with ESMTP id D89B78003E1; Mon, 30 Oct 2006 00:33:15 +0100 (CET)
+Received: from localhost (lathund.dewire.com [127.0.0.1]) by
+ lathund.dewire.com (Postfix) with ESMTP id D264928E5B; Mon, 30 Oct 2006
+ 00:37:48 +0100 (CET)
+Received: from lathund.dewire.com ([127.0.0.1]) by localhost
+ (lathund.dewire.com [127.0.0.1]) (amavisd-new, port 10025) with LMTP id
+ xpvfz6k1OYMA; Mon, 30 Oct 2006 00:37:45 +0100 (CET)
+Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1]) by
+ lathund.dewire.com (Postfix) with ESMTP id 9BC8928E54; Mon, 30 Oct 2006
+ 00:37:45 +0100 (CET)
+To: catalin.marinas@arm.com
 Sender: git-owner@vger.kernel.org
 
-Petr Baudis wrote:
-> On Tue, Nov 21, 2006 at 11:02:36PM CET, Kir Kolyshkin wrote:
->   
->> Slightly tested on http://git.openvz.org/. Applicable to git-1.4.4.
->>     
->
-> ...but in git's gitweb view it will make this <a
-> href="http://git.openvz.org/.">http://git.openvz.org/.</a>. :-)
-Not a problem actually since "." means "current directory", so it will 
-work fine (and I have checked that) :)
-Sure there is a room for improvement for this regex -- and I am 
-collecting those.
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
 
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+
+ contrib/stgbashprompt.sh |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
+
+diff --git a/contrib/stgbashprompt.sh b/contrib/stgbashprompt.sh
+new file mode 100755
+index 0000000..792da53
+--- /dev/null
++++ b/contrib/stgbashprompt.sh
+@@ -0,0 +1,16 @@
++# include this in your bashrc or copy to /etc/bash_completions.d
++
++if [ "$PS1" ]; then
++    # trap 'PS1="\u@\h [$(stg top)] \w]\$ "' DEBUG
++    function stgtag
++    {
++	br=$(stg branch 2>/dev/null)
++	top=$(stg top 2>/dev/null)
++	if [[ -n "$br$top" ]];then
++	    echo "[$top@$br]"
++	    return
++	fi
++    }
++    PS1='\u@\h$(stgtag)\w\$ '
++
