@@ -1,62 +1,92 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH 2/2] git-svn: don't die on rebuild when --upgrade is specified
-Date: Sat,  4 Nov 2006 21:51:11 -0800
-Message-ID: <11627058733587-git-send-email-normalperson@yhbt.net>
-References: <11627058712379-git-send-email-normalperson@yhbt.net>
-NNTP-Posting-Date: Sun, 5 Nov 2006 05:51:31 +0000 (UTC)
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: fetching packs and storing them as packs
+Date: Sun, 29 Oct 2006 00:38:19 -0400
+Message-ID: <20061029043818.GA3650@spearce.org>
+References: <Pine.LNX.4.64.0610271310450.3849@g5.osdl.org> <7v3b99e87c.fsf@assigned-by-dhcp.cox.net> <20061028034206.GA14044@spearce.org> <Pine.LNX.4.64.0610272109500.3849@g5.osdl.org> <7vwt6l9etn.fsf@assigned-by-dhcp.cox.net> <20061028072146.GB14607@spearce.org> <20061028084001.GC14607@spearce.org> <7vfyd88d6s.fsf@assigned-by-dhcp.cox.net> <20061029035025.GC3435@spearce.org> <7vejsr68y9.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 29 Oct 2006 04:38:42 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Mailer: git-send-email 1.4.3.3.ga126
-In-Reply-To: <11627058712379-git-send-email-normalperson@yhbt.net>
+Content-Disposition: inline
+In-Reply-To: <7vejsr68y9.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30413>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Ggaub-00077U-Pv for gcvg-git@gmane.org; Sun, 05 Nov
- 2006 06:51:18 +0100
+ esmtp (Exim 4.43) id 1Ge2RM-0000GR-3l for gcvg-git@gmane.org; Sun, 29 Oct
+ 2006 05:38:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161058AbWKEFvQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
- 00:51:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161096AbWKEFvP
- (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 00:51:15 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:9386 "EHLO hand.yhbt.net") by
- vger.kernel.org with ESMTP id S1161058AbWKEFvO (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 00:51:14 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
- (Postfix) with SMTP id 8046B2DC035; Sat,  4 Nov 2006 21:51:13 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 04 Nov 2006
- 21:51:13 -0800
+ S964990AbWJ2EiX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 00:38:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965000AbWJ2EiX
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 00:38:23 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:56793 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S964990AbWJ2EiW
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 00:38:22 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Ge2RU-00026a-AZ; Sun, 29 Oct 2006 00:38:40 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 5467020E45B; Sun, 29 Oct 2006 00:38:19 -0400 (EDT)
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
---copy-remote and --upgrade are rarely (never?) used together,
-so if --copy-remote is specified, that means the user really
-wanted to copy the remote ref, and we should fail if that fails.
+Junio C Hamano <junkio@cox.net> wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
+> 
+> > The issue is --unpacked= uses the path of the pack name, which
+> > includes $GIT_OBJECT_DIRECTORY, whatever that may be.  This makes it
+> > impossible for the shell script to hand through a proper --unpacked=
+> > line for the active packs without including $GIT_OBJECT_DIRECTORY
+> > as part of the option.
+> 
+> Yeah, I realize that; you need to know how to build shell script
+> that is properly shell quoted to be eval'ed, which is not hard
+> but is not usually done and is cumbersome.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- git-svn.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Too much work.  :-)
 
-diff --git a/git-svn.perl b/git-svn.perl
-index cc3335a..4a56f18 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -3139,7 +3139,7 @@ sub copy_remote_ref {
- 	my $ref = "refs/remotes/$GIT_SVN";
- 	if (safe_qx('git-ls-remote', $origin, $ref)) {
- 		sys(qw/git fetch/, $origin, "$ref:$ref");
--	} else {
-+	} elsif ($_cp_remote && !$_upgrade) {
- 		die "Unable to find remote reference: ",
- 				"refs/remotes/$GIT_SVN on $origin\n";
- 	}
+> I would suspect it is probably easier to just say --unpacked
+> (without packname) means "unpacked objects, and objects in packs
+> that do not have corresponding .keep".  However, that would be a
+> change in semantics for --unpacked (without packname), which is
+> not nice.
+> 
+> So how about pack-X{40}.volatile that marks an eligible one for
+> repacking?
+
+Then anyone who has an existing pack would need to create that
+file first as soon as they got this newer version of Git... not
+very upgrade friendly if you ask me.
+ 
+> Then we can make "pack-objects --unpacked" to pretend the ones
+> with corresponding .volatile as if the objects in them are
+> loose, without breaking backward compatibility.
+
+Currently I'm changing --unpacked= to match without needing quoting.
+I'm allowing it to match an exact pack name or if it starts with
+"pack-" and matches the last 50 ("pack-X{40}.pack") of the pack name.
+
+I figure this should work fine as probably anyone who has a pack
+name that matches 50 characters and starts with "pack-" is using a
+pack file name which has the SHA1 of the object list contained in
+it and is thus probably unique.
+ 
 -- 
-1.4.3.3.ga126
