@@ -4,115 +4,118 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Catalin Marinas <catalin.marinas@arm.com>
-Subject: Re: StGIT and rerere
-Date: Thu, 26 Oct 2006 17:34:12 +0100
-Message-ID: <tnxu01r2fzv.fsf@arm.com>
-References: <200610210039.10215.robin.rosenberg.lists@dewire.com>
-Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: [PATCH 2/3] Only repack active packs by skipping over kept packs.
+Date: Sun, 29 Oct 2006 04:37:54 -0500
+Message-ID: <20061029093754.GD3847@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 26 Oct 2006 16:35:15 +0000 (UTC)
+NNTP-Posting-Date: Sun, 29 Oct 2006 09:38:04 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200610210039.10215.robin.rosenberg.lists@dewire.com> (Robin
- Rosenberg's message of "Sat, 21 Oct 2006 00:39:09 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 26 Oct 2006 16:34:14.0573 (UTC) FILETIME=[92E835D0:01C6F91C]
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30421>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd8Bm-0002Gt-PJ for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 18:34:43 +0200
+ esmtp (Exim 4.43) id 1Ge77B-00081R-6b for gcvg-git@gmane.org; Sun, 29 Oct
+ 2006 10:38:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161434AbWJZQe3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 12:34:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161436AbWJZQe3
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 12:34:29 -0400
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:20909 "EHLO
- cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP id
- S1161434AbWJZQe2 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006
- 12:34:28 -0400
-Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.255.63]) by
- cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id k9QGYEQb006451;
- Thu, 26 Oct 2006 17:34:14 +0100 (BST)
-Received: from localhost.localdomain ([10.1.255.211]) by
- cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0); Thu, 26 Oct 2006
- 17:34:14 +0100
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+ S932134AbWJ2Jh6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 04:37:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932135AbWJ2Jh6
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 04:37:58 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:45962 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S932134AbWJ2Jh5
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 04:37:57 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Ge77M-0002wE-Aw; Sun, 29 Oct 2006 04:38:12 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 4E67120E45B; Sun, 29 Oct 2006 04:37:54 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> It seems stgit does not use git-rerere, so why not? Any reason other
-> than it hasn't been done yet?
+During `git repack -a -d` only repack objects which are loose or
+which reside in an active (a non-kept) pack.  This allows the user
+to keep large packs as-is without continuous repacking and can be
+very helpful on large repositories.  It should also help us resolve
+a race condition between `git repack -a -d` and the new pack store
+functionality in `git-receive-pack`.
 
-I didn't know it exists. I've been thinking at a way to avoid
-duplicating the conflict fixing but haven't got to any results. This
-looks like a good idea.
+Kept packs are those which have a corresponding .keep file in
+$GIT_OBJECT_DIRECTORY/pack.  That is pack-X.pack will be kept
+(not repacked and not deleted) if pack-X.keep exists in the same
+directory when `git repack -a -d` starts.
 
-> I abuse stgit heavily, by frequently reording patches, which for
-> some patches result in re-occuring conflicts. git-rerere seems to be
-> the solution.
+Currently this feature is not documented and there is no user
+interface to keep an existing pack.
 
-My problem was with maintaining a public branch where re-basing
-patches is not welcomed but I would still like to use StGIT in my
-development branch. When pulling from upstream in my devel branch, I
-get conflicts in some patches. The problem is that I get the same
-conflicts in the patches already merged in the public branch where the
-patches were previously checked in.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ git-repack.sh |   27 +++++++++++++++++----------
+ 1 files changed, 17 insertions(+), 10 deletions(-)
 
-Another case is several branches with common patches that generate
-conflicts.
-
-> What's the "rules" for when to invoke rerere? It seems it is mostly
-> automatic in git, but since only the porcelainish commands use it,
-> that means StGIT doesn't.
-
-It could probably be invoked by stgit.git.merge() if the git-read-tree
-(and maybe the diff3 merge) failed (BTW, I replaced git-read-tree with
-git-recursive-merge in my local tree and seems to detect renames
-properly; I'll push it once I'm convinced there are no problems).
-
-Note, however, that I haven't looked at how git-rerere works and I
-might have misunderstood its functionality.
-
-> So here is what I *think* needs to be done. Seems simple enough.
->
-> stg push, stg pick, stg import, stg goto, stg fold, stg float do
-> what push does and invoke git-rerere at the end whether the push
-> ends with conflicts or not
-
-the git.merge() function handles all the merges.
-
-> stg pop
-> 	nothing, or do I need to remove rr-cache/MERGE_RR, like
-> git-reset does?
-
-I think pop shouldn't do anything.
-
-> stg status --reset, stg push --undo
-> 	remove rr-cache/MERGE_RR ?
-
-Yes (not sure for push --undo).
-
-> stg refresh
-> 	do what stgit does normally and then invoke git-rerere
-
-Why should it invoke git-rerere? This just creates a commit. Or is it
-needed for storing rerere ids?
-
-> stg resolved:
-> 	do what stgit does normally and then invoke git-rerere
-
-No need to call rerere here since resolved is an StGIT-only function,
-it doesn't affect the repository (it just unmarks the conflict files
-so that stgit allows you to refresh).
-
-> stg clean, stge delete:
-> 	remove rr-cache/MERGE_RR ?
-
-That's not needed. Delete can act like pop for the top patch.
-
+diff --git a/git-repack.sh b/git-repack.sh
+index 17e2452..f150a55 100755
+--- a/git-repack.sh
++++ b/git-repack.sh
+@@ -45,11 +45,19 @@ case ",$all_into_one," in
+ 	args='--unpacked --incremental'
+ 	;;
+ ,t,)
+-	args=
+-
+-	# Redundancy check in all-into-one case is trivial.
+-	existing=`test -d "$PACKDIR" && cd "$PACKDIR" && \
+-	    find . -type f \( -name '*.pack' -o -name '*.idx' \) -print`
++	if [ -d "$PACKDIR" ]; then
++		for e in `cd "$PACKDIR" && find . -type f -name '*.pack' \
++			| sed -e 's/^\.\///' -e 's/\.pack$//'`
++		do
++			if [ -e "$PACKDIR/$e.keep" ]; then
++				: keep
++			else
++				args="$args --unpacked=$e.pack"
++				existing="$existing $e"
++			fi
++		done
++	fi
++	[ -z "$args" ] && args='--unpacked --incremental'
+ 	;;
+ esac
+ 
+@@ -86,17 +94,16 @@ fi
+ 
+ if test "$remove_redundant" = t
+ then
+-	# We know $existing are all redundant only when
+-	# all-into-one is used.
+-	if test "$all_into_one" != '' && test "$existing" != ''
++	# We know $existing are all redundant.
++	if [ -n "$existing" ]
+ 	then
+ 		sync
+ 		( cd "$PACKDIR" &&
+ 		  for e in $existing
+ 		  do
+ 			case "$e" in
+-			./pack-$name.pack | ./pack-$name.idx) ;;
+-			*)	rm -f $e ;;
++			pack-$name) ;;
++			*)	rm -f "$e.pack" "$e.idx" "$e.keep" ;;
+ 			esac
+ 		  done
+ 		)
 -- 
+1.4.3.3.g7d63
