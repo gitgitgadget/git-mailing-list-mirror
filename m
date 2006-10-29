@@ -1,77 +1,159 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Mon, 18 Dec 2006 09:17:44 +0000
-Message-ID: <200612180917.46214.andyparkins@gmail.com>
-References: <7vodq3a136.fsf@assigned-by-dhcp.cox.net> <200612172341.27709.andyparkins@gmail.com> <7vac1l1v8e.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH/RFC] gitweb: New improved patchset view
+Date: Sun, 29 Oct 2006 11:55:54 -0800 (PST)
+Message-ID: <20061029195554.77410.qmail@web31813.mail.mud.yahoo.com>
+References: <200610291850.46321.jnareb@gmail.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 18 Dec 2006 09:18:10 +0000 (UTC)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Sun, 29 Oct 2006 19:56:05 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Oy/Pm3KNCDBs/MwFO+UVSuurP+SMEuxFSuazisqIZfldqquKesqIa8S5TXPb2K4G3LQ5spLa3khj4E6xd27jMDpSi7QeWnVtCssL0iuJikO2aMaJBFLPlSL3RS3WuPG8Vx59rEEo9kTOUDuLkOVDEfGuBcxjQLKBzSGhk3QYQfk=
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vac1l1v8e.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+  s=s1024; d=yahoo.com;
+  h=Message-ID:X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=imUk+umCK6MfNM6L6SdfoK0tOa5JwmChkNbLlxQmmiTaFuiu/oHWxE666mlhGA8LzhQZGz+R7BnWFig3ml6imXrc/2aQonRXbUEBb+dcCRlJuYaxMYY7dhhMcH4AnCP1YPbtl8/OJqeMeVDg/yzOmCSlRCn3+W59khCnB8SiX1U=  ;
+X-YMail-OSG: m4lfG8oVM1kC2Br2IRoBkTr09NEVRJIdiIp7FGBsnInFfM5hPIt3k1YUw9kz1CkK47Llgup7H3_SXOSWA1rz7Mr2Xx9VUHHrr2pzgTC3YzHBv_2UlpoGid6jT2xVVQKAq8dIh6FXgDM-
+In-Reply-To: <200610291850.46321.jnareb@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34731>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwEdL-0004AZ-UR for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 10:18:08 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30449>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GeGlC-0005jf-QV for gcvg-git@gmane.org; Sun, 29 Oct
+ 2006 20:55:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753593AbWLRJSE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
- 04:18:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753594AbWLRJSE
- (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 04:18:04 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:36152 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1753593AbWLRJSC (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec
- 2006 04:18:02 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1444722uga for
- <git@vger.kernel.org>; Mon, 18 Dec 2006 01:18:00 -0800 (PST)
-Received: by 10.67.100.17 with SMTP id c17mr4719367ugm.1166433470322; Mon, 18
- Dec 2006 01:17:50 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id b23sm8837255ugd.2006.12.18.01.17.49; Mon, 18 Dec 2006 01:17:49 -0800
- (PST)
-To: git@vger.kernel.org
+ S965360AbWJ2Tzz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 14:55:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932326AbWJ2Tzz
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 14:55:55 -0500
+Received: from web31813.mail.mud.yahoo.com ([68.142.207.76]:18003 "HELO
+ web31813.mail.mud.yahoo.com") by vger.kernel.org with SMTP id
+ S1751814AbWJ2Tzy (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006
+ 14:55:54 -0500
+Received: (qmail 77412 invoked by uid 60001); 29 Oct 2006 19:55:54 -0000
+Received: from [71.80.233.118] by web31813.mail.mud.yahoo.com via HTTP; Sun,
+ 29 Oct 2006 11:55:54 PST
+To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Monday 2006 December 18 08:09, Junio C Hamano wrote:
+--- Jakub Narebski <jnareb@gmail.com> wrote:
+> A couple of questions regarding new patchset/diff look for gitweb.
+> Currently patch starts with "git diff" header
+> 
+>   diff --git a/file1 b/file2
+> 
+> then we have a couple of extended header lines
+> 
+>   old|new|deleted file|new file mode <mode>
+>   copy|rename from|to <path>
+>   (dis)?similarity index <percent>
+>   index <hash>..<hash> [<mode>]
+> 
+> then we have two-line from-file/to-file header
 
-> By definition each reflog entry says "it was pointing at this
-> object before, and it was changed by this user to point at that
-> object at this time and the reason for the change was this".
+First revert back to monospace in the commit message.
+As I mentioned in that other email, where the person
+didn't CC you and thus so I didn't, see commit 
+4b7ce6e2d6ba088da50de1df38b040ea2c0b8f18.
 
-I'm daft.  I've realised, pruning doesn't remove the ref, it removes one of 
-the hashes in the reflog.  I withdraw my comment.
+Can you please hyperlink what you had intended to
+quote?  I.e. filenames which can lead the user browsing to a
+state (pre-rename, post-rename, etc).  Thanks.
 
-I'd imagined it' as the opposite of a creation.
+> 
+>   --- a/file1
+>   +++ b/file2
+> 
+> then patch itself.
+> 
+> 
+> 1. Which parts to convert to hyperlinks, and which to do not? Which
+>    links have visible and which hidden (underline on mouseover, the same
+>    color as neighbouring text)?
 
-000000 abcdef  branch created
-abcdef 000000  branch deleted
+I think the current state of your patch is good, sans the comments
+received so far: monospace, that bug in the index links, etc.
+Lets get that in, and then you can RFC another improvement on top of this.
 
-Which is fine, except that isn't what prune is doing at all.
+>    I think that a/file1 in "git diff" header should be turned into
+>    visible hyperlink unless file is created, and b/file2 should be link
+>    unless file is deleted.
 
-> I personally do not think recording "at this point these things
-> were pruned" makes _any_ sense whatsoever --- if you care about
+This is intuitive and makes sense.
 
-I think you're right. :-)
+>    Also both <hash>-es in "index" extended header lines should be turned
+>    into links, as it is the only way to have hyperlink to all previou
+
+Fix the bug though.
+
+>    versions of the file in the case of "combined diff" format (to be
+>    added later). The question is if those hyperlinks should be visible;
+
+I personally love little hidden gems, but some people like everything
+to be overly obvious to them.  Hidden gems are part of the learning,
+but I'm sure I'm not going to convince everyone.
+
+Hidden.
+
+>    I don't have compelling reason against. Should we use title attribute
+>    to give filename perhaps, or is it unnecessary?
+> 
+>    Currently file1 and file2 in "--- a/file1" and "+++ b/file2" are
+>    turned into hidden links. Should we leave it, or should we remove
+>    this link as we have similar link just above? If we decide to have
+
+Leave it -- it's cool.
+
+>    this link, should we also hyperlink <path> in "copy|rename" extended
+>    header line?
+
+If it makes sense.
+
+> 2. Use quoted or unquoted filename, remove or leave surrounding quotes
+>    in quoted filename? Should we unquote the not hyperlinked filename
+
+Are you familiar with the term "legalism"?
+
+>    in the case of creation/deletion? What should be span of link:
+>      "a/_file1_", "_a/file1_", _"a/file1"_
+>      "_file_", _"file"_ 
+>    (where '_' marks beginning and end of link) for quoted filenames?
+>    What should be span of link for unquoted filenames:
+>       a/_file_, _a/file_
+>    Currently gitweb uses a/_file_ in ---/+++ line.
+
+Unquoted!  Now that we've solved this "problem", lets move on to more
+interesting things. ;-)
+
+> 3. How (and if) to explain numerical mode: the currently used
+
+Let's not explain it for now.  Let's have your patch go in sans the
+comments already posted.  We can always debate on that later.
+
+Thanks,
+   Luben
 
 
-Andy
-
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
+>    <mode>/<symbolic mode> (<file type>) e.g. 100755/-rwxr-xr-x (file).
+>    Or <mode> (<file type>) should be enough? Should we mark the addition
+>    compared to git-diff output? Or should we explain <mode> only on
+>    mouseover, using for example:
+>      <abbr title="100644/-rw-r--r-- (file)">100644</abbr>
+>    or just
+>      <abbr title="executable file">100755</abbr>?
+> -- 
+> Jakub Narebski
+> Poland
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
