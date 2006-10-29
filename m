@@ -1,79 +1,107 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [RFC] Submodules in GIT
-Date: Thu, 30 Nov 2006 15:30:49 +0000
-Message-ID: <200611301530.51171.andyparkins@gmail.com>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611301449.55171.andyparkins@gmail.com> <20061130152011.GM12463MdfPADPa@greensroom.kotnet.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 30 Nov 2006 15:31:17 +0000 (UTC)
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: Re: Generating docu in 1.4.3.3.g01929
+Date: Sun, 29 Oct 2006 16:03:36 -0300
+Message-ID: <200610291903.k9TJ3am7017976@laptop13.inf.utfsm.cl>
+References: <junkio@cox.net>
+NNTP-Posting-Date: Sun, 29 Oct 2006 19:05:52 +0000 (UTC)
+Cc: Sean <seanlkml@sympatico.ca>, git@vger.kernel.org,
+	"Horst H. von Brand" <vonbrand@inf.utfsm.cl>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=jU5eVTbZlQJXr1Z/sR6ET9hYYYfjVGlef2pnxJoJcXR3aO+Y+AUEhC5oJSCnwHdlatBZJhF7ZiXAIKqcggh40ht1s2Facj0jIwIa9fQSTYsiuE/X0ngExAgmMH01184T42TdDV4sZK439YUOMwRvNw1PFM7+2nnh6hmrFiRJJuA=
-User-Agent: KMail/1.9.5
-In-Reply-To: <20061130152011.GM12463MdfPADPa@greensroom.kotnet.org>
-Content-Disposition: inline
+In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
+   of "Sat, 28 Oct 2006 12:04:24 PDT." <7vmz7g8don.fsf@assigned-by-dhcp.cox.net> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.19.1]); Sun, 29 Oct 2006 16:03:40 -0300 (CLST)
+X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30439>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpnsL-0003Je-Qp for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 16:31:02 +0100
+ esmtp (Exim 4.43) id 1GeFyK-0002Ns-17 for gcvg-git@gmane.org; Sun, 29 Oct
+ 2006 20:05:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030511AbWK3Pa5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 10:30:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030513AbWK3Pa5
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 10:30:57 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:56733 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1030511AbWK3Pa4
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 10:30:56 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so2145058uga for
- <git@vger.kernel.org>; Thu, 30 Nov 2006 07:30:55 -0800 (PST)
-Received: by 10.67.121.15 with SMTP id y15mr5541053ugm.1164900655352; Thu, 30
- Nov 2006 07:30:55 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id i39sm19891915ugd.2006.11.30.07.30.54; Thu, 30 Nov 2006 07:30:54
- -0800 (PST)
-To: git@vger.kernel.org
+ S932429AbWJ2TFR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 14:05:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932428AbWJ2TFR
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 14:05:17 -0500
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:1414 "EHLO
+ inti.inf.utfsm.cl") by vger.kernel.org with ESMTP id S932429AbWJ2TFQ (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 14:05:16 -0500
+Received: from laptop13.inf.utfsm.cl (pc-232-245-83-200.cm.vtr.net
+ [200.83.245.232]) by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id
+ k9TJ3cAQ025050 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
+ verify=NO); Sun, 29 Oct 2006 16:03:39 -0300
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1]) by
+ laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id k9TJ3am7017976; Sun, 29
+ Oct 2006 16:03:36 -0300
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Thursday 2006 November 30 15:20, Sven Verdoolaege wrote:
+Junio C Hamano <junkio@cox.net> wrote:
 
-> You can work on the submodule independently.
+[...]
 
-It's not independent if any part of it is in the supermodule.
+> and here is what I have:
+> 
+>    asciidoc-7.0.2-3.fc6
+>    xmlto-0.0.18-13.1
+>    python-2.4.3-18.fc6
+>    docbook-dtds-1.0-30.1
+>    package docbook-xsl is not installed
+>    flex-2.5.4a-41.fc6
+>    libxslt-1.1.17-1.1
+>    passivetex-1.25-5.1.1
+>    util-linux-2.13-0.44.fc6
+>    w3m-0.5.1-14.1
 
-> > some of the development of the submodule is contained in the supermodule
-> > then it's not a submodule anymore.
->
-> On the contrary, that's exactly what a submodule is supposed to be.
+I've got:
 
-I don't think so.  I think it's just made some complicated normal repository.
+asciidoc-7.0.2-3.fc6
+xmlto-0.0.18-13.1
+python-2.4.4-1.fc7
+docbook-dtds-1.0-30.1
+package docbook-xsl is not installed
+flex-2.5.4a-41.fc6
+libxslt-1.1.18-1
+passivetex-1.25-5.1.1
+util-linux-2.13-0.44.fc6
+w3m-0.5.1-14.1
 
-> How are you going to checkout the right commit of the lixcb repo if
-> you didn't store it in the supermodule ?
+> "rpm -q --whatprovides docbook-xsl" says:
+> 
+>    docbook-style-xsl-1.69.1-5.1
 
-Well, I know what the commit is /that/ was all that was stored.  So I 
-(actually supermodule-git does):
+docbook-style-xsl-1.69.1-5.1
 
-cd $DIRECTORY_ASSOCIATED_WITH_SUBMODULE
-git checkout -f $COMMIT_FROM_SUPERMODULE
+Differences are (mine (Junio's)):
 
-Obviously, this is grossly simplified.  It also requires that HEAD be allowed 
-to be an arbitrary commit rather than a branch, but that's already been 
-generally agreed upon as a good thing.
+python-2.4.4-1.fc7 (python-2.4.3-18.fc6)
+libxslt-1.1.18-1 (libxslt-1.1.17-1.1)
 
-Andy
+libxslt requires libxml2:
+
+libxml2-2.6.27-1 (Fedora 6 has libxml2-2.6.26-2.1.1)
+
+Getting the Fedora 6 libxslt (Junio's) and redoing git gives no errors.
+
+Judging from the libxslt changelog <http://xmlsoft.org/XSLT/news.html> they
+tightened up the processing, so I'd guess asciidoc is generating fishy XML
+or xmlto is broken. I've no clue here... somebody knowledgeable who can
+take a closer look or otherwise lend me a hand?
+
+Thanks!
+
+PS: I get similar errors with tig...
 -- 
-Dr Andy Parkins, M Eng (hons), MIEE
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                    Fono: +56 32 2654431
+Universidad Tecnica Federico Santa Maria             +56 32 2654239
+Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
+
