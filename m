@@ -1,88 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Do not ignore hidden refs
-Date: Sat, 18 Nov 2006 12:05:12 -0800
-Message-ID: <7vy7q8bjwn.fsf@assigned-by-dhcp.cox.net>
-References: <20061118041137.6064.75827.stgit@machine.or.cz>
-	<7v8xi9fjw9.fsf@assigned-by-dhcp.cox.net>
-	<20061118045323.GK7201@pasky.or.cz>
-	<7vzmapdxki.fsf@assigned-by-dhcp.cox.net>
-	<20061118192830.GP7201@pasky.or.cz>
-	<7vejs0cz5s.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: master and origin
+Date: Sun, 29 Oct 2006 22:19:21 +0100
+Message-ID: <200610292219.21823.jnareb@gmail.com>
+References: <4d8e3fd30610291253s2d8000dfx942e0fa20e0057f6@mail.gmail.com> <ei34qd$emn$1@sea.gmane.org> <4d8e3fd30610291307v24f5aab8l3f447a1bfdf86ab4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 18 Nov 2006 20:05:37 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 29 Oct 2006 21:19:40 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vejs0cz5s.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 18 Nov 2006 11:50:23 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=QQsKvznfKNSgMnFFEo1cNwg2ezbuVtO/3z9w+HhxLm64U8dr+Atkfjwb6fazRxZL/xBFM29PArJCPcdFtaF7R/uyXicMXnA2iIv+h34N7FG251N8y/dwsf9QHrlBa8fZYo+Lbww7vO8LDrkyPSKkoPB8kH9k0KfGwu+IAGPUG8Q=
+User-Agent: KMail/1.9.3
+In-Reply-To: <4d8e3fd30610291307v24f5aab8l3f447a1bfdf86ab4@mail.gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30462>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlWRE-0007a0-Lb for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 21:05:21 +0100
+ esmtp (Exim 4.43) id 1GeI44-0007xB-Ot for gcvg-git@gmane.org; Sun, 29 Oct
+ 2006 22:19:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755241AbWKRUFP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
- 15:05:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755244AbWKRUFO
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 15:05:14 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:58072 "EHLO
- fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S1755241AbWKRUFN
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 15:05:13 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao04.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061118200513.TEXI7494.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>; Sat, 18
- Nov 2006 15:05:13 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id oL4k1V00M1kojtg0000000; Sat, 18 Nov 2006
- 15:04:45 -0500
-To: Junio C Hamano <junkio@cox.net>
+ S1030238AbWJ2VT3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 16:19:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030322AbWJ2VT3
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 16:19:29 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:52143 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1030238AbWJ2VT2
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 16:19:28 -0500
+Received: by ug-out-1314.google.com with SMTP id 32so1014186ugm for
+ <git@vger.kernel.org>; Sun, 29 Oct 2006 13:19:27 -0800 (PST)
+Received: by 10.67.121.15 with SMTP id y15mr3050880ugm; Sun, 29 Oct 2006
+ 13:19:27 -0800 (PST)
+Received: from host-81-190-18-116.torun.mm.pl ( [81.190.18.116]) by
+ mx.google.com with ESMTP id k2sm2094225ugf.2006.10.29.13.19.26; Sun, 29 Oct
+ 2006 13:19:26 -0800 (PST)
+To: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+Paolo Ciarrocchi wrote:
+> On 10/29/06, Jakub Narebski <jnareb@gmail.com> wrote:
+>> Paolo Ciarrocchi wrote:
+>>
+>>> I went trough the docs I found on the web but I still don't fully
+>>> understand why if I clone a remote repository my local copy has two
+>>> branches, origin (that is always a exact copy of the remote
+>>> repository) and master which is... what? The branch supposed to be
+>>> used for local development?
+>>>
+>>> I'm used to just checkout to a new branch, do my own development and
+>>> then diff against origin so I'm missing why I see the master branch.
+[...]
+>> If you don't do your development on 'master', but use other branches,
+>> the 'master'/'origin' is unnecessary; you could fetch 'master' into
+>> 'master'...
+>>
+>> By the way, if you clone with --use-separate-remote you would get
+>> separate namespace for tracking branches; additionally they would
+>> be treated read-only (can't commit to).
+> 
+> There is still one thing I don't understand, if I pull the git or
+> kernel repository all the local branches are updated according to the
+> remote branches, right? If I'm hacking on master what will happen to
+> my local changes?
 
->> What about leading underscore?
->
-> I would rather prefer to do refs/{heads,private}/ and allow
-> checkout to treat either of them as branches.  We are talking
-> about allowing checkout to go to a non-branch by storing a raw
-> commit object name in HEAD instead of leaving it as a symref, so
-> we know we are going to touch that area already.
+With the default setup (git clone without --use-separate-remote), then
+all local branches are updated according to remote branches... with the
+exception of remote 'master' branch which updates local 'origin' branch.
+pull = fetch + merge, so if you pull when you are on your local 'master'
+branch (and 'master' branch is first in the .git/remotes/origin file I think)
+you would fetch remote 'master' into local 'origin' and merge what you
+have in 'origin' into your 'master' (or merge remote 'master' into
+your local 'master' if you want to think like that).
 
-Oops.  Consider this rescinded.  I myself already talked about
-"not necessarily just public vs private".  Silly me.
+If you have uncommitted changes git would probably refuse the merge.
+If you made changes to one of the tracking branches (e.g. 'next' or
+'origin'), git would refuse to fetch into this branch (unless forced).
 
-I think this is related to the common gripe of "why can't Junio
-mark pu to be rewinded in his public repository".  We should be
-able to leave the branch grouping to users.
-
-Not just public vs private, but I can see an organization that
-uses something like this:
-
-    heads/1.5/{maint,master,next,pu} are to maintain and advance 1.5 series
-    heads/1.5/topics/{foo,bar} are topics applicable to 1.5
-    heads/2.0/{maint,master,next,pu} are to maintain and advance 2.0 series
-    heads/2.0/topics/{foo,bar} are topics applicable only to 2.0
-    heads/topics/{frotz,nitfol} are topics applicable to both
-
-and wanting to view all the topics, only things related to 1.5,
-etc.  So Porcelains _can_ enforce their own policies to arrange
-things differently but we should also be able to let the users
-(and project branch naming policy) to do what we've been talking
-about by saying:
-
-	use heads/private/ for your own stuff.  And have
-	configuration that says "heads/private/" are private
-	branches that are not subject to default
-	pushing/pulling.
-
-The real instruction from the project would say what the syntax
-for telling that to git but I think you got the idea...
+HTH
+-- 
+Jakub Narebski
