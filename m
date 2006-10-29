@@ -1,118 +1,105 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: sf <sf@b-i-t.de>
-Subject: Non-ASCII paths and git-cvsserver
-Date: Thu, 09 Nov 2006 12:11:42 +0100
-Message-ID: <45530CEE.6030008@b-i-t.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: master and origin
+Date: Sun, 29 Oct 2006 22:40:57 +0100
+Message-ID: <200610292240.57443.jnareb@gmail.com>
+References: <4d8e3fd30610291253s2d8000dfx942e0fa20e0057f6@mail.gmail.com> <200610292219.21823.jnareb@gmail.com> <4d8e3fd30610291329n7fe59873r87cbee9ccbd4b720@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 9 Nov 2006 11:13:35 +0000 (UTC)
+NNTP-Posting-Date: Sun, 29 Oct 2006 21:41:22 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 72
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: ip-213157015184.dialin.heagmedianet.de
-User-Agent: Thunderbird 1.5.0.7 (X11/20060927)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=FQ+mDDGTe9PmeEhx8r5jiH1guwcVUVq+/Z5uWBwMnMgGWYHz/Kf/Mk7v+USQM9f+9/5yhDlouv4GHDxh5EHUD60n3ffp2ng0j0qfrP7e8n9BG8Wiv+en5AjV03YAqlwGQfULTEkLWg4rl97KIvNgs2gDAYsh1sQoy3NFcDXP/Ts=
+User-Agent: KMail/1.9.3
+In-Reply-To: <4d8e3fd30610291329n7fe59873r87cbee9ccbd4b720@mail.gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30464>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gi7q0-0003jY-G0 for gcvg-git@gmane.org; Thu, 09 Nov
- 2006 12:12:52 +0100
+ esmtp (Exim 4.43) id 1GeIOu-0004Fy-1W for gcvg-git@gmane.org; Sun, 29 Oct
+ 2006 22:41:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932802AbWKILMt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 9 Nov 2006
- 06:12:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932803AbWKILMt
- (ORCPT <rfc822;git-outgoing>); Thu, 9 Nov 2006 06:12:49 -0500
-Received: from main.gmane.org ([80.91.229.2]:48273 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S932802AbWKILMs (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 9 Nov 2006 06:12:48 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gi7pc-0003fl-8Y for git@vger.kernel.org; Thu, 09 Nov 2006 12:12:28 +0100
-Received: from ip-213157015184.dialin.heagmedianet.de ([213.157.15.184]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Thu, 09 Nov 2006 12:12:28 +0100
-Received: from sf by ip-213157015184.dialin.heagmedianet.de with local
- (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 09
- Nov 2006 12:12:28 +0100
-To: git@vger.kernel.org
+ S1030343AbWJ2Vk7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 16:40:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030350AbWJ2Vk7
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 16:40:59 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:42719 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1030343AbWJ2Vk7
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 16:40:59 -0500
+Received: by ug-out-1314.google.com with SMTP id 32so1015918ugm for
+ <git@vger.kernel.org>; Sun, 29 Oct 2006 13:40:57 -0800 (PST)
+Received: by 10.66.232.10 with SMTP id e10mr3098177ugh; Sun, 29 Oct 2006
+ 13:40:56 -0800 (PST)
+Received: from host-81-190-18-116.torun.mm.pl ( [81.190.18.116]) by
+ mx.google.com with ESMTP id 50sm2091011ugb.2006.10.29.13.40.56; Sun, 29 Oct
+ 2006 13:40:56 -0800 (PST)
+To: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Hello,
+Paolo Ciarrocchi wrote:
+> On 10/29/06, Jakub Narebski <jnareb@gmail.com> wrote:
+[...]
+>> pull = fetch + merge, so if you pull when you are on your local 'master'
+>> branch (and 'master' branch is first in the .git/remotes/origin file I think)
+>> you would fetch remote 'master' into local 'origin' and merge what you
+>> have in 'origin' into your 'master' (or merge remote 'master' into
+>> your local 'master' if you want to think like that).
+> 
+> So in this case, there is a difference between doing my local
+> development under master or myownlocalbranch. Right?
+> I mean, if I do my own development under master and I pull, the master
+> branch will include origin and my local changes. Corret?
+> While if I work in my local branch the datas are not modified with a
+> pull, because pull will update only the local copy of the remote
+> branch. Correct?
 
-I want to access a git repository via git-cvsserver. The problem is that 
-the repository contains paths with umlauts. These paths come out quoted 
-and escaped when checked out with cvs.
+To be more exact (sorry for the confusion) "git pull" means first do
+the "git fetch", i.e. update local 'tracking' branches with the contents
+of remote branches. For ordinary clone this means:
 
-Test case:
+    remote (origin)  | local
+   ------------------+------------------
+    master           | origin
+    next             | next
+    ...              | ...
 
-#! /bin/sh
+For --use-separate-remote this means
 
-set -e -u -x
+   remote (origin)   | local
+  -------------------+-------------------
+   master            | refs/remotes/origin/master
+   next              | refs/remotes/origin/next
+   ...               | ...
 
-WORK='/tmp/gittest'
-FILE=$'\303\244'
+Then it does "merge". It takes the remote branch from first Pull: line in
+remotes/origin file, or first in remote.origin.fetch configuration variable,
+and merges it with _current_ branch.
 
-mkdir "${WORK}"
-mkdir "${WORK}/git"
-
-#trap 'rm -r "${WORK}"' EXIT
-
-cd "${WORK}/git"
-
-git init-db
-git repo-config gitcvs.enabled 1
-git repo-config gitcvs.logfile "${WORK}/git/.git/cvslog.txt"
-
-touch "${FILE}"
-git add "${FILE}"
-git commit -a -mx
-
-cd "${WORK}"
-
-CVS_SERVER='git-cvsserver'
-export CVS_SERVER
-
-cvs -d ":fork:${WORK}/git/.git" co master
-
-ls master
-
-### end
-
-
-This is what I get:
-
-+ WORK=/tmp/gittest
-+ FILE=$'\303\244'
-+ mkdir /tmp/gittest
-+ mkdir /tmp/gittest/git
-+ cd /tmp/gittest/git
-+ git init-db
-defaulting to local storage area
-+ git repo-config gitcvs.enabled 1
-+ git repo-config gitcvs.logfile /tmp/gittest/git/.git/cvslog.txt
-+ touch $'\303\244'
-+ git add $'\303\244'
-+ git commit -a -mx
-Committing initial tree 23d6145738bba135994775c19d6e8ae707d399ee
-+ cd /tmp/gittest
-+ CVS_SERVER=git-cvsserver
-+ export CVS_SERVER
-+ cvs -d :fork:/tmp/gittest/git/.git co master
-cvs checkout: Updating master
-U master/"\303\244"
-+ ls master
-"\303\244"  CVS
+So if you always work on local branches, and newer want to merge
+automatically, you probably should use "git fetch" for fetching changes.
 
 
-I do not speak perl so can anyone help?
+What is not obvious (and is PITA for first-timers) that to merge
+some <sidebranch> into your <branch>, it is simplest to first switch
+to <branch> using
+  git checkout <branch>
+and then merge <sidebranch> using
+  git pull . <sidebranch>
+(where '.' means local repository).
 
-Regards
-
-Stephan
+HTH
+-- 
+Jakub Narebski
