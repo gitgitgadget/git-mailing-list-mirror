@@ -1,80 +1,106 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Tracking a repository for content instead of history
-Date: Tue, 12 Dec 2006 17:24:00 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612121715230.2807@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200612121235.09984.andyparkins@gmail.com>
- <200612121326.24508.andyparkins@gmail.com>
- <Pine.LNX.4.63.0612121527070.2807@wbgn013.biozentrum.uni-wuerzburg.de>
- <200612121538.41197.andyparkins@gmail.com>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Add "next" link to commitdiff view
+Date: Sun, 29 Oct 2006 03:58:31 +0200
+Message-ID: <200610290258.31771.jnareb@gmail.com>
+References: <196807.75961.qm@web31801.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 12 Dec 2006 16:27:59 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 29 Oct 2006 01:58:52 +0000 (UTC)
+Cc: Luben Tuikov <ltuikov@yahoo.com>, Junio Hamano <junkio@cox.net>,
+	Petr Baudis <pasky@suse.cz>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <200612121538.41197.andyparkins@gmail.com>
-X-Y-GMX-Trusted: 0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=ilIy4OZLdAnaf2Hgylgx3h/BxDJ0wGRJ2TUv9LKwHjNsEheKRVstJwJbgF0MNduAKnzkj2mTQOIubbGahtRwu+sPJZdQxIzCkJUH4N6SjbdoslUkXpdhm1uXHQrxr52L1AtySu4njwcBUbe41HLY8wX7CcEG41TeURzPEqK2YBI=
+User-Agent: KMail/1.9.3
+In-Reply-To: <196807.75961.qm@web31801.mail.mud.yahoo.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34107>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuATy-0004ZX-Lp for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 17:27:55 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30405>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gdzwg-0008AF-7d for gcvg-git@gmane.org; Sun, 29 Oct
+ 2006 02:58:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751540AbWLLQYu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 11:24:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751516AbWLLQY0
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 11:24:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42333 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1751521AbWLLQYD
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 11:24:03 -0500
-Received: (qmail invoked by alias); 12 Dec 2006 16:24:01 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp046) with SMTP; 12 Dec 2006 17:24:01 +0100
-To: Andy Parkins <andyparkins@gmail.com>
+ S1751462AbWJ2B6g (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
+ 21:58:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751464AbWJ2B6g
+ (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 21:58:36 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:38444 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1751462AbWJ2B6f
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006 21:58:35 -0400
+Received: by ug-out-1314.google.com with SMTP id 32so933174ugm for
+ <git@vger.kernel.org>; Sat, 28 Oct 2006 18:58:34 -0700 (PDT)
+Received: by 10.66.244.10 with SMTP id r10mr1938286ugh; Sat, 28 Oct 2006
+ 18:58:34 -0700 (PDT)
+Received: from host-81-190-18-116.torun.mm.pl ( [81.190.18.116]) by
+ mx.google.com with ESMTP id b23sm1366196ugd.2006.10.28.18.58.33; Sat, 28 Oct
+ 2006 18:58:33 -0700 (PDT)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Luben Tuikov wrote:
+> --- Jakub Narebski <jnareb@gmail.com> wrote:
+>> Jakub Narebski wrote:
+>>> Add a kind of "next" view in the bottom part of navigation bar for
+>>> "commitdiff" view.
+>>> 
+>>> For commitdiff between two commits:
+>>>   (from: _commit_)
+>>> For commitdiff for one single parent commit:
+>>>   (parent: _commit_)
+>>> For commitdiff for one merge commit
+>>>   (merge: _commit_ _commit_ ...)
+>>> For commitdiff for root (parentless) commit
+>>>   (initial)
+>>> where _link_ denotes hyperlink. SHA1 is shortened to 7 characters on
+>>> display, everything is perhaps unnecessary esc_html on display.
+[...]
+>> 
+>> Any reasons not to accept this patch? I find it very useful.
+>> 
+>> The idea to use fixed string instead of shortened SHA-1 of commit
+>> was abandoned after some discussion in this thread.
+> 
+> I prefer using the commit-8 without any "..." postfixed.  Anyone who
+> knows squat about git knows very well what a commit-8 is when they
+> see one -- the first 8 hexadecimal digits of the full SHA-1.
+> 
+> I like using "next" only when there is a "prev" right next to it,
+> i.e. based on _context_, something like this:
+>    << prev next>>
+> where "<< prev" is hyperlinked, and "next>>" is also.
 
-On Tue, 12 Dec 2006, Andy Parkins wrote:
+Unfortunately this is simply not possible in this case, as links in git
+are only from commit to paren(a), in one direction only.
 
-> On Tuesday 2006 December 12 14:28, Johannes Schindelin wrote:
-> 
-> > You are not by any chance talking about the --remote option to
-> > git-archive?
-> 
-> I wasn't; but that's certainly a helpful switch.  It's certainly a huge 
-> help.
-> 
-> > If you want to reduce the number of objects to be downloaded, by telling
-> > the other side what you have, you literally end up with something like
-> > shallow clone: the other side _has_ to support it.
-> 
-> I suppose so; but I was thinking more an automated way of getting the data 
-> that is supplied for the kernel anyway.  So:
-> 
-> base-v1.0.0.tar.gz
-> patch-v1.0.1.gz
-> patch-v1.0.2.gz
-> etc
-> 
-> Each patch is obviously smaller than "base".  Git could easily make the 
-> patches, and each of those patches could be fed by hand into a repository 
-> with git-apply.
+Besides as you can see we can have more than one "next>>" link: for merge
+commit there are multiple parents. Well, for branch points there are
+multiple commits which have given commit as (one of) its parent(s), so
+there can be multiple "<<prev" links as well.
 
-If it weren't for the recent discussion of kernel.org being overloaded 
-with gitweb processes, I'd just write down a hint like 
-http://repo.or.cz/w/git/jnareb-git.git?a=commitdiff_plain;h=next;hp=master
+> I looked at your patch (first email in this thread) and from
+> what I gathered that it does, I like it (haven't tried it yet).
+> 
+> What I like about it is the clear information it conveys:
+> it gives me both the commit-8 and what that commit-8 _is_.
 
-But since kernel.org is overloaded, I will not do that.
+It is commit-7, but that can be easily changed.
 
-Ciao,
+> Acked-by: Luben Tuikov <ltuikov@yahoo.com>
+> (not that it matters in any way ;-) )
+
+IIRC Junio asked for ACKs.
+-- 
+Jakub Narebski
