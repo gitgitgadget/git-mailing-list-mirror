@@ -1,75 +1,60 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: git-fetching from a big repository is slow
-Date: Thu, 14 Dec 2006 17:38:13 -0500
-Message-ID: <20061214223813.GC26202@spearce.org>
-References: <20061214194636.GO1747@spearce.org> <200612142212.kBEMCVeu032626@laptop13.inf.utfsm.cl>
+X-Spam-Status: No, score=-2.4 required=3.0 tests=BAYES_00,BODY_URI_ONLY,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
+From: "Ryan Anderson" <rda@google.com>
+Subject: Re: [PATCH 1/2] git-send-email: Document support for local sendmail instead of SMTP server
+Date: Sun, 29 Oct 2006 13:34:27 -0700
+Message-ID: <87dcb0bd0610291234j587ebadcxf61e2f61777435c6@mail.gmail.com>
+References: <11621502993406-git-send-email-vsu@altlinux.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 14 Dec 2006 22:38:30 +0000 (UTC)
-Cc: Geert Bosch <bosch@adacore.com>, Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 29 Oct 2006 20:34:48 +0000 (UTC)
+Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
+	h=received:message-id:date:from:to:subject:cc:in-reply-to:
+	mime-version:content-type:content-transfer-encoding:
+	content-disposition:references;
+	b=vILkGQkIfw2vHxh5EMlrtIVCMjJnZYLOu4kTcGepovUXSnzdTmpFHyyA7Hc5ycCcD
+	zRrKxqSxL5CDzRZwDdJFA==
+In-Reply-To: <11621502993406-git-send-email-vsu@altlinux.ru>
 Content-Disposition: inline
-In-Reply-To: <200612142212.kBEMCVeu032626@laptop13.inf.utfsm.cl>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34419>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuzDd-0003YD-Nt for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 23:38:26 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30455>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GeHMb-0006ht-S7 for gcvg-git@gmane.org; Sun, 29 Oct
+ 2006 21:34:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964929AbWLNWiW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 17:38:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964975AbWLNWiW
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 17:38:22 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:39775 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S964942AbWLNWiV (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 17:38:21 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GuzDJ-0001Ti-Ia; Thu, 14 Dec 2006 17:38:05 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 5D7B320FB65; Thu, 14 Dec 2006 17:38:13 -0500 (EST)
-To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+ S1030191AbWJ2Uef (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 15:34:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030190AbWJ2Uef
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 15:34:35 -0500
+Received: from smtp-out.google.com ([216.239.45.12]:51130 "EHLO
+ smtp-out.google.com") by vger.kernel.org with ESMTP id S1030189AbWJ2Uee
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 15:34:34 -0500
+Received: from zps76.corp.google.com (zps76.corp.google.com [172.25.146.76])
+ by smtp-out.google.com with ESMTP id k9TKYUKm018273 for
+ <git@vger.kernel.org>; Sun, 29 Oct 2006 12:34:30 -0800
+Received: from nz-out-0102.google.com (nzfl1.prod.google.com [10.36.188.1])
+ by zps76.corp.google.com with ESMTP id k9TKYSOR032116 for
+ <git@vger.kernel.org>; Sun, 29 Oct 2006 12:34:28 -0800
+Received: by nz-out-0102.google.com with SMTP id l1so1035201nzf for
+ <git@vger.kernel.org>; Sun, 29 Oct 2006 12:34:28 -0800 (PST)
+Received: by 10.65.180.7 with SMTP id h7mr3258570qbp; Sun, 29 Oct 2006
+ 12:34:27 -0800 (PST)
+Received: by 10.64.84.12 with HTTP; Sun, 29 Oct 2006 12:34:27 -0800 (PST)
+To: "Sergey Vlasov" <vsu@altlinux.ru>
 Sender: git-owner@vger.kernel.org
 
-"Horst H. von Brand" <vonbrand@inf.utfsm.cl> wrote:
-> Shawn Pearce <spearce@spearce.org> wrote:
-> 
-> [...]
-> 
-> > And yet I get good delta compression on a number of ZIP formatted
-> > files which don't get good additional zlib compression (<3%).
-> 
-> .zip is something like a tar of the compressed files, if the files inside
-> the archive don't change, the deltas will be small.
-
-Yes, especially when the new zip is made using the exact same
-software with the same parameters, so the resulting compressed file
-stream is identical for files whose content has not changed.  :-)
-
-Since this is actually a JAR full of Java classes which have
-been recompiled, its even more interesting that javac produced an
-identical class file given the same input.  I've seen times where
-it doesn't thanks to the automatic serialVersionUID field being
-somewhat randomly generated.
-
--- 
+On 10/29/06, Sergey Vlasov <vsu@altlinux.ru> wrote:
+> Fix the --smtp-server option description to match reality.
+>
+> Signed-off-by: Sergey Vlasov <vsu@altlinux.ru>
+Acked-by: Ryan Anderson <rda@google.com> (or ryan@michonline.com,
