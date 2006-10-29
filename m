@@ -1,88 +1,57 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 3/3] gitweb: Use author_epoch for pubdate in gitweb feeds
-Date: Sat, 25 Nov 2006 15:54:34 +0100
-Message-ID: <11644665273247-git-send-email-jnareb@gmail.com>
-References: <11644664743455-git-send-email-jnareb@gmail.com>
-NNTP-Posting-Date: Sat, 25 Nov 2006 14:54:43 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH/RFC] gitweb: New improved patchset view
+Date: Sun, 29 Oct 2006 12:29:13 -0800
+Message-ID: <7vmz7e27dy.fsf@assigned-by-dhcp.cox.net>
+References: <539418.62803.qm@web31807.mail.mud.yahoo.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 29 Oct 2006 20:29:28 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Y+ADDHdwug35zXe4VGHiDFTmZwdk7a2Q02Y11l8nr61At+OHh9fcQgULgFxecOnEOlrj7c9SeL5+KXw3NCYUTJXjVxonRasmXATozAT1mtj90xmoSBaSp8LSvhquYxsj0BOb5K8a/3ZEka7eFk5glxl9ers+7FcQOziZ/a0fTQs=
-X-Mailer: git-send-email 1.4.4.1
-In-Reply-To: <11644664743455-git-send-email-jnareb@gmail.com>
+In-Reply-To: <539418.62803.qm@web31807.mail.mud.yahoo.com> (Luben Tuikov's
+	message of "Sun, 29 Oct 2006 11:43:14 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30453>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnyvP-0001FS-Qn for gcvg-git@gmane.org; Sat, 25 Nov
- 2006 15:54:40 +0100
+ esmtp (Exim 4.43) id 1GeHHT-0005OP-0R for gcvg-git@gmane.org; Sun, 29 Oct
+ 2006 21:29:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966604AbWKYOyI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 09:54:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966606AbWKYOyI
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 09:54:08 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:38525 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S966604AbWKYOyG
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 09:54:06 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so849710uga for
- <git@vger.kernel.org>; Sat, 25 Nov 2006 06:54:06 -0800 (PST)
-Received: by 10.66.219.11 with SMTP id r11mr8904454ugg.1164466446163; Sat, 25
- Nov 2006 06:54:06 -0800 (PST)
-Received: from roke.D-201 ( [81.190.24.209]) by mx.google.com with ESMTP id
- o1sm15046512uge.2006.11.25.06.54.05; Sat, 25 Nov 2006 06:54:06 -0800 (PST)
-Received: from roke.D-201 (localhost.localdomain [127.0.0.1]) by roke.D-201
- (8.13.4/8.13.4) with ESMTP id kAPEtTRY016985; Sat, 25 Nov 2006 15:55:38 +0100
-Received: (from jnareb@localhost) by roke.D-201 (8.13.4/8.13.4/Submit) id
- kAPEtRai016984; Sat, 25 Nov 2006 15:55:27 +0100
-To: git@vger.kernel.org
+ S965429AbWJ2U3P (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 15:29:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965431AbWJ2U3P
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 15:29:15 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:60915 "EHLO
+ fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP id S965430AbWJ2U3O
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 15:29:14 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao09.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061029202914.PHFZ16798.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>; Sun, 29
+ Oct 2006 15:29:14 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id gLVJ1V00C1kojtg0000000 Sun, 29 Oct 2006
+ 15:29:18 -0500
+To: ltuikov@yahoo.com
 Sender: git-owner@vger.kernel.org
 
-Use creation date (author_epoch) instead of former commit date
-(committer_epoch) as publish date in gitweb feeds (RSS, Atom).
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This I'm not so sure about. I just wonder why commit date was used
-as publish date of feed item/entry...
+> For dear life, I cannot understand  *WTF*  is this argument about
+> "quoted" and "unquoted".  Can this stop please?  PLEASE?
+>
+> Unquoted, natural, normal.
 
- gitweb/gitweb.perl |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+I do not think Jakub is talking about quoting normal filenames a/foo
+that is not quoted by "git diff" into "a/foo" with his code.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 15dd1f4..fac7923 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -4201,7 +4201,7 @@ sub git_feed {
- 	}
- 	if (defined($revlist[0])) {
- 		%latest_commit = parse_commit($revlist[0]);
--		%latest_date   = parse_date($latest_commit{'committer_epoch'});
-+		%latest_date   = parse_date($latest_commit{'author_epoch'});
- 		print $cgi->header(
- 			-type => $content_type,
- 			-charset => 'utf-8',
-@@ -4294,10 +4294,10 @@ XML
- 		my $commit = $revlist[$i];
- 		my %co = parse_commit($commit);
- 		# we read 150, we always show 30 and the ones more recent than 48 hours
--		if (($i >= 20) && ((time - $co{'committer_epoch'}) > 48*60*60)) {
-+		if (($i >= 20) && ((time - $co{'author_epoch'}) > 48*60*60)) {
- 			last;
- 		}
--		my %cd = parse_date($co{'committer_epoch'});
-+		my %cd = parse_date($co{'author_epoch'});
- 
- 		# get list of changed files
- 		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
--- 
-1.4.4.1
+I think when "git diff" quotes because of unusual characters
+gitweb should show it quoted, i.e. as it receives from "git diff".
+
