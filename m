@@ -5,72 +5,82 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: check if a commit is ascendent of a specific commit
-Date: Sat, 11 Nov 2006 10:43:47 -0800
-Message-ID: <7virhlken0.fsf@assigned-by-dhcp.cox.net>
-References: <fcaeb9bf0611110308l577d70bfo5046d7d7eb09ac58@mail.gmail.com>
+Subject: Re: fetching packs and storing them as packs
+Date: Sat, 28 Oct 2006 21:29:34 -0700
+Message-ID: <7vejsr68y9.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home>
+	<4540CA0C.6030300@tromer.org>
+	<Pine.LNX.4.64.0610271310450.3849@g5.osdl.org>
+	<7v3b99e87c.fsf@assigned-by-dhcp.cox.net>
+	<20061028034206.GA14044@spearce.org>
+	<Pine.LNX.4.64.0610272109500.3849@g5.osdl.org>
+	<7vwt6l9etn.fsf@assigned-by-dhcp.cox.net>
+	<20061028072146.GB14607@spearce.org>
+	<20061028084001.GC14607@spearce.org>
+	<7vfyd88d6s.fsf@assigned-by-dhcp.cox.net>
+	<20061029035025.GC3435@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 11 Nov 2006 18:44:00 +0000 (UTC)
+NNTP-Posting-Date: Sun, 29 Oct 2006 04:29:47 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <fcaeb9bf0611110308l577d70bfo5046d7d7eb09ac58@mail.gmail.com>
-	(Nguyen Thai Ngoc Duy's message of "Sat, 11 Nov 2006 18:08:56 +0700")
+In-Reply-To: <20061029035025.GC3435@spearce.org> (Shawn Pearce's message of
+	"Sat, 28 Oct 2006 23:50:25 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30412>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GixpY-0004Tn-V0 for gcvg-git@gmane.org; Sat, 11 Nov
- 2006 19:43:53 +0100
+ esmtp (Exim 4.43) id 1Ge2Ip-000652-Rs for gcvg-git@gmane.org; Sun, 29 Oct
+ 2006 05:29:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424601AbWKKSnu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006
- 13:43:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424602AbWKKSnt
- (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 13:43:49 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:6840 "EHLO
- fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1424601AbWKKSns
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 13:43:48 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061111184348.MKVL5575.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Sat, 11
- Nov 2006 13:43:48 -0500
+ S964998AbWJ2E3h (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 00:29:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964999AbWJ2E3h
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 00:29:37 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:46332 "EHLO
+ fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S964998AbWJ2E3g
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 00:29:36 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061029042935.TODV12909.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Sun, 29
+ Oct 2006 00:29:35 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id lWjt1V00R1kojtg0000000; Sat, 11 Nov 2006
- 13:43:54 -0500
-To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+ fed1rmimpo02.cox.net with bizsmtp id g4Vf1V00C1kojtg0000000 Sun, 29 Oct 2006
+ 00:29:40 -0400
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-"Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
+Shawn Pearce <spearce@spearce.org> writes:
 
-> Hi,
-> I want to create "git-amend-commit" to be able to amend commits before
-> HEAD. So I need to check whether the commit I'm going to amend is
-> ascendent of HEAD. Is there any way to check that?
+> The issue is --unpacked= uses the path of the pack name, which
+> includes $GIT_OBJECT_DIRECTORY, whatever that may be.  This makes it
+> impossible for the shell script to hand through a proper --unpacked=
+> line for the active packs without including $GIT_OBJECT_DIRECTORY
+> as part of the option.
 
-Ascendant is a word from astorology -- you mean ancestor ;-).
+Yeah, I realize that; you need to know how to build shell script
+that is properly shell quoted to be eval'ed, which is not hard
+but is not usually done and is cumbersome.
 
-"git-merge-base A B === A" when A is an ancestor of B.
+I would suspect it is probably easier to just say --unpacked
+(without packname) means "unpacked objects, and objects in packs
+that do not have corresponding .keep".  However, that would be a
+change in semantics for --unpacked (without packname), which is
+not nice.
 
-Provided if the history between A and B is linear, and you do
-not have trouble making your co-workers adjusting to your
-history change after A (including the cases where you do not
-have any co-workers or you have not made history between A and B
-public), you could do one of these three things:
+So how about pack-X{40}.volatile that marks an eligible one for
+repacking?
 
- - use "stg uncommit" until you pop A, make a change there and
-   "stg refresh", and then "stg push" everything back.
+Then we can make "pack-objects --unpacked" to pretend the ones
+with corresponding .volatile as if the objects in them are
+loose, without breaking backward compatibility.
 
- - "git format-patch A && git reset --hard A", edit the patches
-   and then "git am" them.
+> However on the git.git repository if I ran `git repack -a -d`
+> with every single object in a kept pack and no loose objects I
+> kept repacking the same 102 objects into a new active pack,
+> even though there were no loose objects to repack and no
+> active packs.  Uh, yea.
 
- - "git tag -f Anchor && git reset --hard A", edit and "git
-   commit --amend".  Look at "git show-branch Anchor HEAD", and
-   repeatedly "git cherry-pick Anchor~$n" from older to newer
-   from Anchor, and then "git tag -d Anchor".
-
-
-
-
-
+Will take a look myself if you are otherwise busy.
