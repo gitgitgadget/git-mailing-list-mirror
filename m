@@ -1,70 +1,61 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: On removing files and "git-rm is pointless"
-Date: Mon, 04 Dec 2006 21:43:15 -0800
-Message-ID: <7vslfukido.fsf@assigned-by-dhcp.cox.net>
-References: <87odqm2ppv.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0612020919400.3476@woody.osdl.org>
-	<4571DB40.6020800@vilain.net>
-	<Pine.LNX.4.64.0612022246310.2630@xanadu.home>
-	<7vd570q888.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0612040737120.3476@woody.osdl.org>
-	<7v8xhnm9o6.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0612042225220.2630@xanadu.home>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 1/3] Allow short pack names to git-pack-objects --unpacked=.
+Date: Sun, 29 Oct 2006 04:44:04 -0500
+Message-ID: <20061029094404.GF3847@spearce.org>
+References: <20061029093711.GC3847@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 5 Dec 2006 05:44:01 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
-	Carl Worth <cworth@cworth.org>, Sam Vilain <sam@vilain.net>
+NNTP-Posting-Date: Sun, 29 Oct 2006 09:44:20 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0612042225220.2630@xanadu.home> (Nicolas Pitre's
-	message of "Mon, 04 Dec 2006 22:29:13 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <20061029093711.GC3847@spearce.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33305>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrT5y-0003gS-Gv for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 06:43:58 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30423>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Ge7DC-0000am-Gj for gcvg-git@gmane.org; Sun, 29 Oct
+ 2006 10:44:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967726AbWLEFnS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 00:43:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967865AbWLEFnS
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 00:43:18 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:65034 "EHLO
- fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S967726AbWLEFnQ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
- 00:43:16 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061205054316.IOMN5465.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Tue, 5
- Dec 2006 00:43:16 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id utjR1V00W1kojtg0000000; Tue, 05 Dec 2006
- 00:43:26 -0500
-To: Nicolas Pitre <nico@cam.org>
+ S932138AbWJ2JoM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 04:44:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932139AbWJ2JoM
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 04:44:12 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:23435 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S932138AbWJ2JoL
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 04:44:11 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Ge7DN-0003RS-VF; Sun, 29 Oct 2006 04:44:26 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 3006320E45B; Sun, 29 Oct 2006 04:44:06 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre <nico@cam.org> writes:
+Ok, I'm a freaking idiot:
 
-> On Mon, 4 Dec 2006, Junio C Hamano wrote:
->
->> Linus Torvalds <torvalds@osdl.org> writes:
->> 
->> > If it doesn't match HEAD, we can't get it back as easily, so maybe that's 
->> > the case when we want to have "git rm -f filename".
->> 
->> Hmph.  Wouldn't this lossage the same as the lossage we are
->> removing the "safety valve" for, when "commit --only" jumps the
->> index?
->
-> Losing an intermediate file state is much less severe than losing the 
-> latest file state I would think.
+> Subject: [PATCH 1/3] Allow short pack names to git-pack-objects --unpacked=.
+> 
+> Allow short pack names to git-pack-objects --unpacked=.
 
-Very true indeed.
+I meant to delete the first two lines of the body of the message
+before sending so that git-am didn't stutter the first line of the
+commit message when applied, yet I managed to not do that.  *sigh*
+
+-- 
