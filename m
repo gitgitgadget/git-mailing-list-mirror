@@ -1,82 +1,96 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
-Subject: Re: svn versus git
-Date: Thu, 14 Dec 2006 00:32:40 +0100
-Message-ID: <slrneo13co.o4k.Peter.B.Baumann@xp.machine.xx>
-References: <200612132200.41420.andyparkins@gmail.com> <elpun9$qp1$1@sea.gmane.org>
-NNTP-Posting-Date: Wed, 13 Dec 2006 23:33:30 +0000 (UTC)
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH/RFC] gitweb: New improved patchset view
+Date: Sun, 29 Oct 2006 03:47:43 -0800
+Message-ID: <7viri34a3k.fsf@assigned-by-dhcp.cox.net>
+References: <200610291122.30852.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 29 Oct 2006 11:47:52 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 38
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: mason.hofmann.stw.uni-erlangen.de
-User-Agent: slrn/0.9.8.0 (Linux)
+In-Reply-To: <200610291122.30852.jnareb@gmail.com> (Jakub Narebski's message
+	of "Sun, 29 Oct 2006 11:22:30 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34259>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GudbF-0001kV-JX for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 00:33:21 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30427>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Ge98m-0005CV-MJ for gcvg-git@gmane.org; Sun, 29 Oct
+ 2006 12:47:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751728AbWLMXdS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 18:33:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751750AbWLMXdS
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 18:33:18 -0500
-Received: from main.gmane.org ([80.91.229.2]:53384 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751726AbWLMXdR
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006 18:33:17 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gudaw-0007mI-3A for git@vger.kernel.org; Thu, 14 Dec 2006 00:33:02 +0100
-Received: from mason.hofmann.stw.uni-erlangen.de ([131.188.24.36]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Thu, 14 Dec 2006 00:33:02 +0100
-Received: from Peter.B.Baumann by mason.hofmann.stw.uni-erlangen.de with
- local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Thu, 14 Dec 2006 00:33:02 +0100
-To: git@vger.kernel.org
+ S932293AbWJ2Lrq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 06:47:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932297AbWJ2Lrp
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 06:47:45 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:6329 "EHLO
+ fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S932293AbWJ2Lro
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 06:47:44 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao11.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061029114743.QVVX13992.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>; Sun, 29
+ Oct 2006 06:47:43 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id gBnQ1V00H1kojtg0000000 Sun, 29 Oct 2006
+ 06:47:25 -0500
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-[...]
->> svn revert::
->> Restore pristine working copy file (undo most local edits).
->> git reset --hard::
->> Reset the repository to an arbitrary point in the past, updating the
->> working copy as well.
->> git checkout -f HEAD <file>::
->> Checks out <file> from HEAD, forcing an overwrite of any working
->> directory changes to that file.
->> 
->> Draw.  There is no easy way to undo changes that have already been
->> committed to a subversion repository, so git would win.  However, it's
->> uncomfortable to revert a single file using checkout.
->
-> There was talk about adding "git reset [<commit-ish>] -- <file>".
->
+Jakub Narebski <jnareb@gmail.com> writes:
 
-I would appreciate this. The first thing which comes to my mind if I
-have to actualy revert a change I made was
+> Changes:
+> * "gitweb diff header" which looked for example like below:
+>     file:_<sha1 before>_ -> file:_<sha1 after>_
+>   where 'file' is file type and '<sha1>' is full sha1 of blob, is link
+>   and uses default link style is changed to
+>     diff --git a/<file before> b/<file after>
+>   where <file> is hidden link (i.e. underline on hover, only)
+>   to appropriate version of file. If file is added, a/<file> is not
+>   hyperlinked, if file is deleted, b/<file> is not hyperlinked.
 
-	git reset file
+I do not have time to look at the code right now, but here are 
+quick comments on the output.
 
-After that didn't work I figured out I have to use the seperating -- and typed
+I personally do not mind "hidden" but it might be more obvious
+to make them normal links -- the filenames in the header are not
+part of long text people need to "read".  On the other hand,
+it feels a bit wasteful to have these hidden links both on "diff
+--git" line *and* ---/+++ lines (these three are very close to
+each other).
 
-	git reset -- file
+> * there is added "extended diff header", with <path> and <hash>
+>   hyperlinked (and <hash> shortened to 7 characters), and <mode>
+>   explained: '<mode>' is extnded to '<mode>/<symbolic mode> (<file type>)'.
 
-and that didn't work, too. After several hours (ok, I'am just
-exaggerating, it took me only about 15 minutes) reading manpages I figured out
-that I have to use   git checkout [<revision>] -- file
+It somehow feels that deviating from what "git diff" gives makes
+it very distracting; I would feel better if "/-rw-r--r-- (file)"
+were not there.
 
-After putting some thought into the mental model behind git checkout -- file
-this command it looks obvious and understantable, but in _my_ mental modell
+Also I think arguing over 7 or 8 hexdigits is pointless; if you
+are reading this from "git diff", it is probably the easiest to
+match what "git diff" gave you.  One thing we _might_ want to do
+in the future is to change "git diff" to use DEFAULT_ABBREV
+hexdigits at the minimum but more if needed to disambiguate; I
+think it currently does not do the "more if needed" part.
 
-	git reset [<revision] -- file
+> * <file> hyperlinking should work also when <file> is originally
+>   quoted. For now we present filename quoted. This needed changes to
+>   parse_difftree_raw_line subroutine.
 
-would be a much better fit.
+This feels Ok.
 
--Peter
+> * from-file/to-file two-line header lines have slightly darker color
+>   than removed/added lines.
+
+This visually feels right.
+
+> * chunk header has now delicate line above for easier finding chunk
+>   boundary, and top margin of 1px.
+
+This visually feels right.
