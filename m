@@ -1,79 +1,101 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sat, 2 Dec 2006 10:04:20 +0000
-Message-ID: <200612021004.22236.andyparkins@gmail.com>
-References: <20061130170625.GH18810@admingilde.org> <200612012154.33834.andyparkins@gmail.com> <20061201220821.GL18810@admingilde.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: [PATCH 1/3] Allow short pack names to git-pack-objects --unpacked=.
+Date: Sun, 29 Oct 2006 04:37:11 -0500
+Message-ID: <20061029093711.GC3847@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 2 Dec 2006 10:07:25 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 29 Oct 2006 09:37:29 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=D9fK/Uk6FkKYtKR4G3WTRtQnjYO8XFAOZFyuo89mBuIVy8dN+2u/YnLyH/4lu3u0wIvQG6HqsBMhl+y2OUq832DEB0JhvXcbTKhAUPi45G4AJCu4ri5uWuRCucDpt0kDnVRlhlZzCejiSUO7YQ9N0aIvx3ySobKuznRJ7yLcB9Y=
-User-Agent: KMail/1.9.5
-In-Reply-To: <20061201220821.GL18810@admingilde.org>
 Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30420>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqRmE-0007hb-4d for gcvg-git@gmane.org; Sat, 02 Dec
- 2006 11:07:22 +0100
+ esmtp (Exim 4.43) id 1Ge76Y-0007vl-E4 for gcvg-git@gmane.org; Sun, 29 Oct
+ 2006 10:37:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757669AbWLBKHK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 05:07:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759419AbWLBKHK
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 05:07:10 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:12876 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1757669AbWLBKHH
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 05:07:07 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so2618568uga for
- <git@vger.kernel.org>; Sat, 02 Dec 2006 02:07:06 -0800 (PST)
-Received: by 10.78.201.2 with SMTP id y2mr5710702huf.1165054025904; Sat, 02
- Dec 2006 02:07:05 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
- mx.google.com with ESMTP id 36sm14662753huc.2006.12.02.02.07.05; Sat, 02 Dec
- 2006 02:07:05 -0800 (PST)
-To: git@vger.kernel.org
+ S932132AbWJ2JhS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 04:37:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932134AbWJ2JhS
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 04:37:18 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:39562 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S932132AbWJ2JhQ
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 04:37:16 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Ge76h-0002sW-0U; Sun, 29 Oct 2006 04:37:31 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 57CD720E45B; Sun, 29 Oct 2006 04:37:12 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Friday 2006, December 01 22:08, Martin Waitz wrote:
+Allow short pack names to git-pack-objects --unpacked=.
 
-> > echo $SUBMODULE_HASH >
-> > submodule/.git/refs/supermodules/commit$SUPERMODULE_HASH
->
-> I guess you are aware that you have to scan _all_ trees inside _all_
-> supermodule commits for possible references.
+This allows us to pass just the file name of a pack rather than
+the complete path when we want pack-objects to consider its
+contents as though they were loose objects.  This can be helpful
+if $GIT_OBJECT_DIRECTORY contains shell metacharacters which make
+it cumbersome to pass complete paths safely in a shell script.
 
-No you don't; you do it as part of the appropriate normal operations.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ sha1_file.c |   20 +++++++++++++++++++-
+ 1 files changed, 19 insertions(+), 1 deletions(-)
 
- * supermodule commit - scan the current tree for "link" objects in the
-   tree.  If you find one write the reference in the submodule.
- * adding a new submodule - if this is a new submodule there can't be any
-   references in the supermodule already.
- * cloning a supermodule, every new commit that gets written in the 
-   supermodule gets checked from "link" objects.
-
-> So what do you do with deleted submodules?
-> You wouldn't want them to still sit around in your working directory,
-> but you still have to preserve them.
-
-Now that is a tricky one.  Mind you, I think that problem exists for any 
-implementation.  I haven't got a good answer for that.
-
-
-Andy
-
+diff --git a/sha1_file.c b/sha1_file.c
+index e89d24c..5e6c8b8 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1203,6 +1203,24 @@ unsigned long find_pack_entry_one(const
+ 	return 0;
+ }
+ 
++static int matches_pack_name(struct packed_git *p, const char *ig)
++{
++	const char *last_c, *c;
++
++	if (!strcmp(p->pack_name, ig))
++		return 0;
++
++	for (c = p->pack_name, last_c = c; *c;)
++		if (*c == '/')
++			last_c = ++c;
++		else
++			++c;
++	if (!strcmp(last_c, ig))
++		return 0;
++
++	return 1;
++}
++
+ static int find_pack_entry(const unsigned char *sha1, struct pack_entry *e, const char **ignore_packed)
+ {
+ 	struct packed_git *p;
+@@ -1214,7 +1232,7 @@ static int find_pack_entry(const unsigne
+ 		if (ignore_packed) {
+ 			const char **ig;
+ 			for (ig = ignore_packed; *ig; ig++)
+-				if (!strcmp(p->pack_name, *ig))
++				if (!matches_pack_name(p, *ig))
+ 					break;
+ 			if (*ig)
+ 				continue;
 -- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
+1.4.3.3.g7d63
