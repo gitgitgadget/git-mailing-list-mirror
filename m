@@ -1,78 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Blake <ebb9@byu.net>
-Subject: git on cygwin
-Date: Sat, 25 Nov 2006 07:38:23 -0700
-Message-ID: <4568555F.8050500@byu.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] send-pack --keep: do not explode into loose objects on the receiving end.
+Date: Sun, 29 Oct 2006 01:05:37 -0700
+Message-ID: <7vslh74kdq.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home>
+	<7vwt6j4l77.fsf@assigned-by-dhcp.cox.net>
+	<20061029075638.GB3847@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 25 Nov 2006 14:41:37 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 29 Oct 2006 08:05:58 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.8) Gecko/20061025 Thunderbird/1.5.0.8 Mnenhy/0.7.4.666
-X-Enigmail-Version: 0.94.1.2
+In-Reply-To: <20061029075638.GB3847@spearce.org> (Shawn Pearce's message of
+	"Sun, 29 Oct 2006 02:56:38 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30419>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnyiY-0006r4-NR for gcvg-git@gmane.org; Sat, 25 Nov
- 2006 15:41:23 +0100
+ esmtp (Exim 4.43) id 1Ge5fy-0000Jc-QP for gcvg-git@gmane.org; Sun, 29 Oct
+ 2006 09:05:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966586AbWKYOkW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 09:40:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966594AbWKYOkW
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 09:40:22 -0500
-Received: from alnrmhc11.comcast.net ([204.127.225.91]:28297 "EHLO
- alnrmhc11.comcast.net") by vger.kernel.org with ESMTP id S966586AbWKYOkV
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 09:40:21 -0500
-Received: from [192.168.0.103]
- (c-24-10-241-225.hsd1.ut.comcast.net[24.10.241.225]) by comcast.net
- (alnrmhc11) with ESMTP id <20061125144020b1100skqede>; Sat, 25 Nov 2006
- 14:40:20 +0000
-To: git@vger.kernel.org
+ S965140AbWJ2IFj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 03:05:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965145AbWJ2IFj
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 03:05:39 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:59864 "EHLO
+ fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S965140AbWJ2IFi
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 03:05:38 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao02.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061029080538.EHDY12581.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>; Sun, 29
+ Oct 2006 03:05:38 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id g85i1V00B1kojtg0000000 Sun, 29 Oct 2006
+ 03:05:42 -0500
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Shawn Pearce <spearce@spearce.org> writes:
 
-I found the following patch useful for building git 1.4.4.1 on cygwin.  As
-of cygwin-1.5.22, C99 format strings are now supported (since I
-contributed the newlib patch that added them).  As of cygwin-1.5.21, d_ino
-is now reliable for all cygwin filesystem accesses (except for some remote
-NetApp drives, which have been fixed in cygwin CVS).  And while it is true
-that native Windows does not support symlinks, making NO_SYMLINK_HEAD a
-good idea for native builds; this is not the case for cygwin, and I did
-not seem to have any problems with removing it, either.
+> I was thinking of just reading the pack header in receive-pack,
+> checking the object count, and if its over a configured threshold
+> call index-pack rather than unpack-objects.  Unfortunately I just
+> realized that if we read the pack header to make that decision then
+> its gone and the child process won't have it.  :-(
 
-- --- origsrc/git-1.4.4.1/Makefile        2006-11-22 19:38:07.000000000 -0700
-+++ src/git-1.4.4.1/Makefile    2006-11-24 17:51:00.600344000 -0700
-@@ -369,11 +369,8 @@
- endif
- ifeq ($(uname_O),Cygwin)
-        NO_D_TYPE_IN_DIRENT = YesPlease
-- -       NO_D_INO_IN_DIRENT = YesPlease
-        NO_STRCASESTR = YesPlease
-- -       NO_SYMLINK_HEAD = YesPlease
-        NEEDS_LIBICONV = YesPlease
-- -       NO_C99_FORMAT = YesPlease
-        # There are conflicting reports about this.
-        # On some boxes NO_MMAP is needed, and not so elsewhere.
-        # Try uncommenting this if you see things break -- YMMV.
+If you want to do that, that is certainly possible.
 
-- --
-Life is short - so eat dessert first!
-
-Eric Blake             ebb9@byu.net
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (Cygwin)
-Comment: Public key at home.comcast.net/~ericblake/eblake.gpg
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFFaFVe84KuGfSFAYARAjdrAJ9A+d9/aaEG0V2j8VTs/oycIpUS0wCeL/Ly
-70V5CWHOrAKD7kI09gQiTh0=
-=C8dP
+You can read the first block in the parent (without discarding),
+make the decision and then fork()+exec() either unpack-objects
+or index-pack and feed it from the parent.  The parent first
+feeds the initial block it read to make that decision, and then
+becomes a cat that reads from send-pack and writes to the child
+process that is either unpack-objects or index-pack.
