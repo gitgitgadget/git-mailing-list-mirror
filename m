@@ -1,91 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Bash completion Issue?
-Date: Sat, 4 Nov 2006 13:41:20 -0500
-Message-ID: <20061104184120.GB2311@spearce.org>
-References: <200611041236.59989.alan@chandlerfamily.org.uk>
+From: Sylvain Beucler <beuc@gnu.org>
+Subject: Overwriting bare repositories' master
+Date: Sun, 29 Oct 2006 22:03:33 +0100
+Message-ID: <20061029210333.GG12285@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 4 Nov 2006 18:41:41 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Sun, 29 Oct 2006 21:04:06 +0000 (UTC)
+Cc: savannah-hackers-public@gnu.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <200611041236.59989.alan@chandlerfamily.org.uk>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Operating-System: GNU/Linux
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Ovh-Remote: 82.238.35.175 (perso.beuc.net)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30461>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgQSN-00049J-E9 for gcvg-git@gmane.org; Sat, 04 Nov
- 2006 19:41:27 +0100
+ esmtp (Exim 4.43) id 1GeHow-0004nv-23 for gcvg-git@gmane.org; Sun, 29 Oct
+ 2006 22:03:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965599AbWKDSlY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
- 13:41:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965600AbWKDSlY
- (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 13:41:24 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:42976 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S965599AbWKDSlX
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 13:41:23 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GgQSA-0004uU-M5; Sat, 04 Nov 2006 13:41:14 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 1727920E491; Sat,  4 Nov 2006 13:41:20 -0500 (EST)
-To: Alan Chandler <alan@chandlerfamily.org.uk>
+ S1030257AbWJ2VDv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 16:03:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030260AbWJ2VDv
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 16:03:51 -0500
+Received: from 42.mail-out.ovh.net ([213.251.189.42]:32666 "EHLO
+ 42.mail-out.ovh.net") by vger.kernel.org with ESMTP id S1030257AbWJ2VDu
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 16:03:50 -0500
+Received: (qmail 27858 invoked by uid 503); 29 Oct 2006 21:03:33 -0000
+Received: from b6.ovh.net (HELO mail139.ha.ovh.net) (213.186.33.56) by
+ 42.mail-out.ovh.net with SMTP; 29 Oct 2006 21:03:33 -0000
+Received: from b0.ovh.net (HELO queue-out) (213.186.33.50) by b0.ovh.net with
+ SMTP; 29 Oct 2006 21:03:48 -0000
+Received: from perso.beuc.net (HELO localhost.localdomain) (82.238.35.175) by
+ ns0.ovh.net with SMTP; 29 Oct 2006 21:03:45 -0000
+Received: from me by localhost.localdomain with local (Exim 4.63)
+ (envelope-from <beuc@beuc.net>) id 1GeHoc-0006Gk-06; Sun, 29 Oct 2006
+ 22:03:34 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Alan Chandler <alan@chandlerfamily.org.uk> wrote:
-> When I type a normal command on the bash command line (say emacs) followed by 
-> the partial directory name the completion completes the directory and then 
-> adds a slash.  If I type a git command (say git update-index) with the same 
-> partial directory name it completes the directory, but then adds a space.  I 
-> have to backspace, manually add the slash, before continuing with the next 
-> directory or filename.
+Hello,
 
-Hmm.  I just tried 'git update-index' and it completed here for
-me as you want it to (this is with the current stock Git bash
-completion support).
+I'm trying to setup a git hosting facility, such as repo.or.cz. The
+facility provides a pre-initialized git repository only accessible
+through git-shell.
 
-However we do some funny things when completing into trees.  E.g. the
-completion support for 'git ls-tree man:man<tab>' may seem a little
-strange but it works well for my fingers.  I've never really had
-any problem with it.
+The goal is to minimise the system admins' intervention, and I have a
+question about a branch 'overwriting'. For example, let's say the user
+makes an initial import to refs/heads/master for testing purposes,
+then wants to start over and import the real project. Can he put a
+wholy different git repository in place of the other one, at the same
+destination?
 
-I think the only way we differ from normal bash completion is we
-sometimes don't add a space after fully completing a path name.
-Usually the user has to type the space in by hand.
- 
-> In debian, there seems to be a directory /etc/bash_completion.d with files for 
-> each of the packages, and the debian git packages have entries in there.  So 
-> I assume they are derived from the completion work mentioned on this list.
+I tried and I found something that doesn't seem to follow the
+documentation:
 
-What completion script is it?  The one that is now shipped as part
-of Git has a header of the following, and resides in git.git as
-contrib/completion/git-completion.bash:
+repo_one$ git push Beuc@cvs.sv.gnu.org:/srv/git/sources/administration.git \
+  master:refs/heads/master
+# [OK]
+repo_two$ git push --force Beuc@cvs.sv.gnu.org:/srv/git/administration.git \
+  +refs/heads/master:refs/heads/master
+updating 'refs/heads/master'
+  from ee3bda653dfabaf0f78f2a9977abec180f2b19dc
+  to   c9a726b610bafc82142a16af80b83d28375ca619
+Generating pack...
+Done counting 0 objects.
+Total 0, written 0 (delta 0), reused 0 (delta 0)
+Unpacking 0 objects
+error: denying non-fast forward; you should pull first
 
-	#
-	# bash completion support for core Git.
-	#
-	# Copyright (C) 2006 Shawn Pearce
-	# Conceptually based on gitcompletion (http://gitweb.hawaga.org.uk/).
-	#
+From man git-push:
+"If the optional plus + is used, the remote ref is updated even if it
+does not result in a fast forward update."
 
-> What seems strange to me is that nobody else has mentioned this before now.
+This also makes one wonder how the 'pu' git branch is updated.
 
-Maybe because you have a different completion script?
+
+One the one hand, this means that sysadmin intervention is required to
+reset such a repository, which is bad. One the other hand, this is
+also a security because users cannot erase history, even if there a
+cron job to prune&pack the git repositories, which is good.
+
+Is this by design? Or should it work?
 
 -- 
