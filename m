@@ -1,66 +1,81 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sat, 2 Dec 2006 09:27:49 +0000
-Message-ID: <200612020927.50787.andyparkins@gmail.com>
-References: <20061130170625.GH18810@admingilde.org> <200612020114.42858.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0612011621380.3695@woody.osdl.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 2 Dec 2006 09:30:49 +0000 (UTC)
+From: Sergey Vlasov <vsu@altlinux.ru>
+Subject: [PATCH 2/2] git-send-email: Read the default SMTP server from the GIT config file
+Date: Sun, 29 Oct 2006 22:31:39 +0300
+Message-ID: <11621503001930-git-send-email-vsu@altlinux.ru>
+References: <11621502993406-git-send-email-vsu@altlinux.ru>
+NNTP-Posting-Date: Sun, 29 Oct 2006 19:32:07 +0000 (UTC)
+Cc: Ryan Anderson <rda@google.com>, git@vger.kernel.org,
+	Sergey Vlasov <vsu@altlinux.ru>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=NymfW1+mtxGbYqapKuKGnf6uFoS7dl/zweuedm1Hi8X8lGD4MrP0wNpDoQWsbI8/1xYrf8XLANhfYntkBjN4D2EfIPrfbPS+bjFPAGo7hTy2zG0gc+8M7Va8VLdL/AWL/H2MEFRivL3BLeVD9jFsjfmtR5jtWGiA99R1ZNowl1s=
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.64.0612011621380.3695@woody.osdl.org>
-Content-Disposition: inline
+X-Mailer: git-send-email 1.4.3.3.ge502
+In-Reply-To: <11621502993406-git-send-email-vsu@altlinux.ru>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30442>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqRCj-000173-BC for gcvg-git@gmane.org; Sat, 02 Dec
- 2006 10:30:41 +0100
+ esmtp (Exim 4.43) id 1GeGNo-00006V-Qk for gcvg-git@gmane.org; Sun, 29 Oct
+ 2006 20:31:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1162864AbWLBJah (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 04:30:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162866AbWLBJah
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 04:30:37 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:15857 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1162864AbWLBJag
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 04:30:36 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so2615535uga for
- <git@vger.kernel.org>; Sat, 02 Dec 2006 01:30:34 -0800 (PST)
-Received: by 10.78.164.13 with SMTP id m13mr5695254hue.1165051834295; Sat, 02
- Dec 2006 01:30:34 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
- mx.google.com with ESMTP id 36sm14609680huc.2006.12.02.01.30.33; Sat, 02 Dec
- 2006 01:30:33 -0800 (PST)
-To: git@vger.kernel.org
+ S965349AbWJ2Tbo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 14:31:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965352AbWJ2Tbn
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 14:31:43 -0500
+Received: from master.altlinux.org ([62.118.250.235]:30993 "EHLO
+ master.altlinux.org") by vger.kernel.org with ESMTP id S965349AbWJ2Tbn (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 14:31:43 -0500
+Received: by master.altlinux.org (Postfix, from userid 584) id 107DDE3A65;
+ Sun, 29 Oct 2006 22:31:42 +0300 (MSK)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Saturday 2006, December 02 00:33, Linus Torvalds wrote:
+Make the default value for --smtp-server configurable through the
+'sendemail.smtpserver' option in .git/config (or $HOME/.gitconfig).
 
-> Yes, you do need to have a list of submodules somewhere, and you'd need to
-> maintain that separately. One of the results of having the submodules be
+Signed-off-by: Sergey Vlasov <vsu@altlinux.ru>
+---
+ Documentation/git-send-email.txt |    8 +++++---
+ git-send-email.perl              |    3 +++
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-Why?  You just recursively search for every "link" object in the supermodule.  
-That tells you which submodules you need and where they should be.
-
-During a supermodule clone, it can tell the client end to start a new clone 
-with the correct path because it knows what the local path is at that moment.
-
-
-
-Andy
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index ec0e201..4c8d907 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -68,9 +68,11 @@ The options available are:
+ --smtp-server::
+ 	If set, specifies the outgoing SMTP server to use.  A full
+ 	pathname of a sendmail-like program can be specified instead;
+-	the program must support the `-i` option.  Defaults to
+-	`/usr/sbin/sendmail` or `/usr/lib/sendmail` if such program is
+-	available, or to `localhost` otherwise.
++	the program must support the `-i` option.  Default value can
++	be specified by the 'sendemail.smtpserver' configuration
++	option; the built-in default is `/usr/sbin/sendmail` or
++	`/usr/lib/sendmail` if such program is available, or
++	`localhost` otherwise.
+ 
+ --subject::
+    	Specify the initial subject of the email thread.
+diff --git a/git-send-email.perl b/git-send-email.perl
+index c42dc3b..4c87c20 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -231,6 +231,9 @@ if (!defined $initial_reply_to && $promp
+ }
+ 
+ if (!$smtp_server) {
++	$smtp_server = $repo->config('sendemail.smtpserver');
++}
++if (!$smtp_server) {
+ 	foreach (qw( /usr/sbin/sendmail /usr/lib/sendmail )) {
+ 		if (-x $_) {
+ 			$smtp_server = $_;
 -- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
+1.4.3.3.ge502
