@@ -2,108 +2,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: David Lang <dlang@digitalinsight.com>
-Subject: Re: VCS comparison table
-Date: Thu, 26 Oct 2006 10:04:34 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0610261003290.2424@qynat.qvtvafvgr.pbz>
-References: <45354AD0.1020107@utoronto.ca><BAYC1-PASMTP07AB11A64250AAF683424
- DAE0E0@CEZ.ICE><vpq4ptz2uh8.fsf@ecrins.imag.fr> 
- <453DAC87.8050203@research.canon.com.au><Pine.LNX.4.64.0610232318200.3962@g
- 5.osdl.org><Pine.LNX.4.64N.0610232336010.30334@attu2.cs.washington.edu><Pin
- e.LNX.4.64.0610240812410.3962@g5.osdl.org><Pine.LNX.4.64N.0610241300450.811
- 2@attu4.cs.washington.edu><20061025084810.GA26618@coredump.intra.peff.net><
- Pine.LNX.4.64N.0610250157470.3467@attu1.cs.washington.edu><20061025094900.G
- A26989@coredump.intra.peff.net><Pine.LNX.4.64N.0610250954380.31053@attu2.cs
- .washington.edu><454098EC.8040406@op5.se><Pine.LNX.4.63.0610260929040.2424@
- qynat.qvtvafvgr.pbz> <Pine.LNX.4.64.0610261247420.12418@xanadu.home>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH (WISP) 0/5] Support shallow repositories
+Date: Mon, 30 Oct 2006 20:08:14 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0610302006301.26682@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-NNTP-Posting-Date: Thu, 26 Oct 2006 17:07:25 +0000 (UTC)
-Cc: Andreas Ericsson <ae@op5.se>,
-	David Rientjes <rientjes@cs.washington.edu>,
-	Jeff King <peff@peff.net>, Linus Torvalds <torvalds@osdl.org>,
-	Lachlan Patrick <loki@research.canon.com.au>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Mon, 30 Oct 2006 19:19:08 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <Pine.LNX.4.64.0610261247420.12418@xanadu.home>
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30508>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd8gr-0000B1-RD for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 19:06:50 +0200
+ esmtp (Exim 4.43) id 1GecVY-0005rW-8C for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 20:09:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423254AbWJZRGr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 13:06:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161192AbWJZRGr
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 13:06:47 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:19454 "HELO
- warden.diginsite.com") by vger.kernel.org with SMTP id S1161157AbWJZRGq
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 13:06:46 -0400
-Received: from wlvims02.diginsite.com by warden.diginsite.com via smtpd (for
- vger.kernel.org [209.132.176.167]) with SMTP; Thu, 26 Oct 2006 10:06:46 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by
- wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Thu, 26
- Oct 2006 10:06:06 -0700
-To: Nicolas Pitre <nico@cam.org>
+ S1161461AbWJ3TI2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 14:08:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161458AbWJ3TI2
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 14:08:28 -0500
+Received: from mail.gmx.net ([213.165.64.20]:5064 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1161455AbWJ3TI0 (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 14:08:26 -0500
+Received: (qmail invoked by alias); 30 Oct 2006 19:08:20 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp046) with SMTP; 30 Oct 2006 20:08:20 +0100
+To: git@vger.kernel.org, junkio@cox.net
 Sender: git-owner@vger.kernel.org
 
-On Thu, 26 Oct 2006, Nicolas Pitre wrote:
+Hi,
 
-> On Thu, 26 Oct 2006, David Lang wrote:
->
->> On Thu, 26 Oct 2006, Andreas Ericsson wrote:
->>
->>>>
->>>> There are _not_ scalability improvements.  There may be some slight
->>>> performance improvements, but definitely not scalability.  If you have
->>>> ever tried to use git to manage terabytes of data, you will see this
->>>> becomes very clear.  And "rebasing with 3-way merge" is not something
->>>> often used in industry anyway if you've followed the more common models
->>>> for revision control within large companies with thousands of engineers.
->>>> Typically they all work off mainline.
->>>>
->>>
->>> Actually, I don't see why git shouldn't be perfectly capable of handling a
->>> repo containing several terabytes of data, provided you don't expect it to
->>> turn up the full history for the project in a couple of seconds and you
->>> don't actually *change* that amount of data in each revision. If you want a
->>> vcs that handles that amount with any kind of speed, I think you'll find
->>> rsync and raw rvs a suitable solution.
->>
->> actually, there are some real problems in this area. the git pack format can't
->> be larger then 4G, and I wouldn't be surprised if there were other issues with
->> files larger then 4G (these all boil down to 32 bit limits). once these limits
->> are dealt with then you will be right.
->
-> There is no such limit on the pack format.  A pack itself can be as
-> large as you want.  The 4G limit is in the tool not the format.
->
-> The actual pack limits are as follows:
->
-> 	- a pack can have infinite size
->
-> 	- a pack cannot have more than 4294967296 objects
->
-> 	- each non-delta objects can be of infinite size
->
-> 	- delta objects can be of infinite size themselves but...
->
-> 	- current delta encoding can use base objects no larger than 4G
->
-> The _code_ is currently limited to 4G though, especially on 32-bit
-> architectures.  The delta issue could be resolved in a backward
-> compatible way but it hasn't been formalized yet.
->
-> The pack index is actually limited to 32-bits meaning it can cope with
-> packs no larger than 4G.  But the pack index is a local matter and not
-> part of the protocol so this is not a big issue to define a new index
-> format and automatically convert existing indexes at that point.
+Def.: Shallow commits do have parents, but not in the shallow
+repo, and therefore grafts are introduced pretending that
+these commits have no parents.
 
-the offset within a pack for the starting location of an object cannot be larger 
-then 4G.
+The basic idea is to write the SHA1s of shallow commits into
+$GIT_DIR/shallow, and handle its contents like the contents
+of $GIT_DIR/info/grafts (with the difference that shallow
+cannot contain parent information).
 
+This information is stored in a new file instead of grafts, or
+even the config, since the user should not touch that file
+at all (even I did not once edit it myself during development!).
+Each line contains exactly one SHA1. When read, a commit_graft
+will be constructed, which has nr_parent < 0 to make it easier
+to discern from user provided grafts.
+
+Since fsck-objects relies on the library to read the objects,
+it honours shallow commits automatically.
+
+This stuff is definitely "pu" material:
+
+- I am not quite sure if we have to force non-thin packs when
+fetching into a shallow repo (ATM they are forced non-thin). 
+Comments?
+
+- A special handling of a shallow upstream is needed. At some
+stage, upload-pack has to check if it sends a shallow commit,
+and it should send that information early (or fail, if the
+client does not support shallow repositories). There is no
+support at all for this in this patch series.
+
+- Instead of locking $GIT_DIR/shallow at the start, just
+the timestamp of it is noted, and when it comes to writing it,
+a check is performed if the mtime is still the same, dying if
+it is not. Is this enough?
+
+- I have not touched the "push into/from a shallow repo" issue.
+Don't even try it yet.
+
+- If you deepen a history, you'd want to get the tags of the
+newly stored (but older!) commits. I don't think this works
+right now.
+
+This series does the following:
+
+- gets rid of the call to rev-list in upload-pack
+
+  It is just a tiny change. It is needed so that the client can
+tell the server which commits to ignore for the moment. Note that
+this is bad for porting to Windows: it should be relatively easy
+to spawn other programs in Win32, but is probably lot more work
+to just fork _and_ maintain the memory and fd's.
+
+- support fetching into shallow repositories
+
+  Up until now (including this patch), we do not have tool
+support to make shallow repos. This patch is separated from
+the rest for your reviewing pleasure only.
+
+- support making a shallow repository by cloning with a depth
+
+  "git-clone --depth 20 repo" will lead to a shallow repository,
+which contains only commit chains with a length of at most 20. It
+also writes an appropriate $GIT_DIR/shallow.
+
+- support deepening a shallow repository
+
+  "git-fetch --depth 20 repo branch" will fetch branch from repo,
+but stop at depth 20, updating $GIT_DIR/shallow.
+
+- add tests to t5500
+
+  Since t5500 conveniently provides all we need to test shallow
+clones, no new test script was added, but t5500 extended.
+
+Unfortunately, my time resources are scarce in the next few days,
+but I did not want to hold this stuff back any longer.
+
+Ciao,
+Dscho
