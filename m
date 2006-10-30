@@ -1,70 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: What's in git.git (stable)
-Date: Sat, 16 Dec 2006 14:04:54 -0800
-Message-ID: <7vhcvvcxa1.fsf@assigned-by-dhcp.cox.net>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net>
-	<em0u4k$8hs$1@sea.gmane.org>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: [PATCH] gitweb: esc_html() author in blame
+Date: Mon, 30 Oct 2006 12:37:54 -0800 (PST)
+Message-ID: <20061030203755.5021.qmail@web31810.mail.mud.yahoo.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 16 Dec 2006 22:05:02 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Mon, 30 Oct 2006 20:43:09 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <em0u4k$8hs$1@sea.gmane.org> (Jakub Narebski's message of "Sat,
-	16 Dec 2006 14:59:40 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=G5WBmaRWFU0pLHhHHLY+T3B9gvv5P56vT3d4d7fDJuds7nXoYoH2ZRcndln8sc/kCg9FEw20m0GX9x/xIyO9FPtGyB/bTIIVLGTDwioFEAkFjQJbpLjezK3viowZWJ+Ptw4eds+7N6md4oOhtJgZ8HQUvKpm0IwoHkNgwxQ0zXc=  ;
+X-YMail-OSG: cCtRhwcVM1nDqAA7QAg6NiaoHQ.GaRkS5VB3KmCva4h2sk0Ih4hPncPrm8XmcoI.EdOnZsbJeyGCnIuP.BnugigZc8oRASwr0JtyqpIlFRaz8kpe8XevGq4bqzHnKkMk3dzz1.nJfSTxUw--
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34647>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvheM-00026f-OD for gcvg-git@gmane.org; Sat, 16 Dec
- 2006 23:04:59 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30521>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gedtf-0004Xd-TH for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 21:38:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422639AbWLPWE4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
- 17:04:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422643AbWLPWE4
- (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 17:04:56 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:46452 "EHLO
- fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1422639AbWLPWEz (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
- 17:04:55 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061216220455.YJZG15640.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Sat, 16
- Dec 2006 17:04:55 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id za561V00d1kojtg0000000; Sat, 16 Dec 2006
- 17:05:06 -0500
-To: Jakub Narebski <jnareb@gmail.com>
+ S932478AbWJ3Uh6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 15:37:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932467AbWJ3Uh6
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 15:37:58 -0500
+Received: from web31810.mail.mud.yahoo.com ([68.142.207.73]:14008 "HELO
+ web31810.mail.mud.yahoo.com") by vger.kernel.org with SMTP id S932466AbWJ3Uh5
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 15:37:57 -0500
+Received: (qmail 5025 invoked by uid 60001); 30 Oct 2006 20:37:55 -0000
+Received: from [64.215.88.90] by web31810.mail.mud.yahoo.com via HTTP; Mon,
+ 30 Oct 2006 12:37:54 PST
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Blame fails for example on
+block/ll_rw_blk.c at v2.6.19-rc3.
 
-> Junio C Hamano wrote:
->
->> Things that need to be done to complete what have been merged to
->> 'master' are:
->
-> What about discussed but not implemented moving restriction on non-head refs
-> from git-checkout (forbidding to checkout tags, remotes, and arbitrary
-> commits like HEAD~n) to git-commit (allowing commiting only to heads refs)?
+Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
+---
+ gitweb/gitweb.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Did I miss a patch? ;-)
-
-I've taken a look at it once, and it is usually easy to decide
-if we should allow or disallow manipulation of the HEAD at
-individual places that tries to look at it or modify it, but
-there are many places and giving reasonable error messages to
-all of the places we would want to disallow would be quite a lot
-of work.  In other words, it is rather a wide-and-shallow change
-all over manipulators section of Porcelain.  So from my point of
-view it is backburnered, but that does not mean I would object
-to a patch that does it cleanly ;-).
-
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index c52e19d..177efd3 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2751,7 +2751,7 @@ HTML
+ 		print "<tr class=\"$rev_color[$current_color]\">\n";
+ 		if ($group_size) {
+ 			print "<td class=\"sha1\"";
+-			print " title=\"$author, $date\"";
++			print " title=\"". esc_html($author) . ", $date\"";
+ 			print " rowspan=\"$group_size\"" if ($group_size > 1);
+ 			print ">";
+ 			print $cgi->a({-href => href(action=>"commit",
+-- 
+1.4.3.3.g1e64f-dirty
