@@ -4,59 +4,80 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: http git and curl 7.16.0
-Date: Sun, 17 Dec 2006 12:32:35 +0100
-Message-ID: <20061217113235.GJ25274MdfPADPa@greensroom.kotnet.org>
-References: <20061118080708.428cbff6@athlon>
-Reply-To: skimo@liacs.nl
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Sun, 17 Dec 2006 11:33:11 +0000 (UTC)
-Cc: Git List <git@vger.kernel.org>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH] Bash snippet to show branch and patch in bash prompt
+Date: Mon, 30 Oct 2006 11:42:25 +0100
+Message-ID: <20061030104225.11875.57076.stgit@lathund.dewire.com>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
+NNTP-Posting-Date: Mon, 30 Oct 2006 10:41:23 +0000 (UTC)
+Cc: Eran Tromer <git2eran@tromer.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <20061118080708.428cbff6@athlon>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+X-Virus-Scanned: amavisd-new at localhost.localdomain
+In-Reply-To: 4545CC6F.90001@tromer.org
+Original-References: 4545CC6F.90001@tromer.org
+User-Agent: StGIT/0.10
+X-Virus-Scanned: by amavisd-new at dewire.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34685>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvuGM-0001b0-1N for gcvg-git@gmane.org; Sun, 17 Dec
- 2006 12:33:02 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30494>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GeUZz-0007Sh-8Y for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 11:41:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752463AbWLQLc7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
- 06:32:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752467AbWLQLc7
- (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 06:32:59 -0500
-Received: from smtp15.wxs.nl ([195.121.247.6]:39849 "EHLO smtp15.wxs.nl"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1752463AbWLQLc6
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006 06:32:58 -0500
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl
- [84.81.90.170]) by smtp15.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built
- Jul 14 2004)) with SMTP id <0JAF00N291EB2F@smtp15.wxs.nl> for
- git@vger.kernel.org; Sun, 17 Dec 2006 12:32:36 +0100 (CET)
-Received: (qmail 8981 invoked by uid 500); Sun, 17 Dec 2006 11:32:35 +0000
-To: George Sherwood <pilot@beernabeer.com>
+ S1161232AbWJ3KlQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 05:41:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161233AbWJ3KlQ
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 05:41:16 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:51245 "EHLO
+ torino.dewire.com") by vger.kernel.org with ESMTP id S1161232AbWJ3KlP (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 05:41:15 -0500
+Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
+ (Postfix) with ESMTP id 94E018030A5; Mon, 30 Oct 2006 11:37:57 +0100 (CET)
+Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 29553-02; Mon, 30 Oct
+ 2006 11:37:57 +0100 (CET)
+Received: from lathund.dewire.com (unknown [10.9.0.5]) by torino.dewire.com
+ (Postfix) with ESMTP id 3BDF78030A1; Mon, 30 Oct 2006 11:37:57 +0100 (CET)
+Received: from localhost (lathund.dewire.com [127.0.0.1]) by
+ lathund.dewire.com (Postfix) with ESMTP id 2523C28E57; Mon, 30 Oct 2006
+ 11:42:28 +0100 (CET)
+Received: from lathund.dewire.com ([127.0.0.1]) by localhost
+ (lathund.dewire.com [127.0.0.1]) (amavisd-new, port 10025) with LMTP id
+ qLAQsOEVEB-D; Mon, 30 Oct 2006 11:42:26 +0100 (CET)
+Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1]) by
+ lathund.dewire.com (Postfix) with ESMTP id F170F28E10; Mon, 30 Oct 2006
+ 11:42:25 +0100 (CET)
+To: Catalin Marinas <catalin.marinas@arm.com>
 Sender: git-owner@vger.kernel.org
 
-On Sat, Nov 18, 2006 at 08:07:08AM +0400, George Sherwood wrote:
-> I seem to be having a problem doing an http checkout with git built
-> with curl 7.16.0 enabled.  If I build against curl 7.16.0 and try a
-> clone, I get:
-> 
-> git clone http://dmlb2000.homelinux.org/~dmlb2000/git-repos/local/castfs.git
-> error: Unable to start request error: Could not interpret heads/master
-> as something to pull
-> 
-> If I rebuild git against curl 7.15.5 then I get:
-[..]
-> and the checkout finishes.
-> 
-> Has any one else seen this?
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
 
-FWIW, I've seen the same with curl 7.16.0 on a Solaris 9 machine.
-It worked fine with curl 7.15.0.
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
 
+ contrib/stgbashprompt.sh |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
+
+diff --git a/contrib/stgbashprompt.sh b/contrib/stgbashprompt.sh
+new file mode 100755
+index 0000000..792da53
+--- /dev/null
++++ b/contrib/stgbashprompt.sh
+@@ -0,0 +1,16 @@
++# include this in your bashrc or copy to /etc/bash_completions.d
++
++if [ "$PS1" ]; then
++    # trap 'PS1="\u@\h [$(stg top)] \w]\$ "' DEBUG
++    function stgtag
++    {
++	br=$(stg branch 2>/dev/null)
++	top=$(stg top 2>/dev/null)
++	if [[ -n "$br$top" ]];then
++	    echo "[$top@$br]"
++	    return
++	fi
++    }
++    PS1='\u@\h$(stgtag)\w\$ '
++
