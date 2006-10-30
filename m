@@ -1,55 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: StGIT repository not clonable?
-Date: Sat, 11 Nov 2006 23:34:28 +0100
-Message-ID: <20061111223428.GB20192@diana.vm.bytemark.co.uk>
-References: <200611110359.kAB3ul02013227@laptop13.inf.utfsm.cl> <20061111123634.GD11224@diana.vm.bytemark.co.uk> <b0943d9e0611111359t994d688w9bc6aae8e9183fd3@mail.gmail.com>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [StGIT PATCH] Bash snippet to show branch and patch in bash prompt
+Date: Mon, 30 Oct 2006 11:32:44 +0100
+Message-ID: <200610301132.45086.robin.rosenberg@dewire.com>
+References: <20061029233745.24899.1470.stgit@lathund.dewire.com> <4545CC6F.90001@tromer.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sat, 11 Nov 2006 22:34:43 +0000 (UTC)
-Cc: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>, git@vger.kernel.org
+NNTP-Posting-Date: Mon, 30 Oct 2006 10:33:12 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+User-Agent: KMail/1.9.4
+In-Reply-To: <4545CC6F.90001@tromer.org>
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0611111359t994d688w9bc6aae8e9183fd3@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: by amavisd-new at dewire.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30493>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gj1Qo-0000Lt-3G for gcvg-git@gmane.org; Sat, 11 Nov
- 2006 23:34:34 +0100
+ esmtp (Exim 4.43) id 1GeUQb-0005NY-7Q for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 11:31:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754883AbWKKWeb convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006 17:34:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754884AbWKKWeb
- (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 17:34:31 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:39182 "EHLO
- diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1754883AbWKKWea
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 17:34:30 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1Gj1Qi-0005HD-00; Sat, 11 Nov 2006 22:34:28 +0000
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S1161216AbWJ3Kbe convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006 05:31:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161217AbWJ3Kbe
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 05:31:34 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:28461 "EHLO
+ torino.dewire.com") by vger.kernel.org with ESMTP id S1161216AbWJ3Kbd convert
+ rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006
+ 05:31:33 -0500
+Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
+ (Postfix) with ESMTP id AC0DB8030A5; Mon, 30 Oct 2006 11:28:15 +0100 (CET)
+Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 29172-08; Mon, 30 Oct
+ 2006 11:28:15 +0100 (CET)
+Received: from [10.9.0.5] (unknown [10.9.0.5]) by torino.dewire.com (Postfix)
+ with ESMTP id 652648030A1; Mon, 30 Oct 2006 11:28:13 +0100 (CET)
+To: Eran Tromer <git2eran@tromer.org>
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-11 21:59:32 +0000, Catalin Marinas wrote:
+m=C3=A5ndag 30 oktober 2006 10:57 skrev Eran Tromer:
+> That's an annoying 430ms delay at every prompt, on my box. Does StGIT=
+ do
+> something expensive on every invocation?
 
-> I've never packed it. IIRC, there was some advise in some GIT
-> document or e-mail saying that you shouldn't pack if the export is
-> over a dumb protocol. That's good for people pulling regularly but
-> bad for cloning.
+I don't type fast enough to notice really and my machine seems faster, =
+~300 ms=20
+per prompt.
 
-It's _extremely_ bad when cloning. There's a separate HTTP request for
-each object in the repository, which means lots of time and lots of
-web server load. It's just about doable to clone the StGIT repository
-now because it's so small.
+>
+> Ben Clifford'd solution is pretty much instantaneous, and the followi=
+ng
+> extends it to StGIT (in a less clean but much faster way):
+>
+> ----------------------------------------------
+> __prompt_githead() {
+>     __PS_GIT=3D"$(git-symbolic-ref HEAD 2>/dev/null)" || exit
+>     __PS_GIT=3D"$(basename $__PS_GIT)"
+>     echo -n " $__PS_GIT"
+>     __PS_GIT=3D$(cat "${GIT_DIR:-.git}/patches/$__PS_GIT/current" \
+>                2>/dev/null) || exit
+>     echo -n ":$__PS_GIT"
+> }
+> PS1=3D'[\u@\h \W$(__prompt_githead)]\$ '
+> ----------------------------------------------
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
+This doesn't work if the branch have a / in the name or if you are in a=
+=20
+subdirectory, not the top level. Probably not hard to fix though.
+
