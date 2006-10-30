@@ -2,71 +2,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: how to ignore merge conflicts?
-Date: Mon, 30 Oct 2006 21:06:00 +0100
-Organization: At home
-Message-ID: <ei5lv0$2jv$1@sea.gmane.org>
-References: <200610301448.38222.len.brown@intel.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH/RFC (take 2)] gitweb: New improved patchset view
+Date: Mon, 30 Oct 2006 14:59:15 -0800
+Message-ID: <7v7iyhv29o.fsf@assigned-by-dhcp.cox.net>
+References: <92622.251.qm@web31812.mail.mud.yahoo.com>
+	<7vy7qyw6w6.fsf@assigned-by-dhcp.cox.net>
+	<200610301043.22033.jnareb@gmail.com>
+	<200610301458.33634.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Mon, 30 Oct 2006 20:34:04 +0000 (UTC)
+NNTP-Posting-Date: Mon, 30 Oct 2006 22:59:31 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 22
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-18-116.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <200610301458.33634.jnareb@gmail.com> (Jakub Narebski's message
+	of "Mon, 30 Oct 2006 14:58:32 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30547>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GedgW-0000we-0H for gcvg-git@gmane.org; Mon, 30 Oct
- 2006 21:24:40 +0100
+ esmtp (Exim 4.43) id 1Geg6C-0008RD-NL for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 23:59:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751968AbWJ3UYd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 15:24:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751969AbWJ3UYd
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 15:24:33 -0500
-Received: from main.gmane.org ([80.91.229.2]:52971 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1751968AbWJ3UYc (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 15:24:32 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GedYN-0007B6-CY for git@vger.kernel.org; Mon, 30 Oct 2006 21:16:15 +0100
-Received: from host-81-190-18-116.torun.mm.pl ([81.190.18.116]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Mon, 30 Oct 2006 21:16:15 +0100
-Received: from jnareb by host-81-190-18-116.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 30 Oct 2006
- 21:16:15 +0100
-To: git@vger.kernel.org
+ S1422743AbWJ3W7R (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 17:59:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422733AbWJ3W7R
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 17:59:17 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:33993 "EHLO
+ fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP id S1422743AbWJ3W7Q
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 17:59:16 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao12.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061030225916.REWS18180.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>; Mon, 30
+ Oct 2006 17:59:16 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id gmyw1V00Y1kojtg0000000 Mon, 30 Oct 2006
+ 17:58:57 -0500
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Len Brown wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Sometimes when a multiple-file merge give conflicts, I don't want to edit
-> one of the resulting <<<<<=====>>>>> files.
-> Instead, I just want to choose the version of that particular file that
-> existed in one of the two merged branches and commit that along with
-> the rest of the merge.
-> 
-> How to do this?
+> I have realized that it is not as easy as it sounds, at least for the
+> git-diff-tree output...
 
-$ git cat-file -p :<n>:<filename> > <filename>
-$ git update-index <filename>
+I do not think so.a The output is designed to be machine
+parsable.  See Documentation/diff-format.txt and also please
+refer to 65a9289d:diff-helper.c for a sample code to see how to
+parse the output.
 
-where <n> is one of stages, 1 or 2 to choose one branch version if I
-remember correctly. Check out documentation.
-
-Or just use 'ours' as merge strategy...
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
 
