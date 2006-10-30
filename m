@@ -1,70 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] gitweb: Show project's README.html if available
-Date: Tue, 24 Oct 2006 12:09:03 -0700 (PDT)
-Message-ID: <524029.7339.qm@web31812.mail.mud.yahoo.com>
-References: <20061024113057.GA20017@pasky.or.cz>
-Reply-To: ltuikov@yahoo.com
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Eran Tromer <git2eran@tromer.org>
+Subject: Re: [StGIT PATCH] Bash snippet to show branch and patch in bash prompt
+Date: Mon, 30 Oct 2006 11:57:03 +0200
+Message-ID: <4545CC6F.90001@tromer.org>
+References: <20061029233745.24899.1470.stgit@lathund.dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Tue, 24 Oct 2006 19:09:32 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 30 Oct 2006 09:58:02 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=V79aExxE4W5XDnyRiHM8GZloYTnsRPJjznL+/4htMu/tLyF1AXc+2ZQlPKXRIzRkW1BSA384RvIwDECAu1FDy73thnBXDl4OL/FP+Jb0QlkRBBDKcZpWxJXkZuuSF2XQ5tTgiZMTI7Is68RVcAuRM41IvzhTKJmd9T1xt8tVFcI=  ;
-X-YMail-OSG: hDA8A_8VM1laqYiV_7R5irgz4PvBW_6sRZOef8Pj
-In-Reply-To: <20061024113057.GA20017@pasky.or.cz>
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.7) Gecko/20060913 Fedora/1.5.0.7-1.fc5 Thunderbird/1.5.0.7 Mnenhy/0.7.4.0
+In-Reply-To: <20061029233745.24899.1470.stgit@lathund.dewire.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30490>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcReE-0007j9-LK for gcvg-git@gmane.org; Tue, 24 Oct
- 2006 21:09:15 +0200
+ esmtp (Exim 4.43) id 1GeTtz-00060K-J1 for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 10:57:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161188AbWJXTJJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006
- 15:09:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161190AbWJXTJJ
- (ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 15:09:09 -0400
-Received: from web31812.mail.mud.yahoo.com ([68.142.207.75]:26495 "HELO
- web31812.mail.mud.yahoo.com") by vger.kernel.org with SMTP id
- S1161188AbWJXTJI (ORCPT <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006
- 15:09:08 -0400
-Received: (qmail 7449 invoked by uid 60001); 24 Oct 2006 19:09:03 -0000
-Received: from [64.215.88.90] by web31812.mail.mud.yahoo.com via HTTP; Tue,
- 24 Oct 2006 12:09:03 PDT
-To: Petr Baudis <pasky@suse.cz>
+ S1161201AbWJ3J5w (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 04:57:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161190AbWJ3J5w
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 04:57:52 -0500
+Received: from line108-16.adsl.actcom.co.il ([192.117.108.16]:60907 "EHLO
+ lucian.tromer.org") by vger.kernel.org with ESMTP id S1161201AbWJ3J5v (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 04:57:51 -0500
+Received: from [192.168.4.6] ([192.168.4.6]) by lucian.tromer.org
+ (8.13.7/8.12.11) with ESMTP id k9U9vNCh020874; Mon, 30 Oct 2006 11:57:28
+ +0200
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 
---- Petr Baudis <pasky@suse.cz> wrote:
-> > Why not instead re-submit a patch implementing what was discussed
-> > in this thread bearing the same name:
-> > 
-> > http://marc.theaimsgroup.com/?t=116044914900001&r=1&w=2
-> 
-> This implements
-> 
-> 	http://marc.theaimsgroup.com/?l=git&m=116047939517299&w=2
-> 
-> I see no other ideas I could take there except various naming proposals
-> and perhaps using File::Copy but I'll wait until someone does a
-> gitweb-wide change for the latter.
-> 
-> I don't really care _what_ name it bears, but I'd like to have it
-> included. :-)
+On 2006-10-30 01:37, Robin Rosenberg wrote:
+> +# include this in your bashrc or copy to /etc/bash_completions.d
+> +
+> +if [ "$PS1" ]; then
+> +    # trap 'PS1="\u@\h [$(stg top)] \w]\$ "' DEBUG
+> +    function stgtag
+> +    {
+> +	br=$(stg branch 2>/dev/null)
+> +	top=$(stg top 2>/dev/null)
+> +	if [[ -n "$br$top" ]];then
+> +	    echo "[$top@$br]"
+> +	    return
+> +	fi
+> +    }
+> +    PS1='\u@\h$(stgtag)\w\$ '
+> +
+> +fi
 
-People have suggested that this functionality be folded into the
-"Description" column, where the description printed is the
-first line of the description file "description" and if clicked
-on, it shows the whole "descrption" file.
+That's an annoying 430ms delay at every prompt, on my box. Does StGIT do
+something expensive on every invocation?
 
-    Luben
+Ben Clifford'd solution is pretty much instantaneous, and the following
+extends it to StGIT (in a less clean but much faster way):
+
+----------------------------------------------
+__prompt_githead() {
+    __PS_GIT="$(git-symbolic-ref HEAD 2>/dev/null)" || exit
+    __PS_GIT="$(basename $__PS_GIT)"
+    echo -n " $__PS_GIT"
+    __PS_GIT=$(cat "${GIT_DIR:-.git}/patches/$__PS_GIT/current" \
+               2>/dev/null) || exit
+    echo -n ":$__PS_GIT"
+}
+PS1='[\u@\h \W$(__prompt_githead)]\$ '
+----------------------------------------------
+
