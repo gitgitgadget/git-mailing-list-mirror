@@ -1,77 +1,59 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] Trim hint printed when gecos is empty.
-Date: Tue, 28 Nov 2006 14:03:35 +0000
-Message-ID: <200611281403.36370.andyparkins@gmail.com>
-References: <ekh2uh$nk2$1@sea.gmane.org> <200611281146.56201.andyparkins@gmail.com> <Pine.LNX.4.63.0611281426311.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] Bash snippet to show branch and patch in bash prompt
+Date: Mon, 30 Oct 2006 11:57:42 +0100
+Organization: Dewire
+Message-ID: <200610301157.43702.robin.rosenberg.lists@dewire.com>
+References: <20061030104225.11875.57076.stgit@lathund.dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 28 Nov 2006 14:04:05 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Mon, 30 Oct 2006 10:57:03 +0000 (UTC)
+Cc: Eran Tromer <git2eran@tromer.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=A3bydXiy8t8ShiWQL2eiITS4GcK+kZs9IokQT63Ljs/TtEbCI8yBKL256AwI6NTWJzBaKj1SRZ7z1AJAageRlOQiSqAJguYN7W2QBxgbLSfx2Xsh0XEdHFjb7ZdWa/oe6q7nXOBoB3Pvf9yb7/9x08ecUN4o6KfNHo56+J8I1oI=
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.63.0611281426311.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: KMail/1.9.4
+In-Reply-To: <20061030104225.11875.57076.stgit@lathund.dewire.com>
 Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30496>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gp3Yq-0002Ua-8t for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 15:03:48 +0100
+ esmtp (Exim 4.43) id 1GeUom-0002Tq-OO for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 11:56:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934637AbWK1ODp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 09:03:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934963AbWK1ODp
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 09:03:45 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:62665 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S934637AbWK1ODp
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 09:03:45 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1483048uga for
- <git@vger.kernel.org>; Tue, 28 Nov 2006 06:03:43 -0800 (PST)
-Received: by 10.66.248.5 with SMTP id v5mr1614496ugh.1164722623540; Tue, 28
- Nov 2006 06:03:43 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id e33sm19612161ugd.2006.11.28.06.03.39; Tue, 28 Nov 2006 06:03:39
- -0800 (PST)
-To: git@vger.kernel.org
+ S1161241AbWJ3K4e convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006 05:56:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161245AbWJ3K4d
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 05:56:33 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:33582 "EHLO
+ torino.dewire.com") by vger.kernel.org with ESMTP id S1161241AbWJ3K4d convert
+ rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006
+ 05:56:33 -0500
+Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
+ (Postfix) with ESMTP id 55E4F8030A5; Mon, 30 Oct 2006 11:53:15 +0100 (CET)
+Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 29639-07; Mon, 30 Oct
+ 2006 11:53:15 +0100 (CET)
+Received: from [10.9.0.5] (unknown [10.9.0.5]) by torino.dewire.com (Postfix)
+ with ESMTP id 14CA48030A1; Mon, 30 Oct 2006 11:53:12 +0100 (CET)
+To: Catalin Marinas <catalin.marinas@arm.com>
 Sender: git-owner@vger.kernel.org
 
-On Tuesday 2006 November 28 13:28, Johannes Schindelin wrote:
+m=C3=A5ndag 30 oktober 2006 11:42 skrev Robin Rosenberg:
+> From: Robin Rosenberg <robin.rosenberg@dewire.com>
+>
+> Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
 
-> No. As has been often said, a signoff _has_ to be a conscious act, or else
-> it will lose its meaning.
+This was a "reply" using stgit, but the reference missed the ange brack=
+ets.=20
 
-I'm not suggesting that a project integrator would have that switch on, but 
-for me, in my own repository, where I am the only person writing patches, 
-what possible case is there that I won't sign off?
+Anyway thanks for the feedback on the prompt.
 
-> Once you are reasonably convinced you want to sign off on that commit,
-
-I am always convinced.  Perhaps I am doing wrong - please explain to me under 
-what circumstance I would /not/ want to sign off on a commit.  (assuming I am 
-acting merely as a developer on a project, I am not accepting patches from 
-anyone but me).
-
-> just add "-s" to git-commit. And if you forgot, fix it by "git commit -s
-> --amend". (Note that this is another nice example why "-a" by default
-> would be wrong, wrong, wrong.)
-
-I don't see what one has to do with the other.  There are good arguments for 
-not having "-a" default, but signing off isn't one of them.
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
+-- robin
