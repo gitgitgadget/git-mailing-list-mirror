@@ -1,99 +1,91 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Shallow clone
-Date: Sun, 12 Nov 2006 00:16:40 -0800
-Message-ID: <7vu015f5av.fsf@assigned-by-dhcp.cox.net>
-References: <7v8ximwrm3.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0611072009220.2601@qynat.qvtvafvgr.pbz>
-	<45520872.3090506@gmail.com> <45521AE9.7050902@gmail.com>
-	<7vac31p8om.fsf@assigned-by-dhcp.cox.net>
-	<87zmaynl18.fsf@wine.dyndns.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: WARNING: THIS PATCH CAN BREAK YOUR REPO, was Re: [PATCH 2/3] Only repack active packs by skipping over kept packs.
+Date: Mon, 30 Oct 2006 15:26:11 -0500
+Message-ID: <20061030202611.GA5775@spearce.org>
+References: <20061029093754.GD3847@spearce.org> <Pine.LNX.4.64.0610301332440.11384@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 12 Nov 2006 08:16:57 +0000 (UTC)
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>, git@vger.kernel.org
+NNTP-Posting-Date: Mon, 30 Oct 2006 20:34:21 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0610301332440.11384@xanadu.home>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30519>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GjAWM-0002Qn-Kb for gcvg-git@gmane.org; Sun, 12 Nov
- 2006 09:16:54 +0100
+ esmtp (Exim 4.43) id 1Gedi8-0001NU-I8 for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 21:26:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754087AbWKLIQm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 12 Nov 2006
- 03:16:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754102AbWKLIQm
- (ORCPT <rfc822;git-outgoing>); Sun, 12 Nov 2006 03:16:42 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:31434 "EHLO
- fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1754087AbWKLIQl
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2006 03:16:41 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061112081641.KEWE5575.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Sun, 12
- Nov 2006 03:16:41 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id lkGF1V00C1kojtg0000000; Sun, 12 Nov 2006
- 03:16:16 -0500
-To: Alexandre Julliard <julliard@winehq.org>
+ S1751969AbWJ3U0R (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 15:26:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751972AbWJ3U0R
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 15:26:17 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:49888 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1751969AbWJ3U0Q
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 15:26:16 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gedht-0002uC-Q3; Mon, 30 Oct 2006 15:26:05 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 0A9AD20FB0C; Mon, 30 Oct 2006 15:26:12 -0500 (EST)
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-Alexandre Julliard <julliard@winehq.org> writes:
+Nicolas Pitre <nico@cam.org> wrote:
+> On Sun, 29 Oct 2006, Shawn Pearce wrote:
+> 
+> > During `git repack -a -d` only repack objects which are loose or
+> > which reside in an active (a non-kept) pack.  This allows the user
+> > to keep large packs as-is without continuous repacking and can be
+> > very helpful on large repositories.
+> 
+> Something is really broken here.
+> 
+> Here's how to destroy your GIT's git repository.
+> 
+> WARNING: MAKE A COPY BEFORE TRYING THIS!  I'm serious.
+> 
+> First, let's make a single pack just to make things simpler and 
+> reproducible:
+> 
+> $ git-repack -a -f -d
+> $ git-prune
+> $ git-fsck-objects --full
 
-> There's also a problem with the packing, a clone --depth 1 currently
-> results in a pack that's about 3 times as large as it should be.
+Actually the breakage is easier to reproduce without trashing
+a repository.
 
-That's interesting.
+Do the above so you have everything in one pack.  Now use rev-list
+to simulate the object list construction in pack-objects as though
+we were doing a 'git repack -a -d':
 
-  : gitster; git clone -n --depth 1 git://127.0.0.1/git.git victim-001
-  remote: Generating pack...
-  remote: Done counting 6246 objects.
-  remote: Deltifying 6246 objects.
-  remote:  100% (6246/6246) done
-  Indexing 6246 objects.
-  remote: Total 6246, written 6246 (delta 3106), reused 4313 (delta 3106)
-   100% (6246/6246) done
-  Resolving 3106 deltas.
-   100% (3106/3106) done
-  : gitster; cd victim-001
-  : gitster; ls -lh .git/objects/pack/
-  total 9.6M
-  drwxrwsr-x 2 junio src 4.0K 2006-11-11 23:52 ./
-  drwxrwsr-x 4 junio src 4.0K 2006-11-11 23:52 ../
-  -r--r--r-- 1 junio src 148K 2006-11-11 23:52 pack-f5f88d83....idx
-  -r--r--r-- 1 junio src 9.5M 2006-11-11 23:52 pack-f5f88d83....pack
+  git-rev-list --objects --all \
+    --unpacked=.git/objects/pack/pack-*.pack \
+	| wc -l
 
-Repacking immediately after cloning brings it down to what is
-expected.
+gives me 102 (WRONG WRONG WRONG WRONG!!!!!!)
 
-  : gitster; git repack -a -d -f
-  Generating pack...
-  Done counting 6246 objects.
-  Deltifying 6246 objects.
-   100% (6246/6246) done
-  Writing 6246 objects.
-   100% (6246/6246) done
-  Total 6246, written 6246 (delta 4815), reused 1407 (delta 0)
-  Pack pack-f5f88d83524213e3ab05697ff75f245b1ef9081a created.
-  : gitster; ls -lh .git/objects/pack/
-  total 2.8M
-  drwxrwsr-x 2 junio src 4.0K 2006-11-11 23:53 ./
-  drwxrwsr-x 4 junio src 4.0K 2006-11-11 23:52 ../
-  -rw-rw-r-- 1 junio src 148K 2006-11-11 23:53 pack-f5f88d83....idx
-  -rw-rw-r-- 1 junio src 2.6M 2006-11-11 23:53 pack-f5f88d83....pack
+and
+ 
+  git-rev-list --objects --all | wc -l
 
-In any case, after this "shallow" stuff, repeated "fetch --depth
-99" seems to fetch 0 object and 3400 objects alternately, and
-the shallow file alternates between 900 bytes and 11000 bytes.
+gives me 31912 (correct).  The --unpacked flag is horribly broken.
 
-We would need to take a deeper look into what this series does,
-before moving it to 'next'.
-
-
-
+-- 
