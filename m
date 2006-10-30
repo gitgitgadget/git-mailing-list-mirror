@@ -4,93 +4,77 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 05 Dec 2006 16:30:53 +0100
-Message-ID: <457590AD.4000806@op5.se>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611281335.38728.andyparkins@gmail.com> <20061129160355.GF18810@admingilde.org> <200611292000.23778.andyparkins@gmail.com> <20061130170625.GH18810@admingilde.org> <456F29A2.1050205@op5.se> <20061205090125.GA2428@cepheus> <45754AFE.1070207@op5.se> <20061205150217.GA5573@cepheus>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: WARNING: THIS PATCH CAN BREAK YOUR REPO, was Re: [PATCH 2/3] Only repack active packs by skipping over kept packs.
+Date: Mon, 30 Oct 2006 13:48:24 -0800
+Message-ID: <7v7iyhwk47.fsf@assigned-by-dhcp.cox.net>
+References: <20061029093754.GD3847@spearce.org>
+	<Pine.LNX.4.64.0610301332440.11384@xanadu.home>
+	<20061030202611.GA5775@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 5 Dec 2006 15:31:04 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 30 Oct 2006 21:54:04 +0000 (UTC)
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <20061205150217.GA5573@cepheus>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33349>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrcG2-0008MZ-Uq for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 16:30:59 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30530>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Geezd-00086x-QT for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 22:48:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S968308AbWLEPa4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 10:30:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968309AbWLEPa4
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 10:30:56 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:60213 "EHLO
- smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S968308AbWLEPaz (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
- 10:30:55 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id 8857B6BCBE; Tue,  5 Dec 2006 16:30:53 +0100 (CET)
-To: Uwe Kleine-Koenig <zeisberg@informatik.uni-freiburg.de>, Andreas Ericsson
- <ae@op5.se>, Martin Waitz <tali@admingilde.org>, Andy Parkins
- <andyparkins@gmail.com>, git@vger.kernel.org
+ S1161520AbWJ3Vs1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 16:48:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161521AbWJ3Vs1
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 16:48:27 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:56229 "EHLO
+ fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S1161520AbWJ3Vs0
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 16:48:26 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao03.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061030214825.FJRZ2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>; Mon, 30
+ Oct 2006 16:48:25 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id glo51V00V1kojtg0000000 Mon, 30 Oct 2006
+ 16:48:06 -0500
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Uwe Kleine-Koenig wrote:
-> Hella Andreas,
-> 
-> Andreas Ericsson wrote:
->>>> The only problem I'm seeing atm is that the supermodule somehow has to 
->>>> mark whatever commits it's using from the submodule inside the submodule 
->>>> repo so that they effectively become un-prunable, otherwise the 
->>>> supermodule may some day find itself with a history that it can't restore.
->>> One could circumvent that by creating a separate repo for the submodule
->>> at checkout time and pull the needed objects in the supermodule's odb
->>> when commiting the supermodule.  This way prune in the submodule cannot
->>> do any harm, because in it's odb are no objects that are important for
->>> the supermodule.
->> Yes, but then you'd lose history connectivity (I'm assuming you'd only 
->> pull in the tree and blob objects from the submodule, and prefix the 
->> tree-entrys with whatever directory you're storing the submodul in).
-> That's the reason for me prefering to pull in the complete commit.
-> 
-> I don't understand what you mean with "prefix the tree-entrys with
-> whatever directory you're storing the submodul in".
-> Maybe one of us doesn't understand tree objects correctly.  AFAICT they
-> don't store the location where they occur, so there is no need to store
-> a prefix.  E.g. 
-> 
-> 	100644 blob 610bafd79f92c7e546b104d5b22795df1f099723    Makefile
-> 	040000 tree 754eadab39642175748bb02155d2959176bcf014    subdir
-> 
-> So the tree that only contains the Makefile specifing LD_FLAGS has the
-> sha1id 754eadab39642175748bb02155d2959176bcf014 independent of being the
-> root of my project or a subtree.
-> 
-> But maybe I misunderstood you?
-> 
+Shawn Pearce <spearce@spearce.org> writes:
 
-Nopes. I just didn't think of the fact that subtrees are trees and never 
-store any path-info no matter what. So basically the supermodule can 
-store all trees of all submodules for each commit adding a new submodule 
-revision (which is neat, since "casuals" never have to bother with 
-getting all the submodules if they want to see all the code used in any 
-particular revision), while we invent the new tree object "subm" that 
-points to a commit in the submodule repo. We then teach the tools to 
-recognize when the *real* submodule repo is present and just don't check 
-out trees from the supermodule odb that lead us to directories where 
-submodules reside. Simple and beautiful. Me likes.
+> Do the above so you have everything in one pack.  Now use rev-list
+> to simulate the object list construction in pack-objects as though
+> we were doing a 'git repack -a -d':
+>
+>   git-rev-list --objects --all \
+>     --unpacked=.git/objects/pack/pack-*.pack \
+> 	| wc -l
+>
+> gives me 102 (WRONG WRONG WRONG WRONG!!!!!!)
 
-*IF* we teach the history viewers about submodules is a different matter 
-though. I'm not sure it would make much sense to have simple text-mode 
-browsers show the submodule history, although I can imagine qgit and 
-gitk wanting to take advantage of their nice side-by-side DAG displaying 
-code to show all the repos in parallell, or link between them in some 
-point-and-click kind of way.
+Now I think I know what is going on.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
+The meaning of "unpacked" (with or without the "pretend as if
+all objects in this pack are loose") has always been to stop
+traversing once we hit a packed object, not "do not include
+already packed object".
+
+So --unpacked=pretend-this-is-loose was wrong to begin with; it
+probably should have been --incremental=pretend-this-is-loose.
+
+How about reverting the following:
+
+commit ce8590748b918687abc4c7cd2d432dd23f07ae40
+Author: Shawn Pearce <spearce@spearce.org>
+
+    Only repack active packs by skipping over kept packs.
+
+
+commit 106d710bc13f34aec1a15c4cff80f062f384edf6
+Author: Junio C Hamano <junkio@cox.net>
+
+    pack-objects --unpacked=<existing pack> option.
+
+
