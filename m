@@ -4,70 +4,72 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: sf <sf@b-i-t.de>
-Subject: Re: [RFC] Submodules in GIT
-Date: Fri, 01 Dec 2006 14:21:20 +0100
-Message-ID: <45702C50.9050307@b-i-t.de>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611281335.38728.andyparkins@gmail.com> <20061129160355.GF18810@admingilde.org> <200611292000.23778.andyparkins@gmail.com> <20061130170625.GH18810@admingilde.org> <456F29A2.1050205@op5.se> <45701A24.5060500@b-i-t.de> <20061201121110.GP18810@admingilde.org>
+From: Jan Harkes <jaharkes@cs.cmu.edu>
+Subject: Re: WARNING: THIS PATCH CAN BREAK YOUR REPO, was Re: [PATCH 2/3] Only repack active packs by skipping over kept packs.
+Date: Mon, 30 Oct 2006 16:07:51 -0500
+Message-ID: <20061030210751.GB20236@delft.aura.cs.cmu.edu>
+References: <20061029093754.GD3847@spearce.org> <Pine.LNX.4.64.0610301332440.11384@xanadu.home> <20061030202611.GA5775@spearce.org> <20061030205200.GA20236@delft.aura.cs.cmu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 1 Dec 2006 13:22:23 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 30 Oct 2006 21:13:32 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 25
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: ip-213157015184.dialin.heagmedianet.de
-User-Agent: Thunderbird 1.5.0.8 (X11/20061110)
-In-Reply-To: <20061201121110.GP18810@admingilde.org>
+Mail-Followup-To: Shawn Pearce <spearce@spearce.org>,
+	Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20061030205200.GA20236@delft.aura.cs.cmu.edu>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30523>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq8LD-0003Gb-Vs for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 14:22:12 +0100
+ esmtp (Exim 4.43) id 1GeeMS-0004sG-AD for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 22:08:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936496AbWLANWI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 08:22:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759157AbWLANWI
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 08:22:08 -0500
-Received: from main.gmane.org ([80.91.229.2]:49824 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1758067AbWLANWF (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 08:22:05 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gq8Kk-0003Bf-RJ for git@vger.kernel.org; Fri, 01 Dec 2006 14:21:43 +0100
-Received: from ip-213157015184.dialin.heagmedianet.de ([213.157.15.184]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 01 Dec 2006 14:21:42 +0100
-Received: from sf by ip-213157015184.dialin.heagmedianet.de with local
- (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 01
- Dec 2006 14:21:42 +0100
-To: git@vger.kernel.org
+ S1422660AbWJ3VH4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 16:07:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422661AbWJ3VH4
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 16:07:56 -0500
+Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:43749 "EHLO
+ delft.aura.cs.cmu.edu") by vger.kernel.org with ESMTP id S1422660AbWJ3VHz
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 16:07:55 -0500
+Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 4.63)
+ (envelope-from <jaharkes@cs.cmu.edu>) id 1GeeMJ-0006Po-Co; Mon, 30 Oct 2006
+ 16:07:51 -0500
+To: Shawn Pearce <spearce@spearce.org>, Nicolas Pitre <nico@cam.org>, Junio C
+ Hamano <junkio@cox.net>, git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Martin Waitz wrote:
-> hoi :)
+On Mon, Oct 30, 2006 at 03:52:00PM -0500, Jan Harkes wrote:
+> On Mon, Oct 30, 2006 at 03:26:11PM -0500, Shawn Pearce wrote:
+> > Do the above so you have everything in one pack.  Now use rev-list
+> > to simulate the object list construction in pack-objects as though
+> > we were doing a 'git repack -a -d':
+> > 
+> >   git-rev-list --objects --all \
+> >     --unpacked=.git/objects/pack/pack-*.pack \
+> > 	| wc -l
+> > 
+> > gives me 102 (WRONG WRONG WRONG WRONG!!!!!!)
 > 
-> On Fri, Dec 01, 2006 at 01:03:48PM +0100, sf wrote:
->> Andreas Ericsson wrote:
->> 2. You can never prune the main (the supermodule's) repository, at least 
->> not with what git provides today.
+...
 > 
-> It even already works (well, not with what git provides today, but with
-> my implementation). git-prune simply walks all the submodules, too, when
-> doing it's reachability analysis.
-> 
-> What does not work is a prune inside the submodule, because it does not
-> know about all the commits used by the supermodule.
+> The following patch does fix the problem Nicolas reported, but for some
+> reason I'm still getting only 102 objects (only tags and the commits
+> they refer to?) with your test.
 
-I just had a short (really short) look at your work. My impression is 
-that your repository setup is much too complicated.
+Seems to be operator error, I guess the shell can't (won't) expand
+--unpacked=.git/objects/pack/pack-*.pack and there is no pack named
+pack-*.pack, so rev-list will actually find every object in one of the
+packs and skip them.
 
-As I proposed elsewhere: For submodules to work you only need to allow 
-commits in tree objects (that is what your implementation requires as 
-well). Everything else is in the tools. Much simpler.
+The following works correctly,
 
-Regards
+    $ git-rev-list --objects --all --unpacked=.git/objects/pack/pack-234f8136e45fb34d118bb346c15267535e80e5f0.pack --unpacked=.git/objects/pack/pack-aceb4c6394c586abaf65d76dd6cf088f50a5b806.pack | wc -l
+    28713
 
-Stephan
+    $ ~/git/git/git-rev-list --objects --all | wc -l
+    28713
+
+Jan
