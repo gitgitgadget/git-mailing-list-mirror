@@ -4,118 +4,63 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: [PATCH 2/3] Only repack active packs by skipping over kept packs.
-Date: Sun, 29 Oct 2006 04:37:54 -0500
-Message-ID: <20061029093754.GD3847@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/2] Allow '-' in config variable names
+Date: Mon, 30 Oct 2006 14:45:17 -0800
+Message-ID: <7vodrtv2wy.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0610300823250.25218@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 29 Oct 2006 09:38:04 +0000 (UTC)
+NNTP-Posting-Date: Mon, 30 Oct 2006 22:45:30 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <Pine.LNX.4.64.0610300823250.25218@g5.osdl.org> (Linus Torvalds's
+	message of "Mon, 30 Oct 2006 08:25:36 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30543>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Ge77B-00081R-6b for gcvg-git@gmane.org; Sun, 29 Oct
- 2006 10:38:01 +0100
+ esmtp (Exim 4.43) id 1Gefsg-0005Xq-Hv for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 23:45:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932134AbWJ2Jh6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
- 04:37:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932135AbWJ2Jh6
- (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 04:37:58 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:45962 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S932134AbWJ2Jh5
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 04:37:57 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Ge77M-0002wE-Aw; Sun, 29 Oct 2006 04:38:12 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 4E67120E45B; Sun, 29 Oct 2006 04:37:54 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S1422726AbWJ3WpT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 17:45:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422728AbWJ3WpT
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 17:45:19 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:4815 "EHLO
+ fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1422726AbWJ3WpS
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 17:45:18 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061030224517.WUXA18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Mon, 30
+ Oct 2006 17:45:17 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id gmky1V0091kojtg0000000 Mon, 30 Oct 2006
+ 17:44:58 -0500
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-During `git repack -a -d` only repack objects which are loose or
-which reside in an active (a non-kept) pack.  This allows the user
-to keep large packs as-is without continuous repacking and can be
-very helpful on large repositories.  It should also help us resolve
-a race condition between `git repack -a -d` and the new pack store
-functionality in `git-receive-pack`.
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Kept packs are those which have a corresponding .keep file in
-$GIT_OBJECT_DIRECTORY/pack.  That is pack-X.pack will be kept
-(not repacked and not deleted) if pack-X.keep exists in the same
-directory when `git repack -a -d` starts.
+> I need this in order to allow aliases of the same form as "ls-tree", 
+> "rev-parse" etc, so that I can use
+>
+> 	[alias]
+> 		my-cat=--paginate cat-file -p
+>
+> to add a "git my-cat" command.
 
-Currently this feature is not documented and there is no user
-interface to keep an existing pack.
+I do not have problem with this (and would perhaps also want to
+add '_' to keychar set), but people who envisioned parsing
+config from scripts (i.e. Perly git) might prefer if we stayed
+within alnum, since I'd suspect then they may be able to reuse
+existing .ini parsers.  I do not much care about that myself,
+but I am bringing it up just in case other people might.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- git-repack.sh |   27 +++++++++++++++++----------
- 1 files changed, 17 insertions(+), 10 deletions(-)
+Other than that, this sounds nice.
 
-diff --git a/git-repack.sh b/git-repack.sh
-index 17e2452..f150a55 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -45,11 +45,19 @@ case ",$all_into_one," in
- 	args='--unpacked --incremental'
- 	;;
- ,t,)
--	args=
--
--	# Redundancy check in all-into-one case is trivial.
--	existing=`test -d "$PACKDIR" && cd "$PACKDIR" && \
--	    find . -type f \( -name '*.pack' -o -name '*.idx' \) -print`
-+	if [ -d "$PACKDIR" ]; then
-+		for e in `cd "$PACKDIR" && find . -type f -name '*.pack' \
-+			| sed -e 's/^\.\///' -e 's/\.pack$//'`
-+		do
-+			if [ -e "$PACKDIR/$e.keep" ]; then
-+				: keep
-+			else
-+				args="$args --unpacked=$e.pack"
-+				existing="$existing $e"
-+			fi
-+		done
-+	fi
-+	[ -z "$args" ] && args='--unpacked --incremental'
- 	;;
- esac
- 
-@@ -86,17 +94,16 @@ fi
- 
- if test "$remove_redundant" = t
- then
--	# We know $existing are all redundant only when
--	# all-into-one is used.
--	if test "$all_into_one" != '' && test "$existing" != ''
-+	# We know $existing are all redundant.
-+	if [ -n "$existing" ]
- 	then
- 		sync
- 		( cd "$PACKDIR" &&
- 		  for e in $existing
- 		  do
- 			case "$e" in
--			./pack-$name.pack | ./pack-$name.idx) ;;
--			*)	rm -f $e ;;
-+			pack-$name) ;;
-+			*)	rm -f "$e.pack" "$e.idx" "$e.keep" ;;
- 			esac
- 		  done
- 		)
--- 
-1.4.3.3.g7d63
+By the way, everybody seems to do "alias.xxx = -p cat-file -p"
+(I have it as "git less").  Maybe we would want to make a
+built-in alias for that?
