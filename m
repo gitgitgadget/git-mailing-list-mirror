@@ -4,107 +4,51 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 10:41:34 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0611151023160.2591@xanadu.home>
-References: <87k61yt1x2.wl%cworth@cworth.org>
- <7virhhy76h.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0611142048350.2591@xanadu.home>
- <200611150917.23756.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Move deny_non_fast_forwards handling completely into receive-pack.
+Date: Mon, 30 Oct 2006 15:06:45 -0800
+Message-ID: <7vpsc9tncq.fsf@assigned-by-dhcp.cox.net>
+References: <20061030223518.GF5775@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Wed, 15 Nov 2006 15:42:00 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 30 Oct 2006 23:07:19 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <200611150917.23756.andyparkins@gmail.com>
-X-X-Sender: nico@xanadu.home
+In-Reply-To: <20061030223518.GF5775@spearce.org> (Shawn Pearce's message of
+	"Mon, 30 Oct 2006 17:35:18 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30551>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkMtY-0001kd-Lw for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 16:41:49 +0100
+ esmtp (Exim 4.43) id 1GegDg-0001Wh-E8 for gcvg-git@gmane.org; Tue, 31 Oct
+ 2006 00:07:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030595AbWKOPlp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 10:41:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030597AbWKOPlp
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 10:41:45 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:40183 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S1030595AbWKOPlo
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 10:41:44 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J8S00DDP3LA4990@VL-MH-MR001.ip.videotron.ca> for git@vger.kernel.org; Wed,
- 15 Nov 2006 10:41:35 -0500 (EST)
-To: Andy Parkins <andyparkins@gmail.com>
+ S1161537AbWJ3XGr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 18:06:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161532AbWJ3XGr
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 18:06:47 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:8681 "EHLO
+ fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1161343AbWJ3XGq
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 18:06:46 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061030230646.YALR18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Mon, 30
+ Oct 2006 18:06:46 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id gn6S1V00f1kojtg0000000 Mon, 30 Oct 2006
+ 18:06:27 -0500
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-On Wed, 15 Nov 2006, Andy Parkins wrote:
+Shawn Pearce <spearce@spearce.org> writes:
 
-> On Wednesday 2006 November 15 04:32, Nicolas Pitre wrote:
-> 
-> > OK..... let's pretend this is my follow-up to your "If I were redoing
-> 
-> Personally, I agree with almost everything in this email.  Except the 
-> implementation of point 3.
-> 
-> > 3) remote branch handling should become more straight forward.
-> 
-> I was completely confused by this origin/master/clone stuff when I started 
-> with git.  In hindsight, now I understand git a bit more, this is what I 
-> would have liked:
-> 
->  * Don't use the name "origin" twice.  In fact, don't use it at all.  In a 
-> distributed system there is no such thing as a true origin.
+> The 'receive.denynonfastforwards' option has nothing to do with
+> the repository format version.  Since receive-pack already uses
+> git_config to initialize itself before executing any updates we
+> can use the normal configuration strategy and isolate the receive
+> specific variables away from the core variables.
 
-I agree, sort of.  Not because"origin" is ambigous as a name.  But 
-rather because there is a magic translation from "master" to "origin", 
-and I think this is wrong to do that.
-
-As mentioned elsewhere (and let's start using "get" instead of "pull" as 
-suggested by Johannes), a "get" should probably always create a branch 
-group even if it contains only one branch.  This way the remote branch 
-called "master" will still be called "master" locally, under the branch 
-group used to represent the remote repository.  And if a local name is 
-not provided then let's just call it "default".  This way, amongst the 
-remote references, there would be a "default/master" that would be used 
-when nothing else is provided by the user. So...
-
-	git get repo.com/time_machine.git
-
-would create a local branch named "remotes/default/master" if the remote 
-repo has only a master branch.
-
-Then, a simple:
-
-	git merge
-
-could be the same as
-
-	git merge default
-
-which would be equivalent to
-
-	git merge default/master
-
-Afterwards, because the "default" remote already exists, then:
-
-	git get
-
-would be the same as
-
-	git get default
-
-to get changes for all branches in the "default" remote branches, of 
-which "master" might be the only one in the simple case.
-
-But again I think it is important that the URL to use must be a per 
-branch attribute i.e. attached to "default/master" and not just 
-"default".  This way someone could add all branches of interest into the 
-"default" group even if they're from different repositories, and a 
-simple  get without any argument would get them all.
-
+Sounds sane.  Thanks.
 
