@@ -2,90 +2,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: What's cooking in git.git (topics)
-Date: Wed, 06 Dec 2006 14:14:31 -0800
-Message-ID: <7vmz60y8mw.fsf@assigned-by-dhcp.cox.net>
-References: <7vvekoyb79.fsf@assigned-by-dhcp.cox.net>
-	<el7dsn$9a6$1@sea.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: how to ignore merge conflicts?
+Date: Mon, 30 Oct 2006 21:06:00 +0100
+Organization: At home
+Message-ID: <ei5lv0$2jv$1@sea.gmane.org>
+References: <200610301448.38222.len.brown@intel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 6 Dec 2006 22:14:42 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Mon, 30 Oct 2006 20:34:04 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <el7dsn$9a6$1@sea.gmane.org> (Jakub Narebski's message of "Wed,
-	06 Dec 2006 22:51:13 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 22
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-18-116.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33529>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gs52C-00010Q-LA for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 23:14:37 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30518>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GedgW-0000we-0H for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 21:24:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937717AbWLFWOd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 17:14:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937722AbWLFWOd
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 17:14:33 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:41880 "EHLO
- fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S937717AbWLFWOc (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
- 17:14:32 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061206221432.THFU9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Wed, 6
- Dec 2006 17:14:32 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id vaEh1V00r1kojtg0000000; Wed, 06 Dec 2006
- 17:14:42 -0500
-To: Jakub Narebski <jnareb@gmail.com>
+ S1751968AbWJ3UYd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 15:24:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751969AbWJ3UYd
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 15:24:33 -0500
+Received: from main.gmane.org ([80.91.229.2]:52971 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1751968AbWJ3UYc (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 15:24:32 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GedYN-0007B6-CY for git@vger.kernel.org; Mon, 30 Oct 2006 21:16:15 +0100
+Received: from host-81-190-18-116.torun.mm.pl ([81.190.18.116]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Mon, 30 Oct 2006 21:16:15 +0100
+Received: from jnareb by host-81-190-18-116.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 30 Oct 2006
+ 21:16:15 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Len Brown wrote:
 
->> * jc/3way (Wed Nov 29 18:53:13 2006 -0800)
->>  + git-merge: preserve and merge local changes when doing fast forward
->> 
->>  This allows you to run a 'git merge' (or 'git pull') that
->>  results in a fast-forward merge that updates a path your
->>  working tree has modified locally; it merges your local changes
->>  into the updated version, in the same way the branch switching
->>  'git checkout -m' works.  It has been in next for some time and
->>  unless we hear somebody scream I think it is Ok to merge to
->>  'master'.
->
-> Very nice. Less suprises for CVS users (with "update then commit"
-> mentality/habits).
+> Sometimes when a multiple-file merge give conflicts, I don't want to edit
+> one of the resulting <<<<<=====>>>>> files.
+> Instead, I just want to choose the version of that particular file that
+> existed in one of the two merged branches and commit that along with
+> the rest of the merge.
+> 
+> How to do this?
 
-This only makes "update; edit; update; commit" to work.  "edit;
-commit; edit; commit; edit; update; commit" would not work,
-because you would be faced to resolving the conflicts upon the
-last update while your working tree is already contaminated with
-your own changes (it can be done and experienced people have
-done so, but you are talking about "CVS users" here).
+$ git cat-file -p :<n>:<filename> > <filename>
+$ git update-index <filename>
 
-We'd be much better off to encourage users to shake "update then
-commit" habit, especially if they are on a slow link.
+where <n> is one of stages, 1 or 2 to choose one branch version if I
+remember correctly. Check out documentation.
 
->> * jc/web (Wed Nov 8 14:54:09 2006 -0800)
->>  - gitweb: steal loadavg throttle from kernel.org
->
-> Is having loadavg in gitweb, and not configured in server good idea?
+Or just use 'ours' as merge strategy...
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
-Have you looked at the code to see what it does?
-
->> * lh/branch-rename (Thu Nov 30 03:16:56 2006 +0100)
->>  + git-branch: let caller specify logmsg
->>  + rename_ref: use lstat(2) when testing for symlink
->>  + git-branch: add options and tests for branch renaming
->> 
->>  I do not rename branches myself and do not see a need for this
->>  nor I have tested it in real-world setting.  The code seemed
->>  clean and may be 'master' material.
->
-> I'd like to have this, but it MUST work well with reflogs for me.
-
-Then test it and fix breakage if any please.
