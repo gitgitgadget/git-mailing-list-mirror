@@ -4,49 +4,96 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] no need to install manpages as executable
-Date: Mon, 11 Dec 2006 17:15:50 -0800
-Message-ID: <7virghzzg9.fsf@assigned-by-dhcp.cox.net>
-References: <20061211073932.GA12555@sequoia.sous-sol.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: WARNING: THIS PATCH CAN BREAK YOUR REPO, was Re: [PATCH 2/3] Only repack active packs by skipping over kept packs.
+Date: Mon, 30 Oct 2006 16:55:29 -0500
+Message-ID: <20061030215529.GC5775@spearce.org>
+References: <20061029093754.GD3847@spearce.org> <Pine.LNX.4.64.0610301332440.11384@xanadu.home> <20061030202611.GA5775@spearce.org> <7v7iyhwk47.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Tue, 12 Dec 2006 01:16:19 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 30 Oct 2006 22:00:15 +0000 (UTC)
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <7v7iyhwk47.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34055>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtwFj-0005mZ-8w for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 02:16:15 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30532>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gef6Z-0001Xj-V7 for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 22:55:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750813AbWLLBPz convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006 20:15:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750811AbWLLBPz
- (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 20:15:55 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:37599 "EHLO
- fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1750813AbWLLBPw convert rfc822-to-8bit (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 11 Dec 2006 20:15:52 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061212011552.OGTZ9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Mon, 11
- Dec 2006 20:15:52 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id xdG21V00f1kojtg0000000; Mon, 11 Dec 2006
- 20:16:03 -0500
-To: Chris Wright <chrisw@sous-sol.org>
+ S1161458AbWJ3Vzg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 16:55:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161528AbWJ3Vzg
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 16:55:36 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:58498 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1161458AbWJ3Vzf
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 16:55:35 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gef6I-0003Tr-5d; Mon, 30 Oct 2006 16:55:22 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 3D11320FB0C; Mon, 30 Oct 2006 16:55:29 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Chris Wright <chrisw@sous-sol.org> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
+> 
+> > Do the above so you have everything in one pack.  Now use rev-list
+> > to simulate the object list construction in pack-objects as though
+> > we were doing a 'git repack -a -d':
+> >
+> >   git-rev-list --objects --all \
+> >     --unpacked=.git/objects/pack/pack-*.pack \
+> > 	| wc -l
+> >
+> > gives me 102 (WRONG WRONG WRONG WRONG!!!!!!)
+> 
+> Now I think I know what is going on.
+> 
+> The meaning of "unpacked" (with or without the "pretend as if
+> all objects in this pack are loose") has always been to stop
+> traversing once we hit a packed object, not "do not include
+> already packed object".
 
-> No need to install manpages as executable.  Noticed by Ville Skytt=E4=
-=2E
+Did you see Jan Harkes' patch that changes the behavior to be what
+it should have been?
+ 
+> So --unpacked=pretend-this-is-loose was wrong to begin with; it
+> probably should have been --incremental=pretend-this-is-loose.
 
-Thanks.  I agree there is no need but I wonder why we even need
-to specify that explicitly.  Well, I guess I did not know that
-install(1) was that stupid.
+I don't care about what the option name is.  If you want to change
+it to --incremental we can but the --unpacked actually makes more
+sense now...  Its saying pretend every object in this pack is
+unpacked and therefore should be packed.
+ 
+> How about reverting the following:
+> 
+> commit ce8590748b918687abc4c7cd2d432dd23f07ae40
+> Author: Shawn Pearce <spearce@spearce.org>
+> 
+>     Only repack active packs by skipping over kept packs.
+> 
+> 
+> commit 106d710bc13f34aec1a15c4cff80f062f384edf6
+> Author: Junio C Hamano <junkio@cox.net>
+> 
+>     pack-objects --unpacked=<existing pack> option.
+> 
+
+Nah.  I think Jan's patch fixes the bug and the --unpacked option
+now makes sense as is, so I don't see why we would revert these.
+
+-- 
