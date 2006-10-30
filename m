@@ -6,67 +6,172 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Remove uncontested renamed files during merge.
-Date: Wed, 13 Dec 2006 11:31:25 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612131129550.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20061213095540.GA25001@spearce.org>
+Subject: [PATCH 1/5] upload-pack: no longer call rev-list
+Date: Mon, 30 Oct 2006 20:08:43 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0610302008320.26682@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 13 Dec 2006 10:31:36 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+NNTP-Posting-Date: Mon, 30 Oct 2006 19:18:19 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20061213095540.GA25001@spearce.org>
 X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34202>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuROe-0005VR-EG for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 11:31:32 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30507>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GecVX-0005rW-6T for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 20:09:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932654AbWLMKb3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 05:31:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932656AbWLMKb3
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 05:31:29 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43443 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932654AbWLMKb2
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006 05:31:28 -0500
-Received: (qmail invoked by alias); 13 Dec 2006 10:31:27 -0000
+ S1161425AbWJ3TI4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 14:08:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161463AbWJ3TI4
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 14:08:56 -0500
+Received: from mail.gmx.de ([213.165.64.20]:52683 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1161425AbWJ3TIy (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 14:08:54 -0500
+Received: (qmail invoked by alias); 30 Oct 2006 19:08:49 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp033) with SMTP; 13 Dec 2006 11:31:27 +0100
-To: "Shawn O. Pearce" <spearce@spearce.org>
+ [132.187.25.13] by mail.gmx.net (mp041) with SMTP; 30 Oct 2006 20:08:49 +0100
+To: git@vger.kernel.org, junkio@cox.net
 Sender: git-owner@vger.kernel.org
 
-Hi,
 
-On Wed, 13 Dec 2006, Shawn O. Pearce wrote:
+It is trivial to do now, and it is needed for the upcoming shallow
+clone stuff.
 
-> Prior to 65ac6e9c3f47807cb603af07a6a9e1a43bc119ae we deleted a
-> file from the working directory during a merge if the file existed
-> in the working directory before the merge started but was renamed
-> by the branch which is being merged in.  This broke in 65ac63 as
-> git-merge-recursive did not actually update the working directory
-> on this uncontested rename case.
-> 
-> [...]
->
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index 9d53bcd..741d17f 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -873,7 +873,7 @@ static int process_renames(struct path_list *a_renames,
->  			struct diff_filespec src_other, dst_other;
->  			int try_merge, stage = a_renames == renames1 ? 3: 2;
->  
-> -			remove_file(1, ren1_src, 1);
-> +			remove_file(1, ren1_src, 0);
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ upload-pack.c |   93 ++++++++++++++++++++++++++++++++++++--------------------
+ 1 files changed, 60 insertions(+), 33 deletions(-)
 
-I _think_ that the "0" should be "!index_only". After all, these functions 
-are not only called on the virtual merges, but also on the final merge, 
-which indeed should update the working directory. And since it is a 
-rename, the old file has to go.
-
-Ciao,
+diff --git a/upload-pack.c b/upload-pack.c
+index 4572fff..7f7df2a 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -9,6 +9,9 @@
+ #include "object.h"
+ #include "commit.h"
+ #include "exec_cmd.h"
++#include "diff.h"
++#include "revision.h"
++#include "list-objects.h"
+ 
+ static const char upload_pack_usage[] = "git-upload-pack [--strict] [--timeout=nn] <dir>";
+ 
+@@ -57,6 +60,40 @@ static ssize_t send_client_data(int fd,
+ 	return safe_write(fd, data, sz);
+ }
+ 
++FILE *pack_pipe = NULL;
++static void show_commit(struct commit *commit)
++{
++	if (commit->object.flags & BOUNDARY)
++		fputc('-', pack_pipe);
++	if (fputs(sha1_to_hex(commit->object.sha1), pack_pipe) < 0)
++		die("broken output pipe");
++	fputc('\n', pack_pipe);
++	fflush(pack_pipe);
++	free(commit->buffer);
++	commit->buffer = NULL;
++}
++
++static void show_object(struct object_array_entry *p)
++{
++	/* An object with name "foo\n0000000..." can be used to
++	 * confuse downstream git-pack-objects very badly.
++	 */
++	const char *ep = strchr(p->name, '\n');
++	if (ep) {
++		fprintf(pack_pipe, "%s %.*s\n", sha1_to_hex(p->item->sha1),
++		       (int) (ep - p->name),
++		       p->name);
++	}
++	else
++		fprintf(pack_pipe, "%s %s\n",
++				sha1_to_hex(p->item->sha1), p->name);
++}
++
++static void show_edge(struct commit *commit)
++{
++	fprintf(pack_pipe, "-%s\n", sha1_to_hex(commit->object.sha1));
++}
++
+ static void create_pack_file(void)
+ {
+ 	/* Pipes between rev-list to pack-objects, pack-objects to us
+@@ -78,48 +115,38 @@ static void create_pack_file(void)
+ 
+ 	if (!pid_rev_list) {
+ 		int i;
+-		int args;
+-		const char **argv;
+-		const char **p;
+-		char *buf;
++		struct rev_info revs;
+ 
+-		if (create_full_pack) {
+-			args = 10;
+-			use_thin_pack = 0; /* no point doing it */
+-		}
+-		else
+-			args = have_obj.nr + want_obj.nr + 5;
+-		p = xmalloc(args * sizeof(char *));
+-		argv = (const char **) p;
+-		buf = xmalloc(args * 45);
++		pack_pipe = fdopen(lp_pipe[1], "w");
+ 
+-		dup2(lp_pipe[1], 1);
+-		close(0);
+-		close(lp_pipe[0]);
+-		close(lp_pipe[1]);
+-		*p++ = "rev-list";
+-		*p++ = use_thin_pack ? "--objects-edge" : "--objects";
+ 		if (create_full_pack)
+-			*p++ = "--all";
+-		else {
++			use_thin_pack = 0; /* no point doing it */
++		init_revisions(&revs, NULL);
++		revs.tag_objects = 1;
++		revs.tree_objects = 1;
++		revs.blob_objects = 1;
++		if (use_thin_pack)
++			revs.edge_hint = 1;
++
++		if (create_full_pack) {
++			const char *args[] = {"rev-list", "--all", NULL};
++			setup_revisions(2, args, &revs, NULL);
++		} else {
+ 			for (i = 0; i < want_obj.nr; i++) {
+ 				struct object *o = want_obj.objects[i].item;
+-				*p++ = buf;
+-				memcpy(buf, sha1_to_hex(o->sha1), 41);
+-				buf += 41;
++				add_pending_object(&revs, o, NULL);
+ 			}
+-		}
+-		if (!create_full_pack)
+ 			for (i = 0; i < have_obj.nr; i++) {
+ 				struct object *o = have_obj.objects[i].item;
+-				*p++ = buf;
+-				*buf++ = '^';
+-				memcpy(buf, sha1_to_hex(o->sha1), 41);
+-				buf += 41;
++				o->flags |= UNINTERESTING;
++				add_pending_object(&revs, o, NULL);
+ 			}
+-		*p++ = NULL;
+-		execv_git_cmd(argv);
+-		die("git-upload-pack: unable to exec git-rev-list");
++			setup_revisions(0, NULL, &revs, NULL);
++		}
++		prepare_revision_walk(&revs);
++		mark_edges_uninteresting(revs.commits, &revs, show_edge);
++		traverse_commit_list(&revs, show_commit, show_object);
++		exit(0);
+ 	}
+ 
+ 	if (pipe(pu_pipe) < 0)
+-- 
+1.4.3.3.gca42
