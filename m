@@ -4,103 +4,50 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: Suggestion: drop 'g' in git-describe suffix
-Date: Thu, 02 Nov 2006 11:21:24 +0000
-Message-ID: <4549D4B4.4030601@shadowen.org>
-References: <eibh94$t7n$1@sea.gmane.org> <45494E20.1000503@shadowen.org>	 <4549C083.9060805@xs4all.nl> <4549CA6B.4090909@shadowen.org>	 <4549CE2A.3010808@xs4all.nl> <8aa486160611020312v42047716t6a13e6fa16eeae8@mail.gmail.com>
+From: Len Brown <len.brown@intel.com>
+Subject: how to ignore merge conflicts?
+Date: Mon, 30 Oct 2006 14:48:38 -0500
+Organization: Intel Open Source Technology Center
+Message-ID: <200610301448.38222.len.brown@intel.com>
+Reply-To: Len Brown <lenb@kernel.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 2 Nov 2006 11:22:30 +0000 (UTC)
-Cc: hanwen@xs4all.nl, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 30 Oct 2006 19:56:47 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
-In-Reply-To: <8aa486160611020312v42047716t6a13e6fa16eeae8@mail.gmail.com>
-X-Enigmail-Version: 0.94.0.0
+User-Agent: KMail/1.8.2
+Content-Disposition: inline
+X-Virus-Scanned: ClamAV 0.88.5/2131/Sun Oct 29 22:00:12 2006 on hera.kernel.org
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30515>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfaeC-0006B6-0F for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 12:22:12 +0100
+ esmtp (Exim 4.43) id 1Ged5H-0007d2-7c for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 20:46:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751626AbWKBLWH convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006 06:22:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752765AbWKBLWH
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 06:22:07 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:8203 "EHLO
- hellhawk.shadowen.org") by vger.kernel.org with ESMTP id S1751626AbWKBLWD
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 06:22:03 -0500
-Received: from localhost ([127.0.0.1]) by hellhawk.shadowen.org with esmtp
- (Exim 4.50) id 1GfadP-00045U-H2; Thu, 02 Nov 2006 11:21:23 +0000
-To: =?ISO-8859-1?Q?Santi_B=E9jar?= <sbejar@gmail.com>
+ S965172AbWJ3TqG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 14:46:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964855AbWJ3TqG
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 14:46:06 -0500
+Received: from hera.kernel.org ([140.211.167.34]:59061 "EHLO
+ hera.kernel.org") by vger.kernel.org with ESMTP id S965172AbWJ3TqF (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 14:46:05 -0500
+Received: from lenb-laptop (c-65-96-213-102.hsd1.ma.comcast.net
+ [65.96.213.102]) (authenticated bits=0) by hera.kernel.org (8.13.7/8.13.7)
+ with ESMTP id k9UJjZKX007551 (version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128
+ verify=NO) for <git@vger.kernel.org>; Mon, 30 Oct 2006 19:46:00 GMT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Santi B=E9jar wrote:
-> On 11/2/06, Han-Wen Nienhuys <hanwen@xs4all.nl> wrote:
->> Andy Whitcroft escreveu:
->> > Han-Wen Nienhuys wrote:
->> >>
->> >>   tag+sha1
->> >>
->> >> to separate the tag and the committish.
->> >
->> > Well there is a non-alphabet character in there, a minus (-).  The=
- g
->> > prefix on the sha1 _fragment_ it to indicate that it is in fact a
->> > truncated sha1, not a complete one.
->=20
-> I think it is there to indicate it is a git commit sha1.
->=20
->>
->> is this policy documented somewhere?  None of the tools understand i=
-t.
->>
->> [lilydev@haring git]$ git describe
->> v1.4.3.3-g1e1f76e
->> [lilydev@haring git]$ git show g1e1f76e
->> fatal: ambiguous argument 'g1e1f76e': unknown revision or path not i=
-n
->> the working tree.
->> Use '--' to separate paths from revisions
->>
->=20
-> Use the complete output of describe:
-> $ git show v1.4.3.3-g1e1f76e
->=20
-> or the abbrev sha1:
-> $ git show 1e1f76e
->=20
->> My suggestion is to use
->>
->>    v1.4.3.3+1e1f76e
->=20
-> My suggestion is to use:
->=20
-> v1.4.3.3-git1e1f76e
->=20
-> to make clear that it is a git revision version.
->=20
-> One problem I see with this scheme (either 'g', 'git' of '+') is that
-> it does not provide an increasing version number, even for
-> fast-forwarding commits. Then it is not useful as a package version
-> number (deb or rpm). I've already seen deb packages with
-> version+git20061010. One possibility could be to add the number of
-> commits between the tag and the commit as:
->=20
-> v1.4.3.3-git12g1e1f76e
->=20
-> to provide a weak ordering for fast-forwarding commits. What do you t=
-hing?
+Sometimes when a multiple-file merge give conflicts, I don't want to edit
+one of the resulting <<<<<=====>>>>> files.
+Instead, I just want to choose the version of that particular file that
+existed in one of the two merged branches and commit that along with
+the rest of the merge.
 
-I think you'll restart the 1.2.3.4 versioning is better 'debate' again!
+How to do this?
 
-Surly if things are being pushed into a .deb or .rpm we should be using
-a real release version.  We should be tagging that.  If the project is
-not providing release number, there is nothing stopping you from taggin=
-g
-them yourself in your copy of the repository and using your tag.  you
-could use like 'unofficial-N' where N increments in the way you want.
-
+thanks,
