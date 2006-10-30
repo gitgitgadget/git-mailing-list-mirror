@@ -1,75 +1,141 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Missing features in git
-Date: Tue, 14 Nov 2006 12:49:39 -0500
-Message-ID: <20061114174939.GB4299@spearce.org>
-References: <20061114134958.5326.qmail@science.horizon.com> <200611141815.24236.jnareb@gmail.com> <20061114173657.GC5453@diana.vm.bytemark.co.uk> <200611141845.18930.jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH/RFC (take 2)] gitweb: New improved patchset view
+Date: Sun, 29 Oct 2006 17:12:20 -0800
+Message-ID: <7vr6wqy5cb.fsf@assigned-by-dhcp.cox.net>
+References: <200610291122.30852.jnareb@gmail.com>
+	<200610300051.37896.jnareb@gmail.com>
+	<200610300134.53668.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Tue, 14 Nov 2006 17:50:04 +0000 (UTC)
-Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 30 Oct 2006 01:12:35 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <200611141845.18930.jnareb@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <200610300134.53668.jnareb@gmail.com> (Jakub Narebski's message
+	of "Mon, 30 Oct 2006 01:34:53 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30477>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gk2Pr-0008UA-E0 for gcvg-git@gmane.org; Tue, 14 Nov
- 2006 18:49:48 +0100
+ esmtp (Exim 4.43) id 1GeLhX-0002T9-VQ for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 02:12:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966223AbWKNRto convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006 12:49:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966225AbWKNRto
- (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 12:49:44 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:17342 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S966223AbWKNRtn
- convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006
- 12:49:43 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Gk2Pe-0001XA-84; Tue, 14 Nov 2006 12:49:34 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 2E7DF20FB0B; Tue, 14 Nov 2006 12:49:39 -0500 (EST)
+ S965461AbWJ3BMW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 20:12:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965463AbWJ3BMW
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 20:12:22 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:45799 "EHLO
+ fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S965461AbWJ3BMV
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 20:12:21 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061030011221.KUZG18985.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Sun, 29
+ Oct 2006 20:12:21 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id gRCR1V0051kojtg0000000 Sun, 29 Oct 2006
+ 20:12:25 -0500
 To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Dnia wtorek 14. listopada 2006 18:36, Karl Hasselstr=F6m napisa?:
-> >
-> > For example, we could skip the "bisect" branch, since
-> > you aren't supposed to commit to that anyway.
->=20
-> Well, to have "branch" to which you could not commit, just put ref
-> outside refs/heads.=20
->=20
-> Another solution would be to be able to put non-head ref in HEAD,
-> but allow to commit only if the prefix is refs/heads/
+Jakub Narebski <jnareb@gmail.com> writes:
 
-That's not a bad idea.  Then you can checkout a tag and have
-'ref: refs/tags/v1.11' in HEAD, which means anyone who puts
-$(git-symbolic-ref) calls into their PS1 will see "refs/tags/v1.11"
-as their current branch, reminding them they are looking at the past.
+> Few other questions, probably to be adressed in the future patches, and 
+> not added to this one.
+>
+> 0. git-ls-tree and git-diff-tree without -z does quote not only ...
+> also UTF-8 characters.
 
-Doing bisect branch in refs/bisect rather than refs/heads/bisect
-would then likewise remind the user that they are bisecting, and
-since neither matches refs/heads/* you cannot commit.
+I've already mentioned this in an earlier message to you:
 
---=20
+	Message-ID: <7v3b972bzq.fsf@assigned-by-dhcp.cox.net>
+
+Let's illustrate what I mean by an untested patch; this does:
+
+ 0. Use explicitly "unsigned char" so that (ch < ' ') does not
+    catch bytes in 0x80- range.  The original meant to catch the
+    control characters only so this is a bugfix;
+
+ 1. We still worry about control characters in 0x80-0x9f range;
+    if there are some, that is not a valid UTF-8 string (or
+    other encodings that is compatible with ASCII), and quoting
+    only these bytes and not quoting 0xa0- range can result
+    in letters chopped in the middle, so we would quote all
+    bytes in 0xa0- range when we have them;
+
+ 2. Otherwise we do not quote bytes in 0xa0- range.
+
+-- >8 --
+diff --git a/quote.c b/quote.c
+index ee7d62c..4f086fb 100644
+--- a/quote.c
++++ b/quote.c
+@@ -199,18 +199,32 @@ static int quote_c_style_counted(const c
+ 
+ #define EMITQ() EMIT('\\')
+ 
+-	const char *sp;
+-	int ch, count = 0, needquote = 0;
++	const unsigned char *name_u = (const unsigned char *)name;
++	const unsigned char *sp;
++	int ch, count = 0, needquote = 0, has_high_ctrl = 0;
++
++	/* Check if we have control character in 0x80-0x9f range */
++	for (sp = name_u; sp < name_u + namelen; sp++) {
++		ch = *sp;
++		if (!ch)
++			break;
++		if ((ch < ' ') || (ch == '"') || (ch == '\\') ||
++		    (ch == 0177) || (ch == 0377))
++			needquote = 1;
++		else if (0x80 <= ch && ch <= 0x9f)
++			needquote = has_high_ctrl = 1;
++	}
+ 
+ 	if (!no_dq)
+ 		EMIT('"');
+-	for (sp = name; sp < name + namelen; sp++) {
++
++	for (sp = name_u; sp < name_u + namelen; sp++) {
+ 		ch = *sp;
+ 		if (!ch)
+ 			break;
+ 		if ((ch < ' ') || (ch == '"') || (ch == '\\') ||
+-		    (ch == 0177) || (ch == 0377)) {
+-			needquote = 1;
++		    (ch == 0177) ||
++		    (has_high_ctrl && 0x80 <= ch)) {
+ 			switch (ch) {
+ 			case '\a': EMITQ(); ch = 'a'; break;
+ 			case '\b': EMITQ(); ch = 'b'; break;
+-- 8< --
+
+> 1. Current version doesn't display empty patches (i.e. pure rename and 
+> mode change combinations) and doesn't provide links to them from 
+> difftree. This is legacy of old /usr/bin/diff using code, which did not 
+> generated extended diff header, which is only output for "empty 
+> patches". Should we change this, or leave as is?
+
+I think this needs to be fixed.
+
+> 2. Schould we change syntax highlighting of chunk header line, namely 
+> changing slightly syntax coloring of "in which function are we" part of 
+> chunk header?
+
+Probably matching "git diff --color" would be sensible; by
+following what has already been done, you do not have to think
+about what to color and how yourself.
+
+> 3. Should we make from-range/to-range in chunk header hyperlink to the 
+> start of given bunch of lines in appropriate file? Or perhaps to the 
+> middle of the bunch of lines? Or to first changed line (omitting 
+> context)?
+
+I do not see what usage pattern this link would help.  Care to
+explain a bit better?
