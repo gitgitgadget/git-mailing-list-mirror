@@ -1,82 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sat, 25 Nov 2006 11:30:47 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611251128170.3483@woody.osdl.org>
-References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org>
- <7v7ixp20za.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org>
- <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net>
- <Pine.LNX.4.64.0611211437430.3338@woody.osdl.org>
- <20061121235429.GH5443@nan92-1-81-57-214-146.fbx.proxad.net>
- <20061122034056.GB23856@spearce.org> <20061123232313.GB24909@nan92-1-81-57-214-146.fbx.proxad.net>
- <20061125065338.GC4528@spearce.org> <20061125111235.GO5443@nan92-1-81-57-214-146.fbx.proxad.net>
- <Pine.LNX.4.64.0611251037000.6991@woody.osdl.org> <45689747.3020403@midwinter.com>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH/RFC (take 2)] gitweb: New improved patchset view
+Date: Mon, 30 Oct 2006 13:34:36 -0800 (PST)
+Message-ID: <850923.44762.qm@web31812.mail.mud.yahoo.com>
+References: <200610300905.04454.jnareb@gmail.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sat, 25 Nov 2006 19:31:22 +0000 (UTC)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Mon, 30 Oct 2006 21:35:27 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <45689747.3020403@midwinter.com>
-X-MIMEDefang-Filter: osdl$Revision: 1.160 $
-X-Scanned-By: MIMEDefang 2.36
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=Yzb8zekj5BuwB8YRuuxsarWkum6i/Rg5Zcx9p8rM3ORI+uyuNuhxkQ0z+dl2tnfLb4qMkE/2uTkm5RmxXkk/GtuT6PeZT89xh0B8uqXBju2SIAzVwUnviN0asi3D4HVGddzoKz6EjlSOKA/Fksag2w/4/DM9k/8qOPEmqvTTvW0=  ;
+X-YMail-OSG: iSdfd7AVM1nX2HCKCQE3h9DYEdRSP9btgtAKhAkDawxZGs_6jDegyeS5b1YPsnbIjcew.UBW3FxLODnlJqvuk0mEBQYR2tcI8EfU75xDSQxqVoh4wpkzKetxDc0sT03Bzjv3kRaa_4M-
+In-Reply-To: <200610300905.04454.jnareb@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30528>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Go3F9-000876-Gr for gcvg-git@gmane.org; Sat, 25 Nov
- 2006 20:31:19 +0100
+ esmtp (Exim 4.43) id 1GeemJ-0004Qe-C3 for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 22:34:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967144AbWKYTbQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 14:31:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967143AbWKYTbQ
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 14:31:16 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:19158 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S967144AbWKYTbP (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 14:31:15 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAPJUlix030874
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sat, 25
- Nov 2006 11:30:53 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAPJUkYi010582; Sat, 25 Nov
- 2006 11:30:47 -0800
-To: Steven Grimm <koreth@midwinter.com>
+ S1161514AbWJ3Vej (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 16:34:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161515AbWJ3Vej
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 16:34:39 -0500
+Received: from web31812.mail.mud.yahoo.com ([68.142.207.75]:29058 "HELO
+ web31812.mail.mud.yahoo.com") by vger.kernel.org with SMTP id
+ S1161514AbWJ3Vei (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006
+ 16:34:38 -0500
+Received: (qmail 44765 invoked by uid 60001); 30 Oct 2006 21:34:36 -0000
+Received: from [64.215.88.90] by web31812.mail.mud.yahoo.com via HTTP; Mon,
+ 30 Oct 2006 13:34:36 PST
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-
-
-On Sat, 25 Nov 2006, Steven Grimm wrote:
-
-> Linus Torvalds wrote:
-> > So I actually think that submodules should at least start out as something
-> > rather independent, where a "commit -a" in the supermodule will _only_
-> > commit the supermodule itself - and if you haven't committed the submodule
-> > yet, you'll just get the current HEAD state of the submodule.
+--- Jakub Narebski <jnareb@gmail.com> wrote:
+> > Wouldn't this be confusing with the other fine lines?
+> > I personally don't like this chunk separation.  Chunk separation
+> > already exists as is and we view it all the time elsewhere.
 > 
-> That would make it impossible to atomically commit a change that affects two
-> submodules, yes?
+> But not always the program displaying diff can display such line
+> separating chunks, for example on text terminal it can't.
 
-No. Quite the reverse. What you do is:
+What I meant is that since I stare at diffs exactly on text terminals,
+my eyes have found other ways to discern chunk blocks.
 
- (a) commit both submodules INDEPENDENTLY.
+> But if you think that the dotted 1px #ffbbff line is too intrusive,
+> we can remove it (and perhaps increase vertical space a few pixels).
+> I'd like to have more opinions first.
 
- (b) then commit the supermodule that contains the submodules.
+No, I just think that it should be as close as possible to what
+we see now and what we see on text terminals -- no extra vertical
+space please.  Between the two evils, I'd prefer the thin "dotted" line.
 
-And note how the important part here is that committing in a submodule 
-DOES NOT AFFECT THE SUPERMODULE AT ALL!
+> BTW. you can easily override it in your CSS file.
 
-The git trees are _independent_. That's important. You should _not_ try to 
-mix them up and make a commit in one commit anything AT ALL in some other 
-tree, exctly because it gets impossible to do (a) interesting things and 
-(b) atomic commits otherwise.
+Why should we allow something to go into gitweb and disrupt the current
+default behavior only so that people have to change their own css file
+to keep current default behaviour.  Please don't shove this down our
+throats.  Please?
 
-Note that this is true also in the case of a submodule that itself 
-contains a submodule. That doesn't change anything - you still need to be 
-able to view _each_ layer as an independent thing.
-
+   Luben
