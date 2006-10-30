@@ -1,83 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Documentation: Transplanting branch with git-rebase --onto
-Date: Tue, 7 Nov 2006 00:14:20 +0100
-Message-ID: <200611070014.20607.jnareb@gmail.com>
-References: <200611042205.58212.jnareb@gmail.com> <200611061912.46436.jnareb@gmail.com> <7v4ptcchli.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: WARNING: THIS PATCH CAN BREAK YOUR REPO, was Re: [PATCH 2/3] Only repack active packs by skipping over kept packs.
+Date: Mon, 30 Oct 2006 13:59:03 -0800
+Message-ID: <7v3b95wjmg.fsf@assigned-by-dhcp.cox.net>
+References: <20061029093754.GD3847@spearce.org>
+	<Pine.LNX.4.64.0610301332440.11384@xanadu.home>
+	<20061030202611.GA5775@spearce.org>
+	<20061030205200.GA20236@delft.aura.cs.cmu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 6 Nov 2006 23:14:02 +0000 (UTC)
-Cc: git@vger.kernel.org, Carl Worth <cworth@cworth.org>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 30 Oct 2006 22:05:00 +0000 (UTC)
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=RoSbCci56amk+h/0YhLsGW83d/W/W2BUL+V5NsW/t2wcehqrW9FlM4yyHVq1Lfg5PpmnhBNH4hNPDqqXYtyl2OGMc3vuxq0YhLCpsgsbAccv4lJttLYjm0pFglccGHKAo1wwV/z/Uh+ZVY9gNHbfO3rdrzSpRmKBSpUMg3X3OJg=
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v4ptcchli.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+In-Reply-To: <20061030205200.GA20236@delft.aura.cs.cmu.edu> (Jan Harkes's
+	message of "Mon, 30 Oct 2006 15:52:00 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30533>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhDf4-0000IO-RP for gcvg-git@gmane.org; Tue, 07 Nov
- 2006 00:13:51 +0100
+ esmtp (Exim 4.43) id 1Gef9z-0002Vh-9W for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 22:59:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753914AbWKFXNq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
- 18:13:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753915AbWKFXNq
- (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 18:13:46 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:36334 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1753914AbWKFXNp
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 18:13:45 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so1042214ugc for
- <git@vger.kernel.org>; Mon, 06 Nov 2006 15:13:43 -0800 (PST)
-Received: by 10.67.97.7 with SMTP id z7mr8151925ugl.1162854823409; Mon, 06
- Nov 2006 15:13:43 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id q40sm5618603ugc.2006.11.06.15.13.42; Mon, 06 Nov
- 2006 15:13:43 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
+ S1422674AbWJ3V7H (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 16:59:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422672AbWJ3V7G
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 16:59:06 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:42657 "EHLO
+ fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1422674AbWJ3V7F
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 16:59:05 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061030215904.JMVZ22977.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Mon, 30
+ Oct 2006 16:59:04 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id glyk1V00L1kojtg0000000 Mon, 30 Oct 2006
+ 16:58:45 -0500
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
->> Added example of transplantig feature branch from one development
->> branch (for example "next") into the other development branch (for
->> example "master").
->>
->> [jn: with a little help from Junio]
->>
->> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
->> ---
->> What about this?
-> 
-> I agree with Carl that the original example of --onto was not
-> clear why it is a good thing, so I am inclined to follow his
-> suggestion and drop the original example and keep your second
-> one yanked from your try#1 patch when committing, if it is Ok
-> with you.
+Jan Harkes <jaharkes@cs.cmu.edu> writes:
 
-That's O.K. by me. 
+> The following patch does fix the problem Nicolas reported, but for some
+> reason I'm still getting only 102 objects (only tags and the commits
+> they refer to?) with your test.
 
-Perhaps you can add the info that git-rebase with <branch> argument 
-switches to given branch (is equivalent to checkout + rebase without
-<branch> argument).
+One potential downside of this is that this makes an obscure but
+useful "gitk --unpacked" useless (robs performance).
 
-P.S. The "transplanting from 'next' to 'master'" example was taken from 
-your mail, Junio:
-  Message-ID: <7vlkrfoaky.fsf@assigned-by-dhcp.cox.net>
-  http://permalink.gmane.org/gmane.comp.version-control.git/22923
+http://thread.gmane.org/gmane.comp.version-control.git/19197/focus=19207
 
--- 
-Jakub Narebski
+But other than that, I think it is an Ok change.  The original
+semantics of --unpacked (with or without "pretend as if objects
+in this pack are loose") were, eh, "strange".
+
