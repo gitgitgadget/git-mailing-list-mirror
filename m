@@ -4,77 +4,95 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 13:31:14 -0800
-Message-ID: <7virhgjt25.fsf@assigned-by-dhcp.cox.net>
-References: <87k61yt1x2.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>
-	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
-	<200611151858.51833.andyparkins@gmail.com>
-	<Pine.LNX.4.64.0611151111250.3349@woody.osdl.org>
-	<f2b55d220611151139v66fba16ax97ce6b9966b33ce7@mail.gmail.com>
-	<Pine.LNX.4.64.0611151203450.3349@woody.osdl.org>
-	<Pine.LNX.4.64.0611151516360.2591@xanadu.home>
-	<Pine.LNX.4.64.0611151226590.3349@woody.osdl.org>
-	<87velgs9hx.wl%cworth@cworth.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: [PATCH 1/2] Allow '-' in config variable names
+Date: Mon, 30 Oct 2006 08:25:36 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0610300823250.25218@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 15 Nov 2006 21:31:49 +0000 (UTC)
-Cc: Nicolas Pitre <nico@cam.org>,
-	"Michael K. Edwards" <medwards.linux@gmail.com>,
-	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Mon, 30 Oct 2006 16:34:36 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <87velgs9hx.wl%cworth@cworth.org> (Carl Worth's message of "Wed,
-	15 Nov 2006 13:08:58 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30502>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkSM2-00055z-Oj for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 22:31:35 +0100
+ esmtp (Exim 4.43) id 1GeZxm-0005GK-4Q for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 17:26:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161717AbWKOVbb (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 16:31:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161729AbWKOVbb
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 16:31:31 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:36014 "EHLO
- fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1161717AbWKOVba
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 16:31:30 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061115213130.DAQZ20330.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Wed, 15
- Nov 2006 16:31:30 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id n9Xb1V0161kojtg0000000; Wed, 15 Nov 2006
- 16:31:36 -0500
-To: Carl Worth <cworth@cworth.org>
+ S964977AbWJ3Q0J (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 11:26:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965015AbWJ3Q0J
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 11:26:09 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:60073 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S964977AbWJ3Q0G (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 11:26:06 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9UGPbPo006866
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Mon, 30
+ Oct 2006 08:25:38 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9UGPad2026181; Mon, 30 Oct
+ 2006 08:25:37 -0800
+To: Junio C Hamano <junkio@cox.net>, Git Mailing List <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 
-Carl Worth <cworth@cworth.org> writes:
 
-> So there's this goofy circular notion that people end up with
-> If we fix it so that a local merge really is performed with
-> "git merge <branch>" instead of "git pull . <branch>" then teaching
-> pull=fetch+merge really is a lot easier.
+I need this in order to allow aliases of the same form as "ls-tree", 
+"rev-parse" etc, so that I can use
 
-I am wondering if that could be "git merge <committish>..."
-instead.  I do not care too much about the ... part (i.e. an
-Octopus), but I often find myself doing:
+	[alias]
+		my-cat=--paginate cat-file -p
 
-	git checkout next
-        git merge "Merge early part of branch 'foo'" HEAD foo~3
+to add a "git my-cat" command.
 
-when earlier part of "foo" topic are worthy to be in 'next' but
-not the later ones.
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
 
-> In the meantime, pull would still be useless to me, I think. But maybe
-> that's just the "default branch to merge" selection being broken.
+This will be followed by another patch to "builtin-push.c" to allow me to 
+make a useful (to me) "push-all" alias.
 
-Have you looked into per-branch configuration for default merge
-source recently?  It might not be documented well enough,
-though, because I do not use it myself, but you should be able
-to improve on that (meaning both documentation and setting up
-the defaults upon cloning and fetching).
+diff --git a/config.c b/config.c
+index e8f0caf..3cae390 100644
+--- a/config.c
++++ b/config.c
+@@ -103,6 +103,11 @@ static char *parse_value(void)
+ 	}
+ }
+ 
++static inline int iskeychar(int c)
++{
++	return isalnum(c) || c == '-';
++}
++
+ static int get_value(config_fn_t fn, char *name, unsigned int len)
+ {
+ 	int c;
+@@ -113,7 +118,7 @@ static int get_value(config_fn_t fn, cha
+ 		c = get_next_char();
+ 		if (c == EOF)
+ 			break;
+-		if (!isalnum(c))
++		if (!iskeychar(c))
+ 			break;
+ 		name[len++] = tolower(c);
+ 		if (len >= MAXNAME)
+@@ -181,7 +186,7 @@ static int get_base_var(char *name)
+ 			return baselen;
+ 		if (isspace(c))
+ 			return get_extended_base_var(name, baselen, c);
+-		if (!isalnum(c) && c != '.')
++		if (!iskeychar(c) && c != '.')
+ 			return -1;
+ 		if (baselen > MAXNAME / 2)
+ 			return -1;
+@@ -573,7 +578,7 @@ int git_config_set_multivar(const char*
+ 			dot = 1;
+ 		/* Leave the extended basename untouched.. */
+ 		if (!dot || i > store.baselen) {
+-			if (!isalnum(c) || (i == store.baselen+1 && !isalpha(c))) {
++			if (!iskeychar(c) || (i == store.baselen+1 && !isalpha(c))) {
+ 				fprintf(stderr, "invalid key: %s\n", key);
+ 				free(store.key);
