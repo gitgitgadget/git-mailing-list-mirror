@@ -1,90 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/5] upload-pack: no longer call rev-list
-Date: Mon, 30 Oct 2006 21:11:25 -0800
-Message-ID: <7v1woprrwi.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0610302008320.26682@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH/RFC (take 2)] gitweb: New improved patchset view
+Date: Sun, 29 Oct 2006 17:59:18 -0800 (PST)
+Message-ID: <92622.251.qm@web31812.mail.mud.yahoo.com>
+References: <200610300051.37896.jnareb@gmail.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 31 Oct 2006 05:11:49 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Mon, 30 Oct 2006 01:59:56 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.63.0610302008320.26682@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Mon, 30 Oct 2006 20:08:43 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=01W3uw9ZG5hQ0K9ie83VcknuT+P9TLe0fN3N0QYSd9iZLi3eEe+f1uJL/JOeiB9m4A+sUwjnSlKCi+fzxCf5yTn7v/nWQ805XRqYohiqGKQt75r0XXLwiyk3soqDRKSDRfV+AflJXBwWGLyIQPxh+H6s+qlxOENSze/7Rj81ubU=  ;
+X-YMail-OSG: rYd3OqcVM1m6oWzHBexvZ0l11xUjYZ5DhaZAoWmbIx9PgwqFhFsmMfbbt9.X0pWf4jQQSom5M1h5MeMhQH3xvvd7TChHrPq0DNbkCfCLCRNjCLhbSX3otysfa2GfzxZ.6pM_EHk6d14-
+In-Reply-To: <200610300051.37896.jnareb@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30481>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GeluV-00012g-M5 for gcvg-git@gmane.org; Tue, 31 Oct
- 2006 06:11:40 +0100
+ esmtp (Exim 4.43) id 1GeMQx-0006Ll-8F for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 02:59:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965524AbWJaFL2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
- 00:11:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965523AbWJaFL1
- (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 00:11:27 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:60087 "EHLO
- fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S965524AbWJaFL0
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 00:11:26 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061031051126.QOET18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Tue, 31
- Oct 2006 00:11:26 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id gtB61V00H1kojtg0000000 Tue, 31 Oct 2006
- 00:11:06 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1030487AbWJ3B7V (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
+ 20:59:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030504AbWJ3B7U
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 20:59:20 -0500
+Received: from web31812.mail.mud.yahoo.com ([68.142.207.75]:25008 "HELO
+ web31812.mail.mud.yahoo.com") by vger.kernel.org with SMTP id
+ S1030503AbWJ3B7S (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006
+ 20:59:18 -0500
+Received: (qmail 464 invoked by uid 60001); 30 Oct 2006 01:59:18 -0000
+Received: from [71.80.233.118] by web31812.mail.mud.yahoo.com via HTTP; Sun,
+ 29 Oct 2006 17:59:18 PST
+To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+--- Jakub Narebski <jnareb@gmail.com> wrote:
+> Replace "gitweb diff header" with its full sha1 of blobs and replace
+> it by "git diff" header and extended diff header. Change also somewhat
+> highlighting of diffs.
+> 
+> Changes:
+> * "gitweb diff header" which looked for example like below:
+>     file:_<sha1 before>_ -> file:_<sha1 after>_
+>   where 'file' is file type and '<sha1>' is full sha1 of blob is
+>   changed to
+>     diff --git _a/<file before>_ _b/<file after>_
+>   In both cases links are visible and use default link style. If file
+>   is added, a/<file> is not hyperlinked, if file is deleted, b/<file>
+>   is not hyperlinked.
 
-> It is trivial to do now,...
+"Everything clickable underlined" isn't the best way to represent things.
+Anyway, my 2 cents is that I don't like the overly explicit underlineing.
+I liked it the way it was in take 1.
 
-May be, but can we do something about these duplicated code?
+> * there is added "extended diff header", with <path> and <hash>
+>   hyperlinked (and <hash> shortened to 7 characters), and <mode>
+>   explained: '<mode>' is extended to '<mode> (<file type>)'.
+> * <file> hyperlinking should work also when <file> is originally
+>   quoted. For now we present filename quoted. This needed changes to
+>   parse_difftree_raw_line subroutine. And doesn't work: perhaps
+>   unquote is broken.
 
-> @@ -57,6 +60,40 @@ static ssize_t send_client_data(int fd,
->  	return safe_write(fd, data, sz);
->  }
->  
-> +FILE *pack_pipe = NULL;
-> +static void show_commit(struct commit *commit)
-> +{
-> +	if (commit->object.flags & BOUNDARY)
-> +		fputc('-', pack_pipe);
-> +	if (fputs(sha1_to_hex(commit->object.sha1), pack_pipe) < 0)
-> +		die("broken output pipe");
-> +	fputc('\n', pack_pipe);
-> +	fflush(pack_pipe);
-> +	free(commit->buffer);
-> +	commit->buffer = NULL;
-> +}
-> +
-> +static void show_object(struct object_array_entry *p)
-> +{
-> +	/* An object with name "foo\n0000000..." can be used to
-> +	 * confuse downstream git-pack-objects very badly.
-> +	 */
-> +	const char *ep = strchr(p->name, '\n');
-> +	if (ep) {
-> +		fprintf(pack_pipe, "%s %.*s\n", sha1_to_hex(p->item->sha1),
-> +		       (int) (ep - p->name),
-> +		       p->name);
-> +	}
-> +	else
-> +		fprintf(pack_pipe, "%s %s\n",
-> +				sha1_to_hex(p->item->sha1), p->name);
-> +}
-> +
-> +static void show_edge(struct commit *commit)
-> +{
-> +	fprintf(pack_pipe, "-%s\n", sha1_to_hex(commit->object.sha1));
-> +}
-> +
+In which case we shouldn't commit this.  IOW, let's commit things
+which we _know_ to work.
 
+Why not resubmit your original patch with the bugfixes as few comments
+as mentioned?
+
+> * from-file/to-file two-line header lines have slightly darker color
+>   than removed/added lines.
+> * chunk header has now delicate line above for easier finding chunk
+>   boundary, and top margin of 1px.
+
+Wouldn't this be confusing with the other fine lines?
+I personally don't like this chunk separation.  Chunk separation
+already exists as is and we view it all the time elsewhere.
+
+If you'd like to separate chunks, why not darken the background
+of the section of line the chunk header is printed at?  I.e.
+anything between the @@ including the @@.
+
+    Luben
