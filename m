@@ -5,85 +5,78 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: multi-project repos
-Date: Fri, 17 Nov 2006 23:31:42 -0800
-Message-ID: <7vvelddxcx.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
-	<455C412D.1030408@xs4all.nl>
-	<Pine.LNX.4.64.0611160814560.3349@woody.osdl.org>
-	<455C94FA.3050903@xs4all.nl>
-	<Pine.LNX.4.64.0611160904010.3349@woody.osdl.org>
-	<455CA2A8.5010700@xs4all.nl>
-	<Pine.LNX.4.64.0611160958170.3349@woody.osdl.org>
-	<Pine.LNX.4.64.0611161039160.3349@woody.osdl.org>
-	<20061117162605.GA32597@spearce.org>
-	<7virhem0ps.fsf@assigned-by-dhcp.cox.net>
-	<20061118060243.GB2125@spearce.org>
+Subject: Re: [PATCH/RFC (take 2)] gitweb: New improved patchset view
+Date: Mon, 30 Oct 2006 00:21:45 -0800
+Message-ID: <7vy7qyw6w6.fsf@assigned-by-dhcp.cox.net>
+References: <92622.251.qm@web31812.mail.mud.yahoo.com>
+	<200610300905.04454.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 18 Nov 2006 07:31:54 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Han-Wen Nienhuys <hanwen@xs4all.nl>, git@vger.kernel.org
+NNTP-Posting-Date: Mon, 30 Oct 2006 08:22:08 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061118060243.GB2125@spearce.org> (Shawn Pearce's message of
-	"Sat, 18 Nov 2006 01:02:43 -0500")
+In-Reply-To: <200610300905.04454.jnareb@gmail.com> (Jakub Narebski's message
+	of "Mon, 30 Oct 2006 09:05:04 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30487>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlKfz-0002A3-Ro for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 08:31:48 +0100
+ esmtp (Exim 4.43) id 1GeSP2-00009T-Jp for gcvg-git@gmane.org; Mon, 30 Oct
+ 2006 09:21:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1756234AbWKRHbp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
- 02:31:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756236AbWKRHbp
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 02:31:45 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:54515 "EHLO
- fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1756234AbWKRHbo
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 02:31:44 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061118073143.MWMR20330.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Sat, 18
- Nov 2006 02:31:43 -0500
+ S1161194AbWJ3IVr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 03:21:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161198AbWJ3IVr
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 03:21:47 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:56240 "EHLO
+ fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S1161194AbWJ3IVq
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 03:21:46 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao03.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061030082145.FZET2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>; Mon, 30
+ Oct 2006 03:21:45 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id o7Xq1V0061kojtg0000000; Sat, 18 Nov 2006
- 02:31:50 -0500
-To: Shawn Pearce <spearce@spearce.org>
+ fed1rmimpo01.cox.net with bizsmtp id gYMS1V0081kojtg0000000 Mon, 30 Oct 2006
+ 03:21:26 -0500
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce <spearce@spearce.org> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Junio C Hamano <junkio@cox.net> wrote:
->> Shawn Pearce <spearce@spearce.org> writes:
->> > Although if you have reflog enabled on your current branch there
->> > is a 1 character shorter syntax:
->> >
->> > 	gitk HEAD@{1}..
->> 
->> Are you sure about this?  I've seen "next@{1}" to look at
->> history of the named branch, but never history of "HEAD".
->  
-> Yes.  :-)
->
-> If the ref name is a symref then we resolve the symref all the
-> way down to the real ref before we open and walk the reflog.
-> Therefore this works.
+> ..., without
+> resolving the strange filenames problem (it would be nice if somebody was
+> to send code; well Junio send patch to address core git filename quoting
+> issue).
 
-True, except if you did:
+Having showed that patch, I do not think it is a good way to go.
 
-        $ git pull
-        $ git checkout otherbranch
-        $ git show HEAD@{1}
+I think the UI layer like gitweb should have freedom to choose
+its own pathname handling, and should read from -z output.
 
-My real point was that I was wondering if it also makes sense
-for ref-log to record switching branches for the symref itself.
+The git plumbing is agnostic to the character encoding issues,
+and does not care what character set pathnames are encoded, and
+what character set the file contents are encoded.  These are
+very project specific and should be handled per project.
 
-But after sending that message I thought about it a bit more and
-concluded that it is not an interesting information.  It is more
-code that affects unrelated places even if we were to implement
-it and without real gain, so let's not log symref itself and
-keep the current implementation.
+One of the primary purposes, aside from being understandable by
+humans, of human readable "git diff" format is to convey machine
+readable information without corruption in text form transport
+(think "e-mail"), so quoting pathnames to avoid high-bits has
+clear advantage (pathname character set and file contents
+character set are often different, and when both are non-ascii
+we would need to sacrifice one if we spit diff out in a single
+text file --- we choose to quote pathnames so that it would not
+interfere with file contents, which would be more important to
+be inspectable by humans reading "diff" output).  People in the
+past suggested converting everything to UTF-8 but that is not a
+usable robust solution in the real world.
 
-
+The HTML output generated by gitweb do not have the "machine
+readably robust" requirement, so it _can_ stress more on
+readability by humans, including converting both pathname and
+contents to UTF-8; for this, the project needs to tell gitweb
+what its pathname character encoding is, and blob contents
+encoding, at the worst case blob-by-blob, but more often
+path-by-path.
