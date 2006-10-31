@@ -5,71 +5,64 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [ANNOUNCE] CGit v0.1-pre
-Date: Mon, 11 Dec 2006 09:33:38 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612110929510.12500@woody.osdl.org>
-References: <8c5c35580612101542n72d300c7o106e53e219670510@mail.gmail.com> 
- <Pine.LNX.4.64.0612101653420.12500@woody.osdl.org>
- <8c5c35580612110033y4f6260c9xffeaf4457f4ead21@mail.gmail.com>
- <Pine.LNX.4.64.0612110859200.12500@woody.osdl.org>
+Subject: Re: [PATCH 1/2] Allow '-' in config variable names
+Date: Mon, 30 Oct 2006 19:23:20 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0610301922020.25218@g5.osdl.org>
+References: <Pine.LNX.4.64.0610300823250.25218@g5.osdl.org>
+ <7vodrtv2wy.fsf@assigned-by-dhcp.cox.net> <7vfyd5rxvg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Mon, 11 Dec 2006 17:34:02 +0000 (UTC)
+NNTP-Posting-Date: Tue, 31 Oct 2006 03:23:31 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0612110859200.12500@woody.osdl.org>
-X-MIMEDefang-Filter: osdl$Revision: 1.162 $
+In-Reply-To: <7vfyd5rxvg.fsf@assigned-by-dhcp.cox.net>
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
 X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34020>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gtp2A-0006p4-CR for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 18:33:46 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30565>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GekDp-0007mE-4Y for gcvg-git@gmane.org; Tue, 31 Oct
+ 2006 04:23:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1762990AbWLKRdn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
- 12:33:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762992AbWLKRdn
- (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 12:33:43 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:47469 "EHLO smtp.osdl.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1762990AbWLKRdm
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec 2006 12:33:42 -0500
+ S1161573AbWJaDX0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 22:23:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161574AbWJaDX0
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 22:23:26 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:15287 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1161573AbWJaDXZ (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 22:23:25 -0500
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBBHXeID023348
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Mon, 11
- Dec 2006 09:33:40 -0800
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9V3NLPo012551
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Mon, 30
+ Oct 2006 19:23:21 -0800
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBBHXcJZ000606; Mon, 11 Dec
- 2006 09:33:39 -0800
-To: Lars Hjemli <hjemli@gmail.com>
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9V3NKhF014949; Mon, 30 Oct
+ 2006 19:23:20 -0800
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
 
 
-On Mon, 11 Dec 2006, Linus Torvalds wrote:
+On Mon, 30 Oct 2006, Junio C Hamano wrote:
 > 
-> The point is, if you have races, you will hit them _occasionally_. It may 
-> not be a performance problem in real life, BUT:
+> One thing I forgot to add.  Just like we downcase what user has
+> written in config file, it might make sense to also remove '-'
+> (and if we add '_' to keychar set, that one as well) to when
+> canonicalizing the key value.  That way, somewhat awkward long
+> configuration variables we currently have can be written more
+> readably, e.g. repack.use-delta-base-offset
 
-Side note: another problem with races is that
+Well, then we need to teach "git <alias>" that "git <al-i-as>" is the same 
+thing as "alias".
 
- - exactly because they are rare, any potential problems they cause are 
-   really hard to debug - you may have a hard time reproducing things.
+> > By the way, everybody seems to do "alias.xxx = -p cat-file -p"
+> > (I have it as "git less").  Maybe we would want to make a
+> > built-in alias for that?
+> 
+> Seconds?
 
- - some loads may be able to trigger them thanks to very unlucky timing, 
-   so even if the problem is "just a theoretical performance issue", 
-   sometimes that theoretical performance problem that only happens once 
-   in a blue moon ends up happening a _lot_ for a particular user.
-
-I'm probably biased, simply because I've done system programming for so 
-long (and race conditions etc are one of the most common source of subtle 
-bugs), but I've long since come to the very strong opinion that locking is 
-simply too important to not do right.
-
-Even if you can argue that "it doesn't matter" (and you may even be 
-right), I personally tend to just consider dodgy locking to be a serious 
-bug _whether_ it really matters or not.
-
-Just a hangup of mine.
+I like it mainly as a great example of how to use aliases, not because I 
+actually much -use- the thing, so I don't personally care.
 
