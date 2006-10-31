@@ -4,67 +4,83 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: git-fetching from a big repository is slow
-Date: Thu, 14 Dec 2006 13:14:07 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0612141311310.18171@xanadu.home>
-References: <200612141340.43925.andyparkins@gmail.com> <4581573E.40803@op5.se>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 2/2] Teach receive-pack how to keep pack files based on object count.
+Date: Tue, 31 Oct 2006 16:29:42 -0500
+Message-ID: <20061031212942.GA24184@spearce.org>
+References: <20061031075704.GB7691@spearce.org> <Pine.LNX.4.64.0610311447250.11384@xanadu.home> <20061031201148.GD23671@spearce.org> <Pine.LNX.4.64.0610311559150.11384@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Thu, 14 Dec 2006 18:14:44 +0000 (UTC)
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 31 Oct 2006 21:30:09 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <4581573E.40803@op5.se>
-X-X-Sender: nico@xanadu.home
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0610311559150.11384@xanadu.home>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34380>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Guv6O-0007pw-M5 for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 19:14:41 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30598>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gf1BB-00079k-9T for gcvg-git@gmane.org; Tue, 31 Oct
+ 2006 22:29:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751961AbWLNSOK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 13:14:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751960AbWLNSOJ
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 13:14:09 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:34241 "EHLO
- relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751961AbWLNSOI (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 13:14:08 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0JA9006KIZZJGY60@VL-MO-MR004.ip.videotron.ca> for git@vger.kernel.org; Thu,
- 14 Dec 2006 13:14:07 -0500 (EST)
-To: Andreas Ericsson <ae@op5.se>
+ S1946030AbWJaV3t (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
+ 16:29:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946043AbWJaV3t
+ (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 16:29:49 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:13549 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1946030AbWJaV3r
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 16:29:47 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gf1At-0002Np-HZ; Tue, 31 Oct 2006 16:29:35 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 466F220FB0C; Tue, 31 Oct 2006 16:29:42 -0500 (EST)
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-On Thu, 14 Dec 2006, Andreas Ericsson wrote:
-
-> Andy Parkins wrote:
-> > Hello,
+Nicolas Pitre <nico@cam.org> wrote:
+> On Tue, 31 Oct 2006, Shawn Pearce wrote:
+> > Nicolas Pitre <nico@cam.org> wrote:
+> > > I think this should be solved before rx packs are actually stored as 
+> > > packs though.  Otherwise people will end up with unwanted .keep files 
+> > > left around.  Maybe having a much bigger default for object number 
+> > > treshold for the time being?  (unless this patch is applied to "next" at 
+> > > the same time as another one that actually deals with those .keep 
+> > > files).
 > > 
-> > I've got a big repository.  I've got two computers.  One has the repository
-> > up-to-date (164M after repack); one is behind (30M ish).
+> > Its next on my list of things to do.  Hopefully I'll be able to
+> > implement it today.
 > > 
-> > I used git-fetch to try and update; and the sync took HOURS.  I zipped the
-> > .git directory and transferred that and it took about 15 minutes to
-> > transfer.
-> > 
-> > Am I doing something wrong?  The git-fetch was done with a git+ssh:// URL.
-> > The zip transfer with scp (so ssh shouldn't be a factor).
-> > 
+> > I'm thinking of just brute forcing it: put enough identifying data
+> > into the .keep file to make it unique, then go through every local
+> > pack and look at their .keep file; if the content matches what
+> > receive-pack asked index-pack to put there then remove it.
 > 
-> This seems to happen if your repository consists of many large binary files,
-> especially many large binary files of several versions that do not deltify
-> well against each other. Perhaps it's worth adding gzip compression detecion
-> to git? I imagine more people than me are tracking gzipped/bzip2'ed content
-> that pretty much never deltifies well against anything else.
+> Ouch.  What about the patch below?  It covers only the pull/fetch case, 
+> but covering the push case shouldn't be that hard either (simply use a 
+> pipe to read index-pack's stdout and capture the pack name).
+> 
+> I used "pack" <tab> <sha1> so it is easy to pick out of the list of refs 
+> that usually comes over the stream in the fetch case (if I understood 
+> that part right).
 
-If your remote repository is fully packed in a single pack that should 
-not have any impact on the transfer latency since no attempt to 
-redeltify objects against each other is attempted by default when those 
-objects are in the same pack.
+I thought about using a pipe too, but in the case of receive-pack
+it looked like index-pack was sending something back to the push
+end of the connection.  I didn't dig into the code enough to see
+what that was and how to do the same in receive-pack itself.  The
+brute force approach is horrible but simple.  ;-)
 
+I'll look at your patch and what I need to do make a pipe work here,
+because its clearly the better solution.
 
+-- 
