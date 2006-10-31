@@ -1,287 +1,223 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add builtin merge-file, a minimal replacement for RCS
- merge
-Date: Wed, 6 Dec 2006 16:26:06 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612061621420.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0612061609430.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Shawn Pearce <spearce@spearce.org>
+Subject: [PATCH 2/2] Teach receive-pack how to keep pack files based on object count.
+Date: Tue, 31 Oct 2006 02:57:04 -0500
+Message-ID: <20061031075704.GB7691@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 6 Dec 2006 15:27:24 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 31 Oct 2006 07:57:46 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.63.0612061609430.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Y-GMX-Trusted: 0
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33472>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gryfx-0002kw-RS for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 16:27:14 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30574>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GeoV3-00084u-3y for gcvg-git@gmane.org; Tue, 31 Oct
+ 2006 08:57:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935686AbWLFP0P (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 10:26:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935706AbWLFP0N
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 10:26:13 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38534 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S935686AbWLFP0I
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 10:26:08 -0500
-Received: (qmail invoked by alias); 06 Dec 2006 15:26:06 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp042) with SMTP; 06 Dec 2006 16:26:06 +0100
-To: git@vger.kernel.org, junkio@cox.net
+ S1422796AbWJaH5N (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
+ 02:57:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422794AbWJaH5N
+ (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 02:57:13 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:13523 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1422913AbWJaH5K
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 02:57:10 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GeoUb-00043U-4q; Tue, 31 Oct 2006 02:57:05 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ A991320FB0C; Tue, 31 Oct 2006 02:57:04 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-Oops. Here is a corrected patch:
+Since keeping a pushed pack or exploding it into loose objects
+should be a local repository decision this teaches receive-pack
+to decide if it should call unpack-objects or index-pack --stdin
+--fix-thin based on the setting of receive.unpackLimit and the
+number of objects contained in the received pack.
 
- Makefile              |    1 
- builtin-merge-file.c  |   72 ++++++++++++++++++++++++++++++
- builtin.h             |    1 
- git.c                 |    1 
- t/t6023-merge-file.sh |  116 +++++++++++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 191 insertions(+), 0 deletions(-)
+If the number of objects (hdr_entries) in the received pack is
+below the value of receive.unpackLimit (which is 5000 by default)
+then we unpack-objects as we have in the past.
 
-diff --git a/Makefile b/Makefile
-index cf69242..81cc7c4 100644
---- a/Makefile
-+++ b/Makefile
-@@ -275,6 +283,7 @@ BUILTIN_OBJS = \
- 	builtin-ls-tree.o \
- 	builtin-mailinfo.o \
- 	builtin-mailsplit.o \
-+	builtin-merge-file.o \
- 	builtin-mv.o \
- 	builtin-name-rev.o \
- 	builtin-pack-objects.o \
-diff --git a/builtin-merge-file.c b/builtin-merge-file.c
-new file mode 100644
-index 0000000..11976ea
---- /dev/null
-+++ b/builtin-merge-file.c
-@@ -0,0 +1,72 @@
-+#include "cache.h"
-+#include "xdiff/xdiff.h"
+If the hdr_entries >= receive.unpackLimit then we call index-pack and
+ask it to include our pid and hostname in the .keep file to make it
+easier to identify why a given pack has been kept in the repository.
+
+Currently this leaves every received pack as a kept pack.  We really
+don't want that as received packs will tend to be small.  Instead we
+want to delete the .keep file automatically after all refs have
+been updated.  That is being left as room for future improvement.
+
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ Documentation/config.txt |   11 +++++++-
+ cache.h                  |    1 +
+ receive-pack.c           |   66 +++++++++++++++++++++++++++++++++++++++++++--
+ sha1_file.c              |    2 +-
+ 4 files changed, 75 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index d9e73da..9d3c71c 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -301,7 +301,16 @@ imap::
+ 	The configuration variables in the 'imap' section are described
+ 	in gitlink:git-imap-send[1].
+ 
+-receive.denyNonFastforwads::
++receive.unpackLimit::
++	If the number of objects received in a push is below this
++	limit then the objects will be unpacked into loose object
++	files. However if the number of received objects equals or
++	exceeds this limit then the received pack will be stored as
++	a pack, after adding any missing delta bases.  Storing the
++	pack from a push can make the push operation complete faster,
++	especially on slow filesystems.
 +
-+static const char merge_file_usage[] =
-+"git merge-file [-L name1 [-L orig [-L name2]]] file1 orig_file file2";
-+
-+static int read_file(mmfile_t *ptr, const char *filename)
-+{
-+	struct stat st;
-+	FILE *f;
-+
-+	if (stat(filename, &st))
-+		return error("Could not stat %s", filename);
-+	if ((f = fopen(filename, "rb")) == NULL)
-+		return error("Could not open %s", filename);
-+	ptr->ptr = xmalloc(st.st_size);
-+	if (fread(ptr->ptr, st.st_size, 1, f) != 1)
-+		return error("Could not read %s", filename);
-+	fclose(f);
-+	ptr->size = st.st_size;
-+	return 0;
-+}
-+
-+int cmd_merge_file(int argc, char **argv, char **envp)
-+{
-+	char *names[3];
-+	char *buffers[3];
-+	mmfile_t mmfs[3], result = {NULL, 0};
-+	int ret = 0, i = 0;
-+
-+	while (argc > 4) {
-+		if (!strcmp(argv[1], "-L")) {
-+			names[i++] = argv[2];
-+			argc -= 2;
-+			argv += 2;
-+			continue;
-+		}
-+		usage(merge_file_usage);
++receive.denyNonFastForwards::
+ 	If set to true, git-receive-pack will deny a ref update which is
+ 	not a fast forward. Use this to prevent such an update via a push,
+ 	even if that push is forced. This configuration variable is
+diff --git a/cache.h b/cache.h
+index e997a85..6cb7e1d 100644
+--- a/cache.h
++++ b/cache.h
+@@ -376,6 +376,7 @@ extern struct packed_git *parse_pack_ind
+ 						char *idx_path);
+ 
+ extern void prepare_packed_git(void);
++extern void reprepare_packed_git(void);
+ extern void install_packed_git(struct packed_git *pack);
+ 
+ extern struct packed_git *find_sha1_pack(const unsigned char *sha1, 
+diff --git a/receive-pack.c b/receive-pack.c
+index 7e154c5..b394833 100644
+--- a/receive-pack.c
++++ b/receive-pack.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "pack.h"
+ #include "refs.h"
+ #include "pkt-line.h"
+ #include "run-command.h"
+@@ -7,9 +8,8 @@
+ 
+ static const char receive_pack_usage[] = "git-receive-pack <git-dir>";
+ 
+-static const char *unpacker[] = { "unpack-objects", NULL };
+-
+ static int deny_non_fast_forwards = 0;
++static int unpack_limit = 5000;
+ static int report_status;
+ 
+ static char capabilities[] = "report-status";
+@@ -25,6 +25,12 @@ static int receive_pack_config(const cha
+ 		return 0;
+ 	}
+ 
++	if (strcmp(var, "receive.unpacklimit") == 0)
++	{
++		unpack_limit = git_config_int(var, value);
++		return 0;
 +	}
 +
-+	if (argc != 4)
-+		usage(merge_file_usage);
-+
-+	for (; i < 3; i++)
-+		names[i] = argv[i + 1];
-+
-+	for (i = 0; i < 3; i++)
-+		if (read_file(mmfs + i, argv[i + 1]))
-+			return -1;
-+
-+	xpparam_t xpp = {XDF_NEED_MINIMAL};
-+	ret = xdl_merge(mmfs + 1, mmfs + 0, names[0], mmfs + 2, names[2],
-+			&xpp, XDL_MERGE_ZEALOUS, &result);
-+
-+	for (i = 0; i < 3; i++)
-+		free(mmfs[i].ptr);
-+
-+	if (ret >= 0) {
-+		char *filename = argv[1];
-+		FILE *f = fopen(filename, "wb");
-+
-+		if (!f)
-+			ret = error("Could not open %s for writing", filename);
-+		else if (fwrite(result.ptr, result.size, 1, f) != 1)
-+			ret = error("Could not write to %s", filename);
-+		else if (fclose(f))
-+			ret = error("Could not close %s", filename);
-+		free(result.ptr);
-+	}
-+
-+	return ret;
+ 	return 0;
+ }
+ 
+@@ -227,9 +233,63 @@ static void read_head_info(void)
+ 	}
+ }
+ 
++static const char *parse_pack_header(struct pack_header *hdr)
++{
++	char *c = (char*)hdr;
++	ssize_t remaining = sizeof(struct pack_header);
++	do {
++		ssize_t r = xread(0, c, remaining);
++		if (r <= 0)
++			return "eof before pack header was fully read";
++		remaining -= r;
++		c += r;
++	} while (remaining > 0);
++	if (hdr->hdr_signature != htonl(PACK_SIGNATURE))
++		return "protocol error (pack signature mismatch detected)";
++	if (!pack_version_ok(hdr->hdr_version))
++		return "protocol error (pack version unsupported)";
++	return NULL;
 +}
-diff --git a/builtin.h b/builtin.h
-index b5116f3..08519e7 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -42,6 +42,7 @@ extern int cmd_ls_files(int argc, const char **argv, const char *prefix);
- extern int cmd_ls_tree(int argc, const char **argv, const char *prefix);
- extern int cmd_mailinfo(int argc, const char **argv, const char *prefix);
- extern int cmd_mailsplit(int argc, const char **argv, const char *prefix);
-+extern int cmd_merge_file(int argc, const char **argv, const char *prefix);
- extern int cmd_mv(int argc, const char **argv, const char *prefix);
- extern int cmd_name_rev(int argc, const char **argv, const char *prefix);
- extern int cmd_pack_objects(int argc, const char **argv, const char *prefix);
-diff --git a/git.c b/git.c
-index 357330e..cb5a7ef 100644
---- a/git.c
-+++ b/git.c
-@@ -242,6 +252,7 @@ static void handle_internal_command(int argc, const char **argv, char **envp)
- 		{ "ls-tree", cmd_ls_tree, RUN_SETUP },
- 		{ "mailinfo", cmd_mailinfo },
- 		{ "mailsplit", cmd_mailsplit },
-+		{ "merge-file", cmd_merge_file },
- 		{ "mv", cmd_mv, RUN_SETUP },
- 		{ "name-rev", cmd_name_rev, RUN_SETUP },
- 		{ "pack-objects", cmd_pack_objects, RUN_SETUP },
-diff --git a/t/t6023-merge-file.sh b/t/t6023-merge-file.sh
-new file mode 100644
-index 0000000..5d9b6f3
---- /dev/null
-+++ b/t/t6023-merge-file.sh
-@@ -0,0 +1,116 @@
-+#!/bin/sh
 +
-+test_description='RCS merge replacement: merge-file'
-+. ./test-lib.sh
+ static const char *unpack()
+ {
+-	int code = run_command_v_opt(1, unpacker, RUN_GIT_CMD);
++	struct pack_header hdr;
++	const char *hdr_err;
++	char hdr_arg[38];
++	int code;
 +
-+cat > orig.txt << EOF
-+Dominus regit me,
-+et nihil mihi deerit.
-+In loco pascuae ibi me collocavit,
-+super aquam refectionis educavit me;
-+animam meam convertit,
-+deduxit me super semitas jusitiae,
-+propter nomen suum.
-+EOF
++	hdr_err = parse_pack_header(&hdr);
++	if (hdr_err)
++		return hdr_err;
++	snprintf(hdr_arg, sizeof(hdr_arg), "--pack_header=%u,%u",
++		ntohl(hdr.hdr_version), ntohl(hdr.hdr_entries));
 +
-+cat > new1.txt << EOF
-+Dominus regit me,
-+et nihil mihi deerit.
-+In loco pascuae ibi me collocavit,
-+super aquam refectionis educavit me;
-+animam meam convertit,
-+deduxit me super semitas jusitiae,
-+propter nomen suum.
-+Nam et si ambulavero in medio umbrae mortis,
-+non timebo mala, quoniam tu mecum es:
-+virga tua et baculus tuus ipsa me consolata sunt.
-+EOF
++	if (ntohl(hdr.hdr_entries) < unpack_limit) {
++		const char *unpacker[3];
++		unpacker[0] = "unpack-objects";
++		unpacker[1] = hdr_arg;
++		unpacker[2] = NULL;
++		code = run_command_v_opt(1, unpacker, RUN_GIT_CMD);
++	} else {
++		const char *keeper[6];
++		char my_host[255], keep_arg[128 + 255];
 +
-+cat > new2.txt << EOF
-+Dominus regit me, et nihil mihi deerit.
-+In loco pascuae ibi me collocavit,
-+super aquam refectionis educavit me;
-+animam meam convertit,
-+deduxit me super semitas jusitiae,
-+propter nomen suum.
-+EOF
++		if (gethostname(my_host, sizeof(my_host)))
++			strcpy(my_host, "localhost");
++		snprintf(keep_arg, sizeof(keep_arg),
++			"--keep=receive-pack %i on %s",
++			getpid(), my_host);
 +
-+cat > new3.txt << EOF
-+DOMINUS regit me,
-+et nihil mihi deerit.
-+In loco pascuae ibi me collocavit,
-+super aquam refectionis educavit me;
-+animam meam convertit,
-+deduxit me super semitas jusitiae,
-+propter nomen suum.
-+EOF
-+
-+cat > new4.txt << EOF
-+Dominus regit me, et nihil mihi deerit.
-+In loco pascuae ibi me collocavit,
-+super aquam refectionis educavit me;
-+animam meam convertit,
-+deduxit me super semitas jusitiae,
-+EOF
-+echo -n "propter nomen suum." >> new4.txt
-+
-+cp new1.txt test.txt
-+test_expect_success "merge without conflict" \
-+	"git-merge-file test.txt orig.txt new2.txt"
-+
-+cp new1.txt test2.txt
-+test_expect_success "merge without conflict (missing LF at EOF)" \
-+	"git-merge-file test2.txt orig.txt new2.txt"
-+
-+test_expect_success "merge result added missing LF" \
-+	"diff -u test.txt test2.txt"
-+
-+cp test.txt backup.txt
-+test_expect_failure "merge with conflicts" \
-+	"git-merge-file test.txt orig.txt new3.txt"
-+
-+cat > expect.txt << EOF
-+<<<<<<< test.txt
-+Dominus regit me, et nihil mihi deerit.
-+=======
-+DOMINUS regit me,
-+et nihil mihi deerit.
-+>>>>>>> new3.txt
-+In loco pascuae ibi me collocavit,
-+super aquam refectionis educavit me;
-+animam meam convertit,
-+deduxit me super semitas jusitiae,
-+propter nomen suum.
-+Nam et si ambulavero in medio umbrae mortis,
-+non timebo mala, quoniam tu mecum es:
-+virga tua et baculus tuus ipsa me consolata sunt.
-+EOF
-+
-+test_expect_success "expected conflict markers" "diff -u test.txt expect.txt"
-+
-+cp backup.txt test.txt
-+test_expect_failure "merge with conflicts, using -L" \
-+	"git-merge-file -L 1 -L 2 test.txt orig.txt new3.txt"
-+
-+cat > expect.txt << EOF
-+<<<<<<< 1
-+Dominus regit me, et nihil mihi deerit.
-+=======
-+DOMINUS regit me,
-+et nihil mihi deerit.
-+>>>>>>> new3.txt
-+In loco pascuae ibi me collocavit,
-+super aquam refectionis educavit me;
-+animam meam convertit,
-+deduxit me super semitas jusitiae,
-+propter nomen suum.
-+Nam et si ambulavero in medio umbrae mortis,
-+non timebo mala, quoniam tu mecum es:
-+virga tua et baculus tuus ipsa me consolata sunt.
-+EOF
-+
-+test_expect_success "expected conflict markers, with -L" \
-+	"diff -u test.txt expect.txt"
-+
-+test_done
-+
++		keeper[0] = "index-pack";
++		keeper[1] = "--stdin";
++		keeper[2] = "--fix-thin";
++		keeper[3] = hdr_arg;
++		keeper[4] = keep_arg;
++		keeper[5] = NULL;
++		code = run_command_v_opt(1, keeper, RUN_GIT_CMD);
++		if (!code)
++			reprepare_packed_git();
++	}
+ 
+ 	switch (code) {
+ 	case 0:
+diff --git a/sha1_file.c b/sha1_file.c
+index 5e6c8b8..7bda2d4 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -663,7 +663,7 @@ void prepare_packed_git(void)
+ 	prepare_packed_git_run_once = 1;
+ }
+ 
+-static void reprepare_packed_git(void)
++void reprepare_packed_git(void)
+ {
+ 	prepare_packed_git_run_once = 0;
+ 	prepare_packed_git();
+-- 
+1.4.3.3.g7d63
