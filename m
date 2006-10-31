@@ -4,65 +4,90 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Cleaning up git user-interface warts
-Date: Thu, 16 Nov 2006 05:30:50 +0100
-Message-ID: <20061116043050.GU7201@pasky.or.cz>
-References: <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home> <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org> <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142306090.2591@xanadu.home> <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+From: Jan Harkes <jaharkes@cs.cmu.edu>
+Subject: [PATCH] Continue traversal when rev-list --unpacked finds a packed commit.
+Date: Mon, 30 Oct 2006 20:37:49 -0500
+Message-ID: <20061031013749.GA19885@delft.aura.cs.cmu.edu>
+References: <20061029093754.GD3847@spearce.org> <Pine.LNX.4.64.0610301332440.11384@xanadu.home> <20061030202611.GA5775@spearce.org> <20061030205200.GA20236@delft.aura.cs.cmu.edu> <7v3b95wjmg.fsf@assigned-by-dhcp.cox.net> <20061030225500.GG3617@delft.aura.cs.cmu.edu> <7vhcxltmit.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 16 Nov 2006 04:31:13 +0000 (UTC)
-Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
+NNTP-Posting-Date: Tue, 31 Oct 2006 01:38:12 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+In-Reply-To: <7vhcxltmit.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30558>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkYty-0005HA-In for gcvg-git@gmane.org; Thu, 16 Nov
- 2006 05:31:02 +0100
+ esmtp (Exim 4.43) id 1GeiZg-00025k-NJ for gcvg-git@gmane.org; Tue, 31 Oct
+ 2006 02:37:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1162278AbWKPEax (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 23:30:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162280AbWKPEax
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 23:30:53 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:14771 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1162278AbWKPEaw (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 23:30:52 -0500
-Received: (qmail 15437 invoked by uid 2001); 16 Nov 2006 05:30:50 +0100
-To: Linus Torvalds <torvalds@osdl.org>
+ S1161569AbWJaBhx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 20:37:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161570AbWJaBhx
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 20:37:53 -0500
+Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:14049 "EHLO
+ delft.aura.cs.cmu.edu") by vger.kernel.org with ESMTP id S1161569AbWJaBhx
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 20:37:53 -0500
+Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 4.63)
+ (envelope-from <jaharkes@cs.cmu.edu>) id 1GeiZZ-0005BJ-4I; Mon, 30 Oct 2006
+ 20:37:49 -0500
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Wed, Nov 15, 2006 at 07:03:18PM CET, Linus Torvalds wrote:
-> If you think "pull" is confusing, I can guarantee you that _changing_ the 
-> name is a hell of a lot more confusing. In fact, I think a lot of the 
-> confusion comes from cogito, not from git - the fact that cogito used 
-> different names and different syntax was a mistake, I think.
 
-  I would agree that having "pull" mean something different in Cogito
-than in Git was a bad idea (explanation: historically, for some period
-of time Cogito had cg-pull which meant the same as cg-fetch or hg pull;
-later it got renamed to cg-fetch). But I'm also happy that Cogito just
-does not use the "pull" expression at all currently: "updating" seems to
-be a clear and unloaded enough concept for new people. Pull is really
-_very_ confusing, with it meaning something different (but not different
-enough) in _all_ other systems but BK (which is basically irrelevant
-nowadays).
+When getting the list of all unpacked objects by walking the commit history,
+we would stop traversal whenever we hit a packed commit. However the fact
+that we found a packed commit does not guarantee that all previous commits
+are also packed. As a result the commit walkers did not show all reachable
+unpacked objects.
 
-  That said, I agree with your argument that changing it in Git now
-might just result in more confusion. I'm just trying to explain Cogito's
-choice here, and I believe it does no good nor harm to Core Git if it
-just uses different name for the concept and avoids the original name at
-all (except explaining in the docs that updating in Cogito is what
-pulling is in Git).
+Signed-off-by: Jan Harkes <jaharkes@cs.cmu.edu>
+---
+ revision.c |   14 ++++++--------
+ 1 files changed, 6 insertions(+), 8 deletions(-)
 
+diff --git a/revision.c b/revision.c
+index 280e92b..a69c873 100644
+--- a/revision.c
++++ b/revision.c
+@@ -418,9 +418,6 @@ static void limit_list(struct rev_info *
+ 
+ 		if (revs->max_age != -1 && (commit->date < revs->max_age))
+ 			obj->flags |= UNINTERESTING;
+-		if (revs->unpacked &&
+-		    has_sha1_pack(obj->sha1, revs->ignore_packed))
+-			obj->flags |= UNINTERESTING;
+ 		add_parents_to_list(revs, commit, &list);
+ 		if (obj->flags & UNINTERESTING) {
+ 			mark_parents_uninteresting(commit);
+@@ -1149,17 +1146,18 @@ struct commit *get_revision(struct rev_i
+ 		 * that we'd otherwise have done in limit_list().
+ 		 */
+ 		if (!revs->limited) {
+-			if ((revs->unpacked &&
+-			     has_sha1_pack(commit->object.sha1,
+-					   revs->ignore_packed)) ||
+-			    (revs->max_age != -1 &&
+-			     (commit->date < revs->max_age)))
++			if (revs->max_age != -1 &&
++			    (commit->date < revs->max_age))
+ 				continue;
+ 			add_parents_to_list(revs, commit, &revs->commits);
+ 		}
+ 		if (commit->object.flags & SHOWN)
+ 			continue;
+ 
++		if (revs->unpacked && has_sha1_pack(commit->object.sha1,
++						    revs->ignore_packed))
++		    continue;
++
+ 		/* We want to show boundary commits only when their
+ 		 * children are shown.  When path-limiter is in effect,
+ 		 * rewrite_parents() drops some commits from getting shown,
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+1.4.2.4.gd5de
