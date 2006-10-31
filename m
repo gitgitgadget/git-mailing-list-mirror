@@ -4,86 +4,56 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Restore a single file in the index back to HEAD
-Date: Wed, 1 Nov 2006 23:27:08 +0100
-Organization: Dewire
-Message-ID: <200611012327.08967.robin.rosenberg.lists@dewire.com>
-References: <200610261641.11239.andyparkins@gmail.com> <200611012029.41869.andyparkins@gmail.com> <7vbqnq51v4.fsf@assigned-by-dhcp.cox.net>
+From: Sasha Khapyorsky <sashak@voltaire.com>
+Subject: Re: [PATCH] git-svnimport: support for partial imports
+Date: Wed, 1 Nov 2006 00:50:54 +0200
+Message-ID: <20061031225054.GA20211@sashak.voltaire.com>
+References: <20061025225026.GA13031@sashak.voltaire.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 1 Nov 2006 22:26:11 +0000 (UTC)
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 31 Oct 2006 22:45:35 +0000 (UTC)
+Cc: git@vger.kernel.org, Matthias Urlichs <smurf@smurf.noris.de>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.4
-In-Reply-To: <7vbqnq51v4.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+In-Reply-To: <20061025225026.GA13031@sashak.voltaire.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-OriginalArrivalTime: 31 Oct 2006 22:45:22.0752 (UTC) FILETIME=[3FD76C00:01C6FD3E]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30604>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfOX2-0001GL-AJ for gcvg-git@gmane.org; Wed, 01 Nov
- 2006 23:26:01 +0100
+ esmtp (Exim 4.43) id 1Gf2MJ-0007Ac-Lw for gcvg-git@gmane.org; Tue, 31 Oct
+ 2006 23:45:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752520AbWKAWZ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
- 17:25:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752522AbWKAWZ5
- (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 17:25:57 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:1829 "EHLO
- torino.dewire.com") by vger.kernel.org with ESMTP id S1752520AbWKAWZ4 (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 17:25:56 -0500
-Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
- (Postfix) with ESMTP id 81882802801; Wed,  1 Nov 2006 23:22:32 +0100 (CET)
-Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
- [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 29631-10; Wed,  1 Nov
- 2006 23:22:32 +0100 (CET)
-Received: from [10.9.0.5] (unknown [10.9.0.5]) by torino.dewire.com (Postfix)
- with ESMTP id 08A1D8003E1; Wed,  1 Nov 2006 23:22:29 +0100 (CET)
+ S1946043AbWJaWpZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
+ 17:45:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423847AbWJaWpZ
+ (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 17:45:25 -0500
+Received: from taurus.voltaire.com ([193.47.165.240]:2368 "EHLO
+ taurus.voltaire.com") by vger.kernel.org with ESMTP id S1423846AbWJaWpY
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 17:45:24 -0500
+Received: from sashak ([172.25.5.176]) by taurus.voltaire.com with Microsoft
+ SMTPSVC(6.0.3790.1830); Wed, 1 Nov 2006 00:45:22 +0200
+Received: by sashak (sSMTP sendmail emulation); Wed,  1 Nov 2006 00:50:54
+ +0200
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-onsdag 01 november 2006 21:49 skrev Junio C Hamano:
-> Andy Parkins <andyparkins@gmail.com> writes:
-> > On Wednesday 2006, November 01 18:28, Junio C Hamano wrote:
-> >> So from that point of view, the above commandline perfectly
-> >> makes sense.  However, giving anything but HEAD with path makes
-> >> us go "Huh?"  It is unclear what this should mean:
-> >>
-> >> 	git-reset [--hard | --mixed] HEAD^ oops/file1
-> >
-> > I don't understand.  Why wouldn't that mean reset oops/file1 to the state
-> > it had in HEAD^?
->
-> Path limiters everywhere in git means "do this only for paths
-> that match this pattern, and empty path means the pattern match
-> every path -- the command's behaviour is not different in any
-> other aspect between the case you gave no limiter and the case
-> you gave _all_ paths as limiters".  So the other paths remain as
-> they were (both index and working tree), and HEAD needs to be
-> updated to HEAD^ in the above example.
->
-> While that perfect makes sense from mechanical point of view, I
-> am not sure what it _means_ to keep some paths from now
-> abandoned future while having some other paths reset to the
-> rewound commit, from the point of view of end-user operation.
->
-> In other words, I do not have a good explanation on what "git
-> reset [--hard|--mixed] <commit> <path>..." does that I can write
-> in the documentation.
+On 00:50 Thu 26 Oct     , Sasha Khapyorsky wrote:
+> This adds support for partial svn imports. Let's assume that SVN
+> repository layout looks like:
+> 
+>   $trunk/path/to/our/project
+>   $branches/path/to/our/project
+>   $tags/path/to/our/project
+> 
+> , and we would like to import only tree under this specific
+> 'path/to/our/project' and not whole tree under $trunk, $branches, etc..
+> Now we will be be able to do it by using '-P path/to/our/project' option
+> with git-svnimport.
+> 
+> Signed-off-by: Sasha Khapyorsky <sashak@voltaire.com>
 
-You could refer to git-checkout although checkout doesn't have something 
-corresponding to --mixed. The --hard option would correspond to the -f flag 
-in checkout.
-
-It is like "cherrypicking" content (not changes) from a particular commit.  
-
-Where did the soft option go? 
-
-Since checkout already does the work.. Is there any need for extending 
-git-reset, other than that's where people look for this feature. The man page 
-could be extended instead.
+Any news about status of this patch?
 
