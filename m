@@ -1,82 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: svn versus git
-Date: Thu, 14 Dec 2006 10:42:08 +0000
-Message-ID: <200612141042.09453.andyparkins@gmail.com>
-References: <200612132200.41420.andyparkins@gmail.com> <200612140908.36952.andyparkins@gmail.com> <7vodq695ha.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 2/2] Teach receive-pack how to keep pack files based on
+ object count.
+Date: Tue, 31 Oct 2006 17:06:47 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0610311659310.11384@xanadu.home>
+References: <20061031075704.GB7691@spearce.org>
+ <Pine.LNX.4.64.0610311447250.11384@xanadu.home>
+ <20061031201148.GD23671@spearce.org>
+ <Pine.LNX.4.64.0610311559150.11384@xanadu.home>
+ <20061031212942.GA24184@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 14 Dec 2006 10:42:24 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Tue, 31 Oct 2006 22:07:40 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=QwcNeuQb31aOE5kFqORELpXLFnmHmBQkvvcTkdioy9oVW1UIOA6XeFvJ2SXPnfCZplIvGXtUJcW6GoY8M8QBKohfXOt1g+F+iq5FU1WTX+eK7kKVj9y2hwdc/r3TR69iNuMpqS0g4wyv9+ZEU/Dt1lzAh+wBQupG0Jlx/cxv7M4=
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vodq695ha.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+In-reply-to: <20061031212942.GA24184@spearce.org>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34306>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Guo2f-0007vt-7x for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 11:42:21 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30600>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gf1lF-0006se-Af for gcvg-git@gmane.org; Tue, 31 Oct
+ 2006 23:07:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751941AbWLNKmS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 05:42:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751932AbWLNKmS
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 05:42:18 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:19303 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1751941AbWLNKmS (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
- 2006 05:42:18 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so455136uga for
- <git@vger.kernel.org>; Thu, 14 Dec 2006 02:42:16 -0800 (PST)
-Received: by 10.67.103.7 with SMTP id f7mr1200966ugm.1166092936420; Thu, 14
- Dec 2006 02:42:16 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id k2sm1864278ugf.2006.12.14.02.42.12; Thu, 14 Dec 2006 02:42:14 -0800
- (PST)
-To: git@vger.kernel.org
+ S1946053AbWJaWGt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
+ 17:06:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946050AbWJaWGt
+ (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 17:06:49 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:49151 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S1946053AbWJaWGs
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 17:06:48 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J8000DNFTFB2H40@VL-MO-MR003.ip.videotron.ca> for git@vger.kernel.org; Tue,
+ 31 Oct 2006 17:06:47 -0500 (EST)
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-On Thursday 2006 December 14 09:44, Junio C Hamano wrote:
+On Tue, 31 Oct 2006, Shawn Pearce wrote:
+> Nicolas Pitre <nico@cam.org> wrote:
+> > I used "pack" <tab> <sha1> so it is easy to pick out of the list of refs 
+> > that usually comes over the stream in the fetch case (if I understood 
+> > that part right).
+> 
+> I thought about using a pipe too, but in the case of receive-pack
+> it looked like index-pack was sending something back to the push
+> end of the connection.  I didn't dig into the code enough to see
+> what that was and how to do the same in receive-pack itself.
 
-> I would say pretending as if cat-file is a Porcelain is the
-> unfair part.
+Well, I think it goes like this:
 
-I had to; there is no other equivalent of "svn cat" in git.
+unpack-objects (and now index-pack --stdin) reads from stdin in 4kb 
+chunks.  When the pack has been entirely parsed, it is possible that the 
+4kb chunk contains data from the stream past the actual pack data which 
+is why the remaining of the buffer is flushed out to stdout for the next 
+tool in the chain to pick up.
 
-> Again, mistaking ls-tree as if it was a Porcelain is the true
-> cause of the newbie confusion.
-
-Again, there is no other equivalent of "svn list" in git.
-
-> If a Porcelain level "ls" is needed (and I am doubtful about
-> usefulness of "svn list -r538" like command), that is the
-
-Me too.  I was in no way advocating that git should try to be SVN (shudder).  
-As I was comparing though, I had to pick git commands that did at least what 
-SVN could do.
-
-> command you would want to teach about using ls-files and ls-tree
-> depending on what the end users want in their workflow.
-
-Personally, I think qgit fills an awfully big hole in svn that makes them all 
-irrelevant.  qgit is a much better repository browsing tool than "svn list" 
-is.
+So if you use a pipe with index-pack to retrieve the pack name, you also 
+must consume all extra data from it and pass it on as well.
 
 
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
