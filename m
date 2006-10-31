@@ -1,85 +1,52 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Seth Falcon <sethfalcon@gmail.com>
-Subject: Change in git-svn dcommit semantics?
-Date: Tue, 19 Dec 2006 13:12:05 -0800
-Message-ID: <m2mz5jegka.fsf@ziti.local>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH 1/2] Allow '-' in config variable names
+Date: Mon, 30 Oct 2006 22:05:56 -0500
+Message-ID: <20061031030556.GB16445@fieldses.org>
+References: <Pine.LNX.4.64.0610300823250.25218@g5.osdl.org> <7vodrtv2wy.fsf@assigned-by-dhcp.cox.net> <7vfyd5rxvg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 19 Dec 2006 21:12:41 +0000 (UTC)
-Cc: Eric Wong <normalperson@yhbt.net>
+NNTP-Posting-Date: Tue, 31 Oct 2006 03:06:09 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:to:cc:subject:from:date:message-id:user-agent:mime-version:content-type;
-        b=rMDpwtcFmA31/Wm55mpCTPbSU/HpzmL6FrCvFbdfBYoS1RrvGXqtBg8JeVoODl77JIxNgG0Ek+CHJVvUNxmRMT0vIuq5AW5lgdLHZ0bmbzS7cnE16wXyLyo6sn+QSARiJ5twIEi08Kxac4diCCrvEdIRS3Wp7ehGD9LpFfOFEz0=
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
+Content-Disposition: inline
+In-Reply-To: <7vfyd5rxvg.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34852>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwmGE-0003c9-Tw for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 22:12:31 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30563>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gejwy-0005AW-CX for gcvg-git@gmane.org; Tue, 31 Oct
+ 2006 04:06:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932954AbWLSVM2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 16:12:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932968AbWLSVM2
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 16:12:28 -0500
-Received: from wx-out-0506.google.com ([66.249.82.229]:25903 "EHLO
- wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S932954AbWLSVM1 (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec
- 2006 16:12:27 -0500
-Received: by wx-out-0506.google.com with SMTP id h27so1784394wxd for
- <git@vger.kernel.org>; Tue, 19 Dec 2006 13:12:27 -0800 (PST)
-Received: by 10.70.116.1 with SMTP id o1mr10350668wxc.1166562746769; Tue, 19
- Dec 2006 13:12:26 -0800 (PST)
-Received: from ziti.local ( [140.107.181.122]) by mx.google.com with ESMTP id
- i14sm10438989wxd.2006.12.19.13.12.23; Tue, 19 Dec 2006 13:12:26 -0800 (PST)
-To: git@vger.kernel.org
+ S1161413AbWJaDGA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 22:06:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161433AbWJaDGA
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 22:06:00 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:40154 "EHLO
+ pickle.fieldses.org") by vger.kernel.org with ESMTP id S1161413AbWJaDF7
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 22:05:59 -0500
+Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
+ (envelope-from <bfields@fieldses.org>) id 1Gejwq-0004ed-6F; Mon, 30 Oct 2006
+ 22:05:56 -0500
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Hi Eric,
+On Mon, Oct 30, 2006 at 07:02:27PM -0800, Junio C Hamano wrote:
+> Junio C Hamano <junkio@cox.net> writes:
+> > By the way, everybody seems to do "alias.xxx = -p cat-file -p"
+> > (I have it as "git less").  Maybe we would want to make a
+> > built-in alias for that?
+> 
+> Seconds?
 
-I just updated to the latest git/git-svn (on branch 'master') and the
-workflow I've been using no longer seems to work:
+Yes!
 
-   # review the commits I'm going to send to svn
-   ziti:~/proj/bioc-2.0-git seth$ git log remotes/git-svn..HEAD
-   
-   # now send them
-   ziti:~/proj/bioc-2.0-git seth$ git svn dcommit remotes/git-svn..HEAD
+I'd vote for calling it just "git cat".
 
-   fatal: ambiguous argument
-   'refs/remotes/git-svn..remotes/git-svn..HEAD': unknown revision or
-   path not in the working tree.  Use '--' to separate paths from
-   revisions 32768 at /Users/seth/scm/bin/git-svn line 2190
-           main::safe_qx('git-rev-list', '--no-merges', 'refs/remotes/git-svn..remotes/git-svn..HEAD') called at /Users/seth/scm/bin/git-svn line 610
-           main::dcommit('remotes/git-svn..HEAD') called at /Users/seth/scm/bin/git-svn line 197
-
-
-At this point, my last commit seems to have been reset (although the
-changes are thankfully still in my working tree).  If this happens to
-you, you can recover the last commit like:
-
-  git commit -a -v -c ORIG_HEAD
-
-And it seems that the new interface requires no extra args:
-
- git svn dcommit
-
-The new interface seems ok until things like 
-
-  git svn dcommit remotes/git-svn..HEAD~2
-
-are allowed (if ever).  But it would be nice for the failure mode to
-not undo commits :-)
-
-+ seth
-
-git version 1.4.4.2.gee60-dirty
