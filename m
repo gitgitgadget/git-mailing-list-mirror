@@ -1,85 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Restore a single file in the index back to HEAD
-Date: Wed, 1 Nov 2006 20:29:27 +0000
-Message-ID: <200611012029.41869.andyparkins@gmail.com>
-References: <200610261641.11239.andyparkins@gmail.com> <200611010953.57360.andyparkins@gmail.com> <7vpsc710oy.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Teach receive-pack how to keep pack files when
+ unpacklooseobjects = 0.
+Date: Mon, 30 Oct 2006 23:08:56 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0610302258400.11384@xanadu.home>
+References: <20061030223615.GH5775@spearce.org>
+ <7vlkmxtmln.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 1 Nov 2006 20:33:32 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Tue, 31 Oct 2006 04:09:09 +0000 (UTC)
+Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=DRTTk2zvJLKizDcW9JR86hUKb7tSIYRv58ROYoSp1Tp3weBBazdOU1XngD6BlaG/iPLz9azM8GRwyNPfgLzdCTc3jHjUPm60e3DLIjbN4LPiRAd178hRjI7bUXVqfuFzLYRe2JFzJZdkw6Sj/gZbtFIvieXuvf2kAgYw45p9lq4=
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vpsc710oy.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+In-reply-to: <7vlkmxtmln.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30566>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfMm3-0003kp-7j for gcvg-git@gmane.org; Wed, 01 Nov
- 2006 21:33:23 +0100
+ esmtp (Exim 4.43) id 1Gekvx-0006g0-Ct for gcvg-git@gmane.org; Tue, 31 Oct
+ 2006 05:09:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S2992807AbWKAUcO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
- 15:32:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992817AbWKAUcN
- (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 15:32:13 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:23447 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S2992812AbWKAUcM
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 15:32:12 -0500
-Received: by ug-out-1314.google.com with SMTP id 32so1817493ugm for
- <git@vger.kernel.org>; Wed, 01 Nov 2006 12:32:10 -0800 (PST)
-Received: by 10.67.119.13 with SMTP id w13mr8815154ugm; Wed, 01 Nov 2006
- 12:32:10 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
- mx.google.com with ESMTP id s7sm1141863uge.2006.11.01.12.32.08; Wed, 01 Nov
- 2006 12:32:09 -0800 (PST)
-To: git@vger.kernel.org
+ S1161608AbWJaEI6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 23:08:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161609AbWJaEI6
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 23:08:58 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:45013 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S1161608AbWJaEI5
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 23:08:57 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J7Z006CGFIWCB10@VL-MO-MR004.ip.videotron.ca> for git@vger.kernel.org; Mon,
+ 30 Oct 2006 23:08:56 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Wednesday 2006, November 01 18:28, Junio C Hamano wrote:
+On Mon, 30 Oct 2006, Junio C Hamano wrote:
 
-> So from that point of view, the above commandline perfectly
-> makes sense.  However, giving anything but HEAD with path makes
-> us go "Huh?"  It is unclear what this should mean:
->
-> 	git-reset [--hard | --mixed] HEAD^ oops/file1
+> One thing you can cheaply do is to tell the number of new
+> commits that is coming to receive-pack from send-pack when it
+> sends the old..new pairs before it sends the packfile payload.
+> It would be just a single internal rev-list call inside
+> send-pack, which is reasonably cheap.
 
-I don't understand.  Why wouldn't that mean reset oops/file1 to the state it 
-had in HEAD^?
+Well, it could even be avoided.
 
-> Checkout is a working tree manipulator Porcelain, and as a side
-> effect it has always updated the index.  So it might make sense
-> to give --index-only there:
->
-> 	git checkout --index-only HEAD -- paths...
+> If the receiving end knows how to process that new information
+> (invent a "send-count" protocol extension and send it just like
+> we already send "report-status" request), send one extra packet
+> after flushing the list of old..new from send-pack to
+> receive-pack, to tell what the number of commits are, and make a
+> matching change in receive-pack.
 
-I think you're right that this is not the place - git-checkout is what one 
-uses to update your working directory, it's only a side-effect that the index 
-is updated - or we could argue that it is necessary that the index is updated 
-in order that checkout can do it's job.
+I don't like this much since a commit can carry along very little or 
+very large amount of objects.  You really want to decide on the number 
+of objects.
 
-> On the other hand, we already have --again, so maybe we have
-> already passed the point of no return.  So I am inclined to
-> agree with your "update-index --reset" approach, unless somebody
-> else injects sanity into me.
+Why not just parse the pack header in receive-pack / fetch-pack, and 
+decide on the first-hand information?  Sure the pack header is then 
+gone, but then the only thing that is needed is an extra flag to both 
+unpack-objects and index-pack to tell them that we've already parsed the 
+pack header and that the pack version is x and the number of objects is 
+y.  Simply something like --pack_header=x,y.  No protocol extension 
+needed, no extra rev-list, no reliance on the remote server providing 
+the needed info.
 
-Actually; you've talked me out of it.   Given that git-reset is already 
-porcelain, and none of the solutions are screaming "right"; it seems better 
-to slightly bend git-reset than git-update-index.
 
-
-Andy
--- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
