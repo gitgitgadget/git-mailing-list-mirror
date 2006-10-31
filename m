@@ -1,62 +1,82 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Michael S. Tsirkin" <mst@mellanox.co.il>
-Subject: Re: how to pass ssh options to git?
-Date: Thu, 2 Nov 2006 11:31:53 +0200
-Message-ID: <20061102093153.GF7468@mellanox.co.il>
-References: <vpqejsm433c.fsf@ecrins.imag.fr>
-Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 2/2] Teach receive-pack how to keep pack files based on object count.
+Date: Tue, 31 Oct 2006 15:11:48 -0500
+Message-ID: <20061031201148.GD23671@spearce.org>
+References: <20061031075704.GB7691@spearce.org> <Pine.LNX.4.64.0610311447250.11384@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 2 Nov 2006 09:29:25 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Tue, 31 Oct 2006 20:12:32 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <vpqejsm433c.fsf@ecrins.imag.fr>
-User-Agent: Mutt/1.4.2.1i
+In-Reply-To: <Pine.LNX.4.64.0610311447250.11384@xanadu.home>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30596>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfYsv-000077-Vn for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 10:29:18 +0100
+ esmtp (Exim 4.43) id 1Gezxm-0007fn-Aa for gcvg-git@gmane.org; Tue, 31 Oct
+ 2006 21:11:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752749AbWKBJ3N (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
- 04:29:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752770AbWKBJ3N
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 04:29:13 -0500
-Received: from dev.mellanox.co.il ([194.90.237.44]:6272 "EHLO
- dev.mellanox.co.il") by vger.kernel.org with ESMTP id S1752749AbWKBJ3N (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 04:29:13 -0500
-Received: from mellanox.co.il ([194.90.237.34]) by dev.mellanox.co.il
- (8.13.1/8.13.1) with SMTP id kA29T0fM010402; Thu, 2 Nov 2006 11:29:01 +0200
-Received: by mellanox.co.il (sSMTP sendmail emulation); Thu,  2 Nov 2006
- 11:31:53 +0200
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
+ S1945968AbWJaULz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
+ 15:11:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945969AbWJaULz
+ (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 15:11:55 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:28894 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1945968AbWJaULy
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 15:11:54 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GezxW-0001gy-Sa; Tue, 31 Oct 2006 15:11:42 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ F0B4C20FB0C; Tue, 31 Oct 2006 15:11:48 -0500 (EST)
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-Quoting r. Matthieu Moy <Matthieu.Moy@imag.fr>:
-> Subject: Re: how to pass ssh options to git?
+Nicolas Pitre <nico@cam.org> wrote:
+> On Tue, 31 Oct 2006, Shawn Pearce wrote:
 > 
-> "Michael S. Tsirkin" <mst@mellanox.co.il> writes:
+> > Since keeping a pushed pack or exploding it into loose objects
+> > should be a local repository decision this teaches receive-pack
+> > to decide if it should call unpack-objects or index-pack --stdin
+> > --fix-thin based on the setting of receive.unpackLimit and the
+> > number of objects contained in the received pack.
 > 
-> > How is it possible to pass ssh options to git?
-> > for example, I use these options to log into some machine:
-> > ssh -i <private> -o HostKeyAlias=<alias> -p <port> -l <user> <address>
+> This works fine when used with my replacement patch for your [1/2] one.
 > 
-> Not answering the question, but this can go to ~/.ssh/config :
+> > Currently this leaves every received pack as a kept pack.  We really
+> > don't want that as received packs will tend to be small.  Instead we
+> > want to delete the .keep file automatically after all refs have
+> > been updated.  That is being left as room for future improvement.
 > 
-> Host *.domain.net
-> User some_user
-> IdentityFile ~/.ssh/foobar
-> 
+> I think this should be solved before rx packs are actually stored as 
+> packs though.  Otherwise people will end up with unwanted .keep files 
+> left around.  Maybe having a much bigger default for object number 
+> treshold for the time being?  (unless this patch is applied to "next" at 
+> the same time as another one that actually deals with those .keep 
+> files).
 
-I know, problem is I want to use different options at different times.
-I could use -F configfile ssh option, but how to pass *that* to git?
+Its next on my list of things to do.  Hopefully I'll be able to
+implement it today.
+
+I'm thinking of just brute forcing it: put enough identifying data
+into the .keep file to make it unique, then go through every local
+pack and look at their .keep file; if the content matches what
+receive-pack asked index-pack to put there then remove it.
 
 -- 
