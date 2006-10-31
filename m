@@ -1,101 +1,177 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: win2k/cygwin cannot handle even moderately sized packs
-Date: Wed, 8 Nov 2006 17:28:37 -0500
-Message-ID: <20061108222837.GA14446@spearce.org>
-References: <20061107174859.GB26591@spearce.org> <81b0412b0611071013j51254a40s749fb6cba65e6873@mail.gmail.com> <20061107181808.GC26591@spearce.org> <20061107182636.GD26591@spearce.org> <20061107185648.GE26591@spearce.org> <20061107231130.GA5141@steel.home> <20061108051914.GB28498@spearce.org> <81b0412b0611080537k1087be66x1a4a9686b43d7b46@mail.gmail.com> <20061108171131.GA13487@spearce.org> <20061108213314.GA4437@steel.home>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 7/n] gitweb: Output also empty patches in "commitdiff" view
+Date: Tue, 31 Oct 2006 17:36:27 +0100
+Message-ID: <200610311736.27910.jnareb@gmail.com>
+References: <200610301953.01875.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 8 Nov 2006 22:29:07 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 31 Oct 2006 16:36:46 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=qilxQE3A2KYc6Y/b4BnI8kpU7CBYyhPvIuAwZfz29taxvtuJi/u01MsGx4k8ki8veq9OKwluKyCOoGsenQIA898rVfBLKad70cBr5HTaksTSO+PlE56vYVtITtqicxYL0yvgWR441Ae5bGrzqpIaIPlRCSiiqo8DL1HM/jmvvsQ=
+User-Agent: KMail/1.9.3
+In-Reply-To: <200610301953.01875.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20061108213314.GA4437@steel.home>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30590>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Ghvub-0002YM-0h for gcvg-git@gmane.org; Wed, 08 Nov
- 2006 23:28:49 +0100
+ esmtp (Exim 4.43) id 1GewbC-0002Xo-15 for gcvg-git@gmane.org; Tue, 31 Oct
+ 2006 17:36:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423812AbWKHW2p (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
- 17:28:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423813AbWKHW2p
- (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 17:28:45 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:6542 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1423812AbWKHW2o
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 17:28:44 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GhvuJ-0001RV-Bk; Wed, 08 Nov 2006 17:28:31 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 448AA20E487; Wed,  8 Nov 2006 17:28:38 -0500 (EST)
-To: Alex Riesen <raa.lkml@gmail.com>
+ S1423466AbWJaQgV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
+ 11:36:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423574AbWJaQgV
+ (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 11:36:21 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:8479 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1423466AbWJaQgU
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 11:36:20 -0500
+Received: by ug-out-1314.google.com with SMTP id 32so1494603ugm for
+ <git@vger.kernel.org>; Tue, 31 Oct 2006 08:36:18 -0800 (PST)
+Received: by 10.67.97.7 with SMTP id z7mr6389963ugl; Tue, 31 Oct 2006
+ 08:36:18 -0800 (PST)
+Received: from host-81-190-18-116.torun.mm.pl ( [81.190.18.116]) by
+ mx.google.com with ESMTP id o24sm5243142ugd.2006.10.31.08.36.17; Tue, 31 Oct
+ 2006 08:36:18 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Alex Riesen <fork0@t-online.de> wrote:
-> Shawn Pearce, Wed, Nov 08, 2006 18:11:31 +0100:
-> > The garbage creation is to account for the 2-4 windows required
-> > by most applications.  Most of the time each window is unused;
-> > we really only have two windows in use during delta decompression,
-> > at all other times we really only have 1 window in use.  The commit
-> > parsing applications don't keep the commit window in use when they
-> > go access a tree or a blob.
-> 
-> So they actually can call unuse_pack to unmap the window,
-> but it's kept for caching reasons?
+Remove skipping over empty patches (i.e. patches which consist solely
+of extended headers) in git_patchset_body, and add links to those
+header-only patches in git_difftree_body (but not generate blobdiff
+links when there were no change in file contents).
 
-Actually very few parts of the code even know about the windows.
-Really the only parts that know it are the ones that directly
-access the pack file, which is mostly restricted to sha1_file.c.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+As promised...
 
-So since all access is through the more public interfaces what
-you find is that the application code never keeps the window.
-We are always doing use_pack/unuse_pack on every object access.
-So the window is almost never in use.  So if we didn't hang onto
-it in an LRU we would be in a world of hurt performance wise.
+ gitweb/gitweb.perl |   67 +++++++++++++++++++++-------------------------------
+ 1 files changed, 27 insertions(+), 40 deletions(-)
 
-> > I could be wrong.  It may not matter.  But I think its crazy to
-> > unmap otherwise valid mappings just because 2 bytes are on the
-> > wrong side of an arbitrary boundary.
-> 
-> You're right, would be unfortunate to remap too often.
-> 
-> use_pack always maps at least 20 bytes, if I understand in_window and
-> its use correctly. Actually, now I'm staring at it longer, I think the
-> interface I suggested does almost the same, just allows to configure
-> (well, hint at) the amount of bytes to be mapped in.
-
-True; but if you look nobody wants more than 20 bytes.  They either
-want <20 for the object header or 20 for the base object id in
-a delta.  Otherwise they are shoving the data into zlib which
-doesn't care.  No need to configure it, just shove it in.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 542dbca..e0f7a3f 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1998,19 +1998,19 @@ sub git_difftree_body {
+ 			print "</td>\n";
+ 			print "<td>$mode_chnge</td>\n";
+ 			print "<td class=\"link\">";
+-			if ($diff{'to_id'} ne $diff{'from_id'}) { # modified
+-				if ($action eq 'commitdiff') {
+-					# link to patch
+-					$patchno++;
+-					print $cgi->a({-href => "#patch$patchno"}, "patch");
+-				} else {
+-					print $cgi->a({-href => href(action=>"blobdiff",
+-					                             hash=>$diff{'to_id'}, hash_parent=>$diff{'from_id'},
+-					                             hash_base=>$hash, hash_parent_base=>$parent,
+-					                             file_name=>$diff{'file'})},
+-					              "diff");
+-				}
+-				print " | ";
++			if ($action eq 'commitdiff') {
++				# link to patch
++				$patchno++;
++				print $cgi->a({-href => "#patch$patchno"}, "patch") .
++				      " | ";
++			} elsif ($diff{'to_id'} ne $diff{'from_id'}) {
++				# "commit" view and modified file (not onlu mode changed)
++				print $cgi->a({-href => href(action=>"blobdiff",
++				                             hash=>$diff{'to_id'}, hash_parent=>$diff{'from_id'},
++				                             hash_base=>$hash, hash_parent_base=>$parent,
++				                             file_name=>$diff{'file'})},
++				              "diff") .
++				      " | ";
+ 			}
+ 			print $cgi->a({-href => href(action=>"blame", hash_base=>$hash,
+ 			                             file_name=>$diff{'file'})},
+@@ -2038,19 +2038,19 @@ sub git_difftree_body {
+ 			              -class => "list"}, esc_path($diff{'from_file'})) .
+ 			      " with " . (int $diff{'similarity'}) . "% similarity$mode_chng]</span></td>\n" .
+ 			      "<td class=\"link\">";
+-			if ($diff{'to_id'} ne $diff{'from_id'}) {
+-				if ($action eq 'commitdiff') {
+-					# link to patch
+-					$patchno++;
+-					print $cgi->a({-href => "#patch$patchno"}, "patch");
+-				} else {
+-					print $cgi->a({-href => href(action=>"blobdiff",
+-					                             hash=>$diff{'to_id'}, hash_parent=>$diff{'from_id'},
+-					                             hash_base=>$hash, hash_parent_base=>$parent,
+-					                             file_name=>$diff{'to_file'}, file_parent=>$diff{'from_file'})},
+-					              "diff");
+-				}
+-				print " | ";
++			if ($action eq 'commitdiff') {
++				# link to patch
++				$patchno++;
++				print $cgi->a({-href => "#patch$patchno"}, "patch") .
++				      " | ";
++			} elsif ($diff{'to_id'} ne $diff{'from_id'}) {
++				# "commit" view and modified file (not only pure rename or copy)
++				print $cgi->a({-href => href(action=>"blobdiff",
++				                             hash=>$diff{'to_id'}, hash_parent=>$diff{'from_id'},
++				                             hash_base=>$hash, hash_parent_base=>$parent,
++				                             file_name=>$diff{'to_file'}, file_parent=>$diff{'from_file'})},
++				              "diff") .
++				      " | ";
+ 			}
+ 			print $cgi->a({-href => href(action=>"blame", hash_base=>$parent,
+ 			                             file_name=>$diff{'from_file'})},
+@@ -2072,7 +2072,6 @@ sub git_patchset_body {
+ 	my $patch_idx = 0;
+ 	my $in_header = 0;
+ 	my $patch_found = 0;
+-	my $skip_patch = 0;
+ 	my $diffinfo;
+ 	my (%from, %to);
  
-> I still can't let go of the idea to get as much data as possible with
-> just one call to sliding window code. Calling use_pack for every byte
-> just does not seem right.
-
-True.  But the only other idea I have is to copy the data into a
-buffer for the caller.  Which we use only for the header section,
-being that its small...  we already copy the delta base (20 bytes)
-onto the stack during decompression.  Might as well copy the header
-to decompress it.  Then you can batch up the range checks to at
-worst no more than 2 range checks per header.
-
+@@ -2084,8 +2083,6 @@ sub git_patchset_body {
+ 
+ 		if ($patch_line =~ m/^diff /) { # "git diff" header
+ 			# beginning of patch (in patchset)
+-			$skip_patch = 0;
+-
+ 			if ($patch_found) {
+ 				# close previous patch
+ 				print "</div>\n"; # class="patch"
+@@ -2116,13 +2113,6 @@ sub git_patchset_body {
+ 			}
+ 			$patch_idx++;
+ 
+-			# for now we skip empty patches
+-			if ($diffinfo->{'from_id'} eq $diffinfo->{'to_id'}) { # no change
+-				$in_header = 1;
+-				$skip_patch = 0;
+-				next LINE;
+-			}
+-
+ 			# print "git diff" header
+ 			$patch_line =~ s!^(diff (.*?) )a/.*$!$1!;
+ 			if ($from{'href'}) {
+@@ -2143,10 +2133,7 @@ sub git_patchset_body {
+ 			print "<div class=\"diff extended_header\">\n";
+ 			$in_header = 1;
+ 			next LINE;
+-		} else {
+-			# actual skipping of empty patches
+-			next LINE if $skip_patch;
+-		} # start of patch in patchset
++		}
+ 
+ 		if ($in_header) {
+ 			if ($patch_line !~ m/^---/) {
 -- 
+1.4.3.3
