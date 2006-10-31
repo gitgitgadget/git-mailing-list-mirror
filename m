@@ -1,75 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: svn versus git
-Date: Fri, 15 Dec 2006 00:10:15 +0700
-Message-ID: <fcaeb9bf0612140910t6aff44e1m9570b20850a41b87@mail.gmail.com>
-References: <200612132200.41420.andyparkins@gmail.com>
-	 <20061213225627.GC32568@spearce.org>
-	 <200612140908.36952.andyparkins@gmail.com>
-	 <7vodq695ha.fsf@assigned-by-dhcp.cox.net>
-	 <fcaeb9bf0612140708w6bc691f6k2e08fbab2a651421@mail.gmail.com>
-	 <Pine.LNX.4.63.0612141630240.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <fcaeb9bf0612140832v1c80bf7dgd61897111292d31@mail.gmail.com>
-	 <Pine.LNX.4.63.0612141754420.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 1/2] Allow pack header preprocessing before unpack-objects/index-pack.
+Date: Tue, 31 Oct 2006 15:08:41 -0500
+Message-ID: <20061031200841.GC23671@spearce.org>
+References: <20061031075629.GA7691@spearce.org> <Pine.LNX.4.64.0610311400180.11384@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 14 Dec 2006 17:10:25 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 31 Oct 2006 20:09:27 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dm/L4rxbzTRU7pf+XbEx6QS2fprhXt8x/vYn+yYkd2nCKAX8nfcyBHiA91f9PDhIBUfC1/UtFlHbEp8vWnSRj1pQxq7FzlYdd3n0LsNoMvpvHbKo3nVjjj5e7MPfU9dQG4+dnO2ZrrDU9ZZdoEG6IHs3JH9fF4+p7R/qLh9jzew=
-In-Reply-To: <Pine.LNX.4.63.0612141754420.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0610311400180.11384@xanadu.home>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34375>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Guu6B-0005k2-A9 for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 18:10:23 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30595>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gezum-0006nJ-6o for gcvg-git@gmane.org; Tue, 31 Oct
+ 2006 21:08:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750973AbWLNRKT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 12:10:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750998AbWLNRKT
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 12:10:19 -0500
-Received: from an-out-0708.google.com ([209.85.132.249]:35378 "EHLO
- an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1750997AbWLNRKR (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
- 2006 12:10:17 -0500
-Received: by an-out-0708.google.com with SMTP id b33so186095ana for
- <git@vger.kernel.org>; Thu, 14 Dec 2006 09:10:17 -0800 (PST)
-Received: by 10.78.97.7 with SMTP id u7mr879356hub.1166116215948; Thu, 14 Dec
- 2006 09:10:15 -0800 (PST)
-Received: by 10.78.100.8 with HTTP; Thu, 14 Dec 2006 09:10:15 -0800 (PST)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+ S1945938AbWJaUIs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
+ 15:08:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945966AbWJaUIs
+ (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 15:08:48 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:64989 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1945938AbWJaUIs
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 15:08:48 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GezuW-0001Gb-2U; Tue, 31 Oct 2006 15:08:36 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 1113D20FB0C; Tue, 31 Oct 2006 15:08:42 -0500 (EST)
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Nicolas Pitre <nico@cam.org> wrote:
+> On Tue, 31 Oct 2006, Shawn Pearce wrote:
+> 
+> > However if the caller consumes the pack header from the input stream
+> > then its no longer available for unpack-objects or index-pack --stdin,
+> > both of which need the version and object count to process the stream.
+> > 
+> > This change introduces --pack_header=ver,cnt as a command line option
+> > that the caller can supply to indicate it has already consumed the
+> > pack header and what version and object count were found in that
+> > header.  As this option is only meant for low level applications
+> > such as receive-pack we are not documenting it at this time.
+> 
+> This breaks index-pack, and unpack-objects with OBJ_OFS_DELTA, if 
+> --pack-header is used.  The header is not accounted in the pack's offset 
+> and therefore every object's offset is wrong.
+> 
+> What about this patch instead?  This makes things much simpler IMHO.
 
-On 12/14/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > - have you seen the patch for git-show today, which would include this
-> > > functionality?
-> >
-> > I didn't. From the patch, it seems git-show can show the index via
-> > ::file syntax. If so, I'd like withdraw my opinion. '::file' syntax is
-> > not intuitive though. Perhaps you should mention that it can show
-> > index (and how) in the git-show document
->
-> Well, you can reference blobs that way, but not trees.
+Agreed.  The idea you are using here came to me in my sleep last
+night; I didn't have time to look at it until now however.  You just
+beat me to posting it.  :-)
 
-Oh, yeah. Isn't this a good oppotunity to add --index option to git-show?
-git-show --index will show the index. git-show --index file will show
-the file content. This makes git-show a little unconsistent though as
-it may or may not require argument <object>.
-
-Another option is treat '::' alone specially -- call git-ls-files.
 -- 
