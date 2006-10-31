@@ -1,51 +1,65 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: VCS comparison table
-Date: Thu, 26 Oct 2006 00:44:28 +0200
-Message-ID: <20061025224428.GN20017@pasky.or.cz>
-References: <Pine.LNX.4.64N.0610232336010.30334@attu2.cs.washington.edu> <Pine.LNX.4.64.0610240812410.3962@g5.osdl.org> <Pine.LNX.4.64N.0610241300450.8112@attu4.cs.washington.edu> <20061025084810.GA26618@coredump.intra.peff.net> <Pine.LNX.4.64N.0610250157470.3467@attu1.cs.washington.edu> <20061025094900.GA26989@coredump.intra.peff.net> <453F6B7A.60805@op5.se> <Pine.LNX.4.63.0610251450040.1754@qynat.qvtvafvgr.pbz> <20061025221531.GB10140@spearce.org> <ehooeo$1g6$2@sea.gmane.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] Teach receive-pack how to keep pack files when unpacklooseobjects = 0.
+Date: Tue, 31 Oct 2006 01:33:12 -0500
+Message-ID: <20061031063312.GA7375@spearce.org>
+References: <20061030223615.GH5775@spearce.org> <7vu01ltnfs.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 25 Oct 2006 22:44:52 +0000 (UTC)
+NNTP-Posting-Date: Tue, 31 Oct 2006 06:33:28 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <ehooeo$1g6$2@sea.gmane.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <7vu01ltnfs.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30569>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcrU9-000289-NQ for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 00:44:34 +0200
+ esmtp (Exim 4.43) id 1GenBa-0003dr-8c for gcvg-git@gmane.org; Tue, 31 Oct
+ 2006 07:33:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965243AbWJYWob (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 18:44:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965245AbWJYWob
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 18:44:31 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:54174 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S965243AbWJYWoa (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 18:44:30 -0400
-Received: (qmail 24292 invoked by uid 2001); 26 Oct 2006 00:44:28 +0200
-To: Jakub Narebski <jnareb@gmail.com>
+ S1422794AbWJaGdT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
+ 01:33:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422798AbWJaGdT
+ (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 01:33:19 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:56009 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1422794AbWJaGdS
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 01:33:18 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GenBU-00086h-9r; Tue, 31 Oct 2006 01:33:16 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 6A95B20FB0C; Tue, 31 Oct 2006 01:33:13 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Dear diary, on Thu, Oct 26, 2006 at 12:29:17AM CEST, I got a letter
-where Jakub Narebski <jnareb@gmail.com> said that...
-> Cute names are taken: CoGITo, gitk, qgit (GTK+ history viewer is gitview,
-> not ggit, curiously ;-) and tig.
+Junio C Hamano <junkio@cox.net> wrote:
+> Until this is resolved, I feel there should be some way to
+> control the behaviour, so while I agree with the general
+> direction, I think the patch to revert the sender's wish should
+> come at the end.
+ 
+I disagree, but I'm not the maintainer.  :-)
 
-wit?
+I reverted it before making my changes as I was editing the same
+lines as c7740a modified.  Therefore reverting c7740a after my
+changes would no longer be a clean revert, making it slightly
+harder to actuallly do the revert as you would need to manually
+fix up receive-pack.c.
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
