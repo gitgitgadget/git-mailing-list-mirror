@@ -1,55 +1,90 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: Generating docu in 1.4.3.3.g01929
-Date: Fri, 27 Oct 2006 14:26:53 -0300
-Message-ID: <200610271726.k9RHQr0F024712@laptop13.inf.utfsm.cl>
-NNTP-Posting-Date: Fri, 27 Oct 2006 17:57:30 +0000 (UTC)
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/5] upload-pack: no longer call rev-list
+Date: Mon, 30 Oct 2006 21:11:25 -0800
+Message-ID: <7v1woprrwi.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0610302008320.26682@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 31 Oct 2006 05:11:49 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.21.155]); Fri, 27 Oct 2006 14:26:53 -0300 (CLST)
-X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
+In-Reply-To: <Pine.LNX.4.63.0610302008320.26682@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Mon, 30 Oct 2006 20:08:43 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30568>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdVTw-0005Zr-0b for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 19:27:02 +0200
+ esmtp (Exim 4.43) id 1GeluV-00012g-M5 for gcvg-git@gmane.org; Tue, 31 Oct
+ 2006 06:11:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752343AbWJ0R04 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 13:26:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752347AbWJ0R04
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 13:26:56 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:33684 "EHLO
- inti.inf.utfsm.cl") by vger.kernel.org with ESMTP id S1752343AbWJ0R0z (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 13:26:55 -0400
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
- by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id k9RHQref025546
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO) for
- <git@vger.kernel.org>; Fri, 27 Oct 2006 14:26:53 -0300
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1]) by
- laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id k9RHQr0F024712 for
- <git@vger.kernel.org>; Fri, 27 Oct 2006 14:26:53 -0300
-To: git@vger.kernel.org
+ S965524AbWJaFL2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
+ 00:11:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965523AbWJaFL1
+ (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 00:11:27 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:60087 "EHLO
+ fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S965524AbWJaFL0
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 00:11:26 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061031051126.QOET18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Tue, 31
+ Oct 2006 00:11:26 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id gtB61V00H1kojtg0000000 Tue, 31 Oct 2006
+ 00:11:06 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-I'm getting lots of these after today's pull:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-asciidoc -b docbook -d manpage -f asciidoc.conf git-daemon.txt
-xmlto -m callouts.xsl man git-daemon.xml
-error : unterminated entity reference                
-error : unterminated entity reference                
-error : unterminated entity reference             ...
-error : unterminated entity reference                
-error : unterminated entity reference                
-Writing git-daemon.1 for refentry
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                    Fono: +56 32 2654431
-Universidad Tecnica Federico Santa Maria             +56 32 2654239
+> It is trivial to do now,...
+
+May be, but can we do something about these duplicated code?
+
+> @@ -57,6 +60,40 @@ static ssize_t send_client_data(int fd,
+>  	return safe_write(fd, data, sz);
+>  }
+>  
+> +FILE *pack_pipe = NULL;
+> +static void show_commit(struct commit *commit)
+> +{
+> +	if (commit->object.flags & BOUNDARY)
+> +		fputc('-', pack_pipe);
+> +	if (fputs(sha1_to_hex(commit->object.sha1), pack_pipe) < 0)
+> +		die("broken output pipe");
+> +	fputc('\n', pack_pipe);
+> +	fflush(pack_pipe);
+> +	free(commit->buffer);
+> +	commit->buffer = NULL;
+> +}
+> +
+> +static void show_object(struct object_array_entry *p)
+> +{
+> +	/* An object with name "foo\n0000000..." can be used to
+> +	 * confuse downstream git-pack-objects very badly.
+> +	 */
+> +	const char *ep = strchr(p->name, '\n');
+> +	if (ep) {
+> +		fprintf(pack_pipe, "%s %.*s\n", sha1_to_hex(p->item->sha1),
+> +		       (int) (ep - p->name),
+> +		       p->name);
+> +	}
+> +	else
+> +		fprintf(pack_pipe, "%s %s\n",
+> +				sha1_to_hex(p->item->sha1), p->name);
+> +}
+> +
+> +static void show_edge(struct commit *commit)
+> +{
+> +	fprintf(pack_pipe, "-%s\n", sha1_to_hex(commit->object.sha1));
+> +}
+> +
+
