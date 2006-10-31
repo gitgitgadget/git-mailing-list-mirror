@@ -1,89 +1,54 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH 2/3] git-svn: correctly handle revision 0 in SVN repositories
-Date: Thu, 23 Nov 2006 14:54:04 -0800
-Message-ID: <1164322446983-git-send-email-normalperson@yhbt.net>
-References: <1164322445180-git-send-email-normalperson@yhbt.net>
-NNTP-Posting-Date: Thu, 23 Nov 2006 22:54:35 +0000 (UTC)
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+Subject: git_get_projects_list and $projects_list
+Date: Tue, 31 Oct 2006 17:17:58 +0530
+Message-ID: <cc723f590610310347h58cdd69bse6d96b19479a4f6a@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 31 Oct 2006 11:48:18 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Mailer: git-send-email 1.4.4.1.g22a08
-In-Reply-To: <1164322445180-git-send-email-normalperson@yhbt.net>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=bFfeK3oi/LXw3wlduRChZ7KgtJKu3v7FhjFnxKUE2GC7rg6N3ppCbd9VVnbSK1RAz3PuI0/si2ZiGog+yqL112mDXHWaHoRt9KVnzFUaZn3p/7iqYC+phFKPnww97atsakkwU/a7EjXKqvb9vh7FiEgbV87y61bWhSArA8uIdHk=
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30579>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnNSQ-0005y8-1u for gcvg-git@gmane.org; Thu, 23 Nov
- 2006 23:54:15 +0100
+ esmtp (Exim 4.43) id 1Ges69-0008Ud-Kp for gcvg-git@gmane.org; Tue, 31 Oct
+ 2006 12:48:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757484AbWKWWyK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
- 17:54:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757490AbWKWWyJ
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 17:54:09 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:3028 "EHLO hand.yhbt.net") by
- vger.kernel.org with ESMTP id S1757484AbWKWWyI (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 17:54:08 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
- (Postfix) with SMTP id E9FD07DC0A8; Thu, 23 Nov 2006 14:54:06 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Thu, 23 Nov 2006
- 14:54:06 -0800
-To: Junio C Hamano <junkio@cox.net>
+ S1161636AbWJaLsA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
+ 06:48:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161638AbWJaLsA
+ (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 06:48:00 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:18559 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1161636AbWJaLr7
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 06:47:59 -0500
+Received: by nf-out-0910.google.com with SMTP id c2so316684nfe for
+ <git@vger.kernel.org>; Tue, 31 Oct 2006 03:47:58 -0800 (PST)
+Received: by 10.49.55.13 with SMTP id h13mr148259nfk.1162295278223; Tue, 31
+ Oct 2006 03:47:58 -0800 (PST)
+Received: by 10.48.212.18 with HTTP; Tue, 31 Oct 2006 03:47:58 -0800 (PST)
+To: "Git Mailing List" <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 
-some SVN repositories have a revision 0 (committed by no author
-and no date) when created; so when we need to ensure that we
-check any revision variables are defined, and not just
-non-zero.
+Ok if i have
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- git-svn.perl |   14 ++++++++++----
- 1 files changed, 10 insertions(+), 4 deletions(-)
+$projects_list = "/a/git////" ==> ending "/" . the function will fail
+at check_export_ok()
 
-diff --git a/git-svn.perl b/git-svn.perl
-index f0db4af..6feae56 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -232,7 +232,7 @@ sub rebuild {
- 		my @commit = grep(/^git-svn-id: /,`git-cat-file commit $c`);
- 		next if (!@commit); # skip merges
- 		my ($url, $rev, $uuid) = extract_metadata($commit[$#commit]);
--		if (!$rev || !$uuid) {
-+		if (!defined $rev || !$uuid) {
- 			croak "Unable to extract revision or UUID from ",
- 				"$c, $commit[$#commit]\n";
- 		}
-@@ -832,8 +832,14 @@ sub commit_diff {
- 		print STDERR "Needed URL or usable git-svn id command-line\n";
- 		commit_diff_usage();
- 	}
--	my $r = shift || $_revision;
--	die "-r|--revision is a required argument\n" unless (defined $r);
-+	my $r = shift;
-+	unless (defined $r) {
-+		if (defined $_revision) {
-+			$r = $_revision
-+		} else {
-+			die "-r|--revision is a required argument\n";
-+		}
-+	}
- 	if (defined $_message && defined $_file) {
- 		print STDERR "Both --message/-m and --file/-F specified ",
- 				"for the commit message.\n",
-@@ -2493,7 +2499,7 @@ sub extract_metadata {
- 	my $id = shift or return (undef, undef, undef);
- 	my ($url, $rev, $uuid) = ($id =~ /^git-svn-id:\s(\S+?)\@(\d+)
- 							\s([a-f\d\-]+)$/x);
--	if (!$rev || !$uuid || !$url) {
-+	if (!defined $rev || !$uuid || !$url) {
- 		# some of the original repositories I made had
- 		# identifiers like this:
- 		($rev, $uuid) = ($id =~/^git-svn-id:\s(\d+)\@([a-f\d\-]+)/);
--- 
-1.4.4.1.g22a08
+
+That is because we get the $pfxlen wrong. We should ignore all the trailing "/"
+my $subdir = substr($File::Find::name, $pfxlen + 1);
+
+
