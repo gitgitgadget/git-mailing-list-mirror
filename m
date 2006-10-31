@@ -1,55 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Adding spell checker to GIT
-Date: Tue, 05 Dec 2006 18:08:01 +0100
-Message-ID: <4575A771.3060007@op5.se>
-References: <b5a19cd20612050805x309d667eq649ba7ef1b8109b7@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/2] Allow pack header preprocessing before unpack-objects/index-pack.
+Date: Tue, 31 Oct 2006 15:51:21 -0800
+Message-ID: <7vwt6goxhi.fsf@assigned-by-dhcp.cox.net>
+References: <20061031075629.GA7691@spearce.org>
+	<Pine.LNX.4.64.0610311400180.11384@xanadu.home>
+	<20061031200841.GC23671@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 5 Dec 2006 17:08:40 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 31 Oct 2006 23:51:31 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <b5a19cd20612050805x309d667eq649ba7ef1b8109b7@mail.gmail.com>
+In-Reply-To: <20061031200841.GC23671@spearce.org> (Shawn Pearce's message of
+	"Tue, 31 Oct 2006 15:08:41 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33356>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrdmS-0007iC-AB for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 18:08:32 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30607>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gf3OB-0003pU-Jh for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 00:51:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S968449AbWLERI3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 12:08:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968467AbWLERI3
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 12:08:29 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:32835 "EHLO
- smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S968449AbWLERI2 (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
- 12:08:28 -0500
-Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
- by smtp-gw1.op5.se (Postfix) with ESMTP id 9D40E6BCBE; Tue,  5 Dec 2006
- 18:08:27 +0100 (CET)
-To: Deepak Barua <dbbarua@gmail.com>
+ S1946165AbWJaXvY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
+ 18:51:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946166AbWJaXvY
+ (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 18:51:24 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:12004 "EHLO
+ fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S1946165AbWJaXvX
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 18:51:23 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao03.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061031235122.JHJO2704.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>; Tue, 31
+ Oct 2006 18:51:22 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id hBrS1V00e1kojtg0000000 Tue, 31 Oct 2006
+ 18:51:27 -0500
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Deepak Barua wrote:
-> Hi All,
->         I am just thought of a idea to integrate a spell checker with
-> git so that when we check in the code the code comments are spell
-> checked before being put into the tree,maybe have a optimized
-> dictionary search.
-> what about this...? is it appropriate ...?
-> 
+Shawn Pearce <spearce@spearce.org> writes:
 
-Sounds like a worthy project for a pre-commit hook, imo.
+> Nicolas Pitre <nico@cam.org> wrote:
+>> On Tue, 31 Oct 2006, Shawn Pearce wrote:
+>> 
+>> > However if the caller consumes the pack header from the input stream
+>> > then its no longer available for unpack-objects or index-pack --stdin,
+>> > both of which need the version and object count to process the stream.
+>> > 
+>> > This change introduces --pack_header=ver,cnt as a command line option
+>> > that the caller can supply to indicate it has already consumed the
+>> > pack header and what version and object count were found in that
+>> > header.  As this option is only meant for low level applications
+>> > such as receive-pack we are not documenting it at this time.
+>> 
+>> This breaks index-pack, and unpack-objects with OBJ_OFS_DELTA, if 
+>> --pack-header is used.  The header is not accounted in the pack's offset 
+>> and therefore every object's offset is wrong.
+>> 
+>> What about this patch instead?  This makes things much simpler IMHO.
+>
+> Agreed.  The idea you are using here came to me in my sleep last
+> night; I didn't have time to look at it until now however.  You just
+> beat me to posting it.  :-)
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
+Will replace your [1/2] still in "pu".
