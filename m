@@ -1,62 +1,81 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: Generating docu in 1.4.3.3.g01929
-Date: Sat, 28 Oct 2006 02:07:39 -0400
-Message-ID: <BAYC1-PASMTP060BC6AED24731185AD6E5AE050@CEZ.ICE>
-References: <20061027154433.da9b29d7.seanlkml@sympatico.ca>
-	<200610272312.k9RNCo2Q002623@laptop13.inf.utfsm.cl>
-	<BAYC1-PASMTP04E0376BEE45F9A676DB03AE050@CEZ.ICE>
-	<7vr6wt9enk.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/2] Allow '-' in config variable names
+Date: Mon, 30 Oct 2006 19:02:27 -0800
+Message-ID: <7vfyd5rxvg.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0610300823250.25218@g5.osdl.org>
+	<7vodrtv2wy.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 28 Oct 2006 06:07:52 +0000 (UTC)
-Cc: git@vger.kernel.org, "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 31 Oct 2006 03:02:39 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Original-Message-Id: <20061028020739.e667f67f.seanlkml@sympatico.ca>
-In-Reply-To: <7vr6wt9enk.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 28 Oct 2006 06:10:56.0203 (UTC) FILETIME=[D49151B0:01C6FA57]
+In-Reply-To: <7vodrtv2wy.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Mon, 30 Oct 2006 14:45:17 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30562>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdhMB-0002Uo-1O for gcvg-git@gmane.org; Sat, 28 Oct
- 2006 08:07:47 +0200
+ esmtp (Exim 4.43) id 1GejtY-0004a4-GR for gcvg-git@gmane.org; Tue, 31 Oct
+ 2006 04:02:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751852AbWJ1GHm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
- 02:07:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751854AbWJ1GHm
- (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 02:07:42 -0400
-Received: from bayc1-pasmtp06.bayc1.hotmail.com ([65.54.191.166]:49542 "EHLO
- BAYC1-PASMTP06.bayc1.hotmail.com") by vger.kernel.org with ESMTP id
- S1751852AbWJ1GHl (ORCPT <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006
- 02:07:41 -0400
-Received: from linux1.attic.local ([65.93.43.81]) by
- BAYC1-PASMTP06.bayc1.hotmail.com over TLS secured channel with Microsoft
- SMTPSVC(6.0.3790.1830); Fri, 27 Oct 2006 23:10:55 -0700
-Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
- esmtp (Exim 4.43) id 1GdgPz-0007LE-8G; Sat, 28 Oct 2006 01:07:39 -0400
-To: Junio C Hamano <junkio@cox.net>
+ S965466AbWJaDC3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
+ 22:02:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752026AbWJaDC2
+ (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 22:02:28 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:61857 "EHLO
+ fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1752025AbWJaDC2
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 22:02:28 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061031030227.KHAH18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Mon, 30
+ Oct 2006 22:02:27 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id gr271V00R1kojtg0000000 Mon, 30 Oct 2006
+ 22:02:08 -0500
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-On Fri, 27 Oct 2006 22:45:51 -0700
-Junio C Hamano <junkio@cox.net> wrote:
+Junio C Hamano <junkio@cox.net> writes:
 
-> Eh, do you mean bisecting asciidoc?  I am not seeing the problem
-> with these on a freshly installed FC6:
-> 
+> Linus Torvalds <torvalds@osdl.org> writes:
+>
+>> I need this in order to allow aliases of the same form as "ls-tree", 
+>> "rev-parse" etc, so that I can use
+>>
+>> 	[alias]
+>> 		my-cat=--paginate cat-file -p
+>>
+>> to add a "git my-cat" command.
+>
+> I do not have problem with this (and would perhaps also want to
+> add '_' to keychar set), but people who envisioned parsing
+> config from scripts (i.e. Perly git) might prefer if we stayed
+> within alnum, since I'd suspect then they may be able to reuse
+> existing .ini parsers.  I do not much care about that myself,
+> but I am bringing it up just in case other people might.
+>
+> Other than that, this sounds nice.
 
-Yeah.. don't see the problem here either.  But assuming there
-is some strange interaction with Horst's environment, bisecting
-would narrow it down.  Even though I don't really think bisecting
-will turn up a problem in Git, it might identify the problem in
-the environment.. 
+One thing I forgot to add.  Just like we downcase what user has
+written in config file, it might make sense to also remove '-'
+(and if we add '_' to keychar set, that one as well) to when
+canonicalizing the key value.  That way, somewhat awkward long
+configuration variables we currently have can be written more
+readably, e.g. repack.use-delta-base-offset
 
+Likes, dislikes?  It is not strictly needed, since we can do
+CamelCase as well in the configuration file.
+
+> By the way, everybody seems to do "alias.xxx = -p cat-file -p"
+> (I have it as "git less").  Maybe we would want to make a
+> built-in alias for that?
+
+Seconds?
