@@ -4,79 +4,107 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 21 Nov 2006 07:21:58 +0100
-Message-ID: <20061121062158.GF20736@admingilde.org>
-References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org> <7v7ixp20za.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org> <7v4pstzmk5.fsf@assigned-by-dhcp.cox.net> <ejthuh$fn8$1@sea.gmane.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 1/2] Allow pack header preprocessing before
+ unpack-objects/index-pack.
+Date: Tue, 31 Oct 2006 14:33:09 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0610311400180.11384@xanadu.home>
+References: <20061031075629.GA7691@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="oFbHfjnMgUMsrGjO"
-NNTP-Posting-Date: Tue, 21 Nov 2006 06:22:18 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Tue, 31 Oct 2006 19:34:02 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <ejthuh$fn8$1@sea.gmane.org>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+In-reply-to: <20061031075629.GA7691@spearce.org>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30593>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmP1M-0001kR-5J for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 07:22:16 +0100
+ esmtp (Exim 4.43) id 1GezMa-00071d-0s for gcvg-git@gmane.org; Tue, 31 Oct
+ 2006 20:33:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934338AbWKUGWA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 01:22:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934339AbWKUGWA
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 01:22:00 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:51146 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S934338AbWKUGV7 (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 01:21:59 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1GmP14-0007SL-DA; Tue, 21 Nov 2006 07:21:58 +0100
-To: Jakub Narebski <jnareb@gmail.com>
+ S1423820AbWJaTdM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
+ 14:33:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423822AbWJaTdL
+ (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 14:33:11 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:8290 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S1423820AbWJaTdK
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 14:33:10 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J80008F4MB9BFG0@VL-MH-MR001.ip.videotron.ca> for git@vger.kernel.org; Tue,
+ 31 Oct 2006 14:33:09 -0500 (EST)
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
+On Tue, 31 Oct 2006, Shawn Pearce wrote:
 
---oFbHfjnMgUMsrGjO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> However if the caller consumes the pack header from the input stream
+> then its no longer available for unpack-objects or index-pack --stdin,
+> both of which need the version and object count to process the stream.
+> 
+> This change introduces --pack_header=ver,cnt as a command line option
+> that the caller can supply to indicate it has already consumed the
+> pack header and what version and object count were found in that
+> header.  As this option is only meant for low level applications
+> such as receive-pack we are not documenting it at this time.
 
-hoi :)
+This breaks index-pack, and unpack-objects with OBJ_OFS_DELTA, if 
+--pack-header is used.  The header is not accounted in the pack's offset 
+and therefore every object's offset is wrong.
 
-On Tue, Nov 21, 2006 at 01:42:22AM +0100, Jakub Narebski wrote:
-> Perhaps it would be best to join those two subproject support
-> solutions together: "bind" tree/commit mount header in commit
-> object, and "commit" entry in a tree.
+What about this patch instead?  This makes things much simpler IMHO.
 
-But which is the autoritative source then?
-Does it give any more information?
-
-The advantage in your proposal would be that submodules would
-be visible immediately when looking at the commit,
-without having to traverse the entire tree.
-This may be worthwhile when showing the combined history of parent
-and submodules.
-
-But still this looks like "caching submodule information in the
-commit object" and I do not know if we really want to do that.
-
---=20
-Martin Waitz
-
---oFbHfjnMgUMsrGjO
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFYpsFj/Eaxd/oD7IRAot9AJ9YbToh3Ur2GGJsLukoM4IVWl2LAACePk9C
-unoBHZm6JZ7vidffPz6BgTI=
-=JtK2
------END PGP SIGNATURE-----
-
+diff --git a/builtin-unpack-objects.c b/builtin-unpack-objects.c
+index 74a90c1..e6d7574 100644
+--- a/builtin-unpack-objects.c
++++ b/builtin-unpack-objects.c
+@@ -371,6 +371,21 @@ int cmd_unpack_objects(int argc, const c
+ 				recover = 1;
+ 				continue;
+ 			}
++			if (!strncmp(arg, "--pack_header=", 14)) {
++				struct pack_header *hdr;
++				char *c;
++
++				hdr = (struct pack_header *)buffer;
++				hdr->hdr_signature = htonl(PACK_SIGNATURE);
++				hdr->hdr_version = htonl(strtoul(arg + 14, &c, 10));
++				if (*c != ',')
++					die("bad %s", arg);
++				hdr->hdr_entries = htonl(strtoul(c + 1, &c, 10));
++				if (*c)
++					die("bad %s", arg);
++				len = sizeof(*hdr);
++				continue;
++			}
+ 			usage(unpack_usage);
+ 		}
+ 
+diff --git a/index-pack.c b/index-pack.c
+index b37dd78..a3b55f9 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -841,6 +841,19 @@ int main(int argc, char **argv)
+ 				keep_msg = "";
+ 			} else if (!strncmp(arg, "--keep=", 7)) {
+ 				keep_msg = arg + 7;
++			} else if (!strncmp(arg, "--pack_header=", 14)) {
++				struct pack_header *hdr;
++				char *c;
++
++				hdr = (struct pack_header *)input_buffer;
++				hdr->hdr_signature = htonl(PACK_SIGNATURE);
++				hdr->hdr_version = htonl(strtoul(arg + 14, &c, 10));
++				if (*c != ',')
++					die("bad %s", arg);
++				hdr->hdr_entries = htonl(strtoul(c + 1, &c, 10));
++				if (*c)
++					die("bad %s", arg);
++				input_len = sizeof(*hdr);
+ 			} else if (!strcmp(arg, "-v")) {
+ 				verbose = 1;
+ 			} else if (!strcmp(arg, "-o")) {
