@@ -1,119 +1,117 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: fetching packs and storing them as packs
-Date: Thu, 26 Oct 2006 23:57:13 -0700
-Message-ID: <7viri6i6uu.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home>
-	<4540CA0C.6030300@tromer.org>
-	<Pine.LNX.4.64.0610261105200.12418@xanadu.home>
-	<45413209.2000905@tromer.org>
-	<Pine.LNX.4.64.0610262038320.11384@xanadu.home>
-	<20061027014229.GA28407@spearce.org>
-	<BAYC1-PASMTP10C050A5FAA4C70AD57679AE040@CEZ.ICE>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 27 Oct 2006 06:57:23 +0000 (UTC)
-Cc: Shawn Pearce <spearce@spearce.org>, Nicolas Pitre <nico@cam.org>,
-	Eran Tromer <git2eran@tromer.org>, git@vger.kernel.org
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH 1/6] Allow pack header preprocessing before
+ unpack-objects/index-pack.
+Date: Wed, 01 Nov 2006 17:06:20 -0500
+Message-ID: <11624187853116-git-send-email-nico@cam.org>
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Wed, 1 Nov 2006 22:06:47 +0000 (UTC)
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <BAYC1-PASMTP10C050A5FAA4C70AD57679AE040@CEZ.ICE>
-	(seanlkml@sympatico.ca's message of "Thu, 26 Oct 2006 22:38:04 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Mailer: git-send-email 1.4.3.3.g87b2-dirty
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30664>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdLeY-0001yx-FT for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 08:57:18 +0200
+ esmtp (Exim 4.43) id 1GfOEB-0005XC-H7 for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 23:06:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946034AbWJ0G5P (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 02:57:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946048AbWJ0G5P
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 02:57:15 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:53397 "EHLO
- fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1946034AbWJ0G5O
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 02:57:14 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061027065714.LEPN22977.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Fri, 27
- Oct 2006 02:57:14 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id fJxH1V00t1kojtg0000000 Fri, 27 Oct 2006
- 02:57:18 -0400
-To: Sean <seanlkml@sympatico.ca>
+ S1752502AbWKAWG1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 17:06:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752511AbWKAWG1
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 17:06:27 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:63137 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S1752502AbWKAWG0
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 17:06:26 -0500
+Received: from localhost.localdomain ([74.56.106.175]) by
+ VL-MH-MR002.ip.videotron.ca (Sun Java System Messaging Server 6.2-2.05 (built
+ Apr 28 2005)) with ESMTP id <0J8200BN9O2PMF20@VL-MH-MR002.ip.videotron.ca>
+ for git@vger.kernel.org; Wed, 01 Nov 2006 17:06:25 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Sean <seanlkml@sympatico.ca> writes:
+Some applications which invoke unpack-objects or index-pack --stdin
+may want to examine the pack header to determine the number of
+objects contained in the pack and use that value to determine which
+executable to invoke to handle the rest of the pack stream.
 
-> On Thu, 26 Oct 2006 21:42:29 -0400
-> Shawn Pearce <spearce@spearce.org> wrote:
->
->> This is an issue for "central" repositories that people push into
->> and which might be getting repacked according to a cronjob.
->> 
->> Unfortunately I don't have a solution.  I tried to come up with
->> one but didn't.  :-)
->
-> What about creating a temporary ref before pushing, and then removing
-> it only after the HEAD has been updated?
+However if the caller consumes the pack header from the input stream
+then its no longer available for unpack-objects or index-pack --stdin,
+both of which need the version and object count to process the stream.
 
-That won't work.  If repack is faster than index-pack, repack
-would fail to find necessary objects, barf, and would not remove
-the existing or new pack, and then index-pack would eventually
-succeed and when it does at least your repository is complete
-even though it may still have redundant objects in packs.
+This change introduces --pack_header=ver,cnt as a command line option
+that the caller can supply to indicate it has already consumed the
+pack header and what version and object count were found in that
+header.  As this option is only meant for low level applications
+such as receive-pack we are not documenting it at this time.
 
-So in that sense, it is not a disaster, so it might be a good
-enough solution.
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
 
-I'd almost say "heavy repository-wide operations like 'repack -a
--d' and 'prune' should operate under a single repository lock",
-but historically we've avoided locks and instead tried to do
-things optimistically and used compare-and-swap to detect
-conflicts, so maybe that avenue might be worth pursuing.
+Patch description text shamelessly stolen from a similar patch from
+Shawn Pearce <spearce@spearce.org>.
 
-How about (I'm thinking aloud and I'm sure there will be
-holes -- I won't think about prune for now)...
 
-* "repack -a -d":
 
- (1) initially run show-ref (or "ls-remote .") and store the
-     result in .git/$ref_pack_lock_file;
+ builtin-unpack-objects.c |   15 +++++++++++++++
+ index-pack.c             |   13 +++++++++++++
+ 2 files changed, 28 insertions(+), 0 deletions(-)
 
- (2) enumerate existing packs;
-
- (3) do the usual "rev-list --all | pack-objects" thing; this
-     may end up including more objects than what are reachable
-     from the result of (1) if somebody else updates refs in the
-     meantime;
-
- (4) enumerate existing packs; if there is difference from (2)
-     other than what (3) created, that means somebody else added
-     a pack in the meantime; stop and do not do the "-d" part;
-
- (5) run "ls-remote ." again and compare it with what it got in
-     (1); if different, somebody else updated a ref in the
-     meantime; stop and do not do the "-d" part;
-
- (6) do the "-d" part as usual by removing packs we saw in (2)
-     but do not remove the pack we created in (3);
-
- (7) remove .git/$ref_pack_lock_file.
-
-* "fetch --thin" and "index-pack --stdin":
-
- (1) check the .git/$ref_pack_lock_file, and refuse to operate
-    if there is such (this is not strictly needed for
-    correctness but only to give an early exit);
-
- (2) create a new pack under a temporary name, and when
-     complete, make the pack/index pair .pack and .idx;
-
- (3) update the refs.
-
+diff --git a/builtin-unpack-objects.c b/builtin-unpack-objects.c
+index 74a90c1..e6d7574 100644
+--- a/builtin-unpack-objects.c
++++ b/builtin-unpack-objects.c
+@@ -371,6 +371,21 @@ int cmd_unpack_objects(int argc, const c
+ 				recover = 1;
+ 				continue;
+ 			}
++			if (!strncmp(arg, "--pack_header=", 14)) {
++				struct pack_header *hdr;
++				char *c;
++
++				hdr = (struct pack_header *)buffer;
++				hdr->hdr_signature = htonl(PACK_SIGNATURE);
++				hdr->hdr_version = htonl(strtoul(arg + 14, &c, 10));
++				if (*c != ',')
++					die("bad %s", arg);
++				hdr->hdr_entries = htonl(strtoul(c + 1, &c, 10));
++				if (*c)
++					die("bad %s", arg);
++				len = sizeof(*hdr);
++				continue;
++			}
+ 			usage(unpack_usage);
+ 		}
+ 
+diff --git a/index-pack.c b/index-pack.c
+index b37dd78..a3b55f9 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -841,6 +841,19 @@ int main(int argc, char **argv)
+ 				keep_msg = "";
+ 			} else if (!strncmp(arg, "--keep=", 7)) {
+ 				keep_msg = arg + 7;
++			} else if (!strncmp(arg, "--pack_header=", 14)) {
++				struct pack_header *hdr;
++				char *c;
++
++				hdr = (struct pack_header *)input_buffer;
++				hdr->hdr_signature = htonl(PACK_SIGNATURE);
++				hdr->hdr_version = htonl(strtoul(arg + 14, &c, 10));
++				if (*c != ',')
++					die("bad %s", arg);
++				hdr->hdr_entries = htonl(strtoul(c + 1, &c, 10));
++				if (*c)
++					die("bad %s", arg);
++				input_len = sizeof(*hdr);
+ 			} else if (!strcmp(arg, "-v")) {
+ 				verbose = 1;
+ 			} else if (!strcmp(arg, "-o")) {
+-- 
+1.4.3.3.g87b2-dirty
