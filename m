@@ -2,73 +2,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git patch
-Date: Wed, 06 Dec 2006 02:00:57 -0800
-Message-ID: <7vslft738m.fsf@assigned-by-dhcp.cox.net>
-References: <4574AC9E.3040506@gmail.com> <4574BF70.8070100@lilypond.org>
-	<45760545.2010801@gmail.com>
-	<Pine.LNX.4.63.0612060053400.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-	<45761451.8020006@gmail.com>
-	<Pine.LNX.4.63.0612060157020.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-	<4576937D.1070402@xs4all.nl>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Documentation: Update information about <format> in
+ git-for-each-ref
+Date: Wed, 1 Nov 2006 16:48:37 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611011646070.1670@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200610281930.05889.jnareb@gmail.com> <7vslh86uz9.fsf@assigned-by-dhcp.cox.net>
+ <200610282323.57797.jnareb@gmail.com> <45485A0F.3040807@op5.se>
+ <7vd5877duh.fsf@assigned-by-dhcp.cox.net> <454875AC.6060300@op5.se>
+ <7vac3b5gn8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 6 Dec 2006 10:02:30 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 1 Nov 2006 15:49:09 +0000 (UTC)
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <4576937D.1070402@xs4all.nl> (Han-Wen Nienhuys's message of "Wed,
-	06 Dec 2006 10:55:09 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vac3b5gn8.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33418>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrtbZ-00087E-0s for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 11:02:21 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30644>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfIKe-0000zf-8E for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 16:48:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760412AbWLFKBA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 05:01:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760416AbWLFKBA
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 05:01:00 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:54626 "EHLO
- fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1760408AbWLFKA6 (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
- 05:00:58 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao12.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061206100058.DGIB4226.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>; Wed, 6
- Dec 2006 05:00:58 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id vN0N1V00H1kojtg0000000; Wed, 06 Dec 2006
- 05:00:23 -0500
-To: hanwen@xs4all.nl
+ S1946909AbWKAPsj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 10:48:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992607AbWKAPsj
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 10:48:39 -0500
+Received: from mail.gmx.de ([213.165.64.20]:51917 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1946909AbWKAPsi (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 10:48:38 -0500
+Received: (qmail invoked by alias); 01 Nov 2006 15:48:36 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp046) with SMTP; 01 Nov 2006 16:48:36 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@xs4all.nl> writes:
+Hi,
 
-> I think it would be more logical to show those diffs as part of
-> git-status and perhaps git-commit, eg.
->
->   git-commit --dry-run <commitoptions>
->
-> shows the diff of what would be committed
->
->   git-status --diff
->
-> shows diffs of modified files in the working tree.
->
-> This makes it more clear what each diff means.
+On Wed, 1 Nov 2006, Junio C Hamano wrote:
 
-Just in case people did not know, "git status" is pronounced as
-"git commit --dry-run".
+> By the way, I think "a compares to b" is also a verb, not just
+> "i compare a and b and found these differences".
 
-It takes exactly the same set of parameters as "git commit", and
-shows what would have been in the commit log message editor as
-the status comments.
+In mathematics, "a compares to b" means that "a" and "b" are comparable. 
+There are uncomparable things like "0" and "sky". What is greater?
 
-And it even takes the "-v" option that "git commit" takes.
+Of course, there is also a song with the title "Nothing compares to you" 
+which is sung by a native speaker, so go figure.
 
+Ciao,
+Dscho
