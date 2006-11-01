@@ -1,136 +1,85 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 28 Nov 2006 16:02:11 -0500
-Message-ID: <20061128210211.GI28337@spearce.org>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611281029.11918.andyparkins@gmail.com> <ekh45n$rfc$1@sea.gmane.org> <200611281335.38728.andyparkins@gmail.com> <456C94E2.6010708@midwinter.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Restore a single file in the index back to HEAD
+Date: Wed, 1 Nov 2006 20:29:27 +0000
+Message-ID: <200611012029.41869.andyparkins@gmail.com>
+References: <200610261641.11239.andyparkins@gmail.com> <200611010953.57360.andyparkins@gmail.com> <7vpsc710oy.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 28 Nov 2006 21:02:41 +0000 (UTC)
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 1 Nov 2006 20:33:32 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=DRTTk2zvJLKizDcW9JR86hUKb7tSIYRv58ROYoSp1Tp3weBBazdOU1XngD6BlaG/iPLz9azM8GRwyNPfgLzdCTc3jHjUPm60e3DLIjbN4LPiRAd178hRjI7bUXVqfuFzLYRe2JFzJZdkw6Sj/gZbtFIvieXuvf2kAgYw45p9lq4=
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vpsc710oy.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <456C94E2.6010708@midwinter.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30654>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpA5s-0004Hp-6q for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 22:02:22 +0100
+ esmtp (Exim 4.43) id 1GfMm3-0003kp-7j for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 21:33:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755518AbWK1VCQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 16:02:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755510AbWK1VCQ
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 16:02:16 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:24769 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1755518AbWK1VCP
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 16:02:15 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GpA5c-0001Mg-HL; Tue, 28 Nov 2006 16:02:04 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 8BB3B20FB7F; Tue, 28 Nov 2006 16:02:11 -0500 (EST)
-To: Steven Grimm <koreth@midwinter.com>
+ S2992807AbWKAUcO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 15:32:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992817AbWKAUcN
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 15:32:13 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:23447 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S2992812AbWKAUcM
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 15:32:12 -0500
+Received: by ug-out-1314.google.com with SMTP id 32so1817493ugm for
+ <git@vger.kernel.org>; Wed, 01 Nov 2006 12:32:10 -0800 (PST)
+Received: by 10.67.119.13 with SMTP id w13mr8815154ugm; Wed, 01 Nov 2006
+ 12:32:10 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
+ mx.google.com with ESMTP id s7sm1141863uge.2006.11.01.12.32.08; Wed, 01 Nov
+ 2006 12:32:09 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Steven Grimm <koreth@midwinter.com> wrote:
-> Andy Parkins wrote:
-> >Unfortunately, during development, you've switched libsubmodule1 to 
-> >branch "development", but supermodule isn't tracking libsubmodule1/HEAD 
-> >it's tracking libsubmodule1/master.  Your supermodule commit doesn't 
-> >capture a snapshot of the tree you're using.
-> >  
+On Wednesday 2006, November 01 18:28, Junio C Hamano wrote:
+
+> So from that point of view, the above commandline perfectly
+> makes sense.  However, giving anything but HEAD with path makes
+> us go "Huh?"  It is unclear what this should mean:
 >
-> Or maybe not a merge, but worse, you'd *replace* the 
-> previously committed master with what's in your dev branch.
+> 	git-reset [--hard | --mixed] HEAD^ oops/file1
 
-Right, you would be replacing the prior branch of that submodule with
-the new submodule branch.
+I don't understand.  Why wouldn't that mean reset oops/file1 to the state it 
+had in HEAD^?
 
-I think the safety valve you are looking for here is two things:
+> Checkout is a working tree manipulator Porcelain, and as a side
+> effect it has always updated the index.  So it might make sense
+> to give --index-only there:
+>
+> 	git checkout --index-only HEAD -- paths...
 
-  * don't automatically update the submodule's HEAD into the
-    supermodule's index.
+I think you're right that this is not the place - git-checkout is what one 
+uses to update your working directory, it's only a side-effect that the index 
+is updated - or we could argue that it is necessary that the index is updated 
+in order that checkout can do it's job.
 
-  * make sure the submodule's HEAD is a fast-forward of the
-    supermodule's index, with a --force option to force it
-	anyway.
+> On the other hand, we already have --again, so maybe we have
+> already passed the point of no return.  So I am inclined to
+> agree with your "update-index --reset" approach, unless somebody
+> else injects sanity into me.
 
-Otherwise the developer just has to know what he/she is doing.
-Today you can put stuff that isn't ready for prime-time into a
-repository on the wrong branch just by applying the wrong patch,
-or cherry-picking the wrong commit, etc...  the user can (and
-will) make mistakes.  But they can also easily recover from them
-by rewinding history and redoing it.
+Actually; you've talked me out of it.   Given that git-reset is already 
+porcelain, and none of the solutions are screaming "right"; it seems better 
+to slightly bend git-reset than git-update-index.
 
-> On a related note, it would be great from a usability point of view if 
-> there were a way to say "I always want to be on the same branch in all 
-> submodules and the supermodule."
 
-That's not really an issue.
-
-A branch doesn't exist just because you checked-out the branch, or
-because you created it.  A branch exists because there were two or
-more commits (B and C) which use the same parent (A) and two or more
-of those commits survive, e.g. they have refs which point to them
-(directly or indirectly) or they were merged into another commit
-which itself survives.
-
-Therefore if the supermodule is on the "development branch" the
-submodules are also immediately on the same branch, because their
-HEADs are derived from whatever is stored in the supermodule's tree.
-And that tree is derived from whatever "development branch" means.
-
-Really what you want/need is a special head in the submodule
-which acts as the "branch that corresponds to the supermodule".
-This probably should just be a naked SHA1 stored in HEAD, which
-is committable only because a supermodule exists in a higher level
-directory.
-
-The fact that the submodule project has branches *at all* is
-totally irrelevant once you start to speak about that submodule
-within the supermodule, as its the supermodule which determines
-the branch of the submodule.
-
-> But I think the Perforce-style 
-> "compose a single workspace out of different bits of a larger project" 
-> model is hugely useful
-
-That's a mess.
-
-You start to get into weird cases where the directory structure
-expected by the build process is no longer intact, because the user
-has sliced it apart in weird ways.  And there's no single version
-which corresponds to that workspace as (if I recall correctly)
-you can pick different tags or branches at will.  I believe that
-ClearCase has the same bug.
-
-You also can't version that now spliced workspace, aside from taking
-the configuration file and putting that under version control too.
-
-However I think the proposal on the table will support that to some
-degree, in that you can take any version of any repository and embed
-it at any directory of any other repository.  This means you can
-for example embed the Linux kernel, glibc and gcc projects into
-a larger "embedded device" repository, but you cannot alter the
-structure of any of those three projects without making your own
-locally developed branch of them.  Which is actually the correct
-thing to do as any subslicing of a repository is exactly that:
-a locally developed branch of that repository.
-
+Andy
 -- 
+Dr Andrew Parkins, M Eng (Hons), AMIEE
