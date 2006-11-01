@@ -1,121 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] Documentation: reorganize cvs-migration.txt
-Date: Thu, 7 Dec 2006 22:34:00 -0500
-Message-ID: <20061208033400.GD30129@fieldses.org>
-References: <4576D92A.80307@xs4all.nl> <20061206145802.GC1714@fieldses.org> <Pine.LNX.4.63.0612061613460.28348@wbgn013.biozentrum.uni-wuerzburg.de> <20061206171950.GD1714@fieldses.org> <20061206172450.GE1714@fieldses.org> <7v7ix47wbr.fsf@assigned-by-dhcp.cox.net> <20061207041805.GC3457@fieldses.org> <Pine.LNX.4.63.0612071522080.28348@wbgn013.biozentrum.uni-wuerzburg.de> <20061207174306.GC16858@fieldses.org> <Pine.LNX.4.63.0612071849340.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: Restore a single file in the index back to HEAD
+Date: Wed, 1 Nov 2006 14:58:54 +0700
+Message-ID: <fcaeb9bf0610312358g1176e4d8q8962b08c2e8ff2c6@mail.gmail.com>
+References: <200610261641.11239.andyparkins@gmail.com>
+	 <81b0412b0610260842x52413570k3971bcdc54b3ccb5@mail.gmail.com>
+	 <200610270827.17659.andyparkins@gmail.com>
+	 <20061027073834.GC29057@spearce.org> <4541BE8E.5050605@op5.se>
+	 <20061027081545.GF29057@spearce.org>
+	 <81b0412b0610270245w6c29b3c3va7967991f53db298@mail.gmail.com>
+	 <4541D670.6000900@op5.se> <7vac3igjpd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 8 Dec 2006 03:34:13 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 1 Nov 2006 07:59:14 +0000 (UTC)
+Cc: "Andreas Ericsson" <ae@op5.se>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=hcrHn/D66SoEv5kqAdR3jPGkQNirjZLmN6NdWKlrhEgQFqw4pX96LKF22OkDpYnIqIykzi5qdNSRi2gpY8FKSZdcVkbyU1K5zbFvelJakEQv9eCnbiG3HylmHV/pHD3knRumPhd/Errd5n98Efp+aH8yAMH7J+D7Z1LizBmiWZM=
+In-Reply-To: <7vac3igjpd.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0612071849340.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33654>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsWUz-0006PM-Uq for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 04:34:10 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30617>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfB02-0007DU-E5 for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 08:59:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424177AbWLHDeF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 22:34:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424174AbWLHDeF
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 22:34:05 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:50177 "EHLO
- pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1424177AbWLHDeD (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 22:34:03 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
- (envelope-from <bfields@fieldses.org>) id 1GsWUq-0000xu-2S; Thu, 07 Dec 2006
- 22:34:00 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1946681AbWKAH65 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 02:58:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946683AbWKAH65
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 02:58:57 -0500
+Received: from nf-out-0910.google.com ([64.233.182.188]:18616 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1946681AbWKAH64
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 02:58:56 -0500
+Received: by nf-out-0910.google.com with SMTP id c2so702673nfe for
+ <git@vger.kernel.org>; Tue, 31 Oct 2006 23:58:55 -0800 (PST)
+Received: by 10.78.160.2 with SMTP id i2mr8414498hue; Tue, 31 Oct 2006
+ 23:58:54 -0800 (PST)
+Received: by 10.78.100.8 with HTTP; Tue, 31 Oct 2006 23:58:54 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Thu, Dec 07, 2006 at 06:50:50PM +0100, Johannes Schindelin wrote:
-> Even easier:
-> 
-> $ mkdir /pub/my-repo.git
-> $ cd /pub/my-repo.git
-> $ git --bare init-db --shared
-> $ git --bare fetch /home/alice/myproject master:master
-> 
-> (Totally untested, of course.)
+On 10/27/06, Junio C Hamano <junkio@cox.net> wrote:
+> On the other hand, I designed --index-info to be compatible with
+> ls-tree output (it is not an accident, it was designed).  In
+>
+>         git ls-tree HEAD frotz | git update-index --index-info
+>
+> "frotz" part does not have to be the exact path but can be a
+> directory name.  It means "revert everything in this directory".
+>
+> This is quite heavy-handed and you would probably want to run
+> update-index --refresh afterwards.
 
-Of course--for some reason I didn't think of doing init-db with --bare.
-Thanks again.
-
---b.
-
-From 22e5bdd9de398f29dfb11125a0921bb4529e2ab7 Mon Sep 17 00:00:00 2001
-From: J. Bruce Fields <bfields@citi.umich.edu>
-Date: Thu, 7 Dec 2006 22:32:28 -0500
-Subject: [PATCH] Documentation: simpler shared repository creation
-
-Take Johannes Schindelin's suggestion for a further simplification of the
-shared repository creation using git --bare init-db --shared.
-
-Also fix a mistake from the previous patch: I forgot to remove the manual setup
-which the --shared does for us.
-
-Signed-off-by: J. Bruce Fields <bfields@citi.umich.edu>
----
- Documentation/cvs-migration.txt |   27 ++++++++-------------------
- 1 files changed, 8 insertions(+), 19 deletions(-)
-
-diff --git a/Documentation/cvs-migration.txt b/Documentation/cvs-migration.txt
-index 4fab0d7..20c5719 100644
---- a/Documentation/cvs-migration.txt
-+++ b/Documentation/cvs-migration.txt
-@@ -76,23 +76,15 @@ possibly created from scratch or from a tarball (see the
- link:tutorial.html[tutorial]), or imported from an already existing CVS
- repository (see the next section).
- 
--Assume your existing repo is at /home/alice/myproject.  Create a temporary
--empty shared repository and fetch your project into it:
-+Assume your existing repo is at /home/alice/myproject.  Create a new "bare"
-+repository (a repository without a working tree) and fetch your project into
-+it:
- 
- ------------------------------------------------
--$ mkdir /pub/temporary
--$ cd /pub/temporary
--$ git init-db --shared
--$ git fetch /home/alice/myproject master:master
--------------------------------------------------
--
--Then create a "bare" repository at /pub/repo.git by just moving the contents of
--the .git directory there.  The temporary repository can then be discarded.
--
--------------------------------------------------
--$ mv .git /pub/repo.git
--$ cd ..
--$ rm -rf temporary
-+$ mkdir /pub/my-repo.git
-+$ cd /pub/my-repo.git
-+$ git --bare init-db --shared
-+$ git --bare fetch /home/alice/myproject master:master
- ------------------------------------------------
- 
- Next, give every team member read/write access to this repository.  One
-@@ -105,10 +97,7 @@ Put all the committers in the same group, and make the repository
- writable by that group:
- 
- ------------------------------------------------
--$ cd /pub
--$ chgrp -R $group repo.git
--$ find repo.git -mindepth 1 -type d |xargs chmod ug+rwx,g+s
--$ GIT_DIR=repo.git git repo-config core.sharedrepository true
-+$ chgrp -R $group /pub/my-repo.git
- ------------------------------------------------
- 
- Make sure committers have a umask of at most 027, so that the directories
+I would prefer "git update-index --reset frotz" or "git checkout
+--index HEAD frotz". git ls-tree|git update-index is too cryptic for
+me and too long for my fingers.
 -- 
-1.4.4.1.GIT
