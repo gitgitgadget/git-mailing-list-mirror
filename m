@@ -1,83 +1,112 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 21 Nov 2006 00:33:34 +0100
-Message-ID: <20061120233333.GD20736@admingilde.org>
-References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org> <7v7ixp20za.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org> <20061120232507.GH12285@fieldses.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 9/n] gitweb: Better support for non-CSS aware web browsers
+Date: Wed, 1 Nov 2006 14:33:21 +0100
+Message-ID: <200611011433.22279.jnareb@gmail.com>
+References: <200610301953.01875.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="2iBwrppp/7QCDedR"
-NNTP-Posting-Date: Mon, 20 Nov 2006 23:33:57 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 1 Nov 2006 13:33:54 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=lXq+ouTqKkCFrkXtf7dk++cnHJLjl24QcWHLX4Oj7AL06PLAqU8tKrmbZupOUjWVFG1jlRhifmgBAYU+XiO52bt7I6Spnl3/dkA+15ojWt7Ij23xUVjOzZmCgmFc4XCAbfOBgNLscEUk+syGwVcxOSldbLASJQJc35kcjUuI+u4=
+User-Agent: KMail/1.9.3
+In-Reply-To: <200610301953.01875.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20061120232507.GH12285@fieldses.org>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30635>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmIdy-0003HF-C5 for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 00:33:42 +0100
+ esmtp (Exim 4.43) id 1GfGDf-00058b-TT for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 14:33:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030510AbWKTXdk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 18:33:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030515AbWKTXdk
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 18:33:40 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:20184 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S1030510AbWKTXdi
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 18:33:38 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1GmIds-0004Bb-6D; Tue, 21 Nov 2006 00:33:36 +0100
-To: "J. Bruce Fields" <bfields@fieldses.org>
+ S1752180AbWKANdP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 08:33:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752201AbWKANdO
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 08:33:14 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:2170 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1752180AbWKANdN
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 08:33:13 -0500
+Received: by ug-out-1314.google.com with SMTP id 32so1706537ugm for
+ <git@vger.kernel.org>; Wed, 01 Nov 2006 05:33:12 -0800 (PST)
+Received: by 10.66.224.19 with SMTP id w19mr8115425ugg; Wed, 01 Nov 2006
+ 05:33:11 -0800 (PST)
+Received: from host-81-190-18-116.torun.mm.pl ( [81.190.18.116]) by
+ mx.google.com with ESMTP id e23sm635828ugd.2006.11.01.05.33.10; Wed, 01 Nov
+ 2006 05:33:11 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+Add option to replace SPC (' ') with hard (non-breakable) space HTML
+entity '&nbsp;' in esc_html subroutine.
 
---2iBwrppp/7QCDedR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Replace ' ' with '&nbsp;' for the code/diff display part in git_blob
+and git_patchset_body; this is to be able to view code and diffs in
+web browsers which doesn't understand "white-space: pre;" CSS
+declaration.
 
-hoi :)
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+For people who want to use non-CSS aware browsers, like w3m, elinks, links
+text browsers, for looking at "blob" and "commitdiff"/"blobdiff" views
+of gitweb.
 
-On Mon, Nov 20, 2006 at 06:25:07PM -0500, J. Bruce Fields wrote:
-> On Mon, Nov 20, 2006 at 03:05:47PM -0800, Linus Torvalds wrote:
-> > Yes. I think it would be a _fine_ idea to have a new tree-entry type th=
-at=20
-> > points to a sub-commit, but it really does need to be on a "tree level"=
-,=20
-> > not a commit level.
->=20
-> Would it also be possible to allow the "Tree:" line in the commit object
-> to refer to a commit, or does the root of the project need to be a
-> special case?
+HTH.
 
-this would then be something like the branch-archival proposal.
-The user interface for such a beast would be difficult, as you have
-to somehow specify if you mean the inner or outer repository.
+ gitweb/gitweb.perl |   11 ++++++++---
+ 1 files changed, 8 insertions(+), 3 deletions(-)
 
---=20
-Martin Waitz
-
---2iBwrppp/7QCDedR
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFYjtMj/Eaxd/oD7IRAjVPAJ94WajAHsYuDhvTfR0bG9QGYG5t3ACffBQO
-AhAT9yZX7blEDviOemnxK7w=
-=wjIs
------END PGP SIGNATURE-----
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 5c82093..b8fcafc 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -554,12 +554,17 @@ sub esc_url {
+ }
+ 
+ # replace invalid utf8 character with SUBSTITUTION sequence
+-sub esc_html {
++sub esc_html ($;%) {
+ 	my $str = shift;
++	my %opts = @_;
++
+ 	$str = to_utf8($str);
+ 	$str = escapeHTML($str);
+ 	$str =~ s/\014/^L/g; # escape FORM FEED (FF) character (e.g. in COPYING file)
+ 	$str =~ s/\033/^[/g; # "escape" ESCAPE (\e) character (e.g. commit 20a3847d8a5032ce41f90dcc68abfb36e6fee9b1)
++	if ($opts{'-nbsp'}) {
++		$str =~ s/ /&nbsp;/g;
++	}
+ 	return $str;
+ }
+ 
+@@ -840,7 +845,7 @@ sub format_diff_line {
+ 		$diff_class = " incomplete";
+ 	}
+ 	$line = untabify($line);
+-	return "<div class=\"diff$diff_class\">" . esc_html($line) . "</div>\n";
++	return "<div class=\"diff$diff_class\">" . esc_html($line, -nbsp=>1) . "</div>\n";
+ }
+ 
+ ## ----------------------------------------------------------------------
+@@ -2985,7 +2990,7 @@ sub git_blob {
+ 		$nr++;
+ 		$line = untabify($line);
+ 		printf "<div class=\"pre\"><a id=\"l%i\" href=\"#l%i\" class=\"linenr\">%4i</a> %s</div>\n",
+-		       $nr, $nr, $nr, esc_html($line);
++		       $nr, $nr, $nr, esc_html($line, -nbsp=>1);
+ 	}
+ 	close $fd
+ 		or print "Reading blob failed.\n";
+-- 
+1.4.3.3
