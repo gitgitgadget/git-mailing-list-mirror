@@ -4,59 +4,85 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Fri, 08 Dec 2006 16:23:48 -0800
-Message-ID: <457A0214.9010900@zytor.com>
-References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>	 <20061207193012.GA84678@dspnet.fr.eu.org> <4578722E.9030402@zytor.com>	 <4579611F.5010303@dawes.za.net> <45798FE2.9040502@zytor.com>	 <Pine.LNX.4.64.0612080830380.3516@woody.osdl.org>	 <457998C8.3050601@garzik.org>	 <Pine.LNX.4.64.0612081453430.3516@woody.osdl.org>	 <f2b55d220612081546u1ffa98e5q75be55d31da82a2f@mail.gmail.com>	 <4579F9FF.7050701@zytor.com> <f2b55d220612081618v26f7c714l7d4ea5315a964aa@mail.gmail.com>
+From: Florent Thoumie <flz@xbsd.org>
+Subject: Re: Problem with git-push
+Date: Wed, 01 Nov 2006 19:57:15 +0000
+Message-ID: <1162411035.93716.14.camel@localhost>
+References: <1162306098.41547.4.camel@mayday.esat.net>
+	 <7v64e0qclo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 9 Dec 2006 00:24:27 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, Jeff Garzik <jeff@garzik.org>,
-	Rogan Dawes <discard@dawes.za.net>,
-	Kernel Org Admin <ftpadmin@kernel.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-tiEeu+9skTWmV7T4UAsJ"
+NNTP-Posting-Date: Wed, 1 Nov 2006 18:58:11 +0000 (UTC)
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
-In-Reply-To: <f2b55d220612081618v26f7c714l7d4ea5315a964aa@mail.gmail.com>
-X-Virus-Scanned: ClamAV 0.88.6/2308/Fri Dec  8 08:10:24 2006 on terminus.zytor.com
-X-Virus-Status: Clean
+In-Reply-To: <7v64e0qclo.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.8.1 FreeBSD GNOME Team Port 
+X-Virus-Scanned: amavisd-new at xbsd.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33777>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gsq0t-0002pX-VH for gcvg-git@gmane.org; Sat, 09 Dec
- 2006 01:24:24 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30651>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfLHl-0007tl-7M for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 19:58:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1947531AbWLIAYP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 19:24:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947535AbWLIAYP
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 19:24:15 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:36256 "EHLO
- terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S1947531AbWLIAYO (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006
- 19:24:14 -0500
-Received: from [10.0.6.0] (yardgnome.c2micro.com [69.104.58.50])
- (authenticated bits=0) by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id
- kB90NpBd004797 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
- verify=NO); Fri, 8 Dec 2006 16:23:51 -0800
-To: "Michael K. Edwards" <medwards.linux@gmail.com>
+ S2992551AbWKAS56 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 13:57:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992554AbWKAS56
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 13:57:58 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:33753 "EHLO
+ smtp3-g19.free.fr") by vger.kernel.org with ESMTP id S2992551AbWKAS55 (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 13:57:57 -0500
+Received: from smtp.xbsd.org (unknown [82.233.2.192]) by smtp3-g19.free.fr
+ (Postfix) with ESMTP id C04354A385; Wed,  1 Nov 2006 19:57:47 +0100 (CET)
+Received: from localhost (localhost.xbsd.org [127.0.0.1]) by smtp.xbsd.org
+ (Postfix) with ESMTP id 711D81141F; Wed,  1 Nov 2006 19:57:47 +0100 (CET)
+Received: from smtp.xbsd.org ([127.0.0.1]) by localhost (srv1.xbsd.org
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 73524-04; Wed,  1 Nov
+ 2006 19:57:21 +0100 (CET)
+Received: from [193.120.13.130] (cream.xbsd.org [193.120.13.130]) by
+ smtp.xbsd.org (Postfix) with ESMTP id A8655114F6; Wed,  1 Nov 2006 19:57:20
+ +0100 (CET)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Michael K. Edwards wrote:
-> On 12/8/06, H. Peter Anvin <hpa@zytor.com> wrote:
->> There is another thing that probably will be required, and I'm not sure
->> if something in front of Apache (like Squid) rather than behind it can
->> easily deal with: on timeout, the process needs to continue in order to
->> feed the cache.  Otherwise, you're still in a failure scenario as soon
->> as timeout happens.
-> 
-> I would think this would be a great deal easier to handle in an
-> arm's-length "accelerator" than in the origin server
 
-True, but it needs to run behind Apache rather than in front of it.
+--=-tiEeu+9skTWmV7T4UAsJ
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-	-hpa
+On Tue, 2006-10-31 at 15:39 -0800, Junio C Hamano wrote:
+
+> A quick workaround until we sort this out would be:
+>=20
+>  - make sure all your developers have umask suitable for group
+>    work (i.e. second octal-digit from the right should be zero
+>    to give group members the same rights as you do).
+>=20
+>  - run "chmod g+w .git/objects/??" in the shared repository.
+
+I thought I checked on the remote (guess I only looked at my local
+repo), but that was it, wrong perms.
+
+Sorry if this is a dumb question but assuming i did 3 successive
+git-push's, why is the object name changing from a try to another?
+
+Thanks for the answer.
+
+Florent
+
+
+--=-tiEeu+9skTWmV7T4UAsJ
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (FreeBSD)
+
+iD8DBQBFSPwbMxEkbVFH3PQRAozTAJ9fphmrJdr+rLll7YJaBLEdp/pxfQCfY2M0
+HFYXtCf7gzbHbO5DKFJjxCo=
+=Ye+w
+-----END PGP SIGNATURE-----
+
+--=-tiEeu+9skTWmV7T4UAsJ--
