@@ -2,61 +2,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: WARNING: THIS PATCH CAN BREAK YOUR REPO, was Re: [PATCH 2/3] Only repack active packs by skipping over kept packs.
-Date: Mon, 30 Oct 2006 13:59:03 -0800
-Message-ID: <7v3b95wjmg.fsf@assigned-by-dhcp.cox.net>
-References: <20061029093754.GD3847@spearce.org>
-	<Pine.LNX.4.64.0610301332440.11384@xanadu.home>
-	<20061030202611.GA5775@spearce.org>
-	<20061030205200.GA20236@delft.aura.cs.cmu.edu>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: binary patch compatibility
+Date: Wed, 01 Nov 2006 22:10:11 +0100
+Organization: At home
+Message-ID: <eib2ev$ga7$1@sea.gmane.org>
+References: <4b73d43f0611011303m3e58b227x1a0bd60a9719f9f8@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 30 Oct 2006 22:05:00 +0000 (UTC)
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Wed, 1 Nov 2006 21:11:01 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061030205200.GA20236@delft.aura.cs.cmu.edu> (Jan Harkes's
-	message of "Mon, 30 Oct 2006 15:52:00 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 16
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-18-116.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30658>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gef9z-0002Vh-9W for gcvg-git@gmane.org; Mon, 30 Oct
- 2006 22:59:11 +0100
+ esmtp (Exim 4.43) id 1GfNM0-0002et-Lr for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 22:10:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422674AbWJ3V7H (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 16:59:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422672AbWJ3V7G
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 16:59:06 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:42657 "EHLO
- fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1422674AbWJ3V7F
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 16:59:05 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061030215904.JMVZ22977.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Mon, 30
- Oct 2006 16:59:04 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id glyk1V00L1kojtg0000000 Mon, 30 Oct 2006
- 16:58:45 -0500
-To: Shawn Pearce <spearce@spearce.org>
+ S1752416AbWKAVK3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 16:10:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752418AbWKAVK3
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 16:10:29 -0500
+Received: from main.gmane.org ([80.91.229.2]:30691 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1752415AbWKAVK2 (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 16:10:28 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GfNLc-0002Zd-Pt for git@vger.kernel.org; Wed, 01 Nov 2006 22:10:09 +0100
+Received: from host-81-190-18-116.torun.mm.pl ([81.190.18.116]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Wed, 01 Nov 2006 22:10:08 +0100
+Received: from jnareb by host-81-190-18-116.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 01 Nov 2006
+ 22:10:08 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Jan Harkes <jaharkes@cs.cmu.edu> writes:
+John Rigby wrote:
 
-> The following patch does fix the problem Nicolas reported, but for some
-> reason I'm still getting only 102 objects (only tags and the commits
-> they refer to?) with your test.
+> If I commit a new binary file to a repository and then use
+> git-format-patch --binary to produce a patch the resulting patch file
+> is not compatible with the patch command.
+> 
+> Am I doing something wrong or is this not possible.
 
-One potential downside of this is that this makes an obscure but
-useful "gitk --unpacked" useless (robs performance).
+GNU patch doesn't understand git binary patch. git-apply does (as does
+git-am). There is no universal binary diff format.
 
-http://thread.gmane.org/gmane.comp.version-control.git/19197/focus=19207
-
-But other than that, I think it is an Ok change.  The original
-semantics of --unpacked (with or without "pretend as if objects
-in this pack are loose") were, eh, "strange".
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
