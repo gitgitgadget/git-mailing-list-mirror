@@ -1,80 +1,89 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Fast access git-rev-list output: some OS knowledge required
-Date: Wed, 6 Dec 2006 14:51:42 -0500
-Message-ID: <20061206195142.GE20320@spearce.org>
-References: <e5bfff550612061124jcd0d94em47793710866776e7@mail.gmail.com> <20061206192800.GC20320@spearce.org> <e5bfff550612061134r3725dcbu2ff2dd6284fcd651@mail.gmail.com> <20061206194258.GD20320@spearce.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: Restore a single file in the index back to HEAD
+Date: Wed, 1 Nov 2006 23:27:08 +0100
+Organization: Dewire
+Message-ID: <200611012327.08967.robin.rosenberg.lists@dewire.com>
+References: <200610261641.11239.andyparkins@gmail.com> <200611012029.41869.andyparkins@gmail.com> <7vbqnq51v4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 6 Dec 2006 19:52:02 +0000 (UTC)
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 1 Nov 2006 22:26:11 +0000 (UTC)
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+User-Agent: KMail/1.9.4
+In-Reply-To: <7vbqnq51v4.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <20061206194258.GD20320@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Virus-Scanned: by amavisd-new at dewire.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33515>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gs2o6-0004xn-Kx for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 20:51:55 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30670>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfOX2-0001GL-AJ for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 23:26:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937584AbWLFTvr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 14:51:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937586AbWLFTvr
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 14:51:47 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:54861 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S937584AbWLFTvq (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
- 14:51:46 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Gs2nZ-0006H7-Pc; Wed, 06 Dec 2006 14:51:21 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- E3BC720FB7F; Wed,  6 Dec 2006 14:51:42 -0500 (EST)
-To: Marco Costalba <mcostalba@gmail.com>
+ S1752520AbWKAWZ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 17:25:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752522AbWKAWZ5
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 17:25:57 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:1829 "EHLO
+ torino.dewire.com") by vger.kernel.org with ESMTP id S1752520AbWKAWZ4 (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 17:25:56 -0500
+Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
+ (Postfix) with ESMTP id 81882802801; Wed,  1 Nov 2006 23:22:32 +0100 (CET)
+Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 29631-10; Wed,  1 Nov
+ 2006 23:22:32 +0100 (CET)
+Received: from [10.9.0.5] (unknown [10.9.0.5]) by torino.dewire.com (Postfix)
+ with ESMTP id 08A1D8003E1; Wed,  1 Nov 2006 23:22:29 +0100 (CET)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce <spearce@spearce.org> wrote:
-> I think all you may need is:
-> 
-> 	#include "revision.h"
-> 	...
+onsdag 01 november 2006 21:49 skrev Junio C Hamano:
+> Andy Parkins <andyparkins@gmail.com> writes:
+> > On Wednesday 2006, November 01 18:28, Junio C Hamano wrote:
+> >> So from that point of view, the above commandline perfectly
+> >> makes sense.  However, giving anything but HEAD with path makes
+> >> us go "Huh?"  It is unclear what this should mean:
+> >>
+> >> 	git-reset [--hard | --mixed] HEAD^ oops/file1
+> >
+> > I don't understand.  Why wouldn't that mean reset oops/file1 to the state
+> > it had in HEAD^?
+>
+> Path limiters everywhere in git means "do this only for paths
+> that match this pattern, and empty path means the pattern match
+> every path -- the command's behaviour is not different in any
+> other aspect between the case you gave no limiter and the case
+> you gave _all_ paths as limiters".  So the other paths remain as
+> they were (both index and working tree), and HEAD needs to be
+> updated to HEAD^ in the above example.
+>
+> While that perfect makes sense from mechanical point of view, I
+> am not sure what it _means_ to keep some paths from now
+> abandoned future while having some other paths reset to the
+> rewound commit, from the point of view of end-user operation.
+>
+> In other words, I do not have a good explanation on what "git
+> reset [--hard|--mixed] <commit> <path>..." does that I can write
+> in the documentation.
 
-You'll also need to call:
+You could refer to git-checkout although checkout doesn't have something 
+corresponding to --mixed. The --hard option would correspond to the -f flag 
+in checkout.
 
-	setup_git_directory();
+It is like "cherrypicking" content (not changes) from a particular commit.  
 
-before any of the below; but that should be done once per process.
+Where did the soft option go? 
 
-> 	struct rev_info revs;
-> 	init_revisions(&revs, prefix);
-> 	revs.abbrev = 0;
-> 	revs.commit_format = CMIT_FMT_UNSPECIFIED;
-> 	argc = setup_revisions(argc, argv, &revs, NULL);
+Since checkout already does the work.. Is there any need for extending 
+git-reset, other than that's where people look for this feature. The man page 
+could be extended instead.
 
-Although now that I think about it the library may not be enough
-of a library.  Some data (e.g. commits) will stay in memory forever
-once loaded.  Pack files won't be released once read; a pack recently
-made available while the application is running may not get noticed.
-
-Perhaps there is some fast IPC API supported by Qt that you could
-use to run the revision listing outside of the main UI process,
-to eliminate the bottlenecks you are seeing and remove the problems
-noted above?  One that doesn't involve reading from a pipe I mean...
-
--- 
