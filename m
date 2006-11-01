@@ -1,105 +1,96 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Sasha Khapyorsky <sashak@voltaire.com>
-Subject: Re: git-svnimport breakage as of git-1.4.4
-Date: Thu, 14 Dec 2006 04:21:42 +0200
-Message-ID: <20061214022142.GA14521@sashak.voltaire.com>
-References: <1165505193.26874.13.camel@systems03.lan.brontes3d.com> <20061208203230.GA9193@sashak.voltaire.com> <1165847230.13854.2.camel@systems03.lan.brontes3d.com> <20061211204904.GC1003@sashak.voltaire.com> <1166027289.21948.4.camel@systems03.lan.brontes3d.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Problem with git-push
+Date: Wed, 1 Nov 2006 12:12:43 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611011205340.1670@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <1162306098.41547.4.camel@mayday.esat.net>
+ <7v64e0qclo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 14 Dec 2006 02:29:44 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 1 Nov 2006 11:13:35 +0000 (UTC)
+Cc: Florent Thoumie <flz@xbsd.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 852 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Dec 2006 21:29:29 EST
-Content-Disposition: inline
-In-Reply-To: <1166027289.21948.4.camel@systems03.lan.brontes3d.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-OriginalArrivalTime: 14 Dec 2006 02:15:14.0541 (UTC) FILETIME=[B0E531D0:01C71F25]
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7v64e0qclo.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34275>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GugLr-0003ZY-8S for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 03:29:39 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30631>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfE2D-0003FB-S7 for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 12:13:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751920AbWLNC3b (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 21:29:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751919AbWLNC3b
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 21:29:31 -0500
-Received: from taurus.voltaire.com ([193.47.165.240]:7337 "EHLO
- taurus.voltaire.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751920AbWLNC3a (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
- 21:29:30 -0500
-Received: from sashak ([172.25.5.176]) by taurus.voltaire.com with Microsoft
- SMTPSVC(6.0.3790.1830); Thu, 14 Dec 2006 04:15:14 +0200
-Received: by sashak (sSMTP sendmail emulation); Thu, 14 Dec 2006 04:21:42
- +0200
-To: Daniel Drake <ddrake@brontes3d.com>
+ S1946773AbWKALMt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 06:12:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946781AbWKALMs
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 06:12:48 -0500
+Received: from mail.gmx.de ([213.165.64.20]:63902 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1946773AbWKALMs (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 06:12:48 -0500
+Received: (qmail invoked by alias); 01 Nov 2006 11:12:46 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp031) with SMTP; 01 Nov 2006 12:12:46 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On 11:28 Wed 13 Dec     , Daniel Drake wrote:
+Hi,
+
+On Tue, 31 Oct 2006, Junio C Hamano wrote:
+
+> So the next thing to see is why adjust_shared_perm() is failing
+> for you.
 > 
-> Sorry, apparently I was using the wrong git-svnimport in my last mail.
-> The above command, with or without your svn_dir patch, doesn't solve the
-> problem.
+> Oops.
 > 
-> With your patch:
-
-Original patch is wrong, so only w/out this patch.
-
+> I think this function is broken at the concept level.  This is
+> to work around people's broken umask (when you are working with
+> other people, your umask should not be stronger than 007) and
+> tries to flip group writability bit on.
 > 
-> # git-svnimport -v -i -C repo -r https://server/repo
-> 
-> RA layer request failed: PROPFIND request failed on '/trunk/.cvsignore':
-> PROPFIND of '/trunk/.cvsignore': 405 Method Not Allowed (https://svn) at
-> git-svnimport line 364
-> 
-> Without the patch, the error is the same as the 1st case in both
-> situations.
+> First of all, if the necessary bits are already on, it is not
+> necessary to run chmod(),
 
-Try this please:
+right
 
+> but more importantly, if the directory in question was created by 
+> somebody else, I do not think this chmod() would succeed even if you are 
+> in the same group as the owner (i.e. previous creator) of the directory.
 
-diff --git a/git-svnimport.perl b/git-svnimport.perl
-index cbaa8ab..071777b 100755
---- a/git-svnimport.perl
-+++ b/git-svnimport.perl
-@@ -146,6 +146,7 @@ sub file {
- 	print "... $rev $path ...\n" if $opt_v;
- 	my (undef, $properties);
- 	my $pool = SVN::Pool->new();
-+	$path =~ s#^/*##;
- 	eval { (undef, $properties)
- 		   = $self->{'svn'}->get_file($path,$rev,$fh,$pool); };
- 	$pool->clear;
-@@ -181,6 +182,7 @@ sub ignore {
- 	my($self,$path,$rev) = @_;
- 
- 	print "... $rev $path ...\n" if $opt_v;
-+	$path =~ s#^/*##;
- 	my (undef,undef,$properties)
- 	    = $self->{'svn'}->get_dir($path,$rev,undef);
- 	if (exists $properties->{'svn:ignore'}) {
-@@ -197,6 +199,7 @@ sub ignore {
- 
- sub dir_list {
- 	my($self,$path,$rev) = @_;
-+	$path =~ s#^/*##;
- 	my ($dirents,undef,$properties)
- 	    = $self->{'svn'}->get_dir($path,$rev,undef);
- 	return $dirents;
-@@ -354,6 +357,7 @@ open BRANCHES,">>", "$git_dir/svn2git";
- sub node_kind($$) {
- 	my ($svnpath, $revision) = @_;
- 	my $pool=SVN::Pool->new;
-+	$svnpath =~ s#^/*##;
- 	my $kind = $svn->{'svn'}->check_path($svnpath,$revision,$pool);
- 	$pool->clear;
- 	return $kind;
+But if somebody else created it, it should already have the correct 
+permissions in the first place (unless the user played around with them, 
+which is not a pilot error, but a willfull pointing of the barrel in the 
+general direction of your knee).
 
-Thanks,
+> [jc: I am CC'ing Johannes to blame him on commit 457f06d6;
+> git-pickaxe is turning out to be quite handy ;-)
+
+I am hating the tool already.
+
+>  	if (dir) {
+>  		*dir = 0;
+>  		mkdir(filename, 0777);
+> -		if (adjust_shared_perm(filename))
+> +		if (adjust_shared_perm(filename)) {
+> +			*dir = '/';
+>  			return -2;
+> +		}
+
+How about this instead:
+
+-		mkdir(filename, 0777);
+-		if (adjust_shared_perm(filename))
++		if (!mkdir(filename, 0777) && adjust_shared_perm(filename)) {
++			*dir = '/';
+ 			return -2;
++		}
+
+Ciao,
+Dscho
