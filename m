@@ -1,93 +1,152 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC (take 2)] gitweb: New improved patchset view
-Date: Mon, 30 Oct 2006 22:50:06 +0100
-Message-ID: <200610302250.06733.jnareb@gmail.com>
-References: <850923.44762.qm@web31812.mail.mud.yahoo.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 30 Oct 2006 21:57:12 +0000 (UTC)
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [PATCH] Allow hand-editing of patches before sending
+Date: Wed, 01 Nov 2006 10:00:46 +0100
+Message-ID: <20061101090046.1107.81105.stgit@localhost>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: quoted-printable
+NNTP-Posting-Date: Wed, 1 Nov 2006 09:03:37 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=GUT/DrZ1hP8/U2Z4oBE18V38VCZ4dzN418fxcbbQFtx+Mzkn90pHKZDxxVu3agqpL7oaTXaxSIWW6BXHzp+j/RlYanKZeYTfoO/CQPckonh8LtbYeUH1R0MMZlf6nhAWtDStA2kD+Zl52y4qTGkrSFGWUMfMPmdu0LG/yVfd3wo=
-User-Agent: KMail/1.9.3
-In-Reply-To: <850923.44762.qm@web31812.mail.mud.yahoo.com>
-Content-Disposition: inline
+User-Agent: StGIT/0.11
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30625>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gef1G-00006L-U8 for gcvg-git@gmane.org; Mon, 30 Oct
- 2006 22:50:13 +0100
+ esmtp (Exim 4.43) id 1GfC0M-0007TF-3I for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 10:03:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161531AbWJ3VuG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 16:50:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161528AbWJ3VuG
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 16:50:06 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:717 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1161531AbWJ3VuE
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 16:50:04 -0500
-Received: by ug-out-1314.google.com with SMTP id 32so1273422ugm for
- <git@vger.kernel.org>; Mon, 30 Oct 2006 13:50:00 -0800 (PST)
-Received: by 10.67.119.13 with SMTP id w13mr4950075ugm; Mon, 30 Oct 2006
- 13:49:59 -0800 (PST)
-Received: from host-81-190-18-116.torun.mm.pl ( [81.190.18.116]) by
- mx.google.com with ESMTP id 39sm3386939ugb.2006.10.30.13.49.59; Mon, 30 Oct
- 2006 13:49:59 -0800 (PST)
-To: ltuikov@yahoo.com
+ S1946563AbWKAJDW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 04:03:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423959AbWKAJDW
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 04:03:22 -0500
+Received: from mxfep02.bredband.com ([195.54.107.73]:18306 "EHLO
+ mxfep02.bredband.com") by vger.kernel.org with ESMTP id S1423960AbWKAJDU
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 04:03:20 -0500
+Received: from ironport.bredband.com ([195.54.107.82] [195.54.107.82]) by
+ mxfep02.bredband.com with ESMTP id
+ <20061101090318.HFRJ9734.mxfep02.bredband.com@ironport.bredband.com> for
+ <git@vger.kernel.org>; Wed, 1 Nov 2006 10:03:18 +0100
+Received: from ua-83-227-180-148.cust.bredbandsbolaget.se (HELO
+ yoghurt.hemma.treskal.com) ([83.227.180.148]) by ironport.bredband.com with
+ ESMTP; 01 Nov 2006 10:03:18 +0100
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by
+ yoghurt.hemma.treskal.com (Postfix) with ESMTP id D6DC04CB5A; Wed,  1 Nov
+ 2006 10:03:17 +0100 (CET)
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Luben Tuikov wrote:
-> --- Jakub Narebski <jnareb@gmail.com> wrote:
->>> Wouldn't this be confusing with the other fine lines?
->>> I personally don't like this chunk separation.  Chunk separation
->>> already exists as is and we view it all the time elsewhere.
->> 
->> But not always the program displaying diff can display such line
->> separating chunks, for example on text terminal it can't.
-> 
-> What I meant is that since I stare at diffs exactly on text terminals,
-> my eyes have found other ways to discern chunk blocks.
+From: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
-I'm just saying that with HTML diffs, presented via gitweb in graphical
-web browser, you have more possibilities, more formatting to use.
-Why not make use of it?
+This adds a new flag to 'stg mail', allowing the user to hand-edit
+each patch e-mail before it is sent, just like it is currently
+possible to edit the cover message.
 
->> But if you think that the dotted 1px #ffbbff line is too intrusive,
->> we can remove it (and perhaps increase vertical space a few pixels).
->> I'd like to have more opinions first.
-> 
-> No, I just think that it should be as close as possible to what
-> we see now and what we see on text terminals -- no extra vertical
-> space please.  Between the two evils, I'd prefer the thin "dotted" line.
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+---
 
-Well, I'll make it nearly invisible in the "take 3". BTW. some people
-liked this line, some were indifferent.
+Intended use is to allow the user to write comments like this, when
+there is only one patch and a cover mail would be overkill.
 
->> BTW. you can easily override it in your CSS file.
-> 
-> Why should we allow something to go into gitweb and disrupt the current
-> default behavior only so that people have to change their own css file
-> to keep current default behaviour.  Please don't shove this down our
-> throats.  Please?
+ stgit/commands/mail.py |   59 ++++++++++++++++++++++++++++----------------=
+----
+ 1 files changed, 35 insertions(+), 24 deletions(-)
 
-That was just to note that if you don't agree with default, you can change
-it very easily. It is probably the time where people would disagree (for
-example infamous "redundant links" debate) on the gitweb UI; the possibility
-to tailor it easily to your own UI concepts and ideas is in my opinion
-very important (and very nice).
-
--- 
-Jakub Narebski
+diff --git a/stgit/commands/mail.py b/stgit/commands/mail.py
+index 970ae3e..26c711d 100644
+--- a/stgit/commands/mail.py
++++ b/stgit/commands/mail.py
+@@ -108,6 +108,9 @@ options =3D [make_option('-a', '--all',
+            make_option('-e', '--edit',
+                        help =3D 'edit the cover message before sending',
+                        action =3D 'store_true'),
++           make_option('-E', '--edit-patches',
++                       help =3D 'edit each patch before sending',
++                       action =3D 'store_true'),
+            make_option('-s', '--sleep', type =3D 'int', metavar =3D 'SECON=
+DS',
+                        help =3D 'sleep for SECONDS between e-mails sending=
+'),
+            make_option('--refid',
+@@ -276,6 +279,34 @@ def __build_extra_headers():
+=20
+     return headers
+=20
++def edit_message(msg):
++    fname =3D '.stgitmail.txt'
++
++    # create the initial file
++    f =3D file(fname, 'w')
++    f.write(msg)
++    f.close()
++
++    # the editor
++    if config.has_option('stgit', 'editor'):
++        editor =3D config.get('stgit', 'editor')
++    elif 'EDITOR' in os.environ:
++        editor =3D os.environ['EDITOR']
++    else:
++        editor =3D 'vi'
++    editor +=3D ' %s' % fname
++
++    print 'Invoking the editor: "%s"...' % editor,
++    sys.stdout.flush()
++    print 'done (exit code: %d)' % os.system(editor)
++
++    # read the message back
++    f =3D file(fname)
++    msg =3D f.read()
++    f.close()
++
++    return msg
++
+ def __build_cover(tmpl, total_nr, msg_id, options):
+     """Build the cover message (series description) to be sent via SMTP
+     """
+@@ -326,30 +357,7 @@ def __build_cover(tmpl, total_nr, msg_id
+               'supported in the patch template'
+=20
+     if options.edit:
+-        fname =3D '.stgitmail.txt'
+-
+-        # create the initial file
+-        f =3D file(fname, 'w+')
+-        f.write(msg)
+-        f.close()
+-
+-        # the editor
+-        if config.has_option('stgit', 'editor'):
+-            editor =3D config.get('stgit', 'editor')
+-        elif 'EDITOR' in os.environ:
+-            editor =3D os.environ['EDITOR']
+-        else:
+-            editor =3D 'vi'
+-        editor +=3D ' %s' % fname
+-
+-        print 'Invoking the editor: "%s"...' % editor,
+-        sys.stdout.flush()
+-        print 'done (exit code: %d)' % os.system(editor)
+-
+-        # read the message back
+-        f =3D file(fname)
+-        msg =3D f.read()
+-        f.close()
++        msg =3D edit_message(msg)
+=20
+     return msg.strip('\n')
+=20
+@@ -431,6 +439,9 @@ def __build_message(tmpl, patch, patch_n
+         raise CmdException, 'Only "%(name)s" variables are ' \
+               'supported in the patch template'
+=20
++    if options.edit_patches:
++        msg =3D edit_message(msg)
++
+     return msg.strip('\n')
+=20
