@@ -1,51 +1,107 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Git and Mozilla
-Date: Tue, 28 Nov 2006 01:47:28 -0500
-Message-ID: <9e4733910611272247y7ef8be0fh2f1436d43a57280@mail.gmail.com>
+From: Andy Whitcroft <apw@shadowen.org>
+Subject: Re: How to view an old revision?
+Date: Wed, 01 Nov 2006 19:02:47 +0000
+Message-ID: <4548EF57.6030509@shadowen.org>
+References: <3bbc18d20611010620m11e40402v44334a8c486a4932@mail.gmail.com>	<4548AFA2.1040606@shadowen.org>	<3bbc18d20611010637s6d05aecbt98322b62cf7235e8@mail.gmail.com>	<4548B32A.5030803@shadowen.org> <7vzmbb2m42.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 28 Nov 2006 06:47:38 +0000 (UTC)
+NNTP-Posting-Date: Wed, 1 Nov 2006 19:03:56 +0000 (UTC)
+Cc: Matt McCutchen <hashproduct+git@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=GDzBu2D9RstxS49abte/zEXgVNgLcQjT4/I82ZGKEkfg0CV7C4qluCTTCxhc7JUtrj7jFzVvYDBazBiMP5Q1xqG60DXlF3IL/+oKfGK/QXaSql6pARtxnKDQ37LFamA38f04RnpB6UpNuUUb1ekiaks9L2t6tgI7Zppfl3YYF7Y=
-Content-Disposition: inline
+User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
+In-Reply-To: <7vzmbb2m42.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.94.0.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30652>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gowkf-0001xB-0c for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 07:47:33 +0100
+ esmtp (Exim 4.43) id 1GfLN5-0000bA-K3 for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 20:03:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935676AbWK1Gra (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 01:47:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935679AbWK1Gr3
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 01:47:29 -0500
-Received: from py-out-1112.google.com ([64.233.166.180]:6311 "EHLO
- py-out-1112.google.com") by vger.kernel.org with ESMTP id S935676AbWK1Gr3
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 01:47:29 -0500
-Received: by py-out-1112.google.com with SMTP id a29so1245383pyi for
- <git@vger.kernel.org>; Mon, 27 Nov 2006 22:47:28 -0800 (PST)
-Received: by 10.35.125.16 with SMTP id c16mr897951pyn.1164696448455; Mon, 27
- Nov 2006 22:47:28 -0800 (PST)
-Received: by 10.35.72.13 with HTTP; Mon, 27 Nov 2006 22:47:28 -0800 (PST)
-To: "Git Mailing List" <git@vger.kernel.org>
+ S2992712AbWKATD2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 14:03:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992717AbWKATD2
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 14:03:28 -0500
+Received: from hellhawk.shadowen.org ([80.68.90.175]:63239 "EHLO
+ hellhawk.shadowen.org") by vger.kernel.org with ESMTP id S2992712AbWKATD1
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 14:03:27 -0500
+Received: from localhost ([127.0.0.1]) by hellhawk.shadowen.org with esmtp
+ (Exim 4.50) id 1GfLMN-00026p-7m; Wed, 01 Nov 2006 19:02:47 +0000
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-It looks like git is out of the race for hosting the Mozilla repository.
-It's going to be Bazaar or Mercurial.
+Junio C Hamano wrote:
+> Andy Whitcroft <apw@shadowen.org> writes:
+> 
+>> Junio, I wonder if we should be changing the usage for this command
+>> slightly.  Currently, it mearly says <object> as the identifier for the
+>> blob.  Really this is <object-ish> as it supports symbolic naming in
+>> addition to raw sha1's.  I also feel it would be very helpful if
+>> <commit-ish> and family were documented as a glossary section in main
+>> git manpage.
+>>
+>> Something like this:
+>>
+>> <commit-ish>:: is an sha1 for a commit, or any symbolic name for a
+>> commit (see SPECIFYING REVISIONS in git-rev-parse)
+>>
+>> What do people think.  I can do the munging about if its seems like a
+>> sane plan.
+> 
+> When we really want an object of type <x>, we accept an object
+> that is not of type <x> if there is a natural and unique
+> dereferencing of that object to the type <x>.  We use word
+> <x-ish> to describe such an object that dereferences to <x>.
+> For example, ls-tree is about listing tree contents (so we want
+> a tree), but we accept a commit because the natural and unique
+> dereferencing of a commit to a tree is to take its (toplevel)
+> tree.  We also accept a tag pointing at a commit because we can
+> dereference it to the commit and then to its tree.  Hence a tag
+> that points at either commit or a tree, and a commit are
+> tree-ish.
+> 
+> <object> is an object which can be <commit>, <tree>, <tag> or
+> <blob>.  There is nothing -ish about it.
+> 
+> I was actually reviewing the documentation of git-rev-parse and
+> noticed that it talks about naming objects in the section called
+> "SPECIFYING REVISIONS".  The title implies that it is about
+> committish (because we think of "revisions" as something that is
+> used in walking commit ancestry chains), but it actually talks
+> about naming objects of any type.
+> 
+> It is a good and comprehensive list when viewed as "list of ways
+> you can name an object", but both the title and the page the
+> list appears in put unfair emphasis of commits for that purpose,
+> and it is hard to realize that what you learned there applies to
+> naming any type of objects.  It is even harder to guess the list
+> appears on that page, unless you are the one who is actively involved
+> in the git list, when you want to know which manual page to look
+> at in order to find out how you name an arbitrary object.
+> 
+> We could either
+> 
+>  (1) retitle the list and move it to git.txt (Symbolic
+>      Identifiers), and refer to it from pages that describe
+>      commands that take object names;
+> 
+>  (2) retitle the list and make it an includable snippet, similar
+>      to the way Documentation/diff-format.txt is used from pages
+>      that describe diff commands, and include it everywhere.
+> 
+> I am slightly in favor of the latter.  Although it has a bloat
+> factor in the generated documentation, docs are not novels and
+> not meant to be read from cover to cover, and duplicating
+> relevant information on each page is more useful than refering
+> the reader to jump around in the documentation set.
 
-http://weblogs.mozillazine.org/preed/2006/11/version_control_system_shootou.html#more
+I'll take a stab at this ...
 
--- 
-Jon Smirl
