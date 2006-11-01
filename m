@@ -1,113 +1,56 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Arkadiusz Miskiewicz <arekm@maven.pl>
-Subject: reexporting git repository via git-daemon
-Date: Fri, 8 Dec 2006 22:12:09 +0100
-Organization: SelfOrganizing
-Message-ID: <200612082212.09682.arekm@maven.pl>
+From: "Matt McCutchen" <hashproduct+git@gmail.com>
+Subject: Re: How to view an old revision?
+Date: Wed, 1 Nov 2006 09:37:50 -0500
+Message-ID: <3bbc18d20611010637s6d05aecbt98322b62cf7235e8@mail.gmail.com>
+References: <3bbc18d20611010620m11e40402v44334a8c486a4932@mail.gmail.com>
+	 <4548AFA2.1040606@shadowen.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Fri, 8 Dec 2006 21:12:26 +0000 (UTC)
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 1 Nov 2006 14:38:37 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.5
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=M5s5e+Rt3d8i5y9h0qwobHlMflz6c10BPyKhAkBp+Sn+S8EsmbVJpmSG0MhO0mS1ue+oX+2Go4wubnjnIp2k/4zRgqWO+sW8sy5mVSdhKxbZewsPBF1NjA3Dd21HoR2v8UlPPZmWYWgGheEQdrLu9yy7xwE2Pr+9oGfUVjQpQqo=
+In-Reply-To: <4548AFA2.1040606@shadowen.org>
 Content-Disposition: inline
-X-Authenticated-Id: arekm
+X-Google-Sender-Auth: c474df846804b534
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33745>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gsn10-00061r-9u for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 22:12:18 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30640>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfHEd-0001gb-QR for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 15:38:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1761217AbWLHVMP convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006 16:12:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759692AbWLHVMO
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 16:12:14 -0500
-Received: from outgoing1.smtp.agnat.pl ([193.239.44.83]:39748 "EHLO
- outgoing1.smtp.agnat.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1761217AbWLHVMN convert rfc822-to-8bit (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 16:12:13 -0500
-Received: from [83.11.55.173] (helo=[192.168.0.64]) by tekla.agnat.pl with
- esmtpsa (TLSv1:DHE-RSA-AES256-SHA:256) (Exim 4.63) (envelope-from
- <arekm@maven.pl>) id 1Gsn0t-0005iS-BO for git@vger.kernel.org; Fri, 08 Dec
- 2006 22:12:11 +0100
-To: git@vger.kernel.org
+ S2992509AbWKAOhx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 09:37:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992518AbWKAOhx
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 09:37:53 -0500
+Received: from nf-out-0910.google.com ([64.233.182.191]:1871 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S2992509AbWKAOhw
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 09:37:52 -0500
+Received: by nf-out-0910.google.com with SMTP id c2so853993nfe for
+ <git@vger.kernel.org>; Wed, 01 Nov 2006 06:37:50 -0800 (PST)
+Received: by 10.82.105.13 with SMTP id d13mr1484436buc; Wed, 01 Nov 2006
+ 06:37:50 -0800 (PST)
+Received: by 10.82.129.2 with HTTP; Wed, 1 Nov 2006 06:37:50 -0800 (PST)
+To: "Andy Whitcroft" <apw@shadowen.org>
 Sender: git-owner@vger.kernel.org
 
+On 11/1/06, Andy Whitcroft <apw@shadowen.org> wrote:
+>         git cat-file -p <commit-ish>:<file>
 
-Hi,
+Nice!  Thanks!  I had guessed "git cat-file -p <commit-ish>/<file>"
+but didn't try a colon as the separator.  The colon syntax ought to be
+mentioned in the git-cat-file man page.
 
-I have weird problem wit git (1.4.4.2).
-
- git --bare clone git://git.kernel.org/pub/scm/git/git.git
-fetches everything correctly;
-
-$ cd /tmp
-$ git clone /gitroot/home/gitrepo/git
-remote: Generating pack...
-remote: Done counting 33527 objects.
-remote: Deltifying 33527 objects.
-remote:  100% (33527/33527) done
-Indexing 33527 objects.
-remote: Total 33527, written 33527 (delta 23162), reused 33527 (delta 2=
-3162)
- 100% (33527/33527) done
-Resolving 23162 deltas.
- 100% (23162/23162) done
-Checking files out...
- 100% (743/743) done
-$
-
-also correctly fetched. The problem begins with exporting that cloned r=
-epo=20
-once again via git-daemon:
-
-$ git clone git://git.my-server/git
-fatal: unexpected EOF
-fetch-pack from 'git://git.my-server/git' failed.
-
-strace on git-daemon side:
-[...]
-18241 lstat("refs/tags/v1.4.1-rc2", {st_mode=3DS_IFREG|0644, st_size=3D=
-41, ...}) =3D=20
-0
-18241 open("refs/tags/v1.4.1-rc2", O_RDONLY) =3D 7
-18241 read(7, "33c9db007159db11c1ad5fa7101ea95853740acf\n", 255) =3D 41
-18241 close(7)                          =3D 0
-18241 write(1, "004233c9db007159db11c1ad5fa7101ea95853740acf=20
-refs/tags/v1.4.1-rc2\n", 66) =3D 66
-18241 write(1, "0045abc02670169cee9541793a86324a014272ca8ed5=20
-refs/tags/v1.4.1-rc2^{}\n", 69) =3D 69
-18241 stat("refs/tags/v1.4.1.1", {st_mode=3DS_IFREG|0644, st_size=3D41,=
- ...}) =3D 0
-18241 lstat("refs/tags/v1.4.1.1", {st_mode=3DS_IFREG|0644, st_size=3D41=
-, ...}) =3D 0
-18241 open("refs/tags/v1.4.1.1", O_RDONLY) =3D 7
-18241 read(7, "8419a453dc088b25b63ab1746d3d7e679caf686d\n", 255) =3D 41
-18241 close(7) =20
-18241 write(1, "00408419a453dc088b25b63ab1746d3d7e679caf686d=20
-refs/tags/v1.4.1.1\n", 64) =3D 64
-18241 write(2, "fatal: ", 7)            =3D 7
-18241 write(2, "corrupted pack=20
-file ./objects/pack/pack-0bb22295a585ac173504a2f8dfb3e31e074a8715.pack"=
-, 85)=20
-=3D 85
-18241 write(2, "\n", 1)  =20
-
-100% repeatable at this moment. Any ideas?
-
-ps. verification for initial  git://git.kernel.org/pub/scm/git/git.git =
-clone:
-git]$ git --bare fsck-objects
-fatal: Not a git repository: '/gitroot/home/gitrepo/git'
-git]$ git fsck-objects
-git]$
-=20
---=20
-Arkadiusz Mi=B6kiewicz        PLD/Linux Team
