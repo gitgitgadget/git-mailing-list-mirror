@@ -1,93 +1,91 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: git bug? + question
-Date: Fri, 3 Nov 2006 18:15:49 +0100
-Message-ID: <200611031815.49553.Josef.Weidendorfer@gmx.de>
-References: <buoejsme6ho.fsf@dhapc248.dev.necel.com> <7v3b90gbfv.fsf@assigned-by-dhcp.cox.net> <20061103094655.GA16721@diana.vm.bytemark.co.uk>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: Restore a single file in the index back to HEAD
+Date: Wed, 1 Nov 2006 16:09:19 +0700
+Message-ID: <fcaeb9bf0611010109t6281a120qeed21e0d3b29ad0c@mail.gmail.com>
+References: <200610261641.11239.andyparkins@gmail.com>
+	 <20061027073834.GC29057@spearce.org> <4541BE8E.5050605@op5.se>
+	 <20061027081545.GF29057@spearce.org>
+	 <81b0412b0610270245w6c29b3c3va7967991f53db298@mail.gmail.com>
+	 <4541D670.6000900@op5.se> <7vac3igjpd.fsf@assigned-by-dhcp.cox.net>
+	 <fcaeb9bf0610312358g1176e4d8q8962b08c2e8ff2c6@mail.gmail.com>
+	 <7vpsc78ua3.fsf@assigned-by-dhcp.cox.net>
+	 <7vvelz7eg2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Fri, 3 Nov 2006 16:48:24 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, Miles Bader <miles@gnu.org>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 1 Nov 2006 09:09:49 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.3
-In-Reply-To: <20061103094655.GA16721@diana.vm.bytemark.co.uk>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=IzdmoR1mYTUpH1te0VfKJuft1Ta1QbOm+IsfnPR27R+dIC8CfRfqefSJZpqe33ptOmaYeYdRPgURdT6J7jSyYRqAFX08b/jOdKJktM/oUtTrQ7WNlMRkJBJZ70Z8qzRDmQ+PrnN5R9CtVkIWeE97ru6OwXpotDNnQjxDpA16UlM=
+In-Reply-To: <7vvelz7eg2.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30627>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gg2Bk-000586-93 for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 17:46:40 +0100
+ esmtp (Exim 4.43) id 1GfC6A-0000B1-Rf for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 10:09:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753366AbWKCQqh convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006 11:46:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753367AbWKCQqh
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 11:46:37 -0500
-Received: from tuminfo2.informatik.tu-muenchen.de ([131.159.0.81]:60641 "EHLO
- tuminfo2.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP id
- S1753366AbWKCQqg convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>);
- Fri, 3 Nov 2006 11:46:36 -0500
-Received: from dhcp-3s-57.lrr.in.tum.de (dhcp-3s-57.lrr.in.tum.de
- [131.159.35.57]) by mail.in.tum.de (Postfix) with ESMTP id ECFFD239C; Fri,  3
- Nov 2006 17:42:48 +0100 (MET)
-To: Karl =?iso-8859-1?q?Hasselstr=F6m?= <kha@treskal.com>
+ S1946714AbWKAJJX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 04:09:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423974AbWKAJJX
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 04:09:23 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:60018 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1423973AbWKAJJV
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 04:09:21 -0500
+Received: by ug-out-1314.google.com with SMTP id 32so1665736ugm for
+ <git@vger.kernel.org>; Wed, 01 Nov 2006 01:09:20 -0800 (PST)
+Received: by 10.78.157.8 with SMTP id f8mr8529510hue; Wed, 01 Nov 2006
+ 01:09:19 -0800 (PST)
+Received: by 10.78.100.8 with HTTP; Wed, 1 Nov 2006 01:09:19 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Friday 03 November 2006 10:46, Karl Hasselstr=F6m wrote:
-> Hmm. How about changing the meaning of "remote" slightly? Like this:
+On 11/1/06, Junio C Hamano <junkio@cox.net> wrote:
+> Junio C Hamano <junkio@cox.net> writes:
+>
+> >> I would prefer "git update-index --reset frotz" or "git checkout
+> >> --index HEAD frotz". git ls-tree|git update-index is too cryptic for
+> >> me and too long for my fingers.
+> >
+> > Then perhaps you can use "git checkout HEAD frotz", which is the
+> > simplest?
+>
+> Sorry, Oops.
+>
+> One should never respond to a message in an ancient thread
+> unless one has enough time to revisit previous messages and
+> refresh one's memory.
+>
+> The original topic was about updating the index entry without
+> touching working tree, so "co HEAD path" would not do what was
+> wanted.
+>
+> I think at the UI level, the most appropriate place would be
+> "git reset".  Checkout is a Porcelainish that is primarily about
+> working tree and it updates the index as a side effect (from the
+> UI point of view); you can update the working tree without
+> modifying index or you can update both index and the working
+> tree, but updating only index and not working tree does not
+> belong there.
 
-That's not good, as it changes existing config meaning.
-But why not support fetch lines in [branch.*] sections?
+Then perhaps git-reset should do "co HEAD path" too if --index is not specified?
+To sum up:
+ - git reset HEAD path -> git checkout HEAD path
+ - git reset --index HEAD path -> git-ls-files HEAD path|git
+update-index --index-info
+ - git reset HEAD (without path) -> the current behaviour
 
-Ie. instead of
-
->       [remote."gitster"]
->               url =3D gitster.example.com:/home/junio/git.git/
->               fetch =3D heads/master:remotes/gitster/master
->               fetch =3D heads/next:remotes/gitster/next
->       [branch."master"]
->               remote =3D gitster
->               merge =3D remotes/gitster/master
->       [branch."next"]
->               remote =3D gitster
->               merge =3D remotes/gitster/next
-
-make your config look like
-
-       [remote."gitster"]
-               url =3D gitster.example.com:/home/junio/git.git/
-       [branch."master"]
-               remote =3D gitster
-               fetch =3D heads/master:remotes/gitster/master
-               merge =3D remotes/gitster/master
-       [branch."next"]
-               remote =3D gitster
-               fetch =3D heads/next:remotes/gitster/next
-               merge =3D remotes/gitster/next
-
-A fetch line in [branch.*] means: Also fetch this refspec in
-addition to the refspecs specified in the remote section.
-Problem being that "git fetch gitster" does nothing anymore :-(
-
-Other option: Introduce "fetchonly" line which ignores the original
-fetch lines in the remote section.
-
-       [remote."gitster"]
-               url =3D gitster.example.com:/home/junio/git.git/
-               fetch =3D heads/master:remotes/gitster/master
-               fetch =3D heads/next:remotes/gitster/next
-       [branch."master"]
-               remote =3D gitster
-               fetchonly =3D heads/master:remotes/gitster/master
-               merge =3D remotes/gitster/master
-
+Because  <commit-ish>  may be missing, there is some ambiguation here.
+-- 
