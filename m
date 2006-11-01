@@ -1,58 +1,100 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Salikh Zakirov <Salikh.Zakirov@Intel.com>
-Subject: Re: Documentation/git-commit.txt
-Date: Fri, 08 Dec 2006 14:55:11 +0300
-Message-ID: <4579529F.9030401@Intel.com>
-References: <7vy7pik51b.fsf@assigned-by-dhcp.cox.net>
+From: Sergey Vlasov <vsu@altlinux.ru>
+Subject: Re: [PATCH] Introduce git-mirror, a tool for exactly mirroring
+ another repository.
+Date: Wed, 1 Nov 2006 15:18:59 +0300
+Message-ID: <20061101151859.0e984d3f.vsu@altlinux.ru>
+References: <20060925044641.GB15757@spearce.org>
+	<20061031174225.3c7c1e77.vsu@altlinux.ru>
+	<7vac3covlf.fsf@assigned-by-dhcp.cox.net>
+	<ei8s19$e04$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 8 Dec 2006 11:56:28 +0000 (UTC)
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg="PGP-SHA1";
+ boundary="Signature=_Wed__1_Nov_2006_15_18_59_+0300_j=nXxbYLuS3lXL1v"
+NNTP-Posting-Date: Wed, 1 Nov 2006 12:19:25 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 10
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: msfwpr01.ims.intel.com
-User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
-In-Reply-To: <7vy7pik51b.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <ei8s19$e04$1@sea.gmane.org>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.2; i586-alt-linux-gnu)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33691>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GseL0-0002NY-2h for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 12:56:22 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30633>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfF3r-0005sV-Ak for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 13:19:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S938057AbWLHL4A (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 06:56:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S938055AbWLHLz7
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 06:55:59 -0500
-Received: from main.gmane.org ([80.91.229.2]:42073 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1425425AbWLHLze
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 06:55:34 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GseK5-0006x0-DH for git@vger.kernel.org; Fri, 08 Dec 2006 12:55:26 +0100
-Received: from msfwpr01.ims.intel.com ([62.118.80.132]) by main.gmane.org
- with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 08 Dec 2006 12:55:25 +0100
-Received: from Salikh.Zakirov by msfwpr01.ims.intel.com with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 08 Dec 2006
- 12:55:25 +0100
-To: git@vger.kernel.org
+ S1946844AbWKAMTG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 07:19:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946819AbWKAMTG
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 07:19:06 -0500
+Received: from mivlgu.ru ([81.18.140.87]:17625 "EHLO mail.mivlgu.ru") by
+ vger.kernel.org with ESMTP id S1946844AbWKAMTE (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 07:19:04 -0500
+Received: from center4.mivlgu.local (center4.mivlgu.local [192.168.1.4]) by
+ mail.mivlgu.ru (Postfix) with SMTP id D921A804E; Wed,  1 Nov 2006 15:19:01
+ +0300 (MSK)
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Junio Hamano wrote:
-> +Instead of staging files after each individual change, you can
-> +tell `git commit` to notice the changes to the tracked files in
-> +your working tree and do corresponding `git add` and `git rm`
-> +for you.  
+--Signature=_Wed__1_Nov_2006_15_18_59_+0300_j=nXxbYLuS3lXL1v
+Content-Type: text/plain; charset=US-ASCII
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-This part is confusing as hell to anyone having any experience
-with either CVS, SVN, Hg or Monotone, as doing "corresponding `git add`
-and `git rm`" commands automatically will be interpreted as adding
-untracked files automatically, which is not the case here.
+On Wed, 01 Nov 2006 02:08:08 +0100 Jakub Narebski wrote:
+
+> Junio C Hamano wrote:
+> > Sergey Vlasov <vsu@altlinux.ru> writes:
+> >> BTW, I was thinking about the possibility to save removed refs under,
+> >> e.g., refs/old/`date -I`/; maybe even non-fast-forward refs could be
+> >> saved there - this will ensure that no object will ever disappear from
+> >> the mirror, no matter what is done on the master side.  Obviously, in
+> >> this case remote refs like refs/old/* should be filtered.
+> >
+> > I do not think that belongs to git-mirror.  It might be better to
+> > have that option in update-ref machinery so that you would even
+> > be protected from a `git branch -d` ran by mistake.
+
+I agree - this would be even better.
+
+What name format should be used for such saved refs?  refs/old/`date -I`
+is not unique enough; probably `date --utc +%Y.%m.%d-%H.%M.%S`?  And it
+would be good if multiple refs which were deleted or modified in a
+non-fast-forward way during a single operation (like git-mirror) would
+be saved together - which may be tricky if they are saved at the lower
+level (in update-ref).
+
+Adding the fast-forward check into update-ref also does not look nice,
+but this check is required for full safety.
+
+> Perhaps just don't remove log when branch is deleted. I tend for example
+> to be careful when reordering commits on a branch, and use git branch -f
+> instead of deleting and recreating branch to not lose reflog.
+
+Keeping the reflog does not help - reflog entries are not refs, and do
+not keep the referenced objects live in the repository.  Therefore old
+objects will be lost when the repository is repacked and pruned.
+
+Also, the reflog really must be deleted together with the ref itself -
+otherwise it may cause a file/directory conflict when another ref is
+created.  Of course, if the ref is renamed instead of deleting, the
+corresponding reflog may be renamed too.
+
+--Signature=_Wed__1_Nov_2006_15_18_59_+0300_j=nXxbYLuS3lXL1v
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQFFSJC1W82GfkQfsqIRAmaNAJwOUZSk5VgbHFtuBKLrXmhlFsbx1ACfe0gq
+Urr/cHYt2IktHfS4GVBI3lE=
+=XMAg
+-----END PGP SIGNATURE-----
+
