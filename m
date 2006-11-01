@@ -2,73 +2,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: can I remove or move a tag in a remote repository?
-Date: Sun, 19 Nov 2006 19:54:27 +0100
-Organization: At home
-Message-ID: <ejq96b$frg$1@sea.gmane.org>
-References: <87wt5rffbm.fsf@rho.meyering.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Documentation: Update information about <format> in git-for-each-ref
+Date: Wed, 01 Nov 2006 00:47:34 -0800
+Message-ID: <7vd5877duh.fsf@assigned-by-dhcp.cox.net>
+References: <200610281930.05889.jnareb@gmail.com>
+	<7vslh86uz9.fsf@assigned-by-dhcp.cox.net>
+	<200610282323.57797.jnareb@gmail.com> <45485A0F.3040807@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sun, 19 Nov 2006 18:54:24 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 1 Nov 2006 08:47:49 +0000 (UTC)
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 23
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <45485A0F.3040807@op5.se> (Andreas Ericsson's message of "Wed, 01
+	Nov 2006 09:25:51 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30623>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Glrni-0005Jh-Ub for gcvg-git@gmane.org; Sun, 19 Nov
- 2006 19:53:59 +0100
+ esmtp (Exim 4.43) id 1GfBl5-0005DN-55 for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 09:47:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932832AbWKSSx4 convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006 13:53:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932843AbWKSSx4
- (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 13:53:56 -0500
-Received: from main.gmane.org ([80.91.229.2]:26849 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S932832AbWKSSxz (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 13:53:55 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GlrnZ-0005Gw-Ty for git@vger.kernel.org; Sun, 19 Nov 2006 19:53:50 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Sun, 19 Nov 2006 19:53:49 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 19 Nov 2006
- 19:53:49 +0100
-To: git@vger.kernel.org
+ S1423953AbWKAIrg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 03:47:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423954AbWKAIrg
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 03:47:36 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:9346 "EHLO
+ fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S1423953AbWKAIrf
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 03:47:35 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao06.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061101084734.BYOX6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>; Wed, 1
+ Nov 2006 03:47:34 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id hLnE1V0081kojtg0000000 Wed, 01 Nov 2006
+ 03:47:15 -0500
+To: Andreas Ericsson <ae@op5.se>
 Sender: git-owner@vger.kernel.org
 
-Jim Meyering wrote:
+Andreas Ericsson <ae@op5.se> writes:
 
-> When I try to push the new tags, git-push fails:
->=20
-> =A0 $ git-push -f --tags ssh+git://git.sv.gnu.org/srv/git/coreutils m=
-aster:refs/heads/master
-> =A0 updating 'refs/tags/cvs-head'
-> =A0 =A0 from 2fd3fd29a8b40be695bc2327c8cd3bd33e521100
-> =A0 =A0 to =A0 db18f53ffb221e9957124d8af81c11a7e350ac3b
-> =A0 ...
-> =A0 Total 1, written 1 (delta 0), reused 0 (delta 0)
-> =A0 Unpacking 1 objects
-> =A0 error: denying non-fast forward; you should pull first
->=20
-> I get the same error also when using --force.
+> Jakub Narebski wrote:
+>
+>> BTW. I had to translate
+>> +       if (strcmp(who, "tagger") && strcmp(who, "committer"))
+>> to
+>> +       if (strcmp(who, "tagger") == 0 || strcmp(who, "committer") == 0)
+>> to understand it. But this is probably my lack of contact with such
+>> C idioms.
+>
+> But this does the exact opposite....
+> "Compare" (as in "strcmp") also translates to "are equal to" and isn't
+> only a verb. This is unfortunate for people who aren't natively
+> english and has had me confused on many a long night...
 
-Possibly remote side has receive.denyNonFastForwards set (it should not
-I think if it is public published bare repository). But even then there
-should be no fast-forward check on tags...
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Being a non-English speaker, I always pronounce xxxcmp() used as
+boolean 'is different' in my head.  The (correct version of the)
+above example expression is read as 'if it is different from
+"tagger" and it is different from "committer", then do this'.
+
+Otherwise I pronounce xxxcmp(a,b) "difference"; it's sign
+matches (a-b).
+
+if (xxxcmp(a,b) < 0) is similar to if ((a-b) < 0) which is
+equivalent to if (a < b).
 
