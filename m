@@ -5,58 +5,47 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGIT PATCH] StGIT bash completion
-Date: Thu, 16 Nov 2006 14:21:27 +0000
-Message-ID: <b0943d9e0611160621g60a0cac2r5205e37ed7d9fe9f@mail.gmail.com>
-References: <20061112211813.19959.73406.stgit@localhost>
+From: "Matt McCutchen" <hashproduct+git@gmail.com>
+Subject: How to view an old revision?
+Date: Wed, 1 Nov 2006 09:20:52 -0500
+Message-ID: <3bbc18d20611010620m11e40402v44334a8c486a4932@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 16 Nov 2006 14:22:14 +0000 (UTC)
-Cc: git@vger.kernel.org, "Shawn Pearce" <spearce@spearce.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 1 Nov 2006 14:21:13 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=tCqGQVoJMafnyC33vFvnt1ngXuQtaH7aPKw7qOpmD8VE60C9XRsL1orGg7HK8yJexppsKLikfi/fngpTou7980cJ2hWhzDafedhNKOyHf+EaR1tcyepVTWkk0jRiz1p8WQeNT2dANvt+OlVYiHCef18iDijH4b3kFdHonipVvpQ=
-In-Reply-To: <20061112211813.19959.73406.stgit@localhost>
+        h=received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=FpjiTWTRpEEvjeiw0VG256777MqDAs7IVWIA45okql1JHFrnXfVPcwmuZOfnRUMpyq7PnDm8wkTmUv6hk4nwPbMVfNtZbvlE6ZY9MQ1EoaBngnoeXjIbPDLSzaBSc85q7XOPLVLTmftu8sdNem8yc/j8LfH/WZl5pTU3ojRwXRY=
 Content-Disposition: inline
+X-Google-Sender-Auth: eb03db6d8375b1c7
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30638>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gki7j-0002fP-ER for gcvg-git@gmane.org; Thu, 16 Nov
- 2006 15:21:51 +0100
+ esmtp (Exim 4.43) id 1GfGxm-0006FJ-0t for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 15:21:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424098AbWKPOVa convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006 09:21:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424079AbWKPOVa
- (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 09:21:30 -0500
-Received: from nz-out-0102.google.com ([64.233.162.194]:15228 "EHLO
- nz-out-0102.google.com") by vger.kernel.org with ESMTP id S1424093AbWKPOV3
- convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006
- 09:21:29 -0500
-Received: by nz-out-0102.google.com with SMTP id l1so291784nzf for
- <git@vger.kernel.org>; Thu, 16 Nov 2006 06:21:28 -0800 (PST)
-Received: by 10.35.111.14 with SMTP id o14mr862871pym.1163686887649; Thu, 16
- Nov 2006 06:21:27 -0800 (PST)
-Received: by 10.35.109.8 with HTTP; Thu, 16 Nov 2006 06:21:27 -0800 (PST)
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+ S1946895AbWKAOUz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 09:20:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946897AbWKAOUz
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 09:20:55 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:58887 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1946895AbWKAOUy
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 09:20:54 -0500
+Received: by nf-out-0910.google.com with SMTP id c2so847799nfe for
+ <git@vger.kernel.org>; Wed, 01 Nov 2006 06:20:53 -0800 (PST)
+Received: by 10.82.106.14 with SMTP id e14mr1488387buc; Wed, 01 Nov 2006
+ 06:20:52 -0800 (PST)
+Received: by 10.82.129.2 with HTTP; Wed, 1 Nov 2006 06:20:52 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 12/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> A minimal bash completion script for StGIT. It completes the
-> subcommand names, and options and patch names for some subcommands.
+Dear git people,
 
-Thanks for the patch. I modified it slightly to automatically generate
-the options for other commands as well (by invoking "stg help
-<command>" and it doesn't seem to be slow). I'll try to push it
-tonight.
+How do I view an old revision of a file without actually checking it
+out?  This would be analogous to "cvs checkout -r <old> -p".  I've
+RTMed and STWed and can't seem to find a way.
 
-Thanks for the other patches as well. I included some but haven't
-finished them yet.
-
---=20
