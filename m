@@ -1,71 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Bahadir Balban" <bahadir.balban@gmail.com>
-Subject: stgit: stg mail
-Date: Tue, 12 Dec 2006 12:12:36 +0000
-Message-ID: <7ac1e90c0612120412i1297ce05uecbeea1107b8c704@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Introduce git-mirror, a tool for exactly mirroring another repository.
+Date: Wed, 01 Nov 2006 08:15:53 -0800
+Message-ID: <7vodrr2ldy.fsf@assigned-by-dhcp.cox.net>
+References: <20060925044641.GB15757@spearce.org>
+	<20061031174225.3c7c1e77.vsu@altlinux.ru>
+	<7vac3covlf.fsf@assigned-by-dhcp.cox.net> <ei8s19$e04$1@sea.gmane.org>
+	<20061101151859.0e984d3f.vsu@altlinux.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 12 Dec 2006 12:12:50 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 1 Nov 2006 16:16:46 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=ikq4mbJ1fMba24Q9z9LQ4kdVFECpW2lqLt8RWgilmht3ukVIb8wMsDzXC1qQT9wNafArB49f1rS6NBtADJ9wJMHwI+bvxINNsbWggAI0XcG9gQATN4MiZf2cnbhuR7zwGddyrCW2NlElUnhr83SLGT6gx3F5maRuIwWKrUOYHik=
-Content-Disposition: inline
+In-Reply-To: <20061101151859.0e984d3f.vsu@altlinux.ru> (Sergey Vlasov's
+	message of "Wed, 1 Nov 2006 15:18:59 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34086>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gu6V0-0006Nq-0V for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 13:12:42 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30646>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfIkw-000706-9x for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 17:15:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751214AbWLLMMj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 07:12:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751245AbWLLMMi
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 07:12:38 -0500
-Received: from nf-out-0910.google.com ([64.233.182.184]:49723 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1751214AbWLLMMi (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec
- 2006 07:12:38 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so220711nfa for
- <git@vger.kernel.org>; Tue, 12 Dec 2006 04:12:37 -0800 (PST)
-Received: by 10.82.138.6 with SMTP id l6mr645797bud.1165925556430; Tue, 12
- Dec 2006 04:12:36 -0800 (PST)
-Received: by 10.82.186.15 with HTTP; Tue, 12 Dec 2006 04:12:36 -0800 (PST)
-To: git@vger.kernel.org
+ S1946919AbWKAQPz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 11:15:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946920AbWKAQPz
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 11:15:55 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:42135 "EHLO
+ fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1946919AbWKAQPy
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 11:15:54 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061101161554.TVYI18985.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Wed, 1
+ Nov 2006 11:15:54 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id hUFy1V00B1kojtg0000000 Wed, 01 Nov 2006
+ 11:15:58 -0500
+To: Sergey Vlasov <vsu@altlinux.ru>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Sergey Vlasov <vsu@altlinux.ru> writes:
 
-I couldn't succeed in getting stg mail produce an mbox file with a
-Signed-off-by line (using stgit 0.11).
+> What name format should be used for such saved refs?  refs/old/`date -I`
+> is not unique enough; probably `date --utc +%Y.%m.%d-%H.%M.%S`?  And it
+> would be good if multiple refs which were deleted or modified in a
+> non-fast-forward way during a single operation (like git-mirror) would
+> be saved together - which may be tricky if they are saved at the lower
+> level (in update-ref).
+>
+> Adding the fast-forward check into update-ref also does not look nice,
+> but this check is required for full safety.
 
-stg mail -m --to=user@mail.com patchname > patchname.diff
+I wasn't going to suggest doing the check or even naming at such
+a low level.  From the usability point of view, the caller
+should decide if the discarded refs are even saved at all, and
+if so in which namespace.  That way commit_lock_file() can just
+notice the old version of the locked file (it is always sitting
+next to it) and hardlink the discarded one to the purgatory
+before renaming the newly created .lock file there.
 
-works OK. If I add the template with Signed-off-by I get:
 
-stg mail -m --to=user@mail.com -t ~/patch.tmpl patchname > patchname.diff
-stg mail: No "From" address
 
-Also tried -c with same result.
-
-Config file:
-[stgit]
-# Default author/committer details
-authname: name surname
-authemail: user@mail.com
-commname:  user@mail.com
-commemail: user@mail.com
-
-I guess it expects to find everything in the template? How do you
-normally supply signoff field?
-
-Thanks,
