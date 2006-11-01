@@ -1,87 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Salikh Zakirov <Salikh.Zakirov@Intel.com>
-Subject: Re: Did anyone have trouble learning the idea of local vs. remote
- branches?
-Date: Tue, 07 Nov 2006 21:08:47 +0300
-Message-ID: <eiqi3f$ouq$1@sea.gmane.org>
-References: <20061107172450.GA26591@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Problem with git-push
+Date: Wed, 01 Nov 2006 07:33:28 -0800
+Message-ID: <7v4ptj5ghj.fsf@assigned-by-dhcp.cox.net>
+References: <1162306098.41547.4.camel@mayday.esat.net>
+	<7v64e0qclo.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0611011205340.1670@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 7 Nov 2006 18:09:31 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 1 Nov 2006 15:34:07 +0000 (UTC)
+Cc: Florent Thoumie <flz@xbsd.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 38
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: msfwpr01.ims.intel.com
-User-Agent: Thunderbird 1.5.0.7 (Windows/20060909)
-In-Reply-To: <20061107172450.GA26591@spearce.org>
+In-Reply-To: <Pine.LNX.4.63.0611011205340.1670@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Wed, 1 Nov 2006 12:12:43 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30643>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhVNs-0004Rv-So for gcvg-git@gmane.org; Tue, 07 Nov
- 2006 19:09:17 +0100
+ esmtp (Exim 4.43) id 1GfI5t-0006GU-Pq for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 16:33:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965668AbWKGSJN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
- 13:09:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965687AbWKGSJM
- (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 13:09:12 -0500
-Received: from main.gmane.org ([80.91.229.2]:10169 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S965668AbWKGSJL (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 13:09:11 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GhVNW-0004NO-89 for git@vger.kernel.org; Tue, 07 Nov 2006 19:08:54 +0100
-Received: from msfwpr01.ims.intel.com ([62.118.80.132]) by main.gmane.org
- with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Tue, 07 Nov 2006 19:08:54 +0100
-Received: from Salikh.Zakirov by msfwpr01.ims.intel.com with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 07 Nov 2006
- 19:08:54 +0100
-To: git@vger.kernel.org
+ S2992620AbWKAPda (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 10:33:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992622AbWKAPda
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 10:33:30 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:32226 "EHLO
+ fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S2992620AbWKAPd3
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 10:33:29 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061101153328.KRDM22409.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Wed, 1
+ Nov 2006 10:33:28 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id hTZY1V00r1kojtg0000000 Wed, 01 Nov 2006
+ 10:33:33 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce wrote:
-> Clearly there is a gap in communicating these ideas in a way that
-> they can be understood by users.  Of course in at least one case
-> the users just isn't reading any Git documentation and plows ahead
-> as though it were CVS ('cause everything's "just like CVS") *sigh*.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I've went through persuading my colleagues (~30 engineers) to use Git and tutoring on it
-through the three summer months, and my experience is very similar to Shawn's.
-(i.e. confusing local and remote branches, not reading documentation,
-and "just like CVS" attitude)
+>> but more importantly, if the directory in question was created by 
+>> somebody else, I do not think this chmod() would succeed even if you are 
+>> in the same group as the owner (i.e. previous creator) of the directory.
+>
+> But if somebody else created it, it should already have the correct 
+> permissions in the first place (unless the user played around with them, 
+> which is not a pilot error, but a willfull pointing of the barrel in the 
+> general direction of your knee).
 
-Below is the one git feature that I think was stumbled upon most often:
+True; I think the yesterday's analysis is still incomplete.  I
+haven't reached the point where I can explain "is a directory".
+If the directory was there and mkdir() failed (but we do not
+check its return value), it would have set errno to EEXIST not
+to EISDIR.  There is something else going on.
 
-* people were often anaware of *multiple* branches created by git-clone,
-  as the operation they wanted was analog of "cvs checkout". 
+>> [jc: I am CC'ing Johannes to blame him on commit 457f06d6;
+>> git-pickaxe is turning out to be quite handy ;-)
+>
+> I am hating the tool already.
 
-* git-fetch / git-pull tries to download all of the branches that were
-  preset at git-clone time, and subsequently gives errors if some topic
-  branches were rewound or dropped, while most of the time my colleagues
-  were interested in just one "mainline" branch.
-
-I think that the particular issue with the workflow in my organization
-could have been solved by the git-checkout and git-clone hybrid
-
-    git-checkout ssh://path.to/repo.git#branch [work_dir]
-
-which would clone repository with just one branch and setup the remotes
-file accordingly (The syntax is completely made up, of course)
-
-P.S. a few words on the workflow we use:
-- there is a "mainline" branch of development, kept as ssh-shared git repository
-- mainline commits require some pre-commit testing, which takes ~1.5 hours,
-  so people tend not to commit to mainline too often. On average, a given
-  person commits to mainline once or twice a week.
-- mainlines commits also require a fellow developer review, that's where
-  topic branches come in handy. Topic branches are also useful for testing,
-  as pre-commit testing should be run on several different platforms, thus
-  on a different machines. Topic branches are kept on the same shared server.
+Well, we could rename it to "git credit" ;-).
