@@ -1,64 +1,55 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Author name and e-mail address in .stgitrc
-Date: Sat, 11 Nov 2006 23:30:17 +0100
-Message-ID: <20061111223017.GA20192@diana.vm.bytemark.co.uk>
-References: <20061111113553.GA11224@diana.vm.bytemark.co.uk> <200611111531.16304.robin.rosenberg.lists@dewire.com> <20061111145708.GH11224@diana.vm.bytemark.co.uk> <200611112126.32380.robin.rosenberg.lists@dewire.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] make git-push a bit more verbose
+Date: Wed, 1 Nov 2006 01:08:40 +0100
+Message-ID: <20061101000840.GE20017@pasky.or.cz>
+References: <Pine.LNX.4.64.0610311648220.11384@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sat, 11 Nov 2006 22:30:38 +0000 (UTC)
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 1 Nov 2006 00:08:55 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <200611112126.32380.robin.rosenberg.lists@dewire.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <Pine.LNX.4.64.0610311648220.11384@xanadu.home>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30609>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gj1Mp-0008BC-FL for gcvg-git@gmane.org; Sat, 11 Nov
- 2006 23:30:27 +0100
+ esmtp (Exim 4.43) id 1Gf3ew-0006yp-J6 for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 01:08:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753527AbWKKWaX convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006 17:30:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754879AbWKKWaX
- (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 17:30:23 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:36622 "EHLO
- diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1753527AbWKKWaW
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 17:30:22 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1Gj1Mg-0005Gf-00; Sat, 11 Nov 2006 22:30:18 +0000
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+ S1946203AbWKAAIn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
+ 19:08:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946205AbWKAAIn
+ (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 19:08:43 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:42680 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1946203AbWKAAIm (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 19:08:42 -0500
+Received: (qmail 19942 invoked by uid 2001); 1 Nov 2006 01:08:40 +0100
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-11 21:26:31 +0100, Robin Rosenberg wrote:
+Dear diary, on Tue, Oct 31, 2006 at 10:58:32PM CET, I got a letter
+where Nicolas Pitre <nico@cam.org> said that...
+> Currently git-push displays progress status for the local packing of 
+> objects to send, but nothing once it starts to push it over the 
+> connection.  Having progress status in that later case is especially 
+> nice when pushing lots of objects over a slow network link.
+> 
+> Signed-off-by: Nicolas Pitre <nico@cam.org>
 
-> l=F6rdag 11 november 2006 15:57 skrev Karl Hasselstr=F6m:
->
-> > But I haven't gotten the impression that specifying them in
-> > ~/.stgitrc is deprecated. The example stgitrc has a section with
-> > author name and committer name, for example.
->
-> The only docs I know of that mentions stgitrc also states that it
-> isn't required, so why use it unless you have to (or for some reason
-> want to)? Just because there are many ways, doesn't mean all but one
-> have to be deprecated.
+Yet Another Undocumented Feature? :-(
 
-No, but having a config option for something that git already provides
-several ways to specify can't possibly be a good idea, especially
-usability-wise. The only use I can think of is if you _want_ to have
-different identities for git and stgit in the same repository, and
-that's just mad.
-
-I'm preparing a patch to fix this. Stay tuned. :-)
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
