@@ -1,74 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Sun, 10 Dec 2006 16:55:28 +1300
-Message-ID: <46a038f90612091955i5bdd6e85l749a2f511f27953@mail.gmail.com>
-References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>
-	 <Pine.LNX.4.64.0612081453430.3516@woody.osdl.org>
-	 <46a038f90612081756w1ab4609epcb4a2cbd9f4d8205@mail.gmail.com>
-	 <200612091251.16460.jnareb@gmail.com> <457AAF31.2050002@garzik.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [RFHC] _XOPEN_SOURCE and OpenBSD 3.9
+Date: Wed, 01 Nov 2006 00:16:01 -0800
+Message-ID: <7vbqnr8tvi.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 10 Dec 2006 03:55:41 +0000 (UTC)
-Cc: "Jakub Narebski" <jnareb@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Linus Torvalds" <torvalds@osdl.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	"Rogan Dawes" <discard@dawes.za.net>,
-	"Kernel Org Admin" <ftpadmin@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 1 Nov 2006 08:16:15 +0000 (UTC)
+Cc: Jason Riedy <ejr@EECS.Berkeley.EDU>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gSG+nhrISAXswY1TWibLVd2Ed9gvR2y3JyjrJsvEkSc2RSDrxSuHKBryOhAj61WCU3JMstaldPF0SDd8OIKHtowfLA2K/b+pSq67Tlj6Lhcw04nTgQI4CiUgQLfvewVZd/nayEDxAG/4OJoR9/bY9BRr1AzxxJ3EybxJlWvYLrw=
-In-Reply-To: <457AAF31.2050002@garzik.org>
-Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33866>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtFmt-000270-Lv for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 04:55:40 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30619>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfBGe-00012Z-8i for gcvg-git@gmane.org; Wed, 01 Nov
+ 2006 09:16:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760150AbWLJDza (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
- 22:55:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760158AbWLJDza
- (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 22:55:30 -0500
-Received: from nf-out-0910.google.com ([64.233.182.188]:55698 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1760150AbWLJDz3 (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec
- 2006 22:55:29 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1589263nfa for
- <git@vger.kernel.org>; Sat, 09 Dec 2006 19:55:28 -0800 (PST)
-Received: by 10.49.92.18 with SMTP id u18mr1404188nfl.1165722928439; Sat, 09
- Dec 2006 19:55:28 -0800 (PST)
-Received: by 10.49.60.1 with HTTP; Sat, 9 Dec 2006 19:55:28 -0800 (PST)
-To: "Jeff Garzik" <jeff@garzik.org>
+ S1946696AbWKAIQF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 03:16:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946697AbWKAIQF
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 03:16:05 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:29180 "EHLO
+ fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP id S1946696AbWKAIQC
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 03:16:02 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao12.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061101081602.LEJE18180.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>; Wed, 1
+ Nov 2006 03:16:02 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id hLFh1V00A1kojtg0000000 Wed, 01 Nov 2006
+ 03:15:42 -0500
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 12/10/06, Jeff Garzik <jeff@garzik.org> wrote:
-> > P.S. Can anyone post some benchmark comparing gitweb deployed under
-> > mod_perl as compared to deployed as CGI script? Does kernel.org use
-> > mod_perl, or CGI version of gitweb?
->
-> CGI version of gitweb.
->
-> But again, mod_perl vs. CGI isn't the issue.
+I was futzing with an OpenBSD 3.9 bochs today, and it appears
+that without __BSD_VISIBILITY we get a complaint from the
+compiler that says S_ISLNK() is implicitly declared function
+(cache.h has an inline create_ce_mode() that uses this macro).
 
-IO is the issue, and the CGI startup of Perl is quite IO & CPU
-intensive. Even if the caching headers, thundering herds and planet
-collisions are resolved, I don't think you'll ever be happy with IO
-and CPU load on kernel.org running gitweb as CGI.
+I do not think this breaks things on Linux boxes, but I do not
+have access to other archs, hence this request for help and
+comments.
 
-cheers,
+Jason Riedy CC'ed who did the initial _XOPEN_SOURCE=500 for AIX
+portability.
 
+Oh, yes, I know OpenBSD 4.0 is very soon coming...
 
-
+diff --git a/convert-objects.c b/convert-objects.c
+index 631678b..2ff19d2 100644
+--- a/convert-objects.c
++++ b/convert-objects.c
+@@ -1,4 +1,4 @@
+-#define _XOPEN_SOURCE 500 /* glibc2 and AIX 5.3L need this */
++#define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500; 600 for OBSD */
+ #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
+ #define _GNU_SOURCE
+ #include <time.h>
