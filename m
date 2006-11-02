@@ -1,129 +1,116 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH/RFC] gitweb: New improved patchset view
-Date: Sun, 29 Oct 2006 17:43:43 -0800 (PST)
-Message-ID: <811156.54327.qm@web31808.mail.mud.yahoo.com>
-References: <7v3b972bzq.fsf@assigned-by-dhcp.cox.net>
-Reply-To: ltuikov@yahoo.com
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 4/n] gitweb: Secure against commit-ish/tree-ish with the same name as path
+Date: Wed, 01 Nov 2006 17:01:51 -0800
+Message-ID: <7vac3awtj4.fsf@assigned-by-dhcp.cox.net>
+References: <200610301953.01875.jnareb@gmail.com>
+	<200610311753.20711.jnareb@gmail.com>
+	<7vejsoovxu.fsf@assigned-by-dhcp.cox.net>
+	<200611010140.56834.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Mon, 30 Oct 2006 01:53:52 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 2 Nov 2006 01:02:05 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=JkTmzcI8HgN3aHif0JkqDq+QoFnHaG1czQEj31eFpil3MLTjf8dKE5mpliBFHFFwpVfOfImpyY9QrwjnjDni1tMlbPEudqr/3MDPgjOl1s3G72PotNCBfYRNY0O2rkpxTCxtCRnrIHR0BNewPZOwVZypwUhn1xXQ+kggi87GbKg=  ;
-X-YMail-OSG: 3yW4kioVM1mweRUwpaI.2dKRD0rMadWeJKDES7jkFPDWdO2Du9LC_dtSdsePIpYdZvr9CMtd3AiZQLmAuq1mWq_OsexeucCMK4OgePJ.JVdfDDsmyz1I2386WkbZCvoSBmyK_7ywh2n0FT.Cihrt9D.zg.SoEoqcCkCAfxVDD5YfUxYP3ODMQA9I
-In-Reply-To: <7v3b972bzq.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30677>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GeMBu-0002A9-Ag for gcvg-git@gmane.org; Mon, 30 Oct
- 2006 02:44:02 +0100
+ esmtp (Exim 4.43) id 1GfQxx-0005AA-J2 for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 02:01:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030480AbWJ3Bnp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
- 20:43:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030482AbWJ3Bnp
- (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 20:43:45 -0500
-Received: from web31808.mail.mud.yahoo.com ([68.142.207.71]:28806 "HELO
- web31808.mail.mud.yahoo.com") by vger.kernel.org with SMTP id
- S1030480AbWJ3Bno (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006
- 20:43:44 -0500
-Received: (qmail 54330 invoked by uid 60001); 30 Oct 2006 01:43:43 -0000
-Received: from [71.80.233.118] by web31808.mail.mud.yahoo.com via HTTP; Sun,
- 29 Oct 2006 17:43:43 PST
-To: Junio C Hamano <junkio@cox.net>, Jakub Narebski <jnareb@gmail.com>
+ S1752433AbWKBBBy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 20:01:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752620AbWKBBBy
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 20:01:54 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:16579 "EHLO
+ fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP id S1752433AbWKBBBx
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 20:01:53 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao09.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061102010152.QIDG16798.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>; Wed, 1
+ Nov 2006 20:01:52 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id hd1w1V00a1kojtg0000000 Wed, 01 Nov 2006
+ 20:01:57 -0500
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
---- Junio C Hamano <junkio@cox.net> wrote:
-> Before answering 3 questions, I think we need to ask a bigger
-> question.  What is the primary target audience of gitweb?
-> 
-> If it is for git-uninitiated, then staying as close to what GNU
-> diff would give would be a better idea.  I would say we at least
-> can assume that the user has some familiarity with SCM, and
-> knows what kind of information is kept track of and is shown as
-> differences between versions, and what files, directories and
-> symlinks are, but not how git represents these.  On the other
-> hand, if the user uses git to track a project (not necessarily
-> the project the user is looking at with gitweb) and is familiar
-> with the way git-diff presents these information, deviating from
-> git-diff output is distractiing.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-I agree.
+>> [PATCH/RFC 1/n] gitweb: Better git-unquoting and gitweb-quoting of p...
+>> 
+>> Marked preliminary, perhaps need some discussion and rerolling
+>> but I haven't looked at it.
+>
+> I'm not sure if without this patch (well, the unquote part) gitweb
+> can work with filenames which git quotes using escape sequences,
 
-gitweb's primary audience is the developers who type "git ..."
-at shell prompt all the time.
+I am reasonably sure it wouldn't, and it sounded like you wanted
+to fix it better than the preliminary one, so I think we are in
+agreement.
 
-> At least to me /-rw-rw-... part made me feel uneasy for that
-> reason.
+>> [PATCH 2/n] gitweb: Use '&iquot;' instead of '?' in esc_path
+>> 
+>> Discussed; we agreed that showing byte values in different
+>> colors is preferable.  Waiting for re-roll.
+>
+> The problem with using text color or background color is that
+> the filenames tends to be shown with different color and background
+> color: "tree" view, parts of difftree, parts of diff header, etc.
+> Perhaps text-decoration: overline;? Just kidding...
 
-It made me feel uneasy to see it where it was because it
-didn't belong there either way.
+Use of overstrike may actually not be a bad thing.  It _is_
+unusual situation after all.
 
-> WIth that in mind, I'll think aloud what I would like if I were
-> not familiar with git:
-> 
->  * "diff --git a/file b/file" would not use /dev/null but
->    ---/+++ does.  If the former is shown as link, it should be
->    visible which side is a link and which side is not for
->    creation or deletion diff; otherwise you would need a second
+>> [PATCH 3/n] gitweb: Use 's' regexp modifier to secure against filena...
+>> 
+>> I looked at it although haven't said anything yet.  Probably a
+>> safe and good change but I wonder how LF at the end of the line
+>> matches /...(.+)$/s pattern; iow, if we do not use -z does it
+>> still do the right thing?  Otherwise I suspect you would perhaps
+>> need to chomp?
+>
+> We always pass chomped lines. First chunk is unnecessary (we care only
+> for type), without second "tree" view look strange for files with
+> embedded newline in filename.
 
-I'd argue otherwise: trying to click on /dev/null and failing
-but succeeding on b/file has already taught something to the
-uinitiated user.
+The codepath affected by the first chunk does not chomp, which
+was what I was referring to.  So in the meantime will apply only
+the second hunk.
 
-OTOH, if one is trying to "click" on /dev/null in gitweb commitdiff
-view -- they have other problems to resolve first...
+>> [PATCH 4/n] gitweb: Secure against commit-ish/tree-ish with the same...
+>> 
+>> Good fix and even improves readability; will apply after
+>> dropping -- from ls-tree args.
 
->    to realize it is not a bug that clicking on a/file on the
->    "diff --git" line did not show anything for a creation diff.
-> 
->  * I think showing object names in "index xxx..yyy mode" line is
->    not very useful to humans (they are added for tools).  I do
+I just applied this.  I'll be pushing out a "master" update
+sometime today, and do not expect to be able to get to your "n
+turned out to be ten" series, so it might be worthwhile to
+reroll the remaining bits that you still care about on top of
+what I push out tonight to make sure we are on the same page.
 
-I like to see it because I might need to know the sha in order to
-go back to shell prompt and do something with the object.  Instead
-of having to git-ls-tree -r .... in order to find it from the sha
-of the commitdiff.
+Preferably:
 
->    agree that we would want some clickable handle in combined
->    diff output, but people not familiar with git would not know
->    that "index xxx,yyy..zzz" is where you would find the
->    parents, so that line needs to be munged anyway.
+ - you should avoid making a series out of more-or-less
+   unrelated things;
 
-I think gitweb should first and foremost cater to git users.
+ - if you are doing related things in one series, do not send
+   half-baked early parts out until you are finished and are
+   confident with it.  If you do not know how many patches you
+   need to complete that logically single topic yet, that is a
+   sure sign that you are not done.  Instead, finish writing and
+   testing it, and if your test finds an earlier mistake,
+   especially a trivial one, go back and fix it in the earlier
+   patch in the series.  Everybody makes mistakes so fixing up
+   before submission is a norm, and other people do not have to
+   be forced to see your "oops" in the development history.
 
->    Side note: Even though some git people (Luben, for example)
->    claim they recognize some abbreviated object names, I suspect
->    that are mostly recent commits and not blobs.
-
-Yes, commit-8 for the day, blob-8 for less than a minute
-which allows me to move the mouse pointer from to the xterm.
-
->  * Mode on the "index" line may be useful, but as you say 100644
->    is probably too git specific; however if our audience is
->    git-uninitiated, I doubt -rw-r--r-- is much better (it is
->    UNIXism, which I personally do not mind).  Spelling them out
->    like "regular file", "executable file", or "symbolic link"
->    might be more readable.
-
-It would be more readable, but then it would be more readable.
-Ideally I'd like it to be less readable, i.e. less to read.
-
->  * I think the filename quoting is better left as-is, since it
->    is a way to indicate something funny is going on. 
-
-I agree.
-
-   Luben
+Thanks.
