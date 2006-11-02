@@ -1,73 +1,51 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Set permissions of each new file before "cvs add"ing it.
-Date: Sun, 03 Dec 2006 18:41:16 -0800
-Message-ID: <7vbqmktmb7.fsf@assigned-by-dhcp.cox.net>
-References: <87ac24zrk0.fsf@rho.meyering.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Suggestion: drop 'g' in git-describe suffix
+Date: Thu, 2 Nov 2006 12:03:31 +0100
+Message-ID: <20061102110331.GJ20017@pasky.or.cz>
+References: <eibh94$t7n$1@sea.gmane.org> <45494E20.1000503@shadowen.org> <4549C083.9060805@xs4all.nl> <4549CA6B.4090909@shadowen.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 4 Dec 2006 02:41:24 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Thu, 2 Nov 2006 11:03:44 +0000 (UTC)
+Cc: hanwen@xs4all.nl, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <87ac24zrk0.fsf@rho.meyering.net> (Jim Meyering's message of
-	"Sun, 03 Dec 2006 20:51:27 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <4549CA6B.4090909@shadowen.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33161>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gr3lg-00076a-Al for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 03:41:20 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30717>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfaMF-0002Q6-7N for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 12:03:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758986AbWLDClS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
- 21:41:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759011AbWLDClR
- (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 21:41:17 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:8364 "EHLO
- fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP id S1758982AbWLDClR
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 21:41:17 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao12.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061204024116.LVTE4226.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>; Sun, 3
- Dec 2006 21:41:16 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id uShS1V0081kojtg0000000; Sun, 03 Dec 2006
- 21:41:26 -0500
-To: Jim Meyering <jim@meyering.net>
+ S1752833AbWKBLDd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 06:03:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752834AbWKBLDd
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 06:03:33 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:61114 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1752833AbWKBLDd (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 06:03:33 -0500
+Received: (qmail 5783 invoked by uid 2001); 2 Nov 2006 12:03:31 +0100
+To: Andy Whitcroft <apw@shadowen.org>
 Sender: git-owner@vger.kernel.org
 
-Jim Meyering <jim@meyering.net> writes:
+Dear diary, on Thu, Nov 02, 2006 at 11:37:31AM CET, I got a letter
+where Andy Whitcroft <apw@shadowen.org> said that...
+> The g prefix on the sha1 _fragment_ it to indicate that it is in fact
+> a truncated sha1, not a complete one.
 
-> Without the following patch, git-cvsexportcommit would fail to propagate
-> permissions of files added in git to the CVS repository.  I.e., when I
-> added an executable script in coreutils' git repo, then tried to propagate
-> that addition to the mirroring CVS repository, the script ended up added
-> not executable there.
+I think it's rather to indicate that it is a sha1 at all.
 
-Thanks.  But...
-
-> +# For any file we want to add to cvs, we must first set its permissions
-> +# properly, *before* the "cvs add ..." command.  Otherwise, it is impossible
-> +# to change the permission of the file in the CVS repository using only cvs
-> +# commands.  This should be fixed in cvs-1.12.14.
-> +sub set_new_file_permissions {
-> +    my ($file) = @_;
-> +    # Given input like this:
-> +    # ba45154d8e9f5f49f46c8c2c2d8a554db7c3465f ...
-> +    # :000000 100755 0000000... b595dc6... A  tests/du/one-file-system
-> +    # extract the three octal permission digits:
-> +    my $cmd = 'git-whatchanged --max-count=1 --pretty=oneline -- $f'
-> +      . q! | sed -n '2s/^:00* [0-7][0-7][0-7]\([0-7][0-7][0-7]\) .*/\1/p'!;
-> +    my $perm = `$cmd`;
-> +
-> +    chmod oct($perm), $file
-> +      or die "failed to set permissions of \"$file\": $!\n";
-> +}
-
-Why sed in a Perl script ;-)?
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
