@@ -4,50 +4,59 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] cvsserver: Avoid miscounting bytes in Perl v5.8.x
-Date: Wed, 06 Dec 2006 21:48:07 -0800
-Message-ID: <7v1wncw92g.fsf@assigned-by-dhcp.cox.net>
-References: <11654627303222-git-send-email-martin@catalyst.net.nz>
+From: "Michael S. Tsirkin" <mst@mellanox.co.il>
+Subject: Re: how to pass ssh options to git?
+Date: Thu, 2 Nov 2006 11:31:53 +0200
+Message-ID: <20061102093153.GF7468@mellanox.co.il>
+References: <vpqejsm433c.fsf@ecrins.imag.fr>
+Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 7 Dec 2006 05:48:20 +0000 (UTC)
+NNTP-Posting-Date: Thu, 2 Nov 2006 09:29:25 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <11654627303222-git-send-email-martin@catalyst.net.nz> (Martin
-	Langhoff's message of "Thu, 7 Dec 2006 16:38:50 +1300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <vpqejsm433c.fsf@ecrins.imag.fr>
+User-Agent: Mutt/1.4.2.1i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33551>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsC7C-0004zi-7n for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 06:48:14 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30696>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfYsv-000077-Vn for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 10:29:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031279AbWLGFsL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 00:48:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031326AbWLGFsL
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 00:48:11 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:40816 "EHLO
- fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1031279AbWLGFsJ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 00:48:09 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061207054808.NSYV20715.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Thu, 7
- Dec 2006 00:48:08 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id vhnY1V0011kojtg0000000; Thu, 07 Dec 2006
- 00:47:32 -0500
-To: Martin Langhoff <martin@catalyst.net.nz>
+ S1752749AbWKBJ3N (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 04:29:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752770AbWKBJ3N
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 04:29:13 -0500
+Received: from dev.mellanox.co.il ([194.90.237.44]:6272 "EHLO
+ dev.mellanox.co.il") by vger.kernel.org with ESMTP id S1752749AbWKBJ3N (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 04:29:13 -0500
+Received: from mellanox.co.il ([194.90.237.34]) by dev.mellanox.co.il
+ (8.13.1/8.13.1) with SMTP id kA29T0fM010402; Thu, 2 Nov 2006 11:29:01 +0200
+Received: by mellanox.co.il (sSMTP sendmail emulation); Thu,  2 Nov 2006
+ 11:31:53 +0200
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
 Sender: git-owner@vger.kernel.org
 
-Martin Langhoff <martin@catalyst.net.nz> writes:
+Quoting r. Matthieu Moy <Matthieu.Moy@imag.fr>:
+> Subject: Re: how to pass ssh options to git?
+> 
+> "Michael S. Tsirkin" <mst@mellanox.co.il> writes:
+> 
+> > How is it possible to pass ssh options to git?
+> > for example, I use these options to log into some machine:
+> > ssh -i <private> -o HostKeyAlias=<alias> -p <port> -l <user> <address>
+> 
+> Not answering the question, but this can go to ~/.ssh/config :
+> 
+> Host *.domain.net
+> User some_user
+> IdentityFile ~/.ssh/foobar
+> 
 
-> At some point between v5.6 and 5.8 Perl started to assume its input,
-> output and filehandles are UTF-8. This breaks the counting of bytes
-> for the CVS protocol, resulting in the client expecting less data
-> than we actually send, and storing truncated files.
+I know, problem is I want to use different options at different times.
+I could use -F configfile ssh option, but how to pass *that* to git?
 
-Thanks.  Will queue for both maint and master.
+-- 
