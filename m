@@ -1,82 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Restore a single file in the index back to HEAD
-Date: Thu, 26 Oct 2006 16:41:09 +0100
-Message-ID: <200610261641.11239.andyparkins@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Minor documentation problems
+Date: Thu, 02 Nov 2006 14:20:44 +0100
+Message-ID: <vpq4ptinfwz.fsf@ecrins.imag.fr>
+References: <vpqmz7a1694.fsf@ecrins.imag.fr>
+	<20061102114149.GL20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 26 Oct 2006 15:41:46 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 2 Nov 2006 13:22:19 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=JCyXLQsvTEudbvT8bHmrPMT74YW7JBPCza0ukhia2UbJZ/N8U2BOMxtmzJEtuzm6Ggm1y+6NfD1rIY6C43PM+2JOWDFXKaXSCzQU4ZPgNZz66RcxajXawjhjkatEkdWKvu/2IiItMfV3aMWu+14htQzshc+WZZcIuCJX0RRsjZg=
-User-Agent: KMail/1.9.5
-Content-Disposition: inline
+Mail-Followup-To: git@vger.kernel.org
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.6 (imag.imag.fr [129.88.30.1]); Thu, 02 Nov 2006 14:20:47 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30746>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd7M8-0000l7-QM for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 17:41:21 +0200
+ esmtp (Exim 4.43) id 1GfcWG-0000bu-Bj for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 14:22:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423580AbWJZPlR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 11:41:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423582AbWJZPlR
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 11:41:17 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:14168 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1423580AbWJZPlQ
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 11:41:16 -0400
-Received: by ug-out-1314.google.com with SMTP id 32so402678ugm for
- <git@vger.kernel.org>; Thu, 26 Oct 2006 08:41:15 -0700 (PDT)
-Received: by 10.67.27.3 with SMTP id e3mr3058981ugj; Thu, 26 Oct 2006
- 08:41:14 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id m1sm1892582uge.2006.10.26.08.41.14; Thu, 26 Oct 2006 08:41:14 -0700
- (PDT)
+ S1752855AbWKBNVm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 08:21:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752848AbWKBNVm
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 08:21:42 -0500
+Received: from imag.imag.fr ([129.88.30.1]:63716 "EHLO imag.imag.fr") by
+ vger.kernel.org with ESMTP id S1752855AbWKBNVl (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 08:21:41 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52]) by
+ imag.imag.fr (8.13.6/8.13.6) with ESMTP id kA2DKjdt020392
+ (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO) for
+ <git@vger.kernel.org>; Thu, 2 Nov 2006 14:20:47 +0100 (CET)
+Received: from ecrins.imag.fr ([129.88.43.124]) by mail-veri.imag.fr with
+ esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.50) id 1GfcUv-0001jb-13 for
+ git@vger.kernel.org; Thu, 02 Nov 2006 14:20:45 +0100
+Received: from moy by ecrins.imag.fr with local (Exim 4.50) id
+ 1GfcUu-00054O-UV for git@vger.kernel.org; Thu, 02 Nov 2006 14:20:44 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hello,
+Petr Baudis <pasky@suse.cz> writes:
 
-I have something like this:
+>   Moreover, I'm more and more thinking about removing the fallback on
+> guessing based on /etc/passwd and hostname. _Many_ people were and will
+> be burnt by it, and I think it's more sane to require the user to
+> confirm once what the valid credentials are (at _that_ point it's ok to
+> guess, but the user has to confirm it) than let them unconsciously do
+> 200 commits with completely bogus author lines.
 
-# On branch refs/heads/newmaster
-# Updated but not checked in:
-#   (will commit)
-#
-#   modified:   oops/file1
-#   modified:   good/file2
-#   modified:   good/file3
-#   modified:   good/file4
+IIRC, Darcs will prompt interactively the first time and remember it.
+The problem of interactive prompt is that it can break scripts (which
+are not always ran from an interactive prompt), so it's probably OK to
+do this in cogito, but less so in git.
 
-i.e. the index has been updated to hold oops/file1
+One nice thing with guess-and-don't-ask is that people who don't care
+don't have to bother about this. I mean, some people have been
+satisfied with CVS storing the username of the guy doing the access
+which is often wrong for years, so ... it's probably OK to use an
+incorrect guess for a private project with, say, <5 contributors.
 
-If I then didn't want to commit oops/file1, how do I restore the HEAD 
-oops/file1 back to the index without doing a full reset?
-
-What I'm wishing for is a per file reset...
-
- git-reset --mixed HEAD oops/file1
-
-(I realise that the above is crazy, but I hope it's explaining what I want).
-
-When I do a git checkout -f oops/file1; I get
-
-"git checkout: updating paths is incompatible with switching branches/forcing
-Did you intend to checkout 'oops/file1' which can not be resolved as commit?"
-
-
-
-Andy
 -- 
-Dr Andy Parkins, M Eng (hons), MIEE
