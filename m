@@ -1,74 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [PATCH] Make git-commit cleverer - have it figure out whether it needs -a automatically
-Date: Thu, 30 Nov 2006 20:32:23 +0700
-Message-ID: <fcaeb9bf0611300532x77c7fc8aq2ba77ff57b81cc05@mail.gmail.com>
-References: <ekmlar$ask$2@sea.gmane.org>
-	 <200611301324.04993.andyparkins@gmail.com>
+From: Miles Bader <miles.bader@necel.com>
+Subject: git bug? + question
+Date: Thu, 02 Nov 2006 14:56:51 +0900
+Message-ID: <buoejsme6ho.fsf@dhapc248.dev.necel.com>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 30 Nov 2006 13:33:00 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 2 Nov 2006 06:01:54 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=sSCb62rg0EkNCrl/ni23Oh0j/wr2NE4lGMT4PNsER6pxs1QHTlHS1+DMiG/qnnI7fxzS4CGz+IJwulEfsDBtKYS4kLK38ixyKTxOYCu0devx5TEXrPWvID6PHfNhonjdkv79geJJNof2UfOuCBd8PvAR6VMEQfVGfHvnDhlM14A=
-In-Reply-To: <200611301324.04993.andyparkins@gmail.com>
-Content-Disposition: inline
+Mail-Followup-To: git@vger.kernel.org, miles@gnu.org
+System-Type: i686-pc-linux-gnu
+Blat: Foop
+Original-Lines: 25
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30688>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gpm1g-0004B1-BG for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 14:32:35 +0100
+ esmtp (Exim 4.43) id 1GfVe8-0000SV-3S for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 07:01:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936233AbWK3Nc2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 08:32:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936359AbWK3Nc2
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 08:32:28 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:171 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S936233AbWK3Nc1
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 08:32:27 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so2110897uga for
- <git@vger.kernel.org>; Thu, 30 Nov 2006 05:32:26 -0800 (PST)
-Received: by 10.78.149.13 with SMTP id w13mr3507660hud.1164893543965; Thu, 30
- Nov 2006 05:32:23 -0800 (PST)
-Received: by 10.78.100.8 with HTTP; Thu, 30 Nov 2006 05:32:23 -0800 (PST)
-To: "Andy Parkins" <andyparkins@gmail.com>
+ S1752651AbWKBGBl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 01:01:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752653AbWKBGBl
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 01:01:41 -0500
+Received: from mgate03.necel.com ([203.180.232.83]:45732 "EHLO
+ mgate03.necel.com") by vger.kernel.org with ESMTP id S1752651AbWKBGBk (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 01:01:40 -0500
+Received: from relay21.aps.necel.com (relay21 [10.29.19.50]) by
+ mgate03.necel.com (8.13.8/8.13.1) with ESMTP id kA24s357024833; Thu, 2 Nov
+ 2006 15:01:35 +0900 (JST)
+Received: from relay31.aps.necel.com ([10.29.19.24] [10.29.19.24]) by
+ relay21.aps.necel.com with ESMTP; Thu, 2 Nov 2006 15:01:35 +0900
+Received: from dhapc248.dev.necel.com ([10.114.97.235] [10.114.97.235]) by
+ relay31.aps.necel.com with ESMTP; Thu, 2 Nov 2006 15:01:35 +0900
+Received: by dhapc248.dev.necel.com (Postfix, from userid 31295) id 02F7B57;
+ Thu,  2 Nov 2006 14:56:51 +0900 (JST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-> diff --git a/git-commit.sh b/git-commit.sh
-> index 81c3a0c..fabfeae 100755
-> --- a/git-commit.sh
-> +++ b/git-commit.sh
-> @@ -265,6 +265,14 @@ $1"
->  done
->  case "$edit_flag" in t) no_edit= ;; esac
->
-> +# Clever commit - if this commit would do nothing, then make it an "all"
-> +# commit
-> +if [ -z "$(git-diff-index --cached --name-only HEAD)" \
-> +       -a -z "$amend" -a -z "$only" -a -z "$also" ]; then
-> +       echo "Nothing to commit but changes in working tree. Assuming 'git commit -a'"
+Hi,
 
-This is hardly seen as the editor will immediately pop up. Better
-pause a second or put it in commit template (I'd prefer the latter).
+I tried the following sequence of commands to make two clones of a
+remote repository, but got an error:
 
-> +       all=t
-> +fi
-> +
->  ################################################################
->  # Sanity check options
->
-> --
-> 1.4.4.1.g3ece-dirty
+   $ git clone --use-separate-remote ssh://fp.gnu.org/~/git/snogray.git snogray-git
+   $ git clone --use-separate-remote --reference snogray-git ssh://fp.gnu.org/~/git/snogray.git imp-sample
+   error: refs/reference-tmp/refs/remotes/origin/HEAD points nowhere!
+
+Is this a real error, or bad usage?
+
+Also, a question:  Is there anyway to make git-clone use
+--use-separate-remote by default?  I'm trying for a "lots of branches in
+a single shared remote repository" style, and use-separate-remote seems
+more sane for this usage.
+
+I'm using git version 1.4.3.3.
+
+Thanks,
+
+-Miles
+
 -- 
+"I distrust a research person who is always obviously busy on a task."
