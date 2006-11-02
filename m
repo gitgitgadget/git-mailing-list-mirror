@@ -4,80 +4,64 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Possible BUG with git-rev-list --all in a StGit repository
-Date: Sun, 26 Nov 2006 12:16:50 -0800
-Message-ID: <7v7ixit13h.fsf@assigned-by-dhcp.cox.net>
-References: <e5bfff550611260827t686a5071w7f050f17f784e5d9@mail.gmail.com>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Suggestion: drop 'g' in git-describe suffix
+Date: Thu, 02 Nov 2006 02:23:04 +0100
+Message-ID: <eibh94$t7n$1@sea.gmane.org>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 26 Nov 2006 20:17:04 +0000 (UTC)
-Cc: catalin.marinas@gmail.com,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <junkio@cox.net>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 2 Nov 2006 01:23:22 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 20
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
+User-Agent: Thunderbird 1.5.0.7 (X11/20061008)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30679>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoQQq-0007t6-Ce for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 21:16:56 +0100
+ esmtp (Exim 4.43) id 1GfRIa-0000Cm-Oj for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 02:23:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757958AbWKZUQw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
- 15:16:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757959AbWKZUQw
- (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 15:16:52 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:30619 "EHLO
- fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S1757958AbWKZUQv
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 15:16:51 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061126201651.UFCM9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Sun, 26
- Nov 2006 15:16:51 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id rYGz1V00M1kojtg0000000; Sun, 26 Nov 2006
- 15:17:00 -0500
-To: "Marco Costalba" <mcostalba@gmail.com>
+ S1423132AbWKBBXN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 20:23:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423133AbWKBBXN
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 20:23:13 -0500
+Received: from main.gmane.org ([80.91.229.2]:30888 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1423132AbWKBBXM (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 20:23:12 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GfRIM-0000B5-HI for git@vger.kernel.org; Thu, 02 Nov 2006 02:23:02 +0100
+Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
+ esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
+ Thu, 02 Nov 2006 02:23:02 +0100
+Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
+ id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 02 Nov 2006 02:23:02
+ +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-"Marco Costalba" <mcostalba@gmail.com> writes:
 
-> In a StGit repository the --all option causes a lot of spurious
-> revisions, possibly stgit related.
->
-> $ git branch
-> * master
->  origin
->  test
->
-> $ git rev-list master origin test -- src/settingsimpl.cpp | wc
->     13      13     533
->
-> $ git rev-list --all -- src/settingsimpl.cpp | wc
->     26      26    1066
->
->
-> The extra revisions have shortlogs of the kind of:
->
-> push        a3bc76fd0bdd154149c26a3c208f0344e9cd873b
-> new e7baf56544cd8b4f8601a35fad274b8de97fd558
-> refresh     8fa01a56a40b04ed9c6d006c669ca9d370176728
->
->>From qgit these are easily seen from file history tab of a file
-> modified by stgit patches or when filtering in main view on the same
-> file.
->
-> Shouldn't 'git-rev-list --all'  print  *the same output* of when the
-> list  with all branches is given in command line?
+hi,
 
-Should it?  The "--all" option is about "all refs", not "all
-user branches" and it has been so from the beginning.  For one
-thing it has to do the reachability thing also for tags
-(otherwise it cannot be used as the upstream for git-repack
-pipeline).
+the convention to use a 'g' in the output of git-describe, eg.
 
-You are looking at .git/refs/bases/ refs that StGIT uses for its
-internal bookkeeping.
+   [lilydev@haring lilypond]$ git describe --abbrev=39
+   lilypond_2_9_7-g47778d2297276484c861fc7536da13feb2d5fe8
 
+
+is confusing: the g is also a hex digit, and without reading the manual 
+carefully, you'd think this is the commit g4777.
+
+Proposal: why not use
+
+   tag#sha1
+
+or some other non-hex character.
+
+-- 
+  Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
