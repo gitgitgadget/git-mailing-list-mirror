@@ -4,83 +4,80 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: What's in git.git (stable)
-Date: Thu, 14 Dec 2006 06:45:46 -0500
-Message-ID: <20061214114546.GI1747@spearce.org>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612140959.19209.andyparkins@gmail.com> <7v7iwu93rv.fsf@assigned-by-dhcp.cox.net> <200612141136.59041.andyparkins@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Minor documentation problems
+Date: Thu, 2 Nov 2006 12:41:49 +0100
+Message-ID: <20061102114149.GL20017@pasky.or.cz>
+References: <vpqmz7a1694.fsf@ecrins.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 14 Dec 2006 11:45:59 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Thu, 2 Nov 2006 11:42:01 +0000 (UTC)
+Cc: jnareb@gmail.com
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <200612141136.59041.andyparkins@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <vpqmz7a1694.fsf@ecrins.imag.fr>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34322>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gup2B-0007mZ-9I for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 12:45:55 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30738>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfaxG-0001VE-D2 for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 12:41:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932648AbWLNLpw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 06:45:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932636AbWLNLpw
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 06:45:52 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:36675 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932648AbWLNLpw (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 06:45:52 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Gup22-0008Vb-VN; Thu, 14 Dec 2006 06:45:47 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 105BC20FB65; Thu, 14 Dec 2006 06:45:46 -0500 (EST)
-To: Andy Parkins <andyparkins@gmail.com>
+ S1750716AbWKBLlv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 06:41:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750835AbWKBLlv
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 06:41:51 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:18883 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1750716AbWKBLlu (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 06:41:50 -0500
+Received: (qmail 13063 invoked by uid 2001); 2 Nov 2006 12:41:49 +0100
+To: git <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> wrote:
-> How's this then:
+  Hi,
+
+Dear diary, on Thu, Nov 02, 2006 at 11:40:23AM CET, I got a letter
+where Matthieu Moy <Matthieu.Moy@imag.fr> said that...
+> I found minor problems with the doc, which deserve to be fixed:
 > 
-> $ git commit
-> $ git commit
-> $ git commit
-> $ git reset HEAD^^^
-> 
-> "AGGGHHHHHH!  I meant HEAD^^"
-> 
-> At this point I start running "git-prune -n | grep commit" and some liberal 
-> use of git-show to try and find the hash of the object so I can do
+> * http://www.kernel.org/pub/software/scm/cogito/docs/cg-commit.1.html
+>   Mentions .git/config, but not ~/.gitconfig (which is indeed _the_
+>   place where I think most people want to set their name and email).
 
-At this point I usually try to politely suggest that users do:
+  thanks for pointing this out, further releases will mention both.
 
-  git repo-config --global core.logAllRefUpdates true
+>   Side note: it can be interesting to have a command to do this.
+>   For example, bzr has "bzr whoami 'me <myself@myisp.com>'", which
+>   avoids having to learn the config file syntax.
 
-and in the future do something like:
+  Yes, you are certainly not the first to wish this, I'm seriously
+thinking about introducing cg-admin-config for setting the most common
+configuration variables.
 
-> $ git commit         # {4}
-> $ git commit         # {3}
-> $ git commit         # {2}
-> $ git reset HEAD^^^  # {1}
-> 
-> "AGGGHHHHHH!  I meant HEAD^^"
+  Moreover, I'm more and more thinking about removing the fallback on
+guessing based on /etc/passwd and hostname. _Many_ people were and will
+be burnt by it, and I think it's more sane to require the user to
+confirm once what the valid credentials are (at _that_ point it's ok to
+guess, but the user has to confirm it) than let them unconsciously do
+200 commits with completely bogus author lines.
 
-  $ git reset HEAD@{4}
+  What do the Git people think? Perhaps we could introduce GIT_NO_GUESS
+environment variable which will prevent var.c from guessing?
 
-should give you what
+> * RSS link on the wiki:
+>   The URL
+>   http://git.or.cz/gitwiki/RecentChanges?action=rss_rc&ddiffs=1&unique=1
+>   seems to be working as an RSS feed for changes, but it's not linked
+>   to by http://git.or.cz/gitwiki/RecentChanges. Usually, there's an
+>   RSS icon, and an HTML <link rel="alternate" ...> to help finding it.
 
-  $ git reset HEAD^^
+  Fixed, thanks.
 
-would have given had you not added the extra ^.  :-)
- 
 -- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
