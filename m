@@ -1,92 +1,90 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: [RFC \ WISH] Add -o option to git-rev-list
-Date: Mon, 11 Dec 2006 21:28:05 +0100
-Message-ID: <200612112128.06485.Josef.Weidendorfer@gmx.de>
-References: <e5bfff550612100338ye2ca2a0u1c8f29bbc59c5431@mail.gmail.com> <Pine.LNX.4.64.0612111003140.12500@woody.osdl.org> <e5bfff550612111059g35f1aa2dmdead17a60f5dfca8@mail.gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 1/6] Allow pack header preprocessing before
+ unpack-objects/index-pack.
+Date: Wed, 01 Nov 2006 22:58:30 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0611012226260.11384@xanadu.home>
+References: <11624187853116-git-send-email-nico@cam.org>
+ <7v3b92zpzj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 11 Dec 2006 20:28:32 +0000 (UTC)
-Cc: "Linus Torvalds" <torvalds@osdl.org>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <junkio@cox.net>,
-	"Alex Riesen" <raa.lkml@gmail.com>,
-	"Shawn Pearce" <spearce@spearce.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Thu, 2 Nov 2006 03:59:25 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #352111
-User-Agent: KMail/1.9.5
-In-Reply-To: <e5bfff550612111059g35f1aa2dmdead17a60f5dfca8@mail.gmail.com>
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+In-reply-to: <7v3b92zpzj.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34031>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtrlC-0001Jp-2y for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 21:28:26 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30684>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfTjf-00041g-EN for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 04:59:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1763081AbWLKU2X (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
- 15:28:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763082AbWLKU2X
- (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 15:28:23 -0500
-Received: from mail.gmx.net ([213.165.64.20]:35279 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1763080AbWLKU2W
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec 2006 15:28:22 -0500
-Received: (qmail invoked by alias); 11 Dec 2006 20:28:20 -0000
-Received: from p5496B761.dip0.t-ipconnect.de (EHLO noname) [84.150.183.97] by
- mail.gmx.net (mp048) with SMTP; 11 Dec 2006 21:28:20 +0100
-To: "Marco Costalba" <mcostalba@gmail.com>
+ S1751678AbWKBD6c (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 22:58:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751676AbWKBD6c
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 22:58:32 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:7475 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S1751678AbWKBD6b
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 22:58:31 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J8300B7F4DIMHG0@VL-MH-MR002.ip.videotron.ca> for git@vger.kernel.org; Wed,
+ 01 Nov 2006 22:58:30 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Monday 11 December 2006 19:59, Marco Costalba wrote:
-> On 12/11/06, Linus Torvalds <torvalds@osdl.org> wrote:
-> >
-> >
-> >
-> > However, you seem to continually ignore the thing I've asked you to do
-> > several times: try with a cold-cache situation.
-> 
-> Yes. I will test it. I was testing with warm cache also to my
-> curiosity about comparing pipes with temporary file reading as data
-> exchange facility. So I needed to avoid HD artifacts.
+On Wed, 1 Nov 2006, Junio C Hamano wrote:
 
-Hi,
+> Rather nicely done.  I see upto 2/6 are identical to what has
+> sitting in "pu" for the past few days, modulo some indentation?
 
-I just looked at the QProcess implementation in Qt 3.3.6, as I was
-curious.
+Yes.  I just inserted them in the serie as I didn't see them in pu until 
+a very recent pull.
 
-Qt does a big select() call in the event loop. If there is data
-available from the child process, it is reading in chunks of a
-maximum of 4096 bytes, with a select() call inbetween to see if
-there is still data available. After every read, the read data
-is concatenated into the read buffer.
+> I wonder how much testing has this series seen, by the way.
 
-For the slow/cold cache case, this probably is the best *if* the
-consumer application can act as fast as possible when data is
-sent. Which makes it a good fit to avoid --topo-order and do
-some redrawing of the graph yourself if needed. For sure, this
-gives the fastest visual appeareance. You could start filling
-the list after e.g. 30 revs are read.
+It has been tested a bit.  At least until it started behaving 
+correctly for me. There might still be bugs remaining, but nothing that 
+should screw a repository up. I think it should be good enough for next.
 
-Obviously, there is some possibility for improvement _when_ you
-know that you want to read in large amounts of data in big
-chunks, given that QProcess uses at least two system calls every
-4 kB.
+> Also, I wonder what happens after 5/6 errors out.  It dies and
+> the caller (typically receive-pack) reports it back, which would
+> fail the push (and does not update the refs).  Retrying in such
+> a case would probably use the same set of refs on both ends,
+> resulting in exactly the same pack...
 
-A general question: How many context switches are involved in such
-a producer/consumer scenario, given that the consumer writes one
-line at a time, and the consumer uses poll/select to wait for the
-data?
-Is there some possibility to make the kernel write-combine single
-small producer writes into bigger chunks, which will be delivered
-at once (or smaller data only after a small timeout)?
+Well, the purpose of 5/6 is to avoid creating a .keep file if it already 
+exists.  This is more a security thing so if you decide to mark one of 
+your pack with .keep (say an history pack that doesn't need to be 
+repacked) then you don't want a funny git server to send you the same 
+pack just for the purpose of overwriting the same .keep file (that could 
+be removed right away if it ends up being considered as a lock file).  
+This is made more obvious with 6/6 as the .keep file is not removed if 
+it was there before.  So this is not actually an error if creating a 
+.keep file fails with EEXIST.
+
+As for index-pack dying, it will be reported the same way as 
+unpack-objects dying -- no difference there.  Of course if it dies on 
+the first push, it is likely to die on all subsequent pushes since the 
+condition for that to happen is most probably due to a serious problem 
+(out of disk space, corruption in the existing objects in the 
+repository, etc).
+
+The pack is put in place with move_temp_to_file() so if a previous 
+attempt already stored a pack with the same name before successfully 
+updating corresponding refs then the old pack will silently be kept 
+since we know both packs contain the same objects when they have the 
+same name.  When a pack is moved it is always complete so there 
+shouldn't be any (new) instance of repository corruption in normal 
+circumbstances even in the presence of index-pack dying.
+
+
 
