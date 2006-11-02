@@ -1,79 +1,87 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] git-parse-remote: fix ambiguous shell bug in expand_refs_wildcard
-Date: Mon, 18 Dec 2006 03:09:41 -0500
-Message-ID: <20061218080941.GA3857@coredump.intra.peff.net>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: Suggestion: drop 'g' in git-describe suffix
+Date: Thu, 2 Nov 2006 13:39:26 +0100
+Message-ID: <8aa486160611020439r255bcdb1q6e7ece46c77de11c@mail.gmail.com>
+References: <eibh94$t7n$1@sea.gmane.org> <45494E20.1000503@shadowen.org>
+	 <4549C083.9060805@xs4all.nl> <4549CA6B.4090909@shadowen.org>
+	 <4549CE2A.3010808@xs4all.nl>
+	 <8aa486160611020312v42047716t6a13e6fa16eeae8@mail.gmail.com>
+	 <4549D4B4.4030601@shadowen.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 18 Dec 2006 08:09:49 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 2 Nov 2006 12:39:36 +0000 (UTC)
+Cc: hanwen@xs4all.nl, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=hJTffaPI3XxkMCiOqVlRr/+Wfwf7fqj4VjSZEg026DPJf2O0QAow67M1R4T4Qhbbm8HI9aEJweoYFrdDpxOYNQ7f2V6MMws81pgHSAEizerh51YlPHZa1ttfTJpnxyzLmD95SqlX2v7iBgqVuANJ4SMYBcBw1Ulh8EYrzLmoaSI=
+In-Reply-To: <4549D4B4.4030601@shadowen.org>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34727>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwDZD-0002cu-It for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 09:09:47 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30742>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gfbr1-00029V-SE for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 13:39:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753494AbWLRIJo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
- 03:09:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753493AbWLRIJo
- (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 03:09:44 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:41749
- "HELO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id
- S1753494AbWLRIJn (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
- 03:09:43 -0500
-Received: (qmail 26463 invoked from network); 18 Dec 2006 03:09:42 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2) by
- 66-23-211-5.clients.speedfactory.net with SMTP; 18 Dec 2006 03:09:42 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Dec
- 2006 03:09:41 -0500
-To: Junio C Hamano <junkio@cox.net>
+ S1752301AbWKBMj1 convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006 07:39:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752389AbWKBMj1
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 07:39:27 -0500
+Received: from wx-out-0506.google.com ([66.249.82.226]:60781 "EHLO
+ wx-out-0506.google.com") by vger.kernel.org with ESMTP id S1752301AbWKBMj1
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006
+ 07:39:27 -0500
+Received: by wx-out-0506.google.com with SMTP id s14so109299wxc for
+ <git@vger.kernel.org>; Thu, 02 Nov 2006 04:39:26 -0800 (PST)
+Received: by 10.70.11.1 with SMTP id 1mr764596wxk.1162471166235; Thu, 02 Nov
+ 2006 04:39:26 -0800 (PST)
+Received: by 10.70.46.19 with HTTP; Thu, 2 Nov 2006 04:39:26 -0800 (PST)
+To: "Andy Whitcroft" <apw@shadowen.org>
 Sender: git-owner@vger.kernel.org
 
-Bash and dash parse "${name%'^{}'}" differently, with bash quoting the
-^{}, and dash assuming the first } is the end of the variable (and thus
-tacking '} to the end). Instead, use backslash to quote the closing
-brace.
+On 11/2/06, Andy Whitcroft <apw@shadowen.org> wrote:
+> Santi B=E9jar wrote:
+> > One problem I see with this scheme (either 'g', 'git' of '+') is th=
+at
+> > it does not provide an increasing version number, even for
+> > fast-forwarding commits. Then it is not useful as a package version
+> > number (deb or rpm). I've already seen deb packages with
+> > version+git20061010. One possibility could be to add the number of
+> > commits between the tag and the commit as:
+> >
+> > v1.4.3.3-git12g1e1f76e
+> >
+> > to provide a weak ordering for fast-forwarding commits. What do you=
+ thing?
+>
+> I think you'll restart the 1.2.3.4 versioning is better 'debate' agai=
+n!
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Please sanity check that I understand what the code is supposed to be
-doing. The bug I was getting was this:
+Sorry, I don't undestand this.
 
-$ readlink /bin/sh
-dash
-$ git-clone git://git.kernel.org/pub/scm/git/git.git
-[...]
-$ cd git && git-pull
-Warning: No merge candidate found because value of config option
-         "branch.master.merge" does not match any remote branch fetched.
+> Surly if things are being pushed into a .deb or .rpm we should be usi=
+ng
+> a real release version.  We should be tagging that.  If the project i=
+s
+> not providing release number, there is nothing stopping you from tagg=
+ing
+> them yourself in your copy of the repository and using your tag.  you
+> could use like 'unofficial-N' where N increments in the way you want.
 
-A shell trace showed lots of tests against strings like
-"refs/heads/master'}". Expand_refs_wildcard returned no entries, so it
-couldn't match the branch.master.merge field.
+And where do you store this tag? It is an upstream commit and you just
+refer to this. With the unofficial-N there is no way to know which
+upstream commit you are refering without having access to the git
+repository of the packager  .
 
- git-parse-remote.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index f27c3c2..ab79042 100755
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -116,7 +116,7 @@ expand_refs_wildcard () {
- 			while read sha1 name
- 			do
- 				mapped=${name#"$from"}
--				if test "z$name" != "z${name%'^{}'}" ||
-+				if test "z$name" != "z${name%'^{\}'}" ||
- 					test "z$name" = "z$mapped"
- 				then
- 					continue
--- 
