@@ -1,71 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
-Date: Thu, 30 Nov 2006 20:20:10 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0611302017120.9647@xanadu.home>
-References: <7virgzuf38.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0611282322320.9647@xanadu.home>
- <7vr6vmsnly.fsf@assigned-by-dhcp.cox.net> <87ejrlvn7r.wl%cworth@cworth.org>
- <7vodqpn3t4.fsf@assigned-by-dhcp.cox.net>
- <7vk61dn2yj.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0611300310520.30004@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0611291859070.3513@woody.osdl.org> <456EBBE7.8030404@op5.se>
- <Pine.LNX.4.64.0611300749560.3513@woody.osdl.org>
- <20061130164046.GB17715@thunk.org>
- <Pine.LNX.4.64.0611300903080.3513@woody.osdl.org>
- <Pine.LNX.4.64.0611301229290.9647@xanadu.home>
- <87irgwu6e6.wl%cworth@cworth.org> <87hcwgu5t1.wl%cworth@cworth.org>
- <Pine.LNX.4.64.0611301132350.3513@woody.osdl.org>
- <Pine.LNX.4.64.0611301521320.9647@xanadu.home>
- <7vhcwgiqer.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0611301624430.9647@xanadu.home>
- <7vlklsfsgz.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git and "dumb protocols"
+Date: Thu, 02 Nov 2006 13:12:53 +0100
+Organization: At home
+Message-ID: <eicnbe$v6l$1@sea.gmane.org>
+References: <vpqu01i16g8.fsf@ecrins.imag.fr> <20061102104848.GH20017@pasky.or.cz> <vpq4ptixdfj.fsf@ecrins.imag.fr>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Fri, 1 Dec 2006 01:20:49 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, Carl Worth <cworth@cworth.org>,
-	Theodore Tso <tytso@mit.edu>, Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Thu, 2 Nov 2006 12:13:28 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <7vlklsfsgz.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 19
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-18-116.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30740>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gpx50-0001DB-Gd for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 02:20:42 +0100
+ esmtp (Exim 4.43) id 1GfbRZ-0006bF-47 for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 13:13:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031705AbWLABUN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 20:20:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031702AbWLABUN
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 20:20:13 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:10845 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S1031699AbWLABUL
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 20:20:11 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J9K007H9MDMEF60@VL-MO-MR002.ip.videotron.ca> for git@vger.kernel.org; Thu,
- 30 Nov 2006 20:20:10 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S1752149AbWKBMNJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 07:13:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752376AbWKBMNJ
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 07:13:09 -0500
+Received: from main.gmane.org ([80.91.229.2]:61411 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1752324AbWKBMNG (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 07:13:06 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GfbRB-0006X0-C5 for git@vger.kernel.org; Thu, 02 Nov 2006 13:12:50 +0100
+Received: from host-81-190-18-116.torun.mm.pl ([81.190.18.116]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Thu, 02 Nov 2006 13:12:49 +0100
+Received: from jnareb by host-81-190-18-116.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 02 Nov 2006
+ 13:12:49 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Thu, 30 Nov 2006, Junio C Hamano wrote:
+Matthieu Moy wrote:
 
-> I sense that you are inviting me to argue for reverting the
-> other "git commit" braindead which is spelled "--only" (and
-> worse yet, it is the default).  I am very tempted.
+> I'll probably do, but my concern is broader than that. I like the
+> ability to use almost any webhosting service for my revision control.
+> GNU Arch was quite good at that, bzr is also (doesn't support webdav
+> very well yet, but read-only-HTTP, sftp and ftp are there), so I'd
+> like git to do the same.
 
-No no no !
+Well, git can fetch (read) via http, https, ftp, sftp, rsync, git, ssh+git;
+it can push via http(s) with WebDAV, and ssh+git (ssh+git meaning via ssh,
+with git installed on the server side).
 
-I argued for that at the time and I still stands behind that change !
-
+BTW. rsync is considered obsolete, and suitable only for initial cloning,
+perhaps.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
