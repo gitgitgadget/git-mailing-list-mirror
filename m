@@ -1,130 +1,84 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git bug? + question
-Date: Fri, 3 Nov 2006 08:10:29 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611030741530.25218@g5.osdl.org>
-References: <buoejsme6ho.fsf@dhapc248.dev.necel.com> <7v4pthmew1.fsf@assigned-by-dhcp.cox.net>
- <20061103074857.GA15972@diana.vm.bytemark.co.uk> <7v3b90gbfv.fsf@assigned-by-dhcp.cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Rebasing part of a branch
+Date: Thu, 2 Nov 2006 11:45:23 +0100
+Message-ID: <200611021045.25423.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Fri, 3 Nov 2006 16:11:32 +0000 (UTC)
-Cc: =?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>,
-	Miles Bader <miles@gnu.org>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 2 Nov 2006 10:46:13 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7v3b90gbfv.fsf@assigned-by-dhcp.cox.net>
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=H7oqdgwjdSyx6FiFCPFAdBs1babCwHvErSRSax8hUVkb94qABDxOLs5wCbrWXuvJMI4pyWMdR2+bCQTKnEjJCBRukpKMtcJ278fG+b5C7LjYavC4v3dKHDzqcuakT9Qeco79Uin/InK0RS7meAtyuBOP9+aMWkKfxm05Cpn/Xy4=
+User-Agent: KMail/1.9.5
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30710>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gg1dO-0004Ue-Lt for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 17:11:11 +0100
+ esmtp (Exim 4.43) id 1Gfa4z-0006L5-U6 for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 11:45:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753335AbWKCQKs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
- 11:10:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753336AbWKCQKs
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 11:10:48 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:26051 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1753335AbWKCQKr (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 11:10:47 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kA3GAUoZ011746
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Fri, 3
- Nov 2006 08:10:30 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kA3GATRj024582; Fri, 3 Nov
- 2006 08:10:29 -0800
-To: Junio C Hamano <junkio@cox.net>
+ S1752820AbWKBKpc (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 05:45:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752114AbWKBKpb
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 05:45:31 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:21012 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1752820AbWKBKpa
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 05:45:30 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so85635ugc for
+ <git@vger.kernel.org>; Thu, 02 Nov 2006 02:45:29 -0800 (PST)
+Received: by 10.67.96.14 with SMTP id y14mr414203ugl.1162464329289; Thu, 02
+ Nov 2006 02:45:29 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id m1sm1937012uge.2006.11.02.02.45.28; Thu, 02 Nov 2006 02:45:28 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+Hello,
+
+Is there a way to rebase part of a branch?  For example
+
+                        H---I---J topicB
+                       /
+              E---F---G  topicA
+             /
+A---B---C---D  master
+
+And I want:
+
+             H---I---J  topicB
+            /
+            | E---F---G  topicA
+            |/
+A---B---C---D  master
+
+Of course,
+ 
+ git-checkout topicB
+ git-rebase master
+
+Doesn't work, because the common ancestor is D, which is master, and there is 
+nothing to do.
+
+Of course I can cherry-pick, but is there something like
+
+ git-rebase --limit topicA master
+
+Or some git-magic I can work?
 
 
-On Fri, 3 Nov 2006, Junio C Hamano wrote:
-> 
-> 	[remote."gitster"]
-
-Btw, why the '.'? It doesn't even work with a dot, you have to have a 
-space, which is also a lot more readable..
-
-Also, may I suggest that we just extend the format with a robust default 
-value thing?
-
-It should be reasonably easy to have just the rule:
-
- - add a new "remote.<remote>.branch" thing that lists multiple simple 
-   branches separated by whitespace.
-
- - a "simple branch" is just a "implicit refspec" for the relationship
-   "heads/<name>:remotes/<remote>/<name>"
-
-And then you should be able to write all of your cumbersome config options 
-as a simple
-
-	[remote "gitster"]
-		url = gitster.example.com:/home/junio/git.git/
-		branch = maint master next +pu
-
-and you're all done. It would imply everything you said.
-
-This would basically require that "git-parse-remote" be re-written as a 
-native builtin, because quite frankly, it would be too damn painful any 
-other way, but it really shouldn't be that nasty. In fact, I think we 
-should have done that long ago, because the shell-code is just horrid for 
-things like this.
-
-For example, for builtin-push (which is currently the only thing that 
-parses "remote" entries in C), you'd just need to do something like the 
-appended..  It would generate the full refspecs from the "branch" config 
-automatically.
-
-		Linus
-
----
-diff --git a/builtin-push.c b/builtin-push.c
-index d23974e..805ffa8 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -123,15 +123,33 @@ static int get_remote_config(const char*
- {
- 	if (!strncmp(key, "remote.", 7) &&
- 	    !strncmp(key + 7, config_repo, config_repo_len)) {
--		if (!strcmp(key + 7 + config_repo_len, ".url")) {
-+	    	const char *subkey = key + 7 + config_repo_len;
-+		if (!strcmp(subkey, ".url")) {
- 			if (config_current_uri < MAX_URI)
- 				config_uri[config_current_uri++] = xstrdup(value);
- 			else
- 				error("more than %d URL's specified, ignoring the rest", MAX_URI);
- 		}
--		else if (config_get_refspecs &&
--			 !strcmp(key + 7 + config_repo_len, ".push"))
--			add_refspec(xstrdup(value));
-+		else if (config_get_refspecs) {
-+			if (!strcmp(subkey, ".push"))
-+				add_refspec(xstrdup(value));
-+			else if (!strcmp(subkey, ".branch")) {
-+				while (isspace(*value))
-+					value++;
-+				while (*value) {
-+					const char *end = value;
-+					while (!isspace(*end))
-+						end++;
-+					add_refspec(xsprintf("heads/%.*s:remotes/%.*s/%.*s",
-+						end-value, value,
-+						config_repo_len, config_repo,
-+						end-value, value));
-+					while (isspace(*end))
-+						end++;
-+					value = end;
-+				}
-+			}
-+		}
- 	}
- 	return 0;
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
