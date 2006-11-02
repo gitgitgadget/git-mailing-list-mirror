@@ -1,78 +1,115 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Documentation: reorganize cvs-migration.txt
-Date: Wed, 06 Dec 2006 21:51:10 -0800
-Message-ID: <7vu008uucx.fsf@assigned-by-dhcp.cox.net>
-References: <4574BF70.8070100@lilypond.org> <45760545.2010801@gmail.com>
-	<20061206.105251.144349770.wl@gnu.org>
-	<Pine.LNX.4.63.0612061325320.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-	<4576D92A.80307@xs4all.nl> <20061206145802.GC1714@fieldses.org>
-	<Pine.LNX.4.63.0612061613460.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20061206171950.GD1714@fieldses.org>
-	<20061206172450.GE1714@fieldses.org>
-	<7v7ix47wbr.fsf@assigned-by-dhcp.cox.net>
-	<20061207041805.GC3457@fieldses.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: [PATCH 3/4] Default to displaying /all/ non-tag refs, not just locals
+Date: Thu, 2 Nov 2006 11:11:22 +0000
+Message-ID: <200611021111.22604.andyparkins@gmail.com>
+References: <bec6ab7849e3fcacac23cca44a0ba93282af5fca.1162465753.git.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 7 Dec 2006 05:51:23 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 2 Nov 2006 11:11:44 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061207041805.GC3457@fieldses.org> (J. Bruce Fields's message
-	of "Wed, 6 Dec 2006 23:18:05 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <bec6ab7849e3fcacac23cca44a0ba93282af5fca.1162465753.git.andyparkins@gmail.com>
+X-TUID: 0bead34287d13326
+X-UID: 158
+X-Length: 2267
+Content-Disposition: inline
+X-OriginalArrivalTime: 02 Nov 2006 11:12:29.0077 (UTC) FILETIME=[C8D38C50:01C6FE6F]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33552>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsCA7-0005G1-Gt for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 06:51:15 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30722>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfaTp-00040H-7O for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 12:11:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031366AbWLGFvN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 00:51:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031388AbWLGFvN
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 00:51:13 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:56022 "EHLO
- fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1031366AbWLGFvM (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 00:51:12 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao04.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061207055111.WPRH7494.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>; Thu, 7
- Dec 2006 00:51:11 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id vhqb1V00K1kojtg0000000; Thu, 07 Dec 2006
- 00:50:36 -0500
-To: "J. Bruce Fields" <bfields@fieldses.org>
+ S1752843AbWKBLL0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 06:11:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752844AbWKBLL0
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 06:11:26 -0500
+Received: from mail.360visiontechnology.com ([194.70.53.226]:12902 "EHLO
+ 369run02s.360vision.com") by vger.kernel.org with ESMTP id S1752843AbWKBLLZ
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 06:11:25 -0500
+Received: from dvr.360vision.com ([192.189.1.24]) by 369run02s.360vision.com
+ with Microsoft SMTPSVC(5.0.2195.6713); Thu, 2 Nov 2006 11:12:29 +0000
+Received: from localhost ([127.0.0.1]) by dvr.360vision.com with esmtp (Exim
+ 3.36 #1 (Debian)) id 1GfaTk-0003vx-00 for <git@vger.kernel.org>; Thu, 02 Nov
+ 2006 11:11:24 +0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-"J. Bruce Fields" <bfields@fieldses.org> writes:
+Adds support for display_mode == 2; which shows all non-tag refs.  I've set
+display_mode = 2 by default so it's easily reverted if needed - or if a switch
+for the old mode is wanted it can be easily added
 
-> diff --git a/Documentation/cvs-migration.txt b/Documentation/cvs-migration.txt
-> index 6812683..773fc99 100644
-> --- a/Documentation/cvs-migration.txt
-> +++ b/Documentation/cvs-migration.txt
-> @@ -1,113 +1,21 @@
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
+ builtin-branch.c |   32 +++++++++++++++++++++++++-------
+ 1 files changed, 25 insertions(+), 7 deletions(-)
 
-This conflicted in a funny way with your own commit but I think
-this version (773fc99 blob) supersedes its contents.
-
-I munged only one line, though.  The title of this section 
-should not be "a CVS repository" but "a shared repository" for
-obvious reasons ;-).
-
-> +Developing against a CVS repository
->  -----------------------------------
->  
-> +Suppose a shared repository is set up in /pub/repo.git on the host
->  foo.com.  Then as an individual committer you can clone the shared
-> +repository over ssh with:
->  
->  ------------------------------------------------
->  $ git clone foo.com:/pub/repo.git/ my-project
+diff --git a/builtin-branch.c b/builtin-branch.c
+index 85b7007..b88413a 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -104,20 +104,38 @@ static void print_ref_list(int display_m
+ {
+ 	int i;
+ 	char c;
++	char *p;
+ 
+-	if (display_mode)
+-		for_each_remote_ref(append_ref, NULL);
+-	else
+-		for_each_branch_ref(append_ref, NULL);
++	switch (display_mode) {
++		case 0:
++			for_each_branch_ref(append_ref, NULL);
++			break;
++		case 1:
++			for_each_remote_ref(append_ref, NULL);
++			break;
++		case 2:
++			for_each_ref(append_ref, NULL);
++			break;
++	}
+ 
+ 	qsort(ref_list, ref_index, sizeof(char *), ref_cmp);
+ 
+ 	for (i = 0; i < ref_index; i++) {
++		p = ref_list[i];
++		if (display_mode == 2) {
++			if (!strncmp( p, "refs/", 5 ))
++				p += 5;
++			if (!strncmp( p, "tags/", 5 ))
++				continue;
++			if (!strncmp( p, "heads/", 6 ))
++				p += 6;
++		}
++
+ 		c = ' ';
+-		if (!strcmp(ref_list[i], head))
++		if (!strcmp(p, head))
+ 			c = '*';
+ 
+-		printf("%c %s\n", c, ref_list[i]);
++		printf("%c %s\n", c, p);
+ 	}
+ }
+ 
+@@ -160,7 +178,7 @@ static void create_branch(const char *na
+ 
+ int cmd_branch(int argc, const char **argv, const char *prefix)
+ {
+-	int delete = 0, force_delete = 0, force_create = 0, display_mode = 0;
++	int delete = 0, force_delete = 0, force_create = 0, display_mode = 2;
+ 	int reflog = 0;
+ 	int i;
+ 
+-- 
+1.4.3.2
 
