@@ -1,63 +1,81 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Rename detection at git log
-Date: Mon, 20 Nov 2006 12:17:37 +0100
-Message-ID: <200611201117.39244.andyparkins@gmail.com>
-References: <200611201157.23680.litvinov2004@gmail.com> <200611201023.54146.andyparkins@gmail.com> <7vd57i4cij.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 6/6] remove .keep pack lock files when done with refs update
+Date: Thu, 02 Nov 2006 10:09:49 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0611020959410.11384@xanadu.home>
+References: <11624187853116-git-send-email-nico@cam.org>
+ <11624187853865-git-send-email-nico@cam.org>
+ <1162418786895-git-send-email-nico@cam.org>
+ <1162418786390-git-send-email-nico@cam.org>
+ <11624187871572-git-send-email-nico@cam.org>
+ <11624187883225-git-send-email-nico@cam.org>
+ <7vzmbav2n9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 20 Nov 2006 11:18:22 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Thu, 2 Nov 2006 15:11:11 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=FmLnA/VOlCEIQTI3MLFHAoPV/h/eCOWrgM+YiTTiSHi48ULOPlJm1JqK8r/KG//b4AktVMM7JZYtZRQJUsefeNrMQToWmWFUzIkgpfYRL9NMnf1mCM/tUg2zOfJZZGGfMhywUs1YUUK38c+SY5P1SHfGS0DCsiP+MHTt/4Y/3UA=
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vd57i4cij.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+In-reply-to: <7vzmbav2n9.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30757>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gm7AJ-0001rk-QH for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 12:18:20 +0100
+ esmtp (Exim 4.43) id 1GfeD3-0005dL-7G for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 16:10:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1756724AbWKTLRq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 06:17:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755909AbWKTLRp
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 06:17:45 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:30485 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1756806AbWKTLRo
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 06:17:44 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so1143958ugc for
- <git@vger.kernel.org>; Mon, 20 Nov 2006 03:17:43 -0800 (PST)
-Received: by 10.67.91.6 with SMTP id t6mr7654828ugl.1164021462568; Mon, 20
- Nov 2006 03:17:42 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id h1sm7519688ugf.2006.11.20.03.17.41; Mon, 20 Nov 2006 03:17:42 -0800
- (PST)
-To: git@vger.kernel.org
+ S1751319AbWKBPKW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 10:10:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751333AbWKBPKW
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 10:10:22 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:65022 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S1751319AbWKBPKV
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 10:10:21 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J8300DJTZGD37H0@VL-MO-MR003.ip.videotron.ca> for git@vger.kernel.org; Thu,
+ 02 Nov 2006 10:09:49 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Monday 2006 November 20 10:51, Junio C Hamano wrote:
+On Wed, 1 Nov 2006, Junio C Hamano wrote:
 
-> I think Alex (Riesen) is saying "you (Alex Litvinov) were
-> wondering why you do not see the commit log message but only the
-> first line. That is because you are using --pretty=oneline.
-> Lose it, then you would get what you want because giving the log
-> message _is_ the default".
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> > --- a/git-fetch.sh
+> > +++ b/git-fetch.sh
+> > @@ -51,7 +51,7 @@ do
+> >  		verbose=Yes
+> >  		;;
+> >  	-k|--k|--ke|--kee|--keep)
+> > -		keep=--keep
+> > +		keep=-k -k
+> >  		;;
+> >  	--reflog-action=*)
+> >  		rloga=`expr "z$1" : 'z-[^=]*=\(.*\)'`
+> 
+> Micronit.  This cannot be right without quoting.
 
-You're right.  Apologies to Alex for my misunderstanding.
+OK.  Shell programming isn't really my turf.
 
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
+Another area of that patch I'm not really sure of is this:
+
+@@ -408,6 +415,7 @@ fetch_main () {
+          append_fetch_head "$sha1" "$remote" \
+                  "$remote_name" "$remote_nick" "$local_name" "$not_for_merge"
+       done
++      if [ "$pack_lockfile" ]; then rm -f "$pack_lockfile"; fi
+     ) || exit ;;
+   esac
+
+How can I make sure to not clobber a non-zero return code with the rm 
+that would prevent the exit while still performing the rm in all cases?
+
+
