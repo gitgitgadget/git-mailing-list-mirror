@@ -1,66 +1,55 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Michael K. Edwards" <medwards.linux@gmail.com>
-Subject: [PATCH] Make "git checkout <branch> <path>" work when <path> is a directory.
-Date: Thu, 16 Nov 2006 21:49:21 -0800
-Message-ID: <f2b55d220611162149m719079f3ubdaeac43fe9798cb@mail.gmail.com>
+From: Andy Whitcroft <apw@shadowen.org>
+Subject: git pickaxe -- problems with relative filenames
+Date: Thu, 02 Nov 2006 03:21:22 +0000
+Message-ID: <45496432.80503@shadowen.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 17 Nov 2006 05:49:29 +0000 (UTC)
+NNTP-Posting-Date: Thu, 2 Nov 2006 03:22:10 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=WscioDism9xLkbd0HI/M+xE5ntlIxBfKq7QR6XbvcPwMNJwB2JWbd6GQpXui4Yv14hFOMOfEN44ux/Zcv2GqzNZht4cB++SHdW0JXkX7ZkoojBWH4opt3zOdTMA8DvlaJRFvXVtBFtMoP8HYtrzWaHEddacTcqt1CeNg2LitBKE=
-Content-Disposition: inline
+User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
+X-Enigmail-Version: 0.94.0.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30683>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkwbM-0001eo-TD for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 06:49:25 +0100
+ esmtp (Exim 4.43) id 1GfT9X-00075L-78 for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 04:22:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424776AbWKQFtW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 00:49:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424778AbWKQFtW
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 00:49:22 -0500
-Received: from wx-out-0506.google.com ([66.249.82.238]:53221 "EHLO
- wx-out-0506.google.com") by vger.kernel.org with ESMTP id S1424776AbWKQFtV
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 00:49:21 -0500
-Received: by wx-out-0506.google.com with SMTP id s7so840447wxc for
- <git@vger.kernel.org>; Thu, 16 Nov 2006 21:49:21 -0800 (PST)
-Received: by 10.90.89.5 with SMTP id m5mr1190830agb.1163742561153; Thu, 16
- Nov 2006 21:49:21 -0800 (PST)
-Received: by 10.90.25.4 with HTTP; Thu, 16 Nov 2006 21:49:21 -0800 (PST)
-To: git@vger.kernel.org
+ S1752586AbWKBDWA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 22:22:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752587AbWKBDWA
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 22:22:00 -0500
+Received: from hellhawk.shadowen.org ([80.68.90.175]:38921 "EHLO
+ hellhawk.shadowen.org") by vger.kernel.org with ESMTP id S1752586AbWKBDWA
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 22:22:00 -0500
+Received: from localhost ([127.0.0.1]) by hellhawk.shadowen.org with esmtp
+ (Exim 4.50) id 1GfT8r-00036h-1Z; Thu, 02 Nov 2006 03:21:21 +0000
+To: Git Mailing List <git@vger.kernel.org>, Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-This improves the workflow for, say, kernel subsystem backporting.
+We seem to have a difference in the handling of relative filenames
+within a repository between git blame and git pickaxe.  Specifically git
+pickaxe seems to always require names as if it were run in the top of
+the project:
 
-Signed-off-by: Michael K. Edwards <medwards-linux@gmail.com>
----
- git-checkout.sh |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+apw@pinky$ pwd
+/home/apw/git/git/Documentation
+apw@pinky$ git blame git.txt | head -2
+7984eabe (Sebastian Kuzminsky 2005-05-19 10:24:54 -0600   1) git(7)
+2cf565c5 (David Greaves       2005-05-10 22:32:30 +0100   2) ======
+apw@pinky$ git pickaxe git.txt | head -2
+fatal: cannot stat path git.txt: No such file or directory
+apw@pinky$ git pickaxe Documentation/git.txt | head -2
+7984eabe (Sebastian Kuzminsky 2005-05-19 10:24:54 -0600   1) git(7)
+2cf565c5 (David Greaves       2005-05-10 22:32:30 +0100   2) ======
 
-diff --git a/git-checkout.sh b/git-checkout.sh
-index dd47724..5866604 100755
---- a/git-checkout.sh
-+++ b/git-checkout.sh
-@@ -106,7 +106,8 @@ Did you intend to checkout '$@' which ca
- 		git-ls-tree --full-name -r "$new" "$@" |
- 		git-update-index --index-info || exit $?
- 	fi
--	git-checkout-index -f -u -- "$@"
-+	git-ls-files "$@" |
-+	git-checkout-index -f -u --stdin
- 	exit $?
- else
- 	# Make sure we did not fall back on $arg^{tree} codepath
--- 
+This seems inconsistent? Is this expected behaviour?
+
