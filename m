@@ -1,64 +1,80 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Alexander Litvinov" <litvinov2004@gmail.com>
-Subject: Getting new branches from remote repo.
-Date: Mon, 13 Nov 2006 10:33:52 +0600
-Message-ID: <6e1787fe0611122033p49671e13xf5b7f95beeba8b06@mail.gmail.com>
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: Minor documentation problems [RFC PATCH]
+Date: Thu, 2 Nov 2006 09:30:14 -0500
+Message-ID: <BAYC1-PASMTP042F05A3C71EDC671552FFAEFF0@CEZ.ICE>
+References: <vpqmz7a1694.fsf@ecrins.imag.fr>
+	<BAYC1-PASMTP018DA61B5F35F9603DF8A8AEFF0@CEZ.ICE>
+	<Pine.LNX.4.63.0611021448100.1670@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 13 Nov 2006 04:35:57 +0000 (UTC)
+NNTP-Posting-Date: Thu, 2 Nov 2006 14:30:55 +0000 (UTC)
+Cc: git <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=A0mqsPbCjCxYxgS0OmZHJPRqw3Q6/HLL3WvdZn8Yt/j0IuniFiv9VS90iadpXXkkR2Xt7sM72HUWZFyl0z650Xx5pD+G17Eca7P0CnAsdtJU1G3aXAyWDmNIWFj0MDie3OfeLXZhOT7BX/S/AeCz9u35f58oGvQWDf3JGIXzOYg=
-Content-Disposition: inline
-X-Virus-Scanned: ClamAV 0.88.5/2188/Sun Nov 12 20:32:01 2006 on zeus1.kernel.org
-X-Virus-Status: Clean
+X-Originating-IP: [65.93.43.81]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Original-Message-Id: <20061102093014.9f049a24.seanlkml@sympatico.ca>
+In-Reply-To: <Pine.LNX.4.63.0611021448100.1670@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 02 Nov 2006 14:30:16.0417 (UTC) FILETIME=[6A4FED10:01C6FE8B]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31286>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GjTXz-0004AJ-3R for gcvg-git@gmane.org; Mon, 13 Nov
- 2006 05:35:51 +0100
+ esmtp (Exim 4.43) id 1GfdaR-0006if-Hm for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 15:30:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753877AbWKMEfX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 12 Nov 2006
- 23:35:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753885AbWKMEfX
- (ORCPT <rfc822;git-outgoing>); Sun, 12 Nov 2006 23:35:23 -0500
-Received: from zeus1.kernel.org ([204.152.191.4]:36001 "EHLO
- zeus1.kernel.org") by vger.kernel.org with ESMTP id S1753877AbWKMEfW (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2006 23:35:22 -0500
-Received: from py-out-1112.google.com (py-out-1112.google.com
- [64.233.166.181]) by zeus1.kernel.org (8.13.7/8.13.1) with ESMTP id
- kAD4Z9tH010411 for <git@vger.kernel.org>; Mon, 13 Nov 2006 04:35:22 GMT
-Received: by py-out-1112.google.com with SMTP id a29so675049pyi for
- <git@vger.kernel.org>; Sun, 12 Nov 2006 20:34:09 -0800 (PST)
-Received: by 10.35.53.18 with SMTP id f18mr9320568pyk.1163392433665; Sun, 12
- Nov 2006 20:33:53 -0800 (PST)
-Received: by 10.35.108.4 with HTTP; Sun, 12 Nov 2006 20:33:52 -0800 (PST)
-To: git@vger.kernel.org
+ S1750820AbWKBOaS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 09:30:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750862AbWKBOaS
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 09:30:18 -0500
+Received: from bayc1-pasmtp04.bayc1.hotmail.com ([65.54.191.164]:26365 "EHLO
+ BAYC1-PASMTP04.bayc1.hotmail.com") by vger.kernel.org with ESMTP id
+ S1750820AbWKBOaQ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006
+ 09:30:16 -0500
+Received: from linux1.attic.local ([65.93.43.81]) by
+ BAYC1-PASMTP04.bayc1.hotmail.com over TLS secured channel with Microsoft
+ SMTPSVC(6.0.3790.1830); Thu, 2 Nov 2006 06:30:16 -0800
+Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
+ esmtp (Exim 4.43) id 1Gfce6-0001kz-Bg; Thu, 02 Nov 2006 08:30:14 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Hello list,
+On Thu, 2 Nov 2006 14:54:24 +0100 (CET)
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
-I have a trouble I don't know how to solve. When I am cloning remote
-repo I automatically get all it's branches stored at my repo (they are
-listed at .git/remotes/origin). When someone adds new branch(es) to
-remote repo git pull (git fetch) does not automatically add them to my
-repo. I have a tool to list all remote branches (git ls-remote --heads
-origin) but I can't find how to add interesting (or all) branches to
-by repo.
+> Your patch would be loads shorter and easier to read if you'd just 
+> override the GIT_CONFIG environment variable (like --git-dir sets 
+> GIT_DIR).
+> 
 
-By the way, how can I clone remote repo created by cloning another
-repo using git clone --use-separate-remotes ? Even git ls-remote
---heads origin does not show all branches taken from that another
-repo.
+Indeed. Thanks...  How 'bout this:
 
+diff --git a/builtin-repo-config.c b/builtin-repo-config.c
+index f60cee1..dcdae81 100644
+--- a/builtin-repo-config.c
++++ b/builtin-repo-config.c
+@@ -139,7 +139,16 @@ int cmd_repo_config(int argc, const char
+ 			type = T_BOOL;
+ 		else if (!strcmp(argv[1], "--list") || !strcmp(argv[1], "-l"))
+ 			return git_config(show_all_config);
+-		else
++		else if (!strcmp(argv[1], "--global")) {
++			char *home = getenv("HOME");
++			if (home) {
++				char *user_config = xstrdup(mkpath("%s/.gitconfig", home));
++				setenv("GIT_CONFIG", user_config, 1);
++				free(user_config);
++			} else {
++				return -1;
++			}
++		} else
+ 			break;
+ 		argc--;
+ 		argv++;
