@@ -1,68 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [DRAFT] Branching and merging with git
-Date: Fri, 17 Nov 2006 17:33:41 +0100
-Message-ID: <20061117163341.GQ4842@pasky.or.cz>
-References: <20061116221701.4499.qmail@science.horizon.com> <20061117153246.GA20065@thunk.org> <BAYC1-PASMTP07C8A8D8E5E78173953CA9AEE80@CEZ.ICE> <fcaeb9bf0611170819j57cda9e1ia4ecd4cd13956447@mail.gmail.com> <455DE275.8020000@gmx.net>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: "cg-init arg" silently ignores its argument
+Date: Thu, 02 Nov 2006 14:38:56 +0100
+Message-ID: <vpqslh2m0i7.fsf@ecrins.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 17 Nov 2006 16:35:14 +0000 (UTC)
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+NNTP-Posting-Date: Thu, 2 Nov 2006 13:39:40 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <455DE275.8020000@gmx.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+Mail-Followup-To: git@vger.kernel.org
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.6 (imag.imag.fr [129.88.30.1]); Thu, 02 Nov 2006 14:38:57 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30748>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gl6ex-0002NS-5Q for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 17:33:47 +0100
+ esmtp (Exim 4.43) id 1Gfcn9-0004Li-TL for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 14:39:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932941AbWKQQdo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 11:33:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933715AbWKQQdn
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 11:33:43 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:15014 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S932941AbWKQQdn (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 11:33:43 -0500
-Received: (qmail 12923 invoked by uid 2001); 17 Nov 2006 17:33:41 +0100
-To: Marko Macek <marko.macek@gmx.net>
+ S1752320AbWKBNjc (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 08:39:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752339AbWKBNjb
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 08:39:31 -0500
+Received: from imag.imag.fr ([129.88.30.1]:32643 "EHLO imag.imag.fr") by
+ vger.kernel.org with ESMTP id S1752320AbWKBNjb (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 08:39:31 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52]) by
+ imag.imag.fr (8.13.6/8.13.6) with ESMTP id kA2DcudO024507
+ (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO) for
+ <git@vger.kernel.org>; Thu, 2 Nov 2006 14:38:57 +0100 (CET)
+Received: from ecrins.imag.fr ([129.88.43.124]) by mail-veri.imag.fr with
+ esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.50) id 1GfcmW-0002Am-Lb for
+ git@vger.kernel.org; Thu, 02 Nov 2006 14:38:56 +0100
+Received: from moy by ecrins.imag.fr with local (Exim 4.50) id
+ 1GfcmW-0005Bn-IA for git@vger.kernel.org; Thu, 02 Nov 2006 14:38:56 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Fri, Nov 17, 2006 at 05:25:25PM CET, Marko Macek wrote:
-> Nguyen Thai Ngoc Duy wrote:
-> >On 11/17/06, Sean <seanlkml@sympatico.ca> wrote:
-> >>It would be nice to post this information on the Git website and not
-> >>have it overshadowed by Cogito examples with paragraphs explaining how
-> >>Cogito makes things easier.  The current website distracts users away
-> >>from learning Git or ever reading about this kind of information.
-> >>Maybe we can pass a hat around for some funds for a separate Cogito
-> >>website. ;o)
-> >
-> >Or.. find a way to merge cogito back to git :-)
-> >/me runs into a nearest bush.
+Hi,
 
-I think we are trying to figure that out in the last few days in those
-mammoth threads. UI-wise with no big breakthroughs so far I guess,
-though.
+It seems that
 
-> The alternative would be to explain that git is a low level tool suitable 
-> mostly for integrators like Linus (that, and that Cogito and/or StGit 
-> should be used by developers/contributors).
+$ cg-init foo
 
-This is in essence what many people (including Junio) are saying. I'm
-not saying it's a totally great situation, hence the previous paragraph.
+does the same as
+
+$ cg-init
+
+At best, I'd expect it to do something like
+
+$ mkdir -p foo; cd foo; cg-init
+
+(probably it should disable autocommiting then). That's what bzr does,
+and I find it handy to try something on a temporary toy repository.
+
+and at least, if it doesn't, it should complain about invalid
+argument.
+
+Thanks,
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
