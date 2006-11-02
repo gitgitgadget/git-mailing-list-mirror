@@ -1,82 +1,105 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Sun, 10 Dec 2006 11:09:33 +0100
-Message-ID: <200612101109.34267.jnareb@gmail.com>
-References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org> <200612091437.01183.jnareb@gmail.com> <46a038f90612092007w4637637aya1a01ec18ff16f6f@mail.gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Problem with git-push
+Date: Thu, 2 Nov 2006 10:29:12 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611021018040.1670@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <1162306098.41547.4.camel@mayday.esat.net>
+ <7v64e0qclo.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0611011205340.1670@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vk62f2l46.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 10 Dec 2006 10:07:38 +0000 (UTC)
-Cc: "Jeff Garzik" <jeff@garzik.org>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Linus Torvalds" <torvalds@osdl.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	"Rogan Dawes" <discard@dawes.za.net>,
-	"Kernel Org Admin" <ftpadmin@kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 2 Nov 2006 09:29:31 +0000 (UTC)
+Cc: Florent Thoumie <flz@xbsd.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=jEIV2g5xUL0JtIX1V46My8CD/ayg189PkAJ6+H8F3s54z5FxKoi2mdCPlRxJeWJxPtCUhRDiAcVh4YQk0MihwdBmFjW3knbnBhiF45ArMs8yz7uzKlRJ3uEjpqp5V54+IcVGhdqRcL5G7lM/gQdU13L0B19BZL5avmSUUUqURRo=
-User-Agent: KMail/1.9.3
-In-Reply-To: <46a038f90612092007w4637637aya1a01ec18ff16f6f@mail.gmail.com>
-Content-Disposition: inline
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vk62f2l46.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33874>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtLak-0007tY-BS for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 11:07:30 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30697>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfYsw-000077-J2 for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 10:29:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760617AbWLJKHU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 05:07:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760612AbWLJKHU
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 05:07:20 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:3282 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1760615AbWLJKHS (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec
- 2006 05:07:18 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1077584uga for
- <git@vger.kernel.org>; Sun, 10 Dec 2006 02:07:17 -0800 (PST)
-Received: by 10.66.244.11 with SMTP id r11mr8070095ugh.1165745237372; Sun, 10
- Dec 2006 02:07:17 -0800 (PST)
-Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107]) by
- mx.google.com with ESMTP id y1sm4331435uge.2006.12.10.02.07.16; Sun, 10 Dec
- 2006 02:07:17 -0800 (PST)
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
+ S1752769AbWKBJ3P (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 04:29:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752770AbWKBJ3P
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 04:29:15 -0500
+Received: from mail.gmx.de ([213.165.64.20]:30694 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1752769AbWKBJ3N (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 04:29:13 -0500
+Received: (qmail invoked by alias); 02 Nov 2006 09:29:12 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp046) with SMTP; 02 Nov 2006 10:29:12 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Martin Langhoff wrote:
-> On 12/10/06, Jakub Narebski <jnareb@gmail.com> wrote:
+Hi,
 
->> Sending Last-Modified: should be easy; sending ETag needs some consensus
->> on the contents: mainly about validation. Responding to If-Modified-Since:
->> and If-None-Match: should cut at least _some_ of the page generating time.
->> If ETag can be calculated on URL alone, then we can cut If-None-Match:
->> just at beginning of script.
+On Wed, 1 Nov 2006, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> Indeed. Let me add myself to the pileup agreeing that a combination of
-> setting Last-Modified and checking for If-Modified-Since for
-> ref-centric pages (log, shortlog, RSS, and summary) is the smartest
-> scheme. I got locked into thinking ETags.
+> > How about this instead:
+> >
+> > -		mkdir(filename, 0777);
+> > -		if (adjust_shared_perm(filename))
+> > +		if (!mkdir(filename, 0777) && adjust_shared_perm(filename)) {
+> > +			*dir = '/';
+> >  			return -2;
+> > +		}
+> 
+> Not really.  See the comment above the code you just touched.
 
-Sometimes it is easier to use ETags, sometimes it is easier to use
-Last-Modified:. Usually you can check ETag earlier (after calling
-git-rev-list) than Last-Modified (after parsing first commit). But
-some pages doesn't have natural ETag...
+ /*
+  * Try to mkdir the last path component if that failed.
+  *
+  * Re-try the "link()" regardless of whether the mkdir
+  * succeeds, since a race might mean that somebody
+  * else succeeded.
+  */
 
-Besides, because ETag is HTTP/1.1 we should provide and validate
-both.
+What I proposed does not break that. It only means that you only try to 
+adjust the permissions if the mkdir succeeded. If somebody else created 
+the directory in the mean time, it is not our job to adjust the 
+permissions. Worse, if the other mkdir was run by a different user, the 
+permission adjusting _cannot_ succeed, like you pointed out.
 
-P.S. Any hints to how to do this with CGI Perl module?
--- 
-Jakub Narebski
+So I think that my patch is correct, but does not matter very much.
+
+The other thing you asked for: adjust_shared_permissions should only try 
+to adjust the permissions only if they are not already correct. Here is my 
+attempt to implement that:
+
+Totally untested.
+
+Ciao,
+Dscho
+
+-- snip --
+adjust_shared_perm(): Avoid unnecessary chmod()s
+
+Sighed-off-by: Johannes E. Schindelin <johannes.schindelin@gmx.de>
+---
+diff --git a/path.c b/path.c
+index bb89fb0..0a2bc51 100644
+--- a/path.c
++++ b/path.c
+@@ -279,7 +279,7 @@ int adjust_shared_perm(const char *path)
+ 			    : 0));
+ 	if (S_ISDIR(mode))
+ 		mode |= S_ISGID;
+-	if (chmod(path, mode) < 0)
++	if ((mode & st.st_mode != mode) && chmod(path, mode) < 0)
+ 		return -2;
+ 	return 0;
+ }
