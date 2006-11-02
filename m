@@ -1,88 +1,67 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-rev-list: --objects list inconsistency
-Date: Tue, 14 Nov 2006 10:26:46 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611141020480.3327@woody.osdl.org>
-References: <4559E6A9.9A30A236@eudaptics.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: git and "dumb protocols"
+Date: Thu, 02 Nov 2006 11:36:07 +0100
+Message-ID: <vpqu01i16g8.fsf@ecrins.imag.fr>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 14 Nov 2006 18:27:23 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 2 Nov 2006 10:37:19 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <4559E6A9.9A30A236@eudaptics.com>
-X-MIMEDefang-Filter: osdl$Revision: 1.156 $
-X-Scanned-By: MIMEDefang 2.36
+Mail-Followup-To: git@vger.kernel.org
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.6 (imag.imag.fr [129.88.30.1]); Thu, 02 Nov 2006 11:36:10 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30706>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gk2zw-0008RD-6Y for gcvg-git@gmane.org; Tue, 14 Nov
- 2006 19:27:06 +0100
+ esmtp (Exim 4.43) id 1GfZwb-0004am-TN for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 11:37:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966252AbWKNS1A (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
- 13:27:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966259AbWKNS1A
- (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 13:27:00 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:39097 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S966252AbWKNS07 (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 13:26:59 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAEIQooZ011913
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 14
- Nov 2006 10:26:51 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAEIQleI010755; Tue, 14 Nov
- 2006 10:26:49 -0800
-To: Johannes Sixt <J.Sixt@eudaptics.com>
+ S1161311AbWKBKhG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 05:37:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752814AbWKBKhF
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 05:37:05 -0500
+Received: from imag.imag.fr ([129.88.30.1]:54971 "EHLO imag.imag.fr") by
+ vger.kernel.org with ESMTP id S1752813AbWKBKhC (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 05:37:02 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52]) by
+ imag.imag.fr (8.13.6/8.13.6) with ESMTP id kA2AaAes012548
+ (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO) for
+ <git@vger.kernel.org>; Thu, 2 Nov 2006 11:36:10 +0100 (CET)
+Received: from ecrins.imag.fr ([129.88.43.124]) by mail-veri.imag.fr with
+ esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.50) id 1GfZvb-0006fz-Gf for
+ git@vger.kernel.org; Thu, 02 Nov 2006 11:36:07 +0100
+Received: from moy by ecrins.imag.fr with local (Exim 4.50) id
+ 1GfZvb-0004dE-Cx for git@vger.kernel.org; Thu, 02 Nov 2006 11:36:07 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+Hi,
 
+Is it possible with git to push to a server on which git is not
+installed, and if so, how?
 
-On Tue, 14 Nov 2006, Johannes Sixt wrote:
-> 
-> As you can see, without --objects, master^^..master and --max-count=2
-> list the same two commits.
+From the man page of git, sftp doesn't seem supported, and ssh://
+complains about git-receive-pack not being installed on the server.
 
-"--max-count=X" and "master^^..master" are two TOTALLY different things.
+The man page documents a rsync:// protocol, but
 
-The fact that they happened to give the same results without "--objects" 
-is a random thing, and not at all guaranteed. For example, if "master" (or 
-its parent) had been a merge, it probably wouldn't have given the same 
-result even _without_ "--objects".
+$ git push rsync://some.location.com/
+fatal: I don't handle protocol 'rsync'
+$ 
 
-> But with --objects I get different object lists. I don't even know which
-> one is the one to expect, but I certainly would not have expected the
-> lists to be different. What's wrong here?
+What am I missing?
 
-Nothing is wrong. You're asking for two totally different things.
+Thanks,
 
-With "--max-count=2", you're saying "I want the first two commits", and 
-then the "--objects" part extends that to all the other object types too.
-
-So you get two commits _and_ every single object reachable from those two 
-commits.
-
-In contrast, with "master^^..master", you're saying "I want everything 
-that is reachable from "master", but _not_ reachable from it's 
-grand-parent. And the "--objects" flag extends that to all the other 
-object types too.
-
-So you get (in this case) two commits _and_ all the objects that are 
-reachable from those two commits but that are _not_ reachable from the 
-grandparent.
-
-That's a totally different thing, obviously. There's likely to be a lot of 
-objects in common between "master" and its grandparent, and you literally 
-asked to not be shown those objects. In the first case, you didn't ask for 
-the exclusion of the grandparent.
-
-So you should expect a big difference in almost all cases. In one case, 
-you ask for an exclusion, in the other case, you just say "just the first 
-two commits, please". Not at all equivalent.
-
+-- 
