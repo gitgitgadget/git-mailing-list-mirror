@@ -1,67 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: VCS comparison table
-Date: Tue, 24 Oct 2006 21:27:07 +0200
-Message-ID: <20061024192707.GG20017@pasky.or.cz>
-References: <87zmbozau2.wl%cworth@cworth.org> <20061022185350.GW75501@over-yonder.net> <Pine.LNX.4.64.0610231018410.3962@g5.osdl.org> <20061023222131.GB17019@over-yonder.net> <Pine.LNX.4.64.0610231534010.3962@g5.osdl.org> <20061024002622.GC17019@over-yonder.net> <Pine.LNX.4.63.0610240853160.10841@qynat.qvtvafvgr.pbz> <20061024163458.GH17019@over-yonder.net> <Pine.LNX.4.63.0610241038060.10841@qynat.qvtvafvgr.pbz> <ehllqj$bee$1@sea.gmane.org>
+From: "Doug Reiland" <dreiland@gmail.com>
+Subject: git and branches newie questions
+Date: Thu, 2 Nov 2006 12:02:42 -0500
+Message-ID: <6844644e0611020902tc6251f7i2eda0d3fc82e0502@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 24 Oct 2006 19:27:34 +0000 (UTC)
-Cc: git@vger.kernel.org, bazaar-ng@lists.canonical.com
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 2 Nov 2006 17:03:38 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=qLyML9obKwA74z4HNkkOPYRLo1nIea52Nutwm8RtPzE3/+XS/9EgST+UWtKDQqvmV87KPuvop1GnwXhlRBgK4qh0uw4LHAmBq1ayuKE3EhTnOkeIpiEZT+BsuVl2K+lY9Hs10Hou4VMFQIDv258m8IKt2lKpS0SOpNt8UCv4lOk=
 Content-Disposition: inline
-In-Reply-To: <ehllqj$bee$1@sea.gmane.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30760>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcRvd-0003Tx-6P for gcvg-git@gmane.org; Tue, 24 Oct
- 2006 21:27:13 +0200
+ esmtp (Exim 4.43) id 1Gffxz-0005IL-Gn for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 18:03:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752006AbWJXT1J (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006
- 15:27:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752028AbWJXT1J
- (ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 15:27:09 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:23959 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1752006AbWJXT1I (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 15:27:08 -0400
-Received: (qmail 29927 invoked by uid 2001); 24 Oct 2006 21:27:07 +0200
-To: Jakub Narebski <jnareb@gmail.com>
+ S1751067AbWKBRCo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 12:02:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbWKBRCo
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 12:02:44 -0500
+Received: from py-out-1112.google.com ([64.233.166.179]:28235 "EHLO
+ py-out-1112.google.com") by vger.kernel.org with ESMTP id S1751067AbWKBRCn
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 12:02:43 -0500
+Received: by py-out-1112.google.com with SMTP id a73so134410pye for
+ <git@vger.kernel.org>; Thu, 02 Nov 2006 09:02:42 -0800 (PST)
+Received: by 10.35.62.1 with SMTP id p1mr1279328pyk.1162486962121; Thu, 02
+ Nov 2006 09:02:42 -0800 (PST)
+Received: by 10.35.34.17 with HTTP; Thu, 2 Nov 2006 09:02:41 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Dear diary, on Tue, Oct 24, 2006 at 08:25:53PM CEST, I got a letter
-where Jakub Narebski <jnareb@gmail.com> said that...
-> David Lang wrote:
-> 
-> > 1. Centralized: all commits must go to one repository, connectivity
-> > required to check-in 
-> 
-> Bazaar-NG "light checkouts" implements this. Git doesn't support this
-> topology, and probably wouldn't.
-> 
-> 1.5. Disconnected centralized. Like centralized, but you can work (perhaps
-> limited to what you can do) even without connection to central server.
-> Minimally you have to be able to commit changes locally, if central server
-> is not available. Bzr "normal/heavyweight checkouts" are [roughly] abot
-> this. Git "lazy clone" proposal is about similar thing; you can get git to
-> support this model (although without space savings) with full 
-> clone + hooks.
+I need some suggestions for the best way to setup my repositories.
 
-Cogito can do it now out of the box, having support for cg-commit --push
-and cg-update preserving uncommitted local changes.
+I have a linux repository cloned right from Linus.
+I want to create 2 additional branches in this repository:
+   internal_current and internal_testing
 
-Not that you probably should use it. ;-)
+I want to use internal_current to make modifications to the main Linux
+branch for an internal project.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+I want other users to clone/pull/push changes to the internal_current branch.
+
+I want to use internal_testing as a branch to merge and test the
+latest Linux branch with changes made to internal_current. Once this
+testing is complete, merge the changes into internal_current.
+
+That is the best way to do this. I am open to use cogito. I have
+messed up this merging process just about each time, and I want to get
+a stable process before I open this up to other users.
+
+Also, I can't figure out permissions. I have setup the allow_users
+hook in .git/hooks/update. My repository is "owned" by gate_keeper. My
+user login is dreiland. I push changes back to the gate_keeper
+repository and stuff under .git gets owned by me. Now, I log as a
+gate_keeper to get a Linus update or perform the internal_testing
+merges and things fail because it is owned by dreiland.
+
