@@ -1,167 +1,94 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: More merge-recursive woes
-Date: Wed, 13 Dec 2006 02:36:39 -0500
-Message-ID: <20061213073639.GA9289@spearce.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: [PATCH 4/4] Show the branch type after the branch name for remotes
+Date: Thu, 2 Nov 2006 11:11:32 +0000
+Message-ID: <200611021111.32759.andyparkins@gmail.com>
+References: <bec6ab7849e3fcacac23cca44a0ba93282af5fca.1162465753.git.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 13 Dec 2006 12:08:43 +0000 (UTC)
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 2 Nov 2006 11:11:53 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+In-Reply-To: <bec6ab7849e3fcacac23cca44a0ba93282af5fca.1162465753.git.andyparkins@gmail.com>
+X-TUID: fe2e08d5124584c7
+X-UID: 159
+X-Length: 1623
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-OriginalArrivalTime: 02 Nov 2006 11:12:39.0264 (UTC) FILETIME=[CEE5F600:01C6FE6F]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34214>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuSuc-0001QC-0O for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 13:08:38 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30723>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfaTz-00042A-Br for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 12:11:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964864AbWLMMIX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 07:08:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964885AbWLMMIX
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 07:08:23 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:33866 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S964896AbWLMMIV (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
- 07:08:21 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GuOfR-00044C-5X for git@vger.kernel.org; Wed, 13 Dec 2006 02:36:41 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- E90D420FB6E; Wed, 13 Dec 2006 02:36:39 -0500 (EST)
+ S1752844AbWKBLLg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 06:11:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752845AbWKBLLg
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 06:11:36 -0500
+Received: from mail.360visiontechnology.com ([194.70.53.226]:13670 "EHLO
+ 369run02s.360vision.com") by vger.kernel.org with ESMTP id S1752844AbWKBLLf
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 06:11:35 -0500
+Received: from dvr.360vision.com ([192.189.1.24]) by 369run02s.360vision.com
+ with Microsoft SMTPSVC(5.0.2195.6713); Thu, 2 Nov 2006 11:12:39 +0000
+Received: from localhost ([127.0.0.1]) by dvr.360vision.com with esmtp (Exim
+ 3.36 #1 (Debian)) id 1GfaTu-0003wE-00 for <git@vger.kernel.org>; Thu, 02 Nov
+ 2006 11:11:34 +0000
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Today I found two new bugs in git-merge-recursive.  I'm still
-researching them, but I at least have a test case for one of the
-two:
+Instead of prefixing the remote branches with "remotes/" suffix them with
+"[read only]"
 
-Bug #1: If one branch renames a file which existed in the merge base,
-when we merge that change into a different branch the old version
-of the file is not deleted from the working directory.  The attached
-test script shows this ("BAD: A still exists in working directory").
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
+ builtin-branch.c |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
 
-Bug #2: In that horrible repository that I have where I ran into the
-empty tree missing bug I now have a pair of commits which when merged
-together cause git-merge-recursive to go into an infinite loop,
-or least burn CPU for hours on end without doing squat.  I have
-not been able to get enough data to even write a good analysis
-of it yet.  I'll try to do that this week, as I cannot share the
-repository itself.  It just happens to be two new commits along
-the same two branches however.  :-(
-
-Both bugs are appearing with current 'next' (8662d0ea).
-
-After I eat something and weed through my inbox I may take a stab
-at the first one, if I haven't passed out on the couch.  :-)
-
-
-->->->->->->--t6024-merge-rename2.sh-->->->->->->->->-
-#!/bin/sh
-
-test_description='Merge-recursive merging renames'
-. ./test-lib.sh
-
-test_expect_success setup \
-'
-cat >A <<\EOF &&
-a aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-b bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-c cccccccccccccccccccccccccccccccccccccccccccccccc
-d dddddddddddddddddddddddddddddddddddddddddddddddd
-e eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-f ffffffffffffffffffffffffffffffffffffffffffffffff
-g gggggggggggggggggggggggggggggggggggggggggggggggg
-h hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-i iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
-j jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
-k kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-l llllllllllllllllllllllllllllllllllllllllllllllll
-m mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-n nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-o oooooooooooooooooooooooooooooooooooooooooooooooo
-EOF
-
-cat >M <<\EOF &&
-A AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-B BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-C CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-D DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-E EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-F FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-G GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-H HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-I IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-J JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
-K KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
-L LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-M MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-N NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-O OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-EOF
-
-git add A M &&
-git commit -m "initial has A and M" &&
-git branch white &&
-git branch red &&
-
-git checkout white &&
-sed -e "/^g /s/.*/g : white changes a line/" <A >B &&
-sed -e "/^G /s/.*/G : colored branch changes a line/" <M >N &&
-rm -f A M &&
-git update-index --add --remove A B M N &&
-git commit -m "white renames A->B, M->N" &&
-
-git checkout red &&
-echo created by red >R &&
-git update-index --add R &&
-git commit -m "red creates R" &&
-
-git checkout master'
-
-test_expect_success 'merge white into red' \
-'
-	git checkout -b red-white red &&
-	git merge white &&
-	git write-tree >/dev/null || {
-		echo "BAD: merge did not complete"
-		return 1
-	}
-
-	test -f B || {
-		echo "BAD: B does not exist in working directory"
-		return 1
-	}
-	test -f N || {
-		echo "BAD: N does not exist in working directory"
-		return 1
-	}
-	test -f R || {
-		echo "BAD: R does not exist in working directory"
-		return 1
-	}
-
-	test -f A && {
-		echo "BAD: A still exists in working directory"
-		return 1
-	}
-	test -f M && {
-		echo "BAD: M still exists in working directory"
-		return 1
-	}
-'
-
+diff --git a/builtin-branch.c b/builtin-branch.c
+index b88413a..6736882 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -105,6 +105,7 @@ static void print_ref_list(int display_m
+ 	int i;
+ 	char c;
+ 	char *p;
++	const char *suffix;
+ 
+ 	switch (display_mode) {
+ 		case 0:
+@@ -122,6 +123,7 @@ static void print_ref_list(int display_m
+ 
+ 	for (i = 0; i < ref_index; i++) {
+ 		p = ref_list[i];
++		suffix = "";
+ 		if (display_mode == 2) {
+ 			if (!strncmp( p, "refs/", 5 ))
+ 				p += 5;
+@@ -129,13 +131,17 @@ static void print_ref_list(int display_m
+ 				continue;
+ 			if (!strncmp( p, "heads/", 6 ))
+ 				p += 6;
++			if (!strncmp( p, "remotes/", 8 )) {
++				suffix = " [read only]";
++				p += 8;
++			}
+ 		}
+ 
+ 		c = ' ';
+ 		if (!strcmp(p, head))
+ 			c = '*';
+ 
+-		printf("%c %s\n", c, p);
++		printf("%c %s%s\n", c, p, suffix);
+ 	}
+ }
+ 
+-- 
+1.4.3.2
