@@ -1,93 +1,108 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: git-commit: select which files to commit while editing the commit message
-Date: Fri, 8 Dec 2006 12:45:59 -0800 (PST)
-Message-ID: <360959.72234.qm@web31809.mail.mud.yahoo.com>
-References: <elcegl$qfh$1@sea.gmane.org>
-Reply-To: ltuikov@yahoo.com
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] git-pickaxe: look for files relative to current path
+Date: Thu, 2 Nov 2006 02:22:49 -0500
+Message-ID: <20061102072249.GA15220@coredump.intra.peff.net>
+References: <45496432.80503@shadowen.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Fri, 8 Dec 2006 20:46:24 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 2 Nov 2006 07:23:05 +0000 (UTC)
+Cc: git@vger.kernel.org, Andy Whitcroft <apw@shadowen.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=TVGQ+VR2OPaKWYw+Fd+JrJYJ/r0eEfAVy+IActtArtdvJOSq/3p1kpr42PxzDcyv5hmAxRoj8rUUUpYnpc1E54uDoboBzi6cVcS9cRZ0zlpnQFkI/13ZjQ17canmZKL07ZIm3V8xiHrSF/c2RvHayEAylgMBscHqPzFRq0obxNU=;
-X-YMail-OSG: 4mxg5dcVM1nKsjpe2_9YRzYlqu9Znv_9n0n9MSXtNmnhhw3GRz45h0SYcCPjqU6qvNqcH7Vt5dvCirJZufeLJTEQPUYBd7Q3y5bEhYIvCbBeeFNjYtKCVYUtra9GNxSgW0huCN0WsN64XPyq7zW.36Bxbpbm8Ki93UZKI0g1_8dNc4Mt3Ek9GjED
-In-Reply-To: <elcegl$qfh$1@sea.gmane.org>
+Content-Disposition: inline
+In-Reply-To: <45496432.80503@shadowen.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33741>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gsmbj-0002fE-GS for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 21:46:11 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30690>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfWuf-0004AC-I3 for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 08:22:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1761194AbWLHUqI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 15:46:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761196AbWLHUqI
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 15:46:08 -0500
-Received: from web31809.mail.mud.yahoo.com ([68.142.207.72]:24558 "HELO
- web31809.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- SMTP id S1761192AbWLHUqF (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec
- 2006 15:46:05 -0500
-Received: (qmail 73573 invoked by uid 60001); 8 Dec 2006 20:46:04 -0000
-Received: from [64.215.88.90] by web31809.mail.mud.yahoo.com via HTTP; Fri,
- 08 Dec 2006 12:45:59 PST
-To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+ S1752706AbWKBHWw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 02:22:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752707AbWKBHWw
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 02:22:52 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:61071
+ "HELO peff.net") by vger.kernel.org with SMTP id S1752706AbWKBHWv (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 02:22:51 -0500
+Received: (qmail 23780 invoked from network); 2 Nov 2006 02:21:59 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2) by
+ 66-23-211-5.clients.speedfactory.net with SMTP; 2 Nov 2006 02:21:59 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Nov
+ 2006 02:22:49 -0500
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
---- Jakub Narebski <jnareb@gmail.com> wrote:
-> Junio C Hamano wrote:
-> > Pazu <pazu@pazu.com.br> writes:
-> > 
-> >> # Please enter the commit message for your changes.
-> >> # (Comment lines starting with '#' will not be included)
-> >> # On branch refs/heads/next
-> >> # Updated but not checked in:
-> >> #   (will commit)
-> >> #
-> >> #    modified:   perl/Makefile
-> >> #    modified:   var.c
-> >>
-> >> Here's where the magic would happen. Removing the line "modified: var.c" would
-> >> remove var.c from this commit. Of course, the template message should be
-> >> modified to tell the user he can do that.
-> >>
-> >> So, what do you think about this?
-> > 
-> > Personally, I would refuse to use such a modified git, because
-> > often the first thing I would do in the commit log buffer is
-> > check the listed files and remove the '# ...' lines while
-> > typing.  I do not want that to affect the set of changes I
-> > staged in any way.
-> > 
-> > But maybe that is just me.
-> 
-> I was to raise the same objection. 
-> 
-> But this can be solved by using magic _only_ if the template with exception
-> of "modified:" lines matches, and if there is at least one file
-> in "modified:" section.
 
-I raise the same objection as Junio.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Andy Whitcroft writes:
+> We seem to have a difference in the handling of relative filenames
+> within a repository between git blame and git pickaxe.  Specifically git
+> pickaxe seems to always require names as if it were run in the top of
+> the project:
 
-This is how perforce does it*, and while it is useful, git is NOT perforce,
-and I agree with Junio and Jakub.
+This simple patch seems to fix it (but is not extensively tested).
 
-If you want to commit only few files, update the index for only
-the ones you want to commit.  If you did update the index for all
-of them, "git-read-tree -m -i HEAD" is your friend.
+ builtin-pickaxe.c |   15 +++++++++++----
+ 1 files changed, 11 insertions(+), 4 deletions(-)
 
-    Luben
-
-* The reason being is that there is no "index-cache" and the commit
-message needs to be scanned to determine which of the edited files
-you actually intend to commit to the server at this time.
+diff --git a/builtin-pickaxe.c b/builtin-pickaxe.c
+index c9405e9..3e76258 100644
+--- a/builtin-pickaxe.c
++++ b/builtin-pickaxe.c
+@@ -1413,6 +1413,13 @@ static void sanity_check_refcnt(struct s
+ 	}
+ }
+ 
++static const char *add_prefix(const char *prefix, const char *path)
++{
++	if (!prefix || !prefix[0])
++		return path;
++	return prefix_path(prefix, strlen(prefix), path);
++}
++
+ static int has_path_in_work_tree(const char *path)
+ {
+ 	struct stat st;
+@@ -1548,7 +1555,7 @@ int cmd_pickaxe(int argc, const char **a
+ 		/* (1) */
+ 		if (argc <= i)
+ 			usage(pickaxe_usage);
+-		path = argv[i];
++		path = add_prefix(prefix, argv[i]);
+ 		if (i + 1 == argc - 1) {
+ 			if (unk != 1)
+ 				usage(pickaxe_usage);
+@@ -1566,13 +1573,13 @@ int cmd_pickaxe(int argc, const char **a
+ 		if (seen_dashdash) {
+ 			if (seen_dashdash + 1 != argc - 1)
+ 				usage(pickaxe_usage);
+-			path = argv[seen_dashdash + 1];
++			path = add_prefix(prefix, argv[seen_dashdash + 1]);
+ 			for (j = i; j < seen_dashdash; j++)
+ 				argv[unk++] = argv[j];
+ 		}
+ 		else {
+ 			/* (3) */
+-			path = argv[i];
++			path = add_prefix(prefix, argv[i]);
+ 			if (i + 1 == argc - 1) {
+ 				final_commit_name = argv[i + 1];
+ 
+@@ -1580,7 +1587,7 @@ int cmd_pickaxe(int argc, const char **a
+ 				 * old-style
+ 				 */
+ 				if (unk == 1 && !has_path_in_work_tree(path)) {
+-					path = argv[i + 1];
++					path = add_prefix(prefix, argv[i + 1]);
+ 					final_commit_name = argv[i];
+ 				}
+ 			}
+-- 
