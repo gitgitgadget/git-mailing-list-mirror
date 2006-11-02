@@ -2,77 +2,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: cloning the kernel - why long time in "Resolving 313037 deltas"
-Date: Tue, 19 Dec 2006 20:58:07 -0500
-Message-ID: <20061220015807.GB27638@spearce.org>
-References: <86r6uw9azn.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181625140.18171@xanadu.home> <86hcvs984c.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181414200.3479@woody.osdl.org> <8664c896xv.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181511260.3479@woody.osdl.org> <Pine.LNX.4.64.0612181906450.18171@xanadu.home> <20061219051108.GA29405@thunk.org> <20061219063930.GA2511@spearce.org> <20061219161919.GA16980@thunk.org>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's in git.git
+Date: Thu, 2 Nov 2006 11:02:58 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611021055550.1670@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vk62ewtxd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 20 Dec 2006 01:58:31 +0000 (UTC)
-Cc: Nicolas Pitre <nico@cam.org>, Linus Torvalds <torvalds@osdl.org>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 2 Nov 2006 10:03:16 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061219161919.GA16980@thunk.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vk62ewtxd.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34891>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gwqiw-00065z-5E for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 02:58:26 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30702>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfZPd-0006W5-Bl for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 11:03:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932956AbWLTB6R (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 20:58:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932968AbWLTB6Q
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 20:58:16 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:52708 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932954AbWLTB6P (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
- 20:58:15 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GwqiV-0002K5-4Y; Tue, 19 Dec 2006 20:57:59 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 548B220FB65; Tue, 19 Dec 2006 20:58:08 -0500 (EST)
-To: Theodore Tso <tytso@mit.edu>
+ S1752787AbWKBKDB (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 05:03:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752791AbWKBKDA
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 05:03:00 -0500
+Received: from mail.gmx.net ([213.165.64.20]:10726 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1752787AbWKBKDA (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 05:03:00 -0500
+Received: (qmail invoked by alias); 02 Nov 2006 10:02:58 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp028) with SMTP; 02 Nov 2006 11:02:58 +0100
+To: Junio C Hamano <junkio@cox.net>, Jon Smirl <jonsmirl@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Theodore Tso <tytso@mit.edu> wrote:
-> On Tue, Dec 19, 2006 at 01:39:30AM -0500, Shawn Pearce wrote:
-> > This is why git-fast-import mmaps 128 MiB blocks from the file at
-> > a time.  The mmap region is usually much larger than the file itself;
-> > the application appends to the file via write() then goes back
-> > and rereads data when necessary via the already established mmap.
-> > Its rare for the application to need to unmap/remap a different block
-> > so there really isn't very much page table manipulation overhead.
+Hi,
+
+On Wed, 1 Nov 2006, Junio C Hamano wrote:
+
+> * The 'pu' branch, in addition, has these.
 > 
-> Yes, but unless you are using the (non-portable, Linux specific)
-> MAP_POPULATE flag to mmap, each time you touch a new page, you end up
-> taking a page fault; and so malloc/read/free might *still* be faster.
-> I'd encourage you to make the change and benchmark it; the results may
-> be surprising.  I played with this with dcraw, the Canon Raw File
-> converter a while back (before MAP_POPULATE was added), where I found
-> that with a linear access pattern, if you are reading the entire file,
-> it's stil marginally faster to use read() over mmap(), because with
-> dcraw taking a page fault every 4k of raw file, the system time was
-> significantly higher.
+>   Johannes's "shallow" was marked as "pu" material so I've based
+>   the series on the tip of "next" (which means we cannot
+>   directly merge that into "next" or "master" without rebasing
+>   it to "master" first) and parked it in "pu".  I have given
+>   only a cursory look to it but it looks promising.
 
-Interesting.  Lots of good reasons to probably just use pread()
-in there instead of mmap.  For one thing git-fast-import doesn't
-go back and hit the already written pack data very often. Its own
-in memory caches usually perform very well.
+Note that I have no use for shallow clones myself, since I really like to 
+have the complete history around. It also makes for a nice distributed 
+backup solution.
 
--- 
+The reasons I did it:
+
+- 'cause I could
+- I think it is important for other people (this means you, Jon)
+- I suggested lazy clones as an easy way out, but I am now convinced that 
+they introduce more problems than they solve. Therefore I wanted to make 
+good for the confusion I helped develop.
+
+Since I do not have any use for shallow clones myself, I am waiting for 
+people to jump on it, test it, and shout "Hooray" or "Nacknacknack".
+
+Ciao,
+Dscho
