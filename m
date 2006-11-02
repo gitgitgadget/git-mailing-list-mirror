@@ -2,90 +2,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: WARNING: THIS PATCH CAN BREAK YOUR REPO, was Re: [PATCH 2/3] Only repack active packs by skipping over kept packs.
-Date: Mon, 30 Oct 2006 15:26:11 -0500
-Message-ID: <20061030202611.GA5775@spearce.org>
-References: <20061029093754.GD3847@spearce.org> <Pine.LNX.4.64.0610301332440.11384@xanadu.home>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: weird strncmp usage?
+Date: Thu, 2 Nov 2006 10:15:12 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611021008180.1670@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <eibhga$tpg$1@sea.gmane.org> <45494D84.2060402@shadowen.org>
+ <20061102065127.GA23105@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 30 Oct 2006 20:34:21 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 2 Nov 2006 09:15:37 +0000 (UTC)
+Cc: Andy Whitcroft <apw@shadowen.org>, hanwen@xs4all.nl,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0610301332440.11384@xanadu.home>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20061102065127.GA23105@coredump.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30694>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gedi8-0001NU-I8 for gcvg-git@gmane.org; Mon, 30 Oct
- 2006 21:26:20 +0100
+ esmtp (Exim 4.43) id 1GfYfR-0005qG-Ls for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 10:15:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751969AbWJ3U0R (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 15:26:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751972AbWJ3U0R
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 15:26:17 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:49888 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1751969AbWJ3U0Q
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 15:26:16 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Gedht-0002uC-Q3; Mon, 30 Oct 2006 15:26:05 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 0A9AD20FB0C; Mon, 30 Oct 2006 15:26:12 -0500 (EST)
-To: Nicolas Pitre <nico@cam.org>
+ S1752765AbWKBJPR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 04:15:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752764AbWKBJPQ
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 04:15:16 -0500
+Received: from mail.gmx.de ([213.165.64.20]:45971 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1752766AbWKBJPP (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 04:15:15 -0500
+Received: (qmail invoked by alias); 02 Nov 2006 09:15:13 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp044) with SMTP; 02 Nov 2006 10:15:13 +0100
+To: Jeff King <peff@peff.net>
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre <nico@cam.org> wrote:
-> On Sun, 29 Oct 2006, Shawn Pearce wrote:
+Hi,
+
+On Thu, 2 Nov 2006, Jeff King wrote:
+
+> On Thu, Nov 02, 2006 at 01:44:36AM +0000, Andy Whitcroft wrote:
 > 
-> > During `git repack -a -d` only repack objects which are loose or
-> > which reside in an active (a non-kept) pack.  This allows the user
-> > to keep large packs as-is without continuous repacking and can be
-> > very helpful on large repositories.
+> > That said if you know its constant you can also use sizeof("foo") and
+> > that is done at compile time.  Something like:
+> > 
+> > #define strxcmp(x, y)	strncmp((x), (y), sizeof((y))
 > 
-> Something is really broken here.
+> You would, of course, need to use sizeof(y)-1 to avoid comparing the NUL
+> termination. :)
 > 
-> Here's how to destroy your GIT's git repository.
-> 
-> WARNING: MAKE A COPY BEFORE TRYING THIS!  I'm serious.
-> 
-> First, let's make a single pack just to make things simpler and 
-> reproducible:
-> 
-> $ git-repack -a -f -d
-> $ git-prune
-> $ git-fsck-objects --full
+> This is a slightly dangerous macro, because it _only_ works for string
+> literals, but not pointers (which is fine in this case, but its
+> limitations need to be documented).
 
-Actually the breakage is easier to reproduce without trashing
-a repository.
+It would be even better to avoid these errors by doing something like
 
-Do the above so you have everything in one pack.  Now use rev-list
-to simulate the object list construction in pack-objects as though
-we were doing a 'git repack -a -d':
+	#define starts_with(x, y) !strncmp((x), #y, sizeof(#y) - 1)
 
-  git-rev-list --objects --all \
-    --unpacked=.git/objects/pack/pack-*.pack \
-	| wc -l
+which would be used like this:
 
-gives me 102 (WRONG WRONG WRONG WRONG!!!!!!)
+	if (starts_with(arg, --abbrev=))
 
-and
- 
-  git-rev-list --objects --all | wc -l
+However, in this case, you would need another macro, which automatically 
+extracts the argument, and soon you will end up with yet another getopt 
+package.
 
-gives me 31912 (correct).  The --unpacked flag is horribly broken.
-
--- 
+Ciao,
+Dscho
