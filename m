@@ -1,121 +1,92 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: protect blob and diff output lines from controls.
-Date: Thu, 9 Nov 2006 01:46:25 +0100
-Message-ID: <200611090146.25306.jnareb@gmail.com>
-References: <7vpsbxqzre.fsf@assigned-by-dhcp.cox.net> <200611090104.32247.jnareb@gmail.com> <7v1wodqxux.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: how to pass ssh options to git?
+Date: Thu, 2 Nov 2006 15:22:30 -0500
+Message-ID: <20061102202230.GA21456@spearce.org>
+References: <20061102110639.G523a966f@leonov.stosberg.net> <20061102112720.GA8469@mellanox.co.il> <Pine.LNX.4.64.0611020801160.25218@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 9 Nov 2006 00:45:47 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 2 Nov 2006 20:22:54 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=saRbvTeSiXdL5XztvB9DvggWHSt1eUqH+y2uxig4CgQGFHmkD0C+M6iVxORLyLCml5ocaYq86QCoUXEjr8epUUIwVex6pqPp5mQSPaxqiiw6lWWxp0UAsR7ODxAwbG0U08pCoKzQUVW11iyDN6f4G9JaUO/fx4aeo7s4VN8IYnQ=
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v1wodqxux.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0611020801160.25218@g5.osdl.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30765>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Ghy34-0002zz-7z for gcvg-git@gmane.org; Thu, 09 Nov
- 2006 01:45:42 +0100
+ esmtp (Exim 4.43) id 1Gfj5D-0008WN-HA for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 21:22:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422810AbWKIApi (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
- 19:45:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423960AbWKIApi
- (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 19:45:38 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:44374 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1422810AbWKIAph
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 19:45:37 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so75692ugc for
- <git@vger.kernel.org>; Wed, 08 Nov 2006 16:45:36 -0800 (PST)
-Received: by 10.66.243.4 with SMTP id q4mr431503ugh.1163033135822; Wed, 08
- Nov 2006 16:45:35 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id b23sm90878ugd.2006.11.08.16.45.35; Wed, 08 Nov
- 2006 16:45:35 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
+ S1752148AbWKBUWg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 15:22:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752329AbWKBUWf
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 15:22:35 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:13194 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1752327AbWKBUWe
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 15:22:34 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gfj4y-0005Xa-QW; Thu, 02 Nov 2006 15:22:24 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 9652F20E491; Thu,  2 Nov 2006 15:22:30 -0500 (EST)
+To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
+Linus Torvalds <torvalds@osdl.org> wrote:
+> It's really better to use a ".ssh/config" file instead.
 > 
->> 1. First, esc_path should _not_ use subroutine which does it's own 
->> contol characters escaping. That was also a mistake I made in my patch.
->> Perhaps we should have some quot_html or to_html subroutine which does 
->> _only_ to_utf8 (decode from Encode module), escapeHTML and optionally 
->> s/ /&nbsp;/g conversion.
+> I realize that you want to use different options "dynamically", but what 
+> you can do is to just have different "fake hostnames". For example, you 
+> can do
 > 
-> I hated that original arrangement, 
+> 	Host private.host.com
+> 		User myname
+> 		Hostname host.com
+> 		IdentityFile /home/myname/.ssh/private-identity
+> 	Host public.host.com
+> 		User groupname
+> 		Hostname host.com
+> 		IdentityFile /home/myname/.ssh/public-identity
 
-What did you hate, again?
+I often setup not only multiple fake hostnames in my .ssh/config
+but I also setup multiple remote files under any given repository's
+.git/remotes directory, using one file per fake hostname.
 
->                                    but I do not see anything 
-> obviously wrong in the output with the patch you are responding
-> to.  Except that git_blame2 is missing a chomp() on "my $data"
-> after finishing the metainfo loop, that is.
+That way I can pick which options to apply at the time of git push
+or git fetch by just changing the name passed to it.
 
-The original (mine) code for esc_path uses esc_html, which did it's
-own partial (very partial) special characters esaping, namely
-\014 (\f) => ^L, \033 (\e) => ^[. So if pathname had form feed character,
-it would be replaced by ^L, not '\f'.
+	$ ls .git/remotes
+	private public
 
-You have added quot_cec to esc_html subroutine directly. I don't know
-what is your version of esc_html after the changes you made, but
-this makes escaping part (quot) in esc_path never invoked. 
+	$ cat .git/remotes/private
+	URL: private.host.com:/path/to/repo
+	Pull: refs/heads/master:refs/heads/origin
 
->> 2. In my opinion CS is better than CEC for quoting/escaping control 
->> characters in the "bulk" output, namely "blob" output and "text 
->> diff" (patchset body) output. CEC is better for pathnames (which must 
->> fit in one line), and perhaps other one-liners; perhaps not.
-> 
-> I am more for code reuse and consistency.  If "^L" is more
-> readable then we should consistently use it for both contents
-> and pathnames.  
+	$ cat .git/remotes/public
+	URL: public.host.com:/path/to/repo
+	Pull: refs/heads/master:refs/heads/origin
 
-Well, the pathname has the limit that it must be in single line
-after quoting. The "blob" output is multipage. IMHO CEC like \n, \f,
-\t are better in pathnames because this is what ls uses, while CS
-for "blob" output is better because editors (including one true
-editor being GNU Emacs ;-) uses CS like ^L (there is no end-of-line
-as we split on LF and chomp; there is no tab character because line
-is untabified first). But that is my opinion.
+	$ git push private
+	$ git fetch public
 
-I think that conrol characters in filenames (in esc_path) should
-be encompassed with <span class="cntrl">...</span> and styled.
-I'm not sure if in "blob" view they should be styled. For sure
-there should be no <span>...</span> for escaped attributed (future
-esc_attr). Common to_html/quot_html would give us code reuse (as gives
-quot_cec), if not consistent.
+I often need this to traverse around firewalls and whatnot.
+It works pretty well, assuming I can remember where I'm currently
+connected to.  :-)
 
->                One of my tests were a symlink that points at a 
-> funny filename ;-).
-
-This should be IMHO solved rather by better "tree" view support
-for symlinks, 'symlink' -> 'target' like in ls -l output.
-
->> BTW. what had happened with to_qtext post?
-> 
-> Sorry, I don't recall.
-
-There was quite a bit of discussion about name of _suggested_
-filename in blob_plain, blobdiff_plain view, namely the 
-  -content_disposition => 'inline; filename="' ...
-HTTP header. The result (probably lost in the noise) was to
-add to_qtext subroutine for that.
-
-Time to go to sleep...
 -- 
-Jakub Narebski
