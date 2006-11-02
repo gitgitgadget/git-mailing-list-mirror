@@ -1,80 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
-Date: Thu, 30 Nov 2006 23:55:32 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611302354060.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7virgzuf38.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0611282322320.9647@xanadu.home> <7vr6vmsnly.fsf@assigned-by-dhcp.cox.net>
- <87ejrlvn7r.wl%cworth@cworth.org> <7vodqpn3t4.fsf@assigned-by-dhcp.cox.net>
- <7vk61dn2yj.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0611300310520.30004@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0611291859070.3513@woody.osdl.org> <456EBBE7.8030404@op5.se>
- <Pine.LNX.4.64.0611300749560.3513@woody.osdl.org> <20061130164046.GB17715@thunk.org>
- <Pine.LNX.4.64.0611300903080.3513@woody.osdl.org> <Pine.LNX.4.64.0611301229290.9647@xanadu.home>
- <87irgwu6e6.wl%cworth@cworth.org> <87hcwgu5t1.wl%cworth@cworth.org>
- <Pine.LNX.4.64.0611301132350.3513@woody.osdl.org> <7vac28h898.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH] Allow deletion of several patches at once
+Date: Thu, 2 Nov 2006 10:36:51 +0000
+Message-ID: <b0943d9e0611020236p60859a97ide18b95a2e069b1b@mail.gmail.com>
+References: <20061023123714.GB10872@diana.vm.bytemark.co.uk>
+	 <20061101090714.2066.93948.stgit@localhost>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 30 Nov 2006 22:56:16 +0000 (UTC)
-Cc: Carl Worth <cworth@cworth.org>, Linus Torvalds <torvalds@osdl.org>,
-	Nicolas Pitre <nico@cam.org>, Theodore Tso <tytso@mit.edu>,
-	Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 2 Nov 2006 10:37:03 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vac28h898.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=PBLIsROytNIEm9oUZ9U/ozzi01Xi0fKAUMttWP4bTICa0YgS2QdEwImj8JvssXmWL9iDQQS7Qx+RNl1bldnvM9tFyE4szaNnmDj5GgzAHZEmEhWTIpPdYxrDOXkAB9qdl5sEd+CuztsMDTXFd9VMaHNuO7yqQTML3NIi3LfT/nk=
+In-Reply-To: <20061101090714.2066.93948.stgit@localhost>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30705>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gpuoc-00028x-Ds for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 23:55:39 +0100
+ esmtp (Exim 4.43) id 1GfZwN-0004Yq-Ok for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 11:36:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031619AbWK3Wzf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 17:55:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031620AbWK3Wzf
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 17:55:35 -0500
-Received: from mail.gmx.net ([213.165.64.20]:9677 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1031619AbWK3Wze (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 17:55:34 -0500
-Received: (qmail invoked by alias); 30 Nov 2006 22:55:33 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp027) with SMTP; 30 Nov 2006 23:55:33 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1752811AbWKBKgw convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006 05:36:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752813AbWKBKgw
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 05:36:52 -0500
+Received: from py-out-1112.google.com ([64.233.166.179]:38881 "EHLO
+ py-out-1112.google.com") by vger.kernel.org with ESMTP id S1752811AbWKBKgw
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006
+ 05:36:52 -0500
+Received: by py-out-1112.google.com with SMTP id a73so76814pye for
+ <git@vger.kernel.org>; Thu, 02 Nov 2006 02:36:51 -0800 (PST)
+Received: by 10.35.114.16 with SMTP id r16mr586765pym.1162463811454; Thu, 02
+ Nov 2006 02:36:51 -0800 (PST)
+Received: by 10.35.77.5 with HTTP; Thu, 2 Nov 2006 02:36:51 -0800 (PST)
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+On 01/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> This is an updated patch, which uses parse_patches() to support patch
+> ranges. It replaces patch 2/2 in the series; patch 1/2 (original
+> delete regression test) is unaffected.
 
-On Thu, 30 Nov 2006, Junio C Hamano wrote:
+I applied it but added another commit to change the algorithm
+slightly. It now first checks whether the applied patches can be
+deleted before deleting any patch (I find this safer). It also checks
+for local changes, conflicts and HEAD =3D=3D top only if you delete
+applied patches on the current branch. Actually, the HEAD =3D=3D top te=
+st
+failed when deleting on a different branch, which is normal since the
+top is that of the other branch.
 
-> Linus Torvalds <torvalds@osdl.org> writes:
-> 
-> > ...
-> > So yes, you very much ARE talking about CVS braindamage. The reason why
-> >
-> > 	git add file.c
-> > 	echo New line >> file.c
-> > 	git commit
-> >
-> > commits the _old_ content, is very much because git is ALL ABOUT THE 
-> > CONTENT. It has _never_ been about filenames. And it _shouldn't_ be about 
-> > filenames, because that would be BUGGY AND BROKEN.
-> 
-> I think this pretty much sums up and closes the current topic,
-> by declaring "expecting to give behaviour consistent to the
-> 'filename is what the user tells the SCM to track' mental model
-> CVS instilled is a lost cause".
+I'll make the changes public tonight.
 
-I think this is so important, that I vote for including this email as 
-Documentation/howto/explain-why-git-is-better-than-cvs.txt
+Thanks.
 
-Ciao,
-Dscho
+--=20
