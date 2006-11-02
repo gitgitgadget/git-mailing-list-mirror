@@ -1,63 +1,67 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 2/3] git-svn: documentation updates
-Date: Wed, 29 Nov 2006 00:54:19 -0800
-Message-ID: <20061129085419.GB4486@hand.yhbt.net>
-References: <1164768702941-git-send-email-normalperson@yhbt.net> <11647687042130-git-send-email-normalperson@yhbt.net> <456D36CE.1060300@midwinter.com>
+From: Andy Whitcroft <apw@shadowen.org>
+Subject: Re: weird strncmp usage?
+Date: Thu, 02 Nov 2006 01:44:36 +0000
+Message-ID: <45494D84.2060402@shadowen.org>
+References: <eibhga$tpg$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 29 Nov 2006 08:54:38 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 2 Nov 2006 01:47:27 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <456D36CE.1060300@midwinter.com>
-User-Agent: Mutt/1.5.9i
+User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
+In-Reply-To: <eibhga$tpg$1@sea.gmane.org>
+X-Enigmail-Version: 0.94.0.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30681>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpLCx-0002KN-Uc for gcvg-git@gmane.org; Wed, 29 Nov
- 2006 09:54:24 +0100
+ esmtp (Exim 4.43) id 1GfRdy-0004o9-CU for gcvg-git@gmane.org; Thu, 02 Nov
+ 2006 02:45:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966359AbWK2IyV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
- 03:54:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966365AbWK2IyU
- (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 03:54:20 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:22403 "EHLO hand.yhbt.net") by
- vger.kernel.org with ESMTP id S966359AbWK2IyU (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 03:54:20 -0500
-Received: by hand.yhbt.net (Postfix, from userid 500) id C5D172DC035; Wed, 29
- Nov 2006 00:54:19 -0800 (PST)
-To: Steven Grimm <koreth@midwinter.com>
+ S1752454AbWKBBpS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
+ 20:45:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752457AbWKBBpR
+ (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 20:45:17 -0500
+Received: from hellhawk.shadowen.org ([80.68.90.175]:27913 "EHLO
+ hellhawk.shadowen.org") by vger.kernel.org with ESMTP id S1752454AbWKBBpQ
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 20:45:16 -0500
+Received: from localhost ([127.0.0.1]) by hellhawk.shadowen.org with esmtp
+ (Exim 4.50) id 1GfRdE-0002xK-66; Thu, 02 Nov 2006 01:44:37 +0000
+To: hanwen@xs4all.nl
 Sender: git-owner@vger.kernel.org
 
-Steven Grimm <koreth@midwinter.com> wrote:
-> Eric Wong wrote:
-> >Eliminate 'commit' from some places and plug 'dcommit' more.
-> >Also update the section --id (GIT_SVN_ID) usage since we
-> >have multi-init/multi-fetch now.
-> >  
+Han-Wen Nienhuys wrote:
 > 
-> In the spirit of the "should the -a option be the default in 
-> git-commit?" discussion... What are the chances that a future version of 
-> git-svn could change the "dcommit" command to "commit" and the current 
-> "commit" to something else? I know it's a historical artifact, but given 
-> that git-svn is (by definition) aimed at Subversion users who are 
-> probably used to running "svn commit", it seems like making "git-svn 
-> commit" be the thing you usually want to run would be a good thing. One 
-> less habit to unlearn.
+> Hi,
+> 
+> the git source seems full of calls similar to
+> 
+>   strncmp (x, "constant string", 15)
+> 
+> is there a reason not to use something like
+> 
+>   int
+>   strxmp (char const *x, char const *y)
+>   {
+>     return strncmp (x, y, strlen (y));
+>   }
+> 
+> everywhere?
 
-I've been considering something along those lines.  I'm interested in
-renaming the current 'commit' command to something else (it still has
-its uses), but I haven't figured out what to call it...
+If you are doing these a _lot_ then there is a significant additional
+cost to using strlen on a constant string.
 
-Also, something that can wrap (git commit && git svn dcommit) into one
-step would be nice.
+That said if you know its constant you can also use sizeof("foo") and
+that is done at compile time.  Something like:
 
--- 
+#define strxcmp(x, y)	strncmp((x), (y), sizeof((y))
+
+-apw
