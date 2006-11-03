@@ -1,155 +1,81 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] git-clone: use wildcard specification for tracking branches
-Date: Sat, 16 Dec 2006 01:14:39 -0800
-Message-ID: <7vfybgjj7k.fsf@assigned-by-dhcp.cox.net>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH 2/4] Rename remote_only to display_mode
+Date: Fri, 3 Nov 2006 13:00:25 +0100
+Message-ID: <200611031200.27275.andyparkins@gmail.com>
+References: <bec6ab7849e3fcacac23cca44a0ba93282af5fca.1162465753.git.andyparkins@gmail.com> <200611030841.05888.andyparkins@gmail.com> <454B1F3B.1020603@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 16 Dec 2006 09:14:50 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 3 Nov 2006 12:01:17 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 13 Dec 2006 13:35:08 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=gVAaKDVsK0Zcxchmx8/XlGjYeUnUQfG387vwspaLcv1qP6zjfJ3H0aZpULZtrk+UJo3yE6se/If245xo9omcg94aIzCspTIMctW4BW9VfU2Se4NmpFcWeNJU4w/miVeqw1uRTKwogPAujLrrL5Rlnulnj2DtZhWn3mPSxIwzXfg=
+User-Agent: KMail/1.9.5
+In-Reply-To: <454B1F3B.1020603@op5.se>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34596>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvVd2-0000L2-2m for gcvg-git@gmane.org; Sat, 16 Dec
- 2006 10:14:48 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30833>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gfxj0-0006l4-QU for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 13:00:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965338AbWLPJOm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
- 04:14:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965340AbWLPJOm
- (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 04:14:42 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:33049 "EHLO
- fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S965338AbWLPJOl (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
- 04:14:41 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061216091440.SMZH22053.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>; Sat, 16
- Dec 2006 04:14:40 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id zME01V0071kojtg0000000; Sat, 16 Dec 2006
- 04:14:00 -0500
+ S1751426AbWKCMAg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 07:00:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751474AbWKCMAg
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 07:00:36 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:55612 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1751426AbWKCMAf
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 07:00:35 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so385390ugc for
+ <git@vger.kernel.org>; Fri, 03 Nov 2006 04:00:34 -0800 (PST)
+Received: by 10.67.117.2 with SMTP id u2mr2522912ugm.1162555230390; Fri, 03
+ Nov 2006 04:00:30 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id x26sm758506ugc.2006.11.03.04.00.29; Fri, 03 Nov 2006 04:00:30 -0800
+ (PST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-This stops enumerating the set of branches found on the remote
-side when a clone was made in the configuration file.  Instead,
-a single entry that maps each remote branch to the local
-tracking branch for the remote under the same name is created.
+On Friday 2006 November 03 10:51, Andreas Ericsson wrote:
 
-Doing it this way not only shortens the configuration file, but
-automatically adjusts to a new branch added on the remote side
-after the clone is made.
+> If you *need* to change something, change it. If you *want* to change
+> something just because it's not written the way you would write it, back
+> away. If you think some interface you're using needs clearing up
+> (codewise or with extra comments), send a separate patch for that so the
+> actual feature/bugfix you're sending in doesn't drown in cosmetic
+> changes to the interfaces the patch uses/touches.
 
-Unfortunately this cannot be done for the traditional layout,
-where we always need to special case the 'master' to 'origin'
-mapping within the local branch namespace.  But that is Ok; it
-will be going away before v1.5.0.
+Thank you for the excellent advice.  What then would you suggest in the case 
+in point?  I made as minimal a change as I could make; but that left the code 
+a little bit bitty - I had press-ganged a variable into taking on another 
+function and was using numeric literals that should really have been given 
+meaning with #define?
 
-We could also lose the "primary branch" mapping at the
-beginning, but that has to wait until we implement the "forbid
-'git pull' when we do not have branch.$current.merge for the
-current branch" policy we earlier discussed.  That should also
-be in v1.5.0
+My question is perhaps different from simply git-etiquette; it's should I 
+prefer my patches to be minimal or neat?  If there is a more appropriate way 
+of doing something should I do it or should I favour minimalism?
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+I've actually rewritten it now as per Junio's request, and while I'm happier 
+with the code, it was much bigger change, that didn't really lend itself to 
+being broken into smaller patches as did my first attempt.
 
----
-Junio C Hamano <junkio@cox.net> writes:
+I guess in the end it's a judgement call and the best thing to do is post it 
+and see who shoots it down :-)
 
-> Things that need to be done to complete what have been merged to
-> 'master' are:
-> ...
->  - 'git-clone' probably should be updated to use wild-card in
->    remote.origin.fetch, instead of listing all the branches it
->    found when the clone was made.
 
- git-clone.sh |   47 ++++++++++++++++++++++++++++++-----------------
- 1 files changed, 30 insertions(+), 17 deletions(-)
+Andy
 
-diff --git a/git-clone.sh b/git-clone.sh
-index 1f5d07a..422499a 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -366,41 +366,54 @@ then
- 		)
- 	)
- 
--	# Write out remotes/$origin file, and update our "$head_points_at".
-+	# Write out remote.$origin config, and update our "$head_points_at".
- 	case "$head_points_at" in
- 	?*)
--		mkdir -p "$GIT_DIR/remotes" &&
-+		# Local default branch
- 		git-symbolic-ref HEAD "refs/heads/$head_points_at" &&
-+
-+		# Tracking branch for the primary branch at the remote.
- 		case "$use_separate_remote" in
- 		t)	origin_track="$remote_top/$head_points_at"
- 			git-update-ref HEAD "$head_sha1" ;;
- 		*)	origin_track="$remote_top/$origin"
- 			git-update-ref "refs/heads/$origin" "$head_sha1" ;;
- 		esac &&
-+
-+		# Upstream URL and the primary branch tracking
- 		git-repo-config remote."$origin".url "$repo" &&
- 		git-repo-config remote."$origin".fetch \
- 			"refs/heads/$head_points_at:$origin_track" &&
--		(cd "$GIT_DIR/$remote_top" && find . -type f -print) |
--		while read dotslref
--		do
--			name=`expr "$dotslref" : './\(.*\)'`
--			if test "z$head_points_at" = "z$name"
--			then
--				continue
--			fi
--			if test "$use_separate_remote" = '' &&
--			   test "z$origin" = "z$name"
--			then
--				continue
--			fi
--			git-repo-config remote."$origin".fetch "refs/heads/${name}:$remote_top/${name}" '^$'
--		done &&
-+
-+		# Set up the mappings to track the remaining branches.
-+		case "$use_separate_remote" in
-+		t)
-+			git-repo-config remote."$origin".fetch \
-+				"refs/heads/*:$remote_top/*" '^$'
-+			;;
-+		*)
-+			(cd "$GIT_DIR/$remote_top" && find . -type f -print) |
-+			while read dotslref
-+			do
-+				name=`expr "$dotslref" : './\(.*\)'`
-+				if test "z$head_points_at" = "z$name" ||
-+					test "z$origin" = "z$name"
-+				then
-+					continue
-+				fi
-+				git-repo-config remote."$origin".fetch \
-+				"refs/heads/${name}:$remote_top/${name}" '^$'
-+			done
-+			;;
-+		esac &&
-+
- 		case "$use_separate_remote" in
- 		t)
- 			rm -f "refs/remotes/$origin/HEAD"
- 			git-symbolic-ref "refs/remotes/$origin/HEAD" \
- 				"refs/remotes/$origin/$head_points_at"
- 		esac &&
-+
- 		git-repo-config branch."$head_points_at".remote "$origin" &&
- 		git-repo-config branch."$head_points_at".merge "refs/heads/$head_points_at"
- 	esac
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
