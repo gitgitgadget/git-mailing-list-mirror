@@ -1,61 +1,80 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix regression tests on Cygwin
-Date: Tue, 24 Oct 2006 21:50:13 -0700
-Message-ID: <7vods1dmnu.fsf@assigned-by-dhcp.cox.net>
-References: <11616320733093-git-send-email-hjemli@gmail.com>
-	<Pine.LNX.4.63.0610241653020.2106@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vwt6pdn46.fsf@assigned-by-dhcp.cox.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 3/4] Default to displaying /all/ non-tag refs, not just
+ locals
+Date: Fri, 03 Nov 2006 11:55:56 +0100
+Message-ID: <454B203C.9040006@op5.se>
+References: <bec6ab7849e3fcacac23cca44a0ba93282af5fca.1162465753.git.andyparkins@gmail.com> <200611021111.22604.andyparkins@gmail.com> <7vac39mew2.fsf@assigned-by-dhcp.cox.net> <200611030847.22252.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 25 Oct 2006 04:50:22 +0000 (UTC)
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 3 Nov 2006 10:56:31 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vwt6pdn46.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Tue, 24 Oct 2006 21:40:25 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <200611030847.22252.andyparkins@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30823>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcaiZ-0002SJ-FS for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 06:50:19 +0200
+ esmtp (Exim 4.43) id 1GfwiU-0007dI-6P for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 11:56:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422974AbWJYEuQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 00:50:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161337AbWJYEuQ
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 00:50:16 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:11464 "EHLO
- fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S1161326AbWJYEuO
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 00:50:14 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061025045014.MPQA6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>; Wed, 25
- Oct 2006 00:50:14 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id eUpw1V01P1kojtg0000000 Wed, 25 Oct 2006
- 00:49:57 -0400
-To: Lars Hjemli <hjemli@gmail.com>
+ S1752864AbWKCK4B (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 05:56:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753211AbWKCK4B
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 05:56:01 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:43152 "EHLO
+ smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1752864AbWKCK4B (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 05:56:01 -0500
+Received: by smtp-gw1.op5.se (Postfix, from userid 588) id 2999D6BD62; Fri, 
+ 3 Nov 2006 11:56:00 +0100 (CET)
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id 4CDC06BD29; Fri,  3 Nov 2006 11:55:56 +0100 (CET)
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+Andy Parkins wrote:
+> On Friday 2006 November 03 02:40, Junio C Hamano wrote:
+> 
+>> That is a change in behaviour and given that we introduced
+>> remotes for the explicit purpose of not to clutter the local
+>> branch namespace, I doubt defaulting to _show_ remotes is a good
+> 
+> Really?  I had imagined it was to prevent accidental checking out of an 
+> upstream-tracking branch.  Also; I don't think "not cluttering the namespace" 
+> is the same as "not showing multiple namespaces".  The local namespace 
+> remains as uncluttered as it ever was.  This is a question of what to 
+> display.
+> 
+> Assuming my "mixed mode" display thing were in place, doesn't that make the 
+> two choices of UI
+> 
+> 1)
+>  git-branch            : show local branches
+>  git-branch --all      : show local and remote branches
+>  git-branch -r         : show remote branches
+> 2)
+>  git-branch            : show local and remote branches
+>  git-branch --local    : show local branches
+>  git-branch -r         : show remote branches
+> 
+> In case 2) the switch is simply selecting a filter, and so fits in with 
+> the "-r" better.
+> 
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->> On Mon, 23 Oct 2006, Lars Hjemli wrote:
->>
->>> On Cygwin, "make test" failes due to missing ".exe" a couple of places.
->>
->> Last time I made "test" on cygwin, it did not complain.
->
-> Same here (W2k, fairly up-to-date git, installed on local NTFS
-> disk).
+I think it'd make more sense if git-branch could instead take a --filter 
+parameter that does a simple strncmp(filter, branch, strlen(filter)) to 
+see if it should show a branch or not. That way, "--filter=remotes" 
+would work splendidly. "local" as keyword to "--filter" could possibly 
+be a special case and need documentation.
 
-... and more importantly, with fairly up-to-date Cygwin.
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
