@@ -1,58 +1,63 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sun, 26 Nov 2006 02:32:20 +0100
-Message-ID: <20061126013220.GD24909@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20061121235429.GH5443@nan92-1-81-57-214-146.fbx.proxad.net> <20061122034056.GB23856@spearce.org> <20061123232313.GB24909@nan92-1-81-57-214-146.fbx.proxad.net> <20061125065338.GC4528@spearce.org> <20061125111235.GO5443@nan92-1-81-57-214-146.fbx.proxad.net> <Pine.LNX.4.64.0611251037000.6991@woody.osdl.org> <45689747.3020403@midwinter.com> <Pine.LNX.4.64.0611251128170.3483@woody.osdl.org> <20061125234908.GC24909@nan92-1-81-57-214-146.fbx.proxad.net> <20061126011420.GI20094MdfPADPa@greensroom.kotnet.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH] Allow hand-editing of patches before sending
+Date: Fri, 3 Nov 2006 09:39:57 +0000
+Message-ID: <b0943d9e0611030139i7be9569bh4a29596a768e82a3@mail.gmail.com>
+References: <20061101090046.1107.81105.stgit@localhost>
+	 <b0943d9e0611020232x1e343bbco9451c8183c84d68@mail.gmail.com>
+	 <20061102113631.GA30507@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 26 Nov 2006 01:33:26 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Fri, 3 Nov 2006 09:40:44 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=phg49kZl4yHay9bPDVyue5M1D8OZimW5gwjp1YWxqtva6n8kP5nYTbWJVmX4st1U3IjRCWGMsnwYt8fzANhsm+TQOaU8WcVap/KjR5GQOogNvhLH2fdINctzPu3xh8CSIaG8PO5SIcnCsRP/ntEyyrSVECpvigEb4vAvuQTEJn4=
+In-Reply-To: <20061102113631.GA30507@diana.vm.bytemark.co.uk>
 Content-Disposition: inline
-In-Reply-To: <20061126011420.GI20094MdfPADPa@greensroom.kotnet.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30807>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Go8tT-0003Z1-G5 for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 02:33:19 +0100
+ esmtp (Exim 4.43) id 1GfvWr-0007EK-FY for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 10:40:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935228AbWKZBdO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 20:33:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935229AbWKZBdO
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 20:33:14 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:28548 "EHLO
- smtp1-g19.free.fr") by vger.kernel.org with ESMTP id S935228AbWKZBdO (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 20:33:14 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
- [81.57.214.146]) by smtp1-g19.free.fr (Postfix) with ESMTP id E51889B3FC;
- Sun, 26 Nov 2006 02:33:10 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000) id 71AFF201C;
- Sun, 26 Nov 2006 02:32:20 +0100 (CET)
-To: skimo@liacs.nl
+ S1752724AbWKCJj6 convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006 04:39:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752729AbWKCJj6
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 04:39:58 -0500
+Received: from py-out-1112.google.com ([64.233.166.183]:700 "EHLO
+ py-out-1112.google.com") by vger.kernel.org with ESMTP id S1752724AbWKCJj6
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006
+ 04:39:58 -0500
+Received: by py-out-1112.google.com with SMTP id a73so281189pye for
+ <git@vger.kernel.org>; Fri, 03 Nov 2006 01:39:57 -0800 (PST)
+Received: by 10.35.51.13 with SMTP id d13mr2930343pyk.1162546797457; Fri, 03
+ Nov 2006 01:39:57 -0800 (PST)
+Received: by 10.35.77.5 with HTTP; Fri, 3 Nov 2006 01:39:57 -0800 (PST)
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
 Sender: git-owner@vger.kernel.org
 
-On Sun, Nov 26, 2006 at 02:14:20AM +0100, Sven Verdoolaege wrote:
-> Likewise, when you commit in the superproject, it should simply record
-> the changes to the "content" of the subproject and not change it.
-> And the content of the subproject is a commit, so a commit in the
-> superproject should not change the content of the subproject by creating
-> another commit in the subproject.
+On 02/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> That Gnus shows =3D20 suggests that I haven't got the QP encoding 100=
+%
+> right. I haven't had time to look at that yet, and it looks like you
+> may beat me to it.
 
-I've realized after suggesting that how much that idea was inadequate -
-sorry for the noise.
+Well, it might be just the way I read the list (via the gmane news
+gateway) but I have to run some tests. However, I'd like the message
+body to still be 8bit and the QP encoding optional (either command
+line option or [stgit] config variable).
 
-However, I'm not yet buying the idea that "the content of the subproject
-is a commit" :)
-
-Best regards,
--- 
+--=20
