@@ -1,59 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
-From: Pazu <pazu@pazu.com.br>
-Subject: Re: [PATCH 2/3] git-svn: documentation updates
-Date: Wed, 29 Nov 2006 12:35:07 +0000 (UTC)
-Message-ID: <loom.20061129T133305-813@post.gmane.org>
-References: <1164768702941-git-send-email-normalperson@yhbt.net> <11647687042130-git-send-email-normalperson@yhbt.net> <456D36CE.1060300@midwinter.com> <20061129085419.GB4486@hand.yhbt.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Remove extra "/" in path names for git_get_project_list
+Date: Fri, 03 Nov 2006 12:18:00 +0100
+Organization: At home
+Message-ID: <eif8gd$6u5$1@sea.gmane.org>
+References: <454ACF91.50601@gmail.com> <7vslh1jcji.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 29 Nov 2006 12:36:19 +0000 (UTC)
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Fri, 3 Nov 2006 11:18:19 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 10
+Original-Lines: 27
 Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 201.37.99.93 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0)
+X-Gmane-NNTP-Posting-Host: host-81-190-18-116.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30827>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpOfS-0003Si-Qf for gcvg-git@gmane.org; Wed, 29 Nov
- 2006 13:36:03 +0100
+ esmtp (Exim 4.43) id 1Gfx3p-0005CS-5R for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 12:18:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967169AbWK2Mfv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
- 07:35:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967172AbWK2Mfv
- (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 07:35:51 -0500
-Received: from main.gmane.org ([80.91.229.2]:52370 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S967169AbWK2Mfu (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 07:35:50 -0500
+ S1753226AbWKCLSG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 06:18:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753227AbWKCLSG
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 06:18:06 -0500
+Received: from main.gmane.org ([80.91.229.2]:62675 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1753226AbWKCLSD (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 06:18:03 -0500
 Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GpOf1-0003Ox-8X for git@vger.kernel.org; Wed, 29 Nov 2006 13:35:36 +0100
-Received: from C925635D.poa.virtua.com.br ([C925635D.poa.virtua.com.br]) by
+ 1Gfx3Q-00056w-Pj for git@vger.kernel.org; Fri, 03 Nov 2006 12:17:47 +0100
+Received: from host-81-190-18-116.torun.mm.pl ([81.190.18.116]) by
  main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Wed, 29 Nov 2006 13:35:35 +0100
-Received: from pazu by C925635D.poa.virtua.com.br with local (Gmexim 0.1
- (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 29 Nov 2006
- 13:35:35 +0100
+ <git@vger.kernel.org>; Fri, 03 Nov 2006 12:17:44 +0100
+Received: from jnareb by host-81-190-18-116.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 03 Nov 2006
+ 12:17:44 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Eric Wong <normalperson <at> yhbt.net> writes:
+Junio C Hamano wrote:
 
-> Also, something that can wrap (git commit && git svn dcommit) into one
-> step would be nice.
+> "Aneesh Kumar K.V" <aneesh.kumar@gmail.com> writes:
+> 
+>> Without this change we get a wrong $pfxlen value and the check_export_ok()
+>> checks with with a wrong directory name. Without this patch the below
+>> $projects_list fails with gitweb
+>>
+>> $projects_list = "/tmp/a/b/";
+>>
+>> Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
+> 
+> Hmph.  Doesn't this break $projects_list = "/", I wonder?
+> 
+>> +            # remove the trailing "/"
+>> +            $dir =~ s!/+$!!;
 
-What I'd like to see is foreign systems integration for git pull/push. If git
-had to use git-svn behind the curtains, so be it would be -very- nice if the
-user could just use git pull/push.
+So perhaps
 
--- Pazu
+        $dir =~ s!(?<=[^/])/+$!!;
+
+(zero-width positive look-behind assertion).
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
