@@ -1,105 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Shallow clone
-Date: Sun, 12 Nov 2006 21:29:11 -0800
-Message-ID: <7vodrbap94.fsf@assigned-by-dhcp.cox.net>
-References: <7v8ximwrm3.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0611072009220.2601@qynat.qvtvafvgr.pbz>
-	<45520872.3090506@gmail.com> <45521AE9.7050902@gmail.com>
-	<7vac31p8om.fsf@assigned-by-dhcp.cox.net>
-	<87zmaynl18.fsf@wine.dyndns.org>
-	<7vu015f5av.fsf@assigned-by-dhcp.cox.net>
-	<20061112205909.f8951300.vsu@altlinux.ru>
-	<7vd57scong.fsf@assigned-by-dhcp.cox.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: [PATCH] Introducing cg-xxdiff for conflict resolution
+Date: Fri, 3 Nov 2006 15:41:47 +1300
+Message-ID: <46a038f90611021841p54c38d72x12360ec93f32a8ad@mail.gmail.com>
+References: <11546624471356-git-send-email-martin@catalyst.net.nz>
+	 <20060924165037.GS20017@pasky.or.cz>
+	 <46a038f90609241002i1db98ed6n118077089c9e417f@mail.gmail.com>
+	 <20060924171246.GY13132@pasky.or.cz>
+	 <46a038f90609241022i6ac11da1o1a1cba199595d036@mail.gmail.com>
+	 <20060924172838.GZ13132@pasky.or.cz>
+	 <46a038f90611021540s14b6098p477a68ef00c826e9@mail.gmail.com>
+	 <20061103001135.GN20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 13 Nov 2006 05:29:41 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 3 Nov 2006 03:06:58 +0000 (UTC)
+Cc: "Martin Langhoff" <martin@catalyst.net.nz>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vd57scong.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sun, 12 Nov 2006 13:59:15 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=nZkjn+bkGv5nqIjFjQuhEF2MEO1iBuZsVgb65WGdIhv9XKYTA4KrKuKG6+ecPt99PUsY/dNBjIrFYmJOUzOgTf8c+9SAmBVaF+bCusfcaipAZNPZtWj2Vt+cZynWWcy+iuX0JLO2ueR8k9pqusFtEQdoH2a/kdW59fg1bywByi8=
+In-Reply-To: <20061103001135.GN20017@pasky.or.cz>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30779>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GjUNn-000402-Qv for gcvg-git@gmane.org; Mon, 13 Nov
- 2006 06:29:24 +0100
+ esmtp (Exim 4.43) id 1GfpAO-0003wO-40 for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 03:52:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753942AbWKMF3N (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006
- 00:29:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753945AbWKMF3N
- (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 00:29:13 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:20718 "EHLO
- fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1753942AbWKMF3M
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 00:29:12 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061113052912.WXXN18207.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Mon, 13
- Nov 2006 00:29:12 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id m5Um1V00M1kojtg0000000; Mon, 13 Nov 2006
- 00:28:46 -0500
-To: Sergey Vlasov <vsu@altlinux.ru>
+ S1752987AbWKCClu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 21:41:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752988AbWKCClu
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 21:41:50 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:41632 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1752986AbWKCClt
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 21:41:49 -0500
+Received: by nf-out-0910.google.com with SMTP id x30so1184481nfb for
+ <git@vger.kernel.org>; Thu, 02 Nov 2006 18:41:47 -0800 (PST)
+Received: by 10.48.48.1 with SMTP id v1mr511065nfv.1162521707607; Thu, 02 Nov
+ 2006 18:41:47 -0800 (PST)
+Received: by 10.49.60.1 with HTTP; Thu, 2 Nov 2006 18:41:47 -0800 (PST)
+To: "Petr Baudis" <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
-
-> Sergey Vlasov <vsu@altlinux.ru> writes:
+On 11/3/06, Petr Baudis <pasky@suse.cz> wrote:
+> > Paski, did this one get dropped? Change of heart? Heart attack?
 >
->> This is due to optimization in builtin-pack-objects.c:try_delta():
->>
->> 	/*
->> 	 * We do not bother to try a delta that we discarded
->> 	 * on an earlier try, but only when reusing delta data.
->> 	 */
->> 	if (!no_reuse_delta && trg_entry->in_pack &&
->> 	    trg_entry->in_pack == src_entry->in_pack)
->> 		return 0;
->>
->> After removing this part the shallow pack after clone is 2.6M, as it
->> should be.
->>
->> The problem with this optimization is that it is only valid if we are
->> repacking either the same set of objects as we did earlier, or its
->> superset.  But if we are packing a subset of objects, there will be some
->> objects in that subset which were delta-compressed in the original pack,
->> but base objects for that deltas are not included in our subset -
->> therefore we will be unable to reuse existing deltas, and with that
->> optimization we will never try to use delta compression for these
->> objects.
->> ...
->> So any partial fetch (shallow or not) from a mostly packed repository
->> currently results in a suboptimal pack.
+> Hmm, I thought we've agreed to go for the cg-resolve solution
+> instead...?
 
-What we tried to avoid with the original heuristics in commit
-51d1e83f was to avoid wasting time on undeltifiable blobs, and
-they would be stored as base in the original packs, so I think
-the following would fly better (the patch is for maint, for
-master we would also check for OBJ_REF_DELTA as well).
+Oops. That wasn't my reading. Misunderstood. In any case, if you go
+back a bit in the conversation, the usage model I find this useful is
+one where it makes sense to try different tools that have entirely
+different parameters. That is why it makes sense to call them
+differently.
 
----
+So cg-meld [meld params] , is different from cg-xxdiff [xxdiff params]
+and cg-wiggle [wiggle params] makes more sense to me and can be
+maintained by different people (those who like meld probably dont' use
+xxdiff ;-)
 
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 96c069a..84a8749 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -1101,7 +1101,8 @@ static int try_delta(struct unpacked *tr
- 	 * on an earlier try, but only when reusing delta data.
- 	 */
- 	if (!no_reuse_delta && trg_entry->in_pack &&
--	    trg_entry->in_pack == src_entry->in_pack)
-+	    trg_entry->in_pack == src_entry->in_pack &&
-+	    trg_entry->in_pack_type != OBJ_DELTA)
- 		return 0;
- 
- 	/*
+And from a packaging perspective, cg-resolve will depend on a zillion things.
 
+cheers,
 
 
