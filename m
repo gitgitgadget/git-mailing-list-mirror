@@ -1,76 +1,60 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Catalin Marinas <catalin.marinas@arm.com>
-Subject: Re: stgit: No patches to pop
-Date: Mon, 11 Dec 2006 16:11:50 +0000
-Message-ID: <tnxpsaqwgxl.fsf@arm.com>
-References: <7ac1e90c0612110632x56a2917cu4db33e47923f34c2@mail.gmail.com>
-Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 7/n] gitweb: Output also empty patches in "commitdiff" view
+Date: Fri, 3 Nov 2006 12:56:37 +0100
+Message-ID: <200611031256.37927.jnareb@gmail.com>
+References: <200610301953.01875.jnareb@gmail.com> <200610311736.27910.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 11 Dec 2006 16:12:17 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 3 Nov 2006 11:56:33 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7ac1e90c0612110632x56a2917cu4db33e47923f34c2@mail.gmail.com> (Bahadir
- Balban's message of "Mon, 11 Dec 2006 14:32:46 +0000")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 11 Dec 2006 16:12:16.0966 (UTC) FILETIME=[208DD660:01C71D3F]
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=ssh3NS03NUB3T+fLCxmbOOfuo8T+cuCZA64P9bmsCnk8sUAKnVIQxakPcOm0dnaZ4RGh+qm5W9tURj17/aI5xAy7RS3Kt1TmTpSoeYCX4EFEh6POSuxEfzlxTlI802fpLajSVtwPk6+uLz2qLLyzT7PIOV1oJC6FbpDajI2R704=
+User-Agent: KMail/1.9.3
+In-Reply-To: <200610311736.27910.jnareb@gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34011>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gtnl4-0001yA-5u for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 17:12:02 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30831>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gfxep-0005ma-PQ for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 12:56:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936957AbWLKQL7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
- 11:11:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936967AbWLKQL7
- (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 11:11:59 -0500
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:50779 "EHLO
- cam-admin0.cambridge.arm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
- with ESMTP id S936957AbWLKQL6 (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11
- Dec 2006 11:11:58 -0500
-Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.105.18]) by
- cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id kBBGBtYo000834;
- Mon, 11 Dec 2006 16:11:55 GMT
-Received: from localhost.localdomain ([10.1.255.211]) by
- cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0); Mon, 11 Dec 2006
- 16:12:16 +0000
-To: "Bahadir Balban" <bahadir.balban@gmail.com>
+ S1750991AbWKCL4U (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 06:56:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751010AbWKCL4U
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 06:56:20 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:19495 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1750956AbWKCL4U
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 06:56:20 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so384538ugc for
+ <git@vger.kernel.org>; Fri, 03 Nov 2006 03:56:18 -0800 (PST)
+Received: by 10.66.244.10 with SMTP id r10mr2528591ugh.1162554978447; Fri, 03
+ Nov 2006 03:56:18 -0800 (PST)
+Received: from host-81-190-18-116.torun.mm.pl ( [81.190.18.116]) by
+ mx.google.com with ESMTP id h1sm753989ugf.2006.11.03.03.56.17; Fri, 03 Nov
+ 2006 03:56:18 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-"Bahadir Balban" <bahadir.balban@gmail.com> wrote:
-> I've just recently started using stgit (v0.11, git v1.4.3.4). On a
-> test repository, I do:
->
-> % stg applied
-> first
-> second
-> third
->
-> but when I pop I get:
->
-> % stg pop
-> stg pop: No patches to pop
+Jakub Narebski wrote:
+> Remove skipping over empty patches (i.e. patches which consist solely
+> of extended headers) in git_patchset_body, and add links to those
+> header-only patches in git_difftree_body (but not generate blobdiff
+> links when there were no change in file contents).
 
-Can you write a list of commands or script so that I can easily
-reproduce this? It works OK for me.
-
-> I also get things like:
->
-> % stg pop second
-> popping patch "third"... done
-> Now at patch "second"
-
-In version 0.11, the "pop" command is equivalent to "goto". I changed
-this in the latest version (in the StGIT repository) so that "pop
-<patch>" tries to only extract that patch from the stack by popping
-all the patches to the given one and pushing them back without the one
-you specified. It also supports patch ranges (i.e. patch1..patch4).
-
+Attention: I think this patch causes that in some cases gitweb generates
+incorrect HTML (one of <div> elements is not closed).
 -- 
+Jakub Narebski
