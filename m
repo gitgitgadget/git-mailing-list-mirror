@@ -4,68 +4,82 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-svnimport breakage as of git-1.4.4
-Date: Thu, 14 Dec 2006 13:32:28 -0800
-Message-ID: <7vejr217v7.fsf@assigned-by-dhcp.cox.net>
-References: <1165505193.26874.13.camel@systems03.lan.brontes3d.com>
-	<20061208203230.GA9193@sashak.voltaire.com>
-	<1165847230.13854.2.camel@systems03.lan.brontes3d.com>
-	<20061211204904.GC1003@sashak.voltaire.com>
-	<1166027289.21948.4.camel@systems03.lan.brontes3d.com>
-	<20061214022142.GA14521@sashak.voltaire.com>
-	<1166130300.21982.0.camel@systems03.lan.brontes3d.com>
-	<20061214212033.GG7838@sashak.voltaire.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: git-svn todo/wishlist
+Date: Thu, 2 Nov 2006 23:01:36 -0800
+Message-ID: <20061103070136.GB31917@hand.yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 14 Dec 2006 21:32:45 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Fri, 3 Nov 2006 07:01:52 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061214212033.GG7838@sashak.voltaire.com> (Sasha Khapyorsky's
-	message of "Thu, 14 Dec 2006 23:20:33 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34406>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuyBs-0002tO-FJ for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 22:32:32 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30789>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gft3d-0008MV-0v for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 08:01:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932930AbWLNVca (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 16:32:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932932AbWLNVca
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 16:32:30 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:62568 "EHLO
- fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932930AbWLNVc3 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 16:32:29 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao02.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061214213228.IBIV97.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>; Thu, 14
- Dec 2006 16:32:28 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id ylYf1V0161kojtg0000000; Thu, 14 Dec 2006
- 16:32:40 -0500
-To: Sasha Khapyorsky <sashak@voltaire.com>
+ S1753171AbWKCHBh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 02:01:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753172AbWKCHBh
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 02:01:37 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:39836 "EHLO hand.yhbt.net") by
+ vger.kernel.org with ESMTP id S1753171AbWKCHBg (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 02:01:36 -0500
+Received: by hand.yhbt.net (Postfix, from userid 500) id 5983A2DC034; Thu,  2
+ Nov 2006 23:01:36 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Sasha Khapyorsky <sashak@voltaire.com> writes:
+There are several things I'd like to see in git-svn, but haven't had
+much time to do myself, and more interesting things keep popping up :)
 
-> On 16:05 Thu 14 Dec     , Daniel Drake wrote:
->> On Thu, 2006-12-14 at 04:21 +0200, Sasha Khapyorsky wrote:
->> > Try this please:
->> > 
->> > 
->> > diff --git a/git-svnimport.perl b/git-svnimport.perl
->> > index cbaa8ab..071777b 100755
->> > --- a/git-svnimport.perl
->> > +++ b/git-svnimport.perl
->> 
->> Thanks, it now works for both forms of command line arguments.
->
-> Thanks for reporting. I still run git-svnimport against
-> http://tortoisesvn.tigris.org/svn/tortoisesvn, works fine up to now.
+Some of these I dread working on because it involves having to wrangle
+with the (imho) overly complex SVN API, but the end user experience
+should be better afterwards :)
 
-An applicable version of the patch with proposed commit log
-message would be much appreciated.
+1. Ability to transfer deltas over fetches.  Currently, we transfer
+   deltas only when committing, but when we fetch, we fetch whole files
+   if they're modified (like git with dumb protocols).  Our current method
+   is very fast with fast connections and the code is very simple (I
+   ripped the code off svnimport :), but users behind slower links will
+   find the waiting for the svn server to generate a delta to be faster.
+
+2. Ability to login and accept SSL certificates without relying on
+   the caching done by the svn command-line client.  I tried doing this
+   a while back, but was unsuccessful, and didn't look into it further.
+   I couldn't get svm/SVN::Mirror to work with this, either.  This could
+   be a bug in SVN bindings, too...
+
+3. Documentation.  The -i/GIT_SVN_ID= stuff should probably be promoted
+   more now that branches/tags are better supported.  More examples,
+   too...
+
+4. Would storing the SVN URLs in .git/config be a good idea?  I'm
+   considering it as it would potentially simplify some things for
+   people tracking multiple trees.
+
+5. Ability to create tags/branches on the SVN side.  I'd like to avoid
+   having to re-fetch all the new stuff into git if I created a new
+   tag/branch on the SVN side.  This shouldn't be very hard to do.
+   Avoiding re-fetching new stuff when somebody else creates a
+   tag/branch would also be nice, but more involved.
+
+6. Faster multi-fetch across a single repository.  This would probably
+   be easier if we relied less on global variables and subprocesses.
+
+7. Some method of handling svn:externals would be a nice feature to
+   have.  This would be easier with subproject support from git.
+
+8. Packed refs.  I haven't looked into this at all yet, I just heard of
+   it just heard about it a while back and it ("packed refs") sounded
+   like it could replace the .rev_db files I'm using in git-svn.
+
+9. If not packed refs, then .rev_db could be transparently compressed.
+   It's good for high-activity trunks; but very space-inefficient
+   for tags and sparse branches.
+
+-- 
