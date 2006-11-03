@@ -2,91 +2,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Fri, 1 Dec 2006 23:08:21 +0100
-Message-ID: <20061201220821.GL18810@admingilde.org>
-References: <20061130170625.GH18810@admingilde.org> <200612012104.39897.andyparkins@gmail.com> <20061201213722.GK18810@admingilde.org> <200612012154.33834.andyparkins@gmail.com>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: git bug? + question
+Date: Fri, 3 Nov 2006 18:15:49 +0100
+Message-ID: <200611031815.49553.Josef.Weidendorfer@gmx.de>
+References: <buoejsme6ho.fsf@dhapc248.dev.necel.com> <7v3b90gbfv.fsf@assigned-by-dhcp.cox.net> <20061103094655.GA16721@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="uvMug2t/eFzFwVce"
-NNTP-Posting-Date: Fri, 1 Dec 2006 22:08:34 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Fri, 3 Nov 2006 16:48:24 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, Miles Bader <miles@gnu.org>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+User-Agent: KMail/1.9.3
+In-Reply-To: <20061103094655.GA16721@diana.vm.bytemark.co.uk>
 Content-Disposition: inline
-In-Reply-To: <200612012154.33834.andyparkins@gmail.com>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30867>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqGYU-0000sh-0k for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 23:08:26 +0100
+ esmtp (Exim 4.43) id 1Gg2Bk-000586-93 for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 17:46:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1162055AbWLAWIX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 17:08:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162058AbWLAWIX
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 17:08:23 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:29825 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S1162055AbWLAWIW
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 17:08:22 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1GqGYP-00023Y-GL; Fri, 01 Dec 2006 23:08:21 +0100
-To: Andy Parkins <andyparkins@gmail.com>
+ S1753366AbWKCQqh convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006 11:46:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753367AbWKCQqh
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 11:46:37 -0500
+Received: from tuminfo2.informatik.tu-muenchen.de ([131.159.0.81]:60641 "EHLO
+ tuminfo2.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP id
+ S1753366AbWKCQqg convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>);
+ Fri, 3 Nov 2006 11:46:36 -0500
+Received: from dhcp-3s-57.lrr.in.tum.de (dhcp-3s-57.lrr.in.tum.de
+ [131.159.35.57]) by mail.in.tum.de (Postfix) with ESMTP id ECFFD239C; Fri,  3
+ Nov 2006 17:42:48 +0100 (MET)
+To: Karl =?iso-8859-1?q?Hasselstr=F6m?= <kha@treskal.com>
 Sender: git-owner@vger.kernel.org
 
+On Friday 03 November 2006 10:46, Karl Hasselstr=F6m wrote:
+> Hmm. How about changing the meaning of "remote" slightly? Like this:
 
---uvMug2t/eFzFwVce
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+That's not good, as it changes existing config meaning.
+But why not support fetch lines in [branch.*] sections?
 
-hoi :)
+Ie. instead of
 
-On Fri, Dec 01, 2006 at 09:54:32PM +0000, Andy Parkins wrote:
-> On Friday 2006, December 01 21:37, Martin Waitz wrote:
->=20
-> > > I'm going to guess by reachability analysis, you mean that the
-> > > submodule doesn't know that some of it's commits are referenced by the
-> > > supermodule.  As I suggested elsewhere in the thread, that's easily
-> > > fixed by making a refs/supermodule/commitXXXX file for each
-> > > supermodule commit that references as particular submodule commit.
-> >
-> > I wouldn't call this "easily".
->=20
-> Of course it is; when you write a supermodule commit you have it's hash,=
-=20
-> $SUPERMODULE_HASH, you have the commit-hash of the submodule commit you'r=
-e=20
-> referencing, $SUBMODULE_HASH.  It's not really hard to do
->=20
-> echo $SUBMODULE_HASH >=20
-> submodule/.git/refs/supermodules/commit$SUPERMODULE_HASH
+>       [remote."gitster"]
+>               url =3D gitster.example.com:/home/junio/git.git/
+>               fetch =3D heads/master:remotes/gitster/master
+>               fetch =3D heads/next:remotes/gitster/next
+>       [branch."master"]
+>               remote =3D gitster
+>               merge =3D remotes/gitster/master
+>       [branch."next"]
+>               remote =3D gitster
+>               merge =3D remotes/gitster/next
 
-I guess you are aware that you have to scan _all_ trees inside _all_
-supermodule commits for possible references.
+make your config look like
 
-So what do you do with deleted submodules?
-You wouldn't want them to still sit around in your working directory,
-but you still have to preserve them.
+       [remote."gitster"]
+               url =3D gitster.example.com:/home/junio/git.git/
+       [branch."master"]
+               remote =3D gitster
+               fetch =3D heads/master:remotes/gitster/master
+               merge =3D remotes/gitster/master
+       [branch."next"]
+               remote =3D gitster
+               fetch =3D heads/next:remotes/gitster/next
+               merge =3D remotes/gitster/next
 
---=20
-Martin Waitz
+A fetch line in [branch.*] means: Also fetch this refspec in
+addition to the refspecs specified in the remote section.
+Problem being that "git fetch gitster" does nothing anymore :-(
 
---uvMug2t/eFzFwVce
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+Other option: Introduce "fetchonly" line which ignores the original
+fetch lines in the remote section.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFcKfVj/Eaxd/oD7IRAkj1AJ9Z+XGe2glbswKtHAnjVzN4EQ4emQCfeg4Y
-NosrQSYRvwOvEmJNDf7SFPY=
-=Mnco
------END PGP SIGNATURE-----
+       [remote."gitster"]
+               url =3D gitster.example.com:/home/junio/git.git/
+               fetch =3D heads/master:remotes/gitster/master
+               fetch =3D heads/next:remotes/gitster/next
+       [branch."master"]
+               remote =3D gitster
+               fetchonly =3D heads/master:remotes/gitster/master
+               merge =3D remotes/gitster/master
 
