@@ -1,98 +1,82 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: [BUG] daemon.c blows up on OSX
-Date: 20 Dec 2006 15:25:27 -0800
-Message-ID: <86r6uuxi8o.fsf@blue.stonehenge.com>
-References: <7vmz5ib8eu.fsf@assigned-by-dhcp.cox.net>
-	<86vek6z0k2.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0612201412250.3576@woody.osdl.org>
-	<86irg6yzt1.fsf_-_@blue.stonehenge.com>
-	<7vr6uu6w8e.fsf@assigned-by-dhcp.cox.net>
-	<86ejquyz4v.fsf@blue.stonehenge.com>
-	<86ac1iyyla.fsf@blue.stonehenge.com>
-	<7v1wmu6ugr.fsf@assigned-by-dhcp.cox.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: git bug? + question
+Date: Fri, 3 Nov 2006 08:48:57 +0100
+Message-ID: <20061103074857.GA15972@diana.vm.bytemark.co.uk>
+References: <buoejsme6ho.fsf@dhapc248.dev.necel.com> <7v4pthmew1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 21 Dec 2006 01:21:35 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Fri, 3 Nov 2006 07:49:49 +0000 (UTC)
+Cc: Miles Bader <miles@gnu.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-x-mayan-date: Long count = 12.19.13.16.7; tzolkin = 8 Manik; haab = 0 Kankin
-In-Reply-To: <7v1wmu6ugr.fsf@assigned-by-dhcp.cox.net>
-Original-Lines: 46
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+Content-Disposition: inline
+In-Reply-To: <7v4pthmew1.fsf@assigned-by-dhcp.cox.net>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34999>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GxCco-00086R-8t for gcvg-git@gmane.org; Thu, 21 Dec
- 2006 02:21:34 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30792>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gftnz-0000Ii-91 for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 08:49:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161122AbWLUBVT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 20:21:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161124AbWLUBVS
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 20:21:18 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:32095 "EHLO
- blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1161122AbWLUBVS (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
- 20:21:18 -0500
-Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
- (Postfix) with ESMTP id 5558C8CE45; Wed, 20 Dec 2006 17:21:17 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
- (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
- 15464-01-64; Wed, 20 Dec 2006 17:21:16 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001) id 6A3868FB4D;
- Wed, 20 Dec 2006 15:25:27 -0800 (PST)
+ S1753183AbWKCHtG convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006 02:49:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753184AbWKCHtG
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 02:49:06 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:12044 "EHLO
+ diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1753183AbWKCHtD
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 02:49:03 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
+ (Debian)) id 1GftnN-0004Dh-00; Fri, 03 Nov 2006 07:48:57 +0000
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
->>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
+On 2006-11-02 18:40:30 -0800, Junio C Hamano wrote:
 
-Junio> This unfortunately violates the "all common system headers in
-Junio> git-compat-util.h" rule, which is needed to define _XOPEN_SOURCE
-Junio> and friends before including the system header files.
+> which is efficient (guaranteed to do only one fetch from remote) and
+> convenient.
 
-Junio> And string.h, netdb.h and unistd.h are already included there,
-Junio> so there is something deeper going on on OSX.
+Hmm, this is interesting. 99% of the time, I use "git fetch", followed
+by "git pull . remotes/origin/foo" (often having run gitk in between
+the two in order to see what's coming). I like to know what I'm
+pulling (yes, I know how to undo a bad pull, but still ...).
 
-Junio> Is the declaration of strncasecmp in <string.h> on OSX
-Junio> conditional to some macro (and the same question about other
-Junio> symbols you did not get)?  We need to find out what feature
-Junio> macros are expected on that platform and define them as needed.
+> And I also would need to have per-branch configuration to merge from
+> ". remotes/origin/$b" without re-fetching while on a non-master
+> branch $b, for the above to work.
 
-If one of those defines _POSIX_C_SOURCE (or _ANSI_SOURCE),
-then <string.h> does *not* define "strncasecmp", because it has those
-under a comment of "Nonstandard routines".
+This is a good point. The "remotes/$repo/$branch" names are quite a
+mouthful to type, so default pull sources would be a definite
+improvement. (It would also be an improvement for the case when the
+user is susceptible to the human factor.) Simply defaulting to pull
+from the branch that this branch was cloned from should do the trick
+(but the pull source should of course be editable).
 
-Is anything earlier defining one of these?
+> I still need to remember to process "master" first, so all things
+> considered, this is a regression in usability for my workflow.
 
-And yes, netdb.h also has a lot of those depending on _POSIX_C_SOURCE,
-and so does unistd.h
+Where does this constraint come from?
 
-So that's your culprit.  You're defining _POSIX_C_SOURCE when you're
-not really proper _POSIX_C compliant.  Can you just remove that?
+> But that is probably a minor inconvenience to a minority.  Most
+> of the world follow others' repositories that have a single
+> primary head, and defaulting to use separate-remote would help
+> them a lot.
 
-And sys/cdefs.h for darwin has this:
+I can attest that separate remotes is a usability win also when using
+several branches from more than one remote source. It's actually
+possible to infer from the branch name (remotes/$repo/$branch) which
+branch from which repository is being tracked.
 
-    /* Deal with various X/Open Portability Guides and Single UNIX Spec. */
-    #ifdef _XOPEN_SOURCE
-    #if _XOPEN_SOURCE - 0L >= 600L
-    #undef _POSIX_C_SOURCE
-    #define _POSIX_C_SOURCE         200112L
-    #elif _XOPEN_SOURCE - 0L >= 500L
-    #undef _POSIX_C_SOURCE
-    #define _POSIX_C_SOURCE         199506L
-    #endif
-    #endif
+As an aside, in case of several remote repositories, "git fetch --all"
+would be handy.
 
-So that's likely how _POSIX_C_SOURCE is getting defined for the rest.
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
