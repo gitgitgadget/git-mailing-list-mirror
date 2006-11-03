@@ -1,96 +1,128 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] gitweb: protect blob and diff output lines from controls.
-Date: Fri, 10 Nov 2006 02:22:14 -0800 (PST)
-Message-ID: <976905.27021.qm@web31807.mail.mud.yahoo.com>
-References: <7vlkmlkkq8.fsf@assigned-by-dhcp.cox.net>
-Reply-To: ltuikov@yahoo.com
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git bug? + question
+Date: Thu, 02 Nov 2006 18:40:30 -0800
+Message-ID: <7v4pthmew1.fsf@assigned-by-dhcp.cox.net>
+References: <buoejsme6ho.fsf@dhapc248.dev.necel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Fri, 10 Nov 2006 10:22:28 +0000 (UTC)
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
-	Luben Tuikov <ltuikov@yahoo.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Fri, 3 Nov 2006 02:59:30 +0000 (UTC)
+Cc: git@vger.kernel.org,
+	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=SaPzGijxvlMJMdiucYtO/+EiTH1wrTpoQnnUIToMUWSnMVs3qgfeD2zeB4DU9k3mPeoU9y16r55pScshNEfTwppscW+8wzXMNeNhwaxlTg1BEfjGzwWUcy6dUueej6t8o4dnqUX54GRzzdXEuhllv11FvrLYJ65uKBv+a+qOgLo=  ;
-X-YMail-OSG: WRfvIQkVM1mddwlMXqjsdhNGvjOKSVc8d2RVFgq7DOi_XfASFcgnCAvBxauxOJ59dRgFkRuUTiLt12sR_9oZtT9zMlSP4X0qIPLeDU0HlV5C5oPjjnchiOGs_nTJlg9pWfqVndf5CNA-
-In-Reply-To: <7vlkmlkkq8.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30773>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GiTWd-0007MK-F1 for gcvg-git@gmane.org; Fri, 10 Nov
- 2006 11:22:19 +0100
+ esmtp (Exim 4.43) id 1Gfp0A-0003wO-8R for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 03:41:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946304AbWKJKWR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 10 Nov 2006
- 05:22:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946307AbWKJKWR
- (ORCPT <rfc822;git-outgoing>); Fri, 10 Nov 2006 05:22:17 -0500
-Received: from web31807.mail.mud.yahoo.com ([68.142.207.70]:17496 "HELO
- web31807.mail.mud.yahoo.com") by vger.kernel.org with SMTP id
- S1946304AbWKJKWP (ORCPT <rfc822;git@vger.kernel.org>); Fri, 10 Nov 2006
- 05:22:15 -0500
-Received: (qmail 27150 invoked by uid 60001); 10 Nov 2006 10:22:15 -0000
-Received: from [71.80.233.118] by web31807.mail.mud.yahoo.com via HTTP; Fri,
- 10 Nov 2006 02:22:14 PST
-To: Junio C Hamano <junkio@cox.net>, Jakub Narebski <jnareb@gmail.com>
+ S1752973AbWKCCkd convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006 21:40:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752971AbWKCCkd
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 21:40:33 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:28320 "EHLO
+ fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S1752969AbWKCCkb
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006
+ 21:40:31 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao03.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061103024031.BUCT2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>; Thu, 2
+ Nov 2006 21:40:31 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id i2g91V00f1kojtg0000000 Thu, 02 Nov 2006
+ 21:40:10 -0500
+To: Miles Bader <miles@gnu.org>
 Sender: git-owner@vger.kernel.org
 
---- Junio C Hamano <junkio@cox.net> wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> > Jakub Narebski wrote:
-> >> I'm not sure what quoting to choose for esc_attr, but there we could
-> >> use even --no-control-chars quoting (replacing any control character
-> >> by '?');  but perhaps in some cases like git_print_page_path
-> >> subroutine CEC is better.
-> 
-> To be honest, I do not have strong preference between the
-> escaping style.  If the gitweb cabal feel it is more natural to
-> see "^L" in blobs and "\f" in path, I will very happily accept
-> such a patch.
+Miles Bader <miles.bader@necel.com> writes:
 
-I've little preference either, as long as the intention
-of the original name is preserved across gitweb (to a user's
-git-repo/download).
+> Also, a question:  Is there anyway to make git-clone use
+> --use-separate-remote by default?  I'm trying for a "lots of branches=
+ in
+> a single shared remote repository" style, and use-separate-remote see=
+ms
+> more sane for this usage.
 
-> Yes.  It is unfortunate that there needs different types of
-> quoting.  I think the first step would be to stop calling
-> esc_html in esc_path.  I think it was a mistake, and I did not
-> correct it when I started touching it.
+This was suggested last week on the list, and I think it is a
+sensible thing to do.
 
-When Jakub mentioned "to_qtext" he meant this patch:
-http://marc.theaimsgroup.com/?l=git&m=116016249121781&w=2
+Karl Hasselstr=F6m <kha@treskal.com> writes:
 
-   Luben
+> On 2006-10-26 10:11:50 -0700, Linus Torvalds wrote:
+>
+>> But it's a good rule in general, just because it makes a certain
+>> common workflow explicit. In fact, we really probably should start
+>> to always use the "refs/remote/origin/HEAD" kind of syntax by
+>> default, where you can't even _switch_ to the branch maintained in
+>> the remote repository, because it's not a real branch locally.
+>
+> Seconded. I really like having remote branches in their own namespace
+> where I can't confuse them with my local branches by mistake -- and
+> that the branches of different remotes end up in different separate
+> namespaces.
+>
+>> So normally you should consider the "origin" branch to be a pointer
+>> to WHAT YOU FETCHED LAST - and that implies that you shouldn't
+>> commit to it, because then it loses that meaning (now it's "what you
+>> fetched last and then committed your own work on top of", which is
+>> something totally different).
+>
+> Defaulting to --use-separate-remotes would mean not having to explain
+> this to every single confused new user. :-)
+
+The only downside that I can think of is that it affects me or
+anybody who works on more than one machine on multiple branches
+slightly negatively.
+
+I know I keep "master" checked out on my secondary machines when
+I am done working there, so the mapping origin:master,
+maint:maint, next:next, and +pu:pu I get by default has been
+easy for me to work on.  With the current layout, updating and
+building four variants can be done with:
+
+	git pull
+        for b in master maint next pu
+        do
+        	git checkout $b && make || break
+	done
+
+which is efficient (guaranteed to do only one fetch from remote)
+and convenient.  Also I have Push: mapping set up on my
+main machine to do master:origin, next:next, maint:maint, and
++pu:pu so that I can replace the first "git pull" on the
+secondary machine with "git push secondary" on my main machine.
+
+With separate remotes, I'd need something like:
+
+	for b in master maint next pu
+        do
+        	git checkout $b && git pull && make || break
+	done
+
+And I also would need to have per-branch configuration to merge
+from ". remotes/origin/$b" without re-fetching while on a
+non-master branch $b, for the above to work.  I still need to
+remember to process "master" first, so all things considered,
+this is a regression in usability for my workflow.
+
+But that is probably a minor inconvenience to a minority.  Most
+of the world follow others' repositories that have a single
+primary head, and defaulting to use separate-remote would help
+them a lot.
+
+So I am in favor of the change, but this is not something we can
+do in a flag-day fashion.  We would probably need updating the
+tutorial and the documentation first.
 
 
-> Somehow I ended up spending sizeable part of my git day this
-> week on fixing up blob/blame/tag/commit message view regarding
-> this "make controls visible and safe" issues on the 'master'
-> branch, but I have been consciously staying out of gitweb/ part
-> of the system, primarily because there are many other people who
-> are more interested and qualified in it than myself.
-> 
-> I'll step aside and try not to get in the way.  There is another
-> thing I noticed while testing it with an artifitial test that I
-> haven't fixed, but I think you already know about it (when the
-> commitdiff is completely empty except mode changes, we end up
-> with unbalanced div).  My test's tip can be found at
-> 'gitweb-test-funny-char' branch temporarily in the git.git
-> repository.
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+
