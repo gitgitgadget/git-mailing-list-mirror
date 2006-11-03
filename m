@@ -1,118 +1,63 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH/RFC] Convenient support of remote branches in git-checkout
-Date: Mon, 06 Nov 2006 16:13:44 -0800
-Message-ID: <7vd580azbb.fsf@assigned-by-dhcp.cox.net>
-References: <200611070026.16425.Josef.Weidendorfer@gmx.de>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] Allow hand-editing of patches before sending
+Date: Fri, 3 Nov 2006 12:35:36 +0100
+Message-ID: <20061103113536.GA19382@diana.vm.bytemark.co.uk>
+References: <20061101090046.1107.81105.stgit@localhost> <b0943d9e0611020232x1e343bbco9451c8183c84d68@mail.gmail.com> <20061102113631.GA30507@diana.vm.bytemark.co.uk> <b0943d9e0611030139i7be9569bh4a29596a768e82a3@mail.gmail.com> <20061103095859.GC16721@diana.vm.bytemark.co.uk> <20061103100142.GD16721@diana.vm.bytemark.co.uk> <20061103102119.GO20017@pasky.or.cz> <454B1BC3.1070203@op5.se> <20061103105349.GA18651@diana.vm.bytemark.co.uk> <7vslh0bwsm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 7 Nov 2006 00:13:53 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Fri, 3 Nov 2006 11:36:47 +0000 (UTC)
+Cc: Petr Baudis <pasky@suse.cz>,
+	Catalin Marinas <catalin.marinas@gmail.com>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200611070026.16425.Josef.Weidendorfer@gmx.de> (Josef
-	Weidendorfer's message of "Tue, 7 Nov 2006 00:26:16 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <7vslh0bwsm.fsf@assigned-by-dhcp.cox.net>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30829>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhEb8-0002mA-Pj for gcvg-git@gmane.org; Tue, 07 Nov
- 2006 01:13:51 +0100
+ esmtp (Exim 4.43) id 1GfxLc-0000w8-W1 for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 12:36:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753857AbWKGANq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
- 19:13:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753862AbWKGANq
- (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 19:13:46 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:52458 "EHLO
- fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1753456AbWKGANp
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 19:13:45 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061107001344.ZDFI18816.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Mon, 6
- Nov 2006 19:13:44 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id jcDp1V00b1kojtg0000000; Mon, 06 Nov 2006
- 19:13:50 -0500
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+ S1753233AbWKCLft convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006 06:35:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753234AbWKCLft
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 06:35:49 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:21006 "EHLO
+ diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1753233AbWKCLfs
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 06:35:48 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
+ (Debian)) id 1GfxKj-00056I-00; Fri, 03 Nov 2006 11:35:37 +0000
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
+On 2006-11-03 03:21:29 -0800, Junio C Hamano wrote:
 
-> Example to hack on git's next branch:
+> Karl Hasselstr=F6m <kha@treskal.com> writes:
 >
->  git-clone --use-separate-remote http://www.kernel.org/pub/scm/git/git.git
->  cd git
->  git-checkout origin/next
->  <hack on next>
->  git pull (to merge patches from remote 'next')
+> > This all just strengthens my belief that StGIT should go to great
+> > legths to avoid stepping on mail servers' toes.
 >
-> The checkout creates local branch 'next' to checkout read-only
-> remote branch 'remotes/origin/next'. Additionally, it sets up
-> 'remotes/origin/next' from remote repository 'origin' as
-> default merge source for the new development branch.
+> I wonder if this can be solved by simply reusing the machinery
+> format-patch already has. If calling it as a standalone script does
+> more unnecessary things than what StGIT wants, we should certainly
+> be able to separate the only necessary part out to suit StGIT's
+> needs.
 
-I am disturbed by an inconsistency here.
+Yes, I agree. Mail code tends to not be so beautiful that you want to
+maintain more copies of it than absolutely necessary.
 
-> +	if git-show-ref --verify --quiet -- "refs/heads/$newbranch"
-> +	then
-> +		echo "Proposed new branch '$newbranch' to checkout...
-> +		echo "To checkout, specify a new branch name with -b"
-> +		exit 1
-> +	fi
+Of course, the same reasoning applies when importing mails into stgit.
 
-This logic is guarding against already having a local branch
-that is called 'next', and that is why the "Proposed new branch"
-message needs to be there.  One explanation of why 'next' exists
-in the local branch namespace in the first place is probably
-there are other remote branches than origin that have 'next' and
-the user previously checked it out.  Or perhaps the user has
-already done this "checkout origin/next" once already.
-
-I wonder if it is more consistent and easy to use to just make
-this:
-
-	git checkout origin/next
-
-a synonym to:
-
-	git checkout -b origin/next remotes/origin/next
-
-when remotes/origin/next exists and heads/origin/next does not.
-
-Then "git checkout origin/next" would always mean "I want to
-switch to the branch I use to hack on the branch 'next' Junio
-has".  Do it once and you will get exactly my tip, hack on it,
-switch out of it and then do it again and you won't lose your
-previous work but just switch to that branch.
-
-That is, something like this...
-
----
-
-diff --git a/git-checkout.sh b/git-checkout.sh
-index 119bca1..f6486c6 100755
---- a/git-checkout.sh
-+++ b/git-checkout.sh
-@@ -4,6 +4,16 @@ USAGE='[-f] [-b <new_branch>] [-m] [<bra
- SUBDIRECTORY_OK=Sometimes
- . git-sh-setup
- 
-+# Automatic forking of local branch based on remote
-+if test $# = 1 &&
-+   git show-ref --verify --quiet -- "refs/remotes/$1" &&
-+   ! git show-ref --verify --quiet -- "refs/heads/$1"
-+then
-+	set x -b "$1" "remotes/$1"
-+	echo >&2 "* Forking local branch $1 off of remotes/$1..."
-+	shift
-+fi
-+
- old_name=HEAD
- old=$(git-rev-parse --verify $old_name 2>/dev/null)
- new=
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
