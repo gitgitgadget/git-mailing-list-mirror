@@ -1,65 +1,53 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH] git-svn: correctly access repos when only given partial
- read permissions
-Date: Sun, 03 Dec 2006 11:40:10 +1300
-Message-ID: <457200CA.7010805@vilain.net>
-References: <11644366982320-git-send-email-normalperson@yhbt.net> <4571F6E7.4050809@vilain.net> <20061202222433.GA21171@localdomain>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] Allow hand-editing of patches before sending
+Date: Fri, 3 Nov 2006 14:42:45 +0100
+Message-ID: <20061103134245.GC21202@diana.vm.bytemark.co.uk>
+References: <20061101090046.1107.81105.stgit@localhost> <b0943d9e0611020232x1e343bbco9451c8183c84d68@mail.gmail.com> <20061102113631.GA30507@diana.vm.bytemark.co.uk> <b0943d9e0611030139i7be9569bh4a29596a768e82a3@mail.gmail.com> <20061103095859.GC16721@diana.vm.bytemark.co.uk> <b0943d9e0611030444w13e04586u185413c2562d45bc@mail.gmail.com> <20061103130259.GA20611@diana.vm.bytemark.co.uk> <b0943d9e0611030525t5da2cce7nf7b41323411e8d2d@mail.gmail.com> <20061103133329.GB21202@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 2 Dec 2006 22:40:39 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Fri, 3 Nov 2006 13:43:59 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.4 (X11/20060615)
-In-Reply-To: <20061202222433.GA21171@localdomain>
-X-Enigmail-Version: 0.94.0.0
+Content-Disposition: inline
+In-Reply-To: <20061103133329.GB21202@diana.vm.bytemark.co.uk>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30853>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqdX3-0000pJ-Oe for gcvg-git@gmane.org; Sat, 02 Dec
- 2006 23:40:30 +0100
+ esmtp (Exim 4.43) id 1GfzK3-0006S3-DJ for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 14:43:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936574AbWLBWk1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 17:40:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936573AbWLBWk1
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 17:40:27 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:3507 "EHLO
- magnus.utsl.gen.nz") by vger.kernel.org with ESMTP id S936574AbWLBWk0 (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 17:40:26 -0500
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534) id 00147139B0D;
- Sun,  3 Dec 2006 11:40:23 +1300 (NZDT)
-Received: from [127.0.0.1] (longdrop.magnus.utsl.gen.nz [192.168.253.12])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by magnus.utsl.gen.nz (Postfix) with ESMTP id
- 4D0811380C2; Sun,  3 Dec 2006 11:40:17 +1300 (NZDT)
-To: Eric Wong <normalperson@yhbt.net>
+ S1753026AbWKCNms convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006 08:42:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753152AbWKCNms
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 08:42:48 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:35087 "EHLO
+ diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1753026AbWKCNmr
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 08:42:47 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
+ (Debian)) id 1GfzJl-0005c3-00; Fri, 03 Nov 2006 13:42:45 +0000
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Eric Wong wrote:
->> I now get this error:
->>
->> Filesystem has no item: File not found: revision 8514, path
->> '/mirror/fai/tags/mirror/fai/tags' at /home/samv/src/git/git-svn line 3236
-> 
-> This should be fixed in 1ca7558dd838e82f6f6b8611b981654fa4ecde2b in
-> Junio's master: "git-svn: fix multi-init".
+On 2006-11-03 14:33:29 +0100, Karl Hasselstr=F6m wrote:
 
-Ah, so it did.  Silly me for running on ancient version of git-svn ;)
+> Does that mean that "stg mail" with my QP patch generates output that
+> even git-am can't read? I had guessed from what you said earlier that
+> git-am _could_ read them.
 
->> (next, I'll make git-svn correctly look at the svm:* revprops to get the
->> upstream repo URL and revision number for the commit message)
-> 
-> Cool.  While you're at it, would you mind looking into supporting some
-> of the merge revprops that I've heard about, too?  Thanks.
+(Yes, I'm way too lazy. I tested the "stg mail" output by mailing
+patches to myself and making sure that they looked good in my mail
+reader. And by looking at the raw output quite a bit.)
 
-Great idea, I'll certainly do that.  Of course, they are relative to the
-*local* repository...
-
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
