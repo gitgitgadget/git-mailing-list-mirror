@@ -5,75 +5,60 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Colourise git-branch output
-Date: Tue, 12 Dec 2006 10:43:41 -0800
-Message-ID: <7vpsapuf8i.fsf@assigned-by-dhcp.cox.net>
-References: <200612120641.52556.andyparkins@gmail.com>
+Subject: Re: git-format-patch little gripe
+Date: Fri, 03 Nov 2006 14:26:29 -0800
+Message-ID: <7v3b905fqi.fsf@assigned-by-dhcp.cox.net>
+References: <7vwt6cbwzq.fsf@assigned-by-dhcp.cox.net>
+	<20061103195253.9244.qmail@web31814.mail.mud.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 12 Dec 2006 18:43:52 +0000 (UTC)
+NNTP-Posting-Date: Fri, 3 Nov 2006 22:26:47 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+In-Reply-To: <20061103195253.9244.qmail@web31814.mail.mud.yahoo.com> (Luben
+	Tuikov's message of "Fri, 3 Nov 2006 11:52:53 -0800 (PST)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34122>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuCbU-00037s-66 for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 19:43:48 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30889>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gg7Ui-0004jz-I3 for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 23:26:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932329AbWLLSnq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 13:43:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932330AbWLLSnp
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 13:43:45 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:46007 "EHLO
- fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932329AbWLLSno (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006
- 13:43:44 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061212184342.KYRO16632.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Tue, 12
- Dec 2006 13:43:42 -0500
+ S932122AbWKCW0c (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 17:26:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932173AbWKCW0c
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 17:26:32 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:21204 "EHLO
+ fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP id S932122AbWKCW0b
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 17:26:31 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao09.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061103222630.RTUL16798.fed1rmmtao09.cox.net@fed1rmimpo01.cox.net>; Fri, 3
+ Nov 2006 17:26:30 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id xuj31V00d1kojtg0000000; Tue, 12 Dec 2006
- 13:43:04 -0500
-To: Andy Parkins <andyparkins@gmail.com>
+ fed1rmimpo01.cox.net with bizsmtp id iNS81V00i1kojtg0000000 Fri, 03 Nov 2006
+ 17:26:09 -0500
+To: Luben Tuikov <ltuikov@yahoo.com>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> writes:
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
-> The colour parameter is "color.branch" rather than "branch.color" to
-> avoid clashing with the default namespace for default branch merge
-> definitions.
+> Also I doubt how many people actually have coded in their scripts
+> "git-format-patch <sha-1>" to mead by default "<sha-1>..HEAD" -- I'd think
+> that maintainers always want to know the "end point" and would always
+> use the <a>..<b> format, instead of presuming where/what their HEAD is.
 
-Very nice.
+Well, the answer would be "do not script around Porcelain".
 
->  		c = ' ';
->  		if (ref_list.list[i].kind == REF_LOCAL_BRANCH &&
-> -				!strcmp(ref_list.list[i].name, head))
-> +				!strcmp(ref_list.list[i].name, head)) {
->  			c = '*';
-> +			color = COLOR_BRANCH_CURRENT;
-> +		}
->  
->  		if (verbose) {
-> -			printf("%c %-*s", c, ref_list.maxwidth,
-> -			       ref_list.list[i].name);
-> +			printf("%c %s%-*s%s", c,
-> +					branch_get_color(color),
-> +					ref_list.maxwidth,
-> +					ref_list.list[i].name,
-> +					branch_get_color(COLOR_BRANCH_RESET));
->  			print_ref_info(ref_list.list[i].sha1, abbrev);
->  		}
->  		else
-> -			printf("%c %s\n", c, ref_list.list[i].name);
-> +			printf("%c %s%s%s\n", c,
-> +					branch_get_color(color),
-> +					ref_list.list[i].name,
-> +					branch_get_color(COLOR_BRANCH_RESET));
->  	}
+> Sorry it's my rant.  I know it's not your fault.
 
-Now this makes me wonder if under output coloring we would still
-want the two-space indent and '*' prefix.
+I do not even think there is any "fault" there, to be honest, so
+there is no need to apologize.  The format-patch command does
+what it was designed to do and does it well -- format a sequence
+of patches for upstream submission.
+
+If you want a single patch, you can always say "git show", by
+the way.
+
