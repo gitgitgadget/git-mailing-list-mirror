@@ -1,144 +1,165 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git and bzr
-Date: Tue, 28 Nov 2006 01:39:14 +0100
-Organization: At home
-Message-ID: <ekg0c5$b43$1@sea.gmane.org>
-References: <45357CC3.4040507@utoronto.ca>	<20061021130111.GL75501@over-yonder.net>	<453F2FF8.2080903@op5.se> <200610251146.06116.jnareb@gmail.com>	<a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>	<87slhcz8zh.wl%cworth@cworth.org>	<a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>	<7vu01ro20b.fsf@assigned-by-dhcp.cox.net>	<a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>	<20061026101038.GA13310@coredump.intra.peff.net>	<877iyne4dm.fsf@alplog.fr> <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org> <456B7C6A.80104@webdrake.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: [PATCH] Colourise git-branch output
+Date: Fri, 3 Nov 2006 12:06:12 +0000
+Message-ID: <200611031206.12515.andyparkins@gmail.com>
+References: <200611031052.16095.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Tue, 28 Nov 2006 00:38:16 +0000 (UTC)
-Cc: bazaar-ng@lists.canonical.com
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 3 Nov 2006 12:06:41 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Followup-To: gmane.comp.version-control.git
-Original-Lines: 92
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <200611031052.16095.andyparkins@gmail.com>
+X-TUID: 2faeccc0a768f2ca
+X-UID: 162
+X-Length: 3787
+Content-Disposition: inline
+X-OriginalArrivalTime: 03 Nov 2006 12:07:20.0375 (UTC) FILETIME=[9D018470:01C6FF40]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30834>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Goqz8-0006Im-8o for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 01:38:06 +0100
+ esmtp (Exim 4.43) id 1GfxoS-00081c-Nx for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 13:06:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933879AbWK1AiB (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 19:38:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933880AbWK1AiB
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 19:38:01 -0500
-Received: from main.gmane.org ([80.91.229.2]:8358 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S933879AbWK1AiA (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 19:38:00 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Goqym-0006Cr-18 for git@vger.kernel.org; Tue, 28 Nov 2006 01:37:44 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Tue, 28 Nov 2006 01:37:44 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 28 Nov 2006
- 01:37:44 +0100
+ S1751552AbWKCMGR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 07:06:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751803AbWKCMGR
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 07:06:17 -0500
+Received: from mail.360visiontechnology.com ([194.70.53.226]:23230 "EHLO
+ 369run02s.360vision.com") by vger.kernel.org with ESMTP id S1751552AbWKCMGQ
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 07:06:16 -0500
+Received: from dvr.360vision.com ([192.189.1.24]) by 369run02s.360vision.com
+ with Microsoft SMTPSVC(5.0.2195.6713); Fri, 3 Nov 2006 12:07:20 +0000
+Received: from localhost ([127.0.0.1]) by dvr.360vision.com with esmtp (Exim
+ 3.36 #1 (Debian)) id 1GfxoM-0005kO-00 for <git@vger.kernel.org>; Fri, 03 Nov
+ 2006 12:06:14 +0000
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Joseph Wakeling wrote:
+I wanted to have a visual indication of which branches are local and which are
+remote in git-branch -a output; however Junio was concerned that someone might
+be using the output in a script.  This patch addresses the problem by colouring
+the git-branch output - which in "auto" mode won't be activated.
 
-> Hello all,
-> 
-> Following the very interesting debate about the differences between bzr
-> and git, I thought it was about time I tried to learn properly about git
-> and how to use it.  I've been using bzr for a good while now, although
-> since I'm not a serious developer I only use it for simple purposes,
-> keeping track of code I write on my own for academic projects.
-> 
-> So, a few questions about differences I don't understand...
-> 
-> First off a really dumb one: how do I identify myself to git, i.e. give
-> it a name and email address?  Currently it uses my system identity,
-> My Name <username@computer.(none)>.  I haven't found any equivalent of
-> the bzr whoami command.
+I've based it off the colouring code for builtin-diff.c; which means there is a
+branch.color configuration variable that needs setting to something before the
+color will appear.
 
-git repo-config user.name "Joseph Wakeling"
-git repo-config user.email joseph.wakeling@webdrake.net
+This patch chooses green for local, red for remote and bold green for current.
 
-You might add --global option if you want your identity to be saved
-in ~/.gitconfig file, and not per repository (one might want to use
-different identities for different repositories).
+As yet, there is no support for changing the colors using the config file; but
+it wouldn't be hard to add.
 
-"git repo-config --list" or "git var -l" to list all config. There is no
-direct equivalent of "bzr whoami" (the equivalent would be:
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
+ builtin-branch.c |   57 +++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 54 insertions(+), 3 deletions(-)
 
-  echo "$(git repo-config --get user.name) <$(git repo-config --get user.email)>"
+diff --git a/builtin-branch.c b/builtin-branch.c
+index 6dd33ee..de7f81e 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -5,6 +5,7 @@
+  * Based on git-branch.sh by Junio C Hamano.
+  */
  
-> Now to more serious business.  One of the main operational differences I
-> see as a new user is that bzr defaults to setting up branches in
-> different locations, whereas git by default creates a repository where
-> branches are different versions of the directory contents and switching
-> branches *changes* the directory contents.  bzr branch seems to be
-> closer to git-clone than git-branch (N.B. I have never used bzr repos so
-> might not be making a fair comparison).
-
-The rough equivalent of bzr repos would be a set of git repos which share
-object database, either via symlink, or via GIT_OBJECT_DIRECTORY, or via
-alternates mechanism.
-
-But it is a fact that in bzr working area is associated with branch, while
-in git it is associated with repository.
-
-> With this in mind, is there any significance to the "master" branch (is
-> it intended e.g. to indicate a git repository's "stable" version
-> according to the owner?), or is this just a convenient default name?
-> Could I delete or rename it?  Using bzr I would normally give the
-> central branch(*) the name of the project.
-
-Of course you can rename 'master' branch. But please remember that names
-of branches in git are local matter. Well, except the fact that you usually
-preserve them in a fashion.
-
-But equivalent of giving central branch the name of the project would
-be naming the directory with working area and .git directory the name
-of project, or in the case of bare repository giving $GIT_DIR for a project
-name project.git.
-
-> Any other useful comments that can be made to a bzr user about working
-> with this difference, positive or negative aspects of it?
-
-By the way, 'master' is by no means special. It is default in a few cases
-(init-db, clone), but that's all.
++#include "color.h"
+ #include "cache.h"
+ #include "refs.h"
+ #include "commit.h"
+@@ -17,6 +18,38 @@ static const char builtin_branch_usage[]
+ static const char *head;
+ static unsigned char head_sha1[20];
  
-> Next question ... one of the reasons I started seriously thinking about
-> git was that in the VCS comparison discussion, it was noted that git is
-> a lot more flexible than bzr in terms of how it can track data (e.g. the
-> git pickaxe command, although I understand that's not in the released
-> version [1.4.4.1] yet?).  A frustration with bzr is that pulling or
-> merging patches from another branch or repo requires them to share the
-> same HEAD.  Is this a requirement in git or can I say, "Hey, I like that
-> particular function in project XXX, I'm going to pull that individual
-> bit of code and its development history into project YYY"?
-
-In git repository can have unrelated branches. So you can fetch unrelated
-repository into your repository, and merge/cherry-pick from there
-if needed.
-
-In defence of Bazaar-NG, you can probably get the same or very similar with
-bzr repos. 
-
-> Last off (for now, I'm sure I'll think of more): is there any easy (or
-> difficult) way to effectively import version history from a bzr
-> repository, and vice versa?
-
-Try git-archimport, or Tailor tool.
++static int branch_use_color;
++static char branch_colors[][COLOR_MAXLEN] = {
++	"\033[m",	/* reset */
++	"",		/* PLAIN (normal) */
++	"\033[31m",	/* REMOTE (red) */
++	"\033[32m",	/* LOCAL (green) */
++	"\033[1;32m",	/* CURRENT (boldgreen) */
++};
++enum color_branch {
++	COLOR_BRANCH_RESET = 0,
++	COLOR_BRANCH_PLAIN = 1,
++	COLOR_BRANCH_REMOTE = 2,
++	COLOR_BRANCH_LOCAL = 3,
++	COLOR_BRANCH_CURRENT = 4,
++};
++
++int git_branch_config(const char *var, const char *value)
++{
++	if (!strcmp(var, "branch.color")) {
++		branch_use_color = git_config_colorbool(var, value);
++		return 0;
++	}
++	return git_default_config(var, value);
++}
++
++const char *branch_get_color(enum color_branch ix)
++{
++	if (branch_use_color)
++		return branch_colors[ix];
++	return "";
++}
++
+ static int in_merge_bases(const unsigned char *sha1,
+ 			  struct commit *rev1,
+ 			  struct commit *rev2)
+@@ -157,6 +190,7 @@ static void print_ref_list( int type_wan
+ 	int i;
+ 	char c;
+ 	struct ref_list ref_list;
++	int color;
+ 
+ 	memset( &ref_list, 0, sizeof( ref_list ) );
+ 	ref_list.type_wanted = type_wanted;
+@@ -165,11 +199,28 @@ static void print_ref_list( int type_wan
+ 	qsort(ref_list.list, ref_list.index, sizeof(struct ref_item), ref_cmp);
+ 
+ 	for (i = 0; i < ref_list.index; i++) {
++		switch( ref_list.list[i].type ) {
++			case REF_LOCAL_BRANCH:
++				color = COLOR_BRANCH_LOCAL;
++				break;
++			case REF_REMOTE_BRANCH:
++				color = COLOR_BRANCH_REMOTE;
++				break;
++			default:
++				color = COLOR_BRANCH_PLAIN;
++				break;
++		}
++
+ 		c = ' ';
+-		if (!strcmp(ref_list.list[i].name, head))
++		if (!strcmp(ref_list.list[i].name, head)) {
+ 			c = '*';
++			color = COLOR_BRANCH_CURRENT;
++		}
+ 
+-		printf("%c %s\n", c, ref_list.list[i].name);
++		printf("%c %s%s%s\n", c,
++				branch_get_color(color),
++				ref_list.list[i].name,
++				branch_get_color(COLOR_BRANCH_RESET));
+ 	}
+ 
+ 	tidy_ref_list( &ref_list );
+@@ -219,7 +270,7 @@ int cmd_branch(int argc, const char **ar
+ 	int i;
+ 	int type_wanted = REF_LOCAL_BRANCH;
+ 
+-	git_config(git_default_config);
++	git_config(git_branch_config);
+ 
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+1.4.3.2
