@@ -1,68 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix bad usage of mkpath in builtin-branch.sh
-Date: Wed, 25 Oct 2006 15:51:32 -0700
-Message-ID: <7v3b9cko0b.fsf@assigned-by-dhcp.cox.net>
-References: <1161655176461-git-send-email-hjemli@gmail.com>
-	<7vlkn6qkh2.fsf@assigned-by-dhcp.cox.net>
-	<20061024113806.GB20017@pasky.or.cz>
-	<7vac3lf3jl.fsf@assigned-by-dhcp.cox.net>
-	<7vslhddmtu.fsf@assigned-by-dhcp.cox.net>
-	<20061025224313.GM20017@pasky.or.cz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: How to complete t/README file?
+Date: Fri, 3 Nov 2006 19:50:06 +0100
+Message-ID: <200611031950.06242.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 25 Oct 2006 22:51:41 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 3 Nov 2006 18:49:56 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061025224313.GM20017@pasky.or.cz> (Petr Baudis's message of
-	"Thu, 26 Oct 2006 00:43:13 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=TP3kYPE/GPEGuR3Hj0FbAkJxdbPEDhRO1jzAl+tXUC1xhzF6rLXdxTaywNeg6qOuKWCBKtAPBXETGggsJLFah8HJw5VaxnAiX4LOCmO5FZ8DOlSfOsM4R4aWugUZ2sXZXtCB0mSEy0eU5cse2KQUGzQqa6pSqaWFNHSR9aP2kLs=
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30873>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gcrb1-0003PD-3Y for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 00:51:39 +0200
+ esmtp (Exim 4.43) id 1Gg46w-00074x-DR for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 19:49:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422627AbWJYWvf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 18:51:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422639AbWJYWvf
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 18:51:35 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:60889 "EHLO
- fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S1422627AbWJYWve
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 18:51:34 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao06.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061025225133.LSUM6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>; Wed, 25
- Oct 2006 18:51:33 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id emrG1V0041kojtg0000000 Wed, 25 Oct 2006
- 18:51:16 -0400
-To: Petr Baudis <pasky@suse.cz>
+ S1753456AbWKCStr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 13:49:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753465AbWKCStr
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 13:49:47 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:5319 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1753456AbWKCStq
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 13:49:46 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so487611ugc for
+ <git@vger.kernel.org>; Fri, 03 Nov 2006 10:49:45 -0800 (PST)
+Received: by 10.67.22.2 with SMTP id z2mr3189197ugi.1162579785218; Fri, 03
+ Nov 2006 10:49:45 -0800 (PST)
+Received: from host-81-190-18-116.torun.mm.pl ( [81.190.18.116]) by
+ mx.google.com with ESMTP id 59sm1303893ugf.2006.11.03.10.49.44; Fri, 03 Nov
+ 2006 10:49:44 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Petr Baudis <pasky@suse.cz> writes:
+How to complete family numbering in t/README? Curently we have:
 
->> +
->> +test "$ret" = 0 && git-diff-tree --summary --root --no-commit-id HEAD
->> +
->>  exit "$ret"
->
-> Yes, this might be a good idea, although after the commit is perhaps too
-> late.
+-- >8 --
+First digit tells the family:
 
-Before the commit I thought we have git-status output in the
-commit log buffer.
+        0 - the absolute basics and global stuff
+        1 - the basic commands concerning database
+        2 - the basic commands concerning the working tree
+        3 - the other basic commands (e.g. ls-files)
+        4 - the diff commands
+        5 - the pull and exporting commands
+        6 - the revision tree commands (even e.g. merge-base)
+        7 - the porcelainish commands concerning the working tree
+-- >8 --
 
-Ah,...
+But there are tests which have 8 or 9 as first digit:
 
-We had that old issue of "'M foo' cannot tell content or mode
-changes (or both)", and people suggested "M+" and such which
-were rejected because Porcelains and people's scripts depended
-deeply on "diff --name-status" output being stable.
+	8 - annotate, blame, pickaxe
+	9 - send-email, git-svn
+
+8 seems to be porcelanish "archeology" (analysis, interrogators) 
+commands, 9 seems to be interfaces (to email, to svn). Do you have idea 
+how to name those families?
+
+P.S. Do I understand correctly that gotweb tests would eblong 
+to familiy 9 of tests?
+-- 
+Jakub Narebski
