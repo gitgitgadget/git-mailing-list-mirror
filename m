@@ -1,83 +1,54 @@
-Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
-X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD
+X-Spam-ASN: AS31976 209.132.176.0/21
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74B5420193
-	for <e@80x24.org>; Thu, 11 Aug 2016 19:30:43 +0000 (UTC)
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752625AbcHKTaX (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 15:30:23 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63316 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752569AbcHKTaV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 15:30:21 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A28A131111;
-	Thu, 11 Aug 2016 15:30:19 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8l0d8K0BnZ09vBbAiZz2WlXSPxA=; b=FaD4Eg
-	5hfZzc+5UnmFOxInPR5bIOc/qznzyZHuggWQcP/r25kSwbyrTn+jHQweNCLMXDcM
-	QJaklV5hxYAxf5SPii+YO8KKV2syG3levuxcsz8/OORG4G8zOpAKlG5KM2jq1G8h
-	AcVfhF9bnaw6SHDbsjqZmHmyRrc5NPRNPjjj0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uZ3QCLl7ahdfDIva3fAL31xUt2gUBhix
-	s89MFgbgrMTaLcYlAtdL6VBn5WBN/FqXgy8CVHkdxAhd1FWw2oTIjiFakyx2puxH
-	JEBgpdkWJFemDsPLl43GFBV0NXZyq3p3nRcfiFmy6cspm987KGDzQnsISH/iUDuT
-	ydq3aDoOvrI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 959D031110;
-	Thu, 11 Aug 2016 15:30:19 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 013763110F;
-	Thu, 11 Aug 2016 15:30:19 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Christian Couder <christian.couder@gmail.com>
-Cc:	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	=?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= 
-	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v10 33/40] environment: add set_index_file()
-References: <20160808210337.5038-1-chriscool@tuxfamily.org>
-	<20160808210337.5038-34-chriscool@tuxfamily.org>
-	<xmqq60raewod.fsf@gitster.mtv.corp.google.com>
-	<CAP8UFD2ZAdUjQnO-4qnum2_AK84SfBN2_yO=py+Jj+pkV8pk-w@mail.gmail.com>
-	<xmqqlh045y0l.fsf@gitster.mtv.corp.google.com>
-	<CAP8UFD3-0=O7uLXG=KL8OVueFPCpN5y-JmtcncVyrd8GoRh--g@mail.gmail.com>
-Date:	Thu, 11 Aug 2016 12:30:17 -0700
-In-Reply-To: <CAP8UFD3-0=O7uLXG=KL8OVueFPCpN5y-JmtcncVyrd8GoRh--g@mail.gmail.com>
-	(Christian Couder's message of "Thu, 11 Aug 2016 21:08:50 +0200")
-Message-ID: <xmqqeg5v14ty.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 09B6E9D2-5FFA-11E6-8756-89D312518317-77302942!pb-smtp1.pobox.com
-Sender:	git-owner@vger.kernel.org
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Allow hand-editing of patches before sending
+Date: Fri, 3 Nov 2006 14:39:33 +0100
+Message-ID: <20061103133933.GP20017@pasky.or.cz>
+References: <20061101090046.1107.81105.stgit@localhost> <b0943d9e0611020232x1e343bbco9451c8183c84d68@mail.gmail.com> <20061102113631.GA30507@diana.vm.bytemark.co.uk> <b0943d9e0611030139i7be9569bh4a29596a768e82a3@mail.gmail.com> <20061103095859.GC16721@diana.vm.bytemark.co.uk> <b0943d9e0611030444w13e04586u185413c2562d45bc@mail.gmail.com> <20061103130259.GA20611@diana.vm.bytemark.co.uk> <b0943d9e0611030525t5da2cce7nf7b41323411e8d2d@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 3 Nov 2006 13:40:11 +0000 (UTC)
+Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
+	git@vger.kernel.org
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0611030525t5da2cce7nf7b41323411e8d2d@mail.gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List:	git@vger.kernel.org
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30852>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfzGn-0005bf-5F for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 14:39:45 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
+ S1752972AbWKCNjg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 08:39:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752975AbWKCNjg
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 08:39:36 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:7064 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1752970AbWKCNjf (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 08:39:35 -0500
+Received: (qmail 18420 invoked by uid 2001); 3 Nov 2006 14:39:33 +0100
+To: Catalin Marinas <catalin.marinas@gmail.com>
+Sender: git-owner@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Dear diary, on Fri, Nov 03, 2006 at 02:25:36PM CET, I got a letter
+where Catalin Marinas <catalin.marinas@gmail.com> said that...
+> I just run git-am and "stg uncommit" or "assimilate".
 
-> Yeah, it is feasible and perhaps even simpler using
-> hold_lock_file_for_update() than with set_index_file(), so I
-> dropped the set_index_file() patch and added a new one that uses
-> hold_lock_file_for_update().
+git-am calls git-mailsplit and git-mailinfo, and those two tools will do
+most of the work (basically everything except the actual committing) for
+you, I use them in cg-patch -m and it should be fairly trivial to make a
+stg command reusing those too.
 
-I wasn't paying too close an attention while reading the changes,
-but anyway that is a great news.
-
-Thanks.
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
