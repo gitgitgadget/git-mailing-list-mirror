@@ -1,85 +1,65 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 21 Nov 2006 07:27:53 +0100
-Message-ID: <20061121062753.GG20736@admingilde.org>
-References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org> <7v7ixp20za.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org> <7v4pstzmk5.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: multiple branches or  multiple repositories
+Date: Thu, 02 Nov 2006 18:38:01 -0800
+Message-ID: <7vlkmtmf06.fsf@assigned-by-dhcp.cox.net>
+References: <eie7ae$ib6$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="oOB74oR0WcNeq9Zb"
-NNTP-Posting-Date: Tue, 21 Nov 2006 06:28:05 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 3 Nov 2006 02:38:15 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <7v4pstzmk5.fsf@assigned-by-dhcp.cox.net>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <eie7ae$ib6$1@sea.gmane.org> (Han-Wen Nienhuys's message of "Fri,
+	03 Nov 2006 02:51:30 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30769>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmP6s-0002qp-Kn for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 07:27:59 +0100
+ esmtp (Exim 4.43) id 1Gfowe-0003Ui-5w for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 03:38:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934347AbWKUG14 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 01:27:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934348AbWKUG1z
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 01:27:55 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:734 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S934347AbWKUG1z (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 01:27:55 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1GmP6n-0007Ur-Bc; Tue, 21 Nov 2006 07:27:53 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1750991AbWKCCiE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 21:38:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751676AbWKCCiE
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 21:38:04 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:11437 "EHLO
+ fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S1750991AbWKCCiC
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 21:38:02 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao01.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061103023802.WAHJ6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>; Thu, 2
+ Nov 2006 21:38:02 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id i2dg1V00g1kojtg0000000 Thu, 02 Nov 2006
+ 21:37:41 -0500
+To: Han-Wen Nienhuys <hanwen@xs4all.nl>
 Sender: git-owner@vger.kernel.org
 
+Han-Wen Nienhuys <hanwen@xs4all.nl> writes:
 
---oOB74oR0WcNeq9Zb
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> We're in the process of converting the LilyPond CVS repository at
+> savannah.gnu.org to GIT.  One of the questions we need to deal with,
+> is how handle modules.
+>
+> There seem to be two approaches:
+>
+>  - for each module, create a separate git repository.  Inside the
+> repository, each subproject has its own branching
+>
+>  - put each module as a separate branch in a shared repository.
+>
+> I think the first option is the most natural one, but are there any
+> issues, besides namespace pollution to the second option?
 
-hoi :)
-
-On Mon, Nov 20, 2006 at 04:10:50PM -0800, Junio C Hamano wrote:
-> However, if I recall correctly, it was rather nightmarish to
-> make this also work for reachability traversal necessary for
-> pack generation.  It was painful enough even when the bind was
-> at the commit level (which was way simpler to handle), but to do
-> this the right way, the bind needs to be done at the tree level,
-> and "rev-list --objects foo..bar" would need some way to limit
-> the commit ancestry chain of subproject at the same time, by
-> computing the commit ancestry of the embedded commits in the
-> trees.
-
-This at least seems to work already.
-The UNINTERESTING flag is recursively set for the submodule
-commits while walking the object chain.
-
-But I must admit that I only did very simple tests up to now.
-Do you have any special constellations in mind which were
-difficult to support?
-
---=20
-Martin Waitz
-
---oOB74oR0WcNeq9Zb
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFYpxpj/Eaxd/oD7IRAurHAJ4oCdOl7EKEoL5bT0nWhTySEzlzsQCdF+63
-oyXcZZdRxb6weESZP9vTQz0=
-=Ofq+
------END PGP SIGNATURE-----
+As the layout for a distribution point, the second one may be
+easier to handle (one place to remotely sync with), but in all
+other aspects the first option should be easier to deal with
+day-to-day.
 
