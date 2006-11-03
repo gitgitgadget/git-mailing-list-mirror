@@ -1,109 +1,85 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Wed, 29 Nov 2006 17:15:43 +0100
-Message-ID: <20061129161543.GG18810@admingilde.org>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611281335.38728.andyparkins@gmail.com> <20061128154434.GD28337@spearce.org> <200611281629.08636.andyparkins@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 4/n] gitweb: Secure against commit-ish/tree-ish with the same name as path
+Date: Fri, 3 Nov 2006 11:49:59 +0100
+Message-ID: <200611031149.59329.jnareb@gmail.com>
+References: <200610301953.01875.jnareb@gmail.com> <7vhcxhjbog.fsf@assigned-by-dhcp.cox.net> <7vlkmseutr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="NQTVMVnDVuULnIzU"
-NNTP-Posting-Date: Wed, 29 Nov 2006 16:16:47 +0000 (UTC)
-Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 3 Nov 2006 10:50:20 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Z/gGzEsIAqOrKlU/OXdXNwPAA8J8Nd2vfu+BNhdU/Qqwep2+tl/9yQaZszIj6iM5NwmbTBO6ROnwpCnokyesApOF8A2gk+PWAogj6Ce2Jl562+pFy/1OO4UTz9jTNXdjX5Ja3XtfzPI0zuskqyKFvtIMwBkr5PyxBiQkzRZUDLg=
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vlkmseutr.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <200611281629.08636.andyparkins@gmail.com>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30819>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpS6K-0003qk-5K for gcvg-git@gmane.org; Wed, 29 Nov
- 2006 17:16:00 +0100
+ esmtp (Exim 4.43) id 1GfwcR-00061N-0r for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 11:49:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967460AbWK2QP4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
- 11:15:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967462AbWK2QP4
- (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 11:15:56 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:57773 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S967460AbWK2QPz (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 11:15:55 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1GpS63-0005f5-Qd; Wed, 29 Nov 2006 17:15:43 +0100
-To: Andy Parkins <andyparkins@gmail.com>
+ S1752874AbWKCKtm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 05:49:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753206AbWKCKtm
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 05:49:42 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:44516 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1752874AbWKCKtl
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 05:49:41 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so370894ugc for
+ <git@vger.kernel.org>; Fri, 03 Nov 2006 02:49:40 -0800 (PST)
+Received: by 10.67.92.1 with SMTP id u1mr2446828ugl.1162550980085; Fri, 03
+ Nov 2006 02:49:40 -0800 (PST)
+Received: from host-81-190-18-116.torun.mm.pl ( [81.190.18.116]) by
+ mx.google.com with ESMTP id o1sm676611uge.2006.11.03.02.49.39; Fri, 03 Nov
+ 2006 02:49:39 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
+Junio C Hamano wrote:
+> Junio C Hamano <junkio@cox.net> writes:
+> 
+>> I'd see if I can add some constructive comments on patches 5-10
+>> tonight, but I'm in the middle of other things so don't hold
+>> your breath ;-).
+> 
+> 7 and 9 look obviously good, so I've applied them without
+> others.
+> 
+>         gitweb: Output also empty patches in "commitdiff" view
 
---NQTVMVnDVuULnIzU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This patch in my opinion has no sense without having extended diff
+header in commitdiff view, i.e. without "New improved patchset view"
+(I have send non-line wrapped version).
 
-hoi :)
+>         gitweb: Better support for non-CSS aware web browsers
 
-On Tue, Nov 28, 2006 at 04:29:05PM +0000, Andy Parkins wrote:
-> In summary, from the supermodule's point of view:
->  * A submodule with changed working directory is "dirty-wd"
->  * A submodule with changed index is "dirty-idx" from the supermodule's
->  * A submodule with changed HEAD (since the last supermodule commit)=20
->    is "changed but not updated" and can hence be "update-index"ed into the
->    supermodule
->  * A submodule with changed HEAD that has been added to the supermodule i=
-ndex
->    is "updated but not checked in"
->  * A submodule with changed HEAD (since the last supermodule update-index=
-) is
->    both "changed but not updated" _and_ "updated but not checked in", jus=
-t=20
->    like any normal file.
+Thats independent from other changes, true.
 
-when tracking refs/heads/master instead of HEAD, you also get:
-   * A submodule where HEAD is not pointing to refs/heads/master is
-     "dirty-branch" or something.
+> 5 is terminally linewrapped and rather big to comment on without
+> comparing pre- and post- patch outputs, so I'll refrain from
+> commenting on it. 
 
+You can check out new gitweb at work at my site (when it is up)
+  http://roke . dyndns . info/cgi-bin/gitweb/gitweb.cgi
 
-> What's needed then:
->  * A way of telling git to treat a particular directory as a submodule in=
-stead
->    of a directory
-This is handled by creating a GIT repository in this directory.
-My current implementation needs some more magic by the user to add it to
-the index, but I plan to change this to the way that GIT repositories
-will be recognized as possible submodules.
+>                    8 is "oops, I made a mistake when I did 5", 
+> which discourages me even more from looking at 5 X-<.
 
->  * git-status gets knowledge of how to check for "dirty" submodules
-This is on top of my TODO.
-
->  * git-commit-tree learns about how to store "submodule" object types in
->    trees.  The submodule object type will be nothing more than the hash o=
-f the
->    current HEAD commit.  (This might be my ignorance, perhaps it's just=
-=20
->    update-index that needs to know this)
-it's only update-index that has to know this.
-Otherwise it would be implicitly updated and you would never get your
-"changed but not updated" status as above.
-
-
---=20
-Martin Waitz
-
---NQTVMVnDVuULnIzU
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFbbIvj/Eaxd/oD7IRAv6ZAJ9W909185K/byVc91ctIBsqlkM9hACfZhzD
-FDHKPq/XhUbPIOcZkZNnVtk=
-=sT3j
------END PGP SIGNATURE-----
-
+Well, you wouldn't notice error corrected by 8 unless you have
+files with funny filenames.
+-- 
+Jakub Narebski
