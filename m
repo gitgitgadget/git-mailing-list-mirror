@@ -1,104 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Using GIT to store /etc (Or: How to make GIT store all file permission bits)
-Date: Sun, 10 Dec 2006 16:30:00 +0100
-Organization: At home
-Message-ID: <elh91b$v6r$1@sea.gmane.org>
-References: <787BE48C-1808-4A33-A368-5E8A3F00C787@mac.com> <457C1E8E.4080407@garzik.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 2/4] Rename remote_only to display_mode
+Date: Fri, 03 Nov 2006 11:51:39 +0100
+Message-ID: <454B1F3B.1020603@op5.se>
+References: <bec6ab7849e3fcacac23cca44a0ba93282af5fca.1162465753.git.andyparkins@gmail.com> <200611021111.09434.andyparkins@gmail.com> <7v64dxl0bf.fsf@assigned-by-dhcp.cox.net> <200611030841.05888.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Sun, 10 Dec 2006 15:28:31 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 3 Nov 2006 10:52:04 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 54
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <200611030841.05888.andyparkins@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33895>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtQbK-0001PH-Po for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 16:28:27 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30820>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfweJ-0006Zo-P5 for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 11:51:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1761180AbWLJP2P (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 10:28:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761183AbWLJP2P
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 10:28:15 -0500
-Received: from main.gmane.org ([80.91.229.2]:41569 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1761180AbWLJP2O
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 10:28:14 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GtQax-0006E3-Em for git@vger.kernel.org; Sun, 10 Dec 2006 16:28:03 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Sun, 10 Dec 2006 16:28:03 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 10 Dec 2006
- 16:28:03 +0100
-To: git@vger.kernel.org
+ S1753206AbWKCKvp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 05:51:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753209AbWKCKvo
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 05:51:44 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:3984 "EHLO
+ smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1753206AbWKCKvo (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 05:51:44 -0500
+Received: by smtp-gw1.op5.se (Postfix, from userid 588) id 3C6816BD29; Fri, 
+ 3 Nov 2006 11:51:43 +0100 (CET)
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id CE6066BCD9; Fri,  3 Nov 2006 11:51:39 +0100 (CET)
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Jeff Garzik wrote:
+Andy Parkins wrote:
+> Digressing a little: what is the polite form of patches for git?  My strategy 
+> with this set was to make each patch as small as possible to reach my end 
+> point.  If those patches were okayed on the list, I could then do a "make 
+> more beautiful" patch, which is really nothing to do with the original 
+> changes to functionality but would make the code prettier.
 
-> Kyle Moffett wrote:
->>
->> I've recently become somewhat interested in the idea of using GIT to 
->> store the contents of various folders in /etc.  However after a bit of 
->> playing with this, I discovered that GIT doesn't actually preserve all 
->> permission bits since that would cause problems with the more 
->> traditional software development model.  I'm curious if anyone has done 
->> this before; and if so, how they went about handling the permissions and 
->> ownership issues.
->> 
->> I spent a little time looking over how GIT stores and compares 
->> permission bits; trying to figure out if it's possible to patch in a new 
->> configuration variable or two; say "preserve_all_perms" and 
->> "preserve_owner", or maybe even "save_acls".  It looks like standard 
->> permission preservation is fairly basic; you would just need to patch a 
->> few routines which alter the permissions read in from disk or compare 
->> them with ones from the database.  On the other hand, it would appear 
->> that preserving ownership or full POSIX ACLs might be a bit of a challenge.
+I believe the order of preferrence goes: tested, concise, short.
+
+Linus has a nasty habit of ending his mails with "totally untested 
+ofcourse", which is not a good strategy to adopt if you want your 
+patches included.
+
+>  Really I'm asking 
+> what level of intrusiveness of patch is not considered rude?  In making my 
+> patches, should I ride rough-shod over current implementation and just do it 
+> how I'd do it or should I try to fit in (as I did in this case)?
 > 
-> It's a great idea, something I would like to do, and something I've 
-> suggested before.  You could dig through the mailing list archives, if 
-> you're motivated.
-> 
-> I actively use git to version, store and distribute an exim mail 
-> configuration across six servers.  So far my solution has been a 'fix 
-> perms' script, or using the file perm checking capabilities of cfengine.
 
-Fix perms' script used on a checkout hook is a best idea I think.
- 
-> But it would be a lot better if git natively cared about ownership and 
-> permissions (presumably via an option).
+If you *need* to change something, change it. If you *want* to change 
+something just because it's not written the way you would write it, back 
+away. If you think some interface you're using needs clearing up 
+(codewise or with extra comments), send a separate patch for that so the 
+actual feature/bugfix you're sending in doesn't drown in cosmetic 
+changes to the interfaces the patch uses/touches.
 
-There is currently no place for ownership and extended attributes in
-the tree object; and even full POSIX permissions might be challenge
-because for example currently unused 'is socket' permission bit is
-used for experimental commit-in-tree submodule support. And given Linus
-stance that git is "content tracker"...
-
-In the loooong thread "VCS comparison table" there was some talk
-about using git (or any SCM) to manage /etc. Check out:
-
- * Message-ID: <Pine.LNX.4.64.0610220926170.3962@g5.osdl.org>
-   http://permalink.gmane.org/gmane.comp.version-control.git/29765
- * Message-ID: <20061023051932.GA8625@evofed.localdomain>
-   http://marc.theaimsgroup.com/?i=<20061023051932.GA8625@evofed.localdomain>
-
-(and other messages in this subthread).
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
