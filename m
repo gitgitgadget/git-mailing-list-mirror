@@ -4,64 +4,70 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: cloning the kernel - why long time in "Resolving 313037 deltas"
-Date: Mon, 18 Dec 2006 17:50:06 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0612181746310.18171@xanadu.home>
-References: <86y7p57y05.fsf@blue.stonehenge.com>
- <Pine.LNX.4.64.0612181251020.3479@woody.osdl.org>
- <86r6uw9azn.fsf@blue.stonehenge.com>
- <Pine.LNX.4.64.0612181625140.18171@xanadu.home>
- <86hcvs984c.fsf@blue.stonehenge.com>
- <Pine.LNX.4.64.0612181708340.18171@xanadu.home>
- <86ac1k975v.fsf@blue.stonehenge.com>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: [PATCH 4/4] git.el: Include MERGE_MSG in the log-edit buffer even when not committing a merge.
+Date: Fri, 03 Nov 2006 17:42:43 +0100
+Message-ID: <87zmb81ny4.fsf@wine.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Mon, 18 Dec 2006 22:50:52 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 3 Nov 2006 16:45:05 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <86ac1k975v.fsf@blue.stonehenge.com>
-X-X-Sender: nico@xanadu.home
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.90 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30866>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GwRJF-0003oJ-SX for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 23:50:14 +0100
+ esmtp (Exim 4.43) id 1Gg28G-00045q-TB for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 17:43:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754729AbWLRWuK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
- 17:50:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754731AbWLRWuK
- (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 17:50:10 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:47312 "EHLO
- relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1754729AbWLRWuI (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
- 17:50:08 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0JAH00EA9RFIB7S0@VL-MH-MR001.ip.videotron.ca> for git@vger.kernel.org; Mon,
- 18 Dec 2006 17:50:07 -0500 (EST)
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+ S1753365AbWKCQmr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 11:42:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753367AbWKCQmr
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 11:42:47 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:51383 "EHLO
+ mail.codeweavers.com") by vger.kernel.org with ESMTP id S1753365AbWKCQmq
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 11:42:46 -0500
+Received: from adsl-84-227-158-29.adslplus.ch ([84.227.158.29]
+ helo=wine.dyndns.org) by mail.codeweavers.com with esmtpsa
+ (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32) (Exim 4.50) id 1Gg27x-0004XX-AX for
+ git@vger.kernel.org; Fri, 03 Nov 2006 10:42:45 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000) id 37EE3109EB7; Fri,
+  3 Nov 2006 17:42:43 +0100 (CET)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Mon, 18 Dec 2006, Randal L. Schwartz wrote:
+This lets us take advantage of the fact that git-cherry-pick now saves
+the message in MERGE_MSG too.
 
-> Nicolas> What CPU and amount of ram do you have?
-> 
-> 2.2 Ghz Intel Core 2 Duo (Macbook Pro high end)
-> I can compile and install GNU Emacs from source in 11 minutes. :)
+Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+---
+ contrib/emacs/git.el |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-So it shouldn't be a lack of resource.
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index 6f3b46d..972c402 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -589,6 +589,7 @@ and returns the process output as a stri
+                           (let ((commit (git-commit-tree buffer tree head)))
+                             (git-update-ref "HEAD" commit head)
+                             (condition-case nil (delete-file ".git/MERGE_HEAD") (error nil))
++                            (condition-case nil (delete-file ".git/MERGE_MSG") (error nil))
+                             (with-current-buffer buffer (erase-buffer))
+                             (git-set-files-state files 'uptodate)
+                             (when (file-directory-p ".git/rr-cache")
+@@ -888,7 +889,7 @@ and returns the process output as a stri
+           'face 'git-header-face)
+          (propertize git-log-msg-separator 'face 'git-separator-face)
+          "\n")
+-        (cond ((and merge-heads (file-readable-p ".git/MERGE_MSG"))
++        (cond ((file-readable-p ".git/MERGE_MSG")
+                (insert-file-contents ".git/MERGE_MSG"))
+               (sign-off
+                (insert (format "\n\nSigned-off-by: %s <%s>\n"
+-- 
+1.4.3.3.gf3240
 
-> Nicolas> Are you on Windows?
-> 
-> Gawd no!
-
-;-)
-
-I asked because it could have had something with the mmap() usage 
-recently reported to be dreadfully slow on Windows
-
-
+-- 
+Alexandre Julliard
