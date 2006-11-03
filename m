@@ -4,70 +4,77 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: Re: Sometimes "Failed to find remote refs" means "try git-fetch --no-tags"
-Date: Wed, 15 Nov 2006 18:13:42 -0300
-Message-ID: <200611152113.kAFLDgZO005651@laptop13.inf.utfsm.cl>
-References: <junkio@cox.net>
-NNTP-Posting-Date: Wed, 15 Nov 2006 21:14:27 +0000 (UTC)
-Cc: "Michael K. Edwards" <medwards.linux@gmail.com>,
-	git@vger.kernel.org
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: [PATCH 2/4] git.el: Added a function to open the current file in another window.
+Date: Fri, 03 Nov 2006 17:41:46 +0100
+Message-ID: <878xis32k5.fsf@wine.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 3 Nov 2006 16:42:44 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
-   of "Tue, 14 Nov 2006 20:05:07 -0800." <7vvelhs6bw.fsf@assigned-by-dhcp.cox.net> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.19.1]); Wed, 15 Nov 2006 18:13:42 -0300 (CLST)
-X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.90 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30863>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkS5F-0001OU-Ix for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 22:14:13 +0100
+ esmtp (Exim 4.43) id 1Gg277-0003k7-Cj for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 17:41:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161697AbWKOVNx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 16:13:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161693AbWKOVNw
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 16:13:52 -0500
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:64186 "EHLO
- inti.inf.utfsm.cl") by vger.kernel.org with ESMTP id S1161697AbWKOVNw (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 16:13:52 -0500
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
- by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id kAFLDgHF010861
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); Wed, 15
- Nov 2006 18:13:42 -0300
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1]) by
- laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id kAFLDgZO005651; Wed, 15
- Nov 2006 18:13:42 -0300
-To: Junio C Hamano <junkio@cox.net>
+ S1753334AbWKCQlu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 11:41:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753361AbWKCQlu
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 11:41:50 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:29879 "EHLO
+ mail.codeweavers.com") by vger.kernel.org with ESMTP id S1753334AbWKCQlt
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 11:41:49 -0500
+Received: from adsl-84-227-158-29.adslplus.ch ([84.227.158.29]
+ helo=wine.dyndns.org) by mail.codeweavers.com with esmtpsa
+ (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32) (Exim 4.50) id 1Gg272-0004Tm-Ie for
+ git@vger.kernel.org; Fri, 03 Nov 2006 10:41:49 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000) id AB78C109EB7; Fri,
+  3 Nov 2006 17:41:46 +0100 (CET)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> wrote:
+Bound to 'o' by default, compatible with pcl-cvs and
+buffer-mode. Suggested by Han-Wen Nienhuys.
 
-[...]
+Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+---
+ contrib/emacs/git.el |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
 
-> However "fetch --no-tags" from http upstream is a band-aid to
-> hide that the upstream repository has stale info/refs, and I do
-> not think we would want to encourage the band-aid.  Rather, the
-> message should say "yell loudly at the repository owner" ;-).
-
-I'm seeing this gem here:
-
-  [vonbrand@laptop13 git]$ git pull
-  fatal: read error (Connection reset by peer)
-  Fetch failure: git://git.kernel.org/pub/scm/git/git.git
-  fatal: read error (Connection reset by peer)
-  Failed to find remote refs
-  No changes.
-
-Who shall I yell at? ;-)
-
-Seriously, this is broken. I get 4 different error messages, plus a
-(reassuring?) "No changes". Yes, I know this is what I'll see if the
-machine is overloaded.
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index e283df2..08d6404 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -910,6 +910,15 @@ and returns the process output as a stri
+     (when (eq 'unmerged (git-fileinfo->state info))
+       (smerge-mode))))
+ 
++(defun git-find-file-other-window ()
++  "Visit the current file in its own buffer in another window."
++  (interactive)
++  (unless git-status (error "Not in git-status buffer."))
++  (let ((info (ewoc-data (ewoc-locate git-status))))
++    (find-file-other-window (git-fileinfo->name info))
++    (when (eq 'unmerged (git-fileinfo->state info))
++      (smerge-mode))))
++
+ (defun git-find-file-imerge ()
+   "Visit the current file in interactive merge mode."
+   (interactive)
+@@ -994,6 +1003,7 @@ and returns the process output as a stri
+     (define-key map "M"   'git-mark-all)
+     (define-key map "n"   'git-next-file)
+     (define-key map "N"   'git-next-unmerged-file)
++    (define-key map "o"   'git-find-file-other-window)
+     (define-key map "p"   'git-prev-file)
+     (define-key map "P"   'git-prev-unmerged-file)
+     (define-key map "q"   'git-status-quit)
 -- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                    Fono: +56 32 2654431
-Universidad Tecnica Federico Santa Maria             +56 32 2654239
+1.4.3.3.gf3240
+
+-- 
+Alexandre Julliard
