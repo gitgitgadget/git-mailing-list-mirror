@@ -1,61 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: Re: Cleaning up git user-interface warts
-Date: Thu, 16 Nov 2006 14:11:53 +0100
-Message-ID: <455C6399.5020407@xs4all.nl>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>	<87hcx1u934.wl%cworth@cworth.org>	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>	<87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>	<Pine.LNX.4.64.0611141633430.2591@xanadu.home>	<7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611142007010.2591@xanadu.home>	<7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>	<455BBCE9.4050503@xs4all.nl>	<Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>	<455C412D.1030408@xs4all.nl> <7v7ixvbq80.fsf@assigned-by-dhcp.cox.net> <455C618A.7080309@xs4all.nl>
-Reply-To: hanwen@xs4all.nl
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: git bug? + question
+Date: Thu, 2 Nov 2006 22:45:49 -0500
+Message-ID: <BAYC1-PASMTP041E1FB36F85221E4E1FB4AEFE0@CEZ.ICE>
+References: <buoejsme6ho.fsf@dhapc248.dev.necel.com>
+	<7v4pthmew1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 16 Nov 2006 13:12:57 +0000 (UTC)
+NNTP-Posting-Date: Fri, 3 Nov 2006 03:46:24 +0000 (UTC)
+Cc: Miles Bader <miles@gnu.org>, git@vger.kernel.org,
+	Karl =?ISO-8859-1?B?SGFzc2Vsc3Ry9m0=?= <kha@treskal.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 12
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
-In-Reply-To: <455C618A.7080309@xs4all.nl>
+X-Originating-IP: [65.93.43.81]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Original-Message-Id: <20061102224549.499610d1.seanlkml@sympatico.ca>
+In-Reply-To: <7v4pthmew1.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 03 Nov 2006 03:45:51.0255 (UTC) FILETIME=[8E7E2A70:01C6FEFA]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31580>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gkh2s-0003Mg-Tl for gcvg-git@gmane.org; Thu, 16 Nov
- 2006 14:12:47 +0100
+ esmtp (Exim 4.43) id 1Gfq0U-0001I0-J2 for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 04:46:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424022AbWKPNMd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
- 08:12:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424023AbWKPNMd
- (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 08:12:33 -0500
-Received: from main.gmane.org ([80.91.229.2]:33938 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1424022AbWKPNMc (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 08:12:32 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gkh2O-0003HG-LO for git@vger.kernel.org; Thu, 16 Nov 2006 14:12:16 +0100
-Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
- esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Thu, 16 Nov 2006 14:12:16 +0100
-Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
- id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 16 Nov 2006 14:12:16
- +0100
-To: git@vger.kernel.org
+ S1753006AbWKCDpw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 22:45:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753028AbWKCDpw
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 22:45:52 -0500
+Received: from bayc1-pasmtp04.bayc1.hotmail.com ([65.54.191.164]:55038 "EHLO
+ BAYC1-PASMTP04.bayc1.hotmail.com") by vger.kernel.org with ESMTP id
+ S1753006AbWKCDpv (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006
+ 22:45:51 -0500
+Received: from linux1.attic.local ([65.93.43.81]) by
+ BAYC1-PASMTP04.bayc1.hotmail.com over TLS secured channel with Microsoft
+ SMTPSVC(6.0.3790.1830); Thu, 2 Nov 2006 19:45:50 -0800
+Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
+ esmtp (Exim 4.43) id 1Gfp40-0003a1-TS; Thu, 02 Nov 2006 21:45:48 -0500
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Han-Wen Nienhuys escreveu:
+On Thu, 02 Nov 2006 18:40:30 -0800
+Junio C Hamano <junkio@cox.net> wrote:
 
-> I can go on with listing idiosyncrasies, but my point is not to get help 
-> from you, but rather to show how git can be improved.
+> which is efficient (guaranteed to do only one fetch from remote)
+> and convenient.  Also I have Push: mapping set up on my
+> main machine to do master:origin, next:next, maint:maint, and
+> +pu:pu so that I can replace the first "git pull" on the
+> secondary machine with "git push secondary" on my main machine.
 
-oh, and another annoying one: git's insistence on firing up a pager if 
-there is nothing to page, eg. try
+One thing that would make separate-remotes nicer to work with
+is to have an automatic mapping between any local branch and
+one of the same name in remotes.
 
-   git-log je-n-existe-pas
+So for instance, if you have a local branch named pu checked
+out and you pull from origin, remotes/origin/pu would be merged
+after the fetch unless a manual mapping was defined in the
+remotes or config file.
 
--- 
-  Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
+Maybe even going as far as automatically creating a local branch
+for each remote branch on clone is worth considering.
+
+On a peripherally related topic, someone on the xorg list was
+complaining that after the initial clone, there is no easy way
+to track branches that get added/deleted from the remote repo.
+It would be nice if pull had an option to automatically add
+and remove remote branches from the remotes/<remote>/xxx
+namespace.
+
