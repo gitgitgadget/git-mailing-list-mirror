@@ -1,79 +1,133 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: svn versus git
-Date: Wed, 13 Dec 2006 18:17:54 -0500
-Message-ID: <20061213231754.GD32568@spearce.org>
-References: <200612132200.41420.andyparkins@gmail.com> <elpun9$qp1$1@sea.gmane.org> <200612132251.17202.andyparkins@gmail.com> <elq1c8$37d$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-format-patch little gripe
+Date: Fri, 03 Nov 2006 03:17:13 -0800
+Message-ID: <7vwt6cbwzq.fsf@assigned-by-dhcp.cox.net>
+References: <46a038f90611030122reecee87ufac5bbaa910ee933@mail.gmail.com>
+	<511753.217.qm@web31807.mail.mud.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 13 Dec 2006 23:18:45 +0000 (UTC)
+NNTP-Posting-Date: Fri, 3 Nov 2006 11:17:29 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <elq1c8$37d$1@sea.gmane.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <511753.217.qm@web31807.mail.mud.yahoo.com> (Luben Tuikov's
+	message of "Fri, 3 Nov 2006 01:59:18 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34251>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GudN0-0008Lx-1A for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 00:18:38 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30826>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gfx30-00051e-U5 for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 12:17:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751729AbWLMXR7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 18:17:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751733AbWLMXR7
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 18:17:59 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:39149 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751729AbWLMXR6 (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
- 18:17:58 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GudMA-0007z7-TA; Wed, 13 Dec 2006 18:17:46 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 8441F20FB6E; Wed, 13 Dec 2006 18:17:54 -0500 (EST)
-To: Jakub Narebski <jnareb@gmail.com>
+ S1753218AbWKCLRP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 06:17:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753226AbWKCLRP
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 06:17:15 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:25231 "EHLO
+ fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1753218AbWKCLRP
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 06:17:15 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao07.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061103111714.DVVW13632.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>; Fri, 3
+ Nov 2006 06:17:14 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id iBHJ1V00R1kojtg0000000 Fri, 03 Nov 2006
+ 06:17:19 -0500
+To: Luben Tuikov <ltuikov@yahoo.com>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Andy Parkins wrote:
-> 
-> >> Hmmm... I thought that some progress indicator of download/upload was
-> >> added... guess I was wrong.
-> > 
-> > You're not wrong, there is a progress indicator, but it's measured 
-> > in "objects" not megabytes.  It's got a percentage as well.  Neither of these 
-> > things is a whole lot of use if I want to know how much data (in megabytes) 
-> > has been transferred, how much is there left to go and how long is it going 
-> > to take.
-> 
-> No, what you see is if I understand correctly progress indicator for
-> local and remote generating pack to send / exploding pack into loose
-> objects (or not). There was some patch to add download/upload progress
-> indicator, but I guess it was not applied.
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
-There is one that gets started when the transfer is taking a while,
-but it shows the total number of MiB transferred and the current
-transfer rate.  I don't think there's a way to tell when it will be
-done, just that its running and running slower than you might like.
-:-)
+> But what wouldn't I give to have
+>   git-format-_patch_ -o /tmp/ <commit>
+> generate a _single_ patch just as its name implies...
 
-Part of the problem is the remote end doesn't know how many bytes
-are needed for the pack its sending until after it has finished
-sending the pack.  Sort of a catch-22.
+It would have been nicer if you made that argument as a reply to
+one of these messages:
 
--- 
+http://thread.gmane.org/gmane.comp.version-control.git/4266/focus=4279
+http://thread.gmane.org/gmane.comp.version-control.git/4843/focus=4843
+http://thread.gmane.org/gmane.comp.version-control.git/5440/focus=5446
+
+It is not an ideology; it is called not breaking existing UI,
+which is rather unfortunate, because its UI is not the greatest
+in the world.
+
+Back when it was done, it was not clear that we would have a
+rich set of revision set operations as "--since=2.weeks",
+"from..to", or "this...that" as we have today.  Even though we
+have them now, these set operations do not mesh very well with
+the patch-id based filtering format-patch needs to do.
+
+In order to exclude patches that you have as commits that have
+not been _merged_ into your upstream, but the change they
+contain have already been _applied_, you would need "the other
+set" which is roughly "rev-list yours..upstream".  Some of your
+patches (i.e. "rev-list upstream..yours") may have already
+applied to the upstream but obviously as different commits, and
+you would fiter them by comparing the patch-ids of them and
+those from "the other set".  
+
+Unfortunately, other than the recent addition "this...that",
+none of the revision set operation would give us the "other set"
+that is efficient to use ("all the commits that is older than 2
+weeks" is an obvious "other set" for "--since=2.weeks", but that
+set goes all the way down to the initial commit, which is
+obviously not what we want).
+
+One thing we talked about but nobody stepped up to code [*1*] is
+to give "git-format-patch --stdin" that reads list of commits,
+and runs "git-diff-tree --pretty --stat --summary -p $commit".
+With that, we could do something like:
+
+	git rev-list linus..orinoco | git format-patch --stdin
+
+Your "git-format-patch --single $commit" is a shorthand for a
+degenerated special case of that pattern.
+
+You cannot do patch-id based filtering with this form, but I see
+that "single" is often wanted on the list and #git, and people
+who want it do not care about patch-id based filtering at all.
+And I do not think it is that "they do not realize how much they
+would be missing without patch-id filtering", in this case.  So
+the above command line would probably be Ok.
+
+With --left-right (in "pu"), you could even do something a bit
+fancier like this:
+
+	git rev-list --left-right linus...8139cp linus...airo |
+	git format-patch --stdin
+
+The --left-right output option, when used in conjunction with
+the symmetric difference set operator, prefixes each commit with
+'<' (left) or '>' (right) to indicate which ancestry it belongs
+to (in the above example, the commits only in the branch that
+tracks Linus but not in branches 8139cp or airo are prefixed
+with '<', and commits on 8139cp or airo branches that have not
+been merged in linus are prefixed with '>').  --stdin could use
+that and take '<' as "the other set", i.e. the ones to base
+filtering of '>' commits on, and output the commits that came
+with '>' prefix (but subtracting the ones that have equivalent
+patches in the '<' set).
+
+
+[Footnote]
+
+*1* format-patch is primarily the tool for a patch submitter,
+and I did its original version back when I was one.  For a long
+time (an equivalent to "eternity" in git timescale back then)
+Linus did not show _any_ interest in it (you can compare the
+dates on the messages I quoted above with the commit date of
+0acfc972), and I suspect one of the reasons is because he was
+the toplevel maintainer and did not have a need for a tool like
+that.  Now I am the toplevel maintainer here and I haven't felt
+the need to update it myself for quite some time ("it works for
+me"), which is a bit sad.
+
