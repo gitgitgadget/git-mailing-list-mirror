@@ -1,64 +1,47 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [BUG] daemon.c blows up on OSX
-Date: Wed, 20 Dec 2006 14:25:21 -0800
-Message-ID: <7vr6uu6w8e.fsf@assigned-by-dhcp.cox.net>
-References: <7vmz5ib8eu.fsf@assigned-by-dhcp.cox.net>
-	<86vek6z0k2.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0612201412250.3576@woody.osdl.org>
-	<86irg6yzt1.fsf_-_@blue.stonehenge.com>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: git cygwin package?
+Date: Fri, 3 Nov 2006 19:18:00 +0700
+Message-ID: <fcaeb9bf0611030418k7cac08f3h77d52cdee8b41656@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 20 Dec 2006 22:26:20 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 3 Nov 2006 12:19:53 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <86irg6yzt1.fsf_-_@blue.stonehenge.com> (Randal L. Schwartz's
-	message of "20 Dec 2006 14:20:42 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=dKF5Dyn0p8S45PI+pn1KJm2Z3DCqlVNjqs+6Y3h763qgLOwj4gcUIynsNf1M2cJWvFKxrYJV6oyXLA4ylZVpdenKPTqZ8kKdkUhRuQz2jdQwIwTqMDRetIugXTh9PWCFJVCEqfOk6FPC+aebD6U8bzcE3tI0sVU0TGVXjOf/jvY=
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34972>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gx9t1-0003t0-4t for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 23:26:07 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30838>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gfy0k-0002hp-PF for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 13:19:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030401AbWLTWZZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 17:25:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030399AbWLTWZY
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 17:25:24 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:41454 "EHLO
- fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1030401AbWLTWZX (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
- 17:25:23 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061220222522.PFDZ20715.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Wed, 20
- Dec 2006 17:25:22 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id 1AQg1W0011kojtg0000000; Wed, 20 Dec 2006
- 17:24:40 -0500
-To: merlyn@stonehenge.com (Randal L. Schwartz)
+ S1752635AbWKCMSE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 07:18:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752676AbWKCMSE
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 07:18:04 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:656 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1752635AbWKCMSC
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 07:18:02 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so388704ugc for
+ <git@vger.kernel.org>; Fri, 03 Nov 2006 04:18:00 -0800 (PST)
+Received: by 10.78.146.11 with SMTP id t11mr2663351hud.1162556280392; Fri, 03
+ Nov 2006 04:18:00 -0800 (PST)
+Received: by 10.78.100.8 with HTTP; Fri, 3 Nov 2006 04:18:00 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-merlyn@stonehenge.com (Randal L. Schwartz) writes:
-
-> Nope... can't compile:
-> ...
->     daemon.c:970: warning: implicit declaration of function 'initgroups'
->     make: *** [daemon.o] Error 1
->
-> This smells like we've seen this before.  Regression introduced with
-> some of the cleanup?
-
-Most likely.  You were CC'ed on these messages:
-
-	<7v7iwnnzed.fsf@assigned-by-dhcp.cox.net>
-	<7vbqlye2zz.fsf@assigned-by-dhcp.cox.net>
-
+Hi,
+Has anyone created a binary package for git on cygwin?
+-- 
