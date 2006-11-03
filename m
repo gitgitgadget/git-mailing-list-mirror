@@ -1,49 +1,59 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: check if a commit is ascendent of a specific commit
-Date: Sat, 11 Nov 2006 18:08:56 +0700
-Message-ID: <fcaeb9bf0611110308l577d70bfo5046d7d7eb09ac58@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: Remove extra "/" in path names for git_get_project_list
+Date: Thu, 02 Nov 2006 21:59:29 -0800
+Message-ID: <7vslh1jcji.fsf@assigned-by-dhcp.cox.net>
+References: <454ACF91.50601@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 11 Nov 2006 11:09:12 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 3 Nov 2006 05:59:48 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=A00mCZZYnyQif08pHEO8KRVGIj5vloiqy4JBRbPHNV1YOrsTeYGhv1tso+vld0Edexlp4NULkQKC58LV3egc0XfhHmo4iV75XZeQ96b7FE/v2oBlm468dhoyALCRO2im9kUtc1YruuxaBRokJB8NLedg8iKkfx9kLOqg8XcgS6I=
-Content-Disposition: inline
+In-Reply-To: <454ACF91.50601@gmail.com> (Aneesh Kumar K. V.'s message of "Fri,
+	03 Nov 2006 10:41:45 +0530")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30785>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GiqjO-0007Hm-43 for gcvg-git@gmane.org; Sat, 11 Nov
- 2006 12:09:02 +0100
+ esmtp (Exim 4.43) id 1Gfs5b-0004cC-3X for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 06:59:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966111AbWKKLI6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006
- 06:08:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966024AbWKKLI6
- (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 06:08:58 -0500
-Received: from nf-out-0910.google.com ([64.233.182.188]:4511 "EHLO
- nf-out-0910.google.com") by vger.kernel.org with ESMTP id S965982AbWKKLI6
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 06:08:58 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1610992nfa for
- <git@vger.kernel.org>; Sat, 11 Nov 2006 03:08:56 -0800 (PST)
-Received: by 10.78.83.13 with SMTP id g13mr3830994hub.1163243336181; Sat, 11
- Nov 2006 03:08:56 -0800 (PST)
-Received: by 10.78.100.8 with HTTP; Sat, 11 Nov 2006 03:08:56 -0800 (PST)
-To: git@vger.kernel.org
+ S1753128AbWKCF7b (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 00:59:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753130AbWKCF7b
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 00:59:31 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:6835 "EHLO
+ fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP id S1753128AbWKCF7a
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 00:59:30 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao12.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061103055929.UZXV18180.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>; Fri, 3
+ Nov 2006 00:59:29 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id i5za1V00A1kojtg0000000 Fri, 03 Nov 2006
+ 00:59:34 -0500
+To: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
-I want to create "git-amend-commit" to be able to amend commits before
-HEAD. So I need to check whether the commit I'm going to amend is
-ascendent of HEAD. Is there any way to check that?
--- 
+"Aneesh Kumar K.V" <aneesh.kumar@gmail.com> writes:
+
+> Without this change we get a wrong $pfxlen value and the check_export_ok()
+> checks with with a wrong directory name. Without this patch the below
+> $projects_list fails with gitweb
+>
+> $projects_list = "/tmp/a/b/";
+>
+> Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
+
+Hmph.  Doesn't this break $projects_list = "/", I wonder?
+
+> +		# remove the trailing "/"
+> +		$dir =~ s!/+$!!;
+
