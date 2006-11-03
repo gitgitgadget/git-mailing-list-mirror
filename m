@@ -1,63 +1,54 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] shortlog: remove range check
-Date: Tue, 28 Nov 2006 22:49:17 +0100
-Message-ID: <456CAEDD.7030203@lsrfire.ath.cx>
-References: <7v8xhv2uj1.fsf@assigned-by-dhcp.cox.net>
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jeff King <peff@peff.net>
+Subject: Re: git-format-patch little gripe
+Date: Fri, 3 Nov 2006 18:16:47 -0500
+Message-ID: <20061103231647.GB6970@coredump.intra.peff.net>
+References: <7vwt6cbwzq.fsf@assigned-by-dhcp.cox.net> <20061103195253.9244.qmail@web31814.mail.mud.yahoo.com> <7v3b905fqi.fsf@assigned-by-dhcp.cox.net> <87velwupk6.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 28 Nov 2006 21:49:55 +0000 (UTC)
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 3 Nov 2006 23:16:59 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, Luben Tuikov <ltuikov@yahoo.com>,
 	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
-In-Reply-To: <7v8xhv2uj1.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+In-Reply-To: <87velwupk6.wl%cworth@cworth.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30895>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpApS-00072H-VR for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 22:49:27 +0100
+ esmtp (Exim 4.43) id 1Gg8HN-0000MN-FN for gcvg-git@gmane.org; Sat, 04 Nov
+ 2006 00:16:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757072AbWK1VtY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 16:49:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757076AbWK1VtY
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 16:49:24 -0500
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de
- ([217.172.187.230]:59099 "EHLO neapel230.server4you.de") by vger.kernel.org
- with ESMTP id S1757069AbWK1VtX (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28
- Nov 2006 16:49:23 -0500
-Received: from [10.0.1.4] (p508E44AE.dip.t-dialin.net [80.142.68.174]) by
- neapel230.server4you.de (Postfix) with ESMTP id 5244214032; Tue, 28 Nov 2006
- 22:49:22 +0100 (CET)
-To: Junio C Hamano <junkio@cox.net>
+ S932492AbWKCXQu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 18:16:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932493AbWKCXQu
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 18:16:50 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3973 "HELO
+ peff.net") by vger.kernel.org with SMTP id S932492AbWKCXQu (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 18:16:50 -0500
+Received: (qmail 8578 invoked from network); 3 Nov 2006 18:15:51 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2) by
+ 66-23-211-5.clients.speedfactory.net with SMTP; 3 Nov 2006 18:15:51 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Nov
+ 2006 18:16:47 -0500
+To: Carl Worth <cworth@cworth.org>
 Sender: git-owner@vger.kernel.org
 
-Don't force the user to specify more than one revision parameter,
-thus making git-shortlog behave more like git-log.
-'git-shortlog master' will now produce the expected results; the
-other end of the range simply is the (oldest) root commit.
+On Fri, Nov 03, 2006 at 02:35:05PM -0800, Carl Worth wrote:
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+> I mean, git show is fine for displaying something to just read it, but
+> if the results are to be fed back into git at some point, then
+> git-show is pretty useless, (throws away commit message, author,
+> timestamp, etc.).
 
-diff --git a/builtin-shortlog.c b/builtin-shortlog.c
-index b5b13de..f1124e2 100644
---- a/builtin-shortlog.c
-+++ b/builtin-shortlog.c
-@@ -298,9 +298,7 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
- 	if (!access(".mailmap", R_OK))
- 		read_mailmap(".mailmap");
- 
--	if (rev.pending.nr == 1)
--		die ("Need a range!");
--	else if (rev.pending.nr == 0)
-+	if (rev.pending.nr == 0)
- 		read_from_stdin(&list);
- 	else
+Try
+  git-show --pretty=email
+or even
+  git-show --pretty=email --stat -p
+
