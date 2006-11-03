@@ -1,113 +1,90 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/2] git reflog expire
-Date: Tue, 19 Dec 2006 02:15:39 -0800
-Message-ID: <7vhcvsry2c.fsf@assigned-by-dhcp.cox.net>
-References: <7vodq3a136.fsf@assigned-by-dhcp.cox.net>
-	<7vr6uxzgjb.fsf@assigned-by-dhcp.cox.net>
-	<20061218140813.GA32446@spearce.org>
-	<7vy7p4u1au.fsf@assigned-by-dhcp.cox.net>
-	<7v64c8thr4.fsf@assigned-by-dhcp.cox.net>
-	<20061219090851.GH2511@spearce.org>
+From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
+Subject: [PATCH] gitweb: Remove extra "/" in path names for git_get_project_list
+Date: Fri, 03 Nov 2006 10:41:45 +0530
+Message-ID: <454ACF91.50601@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 19 Dec 2006 10:15:55 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: multipart/mixed;
+ boundary="------------070902060209070505090401"
+NNTP-Posting-Date: Fri, 3 Nov 2006 05:12:11 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061219090851.GH2511@spearce.org> (Shawn Pearce's message of
-	"Tue, 19 Dec 2006 04:08:51 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type;
+        b=KULrCbcZz26yaZs7K/oKTP3zjtVIz+T4UGHeRwpRpHRUCbu4HNNNXbMocauvDdDRsEmwIIGIZgxPK8jjBl19wLDj6gqQjDEnXC/OA9BU0U953oR4vP1K4ayNTWGMcqrgTfhvbgGu/4GmU87fAXnF2MQBBjhsVNOb3gw28xoe/30=
+User-Agent: Thunderbird 1.5.0.7 (X11/20060918)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30784>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gwc0e-0005tU-0S for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 11:15:44 +0100
+ esmtp (Exim 4.43) id 1GfrLb-0005E2-EO for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 06:12:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932757AbWLSKPl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 05:15:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932758AbWLSKPl
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 05:15:41 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:51217 "EHLO
- fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932757AbWLSKPk (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
- 05:15:40 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061219101540.THFC16632.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Tue, 19
- Dec 2006 05:15:40 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id 0aFs1W0011kojtg0000000; Tue, 19 Dec 2006
- 05:15:52 -0500
-To: Shawn Pearce <spearce@spearce.org>
+ S1752635AbWKCFL4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 00:11:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753115AbWKCFL4
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 00:11:56 -0500
+Received: from wx-out-0506.google.com ([66.249.82.235]:15665 "EHLO
+ wx-out-0506.google.com") by vger.kernel.org with ESMTP id S1752635AbWKCFLz
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 00:11:55 -0500
+Received: by wx-out-0506.google.com with SMTP id s14so326191wxc for
+ <git@vger.kernel.org>; Thu, 02 Nov 2006 21:11:54 -0800 (PST)
+Received: by 10.70.69.11 with SMTP id r11mr2313899wxa.1162530714869; Thu, 02
+ Nov 2006 21:11:54 -0800 (PST)
+Received: from ?217.156.221.183? ( [156.153.255.234]) by mx.google.com with
+ ESMTP id h18sm616183wxd.2006.11.02.21.11.53; Thu, 02 Nov 2006 21:11:54 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce <spearce@spearce.org> writes:
+This is a multi-part message in MIME format.
+--------------070902060209070505090401
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> Of course that's not what the code does, because if either the
-> old or the new object is no longer in the ODB you are pruning away
-> the log entry.  I cannot however come up with a better name than
-> --expire-lost.  :-(
 
-How about --expire-unreachable?
+--------------070902060209070505090401
+Content-Type: text/plain;
+ name*0="0001-gitweb-Remove-extra-in-path-names-for-git_get_project_list.";
+ name*1="txt"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename*0="0001-gitweb-Remove-extra-in-path-names-for-git_get_project_l";
+ filename*1="ist.txt"
 
-> I'm thinking that we may want the 'expire' subcommand to simply be
-> implied by '--expire' instead.
 
-After coding this, my conclusion is the same as yours, but
-reasoning behind it is slightly different.
+Without this change we get a wrong $pfxlen value and the check_export_ok()
+checks with with a wrong directory name. Without this patch the below
+$projects_list fails with gitweb
 
-To have 'expire' action as a subcommand to 'git-reflog' is from
-implementor's point of view, and is a horrible organization from
-the UI standpoint.  To the end users, it may be easier to have a
-single 'git-gc' command that runs these commands with reasonable
-set of defaults:
+$projects_list = "/tmp/a/b/";
 
-	- rerere gc
-        - reflog expire --all
-	- (possibly) repack -a -d
-        - prune
+Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
+---
+ gitweb/gitweb.perl |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-If we go that route, it probably is not even necessary to
-advertise that 'expire' is a subcommand of reflog.  The users
-would not run it from the command line; it is an implementation
-detail of 'git-gc' command.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 7710cc2..a0a9aaf 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -897,6 +897,8 @@ sub git_get_projects_list {
+ 	if (-d $projects_list) {
+ 		# search in directory
+ 		my $dir = $projects_list;
++		# remove the trailing "/"
++		$dir =~ s!/+$!!;
+ 		my $pfxlen = length("$dir");
+ 
+ 		File::Find::find({
+-- 
+1.4.3.3.gc954-dirty
 
-> Needing a subcommand like 'git reflog show HEAD' is just a lot
-> of typing[*1*].
 
-I am very interested in seeing how 'git reflog show HEAD' would
-show the reflog entries.  I've tried showing it just like log
-family shows (it is reasonably easy; you build the list of revs
-out of reflog entries and feed them to 'git-show' machinery),
-and while it works, it is unusable for the purpose of seeing
-which ones are the lost ones (amended commits and rebased branch
-remnants).
-
-The best I came up with is still my "show-branch --reflog" so
-far.  You really need to show not just the commit title but how
-they topologically relate to the commits on the surviving
-branch, and I think having something graphical or semi-graphical
-is a must.
-
-> I would also say maybe we want to make --dry-run the default, with
-> a final message which tells the user that if they really want to
-> make it possible to throw away the commits printed above then
-> restart the expire operation.
-
-I am moderately negative on that.  Nobody does it like that;
-prune, branch -d, tag -d,...
-
-> I'd like to take a stab at the log display code for the reflog
-> command, but I'd also really like to port forward (aka rewrite)
-> that mmap window code I keep saying I'll work on, but never quite
-> seem to do...
-
-After today's pread() thing, I was also wondering about that too
-;-).
