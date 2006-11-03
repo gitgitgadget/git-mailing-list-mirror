@@ -1,86 +1,131 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Kyle Moffett <mrmacman_g4@mac.com>
-Subject: Re: Using GIT to store /etc (Or: How to make GIT store all file permission bits)
-Date: Sun, 10 Dec 2006 13:35:17 -0500
-Message-ID: <19476830-E30A-42B7-AD9B-4C417D830C8E@mac.com>
-References: <787BE48C-1808-4A33-A368-5E8A3F00C787@mac.com> <elh91b$v6r$1@sea.gmane.org> <A52817B6-0265-4164-8E5D-334AF92DC267@mac.com> <200612101926.33307.jnareb@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v752.2)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/n] gitweb: Use '&iquot;' instead of '?' in esc_path
+Date: Fri, 3 Nov 2006 23:33:49 +0100
+Message-ID: <200611032333.49794.jnareb@gmail.com>
+References: <200610301953.01875.jnareb@gmail.com> <200611031719.13073.jnareb@gmail.com> <7virhw5hoi.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 10 Dec 2006 18:35:34 +0000 (UTC)
+NNTP-Posting-Date: Fri, 3 Nov 2006 22:33:50 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200612101926.33307.jnareb@gmail.com>
-X-Mailer: Apple Mail (2.752.2)
-X-Brightmail-Tracker: AAAAAA==
-X-Brightmail-scanned: yes
-X-Proofpoint-Virus-Version: vendor=fsecure engine=4.65.5446:2.3.11,1.2.37,4.0.164 definitions=2006-12-10_01:2006-12-08,2006-12-08,2006-12-10 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 ipscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx engine=3.1.0-0611300000 definitions=main-0612100009
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=iUhrSoDpC1xZw6d73pJHVLqGLGJbwTQp4MHbciIUz3REEb8Y4ozvOtd+YI6MfsUkoPB1sFA7X2Wxk9qBC9mngFiYV5TS0tbT7Acxg+HOMcIW81clA+g1TSPTQvi1PmGBk94QOuTYKXtrJOkpfGgjsgusGU+ynDkzM86OU3Y6le8=
+User-Agent: KMail/1.9.3
+In-Reply-To: <7virhw5hoi.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33914>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtTWK-0003NV-7U for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 19:35:28 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30890>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gg7bQ-0006Oe-Rs for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 23:33:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1762333AbWLJSfY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 13:35:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762336AbWLJSfY
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 13:35:24 -0500
-Received: from smtpout.mac.com ([17.250.248.183]:59769 "EHLO smtpout.mac.com"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1762333AbWLJSfY
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 13:35:24 -0500
-Received: from mac.com (smtpin01-en2 [10.13.10.146]) by smtpout.mac.com
- (Xserve/8.12.11/smtpout13/MantshX 4.0) with ESMTP id kBAIZMd9027708; Sun, 10
- Dec 2006 10:35:22 -0800 (PST)
-Received: from [10.0.7.253] (hc6524e82.dhcp.vt.edu [198.82.78.130])
- (authenticated bits=0) by mac.com (Xserve/smtpin01/MantshX 4.0) with ESMTP id
- kBAIZImn023883 (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
- Sun, 10 Dec 2006 10:35:20 -0800 (PST)
-To: Jakub Narebski <jnareb@gmail.com>
+ S932208AbWKCWd3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 17:33:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932222AbWKCWd3
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 17:33:29 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:64016 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S932208AbWKCWd3
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 17:33:29 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so531736ugc for
+ <git@vger.kernel.org>; Fri, 03 Nov 2006 14:33:27 -0800 (PST)
+Received: by 10.67.22.7 with SMTP id z7mr3484954ugi.1162593207427; Fri, 03
+ Nov 2006 14:33:27 -0800 (PST)
+Received: from host-81-190-18-116.torun.mm.pl ( [81.190.18.116]) by
+ mx.google.com with ESMTP id 39sm1403006ugb.2006.11.03.14.33.26; Fri, 03 Nov
+ 2006 14:33:27 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Dec 10, 2006, at 13:26:32, Jakub Narebski wrote:
-> The idea is to not store /etc in git directly, but use import/ 
-> export scripts, which for example saves permissions and ownership  
-> in some file also tracked by git on import, and restores correct  
-> permissions on export. That is what I remember from this  
-> discussion. This of course means that you would have to write your  
-> own porcelain...
->
-> What about mentioned in other email IsiSetup?
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> # quote unsafe characters and escape filename to HTML
+>> sub esc_path {
+>> 	my $str = shift;
+>> 	$str = esc_html($str);
+>> 	$str =~ s!([[:cntrl:]])!sprintf('<span 
+class="cntrl">&#%04d;</span>', 9216+ord($1))!eg;
+>> 	return $str;
+>> }
+>>
+>> with perhaps the following CSS
+>>
+>> span.cntrl {
+>> 	border: dashed #aaaaaa;
+>> 	border-width: 1px;
+>> 	padding: 0px 2px 0px 2px;
+>> 	margin:  0px 2px 0px 2px;
+>> }
+>>
+>> What do you think of it?
+> 
+> Probably "# quote unsafe characters" is not what it does yet (it
+> just quotes controls currently and nothing else), but we have to
+> start somewhere and I think this is a good start.
 
-The real problem I have with that is you literally have to duplicate  
-all sorts of functionality.  I want to run "foo-status" in /etc and  
-get something useful, but if /etc is not a git directory in and of  
-itself then you have to duplicate most of "git-status" anyways.  And  
-the same applies to all the other commands.  From what I can see of  
-IsiSetup the tools for checking out, merging, modifying, cloning, etc  
-are all much more limited and immature than the ones available  
-through GIT/cogito, and I would be loathe to discard all that extra  
-functionality and duplicate a few thousand lines of code in the name  
-of "concept purity".
+Well, control characters (at least some of them) are not correct
+characters in UTF-8 HTML output; Mozilla in strict XHTML mode complains.
+Currently for example esc_html escapes FORM FEED (FF) and ESCAPE (ESC)
+characters, because they happened to be present in git.git repository
+(in COPYING file and in commit v1.4.2.1-g20a3847 respectively).
 
-GIT already has _some_ idea about file permissions, it just discards  
-most of the data before writing to disk.  Of course, adding POSIX  
-ACLs and user-extended-attributes requires a new data format, but  
-those are very similar to filesystem permissions; they differ only in  
-amount of data stored, not in purpose.
+As I see it, we can either replace non-safe characters (control
+characters) by single characters a la --hide-control-chars: that
+is minimal solution, or we can quote unseafe characters somewhat,
+but if we do that we have to indicate that we quote. Git core and
+ls encloses material which needs escaping with quotes; in gitweb
+it is somewhat impractical; besides we have more possibilities
+to mark fragment of text (span element encompassing representation
+of escaped characters for example).
 
-Import/export scripts literally require wrapping every single GIT  
-command with a script that changes directory a few times, reads from  
-a different checked-out tree, and permutes some extended-attribute  
-data slightly before storing it in the underlying GIT tree.  Even  
-without adding any new functionality whatsoever that doubles the  
-amount of code just for finding your repository and checking command- 
-line arguments, and that's a crazy trade-off to make in any situation.
+I have thought of the following escaping:
 
-Cheers,
-Kyle Moffett
+1. Hide control characters using '?' or other similar character like
+   &cdot; for example
+2. Use "Unicode" quoting, i.e. replace control characters by their
+   Unicode Printable Representation (PR), as shown above. Has the
+   advantage that it is simple and does not need theoretically marking
+   that it is quoted; has the disadvantage that browser must support
+   this part of Unicode, and that those characters are less than
+   readable with default font size gitweb uses.
+3. Use Character Escape Codes (CEC), using alphabetic and octal
+   backslash sequences like those used in C. Probably need to escape
+   backslash (quoting character) too. Has the advantage of being widely
+   understood in POSIX world. Has the disadvantage of need for escape
+   sequence table/hash. Has the advantage that it works for all
+   characters - simple octal backslash sequence if they have no special
+   escape sequence.
+4. Control key Sequence (CS), like the one used in esc_html currently,
+   replacing control characters by key sequence that produces them,
+   for example replacing LF with ^J, CR with ^M, FF with ^L, ESC with
+   ^[, TAB with ^I. Has the advantage of being undestodd I think in
+   MS-DOS/MS WIndows world. Has the advantage of being used in esc_html.
+   Has the advantage that some text editors use this representation.
+   Has the disadvantage of need for large key sequence table/hash.
+   Has the disadvantage that less common control characters have cryptic
+   control key sequences.
+5. Percent encoding, also know as URL encoding. Use %<hex> encoding used
+   in URL, taken for example from core of esc_url/esc_param subroutine.
+   Simple, but does need marking that is escaped. Disadvantage of hardly
+   readable.
+
+Which solution do you think it's best? Or perhaps other solution, like 
+using Unicode Printable Representation, or Character Escape Codes with 
+the exception of LF which would be replaced by &para; (paragraph sign), 
+RET by &crarr; and TAB by either &thorn;, &#8614; or &rarr;.
+
+-- 
+Jakub Narebski
