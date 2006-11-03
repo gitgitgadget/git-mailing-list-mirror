@@ -2,204 +2,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: For all you darcs lovers: git-hunk-commit
-Date: Tue, 5 Dec 2006 19:48:49 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612051936480.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 4/4] Show the branch type after the branch name for remotes
+Date: Fri, 03 Nov 2006 12:08:33 -0800
+Message-ID: <7vmz785m4e.fsf@assigned-by-dhcp.cox.net>
+References: <bec6ab7849e3fcacac23cca44a0ba93282af5fca.1162465753.git.andyparkins@gmail.com>
+	<200611021111.32759.andyparkins@gmail.com>
+	<7vy7qtl0bk.fsf@assigned-by-dhcp.cox.net>
+	<200611030833.42596.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-967835776-1165344529=:28348"
-NNTP-Posting-Date: Tue, 5 Dec 2006 18:49:04 +0000 (UTC)
-Cc: Han-Wen Nienhuys <hanwen@lilypond.org>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 3 Nov 2006 20:08:55 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-X-Y-GMX-Trusted: 0
+In-Reply-To: <200611030833.42596.andyparkins@gmail.com> (Andy Parkins's
+	message of "Fri, 3 Nov 2006 09:33:40 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33364>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrfLc-00075S-7j for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 19:48:56 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30880>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gg5LC-0006p5-As for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 21:08:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S968618AbWLESsx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 13:48:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968619AbWLESsx
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 13:48:53 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33349 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S968618AbWLESsw
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 13:48:52 -0500
-Received: (qmail invoked by alias); 05 Dec 2006 18:48:50 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp031) with SMTP; 05 Dec 2006 19:48:50 +0100
-To: git@vger.kernel.org
+ S932075AbWKCUIf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 15:08:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932082AbWKCUIe
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 15:08:34 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:15765 "EHLO
+ fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S932075AbWKCUIe
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 15:08:34 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao07.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061103200833.TRQE13632.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>; Fri, 3
+ Nov 2006 15:08:33 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id iL8C1V0091kojtg0000000 Fri, 03 Nov 2006
+ 15:08:12 -0500
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Andy Parkins <andyparkins@gmail.com> writes:
 
----1148973799-967835776-1165344529=:28348
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+> For me personally, I find my git-branch output more useful because in it's 
+> unswitched form it shows me all branches.  However, I can easily put this 
+> behaviour under a switch or, and this would get my vote, put the original 
+> behaviour (i.e. show local branches only) under a switch.
+>
+> Which would you like?  If any.
 
-Hi,
+I am a wrong person to ask, since I do not usually work in
+repositories with refs/remotes/ myself and the choice would not
+affect me either way.
 
-I was inspired by Han-Wen. This script allows you to commit selected hunks 
-from the current modifications.
+For people who work with multiple remotes (e.g. following both
+Linus and Jeff) and work on many separate topic branches of
+their own, I would suspect that showing only local branches by
+default, with an option to show remote branches from only named
+remotes would make things less cluttered, and we can always have
+"-a" to mean everything under the sun.
 
-It has two modes: darcs mode (--darcs) and normal mode (without 
-arguments).
+This kind of limiting can be done more flexibly with globbing
+than just fixed set of flags.
 
-In darcs mode, all hunks are presented one by one, and you are asked if 
-you want to commit this or not. If you make a mistake: ^C and back to 
-start. I do not really know darcs, so this might not be how it works -- I 
-did not find any good documentation how a "darcs record" looks like.
+We could have:
 
-Normal mode shows you the list of modified files, and lets you choose one. 
-Then it shows you how many hunks there are, and lets you pick one for 
-inspection, after which you are asked if you want it or not.
+	git branch --list 'heads/'
+        git branch --list 'remotes/jgarzik/'
+        git branch --list 'heads/??/*'
 
-Normal mode is chattier, but if you know which (of those thousands) hunk 
-you want to commit, it is faster. Besides, it was easier to debug.
+and that command, crazily enough, would let you do:
 
-Note that this script uses no temporary files, but rather bash array 
-variables.
+        git branch --list 'tags/v2.6.19-rc*'
 
-Ciao,
-Dscho
-
----1148973799-967835776-1165344529=:28348
-Content-Type: TEXT/PLAIN; charset=US-ASCII; name=git-hunk-commit.bash
-Content-Transfer-Encoding: BASE64
-Content-ID: <Pine.LNX.4.63.0612051948490.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Description: 
-Content-Disposition: attachment; filename=git-hunk-commit.bash
-
-IyEvYmluL2Jhc2gNCg0KIyBDb3B5cmlnaHQgKEMpIDIwMDYgSm9oYW5uZXMg
-RS4gU2NoaW5kZWxpbg0KIyBEaXN0cmlidXRlZCB1bmRlciB0aGUgc2FtZSBs
-aWNlbnNlIGFzIGdpdC4NCg0KIyBVc2UgdGhpcyBjb21tYW5kIHRvIGNvbW1p
-dCBqdXN0IGEgZmV3IGh1bmtzIG9mIHRoZSBjdXJyZW50IG91dHB1dA0KIyBv
-ZiAiZ2l0IGRpZmYiLiBGb3IgeW91ciBzZWN1cml0eSwgaXQgb25seSB3b3Jr
-cyB3aGVuIHRoZSBpbmRleCBtYXRjaGVzDQojIEhFQUQuDQoNCiMgZW5zdXJl
-IHRoYXQgdGhpcyBpcyBhIGdpdCByZXBvc2l0b3J5DQouIGdpdC1zaC1zZXR1
-cA0KDQojIHRoZSBpbmRleCBtdXN0IG1hdGNoIHRoZSBIRUFEDQppZiBbIC1u
-ICIkKGdpdCBkaWZmIC0taW5kZXggLS1uYW1lLW9ubHkgSEVBRCkiIF07IHRo
-ZW4NCgllY2hvICJUaGUgc3RhZ2luZyBhcmVhIChBS0EgaW5kZXgpIGlzIGFs
-cmVhZHkgZGlydHkuIg0KCWV4aXQgMQ0KZmkNCg0KIyByZWFkIHRoZSBuYW1l
-cyBvZiBhbGwgbW9kaWZpZWQgZmlsZXMgaW50byB0aGUgYXJyYXkgIm1vZGlm
-aWVkIg0KDQpkZWNsYXJlIC1hIG1vZGlmaWVkDQpmaWxlbnI9MQ0Kd2hpbGUg
-cmVhZCAtZCAkJ1wwJyBmaWxlOyBkbw0KCW1vZGlmaWVkWyRmaWxlbnJdPSIk
-ZmlsZSINCglmaWxlbnI9JCgoJGZpbGVucisxKSkNCmRvbmUgPCA8KGdpdCBs
-cy1maWxlcyAtLW1vZGlmaWVkIC16KQ0KDQppZiBbICR7I21vZGlmaWVkWypd
-fSA9IDAgXTsgdGhlbg0KCWVjaG8gIk5vIG1vZGlmaWVkIGZpbGVzLiINCgll
-eGl0IDENCmZpDQoNCmRlY2xhcmUgLWEgaHVua3MNCg0KIyBpbnRlcmFjdGl2
-ZWx5IHNob3cgdGhlIGh1bmtzIG9mIGEgZmlsZSBhbmQgYXNrIGlmIHRoZXkg
-c2hvdWxkIGJlIGNvbW1pdHRlZC4NCiMgMXN0IHBhcmFtZXRlciBpcyB0aGUg
-aW5kZXggaW50byB0aGUgbW9kaWZpZWQgZmlsZSBsaXN0Lg0KIyAybmQgcGFy
-YW1ldGVyIHNob3VsZCBiZSAidHJ1ZSIgZm9yIGRhcmNzIG1vZGUsIGVtcHR5
-IG90aGVyd2lzZS4NCiMJRGFyY3MgbW9kZSBtZWFucyB0aGF0IGFsbCBodW5r
-cyBhcmUgcHJlc2VudGVkIG9uZSBhZnRlciBhbm90aGVyLg0KIwlOb3JtYWwg
-bW9kZSBtZWFucyB1c2VyIGNhbiBzcGVjaWZ5IGh1bmtzIGludGVyYWN0aXZl
-bHkuDQoNCnNlbGVjdF9odW5rcyAoKSB7DQoJbG9jYWwgaW5kZXg9JDENCgls
-b2NhbCBkYXJjc19tb2RlPSQyDQoJbG9jYWwgZmlsZW5hbWU9JHttb2RpZmll
-ZFskaW5kZXhdfQ0KCWxvY2FsIC1hIGRpZmYNCglsb2NhbCAtYSBodW5rX3N0
-YXJ0DQoJbG9jYWwgY3VycmVudF9odW5rcz0ke2h1bmtzWyRpbmRleF19DQoJ
-bG9jYWwgbGluZW5vDQoJbG9jYWwgaHVua25vDQoJbG9jYWwgYWN0aW9uDQoJ
-bG9jYWwgaQ0KCWxvY2FsIGFjdGl2ZQ0KDQoJbGluZW5vPTENCglodW5rbm89
-MA0KCXdoaWxlIHJlYWQgbGluZTsgZG8NCgkJZGlmZlskbGluZW5vXT0iJGxp
-bmUiDQoJCWNhc2UgIiRsaW5lIiBpbg0KCQlAQCopDQoJCQlodW5rX3N0YXJ0
-WyRodW5rbm9dPSRsaW5lbm8NCgkJCWh1bmtubz0kKCgkaHVua25vKzEpKQ0K
-CQkJOzsNCgkJZXNhYw0KCQlsaW5lbm89JCgoJGxpbmVubysxKSkNCglkb25l
-IDwgPChnaXQgZGlmZiAiJGZpbGVuYW1lIikNCg0KCWh1bmtfc3RhcnRbJGh1
-bmtub109JGxpbmVubw0KDQoJYWN0aW9uPSIiDQoJd2hpbGUgWyAiJGFjdGlv
-biIgIT0gY29tbWl0IC1hICIkYWN0aW9uIiAhPSBhYm9ydCBdOyBkbw0KCQlj
-YXNlICIkZGFyY3NfbW9kZSIgaW4NCgkJJycpDQoJCQllY2hvDQoJCQllY2hv
-ICJDdXJyZW50IGh1bmtzOiAoJGN1cnJlbnRfaHVua3MpIG9mICRodW5rbm8g
-aHVua3MiDQoJCQllY2hvICJUbyBzaG93IChhbmQgZGVjaWRlIG9uKSBhIGh1
-bmsgdHlwZSBpbiB0aGUgbnVtYmVyLiINCgkJCWVjaG8gIlRvIGNvbW1pdCB0
-aGUgY3VycmVudCBodW5rcywgc2F5ICdjb21taXQnLCBlbHNlICdhYm9ydCcu
-Ig0KCQkJZWNobw0KCQkJZWNobyAtbiAiWW91ciBjaG9pY2U/ICINCgkJCXJl
-YWQgYWN0aW9uDQoJCQk7Ow0KCQlbMS05XSopDQoJCQlkYXJjc19tb2RlPSQo
-KCRkYXJjc19tb2RlKzEpKQ0KCQkJaWYgWyAkZGFyY3NfbW9kZSAtZ3QgJGh1
-bmtubyBdOyB0aGVuDQoJCQkJYWN0aW9uPWNvbW1pdA0KCQkJZWxzZQ0KCQkJ
-CWFjdGlvbj0kZGFyY3NfbW9kZQ0KCQkJZmkNCgkJCTs7DQoJCSopDQoJCQlk
-YXJjc19tb2RlPTENCgkJCWFjdGlvbj0xDQoJCQk7Ow0KCQllc2FjDQoJCWNh
-c2UgIiRhY3Rpb24iIGluDQoJCWMpIGFjdGlvbj1jb21taXQ7Ow0KCQlxfGEp
-IGFjdGlvbj1hYm9ydDs7DQoJCWNvbW1pdHxhYm9ydCkgOzsNCgkJWzEtOV0q
-KQ0KCQkJZWNobw0KCQkJZm9yICgoaT0ke2h1bmtfc3RhcnRbJCgoJGFjdGlv
-bi0xKSldfTsgaTwke2h1bmtfc3RhcnRbJGFjdGlvbl19OyBpKyspKTsgZG8N
-CgkJCQlpZiBbIC1uICIkZGFyY3NfbW9kZSIgLWEgJGkgPSAke2h1bmtfc3Rh
-cnRbMF19IF07IHRoZW4NCgkJCQkJZWNobyAiRmlsZTogJGZpbGVuYW1lIg0K
-CQkJCWZpDQoJCQkJZWNobyAke2RpZmZbJGldfQ0KCQkJZG9uZSB8IGxlc3Mg
-LUZTDQoJCQlhY3RpdmU9JChlY2hvICRjdXJyZW50X2h1bmtzLCRhY3Rpb24g
-fCB0ciAsICdcbicgfCBzb3J0IHwgdW5pcSAtdSB8IHRyICdcbicgLCB8IHNl
-ZCAtZSAicy9eLC8vIiAtZSAicy8sJC8vIikNCgkJCWlmIFsgJHsjYWN0aXZl
-fSAtbHQgJHsjY3VycmVudF9odW5rc30gXTsgdGhlbg0KCQkJCWk9eWVzDQoJ
-CQllbHNlDQoJCQkJaT1ubw0KCQkJZmkNCgkJCWVjaG8NCgkJCXdoaWxlIFsg
-LW4gIiRhY3Rpb24iIC1hICIkYWN0aW9uIiAhPSB5ZXMgLWEgIiRhY3Rpb24i
-ICE9IG5vIC1hIC1uICIkYWN0aW9uIiBdOyBkbw0KCQkJCWVjaG8gLW4gIkNv
-bW1pdCB0aGlzIGh1bmsgKGRlZmF1bHQgaXMgJGkpPyAiDQoJCQkJcmVhZCBh
-Y3Rpb24NCgkJCQljYXNlICIkYWN0aW9uIiBpbg0KCQkJCXkpIGFjdGlvbj15
-ZXM7Ow0KCQkJCW4pIGFjdGlvbj1ubzs7DQoJCQkJZXNhYw0KCQkJZG9uZQ0K
-CQkJaWYgWyAtbiAiJGFjdGlvbiIgLWEgJGkgIT0gIiRhY3Rpb24iIF07IHRo
-ZW4NCgkJCQljdXJyZW50X2h1bmtzPSRhY3RpdmUNCgkJCWZpDQoJCQk7Ow0K
-CQkqKSBlY2hvICJVbmtub3duIGNvbW1hbmQ6ICRhY3Rpb24iOzsNCgkJZXNh
-Yw0KCWRvbmUNCg0KCWlmIFsgIiRhY3Rpb24iID0gY29tbWl0IF07IHRoZW4N
-CgkJaHVua3NbJGluZGV4XT0kY3VycmVudF9odW5rcw0KCWZpDQp9DQoNCiMg
-QXBwbHkgdGhlIGh1bmtzIHNhdmVkIGluIHRoZSBhcnJheSBodW5rcyBmb3Ig
-dGhlIHNwZWNpZmllZCBmaWxlLg0KIyBUaGlzIG1lYW5zIHRoYXQgdGhlIGRp
-ZmYgaXMgcmV3cml0dGVuIHRvIHNraXAgdGhlIHVud2FudGVkIGh1bmtzLg0K
-DQphcHBseV9odW5rcyAoKSB7DQoJbG9jYWwgaW5kZXg9JDENCglsb2NhbCBm
-aWxlbmFtZT0ke21vZGlmaWVkWyRpbmRleF19DQoJbG9jYWwgLWEgY3VycmVu
-dF9odW5rcw0KCWxvY2FsIGxpbmVubw0KCWxvY2FsIGxpbmVubzINCglsb2Nh
-bCBsaW5lZGlmZg0KCWxvY2FsIGh1bmtubw0KCWxvY2FsIGkNCglsb2NhbCBh
-Y3RpdmUNCg0KCWk9MA0KCXdoaWxlIHJlYWQgaHVua25vOyBkbw0KCQljdXJy
-ZW50X2h1bmtzWyRpXT0kaHVua25vDQoJCWk9JCgoJGkrMSkpDQoJZG9uZSA8
-IDwoZWNobyAke2h1bmtzWyRpbmRleF19IHwgdHIgLCAnXG4nKQ0KDQoJbGlu
-ZWRpZmY9MA0KCWh1bmtubz0wDQoJaT0wDQoJYWN0aXZlPXRydWUNCgl3aGls
-ZSByZWFkIGxpbmUNCglkbw0KCQljYXNlICIkbGluZSIgaW4NCgkJQEAqKQ0K
-CQkJaHVua25vPSQoKCRodW5rbm8rMSkpDQoJCQlpZiBbICRodW5rbm8gPSAi
-JHtjdXJyZW50X2h1bmtzWyRpXX0iIF07IHRoZW4NCgkJCQlhY3RpdmU9dHJ1
-ZQ0KCQkJCWk9JCgoJGkrMSkpDQoJCQkJaWYgWyAkbGluZWRpZmYgLW5lIDAg
-XTsgdGhlbg0KCQkJCQlsaW5lbm89JChlY2hvICIkbGluZSIgfCBzZWQgInMv
-Xi4qK1woWzAtOV0qXClbLCBdLiokL1wxLyIpDQoJCQkJCWxpbmVubzI9JCgo
-JGxpbmVubyskbGluZWRpZmYpKQ0KCQkJCQlsaW5lPSIkKGVjaG8gIiRsaW5l
-IiB8IHNlZCAicy8rJGxpbmVuby8rJGxpbmVubzIvIikiDQoJCQkJZmkNCgkJ
-CWVsc2UNCgkJCQlhY3RpdmU9DQoJCQkJbGluZW5vPSQoZWNobyAiJGxpbmUi
-IHwgc2VkIC1uICJzL14uKi1bMC05XSosXChbMC05XSpcKSAuKiQvXDEvcCIp
-DQoJCQkJaWYgWyAteiAiJGxpbmVubyIgXTsgdGhlbg0KCQkJCQlsaW5lbm89
-MQ0KCQkJCWZpDQoJCQkJbGluZW5vMj0kKGVjaG8gIiRsaW5lIiB8IHNlZCAt
-biAicy9eLiorWzAtOV0qLFwoWzAtOV0qXCkgLiokL1wxL3AiKQ0KCQkJCWlm
-IFsgLXogIiRsaW5lbm8yIiBdOyB0aGVuDQoJCQkJCWxpbmVubzI9MQ0KCQkJ
-CWZpDQoJCQkJbGluZWRpZmY9JCgoJGxpbmVkaWZmKyRsaW5lbm8tJGxpbmVu
-bzIpKQ0KCQkJZmkNCgkJCTs7DQoJCWVzYWMNCgkJaWYgWyAtbiAiJGFjdGl2
-ZSIgXTsgdGhlbg0KCQkJZWNobyAiJGxpbmUiDQoJCWZpDQoJZG9uZSA8IDwo
-Z2l0IGRpZmYgIiRmaWxlbmFtZSIpDQp9DQoNCmRhcmNzX21vZGU9DQpjYXNl
-ICIkMSIgaW4NCi0tZGFyY3MpIGRhcmNzX21vZGU9dHJ1ZTs7DQplc2FjDQoN
-CklGUz0nJw0KYWN0aW9uPQ0KaT0NCndoaWxlIFsgIiRhY3Rpb24iICE9IGNv
-bW1pdCAtYSAiJGFjdGlvbiIgIT0gYWJvcnQgXTsgZG8NCgljYXNlICIkZGFy
-Y3NfbW9kZSIgaW4NCgknJykNCgkJZWNobw0KCQlmb3IgKChpPTE7IGk8JGZp
-bGVucjsgaSsrKSk7IGRvDQoJCQllY2hvIC1uICIkaSAke21vZGlmaWVkWyRp
-XX0iDQoJCQlpZiBbIC1uICIke2h1bmtzWyRpXX0iIF07IHRoZW4NCgkJCQll
-Y2hvICIgKCR7aHVua3NbJGldfSkiDQoJCQllbHNlDQoJCQkJZWNobw0KCQkJ
-ZmkNCgkJZG9uZSB8IGxlc3MgLUZTDQoJCWVjaG8NCgkJZWNobyAiVG8gcHV0
-IG9uZSBvciBtb3JlIGh1bmtzIG9mIGEgZmlsZSBpbnRvIHRoZSBzdGFnaW5n
-IGFyZWEgKEFLQSINCgkJZWNobyAiaW5kZXgpLCB0eXBlIGluIHRoZSBudW1i
-ZXIgb2YgdGhlIGZpbGUuIg0KCQllY2hvICJUbyBjb21taXQsIHNheSAnY29t
-bWl0JywgdG8gYWJvcnQsIHNheSAnYWJvcnQnLiINCgkJZWNobw0KCQllY2hv
-IC1uICJZb3VyIGNob2ljZT8gIg0KCQlyZWFkIGFjdGlvbg0KCQk7Ow0KCXRy
-dWUpDQoJCWlmIFsgLXogIiRpIiBdOyB0aGVuDQoJCQlpPTENCgkJZWxzZQ0K
-CQkJaT0kKCgkaSsxKSkNCgkJZmkNCgkJaWYgWyAkaSAtZ2UgJGZpbGVuciBd
-OyB0aGVuDQoJCQlhY3Rpb249Y29tbWl0DQoJCWVsc2UNCgkJCWFjdGlvbj0k
-aQ0KCQlmaQ0KCQk7Ow0KCWVzYWMNCgljYXNlICIkYWN0aW9uIiBpbg0KCWMp
-IGFjdGlvbj1jb21taXQ7Ow0KCXF8YSkgYWN0aW9uPWFib3J0OzsNCgljb21t
-aXR8YWJvcnQpIDs7DQoJWzAtOV0qKSBzZWxlY3RfaHVua3MgIiRhY3Rpb24i
-ICIkZGFyY3NfbW9kZSI7Ow0KCSopIGVjaG8gIlVua25vd24gY29tbWFuZC4i
-IDs7DQoJZXNhYw0KZG9uZQ0KDQppZiBbICIkYWN0aW9uIiA9IGNvbW1pdCBd
-OyB0aGVuDQoJZm9yICgoaT0xOyBpPCRmaWxlbnI7IGkrKykpOyBkbw0KCQlp
-ZiBbIC1uICIke2h1bmtzWyRpXX0iIF07IHRoZW4NCgkJCWFwcGx5X2h1bmtz
-ICRpDQoJCWZpDQoJZG9uZSB8IHRlZSBhMTIzIHwgZ2l0IGFwcGx5IC0tY2Fj
-aGVkDQoJZ2l0IGNvbW1pdA0KZmkNCg0K
-
+Hmm?
