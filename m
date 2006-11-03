@@ -1,69 +1,63 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: merge-recursive, was Re: What's in git.git
-Date: Thu, 26 Oct 2006 09:23:28 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0610260921550.12418@xanadu.home>
-References: <7vk62npipb.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0610261114520.3286@wbgn013.biozentrum.uni-wuerzburg.de>
- <ehputm$ch2$3@sea.gmane.org> <7vlkn3o1w1.fsf@assigned-by-dhcp.cox.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: [ANNOUNCE] Example Cogito Addon - cogito-bundle
+Date: Fri, 3 Nov 2006 19:36:04 +1300
+Message-ID: <46a038f90611022236q6392a4d3ue261c935506b5ea1@mail.gmail.com>
+References: <9e4733910610140807p633f5660q49dd2d2111c9f5fe@mail.gmail.com>
+	 <20061021174056.GA29927@artax.karlin.mff.cuni.cz>
+	 <Pine.LNX.4.64.0610211102250.3962@g5.osdl.org>
+	 <200610212121.58245.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Thu, 26 Oct 2006 13:23:47 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 3 Nov 2006 06:36:20 +0000 (UTC)
+Cc: "Linus Torvalds" <torvalds@osdl.org>, "Jan Hudec" <bulb@ucw.cz>,
+	"Jeff King" <peff@peff.net>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <7vlkn3o1w1.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=AgRu89OMZ07kaEd7Upk6RHZ1Tk1/cbA5tPnlT3ytSPkHhoXLTDLFvsOLqdF67xE47jQA0br4T0YgLHzVfm8HEuBpMZHmXbGSiOE0RGBbcaRq0AUSW6ohnaqp7oyfj5tWLismcXHhaus1GCtU3vdaRU4eTg5vlxb3SnpxKT+yFJc=
+In-Reply-To: <200610212121.58245.jnareb@gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30787>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd5Cm-0006yY-Nz for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 15:23:35 +0200
+ esmtp (Exim 4.43) id 1Gfsey-0002sx-Pg for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 07:36:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423510AbWJZNXa (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 09:23:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423511AbWJZNX3
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 09:23:29 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:33639 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S1423510AbWJZNX3
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 09:23:29 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J7Q007DOVV48F70@VL-MO-MR002.ip.videotron.ca> for git@vger.kernel.org; Thu,
- 26 Oct 2006 09:23:28 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
+ S1753152AbWKCGgJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 01:36:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753151AbWKCGgJ
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 01:36:09 -0500
+Received: from nf-out-0910.google.com ([64.233.182.184]:38070 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1753152AbWKCGgG
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 01:36:06 -0500
+Received: by nf-out-0910.google.com with SMTP id m18so25846nfc for
+ <git@vger.kernel.org>; Thu, 02 Nov 2006 22:36:05 -0800 (PST)
+Received: by 10.48.254.10 with SMTP id b10mr709332nfi.1162535764668; Thu, 02
+ Nov 2006 22:36:04 -0800 (PST)
+Received: by 10.49.60.1 with HTTP; Thu, 2 Nov 2006 22:36:04 -0800 (PST)
+To: "Jakub Narebski" <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On Thu, 26 Oct 2006, Junio C Hamano wrote:
+On 10/22/06, Jakub Narebski <jnareb@gmail.com> wrote:
+> Lack of --follow is not a big issue because you can do this "by hand";
+> you can use git-diff-tree -M at the end of file history to check if
+> [git considers] it was moved from somewhere.
 
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> > Johannes Schindelin wrote:
-> >
-> >> BTW what happened to the builtin shortlog? It is the last Perl script I 
-> >> use regularly... (should make people happy who are stuck with Activision 
-> >> Perl...)
-> >
-> > BTW. both Perl version and builtin shorlog have email->real name translation
-> > table built in. In Perl script version it is in __DATA__ section, and we
-> > could update it using Inline::Files module, in C version it was in table.
-> > But in fact this list is project specific. Shouldn't we make it customizable
-> > (::sigh::, yet another file in $GIT_DIR...).
-> 
-> It already reads from .mailmap which could be tracked as part of
-> the sources (if it is project specific it would be better if it
-> can be shared among members).
+This 'by hand' can be done in shell. cg-log has a half-complete
+implementation of it. Seems to be disabled now :-(
 
-The C version was missing that support if I remember right.
-
-Actually I think that the email table should be removed out of the tool 
-entirely and always read from .mailmap instead.
+cheers,
 
 
