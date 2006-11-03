@@ -1,135 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Hyphens and hiding core commands
-Date: Tue, 28 Nov 2006 01:15:27 -0800
-Message-ID: <7vu00k3pao.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home>
-	<7vmz6cfsuw.fsf@assigned-by-dhcp.cox.net>
-	<87bqmswm1e.wl%cworth@cworth.org>
-	<7vodqse90q.fsf@assigned-by-dhcp.cox.net>
-	<87ac2cwha4.wl%cworth@cworth.org>
-	<7vy7pwcsgp.fsf@assigned-by-dhcp.cox.net>
-	<878xhwwdyj.wl%cworth@cworth.org>
-	<7vk61gcnzl.fsf@assigned-by-dhcp.cox.net>
-	<20061128054032.GC11122@thunk.org>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: git-format-patch little gripe
+Date: Fri, 3 Nov 2006 01:59:18 -0800 (PST)
+Message-ID: <511753.217.qm@web31807.mail.mud.yahoo.com>
+References: <46a038f90611030122reecee87ufac5bbaa910ee933@mail.gmail.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 28 Nov 2006 09:15:45 +0000 (UTC)
-Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Fri, 3 Nov 2006 09:59:36 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061128054032.GC11122@thunk.org> (Theodore Tso's message of
-	"Tue, 28 Nov 2006 00:40:32 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=DZiE0CCo840o6/RUHMJlLlkcpnEqdFYf5Z4avBiCaKefLM42kG8NP68QkagLw0ufTuh1/t7zB58i+MtFHBCNbA0GjDRhWZgLWwesdt+BpLX5RsF6Gmm6wvfk/EI0DC9Nj6D2XMsiHfyn1lkR/EGiMeTyNrfABComHMhRQrQpY3w=  ;
+X-YMail-OSG: WstFL3cVM1nBaREAq0hJPt46_A7anFZ23eNDJAiekBwMhtTebxRkc3eZVMBcnraUhcBSnr5hPrVTNcvpRCleyF2HNJs6d.zPycTFj1_q8HB_QvuSxXTKZI3YRboF5sjZpo73ctRGGpw-
+In-Reply-To: <46a038f90611030122reecee87ufac5bbaa910ee933@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30812>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Goz3s-00005E-P6 for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 10:15:33 +0100
+ esmtp (Exim 4.43) id 1Gfvpb-00039m-06 for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 10:59:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935741AbWK1JPa (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 04:15:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935744AbWK1JPa
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 04:15:30 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:52380 "EHLO
- fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S935741AbWK1JP3
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 04:15:29 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao03.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061128091528.FFRH4817.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>; Tue, 28
- Nov 2006 04:15:28 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id s9Fc1V00Z1kojtg0000000; Tue, 28 Nov 2006
- 04:15:37 -0500
-To: Theodore Tso <tytso@mit.edu>
+ S1752807AbWKCJ7U (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 04:59:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752800AbWKCJ7U
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 04:59:20 -0500
+Received: from web31807.mail.mud.yahoo.com ([68.142.207.70]:33432 "HELO
+ web31807.mail.mud.yahoo.com") by vger.kernel.org with SMTP id
+ S1752808AbWKCJ7T (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006
+ 04:59:19 -0500
+Received: (qmail 497 invoked by uid 60001); 3 Nov 2006 09:59:18 -0000
+Received: from [71.80.233.118] by web31807.mail.mud.yahoo.com via HTTP; Fri,
+ 03 Nov 2006 01:59:18 PST
+To: Martin Langhoff <martin.langhoff@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Theodore Tso <tytso@mit.edu> writes:
+--- Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> On 11/3/06, Luben Tuikov <ltuikov@yahoo.com> wrote:
+> > Yep, after more than a year, I simply cannot get used to it...
+> > http://marc.theaimsgroup.com/?l=git&m=113259043217761&w=2
+> > And as I've seen, other people brought that up too.
+> 
+> Hi Luben,
+> 
+> reading the thread, it sounds like you have a couple of shells scripts
+> or aliases that do what you want already ;-)
 
-> Carl was saying that the totorial should be changed to do this.  I
-> would change "perhaps" to "DEFINITELY".  
+Yeah, would you know it those scripts got lost somewhere.  I now
+know better -- branch off of git "next" and store in USB key. :-)
+So I generally work off of "next" merged to my own branch which includes
+extras I've collected along the way.
 
-You are right.
+But what wouldn't I give to have
+  git-format-_patch_ -o /tmp/ <commit>
+generate a _single_ patch just as its name implies...
 
-How about doing something like this?  I tried to make it neutral
-to be usable whichever default we end up taking.
+   Luben
 
----
-
-diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
-index 35af81a..5ddd2e9 100644
---- a/Documentation/tutorial.txt
-+++ b/Documentation/tutorial.txt
-@@ -11,6 +11,18 @@ diff" with:
- $ man git-diff
- ------------------------------------------------
- 
-+It is a good idea to introduce yourself to git before doing any
-+operation.  The easiest way to do so is:
-+
-+------------------------------------------------
-+$ cat >~/.gitconfig
-+[user]
-+	name = Your Name Comes Here
-+	email = you@yourdomain.example.com
-+^D
-+------------------------------------------------
-+
-+
- Importing a new project
- -----------------------
- 
-@@ -31,7 +43,8 @@ defaulting to local storage area
- 
- You've now initialized the working directory--you may notice a new
- directory created, named ".git".  Tell git that you want it to track
--every file under the current directory with
-+every file under the current directory with (notice the dot '.'
-+that means the current directory):
- 
- ------------------------------------------------
- $ git add .
-@@ -40,7 +53,7 @@ $ git add .
- Finally,
- 
- ------------------------------------------------
--$ git commit -a
-+$ git commit
- ------------------------------------------------
- 
- will prompt you for a commit message, then record the current state
-@@ -55,11 +68,17 @@ $ git diff
- to review your changes.  When you're done,
- 
- ------------------------------------------------
--$ git commit -a
-+$ git commit file1 file2...
- ------------------------------------------------
- 
- will again prompt your for a message describing the change, and then
--record the new versions of the modified files.
-+record the new versions of the files you listed.  It is cumbersome
-+to list all files and you can say `-a` (which stands for 'all')
-+instead.
-+
-+------------------------------------------------
-+$ git commit -a
-+------------------------------------------------
- 
- A note on commit messages: Though not required, it's a good idea to
- begin the commit message with a single short (less than 50 character)
-@@ -75,7 +94,7 @@ $ git add path/to/new/file
- ------------------------------------------------
- 
- then commit as usual.  No special command is required when removing a
--file; just remove it, then commit.
-+file; just remove it, then tell `commit` about the file as usual.
- 
- At any point you can view the history of your changes using
- 
