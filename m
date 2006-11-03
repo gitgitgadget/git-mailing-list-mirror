@@ -1,75 +1,61 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Michael K. Edwards" <medwards.linux@gmail.com>
-Subject: Re: Cleaning up git user-interface warts
-Date: Fri, 17 Nov 2006 17:24:45 -0800
-Message-ID: <f2b55d220611171724u616ac6ft300abd066682ef22@mail.gmail.com>
-References: <87k61yt1x2.wl%cworth@cworth.org>
-	 <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
-	 <455BBCE9.4050503@xs4all.nl>
-	 <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
-	 <Pine.LNX.4.63.0611162353250.13772@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <Pine.LNX.4.64.0611161508530.3349@woody.osdl.org>
-	 <455CFCBD.8040901@xs4all.nl>
-	 <f2b55d220611161734m49136e6fneda5b002eb67618b@mail.gmail.com>
-	 <f2b55d220611162242s48dc42d6g4cbfd9173e712ff8@mail.gmail.com>
-	 <7v64dev88t.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Improve git-prune -n output
+Date: Thu, 02 Nov 2006 18:40:32 -0800
+Message-ID: <7vslh1l0bj.fsf@assigned-by-dhcp.cox.net>
+References: <200611021112.26420.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 18 Nov 2006 01:25:07 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 3 Nov 2006 03:00:30 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=hiurx0I2xGVPC9PgMjaMBxyREF/jhksqwathJ9R2M+aSzi2U6QjGMxzjo4REg4Gc53xS8Zb85QsGgZGQyJ5Ug5usYce0JavvWErk306Oa0QrU/3Gl5gy5nH1j7AMKoemdjOiBWkLEXc3869DujuIV6MaLrOB6ExeygNGSClXhow=
-In-Reply-To: <7v64dev88t.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30775>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlEww-0003cG-8D for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 02:24:54 +0100
+ esmtp (Exim 4.43) id 1Gfp33-0003wO-Tz for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 03:45:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1756118AbWKRBYr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 20:24:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756119AbWKRBYr
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 20:24:47 -0500
-Received: from wx-out-0506.google.com ([66.249.82.229]:18840 "EHLO
- wx-out-0506.google.com") by vger.kernel.org with ESMTP id S1756118AbWKRBYq
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 20:24:46 -0500
-Received: by wx-out-0506.google.com with SMTP id s7so1141536wxc for
- <git@vger.kernel.org>; Fri, 17 Nov 2006 17:24:45 -0800 (PST)
-Received: by 10.90.50.1 with SMTP id x1mr2373579agx.1163813085507; Fri, 17
- Nov 2006 17:24:45 -0800 (PST)
-Received: by 10.90.25.4 with HTTP; Fri, 17 Nov 2006 17:24:45 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
+ S1752966AbWKCCki (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
+ 21:40:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752978AbWKCCkh
+ (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 21:40:37 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:37052 "EHLO
+ fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1752966AbWKCCkf
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 21:40:35 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao07.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061103024033.THMW13632.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>; Thu, 2
+ Nov 2006 21:40:33 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id i2gB1V00j1kojtg0000000 Thu, 02 Nov 2006
+ 21:40:12 -0500
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On 11/16/06, Junio C Hamano <junkio@cox.net> wrote:
-> "Michael K. Edwards" <medwards.linux@gmail.com> writes:
->
-> > Presumably "git branch -D" should inspect everything under
-> > .git/remotes to see whether one or more Pull: lines need to be
-> > deleted along with the branch.
->
-> I am not sure what you mean.  .git/remotes files do not describe
-> any relationship between local branches (and that is where one
-> of the problem raised in recent thread -- pull does not notice
-> on which branch you are on and change its behaviour depending on
-> it), so I do not think there is anything gained for "git branch
-> -D" by going through them.
+Andy Parkins <andyparkins@gmail.com> writes:
 
-.git/remotes/foo does contain Pull: lines which indicate the local
-branch onto which to _fetch_ remote changes.  It's the subsequent
-_merge_ that doesn't notice which branch you have checked out.
+> prune_object() in show_only mode would previously just show the path to the
+> object that would be deleted.  The path the object is stored in shouldn't be
+> shown to users, they only know about sha1 identifiers so show that instead.
+>
+> Further, the sha1 alone isn't that useful for examining what is going to be
+> deleted.  This patch also adds the object type to the output, which makes it
+> easy to pick out, say, the commits and use git-show to display them.
+>
+> Signed-off-by: Andy Parkins <andyparkins@gmail.com>
 
-Cheers,
+List members and git users, 
+
+	if you are using "prune -n" output in your scripts, this
+change could cause those scripts to break; so please holler.
+
+I am inclined to take this output format change, so if you are
+going to holler please do so fast.
