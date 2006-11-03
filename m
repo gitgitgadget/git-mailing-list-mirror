@@ -1,69 +1,59 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: Re: What's in git.git (stable)
-Date: Thu, 14 Dec 2006 20:52:08 -0300
-Message-ID: <200612142352.kBENq8Ie002603@laptop13.inf.utfsm.cl>
-References: <junkio@cox.net>
-NNTP-Posting-Date: Thu, 14 Dec 2006 23:52:53 +0000 (UTC)
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] Allow hand-editing of patches before sending
+Date: Fri, 3 Nov 2006 14:25:46 +0100
+Message-ID: <20061103132546.GA21202@diana.vm.bytemark.co.uk>
+References: <20061101090046.1107.81105.stgit@localhost> <b0943d9e0611020232x1e343bbco9451c8183c84d68@mail.gmail.com> <20061102113631.GA30507@diana.vm.bytemark.co.uk> <b0943d9e0611030139i7be9569bh4a29596a768e82a3@mail.gmail.com> <20061103095859.GC16721@diana.vm.bytemark.co.uk> <b0943d9e0611030444w13e04586u185413c2562d45bc@mail.gmail.com> <20061103130259.GA20611@diana.vm.bytemark.co.uk> <b0943d9e0611030516v43a25b76y4c07f82b33411a6e@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Fri, 3 Nov 2006 13:26:35 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
-   of "Wed, 13 Dec 2006 15:31:12 -0800." <7vk60vbcfz.fsf@assigned-by-dhcp.cox.net> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
-X-Greylist: Recipient e-mail whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.21.155]); Thu, 14 Dec 2006 20:52:08 -0300 (CLST)
-X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0611030516v43a25b76y4c07f82b33411a6e@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34443>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gv0Na-0004Ne-DP for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 00:52:46 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30849>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gfz3Q-00029G-AF for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 14:25:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752004AbWLNXwY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 18:52:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752006AbWLNXwY
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 18:52:24 -0500
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:33155 "EHLO
- inti.inf.utfsm.cl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S1752004AbWLNXwX (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 18:52:23 -0500
-Received: from laptop13.inf.utfsm.cl (pc-173-245-83-200.cm.vtr.net
- [200.83.245.173]) by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id
- kBENq79G030757 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
- verify=NO); Thu, 14 Dec 2006 20:52:08 -0300
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1]) by
- laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id kBENq8Ie002603; Thu, 14
- Dec 2006 20:52:08 -0300
-To: Junio C Hamano <junkio@cox.net>
+ S1752977AbWKCNZs convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006 08:25:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752979AbWKCNZs
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 08:25:48 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:22543 "EHLO
+ diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1752977AbWKCNZr
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 08:25:47 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
+ (Debian)) id 1Gfz3K-0005Ws-00; Fri, 03 Nov 2006 13:25:46 +0000
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> wrote:
+On 2006-11-03 13:16:08 +0000, Catalin Marinas wrote:
 
-[...]
+> On 03/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+>
+> > Or try to use the git plumbing directly, if reasonable. Mail
+> > encoding and decoding isn't my idea of fun -- I just want it to
+> > not break. And I don't see much point in StGIT replicating core
+> > GIT functionality when there's no reason to.
+>
+> As I said in my reply to Junio, I really like to keep the e-mail
+> templates functionality of StGIT. This is not available in
+> git-format-patch.
 
-> In general the principle ought to be not to say anything if the
-> command does exactly what it was told to do successfully, unless
-> the operation is expected to take longer than other normal
-> commands in the git suite, or something that is rarely used.
+=46air enough. How about e-mail importing -- is there a good reason to
+not use the git plumbing there?
 
-Nodz. Just hoary Unix tradition.
-
-> Perhaps under "[user] expert" control.
-
-Nope. You'd be surprised what kind of people consider themselves
-"experts"... I'd prefer adding -v/--verbose flags to all commands (if
-nothing else, for symmetry's sake), have a '[default] --verbose' controlling
-this across the board (perhaps also '[default "command"] --verbose'), with
-'[default]' setting default switches.
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                    Fono: +56 32 2654431
-Universidad Tecnica Federico Santa Maria             +56 32 2654239
-Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
