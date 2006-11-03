@@ -1,218 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] git-pickaxe: -L /regexp/,/regexp/
-Date: Mon, 06 Nov 2006 17:57:33 -0800
-Message-ID: <7vmz749fxu.fsf@assigned-by-dhcp.cox.net>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH] Allow hand-editing of patches before sending
+Date: Fri, 3 Nov 2006 12:56:24 +0000
+Message-ID: <b0943d9e0611030456w3de91550s3901ae7b187e086e@mail.gmail.com>
+References: <20061101090046.1107.81105.stgit@localhost>
+	 <b0943d9e0611020232x1e343bbco9451c8183c84d68@mail.gmail.com>
+	 <20061102113631.GA30507@diana.vm.bytemark.co.uk>
+	 <b0943d9e0611030139i7be9569bh4a29596a768e82a3@mail.gmail.com>
+	 <20061103095859.GC16721@diana.vm.bytemark.co.uk>
+	 <20061103100142.GD16721@diana.vm.bytemark.co.uk>
+	 <20061103102119.GO20017@pasky.or.cz> <454B1BC3.1070203@op5.se>
+	 <20061103105349.GA18651@diana.vm.bytemark.co.uk>
+	 <7vslh0bwsm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 7 Nov 2006 01:57:48 +0000 (UTC)
-Cc: pasky@suse.cz
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 3 Nov 2006 12:57:00 +0000 (UTC)
+Cc: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
+	"Petr Baudis" <pasky@suse.cz>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=B7U7i+6mhOexvRihBOclAE769zt21XD1fI9O6GTjAI4z5qrI4jg10TGD73Vu6k2KsSfFET70aPEryOzpnkB0sCg7uJN2EWUPYY8/1lz0j7DemhGu25ak+t+SjvE8AvYwqmVGffth0rBDjbP+pXJmGnVvpm3NTe5MdEyorIWX8/s=
+In-Reply-To: <7vslh0bwsm.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30845>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhGDh-0007fp-7H for gcvg-git@gmane.org; Tue, 07 Nov
- 2006 02:57:45 +0100
+ esmtp (Exim 4.43) id 1Gfyaz-0003Tn-Hh for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 13:56:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753944AbWKGB5f (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
- 20:57:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753945AbWKGB5f
- (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 20:57:35 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:4252 "EHLO
- fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S1753944AbWKGB5e
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 20:57:34 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061107015734.ZMGR22409.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Mon, 6
- Nov 2006 20:57:34 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id jdxf1V0021kojtg0000000; Mon, 06 Nov 2006
- 20:57:39 -0500
-To: git@vger.kernel.org
+ S1751676AbWKCM40 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 07:56:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752784AbWKCM40
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 07:56:26 -0500
+Received: from py-out-1112.google.com ([64.233.166.179]:12669 "EHLO
+ py-out-1112.google.com") by vger.kernel.org with ESMTP id S1752787AbWKCM4Z
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 07:56:25 -0500
+Received: by py-out-1112.google.com with SMTP id a73so312074pye for
+ <git@vger.kernel.org>; Fri, 03 Nov 2006 04:56:24 -0800 (PST)
+Received: by 10.35.62.1 with SMTP id p1mr3287816pyk.1162558584461; Fri, 03
+ Nov 2006 04:56:24 -0800 (PST)
+Received: by 10.35.77.5 with HTTP; Fri, 3 Nov 2006 04:56:24 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-With this change, you can specify the beginning and the ending
-line of the range you wish to inspect with pattern matching.
+On 03/11/06, Junio C Hamano <junkio@cox.net> wrote:
+> I wonder if this can be solved by simply reusing the machinery
+> format-patch already has.  If calling it as a standalone script
+> does more unnecessary things than what StGIT wants, we should
+> certainly be able to separate the only necessary part out to
+> suit StGIT's needs.
 
-For example, these are equivalent with the git.git sources:
+I would like to keep the e-mail templates feature which is not
+available via format-patch. The reason is because I also send patches
+to the ARM Linux maintainer via a patch tracking system which expects
+the messages formatted in a strict certain way
+(http://www.arm.linux.org.uk/developer/patches/info.php). It would
+probably be easier to fix StGIT than modifying format-patch.
 
-    git pickaxe -L 7,21                       v1.4.0 -- commit.c
-    git pickaxe -L '/^struct sort_node/,/^}/' v1.4.0 -- commit.c
-    git pickaxe -L '7,/^}/'                   v1.4.0 -- commit.c
-    git pickaxe -L '/^struct sort_node/,21'   v1.4.0 -- commit.c
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-
- * Pasky, the other day I overheard that you were moaning about
-   git-annotate using -S to mean something other than pickaxe,
-   and git-pickaxe needed to stay compatible with it.  I think
-   this is a better way to do what you wanted.
-
- builtin-pickaxe.c |  103 ++++++++++++++++++++++++++++++++++++++++++++++-------
- 1 files changed, 90 insertions(+), 13 deletions(-)
-
-diff --git a/builtin-pickaxe.c b/builtin-pickaxe.c
-index f45edbd..007b1b8 100644
---- a/builtin-pickaxe.c
-+++ b/builtin-pickaxe.c
-@@ -17,6 +17,7 @@
- 
- #include <time.h>
- #include <sys/time.h>
-+#include <regex.h>
- 
- static char pickaxe_usage[] =
- "git-pickaxe [-c] [-l] [-t] [-f] [-n] [-p] [-L n,m] [-S <revs-file>] [-M] [-C] [-C] [commit] [--] file\n"
-@@ -1533,6 +1534,85 @@ static const char *add_prefix(const char
- 	return prefix_path(prefix, strlen(prefix), path);
- }
- 
-+static const char *parse_loc(const char *spec,
-+			     struct scoreboard *sb, long lno,
-+			     long begin, long *ret)
-+{
-+	char *term;
-+	const char *line;
-+	long num;
-+	regex_t regexp;
-+
-+	num = strtol(spec, &term, 10);
-+	if (term != spec) {
-+		*ret = num;
-+		return term;
-+	}
-+
-+	if (spec[0] != '/')
-+		return spec;
-+
-+	/* it could be a regexp of form /.../ */
-+	for (term = (char*) spec + 1; *term && *term != '/'; term++) {
-+		if (*term == '\\')
-+			term++;
-+	}
-+	if (*term != '/')
-+		return spec;
-+	/* try [spec+1 .. term-1] as regexp */
-+	*term = 0;
-+	if (regcomp(&regexp, spec + 1, REG_NEWLINE)) {
-+		/* not a regexp */
-+	error_return:
-+		regfree(&regexp);
-+		*term = '/';
-+		return spec;
-+	}
-+
-+	/* Now find the first line that matches the regexp, after
-+	 * line "begin" in sb->final_buf.
-+	 */
-+	while (begin < lno) {
-+		char *nline;
-+		int hit;
-+
-+		begin++;
-+		line = nth_line(sb, begin);
-+		if (begin < lno) {
-+			nline = (char*) nth_line(sb, begin+1);
-+			nline[-1] = 0;
-+		}
-+		hit = regexec(&regexp, line, 0, NULL, 0);
-+		if (begin < lno)
-+			nline[-1] = '\n';
-+		if (!hit) {
-+			/* lines count from 1 in UI terms */
-+			*ret = begin + 1;
-+			regfree(&regexp);
-+			*term++ = '/';
-+			return term;
-+		}
-+	}
-+	goto error_return;
-+}
-+
-+static void prepare_blame_range(struct scoreboard *sb,
-+				const char *bottomtop,
-+				long lno,
-+				long *bottom, long *top)
-+{
-+	const char *term;
-+
-+	term = parse_loc(bottomtop, sb, lno, 0, bottom);
-+	if (*term == ',') {
-+		term = parse_loc(term + 1, sb, lno, *bottom + 1, top);
-+		if (*term)
-+			usage(pickaxe_usage);
-+	}
-+	if (*term)
-+		usage(pickaxe_usage);
-+}
-+
- int cmd_pickaxe(int argc, const char **argv, const char *prefix)
- {
- 	struct rev_info revs;
-@@ -1547,11 +1627,11 @@ int cmd_pickaxe(int argc, const char **a
- 	const char *revs_file = NULL;
- 	const char *final_commit_name = NULL;
- 	char type[10];
-+	const char *bottomtop = NULL;
- 
- 	save_commit_buffer = 0;
- 
- 	opt = 0;
--	bottom = top = 0;
- 	seen_dashdash = 0;
- 	for (unk = i = 1; i < argc; i++) {
- 		const char *arg = argv[i];
-@@ -1578,7 +1658,6 @@ int cmd_pickaxe(int argc, const char **a
- 			blame_copy_score = parse_score(arg+2);
- 		}
- 		else if (!strncmp("-L", arg, 2)) {
--			char *term;
- 			if (!arg[2]) {
- 				if (++i >= argc)
- 					usage(pickaxe_usage);
-@@ -1586,18 +1665,9 @@ int cmd_pickaxe(int argc, const char **a
- 			}
- 			else
- 				arg += 2;
--			if (bottom || top)
-+			if (bottomtop)
- 				die("More than one '-L n,m' option given");
--			bottom = strtol(arg, &term, 10);
--			if (*term == ',') {
--				top = strtol(term + 1, &term, 10);
--				if (*term)
--					usage(pickaxe_usage);
--			}
--			if (bottom && top && top < bottom) {
--				unsigned long tmp;
--				tmp = top; top = bottom; bottom = tmp;
--			}
-+			bottomtop = arg;
- 		}
- 		else if (!strcmp("--score-debug", arg))
- 			output_option |= OUTPUT_SHOW_SCORE;
-@@ -1758,6 +1828,13 @@ int cmd_pickaxe(int argc, const char **a
- 	num_read_blob++;
- 	lno = prepare_lines(&sb);
- 
-+	bottom = top = 0;
-+	if (bottomtop)
-+		prepare_blame_range(&sb, bottomtop, lno, &bottom, &top);
-+	if (bottom && top && top < bottom) {
-+		long tmp;
-+		tmp = top; top = bottom; bottom = tmp;
-+	}
- 	if (bottom < 1)
- 		bottom = 1;
- 	if (top < 1)
 -- 
-1.4.3.4.g9f05
-
