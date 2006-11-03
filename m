@@ -1,85 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: [PATCH] Add branch.*.localmerge and documentation update
-Date: Sat, 9 Dec 2006 00:17:43 +0100
-Message-ID: <200612090017.44105.Josef.Weidendorfer@gmx.de>
-References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com> <200612082301.57037.Josef.Weidendorfer@gmx.de> <7v1wnaggp7.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH 2/4] Rename remote_only to display_mode
+Date: Fri, 3 Nov 2006 13:37:33 +0100
+Message-ID: <200611031237.35290.andyparkins@gmail.com>
+References: <bec6ab7849e3fcacac23cca44a0ba93282af5fca.1162465753.git.andyparkins@gmail.com> <454B1F3B.1020603@op5.se> <7v4ptgagth.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 8 Dec 2006 23:18:02 +0000 (UTC)
-Cc: Santi =?iso-8859-1?q?B=E9jar?= <sbejar@gmail.com>,
-	"Aneesh Kumar K.V" <aneesh.kumar@gmail.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+NNTP-Posting-Date: Fri, 3 Nov 2006 12:38:08 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=qLngV8q9wqO/WFrbO8WscjnuUqX6fUvd9KiicYNTHty6OhXbv9b1+Z3Od6aVAaLFTRpyL3Ia1+NjbF/gHEgPkd8ZvQ/EW97024ddwZV+CR787JtfABG7sUtsNcw7F0I5kvQ8CJiyXXyT90qWIbczF4L01s2uqECrBEcJwv1cDU8=
 User-Agent: KMail/1.9.5
-In-Reply-To: <7v1wnaggp7.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7v4ptgagth.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33765>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gsoye-0004Wu-P1 for gcvg-git@gmane.org; Sat, 09 Dec
- 2006 00:18:01 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30840>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GfyIt-0007N5-4S for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 13:37:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1761266AbWLHXRv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 18:17:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761267AbWLHXRv
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 18:17:51 -0500
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:36115 "EHLO
- mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK) by
- vger.kernel.org with ESMTP id S1761266AbWLHXRu (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 18:17:50 -0500
-Received: from dhcp-3s-46.lrr.in.tum.de (dhcp-3s-46.lrr.in.tum.de
- [131.159.35.46]) by mail.in.tum.de (Postfix) with ESMTP id 701B72163; Sat,  9
- Dec 2006 00:17:48 +0100 (MET)
-To: Junio C Hamano <junkio@cox.net>
+ S1752784AbWKCMhm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 07:37:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752789AbWKCMhm
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 07:37:42 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:52211 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1752784AbWKCMhm
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 07:37:42 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so392843ugc for
+ <git@vger.kernel.org>; Fri, 03 Nov 2006 04:37:40 -0800 (PST)
+Received: by 10.66.216.20 with SMTP id o20mr2582945ugg.1162557460648; Fri, 03
+ Nov 2006 04:37:40 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id p32sm787552ugc.2006.11.03.04.37.38; Fri, 03 Nov 2006 04:37:38 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Friday 08 December 2006 23:34, Junio C Hamano wrote:
-> >> What convenience would it buy us (including but not limited to
-> >> new people), and if there is any, would that outweigh the
-> >> potential confusion factor to have two different configuration
-> >> variables that do exactly the same thing whose sole difference
-> >> is which side of the fetched branch namespace it uses to specify
-> >> the merge source?
-> >
-> > I just came up with a concrete patch.
-> > I am not saying that this is the only true solution.
-> 
-> I admit that I do not use branch.*.merge and I do not know what
-> people find lacking in what Santi did in late September with
-> commit 5372806.  What problem are we trying to solve (not a
-> rhetorical question -- I am truly lost here)?  Is it only a
-> confusion between remote and local, or is there something that
-> cannot be expressed with the current scheme?
+On Friday 2006 November 03 11:51, Junio C Hamano wrote:
 
-More or less, yes.
+> Seriously, it is perfectly Ok to send "for discussion" feelers
 
-When this thread started, I remembered being bitten exactly by
-this issue. And I only understood my problem after looking and
-trying to understand the code.
-Therefore, it was quite easy to come up with this patch.
+Thank you for all the excellent advice.  Being new here I'm basically trying 
+not to make a nuisance of myself :-)
 
-IMHO, a problem really is the people do not want to read documentation.
-They see the branch.*.merge option in .git/config, and try to build
-their own mental model how it works.
+I'll worry less about getting these things right first time; no one here goes 
+mad if a patch is wrong and I'm quite enjoying myself really :-)
 
-Perhaps the warning I added now would have been enough for me to see
-my error; it points at the misconfigured option. For sure, I would
-have looked up the manual for the meaning of this option after seeing
-the warning.
-But the previous documentation simply was way to short.
 
-Should I send a "simplified" patch?
 
+Andy
+
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
