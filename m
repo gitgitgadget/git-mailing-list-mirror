@@ -1,62 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: Tracking a repository for content instead of history
-Date: Wed, 13 Dec 2006 04:48:12 +0700
-Message-ID: <fcaeb9bf0612121348q35549a4cof0adb85e0391b92c@mail.gmail.com>
-References: <200612121235.09984.andyparkins@gmail.com>
-	 <200612121326.24508.andyparkins@gmail.com>
-	 <Pine.LNX.4.63.0612121527070.2807@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <200612121538.41197.andyparkins@gmail.com>
-	 <fcaeb9bf0612121346s3c82bcdbh522c17f4ae9f279b@mail.gmail.com>
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: git bug? + question
+Date: Fri, 3 Nov 2006 16:27:07 -0500
+Message-ID: <BAYC1-PASMTP020F825A42FB7A7DB6CD8BAEFE0@CEZ.ICE>
+References: <buoejsme6ho.fsf@dhapc248.dev.necel.com>
+	<7v4pthmew1.fsf@assigned-by-dhcp.cox.net>
+	<20061102224549.499610d1.seanlkml@sympatico.ca>
+	<20061103081232.GB15972@diana.vm.bytemark.co.uk>
+	<20061103042540.192bbd18.seanlkml@sympatico.ca>
+	<20061103202945.GA7585@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 12 Dec 2006 21:48:22 +0000 (UTC)
+NNTP-Posting-Date: Fri, 3 Nov 2006 21:27:33 +0000 (UTC)
+Cc: Karl =?ISO-8859-1?B?SGFzc2Vsc3Ry9m0=?= <kha@treskal.com>,
+	Junio C Hamano <junkio@cox.net>, Miles Bader <miles@gnu.org>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=TsEagFmLqI306AobX/BixsJXWhZaLWbns/g8kSea2Ssabhl9MuvGy2gQ1NmEPv0MDAGCMF4eaoWzcU78choRJ4PvMgBpZvZrH/Drw3N1HTs5Fm/O+85lvC67mr1kL9cNXAtOznWgil4Pkr34qmXCy/dUfyGsLGTq2ugM6hUZw5g=
-In-Reply-To: <fcaeb9bf0612121346s3c82bcdbh522c17f4ae9f279b@mail.gmail.com>
-Content-Disposition: inline
+X-Originating-IP: [65.93.43.81]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Original-Message-Id: <20061103162707.cc8af608.seanlkml@sympatico.ca>
+In-Reply-To: <20061103202945.GA7585@spearce.org>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 03 Nov 2006 21:27:09.0022 (UTC) FILETIME=[D1664FE0:01C6FF8E]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34148>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuFU1-0006Sz-Ub for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 22:48:18 +0100
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gg6ZF-0006Lp-Bt for gcvg-git@gmane.org; Fri, 03 Nov
+ 2006 22:27:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932447AbWLLVsP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 16:48:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932449AbWLLVsP
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 16:48:15 -0500
-Received: from an-out-0708.google.com ([209.85.132.250]:19014 "EHLO
- an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S932447AbWLLVsO (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec
- 2006 16:48:14 -0500
-Received: by an-out-0708.google.com with SMTP id b33so465423ana for
- <git@vger.kernel.org>; Tue, 12 Dec 2006 13:48:13 -0800 (PST)
-Received: by 10.78.117.10 with SMTP id p10mr41458huc.1165960092533; Tue, 12
- Dec 2006 13:48:12 -0800 (PST)
-Received: by 10.78.100.8 with HTTP; Tue, 12 Dec 2006 13:48:12 -0800 (PST)
-To: git@vger.kernel.org
+ S932075AbWKCV1K (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 16:27:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932084AbWKCV1K
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 16:27:10 -0500
+Received: from bayc1-pasmtp02.bayc1.hotmail.com ([65.54.191.162]:53301 "EHLO
+ BAYC1-PASMTP02.CEZ.ICE") by vger.kernel.org with ESMTP id S932075AbWKCV1J
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 16:27:09 -0500
+Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP02.CEZ.ICE
+ over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830); Fri, 3 Nov
+ 2006 13:27:08 -0800
+Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
+ esmtp (Exim 4.43) id 1Gg5d4-0005tD-Ta; Fri, 03 Nov 2006 15:27:06 -0500
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-On 12/13/06, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> Hm.. I'm no git:// expert. But is it possible doing as follow?
-> 1. git-archive <base>
-> 2. reconstruct commit, blobs and trees from the archive
-> 3. tell git server that you have one commit, you need another commit
-> (maybe heads only, i'm not sure here)
-> 4. get the pack from git server, create new commit and a diff
+On Fri, 3 Nov 2006 15:29:45 -0500
+Shawn Pearce <spearce@spearce.org> wrote:
 
-Ok. Stupid idea. The pack may base on objects that I don't have.
+> Nack.  I'd rather see the entries added/removed from .git/config when
+> the branch is created/deleted, just like the ref and the reflog are
+> created/deleted.  It makes behavior more consistent for the user
+> and it is mostly self documenting...
+> 
+> 	"why is branch FOO pulling FOO by default?  ahhh, its in
+> 	.git/config after git branch FOO FOO."
+> 
+> Same goes for git-clone.  The branch.master.merge=origin/master
+> entry should be in .git/config file after the clone is complete.
 
--- 
+Well that's certainly an alternative implementation that achieves 
+the same thing.  The essential point is that most of the time the
+Git user should not have to manually create the merge entries
+in the config file.  Git should be smart enough to get it right
+most of the time automatically.
+
