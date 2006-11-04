@@ -1,88 +1,61 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] "master" should be treated no differently from any other branch
-Date: Fri, 15 Dec 2006 11:29:01 +0100
-Organization: At home
-Message-ID: <eltt8n$h4s$1@sea.gmane.org>
-References: <200612141519.44294.andyparkins@gmail.com> <Pine.LNX.4.63.0612141627090.3635@wbgn013.biozentrum.uni-wuerzburg.de> <4581721B.4050102@xs4all.nl> <458174C9.2050401@xs4all.nl> <Pine.LNX.4.63.0612141710400.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Initial push to git+ssh://repo.or.cz/srv/git/git/jnareb-git.git fails
+Date: Sat, 4 Nov 2006 12:57:29 +0100
+Message-ID: <20061104115729.GT20017@pasky.or.cz>
+References: <200610291308.44653.jnareb@gmail.com> <20061104111340.GZ18879@pasky.or.cz> <200611041251.07790.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Fri, 15 Dec 2006 10:27:02 +0000 (UTC)
+NNTP-Posting-Date: Sat, 4 Nov 2006 11:58:11 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 38
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+Content-Disposition: inline
+In-Reply-To: <200611041251.07790.jnareb@gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34491>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvAHF-0003rJ-2e for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 11:26:53 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30921>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GgK9v-0008Pp-3Z for gcvg-git@gmane.org; Sat, 04 Nov
+ 2006 12:57:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751764AbWLOK0u (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 05:26:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751771AbWLOK0u
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 05:26:50 -0500
-Received: from main.gmane.org ([80.91.229.2]:56975 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751764AbWLOK0t
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006 05:26:49 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GvAH5-0006JU-9A for git@vger.kernel.org; Fri, 15 Dec 2006 11:26:43 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 15 Dec 2006 11:26:43 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 15 Dec 2006
- 11:26:43 +0100
-To: git@vger.kernel.org
+ S965330AbWKDL5d (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
+ 06:57:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965329AbWKDL5d
+ (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 06:57:33 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:13796 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S965331AbWKDL5c (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 06:57:32 -0500
+Received: (qmail 15284 invoked by uid 2001); 4 Nov 2006 12:57:29 +0100
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin wrote:
+Dear diary, on Sat, Nov 04, 2006 at 12:51:07PM CET, I got a letter
+where Jakub Narebski <jnareb@gmail.com> said that...
+> Petr Baudis "<pasky@ucw.cz>" wrote
+> 
+> > On Sun, Oct 29, 2006 at 01:08:44PM CET, Jakub Narebski wrote:
+> 
+> >> And here it hangs...
+> > 
+> > This is because the unpacking takes really looooooooong time. :-(
+> 
+> That was because git-push didn't have progress report on uploading and 
+> unpacking.
 
-> On Thu, 14 Dec 2006, Han-Wen Nienhuys wrote:
-> 
->> Wouldn't it be better to mention the id of the local repository too? 
->> 
->>   Merge branch 'master' of ssh+git://git.sv.gnu.org/srv/git/lilypond into 
->>   'master' of 'hanwen@xs4all.nl'
->> 
->> this would give more information when these commit messages get pushed 
->> to someone else.
-> 
-> And why not put your address and birthday in there, too?
-> 
-> Frankly, it does not matter. In my private git repository I see that I 
-> often merged from this machine to that machine, criss-crossing often. It 
-> does not buy me anything to even know _where_ I got it from.
-> 
-> Besides, the information you are most likely looking for is the committer, 
-> which is recorded anyway.
-> 
-> The single most useful information in the Merge message is the name of the 
-> branch I merged, since it is more often than not a topic branch, which is 
-> aptly named.
+No, that makes it more bearable but not shorter and less totally
+pointless (since the next time we hit the repository we are going to
+pack it back).
 
-By the way, I run git with merge.summary=true, and it is very nice and
-usually shows the correct thing... but because git doesn't mark branching
-points in any way sometimes under feature branch header there are changes
-not related to given topic, but which were on given branch; the
-fast-forward case I think.
-
-That said, I'm all for not having "master" branch special-cased, besides
-having it default name for branch in git-init-db.
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
