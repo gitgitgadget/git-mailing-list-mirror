@@ -1,101 +1,81 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: fetching packs and storing them as packs
-Date: Fri, 27 Oct 2006 21:18:07 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610272109500.3849@g5.osdl.org>
-References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home> <4540CA0C.6030300@tromer.org>
- <Pine.LNX.4.64.0610271310450.3849@g5.osdl.org> <7v3b99e87c.fsf@assigned-by-dhcp.cox.net>
- <20061028034206.GA14044@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Problem with git-apply?
+Date: Sat, 04 Nov 2006 02:15:55 -0800
+Message-ID: <7vu01f34bo.fsf@assigned-by-dhcp.cox.net>
+References: <20061104072349.GA19667@cubit>
+	<7v8xir4k3w.fsf@assigned-by-dhcp.cox.net>
+	<7v4ptf4jmj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sat, 28 Oct 2006 04:18:35 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 4 Nov 2006 10:16:12 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061028034206.GA14044@spearce.org>
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+In-Reply-To: <7v4ptf4jmj.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sat, 04 Nov 2006 02:00:04 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30915>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdfeQ-00025Z-8P for gcvg-git@gmane.org; Sat, 28 Oct
- 2006 06:18:30 +0200
+ esmtp (Exim 4.43) id 1GgIZD-00054k-IW for gcvg-git@gmane.org; Sat, 04 Nov
+ 2006 11:15:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751767AbWJ1ESV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
- 00:18:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751768AbWJ1ESV
- (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 00:18:21 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:59567 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1751767AbWJ1ESV (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006 00:18:21 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9S4I8Po014486
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Fri, 27
- Oct 2006 21:18:09 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9S4I7Yj014689; Fri, 27 Oct
- 2006 21:18:08 -0700
-To: Shawn Pearce <spearce@spearce.org>
+ S965213AbWKDKP4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
+ 05:15:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965220AbWKDKP4
+ (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 05:15:56 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:1476 "EHLO
+ fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S965213AbWKDKP4
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 05:15:56 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061104101555.EEJR22977.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Sat, 4
+ Nov 2006 05:15:55 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id iaFZ1V01g1kojtg0000000 Sat, 04 Nov 2006
+ 05:15:34 -0500
+To: Kevin Shanahan <kmshanah@disenchant.net>
 Sender: git-owner@vger.kernel.org
 
+Junio C Hamano <junkio@cox.net> writes:
+
+> *BLUSH*  A prime example of "you should not speak before
+> thinking".
+>
+> Please forget everything I said.  The patch parsing is just fine
+> with or without "/dev/null".  This must be a recent breakage
+> around write_out_one_result().  Will take a look.
 
 
-On Fri, 27 Oct 2006, Shawn Pearce wrote:
-> 
-> So a reader-writer lock is preferred over
-> a non-locking solution such as I posted in
-> http://article.gmane.org/gmane.comp.version-control.git/30288 ?
-> 
-> Not to mention that such a solution would also fix the -d issue
-> Linus points out above.
+Actually it was a small problem in the patch parsing code.  Can
+you give this a try?
 
-Be very careful.
-
-There's a good reason why git doesn't use locking, and tends to use the 
-"create file exclusively and move over the old version after having tested 
-that the old version is still relevant" approach.
-
-Two _major_ issues:
-
- - just about any other locking algorithm simply doesn't work on some 
-   filesystems. And then you're just royally screwed.
-
- - I want to be able to push out, regardless of whether there is somebody 
-   (or millions of somebodies) reading the repository at the same time. So 
-   locking is not acceptable for "normal operations" at all - at most this 
-   would be a "keep a repack from interfering with another repack" kind of 
-   thing.
-
-I would MUCH rather we just rename the index/pack file to something that 
-git can _use_, but that "git repack -a -d" won't remove. In other words, 
-rather than locking, it would be much better to just use a naming rule: 
-when we download a new pack, the new pack will be called
-
-	new-pack-<SHA1ofobjectlist>.pack
-	new-pack-<SHA1ofobjectlist>.idx
-
-and we just make the rule that "git repack -a -d" will only ever touch 
-packs that are called just "pack-*.{pack|idx}", and never anything else.
-
-It really is that simple. Allow normal git object opens to open the 
-"temporary file" naming version too (so that you can install the refs 
-before the rename, and all the objects will be visible), but don't allow 
-"git repack" to remove packs that are in the process of being installed.
-
-Race removed, and no locking really needed. At most, we might need to be 
-able to match up a "new-pack-*.idx" file with a "pack-*.pack" file when we 
-open pack-files, simply because we can't rename two files atomically, so 
-the pack-file and index file would potentially exist with "different" 
-names for a short window. 
-
-That kind of small semantic changes are _way_ better than introducing 
-locking, which will inevitably have much worse error cases (not working, 
-stale locks, inability to push because something is really slow, or any 
-number of other problems).
-
+---
+diff --git a/builtin-apply.c b/builtin-apply.c
+index 11397f5..db7cdce 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -1043,10 +1043,14 @@ static int parse_single_patch(char *line
+ 		 * then not having oldlines means the patch is creation,
+ 		 * and not having newlines means the patch is deletion.
+ 		 */
+-		if (patch->is_new < 0 && !oldlines)
++		if (patch->is_new < 0 && !oldlines) {
+ 			patch->is_new = 1;
+-		if (patch->is_delete < 0 && !newlines)
++			patch->old_name = NULL;
++		}
++		if (patch->is_delete < 0 && !newlines) {
+ 			patch->is_delete = 1;
++			patch->new_name = NULL;
++		}
+ 	}
+ 
+ 	if (0 < patch->is_new && oldlines)
