@@ -1,128 +1,175 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: git and bzr
-Date: Mon, 27 Nov 2006 19:40:49 -0500
-Message-ID: <20061127194049.8ac68b1c.seanlkml__10154.9762803645$1164674480$gmane$org@sympatico.ca>
-References: <45357CC3.4040507@utoronto.ca>
-	<20061021130111.GL75501@over-yonder.net>
-	<453F2FF8.2080903@op5.se>
-	<200610251146.06116.jnareb@gmail.com>
-	<a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>
-	<87slhcz8zh.wl%cworth@cworth.org>
-	<a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>
-	<7vu01ro20b.fsf@assigned-by-dhcp.cox.net>
-	<a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>
-	<20061026101038.GA13310@coredump.intra.peff.net>
-	<877iyne4dm.fsf@alplog.fr>
-	<Pine.LNX.4.64.0610260753090.3962@g5.osdl.org>
-	<456B7C6A.80104@webdrake.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: If I were redoing git from scratch...
+Date: Sat, 04 Nov 2006 03:34:42 -0800
+Message-ID: <7vpsc3xx65.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 28 Nov 2006 00:41:20 +0000 (UTC)
-Cc: git@vger.kernel.org, bazaar-ng@lists.canonical.com
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 4 Nov 2006 11:35:14 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Originating-IP: [65.93.43.74]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Original-Message-Id: <20061127194049.8ac68b1c.seanlkml@sympatico.ca>
-In-Reply-To: <456B7C6A.80104@webdrake.net>
-X-Mailer: Sylpheed version 2.2.10 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 28 Nov 2006 00:40:52.0317 (UTC) FILETIME=[DB5660D0:01C71285]
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30919>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gor25-0006zh-Dj for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 01:41:09 +0100
+ esmtp (Exim 4.43) id 1GgJnd-0003FE-UR for gcvg-git@gmane.org; Sat, 04 Nov
+ 2006 12:34:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934962AbWK1Akx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 19:40:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934989AbWK1Akx
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 19:40:53 -0500
-Received: from bayc1-pasmtp03.bayc1.hotmail.com ([65.54.191.163]:36573 "EHLO
- BAYC1-PASMTP03.bayc1.hotmail.com") by vger.kernel.org with ESMTP id
- S934962AbWK1Akw (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006
- 19:40:52 -0500
-Received: from linux1.attic.local ([65.93.43.74]) by
- BAYC1-PASMTP03.bayc1.hotmail.com over TLS secured channel with Microsoft
- SMTPSVC(6.0.3790.1830); Mon, 27 Nov 2006 16:40:51 -0800
-Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
- esmtp (Exim 4.43) id 1Goq5g-0007Zg-DK; Mon, 27 Nov 2006 18:40:48 -0500
-To: Joseph Wakeling <joseph.wakeling@webdrake.net>
+ S965286AbWKDLeo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
+ 06:34:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965302AbWKDLeo
+ (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 06:34:44 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:11941 "EHLO
+ fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP id S965286AbWKDLen
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 06:34:43 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao12.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061104113443.LRXU18180.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>; Sat, 4
+ Nov 2006 06:34:43 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id ibaM1V00K1kojtg0000000 Sat, 04 Nov 2006
+ 06:34:21 -0500
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Tue, 28 Nov 2006 01:01:46 +0100
-Joseph Wakeling <joseph.wakeling@webdrake.net> wrote:
+I've been thinking about these for a while on the back of my
+head, and thought it might be better to start writing it down.
 
-> First off a really dumb one: how do I identify myself to git, i.e. give
-> it a name and email address?  Currently it uses my system identity,
-> My Name <username@computer.(none)>.  I haven't found any equivalent of
-> the bzr whoami command.
+A lot of issues involve UI which means it will not materialize
+without breaking existing uses, but if we know in advance what
+we will be aiming for, maybe we will find a smoother path to
+reach there.
 
-Assuming you have a recent version of git, then:
+* Core data structure
 
-$ git repo-config --global user.email "you@email.com"
-$ git repo-config --global user.name "Your Name"
+I consider on-disk data structures and on-wire protocol we
+currently use are sane and there is not much to fix.  There are
+certainly things to be enhanced (64-bit .idx offset, for
+example), but I do not think there is anything fundamentally
+broken and needs to be reworked.
 
-Will setup a ~/.gitconfig in your home directory; these settings
-will apply in any repo you use.  Drop the "--global" to set them
-per repo.
+I have the same feeling for in-core data structures in general,
+except a few issues.
 
-> With this in mind, is there any significance to the "master" branch (is
-> it intended e.g. to indicate a git repository's "stable" version
-> according to the owner?), or is this just a convenient default name?
-> Could I delete or rename it?  Using bzr I would normally give the
-> central branch(*) the name of the project.
+The biggest one is that we use too many static (worse, function
+scope static) variables that live for the life of the process,
+which makes many things very nice and easy ("run-once and let
+exit clean up the mess" mentality), but because of this it
+becomes awkward to do certain things.  Examples are:
 
-It's just a common convention and carries no special significance;
-rename away!
+ - Multiple invocations of merge-bases (needs clearing the
+   marks left on commit objects by earlier traversal),
 
-> Any other useful comments that can be made to a bzr user about working
-> with this difference, positive or negative aspects of it?
+ - Creating a new pack and immediately start using it inside the
+   process itself (prepare_packed_git() is call-once, and we
+   have hacks to cause it re-read the packs in many places).
 
-Don't be afraid to git-clone your local repo, especially with the -l
-and -s options.  That will get you a separate repo/working directory
-while not taking up much extra disk space (objects from your first
-repo will be shared with the second).
+ - Visiting more than one repositories within one process
+   (many per-repository variables in sha1_file.c are static
+   variables and there is no "struct repository" that we can
+   re-initialize in one go),
 
-Once you get comfortable with multiple branches in a single repo/
-working directory, it often is much better than the alternatives.
-But the above gives you the option to work either way.
+ - The object layer holds onto all parsed objects
+   indefinitely.  Because the object store at the philosophy
+   level represents the global commit ancestry DAG, there is
+   no inherent reason to have more than one instance of
+   object.c::obj_hash even if we visit more than one
+   repositories in a process, but if the two repositories are
+   unrelated, objects from the repository we were looking at
+   only waste memory after switching to a different
+   repostiory.
 
-> Next question ... one of the reasons I started seriously thinking about
-> git was that in the VCS comparison discussion, it was noted that git is
-> a lot more flexible than bzr in terms of how it can track data (e.g. the
-> git pickaxe command, although I understand that's not in the released
-> version [1.4.4.1] yet?).  A frustration with bzr is that pulling or
-> merging patches from another branch or repo requires them to share the
-> same HEAD.  Is this a requirement in git or can I say, "Hey, I like that
-> particular function in project XXX, I'm going to pull that individual
-> bit of code and its development history into project YYY"?
+ - The diffcore is not run-once but it is run-one-at-a-time.
+   This is easy to fix if needed, though.
 
-The Git cherry-pick command lets you grab specific commits from
-other branches in your repo.  But cherry-pick works at the commit
-level, there is no easy way to grab a single function for instance
-and merge just its history into another branch.
+There are some other minor details but they are not as
+fundamental.  Examples are:
 
-However, you can merge an entire separate project into yours even
-though they don't share a base commit.  This has been done several
-times in the history of Git itself. For instance you can see two
-separate "initial" commits in the Git repo with a command like
-"gitk README gitk" which gives a graphical history of the "gitk"
-and "README" files and shows each started life in a separate
-initial commit.  Use "git show 5569b" to see Linus bragging on
-this first separate-project-merge and give some more details.
- 
-> Last off (for now, I'm sure I'll think of more): is there any easy (or
-> difficult) way to effectively import version history from a bzr
-> repository, and vice versa?
+ - The revision traversal is nicely done but one gripe I have is
+   that it is focused on painting commits into two (and only
+   two) classes: interesting and uninteresting.  If we allowed
+   more than one (especially, arbitrary number of) kinds of
+   interesting, answering questions like "which branches does
+   this commit belong to?  which tagged versions is this commit
+   already included in?"  would become more easy and efficient.
+   show-branch has machinery to do that for a handful but it
+   could be unified with the revision.c traversal machinery. 
 
-Don't think a direct bridge between the two has been written yet.
+ - We have at least three independent implementations of
+   pathspec match logic and two different semantics (one is
+   component-prefix match, the other is shell glob), and they
+   should be unified.  You can say "git grep foo -- 't/t5*'" but
+   not "git diff otherbranch -- 't/t5*'".
 
-Cheers,
+
+* Fetch/Push/Pull/Merge confusion
+
+Everybody hates the fact that inverse of push is fetch not pull,
+and merge is not a usual Porcelain (while it _is_ usable as a
+regular UI command, it was originally done as a lower layer
+helper to "pull" Porcelain and has a strange parameter order
+with seemingly useless HEAD parameter in the middle).
+
+If I were doing git from scratch, I would probably avoid any of
+the above words that have loaded meanings from other SCMs.
+Perhaps...
+
+ - "git download" would download changes made in the other end
+   since we contacted them the last time and would not touch our
+   branches nor working tree (associate the word with getting
+   tarballs -- people would not expect the act of downloading a
+   tarball would touch their working tree nor local history.
+   untarring it does).  It is a different story if the end-user
+   should be required to explicitly say "download"; I am leaning
+   towards making it more or less transparent.
+
+ - "git upload" to upload our changes to the other end -- that
+   is what "git push" currently does.
+
+ - "git join" to merge another branch into the current branch,
+   with the "per branch configuration" frills to decide what the
+   default for "another branch" is based on what the current
+   branch is, etc.
+
+* Less visible "remoteness" of remote branches
+
+If I were doing git from scratch, I would probably have done
+separate remotes _the_ only layout, except I might have opted to
+make "remotes" even less visible and treating it as merely a
+cache of "the branch tips and tags we saw when we connected over
+the network to look at them the last time".
+
+So "git branch --list $remote" might contact the remote over the
+network or use cached version.  When you think about, it it is
+not all that different from always contacting the remote end --
+the remote end may have mirror propagation delays, and your
+local instance of git caching and not contacting the remote all
+the time introduces a similar delay on your end which is (1) not
+a big deal, and (2) unlike the remote mirror delay, controllable
+on your end.  For example, you could force it to update the
+cache by "git download $remote; git branch --list $remote".
+
+* Unified "fetch" and "push" across backends.
+
+I was rediscovering git-cvsimport today and wished if I could
+just have said (syntax aside):
+
+	URL: cvs;/my.re.po/.cvsroot
+        Pull: HEAD:remotes/cvs/master
+        Pull: experiment:remotes/cvs/experiment
+
+to cause "git fetch" to run git-cvsimport to update the remotes/cvs/
+branches (and "git pull" to merge CVS changes to my branches).
+The same thing should be possible for SVN and other foreign SCM
+backends.
+
+Also it should be possible to use git-cvsexportcommit as a
+backend for "git push" into the cvs repository.
+
+That's it for tonight...
