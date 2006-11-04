@@ -1,138 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "=?ISO-8859-1?Q?Erik_B=E5gfors?=" <zindar@gmail.com>
-Subject: Re: VCS comparison table
-Date: Tue, 24 Oct 2006 23:51:22 +0200
-Message-ID: <845b6e870610241451x578efe9n77017f3a9404e81c@mail.gmail.com>
-References: <20061022074513.GF29927@artax.karlin.mff.cuni.cz>
-	 <87zmbozau2.wl%cworth@cworth.org>
-	 <20061022185350.GW75501@over-yonder.net>
-	 <Pine.LNX.4.64.0610231018410.3962@g5.osdl.org>
-	 <20061023222131.GB17019@over-yonder.net> <ehjgli$lft$1@sea.gmane.org>
-	 <845b6e870610231614y681e64eu33bb0806f530c742@mail.gmail.com>
-	 <Pine.LNX.4.64.0610231623340.3962@g5.osdl.org>
-	 <20061024002657.GD17019@over-yonder.net>
-	 <87y7r6zgic.wl%cworth@cworth.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Problem with git-apply?
+Date: Sat, 04 Nov 2006 02:00:04 -0800
+Message-ID: <7v4ptf4jmj.fsf@assigned-by-dhcp.cox.net>
+References: <20061104072349.GA19667@cubit>
+	<7v8xir4k3w.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 24 Oct 2006 21:52:12 +0000 (UTC)
-Cc: "Matthew D. Fuller" <fullermd@over-yonder.net>,
-	"Linus Torvalds" <torvalds@osdl.org>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org,
-	"Jakub Narebski" <jnareb@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 4 Nov 2006 10:00:16 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=j5nHQ9qwpD2foajj2hybHqFhsH3L5vZFjSmtOhwNLSCffTTeL4p1U5N+/Nekyk+SMHuuq8bGuB934zboK7NArDlmrWsF4NCx7OxeXdESjmzz/G2S+pDFOHXb9StKiyBthgpnnjJqHDXHjVykMYBRq2UVvgTIS9DvZ2eEJpPm3xA=
-In-Reply-To: <87y7r6zgic.wl%cworth@cworth.org>
-Content-Disposition: inline
+In-Reply-To: <7v8xir4k3w.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sat, 04 Nov 2006 01:49:39 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30913>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcUBE-0003Mz-Vd for gcvg-git@gmane.org; Tue, 24 Oct
- 2006 23:51:29 +0200
+ esmtp (Exim 4.43) id 1GgIJy-00028q-1o for gcvg-git@gmane.org; Sat, 04 Nov
+ 2006 11:00:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422644AbWJXVvZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006
- 17:51:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161252AbWJXVvZ
- (ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 17:51:25 -0400
-Received: from nz-out-0102.google.com ([64.233.162.197]:45122 "EHLO
- nz-out-0102.google.com") by vger.kernel.org with ESMTP id S1161226AbWJXVvY
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 17:51:24 -0400
-Received: by nz-out-0102.google.com with SMTP id z3so754059nzf for
- <git@vger.kernel.org>; Tue, 24 Oct 2006 14:51:23 -0700 (PDT)
-Received: by 10.35.94.7 with SMTP id w7mr9680028pyl; Tue, 24 Oct 2006
- 14:51:22 -0700 (PDT)
-Received: by 10.35.116.4 with HTTP; Tue, 24 Oct 2006 14:51:22 -0700 (PDT)
-To: "Carl Worth" <cworth@cworth.org>
+ S965161AbWKDKAH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
+ 05:00:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965138AbWKDKAH
+ (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 05:00:07 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:30339 "EHLO
+ fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S965161AbWKDKAF
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 05:00:05 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061104100005.LSWW18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Sat, 4
+ Nov 2006 05:00:05 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id iZzj1V00F1kojtg0000000 Sat, 04 Nov 2006
+ 04:59:44 -0500
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Sorry for going back to an old mail... but....
+Junio C Hamano <junkio@cox.net> writes:
 
-On 10/24/06, Carl Worth <cworth@cworth.org> wrote:
-> On Mon, 23 Oct 2006 19:26:57 -0500, "Matthew D. Fuller" wrote:
-> >
-> > On Mon, Oct 23, 2006 at 04:24:30PM -0700 I heard the voice of
-> > Linus Torvalds, and lo! it spake thus:
-> > >
-> > > The problem? How do you show a commit that is _common_ to two
-> > > branches, but has different revision names in them?
-> >
-> > Why would you?
+> Kevin Shanahan <kmshanah@disenchant.net> writes:
 >
-> Assume you've got two long-lived branches and one periodically gets
-> merged into the other one. The combined history might look as follows
-> (more recent commits first):
+>> #!/bin/sh
+>>
+>> mkdir a b repo
+>> echo foo > b/foo
+>> diff -urN a b > test.diff
 >
->  f   g
->  |   |
->  d   e
->  |\ /
->  b c
->  |/
->  a
+> It is *very* surprising that this issue did not come up earlier,
+> given that we used to use GNU diff internally to generate our
+> own diff.
 >
-> The point is that it is extremely nice to be able to visualize things
-> that way. Say I've got a "dev" branch that points at f and a "stable"
-> branch that points at g. With this, a command like:
+> If you cat the test.diff file, you will see "a/foo" and "b/foo",
+> not "/dev/null".
 >
->         gitk dev stable
->
-> would result in a picture just like the above. Can a similar figure be
-> made with bzr? Or only the following two separate pictures:
+> The problem appears that GNU diff _never_ uses "--- /dev/null"
+> or "+++ /dev/null" to indicate creation or deletion of the file,
+> but the "traditional patch parser" builtin-apply has assumed
+> that is what the traditional diff output from day one.  Where we
+> got that idea is mystery to me (this is Linus's code), but I
+> suspect it is what other SCMs did.
 
-I wanted to test how hard it is. So I created a small plugin that will
-show the relationsships between revisions... The following commands
+*BLUSH*  A prime example of "you should not speak before
+thinking".
 
-bzr init-repo repo --trees
-bzr init repo/branchA
-cd repo/branchA
-bzr whoami --branch "Test Devel 1 <test1@devel.com>"
-bzr ci --unchanged -m a1
-bzr ci --unchanged -m a2
-bzr branch . ../branchB
-bzr ci --unchanged -m a3
-bzr ci --unchanged -m a4
-cd ../branchB
-bzr whoami --branch "Test Devel 2 <test2@devel.com>"
-bzr ci --unchanged -m b1
-bzr ci --unchanged -m b2
-bzr merge ../branchA
-bzr ci -m merge
-bzr ci --unchanged -m b3
-bzr ci --unchanged -m b4
-cd ../branchA
-bzr merge ../branchB
-bzr ci -m merge
-bzr ci --unchanged -m a5
-cd ../branchB
-bzr ci --unchanged -m b5
-cd ..
-bzr dotrepo > test.dot
-dot -Tpng test.dot > dotrepo.png
-
-Creates the picture you can see at
-http://erik.bagfors.nu/bzr-plugins/dotrepo.png
-
-Please remember that this is a 15 min implementation and as such might
-suck (the output is not perfect for example, it's slow, etc).  This
-just brings in every revision in the entire repo, but to expand it to
-just take the branches on the command line, is perfectly possible.
-
-But still.. there is no problem to create this.
-
-/Erik
-ps. the plugin can be bzr branched from
-http://erik.bagfors.nu/bzr-plugins/dotrepo/
--- 
-google talk/jabber. zindar@gmail.com
-SIP-phones: sip:erik_bagfors@gizmoproject.com
+Please forget everything I said.  The patch parsing is just fine
+with or without "/dev/null".  This must be a recent breakage
+around write_out_one_result().  Will take a look.
