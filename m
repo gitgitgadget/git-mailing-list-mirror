@@ -4,54 +4,56 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Thu, 07 Dec 2006 11:57:34 -0800
-Message-ID: <4578722E.9030402@zytor.com>
-References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org> <45744FA3.7020908@zytor.com> <Pine.LNX.4.64.0612061847190.3615@woody.osdl.org> <45778AA3.7080709@zytor.com> <Pine.LNX.4.64.0612061940170.3615@woody.osdl.org> <4577A84C.3010601@zytor.com> <Pine.LNX.4.64.0612070953290.3615@woody.osdl.org> <45785697.1060001@zytor.com> <Pine.LNX.4.64.0612071052560.3615@woody.osdl.org> <457868AA.2030605@zytor.com> <20061207193012.GA84678@dspnet.fr.eu.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: If I were redoing git from scratch...
+Date: Sat, 4 Nov 2006 23:29:45 +0100
+Organization: Dewire
+Message-ID: <200611042329.46556.robin.rosenberg.lists@dewire.com>
+References: <7vpsc3xx65.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611040829040.25218@g5.osdl.org> <20061104191651.GC2517@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 7 Dec 2006 19:59:05 +0000 (UTC)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Sat, 4 Nov 2006 22:28:41 +0000 (UTC)
 Cc: Linus Torvalds <torvalds@osdl.org>,
-	Kernel Org Admin <ftpadmin@kernel.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
-In-Reply-To: <20061207193012.GA84678@dspnet.fr.eu.org>
-X-Virus-Scanned: ClamAV 0.88.6/2301/Thu Dec  7 07:20:18 2006 on terminus.zytor.com
-X-Virus-Status: Clean
+User-Agent: KMail/1.9.4
+In-Reply-To: <20061104191651.GC2517@spearce.org>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33623>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsPOW-0002eq-Lw for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 20:59:01 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30940>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GgU08-0002aQ-75 for gcvg-git@gmane.org; Sat, 04 Nov
+ 2006 23:28:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1163251AbWLGT65 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 14:58:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163250AbWLGT65
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 14:58:57 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:40027 "EHLO
- terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S1163248AbWLGT64 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 14:58:56 -0500
-Received: from [10.0.6.0] (yardgnome.c2micro.com [69.104.58.50])
- (authenticated bits=0) by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id
- kB7Jvb7j024497 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
- verify=NO); Thu, 7 Dec 2006 11:57:37 -0800
-To: Olivier Galibert <galibert@pobox.com>
+ S965723AbWKDW22 convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006 17:28:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965724AbWKDW22
+ (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 17:28:28 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:63247 "EHLO
+ torino.dewire.com") by vger.kernel.org with ESMTP id S965723AbWKDW22 convert
+ rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 17:28:28
+ -0500
+Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
+ (Postfix) with ESMTP id 9119D8027F2; Sat,  4 Nov 2006 23:25:05 +0100 (CET)
+Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 01100-01; Sat,  4 Nov
+ 2006 23:25:05 +0100 (CET)
+Received: from [10.9.0.3] (unknown [10.9.0.3]) by torino.dewire.com (Postfix)
+ with ESMTP id 3A9F18027E4; Sat,  4 Nov 2006 23:25:03 +0100 (CET)
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Olivier Galibert wrote:
-> On Thu, Dec 07, 2006 at 11:16:58AM -0800, H. Peter Anvin wrote:
->> Unfortunately, the most common queries are also extremely expensive.
-> 
-> Do you have a top-ten of queries ?  That would be the ones to optimize
-> for.
+l=F6rdag 04 november 2006 20:16 skrev Shawn Pearce:
+> But trying to abstractly represent an object in Java the same
+> way that it is represented in Git costs a huge amount of memory.
+> Java is at least 16 bytes of overhead per object, before you get to
+> store anything in it. =20
 
-The front page, summary page of each project, and the RSS feed for each 
-project.
+The overhead is eigth bytes per object on a 32-bit platform and 16 on a=
+ 64-bit=20
+platform for Sun's JDK. The granularity is eight bytes in both cases.=20
 
