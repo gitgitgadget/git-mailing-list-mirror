@@ -1,96 +1,59 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Problem with git-push
-Date: Wed, 1 Nov 2006 12:12:43 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611011205340.1670@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <1162306098.41547.4.camel@mayday.esat.net>
- <7v64e0qclo.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Alan Chandler <alan@chandlerfamily.org.uk>
+Subject: Bash completion Issue?
+Date: Sat, 4 Nov 2006 12:36:59 +0000
+Message-ID: <200611041236.59989.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 1 Nov 2006 11:13:35 +0000 (UTC)
-Cc: Florent Thoumie <flz@xbsd.org>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 4 Nov 2006 12:37:28 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7v64e0qclo.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+User-Agent: KMail/1.9.5
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30926>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfE2D-0003FB-S7 for gcvg-git@gmane.org; Wed, 01 Nov
- 2006 12:13:30 +0100
+ esmtp (Exim 4.43) id 1GgKm5-0008UN-GL for gcvg-git@gmane.org; Sat, 04 Nov
+ 2006 13:37:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946773AbWKALMt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
- 06:12:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946781AbWKALMs
- (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 06:12:48 -0500
-Received: from mail.gmx.de ([213.165.64.20]:63902 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1946773AbWKALMs (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 06:12:48 -0500
-Received: (qmail invoked by alias); 01 Nov 2006 11:12:46 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp031) with SMTP; 01 Nov 2006 12:12:46 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S965391AbWKDMhV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
+ 07:37:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965398AbWKDMhV
+ (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 07:37:21 -0500
+Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk
+ ([82.44.22.127]:12169 "EHLO home.chandlerfamily.org.uk") by vger.kernel.org
+ with ESMTP id S965391AbWKDMhU (ORCPT <rfc822;git@vger.kernel.org>); Sat, 4
+ Nov 2006 07:37:20 -0500
+Received: from kanger.home ([192.168.0.21]) by home.chandlerfamily.org.uk
+ with esmtp (Exim 4.63) (envelope-from <alan@chandlerfamily.org.uk>) id
+ 1GgKlz-0006D1-Ea for git@vger.kernel.org; Sat, 04 Nov 2006 12:37:19 +0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi,
+I am experiencing (and have for some time) a strange effect with bash 
+completion on my Debian (Unstable) system.  Is this a git problem, or 
+something else?
 
-On Tue, 31 Oct 2006, Junio C Hamano wrote:
+When I type a normal command on the bash command line (say emacs) followed by 
+the partial directory name the completion completes the directory and then 
+adds a slash.  If I type a git command (say git update-index) with the same 
+partial directory name it completes the directory, but then adds a space.  I 
+have to backspace, manually add the slash, before continuing with the next 
+directory or filename.
 
-> So the next thing to see is why adjust_shared_perm() is failing
-> for you.
-> 
-> Oops.
-> 
-> I think this function is broken at the concept level.  This is
-> to work around people's broken umask (when you are working with
-> other people, your umask should not be stronger than 007) and
-> tries to flip group writability bit on.
-> 
-> First of all, if the necessary bits are already on, it is not
-> necessary to run chmod(),
+In debian, there seems to be a directory /etc/bash_completion.d with files for 
+each of the packages, and the debian git packages have entries in there.  So 
+I assume they are derived from the completion work mentioned on this list.
 
-right
+What seems strange to me is that nobody else has mentioned this before now.
 
-> but more importantly, if the directory in question was created by 
-> somebody else, I do not think this chmod() would succeed even if you are 
-> in the same group as the owner (i.e. previous creator) of the directory.
-
-But if somebody else created it, it should already have the correct 
-permissions in the first place (unless the user played around with them, 
-which is not a pilot error, but a willfull pointing of the barrel in the 
-general direction of your knee).
-
-> [jc: I am CC'ing Johannes to blame him on commit 457f06d6;
-> git-pickaxe is turning out to be quite handy ;-)
-
-I am hating the tool already.
-
->  	if (dir) {
->  		*dir = 0;
->  		mkdir(filename, 0777);
-> -		if (adjust_shared_perm(filename))
-> +		if (adjust_shared_perm(filename)) {
-> +			*dir = '/';
->  			return -2;
-> +		}
-
-How about this instead:
-
--		mkdir(filename, 0777);
--		if (adjust_shared_perm(filename))
-+		if (!mkdir(filename, 0777) && adjust_shared_perm(filename)) {
-+			*dir = '/';
- 			return -2;
-+		}
-
-Ciao,
-Dscho
+-- 
+Alan Chandler
