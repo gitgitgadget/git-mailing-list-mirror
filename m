@@ -2,81 +2,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sat, 25 Nov 2006 01:53:38 -0500
-Message-ID: <20061125065338.GC4528@spearce.org>
-References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org> <7v7ixp20za.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org> <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <Pine.LNX.4.64.0611211437430.3338@woody.osdl.org> <20061121235429.GH5443@nan92-1-81-57-214-146.fbx.proxad.net> <20061122034056.GB23856@spearce.org> <20061123232313.GB24909@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: If I were redoing git from scratch...
+Date: Sat, 04 Nov 2006 13:21:57 +0100
+Organization: At home
+Message-ID: <eii0kg$1co$1@sea.gmane.org>
+References: <7vpsc3xx65.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 25 Nov 2006 06:53:58 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Sat, 4 Nov 2006 12:22:30 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061123232313.GB24909@nan92-1-81-57-214-146.fbx.proxad.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 53
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30925>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnrQ7-00016V-Gz for gcvg-git@gmane.org; Sat, 25 Nov
- 2006 07:53:51 +0100
+ esmtp (Exim 4.43) id 1GgKXW-0005Wd-Ty for gcvg-git@gmane.org; Sat, 04 Nov
+ 2006 13:22:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757851AbWKYGxs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 01:53:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757853AbWKYGxs
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 01:53:48 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:15532 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1757851AbWKYGxr
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 01:53:47 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GnrPw-0002j2-DN; Sat, 25 Nov 2006 01:53:40 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 0FA2C20FB09; Sat, 25 Nov 2006 01:53:39 -0500 (EST)
-To: Yann Dirson <ydirson@altern.org>
+ S965384AbWKDMWM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
+ 07:22:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965368AbWKDMWM
+ (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 07:22:12 -0500
+Received: from main.gmane.org ([80.91.229.2]:5779 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S965384AbWKDMWL (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 07:22:11 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GgKX5-0005Pl-M9 for git@vger.kernel.org; Sat, 04 Nov 2006 13:21:55 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Sat, 04 Nov 2006 13:21:55 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sat, 04 Nov 2006
+ 13:21:55 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Yann Dirson <ydirson@altern.org> wrote:
-> On Tue, Nov 21, 2006 at 10:40:56PM -0500, Shawn Pearce wrote:
-> > Yet we still want to be able to efficiently perform operations like
-> > "git bisect" within the scope of that submodule, to help narrow down
-> > a particular bug that is within that submodule.  To do that we need
-> > the commit chain (all 10,000 of those commits) in the submodule.
-> > To get those we really need a commit-ish and not a tree-ish, as
-> > going from a tree-ish to a commit-ish is not only not unique but
-> > is also pretty infeasible to do (you need to scan *every* commit).
+Junio C Hamano wrote:
+
+> * Core data structure
+[...]
+> The biggest one is that we use too many static (worse, function
+> scope static) variables that live for the life of the process,
+> which makes many things very nice and easy ("run-once and let
+> exit clean up the mess" mentality), but because of this it
+> becomes awkward to do certain things.  Examples are:
+
+One of examples that have been only rarely fixed was for_each_ref
+forcing callers to using static variable to store gathered data
+instead of passing the data as one of arguments.
+
+> * Fetch/Push/Pull/Merge confusion
 > 
-> We don't need to have commits in the tree for this.  We'll just have
-> submodule commits which are not attached to a supermodule commit, and we
-> can access the whole submodule history through the submodule .git/HEAD,
-> just like we do for a standard git project.
+> Everybody hates the fact that inverse of push is fetch not pull,
+> and merge is not a usual Porcelain (while it _is_ usable as a
+> regular UI command, it was originally done as a lower layer
+> helper to "pull" Porcelain and has a strange parameter order
+> with seemingly useless HEAD parameter in the middle).
+> 
+> If I were doing git from scratch, I would probably avoid any of
+> the above words that have loaded meanings from other SCMs.
 
-No.  You cannot do that.
+I'm a bit used to "push", "fetch" and "pull". I consider "pull"
+a bit of artifact from times of one branch per repository layout.
+The fact that "pull" fetches _all_ the branches but merges one
+[usually] with the _current_ branch (unless you configure it other
+way)...
 
-How do we setup .git/HEAD when bisecting the supermodule?
-Or merging it?  Or doing anything else with it?
+I'll leave "push" as is, leave "fetch" as is, and make "pull" to be
+"fetch" by default unless you use "--merge[=<branch>]" option.
+I'd rename "merge" to "merge-driver" and make new "merge" thanks
+to new users wouldn't have to learn to use "git pull . branchA"
+to merge current branch with branchA. 
 
-Ideally the .git/HEAD of every submodule should seek to the commit
-that points at the tree of the submodule which the supermodule
-is referencing.  This lets you then perform a bisect within the
-submodule when you identify the supermodule commit which caused
-the breakage.
+Perhaps would make it possible to specify remote branch a la cogito,
+<URL>#<branch>, to pull remote branch without tracking branch, and
+for symmetry have "--pull[=<repo>]" or "--fetch[=<repo>]" option.
 
-We need the submodule commits to do this.  Doing it without is
-too expensive.
+> * Unified "fetch" and "push" across backends.
+>
+
+Very nice idea, but one must remember the limitations of import/export tools
+and of course limitations of other SCM... well, and also limitations of
+Git, if there are any compared to other SCM ;-)
 
 -- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
