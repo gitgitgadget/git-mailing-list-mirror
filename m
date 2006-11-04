@@ -1,104 +1,115 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: Handling of branches in stgit
-Date: Tue, 5 Dec 2006 23:51:37 +0100
-Message-ID: <20061205225137.GA17132@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20061130000038.GA13324@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0612010442gf7bf2ccr8995967403788fe7@mail.gmail.com> <20061201221941.GA32337@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: If I were redoing git from scratch...
+Date: Sat, 4 Nov 2006 08:44:02 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611040829040.25218@g5.osdl.org>
+References: <7vpsc3xx65.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 5 Dec 2006 22:52:45 +0000 (UTC)
-Cc: GIT list <git@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Sat, 4 Nov 2006 16:44:25 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061201221941.GA32337@nan92-1-81-57-214-146.fbx.proxad.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <7vpsc3xx65.fsf@assigned-by-dhcp.cox.net>
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33383>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Grj9X-0001z1-Rw for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 23:52:44 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30929>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GgOcx-00032v-Lx for gcvg-git@gmane.org; Sat, 04 Nov
+ 2006 17:44:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936954AbWLEWwl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 17:52:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937005AbWLEWwl
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 17:52:41 -0500
-Received: from smtp4-g19.free.fr ([212.27.42.30]:50079 "EHLO
- smtp4-g19.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S936954AbWLEWwk (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
- 17:52:40 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
- [81.57.214.146]) by smtp4-g19.free.fr (Postfix) with ESMTP id E5D1888AB; Tue,
-  5 Dec 2006 23:52:38 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000) id 6B9851F089;
- Tue,  5 Dec 2006 23:51:37 +0100 (CET)
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S965545AbWKDQoK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
+ 11:44:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965548AbWKDQoK
+ (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 11:44:10 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:43909 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S965545AbWKDQoI (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 11:44:08 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kA4Gi4oZ025461
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sat, 4
+ Nov 2006 08:44:05 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kA4Gi39S026384; Sat, 4 Nov
+ 2006 08:44:04 -0800
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Fri, Dec 01, 2006 at 11:19:41PM +0100, Yann Dirson wrote:
-> > >  annoying [ISSUE 1].  Hence this work of mine: being able to store
-> > >  this info in .git/patches/<stack>/parent (my initial implementation)
-> > >  was sufficient in theory.
-> > 
-> > I would leave this to GIT and its configuration files. Do you see any
-> > problems with this approach?
+
+
+On Sat, 4 Nov 2006, Junio C Hamano wrote:
 > 
-> I'd rather consider it a stgit issue: git itself does no have to know
-> which of the various heads descending from our stack base is to be
-> "prefered" by our stack.  Where to store it is anothe issue (see below).
+> The biggest one is that we use too many static (worse, function
+> scope static) variables that live for the life of the process,
+> which makes many things very nice and easy ("run-once and let
+> exit clean up the mess" mentality), but because of this it
+> becomes awkward to do certain things.  Examples are:
 > 
-> 
-> > I plan to merge the stgit config with the git one (and have a [stgit]
-> > section) so that it is more maintainable.
-> 
-> Sure, let's take advantage of git-repo-config !
-> My latest 1/3 patch could then be seen as a 1st step towards an
-> abstraction of stgit object configuration, which could ease the transition
+>  - Multiple invocations of merge-bases (needs clearing the
+>    marks left on commit objects by earlier traversal),
 
-Indeed most of the current attributes of a stack (except maybe for the
-description, which can hardly be seen as a config option) are quite
-volatile, and thus unsuited for repo-config.
-OTOH, as you said parent information would find easily its place there.
+Well, quite frankly, I dare anybody to do it differently, yet have good 
+performance with millions of objects.
 
+The fact is, I don't think it _can_ be done. I would seriously suggest 
+re-visiting this in five years, just because CPU's and memory will by then 
+hopefully have gotten an order of magnitude faster/bigger.
 
-> > On 30/11/06, Yann Dirson <ydirson@altern.org> wrote:
-> > >I have started to work on recording parent information for stgit
-> > >branches, so we don't need to give the same info on every "git pull".
-> >
-> > Isn't this what the branch.<name>.remote configuration option is for?
-> > I think we should leave GIT handle this and StGIT only invoke "git
-> > pull" without any arguments.
-> 
-> This is one part of the problem (and I admit I have missed this config option),
-> the other one being having stgit pull the correct branch, unstead of
-> (implicitely) having git-pull using the 1st one in the remotes file.
+The thing is, the object database when we read it in really needs to be 
+pretty compact-sized, and we need to remember objects we've seen earlier 
+(exactly _because_ we depend on the flags). So there's exactly two 
+alternatives:
+ - global life-time allocations of objects like we do now
+ - magic memory management with unknown lifetimes and keeping track of all 
+   pointers.
 
-I would also think that what really belongs to that config item would
-be the declaration of which remote our parent branch should use to be
-updated (ie. no need to duplicate the info in all the stgit stacks
-forked off the same parent).
+And I'd like to point out that the memory management right now is simply 
+not realistic:
 
-However it looks like this config option is not currently used unless
-the branch to be git-fetched is the curent one, which is quite
-annoying - we would need to get that setting ourselves to pass it to
-git-fetch.
+ - it's too damn hard. A simple garbage collector based on the approach we 
+   have now would simply not be able to do anything, since all objects are 
+   _by_definition_ reachable from the hash chains, so there's nothing to 
+   collect. The lifetime of an object fundamentally _is_ the whole process 
+   lifetime, exactly because we expect the objects (and the object flags 
+   in particular) to be meaningful.
 
-What's not clear to me is how to deal with cogito branches (maybe
-check for the existence of .git/branches/<name> and then "git fetch
-<name>" ?), and with local branches (how are we supposed to derive
-that a branch is not a remote one ?  Should GIT add a
-branch.<name>.remote or "." for locally-created branches ?).
+ - pretty much all garbage collection schemes tend to have a memory 
+   footprint that is about twice what a static footprint is under any 
+   normal load. Think about what we already do with "git pack-objects" for 
+   something like the mozilla repository: I worked quite a lot on getting 
+   the memory footprint down, and it's _still_ several hundred MB. 
 
+In other words, I can pretty much guarantee that some kind of "smarter" 
+memory management would be a huge step backwards. Yes, we now have to do 
+some things explicitly, but exactly because we do them explicitly we can 
+_afford_ to have the stupid and simple and VERY EFFICIENT memory 
+management ("lack of memory management") that we have now.
 
-We would also still need a config item to tell which parent branch we
-should use, in order to know which branch.<name>.remote to extract,
-and which branch to fast-forward our base onto.
+The memory use of git had an very real correlation with performance when I 
+was doing the memory shrinking a few months back (back in June). I realize 
+that it's perhaps awkward, but I would really want people to realize that 
+it's a huge performance issue. It was a clear performance issue for me 
+(and I use machines with 2GB of RAM, so I was never swapping), it would be 
+an even bigger one for anybody where the size meant that you needed to 
+start doing paging.
 
-Best regards,
--- 
+So I would seriously ask you not to even consider changing the object 
+model. Maybe add a few more helper routines to clear all object flags or 
+something, but the "every object is global and will never be de-allocated" 
+is really a major deal.
+
+Five years from now, or for somebody who re-implements git in Java (where 
+performance isn't going to be the major issue anyway, and you probably do 
+"small" things like "commit" and "diff", and never do full-database things 
+like "git repack"), _then_ you can happily look at having something 
+fancier. Right now, it's too easy to just look at cumbersome interfaces, 
+and forget about the fact that those interfaces is sometimes what allows 
+us to practically do some things in the first place.
+
