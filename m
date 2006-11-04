@@ -1,68 +1,86 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: David Tweed <tweed314@yahoo.co.uk>
-Subject: Average size of git bookkeeping data (related to Using git as a general backup mechanism)
-Date: Wed, 13 Dec 2006 19:31:49 +0000 (GMT)
-Message-ID: <20061213193149.43284.qmail@web86909.mail.ukl.yahoo.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: git bug? + question
+Date: Sat, 4 Nov 2006 00:10:08 -0500
+Message-ID: <20061104051008.GC9003@spearce.org>
+References: <buoejsme6ho.fsf@dhapc248.dev.necel.com> <7v4pthmew1.fsf@assigned-by-dhcp.cox.net> <20061102224549.499610d1.seanlkml@sympatico.ca> <20061103081232.GB15972@diana.vm.bytemark.co.uk> <20061103042540.192bbd18.seanlkml@sympatico.ca> <20061103202945.GA7585@spearce.org> <20061103232936.GC6970@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ascii
-Content-Transfer-Encoding: 8BIT
-NNTP-Posting-Date: Wed, 13 Dec 2006 19:38:38 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 4 Nov 2006 05:10:25 +0000 (UTC)
+Cc: Sean <seanlkml@sympatico.ca>, Karl Hasselstr?m <kha@treskal.com>,
+	Junio C Hamano <junkio@cox.net>, Miles Bader <miles@gnu.org>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Dec 2006 14:38:30 EST
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.co.uk;
-  h=Message-ID:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=iYuDBgMOhsxC2vvHhsg0wIbXzy7Cr4e+xxCoKO7VEETC0GO6UgP+j50Mww4oAaH1dUGWteMioTRFG6T4HDZ4281AGrR8t4jSfFrzYqd7l+goAatNcOcA4zkws1o8bTQ52suLeC+u7gH9fYYXukWoyfaVY1FLhWM15zRxYd05sak=  ;
+Content-Disposition: inline
+In-Reply-To: <20061103232936.GC6970@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34229>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuZw2-0008Mt-MQ for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 20:38:35 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30905>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GgDnQ-0003vP-J8 for gcvg-git@gmane.org; Sat, 04 Nov
+ 2006 06:10:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965092AbWLMTib (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 14:38:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965093AbWLMTib
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 14:38:31 -0500
-Received: from web86909.mail.ukl.yahoo.com ([217.12.13.61]:46817 "HELO
- web86909.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- SMTP id S965092AbWLMTia convert rfc822-to-8bit (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006 14:38:30 -0500
-Received: (qmail 43286 invoked by uid 60001); 13 Dec 2006 19:31:49 -0000
-Received: from [134.225.1.161] by web86909.mail.ukl.yahoo.com via HTTP; Wed,
- 13 Dec 2006 19:31:49 GMT
-To: git@vger.kernel.org
+ S1753594AbWKDFKR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
+ 00:10:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753591AbWKDFKR
+ (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 00:10:17 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:42462 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1753364AbWKDFKP
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 00:10:15 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GgDnF-0006AA-N5; Sat, 04 Nov 2006 00:10:09 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 115CB20E491; Sat,  4 Nov 2006 00:10:08 -0500 (EST)
+To: Jeff King <peff@peff.net>
 Sender: git-owner@vger.kernel.org
 
-Hi,
-This is in connection with the "Using git as a general backup mechanism" thread,
-but on a different slant more along automatic versioning a subset of the files on the disc (to avoid
-sucking in things like core files and particularly huge multimedia files). In this case I don't
-want to discard old "backups" but just grow the chronological database. (Think a more selective version of
-Plan 9's venti filesystem.)
+Jeff King <peff@peff.net> wrote:
+> On Fri, Nov 03, 2006 at 03:29:45PM -0500, Shawn Pearce wrote:
+> 
+> > Nack.  I'd rather see the entries added/removed from .git/config when
+> > the branch is created/deleted, just like the ref and the reflog are
+> > created/deleted.  It makes behavior more consistent for the user
+> > and it is mostly self documenting...
+> 
+> If we go this route, please consider updating .git/auto-branch-config or
+> similar, and adding the functionality to include that file into
+> .git/config.
+> 
+> I think the concept of automagically munging a user-editable config file
+> is problematic, especially when users might manage those files with
+> version control or other systems.
 
-How big is the "metadata" or "bookeeping data" in git related to a commit? (Eg, "around x bytes per changed file"
-or "around x bytes per file being tracked (whether changed in the commit or not)" )
+Most users that I know use repo-config to munge their .git/config
+rather than editing it by hand.  Though with more data stored in
+it for branches and remotes that is probably going to change.
 
-[I'm trying to get a feel for, if I switched to git, how much overhead would come from having a cron job automatically doing
-a snapshot every hour (if anything has changed), plus manual snapshots at points where I want to feel "safeguarded".
-I'm currently using my own simple, hacked together system for combined versioning/backups that does
-this. Using naive tools that don't account for wastes space due to disk block size effects the data being
-tracked is currently just under 9 months of acitvity on  2016 filenames with
-17457599 bytes of data (ie, compressed version of their contents at various times) and 7838546 bytes
-is "metadata", ie, 30 percent of the stored data is metadata. This is in a format using 6 bytes to associate a single blob of
-contents to a filename (whether changed since last snapshot or not).]
+If we go this route I wonder if want to say create a config file
+per branch and then use a wildcard include like Apache's httpd.conf
+wildcard include, e.g.:
 
-Many thanks for any insight,
+	.git/config:
+		include branch_configs/**/*.config
 
-cheers, dave tweed
+	.git/branch_configs/refs/heads/master.config:
+		[branch "master"]
+			...
 
+As then git-branch is only manipulating one file per branch.
 
-
+-- 
