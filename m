@@ -1,80 +1,90 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Some tips for doing a CVS importer
-Date: Wed, 22 Nov 2006 09:40:28 +1300
-Message-ID: <46a038f90611211240u4e493f46i2cc46ab780e6c49b@mail.gmail.com>
-References: <9e4733910611201349s4d08b984g772c64982f148bfa@mail.gmail.com>
-	 <46a038f90611201503m6a63ec8ct347026c635190108@mail.gmail.com>
-	 <9e4733910611201537h30b6c9f4oee9d8df75284c284@mail.gmail.com>
-	 <46a038f90611201629o39f11f42ye07b86159360b66e@mail.gmail.com>
-	 <87vel9y5x6.wl%cworth@cworth.org>
-	 <9e4733910611201740i348302e6r84c3c27dc27e5954@mail.gmail.com>
-	 <20061121063934.GA3332@spearce.org>
-	 <20061121200341.GH7201@pasky.or.cz>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: git bug? + question
+Date: Sat, 4 Nov 2006 00:03:06 -0500
+Message-ID: <20061104050305.GA9003@spearce.org>
+References: <buoejsme6ho.fsf@dhapc248.dev.necel.com> <7v4pthmew1.fsf@assigned-by-dhcp.cox.net> <20061102224549.499610d1.seanlkml@sympatico.ca> <20061103203610.GB7585@spearce.org> <20061103162422.b0bf105e.seanlkml@sympatico.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 21 Nov 2006 20:41:14 +0000 (UTC)
-Cc: "Shawn Pearce" <spearce@spearce.org>,
-	"Jon Smirl" <jonsmirl@gmail.com>, "Carl Worth" <cworth@cworth.org>,
-	"Git Mailing List" <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 4 Nov 2006 05:03:31 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, Miles Bader <miles@gnu.org>,
+	git@vger.kernel.org,
+	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pLuMGcRxLdC8QWebAeW4LIWSt0nEaAYZ2HwJFkLE4kfGWRLus9aKoF/CLgPsMublOpmIrlxyveF1TQLzXYw8IXz0osTtQhsQUNb2eZ0YCSuPeW0WiKwfacW0Dbtxy3K8xPoYxqo89YNTBR0yehvez5jkoEMMKaq0D0mzyy2MZSg=
-In-Reply-To: <20061121200341.GH7201@pasky.or.cz>
 Content-Disposition: inline
+In-Reply-To: <20061103162422.b0bf105e.seanlkml@sympatico.ca>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30903>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmcPy-00070R-Mn for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 21:40:37 +0100
+ esmtp (Exim 4.43) id 1GgDgk-0002k9-8t for gcvg-git@gmane.org; Sat, 04 Nov
+ 2006 06:03:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031413AbWKUUkb (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 15:40:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031418AbWKUUkb
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 15:40:31 -0500
-Received: from nf-out-0910.google.com ([64.233.182.187]:45036 "EHLO
- nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1031413AbWKUUka
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 15:40:30 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so288966nfa for
- <git@vger.kernel.org>; Tue, 21 Nov 2006 12:40:29 -0800 (PST)
-Received: by 10.48.235.9 with SMTP id i9mr1440382nfh.1164141628443; Tue, 21
- Nov 2006 12:40:28 -0800 (PST)
-Received: by 10.49.60.1 with HTTP; Tue, 21 Nov 2006 12:40:28 -0800 (PST)
-To: "Petr Baudis" <pasky@suse.cz>
+ S1753584AbWKDFDO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
+ 00:03:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753583AbWKDFDO
+ (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 00:03:14 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:62941 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1751925AbWKDFDN
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 00:03:13 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GgDgR-00058P-Ig; Sat, 04 Nov 2006 00:03:07 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 93ECC20E491; Sat,  4 Nov 2006 00:03:06 -0500 (EST)
+To: Sean <seanlkml@sympatico.ca>
 Sender: git-owner@vger.kernel.org
 
-On 11/22/06, Petr Baudis <pasky@suse.cz> wrote:
-> >   - No GUI.
->
-> It has been my impression that Git's situation is far better than in
-> case of the other systems (except SVN: TortoiseSVN and RapidSVN). Is
-> that not so?
+Sean <seanlkml@sympatico.ca> wrote:
+> On Fri, 3 Nov 2006 15:36:10 -0500
+> Shawn Pearce <spearce@spearce.org> wrote:
+> 
+> > > Maybe even going as far as automatically creating a local branch
+> > > for each remote branch on clone is worth considering.
+> > 
+> > Nack.
+> > 
+> > I work with a workflow where our central repository has 2 important
+> > branches (vmtip and vmvt), and a bunch of transient developer
+> > topic branches (e.g. sp/foo).  We only have a master branch in this
+> > repository so that git-clone will clone it without choking during
+> > the clone.  Users tend to do immediately after a clone:
+> > 
+> > 	git branch -D master
+> > 	git branch -D origin
+> > 	git branch -D ... other topic branches not interested in ...
+> > 	edit .git/remotes/origin ... delete topic branches ...
+> 
+> I think your Nack was a little rash here.  The feature would be quite
+> useful to work flows other than yours.  It sounds like what _you_ want
+> is a feature to select branches when cloning rather than the current
+> default of cloning all.  That would stop your developers having to 
+> delete branches and editing .git/remotes/origin immediately
+> after cloning.
 
-I think GIT is in pretty good shape in all the items mentioned Shawn
-lists except the Win32 port.
+After reading your reply you are probably correct.  I can see there
+may be workflows that want every remote branch also created as a
+local branch.
 
-     Confusing doco? All of them ;-)
-     Push/pull terminology confusion -- all of them again.
+I could certainly live with a command line option to clone, e.g.:
 
-My only thing is that I continue to teach Cogito instead of GIT
-because the index is a great thing for a top-level maintainer of a
-large project but it really offers almost next to nothing to a user
-who wants to make a commit.
+	git clone --only vmdvt,vmtip user@host:/path...
 
-but that hasn't stopped adoption over here...
+So yes, my 'Nack' may have been a little too rash.
 
-cheers,
-
-
-
+-- 
