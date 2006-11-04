@@ -1,65 +1,78 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH/RFC] "init-db" can really be just "init"
-Date: Mon, 27 Nov 2006 14:05:27 -0800
-Message-ID: <7vmz6cfsuw.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: If I were redoing git from scratch...
+Date: Sat, 4 Nov 2006 14:16:51 -0500
+Message-ID: <20061104191651.GC2517@spearce.org>
+References: <7vpsc3xx65.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611040829040.25218@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 27 Nov 2006 22:05:40 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Sat, 4 Nov 2006 19:17:09 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0611271622260.9647@xanadu.home> (Nicolas Pitre's
-	message of "Mon, 27 Nov 2006 16:31:47 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0611040829040.25218@g5.osdl.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30938>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoobU-0003vA-6C for gcvg-git@gmane.org; Mon, 27 Nov
- 2006 23:05:32 +0100
+ esmtp (Exim 4.43) id 1GgR0r-0003rA-J6 for gcvg-git@gmane.org; Sat, 04 Nov
+ 2006 20:17:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933832AbWK0WF3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 17:05:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933880AbWK0WF3
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 17:05:29 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:43228 "EHLO
- fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S933832AbWK0WF2
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 17:05:28 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao03.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061127220528.DUSK4817.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>; Mon, 27
- Nov 2006 17:05:28 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id ry4w1V0071kojtg0000000; Mon, 27 Nov 2006
- 17:04:56 -0500
-To: Nicolas Pitre <nico@cam.org>
+ S1753660AbWKDTRC (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
+ 14:17:02 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753662AbWKDTRC
+ (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 14:17:02 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:13798 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1753660AbWKDTRA
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 14:17:00 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GgR0X-0002A0-8Q; Sat, 04 Nov 2006 14:16:45 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 1B87920E491; Sat,  4 Nov 2006 14:16:51 -0500 (EST)
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre <nico@cam.org> writes:
+Linus Torvalds <torvalds@osdl.org> wrote:
+> or for somebody who re-implements git in Java (where 
+> performance isn't going to be the major issue anyway, and you probably do 
+> "small" things like "commit" and "diff", and never do full-database things 
+> like "git repack"), _then_ you can happily look at having something 
+> fancier. Right now, it's too easy to just look at cumbersome interfaces, 
+> and forget about the fact that those interfaces is sometimes what allows 
+> us to practically do some things in the first place.
 
-> This should make first GIT impression a little less intimidating.
->
-> Signed-off-by: Nicolas Pitre <nico@cam.org>
+Yes and no.  :-)
 
-I was not sure about this for quite some time, thinking that it
-might make sense to default the behaviour of init-db for bare
-repositories and give init as a user-level wrapper to drive
-init-db to add customization suitable for repositories with
-working trees.  List?
+As the only person here who has hacked on some of Git and also
+reimplemented the core on disk data structures in Java I can say
+I mostly agree with Linus.
 
-> Maybe that could be a good rule of thumb to have all porcelainish 
-> commands not have any hyphen in their name, like "diff", "commit", 
-> "add", etc. ?
+Abstractions like the repository (to allow different GIT_DIRs to
+be used in the same process) isn't really a big deal and is not
+a large impact on performance.  They could be implemented in the
+current C core.
 
-I was also hoping that would become the case except verify-tag,
-cherry-pick, and format-patch.  Also I was wondering if it would
-make sense to give two dashes to the back-end ones that never
-get invoked by the end users directly (e.g. merge--recursive,
-upload--pack) but thought it was too ugly.
+But trying to abstractly represent an object in Java the same
+way that it is represented in Git costs a huge amount of memory.
+Java is at least 16 bytes of overhead per object, before you get to
+store anything in it.  Translation: Linus is right, doing a real
+implementation of "git repack" in Java is nuts.  It would barely
+be able to handle git.git, let alone linux.git or mozilla.git.
+
+-- 
