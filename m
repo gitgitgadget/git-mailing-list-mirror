@@ -1,66 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: git-fetching from a big repository is slow
-Date: Thu, 14 Dec 2006 13:40:36 +0000
-Message-ID: <200612141340.43925.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/n] gitweb: Use '&iquot;' instead of '?' in esc_path
+Date: Fri, 03 Nov 2006 16:02:43 -0800
+Message-ID: <7vr6wk3wpo.fsf@assigned-by-dhcp.cox.net>
+References: <200610301953.01875.jnareb@gmail.com>
+	<200611031719.13073.jnareb@gmail.com>
+	<7virhw5hoi.fsf@assigned-by-dhcp.cox.net>
+	<200611032333.49794.jnareb@gmail.com>
+	<7vwt6c40bj.fsf@assigned-by-dhcp.cox.net>
+	<20061103225041.GQ20017@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 14 Dec 2006 13:41:11 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 4 Nov 2006 00:03:02 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=A78/bW44uJUjPlie2WPjh8TOqOfV0gvXaPGpKtZmWefVegPES0PhbciGJfDSzne5O+PGFacXY7bVEv46P7+pfw1pvJB3hTju95sXlTrwMwrqJXeR1nWJKLczNOe4/vC475AAl8P2BFHndTqXFUgsqibbi3VvozoBjgX3wjNVcSM=
-User-Agent: KMail/1.9.5
-Content-Disposition: inline
+In-Reply-To: <20061103225041.GQ20017@pasky.or.cz> (Petr Baudis's message of
+	"Fri, 3 Nov 2006 23:50:41 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34333>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuqpZ-0005fE-4U for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 14:41:01 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30900>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gg8zv-0000zV-3N for gcvg-git@gmane.org; Sat, 04 Nov
+ 2006 01:02:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932723AbWLNNkv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 08:40:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932725AbWLNNkv
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 08:40:51 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:26975 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S932723AbWLNNku (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
- 2006 08:40:50 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so501562uga for
- <git@vger.kernel.org>; Thu, 14 Dec 2006 05:40:48 -0800 (PST)
-Received: by 10.67.97.7 with SMTP id z7mr1416797ugl.1166103648248; Thu, 14
- Dec 2006 05:40:48 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id 39sm2051290ugb.2006.12.14.05.40.47; Thu, 14 Dec 2006 05:40:47 -0800
- (PST)
-To: git@vger.kernel.org
+ S932506AbWKDACp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
+ 19:02:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932507AbWKDACp
+ (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 19:02:45 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:31194 "EHLO
+ fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S932506AbWKDACp
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 19:02:45 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao03.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061104000244.LCZW2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>; Fri, 3
+ Nov 2006 19:02:44 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id iQ2N1V00b1kojtg0000000 Fri, 03 Nov 2006
+ 19:02:23 -0500
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-Hello,
+Petr Baudis <pasky@suse.cz> writes:
 
-I've got a big repository.  I've got two computers.  One has the repository 
-up-to-date (164M after repack); one is behind (30M ish).
+> Dear diary, on Fri, Nov 03, 2006 at 11:44:48PM CET, I got a letter
+> where Junio C Hamano <junkio@cox.net> said that...
+>> Jakub Narebski <jnareb@gmail.com> writes:
+>> > Which solution do you think it's best?
+>> 
+>> Sorry, if it was not clear in my message, I wanted to say that I
+>> kinda liked those "control pictures" in U+2400 range.
+>
+> In principle, right now it should be pretty easy for a project that for
+> some reason does not use UTF-8 in commits etc. to adjust gitweb to work
+> properly, right? Just change the encoding in HTTP headers and you're
+> done, I think.
+>
+> Is it worth trying to preserve that flexibility?
 
-I used git-fetch to try and update; and the sync took HOURS.  I zipped 
-the .git directory and transferred that and it took about 15 minutes to 
-transfer.
+Absolutely, and I got your point.  Maybe <blink>\011</blink>
+would be more portable and appropriate.
 
-Am I doing something wrong?  The git-fetch was done with a git+ssh:// URL.  
-The zip transfer with scp (so ssh shouldn't be a factor).
+Also munging [:cntrl:] would break iso-2022 encoding if it
+munges ESC, but the function under discussion was only for paths
+and I think no sane platform would use iso-2022 for filenames.
 
+Each repository has commit charset/encoding configuration item
+if I am not mistaken, so it is probably a sane thing to do to
+convert commit messages from that uniformly to utf-8, I think.
 
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
