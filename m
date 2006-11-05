@@ -1,74 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "=?ISO-8859-1?Q?Erik_B=E5gfors?=" <zindar@gmail.com>
-Subject: Re: VCS comparison table
-Date: Thu, 26 Oct 2006 12:45:43 +0200
-Message-ID: <845b6e870610260345l7d36bf56j85d49e9a09ee2760@mail.gmail.com>
-References: <20061022185350.GW75501@over-yonder.net>
-	 <Pine.LNX.4.64.0610231534010.3962@g5.osdl.org>
-	 <20061024002622.GC17019@over-yonder.net>
-	 <Pine.LNX.4.63.0610240853160.10841@qynat.qvtvafvgr.pbz>
-	 <20061024163458.GH17019@over-yonder.net>
-	 <Pine.LNX.4.63.0610241038060.10841@qynat.qvtvafvgr.pbz>
-	 <20061025002713.GN17019@over-yonder.net>
-	 <Pine.LNX.4.63.0610251459160.1754@qynat.qvtvafvgr.pbz>
-	 <20061025235306.GD17019@over-yonder.net> <45408A53.10400@op5.se>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 1/2] Use ULONG_MAX rather than implicit cast of -1.
+Date: Sun, 5 Nov 2006 02:27:07 -0500
+Message-ID: <20061105072707.GA4579@spearce.org>
+References: <20061105071805.GA4506@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 26 Oct 2006 10:46:00 +0000 (UTC)
-Cc: "Matthew D. Fuller" <fullermd@over-yonder.net>,
-	bazaar-ng@lists.canonical.com,
-	"David Lang" <dlang@digitalinsight.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 5 Nov 2006 07:27:16 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=UXHvPnBjtT9Jf+EN3ynK09Lg/8kIAByOeRAbBqh+QNn2Uow0OnEsyoFIBiDvFQZP1FZapf9ZiDYs0WSJfMao1/TAtcwyDgh50Qhs/B0dB+iatOqYeqP7oJE6X8GG0jenkY/fwvEDtQs0HG6DlWMBSNjs5MPt8e4PkGfiCrC2Vk0=
-In-Reply-To: <45408A53.10400@op5.se>
 Content-Disposition: inline
+In-Reply-To: <20061105071805.GA4506@spearce.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30954>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd2k8-0006QR-Kb for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 12:45:48 +0200
+ esmtp (Exim 4.43) id 1GgcPS-0007P1-L4 for gcvg-git@gmane.org; Sun, 05 Nov
+ 2006 08:27:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423163AbWJZKpp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 06:45:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423230AbWJZKpp
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 06:45:45 -0400
-Received: from nz-out-0102.google.com ([64.233.162.201]:47774 "EHLO
- nz-out-0102.google.com") by vger.kernel.org with ESMTP id S1423163AbWJZKpo
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 06:45:44 -0400
-Received: by nz-out-0102.google.com with SMTP id z3so291288nzf for
- <git@vger.kernel.org>; Thu, 26 Oct 2006 03:45:44 -0700 (PDT)
-Received: by 10.35.121.2 with SMTP id y2mr3053804pym; Thu, 26 Oct 2006
- 03:45:43 -0700 (PDT)
-Received: by 10.35.116.4 with HTTP; Thu, 26 Oct 2006 03:45:43 -0700 (PDT)
-To: "Andreas Ericsson" <ae@op5.se>
+ S1161202AbWKEH1M (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
+ 02:27:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161208AbWKEH1M
+ (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 02:27:12 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:38866 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1161202AbWKEH1K
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 02:27:10 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GgcPL-0002CD-JL; Sun, 05 Nov 2006 02:27:07 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 58D7420E491; Sun,  5 Nov 2006 02:27:07 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-> On a side-note, git has made my life easier, so I childishly want to
-> defend it and see it on top of every list in the world. Something I'm
-> sure I share with more people on this list and with some of the bazaar
-> users/devs. ;-)
+At least one (older) version of the Solaris C compiler won't allow
+'unsigned long x = -1' without explicitly casting -1 to a type of
+unsigned long.  So instead use ULONG_MAX, which is really the
+correct constant anyway.
 
-Haha, I feel the same way about bzr. Some of the features that bazaar
-has, such as how it preservs the leftmost parent and treats that
-specially in some cases, are things that I REALLY love and don't want
-to live without.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ This is a resend of my earlier patch in in this same thread...
 
-All in all, I feel that git and bazaar and both excellent products,
-what will happen in the future will be interesting to see.
+ builtin-apply.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-/Erik
+diff --git a/builtin-apply.c b/builtin-apply.c
+index db7cdce..aad5526 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -43,7 +43,7 @@ static int apply_verbosely;
+ static int no_add;
+ static int show_index_info;
+ static int line_termination = '\n';
+-static unsigned long p_context = -1;
++static unsigned long p_context = ULONG_MAX;
+ static const char apply_usage[] =
+ "git-apply [--stat] [--numstat] [--summary] [--check] [--index] [--cached] [--apply] [--no-add] [--index-info] [--allow-binary-replacement] [--reverse] [--reject] [--verbose] [-z] [-pNUM] [-CNUM] [--whitespace=<nowarn|warn|error|error-all|strip>] <patch>...";
+ 
 -- 
-google talk/jabber. zindar@gmail.com
-SIP-phones: sip:erik_bagfors@gizmoproject.com
+1.4.3.3.g9621
