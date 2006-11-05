@@ -1,89 +1,75 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jeff Garzik <jeff@garzik.org>
-Subject: Re: [PATCH] index-pack usage of mmap() is unacceptably slower on
- many OSes other than Linux
-Date: Tue, 19 Dec 2006 15:02:02 -0500
-Message-ID: <4588453A.3060904@garzik.org>
-References: <86y7p57y05.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181251020.3479@woody.osdl.org> <86r6uw9azn.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181625140.18171@xanadu.home> <86hcvs984c.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181414200.3479@woody.osdl.org> <8664c896xv.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181511260.3479@woody.osdl.org> <Pine.LNX.4.64.0612181906450.18171@xanadu.home> <20061219051108.GA29405@thunk.org> <Pine.LNX.4.64.0612182234260.3479@woody.osdl.org> <Pine.LNX.4.63.0612190930460.19693@wbgn013.biozentrum.uni-wuerzburg.de> <7v1wmwtfmk.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0612191027270.18171@xanadu.home> <7vk60npv7x.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0612191409500.18171@xanadu.home> <Pine.LNX.4.64.0612191148270.3483@woody.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 3/3] Remove unsupported C99 style struct initializers in git-archive.
+Date: Sat, 04 Nov 2006 23:32:32 -0800
+Message-ID: <7vd582uz5b.fsf@assigned-by-dhcp.cox.net>
+References: <20061105053723.GC4193@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 19 Dec 2006 20:02:29 +0000 (UTC)
-Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 5 Nov 2006 07:32:45 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
-In-Reply-To: <Pine.LNX.4.64.0612191148270.3483@woody.osdl.org>
+In-Reply-To: <20061105053723.GC4193@spearce.org> (Shawn O. Pearce's message of
+	"Sun, 5 Nov 2006 00:37:23 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34847>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwlAH-0002N6-K0 for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 21:02:17 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30956>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GgcUf-00086F-J5 for gcvg-git@gmane.org; Sun, 05 Nov
+ 2006 08:32:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932917AbWLSUCN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 15:02:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932924AbWLSUCN
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 15:02:13 -0500
-Received: from srv5.dvmed.net ([207.36.208.214]:55343 "EHLO mail.dvmed.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932917AbWLSUCM
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 15:02:12 -0500
-Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75]
- helo=[10.10.10.10]) by mail.dvmed.net with esmtpsa (Exim 4.63 #1 (Red Hat
- Linux)) id 1GwlA3-0007zO-5X; Tue, 19 Dec 2006 20:02:03 +0000
-To: Linus Torvalds <torvalds@osdl.org>
+ S1161208AbWKEHce (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
+ 02:32:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161209AbWKEHce
+ (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 02:32:34 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:45742 "EHLO
+ fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1161208AbWKEHcd
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 02:32:33 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061105073232.QSVT18985.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Sun, 5
+ Nov 2006 02:32:32 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id ivYd1V00X1kojtg0000000 Sun, 05 Nov 2006
+ 02:32:38 -0500
+To: "Shawn O. Pearce" <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds wrote:
-> diff --git a/convert-objects.c b/convert-objects.c
-> index 8812583..a630132 100644
-> --- a/convert-objects.c
-> +++ b/convert-objects.c
-> @@ -1,7 +1,3 @@
-> -#define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD needs 600 for S_ISLNK() */
-> -#define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
-> -#define _GNU_SOURCE
-> -#include <time.h>
->  #include "cache.h"
->  #include "blob.h"
->  #include "commit.h"
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 0272d04..e619e29 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -11,6 +11,10 @@
+"Shawn O. Pearce" <spearce@spearce.org> writes:
+
+> +static struct archiver_desc
+> +{
+> +	const char *name;
+> +	write_archive_fn_t write_archive;
+> +	parse_extra_args_fn_t parse_extra;
+> +} archivers[] = {
+> +	{ "tar", write_tar_archive, NULL },
+> +	{ "zip", write_zip_archive, parse_extra_zip_args },
+>  };
+
+If this were a struct with bazillions of fields I might have had
+trouble swallowing the change, but this is so small that it is
+no brainer.
+
+I think this actually is an improvement.
+
+>  static int run_remote_archiver(const char *remote, int argc,
+> @@ -88,7 +86,10 @@ static int init_archiver(const char *nam
 >  
->  #define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
->  
-> +#define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD needs 600 for S_ISLNK() */
-> +#define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
-> +#define _GNU_SOURCE
-> +
->  #include <unistd.h>
->  #include <stdio.h>
->  #include <sys/stat.h>
-> @@ -25,6 +29,10 @@
->  #include <netinet/in.h>
->  #include <sys/types.h>
->  #include <dirent.h>
-> +#include <sys/time.h>
-> +#include <time.h>
-> +#include <signal.h>
-> +#include <sys/wait.h>
+>  	for (i = 0; i < ARRAY_SIZE(archivers); i++) {
+>  		if (!strcmp(name, archivers[i].name)) {
+> -			memcpy(ar, &archivers[i], sizeof(struct archiver));
+> +			memset(ar, 0, sizeof(*ar));
+> +			ar->name = archivers[i].name;
+> +			ar->write_archive = archivers[i].write_archive;
+> +			ar->parse_extra = archivers[i].parse_extra;
 
-
-If you are going to do this, you have to audit -every- file, to make 
-sure git-compat-util.h is -always- the first header.
-
-For example, builtin-mailinfo.c includes git-compat-util.h after ctype.h 
-and iconv.h, which renders your #define _XOPEN_SOURCE 600 useless. 
-/usr/include/features.h has already been included at that point.
-
-	Jeff
-
+But is this change really needed?  Shouldn't a structure
+assignment just work?
