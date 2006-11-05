@@ -1,86 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Catalin Marinas <catalin.marinas@arm.com>
-Subject: Re: [StGIT PATCH] Bash snippet to show branch and patch in bash
- prompt
-Date: Mon, 30 Oct 2006 10:24:50 +0000
-Message-ID: <tnxlkmy2j9p.fsf@arm.com>
-References: <20061029233745.24899.1470.stgit@lathund.dewire.com>
-	<4545CC6F.90001@tromer.org>
-Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: bash completion in backticks partially broken
+Date: Sun, 5 Nov 2006 04:05:40 -0500
+Message-ID: <20061105090540.GA4843@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 30 Oct 2006 10:25:38 +0000 (UTC)
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
+NNTP-Posting-Date: Sun, 5 Nov 2006 09:06:05 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <4545CC6F.90001@tromer.org> (Eran Tromer's message of "Mon, 30
- Oct 2006 11:57:03 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 30 Oct 2006 10:24:52.0502 (UTC) FILETIME=[A2EF8B60:01C6FC0D]
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30960>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GeUKZ-0003y3-Ma for gcvg-git@gmane.org; Mon, 30 Oct
- 2006 11:25:24 +0100
+ esmtp (Exim 4.43) id 1Ggdwq-00066w-Ld for gcvg-git@gmane.org; Sun, 05 Nov
+ 2006 10:05:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161203AbWJ3KZS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 05:25:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161208AbWJ3KZR
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 05:25:17 -0500
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:32244 "EHLO
- cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP id
- S1161203AbWJ3KZQ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006
- 05:25:16 -0500
-Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.255.63]) by
- cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id k9UAOqQb009163;
- Mon, 30 Oct 2006 10:24:52 GMT
-Received: from localhost.localdomain ([10.1.255.211]) by
- cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0); Mon, 30 Oct 2006
- 10:24:52 +0000
-To: Eran Tromer <git2eran@tromer.org>
+ S1422626AbWKEJFp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
+ 04:05:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161223AbWKEJFp
+ (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 04:05:45 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:39645 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1161216AbWKEJFo
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 04:05:44 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Ggdwi-0007J4-3E for git@vger.kernel.org; Sun, 05 Nov 2006 04:05:40 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 8625B20E491; Sun,  5 Nov 2006 04:05:40 -0500 (EST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Eran Tromer <git2eran@tromer.org> wrote:
-> On 2006-10-30 01:37, Robin Rosenberg wrote:
->> +# include this in your bashrc or copy to /etc/bash_completions.d
->> +
->> +if [ "$PS1" ]; then
->> +    # trap 'PS1="\u@\h [$(stg top)] \w]\$ "' DEBUG
->> +    function stgtag
->> +    {
->> +	br=$(stg branch 2>/dev/null)
->> +	top=$(stg top 2>/dev/null)
->> +	if [[ -n "$br$top" ]];then
->> +	    echo "[$top@$br]"
->> +	    return
->> +	fi
->> +    }
->> +    PS1='\u@\h$(stgtag)\w\$ '
->> +
->> +fi
->
-> That's an annoying 430ms delay at every prompt, on my box. Does StGIT do
-> something expensive on every invocation?
+So an annoying feature of bash appears to be that it won't really
+provide completion on backtick'd commands.
 
-Well, there are some forks. For every "stg" command, "git-symbolic-ref
-HEAD" and "git-rev-parse --git-dir" are invoked to get the name of the
-main branch and the .git directory. There is also the delay of
-invoking python and loading the command modules in main.py (maybe I
-should modify this to import the modules on demand, based on what
-command was given).
+For example I can complete "git merge-base ma" just fine as is, but
+if I toss it into backticks say "git update-ref M `git merge-base ma"
+then I can't complete "ma" out to "master" anymore.
 
-Since the repository format is stable, you could use something like
-this (it should be faster):
+A little bit of debugging appears to show that bash is invoking the
+completion hook for the outermost command; that is we are looking
+for parameters for update-ref and not merge-base.
 
-git_dir=$(git-rev-parse --git-dir 2> /dev/null)
-ref=$(git-symbolic-ref HEAD 2> /dev/null)
-br=${ref##*/}
-top=$(cat $git_dir/patches/$br/current)
+I think I could rewrite a good part of git-completion.bash to
+support this use.  But it won't work for "echo `git merge-base ma"
+as the outermost command is echo and we don't have a Git completion
+hook registered for that command.
+
+This is really annoying when it comes to less contrived examples.
+I find myself forming odd pipelines with commit-tree, update-ref,
+mktree, lstree, sed, rev-list, etc. and always keep bumping up on
+the limitations of git-completion.bash.
+
+Any suggestions?  How often do bash users try to use backticks to
+call Git commands, only to find bash isn't being as helpful as it
+should be?
 
 -- 
