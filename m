@@ -4,50 +4,89 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] Enable reflogs by default in any repository with a working directory.
-Date: Thu, 14 Dec 2006 18:42:53 -0500
-Message-ID: <20061214234253.GD5147@fieldses.org>
-References: <7v1wn243mu.fsf@assigned-by-dhcp.cox.net> <20061214224117.GA26374@spearce.org> <20061214231038.GC5147@fieldses.org> <20061214231832.GF26202@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 1/6] Added missing completions for show-branch and merge-base.
+Date: Sun, 5 Nov 2006 06:20:02 -0500
+Message-ID: <20061105112002.GA20495@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 14 Dec 2006 23:43:06 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+NNTP-Posting-Date: Sun, 5 Nov 2006 11:20:48 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <20061214231832.GF26202@spearce.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34441>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gv0EC-0003Bs-Jy for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 00:43:04 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30966>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Ggg2z-0006nA-8Q for gcvg-git@gmane.org; Sun, 05 Nov
+ 2006 12:20:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751997AbWLNXm5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 18:42:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751999AbWLNXm5
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 18:42:57 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:49160 "EHLO
- pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751997AbWLNXmz (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 18:42:55 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
- (envelope-from <bfields@fieldses.org>) id 1Gv0E1-0002mJ-8z; Thu, 14 Dec 2006
- 18:42:53 -0500
-To: Shawn Pearce <spearce@spearce.org>
+ S932642AbWKELUH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
+ 06:20:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932645AbWKELUH
+ (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 06:20:07 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:36224 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S932642AbWKELUF
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 06:20:05 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Ggg2i-0008IO-F2; Sun, 05 Nov 2006 06:20:00 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 532DA20E491; Sun,  5 Nov 2006 06:20:02 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Thu, Dec 14, 2006 at 06:18:32PM -0500, Shawn Pearce wrote:
-> "J. Bruce Fields" <bfields@fieldses.org> wrote:
-> > Stupid question--I assume a mention in the reflog doesn't count as a
-> > real reference to an object, so they won't save you in the case when you
-> > pruned recently?
-> 
-> Not a stupid question.  Your assumption is correct, its not a real
-> reference, so prune will remove things that the log mentions but
-> that refs don't currently mention.
+The show-branch and merge-base commands were partially supported
+when it came to bash completions as they were only specified in
+one form another.  Now we specify them in both forms.
 
-OK, thanks.  So we just need to make sure that's documented someplace.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ contrib/completion/git-completion.bash |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index a3fbb90..fdfbf95 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -309,6 +309,7 @@ _git ()
+ 		log)         _git_log ;;
+ 		ls-remote)   _git_ls_remote ;;
+ 		ls-tree)     _git_ls_tree ;;
++		merge-base)  _git_merge_base ;;
+ 		pull)        _git_pull ;;
+ 		push)        _git_push ;;
+ 		reset)       _git_reset ;;
+@@ -342,12 +343,14 @@ complete -o default -o nospace -F _git_p
+ complete -o default -o nospace -F _git_push git-push
+ complete -o default            -F _git_reset git-reset
+ complete -o default            -F _git_show git-show
++complete -o default -o nospace -F _git_log git-show-branch
+ complete -o default -o nospace -F _git_log git-whatchanged
+ 
+ # The following are necessary only for Cygwin, and only are needed
+ # when the user has tab-completed the executable name and consequently
+ # included the '.exe' suffix.
+ #
++complete -o default -o nospace -F _git git.exe
+ complete -o default            -F _git_branch git-branch.exe
+ complete -o default -o nospace -F _git_cat_file git-cat-file.exe
+ complete -o default -o nospace -F _git_diff git-diff.exe
+@@ -356,4 +359,5 @@ complete -o default -o nospace -F _git_l
+ complete -o default -o nospace -F _git_ls_tree git-ls-tree.exe
+ complete -o default            -F _git_merge_base git-merge-base.exe
+ complete -o default -o nospace -F _git_push git-push.exe
++complete -o default -o nospace -F _git_log git-show-branch.exe
+ complete -o default -o nospace -F _git_log git-whatchanged.exe
+-- 
+1.4.3.3.g9621
