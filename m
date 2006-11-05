@@ -1,96 +1,121 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: [PATCH 2/2] add a flag to disable using of Perls MakeMaker module.
-Date: Thu, 30 Nov 2006 17:30:51 +0100
-Message-ID: <81b0412b0611300830t3799b80dl1d469f94cab35e0@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 3/6] Bash completion support for remotes in .git/config.
+Date: Sun, 5 Nov 2006 06:21:03 -0500
+Message-ID: <20061105112103.GC20495@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_46734_14303964.1164904251834"
-NNTP-Posting-Date: Thu, 30 Nov 2006 16:31:24 +0000 (UTC)
-Cc: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 5 Nov 2006 11:21:43 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=Upo72C0nA0z2D8U+orhmWNrnP4XeXIBxq4b+86QVEcKFf4XrdPYCbpgiKQwtW410N5c5raTXRRBN8/lG+AT0hgiSY0td9fWzS5BJHMpIaW/YEndYqTQUbqh3Y0pd5mg9kk39ZYQKUs0z1t4Vwf9BuoFqkiiSkp9zFEZvQne3pcs=
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30967>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpooL-0002aV-MK for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 17:30:58 +0100
+ esmtp (Exim 4.43) id 1Ggg4E-000758-Qy for gcvg-git@gmane.org; Sun, 05 Nov
+ 2006 12:21:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030722AbWK3Qay (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 11:30:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759261AbWK3Qay
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 11:30:54 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:15940 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1759259AbWK3Qax
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 11:30:53 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so2164130uga for
- <git@vger.kernel.org>; Thu, 30 Nov 2006 08:30:52 -0800 (PST)
-Received: by 10.78.97.7 with SMTP id u7mr3706462hub.1164904252043; Thu, 30
- Nov 2006 08:30:52 -0800 (PST)
-Received: by 10.78.135.3 with HTTP; Thu, 30 Nov 2006 08:30:51 -0800 (PST)
-To: "Alex Riesen" <fork0@t-online.de>
+ S932645AbWKELVJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
+ 06:21:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932648AbWKELVJ
+ (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 06:21:09 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:45440 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S932645AbWKELVG
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 06:21:06 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Ggg3h-0008NE-R2; Sun, 05 Nov 2006 06:21:01 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ E030120E491; Sun,  5 Nov 2006 06:21:03 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-------=_Part_46734_14303964.1164904251834
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Now that Git natively supports remote specifications within the
+config file such as:
 
-There installations (Cygwin + ActivateState Perl) where the generated makefiles
-are not usable, because of lineendings and backslashes. The flags is
-NO_PERL_MAKEMAKER.
+	[remote "origin"]
+		url = ...
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+we should provide bash completion support "out of the box" for
+these remotes, just like we do for the .git/remotes directory.
 
+Also cleaned up the __git_aliases expansion to use the same form
+of querying and filtering repo-config as this saves two fork/execs
+in the middle of a user prompted completion.  Finally also forced
+the variable 'word' to be local within __git_aliased_command.
+
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
-Just remembered configure script. Maybe it could be taught to
-notice the situation and do something about it (like setting the NO_MAKEMAKER).
+ contrib/completion/git-completion.bash |   26 +++++++++++++++++++++-----
+ 1 files changed, 21 insertions(+), 5 deletions(-)
 
-------=_Part_46734_14303964.1164904251834
-Content-Type: text/plain; name="0002-add-a-flag-to-disable-using-of-Perls-MakeMaker-module.txt"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="0002-add-a-flag-to-disable-using-of-Perls-MakeMaker-module.txt"
-X-Attachment-Id: file0
-
-RnJvbSAwNmZjNWU5ODc1NGRlOThiNDQ3NDZkODk2MmRhMTZhNThhNWE1ZDI4IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
-OiBUaHUsIDMwIE5vdiAyMDA2IDE3OjE1OjMzICswMTAwClN1YmplY3Q6IFtQQVRDSF0gYWRkIGEg
-ZmxhZyB0byBkaXNhYmxlIHVzaW5nIG9mIFBlcmxzIE1ha2VNYWtlciBtb2R1bGUuCgpUaGVyZSBp
-bnN0YWxsYXRpb25zIChDeWd3aW4gKyBBY3RpdmF0ZVN0YXRlIFBlcmwpIHdoZXJlIHRoZSBnZW5l
-cmF0ZWQgbWFrZWZpbGVzCmFyZSBub3QgdXNhYmxlLCBiZWNhdXNlIG9mIGxpbmVlbmRpbmdzIGFu
-ZCBiYWNrc2xhc2hlcy4gVGhlIGZsYWdzIGlzCk5PX1BFUkxfTUFLRU1BS0VSLgotLS0KIE1ha2Vm
-aWxlICAgICAgfCAgICAzICsrKwogcGVybC9NYWtlZmlsZSB8ICAgMTUgKysrKysrKysrKysrKysr
-CiAyIGZpbGVzIGNoYW5nZWQsIDE4IGluc2VydGlvbnMoKyksIDAgZGVsZXRpb25zKC0pCgpkaWZm
-IC0tZ2l0IGEvTWFrZWZpbGUgYi9NYWtlZmlsZQppbmRleCA1OTAzYTZmLi4zZTY4MjViIDEwMDY0
-NAotLS0gYS9NYWtlZmlsZQorKysgYi9NYWtlZmlsZQpAQCAtNTM5LDYgKzUzOSw5IEBAIGVuZGlm
-CiBpZmRlZiBOT19BQ0NVUkFURV9ESUZGCiAJQkFTSUNfQ0ZMQUdTICs9IC1ETk9fQUNDVVJBVEVf
-RElGRgogZW5kaWYKK2lmZGVmIE5PX1BFUkxfTUFLRU1BS0VSCisJZXhwb3J0IE5PX1BFUkxfTUFL
-RU1BS0VSCitlbmRpZgogCiAjIFNoZWxsIHF1b3RlIChkbyBub3QgdXNlICQoY2FsbCkgdG8gYWNj
-b21tb2RhdGUgYW5jaWVudCBzZXR1cHMpOwogCmRpZmYgLS1naXQgYS9wZXJsL01ha2VmaWxlIGIv
-cGVybC9NYWtlZmlsZQppbmRleCBjZmYyNGRkLi5hMWI5OGJkIDEwMDY0NAotLS0gYS9wZXJsL01h
-a2VmaWxlCisrKyBiL3BlcmwvTWFrZWZpbGUKQEAgLTE0LDEwICsxNCwyNSBAQCBjbGVhbjoKIAkk
-KFJNKSBwcHBvcnQuaAogCSQoUk0pICQobWFrZmlsZSkKIAoraWZkZWYgTk9fUEVSTF9NQUtFTUFL
-RVIKK2luc3RkaXJfU1EgPSAkKHN1YnN0ICcsJ1wnJywkKHByZWZpeCkvbGliKQorJChtYWtmaWxl
-KTogLi4vR0lULUNGTEFHUyBNYWtlZmlsZQorCWVjaG8gYWxsOiA+ICRACisJZWNobyAnCTonID4+
-ICRACisJZWNobyBpbnN0YWxsOiA+PiAkQAorCWVjaG8gJwlta2RpciAtcCAkKGluc3RkaXJfU1Ep
-JyA+PiAkQAorCWVjaG8gJwkkKFJNKSAkKGluc3RkaXJfU1EpL0dpdC5wbTsgY3AgR2l0LnBtICQo
-aW5zdGRpcl9TUSknID4+ICRACisJZWNobyAnCSQoUk0pICQoaW5zdGRpcl9TUSkvRXJyb3IucG07
-IFwKKwljcCBwcml2YXRlLUVycm9yLnBtICQoaW5zdGRpcl9TUSkvRXJyb3IucG0nID4+ICRACisJ
-ZWNobyBpbnN0bGliZGlyOiA+PiAkQAorCWVjaG8gJwllY2hvICQoaW5zdGRpcl9TUSknID4+ICRA
-CitlbHNlCiAkKG1ha2ZpbGUpOiBNYWtlZmlsZS5QTCAuLi9HSVQtQ0ZMQUdTCiAJJyQoUEVSTF9Q
-QVRIX1NRKScgJDwgRklSU1RfTUFLRUZJTEU9JyRAJyBQUkVGSVg9JyQocHJlZml4X1NRKScKK2Vu
-ZGlmCiAKICMgdGhpcyBpcyBqdXN0IGFkZGVkIGNvbWZvcnQgZm9yIGNhbGxpbmcgbWFrZSBkaXJl
-Y3RseSBpbiBwZXJsIGRpcgogIyAoZXZlbiB0aG91Z2ggR0lULUNGTEFHUyBhcmVuJ3QgdXNlZCB5
-ZXQuIElmIGV2ZXIpCiAuLi9HSVQtQ0ZMQUdTOgogCSQoTUFLRSkgLUMgLi4gR0lULUNGTEFHUwor
-Ci0tIAoxLjQuNC4xLmczOTI0LWRpcnR5Cgo=
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 926638d..5f1be46 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -59,12 +59,21 @@ __git_refs2 ()
+ 
+ __git_remotes ()
+ {
+-	local i REVERTGLOB=$(shopt -p nullglob)
++	local i ngoff IFS=$'\n'
++	shopt -q nullglob || ngoff=1
+ 	shopt -s nullglob
+ 	for i in .git/remotes/*; do
+ 		echo ${i#.git/remotes/}
+ 	done
+-	$REVERTGLOB
++	[ "$ngoff" ] && shopt -u nullglob
++	for i in $(git repo-config --list); do
++		case "$i" in
++		remote.*.url=*)
++			i="${i#remote.}"
++			echo "${i/.url=*/}"
++			;;
++		esac
++	done
+ }
+ 
+ __git_complete_file ()
+@@ -103,13 +112,20 @@ __git_complete_file ()
+ 
+ __git_aliases ()
+ {
+-	git repo-config --list | grep '^alias\.' \
+-		| sed -e 's/^alias\.//' -e 's/=.*$//'
++	local i IFS=$'\n'
++	for i in $(git repo-config --list); do
++		case "$i" in
++		alias.*)
++			i="${i#alias.}"
++			echo "${i/=*/}"
++			;;
++		esac
++	done
+ }
+ 
+ __git_aliased_command ()
+ {
+-	local cmdline=$(git repo-config alias.$1)
++	local word cmdline=$(git repo-config --get "alias.$1")
+ 	for word in $cmdline; do
+ 		if [ "${word##-*}" ]; then
+ 			echo $word
+-- 
+1.4.3.3.g9621
