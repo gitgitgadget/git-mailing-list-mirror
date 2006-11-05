@@ -2,99 +2,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Feature request: git-pull -e/--edit
-Date: Mon, 20 Nov 2006 09:02:16 +0100
-Organization: At home
-Message-ID: <ejrnbg$sg5$1@sea.gmane.org>
-References: <7vy7q67tf2.fsf@assigned-by-dhcp.cox.net> <20061120024308.18620.qmail@science.horizon.com> <7v8xi67qhq.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Mon, 20 Nov 2006 08:01:27 +0000 (UTC)
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH 1/2] git-svn: avoid printing filenames of files we're not tracking
+Date: Sat,  4 Nov 2006 21:51:10 -0800
+Message-ID: <11627058712379-git-send-email-normalperson@yhbt.net>
+NNTP-Posting-Date: Sun, 5 Nov 2006 05:51:34 +0000 (UTC)
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 48
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+X-Mailer: git-send-email 1.4.3.3.ga126
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30950>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gm45j-00055q-2U for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 09:01:23 +0100
+ esmtp (Exim 4.43) id 1Ggaub-00077U-7h for gcvg-git@gmane.org; Sun, 05 Nov
+ 2006 06:51:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933753AbWKTIBJ convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006 03:01:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933684AbWKTIBI
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 03:01:08 -0500
-Received: from main.gmane.org ([80.91.229.2]:33733 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S933753AbWKTIBH (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 03:01:07 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gm45H-0004za-K3 for git@vger.kernel.org; Mon, 20 Nov 2006 09:00:55 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Mon, 20 Nov 2006 09:00:55 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 20 Nov 2006
- 09:00:55 +0100
-To: git@vger.kernel.org
+ S1161095AbWKEFvO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
+ 00:51:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161058AbWKEFvO
+ (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 00:51:14 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:8874 "EHLO hand.yhbt.net") by
+ vger.kernel.org with ESMTP id S1161095AbWKEFvN (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 00:51:13 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id 30B7C2DC034; Sat,  4 Nov 2006 21:51:12 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 04 Nov 2006
+ 21:51:11 -0800
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
+This is purely an aesthetic change, we already skip importing of
+files that don't affect the subdirectory we import.
 
-> So if we rename the current "git merge" to "git-merge--record"
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-svn.perl |    9 ++++-----
+ 1 files changed, 4 insertions(+), 5 deletions(-)
 
-or git-merge-driver
-
-> (or any name "git pull" uses internally to record the merge
-> commit), and make "git merge" a synonym to "git pull .", and
-> give a command line option -m to "git pull" to _affect_ the
-> resulting merge message, I would think everybody would become
-> quite happy. =A0It means:
->=20
-> =A0- People can say "git merge this-branch" (which is internally
-> =A0 =A0translated to "git pull . this-branch");
->=20
-> =A0- People can say "git pull -m 'I am doing this merge for such
-> =A0 =A0and such reason' $URL $branch" to _include_ that message in
-> =A0 =A0the resulting merge commit;
->=20
-> =A0- The same can be said about "git merge -m 'comment' $branch".
->=20
-> I said _affect_ and _include_ in the above because I suspect
-> that most of the time you do not want to _replace_ the
-> autogenerated part ("Merge branch of repo", and if you are
-> pulling from your subordinate trees the merge summary message as
-> well).
-
-I'm all for adding -m <msg> option to git-pull (and perhaps also common
-other message generation options: -F <file>, --edit). I'm even for addi=
-ng
--m option to git-merge.=20
-
-Making "git merge" to be a synonym to "git pull ."... I'm not so sure.
-I'd rather we don't lose the ability to give arbitrary refs ar "other"
-heads like in
-
-  git merge "Merge early part of branch 'topicA'" HEAD topicA~3
-
-example, and ability (if there is such ability) to not include HEAD (cu=
-rrent
-version of branch) as first parent like in
-
-  git checkout pu
-  git merge "Merge branch 'topicA', 'topicB'" topicA topicB
-
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+diff --git a/git-svn.perl b/git-svn.perl
+index 37ecc51..cc3335a 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2662,11 +2662,12 @@ sub libsvn_connect {
+ }
+ 
+ sub libsvn_get_file {
+-	my ($gui, $f, $rev) = @_;
++	my ($gui, $f, $rev, $chg) = @_;
+ 	my $p = $f;
+ 	if (length $SVN_PATH > 0) {
+ 		return unless ($p =~ s#^\Q$SVN_PATH\E/##);
+ 	}
++	print "\t$chg\t$f\n" unless $_q;
+ 
+ 	my ($hash, $pid, $in, $out);
+ 	my $pool = SVN::Pool->new;
+@@ -2769,8 +2770,7 @@ sub libsvn_fetch {
+ 		$pool->clear;
+ 	}
+ 	foreach (@amr) {
+-		print "\t$_->[0]\t$_->[1]\n" unless $_q;
+-		libsvn_get_file($gui, $_->[1], $rev)
++		libsvn_get_file($gui, $_->[1], $rev, $_->[0]);
+ 	}
+ 	close $gui or croak $?;
+ 	return libsvn_log_entry($rev, $author, $date, $msg, [$last_commit]);
+@@ -2848,8 +2848,7 @@ sub libsvn_traverse {
+ 			if (defined $files) {
+ 				push @$files, $file;
+ 			} else {
+-				print "\tA\t$file\n" unless $_q;
+-				libsvn_get_file($gui, $file, $rev);
++				libsvn_get_file($gui, $file, $rev, 'A');
+ 			}
+ 		}
+ 	}
+-- 
+1.4.3.3.ga126
