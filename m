@@ -4,58 +4,88 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [PATCH] Adapt to fuse in kernel 2.6.17
-Date: Sun, 12 Nov 2006 21:01:28 +0100
-Organization: Dewire
-Message-ID: <200611122101.28910.robin.rosenberg.lists@dewire.com>
-References: <20061112184519.8713.7707.stgit@lathund.dewire.com> <200611121956.25481.robin.rosenberg.lists@dewire.com> <455776A7.6050707@garzik.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 3/3] Remove unsupported C99 style struct initializers in git-archive.
+Date: Sun, 5 Nov 2006 02:36:34 -0500
+Message-ID: <20061105073634.GA4616@spearce.org>
+References: <20061105053723.GC4193@spearce.org> <7vd582uz5b.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sun, 12 Nov 2006 20:00:14 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 5 Nov 2006 07:36:51 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.4
-In-Reply-To: <455776A7.6050707@garzik.org>
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+In-Reply-To: <7vd582uz5b.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30957>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GjLUr-0001dE-7z for gcvg-git@gmane.org; Sun, 12 Nov
- 2006 21:00:05 +0100
+ esmtp (Exim 4.43) id 1GgcYc-000060-GA for gcvg-git@gmane.org; Sun, 05 Nov
+ 2006 08:36:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753013AbWKLT7y convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sun, 12 Nov 2006 14:59:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753017AbWKLT7y
- (ORCPT <rfc822;git-outgoing>); Sun, 12 Nov 2006 14:59:54 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:10540 "EHLO
- torino.dewire.com") by vger.kernel.org with ESMTP id S1753003AbWKLT7y convert
- rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2006
- 14:59:54 -0500
-Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
- (Postfix) with ESMTP id 85CA5802806; Sun, 12 Nov 2006 20:56:24 +0100 (CET)
-Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
- [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 07086-06; Sun, 12 Nov
- 2006 20:56:24 +0100 (CET)
-Received: from [10.9.0.2] (unknown [10.9.0.2]) by torino.dewire.com (Postfix)
- with ESMTP id 44A9E800784; Sun, 12 Nov 2006 20:56:22 +0100 (CET)
-To: Jeff Garzik <jeff@garzik.org>
+ S1161209AbWKEHgj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
+ 02:36:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161216AbWKEHgj
+ (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 02:36:39 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:42963 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1161209AbWKEHgi
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 02:36:38 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GgcYV-0002cC-47; Sun, 05 Nov 2006 02:36:35 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ B735E20E491; Sun,  5 Nov 2006 02:36:34 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-s=C3=B6ndag 12 november 2006 20:31 skrev Jeff Garzik:
-> Robin Rosenberg wrote:
-> > This was a patch to GITFS, which may be somewhat unclear from the S=
-ubject
-> > line :)
->
-> I blinked, and I missed it.  Where can I find gitfs?  I've long thoug=
-ht
-> about doing something like that myself.
+Junio C Hamano <junkio@cox.net> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> 
+> > +static struct archiver_desc
+> > +{
+> > +	const char *name;
+> > +	write_archive_fn_t write_archive;
+> > +	parse_extra_args_fn_t parse_extra;
+> > +} archivers[] = {
+> > +	{ "tar", write_tar_archive, NULL },
+> > +	{ "zip", write_zip_archive, parse_extra_zip_args },
+> >  };
+> 
+> If this were a struct with bazillions of fields I might have had
+> trouble swallowing the change, but this is so small that it is
+> no brainer.
 
-It's listed on the wiki and located at=20
-http://www.sfgoth.com/~mitch/linux/gitfs/
+Right; if it was larger I would have been in trouble.  :-)
 
+> I think this actually is an improvement.
+> 
+> >  static int run_remote_archiver(const char *remote, int argc,
+> > @@ -88,7 +86,10 @@ static int init_archiver(const char *nam
+> >  
+> >  	for (i = 0; i < ARRAY_SIZE(archivers); i++) {
+> >  		if (!strcmp(name, archivers[i].name)) {
+> > -			memcpy(ar, &archivers[i], sizeof(struct archiver));
+> > +			memset(ar, 0, sizeof(*ar));
+> > +			ar->name = archivers[i].name;
+> > +			ar->write_archive = archivers[i].write_archive;
+> > +			ar->parse_extra = archivers[i].parse_extra;
+> 
+> But is this change really needed?  Shouldn't a structure
+> assignment just work?
+
+No, they are different structs...
+
+Which I did to reduce the size of the initializer (see above)
+so that it was a no brainer for you to swallow.  :-)
+
+-- 
