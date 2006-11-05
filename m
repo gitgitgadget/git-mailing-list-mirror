@@ -1,89 +1,109 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] Document git-runstatus
-Date: Sat, 18 Nov 2006 16:04:43 +0100
-Message-ID: <455F210B.8000107@lsrfire.ath.cx>
-References: <455F1595.9020009@lsrfire.ath.cx> <20061118092644.a9f15669.seanlkml@sympatico.ca> <20061118143511.GM7201@pasky.or.cz>
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Fix git-runstatus for repositories containing a file named HEAD
+Date: Sun, 5 Nov 2006 17:22:15 -0500
+Message-ID: <20061105222215.GA29042@coredump.intra.peff.net>
+References: <11627635702846-git-send-email-pdmef@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sat, 18 Nov 2006 15:04:52 +0000 (UTC)
-Cc: Sean <seanlkml@sympatico.ca>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 5 Nov 2006 22:22:31 +0000 (UTC)
+Cc: git@vger.kernel.org, Rocco Rutte <pdmef@gmx.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
-In-Reply-To: <20061118143511.GM7201@pasky.or.cz>
-X-Enigmail-Version: 0.94.0.0
+Content-Disposition: inline
+In-Reply-To: <11627635702846-git-send-email-pdmef@gmx.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30988>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlRkG-0000xd-CY for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 16:04:40 +0100
+ esmtp (Exim 4.43) id 1GgqNg-0000Uc-F9 for gcvg-git@gmane.org; Sun, 05 Nov
+ 2006 23:22:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1756353AbWKRPEZ convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006 10:04:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756352AbWKRPEZ
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 10:04:25 -0500
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de
- ([217.172.187.230]:42132 "EHLO neapel230.server4you.de") by vger.kernel.org
- with ESMTP id S1756350AbWKRPEY (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18
- Nov 2006 10:04:24 -0500
-Received: from [10.0.1.3] (p508E406F.dip.t-dialin.net [80.142.64.111]) by
- neapel230.server4you.de (Postfix) with ESMTP id 5631C3C005; Sat, 18 Nov 2006
- 16:04:23 +0100 (CET)
-To: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>
+ S1422747AbWKEWWT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
+ 17:22:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422749AbWKEWWS
+ (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 17:22:18 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:6337 "HELO
+ peff.net") by vger.kernel.org with SMTP id S1422747AbWKEWWR (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 17:22:17 -0500
+Received: (qmail 19743 invoked from network); 5 Nov 2006 17:21:20 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2) by
+ 66-23-211-5.clients.speedfactory.net with SMTP; 5 Nov 2006 17:21:20 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 05 Nov
+ 2006 17:22:15 -0500
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Petr Baudis schrieb:
-> On Sat, Nov 18, 2006 at 03:26:44PM CET, Sean wrote:
->> On Sat, 18 Nov 2006 15:15:49 +0100
->> Rene Scharfe <rene.scharfe@lsrfire.ath.cx> wrote:
->>
->>> I copied most of the text from git-status.txt.
->> [...]=09
->>> +git-runstatus - Show working tree status
->=20
-> Don't forget to add it to the list of commands.
+On Sun, Nov 05, 2006 at 09:52:50PM +0000, Rocco Rutte wrote:
 
-Good catch, thanks.  An incremental patch follows below.
+> The wt_status_print_updated() and wt_status_print_untracked() routines
+> call setup_revisions() with 'HEAD' being the reference to the tip of the
+> current branch. However, setup_revisions() gets confused if the branch
+> also contains a file named 'HEAD' resulting in a fatal error.
 
->> How is git-runstatus different from "git status"?
->=20
-> I have the same question.
+Ack. This is definitely a bug, and the patch fixes it. I wonder if it
+would be slightly more readable to simply get rid of the argv nonsense.
+Junio, please apply whichever you find more readable.
 
-git-status is a wrapper around git-runstatus that takes the same
-options as git-commit.  It could have been named 'git-commit --dry-run'=
-=2E
+-- >8 --
+The wt_status_print_updated() and wt_status_print_untracked() routines
+call setup_revisions() with 'HEAD' being the reference to the tip of the
+current branch. However, setup_revisions() gets confused if the branch
+also contains a file named 'HEAD' resulting in a fatal error.
 
->> Should this command be viewed simply as plumbing, and if so does it
->> deserve a man page or just textual documentation in the source?
->=20
-> All commands deserve a man page.
+Instead, don't pass an argv to setup_revisions() at all; simply give it no
+arguments, and make 'HEAD' the default revision.
 
-Exactly.  Even plumbers read manuals ;-).  Well, me at least.
+Bug noticed by Rocco Rutte <pdmef@gmx.net>.
 
-Ren=E9
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ wt-status.c |   11 +++--------
+ 1 files changed, 3 insertions(+), 8 deletions(-)
 
-
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 52bc05a..63b1746 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -424,6 +424,9 @@ gitlink:git-pack-redundant[1]::
- gitlink:git-rev-list[1]::
- 	Lists commit objects in reverse chronological order.
-=20
-+gitlink:git-runstatus[1]::
-+	Show working tree status.
-+
- gitlink:git-show-index[1]::
- 	Displays contents of a pack idx file.
+diff --git a/wt-status.c b/wt-status.c
+index 7dd6857..9692dfa 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -154,10 +154,8 @@ void wt_status_print_initial(struct wt_s
+ static void wt_status_print_updated(struct wt_status *s)
+ {
+ 	struct rev_info rev;
+-	const char *argv[] = { NULL, NULL, NULL };
+-	argv[1] = s->reference;
+ 	init_revisions(&rev, NULL);
+-	setup_revisions(2, argv, &rev, NULL);
++	setup_revisions(0, NULL, &rev, s->reference);
+ 	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
+ 	rev.diffopt.format_callback = wt_status_print_updated_cb;
+ 	rev.diffopt.format_callback_data = s;
+@@ -168,9 +166,8 @@ static void wt_status_print_updated(stru
+ static void wt_status_print_changed(struct wt_status *s)
+ {
+ 	struct rev_info rev;
+-	const char *argv[] = { NULL, NULL };
+ 	init_revisions(&rev, "");
+-	setup_revisions(1, argv, &rev, NULL);
++	setup_revisions(0, NULL, &rev, NULL);
+ 	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
+ 	rev.diffopt.format_callback = wt_status_print_changed_cb;
+ 	rev.diffopt.format_callback_data = s;
+@@ -225,10 +222,8 @@ static void wt_status_print_untracked(co
+ static void wt_status_print_verbose(struct wt_status *s)
+ {
+ 	struct rev_info rev;
+-	const char *argv[] = { NULL, NULL, NULL };
+-	argv[1] = s->reference;
+ 	init_revisions(&rev, NULL);
+-	setup_revisions(2, argv, &rev, NULL);
++	setup_revisions(0, NULL, &rev, s->reference);
+ 	rev.diffopt.output_format |= DIFF_FORMAT_PATCH;
+ 	rev.diffopt.detect_rename = 1;
+ 	run_diff_index(&rev, 1);
+-- 
+1.4.3.3.ga02d-dirty
