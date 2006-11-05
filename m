@@ -1,56 +1,75 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/4] git-svn: let libsvn_ls_fullurl return properties too
-Date: Mon, 04 Dec 2006 16:12:28 -0800
-Message-ID: <7v3b7vnqtv.fsf@assigned-by-dhcp.cox.net>
-References: <20061204235724.46FD7139B0C@magnus.utsl.gen.nz>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 2/3] Include -lz when linking git-daemon.
+Date: Sun, 5 Nov 2006 00:36:15 -0500
+Message-ID: <20061105053615.GB4193@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 5 Dec 2006 00:12:38 +0000 (UTC)
+NNTP-Posting-Date: Sun, 5 Nov 2006 05:36:36 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061204235724.46FD7139B0C@magnus.utsl.gen.nz> (Sam Vilain's
-	message of "Mon, 4 Dec 2006 20:33:03 +1100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33271>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrNvF-0007My-7B for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 01:12:33 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30947>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GgagA-0004MX-9v for gcvg-git@gmane.org; Sun, 05 Nov
+ 2006 06:36:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967882AbWLEAMa (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 19:12:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967873AbWLEAMa
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 19:12:30 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:35228 "EHLO
- fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S967882AbWLEAM3 (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006
- 19:12:29 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061205001229.ZWQ20330.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Mon, 4
- Dec 2006 19:12:29 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id uoCe1V0161kojtg0000000; Mon, 04 Dec 2006
- 19:12:39 -0500
-To: Sam Vilain <sam@vilain.net>
+ S1030257AbWKEFgT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
+ 00:36:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030261AbWKEFgT
+ (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 00:36:19 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:39876 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1030257AbWKEFgS
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 00:36:18 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Ggag4-0003ZT-RY; Sun, 05 Nov 2006 00:36:16 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ C30C920E491; Sun,  5 Nov 2006 00:36:15 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Thanks.
+Some platforms (Solaris in particular) appear to require -lz as
+part of the link line for git-daemon, due to it linking against
+sha1_file.o and that module requiring inflate/deflate support.
 
-Please CC people who are primarily working on the part of the
-system you are improving.  In the case of git-svn that would be
-Eric Wong.
+This wasn't made platform-specific in the Makefile as the existing
+use of -lz in every other (non git-daemon) application is also
+not platform-specific.
 
-As I almost never touch git-svn myself, I'll queue these four
-changes in 'pu' while waiting Ack from Eric on them.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ Makefile |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-
-
+diff --git a/Makefile b/Makefile
+index 1cc9f58..9f10054 100644
+--- a/Makefile
++++ b/Makefile
+@@ -317,6 +317,7 @@ BUILTIN_OBJS = \
+ 
+ GITLIBS = $(LIB_FILE) $(XDIFF_LIB)
+ EXTLIBS = -lz
++SIMPLE_LIB = -lz
+ 
+ #
+ # Platform specific tweaks
+-- 
+1.4.3.3.g9621
