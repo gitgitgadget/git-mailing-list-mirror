@@ -1,76 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: weird strncmp usage?
-Date: Thu, 2 Nov 2006 10:15:12 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611021008180.1670@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <eibhga$tpg$1@sea.gmane.org> <45494D84.2060402@shadowen.org>
- <20061102065127.GA23105@coredump.intra.peff.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: git-am vs. git-applymbox
+Date: Sun, 05 Nov 2006 13:10:28 +0100
+Organization: At home
+Message-ID: <eikkaq$au7$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 2 Nov 2006 09:15:37 +0000 (UTC)
-Cc: Andy Whitcroft <apw@shadowen.org>, hanwen@xs4all.nl,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Sun, 5 Nov 2006 12:10:49 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20061102065127.GA23105@coredump.intra.peff.net>
-X-Y-GMX-Trusted: 0
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 21
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30975>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfYfR-0005qG-Ls for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 10:15:22 +0100
+ esmtp (Exim 4.43) id 1Gggpb-0000jN-NP for gcvg-git@gmane.org; Sun, 05 Nov
+ 2006 13:10:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752765AbWKBJPR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
- 04:15:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752764AbWKBJPQ
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 04:15:16 -0500
-Received: from mail.gmx.de ([213.165.64.20]:45971 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1752766AbWKBJPP (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 04:15:15 -0500
-Received: (qmail invoked by alias); 02 Nov 2006 09:15:13 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp044) with SMTP; 02 Nov 2006 10:15:13 +0100
-To: Jeff King <peff@peff.net>
+ S965599AbWKEMK2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
+ 07:10:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965855AbWKEMK2
+ (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 07:10:28 -0500
+Received: from main.gmane.org ([80.91.229.2]:16785 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S965599AbWKEMK1 (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 07:10:27 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GggpG-0000e0-IN for git@vger.kernel.org; Sun, 05 Nov 2006 13:10:10 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Sun, 05 Nov 2006 13:10:10 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 05 Nov 2006
+ 13:10:10 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi,
+git-applymbox - Apply a series of patches in a mailbox
+git-am        - Apply a series of patches in a mailbox
 
-On Thu, 2 Nov 2006, Jeff King wrote:
+What are the differences between thos two commands, UI-wise and capability
+(feature) wise? Which one should I use? Which one do _you_ use?
 
-> On Thu, Nov 02, 2006 at 01:44:36AM +0000, Andy Whitcroft wrote:
-> 
-> > That said if you know its constant you can also use sizeof("foo") and
-> > that is done at compile time.  Something like:
-> > 
-> > #define strxcmp(x, y)	strncmp((x), (y), sizeof((y))
-> 
-> You would, of course, need to use sizeof(y)-1 to avoid comparing the NUL
-> termination. :)
-> 
-> This is a slightly dangerous macro, because it _only_ works for string
-> literals, but not pointers (which is fine in this case, but its
-> limitations need to be documented).
 
-It would be even better to avoid these errors by doing something like
+And why git has yet another set of commands which do the same (well,
+git-annotate vs. git-blame "war" was won by git-blame, and git-pickaxe was
+born).
 
-	#define starts_with(x, y) !strncmp((x), #y, sizeof(#y) - 1)
+By the way, could we standarize somewhat short options for git commands,
+like -q for quiet, -v for verbose, -i for interactive, -S for pickaxe
+(search in diff), -n for some kind of no-op/do nothing (e.g. --no-commit),
+-f for force, -l for list, -k for skip errors/keep working even in the case
+of errors? It would be nice to have this in Documentation/API somewhere...
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
-which would be used like this:
-
-	if (starts_with(arg, --abbrev=))
-
-However, in this case, you would need another macro, which automatically 
-extracts the argument, and soon you will end up with yet another getopt 
-package.
-
-Ciao,
-Dscho
