@@ -4,63 +4,73 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Making literal "20" symbolic
-Date: Mon, 20 Nov 2006 02:54:59 -0800
-Message-ID: <7v7ixq4ccc.fsf@assigned-by-dhcp.cox.net>
-References: <200611201049.41024.andyparkins@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 2/6] Only load .exe suffix'd completions on Cygwin.
+Date: Sun, 5 Nov 2006 06:20:25 -0500
+Message-ID: <20061105112025.GB20495@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 20 Nov 2006 10:55:37 +0000 (UTC)
+NNTP-Posting-Date: Sun, 5 Nov 2006 11:20:38 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200611201049.41024.andyparkins@gmail.com> (Andy Parkins's
-	message of "Mon, 20 Nov 2006 11:49:35 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30965>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gm6no-0004ga-Pz for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 11:55:05 +0100
+ esmtp (Exim 4.43) id 1Ggg3H-0006qA-Vu for gcvg-git@gmane.org; Sun, 05 Nov
+ 2006 12:20:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755903AbWKTKzA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 05:55:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755905AbWKTKzA
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 05:55:00 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:27547 "EHLO
- fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S1755903AbWKTKzA
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 05:55:00 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao03.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061120105459.OAPV4817.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>; Mon, 20
- Nov 2006 05:54:59 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id oyuW1V00S1kojtg0000000; Mon, 20 Nov 2006
- 05:54:31 -0500
-To: Andy Parkins <andyparkins@gmail.com>
+ S932644AbWKELUa (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
+ 06:20:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932645AbWKELUa
+ (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 06:20:30 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:40832 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S932644AbWKELU2
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 06:20:28 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Ggg35-0008Kk-7i; Sun, 05 Nov 2006 06:20:23 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 4E63920E491; Sun,  5 Nov 2006 06:20:25 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> writes:
+The only platform which actually needs to define .exe suffixes as
+part of its completion set is Cygwin.  So don't define them on any
+other platform.
 
-> I notice that there are a lot of uses of the literal 20 throughout git; I'd 
-> like to change them (as appropriate) to HASH_WIDTH, or similar; and maybe 
-> HASH_WIDTH_ASCII for the 40s.
->
-> Is there a particular header file that is appropriate to put 
->
-> #define HASH_WIDTH 20
-> #define HASH_WIDTH_ASCII (HASH_WIDTH*2)
->
-> Of course, I plan to review each instance to make sure I'm not changing a 
-> non-hash width 20.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ contrib/completion/git-completion.bash |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-Probably in cache.h, close to where it defines is_null_sha1(),
-hashcmp(), and friends, is the right place.
-
-There are few places that say 42 (because we have 40-hex at the
-beginning of line, followed by a single whitespace and then
-something should follow so line length must be at least 42
-chars), so hunting them all would be a lot of work, but I do
-think this is a worthwhile cleanup.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index fdfbf95..926638d 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -350,6 +350,7 @@ complete -o default -o nospace -F _git_l
+ # when the user has tab-completed the executable name and consequently
+ # included the '.exe' suffix.
+ #
++if [ Cygwin = "$(uname -o 2>/dev/null)" ]; then
+ complete -o default -o nospace -F _git git.exe
+ complete -o default            -F _git_branch git-branch.exe
+ complete -o default -o nospace -F _git_cat_file git-cat-file.exe
+@@ -361,3 +362,4 @@ complete -o default            -F _git_m
+ complete -o default -o nospace -F _git_push git-push.exe
+ complete -o default -o nospace -F _git_log git-show-branch.exe
+ complete -o default -o nospace -F _git_log git-whatchanged.exe
++fi
+-- 
+1.4.3.3.g9621
