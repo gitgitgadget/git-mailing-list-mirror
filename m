@@ -4,63 +4,80 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Do not ignore hidden refs
-Date: Sat, 18 Nov 2006 10:35:47 -0800
-Message-ID: <7vr6w0eh6k.fsf@assigned-by-dhcp.cox.net>
-References: <20061118041137.6064.75827.stgit@machine.or.cz>
-	<Pine.LNX.4.64.0611180933360.3692@woody.osdl.org>
+From: Alan Chandler <alan@chandlerfamily.org.uk>
+Subject: Re: Bash completion Issue?
+Date: Sun, 5 Nov 2006 00:33:07 +0000
+Message-ID: <200611050033.07716.alan@chandlerfamily.org.uk>
+References: <200611041236.59989.alan@chandlerfamily.org.uk> <20061104184120.GB2311@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 18 Nov 2006 18:36:00 +0000 (UTC)
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 5 Nov 2006 00:33:46 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0611180933360.3692@woody.osdl.org> (Linus
-	Torvalds's message of "Sat, 18 Nov 2006 09:35:18 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: KMail/1.9.5
+In-Reply-To: <20061104184120.GB2311@spearce.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30943>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlV2h-0005ln-J2 for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 19:35:55 +0100
+ esmtp (Exim 4.43) id 1GgVxC-0002qW-Me for gcvg-git@gmane.org; Sun, 05 Nov
+ 2006 01:33:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755309AbWKRSfu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
- 13:35:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755310AbWKRSfu
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 13:35:50 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:17574 "EHLO
- fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S1755309AbWKRSft
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 13:35:49 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao04.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061118183548.RJDN7494.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>; Sat, 18
- Nov 2006 13:35:48 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id oJbL1V00D1kojtg0000000; Sat, 18 Nov 2006
- 13:35:20 -0500
-To: Linus Torvalds <torvalds@osdl.org>
+ S965763AbWKEAdd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
+ 19:33:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965764AbWKEAdc
+ (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 19:33:32 -0500
+Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk
+ ([82.44.22.127]:20871 "EHLO home.chandlerfamily.org.uk") by vger.kernel.org
+ with ESMTP id S965763AbWKEAdc (ORCPT <rfc822;git@vger.kernel.org>); Sat, 4
+ Nov 2006 19:33:32 -0500
+Received: from kanger.home ([192.168.0.21]) by home.chandlerfamily.org.uk
+ with esmtp (Exim 4.63) (envelope-from <alan@chandlerfamily.org.uk>) id
+ 1GgVx5-0007nI-09 for git@vger.kernel.org; Sun, 05 Nov 2006 00:33:31 +0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
+On Saturday 04 November 2006 18:41, Shawn Pearce wrote:
+> Alan Chandler <alan@chandlerfamily.org.uk> wrote:
+...
+> > In debian, there seems to be a directory /etc/bash_completion.d with
+> > files for each of the packages, and the debian git packages have entries
+> > in there.  So I assume they are derived from the completion work
+> > mentioned on this list.
+>
+> What completion script is it?  The one that is now shipped as part
+> of Git has a header of the following, and resides in git.git as
+> contrib/completion/git-completion.bash:
+>
+> 	#
+> 	# bash completion support for core Git.
+> 	#
+> 	# Copyright (C) 2006 Shawn Pearce
+> 	# Conceptually based on gitcompletion (http://gitweb.hawaga.org.uk/).
+> 	#
 
-> On Sat, 18 Nov 2006, Petr Baudis wrote:
->>
->> Some of the ref manipulation tools (git-for-each-ref and git-show-ref in
->> particular) would not handle hidden (~ /^\./) refs. This may be an
->> acceptable or possibly even desirable behaviour for the ref walkers and
->> repackers, but git-show-ref hiddenrefname must work.
->
-> No.
->
-> Refnames MUST NOT start with a ".". 
->
-> It's not even about the traditional unix "hidden file" thing. It's simply 
-> a syntactic issue. A ref cannot start with a ".", because we use things 
-> like ".." and "..." to separate them.
+Well I have something like this (with git 1.4.3.3)
 
-We do not forbid a refname that ends with a ".", but I think it
-was a mistake.  We _can_ disambiguate the ones that begin with a
-"." by saying "whatever..heads/.I-begin-with-dot", but not the
-ones that end with "heads/I-end-with-dot...end-of-range".
+# 'git' bash completion and library routines used by porcelain completions.
+#
+# Copyright (c) Paolo Giarrusso, 2005
+# Copyright (c) Ben Clifford, 2005
+#
+# The master version is available at:
+#       http://www.hawaga.org.uk/gitcompletion.git
+
+
+>
+> > What seems strange to me is that nobody else has mentioned this before
+> > now.
+>
+> Maybe because you have a different completion script?
+
+Seems like it might be:-(
+
+
+-- 
+Alan Chandler
