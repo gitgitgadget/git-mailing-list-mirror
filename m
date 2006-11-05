@@ -1,55 +1,82 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn: why fetching files is so slow
-Date: Fri, 24 Nov 2006 12:33:20 -0800
-Message-ID: <20061124203320.GA21654@soma>
-References: <loom.20061124T143148-286@post.gmane.org> <20061124191609.GA32506@localdomain> <loom.20061124T202153-512@post.gmane.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 1/3] Apply obvious numerical cast for stupid C compilers.
+Date: Sun, 5 Nov 2006 02:18:05 -0500
+Message-ID: <20061105071805.GA4506@spearce.org>
+References: <20061105053544.GA4193@spearce.org> <7v3b8ywewj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 24 Nov 2006 20:33:36 +0000 (UTC)
+NNTP-Posting-Date: Sun, 5 Nov 2006 07:18:19 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <loom.20061124T202153-512@post.gmane.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <7v3b8ywewj.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30953>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gnhjl-0003NK-Ti for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 21:33:30 +0100
+ esmtp (Exim 4.43) id 1GgcGl-00062B-NQ for gcvg-git@gmane.org; Sun, 05 Nov
+ 2006 08:18:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935048AbWKXUdX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
- 15:33:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935050AbWKXUdX
- (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 15:33:23 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:64728 "EHLO hand.yhbt.net") by
- vger.kernel.org with ESMTP id S935048AbWKXUdW (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 15:33:22 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
- (Postfix) with SMTP id 917D37DC098; Fri, 24 Nov 2006 12:33:20 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 24 Nov 2006
- 12:33:20 -0800
-To: Pazu <pazu@pazu.com.br>
+ S1161200AbWKEHSL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
+ 02:18:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161201AbWKEHSL
+ (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 02:18:11 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:47057 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1161200AbWKEHSK
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 02:18:10 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GgcGd-0001tu-6G; Sun, 05 Nov 2006 02:18:07 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 2009920E491; Sun,  5 Nov 2006 02:18:06 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Pazu <pazu@pazu.com.br> wrote:
-> Eric Wong <normalperson <at> yhbt.net> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
 > 
-> > git-svn transfers full files, and not deltas.  I'll hopefully have a
-> > chance to look into improving the situation for slow links this weekend.
+> > At least one (older) version of the Solaris C compiler won't allow
+> > 'unsigned long x = -1' without explicitly casting -1 to a type of
+> > unsigned long.  As annoying as it may be to explicitly perform the
+> > cast the compiler is right; -1 is not an unsigned value.
 > 
-> Yes, but why would that make fetching the first revision slower? In this
-> situation, both svn and git-svn would have to fetch full files. Maybe git-svn
-> isn't using gzip compression or http pipelining?
+> Is the compiler really _right_?  The usual integral promotion
+> rules should apply if it claims to be a C compiler, I would
+> think.
 
-Even for the initial transfer, the tree is bundled into one big delta
-(at least over https).
+I'm rusty on my C; but I would expect an error if I tried to assign
+a clearly negative value into an unsigned value, especially in a
+case like this.  It could be compiler is wrong, but as a programmer
+I'd want to know I wrote something stupid like that, because maybe
+the variable should have been signed.  :-)
+ 
+> But I think the code actually wants ULONG_MAX there.  Is that
+> symbolic constant available at the point of offending
+> initialization with the header files we already include, I
+> wonder.
+
+Yes, I agree.  I almost changed it to ULONG_MAX but didn't since
+the original author felt -1 was the better choice here.  *shrug*
+
+For what its worth ULONG_MAX works on my Mac OS X system.
+
+Tomorrow when I have access to that "broken" platform again I'll
+try ULONG_MAX and see if it compiles there.
 
 -- 
