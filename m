@@ -1,76 +1,75 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [GIT PATCH] Makefile missing git-runstatus in PROGRAMS list
-Date: Wed, 15 Nov 2006 11:04:39 -0800
-Message-ID: <7vodr8mszc.fsf@assigned-by-dhcp.cox.net>
-References: <FE74AC4E0A23124DA52B99F17F44159701A11D6D@PA-EXCH03.vmware.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: [PATCH] merge-recursive implicitely depends on trust_executable_bit
+Date: Mon, 6 Nov 2006 11:38:52 +0100
+Message-ID: <81b0412b0611060238k29c20ff6le555aa0579ecc0ae@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 15 Nov 2006 19:05:58 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_42988_9471310.1162809532292"
+NNTP-Posting-Date: Mon, 6 Nov 2006 10:39:06 +0000 (UTC)
+Cc: "Junio C Hamano" <junkio@cox.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <FE74AC4E0A23124DA52B99F17F44159701A11D6D@PA-EXCH03.vmware.com>
-	(Bhavesh Davda's message of "Wed, 15 Nov 2006 10:42:27 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=Q5W9udpv8GpBkXqp+w5uC6PxZLgF4jTEn+Rpc1ADAHRmiY41OlTnNKI7Mes0Y8LsXuHeoXbXn9fgbYvU3StriX7C1pn/bxmBkawJ0riRzTloXmSDgSDAxT7HKED21aBCjbZqnNwYiY7CzCUlj5r9nsM6wkXxVAzD6m3i2ayzNSM=
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31005>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkQ4x-0005Zz-3f for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 20:05:47 +0100
+ esmtp (Exim 4.43) id 1Gh1sX-0007c6-V8 for gcvg-git@gmane.org; Mon, 06 Nov
+ 2006 11:38:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030893AbWKOTEw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 14:04:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030895AbWKOTEw
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 14:04:52 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:20722 "EHLO
- fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S1030893AbWKOTEv
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 14:04:51 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061115190450.TSGA7157.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Wed, 15
- Nov 2006 14:04:50 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id n74w1V00R1kojtg0000000; Wed, 15 Nov 2006
- 14:04:56 -0500
-To: "Bhavesh Davda" <bhavesh@vmware.com>
+ S1750701AbWKFKiy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
+ 05:38:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750807AbWKFKiy
+ (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 05:38:54 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:49957 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1750701AbWKFKiy
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 05:38:54 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so839391ugc for
+ <git@vger.kernel.org>; Mon, 06 Nov 2006 02:38:52 -0800 (PST)
+Received: by 10.78.201.10 with SMTP id y10mr6548766huf.1162809532313; Mon, 06
+ Nov 2006 02:38:52 -0800 (PST)
+Received: by 10.78.128.2 with HTTP; Mon, 6 Nov 2006 02:38:52 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-"Bhavesh Davda" <bhavesh@vmware.com> writes:
+------=_Part_42988_9471310.1162809532292
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-> Indeed! I had "export CDPATH=.:$HOME" in my $HOME/.bash_profile.
->
-> "export -n CDPATH", and now "make install" works, setting up those hard links
-> too.
->
-> If this is a common gotcha in building and installing git, maybe you should
-> add it near the top of the INSTALL instructions.
->
-> I haven't run into this issue with other projects. Is there something that
-> can be changed in git's Makefile so it works even if CDPATH is set and
-> exported in people's environments?
+Read the configuration in to get core.filemode value for this
+particular repository.
 
-I think we already had this discussed twice on this list.
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 
-The problem is not just Makefile, but any command implemented as
-shell scripts, if it needs to "cd" inside, is bitten by exported
-CDPATH not just because it gives unwanted output to stdout
-(which is already stupid -- CDPATH is purely convenience for
-interactive session) but also because it would take the process
-to unexpected places.
+------=_Part_42988_9471310.1162809532292
+Content-Type: text/plain; name="0001-merge-recursive-implicitely-depends-on-trust_executable_bit-core.filemode.txt"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="0001-merge-recursive-implicitely-depends-on-trust_executable_bit-core.filemode.txt"
+X-Attachment-Id: file0
 
-You can solve it by three ways.  (1) unset CDPATH at the
-beginning of every shell script; (2) write all internal "cd" in
-such a way that CDPATH would not try to interfere with it; (3)
-teach users to fix their broken environment.
-
-We do (1) for our shell scripts with git-sh-setup which almost
-all other script sources, along with a comment for (3) at that
-place.  As you say we should probably add the same to INSTALL
-instructions.
+RnJvbSAxOTNhYzY1MjU5YjVkZTE5ZmFlMWExYmQ1ZDRhZGI1NTk4ODA4NmY2IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
+OiBNb24sIDYgTm92IDIwMDYgMDk6MjQ6MTcgKzAxMDAKU3ViamVjdDogW1BBVENIXSBtZXJnZS1y
+ZWN1cnNpdmUgaW1wbGljaXRlbHkgZGVwZW5kcyBvbiB0cnVzdF9leGVjdXRhYmxlX2JpdCAoY29y
+ZS5maWxlbW9kZSkuClJlYWQgdGhlIGNvbmZpZ3VyYXRpb24gaW4gdG8gZ2V0IGl0cyB2YWx1ZSBm
+b3IgdGhpcyBwYXJ0aWN1bGFyIHJlcG9zaXRvcnkKLS0tCiBtZXJnZS1yZWN1cnNpdmUuYyB8ICAg
+IDEgKwogMSBmaWxlcyBjaGFuZ2VkLCAxIGluc2VydGlvbnMoKyksIDAgZGVsZXRpb25zKC0pCgpk
+aWZmIC0tZ2l0IGEvbWVyZ2UtcmVjdXJzaXZlLmMgYi9tZXJnZS1yZWN1cnNpdmUuYwppbmRleCAy
+YmE0M2FlLi5jODEwNDhkIDEwMDY0NAotLS0gYS9tZXJnZS1yZWN1cnNpdmUuYworKysgYi9tZXJn
+ZS1yZWN1cnNpdmUuYwpAQCAtMTMwOCw2ICsxMzA4LDcgQEAgaW50IG1haW4oaW50IGFyZ2MsIGNo
+YXIgKmFyZ3ZbXSkKIAljb25zdCBjaGFyICpicmFuY2gxLCAqYnJhbmNoMjsKIAlzdHJ1Y3QgY29t
+bWl0ICpyZXN1bHQsICpoMSwgKmgyOwogCisJZ2l0X2NvbmZpZyhnaXRfZGVmYXVsdF9jb25maWcp
+OyAvKiBjb3JlLmZpbGVtb2RlICovCiAJb3JpZ2luYWxfaW5kZXhfZmlsZSA9IGdldGVudigiR0lU
+X0lOREVYX0ZJTEUiKTsKIAogCWlmICghb3JpZ2luYWxfaW5kZXhfZmlsZSkKLS0gCjEuNC4zLjMu
+Z2IyODI4Cgo=
