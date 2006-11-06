@@ -1,82 +1,57 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Joining cg-*-id
-Date: Tue, 20 Sep 2005 17:07:19 +0200
-Message-ID: <20050920150719.GB1836@pasky.or.cz>
-References: <1127166049.26772.26.camel@dv> <20050919215608.GA13845@pasky.or.cz> <Pine.LNX.4.58.0509191505470.2553@g5.osdl.org> <20050919225422.GG18320@pasky.or.cz> <Pine.LNX.4.58.0509191746130.2553@g5.osdl.org> <20050920135735.GC1884@pasky.or.cz> <Pine.LNX.4.58.0509200734440.2553@g5.osdl.org>
+From: Liu Yubao <yubao.liu@gmail.com>
+Subject: "git clone" can't clone a gitweb URL
+Date: Mon, 06 Nov 2006 16:32:04 +0800
+Message-ID: <454EF304.4030304@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 20 Sep 2005 15:09:29 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, Pavel Roskin <proski@gnu.org>,
-	fonseca@diku.dk, git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 6 Nov 2006 08:33:35 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0509200734440.2553@g5.osdl.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.10i
+Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=qfkehyHY9V94M6LgZcvJy2dfVjr46A6qKW75bloDVXuIceSlda5GsMtoZ71yYXfSghoXAtJ6pXU4dRru/QghBQJnj1hZ+cMUntPUYIyy1V1MPpUuIuhU2O1H2aKlvLj6e+2Zl2ETQ0TVIJ4+MbfR/1ZscldKG2E270E9NkWco/I=
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.7) Gecko/20060909 Thunderbird/1.5.0.7 Mnenhy/0.7.4.666
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/9000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31001>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1EHjiO-0003tw-9b for gcvg-git@gmane.org; Tue, 20 Sep
- 2005 17:07:24 +0200
+ esmtp (Exim 4.43) id 1Ggzun-0003T4-2j for gcvg-git@gmane.org; Mon, 06 Nov
+ 2006 09:33:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964822AbVITPHV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 20 Sep 2005
- 11:07:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964852AbVITPHV
- (ORCPT <rfc822;git-outgoing>); Tue, 20 Sep 2005 11:07:21 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:34229 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S964822AbVITPHV (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 20 Sep 2005 11:07:21 -0400
-Received: (qmail 12371 invoked by uid 2001); 20 Sep 2005 17:07:19 +0200
-To: Linus Torvalds <torvalds@osdl.org>
+ S1423570AbWKFIdF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
+ 03:33:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423601AbWKFIdF
+ (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 03:33:05 -0500
+Received: from wx-out-0506.google.com ([66.249.82.234]:18669 "EHLO
+ wx-out-0506.google.com") by vger.kernel.org with ESMTP id S1423570AbWKFIdD
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 03:33:03 -0500
+Received: by wx-out-0506.google.com with SMTP id s14so984049wxc for
+ <git@vger.kernel.org>; Mon, 06 Nov 2006 00:33:02 -0800 (PST)
+Received: by 10.90.105.19 with SMTP id d19mr1858774agc.1162801982575; Mon, 06
+ Nov 2006 00:33:02 -0800 (PST)
+Received: from ?192.168.88.85? ( [221.122.47.70]) by mx.google.com with ESMTP
+ id 11sm1710422wrl.2006.11.06.00.33.00; Mon, 06 Nov 2006 00:33:01 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Dear diary, on Tue, Sep 20, 2005 at 04:53:11PM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> told me that...
-> On Tue, 20 Sep 2005, Petr Baudis wrote:
-> > > 
-> > > So I'd love to have
-> > > 
-> > > 	git diff yesterday..
-> > > 
-> > > but the fact is, there's no sensible semantics for it. _which_ yesterday? 
-> > > There might be five different points that are "close to 24 hours ago", 
-> > > along five different paths backwards in the history.
-> > 
-> > A well-defined meaning for this from Cogito standpoint would be "the
-> > last commit on our HEAD before the date and all commits committed and
-> > merged to the HEAD". In Cogito, you don't merge two branches _together_,
-> > you merge one branch _into_ another (represented by the parents order),
-> > so this would be sensible.
-> 
-> No, it's _not_ sensible or well-defined.
-> 
-> The order of the parents does not matter. It fundamentally _cannot_ 
-> matter. I realize that both git and cogito put the "primary parent" first, 
-> but that doesn't help one iota - because git is distributed, if the other 
-> side merged and we just did a fast-forward, the "primary parent" will be 
-> the _other_ side.
-> 
-> In other words, anybody who thinks that the order of parents is meaningful 
-> is in for some nasty shocks. It really _fundamentally_ isn't true. I 
-> realize that's hard to accept, but it's a truism in a distributed system. 
-> You really cannot have parent ordering and distribution at the same time.
+$ git clone http://repo.or.cz/w/i18n.git
+error: Can't lock ref
+rm: cannot remove directory `i18n/.git/clone-tmp': Directory not emp
+ty
 
-Ok ok. I can now remember already learning about this once, but I forgot
-again. I should write it down into some README for myself or so, I
-guess. ;-) Sorry about the noise.
+At last I found the URL was a gitweb URL not for mirroring.
 
-I'll just drop the date revision specifier support from Cogito. I don't
-know if any measurable number of people actually use it in the real
-world anyway.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-VI has two modes: the one in which it beeps and the one in which
+It's better git provides clear information like "This is maybe a
+gitweb URL, view it in web browser for more information", or
+gitweb can send a redirection response to git client. Even more,
+git-daemon also can send redirection response to tell git client
+that the service is offline temporarily and it can use an alternative
