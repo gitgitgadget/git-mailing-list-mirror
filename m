@@ -1,111 +1,91 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-add fails after file type change
-Date: Sat, 16 Dec 2006 17:39:06 -0800
-Message-ID: <7vk60r7139.fsf@assigned-by-dhcp.cox.net>
-References: <458437E0.1050501@midwinter.com> <45843C5A.8020501@gmail.com>
-	<45848CF8.4000704@midwinter.com>
-	<7vvekb73jh.fsf@assigned-by-dhcp.cox.net>
+From: Janos Farkas <chexum+dev@gmail.com>
+Subject: git PATH reordering
+Date: Mon, 6 Nov 2006 14:33:04 +0100
+Message-ID: <priv$efbe06146839$619d340665@200611.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 17 Dec 2006 01:39:32 +0000 (UTC)
+NNTP-Posting-Date: Mon, 6 Nov 2006 13:34:24 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vvekb73jh.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 16 Dec 2006 16:46:10 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent:sender;
+        b=IP3sQZA9ja26GVDPAPe+BvfIKS4gKT7OiFPEO/WQPriBt8e+A5rqhwosOt2s2X/GINOhaY4JvfG6w21ecanouJV39+IMTm9jlQ9ZbCeFOUFbMyQuZd2VnOPgREWbzShCyhb+6ho9MtBehu7PHKDnsIY9xHK6aC/SEYbq5KsUc8Q=
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34673>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gvkzv-0003TR-Tu for gcvg-git@gmane.org; Sun, 17 Dec
- 2006 02:39:28 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31011>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gh4bb-0002G1-Nx for gcvg-git@gmane.org; Mon, 06 Nov
+ 2006 14:33:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751627AbWLQBjL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
- 20:39:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751629AbWLQBjL
- (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 20:39:11 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:47673 "EHLO
- fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751627AbWLQBjK (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
- 20:39:10 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061217013907.PULN9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Sat, 16
- Dec 2006 20:39:07 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id zdfK1V00E1kojtg0000000; Sat, 16 Dec 2006
- 20:39:19 -0500
+ S1753098AbWKFNd1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
+ 08:33:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753099AbWKFNd1
+ (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 08:33:27 -0500
+Received: from nf-out-0910.google.com ([64.233.182.185]:44182 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1753098AbWKFNd0
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 08:33:26 -0500
+Received: by nf-out-0910.google.com with SMTP id x30so2595422nfb for
+ <git@vger.kernel.org>; Mon, 06 Nov 2006 05:33:25 -0800 (PST)
+Received: by 10.48.48.18 with SMTP id v18mr548406nfv.1162820004850; Mon, 06
+ Nov 2006 05:33:24 -0800 (PST)
+Received: from localhost ( [212.112.241.159]) by mx.google.com with ESMTP id
+ p45sm11774521nfa.2006.11.06.05.33.17; Mon, 06 Nov 2006 05:33:23 -0800 (PST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-When replacing an existing file A with a directory B that has a
-file B/C in it in the index, 'update-index --replace --add B/C'
-did not properly remove the file to make room for the new
-directory.
+Hi!
 
-There was a trivial logic error, most likely a cut & paste one,
-dating back to quite early days of git.
+I'm facing an issue which seems to originate about a year ago, so I'm a
+bit late :)
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+Apparently, most git commands seem to tweak their PATH to make sure the
+corresponding version of a subcommand gets ran in the case there are
+multiple ones in there.
 
-  Junio C Hamano <junkio@cox.net> writes:
+The thing is, since this "ensuring" is done by prepend_to_path(), which
+can then change all exec() afterwards.   Usually, that's not a problem,
+but that made git run an unexpectedly different ssh command for remote
+access.  When I discovered what the problem is, I easily fixed it by
+setting GIT_SSH to the explicit path, and I can live with that, but it's
+a bit confusing.
 
-  > But I think you helped me to spot a bug ;-).
-  >
-  >         $ git update-index --replace --add 3/2
-  >         $ git ls-files -s
-  >         100644 00750edc07d6415dcc07ae0351e9397b0222b7ba 0     1
-  >         100644 00750edc07d6415dcc07ae0351e9397b0222b7ba 0     3
-  >         100644 fa457baf8abbf5dd3bb4cbfab0c5a4cf0523d7f8 0     3/2
-  >
-  > The entry '3' should have been removed when we did --replace.
-  > This index cannot be written out as a tree:
-  >
-  >       $ git write-tree
-  >         You have both 3 and 3/2
-  >         fatal: git-write-tree: error building trees
+I don't want to start a neverending thread, so if my bikeshed doesn't
+interest you, I'll give up :)  But the way it's done now seems to be for
+the case which should be very rare.
 
-  And this fixes it.
+As I see, all this PATH manipulation logic was meant to solve the case
+when the desired "git" version is not in the path or some mismatching
+components of it is.  Including the case when you want to point some
+higher level tool to one specific version of "git" to be used,
+irrespective of PATH.  Is this the right way to do it?  Is it
+really required at all?
 
- read-cache.c     |    2 +-
- t/t0000-basic.sh |    9 +++++++++
- 2 files changed, 10 insertions(+), 1 deletions(-)
+Apart from getting rid of this (possibly useful?) munging, I could see
+about two ways to change the behavior to less surprising:
 
-diff --git a/read-cache.c b/read-cache.c
-index a602010..e856a2e 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -517,7 +517,7 @@ static int has_dir_name(const struct cache_entry *ce, int pos, int ok_to_replace
- 		pos = cache_name_pos(name, ntohs(create_ce_flags(len, stage)));
- 		if (pos >= 0) {
- 			retval = -1;
--			if (ok_to_replace)
-+			if (!ok_to_replace)
- 				break;
- 			remove_cache_entry_at(pos);
- 			continue;
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 3260d1d..0cd1c41 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -272,4 +272,13 @@ test_expect_success \
- 	 wc -l) &&
-      test $numparent = 1'
- 
-+test_expect_success 'update-index D/F conflict' '
-+	mv path0 tmp &&
-+	mv path2 path0 &&
-+	mv tmp path2 &&
-+	git update-index --add --replace path2 path0/file2 &&
-+	numpath0=$(git ls-files path0 | wc -l) &&
-+	test $numpath0 = 1
-+'
-+
- test_done
+- Don't make PATH munging if "our" path is in the PATH already.
+- Save the PATH before munging, and restore before any non-git command
+  is run.  This is a bit complex, as multiple languages are used,
+  including sh..
+
+Both could make sense, but I don't think either is the correct way.
+
+What bit me, if someone cares about the details, is that on my system,
+everything is in the correct path, even git*.  There is however a private
+~/bin at the front of the PATH containing some preferred/fixed versions
+of some system tools.  When git (living as a normal citizen in /usr/bin)
+does its PATH munging, it puts /usr/bin in the front of the path,
+skipping this well built house of cards.  As I said, I can live with
+that, since only ssh is one that I can designate as "important", and
+that one can be set separately with GIT_SSH, but still..
+
