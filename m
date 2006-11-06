@@ -1,75 +1,122 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: n0dalus <n0dalus+redhat@gmail.com>
-Subject: Using git-bisect to find more than one breakage
-Date: Tue, 12 Dec 2006 15:04:29 +1030
-Message-ID: <6280325c0612112034x373c8022q909ca192a866cfcf@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] git-pickaxe -C -C -C
+Date: Mon, 06 Nov 2006 01:08:10 -0800
+Message-ID: <7vmz75djt1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 12 Dec 2006 04:34:42 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 6 Nov 2006 09:08:22 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        b=AvKbvNpmjmaPYmTNeKsIe1lUHsO0bqVHUhUpFp4ptIOhVXV4D44M/sMB4OcmPpqOWOBbvRY7qtl7FpAbhVO0MfTgPFM1TyE1yN0Zt8JA4KkdtM15nIf1FBWxE7qePHcwUf0q+kdexBxcU6zefvpDLqYemq8KWj2EtEtFr+I55MQ=
-Content-Disposition: inline
-X-Google-Sender-Auth: 7a3705c50a19ec33
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34060>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtzLd-0007sU-9k for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 05:34:33 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31003>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gh0Sm-00039o-Ab for gcvg-git@gmane.org; Mon, 06 Nov
+ 2006 10:08:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751150AbWLLEea (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
- 23:34:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751149AbWLLEea
- (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 23:34:30 -0500
-Received: from wx-out-0506.google.com ([66.249.82.230]:35744 "EHLO
- wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1751150AbWLLEe3 (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec
- 2006 23:34:29 -0500
-Received: by wx-out-0506.google.com with SMTP id h27so1780295wxd for
- <git@vger.kernel.org>; Mon, 11 Dec 2006 20:34:29 -0800 (PST)
-Received: by 10.70.75.14 with SMTP id x14mr13794174wxa.1165898069098; Mon, 11
- Dec 2006 20:34:29 -0800 (PST)
-Received: by 10.70.129.20 with HTTP; Mon, 11 Dec 2006 20:34:29 -0800 (PST)
+ S1161727AbWKFJIN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
+ 04:08:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161728AbWKFJIN
+ (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 04:08:13 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:40888 "EHLO
+ fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1161727AbWKFJIL
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 04:08:11 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao05.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061106090811.WHVA18816.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>; Mon, 6
+ Nov 2006 04:08:11 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id jM7o1V0011kojtg0000000 Mon, 06 Nov 2006
+ 04:07:48 -0500
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Three -C options makes the command to look for copied lines from _any_
+existing file in the parent commit, not just changed files.
 
-I am trying to find commits in the 2.6.18 linux tree that
-cause/trigger problems for a program I use. I found the first commit
-by using git-bisect. However, somewhere between that commit and master
-there is at least one more commit that breaks things. I'm sure there
-must be a way to find this, but the method I'm using doesn't seem to
-work (I'm new to git).
+This is of course _very_ expensive.
 
-This is what I tried to do:
-- Make a branch ("working") at the bad commit
-- Commit a patch to undo the bug-causing change from that commit
-- Make a copy of the master branch
-- git-rebase working
-- (Then if that worked, use git-bisect to find the next breakage)
+Some numbers and observations.
 
-I expected git-rebase to just apply all the commits from the master
-onto my working branch, possibly stopping in the case of a conflict to
-the file I patched. Instead, it produces large conflicts with
-unrelated files, on the very first commit it tries to apply. I even
-get the conflicts if the commit I make before using git-rebase changes
-no files at all (just adding an empty file 'test').
+* git-pickaxe -C revision.c
+2.22user 0.02system 0:02.24elapsed 100%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+5263minor)pagefaults 0swaps
+num read blob 486
 
-Is there something wrong with my method here? Is there another way to do this?
+* git-pickaxe -C -C -C revision.c
+35.42user 0.27system 0:37.66elapsed 94%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (14major+115543minor)pagefaults 0swaps
+num read blob 43277
 
-I am thinking for now I will just use git-bisect between the bad
-commit and master, and apply my changes to every bisection.
+Comparing the output from the above two, with this option, it
+finds that some lines were copied from diff.c, diff-tree.c and
+merge-cache.c; they are obvious patterns justifiably repeated.
 
-Any help greatly appreciated,
+ - list of parameters to a function (ll. 214-217, 247-249);
+
+ - definitions of local variables (ll. 260-263);
+
+ - loops over all cache entries (ll. 581-584).
+
+This change probably falls into the category of "I did this not
+because it is useful in practice but just because I could".
+
+Nevertheless, looking at the output was very interesting.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+ builtin-pickaxe.c |   10 +++++++---
+ 1 files changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/builtin-pickaxe.c b/builtin-pickaxe.c
+index f12b2d4..619a8c6 100644
+--- a/builtin-pickaxe.c
++++ b/builtin-pickaxe.c
+@@ -19,7 +19,7 @@
+ #include <sys/time.h>
+ 
+ static char pickaxe_usage[] =
+-"git-pickaxe [-c] [-l] [-t] [-f] [-n] [-p] [-L n,m] [-S <revs-file>] [-M] [-C] [-C] [commit] [--] file\n"
++"git-pickaxe [-c] [-l] [-t] [-f] [-n] [-p] [-L n,m] [-S <revs-file>] [-M] [-C] [-C] [-C] [commit] [--] file\n"
+ "  -c, --compatibility Use the same output mode as git-annotate (Default: off)\n"
+ "  -l, --long          Show long commit SHA1 (Default: off)\n"
+ "  -t, --time          Show raw timestamp (Default: off)\n"
+@@ -48,6 +48,7 @@ static int num_commits;
+ #define PICKAXE_BLAME_MOVE		01
+ #define PICKAXE_BLAME_COPY		02
+ #define PICKAXE_BLAME_COPY_HARDER	04
++#define PICKAXE_BLAME_COPY_HARDEST	010
+ 
+ /*
+  * blame for a blame_entry with score lower than these thresholds
+@@ -885,8 +886,9 @@ static int find_copy_in_parent(struct sc
+ 	 * and this code needs to be after diff_setup_done(), which
+ 	 * usually makes find-copies-harder imply copy detection.
+ 	 */
+-	if ((opt & PICKAXE_BLAME_COPY_HARDER) &&
+-	    (!porigin || strcmp(target->path, porigin->path)))
++	if (((opt & PICKAXE_BLAME_COPY_HARDER) &&
++	     (!porigin || strcmp(target->path, porigin->path))) ||
++	    (opt & PICKAXE_BLAME_COPY_HARDEST))
+ 		diff_opts.find_copies_harder = 1;
+ 
+ 	diff_tree_sha1(parent->tree->object.sha1,
+@@ -1569,6 +1571,8 @@ int cmd_pickaxe(int argc, const char **a
+ 			blame_move_score = parse_score(arg+2);
+ 		}
+ 		else if (!strncmp("-C", arg, 2)) {
++			if (opt & PICKAXE_BLAME_COPY_HARDER)
++				opt |= PICKAXE_BLAME_COPY_HARDEST;
+ 			if (opt & PICKAXE_BLAME_COPY)
+ 				opt |= PICKAXE_BLAME_COPY_HARDER;
+ 			opt |= PICKAXE_BLAME_COPY | PICKAXE_BLAME_MOVE;
+-- 
+1.4.3.4.g9f05
+
