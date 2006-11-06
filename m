@@ -1,72 +1,108 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] make commit message a little more consistent and conforting
-Date: Fri, 15 Dec 2006 10:14:55 -0800
-Message-ID: <7vvekdvxeo.fsf@assigned-by-dhcp.cox.net>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net>
-	<200612132237.10051.andyparkins@gmail.com>
-	<7vk60vbcfz.fsf@assigned-by-dhcp.cox.net>
-	<200612140959.19209.andyparkins@gmail.com>
-	<7v7iwu93rv.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0612141343200.18171@xanadu.home>
-	<Pine.LNX.4.64.0612142307160.18171@xanadu.home>
-	<20061215042459.GC27343@spearce.org> <45825E0B.5010200@op5.se>
-	<20061215150909.GE17860@spearce.org>
-	<Pine.LNX.4.64.0612151032240.18171@xanadu.home>
+From: Liu Yubao <yubao.liu@gmail.com>
+Subject: Re: how to show log for only one branch
+Date: Mon, 06 Nov 2006 18:41:57 +0800
+Message-ID: <454F1175.9080506@gmail.com>
+References: <454EAEDB.8020909@gmail.com> <7vk629f6is.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 15 Dec 2006 18:15:12 +0000 (UTC)
-Cc: Shawn Pearce <spearce@spearce.org>, Andreas Ericsson <ae@op5.se>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 6 Nov 2006 10:43:17 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=m56M8dqMBfpijF560m24hFsYRD9/htiOZ4FFELVsI/SmDBAjEys5QSkclpbffi40IuFF2znWroNQ6F4sudVNCkCeJazb12d3RaXZEFiSaztrcY5B5D6MRhHTn65+nFa7GH8ZNbxi9dq9h0ozD3sCmSdGuBMaPPqtbMJDRHkzB98=
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.7) Gecko/20060909 Thunderbird/1.5.0.7 Mnenhy/0.7.4.666
+In-Reply-To: <7vk629f6is.fsf@assigned-by-dhcp.cox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34537>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvHaP-0001WJ-3E for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 19:15:09 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31006>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gh1wR-0008NP-GD for gcvg-git@gmane.org; Mon, 06 Nov
+ 2006 11:42:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753123AbWLOSO7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 13:14:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753120AbWLOSO7
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 13:14:59 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:55005 "EHLO
- fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1753124AbWLOSO6 (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
- 13:14:58 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao12.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061215181456.GPYF4226.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>; Fri, 15
- Dec 2006 13:14:56 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id z6F71V0141kojtg0000000; Fri, 15 Dec 2006
- 13:15:08 -0500
-To: Nicolas Pitre <nico@cam.org>
+ S1751046AbWKFKm4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
+ 05:42:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751388AbWKFKm4
+ (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 05:42:56 -0500
+Received: from nz-out-0102.google.com ([64.233.162.197]:56188 "EHLO
+ nz-out-0102.google.com") by vger.kernel.org with ESMTP id S1751046AbWKFKmz
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 05:42:55 -0500
+Received: by nz-out-0102.google.com with SMTP id z3so766683nzf for
+ <git@vger.kernel.org>; Mon, 06 Nov 2006 02:42:54 -0800 (PST)
+Received: by 10.35.102.18 with SMTP id e18mr387121pym.1162809774439; Mon, 06
+ Nov 2006 02:42:54 -0800 (PST)
+Received: from ?192.168.88.85? ( [221.122.47.70]) by mx.google.com with ESMTP
+ id x72sm4831711pyg.2006.11.06.02.42.52; Mon, 06 Nov 2006 02:42:54 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre <nico@cam.org> writes:
+Junio C Hamano wrote:
+> Liu Yubao <yubao.liu@gmail.com> writes:
+> 
 
-> So in short I do think there should be something shown after a 
-> successful commit, and including the commit sha1 doesn't hurt.
-> ...
-> And it is true that diffstat can be quite large.  I wouldn't mind the 
-> diffstat to be added to the commit message summary in the text editor 
-> though.  And displaying it when -v is used makes also a lot of sense.  
-> But not by default please.
+Snip many great detailed description, thank you very much, I have
+a question about the way git treats fast forwarding but that will
+be another topic.
 
-I agree with everything you said in your message, including that
-commit object name might help as a learning aid.
+> What's mainline is _not_ important, and which parent is first is
+> even less so.  It solely depends on what you are looking for
+> which branch matters more.  Putting too much weight on the
+> difference between HEAD^1 vs HEAD^2 statically does not make any
+> sense.
+> 
+> Reflecting this view of history, git log and other history
+> traversal commands treat merge parents more or less equally, and
+> _how_ you ask your question affects what branches are primarily
+> followed.  For example, if somebody is interested in your device
+> driver work, this command:
+> 
+> 	git log -- drivers/liu-s-device/
+> 
+> would follow your side branch.  On the other hand,
+> 
+> 	git log -- fs/
+> 
+> would follow Linus's development track while you were forked, if
+> you did not do any fs/ work while on that side branch and
+> Linus's development track had works in that area, _despite_ the
+> merge you gave Linus has your development track as its first
+> parent.
+> 
 
-We could give something like this, though, if we wanted to:
+This is perfect and enough for two branches that work on different
+files, but if two branches modify same files, "git log" can't separate
+commits clearly. For example, I want to know what happened in your
+git's "next" branch, I hope to get logs like this:
+     Merge branch 'jc/pickaxe' into next
+     Merge branch 'master' into next
+     Merge branch 'js/modfix' into next
+     ...
+     some good work
+     ...
+     Merge branch ....
 
-	$ git commit
-        4 files changed, 17 insertions(+), 10 deletions(-)
-        mode change 100755 => 100644 test.sh
+I just want to *outline* what happened in "next" branch, if I am interested
+in what have been merged from 'jc/pickaxe' I can follow the merge point again
+or use something like "git log --follow-all-parents".
 
+Instead, "git log" interlaces logs from many branches, I find it's a little
+confused: why does "git log" of current branch contain many logs from other 
+branches? (This is not a real question, I know the reason)
+
+I indeed understand that HEAD^1 is not always the commit that my work
+bases on before a merge (thanks for your detailed description again:-),
+it doesn't make sense to show HEAD~1, HEAD~2, HEAD~3 and so on, that's
+to say 'git log' will never meet my requirement.
+
+Maybe reflog is what I need, I want to know which commits "next" have pointed
+to, but reflog is only for local purpose, it's not downloaded by 'git clone'
