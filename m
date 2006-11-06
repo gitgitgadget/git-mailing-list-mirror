@@ -2,133 +2,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 1/2] Move in_merge_bases() to commit.c
-Date: Tue, 19 Dec 2006 00:25:02 -0800
-Message-ID: <7vbqm0thr5.fsf@assigned-by-dhcp.cox.net>
-References: <7vodq3a136.fsf@assigned-by-dhcp.cox.net>
-	<7vr6uxzgjb.fsf@assigned-by-dhcp.cox.net>
-	<20061218140813.GA32446@spearce.org>
-	<7vy7p4u1au.fsf@assigned-by-dhcp.cox.net>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Rocco Rutte <pdmef@gmx.net>
+Subject: Re: If merging that is really fast forwarding creates new commit
+Date: Mon, 6 Nov 2006 13:39:23 +0000
+Organization: Berlin University of Technology
+Message-ID: <20061106133923.GB1151@robert.daprodeges.fqdn.th-h.de>
+References: <454EAEDB.8020909@gmail.com> <7vk629f6is.fsf@assigned-by-dhcp.cox.net> <454F31D7.1030202@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 19 Dec 2006 08:25:34 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii; format=flowed
+NNTP-Posting-Date: Mon, 6 Nov 2006 13:42:00 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Authenticated: #1642131
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <454F31D7.1030202@gmail.com>
+X-GnuPG-Key: http://user.cs.tu-berlin.de/~pdmef/rrutte.gpg
+X-Blog: http://user.cs.tu-berlin.de/~pdmef/horst.cgi?o
+X-System: robert (FreeBSD 6.2-PRERELEASE i386)
+User-Agent: Mutt/1.5.13-pdmef (2006-10-30)
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31012>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GwaHk-0002tb-KZ for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 09:25:17 +0100
+ esmtp (Exim 4.43) id 1Gh4hd-0003fR-M9 for gcvg-git@gmane.org; Mon, 06 Nov
+ 2006 14:39:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932669AbWLSIZF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 03:25:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932661AbWLSIZF
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 03:25:05 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:34837 "EHLO
- fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932670AbWLSIZE (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
- 03:25:04 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061219082503.JTIR20715.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Tue, 19
- Dec 2006 03:25:03 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id 0YRE1W00p1kojtg0000000; Tue, 19 Dec 2006
- 03:25:15 -0500
-To: Shawn Pearce <spearce@spearce.org>
+ S1753121AbWKFNjk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
+ 08:39:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753129AbWKFNjk
+ (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 08:39:40 -0500
+Received: from mail.gmx.de ([213.165.64.20]:40836 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1753121AbWKFNjj (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 08:39:39 -0500
+Received: (qmail invoked by alias); 06 Nov 2006 13:39:37 -0000
+Received: from cable-62-117-26-126.cust.blue-cable.de (EHLO
+ peter.daprodeges.fqdn.th-h.de) [62.117.26.126] by mail.gmx.net (mp010) with
+ SMTP; 06 Nov 2006 14:39:37 +0100
+Received: from robert.daprodeges.fqdn.th-h.de (robert.daprodeges.fqdn.th-h.de
+ [192.168.0.113]) (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+ (No client certificate requested) by peter.daprodeges.fqdn.th-h.de (Postfix)
+ with ESMTP id 93FDD20F02 for <git@vger.kernel.org>; Mon,  6 Nov 2006 13:39:36
+ +0000 (UTC)
+Received: from robert.daprodeges.fqdn.th-h.de (robert.daprodeges.fqdn.th-h.de
+ [192.168.0.113]) (using TLSv1 with cipher AES128-SHA (128/128 bits)) (No
+ client certificate requested) by robert.daprodeges.fqdn.th-h.de (Postfix)
+ with ESMTP id E59A233FF6 for <git@vger.kernel.org>; Mon,  6 Nov 2006 13:39:24
+ +0000 (UTC)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-This reasonably useful function was hidden inside builtin-branch.c
----
+Hi,
 
- * This is used by the next one, which is why this is part of
-   the 'reflog entry and pruning' series.
+* Liu Yubao [06-11-06 21:00:07 +0800] wrote:
 
- builtin-branch.c |   21 +--------------------
- commit.c         |   17 +++++++++++++++++
- commit.h         |    1 +
- 3 files changed, 19 insertions(+), 20 deletions(-)
+>Then, what bad *logical* problem will happen if a merging that is really a fast forwarding creates a new commit?
 
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 560309c..12eebc0 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -70,25 +70,6 @@ const char *branch_get_color(enum color_branch ix)
- 	return "";
- }
- 
--static int in_merge_bases(const unsigned char *sha1,
--			  struct commit *rev1,
--			  struct commit *rev2)
--{
--	struct commit_list *bases, *b;
--	int ret = 0;
--
--	bases = get_merge_bases(rev1, rev2, 1);
--	for (b = bases; b; b = b->next) {
--		if (!hashcmp(sha1, b->item->object.sha1)) {
--			ret = 1;
--			break;
--		}
--	}
--
--	free_commit_list(bases);
--	return ret;
--}
--
- static void delete_branches(int argc, const char **argv, int force)
- {
- 	struct commit *rev, *head_rev = head_rev;
-@@ -119,7 +100,7 @@ static void delete_branches(int argc, const char **argv, int force)
- 		 */
- 
- 		if (!force &&
--		    !in_merge_bases(sha1, rev, head_rev)) {
-+		    !in_merge_bases(rev, head_rev)) {
- 			fprintf(stderr,
- 				"The branch '%s' is not a strict subset of your current HEAD.\n"
- 				"If you are sure you want to delete it, run 'git branch -D %s'.\n",
-diff --git a/commit.c b/commit.c
-index a6d543e..4bddcbe 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1009,3 +1009,20 @@ struct commit_list *get_merge_bases(struct commit *one,
- 	free(rslt);
- 	return result;
- }
-+
-+int in_merge_bases(struct commit *rev1, struct commit *rev2)
-+{
-+	struct commit_list *bases, *b;
-+	int ret = 0;
-+
-+	bases = get_merge_bases(rev1, rev2, 1);
-+	for (b = bases; b; b = b->next) {
-+		if (!hashcmp(rev1->object.sha1, b->item->object.sha1)) {
-+			ret = 1;
-+			break;
-+		}
-+	}
-+
-+	free_commit_list(bases);
-+	return ret;
-+}
-diff --git a/commit.h b/commit.h
-index fc13de9..10eea9f 100644
---- a/commit.h
-+++ b/commit.h
-@@ -107,4 +107,5 @@ int read_graft_file(const char *graft_file);
- 
- extern struct commit_list *get_merge_bases(struct commit *rev1, struct commit *rev2, int cleanup);
- 
-+int in_merge_bases(struct commit *rev1, struct commit *rev2);
- #endif /* COMMIT_H */
+I don't know what you expect by "logical" nor if I get you right, but if 
+fast-forward merge a branch to another one, both branches now have 
+exactly the same hash. If you create a commit object for a fast-forward 
+merge, both tip hashes not identical anymore... which is bad.
+
+The identical hash important so that you really know they're identical 
+and for future reference like ancestry.
+
+   bye, Rocco
 -- 
-1.4.4.2.g688739
-
