@@ -1,64 +1,114 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: cygwin, 44k files: how to commit only index?
-Date: Thu, 07 Dec 2006 11:16:39 -0800
-Message-ID: <7vd56vtt2g.fsf@assigned-by-dhcp.cox.net>
-References: <81b0412b0612070627r3ff0b394s124d95fbf8084f16@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] Documentation: Transplanting branch with git-rebase --onto
+Date: Mon, 6 Nov 2006 19:12:45 +0100
+Message-ID: <200611061912.46436.jnareb@gmail.com>
+References: <200611042205.58212.jnareb@gmail.com> <7vbqnmwvib.fsf@assigned-by-dhcp.cox.net> <200611051122.17623.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 7 Dec 2006 19:17:02 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 6 Nov 2006 18:41:43 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <81b0412b0612070627r3ff0b394s124d95fbf8084f16@mail.gmail.com>
-	(Alex Riesen's message of "Thu, 7 Dec 2006 15:27:36 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=hVa+0dhkyL/I04kpNV4KEg1yjdBZswrBokdtUqTt5oM2IeAytPzJjl86PTrAHiS3NzcyZerX3IscALEBo5CKkbP26zurLDS9CUvGIjeDU2FE0L0CBhigTJbjz35xQ8sotijvntdFF41D9PnRMwMcH5ywOcZu6bv1eFGAZxtMiQ4=
+User-Agent: KMail/1.9.3
+In-Reply-To: <200611051122.17623.jnareb@gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33605>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsOjq-0004PN-IV for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 20:16:58 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31024>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gh8xK-0005s2-0N for gcvg-git@gmane.org; Mon, 06 Nov
+ 2006 19:12:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1163216AbWLGTQm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 14:16:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163218AbWLGTQm
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 14:16:42 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:62016 "EHLO
- fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1163216AbWLGTQl (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 14:16:41 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061207191640.FHPO2628.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Thu, 7
- Dec 2006 14:16:40 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id vvGq1V00p1kojtg0000000; Thu, 07 Dec 2006
- 14:16:51 -0500
-To: "Alex Riesen" <raa.lkml@gmail.com>
+ S1753750AbWKFSMR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
+ 13:12:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753751AbWKFSMR
+ (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 13:12:17 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:48057 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1753749AbWKFSMQ
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 13:12:16 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so960336ugc for
+ <git@vger.kernel.org>; Mon, 06 Nov 2006 10:12:15 -0800 (PST)
+Received: by 10.67.22.14 with SMTP id z14mr7753570ugi.1162836734918; Mon, 06
+ Nov 2006 10:12:14 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id x26sm4818492ugc.2006.11.06.10.12.14; Mon, 06 Nov
+ 2006 10:12:14 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-"Alex Riesen" <raa.lkml@gmail.com> writes:
+Added example of transplantig feature branch from one development
+branch (for example "next") into the other development branch (for
+example "master").
 
-> I have a kind of awkward project to work with (~44k files, many binaries).
->
-> The normal "git commit", which seem to be more than enough
-> for anything and anyone else, is a really annoying procedure
-> in my context. It spend too much time refreshing index and
-> generating list of the files for the commit message.
->
-> At first I stopped using git commit -a (doing only update-index),
+[jn: with a little help from Junio]
 
-I am not sure what you are trying.  Do you mean stat() is slow
-on your filesystem?
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+What about this?
 
-> Is there any simple way to modify git commit for such a workflow?
-> Failing that, any simple and _fast_ way to find out if the index
-> is any different from HEAD? (so that I don't produce empty commits).
+The second example I think has place in tutorial or GitTips on GitWiki
 
-Maybe you want "assume unchanged"?
+
+ Documentation/git-rebase.txt |   34 ++++++++++++++++++++++++++++++++++
+ 1 files changed, 34 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 10f2924..9e822c5 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -65,6 +65,40 @@ would be:
+     D---E---F---G master
+ ------------
+ 
++
++Here is how you would transplant a topic branch based on one
++branch to another, to pretend that you forked the topic branch
++from the latter branch, using `rebase --onto`.
++
++First let's assume your 'topic' is based on branch 'next'.
++For example feature developed in 'topic' depends on some
++functionality which is found in 'next'.
++
++------------
++    o---o---o---o---o  master
++         \
++          o---o---o---o---o  next
++                           \
++                            o---o---o  topic
++------------
++
++We would want to make 'topic' forked from branch 'master',
++for example because the functionality 'topic' branch depend on
++got merged into more stable 'master' branch, like this:
++
++------------
++    o---o---o---o---o  master
++        |            \
++        |             o'--o'--o'  topic
++         \
++          o---o---o---o---o  next
++------------
++
++We can get this using the following command:
++
++    git-rebase --onto master next topic
++
++
+ In case of conflict, git-rebase will stop at the first problematic commit
+ and leave conflict markers in the tree.  You can use git diff to locate
+ the markers (<<<<<<) and make edits to resolve the conflict.  For each
+-- 
+1.4.3.4
