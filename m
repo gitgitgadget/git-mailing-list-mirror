@@ -1,71 +1,97 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: gitk broken or user error?
-Date: Tue, 14 Nov 2006 09:05:39 +1100
-Message-ID: <17752.60467.854884.206737@cargo.ozlabs.ibm.com>
-References: <m2irhkr467.fsf@ziti.local>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: If merging that is really fast forwarding creates new commit
+ [Was: Re: how to show log for only one branch]
+Date: Mon, 6 Nov 2006 07:48:05 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611060734490.25218@g5.osdl.org>
+References: <454EAEDB.8020909@gmail.com> <7vk629f6is.fsf@assigned-by-dhcp.cox.net>
+ <454F31D7.1030202@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 13 Nov 2006 22:07:14 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Mon, 6 Nov 2006 15:53:10 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <m2irhkr467.fsf@ziti.local>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+In-Reply-To: <454F31D7.1030202@gmail.com>
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31015>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gjjw6-0006Jy-4c for gcvg-git@gmane.org; Mon, 13 Nov
- 2006 23:05:50 +0100
+ esmtp (Exim 4.43) id 1Gh6iM-0005eW-Sf for gcvg-git@gmane.org; Mon, 06 Nov
+ 2006 16:48:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755363AbWKMWFq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006
- 17:05:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755364AbWKMWFq
- (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 17:05:46 -0500
-Received: from ozlabs.org ([203.10.76.45]:1451 "EHLO ozlabs.org") by
- vger.kernel.org with ESMTP id S1755363AbWKMWFq (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 17:05:46 -0500
-Received: by ozlabs.org (Postfix, from userid 1003) id 4606667EC5; Tue, 14
- Nov 2006 09:05:45 +1100 (EST)
-To: Seth Falcon <sethfalcon@gmail.com>
+ S1753255AbWKFPs2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
+ 10:48:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753259AbWKFPs2
+ (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 10:48:28 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:57809 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1753255AbWKFPs1 (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 10:48:27 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kA6Fm6oZ020565
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Mon, 6
+ Nov 2006 07:48:08 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kA6Fm55V022754; Mon, 6 Nov
+ 2006 07:48:06 -0800
+To: Liu Yubao <yubao.liu@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Seth Falcon writes:
 
-> I tried a certainly incorrect thing; just commenting out the offending
-> lines:
 
-[snip]
-> -    .bar.view entryconf 2 -state normal
-> -    .bar.view entryconf 3 -state normal
-> +#    .bar.view entryconf 2 -state normal
-> +#    .bar.view entryconf 3 -state normal
->  }
->  
->  if {[info exists permviews]} {
+On Mon, 6 Nov 2006, Liu Yubao wrote:
 > 
-> And now gitk _seems_ to work.  No error message, and I can pass
-> argument to gitk like --all (wow, very useful).
+> Then, what bad *logical* problem will happen if a merging that is really a
+> fast forwarding creates a new commit?
 
-Those lines are intended to enable the "Edit view" and "Delete view"
-entries in the View menu.  Those entries start out disabled and are
-supposed to be disabled when the "All files" view is displayed, and
-enabled when any other view is displayed.
+You MUST NOT do that.
 
-I suspect that under OSX, the menu gets an extra entry, or something,
-that throws off the numbering.  Instead of commenting out those lines,
-could you instead try changing the 2 and 3 to "Edit*" and "Delete*"
-instead?  If that works I'll do a patch to fix the problem properly.
+If a fast-forward were to do a "merge commit", you'd never get into the 
+situation where two people merging each other would really ever get a 
+stable result. They'd just keep doing merge commits on top of each other.
 
-> I posted about this in October [*1*], but didn't get any response.
+Git tracks history, not "your view of history". Trying to track "your 
+view" is fundamentally wrong, because "your wiew" automatically means that 
+the project history would not be distributed any more - it would be 
+centralized around what _you_ think happened. That is not a sensible thing 
+to have in a distributed system.
 
-I tend to read the git list intermittently (lkml and linuxppc-dev keep
-me pretty much occupied :).  Please cc me on any gitk bug reports.
+For example, the way to break the "infinite merges" problem above is to 
+say that _you_ would be special, and you would do a "fast-forward commit", 
+and the other side would always just fast-forward without a commit. But 
+that is very fundamentally against the whole point of being distributed. 
+Now you're special.
+
+In fact, even for "you", it would be horrible - because you personally 
+might have 5 different repositories on five different machines. You'd have 
+to select _which_ machine you want to track. That's simply insane. It's a 
+totally broken model. (You can even get the same situation with just _one_ 
+repository, by just having five different branches - you have to decide 
+which one is the "main" branch).
+
+Besides, doing an empty commit like that ("I fast forwarded") literally 
+doesn't add any true history information. It literally views history not 
+as history of the _project_, but as the history of just one of the 
+repositories. And that's wrong.
+
+So just get used to it. You MUST NOT do what you want to do. It's stupid.
+
+If you want to track the history of one particular local branch, use the 
+"reflog" thing. It allows you to see what one of your local branches 
+contained at any particular time.
+
+See
+
+	[core]
+		logAllRefUpdates = true
+
+documentation in "man git-update-refs" (and maybe somebody can write more 
+about it?)
 
