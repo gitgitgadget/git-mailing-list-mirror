@@ -1,68 +1,68 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Do not ignore hidden refs
-Date: Sat, 18 Nov 2006 20:28:30 +0100
-Message-ID: <20061118192830.GP7201@pasky.or.cz>
-References: <20061118041137.6064.75827.stgit@machine.or.cz> <7v8xi9fjw9.fsf@assigned-by-dhcp.cox.net> <20061118045323.GK7201@pasky.or.cz> <7vzmapdxki.fsf@assigned-by-dhcp.cox.net>
+From: Liu Yubao <yubao.liu@gmail.com>
+Subject: how to show log for only one branch
+Date: Mon, 06 Nov 2006 11:41:15 +0800
+Message-ID: <454EAEDB.8020909@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 18 Nov 2006 19:28:49 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 6 Nov 2006 03:42:36 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <7vzmapdxki.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=mfEvGhvxUaLgxe8ARVvKDa5k2QQNI74hqScydVzhXe2M0HJAAs4rm+xK+fkb3QZg3ZXK9apNtotxm0teyon7pbJZlPf4yv5ccaAMkdADI/Afc91Nvy0edaZGy5Hop7HPgtSHAMM/2ucpTd8cq4ngBY+8dK4JgEdGXtET8RU60L0=
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.7) Gecko/20060909 Thunderbird/1.5.0.7 Mnenhy/0.7.4.666
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30990>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlVrk-0007tV-1O for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 20:28:40 +0100
+ esmtp (Exim 4.43) id 1GgvNW-0006tg-F9 for gcvg-git@gmane.org; Mon, 06 Nov
+ 2006 04:42:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1756389AbWKRT2d (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
- 14:28:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756395AbWKRT2d
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 14:28:33 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:28615 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1756389AbWKRT2c (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 14:28:32 -0500
-Received: (qmail 23030 invoked by uid 2001); 18 Nov 2006 20:28:30 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1423408AbWKFDmQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
+ 22:42:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423415AbWKFDmQ
+ (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 22:42:16 -0500
+Received: from py-out-1112.google.com ([64.233.166.183]:28910 "EHLO
+ py-out-1112.google.com") by vger.kernel.org with ESMTP id S1423408AbWKFDmQ
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 22:42:16 -0500
+Received: by py-out-1112.google.com with SMTP id a73so922523pye for
+ <git@vger.kernel.org>; Sun, 05 Nov 2006 19:42:15 -0800 (PST)
+Received: by 10.35.40.10 with SMTP id s10mr9569323pyj.1162784535068; Sun, 05
+ Nov 2006 19:42:15 -0800 (PST)
+Received: from ?192.168.88.85? ( [221.122.47.70]) by mx.google.com with ESMTP
+ id n27sm4395127pyh.2006.11.05.19.42.13; Sun, 05 Nov 2006 19:42:14 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Sat, Nov 18, 2006 at 08:27:09AM CET, Junio C Hamano wrote:
-> I think, however, if we (collectively as all the Porcelain
-> writers although I am not really one of them) are to support it,
-> they should not make distinction to the core, and it should be
-> handled with the agreed-upon convention.
+I'm some confused by `git log', here is a revision graph:
 
-I guess I agree.
+a-----> b ---> c ----------------> f ---> g --- master
+         \                        /
+          `------> d ----------> e ---- test
 
-> Personally I established a convention to treat heads/??/* as
-> "private namespace" while using heads/* as public refs for my
-> own work (I do that for git.git as people know, and I do that
-> for my day job project as well).  I do not think it is a great
-> enough convention to be promoted as the official BCP, but it has
-> been good enough for me, especially commands like "show-branch"
-> and "tag -l" understands the shell-style filegrobs (e.g
-> "show-branch master heads/??/*" would show what's yet to be
-> polished and merged).
+I hope `git log ...` shows g, f, c, b, a.
 
-That's way too arbitrary for my taste, I think I needn't explain why.
-:-)
+`git log master` shows g, f, e, d, c, b, a;
+`git log master ^test` shows g, f, c.
+`git log --no-merges master` shows g, e, d, c, b, a.
 
+That's to say, I want to view master, master~1, master~2, master~3, ...
+until the beginning, no commits in other branches involved.
 
-What about leading underscore?
+I have heard git treats all parents equally in a merge operation, so I
+am curious how git decides which parent is HEAD^1.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-The meaning of Stonehenge in Traflamadorian, when viewed from above, is:
-"Replacement part being rushed with all possible speed."
+I feel the HEAD^1 branch is more special than HEAD^2 branch, because HEAD^1
+is usually the working branch and the target branch of merging operation.
+it's a little more convenient to see only commits that really happen in
+current branch, especially for people who come from CVS and Subversion (yes,
+I think git is more interesting than CVS and Subversion:-).
