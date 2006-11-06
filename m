@@ -1,75 +1,59 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Anand Kumria <wildfire@progsoc.org>
-Subject: Re: selective git-update-index per diff(1) chunks
-Date: Fri, 1 Dec 2006 16:45:06 +0000 (UTC)
-Message-ID: <ekpm6i$s35$1@sea.gmane.org>
-References: <b6fcc0a0612010323x7554e47m5e6bdafe85fc8224@mail.gmail.com>
-	<slrnen04os.a5.Peter.B.Baumann@xp.machine.xx>
-	<7v3b7zalsq.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-NNTP-Posting-Date: Fri, 1 Dec 2006 16:47:03 +0000 (UTC)
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: Re: [PATCH] git-pickaxe -C -C -C
+Date: Mon, 06 Nov 2006 13:46:17 -0300
+Message-ID: <200611061646.kA6GkHgi009592@laptop13.inf.utfsm.cl>
+References: <junkio@cox.net>
+NNTP-Posting-Date: Mon, 6 Nov 2006 17:00:55 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 26
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: backup.global.cn
-User-Agent: pan 0.119 (Karma Hunters)
+In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
+   of "Mon, 06 Nov 2006 01:08:10 -0800." <7vmz75djt1.fsf@assigned-by-dhcp.cox.net> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.19.1]); Mon, 06 Nov 2006 13:46:18 -0300 (CLST)
+X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31018>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqBWn-0001Q0-Jy for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 17:46:22 +0100
+ esmtp (Exim 4.43) id 1Gh7cN-0006Wb-0l for gcvg-git@gmane.org; Mon, 06 Nov
+ 2006 17:46:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031592AbWLAQqR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 11:46:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031594AbWLAQqR
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 11:46:17 -0500
-Received: from main.gmane.org ([80.91.229.2]:59847 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1031592AbWLAQqR (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 11:46:17 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GqBW9-0001CK-1r for git@vger.kernel.org; Fri, 01 Dec 2006 17:45:41 +0100
-Received: from backup.global.cn ([195.224.169.69]) by main.gmane.org with
- esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Fri, 01 Dec 2006 17:45:41 +0100
-Received: from wildfire by backup.global.cn with local (Gmexim 0.1 (Debian))
- id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 01 Dec 2006 17:45:41
- +0100
-To: git@vger.kernel.org
+ S1753402AbWKFQqb (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
+ 11:46:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753421AbWKFQqb
+ (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 11:46:31 -0500
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:2029 "EHLO
+ inti.inf.utfsm.cl") by vger.kernel.org with ESMTP id S1753402AbWKFQqa (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 11:46:30 -0500
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
+ by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id kA6GkINd012462
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); Mon, 6
+ Nov 2006 13:46:18 -0300
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1]) by
+ laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id kA6GkHgi009592; Mon, 6
+ Nov 2006 13:46:17 -0300
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Fri, 01 Dec 2006 03:38:13 -0800, Junio C Hamano wrote:
+Junio C Hamano <junkio@cox.net> wrote:
+> Three -C options makes the command to look for copied lines from _any_
+> existing file in the parent commit, not just changed files.
 
-> Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
-> writes:
-> 
->> I don't think it belongs in the plumbing, the git-update-index but I
->> think something like this would be very usefull.
->>
->> AFAIR darcs has this functionality. It selectively ask for each hunk if
->> it should be commited. This would be awfull to have in git.
-> 
-> I concur, on both counts.  My own now-defunct Porcelain had the
-> darcs style interactive hunk selection because it felt so
-> useful (and sometimes it was).
+IMHO, this is horrible UI.
 
-Is there a good receipe on how to do this? Everytime I do it, I try a
-different method; since I'm testing out my understanding of things.
-
-It'd nice to have some of these "advanced receipes" that people often do
-noted down somewhere.
-
-Sometimes I feel git is kind of like the Emacs of VCS ... there is always
-more to learn, even when you think you have a good handle on things.
-
-Cheers,
-Anand
+-C        is one thing
+-C -C     is another
+-C -C -C  is still another?
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                    Fono: +56 32 2654431
+Universidad Tecnica Federico Santa Maria             +56 32 2654239
+Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
