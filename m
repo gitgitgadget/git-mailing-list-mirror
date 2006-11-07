@@ -1,53 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/2] move Git.pm build instructions into perl/Makefile
-Date: Mon, 04 Dec 2006 02:31:42 -0800
-Message-ID: <7v64csq7e9.fsf@assigned-by-dhcp.cox.net>
-References: <20061121225911.GA24201@steel.home>
-	<81b0412b0611300827h64722fa0i7e32808994a97a51@mail.gmail.com>
-	<7vvektyi7n.fsf@assigned-by-dhcp.cox.net>
-	<81b0412b0612040156w794a276cqaa37f1734ba7a1ca@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/n] gitweb: Use '&iquot;' instead of '?' in esc_path
+Date: Tue, 7 Nov 2006 22:53:33 +0100
+Message-ID: <200611072253.34291.jnareb@gmail.com>
+References: <200610301953.01875.jnareb@gmail.com> <200611062258.08320.jnareb@gmail.com> <7v8xiochw0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 4 Dec 2006 10:31:52 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 7 Nov 2006 21:53:27 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <81b0412b0612040156w794a276cqaa37f1734ba7a1ca@mail.gmail.com>
-	(Alex Riesen's message of "Mon, 4 Dec 2006 10:56:49 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=bGjhZH7jsydkzLy7xvc+HYboA8/cE7pA00l1tjHbgTr6b42QnbDsGmHtd6+nBqaEftawhGaPrUtjbMi3IbOc/S7CvcNdrkjKi9FRDpNCLFvs5mXJ8Yvvn6u6YGxDpDxyEL9AYWm3e/5cVdCvUKjV5tKi3xENav5733aKHj40yo0=
+User-Agent: KMail/1.9.3
+In-Reply-To: <7v8xiochw0.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33181>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrB6w-0007yp-Qe for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 11:31:47 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31092>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GhYsX-0003AR-S1 for gcvg-git@gmane.org; Tue, 07 Nov
+ 2006 22:53:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758364AbWLDKbo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 05:31:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758398AbWLDKbo
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 05:31:44 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:1505 "EHLO
- fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1758364AbWLDKbn
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 05:31:43 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061204103143.FWOY18207.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Mon, 4
- Dec 2006 05:31:43 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id uaX81V0081kojtg0000000; Mon, 04 Dec 2006
- 05:31:08 -0500
-To: "Alex Riesen" <raa.lkml@gmail.com>
+ S1753241AbWKGVw6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
+ 16:52:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753242AbWKGVw6
+ (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 16:52:58 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:48218 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1753241AbWKGVw5
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 16:52:57 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so1343840ugc for
+ <git@vger.kernel.org>; Tue, 07 Nov 2006 13:52:55 -0800 (PST)
+Received: by 10.66.232.10 with SMTP id e10mr9800347ugh.1162936375526; Tue, 07
+ Nov 2006 13:52:55 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id x26sm50797ugc.2006.11.07.13.52.55; Tue, 07 Nov
+ 2006 13:52:55 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-"Alex Riesen" <raa.lkml@gmail.com> writes:
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> Here is example code for this:
+> 
+> Ok.  The issues I raised in the previous round seem to have been
+> addressed.  Maybe you would want not to use nested 'sub' and it
+> is good to go, I think.
 
-> Updated patch attached.
+Should I understand this as a statement that you prefer backslash 
+sequences aka. Character Escape Codes (CEC) than "Unicode" escaping 
+aka. Unicode Printable Representation (PR)?
 
-Will apply, thanks, but with a few tweaks while I had to hand
-munge your attachment anyway.
+Should I send better quoting/unquoting work as two patches: unquote 
+correction plus '?' using esc_path + esc_path which uses backslash 
+sequences and span.cntrl element, or should it be send as one, 
+admittedly quite large patch. 
+
+I don't think it would be good idea to separate unquote correction with 
+esc_path work, because havin unquote which unquotes fully means that we 
+can have filenames which have for exampl newline characters in them, 
+hence the need of separate quoting subroutine, esc_path, and using it 
+for filename escaping.
+-- 
+Jakub Narebski
