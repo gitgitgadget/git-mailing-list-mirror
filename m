@@ -1,71 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
-Date: Fri, 01 Dec 2006 09:44:03 +0100
-Message-ID: <456FEB53.7080703@op5.se>
-References: <7virgzuf38.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611282322320.9647@xanadu.home>	<7vr6vmsnly.fsf@assigned-by-dhcp.cox.net>	<87ejrlvn7r.wl%cworth@cworth.org>	<7vodqpn3t4.fsf@assigned-by-dhcp.cox.net>	<7vk61dn2yj.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.63.0611300310520.30004@wbgn013.biozentrum.uni-wuerzburg.de>	<Pine.LNX.4.64.0611291859070.3513@woody.osdl.org>	<456EBBE7.8030404@op5.se>	<Pine.LNX.4.64.0611300749560.3513@woody.osdl.org>	<20061130164046.GB17715@thunk.org>	<Pine.LNX.4.64.0611300903080.3513@woody.osdl.org>	<Pine.LNX.4.64.0611301229290.9647@xanadu.home>	<87irgwu6e6.wl%cworth@cworth.org>	<ekn8s3$lh6$1@sea.gmane.org> <87fyc0u56z.wl%cworth@cworth.org>
+From: Liu Yubao <yubao.liu@gmail.com>
+Subject: Re: If merging that is really fast forwarding creates new commit
+Date: Tue, 07 Nov 2006 11:42:07 +0800
+Message-ID: <4550008F.8030809@gmail.com>
+References: <454EAEDB.8020909@gmail.com> <7vk629f6is.fsf@assigned-by-dhcp.cox.net> <454F31D7.1030202@gmail.com> <20061106133923.GB1151@robert.daprodeges.fqdn.th-h.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 1 Dec 2006 08:44:22 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+NNTP-Posting-Date: Tue, 7 Nov 2006 03:43:41 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <87fyc0u56z.wl%cworth@cworth.org>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=A2CoHBfQYHaQ1+XuSVHM7IPdWF3b5aGA0/q3sf8Gi5OYAO6OnGHY6vuiOgPO9jIdD2slr/aV6yaT4XvMYUoknaoFtudl1WVh8hzDZ3nmLYksqymkEvYFLdh5kF+Qhds4RTfHubtBYA8SO4ELO/sm/TksoP78XleG8dlgjCMQTCU=
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.7) Gecko/20060909 Thunderbird/1.5.0.7 Mnenhy/0.7.4.666
+In-Reply-To: <20061106133923.GB1151@robert.daprodeges.fqdn.th-h.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31043>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq40H-0002Xe-Sz for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 09:44:18 +0100
+ esmtp (Exim 4.43) id 1GhHry-0007MN-4E for gcvg-git@gmane.org; Tue, 07 Nov
+ 2006 04:43:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967556AbWLAIoO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 03:44:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967558AbWLAIoO
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 03:44:14 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:8071 "EHLO
- smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S967556AbWLAIoM (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 03:44:12 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id D81E36BCC3; Fri,  1 Dec 2006 09:44:06 +0100 (CET)
-To: Carl Worth <cworth@cworth.org>
+ S1753976AbWKGDnL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
+ 22:43:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753977AbWKGDnL
+ (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 22:43:11 -0500
+Received: from wx-out-0506.google.com ([66.249.82.239]:59045 "EHLO
+ wx-out-0506.google.com") by vger.kernel.org with ESMTP id S1753976AbWKGDnK
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 22:43:10 -0500
+Received: by wx-out-0506.google.com with SMTP id s14so1265301wxc for
+ <git@vger.kernel.org>; Mon, 06 Nov 2006 19:43:10 -0800 (PST)
+Received: by 10.70.15.15 with SMTP id 15mr6200649wxo.1162870989528; Mon, 06
+ Nov 2006 19:43:09 -0800 (PST)
+Received: from ?192.168.88.85? ( [221.122.47.70]) by mx.google.com with ESMTP
+ id h34sm9565643wxd.2006.11.06.19.43.07; Mon, 06 Nov 2006 19:43:09 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Carl Worth wrote:
+Rocco Rutte wrote:
+> Hi,
 > 
-> See? Git _is_ harder to learn, and a user really cannot learn it
-> without being careful about the index right from the very beginning.
+> * Liu Yubao [06-11-06 21:00:07 +0800] wrote:
 > 
+>> Then, what bad *logical* problem will happen if a merging that is 
+>> really a fast forwarding creates a new commit?
+> 
+> I don't know what you expect by "logical" nor if I get you right, but if 
+> fast-forward merge a branch to another one, both branches now have 
+> exactly the same hash. If you create a commit object for a fast-forward 
+> merge, both tip hashes not identical anymore... which is bad.
+Not so bad, you can know they point to same tree objects.
 
-I'm not so sure about that. I came from CVS / SVN, although I've fiddled 
-quite a bit with other scm's as well. The two-step commit process of git 
-didn't terrify me at all, and I had used git at least a month before I 
-joined the mailing-list and found out that there's this thing called an 
-"index". I knew about it before, since back then (June or July 2005) 
-there was only git-update-index to mark things to commit. I just didn't 
-worry about it but expected the scm to tell me if I was about to break 
-something horribly (which it often but not always did).
+Fast forwarding style merge will blow away the *track* of your branch,
+and this track is useful, that is why reflog appears.
+> 
+> The identical hash important so that you really know they're identical 
+> and for future reference like ancestry.
+I guess you have mixed identical commits with identical trees. Trees
+is what we really need.
 
-I think the main thing people are having difficulties with when it comes 
-to git is that it doesn't do things like other SCM's do it. Imo this is 
-a good thing, because it allows git to be more powerful than other 
-SCM's. Otoh it forces users migrating from 
-darcs/hg/monotone/perforce/whatever to git actually read the 
-documentation (and quite a lot of it), while hg -> bzr migrators use 
-pretty much the same commands for pretty much the same actions. This 
-makes users accustomed to not reading docs / trying things out before 
-attempting Real Work(tm), which breaks down horribly when user 
-expectations doesn't match reality. The simplest and usually most 
-effective solution is to meet the users half-way, and tell them early on 
-that this power comes at the cost of having to read the documentation 
-and do the tutorials.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
+Fake commit doesn't mess the ancestry relation, you can refer to
+my previous mail replied to Andreas Ericsson in this topic.
+> 
+>   bye, Rocco
