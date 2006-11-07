@@ -1,66 +1,113 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: What's in git.git (stable)
-Date: Fri, 15 Dec 2006 16:48:30 +0100
-Message-ID: <4582C3CE.3000902@op5.se>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612140959.19209.andyparkins@gmail.com> <7v7iwu93rv.fsf@assigned-by-dhcp.cox.net> <200612141136.59041.andyparkins@gmail.com> <eluemi$gc0$1@sea.gmane.org> <Pine.LNX.4.64.0612151029080.18171@xanadu.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 15 Dec 2006 15:48:48 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-Spam-Status: No, score=-1.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_BCC,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Christian Thaeter <ct@pipapo.org>
+Subject: [PATCH] syncing disk in a subprocess with a 60 seconds timeout.
+Date: Tue, 7 Nov 2006 10:07:56 +0100
+Message-ID: <20061107092208.798A3F7044@mail.pipapo.org>
+NNTP-Posting-Date: Tue, 7 Nov 2006 09:22:39 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <Pine.LNX.4.64.0612151029080.18171@xanadu.home>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34522>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvFId-0004b9-4j for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 16:48:39 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31056>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GhN9r-0004u0-Hv for gcvg-git@gmane.org; Tue, 07 Nov
+ 2006 10:22:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752755AbWLOPsc (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 10:48:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752756AbWLOPsc
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 10:48:32 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:55280 "EHLO
- smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S1752755AbWLOPsb (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
- 10:48:31 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id 706426BCC7; Fri, 15 Dec 2006 16:48:30 +0100 (CET)
-To: Nicolas Pitre <nico@cam.org>
+ S1754120AbWKGJWM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
+ 04:22:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754136AbWKGJWM
+ (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 04:22:12 -0500
+Received: from pipapo.org ([217.140.77.75]:51722 "EHLO mail.pipapo.org") by
+ vger.kernel.org with ESMTP id S1754120AbWKGJWL (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 04:22:11 -0500
+Received: from localhost (unknown [10.20.40.100]) by mail.pipapo.org
+ (Postfix) with SMTP id 798A3F7044 for <git@vger.kernel.org>; Tue,  7 Nov 2006
+ 10:22:08 +0100 (CET)
+Received: by localhost (sSMTP sendmail emulation); Tue, 07 Nov 2006 10:22:08
+ +0100
+To: undisclosed-recipients:;
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre wrote:
-> On Fri, 15 Dec 2006, Jakub Narebski wrote:
-> 
->> It would be nice to have some generic place in git config to specify
->> default options to git commands (at least for interactive shell). It
->> cannot be done using aliases. Perhaps defaults.<command> config variable?
-> 
-> I would say the alias facility has to be fixed then.
-> 
-> In bash you can alias "ls" to "ls -l" and it just works.
-> 
+sync() can take excessive long time, up to hours in some circumstances.
+(eg. running badblocks on slow disk, dd'ing disk images, packet-writing on optical media)
+Running a prune is usually expected to start (and complete) soon, especially
+if it is initiated from a cron-script.
 
-I think this is because git scripts that need a certain git command to 
-work a certain way don't want some alias to kick in and destroy things 
-for them. Shell-scripts would have the same problem if you alias "awk" 
-to "grep" f.e., which is why prudent shell-scripters use the "unalias 
--a" thing.
+This patch forks the sync() in a background process and waits at most 60 seconds for
+it's completion. If the sync doesnt complete in time or any other error occurs, prunning
+is aborted and can be tried again a later time. Note that the sync() process will get
+orphaned and sit around until syncing eventually completes.
+---
+ builtin-prune-packed.c |   35 +++++++++++++++++++++++++++++++++--
+ 1 files changed, 33 insertions(+), 2 deletions(-)
 
-Anyways, this should be largely solvable by inventing a "--no-aliases" 
-switch to the git wrapper, or by the scripts calling the programs they 
-need directly which, afaik, bypasses the alias logic. If it doesn't, it 
-should.
-
+diff --git a/builtin-prune-packed.c b/builtin-prune-packed.c
+index 24e3b0a..05ac696 100644
+--- a/builtin-prune-packed.c
++++ b/builtin-prune-packed.c
+@@ -1,5 +1,7 @@
+ #include "builtin.h"
+ #include "cache.h"
++#include <time.h>
++#include <sys/wait.h>
+ 
+ static const char prune_packed_usage[] =
+ "git-prune-packed [-n]";
+@@ -53,11 +55,16 @@ void prune_packed_objects(int dryrun)
+ 	}
+ }
+ 
++void sig_nop(int unused){(void)unused;};
++
+ int cmd_prune_packed(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+ 	int dryrun = 0;
+-
++	pid_t syncpid;
++	struct timespec synctimeout;
++	int sleeping;
++		
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+ 
+@@ -71,7 +78,31 @@ int cmd_prune_packed(int argc, const cha
+ 		/* Handle arguments here .. */
+ 		usage(prune_packed_usage);
+ 	}
+-	sync();
++	
++	synctimeout.tv_sec = 60;
++	synctimeout.tv_nsec = 0;
++		
++	signal(SIGCLD, sig_nop);
++	syncpid = fork();
++	if (syncpid == 0) {
++		sync();
++		return 0;
++	}
++	else if (syncpid > 0) {
++		do {
++			if (waitpid(syncpid, NULL, WNOHANG) > 0)
++				break;
++			sleeping = nanosleep(&synctimeout, &synctimeout);
++			if (sleeping == -1) {
++				if (errno != EINTR)
++					die ("nanosleep error");
++			}
++			else
++				die ("coudn't sync within 60 seconds, nothing pruned");
++		} while (1);
++	}
++	else die("failed to fork sync process");
++	signal(SIGCLD, SIG_DFL);
+ 	prune_packed_objects(dryrun);
+ 	return 0;
+ }
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
+1.4.3.2
