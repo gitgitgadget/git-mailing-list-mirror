@@ -4,60 +4,114 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 05 Dec 2006 11:33:34 +0100
-Message-ID: <45754AFE.1070207@op5.se>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611281335.38728.andyparkins@gmail.com> <20061129160355.GF18810@admingilde.org> <200611292000.23778.andyparkins@gmail.com> <20061130170625.GH18810@admingilde.org> <456F29A2.1050205@op5.se> <20061205090125.GA2428@cepheus>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] git-pack-objects progress flag documentation and cleanup
+Date: Tue, 07 Nov 2006 10:51:23 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0611071047230.11384@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 5 Dec 2006 10:33:45 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Tue, 7 Nov 2006 15:52:27 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <20061205090125.GA2428@cepheus>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33333>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrXcK-0000ZP-80 for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 11:33:40 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31074>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GhTEw-0005lI-KQ for gcvg-git@gmane.org; Tue, 07 Nov
+ 2006 16:51:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967468AbWLEKdh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 05:33:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968077AbWLEKdg
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 05:33:36 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:56924 "EHLO
- smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S967468AbWLEKdg (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
- 05:33:36 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id C7C3B6BCC7; Tue,  5 Dec 2006 11:33:34 +0100 (CET)
-To: Uwe Kleine-Koenig <zeisberg@informatik.uni-freiburg.de>, Andreas Ericsson
- <ae@op5.se>, Martin Waitz <tali@admingilde.org>, Andy Parkins
- <andyparkins@gmail.com>, git@vger.kernel.org
+ S1754069AbWKGPvZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
+ 10:51:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754072AbWKGPvZ
+ (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 10:51:25 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:35543 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S1754069AbWKGPvY
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 10:51:24 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J8D00JJPAPNJML0@VL-MH-MR001.ip.videotron.ca> for git@vger.kernel.org; Tue,
+ 07 Nov 2006 10:51:23 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Uwe Kleine-Koenig wrote:
-> Hello,
-> 
-> Andreas Ericsson wrote:
->> The only problem I'm seeing atm is that the supermodule somehow has to 
->> mark whatever commits it's using from the submodule inside the submodule 
->> repo so that they effectively become un-prunable, otherwise the 
->> supermodule may some day find itself with a history that it can't restore.
-> One could circumvent that by creating a separate repo for the submodule
-> at checkout time and pull the needed objects in the supermodule's odb
-> when commiting the supermodule.  This way prune in the submodule cannot
-> do any harm, because in it's odb are no objects that are important for
-> the supermodule.
-> 
+This adds documentation for --progress and --all-progress, remove a 
+duplicate --progress handling and make usage string more readable.
 
-Yes, but then you'd lose history connectivity (I'm assuming you'd only 
-pull in the tree and blob objects from the submodule, and prefix the 
-tree-entrys with whatever directory you're storing the submodul in).
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
+---
+
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index 5ebe34e..fdc6f97 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -99,6 +99,23 @@ base-name::
+         Only create a packed archive if it would contain at
+         least one object.
+ 
++--progress::
++	Progress status is reported on the standard error stream
++	by default when it is attached to a terminal, unless -q
++	is specified. This flag forces progress status even if
++	the standard error stream is not directed to a terminal.
++
++--all-progress::
++	When --stdout is specified then progress report is
++	displayed during the object count and deltification phases
++	but inhibited during the write-out phase. The reason is
++	that in some cases the output stream is directly linked
++	to another command which may wish to display progress
++	status of its own as it processes incoming pack data.
++	This flag is like --progress except that it forces progress
++	report for the write-out phase as well even if --stdout is
++	used.
++
+ -q::
+ 	This flag makes the command not to report its progress
+ 	on the standard error stream.
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 270bcbd..69e5dd3 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -15,7 +15,12 @@
+ #include <sys/time.h>
+ #include <signal.h>
+ 
+-static const char pack_usage[] = "git-pack-objects [-q] [--no-reuse-delta] [--delta-base-offset] [--non-empty] [--local] [--incremental] [--window=N] [--depth=N] [--all-progress] [--revs [--unpacked | --all]*] [--stdout | base-name] <ref-list | <object-list]";
++static const char pack_usage[] = "\
++git-pack-objects [{ -q | --progress | --all-progress }] \n\
++	[--local] [--incremental] [--window=N] [--depth=N] \n\
++	[--no-reuse-delta] [--delta-base-offset] [--non-empty] \n\
++	[--revs [--unpacked | --all]*] [--stdout | base-name] \n\
++	[<ref-list | <object-list]";
+ 
+ struct object_entry {
+ 	unsigned char sha1[20];
+@@ -1520,14 +1525,6 @@ int cmd_pack_objects(int argc, const cha
+ 			local = 1;
+ 			continue;
+ 		}
+-		if (!strcmp("--progress", arg)) {
+-			progress = 1;
+-			continue;
+-		}
+-		if (!strcmp("--all-progress", arg)) {
+-			progress = 2;
+-			continue;
+-		}
+ 		if (!strcmp("--incremental", arg)) {
+ 			incremental = 1;
+ 			continue;
+@@ -1550,6 +1547,10 @@ int cmd_pack_objects(int argc, const cha
+ 			progress = 1;
+ 			continue;
+ 		}
++		if (!strcmp("--all-progress", arg)) {
++			progress = 2;
++			continue;
++		}
+ 		if (!strcmp("-q", arg)) {
+ 			progress = 0;
