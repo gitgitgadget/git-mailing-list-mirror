@@ -4,187 +4,227 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] Two conceptually distinct commit commands
-Date: Wed, 06 Dec 2006 10:31:21 -0800
-Message-ID: <7virgo511i.fsf@assigned-by-dhcp.cox.net>
-References: <87d56z32e1.wl%cworth@cworth.org>
-	<7vejrdbzdb.fsf@assigned-by-dhcp.cox.net>
-	<874ps91v79.wl%cworth@cworth.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: If merging that is really fast forwarding creates new commit
+ [Was: Re: how to show log for only one branch]
+Date: Tue, 7 Nov 2006 09:23:49 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611070841580.3667@g5.osdl.org>
+References: <454EAEDB.8020909@gmail.com> <7vk629f6is.fsf@assigned-by-dhcp.cox.net>
+ <454F31D7.1030202@gmail.com> <Pine.LNX.4.64.0611060734490.25218@g5.osdl.org>
+ <Pine.LNX.4.64.0611060928180.3667@g5.osdl.org> <45503CFC.7000403@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 6 Dec 2006 18:31:38 +0000 (UTC)
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 7 Nov 2006 17:24:44 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <45503CFC.7000403@gmail.com>
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33503>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gs1YE-0000nk-KU for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 19:31:27 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31078>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GhUgN-0002Rw-7j for gcvg-git@gmane.org; Tue, 07 Nov
+ 2006 18:24:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937058AbWLFSbY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 13:31:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937061AbWLFSbX
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 13:31:23 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:36078 "EHLO
- fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S937058AbWLFSbX (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
- 13:31:23 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao12.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061206183122.WKOT4226.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>; Wed, 6
- Dec 2006 13:31:22 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id vWXY1V00H1kojtg0000000; Wed, 06 Dec 2006
- 13:31:32 -0500
-To: Carl Worth <cworth@cworth.org>
+ S965586AbWKGRYP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
+ 12:24:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965587AbWKGRYP
+ (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 12:24:15 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:55489 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S965586AbWKGRYO (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 12:24:14 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kA7HNroZ032429
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 7
+ Nov 2006 09:23:56 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kA7HNnc5008858; Tue, 7 Nov
+ 2006 09:23:50 -0800
+To: Liu Yubao <yubao.liu@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Carl Worth <cworth@cworth.org> writes:
 
-> ... Even if this functionality
-> weren't made available at all, I'd still be interested in your
-> comments on the main thrust of my proposal. I think that consists of:
->
-> 	1. Unifying the two current commands that provide
-> 	   commit-working-tree-content semantics into a single,
-> 	   use-oriented description.
->
-> 	2. Avoiding a change of semantics triggered by merely applying
-> 	   pathname arguments without any command-line option or
-> 	   alternate command name.
 
-I am not sure what needs to be commented on at this point, since
-it is not yet clear to me where you want your proposal to lead
-us.
+On Tue, 7 Nov 2006, Liu Yubao wrote:
+> 
+> Fake commit is only for digging branch scope history, I can *outline* what has
+> been merged to a branch and don't care about how these good work are done on
+> earth.
 
-I do not agree with your "three commands" or "two semantics"
-characterization of the current way "git commit" works.  "git
-commit" without any optional argument already acts as if a
-sensible default arguments are given, that is "no funny business
-with additional paths, commit just what the user has staged
-already."
+The thing is, I think you see a good thing ("outlining"), and miss all the 
+downsides ("extra noise", "incorrect outlining").
 
-"git commit" is primarily about committing what has been staged
-in the index, and "--all" is just a type-saver short-hand (just
-like "--include" is) to perform update-index the last minute and
-nothing more.  In other words, "--all" is a variant of the
-pathname-less form "git commit".  It is not a variant of "git
-commit --only paths..." form, as you characterized.
+Yes, I can see it being useful for reading logs in a perfect world.
 
-The pathname form (the "--only" variant) on the surface seem to
-work differently, but when you think about it, it is not all
-that different from the normal commit.  We explain that it
-ignores index, but in the bigger picture, it does not really.
+However, in real life, more than half of my fast-forwards are just me 
+tracking another branch. An "outline" would be _wrong_. I _want_ to 
+fast-forward, because I'm moving the trees from one machine to another, 
+and the reason it's a fast-forward is exactly the fact that absolutely 
+zero work had been done on the machine I'm pulling from - I'm pulling just 
+to keep up-to-date.
 
-In this sequence:
+So now, just to keep things sane, your scheme would require that people 
+AHEAD OF TIME tell the system whether they want to fast-forward or whether 
+they want to create a magic merge commit as a "outlining" marker.
 
-	edit a b
-	git update-index a
-	git commit --only b
-	git commit --all
+See? Fast-forwarding is absolutely the right thing to do in 99% of all 
+cases. For me, it's perhaps only half, because I do several true merges 
+every day, but that's really quite unusual - I'm the top-level maintainer. 
+Nobody else should EVER do it.
 
-the first commit does "jump" the changes already made to the
-index, but after it makes the commit, the index has the same
-contents as if you did "git update-index a b" where you ran that
-"git commit".  In other words, it is just a handy short-hand to
-pretend as if you did the above sequence in this order instead:
+And the thing is, I refuse to work with a system that makes one person 
+special. I _know_ I'm special, I'm the smartest, most beautiful, and just 
+simply the best person on the planet. I don't need a tool that tells me 
+so.
 
-	edit a b
-        git update-index b
-        git commit
-        git update-index a
-        git commit
+So deep down, what you're really suggesting that there be a special mode 
+that is ONLY ever used for the top-level maintainer, so that he can create 
+an "outline" in the history.
 
-So I actually think it is a mistake to stress the fact that "git
-commit --only paths..." seems to act differently from the normal
-"git commit" too much.  It just helps to split the changes in
-your working tree if the changes happen to be cleanly separable
-at file boundaries (aka "CVS mentality").  When the changes are
-not cleanly separable at file boundaries, the "more painfully
-index aware" variant also allows you to split the changes in
-your working tree in the time dimension:
+Put that way, it almost makes sense, until you realize that 99.9% of all 
+people aren't top-level maintainers, and you don't want them creating crap 
+like that. And that "outlining" is likely most easily done with
 
-        edit a
-	git update-index a
-        edit a
-        git commit ;# without paths
-	git update-index a
-        git commit
+	( git log lastversion.. | git shortlog ;
+	  git diff --stat --summary lastversion.. ) | less -S
 
-In short, while I understand that your "proposal" shows your own
-way to summarize the semantics of "git commit", I am not seeing
-what it buys us, and I do not see the need to come up with a
-pair of new two commands for making commits (if that is what the
-proposal is about, that is, but it is not clear to me if that is
-what you are driving at).  I think it would only confuse users.
+instead.
 
-> 	I receive a patch while I'm in the middle of doing other work,
-> 	(but with a clean index compared to HEAD, which is what I've
-> 	usually). The patch looks good, so I want to commit it right
-> 	away, but I do want to separate it into two or more pieces,
-> 	(commonly this is because I want to separate the "add a test
-> 	case demonstrating a bug" part from the "fix the bug"
-> 	part).
-> ...
-> Who said I wouldn't test it? I do split commits like this precisely so
-> that I _can_ test it this way---and git helps a lot here. I do the
-> split commit, then easily back up to the revision that adds the test
-> case, verify the test fails before the bug fix, (which is something
-> the maintainer doesn't get a chance to do with your (2) approach),
-> then move forward and verify that the test passes after the fix.
->
-> So, sure, I haven't ever had that working tree before the commit. But
-> git makes it easy to get that working tree after I commit and test
-> everything before I push anything out.
+But more importantly, I don't personally like the "top-level maintainer" 
+model. Yes, it's how people do end up working a lot, but quite frankly, 
+I'd rather not have the tool support it, especially if there is ever a 
+schism in a development process. I want to support _forking_, which very 
+much implies having somebody pulling the "wrong way".
 
-You saw a good patch in the middle of something that you did not
-want to lose your working tree changes for.  That good patch was
-not really good enough to be applied straight into your tree but
-needed tweaking and splitting.  Nevertheless you went ahead and
-made two commits out of that patch, even though you were in the
-middle of something.  You could not test them right away after
-committing because your tree was in no shape to test them in
-isolation.  But that is excusable because you would not push
-these commits out right away, before you have a chance to test
-them by rewinding your working tree when you are done with what
-you were originally doing.
+Time for some purely philosophical arguments on why it's wrong to have 
+"special people" encoded in the tools:
 
-Is it just me who finds the above a very much made-up example?
+I think that "forking" is what keeps people honest. The _biggest_ downside 
+with CVS is actually that a central repository gets so much _political_ 
+clout, that it's effectively impossible to fork the project: the 
+maintainers of a central repo have huge powers over everybody else, and 
+it's practically impossible for anybody else to say "you're wrong, and 
+I'll show how wrong you are by competing fairly and being better".
 
-It means the patch (which is good and not good at the same time)
-was not all that urgent after all, and it could well have waited
-until you are done with what you were originally doing.
+For example, gcc (and other tools) have gone through this phase. You've 
+had splinter groups (eg pgcc) that did a hell of a lot better work than 
+the main group, and the tools really made it really hard for them to make 
+progress. I think the most important part of a distributed SCM is not even 
+to support the "main trunk", but to support the notion that anybody can 
+just take the thing and compete fairly.
 
-In any case, I should clarify my aversion to partial commits a
-bit.  What is more important is to notice that, while you cannot
-compile-and-run test what is in the index in isolation (without
-a fuse that exports the index contents as a virtual filesystem
--- anybody interested?), you _can_ preview and verify the text
-that is going to be committed by comparing the index and the
-HEAD.  And for that, your "staging" action (i.e. Nico's "git
-add") needs to be a separate step from your "committing" action.
+With the kernel as an example, any group could literally just start their 
+own kernel git tree, and git should make it as easy as humanly possible 
+for them to track my tree WHILE _THEY_ STILL REMAIN IN CHARGE of their own 
+tree. That doesn't mean that forking is easy - over the years people have 
+simply grown so _used_ to me that they mostly trust me and they are comfy 
+working with me, because even if I've got my quirks (or "major personality 
+disorders" as some people might say), people mostly know how to work with 
+them.
 
-In other words, I would even love Johannes's "per hunk commit"
-idea, at least if it had an option to preview the whole thing
-just one more time before committing, and I would love it better
-if it had an option for not committing but just updating.  You
-could:
+But the point is, there should be no _tool_ issues. As far as git is 
+concerned, every single developer can feel like he is the top-level 
+maintainer - it doesn't have to be a hierarchy, it really can be a 
+"network of equal developers". I want the _tool_ to have that world-view, 
+even if most projects in the end tend to organize more hierarcically than 
+that. Because the "everybody is equal" worldview actually matters in the 
+only case that _really_ matters: when problems happen.
 
-	$ edit foo bar
-	: the whole mess in working tree is in no shape to be committed.
-        $ git add foo	;# stage the state of the entire file
-        $ git hunk-add bar ;# go interactive and update index selectively
-	$ git status -v	;# that is "git commit --dry-run --diff"
+For example: I use git to maintain a few other projects I've started too. 
+I use git to maintain git itself, but I'm no longer the maintainer, simply 
+because I think it's a lot better to step down than stand in the way of 
+somebody better, and because I think it's hard to be the "lead person" on 
+multiple projects. 
 
-to review what would be committed.  So while the commit that
-would be made may not be compile-and-run tested, I would not
-mind partial commit that much (and after all not all the
-projects that track their contents with git are not "compiled"
-nor "need testing" projects -- they could be tracking plain text
-documentation, and the last-minute eyeballing may be a good
-enough test for such contents).
+The same thing is happening to "sparse", which was dormant for a while (it 
+worked, and I fixed problems as people reported them, but it did 
+everything I had set out to do, so my motivation to develop it further had 
+just gone down a lot). What happened? Somebody else came along, showed 
+interest, started sending me patches, and I just suggested he start his 
+own tree and start maintaining it.
+
+Now, both of those transitions were very peaceful, but it should work that 
+way even if the maintainer were to fight tooth and nail to hold on to his 
+"top dog" status. And that's where it's important that the tool not 
+separate out "top maintainers" from "other people".
+
+> I want to separate a branch, not to separate commits by some author, for
+> example, many authors can contribute to git's master branch, I want to
+> know what happened in the master branch like this:
+>      good work from A;
+>      good work from C;
+>      merge from next;   -----> I don't care how this feature is realized.
+>      good work from A;
+
+Really, "git log | git shortlog" will come quite close. I use it all the 
+time for the kernel, and it's powerful.
+
+Try it with the kernel archive, just for fun. Do
+
+	git log v2.6.19-rc4.. | git shortlog | less -S
+
+with the current kernel, and see how easy it is to get a kind of feel for 
+what is going on. We do it by two means:
+
+ - sorting by author. 
+
+   This sounds silly, but it's actually very powerful. It's not so much 
+   that it credits people better (it does) or that it makes the logs 
+   shorter by mentioning the person just once (it does that too), it's 
+   really nice because people tend to automatically do certain things. One 
+   person does "random cleanups". Another one works on "networking". A 
+   third one maintains one particular architecture, and so on..
+
+ - encourage people to have a "topic: explanation" kind of top line of the 
+   commit (and encourage people to have that "summary line" in the first 
+   place: not every SCM does that, and everybody else is strictly much 
+   worse than git)
+
+In fact, when I do this, I usually _remove_ the merges, because they end 
+up being just noise. Really: go and look at the current kernel repo, and 
+do the above one-liner, and realize that I have a hunking big set of 
+commits credited to me right now (it says 30 commits), and in fact I think 
+I'm the #1 author right now on that list.
+
+But when I send out the description, I actually use the "--no-merges" flag 
+to "git log", because those merge messages are _useless_. They really 
+don't do anything at all for me, or for anybody else. Re-run the above 
+one-liner that way, and suddenly I drop to just 5 commits (and quite 
+often, I'm much less - sometimes the _only_ commit I have for an -rc 
+release is the commit that changes the version number). But it's actually 
+more readable.
+
+So I can kind of see what you want, but I'm 100% convinced that the 
+information you _really_ want is better done totally differently.
+
+So if you want to get the "big picture" thing, git does actually support 
+you in several ways. That "git shortlog" is very useful, but so is the 
+"drill down by subsystem". For example, you could do
+
+	git log --no-merges v2.6.19-rc4.. arch/ | git shortlog | less -S
+
+and you'd get the "summary view" of what happened in architecture- 
+specific code. It's not the same thing as the "merge log", but it's 
+actually very useful.
+
+(You can do the same with git. Something like
+
+	git log --no-merges v1.4.3.4.. | git shortlog | less -S
+
+shows quite clearly that a lot of new stuff is gitweb-related, for 
+example. 
+
+Could we do better "reporting" tools? I'm absolutely sure we could. It 
+might be interesting to be able to ignore not just commits, but "trivial 
+patches" too. For example, if you're looking for what changed on a high 
+level, you're not likely to care about patches that change just a few 
+lines. You might want to see only the commits that change an appreciable 
+fraction of code, and so it might be very interesting to have a "git 
+shortlog" that would take patch size into account, for example.
+
+So I'm not saying that git is perfect. I'm just saying that there are 
+better ways (with much fewer downsides) to get what you want, than the way 
+you _think_ you want.
+
