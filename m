@@ -1,62 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: [PATCH 1/2] git-send-email: Document support for local sendmail instead of SMTP server
-Date: Sun, 29 Oct 2006 22:31:38 +0300
-Message-ID: <11621502993406-git-send-email-vsu@altlinux.ru>
-NNTP-Posting-Date: Sun, 29 Oct 2006 19:32:11 +0000 (UTC)
-Cc: Ryan Anderson <rda@google.com>, git@vger.kernel.org,
-	Sergey Vlasov <vsu@altlinux.ru>
+From: Liu Yubao <yubao.liu@gmail.com>
+Subject: Re: If merging that is really fast forwarding creates new commit
+ [Was: Re: how to show log for only one branch]
+Date: Tue, 07 Nov 2006 20:08:11 +0800
+Message-ID: <4550772B.1040308@gmail.com>
+References: <454EAEDB.8020909@gmail.com> <7vk629f6is.fsf@assigned-by-dhcp.cox.net> <454F31D7.1030202@gmail.com> <Pine.LNX.4.64.0611060734490.25218@g5.osdl.org> <45503553.3020605@gmail.com> <455055DD.2090903@shadowen.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 7 Nov 2006 12:09:31 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Mailer: git-send-email 1.4.3.3.ge502
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=czDxT3oD+Mv4ERa4YZeRV2ILW3h5fT7pQXsy3qMIKA4WMfeWJ53hmmwfLR7dEeYKK6+RpLJRyvzfhccEDbgfLgwWqx4U8cRjYtd2Jf0Yw8TdhpT9FC9tofvwTHvvxxW20CEaF539VYisnRnjdmEsAuZL2vetIDwlg4MQu0s41VM=
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.7) Gecko/20060909 Thunderbird/1.5.0.7 Mnenhy/0.7.4.666
+In-Reply-To: <455055DD.2090903@shadowen.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31066>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GeGNm-00006V-Ct for gcvg-git@gmane.org; Sun, 29 Oct
- 2006 20:31:48 +0100
+ esmtp (Exim 4.43) id 1GhPlW-0001A6-LM for gcvg-git@gmane.org; Tue, 07 Nov
+ 2006 13:09:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965347AbWJ2Tbm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
- 14:31:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965349AbWJ2Tbm
- (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 14:31:42 -0500
-Received: from master.altlinux.org ([62.118.250.235]:30225 "EHLO
- master.altlinux.org") by vger.kernel.org with ESMTP id S965347AbWJ2Tbm (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 14:31:42 -0500
-Received: by master.altlinux.org (Postfix, from userid 584) id A4AF3E3C2B;
- Sun, 29 Oct 2006 22:31:40 +0300 (MSK)
-To: Junio C Hamano <junkio@cox.net>
+ S932426AbWKGMJP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
+ 07:09:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932429AbWKGMJP
+ (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 07:09:15 -0500
+Received: from nz-out-0102.google.com ([64.233.162.194]:16680 "EHLO
+ nz-out-0102.google.com") by vger.kernel.org with ESMTP id S932426AbWKGMJO
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 07:09:14 -0500
+Received: by nz-out-0102.google.com with SMTP id s1so955461nze for
+ <git@vger.kernel.org>; Tue, 07 Nov 2006 04:09:14 -0800 (PST)
+Received: by 10.35.70.17 with SMTP id x17mr2915485pyk.1162901353660; Tue, 07
+ Nov 2006 04:09:13 -0800 (PST)
+Received: from ?192.168.88.85? ( [221.122.47.70]) by mx.google.com with ESMTP
+ id p57sm6212333pyb.2006.11.07.04.09.11; Tue, 07 Nov 2006 04:09:13 -0800 (PST)
+To: Andy Whitcroft <apw@shadowen.org>
 Sender: git-owner@vger.kernel.org
 
-Fix the --smtp-server option description to match reality.
-
-Signed-off-by: Sergey Vlasov <vsu@altlinux.ru>
----
- Documentation/git-send-email.txt |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 481b3f5..ec0e201 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -66,8 +66,11 @@ The options available are:
- 	all that is output.
- 
- --smtp-server::
--	If set, specifies the outgoing SMTP server to use.  Defaults to
--	localhost.
-+	If set, specifies the outgoing SMTP server to use.  A full
-+	pathname of a sendmail-like program can be specified instead;
-+	the program must support the `-i` option.  Defaults to
-+	`/usr/sbin/sendmail` or `/usr/lib/sendmail` if such program is
-+	available, or to `localhost` otherwise.
- 
- --subject::
-    	Specify the initial subject of the email thread.
--- 
-1.4.3.3.ge502
+Andy Whitcroft wrote:
+> 
+> One thing to remember, when you merge the destination into which you
+> merge will be HEAD^1, so by just following that you can get junio's view
+> of his branch as he made it.
+> 
+> This is doesn't terminate properly, sucks the performance of your
+> machine and generally should be erased rather than run; but you get the
+> idea:
+> 
+> let n=0
+> while git-show --pretty=one -s "next~$n"
+> do
+>         let "n=$n+1"
+> done | less
+> 
+> -apw
+> 
+This is not a right way to view a branch track in git, see Junio's explanation
