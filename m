@@ -1,71 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Minor documentation problems
-Date: Thu, 02 Nov 2006 14:20:44 +0100
-Message-ID: <vpq4ptinfwz.fsf@ecrins.imag.fr>
-References: <vpqmz7a1694.fsf@ecrins.imag.fr>
-	<20061102114149.GL20017@pasky.or.cz>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Planned new release of git [was: Re: If merging that is really
+ fast forwarding creates new commit]
+Date: Tue, 7 Nov 2006 15:06:29 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611071504200.3667@g5.osdl.org>
+References: <454EAEDB.8020909@gmail.com> <7vk629f6is.fsf@assigned-by-dhcp.cox.net>
+ <454F31D7.1030202@gmail.com> <Pine.LNX.4.64.0611060734490.25218@g5.osdl.org>
+ <45503553.3020605@gmail.com> <Pine.LNX.4.64.0611070729370.3667@g5.osdl.org>
+ <7vhcxb2b15.fsf@assigned-by-dhcp.cox.net> <eiqvoh$ebd$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 2 Nov 2006 13:22:19 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 7 Nov 2006 23:07:22 +0000 (UTC)
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Mail-Followup-To: git@vger.kernel.org
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.6 (imag.imag.fr [129.88.30.1]); Thu, 02 Nov 2006 14:20:47 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+In-Reply-To: <eiqvoh$ebd$1@sea.gmane.org>
+X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31098>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfcWG-0000bu-Bj for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 14:22:09 +0100
+ esmtp (Exim 4.43) id 1Gha1g-0002AV-GO for gcvg-git@gmane.org; Wed, 08 Nov
+ 2006 00:06:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752855AbWKBNVm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
- 08:21:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752848AbWKBNVm
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 08:21:42 -0500
-Received: from imag.imag.fr ([129.88.30.1]:63716 "EHLO imag.imag.fr") by
- vger.kernel.org with ESMTP id S1752855AbWKBNVl (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 08:21:41 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52]) by
- imag.imag.fr (8.13.6/8.13.6) with ESMTP id kA2DKjdt020392
- (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO) for
- <git@vger.kernel.org>; Thu, 2 Nov 2006 14:20:47 +0100 (CET)
-Received: from ecrins.imag.fr ([129.88.43.124]) by mail-veri.imag.fr with
- esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.50) id 1GfcUv-0001jb-13 for
- git@vger.kernel.org; Thu, 02 Nov 2006 14:20:45 +0100
-Received: from moy by ecrins.imag.fr with local (Exim 4.50) id
- 1GfcUu-00054O-UV for git@vger.kernel.org; Thu, 02 Nov 2006 14:20:44 +0100
-To: git@vger.kernel.org
+ S1753844AbWKGXGh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
+ 18:06:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753847AbWKGXGh
+ (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 18:06:37 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:62900 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1753844AbWKGXGg (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 18:06:36 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kA7N6UoZ021046
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 7
+ Nov 2006 15:06:30 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kA7N6T0o020779; Tue, 7 Nov
+ 2006 15:06:29 -0800
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Petr Baudis <pasky@suse.cz> writes:
 
->   Moreover, I'm more and more thinking about removing the fallback on
-> guessing based on /etc/passwd and hostname. _Many_ people were and will
-> be burnt by it, and I think it's more sane to require the user to
-> confirm once what the valid credentials are (at _that_ point it's ok to
-> guess, but the user has to confirm it) than let them unconsciously do
-> 200 commits with completely bogus author lines.
 
-IIRC, Darcs will prompt interactively the first time and remember it.
-The problem of interactive prompt is that it can break scripts (which
-are not always ran from an interactive prompt), so it's probably OK to
-do this in cogito, but less so in git.
+On Tue, 7 Nov 2006, Jakub Narebski wrote:
+>  
+> Do I understand correctly that the work on not exploding downloaded
+> pack on fetch, but making it non-thin, and related work on archival
+> packs (not to be considered for repacking) is not considered ready
+> (and tested)?
 
-One nice thing with guess-and-don't-ask is that people who don't care
-don't have to bother about this. I mean, some people have been
-satisfied with CVS storing the username of the guy doing the access
-which is often wrong for years, so ... it's probably OK to use an
-incorrect guess for a private project with, say, <5 contributors.
+I'd like to see a new version with both the packed refs and the 
+non-exploading download on by default. Maybe time for a git-1.5.0 release 
+from master?
 
--- 
