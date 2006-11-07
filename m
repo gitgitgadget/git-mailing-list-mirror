@@ -1,141 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] Stop telling users we are 'defaulting to local storage area'.
-Date: Thu, 14 Dec 2006 18:09:02 -0500
-Message-ID: <20061214230902.GA26506@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: If merging that is really fast forwarding creates new commit
+Date: Tue, 07 Nov 2006 13:37:42 -0800
+Message-ID: <7vhcxb2b15.fsf@assigned-by-dhcp.cox.net>
+References: <454EAEDB.8020909@gmail.com>
+	<7vk629f6is.fsf@assigned-by-dhcp.cox.net> <454F31D7.1030202@gmail.com>
+	<Pine.LNX.4.64.0611060734490.25218@g5.osdl.org>
+	<45503553.3020605@gmail.com>
+	<Pine.LNX.4.64.0611070729370.3667@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 14 Dec 2006 23:09:12 +0000 (UTC)
-Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>
+NNTP-Posting-Date: Tue, 7 Nov 2006 21:38:13 +0000 (UTC)
+Cc: git@vger.kernel.org, Liu Yubao <yubao.liu@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <Pine.LNX.4.64.0611070729370.3667@g5.osdl.org> (Linus Torvalds's
+	message of "Tue, 7 Nov 2006 08:05:22 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34428>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuzhO-0007a9-Vx for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 00:09:11 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31091>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GhYdg-0000CJ-Gm for gcvg-git@gmane.org; Tue, 07 Nov
+ 2006 22:37:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751731AbWLNXJI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 18:09:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751742AbWLNXJI
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 18:09:08 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:40941 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751731AbWLNXJG (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 18:09:06 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Guzh8-0005Lq-Ri; Thu, 14 Dec 2006 18:08:55 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 0593320FB65; Thu, 14 Dec 2006 18:09:02 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S1753400AbWKGVho (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
+ 16:37:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753421AbWKGVho
+ (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 16:37:44 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:7556 "EHLO
+ fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1753400AbWKGVhn
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 16:37:43 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061107213743.HBQK22977.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Tue, 7
+ Nov 2006 16:37:43 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id jxdK1V00Q1kojtg0000000; Tue, 07 Nov 2006
+ 16:37:20 -0500
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Back in the old days of Git when people messed around with their
-GIT_DIR environment variable more often it was nice to know whether
-or not git-init-db created a .git directory or used GIT_DIR.
+Linus Torvalds <torvalds@osdl.org> writes:
 
-But now that we are making excuses in the documentation about why
-this message gets printed by git-init-db we should just remove it
-entirely.  It doesn't really help the user to understand what just
-happened.  It also breaks from our normal behavior of not printing
-anything if the command was successful.
+> Git doesn't even have that concept. There is the concept of a _default_ 
+> branch ("master"), and yes, the git repository has it. But at the same 
+> time, it really is just a default. There are three "main" branches that 
+> Junio maintains, and they only really differ in the degree of development. 
+> And "master" isn't even the most stable one - it's just the default one, 
+> because it's smack dab in the middle: recent enough to be interesting, but 
+> still stable enough to be worth tracking for just about anybody.
+>
+> But really, "maint" is the stable branch, and in many ways you could say 
+> that "maint" is the trunk branch, since that's what Junio still cuts 
+> releases from.
 
-Suggested by Andy Parkins in his Git 'niggles' list
-(<200612132237.10051.andyparkins@gmail.com>).
+The branch 'maint' is meant to be the moral equivalent of the
+efforts of your -stable team, so it shouldn't be "the trunk",
+but you caught me.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- Documentation/core-tutorial.txt |   14 +++-----------
- Documentation/tutorial-2.txt    |    1 -
- Documentation/tutorial.txt      |    6 ------
- builtin-init-db.c               |    4 +---
- 4 files changed, 4 insertions(+), 21 deletions(-)
-
-diff --git a/Documentation/core-tutorial.txt b/Documentation/core-tutorial.txt
-index 47505aa..f90c66c 100644
---- a/Documentation/core-tutorial.txt
-+++ b/Documentation/core-tutorial.txt
-@@ -54,17 +54,9 @@ $ cd git-tutorial
- $ git-init-db
- ------------------------------------------------
- 
--to which git will reply
--
------------------
--defaulting to local storage area
------------------
--
--which is just git's way of saying that you haven't been doing anything
--strange, and that it will have created a local `.git` directory setup for
--your new project. You will now have a `.git` directory, and you can
--inspect that with `ls`. For your new empty project, it should show you
--three entries, among other things:
-+You will now have a `.git` directory, and you can inspect that with
-+`ls`. For your new empty project, it should show you three entries,
-+among other things:
- 
-  - a file called `HEAD`, that has `ref: refs/heads/master` in it.
-    This is similar to a symbolic link and points at
-diff --git a/Documentation/tutorial-2.txt b/Documentation/tutorial-2.txt
-index 6389de5..f7f2e1c 100644
---- a/Documentation/tutorial-2.txt
-+++ b/Documentation/tutorial-2.txt
-@@ -18,7 +18,6 @@ Let's start a new project and create a small amount of history:
- $ mkdir test-project
- $ cd test-project
- $ git init-db
--defaulting to local storage area
- $ echo 'hello world' > file.txt
- $ git add .
- $ git commit -a -m "initial commit"
-diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
-index 02dede3..88ace3b 100644
---- a/Documentation/tutorial.txt
-+++ b/Documentation/tutorial.txt
-@@ -35,12 +35,6 @@ $ cd project
- $ git init-db
- ------------------------------------------------
- 
--Git will reply
--
--------------------------------------------------
--defaulting to local storage area
--------------------------------------------------
--
- You've now initialized the working directory--you may notice a new
- directory created, named ".git".  Tell git that you want it to track
- every file under the current directory with (notice the dot '.'
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index 235a0ee..405b9a1 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -274,10 +274,8 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 	 * Set up the default .git directory contents
- 	 */
- 	git_dir = getenv(GIT_DIR_ENVIRONMENT);
--	if (!git_dir) {
-+	if (!git_dir)
- 		git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
--		fprintf(stderr, "defaulting to local storage area\n");
--	}
- 	safe_create_dir(git_dir, 0);
- 
- 	/* Check to see if the repository version is right.
--- 
+We haven't seen a new release from 'master' for about a month.
+I think the dust has settled already after two big topics
+(packed-refs, delta-offset-base) were merged into 'master' since
+v1.4.3, and it is now time to decide which topics that have been
+cooking in 'next' are the ones I want in v1.4.4.  Perhaps by the
+end of the week, I'll cut a v1.4.4-rc1 to start the pre-release
+stabilization process.  No new features nor enhancements on
+'master' after that until v1.4.4 final.
