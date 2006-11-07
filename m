@@ -1,101 +1,172 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Torgil Svensson" <torgil.svensson@gmail.com>
-Subject: Re: cygwin, 44k files: how to commit only index?
-Date: Sat, 9 Dec 2006 09:27:46 +0100
-Message-ID: <e7bda7770612090027x22a06ca5i6d9b768f0ad3c4ad@mail.gmail.com>
-References: <81b0412b0612070627r3ff0b394s124d95fbf8084f16@mail.gmail.com>
-	 <7vd56vtt2g.fsf@assigned-by-dhcp.cox.net>
-	 <20061207192632.GC12143@spearce.org>
-	 <20061207193555.GD12143@spearce.org>
-	 <46d6db660612071326m4817165l992e8d6e7bd673c5@mail.gmail.com>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [PATCH 2/2] Generate unique patch names
+Date: Tue, 07 Nov 2006 07:59:31 +0100
+Message-ID: <20061107065931.10728.66377.stgit@localhost>
+References: <20061107065710.10728.85618.stgit@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 9 Dec 2006 08:28:00 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8;
+	format=fixed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Tue, 7 Nov 2006 06:59:47 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bLnxSGloKS/JddAffz36lIQ5AGZsBqsDFjTXoKhobqsLgDkdfj4bZtBbRGJpTVZDAbeUheMxiPDnIu3VoU4cbs2oXtjvOiDwfrpbU1YDg15Rw8YH2vmU6GmOmWVA4Xtk02ABThj0UjTxNKVFsfh5hn7Lje+CtD6o2X3Wneay+mg=
-In-Reply-To: <46d6db660612071326m4817165l992e8d6e7bd673c5@mail.gmail.com>
-Content-Disposition: inline
+In-Reply-To: <20061107065710.10728.85618.stgit@localhost>
+User-Agent: StGIT/0.11
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33806>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsxYs-0001F5-6L for gcvg-git@gmane.org; Sat, 09 Dec
- 2006 09:27:58 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31048>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GhKvn-00061P-LE for gcvg-git@gmane.org; Tue, 07 Nov
+ 2006 07:59:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936116AbWLII1t (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
- 03:27:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936120AbWLII1s
- (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 03:27:48 -0500
-Received: from nf-out-0910.google.com ([64.233.182.189]:62105 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S936116AbWLII1s (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec
- 2006 03:27:48 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1363285nfa for
- <git@vger.kernel.org>; Sat, 09 Dec 2006 00:27:46 -0800 (PST)
-Received: by 10.49.27.17 with SMTP id e17mr285935nfj.1165652866762; Sat, 09
- Dec 2006 00:27:46 -0800 (PST)
-Received: by 10.49.28.8 with HTTP; Sat, 9 Dec 2006 00:27:46 -0800 (PST)
-To: "Christian MICHON" <christian.michon@gmail.com>
+ S1753204AbWKGG7e convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006 01:59:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753237AbWKGG7d
+ (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 01:59:33 -0500
+Received: from mxfep03.bredband.com ([195.54.107.76]:32491 "EHLO
+ mxfep03.bredband.com") by vger.kernel.org with ESMTP id S1753204AbWKGG7c
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 01:59:32 -0500
+Received: from ironport.bredband.com ([195.54.107.82] [195.54.107.82]) by
+ mxfep03.bredband.com with ESMTP id
+ <20061107065931.MWUN25623.mxfep03.bredband.com@ironport.bredband.com> for
+ <git@vger.kernel.org>; Tue, 7 Nov 2006 07:59:31 +0100
+Received: from ua-83-227-180-148.cust.bredbandsbolaget.se (HELO
+ yoghurt.hemma.treskal.com) ([83.227.180.148]) by ironport.bredband.com with
+ ESMTP; 07 Nov 2006 07:59:31 +0100
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by
+ yoghurt.hemma.treskal.com (Postfix) with ESMTP id 240644C04D; Tue,  7 Nov
+ 2006 07:59:31 +0100 (CET)
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On 12/7/06, Christian MICHON <christian.michon@gmail.com> wrote:
-> On 12/7/06, Shawn Pearce <spearce@spearce.org> wrote:
-> > Shawn Pearce <spearce@spearce.org> wrote:
-> > > Its Cygwin/NTFS.  lstat() is slow.  readdir() is slow.  I have the
-> > > same problem on my Cygwin systems.
-> >
-> > Just to be clear, I'm not trying to blame Cygwin here.
-> >
-> > Windows' dir command is slow.  Windows Explorer is slow while
-> > browsing directories.
+=46rom: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
-I think this is a very common scenario costing hideous amounts of
-money around the globe.
+"stg assimilate" was already making sure that automatically generated
+patch names were non-empty and unique, by suffixing them with a dash
+and a number if necessary. This patch moves that functionality into
+the autogeneration function itself, so that all its callers can
+benefit from it (and the user can benefit from uniform behavior from
+all stgit commands).
 
-If you have lot's of files in a folder, don't even think of
-accidentally touching those folders in Windows Explorer, if you do -
-keep Process Explorer or similar ready. I've ended up using (even w/o
-Cygwin) scripts, automatic compressing and even a database functioning
-as directory cache - basically creating accessibility layers for a
-disabled file-system.
+As an added bonus, this permits the removal of a number of checks that
+would abort with an error if the automatically generated name was
+empty.
 
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+---
 
->
-> before buying any new hardware, you could easily imagine the
-> following scenario (I'm also "stuck" with windows, so it's an idea
-> I've been toying around for a week or so).
->
-> There're virtualizers around, on which networking capabilities can
-> be activated. And we could easily create a vm with linux+git
-> inside, using ext2/ext3/ext4 fs virtual disks (you'd benefit from
-> windows cache actually...)
->
-> example: YTech_Subversion_Appliance_v1.1 (ubuntu + subversion).
->
-> I've no prototype yet, but I've 2 scenario possible:
-> 1) use vmplayer and a minimal uclibc initramfs with git onboard
-> 2) use qemu+kqemu and a similar mini-distro (but right now networking
-> is an issue on windows hosts: I'm exploring tunneling)
->
-> The 1st scenario is "easy". And I start to prefer this idea over
-> even mingw porting of git (I tried and it's hard, really).
->
-> But again, maybe jgit would be a better universal solution.
->
-> --
-> Christian
-> -
+ stgit/commands/assimilate.py |    9 +--------
+ stgit/commands/common.py     |   16 +++++++++++++++-
+ stgit/commands/imprt.py      |    4 +---
+ stgit/commands/pick.py       |    4 +---
+ stgit/commands/uncommit.py   |    5 ++---
+ 5 files changed, 20 insertions(+), 18 deletions(-)
 
-Very interesting!  Have you a time-frame for this?  Maybe even
+diff --git a/stgit/commands/assimilate.py b/stgit/commands/assimilate.p=
+y
+index 0821024..a8b3bfe 100644
+--- a/stgit/commands/assimilate.py
++++ b/stgit/commands/assimilate.py
+@@ -73,14 +73,7 @@ def func(parser, options, args):
+         return name in name2patch or crt_series.patch_exists(name)
+=20
+     for victim in victims:
+-        patchname =3D make_patch_name(victim.get_log())
+-        if not patchname:
+-            patchname =3D 'patch'
+-        if name_taken(patchname):
+-            suffix =3D 0
+-            while name_taken('%s-%d' % (patchname, suffix)):
+-                suffix +=3D 1
+-            patchname =3D '%s-%d' % (patchname, suffix)
++        patchname =3D make_patch_name(victim.get_log(), name_taken)
+         patch2name[victim] =3D patchname
+         name2patch[patchname] =3D victim
+=20
+diff --git a/stgit/commands/common.py b/stgit/commands/common.py
+index 0e1bb44..d986711 100644
+--- a/stgit/commands/common.py
++++ b/stgit/commands/common.py
+@@ -284,7 +284,7 @@ def name_email_date(address):
+=20
+     return str_list[0]
+=20
+-def make_patch_name(msg):
++def patch_name_from_msg(msg):
+     """Return a string to be used as a patch name. This is generated
+     from the first 30 characters of the top line of the string passed
+     as argument."""
+@@ -293,3 +293,17 @@ def make_patch_name(msg):
+=20
+     subject_line =3D msg[:30].lstrip().split('\n', 1)[0].lower()
+     return re.sub('[\W]+', '-', subject_line).strip('-')
++
++def make_patch_name(msg, unacceptable, default_name =3D 'patch'):
++    """Return a patch name generated from the given commit message,
++    guaranteed to make unacceptable(name) be false. If the commit
++    message is empty, base the name on default_name instead."""
++    patchname =3D patch_name_from_msg(msg)
++    if not patchname:
++        patchname =3D 'patch'
++    if unacceptable(patchname):
++        suffix =3D 0
++        while unacceptable('%s-%d' % (patchname, suffix)):
++            suffix +=3D 1
++        patchname =3D '%s-%d' % (patchname, suffix)
++    return patchname
+diff --git a/stgit/commands/imprt.py b/stgit/commands/imprt.py
+index c8cf42b..34cbf38 100644
+--- a/stgit/commands/imprt.py
++++ b/stgit/commands/imprt.py
+@@ -240,9 +240,7 @@ def __import_patch(patch, filename, opti
+                  __parse_patch(filename)
+=20
+     if not patch:
+-        patch =3D make_patch_name(message)
+-        if not patch:
+-            raise CmdException, 'Unknown patch name'
++        patch =3D make_patch_name(message, crt_series.patch_exists)
+=20
+     # refresh_patch() will invoke the editor in this case, with correc=
+t
+     # patch content
+diff --git a/stgit/commands/pick.py b/stgit/commands/pick.py
+index f8f3577..996e789 100644
+--- a/stgit/commands/pick.py
++++ b/stgit/commands/pick.py
+@@ -71,9 +71,7 @@ def func(parser, options, args):
+         elif len(patch_branch) =3D=3D 2:
+             patch =3D patch_branch[0]
+         else:
+-            patch =3D make_patch_name(commit.get_log())
+-            if not patch:
+-                raise CmdException, 'Unknown patch name'
++            patch =3D make_patch_name(commit.get_log(), crt_series.pat=
+ch_exists)
+=20
+     if options.parent:
+         parent =3D git_id(options.parent)
+diff --git a/stgit/commands/uncommit.py b/stgit/commands/uncommit.py
+index 45a2087..9798f19 100644
+--- a/stgit/commands/uncommit.py
++++ b/stgit/commands/uncommit.py
+@@ -97,9 +97,8 @@ def func(parser, options, args):
+         if patchnames:
+             patchname =3D patchnames[n]
+         else:
+-            patchname =3D make_patch_name(commit.get_log())
+-        if not patchname:
+-            raise CmdException, 'Unknown patch name for commit %s' % c=
+ommit_id
++            patchname =3D make_patch_name(commit.get_log(),
++                                        crt_series.patch_exists)
+=20
+         crt_series.new_patch(patchname,
+                              can_edit =3D False, before_existing =3D T=
