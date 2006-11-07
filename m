@@ -1,92 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Gerrit Pape <pape@smarden.org>
-Subject: sizeof(struct ...)
-Date: Thu, 23 Nov 2006 10:16:09 +0000
-Message-ID: <20061123101609.1711.qmail@8b73034525b1a6.315fe32.mid.smarden.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Did anyone have trouble learning the idea of local vs. remote branches?
+Date: Tue, 7 Nov 2006 12:24:50 -0500
+Message-ID: <20061107172450.GA26591@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 23 Nov 2006 10:16:05 +0000 (UTC)
+NNTP-Posting-Date: Tue, 7 Nov 2006 17:25:11 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31079>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnBcY-0005LV-8F for gcvg-git@gmane.org; Thu, 23 Nov
- 2006 11:15:54 +0100
+ esmtp (Exim 4.43) id 1GhUh0-0002cR-1e for gcvg-git@gmane.org; Tue, 07 Nov
+ 2006 18:24:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757328AbWKWKPv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
- 05:15:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757330AbWKWKPv
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 05:15:51 -0500
-Received: from a.ns.smarden.org ([212.42.242.37]:45545 "HELO
- a.mx.smarden.org") by vger.kernel.org with SMTP id S1757328AbWKWKPu (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 05:15:50 -0500
-Received: (qmail 1712 invoked by uid 1000); 23 Nov 2006 10:16:09 -0000
+ S965574AbWKGRYz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
+ 12:24:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965587AbWKGRYz
+ (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 12:24:55 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:38576 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S965574AbWKGRYy
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 12:24:54 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GhUgp-0005d2-0B for git@vger.kernel.org; Tue, 07 Nov 2006 12:24:47 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ BC5A120E487; Tue,  7 Nov 2006 12:24:50 -0500 (EST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi, I don't think we can rely on sizeof(struct ...) to be the exact size
-of the struct as defined.  As the selftests show, archive-zip doesn't
-work correctly on Debian/arm
+Today I was talking with someone that I collaborate with through
+Git and they still seemed to not get the idea that all branches
+in their repository are local, and that at least a 'git fetch'
+is needed to update the local tracking branches to the version
+in the central repository that we collaborate through.  And this
+isn't the first time we've had such discussions.
 
- http://buildd.debian.org/fetch.cgi?&pkg=git-core&ver=1%3A1.4.4-1&arch=arm&stamp=1164122355&file=log
+It dawned on me that this person still hasn't grasped the idea
+behind fetch.  A few other users that I know also have commented on
+how difficult fetch is to learn.
 
-It's because sizeof(struct zip_local_header) is 32, zip_dir_header 48,
-and zip_dir_trailer 24, breaking the zip files.  Compiling with
--fpack-struct seemed to break other things, so I for now I ended up with
-this (not so nice) workaround.
+Most seemed to think that fetch would update their working directory,
+or their current branch, as there is no other way to "download
+changes from origin".  They also seem to expect their local tracking
+branch to automatically update, especially when invoking
+`git checkout -b foo tracking-branch`.
 
-Regards, Gerrit.
 
+Clearly there is a gap in communicating these ideas in a way that
+they can be understood by users.  Of course in at least one case
+the users just isn't reading any Git documentation and plows ahead
+as though it were CVS ('cause everything's "just like CVS") *sigh*.
 
-diff --git a/archive-zip.c b/archive-zip.c
-index ae5572a..4fcda44 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -211,7 +211,7 @@ static int write_zip_entry(const unsigne
- 	}
- 
- 	/* make sure we have enough free space in the dictionary */
--	direntsize = sizeof(struct zip_dir_header) + pathlen;
-+	direntsize = 46 + pathlen;
- 	while (zip_dir_size < zip_dir_offset + direntsize) {
- 		zip_dir_size += ZIP_DIRECTORY_MIN_SIZE;
- 		zip_dir = xrealloc(zip_dir, zip_dir_size);
-@@ -234,8 +234,8 @@ static int write_zip_entry(const unsigne
- 	copy_le16(dirent.attr1, 0);
- 	copy_le32(dirent.attr2, attr2);
- 	copy_le32(dirent.offset, zip_offset);
--	memcpy(zip_dir + zip_dir_offset, &dirent, sizeof(struct zip_dir_header));
--	zip_dir_offset += sizeof(struct zip_dir_header);
-+	memcpy(zip_dir + zip_dir_offset, &dirent, 46);
-+	zip_dir_offset += 46;
- 	memcpy(zip_dir + zip_dir_offset, path, pathlen);
- 	zip_dir_offset += pathlen;
- 	zip_dir_entries++;
-@@ -251,8 +251,8 @@ static int write_zip_entry(const unsigne
- 	copy_le32(header.size, uncompressed_size);
- 	copy_le16(header.filename_length, pathlen);
- 	copy_le16(header.extra_length, 0);
--	write_or_die(1, &header, sizeof(struct zip_local_header));
--	zip_offset += sizeof(struct zip_local_header);
-+	write_or_die(1, &header, 30);
-+	zip_offset += 30;
- 	write_or_die(1, path, pathlen);
- 	zip_offset += pathlen;
- 	if (compressed_size > 0) {
-@@ -282,7 +282,7 @@ static void write_zip_trailer(const unsi
- 	copy_le16(trailer.comment_length, sha1 ? 40 : 0);
- 
- 	write_or_die(1, zip_dir, zip_dir_offset);
--	write_or_die(1, &trailer, sizeof(struct zip_dir_trailer));
-+	write_or_die(1, &trailer, 22);
- 	if (sha1)
- 		write_or_die(1, sha1_to_hex(sha1), 40);
+-- 
