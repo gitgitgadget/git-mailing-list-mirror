@@ -4,73 +4,64 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Ignacio Arenaza <iarenuno@eteo.mondragon.edu>
-Subject: Re: [PATCH] git-cvsimport: add suport for CVS pserver method 
-	HTTP/1.x  proxying
-Date: Fri, 24 Nov 2006 09:43:49 +0100
-Message-ID: <67r6vt6xq2.fsf@poseidon.eteo.mondragon.edu>
-References: <11642344172790-git-send-email-iarenuno@eteo.mondragon.edu><7v64
-	d5keke.fsf@assigned-by-dhcp.cox.net>
+From: Eran Tromer <git2eran@tromer.org>
+Subject: Re: If merging that is really fast forwarding creates new commit
+   [Was: Re: how to show log for only one branch]
+Date: Tue, 07 Nov 2006 13:46:34 +0200
+Message-ID: <4550721A.9030504@tromer.org>
+References: <454EAEDB.8020909@gmail.com> <7vk629f6is.fsf@assigned-by-dhcp.cox.net> <454F31D7.1030202@gmail.com> <Pine.LNX.4.64.0611060734490.25218@g5.osdl.org> <Pine.LNX.4.64.0611060928180.3667@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Fri, 24 Nov 2006 08:44:06 +0000 (UTC)
-Cc: git@vger.kernel.org, Martin Langhoff <martin@catalyst.net.nz>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 7 Nov 2006 11:47:48 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7v64d5keke.fsf@assigned-by-dhcp.cox.net> (Junio C. 
-	Hamano'smessage of "Thu, 23 Nov 2006 14:01:37 -0800")
-User-Agent: Gnus/5.1002 (Gnus v5.10.2) Emacs/21.4 (gnu/linux)
-X-imss-version: 2.044
-X-imss-result: Passed
-X-imss-scores: Clean:99.90000 C:2 M:3 S:5 R:5
-X-imss-settings: Baseline:1 C:1 M:1 S:1 R:1 (0.0000 0.0000)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.7) Gecko/20060913 Fedora/1.5.0.7-1.fc5 Thunderbird/1.5.0.7 Mnenhy/0.7.4.0
+In-Reply-To: <Pine.LNX.4.64.0611060928180.3667@g5.osdl.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31063>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnWfA-0007A1-39 for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 09:44:00 +0100
+ esmtp (Exim 4.43) id 1GhPQb-0005sm-Uf for gcvg-git@gmane.org; Tue, 07 Nov
+ 2006 12:47:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934467AbWKXIn4 convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006 03:43:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934499AbWKXInz
- (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 03:43:55 -0500
-Received: from mx.eteo.mondragon.edu ([193.146.78.131]:10712 "EHLO
- mx.eteo.mondragon.edu") by vger.kernel.org with ESMTP id S934467AbWKXIny
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 03:43:54 -0500
-Received: by mx.eteo.mondragon.edu (Postfix, from userid 1001) id 6A68BB6B5;
- Fri, 24 Nov 2006 09:43:53 +0100 (CET)
-Received: from poseidon.eteo.mondragon.edu (poseidon.eteo.mondragon.edu
- [172.31.3.4]) by mx.eteo.mondragon.edu (Postfix) with ESMTP id 6FE0EB6B1;
- Fri, 24 Nov 2006 09:43:49 +0100 (CET)
-Received: from poseidon.eteo.mondragon.edu (localhost [127.0.0.1]) by
- localhost.eteo.mondragon.edu (Postfix) with ESMTP id 4D7982FD65; Fri, 24 Nov
- 2006 09:43:49 +0100 (CET)
-Received: by poseidon.eteo.mondragon.edu (Postfix, from userid 1072)id 
- 3B46A2FD15; Fri, 24 Nov 2006 09:43:49 +0100 (CET)
-To: Junio C Hamano <junkio@cox.net>
+ S932142AbWKGLrh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
+ 06:47:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932157AbWKGLrh
+ (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 06:47:37 -0500
+Received: from line108-16.adsl.actcom.co.il ([192.117.108.16]:16081 "EHLO
+ lucian.tromer.org") by vger.kernel.org with ESMTP id S932142AbWKGLrg (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 06:47:36 -0500
+Received: from [192.168.4.6] ([192.168.4.6]) by lucian.tromer.org
+ (8.13.7/8.12.11) with ESMTP id kA7Bl7WS006650; Tue, 7 Nov 2006 13:47:09 +0200
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+Hi Linus,
 
-> The "I/O Operators" section talks about evaluating <$s> in a
-> scalar context (i.e. "$rep =3D <$s>"), which we all know would
-> return a single line, and in list context, which swallows
-> everything up to EOF, an obvious disaster for this particular
-> use.  I couldn't find how it is defined to behave in a void
-> context.  By experiments I know this returns only one line, but
-> it leaves me feeling somewhat uneasy.
+On 2006-11-06 19:48, Linus Torvalds wrote:
+> 
+> On Mon, 6 Nov 2006, Linus Torvalds wrote:
+>> Besides, doing an empty commit like that ("I fast forwarded") literally 
+>> doesn't add any true history information. It literally views history not 
+>> as history of the _project_, but as the history of just one of the 
+>> repositories. And that's wrong.
+> 
+> Btw, absolutely the _only_ reason people seem to want to do this is 
+> because they want to "pee in the snow" and put their mark on things. They 
+> seem to want to show "_I_ did this", even if the "doing" was a total 
+> no-op and they didn't actually generate any real value.
 
-This is scalar context, as we are using the implicit $_ variable as
-the destination of the asignment. It seems it's not so obvious for
-non-Perl speakers, so I'll use a clearer idiom :-)
+In a project that uses topic branches extensively, the merge-induced
+commits give a useful cue about the logical grouping of patches. They
+let you easily glean the coarse-grained history and independent lines of
+work ("pickaxe made it to next", "Linus got the libata updates") without
+getting bogged down by individual commits, just by looking at the gitk
+graph. Fast-forwards lose this information, and the more you encourage
+them, the less grokkable history becomes.
 
-Saludos. I=F1aki.
-
---=20
-School of Management
-Mondragon University
-20560 O=F1ati - Spain
-+34 943 718009 (ext. 225)
+Empty commits may be the wrong tool to address this (for all the reasons
+you gave), but there's certainly useful process information that's
+currently being lost.
 
