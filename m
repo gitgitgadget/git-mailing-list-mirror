@@ -1,72 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
-Subject: Re: selective git-update-index per diff(1) chunks
-Date: Fri, 1 Dec 2006 12:33:48 +0100
-Message-ID: <slrnen04os.a5.Peter.B.Baumann@xp.machine.xx>
-References: <b6fcc0a0612010323x7554e47m5e6bdafe85fc8224@mail.gmail.com>
-NNTP-Posting-Date: Fri, 1 Dec 2006 11:35:40 +0000 (UTC)
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: win2k/cygwin cannot handle even moderately sized packs
+Date: Tue, 07 Nov 2006 16:50:59 +0100
+Organization: At home
+Message-ID: <eiq9vm$l7c$1@sea.gmane.org>
+References: <81b0412b0611070302h50541cd5mf0758afe0d6befda@mail.gmail.com> <45507965.3010806@peralex.com> <81b0412b0611070555u1833cc8ci1d37d45782562df8@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Tue, 7 Nov 2006 15:52:17 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 28
+Original-Lines: 20
 Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: mason.hofmann.stw.uni-erlangen.de
-User-Agent: slrn/0.9.8.0 (Linux)
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31073>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq6fu-0001oV-6W for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 12:35:27 +0100
+ esmtp (Exim 4.43) id 1GhTEu-0005lI-Sx for gcvg-git@gmane.org; Tue, 07 Nov
+ 2006 16:51:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936467AbWLALfX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 06:35:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936469AbWLALfX
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 06:35:23 -0500
-Received: from main.gmane.org ([80.91.229.2]:54403 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S936467AbWLALfW (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 06:35:22 -0500
+ S1752470AbWKGPvU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
+ 10:51:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754072AbWKGPvU
+ (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 10:51:20 -0500
+Received: from main.gmane.org ([80.91.229.2]:37017 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1752470AbWKGPvT (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 10:51:19 -0500
 Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gq6fe-0001k8-9Y for git@vger.kernel.org; Fri, 01 Dec 2006 12:35:10 +0100
-Received: from mason.hofmann.stw.uni-erlangen.de ([131.188.24.36]) by
+ 1GhTDu-0005V5-Qq for git@vger.kernel.org; Tue, 07 Nov 2006 16:50:52 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
  main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 01 Dec 2006 12:35:10 +0100
-Received: from Peter.B.Baumann by mason.hofmann.stw.uni-erlangen.de with
- local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Fri, 01 Dec 2006 12:35:10 +0100
+ <git@vger.kernel.org>; Tue, 07 Nov 2006 16:50:50 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 07 Nov 2006
+ 16:50:50 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 2006-12-01, Alexey Dobriyan <adobriyan@gmail.com> wrote:
-> Pretty often I end up with a file with two simple orthogonal fixes in it.
-> git-diff shows me both, that's OK.
->
-> Now I want to commit them as two separate commits. So far, it's
-> * getting full diff
-> * cp(1)
-> * hand-edit both diffs
-> * commit first
-> * commit second
->
-> Has anyone thought about aggregating this into git-update-index or
-> somewhere?
->
->     git-update-index -C1,3    #chunks 1, 3
->     git commit
->     git-update-index -C1,3    # chunks 2,5 in original numbering
->     git commit
->
-> Relying on diff(1) definition of chunks is sorta hacky, though... I admit it.
+Alex Riesen wrote:
 
-I don't think it belongs in the plumbing, the git-update-index but I
-think something like this would be very usefull.
+>> So the problem is probably memory fragmentation.
+> 
+> probably.
+> 
+>> You might have more joy if you allocated one HUGE chunk immediately on
+>> startup to use for the pack, and then kept re-using that chunk.
+> 
+> Well, it is not _one_ chunk. The windows/cygwin abomin...combination
+> may take an issue with this: it seem to copy complete address space
+> at fork, which even for such a small packs I have here takes system
+> down lightly (yes, I tried it).
 
-AFAIR darcs has this functionality. It selectively ask for each hunk if
-it should be commited. This would be awfull to have in git.
+Perhaps planned mmapping only parts of packs would help there.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
--Peter
