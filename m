@@ -1,72 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/2] Allow pack header preprocessing before unpack-objects/index-pack.
-Date: Tue, 31 Oct 2006 15:51:21 -0800
-Message-ID: <7vwt6goxhi.fsf@assigned-by-dhcp.cox.net>
-References: <20061031075629.GA7691@spearce.org>
-	<Pine.LNX.4.64.0610311400180.11384@xanadu.home>
-	<20061031200841.GC23671@spearce.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH] Add a MIME-Version header to e-mails
+Date: Tue, 7 Nov 2006 19:09:06 +0000
+Message-ID: <b0943d9e0611071109w584f4f7fv3ba1b7dbd9413717@mail.gmail.com>
+References: <eile19$p7r$1@sea.gmane.org>
+	 <20061106074532.10376.60478.stgit@localhost>
+	 <b0943d9e0611070153s2a52f65k6ed4643e60a144b3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 31 Oct 2006 23:51:31 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 7 Nov 2006 19:09:20 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061031200841.GC23671@spearce.org> (Shawn Pearce's message of
-	"Tue, 31 Oct 2006 15:08:41 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ajwskhjHqbHTBzDmdAqVWAw+EYYPrP6KnxMv6LuCDlfebUhtlmVTBbL+zZ/i6n7r5Fh0SKAKbdz3caV27ru1OYZ6nV2wyVVm/bIP37IKCeChpJS9gRMaG8fUUKpR01s/OICG6Wc23ceKXotGt4Nybj/9aWqQJ30FUfVqF7OkoR4=
+In-Reply-To: <b0943d9e0611070153s2a52f65k6ed4643e60a144b3@mail.gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31089>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gf3OB-0003pU-Jh for gcvg-git@gmane.org; Wed, 01 Nov
- 2006 00:51:27 +0100
+ esmtp (Exim 4.43) id 1GhWJv-0000Xj-Uu for gcvg-git@gmane.org; Tue, 07 Nov
+ 2006 20:09:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946165AbWJaXvY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
- 18:51:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946166AbWJaXvY
- (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 18:51:24 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:12004 "EHLO
- fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S1946165AbWJaXvX
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 18:51:23 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao03.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061031235122.JHJO2704.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>; Tue, 31
- Oct 2006 18:51:22 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id hBrS1V00e1kojtg0000000 Tue, 31 Oct 2006
- 18:51:27 -0500
-To: Shawn Pearce <spearce@spearce.org>
+ S1751643AbWKGTJJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
+ 14:09:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751415AbWKGTJJ
+ (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 14:09:09 -0500
+Received: from py-out-1112.google.com ([64.233.166.181]:28396 "EHLO
+ py-out-1112.google.com") by vger.kernel.org with ESMTP id S1751471AbWKGTJI
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 14:09:08 -0500
+Received: by py-out-1112.google.com with SMTP id a73so1332738pye for
+ <git@vger.kernel.org>; Tue, 07 Nov 2006 11:09:07 -0800 (PST)
+Received: by 10.35.13.1 with SMTP id q1mr13592096pyi.1162926547127; Tue, 07
+ Nov 2006 11:09:07 -0800 (PST)
+Received: by 10.35.77.5 with HTTP; Tue, 7 Nov 2006 11:09:06 -0800 (PST)
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce <spearce@spearce.org> writes:
+On 07/11/06, Catalin Marinas <catalin.marinas@gmail.com> wrote:
+> I'll include these patches (maybe modified) and I'll try to fix
+> "import" as well.
 
-> Nicolas Pitre <nico@cam.org> wrote:
->> On Tue, 31 Oct 2006, Shawn Pearce wrote:
->> 
->> > However if the caller consumes the pack header from the input stream
->> > then its no longer available for unpack-objects or index-pack --stdin,
->> > both of which need the version and object count to process the stream.
->> > 
->> > This change introduces --pack_header=ver,cnt as a command line option
->> > that the caller can supply to indicate it has already consumed the
->> > pack header and what version and object count were found in that
->> > header.  As this option is only meant for low level applications
->> > such as receive-pack we are not documenting it at this time.
->> 
->> This breaks index-pack, and unpack-objects with OBJ_OFS_DELTA, if 
->> --pack-header is used.  The header is not accounted in the pack's offset 
->> and therefore every object's offset is wrong.
->> 
->> What about this patch instead?  This makes things much simpler IMHO.
->
-> Agreed.  The idea you are using here came to me in my sleep last
-> night; I didn't have time to look at it until now however.  You just
-> beat me to posting it.  :-)
+I re-implemented parts of the mail and import commands (inspiring from
+your patches). They now use the email Python package. The mail command
+encodes the body to 7 or 8bit depending on non-ascii characters. The
+headers are QP-encoded. The import command can decode messages
+properly and can also handle multipart e-mails.
 
-Will replace your [1/2] still in "pu".
+I still have to write a test script but my simple tests showed that it
+works. Please let me know if there is anything wrong (especially with
+the QP-encoding of the mail headers).
+
+Thanks.
+
+-- 
