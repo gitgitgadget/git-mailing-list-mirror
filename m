@@ -1,78 +1,59 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_URI_ONLY,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Liu Yubao <yubao.liu@gmail.com>
-Subject: Re: how to show log for only one branch
-Date: Tue, 07 Nov 2006 10:21:25 +0800
-Message-ID: <454FEDA5.1050607@gmail.com>
-References: <454EAEDB.8020909@gmail.com>	<7vk629f6is.fsf@assigned-by-dhcp.cox.net> <454F1175.9080506@gmail.com> <7vslgwcueo.fsf@assigned-by-dhcp.cox.net>
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: fork0@t-online.de (Alex Riesen)
+Subject: Re: win2k/cygwin cannot handle even moderately sized packs
+Date: Tue, 7 Nov 2006 20:27:59 +0100
+Message-ID: <20061107192759.GA4484@steel.home>
+References: <81b0412b0611070302h50541cd5mf0758afe0d6befda@mail.gmail.com> <45507965.3010806@peralex.com> <81b0412b0611070555u1833cc8ci1d37d45782562df8@mail.gmail.com> <eiq9vm$l7c$1@sea.gmane.org> <81b0412b0611070928l7be83e08kbfc9657937fe7c92@mail.gmail.com> <20061107174859.GB26591@spearce.org> <81b0412b0611071013j51254a40s749fb6cba65e6873@mail.gmail.com> <20061107181808.GC26591@spearce.org> <20061107182636.GD26591@spearce.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 7 Nov 2006 02:22:42 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 7 Nov 2006 19:29:10 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=VSeeyYz7+9UutVWWW6qWYo0MiEyHwTyeyK96oxvBVc3k8fUS/NpQujRCWUg/yJc0Zufj++/gjTV0cit6/eyyTlmHDIne+tAb6WYZ64uqbo/Vv4bIn2hWmMrYpyksz/huate5DT7ltsdUEudvZ1pBTC/PYThKxaYp9Bo5jGFjngA=
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.7) Gecko/20060909 Thunderbird/1.5.0.7 Mnenhy/0.7.4.666
-In-Reply-To: <7vslgwcueo.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+In-Reply-To: <20061107182636.GD26591@spearce.org>
+User-Agent: Mutt/1.5.11
+X-ID: SrCO+eZSoeGj3bqs2E9dpQcoRMW-8J1DvCRGOr9bTOv3ZH+AUWlZcK
+X-TOI-MSGID: 0ce9762b-2f42-4bb7-b9de-83c357115ba1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31090>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhGbl-00036h-87 for gcvg-git@gmane.org; Tue, 07 Nov
- 2006 03:22:37 +0100
+ esmtp (Exim 4.43) id 1GhWcN-0004fM-NT for gcvg-git@gmane.org; Tue, 07 Nov
+ 2006 20:28:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753952AbWKGCW3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
- 21:22:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753953AbWKGCW3
- (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 21:22:29 -0500
-Received: from wx-out-0506.google.com ([66.249.82.231]:11571 "EHLO
- wx-out-0506.google.com") by vger.kernel.org with ESMTP id S1753952AbWKGCW2
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 21:22:28 -0500
-Received: by wx-out-0506.google.com with SMTP id s14so1246047wxc for
- <git@vger.kernel.org>; Mon, 06 Nov 2006 18:22:28 -0800 (PST)
-Received: by 10.70.61.1 with SMTP id j1mr6074280wxa.1162866148008; Mon, 06
- Nov 2006 18:22:28 -0800 (PST)
-Received: from ?192.168.88.85? ( [221.122.47.70]) by mx.google.com with ESMTP
- id 24sm10264102wrl.2006.11.06.18.22.25; Mon, 06 Nov 2006 18:22:27 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
+ S1751907AbWKGT2P (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
+ 14:28:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752129AbWKGT2P
+ (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 14:28:15 -0500
+Received: from mailout02.sul.t-online.com ([194.25.134.17]:28374 "EHLO
+ mailout02.sul.t-online.com") by vger.kernel.org with ESMTP id
+ S1751907AbWKGT2O (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006
+ 14:28:14 -0500
+Received: from fwd35.aul.t-online.de  by mailout02.sul.t-online.com with smtp
+  id 1GhWc8-0007oC-04; Tue, 07 Nov 2006 20:28:04 +0100
+Received: from tigra.home
+ (SrCO+eZSoeGj3bqs2E9dpQcoRMW-8J1DvCRGOr9bTOv3ZH+AUWlZcK@[84.163.93.166]) by
+ fwd35.sul.t-online.de with esmtp id 1GhWc5-0tNykq0; Tue, 7 Nov 2006 20:28:01
+ +0100
+Received: from steel.home (steel.home [192.168.1.2]) by tigra.home (Postfix)
+ with ESMTP id 85DC5277AF; Tue,  7 Nov 2006 20:28:00 +0100 (CET)
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian)) id
+ 1GhWc4-0001JE-0B; Tue, 07 Nov 2006 20:28:00 +0100
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
-> Liu Yubao <yubao.liu@gmail.com> writes:
-> 
->> ... For example, I want to know what happened in your
->> git's "next" branch, I hope to get logs like this:
->>     Merge branch 'jc/pickaxe' into next
->>     Merge branch 'master' into next
->>     Merge branch 'js/modfix' into next
->>     ...
->>     some good work
->>     ...
->>     Merge branch ....
->>
->> I just want to *outline* what happened in "next" branch, if I am interested
->> in what have been merged from 'jc/pickaxe' I can follow the merge point again
->> or use something like "git log --follow-all-parents".
-> 
-> My "next" is a bad example of this, because it is an integration
-> branch and never gets its own development.  It is also a bad
-> example because I can answer that question with this command
-> line:
-> 
-> 	git log --grep='^Merge .* into next$' next
-> 
-> and while it is a perfectly valid answer, I know it would leave
-> you feeling somewhat cheated.
-> 
-smart trick, but if the logs aren't consistent enough it's hard to
-grep them out.
+Shawn Pearce, Tue, Nov 07, 2006 19:26:36 +0100:
+> Too f'ing bad this .patch I created with format-patch doesn't say
+> what commits it was based on, 'cause I can't find anything it will
+> apply too.  Or better, too f'ing bad I deleted that branch.  *sigh*
 
+Maybe you just send the patch anyway? It could give someone an idea
+where to start, or what not to do...
