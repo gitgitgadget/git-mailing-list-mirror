@@ -1,70 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Torgil Svensson" <torgil.svensson@gmail.com>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sat, 16 Dec 2006 09:50:29 +0100
-Message-ID: <e7bda7770612160050j526c2b86gbabeae13f2ff114a@mail.gmail.com>
-References: <20061130170625.GH18810@admingilde.org>
-	 <200612150007.44331.Josef.Weidendorfer@gmx.de>
-	 <e7bda7770612150943j71a7362bmb509cea3b7756003@mail.gmail.com>
-	 <200612152242.50472.Josef.Weidendorfer@gmx.de>
-	 <e7bda7770612151543o39c9d233q91ea643a134196d3@mail.gmail.com>
-	 <e7bda7770612151713k418434e6gd8d565e49a766477@mail.gmail.com>
-	 <Pine.LNX.4.64.0612151747470.3849@woody.osdl.org>
-	 <Pine.LNX.4.64.0612151809510.3557@woody.osdl.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: win2k/cygwin cannot handle even moderately sized packs
+Date: Tue, 7 Nov 2006 12:48:59 -0500
+Message-ID: <20061107174859.GB26591@spearce.org>
+References: <81b0412b0611070302h50541cd5mf0758afe0d6befda@mail.gmail.com> <45507965.3010806@peralex.com> <81b0412b0611070555u1833cc8ci1d37d45782562df8@mail.gmail.com> <eiq9vm$l7c$1@sea.gmane.org> <81b0412b0611070928l7be83e08kbfc9657937fe7c92@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 16 Dec 2006 08:50:38 +0000 (UTC)
-Cc: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>,
-	"R. Steve McKown" <rsmckown@yahoo.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 7 Nov 2006 17:49:17 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=DjrVv2HtnF9Pv1b/JljK6mPk/O2oO1JJ9MpTXtkvaJfmVPrc2j6JbBttKB/6pNvwCQi6mH/aiwmtMHJV5//p6DQeEfNCriWgmxniQtsNu8kT27VLo7fGnOluo2fVola491Wx10TATNy8oZi1am6UpFVg5vy/90ATMpaHi/fFD8A=
-In-Reply-To: <Pine.LNX.4.64.0612151809510.3557@woody.osdl.org>
 Content-Disposition: inline
+In-Reply-To: <81b0412b0611070928l7be83e08kbfc9657937fe7c92@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34595>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvVFa-00079n-PS for gcvg-git@gmane.org; Sat, 16 Dec
- 2006 09:50:35 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31081>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GhV4O-0008Ps-VY for gcvg-git@gmane.org; Tue, 07 Nov
+ 2006 18:49:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030799AbWLPIub (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
- 03:50:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030802AbWLPIub
- (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 03:50:31 -0500
-Received: from nf-out-0910.google.com ([64.233.182.187]:49390 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1030799AbWLPIua (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec
- 2006 03:50:30 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1363091nfa for
- <git@vger.kernel.org>; Sat, 16 Dec 2006 00:50:29 -0800 (PST)
-Received: by 10.49.64.18 with SMTP id r18mr1320381nfk.1166259029512; Sat, 16
- Dec 2006 00:50:29 -0800 (PST)
-Received: by 10.49.28.8 with HTTP; Sat, 16 Dec 2006 00:50:29 -0800 (PST)
-To: "Linus Torvalds" <torvalds@osdl.org>
+ S965613AbWKGRtF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
+ 12:49:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965606AbWKGRtF
+ (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 12:49:05 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:2485 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S965614AbWKGRtD
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 12:49:03 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GhV4B-00013A-WF; Tue, 07 Nov 2006 12:48:56 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 1A38920E487; Tue,  7 Nov 2006 12:49:00 -0500 (EST)
+To: Alex Riesen <raa.lkml@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On 12/16/06, Linus Torvalds <torvalds@osdl.org> wrote:
+Alex Riesen <raa.lkml@gmail.com> wrote:
+> >Perhaps planned mmapping only parts of packs would help there.
+> 
+> BTW, can I find this code somewhere to try it out?
 
-> Side note: that's not to say that I would really see why you'd want to
-> have both the tree and the commit SHA1's, and why you seemingly think that
-> the links don't need a filename. Hmm?
+The patches are on the mailing list archives somewhere around
+Sept. 5th timeframe from me; as I recall we dropped them as they
+didn't apply on top of Junio's 64 bit index changes (which were
+reverted out of next anyway).
 
-I really want that file-name back - we can call it a mind short-circuit.
+I was going to push my branch to a public mirror but it turns
+out I deleted that branch. :-(
 
-> If you require the tree objects to be in the database, you might as well
-> require that the commit object be there. But you could make rules that say
-> that subprojects don't need the whole commit history, for example (which
-> is just a shallow clone in the subproject).
-
-You have a very good point here, this would give us the history of the
+-- 
