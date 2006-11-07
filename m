@@ -1,80 +1,78 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_URI_ONLY,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Avoiding uninteresting merges in Cairo
-Date: Fri, 15 Dec 2006 11:03:03 -0500
-Message-ID: <20061215160303.GG17860@spearce.org>
-References: <20061215020629.GK26202@spearce.org> <eluasq$v7q$3@sea.gmane.org> <20061215150130.GB17860@spearce.org> <200612151657.06909.jnareb@gmail.com>
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Liu Yubao <yubao.liu@gmail.com>
+Subject: Re: how to show log for only one branch
+Date: Tue, 07 Nov 2006 10:21:25 +0800
+Message-ID: <454FEDA5.1050607@gmail.com>
+References: <454EAEDB.8020909@gmail.com>	<7vk629f6is.fsf@assigned-by-dhcp.cox.net> <454F1175.9080506@gmail.com> <7vslgwcueo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 15 Dec 2006 16:03:20 +0000 (UTC)
-Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 7 Nov 2006 02:22:42 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <200612151657.06909.jnareb@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=VSeeyYz7+9UutVWWW6qWYo0MiEyHwTyeyK96oxvBVc3k8fUS/NpQujRCWUg/yJc0Zufj++/gjTV0cit6/eyyTlmHDIne+tAb6WYZ64uqbo/Vv4bIn2hWmMrYpyksz/huate5DT7ltsdUEudvZ1pBTC/PYThKxaYp9Bo5jGFjngA=
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.7) Gecko/20060909 Thunderbird/1.5.0.7 Mnenhy/0.7.4.666
+In-Reply-To: <7vslgwcueo.fsf@assigned-by-dhcp.cox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34527>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvFWn-0006nZ-9y for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 17:03:17 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31040>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GhGbl-00036h-87 for gcvg-git@gmane.org; Tue, 07 Nov
+ 2006 03:22:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752790AbWLOQDJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 11:03:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752789AbWLOQDJ
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 11:03:09 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:51754 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1752792AbWLOQDH (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
- 11:03:07 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GvFWV-00024F-Qt; Fri, 15 Dec 2006 11:02:59 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 932C520FB65; Fri, 15 Dec 2006 11:03:03 -0500 (EST)
-To: Jakub Narebski <jnareb@gmail.com>
+ S1753952AbWKGCW3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
+ 21:22:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753953AbWKGCW3
+ (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 21:22:29 -0500
+Received: from wx-out-0506.google.com ([66.249.82.231]:11571 "EHLO
+ wx-out-0506.google.com") by vger.kernel.org with ESMTP id S1753952AbWKGCW2
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 21:22:28 -0500
+Received: by wx-out-0506.google.com with SMTP id s14so1246047wxc for
+ <git@vger.kernel.org>; Mon, 06 Nov 2006 18:22:28 -0800 (PST)
+Received: by 10.70.61.1 with SMTP id j1mr6074280wxa.1162866148008; Mon, 06
+ Nov 2006 18:22:28 -0800 (PST)
+Received: from ?192.168.88.85? ( [221.122.47.70]) by mx.google.com with ESMTP
+ id 24sm10264102wrl.2006.11.06.18.22.25; Mon, 06 Nov 2006 18:22:27 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Do you mean "commit" view or "commitdiff" view in gitweb for merges
-> is confusing?
+Junio C Hamano wrote:
+> Liu Yubao <yubao.liu@gmail.com> writes:
+> 
+>> ... For example, I want to know what happened in your
+>> git's "next" branch, I hope to get logs like this:
+>>     Merge branch 'jc/pickaxe' into next
+>>     Merge branch 'master' into next
+>>     Merge branch 'js/modfix' into next
+>>     ...
+>>     some good work
+>>     ...
+>>     Merge branch ....
+>>
+>> I just want to *outline* what happened in "next" branch, if I am interested
+>> in what have been merged from 'jc/pickaxe' I can follow the merge point again
+>> or use something like "git log --follow-all-parents".
+> 
+> My "next" is a bad example of this, because it is an integration
+> branch and never gets its own development.  It is also a bad
+> example because I can answer that question with this command
+> line:
+> 
+> 	git log --grep='^Merge .* into next$' next
+> 
+> and while it is a perfectly valid answer, I know it would leave
+> you feeling somewhat cheated.
+> 
+smart trick, but if the logs aren't consistent enough it's hard to
+grep them out.
 
-The commit view was what was confusing me.
- 
-> If it is "commit" view, it is fairly easy to remove difftree/whatchanged
-> output below commit message for merges. However while git-show nor 
-> git-diff-tree doesn't show diff for merge messages, the diftree output
-> in "commit" view might be taken as 'damages'; git diff --summary always
-> takes summary of diff against first parent.
-
-I can see that, but it depends on what the current branch was when
-you do the merge.  In the cairo case I was looking at yesterday the
-"damages" from the merge were actually what was already considered to
-be in the mainline as part of the project due to committer pulling
-the remote master into his own master before pushing.
-
-Given that the "push; whoops; pull; push" pattern is so common to
-Git I think it is sort of misleading to show a merge like this;
-lots of activity may have been pulled in from the central branch
-during that pull.
-
-iirc git whatchanged for a merge shows only files which cannot be
-found in any of the parents; these the files which the merge commit
-itself contributed directly.  If that set is empty then the commit
-just isn't shown by git whatchanged.
-
--- 
