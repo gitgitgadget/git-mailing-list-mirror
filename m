@@ -1,63 +1,90 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH] Set $HOME for selftests
-Date: Tue, 24 Oct 2006 20:00:37 +0000
-Message-ID: <20061024200037.17087.qmail@d8dab9a84b4add.315fe32.mid.smarden.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH/RFC] Convenient support of remote branches in git-checkout
+Date: Tue, 7 Nov 2006 07:54:00 +0100
+Message-ID: <20061107065400.GA25737@diana.vm.bytemark.co.uk>
+References: <200611070026.16425.Josef.Weidendorfer@gmx.de> <7vd580azbb.fsf@assigned-by-dhcp.cox.net> <200611070225.24956.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 24 Oct 2006 20:01:05 +0000 (UTC)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Tue, 7 Nov 2006 06:54:25 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <200611070225.24956.Josef.Weidendorfer@gmx.de>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31045>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcSRh-0002aE-JW for gcvg-git@gmane.org; Tue, 24 Oct
- 2006 22:00:22 +0200
+ esmtp (Exim 4.43) id 1GhKqg-0005Ns-Ts for gcvg-git@gmane.org; Tue, 07 Nov
+ 2006 07:54:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161211AbWJXUAS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006
- 16:00:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161215AbWJXUAR
- (ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 16:00:17 -0400
-Received: from a.ns.smarden.org ([212.42.242.37]:52640 "HELO
- a.mx.smarden.org") by vger.kernel.org with SMTP id S1161211AbWJXUAQ (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 16:00:16 -0400
-Received: (qmail 17088 invoked by uid 1000); 24 Oct 2006 20:00:37 -0000
-To: git@vger.kernel.org
+ S1751641AbWKGGyP convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006 01:54:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752332AbWKGGyP
+ (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 01:54:15 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:52742 "EHLO
+ diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1751641AbWKGGyO
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 01:54:14 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
+ (Debian)) id 1GhKqQ-0006np-00; Tue, 07 Nov 2006 06:54:02 +0000
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Set HOME environment variable to test trash directory and export for
-selftests.  This fixes the git-svn selftests with nonexistent or not
-readable home, as found in at least one automated build system:
+On 2006-11-07 02:25:24 +0100, Josef Weidendorfer wrote:
 
- http://buildd.debian.org/fetch.cgi?&pkg=git-core&ver=1%3A1.4.2.3-2&arch=alpha&stamp=1161537466&file=log
+> On Tuesday 07 November 2006 01:13, Junio C Hamano wrote:
+>
+> > Then "git checkout origin/next" would always mean "I want to
+> > switch to the branch I use to hack on the branch 'next' Junio
+> > has". Do it once and you will get exactly my tip, hack on it,
+> > switch out of it and then do it again and you won't lose your
+> > previous work but just switch to that branch.
+>
+> Ah, now I understand your thinking. I admit it has a compelling
+> elegance.
 
-Signed-off-by: Gerrit Pape <pape@smarden.org>
+I agree. The name is slightly longer than necessary in the common case
+of only one remote repository, but the reduction of newbie confusion
+will be worth it. (Non-newbies know how to give the branch any name
+they want.)
 
----
- t/test-lib.sh |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+> However. Would it not be confusing for newbies (and not only for
+> them) to first reference the remote branch with "origin/next", and
+> afterwards, you get your own development branch by using the exactly
+> same name?
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 2488e6e..07cb706 100755
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -207,7 +207,8 @@ # Test the binaries we have just built. 
- # t/ subdirectory and are run in trash subdirectory.
- PATH=$(pwd)/..:$PATH
- GIT_EXEC_PATH=$(pwd)/..
--export PATH GIT_EXEC_PATH
-+HOME=$(pwd)/trash
-+export PATH GIT_EXEC_PATH HOME
- 
- # Similarly use ../compat/subprocess.py if our python does not
- # have subprocess.py on its own.
--- 
-1.4.2.3
+Not necessarily. As long as they know that there are two kinds of
+branches, remote and local, it should be perfectly obvious. You check
+out and modify your local copy of a remote branch, and occasionally
+pull updates from the remote branch. If there is no local branch
+corresponding to a certain remote branch, git will make one for you.
+
+> IMHO this kind of aliasing is awkward. When you want to start
+> another topic branch on the remote branch, or want to reference the
+> remote branch for diffs, you have to explicitly specify
+> "remotes/origin/next", making for more typing.
+
+Having more than one local branch for a remote branch is advanced
+enough that the user should know how to create branches with any name
+they choose.
+
+But I do agree that calling it "origin/next" the first time you
+branch, and "remotes/origin/next" subsequent times, is nonintuitive.
+However, this could be solved by the following message being printed
+the first time:
+
+  $ git checkout origin/next
+  No local branch "origin/next" exists. Creating new local branch
+  "origin/next" off of remote branch "remotes/origin/next".
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
