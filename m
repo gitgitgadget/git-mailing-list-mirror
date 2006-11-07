@@ -1,86 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Sun, 17 Dec 2006 18:35:34 +0100
-Message-ID: <20061217173534.GA16838@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <7vodq3a136.fsf@assigned-by-dhcp.cox.net> <em1vgj$bc3$1@sea.gmane.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH] Add a MIME-Version header to e-mails
+Date: Tue, 7 Nov 2006 09:53:31 +0000
+Message-ID: <b0943d9e0611070153s2a52f65k6ed4643e60a144b3@mail.gmail.com>
+References: <eile19$p7r$1@sea.gmane.org>
+	 <20061106074532.10376.60478.stgit@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 17 Dec 2006 18:36:22 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Tue, 7 Nov 2006 09:53:57 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 3475 seconds by postgrey-1.27 at vger.kernel.org; Sun, 17 Dec 2006 13:36:15 EST
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=d2ntC3jjuG5cjDMPY9zCc6LW3pRyG8bLUQ5L62A9tPV226TrH/fOx5ALKbDawhvJ2HYUQq/y2asrEv9qqiKLsbgzw/G8BHFvRx890Xm4UQyHJ0EiGb+wESwP6Rwwg6UTzp3jYzfsgMABLgqsW6B8mR1moSejY7chUBjkBP9bN5A=
+In-Reply-To: <20061106074532.10376.60478.stgit@localhost>
 Content-Disposition: inline
-In-Reply-To: <em1vgj$bc3$1@sea.gmane.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34698>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gw0rz-00041Y-UX for gcvg-git@gmane.org; Sun, 17 Dec
- 2006 19:36:20 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31059>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GhNeG-0002gj-7R for gcvg-git@gmane.org; Tue, 07 Nov
+ 2006 10:53:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932358AbWLQSgQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
- 13:36:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932365AbWLQSgQ
- (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 13:36:16 -0500
-Received: from postfix1-g20.free.fr ([212.27.60.42]:37968 "EHLO
- postfix1-g20.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932358AbWLQSgQ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006
- 13:36:16 -0500
-Received: from smtp1-g19.free.fr (smtp1-g19.free.fr [212.27.42.27]) by
- postfix1-g20.free.fr (Postfix) with ESMTP id EAACC5B6E18 for
- <git@vger.kernel.org>; Sun, 17 Dec 2006 18:36:42 +0100 (CET)
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
- [81.57.214.146]) by smtp1-g19.free.fr (Postfix) with ESMTP id ABE519B5D9;
- Sun, 17 Dec 2006 18:35:38 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000) id B7D371F092;
- Sun, 17 Dec 2006 18:35:34 +0100 (CET)
-To: Jakub Narebski <jnareb@gmail.com>
+ S1754152AbWKGJxd convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006 04:53:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754163AbWKGJxd
+ (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 04:53:33 -0500
+Received: from nz-out-0102.google.com ([64.233.162.193]:7573 "EHLO
+ nz-out-0102.google.com") by vger.kernel.org with ESMTP id S1754152AbWKGJxd
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006
+ 04:53:33 -0500
+Received: by nz-out-0102.google.com with SMTP id z3so1077959nzf for
+ <git@vger.kernel.org>; Tue, 07 Nov 2006 01:53:32 -0800 (PST)
+Received: by 10.35.128.1 with SMTP id f1mr12569784pyn.1162893211666; Tue, 07
+ Nov 2006 01:53:31 -0800 (PST)
+Received: by 10.35.77.5 with HTTP; Tue, 7 Nov 2006 01:53:31 -0800 (PST)
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
 Sender: git-owner@vger.kernel.org
 
-On Sun, Dec 17, 2006 at 12:29:25AM +0100, Jakub Narebski wrote:
-> >    I am thinking about teaching fsck-objects and prune to keep
-> >    revisions recorded in the reflog; we would need an end-user
-> >    way to prune older reflog entries and I would appreciate
-> >    somebody codes it up, but even without it, people can always
-> >    use "vi" or "ed" on reflog files ;-).
-> 
-> I'd rather not have prune keep revisions recorded in reflog. Reflog
-> keeps also amended commits, and blobs from incrementally staged
-> commits. Or perhaps make it an configuration option, default to
-> true for new users (or have an option to git-prune to ignore reflog).
+Karl,
 
-I think that is quite near to other issues: we already have other pieces
-of information that we would like to sometimes have ignored and
-sometimes not, when running fsck-objects/prune.  Namely, revisions
-hidden by grafts, as already discussed on this list.
+On 06/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> This is required by some mail servers that want to change the transfe=
+r
+> encoding of the mail.
 
-An idea I had to handle that case, and which could be useful with the
-current problem, as well as others, like dealing with stgit's patch
-logging, would be to define "reachable commits" using a modular
-architecture.  That way we would be able to select what we want
-fsck-object/prune to consider reachable, in objects reachable from:
+Thanks for digging into this problem and thanks to everyone else
+(especially Linus) for the detailed explanations.
 
-- raw "parents" field of commit objects
-- the latter as modified by info/grafts
-- reflogs
-- stgit patchlogs
+I'll include these patches (maybe modified) and I'll try to fix
+"import" as well.
 
-The set of rules to consider could be declared in repo-config, thus
-stgit would be able to declare that its patchlogs should not be ignored,
-and people wishing to prune commits hidden by grafts in one repo could
-just remove the "raw-parents" rule from their repo's config.
-
-Obviously, mentionning stgit-specific rules here immediately suggests a
-plugin-based architecture.
-
-Does that make any sense ?
-
--- 
+--=20
