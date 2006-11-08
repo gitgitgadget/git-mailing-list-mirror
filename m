@@ -1,122 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] git-pickaxe -C -C -C
-Date: Mon, 06 Nov 2006 01:08:10 -0800
-Message-ID: <7vmz75djt1.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/2] gitweb: New improved formatting of chunk header in diff
+Date: Wed, 8 Nov 2006 21:58:43 +0100
+Message-ID: <200611082158.43652.jnareb@gmail.com>
+References: <200611081147.52952.jnareb@gmail.com> <200611081800.16001.jnareb@gmail.com> <7vfyctsmbm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 6 Nov 2006 09:08:22 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 8 Nov 2006 20:58:07 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=pWPjDnBhnXQeIitezBrH6omXb5FO850YLqR04q0qtkirx5SVqx1nnAQLV/chwzLU668JlA7UK22HEGrNdk7fN6o9n5Imx01LD66pVkYRPmL+QsP1VstH0vngQTRxK2QT6SguhOa/7zw8QcnY5nsqxDTlAQcVB995EgBD0S1uF7A=
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vfyctsmbm.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31158>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gh0Sm-00039o-Ab for gcvg-git@gmane.org; Mon, 06 Nov
- 2006 10:08:16 +0100
+ esmtp (Exim 4.43) id 1GhuUh-0008EZ-Lt for gcvg-git@gmane.org; Wed, 08 Nov
+ 2006 21:58:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161727AbWKFJIN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
- 04:08:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161728AbWKFJIN
- (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 04:08:13 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:40888 "EHLO
- fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1161727AbWKFJIL
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 04:08:11 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao05.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061106090811.WHVA18816.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>; Mon, 6
- Nov 2006 04:08:11 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id jM7o1V0011kojtg0000000 Mon, 06 Nov 2006
- 04:07:48 -0500
-To: git@vger.kernel.org
+ S1423727AbWKHU54 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
+ 15:57:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932764AbWKHU54
+ (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 15:57:56 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:9381 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S932763AbWKHU5z
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 15:57:55 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so23540ugc for
+ <git@vger.kernel.org>; Wed, 08 Nov 2006 12:57:54 -0800 (PST)
+Received: by 10.66.232.11 with SMTP id e11mr125780ugh.1163019474196; Wed, 08
+ Nov 2006 12:57:54 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id 72sm7565990ugb.2006.11.08.12.57.53; Wed, 08 Nov
+ 2006 12:57:53 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Three -C options makes the command to look for copied lines from _any_
-existing file in the parent commit, not just changed files.
+Junio C Hamano wrote:
+> This regresses on hunks of form "@@ -n +m,l @@" and friends, so
+> I dropped it for now.
 
-This is of course _very_ expensive.
+O.K. This one introduced new feature, and wasn't needed for earlier 
+accepted patch (output empty patches) to have sense. And it is rc1 
+phase...
 
-Some numbers and observations.
-
-* git-pickaxe -C revision.c
-2.22user 0.02system 0:02.24elapsed 100%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+5263minor)pagefaults 0swaps
-num read blob 486
-
-* git-pickaxe -C -C -C revision.c
-35.42user 0.27system 0:37.66elapsed 94%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (14major+115543minor)pagefaults 0swaps
-num read blob 43277
-
-Comparing the output from the above two, with this option, it
-finds that some lines were copied from diff.c, diff-tree.c and
-merge-cache.c; they are obvious patterns justifiably repeated.
-
- - list of parameters to a function (ll. 214-217, 247-249);
-
- - definitions of local variables (ll. 260-263);
-
- - loops over all cache entries (ll. 581-584).
-
-This change probably falls into the category of "I did this not
-because it is useful in practice but just because I could".
-
-Nevertheless, looking at the output was very interesting.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- builtin-pickaxe.c |   10 +++++++---
- 1 files changed, 7 insertions(+), 3 deletions(-)
-
-diff --git a/builtin-pickaxe.c b/builtin-pickaxe.c
-index f12b2d4..619a8c6 100644
---- a/builtin-pickaxe.c
-+++ b/builtin-pickaxe.c
-@@ -19,7 +19,7 @@
- #include <sys/time.h>
- 
- static char pickaxe_usage[] =
--"git-pickaxe [-c] [-l] [-t] [-f] [-n] [-p] [-L n,m] [-S <revs-file>] [-M] [-C] [-C] [commit] [--] file\n"
-+"git-pickaxe [-c] [-l] [-t] [-f] [-n] [-p] [-L n,m] [-S <revs-file>] [-M] [-C] [-C] [-C] [commit] [--] file\n"
- "  -c, --compatibility Use the same output mode as git-annotate (Default: off)\n"
- "  -l, --long          Show long commit SHA1 (Default: off)\n"
- "  -t, --time          Show raw timestamp (Default: off)\n"
-@@ -48,6 +48,7 @@ static int num_commits;
- #define PICKAXE_BLAME_MOVE		01
- #define PICKAXE_BLAME_COPY		02
- #define PICKAXE_BLAME_COPY_HARDER	04
-+#define PICKAXE_BLAME_COPY_HARDEST	010
- 
- /*
-  * blame for a blame_entry with score lower than these thresholds
-@@ -885,8 +886,9 @@ static int find_copy_in_parent(struct sc
- 	 * and this code needs to be after diff_setup_done(), which
- 	 * usually makes find-copies-harder imply copy detection.
- 	 */
--	if ((opt & PICKAXE_BLAME_COPY_HARDER) &&
--	    (!porigin || strcmp(target->path, porigin->path)))
-+	if (((opt & PICKAXE_BLAME_COPY_HARDER) &&
-+	     (!porigin || strcmp(target->path, porigin->path))) ||
-+	    (opt & PICKAXE_BLAME_COPY_HARDEST))
- 		diff_opts.find_copies_harder = 1;
- 
- 	diff_tree_sha1(parent->tree->object.sha1,
-@@ -1569,6 +1571,8 @@ int cmd_pickaxe(int argc, const char **a
- 			blame_move_score = parse_score(arg+2);
- 		}
- 		else if (!strncmp("-C", arg, 2)) {
-+			if (opt & PICKAXE_BLAME_COPY_HARDER)
-+				opt |= PICKAXE_BLAME_COPY_HARDEST;
- 			if (opt & PICKAXE_BLAME_COPY)
- 				opt |= PICKAXE_BLAME_COPY_HARDER;
- 			opt |= PICKAXE_BLAME_COPY | PICKAXE_BLAME_MOVE;
+By the way, where I can find proper specifiction of unified diff format? 
+Do I understand correctly that bot from and to ranges can be without 
+number of lines part if it simplifies to 0?
 -- 
-1.4.3.4.g9f05
-
+Jakub Narebski
