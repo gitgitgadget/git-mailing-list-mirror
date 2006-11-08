@@ -1,68 +1,89 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Matt McCutchen" <hashproduct+git@gmail.com>
-Subject: Re: How to view an old revision?
-Date: Wed, 1 Nov 2006 11:25:35 -0500
-Message-ID: <3bbc18d20611010825ha4063d6wacf4f997d4652d35@mail.gmail.com>
-References: <3bbc18d20611010620m11e40402v44334a8c486a4932@mail.gmail.com>
-	 <4548AFA2.1040606@shadowen.org>
-	 <3bbc18d20611010637s6d05aecbt98322b62cf7235e8@mail.gmail.com>
-	 <4548B32A.5030803@shadowen.org>
-	 <7vzmbb2m42.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Return non-zero status from pull if merge fails.
+Date: Tue, 07 Nov 2006 16:05:27 -0800
+Message-ID: <7vy7qmzttk.fsf@assigned-by-dhcp.cox.net>
+References: <20061107181053.GA26856@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 1 Nov 2006 16:26:04 +0000 (UTC)
-Cc: "Andy Whitcroft" <apw@shadowen.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 8 Nov 2006 00:05:40 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=KQYkbIyapELOmLNiu1uyXgO0naCKCbfHe37hIdIrYbzvn3RrLBOt/Y5cd2J7Y95SAUhu5pCgkTErJEBQOzSO/IGtkntY0OXGsyZqpAolMIyVkzyWkHnMnO6pq+MduRja/9OPV1+HGRBSngtgqCgafDeogTOBl3LYtTXMD7zIAVo=
-In-Reply-To: <7vzmbb2m42.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
-X-Google-Sender-Auth: 86fcfa505eedd42d
+In-Reply-To: <20061107181053.GA26856@spearce.org> (Shawn O. Pearce's message
+	of "Tue, 7 Nov 2006 13:10:53 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31102>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfIuW-0000kN-Uw for gcvg-git@gmane.org; Wed, 01 Nov
- 2006 17:25:53 +0100
+ esmtp (Exim 4.43) id 1Ghawe-00055X-So for gcvg-git@gmane.org; Wed, 08 Nov
+ 2006 01:05:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S2992548AbWKAQZj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
- 11:25:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992630AbWKAQZj
- (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 11:25:39 -0500
-Received: from nf-out-0910.google.com ([64.233.182.189]:46620 "EHLO
- nf-out-0910.google.com") by vger.kernel.org with ESMTP id S2992548AbWKAQZi
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 11:25:38 -0500
-Received: by nf-out-0910.google.com with SMTP id c2so891124nfe for
- <git@vger.kernel.org>; Wed, 01 Nov 2006 08:25:37 -0800 (PST)
-Received: by 10.82.111.8 with SMTP id j8mr1533838buc; Wed, 01 Nov 2006
- 08:25:35 -0800 (PST)
-Received: by 10.82.129.2 with HTTP; Wed, 1 Nov 2006 08:25:35 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
+ S1753753AbWKHAF3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
+ 19:05:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753927AbWKHAF3
+ (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 19:05:29 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:22479 "EHLO
+ fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S1753753AbWKHAF3
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 19:05:29 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao11.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061108000528.RJID13992.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>; Tue, 7
+ Nov 2006 19:05:28 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id k0551V0011kojtg0000000; Tue, 07 Nov 2006
+ 19:05:05 -0500
+To: "Shawn O. Pearce" <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-On 11/1/06, Junio C Hamano <junkio@cox.net> wrote:
-> I was actually reviewing the documentation of git-rev-parse and
-> noticed that it talks about naming objects in the section called
-> "SPECIFYING REVISIONS".  The title implies that it is about
-> committish (because we think of "revisions" as something that is
-> used in walking commit ancestry chains), but it actually talks
-> about naming objects of any type.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-There's no way I would have known to look in git-rev-parse.  My
-git-rev-parse man page doesn't mention the colon syntax, but now I see
-that part in git's gitweb; my man page must be too old.  Either (1) or
-(2) would have been enough for me to figure out that the colon syntax
-would do what I wanted, but to grab the attention of the less
-persistent user, it would be good to mention the particular case of
-"git-cat-file <commit-ish>:<file>" in the git-cat-file man page.
+> diff --git a/git-merge.sh b/git-merge.sh
+> index cb09438..7725908 100755
+> --- a/git-merge.sh
+> +++ b/git-merge.sh
+> @@ -203,7 +203,7 @@ f,*)
+>  	git-update-index --refresh 2>/dev/null
+>  	new_head=$(git-rev-parse --verify "$1^0") &&
+>  	git-read-tree -u -v -m $head "$new_head" &&
+> -	finish "$new_head" "Fast forward"
+> +	finish "$new_head" "Fast forward" || exit 1
+>  	dropsave
+>  	exit 0
+>  	;;
 
+The shell function "finish" itself exits when there is an error;
+is this needed?
+
+> @@ -214,7 +214,7 @@ f,*)
+> +	git var GIT_COMMITTER_IDENT >/dev/null || exit 1
+> @@ -225,7 +225,7 @@ f,*)
+> +	    ) || exit 1
+> @@ -253,7 +253,7 @@ f,*)
+> +git var GIT_COMMITTER_IDENT >/dev/null || exit 1
+> @@ -327,7 +327,7 @@ done
+> +    result_commit=$(echo "$merge_msg" | git-commit-tree $result_tree $parents) || exit 1
+
+Are these needed?  Wouldn't "something || exit" already exit non-zero
+when something exits non-zero?
+
+> diff --git a/git-pull.sh b/git-pull.sh
+> index ed04e7d..d10fcdd 100755
+> --- a/git-pull.sh
+> +++ b/git-pull.sh
+> @@ -102,6 +102,6 @@ case "$strategy_args" in
+>  esac
+>  
+>  merge_name=$(git-fmt-merge-msg <"$GIT_DIR/FETCH_HEAD") || exit
+> -git-merge "--reflog-action=pull $*" \
+> +exec git-merge "--reflog-action=pull $*" \
+>  	$no_summary $no_commit $squash $strategy_args \
+>  	"$merge_name" HEAD $merge_head
+
+I think this is a good change.
