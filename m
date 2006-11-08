@@ -1,115 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [DRAFT] Branching and merging with git
-Date: Fri, 17 Nov 2006 10:32:46 -0500
-Message-ID: <20061117153246.GA20065@thunk.org>
-References: <20061116221701.4499.qmail@science.horizon.com>
+From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
+Subject: Shallow clone [Was Re: What's in git.git ]
+Date: Wed, 08 Nov 2006 22:10:18 +0530
+Message-ID: <45520872.3090506@gmail.com>
+References: <7v8ximwrm3.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0611072009220.2601@qynat.qvtvafvgr.pbz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 17 Nov 2006 15:34:54 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 8 Nov 2006 16:41:01 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061116221701.4499.qmail@science.horizon.com>
-User-Agent: Mutt/1.5.12-2006-07-14
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:mime-version:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=bCP83D9fdVbLMrcs8joZVpMKIlYdv4+ccBXHp280ucUJN0fJ83DwXqNoOjVAPFGq6Hqc/b0SxFZLgYhklyENzijY2eA0r+Qo6R8u17ahr3HdK+W/NHLpTekAymRqag4Fm55ceWXoZxctD9HKYn5mkO2EVE8Twvp4FAOcvcS44Y8=
+User-Agent: Thunderbird 1.5.0.7 (X11/20060918)
+In-Reply-To: <Pine.LNX.4.63.0611072009220.2601@qynat.qvtvafvgr.pbz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31141>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gl5jE-0005Ex-1E for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 16:34:08 +0100
+ esmtp (Exim 4.43) id 1GhqTZ-000434-FR for gcvg-git@gmane.org; Wed, 08 Nov
+ 2006 17:40:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933675AbWKQPeB (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 10:34:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933676AbWKQPeB
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 10:34:01 -0500
-Received: from thunk.org ([69.25.196.29]:60080 "EHLO thunker.thunk.org") by
- vger.kernel.org with ESMTP id S933673AbWKQPeA (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 10:34:00 -0500
-Received: from root (helo=candygram.thunk.org) by thunker.thunk.org with
- local-esmtps  (tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1
- (Debian)) id 1Gl5mX-0007sx-Oa; Fri, 17 Nov 2006 10:37:34 -0500
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
- (envelope-from <tytso@thunk.org>) id 1Gl5hu-00072E-Ca; Fri, 17 Nov 2006
- 10:32:46 -0500
-To: linux@horizon.com
+ S1161237AbWKHQk3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
+ 11:40:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161293AbWKHQk3
+ (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 11:40:29 -0500
+Received: from nz-out-0102.google.com ([64.233.162.206]:24737 "EHLO
+ nz-out-0102.google.com") by vger.kernel.org with ESMTP id S1161237AbWKHQk2
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 11:40:28 -0500
+Received: by nz-out-0102.google.com with SMTP id z3so1502664nzf for
+ <git@vger.kernel.org>; Wed, 08 Nov 2006 08:40:28 -0800 (PST)
+Received: by 10.35.33.15 with SMTP id l15mr5899213pyj.1163004028121; Wed, 08
+ Nov 2006 08:40:28 -0800 (PST)
+Received: from ?192.168.2.47? ( [59.92.130.252]) by mx.google.com with ESMTP
+ id a22sm7816281pye.2006.11.08.08.40.26; Wed, 08 Nov 2006 08:40:27 -0800 (PST)
+To: unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 
-On Thu, Nov 16, 2006 at 05:17:01PM -0500, linux@horizon.com wrote:
-> I know it took me a while to get used to playing with branches, and I
-> still get nervous when doing something creative.  So I've been trying
-> to get more comfortable, and wrote the following to document what I've
-> learned.
+David Lang wrote:
+> On Tue, 7 Nov 2006, Junio C Hamano wrote:
 > 
-> It's a first draft - I just finished writing it, so there are probably
-> some glaring errors - but I thought it might be of interest anyway.
-
-This is really, really good stuff that you've written!  Have you any
-thoughts or suggestions about where this text should end up?
-Personally, I think this information is actually more important to an
-end-user than the current "part two" of the tutorial, which discusses
-the object database and the index file.  Perhaps this should be "part
-2", and the object database and index file should become "part 3"?  
-
-It might also be a good to consider moving some of the "discussion"
-portion the top-level git(7) man page into the object database and
-index file discussion.  Right now, the best way to introduce git's
-concepts (IMHO), is to start with the part 1 of the tutorial, then go
-into the your draft branch/merging with git, then the current part 2
-of the tutorial, and then direct folks to read the "discussion"
-section of git(7).  Only then do they really have enough background
-understanding of the fundamental concepts of git that they won't get
-confused when they start talking to other git users, on the git
-mailing list, for example.
-
-It would be nice if there was an easy way to direct users through the
-documentation in a way which makes good pedagogical sense.  Right now,
-one of the reasons why life gets hard for new users is that the
-current tutorials aren't enough for them to really undersatnd what's
-going on at a conceptual level.  And if users start using "everyday
-git" as a crutch, without the right background concepts, the human
-brain naturally tries to intuit what's happening in the background,
-but without reading the background docs, git is different enough that
-they will probably get it wrong, which means more stuff that they have
-to unlearn later.  
-
-> * Git's representation of history
+>> [pu]
+>>
+>>  Johannes's shallow clone work now should rebase cleanly on top
+>>  of 'master' although I haven't done so yet.  As he said
+>>  himself the series is waiting for people who have needs for
+>>  such a feature to raise hands.
 > 
-> As you recall from Git 101, there are exactly four kinds of objects in
-> Git's object database.  All of them have globally unique 40-character hex
-> names made by hashing their type and contents.  Blob objects record file
-> contents; they contain bytes.  Tree objects record directory contents;
-> they contain file names, permissions, and the associated tree or blob
-> object names.  Tag objects are shareable pointers to other objects;
-> they're generally used to store a digital signature.
-
-Hmm... this assumes that you've read the Git(7) discussion first.
-There is enough information here though that maybe you don't need to
-say "as you recall".  It might be enough to give a quick summary of
-the concepts that are needed to understand the rest of your tutorial,
-and then point to git(7) Discussion section for people who need to
-learn more details.
-
-> * Remotes files
+> I haven't been watching this recently, but if this is what I understand 
+> it to be (the ability to get a partial repository from upstream and work 
+> normally from there with the result of data-mineing tools sometimes 
+> reporting 'that's part of the truncated history' if they hit the cutoff) 
+> consider my hand raised.
 > 
-> Note that branches to fetch are identified by "Pull: " lines in the
-> remotes file.  This is another example of the fetch/pull confusion.
-> git-pull will be explained eventually.
+> there are a number of cases where I would be interested in following a 
+> project as it moves forwards, but do not have the need to have the full 
+> history (even with the good compression that a git pack provides, it's 
+> still a significant amount of disk space and download time for large 
+> projects)
+> 
 
-Maybe we should change git so that a "Fetch: " line in the remotes
-file works the same way as "Pull: ", and then recommend that people
-use "Fetch: " in order to reduce confusion, as opposed to simply
-explaining it away as "yet another example of the histororical
-fetch/pull confusion"?
+I am trying to test this feature. Is there a documentation .git/shallow some where. Atleast what those entries
+mean ? I know in the mail johannes mentioned only core git will touch this file. But it should be ok to be 
+descriptive like other files. (FETCH_HEAD)
 
-Thanks,
-
+-aneesh 
