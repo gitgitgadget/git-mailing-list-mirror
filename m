@@ -1,74 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Question about commit message conventions
-Date: Wed, 25 Oct 2006 11:48:58 -0700
-Message-ID: <7vbqo0b59h.fsf@assigned-by-dhcp.cox.net>
-References: <200610241549.48238.t.toedter@gmx.net>
-	<20061024140856.GH5639@harddisk-recovery.com>
-	<453F8187.9060208@op5.se>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/2] gitweb: New improved patchset view
+Date: Wed, 8 Nov 2006 20:04:19 +0100
+Message-ID: <200611082004.19918.jnareb@gmail.com>
+References: <200611081147.52952.jnareb@gmail.com> <7virhpu73w.fsf@assigned-by-dhcp.cox.net> <7vejsdu5p5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 25 Oct 2006 18:49:06 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 8 Nov 2006 19:04:10 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <453F8187.9060208@op5.se> (Andreas Ericsson's message of "Wed, 25
-	Oct 2006 17:23:51 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=HJv3EIJxXeGcYBAOf/bk9CAgrmiMXO4vqFfsnUHfTMMgsxWiXy0C82D3bLdlRD9KNOlSDJgAzvFTmWwKXJCAFWCsWQWMX6pklpNNQdiDg3x8ZGp9VoiWhyX55rVprorrKUZeEyYjSKvi9Ixpyf/zlc65OiH5m0Oqj1A3asMXUHA=
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vejsdu5p5.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31154>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcnoF-0008SR-7z for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 20:49:03 +0200
+ esmtp (Exim 4.43) id 1Ghsi7-000126-0r for gcvg-git@gmane.org; Wed, 08 Nov
+ 2006 20:03:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030343AbWJYStA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 14:49:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030412AbWJYStA
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 14:49:00 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:51936 "EHLO
- fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S1030343AbWJYSs7
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 14:48:59 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao02.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061025184859.NAFP12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>; Wed, 25
- Oct 2006 14:48:59 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id eioh1V00b1kojtg0000000 Wed, 25 Oct 2006
- 14:48:42 -0400
-To: Andreas Ericsson <ae@op5.se>
+ S1161686AbWKHTDk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
+ 14:03:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161690AbWKHTDk
+ (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 14:03:40 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:21155 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1161686AbWKHTDj
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 14:03:39 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so1611321ugc for
+ <git@vger.kernel.org>; Wed, 08 Nov 2006 11:03:36 -0800 (PST)
+Received: by 10.67.103.7 with SMTP id f7mr11451245ugm.1163012616008; Wed, 08
+ Nov 2006 11:03:36 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id w40sm7417436ugc.2006.11.08.11.03.35; Wed, 08 Nov
+ 2006 11:03:35 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Andreas Ericsson <ae@op5.se> writes:
+Junio C Hamano wrote:
+> Junio C Hamano <junkio@cox.net> writes:
+> 
+> > Jakub Narebski <jnareb@gmail.com> writes:
+> >
+> >> ---
+> >>  gitweb/gitweb.css  |   66 +++++++++++++++----
+> >>  gitweb/gitweb.perl |  183 
+> >> ++++++++++++++++++++++++++++++++++------------------
+> >>  2 files changed, 173 insertions(+), 76 deletions(-)
+> >
+> > Linewrap?
+> >
+> >> 
+----------------------------------------------------------------------
+> >>  ## functions returning short HTML fragments, or transforming HTML 
+> >> fragments
+> >
+> > ...
+> 
+> No need to resend -- will manage.
 
-> If you sift through the Linux kernel, you will find numerous patches
-> where subsystem maintainers have acked patches sent to them. I *think*
-> this usually means that they have reviewed the patch and approve of
-> it, but not modified it. The Ack is then solely for Linus' benefits
-> and tells him that at least one pair of eyes have already gone over
-> the patch.
+Too late... ;-)
 
-Correct.
-
-> Subsys maintainers sometimes also add Signed-off-by: lines, which I
-> assume means they have tweaked the patch somewhat or somehow
-> collaborated with the author in producing it.
->...
-> Lots of guesswork here, but in a sane world I can't be too far off the
-> mark ;-)
-
-Documentation/SubmittingPatches makes it unnecessary to make any
-guesses on S-o-b lines.  Regarding subsystem maintainer
-sign-offs, you are referring to DCO 1.1 (b), but the signature
-could have been made under DCO 1.1 (c).
-
-In plain terms, the signer vouches that the patch was passed
-either intact or with modifications but the original and
-modifications are both releasable, to the best of signer's
-knowledge, under open source terms.
-
+-- 
+Jakub Narebski
