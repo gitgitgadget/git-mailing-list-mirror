@@ -2,71 +2,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git fetch slow as molasses due to tag downloading
-Date: Thu, 14 Dec 2006 17:05:14 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612141701440.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <elrr8j$a02$1@sea.gmane.org>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/2] gitweb: New improved formatting of chunk header in diff
+Date: Wed, 08 Nov 2006 13:41:45 -0800
+Message-ID: <7vzmb1r4yu.fsf@assigned-by-dhcp.cox.net>
+References: <200611081147.52952.jnareb@gmail.com>
+	<200611081800.16001.jnareb@gmail.com>
+	<7vfyctsmbm.fsf@assigned-by-dhcp.cox.net>
+	<200611082158.43652.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 14 Dec 2006 16:05:34 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 8 Nov 2006 21:42:46 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <elrr8j$a02$1@sea.gmane.org>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <200611082158.43652.jnareb@gmail.com> (Jakub Narebski's message
+	of "Wed, 8 Nov 2006 21:58:43 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34359>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gut5F-00038x-2y for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 17:05:21 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31160>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GhvB8-0000zR-Hx for gcvg-git@gmane.org; Wed, 08 Nov
+ 2006 22:41:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932826AbWLNQFS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 11:05:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932844AbWLNQFR
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 11:05:17 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53095 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932826AbWLNQFQ
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006 11:05:16 -0500
-Received: (qmail invoked by alias); 14 Dec 2006 16:05:15 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp049) with SMTP; 14 Dec 2006 17:05:15 +0100
-To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+ S1753523AbWKHVlr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
+ 16:41:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753524AbWKHVlr
+ (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 16:41:47 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:11217 "EHLO
+ fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1753523AbWKHVlq
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 16:41:46 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061108214146.UAVK5575.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Wed, 8
+ Nov 2006 16:41:46 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id kMhr1V00K1kojtg0000000; Wed, 08 Nov 2006
+ 16:41:51 -0500
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Jakub Narebski <jnareb@gmail.com> writes:
 
-On Thu, 14 Dec 2006, Han-Wen Nienhuys wrote:
+> O.K. This one introduced new feature, and wasn't needed for earlier 
+> accepted patch (output empty patches) to have sense. And it is rc1 
+> phase...
 
-> just upgraded our autobuilder from 1.4.3 to 1.4.4.2.
-> 
-> Now, our standard download command comes to a complete halt.  Judging
-> >from the "ps -ef" apparently, it does 
-> 
->    git-show-ref --verify --quiet -- [TAG]
-> 
-> This is done for every one of the 1500 tags that are in my repository. 
-> At approx 20 tags per second this takes an awful lot of time. 
-> 
-> 1. Is this necessary? 
+I personally do not mind minor gitweb 'feature' updates in -rc
+cycle, just like I am planning to see if there are gitk updates
+I haven't pulled from Paulus (I think there is at least one
+patch from last month or so), unless the changes do not break it
+so badly.
 
-Yes. The purpose is to check which tags have not yet been fetched.
+> By the way, where I can find proper specifiction of unified diff format? 
+> Do I understand correctly that bot from and to ranges can be without 
+> number of lines part if it simplifies to 0?
 
-> 2. Is this efficient?  Wouldn't doing all tags in a single git-show-ref 
-> invocation be potentially quicker?
+When Linus did apply.c and I did diff.c, we primarily worked off
+of sources to GNU patch.
 
-It is not efficient. But it cannot be solved like you propose, since it is 
-inside a loop, and a "continue" is executed when the tag exists already.
+There is a POSIX draft proposal now.
 
-IMHO this should be solved as a filter: "git-show-ref --stdin 
---show-invalid". Thus, git does not have to traverse _every_ ref for 
-_every_ incoming tag.
+http://www.opengroup.org/austin/mailarchives/ag-review/msg02077.html
 
-Ciao,
-Dscho
+See also updates about the proposal.
+
+http://thread.gmane.org/gmane.comp.version-control.git/29331/focus=29389
