@@ -4,49 +4,78 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] Enable reflogs by default in any repository with a working directory.
-Date: Thu, 14 Dec 2006 18:10:38 -0500
-Message-ID: <20061214231038.GC5147@fieldses.org>
-References: <7v1wn243mu.fsf@assigned-by-dhcp.cox.net> <20061214224117.GA26374@spearce.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [RFC] git-gui: A commit / fetch / push interface
+Date: Wed, 8 Nov 2006 00:55:11 -0500
+Message-ID: <20061108055511.GD28498@spearce.org>
+References: <20061107083603.GB9622@spearce.org> <17745.3287.358673.265578@cargo.ozlabs.ibm.com> <45516F21.9070901@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 14 Dec 2006 23:10:49 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+NNTP-Posting-Date: Wed, 8 Nov 2006 05:55:25 +0000 (UTC)
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <20061214224117.GA26374@spearce.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <45516F21.9070901@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34430>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Guziu-0007ki-8Q for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 00:10:44 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31121>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GhgPC-0005B0-3k for gcvg-git@gmane.org; Wed, 08 Nov
+ 2006 06:55:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751749AbWLNXKl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 18:10:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751762AbWLNXKl
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 18:10:41 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:53382 "EHLO
- pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751749AbWLNXKl (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 18:10:41 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
- (envelope-from <bfields@fieldses.org>) id 1Guzio-0002FN-PH; Thu, 14 Dec 2006
- 18:10:38 -0500
-To: "Shawn O. Pearce" <spearce@spearce.org>
+ S1754331AbWKHFzR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
+ 00:55:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754334AbWKHFzQ
+ (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 00:55:16 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:44228 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1754331AbWKHFzP
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 00:55:15 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GhgP3-0001JY-EJ; Wed, 08 Nov 2006 00:55:13 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ B678620E487; Wed,  8 Nov 2006 00:55:11 -0500 (EST)
+To: Liu Yubao <yubao.liu@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On Thu, Dec 14, 2006 at 05:41:17PM -0500, Shawn O. Pearce wrote:
-> New and experienced Git users alike are finding out too late that
-> they forgot to enable reflogs in the current repository, and cannot
-> use the information stored within it to recover from an incorrectly
-> entered command such as `git reset --hard HEAD^^^` when they really
-> meant HEAD^^ (aka HEAD~2).
+Liu Yubao <yubao.liu@gmail.com> wrote:
+> Paul Mackerras wrote:
+> >Shawn Pearce writes:
+> >
+> >>I liked it and wanted to start making it available to some folks I
+> >>work with who are more comfortable with the mouse than they are with
+> >>the keyboard.  At first I tried fixing a few of the outstanding bugs
+> >>in gitool but I eventually wound up rewriting the thing from scratch.
+> >
+> >Cool!
+> >
+> >>I have posted a repository with the source on pasky's service:
+> >>
+> >>	http://repo.or.cz/w/git-gui.git
+> >
+> >Shouldn't the "w" be "r" there?  It gave me an error "Can't lock ref"
+> >with the "w".
+>
+> This it a gitweb URL, not a repos URL for 'git clone', you can only view
+> it in web browser.
 
-Stupid question--I assume a mention in the reflog doesn't count as a
-real reference to an object, so they won't save you in the case when you
-pruned recently?
+Too bad pasky doesn't have the magic mapping setup in the webserver
+so they are one and the same.  :-)
 
+I linked to the gitweb rather than the repository as I figured
+people might want to read the history, or since it was just one
+blob download it right from the webpage rather than cloning the
+repository.  But given that this is the git mailing list most people
+probably would have expected to clone it instead...
+
+-- 
