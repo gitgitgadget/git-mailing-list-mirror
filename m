@@ -1,136 +1,91 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 10:17:22 +0100
-Message-ID: <200611150917.23756.andyparkins@gmail.com>
-References: <87k61yt1x2.wl%cworth@cworth.org> <7virhhy76h.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142048350.2591@xanadu.home>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] Return non-zero status from pull if merge fails.
+Date: Wed, 8 Nov 2006 00:52:57 -0500
+Message-ID: <20061108055257.GC28498@spearce.org>
+References: <20061107181053.GA26856@spearce.org> <7vy7qmzttk.fsf@assigned-by-dhcp.cox.net> <20061108051035.GA28498@spearce.org> <7vu01av6tb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 15 Nov 2006 09:17:50 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 8 Nov 2006 05:53:21 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=i4l9Gpm3nAKr7rNAenSbraSqBnJrXNGu1N6NolweRnkw0FHQ3LSCqmfXjemFFBp/bk0G/nGsd+/H1BtfIYRlyGLFMzU4nKZFREla3bx0byGMeKQOaQqntbjJL+DCaesX5s4BXgoDnGpWk/d6CHKUvHYSJ0Zc3nQeIt6Z3erhnzM=
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.64.0611142048350.2591@xanadu.home>
 Content-Disposition: inline
+In-Reply-To: <7vu01av6tb.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31120>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkGtm-0004IX-Dw for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 10:17:38 +0100
+ esmtp (Exim 4.43) id 1GhgN2-0004wb-NA for gcvg-git@gmane.org; Wed, 08 Nov
+ 2006 06:53:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966708AbWKOJRc (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 04:17:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966714AbWKOJRc
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 04:17:32 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:58445 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S966708AbWKOJRb
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 04:17:31 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so81128ugc for
- <git@vger.kernel.org>; Wed, 15 Nov 2006 01:17:30 -0800 (PST)
-Received: by 10.67.27.3 with SMTP id e3mr2528014ugj.1163582248528; Wed, 15
- Nov 2006 01:17:28 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id j2sm503013ugf.2006.11.15.01.17.27; Wed, 15 Nov 2006 01:17:28 -0800
- (PST)
-To: git@vger.kernel.org
+ S1754327AbWKHFxE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
+ 00:53:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754329AbWKHFxE
+ (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 00:53:04 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:26308 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1754327AbWKHFxC
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 00:53:02 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GhgMu-0001CA-7I; Wed, 08 Nov 2006 00:53:00 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 209E820E487; Wed,  8 Nov 2006 00:52:58 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Wednesday 2006 November 15 04:32, Nicolas Pitre wrote:
+Junio C Hamano <junkio@cox.net> wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
+> 
+> > Yes.  Without it:
+> >
+> >   $ git checkout -b 931233bc666b^
+> >   $ echo broken >builtin-pickaxe.c
+> >   $ git pull . next && echo good merge
+> >   Updating c2e525d..522da27
+> >   builtin-pickaxe.c: needs update
+> >   fatal: Entry 'builtin-pickaxe.c' not uptodate. Cannot merge.
+> >   good merge
+> >
+> > Say what?  There's no way that fast forward was good!  Granted this
+> > use case is horrible but that fast forward went very, very badly,
+> > but the caller now thinks it was good.
+> 
+> I think fast forward went Ok in that "git-ls-tree HEAD" gives
+> the correct merge result from pulling next on top of 931233^ (or
+> whatever).
 
-> OK..... let's pretend this is my follow-up to your "If I were redoing
+No it didn't.  After doing the pull:
 
-Personally, I agree with almost everything in this email.  Except the 
-implementation of point 3.
+	$ git rev-parse --verify HEAD
+	c2e525d97f81bc178567cdf4dd7056ce6224eb58
+	$ git rev-parse --verify 931233bc666b^
+	c2e525d97f81bc178567cdf4dd7056ce6224eb58
 
-> 3) remote branch handling should become more straight forward.
+so no the merge result wasn't put into HEAD.  Nothing was done.
+Which is good because to do the merge the working directory has
+to change but there's a conflict there due to one file being in a
+modified state.  Better we don't change HEAD.
 
-I was completely confused by this origin/master/clone stuff when I started 
-with git.  In hindsight, now I understand git a bit more, this is what I 
-would have liked:
+> I am undecided if we want to keep what dropsave is
+> supposed to remove in that case, but exiting with non-zero to
+> indicate an error condition is needed.
 
- * Don't use the name "origin" twice.  In fact, don't use it at all.  In a 
-distributed system there is no such thing as a true origin.
+I think that elsewhere in git-merge we abort without calling dropsave
+when things to south.  Which is why I aborted before.
 
- * .git/remotes/origin should be ".git/remotes/default".   "origin" is only 
-special because it is the default to push and pull - it's very nice to have a 
-default, but it should therefore be /called/ "default".
-
- * Whatever git-clone calls the remote, it should be matched by a directory 
-in .git/refs/remotes.  So .git/remotes/$name contains "Pull"s to get all the 
-remote branches to .git/refs/remotes/$name/*.   This implies that 
-git /always/ does --use-separate-remote in clone.  If a branch is practically 
-read-only it should be technically read-only too.
-
- * If clone really wants to have a non-read-only master, then that should 
-be .git/refs/heads/master and will initialise 
-to .git/refs/remotes/$name/master after cloning.  Personally I think this is 
-dangerous because it assumes there is a "master" upstream - which git doesn't 
-mandate at all.  Maybe it would be better to take the upstream HEAD and 
-create a local branch for /that/ branch rather than require that it is 
-called "master".
-
- * Ensuring we have /all/ upstream branches at a later date is hard, and not 
-automatic.  Here is the .git/remotes/default file that should be possible:
-    URL: git://host/project.git
-    Pull: refs/heads/*:refs/remotes/default/*
-   Now, every git-pull would check for new upstream branch refs and sync them 
-into the local remotes list.  These are read-only so it'd be perfectly safe 
-to delete any locally that no longer exist upstream.
-
- * git-clone should really just be a small wrapper around
-    - git-init-db
-    - create .git/remotes/default
-    - maybe create specific .git/config
-    - git-fetch default
-   If git-clone does anything that can't be done with settings in the config 
-and the remotes/default file then it's wrong.  The reason I say this is that 
-as soon as git-clone has special capabilities (like --shared, --local 
-and --reference) then you are prevented from doing magic with existing 
-repositories.  For example; how do you create a repository that contains 
-branches from two other local repositories that have the objects hard linked?
-
-While I'm writing wishes, I'd like to jump on Junio's integration with other 
-fetch-backends wish.  I use git-svn, and it would be fantastic if I could 
-replace:
-
-git-svn init --id upstream/trunk svn://host/path/trunk
-git-svn fetch --id upstream/trunk
-git-svn init --id upstream/stable svn://host/path/branches/stable
-git-svn fetch --id upstream/stable
-
-With a .git/remotes/svn
- SVN-URL: svn://host/path
- Pull: trunk:refs/remotes/upstream/trunk
- Pull: branches/stable:refs/remotes/upstream/stable
-and
- git fetch svn
-
-Obviously, the syntax is just made up; but you get the idea.  Even better, 
-would be if it could cope with my "*" syntax suggested above:
- SVN-URL: svn://host/path
- Pull: trunk:refs/remotes/upstream/trunk
- Pull: branches/*:refs/remotes/upstream/*
-
-
-There have been lots of "wishlist" posts lately; would it be useful if I tried 
-to collect all these suggestions from various people into one place to try 
-and get a picture of any consensus?
-
-
-
-Andy
 -- 
-Dr Andy Parkins, M Eng (hons), MIEE
