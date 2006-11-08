@@ -1,91 +1,85 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: index manipulation quickref
-Date: Tue, 12 Dec 2006 12:16:58 +0100
-Organization: At home
-Message-ID: <elm2ur$3ib$1@sea.gmane.org>
-References: <fcaeb9bf0612120257p35dc9483ob65eea9ae21b5f7b@mail.gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [RFC] git-gui: A commit / fetch / push interface
+Date: Wed, 8 Nov 2006 01:03:50 -0500
+Message-ID: <20061108060350.GE28498@spearce.org>
+References: <20061107083603.GB9622@spearce.org> <17745.3287.358673.265578@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Tue, 12 Dec 2006 11:15:29 +0000 (UTC)
+NNTP-Posting-Date: Wed, 8 Nov 2006 06:04:30 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 41
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+Content-Disposition: inline
+In-Reply-To: <17745.3287.358673.265578@cargo.ozlabs.ibm.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34080>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gu5bX-0007F9-Lg for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 12:15:24 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31122>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GhgXx-000670-JX for gcvg-git@gmane.org; Wed, 08 Nov
+ 2006 07:04:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932202AbWLLLPH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 06:15:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932203AbWLLLPH
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 06:15:07 -0500
-Received: from main.gmane.org ([80.91.229.2]:44963 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932202AbWLLLPF
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 06:15:05 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gu5b8-0002IT-54 for git@vger.kernel.org; Tue, 12 Dec 2006 12:14:58 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Tue, 12 Dec 2006 12:14:58 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 12 Dec 2006
- 12:14:58 +0100
-To: git@vger.kernel.org
+ S1754337AbWKHGD4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
+ 01:03:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754338AbWKHGD4
+ (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 01:03:56 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:57541 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1754335AbWKHGDz
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 01:03:55 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GhgXR-0002DG-H7; Wed, 08 Nov 2006 01:03:53 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 5DC5620E487; Wed,  8 Nov 2006 01:03:51 -0500 (EST)
+To: Paul Mackerras <paulus@samba.org>
 Sender: git-owner@vger.kernel.org
 
-Nguyen Thai Ngoc Duy wrote:
+Paul Mackerras <paulus@samba.org> wrote:
+> One thing I have been meaning to do is to integrate gitool into gitk,
+> now that gitk can display a fake commit showing the local changes.  I
+> intend to add a menu item to gitk saying "Commit local changes" or
+> something, which would invoke gitool, or maybe now git-gui instead. :)
+> The nice thing is that then gitk could update the graph to show the
+> new commit once it was created.
 
-> I'm trying to collect all operations related to index from user
-> perspective and corresponding commands. The list may be put to git
-> wiki if people think it can help newbies:
-> 
-> update file content to index: git update-index file
-Or "git add file" woth new git.
+Right.  :-)
 
-> add a file to index: git add file
-> delete a file from index: git update-index --remove --force-remove
-> (or remove that file in workdir and do git update-index --remove)
-Or "git rm file" (old version did remove only from index, new version
-is to remove also from working directory if it matches HEAD)
+I have absolutely no plans (or desire) to attempt to do graph
+rendering in git-gui.  The most I may do for showing history in it
+is perhaps a "git log --max-count=5 --pretty=oneline" type of display
+so the user can see more than just an empty window after a commit.
 
-> read a tree to index: git read-tree treeish, git reset treeish
-> read a file from a tree to index: git ls-tree <tree-ish> file|git
-> update-index --index-info --stdin
-> copy a file from index to workdir: git checkout-index file
-Or just "git checkout -- file"
+IMHO gitk does a very nice job of rendering the graph on a wide
+range of platforms (although it still has two annoying bugs: one
+on Windows and one on Mac OS X that really make it hard to use).
+git-gui is just an attempt to bring the other major features of Git
+to that same set of platforms, with the same set of dependencies
+(wish 8) and ease of use...
 
-> refresh index: git update-index --refresh
-> copy entire index to workdir: git checkout-index
-Or just "git checkout"
+It would be nice if we can eventually connect gitk and git-gui so
+they can coordinate as you are talking about above...
 
-> output a file from index to stdout: ?? (is there a command for this?)
-"git cat-file -p ::<filename>"
+> My current version of gitool also has menus that let you revert
+> modified files, and delete or ignore untracked files.  Have you
+> considered adding that to git-gui?
 
-> list files in index: git ls-files
-> compare index and workdir file listing: 
->    git ls-files (with lots of options here) 
-> diff between workdir and index: git diff
-> diff between index and a tree: git diff --cached <tree-ish>
-
-diff between workdir and tree: git diff <tree-ish> 
+Yes, they are in my TODO list (or if missing from there are certainly
+in my head as things to add).  I'd like to get git-gui finished this
+week, which means getting those features in today or tomorrow.  :-)
+I'll probably do branches first though.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
