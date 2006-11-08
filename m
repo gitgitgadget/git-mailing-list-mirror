@@ -4,114 +4,156 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 3/3] Remove unsupported C99 style struct initializers in git-archive.
-Date: Sun, 5 Nov 2006 00:37:23 -0500
-Message-ID: <20061105053723.GC4193@spearce.org>
+From: Nix <nix@esperi.org.uk>
+Subject: Re: What's the meaning of `parenthood' in git commits?
+Date: Wed, 08 Nov 2006 03:04:51 +0000
+Message-ID: <87velqabak.fsf@hades.wkstn.nix>
+References: <878ximbwm3.fsf@hades.wkstn.nix>
+	<Pine.LNX.4.64.0611071644430.3667@g5.osdl.org>
+	<874ptabubr.fsf@hades.wkstn.nix>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 5 Nov 2006 05:37:38 +0000 (UTC)
+NNTP-Posting-Date: Wed, 8 Nov 2006 03:06:07 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Emacs: Lovecraft was an optimist.
+In-Reply-To: <874ptabubr.fsf@hades.wkstn.nix> (nix@esperi.org.uk's message of "Wed, 08 Nov 2006 01:28:24 +0000")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) XEmacs/21.5-b27 (linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31111>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgahF-0004Zh-MO for gcvg-git@gmane.org; Sun, 05 Nov
- 2006 06:37:30 +0100
+ esmtp (Exim 4.43) id 1GhdlE-0005fI-OH for gcvg-git@gmane.org; Wed, 08 Nov
+ 2006 04:05:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161023AbWKEFh1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
- 00:37:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161008AbWKEFh0
- (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 00:37:26 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:47556 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1161023AbWKEFh0
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 00:37:26 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GgahA-0003cO-75; Sun, 05 Nov 2006 00:37:24 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 30D1220E491; Sun,  5 Nov 2006 00:37:23 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S1753969AbWKHDFE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
+ 22:05:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753954AbWKHDFD
+ (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 22:05:03 -0500
+Received: from 41-052.adsl.zetnet.co.uk ([194.247.41.52]:1807 "EHLO
+ mail.esperi.org.uk") by vger.kernel.org with ESMTP id S1753946AbWKHDFA (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 22:05:00 -0500
+Received: from esperi.org.uk (nix@hades.wkstn.nix [192.168.14.18]) by
+ mail.esperi.org.uk (8.12.11.20060614/8.12.11) with ESMTP id kA834rw4021329;
+ Wed, 8 Nov 2006 03:04:53 GMT
+Received: (from nix@localhost) by esperi.org.uk
+ (8.12.11.20060614/8.12.11/Submit) id kA834qRR012450; Wed, 8 Nov 2006 03:04:52
+ GMT
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-At least one older version of the Solaris C compiler doesn't support
-the newer C99 style struct initializers.  To allow Git to compile
-on those systems use an archive description struct which is easier
-to initialize without the C99 struct initializer syntax.
+On 8 Nov 2006, nix@esperi.org.uk spake thusly:
+> On 8 Nov 2006, Linus Torvalds uttered the following:
+>>  - the "merge-base" algorithms obviously use it to find the most recent 
+>>    common ancestor, and that in turn impacts the normal merge strategies, 
+>>    of course.
+>
+> Hm, yeah, if merging iterates down patch-merged branches it might have
+> interesting consequences, because the trees on one side of patch- merges
+> are likely to be very different to trees on the other side (years of
+> development separate them). I'd like a way to specify that those parents
+> are *not* to be traversed by the merge-base algorithms, really.
+>
+> A series of
+>
+> not-merge-base: <sha1 id>
+>
+> headers, perhaps? (I think that's likely to involve much less code churn
+> than introducing a new `not-merge-base-parent' tag).
 
-Also since the archives array is not used by anyone other than
-archive.c we can make it static.
+Wrong. Sort of.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- archive.h         |    2 --
- builtin-archive.c |   23 ++++++++++++-----------
- 2 files changed, 12 insertions(+), 13 deletions(-)
+When doing normal merges you don't want to consider patch-merged parents
+as real merges: but there is one situation when you *do* want merge-base
+checking to traverse such links.
 
-diff --git a/archive.h b/archive.h
-index 16dcdb8..6838dc7 100644
---- a/archive.h
-+++ b/archive.h
-@@ -25,8 +25,6 @@ struct archiver {
- 	parse_extra_args_fn_t parse_extra;
- };
- 
--extern struct archiver archivers[];
--
- extern int parse_archive_args(int argc,
- 			      const char **argv,
- 			      struct archiver *ar);
-diff --git a/builtin-archive.c b/builtin-archive.c
-index 9177379..2df1a84 100644
---- a/builtin-archive.c
-+++ b/builtin-archive.c
-@@ -15,16 +15,14 @@
- static const char archive_usage[] = \
- "git-archive --format=<fmt> [--prefix=<prefix>/] [--verbose] [<extra>] <tree-ish> [path...]";
- 
--struct archiver archivers[] = {
--	{
--		.name		= "tar",
--		.write_archive	= write_tar_archive,
--	},
--	{
--		.name		= "zip",
--		.write_archive	= write_zip_archive,
--		.parse_extra	= parse_extra_zip_args,
--	},
-+static struct archiver_desc
-+{
-+	const char *name;
-+	write_archive_fn_t write_archive;
-+	parse_extra_args_fn_t parse_extra;
-+} archivers[] = {
-+	{ "tar", write_tar_archive, NULL },
-+	{ "zip", write_zip_archive, parse_extra_zip_args },
- };
- 
- static int run_remote_archiver(const char *remote, int argc,
-@@ -88,7 +86,10 @@ static int init_archiver(const char *nam
- 
- 	for (i = 0; i < ARRAY_SIZE(archivers); i++) {
- 		if (!strcmp(name, archivers[i].name)) {
--			memcpy(ar, &archivers[i], sizeof(struct archiver));
-+			memset(ar, 0, sizeof(*ar));
-+			ar->name = archivers[i].name;
-+			ar->write_archive = archivers[i].write_archive;
-+			ar->parse_extra = archivers[i].parse_extra;
- 			rv = 0;
- 			break;
- 		}
+Say you have the tree just described:
+
+     B
+------------- ref trunks/latest
+     \
+      ------ ref heads/some-change-foo
+
+ ... -------- ref trunks/old-and-grotty
+
+and you want to patch-merge heads/some-change-foo with
+trunks/old-and-grotty.
+
+It doesn't quite apply, so you end up with a conflict-resolution. This
+will normally be in the merge commit, but there's no guarantee of that:
+perhaps you knew the source tree would conflict in advance and fixed it
+up so that it wouldn't, leaving the old heads/some-change-foo pointing
+before that fixup:
+
+     B
+------------- ref trunks/latest
+     \
+      ------- ref heads/some-change-foo
+          D \
+            c
+            |
+ ... -------------- ref trunks/old-and-grotty
+
+Later on, you find a bug in that change. It's still the same conceptual
+change, so you fix it, and you want to patch-merge the fix across:
+
+     B
+------------- ref trunks/latest
+     \
+      -----------\ ref heads/some-change-foo
+          C \    .
+            c    . (link under construction)
+            |    .
+ ... -------------- ref trunks/old-and-grotty
+            E    F
+
+What patch-merge must do in order to produce a diff-merge at point F is
+therefore rather more involved than I'd hoped:
+
+ - determine B as above (most recent merge-base of heads/some-change-foo
+   with anything in trunks/).
+
+ - determine the merge-base of trunks/old-and-grotty with
+   heads/some-change-foo, *traversing patch-merge parents*. Call this
+   base C. (This is the only circumstance in which merge-base
+   determination should traverse patch-merged parents.)
+
+ - Iff that base C is topologically a child of B, then we have already
+   merged part of this change in the past. In that case, instead of the
+   merge consisting of the diff between B and F, it consists of the diff
+   between C and the head, minus the set of changes c. So it remains to
+   determine c.
+
+ - scan backwards along F with git-rev-list, searching specifically for
+   the most recent patch-merge naming any commit which has C as a
+   transitive parent: that is point E. (Such a point must exist as long
+   as only patch-merges have been used to merge heads/some-change-foo
+   with trunks/old-and-grotty: if other sorts of merge have been used,
+   all bets are off and I think we can legitimately fail the merge.)
+   (This requires the ability to distinguish patch-merges from normal
+   merges, but that's easy if we have any tag at all to distinguish
+   them, which we must for merge- base traversal to avoid such parents
+   normally.)
+
+ - Reverse out the diff between C and E (if the two are not the same
+   commit) and remember it temporarily as c.
+
+ - Apply the forwards diff between point C and heads/some-change-foo,
+   and then apply c in the forwards direction (if c is already present,
+   this is not an error: it just means that whatever conflict-
+   resolution was necessary as a one-off was later needed on the change
+   trunk).
+
+I think that should cope with just about everything. I've tried to mock
+up all sorts of contrived trees and I can't find anything that doesn't
+reduce to that case or a simplification of it. (And no, this case is not
+contrived: we test on trunks, so we deal with it whenever anything fails
+testing and has to be fixed...)
+
+(Now all I have to do is write it... enough words, time for action.
+Actually time for sleep, it's three in the morning here. Action
+tomorrow.)
+
 -- 
+Rich industrial heritage: lifeless wasteland. `The land
