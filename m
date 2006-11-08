@@ -4,149 +4,133 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Fri, 1 Dec 2006 12:31:03 +0100
-Message-ID: <20061201113103.GM18810@admingilde.org>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200612010919.06030.andyparkins@gmail.com> <20061201095751.GK18810@admingilde.org> <200612011029.28059.andyparkins@gmail.com>
+From: Nix <nix@esperi.org.uk>
+Subject: Re: What's the meaning of `parenthood' in git commits?
+Date: Wed, 08 Nov 2006 01:36:15 +0000
+Message-ID: <87zmb2afe8.fsf@hades.wkstn.nix>
+References: <878ximbwm3.fsf@hades.wkstn.nix>
+	<7vy7qmyc46.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Qgd2S+2VS1hsWwXW"
-NNTP-Posting-Date: Fri, 1 Dec 2006 11:31:34 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 8 Nov 2006 01:37:21 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <200612011029.28059.andyparkins@gmail.com>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+Emacs: impress your (remaining) friends and neighbors.
+In-Reply-To: <7vy7qmyc46.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Tue, 07 Nov 2006 17:13:13 -0800")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) XEmacs/21.5-b27 (linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31110>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq6bl-0000m8-Dx for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 12:31:09 +0100
+ esmtp (Exim 4.43) id 1GhcMm-0004L7-0V for gcvg-git@gmane.org; Wed, 08 Nov
+ 2006 02:36:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936461AbWLALbG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 06:31:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936462AbWLALbG
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 06:31:06 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:65469 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S936461AbWLALbF (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 06:31:05 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1Gq6bf-00052L-Ra; Fri, 01 Dec 2006 12:31:03 +0100
-To: Andy Parkins <andyparkins@gmail.com>
+ S1753827AbWKHBgY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
+ 20:36:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753831AbWKHBgX
+ (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 20:36:23 -0500
+Received: from 41-052.adsl.zetnet.co.uk ([194.247.41.52]:64777 "EHLO
+ mail.esperi.org.uk") by vger.kernel.org with ESMTP id S1753827AbWKHBgW (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 20:36:22 -0500
+Received: from esperi.org.uk (nix@hades.wkstn.nix [192.168.14.18]) by
+ mail.esperi.org.uk (8.12.11.20060614/8.12.11) with ESMTP id kA81aFB3014068;
+ Wed, 8 Nov 2006 01:36:16 GMT
+Received: (from nix@localhost) by esperi.org.uk
+ (8.12.11.20060614/8.12.11/Submit) id kA81aFih030120; Wed, 8 Nov 2006 01:36:15
+ GMT
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
+On 8 Nov 2006, Junio C. Hamano spake thusly:
+> Nix <nix@esperi.org.uk> writes:
+>
+>> The idea being that if you have a tree like this:
+>>
+>>      B
+>> ------------- ref trunks/latest
+>>      \
+>>       ------ ref heads/some-change-foo
+>>
+>>  ... -------- ref trunks/old-and-grotty
+>>
+>>
+>> then this merge strategy, when asked to merge heads/some-change-foo into
+>> trunks/old-and-grotty would spot that point B was the most recent
+>> merge point into anything in trunks/, generate a diff between point B
+>> and heads/some-change-foo, and patch it into trunks/old-and-grotty.
+>
+> This is a standard "cherry-picking" practice.
 
---Qgd2S+2VS1hsWwXW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yes, pretty much, except that we do *everything* by cherry-picking, and
+we want to track the cherry-picks in the same way that all other changes
+are tracked (i.e., a small branch for each (numbered) change, patching
+madly in all directions into a variety of trunks and release branches,
+with all those patches tracked.)
 
-hoi :)
+>    These commits I list as its parents of this new commit, and
+>    everything that leads to them, are what I considered when
+>    derived this commit.  This new child commit of them suits the
+>    purpose of _my_ branch better than any of these parent
+>    commits I took into consideration because of such and such
+>    reasons that I stated in its commit log message.
+>
+> If you mark the resulting commit on old-and-grotty to have
+> some-change-foo as one of its parents, because some-change-foo
+> has almost everything 'latest' has (up to point B), you are also
+> saying "I have considered everything that happened between
+> old-and-grotty and B when making this commit".
 
-On Fri, Dec 01, 2006 at 10:29:26AM +0000, Andy Parkins wrote:
-> On Friday 2006 December 01 09:57, Martin Waitz wrote:
->=20
-> > So why do you need the url hint committed to the supermodule?
-> > We don't store remote information in the object database, too.
->=20
-> That's why it was a hint, probably configured when you first create the=
-=20
-> submodule connection.
->=20
-> In truth, the clone will be perfectly able to get the submodule
-> objects from the upstream supermodule, maintaining the distributed
-> nature easily.
+Yeah. This is the merge-base tracking that Linus mentioned, and it's not
+quite what I'm looking for :/ it's a sort of step-parent, really...
 
-that's exactly the reason why the hint is not needed.
-Althogh you need to have one common project object database, storing the
-objects of all modules.
+> What's implied by that statement is this, even though you do not
+> explicitly say:
+>
+>    I reject everything that happened on the development line
+>    that led to 'latest' up to point B since old-and-grotty was
+>    forked.
 
-> > > I say:
-> > >  submodulecommithash points at a commit /in the submodule/
-> >
-> > But unluckily, this does not work.
->=20
-> Eh?  "Not work", we're talking about code that doesn't even exist, of
-> course it doesn't "work".   Do you mean "doesn't work if we're using
-> my implementation of submodules"?  Well that hardly seems like a fair
-> attack.
+(which is not necessarily true: we might want to backport an earlier
+change, also on another `small change branch', later on. Stuff on the
+trunks themselves will never want to get backported, but if the
+merge-base algorithm traverses patch-merge parent links, it might
+consider that a `small change branch' has been merged when it actually
+hasn't.)
 
-Well, at first I started exactly as you described: only store the
-submodule commit sha1 in the parent somewhere, but don't traverse it.
-So this is a fair attack: your implementation already exists in
-http://git.admingilde.org/tali/git.git/module ;-)
-(ok, yes, it really is different to what you described as I stored the
-sha1 differently, but I really learned that it is important to be able
-to traverse the entire commit chain, from the root of the project to the
-deepest submodule.)
+> This is not necessarily a bad thing, by the way.  For somebody
+> who is trying to maintain extremely-stable branch by cherry
+> picking only changes in a few narrow areas from the mainline
+> would _want_ to leave most of the "new good stuff" out from his
+> branch.  That's why I emphasized _my_ a few paragraphs above.
 
+That's exactly what we're doing, across-the-board.
 
-> > You really have to be able to traverse the entire commit chain
-> > from the supermodule into all submodules.
->=20
-> You can: when you hit a submodule tree object you set GIT_DIR to that
-> submodule and continue.  If you don't do it like that then you have
-> stored submodule trees in the supermodule and it's no longer a
-> separate repository.
+> But it is _so_ different from the mindset of usual "every branch
+> makes progress _forward_ perhaps with different pace".  In this
+> example, this branch is actively choosing to stay behind and
+> refusing to take changes from the 'latest'.  So your users need
+> to really understand what they are doing.
 
-Well, a submodule repository _is_ special in some ways:
-fsck and prune have to take the references from the supermodule into
-account.  In this sense it is _not_ separate from the supermodule.
+*hahahaaaaa*... hang on, that *was* a joke, right? ;)
 
-I think that is important for the submodule repository to be independent
-in other ways than its object database:  you should be able to exchange
-commits with other repositories (be they stand-alone or a submodule in
-another supermodule).  You should be able to use log/diff/blame/whatever
-inside the submodule.
+> So I think as long as you and your users understand what is
+> going on, I do not see a problem at either the mechanical level
+> or the philosophical level.  But I am sure it would confuse a
+> lot of people, so please do not come back complaining that you
+> ended up getting your users heads explode ;-).
 
-All this does not need an object database of its own.
-So I chose to do it the easy way and use one object database for the
-entire project - and disallow git-prune in a submodule.
-There may be other/better ways to do this, but you have to be able
-to access all objects which belong the project inside the toplevel
-project repository.
+OK, I think I need to find a way to notate in the patch-merged commit
+that one or more parents should be disregarded when searching for merge
+bases (and *only* when searching for merge bases). I think that will
+do what's wanted in all areas: i.e., it'll act like a cherry-pick
+that shows up in the logs/revlist and so on, but doesn't affect the
+semantics of later merges of stuff from anywhere except for the
+same limited branch.
 
-> Why you'd want to - I have no idea.  What
-> purpose would you have for traversing the commit chain into the
-> submodules?  The commit in the submodule is just a note of where that
-> submodule was during the supermodule commit in question.
+(obviously trying to patch-merge B to A twice is always going to
+fail, whether or not merge-base traversal jumps into B: I don't
+think there's any real need to protect against that.)
 
-Things get much simpler if you have one big graph of objects.
-
-clone and especially fetch/pull naturally work at once.
-You can ask for all objects inside the whole project which are needed to
-be transferred between project version A and B, including all submodules.
-
-You can even have one bare repository for the whole project.
-
-> I notice though that you avoided my question: what does YOUR submodule
-> object contain?  I really do want to know, as there is obviously a
-> fundamental difference in what I think a submodule does and what you
-> (and maybe everybody else) thinks a submodule does.
-
-It really only stores the commit of the submodule directly.
-So there is no new submodule object type.  The parent has a direct link
-to the submodule commit in his tree object and in its index.  In order
-to separate them from normal files or normal subdirectories, they get a
-special mode: they are represented as socket.
-
---=20
-Martin Waitz
-
---Qgd2S+2VS1hsWwXW
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFcBJ3j/Eaxd/oD7IRAliBAKCA0CO7IMaXxtlk/MXhVhOVlJFe+QCdH3HK
-4qgQsOoQJdeExcp+JC6Y33g=
-=6n4s
------END PGP SIGNATURE-----
-
+-- 
+Rich industrial heritage: lifeless wasteland. `The land
