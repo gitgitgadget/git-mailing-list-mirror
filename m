@@ -1,106 +1,75 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 6/n] gitweb: Remove redundant "blob" links from git_difftree_body
-Date: Tue, 31 Oct 2006 17:07:42 +0100
-Message-ID: <200610311707.43054.jnareb@gmail.com>
-References: <200610301953.01875.jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: What's in git.git
+Date: Tue, 07 Nov 2006 23:59:17 -0800
+Message-ID: <7vbqniv06i.fsf@assigned-by-dhcp.cox.net>
+References: <7v8ximwrm3.fsf@assigned-by-dhcp.cox.net>
+	<eis1j6$vug$2@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 31 Oct 2006 16:07:56 +0000 (UTC)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Wed, 8 Nov 2006 07:59:30 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=IoZOtBUOebBGTSZc2Iwe+XS9w9XSFSLnrIFUOZ/ZooyJnaj81XIPnzR/db1FyH9iX0mV46g3eTJXM5Cjg0UMNXu+PzuFxvacI3jl5oZKlrC1KZR44AN5dBFCXog7sm9YZs/otKqCRozE4dkOg3p7GjuGNkBQi+/IWe6gbRNWwFo=
-User-Agent: KMail/1.9.3
-In-Reply-To: <200610301953.01875.jnareb@gmail.com>
-Content-Disposition: inline
+In-Reply-To: <eis1j6$vug$2@sea.gmane.org> (Jakub Narebski's message of "Wed,
+	08 Nov 2006 08:40:07 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31128>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gew9P-0004bL-El for gcvg-git@gmane.org; Tue, 31 Oct
- 2006 17:07:45 +0100
+ esmtp (Exim 4.43) id 1GhiLC-0005d2-GV for gcvg-git@gmane.org; Wed, 08 Nov
+ 2006 08:59:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423529AbWJaQHj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
- 11:07:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423532AbWJaQHj
- (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 11:07:39 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:64872 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1423529AbWJaQHi
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 11:07:38 -0500
-Received: by ug-out-1314.google.com with SMTP id 32so1486496ugm for
- <git@vger.kernel.org>; Tue, 31 Oct 2006 08:07:37 -0800 (PST)
-Received: by 10.67.30.6 with SMTP id h6mr6367493ugj; Tue, 31 Oct 2006
- 08:07:37 -0800 (PST)
-Received: from host-81-190-18-116.torun.mm.pl ( [81.190.18.116]) by
- mx.google.com with ESMTP id 53sm5145946ugn.2006.10.31.08.07.36; Tue, 31 Oct
- 2006 08:07:36 -0800 (PST)
-To: git@vger.kernel.org
+ S1754412AbWKHH7T convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006 02:59:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754421AbWKHH7T
+ (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 02:59:19 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:22661 "EHLO
+ fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1754412AbWKHH7S
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006
+ 02:59:18 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061108075918.LWBT18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Wed, 8
+ Nov 2006 02:59:18 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id k7yu1V0081kojtg0000000; Wed, 08 Nov 2006
+ 02:58:55 -0500
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-This revert parts of commit 4777b0141a4812177390da4b6ebc9d40ac3da4b5
-  "gitweb: Restore object-named links in item lists"
-by Petr Baudis, which bring back "blob" links in difftree-raw like
-part of "commit" and "commitdiff" views, namely in git_difftree_body
-subroutine. First, it did that incompletely: it did not add "blob"
-link for added files, and added block used mixture of tabs and spaces
-for align. Second, in "difftree" view the "blob" link is not the most
-interesting, *contrary* to "blob"/"tree" link in "tree" view, so it
-should be enough to have hidden link in the form of file name entry.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-I'm still for having those object-named links in "tree" view.
+> Junio C Hamano wrote:
+>
+>> =A0 =A0Jakub Narebski (4):
+> [...]
+>> =A0 =A0 =A0 gitweb: Output also empty patches in "commitdiff" view
+>
+> I think that this patch is a bit premature. Without "new improved pat=
+chset
+> view" the empty patches are just that: totally empty. It is new heade=
+r and
+> especially outputting extended header information which makes outputt=
+ing
+> "empty" patches (with no diff) in "commitdiff" view usefull. By "empt=
+y"
+> patches I mean pure type change, pure rename, pure copy and type chan=
+ge and
+> rename.
+>
+> The "new improved patchset view" is prepared to send in two stages...
 
-But perhaps it would be better to add "blob" links for all possible
-statuses, including added files... Pasky, Luben, Junio?
+At least this does not break the page even without these two
+follow-ups.  If the follow-ups come in time and do not break the
+page, they are very welcome post -rc1 fixes to have before the
+final release.  On the other hand, even if they don't, it's not
+the end of the world ;-).
 
- gitweb/gitweb.perl |    9 ---------
- 1 files changed, 0 insertions(+), 9 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index c22fcc5..542dbca 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1967,9 +1967,6 @@ sub git_difftree_body {
- 				print $cgi->a({-href => "#patch$patchno"}, "patch");
- 				print " | ";
- 			}
--			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'from_id'},
--			                             hash_base=>$parent, file_name=>$diff{'file'})},
--				      "blob") . " | ";
- 			print $cgi->a({-href => href(action=>"blame", hash_base=>$parent,
- 			                             file_name=>$diff{'file'})},
- 			              "blame") . " | ";
-@@ -2015,9 +2012,6 @@ sub git_difftree_body {
- 				}
- 				print " | ";
- 			}
--			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'to_id'},
--						     hash_base=>$hash, file_name=>$diff{'file'})},
--				      "blob") . " | ";
- 			print $cgi->a({-href => href(action=>"blame", hash_base=>$hash,
- 			                             file_name=>$diff{'file'})},
- 			              "blame") . " | ";
-@@ -2058,9 +2052,6 @@ sub git_difftree_body {
- 				}
- 				print " | ";
- 			}
--			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'from_id'},
--						     hash_base=>$parent, file_name=>$diff{'from_file'})},
--				      "blob") . " | ";
- 			print $cgi->a({-href => href(action=>"blame", hash_base=>$parent,
- 			                             file_name=>$diff{'from_file'})},
- 			              "blame") . " | ";
--- 
-1.4.3.3
