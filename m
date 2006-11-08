@@ -5,96 +5,80 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sun, 3 Dec 2006 19:33:41 +0000
-Message-ID: <200612031933.42968.andyparkins@gmail.com>
-References: <20061130170625.GH18810@admingilde.org> <e7bda7770612021057mc9f3eb9q7fc047dd1b5c235f@mail.gmail.com> <Pine.LNX.4.64.0612021114270.3476@woody.osdl.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH] Add a MIME-Version header to e-mails
+Date: Wed, 8 Nov 2006 09:41:33 +0000
+Message-ID: <b0943d9e0611080141y3751039v37b0289147237e4f@mail.gmail.com>
+References: <eile19$p7r$1@sea.gmane.org>
+	 <20061106074532.10376.60478.stgit@localhost>
+	 <b0943d9e0611070153s2a52f65k6ed4643e60a144b3@mail.gmail.com>
+	 <b0943d9e0611071109w584f4f7fv3ba1b7dbd9413717@mail.gmail.com>
+	 <20061108084038.GA3164@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 3 Dec 2006 19:36:38 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Wed, 8 Nov 2006 09:41:48 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=RLF1BKfhuQToRNZg6lITBnBdd75XnsLo/XgFULmLV/8UIrELs97zB1lAuJ2P60VOsms5ZUR3N0LpDmZhUrFlC933kQ/2EMzTivKek6+FpyE7nyWtJjAWbuV4kEAHYHV/IjldP9VF6TfoxGnPKsjUYEDOH9gvyWufRDE2ffxSpYg=
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.64.0612021114270.3476@woody.osdl.org>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VOn9nS2LNUc3s0FM8810cBXlwTf+CIXang3RenSdZnhIVZAWXViCs/7eZfVmbeZC1bkWjOYUoPl5+uZtGDj5El81C+VCGiabZM6Bsi71tzDMQNdFwjqBLsMwVxSVfFeKnnjVIOG3mHlnu9eJPT57Rme+5GYY2PzaHFG7sUAoJFg=
+In-Reply-To: <20061108084038.GA3164@diana.vm.bytemark.co.uk>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33131>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gqx8d-0007NL-2J for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 20:36:35 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31131>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GhjwA-0006Ks-KI for gcvg-git@gmane.org; Wed, 08 Nov
+ 2006 10:41:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760034AbWLCTgc (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
- 14:36:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760035AbWLCTgc
- (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 14:36:32 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:36789 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1760034AbWLCTgb
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 14:36:31 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so2816137uga for
- <git@vger.kernel.org>; Sun, 03 Dec 2006 11:36:30 -0800 (PST)
-Received: by 10.78.157.8 with SMTP id f8mr6937806hue.1165174589824; Sun, 03
- Dec 2006 11:36:29 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
- mx.google.com with ESMTP id 37sm31687439hub.2006.12.03.11.36.28; Sun, 03 Dec
- 2006 11:36:29 -0800 (PST)
-To: git@vger.kernel.org
+ S1754480AbWKHJlf convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006 04:41:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754483AbWKHJlf
+ (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 04:41:35 -0500
+Received: from py-out-1112.google.com ([64.233.166.179]:31242 "EHLO
+ py-out-1112.google.com") by vger.kernel.org with ESMTP id S1754480AbWKHJle
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006
+ 04:41:34 -0500
+Received: by py-out-1112.google.com with SMTP id a73so1464996pye for
+ <git@vger.kernel.org>; Wed, 08 Nov 2006 01:41:34 -0800 (PST)
+Received: by 10.35.69.11 with SMTP id w11mr15087237pyk.1162978893842; Wed, 08
+ Nov 2006 01:41:33 -0800 (PST)
+Received: by 10.35.77.5 with HTTP; Wed, 8 Nov 2006 01:41:33 -0800 (PST)
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
 Sender: git-owner@vger.kernel.org
 
-On Saturday 2006, December 02 19:41, Linus Torvalds wrote:
+On 08/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 2006-11-07 19:09:06 +0000, Catalin Marinas wrote:
+>
+> > I re-implemented parts of the mail and import commands (inspiring
+> > from your patches). They now use the email Python package. The mail
+> > command encodes the body to 7 or 8bit depending on non-ascii
+> > characters.
+>
+> Even though it turned out to be possible to use 8bit always?
 
-> Now, I'm not exactly sure who wants to use git modules, so this is the
-> time to ask: did you hate the CVS/modules file? Or was it something you
-> set up once, and then basically forgot about? People clearly use the
-> ability to mark certain modules as depending on each other, and aliases to
-> say "if you ask for this module, you actually get a set of _these_
-> modules".
+I just let the Python email package to the encoding and it first tries
+pure ascii and switches to 8bit if this fails. This package
+automatically adds the proper e-mail headers based on the encoding
+type. It can also do QP or base64 encodings (if someone complains of
+an old SMTP server, maybe I'll add a config option to force QP body).
 
-Never used CVS/modules, but I used svn:externals.  I have a few projects that 
-are libraries that I use in many other projects.  So, my directory tree looks 
-like this:
+> > I still have to write a test script but my simple tests showed that
+> > it works. Please let me know if there is anything wrong (especially
+> > with the QP-encoding of the mail headers).
+>
+> I won't have time to check this out today (in fact, it may have to
+> wait until the weekend). But when I do check it out, I might have tim=
+e
+> to write that test, so please holler if you start working on that.
 
- projects/
-   libX/
-   projectP/
-    libX/
-   projectQ/
-    libX/
+It would be great if you can run a test script. I've been thinking
+more of an "import" test that also checks both the "export" and "mail"
+commands. BTW, I'll try to add support for mbox importing which is
+pretty easy with the email package.
 
-The nightmare I had was that I would add a feature to projectP/libX, and 
-commit it.  Great.  Then later I'd do "svn update" in projectQ - HAVING MADE 
-NO CHANGES TO IT - and libX would update to the latest version, which turns 
-out to be incompatible with projectQ, and I can no longer even build 
-projectQ.  If only libX would stay where it was put.  The worst of it is if 
-you check out an older version, say "stable-release" that you tagged last 
-year, the svn:external would always just check out the latest version, so 
-you'd have to go back through the logs to find out what approximate submodule 
-revision you should really check out, check it out and then remember not to 
-do svn update, because that would just reset the external to the latest 
-version.  AHHHHHHH!  Maddening to say the least.
-
-This fits exactly with what you have described as the primary reason for 
-wanting submodules.  I didn't want seamless integration, I was happy to 
-change into projectP/libX to make libX commits.  All I actually wanted was 
-the particular checkout of libX for a particular checkin of projectP to be 
-remembered.  That's it.  Anything else is just gravy.
-
-I'm doing exactly the same sort of thing now but with git.  git hasn't fixed 
-the problem (yet) but certainly hasn't made it any worse than it was.  
-svn:externals were nothing more than a way of storing a URL in the 
-repository - who cares, I wish now I'd never bothered, they serve no version 
-control purpose and are merely a UI convenience.
-
-
-
-
-Andy
--- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
+--=20
