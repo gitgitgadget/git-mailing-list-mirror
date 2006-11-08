@@ -1,189 +1,80 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [EGIT PATCH] Convert author and comment on demand.
-Date: Sun, 3 Dec 2006 01:45:09 +0100
-Message-ID: <200612030145.09576.robin.rosenberg@dewire.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Return non-zero status from pull if merge fails.
+Date: Tue, 07 Nov 2006 21:36:00 -0800
+Message-ID: <7vu01av6tb.fsf@assigned-by-dhcp.cox.net>
+References: <20061107181053.GA26856@spearce.org>
+	<7vy7qmzttk.fsf@assigned-by-dhcp.cox.net>
+	<20061108051035.GA28498@spearce.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 3 Dec 2006 00:43:16 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 8 Nov 2006 05:36:29 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+In-Reply-To: <20061108051035.GA28498@spearce.org> (Shawn Pearce's message of
+	"Wed, 8 Nov 2006 00:10:35 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31118>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqfRn-0004z5-7x for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 01:43:11 +0100
+ esmtp (Exim 4.43) id 1Ghg6r-00034v-D0 for gcvg-git@gmane.org; Wed, 08 Nov
+ 2006 06:36:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424890AbWLCAm4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 19:42:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424898AbWLCAm4
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 19:42:56 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:20845 "EHLO
- torino.dewire.com") by vger.kernel.org with ESMTP id S1424890AbWLCAmz (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 19:42:55 -0500
-Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
- (Postfix) with ESMTP id 7663A800782; Sun,  3 Dec 2006 01:39:08 +0100 (CET)
-Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
- [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 08060-10; Sun,  3 Dec
- 2006 01:39:07 +0100 (CET)
-Received: from [10.9.0.2] (unknown [10.9.0.2]) by torino.dewire.com (Postfix)
- with ESMTP id CB46480019B; Sun,  3 Dec 2006 01:39:05 +0100 (CET)
+ S1754308AbWKHFgE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
+ 00:36:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754312AbWKHFgE
+ (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 00:36:04 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:4788 "EHLO
+ fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S1754308AbWKHFgB
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 00:36:01 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao03.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061108053600.UXLI2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>; Wed, 8
+ Nov 2006 00:36:00 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id k5bd1V00D1kojtg0000000; Wed, 08 Nov 2006
+ 00:35:37 -0500
 To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-This sppeds up reading commits a lot by only store the byte
-array data when reading commits. For the eclipse plugin I only
-need the tree to filter out which commits to display and I can
-take the cost of converting the comments to string for the
-very few commits to display. Only the displayed commits are actually
-converted so this results in convertig author and comment information
-for about five commits rather than 20,000 (in my repo).
+Shawn Pearce <spearce@spearce.org> writes:
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
- .../src/org/spearce/jgit/lib/Commit.java           |   73 +++++++++++++------
- 1 files changed, 50 insertions(+), 23 deletions(-)
+> Yes.  Without it:
+>
+>   $ git checkout -b 931233bc666b^
+>   $ echo broken >builtin-pickaxe.c
+>   $ git pull . next && echo good merge
+>   Updating c2e525d..522da27
+>   builtin-pickaxe.c: needs update
+>   fatal: Entry 'builtin-pickaxe.c' not uptodate. Cannot merge.
+>   good merge
+>
+> Say what?  There's no way that fast forward was good!  Granted this
+> use case is horrible but that fast forward went very, very badly,
+> but the caller now thinks it was good.
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Commit.java 
-b/org.spearce.jgit/src/org/spearce/jgit/lib/Commit.java
-index 4e03a5a..14fa602 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/Commit.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Commit.java
-@@ -16,10 +16,16 @@
-  */
- package org.spearce.jgit.lib;
- 
-+import java.io.BufferedReader;
-+import java.io.ByteArrayInputStream;
- import java.io.IOException;
-+import java.io.InputStreamReader;
-+import java.nio.charset.Charset;
- import java.util.ArrayList;
-+import java.util.Arrays;
- import java.util.List;
- 
-+import org.spearce.jgit.errors.CorruptObjectException;
- import org.spearce.jgit.errors.MissingObjectException;
- 
- public class Commit implements Treeish {
-@@ -39,6 +45,8 @@ public class Commit implements Treeish {
- 
-     private Tree treeObj;
- 
-+    private byte[] raw;
-+
-     public Commit(final Repository db) {
- 	objdb = db;
- 	parentIds = new ArrayList(2);
-@@ -58,29 +66,7 @@ public class Commit implements Treeish {
- 	    rawPtr += 48;
- 	}
- 
--	//
--	// if (n == null || !n.startsWith("author ")) {
--	// throw new CorruptObjectException(commitId, "no author");
--	// }
--	// author = new PersonIdent(n.substring("author ".length()));
--	//
--	// n = br.readLine();
--	// if (n == null || !n.startsWith("committer ")) {
--	// throw new CorruptObjectException(commitId, "no committer");
--	// }
--	// committer = new PersonIdent(n.substring("committer ".length()));
--	//
--	// n = br.readLine();
--	// if (n == null || !n.equals("")) {
--	// throw new CorruptObjectException(commitId, "malformed header");
--	// }
--	//
--	// tempMessage = new StringBuffer();
--	// readBuf = new char[128];
--	// while ((readLen = br.read(readBuf)) > 0) {
--	// tempMessage.append(readBuf, 0, readLen);
--	// }
--	// message = tempMessage.toString();
-+	this.raw = raw;
-     }
- 
-     public ObjectId getCommitId() {
-@@ -119,6 +105,7 @@ public class Commit implements Treeish {
-     }
- 
-     public PersonIdent getAuthor() {
-+	decode();
- 	return author;
-     }
- 
-@@ -127,6 +114,7 @@ public class Commit implements Treeish {
-     }
- 
-     public PersonIdent getCommitter() {
-+	decode();
- 	return committer;
-     }
- 
-@@ -139,9 +127,48 @@ public class Commit implements Treeish {
-     }
- 
-     public String getMessage() {
-+	decode();
- 	return message;
-     }
- 
-+    private void decode() {
-+	if (raw!=null) {
-+	    try {
-+        	BufferedReader br=new BufferedReader(new InputStreamReader(new 
-ByteArrayInputStream(raw)));
-+        	String n=br.readLine();
-+                if (n == null || !n.startsWith("tree ")) {
-+                    throw new CorruptObjectException(commitId, "no tree");
-+                }
-+                while ((n = br.readLine())!=null && n.startsWith("parent "))
-+            	;
-+                if (n == null || !n.startsWith("author ")) {
-+                    throw new CorruptObjectException(commitId, "no author");
-+                }
-+                author = new PersonIdent(n.substring("author ".length()));
-+                n = br.readLine();
-+                if (n == null || !n.startsWith("committer ")) {
-+                    throw new CorruptObjectException(commitId, "no 
-committer");
-+                }
-+                committer = new 
-PersonIdent(n.substring("committer ".length()));
-+                n = br.readLine();
-+                if (n == null || !n.equals("")) {
-+                    throw new CorruptObjectException(commitId, "malformed 
-header");
-+                }
-+                StringBuffer tempMessage = new StringBuffer();
-+                char[] readBuf = new char[2048];
-+                int readLen;
-+		while ((readLen = br.read(readBuf)) > 0) {
-+                    tempMessage.append(readBuf, 0, readLen);
-+                }
-+                message = tempMessage.toString();
-+	    } catch (IOException e) {
-+		e.printStackTrace();
-+	    } finally {
-+		raw = null;
-+	    }
-+	}
-+    }
-+
-     public void setMessage(final String m) {
- 	message = m;
-     }
--- 
-1.4.4.gf05d
+I think fast forward went Ok in that "git-ls-tree HEAD" gives
+the correct merge result from pulling next on top of 931233^ (or
+whatever).  I am undecided if we want to keep what dropsave is
+supposed to remove in that case, but exiting with non-zero to
+indicate an error condition is needed.
 
+> Hmm; apparently you are correct.  But that seems like magic shell
+> voodoo to me.  I honestly didn't expect exit to behave like that.
+
+Get used to it and learn the real shell programming from a
+traditionalist ;-).
+
+	something-that-could-fail || exit
+
+is a well established idiom.
+
+But I do not mind the extra explicit non-zero exit status too
+much as long as you are consistent.
