@@ -1,106 +1,132 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Troy Telford" <ttelford.groups@gmail.com>
-Subject: Re: git-svn bug?
-Date: Fri, 17 Nov 2006 14:17:41 -0700
-Message-ID: <op.ti6irtilzidtg1@rygel.lnxi.com>
-References: <op.ti2svo0ozidtg1@rygel.lnxi.com> <7vejs4jshp.fsf@assigned-by-dhcp.cox.net> <op.ti2xykijzidtg1@rygel.lnxi.com> <20061117085509.GA29644@localdomain>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: What's the meaning of `parenthood' in git commits?
+Date: Tue, 07 Nov 2006 17:13:13 -0800
+Message-ID: <7vy7qmyc46.fsf@assigned-by-dhcp.cox.net>
+References: <878ximbwm3.fsf@hades.wkstn.nix>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; delsp=yes; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 17 Nov 2006 21:18:12 +0000 (UTC)
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 8 Nov 2006 01:13:38 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:to:subject:from:cc:content-type:mime-version:references:content-transfer-encoding:message-id:in-reply-to:user-agent;
-        b=Z4cPZnzlIMoHbtYYsi03hYpfFhInaQ5yOyB7z5j2TSLas5PL1+1/w11W7WhSO5vP2Wb3CW8rabgn6D2d/R2q4uiaWVHX4y9f9M2iuL9m1nnJTxxpqYl2f3mGu9OFq1aADA8ohUA3Obc3Kw8sZEOvr7Fa8Ff2qzyy3iXEUbBK0jE=
-In-Reply-To: <20061117085509.GA29644@localdomain>
-User-Agent: Opera Mail/9.10 (Linux)
+In-Reply-To: <878ximbwm3.fsf@hades.wkstn.nix> (nix@esperi.org.uk's message of
+	"Wed, 08 Nov 2006 00:39:00 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31107>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlB63-00089G-E5 for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 22:18:04 +0100
+ esmtp (Exim 4.43) id 1Ghc0U-00007N-NQ for gcvg-git@gmane.org; Wed, 08 Nov
+ 2006 02:13:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424903AbWKQVSA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 16:18:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424905AbWKQVSA
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 16:18:00 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:60502 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1424903AbWKQVR7
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 16:17:59 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so817686ugc for
- <git@vger.kernel.org>; Fri, 17 Nov 2006 13:17:58 -0800 (PST)
-Received: by 10.78.17.1 with SMTP id 1mr2337967huq.1163798277693; Fri, 17 Nov
- 2006 13:17:57 -0800 (PST)
-Received: from rygel.lnxi.com ( [63.145.151.2]) by mx.google.com with ESMTP
- id 15sm3744966hui.2006.11.17.13.17.55; Fri, 17 Nov 2006 13:17:57 -0800 (PST)
-To: "Eric Wong" <normalperson@yhbt.net>
+ S1753255AbWKHBNP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
+ 20:13:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753446AbWKHBNP
+ (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 20:13:15 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:31712 "EHLO
+ fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1753255AbWKHBNO
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 20:13:14 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao07.cox.net
+ (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
+ <20061108011314.EHWX13632.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>; Tue, 7
+ Nov 2006 20:13:14 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id k1Cq1V00V1kojtg0000000; Tue, 07 Nov 2006
+ 20:12:51 -0500
+To: Nix <nix@esperi.org.uk>
 Sender: git-owner@vger.kernel.org
 
-On Fri, 17 Nov 2006 01:55:10 -0700, Eric Wong <normalperson@yhbt.net>  
-wrote:
+Nix <nix@esperi.org.uk> writes:
 
-> dcommit expects to be run on a git-svn fetch-ed HEAD that is linear
-> superset of remotes/git-svn.  That is: remotes/git-svn..HEAD should
-> (ideally) contain no merges, and no root commits.  git-svn currently
-> does no checking for root commits, but it should.
+> The idea being that if you have a tree like this:
 >
-> This commit is missing the git-svn-id: line at the bottom.  If you
-> simply left it out (private svn repository info), can you check that the
-> URL in this line is actually for the SVN repository you want to commit
-> to?
+>      B
+> ------------- ref trunks/latest
+>      \
+>       ------ ref heads/some-change-foo
+>
+>  ... -------- ref trunks/old-and-grotty
+>
+>
+> then this merge strategy, when asked to merge heads/some-change-foo into
+> trunks/old-and-grotty would spot that point B was the most recent
+> merge point into anything in trunks/, generate a diff between point B
+> and heads/some-change-foo, and patch it into trunks/old-and-grotty.
 
-I didn't remove anything, but I did double-check and the URL is correct.   
-But the following may shed light on why there is no git-svn-id anywhere:   
-IIRC, this is how my current repository came to be (from the very  
-beginning):
-1.)  Way back when, before I even started on the project, it started life  
-as a CVS repository
-2.)  Was converted from CVS -> SVN in early '05 (pre-git)
-3.)  I converted from SVN->git in Nov/Dec '05 (using git-svnimport.  I'm  
-not sure git-svn was available at the time.)
-4.)  The svn repository is still around, and I need to interoperate with  
-the svn repository on occasion.  I read about the new (at the time)  
-'git-svn', and decided to give it a try.
-5.)  I start with my pre-existing git repository, running:
+This is a standard "cherry-picking" practice.
 
-   git svn init <url>
-   git svn fetch
-   git checkout -b master svn
-   git rebase remotes/git-svn
+> After all that setup, my question's simple. Does a `parent' in git
+> terminology simply mean `this commit was derived in some way from the
+> commit listed here'?
 
-> It seems like your usage of dcommit would actually cause the issue
-> you're experiencing to be triggered on the dummy repository, and not the
-> real one.  My other guess would be that you somehow merged commits from
-> your dummy svn repo into your master branch.
+When you think about commit ancestry, think of it this way:
 
-I need to work on being more clear; sorry about that.  Here's what I did  
-with my 'dummy' repository
-1. create a new (empty) svn repository
-2. imported it into a new git repository using git-svn
-3. added a few files that were just sitting in $HOME, then modified them,  
-removed some, added others, etc.  (using both git-svn and subversion)
-4. verified everything was working as I expected it to.  (and if not,  
-figure out why I was wrong).
+   These commits I list as its parents of this new commit, and
+   everything that leads to them, are what I considered when
+   derived this commit.  This new child commit of them suits the
+   purpose of _my_ branch better than any of these parent
+   commits I took into consideration because of such and such
+   reasons that I stated in its commit log message.
 
-My 'dummy' repo was imported using git-svn.
-My 'real' repo was imported using git-svnimport.
+If you mark the resulting commit on old-and-grotty to have
+some-change-foo as one of its parents, because some-change-foo
+has almost everything 'latest' has (up to point B), you are also
+saying "I have considered everything that happened between
+old-and-grotty and B when making this commit".
 
-Having not read any of the code, I'm just taking a wild guess; but is it  
-reasonable to say that since the repository was originally imported to git  
-using git-svnimport (rather than git-svn), git-svn doesn't have some of  
-the data it needs to push to the remote svn repo?
+What's implied by that statement is this, even though you do not
+explicitly say:
 
-Would it be reasonable to use git-svn to import the SVN repository into a  
-new git repo, and then rebase from the old git-svnimport'ed repo into the  
-new git-svn imported one?  (did that even make sense?!?)
--- 
+   I reject everything that happened on the development line
+   that led to 'latest' up to point B since old-and-grotty was
+   forked.
+
+This is not necessarily a bad thing, by the way.  For somebody
+who is trying to maintain extremely-stable branch by cherry
+picking only changes in a few narrow areas from the mainline
+would _want_ to leave most of the "new good stuff" out from his
+branch.  That's why I emphasized _my_ a few paragraphs above.
+
+But it is _so_ different from the mindset of usual "every branch
+makes progress _forward_ perhaps with different pace".  In this
+example, this branch is actively choosing to stay behind and
+refusing to take changes from the 'latest'.  So your users need
+to really understand what they are doing.  For example, if there
+is another topic forked off of B (or at a later commit from
+there that leads to 'latest'), after your "funny merge" took
+place, even the usual merge strategies would work as expected by
+you --- it would still ignore the changes up to B because you
+told git to do so.
+
+Also, if you make a good change on top of the resulting merge
+that _should_ be applicable to some-change-foo which is based on
+the 'latest', you cannot merge that back in the usual way.
+Usual git merge will find your first "funny merge" as the merge
+base, and because it chooses to reject everything leading to B,
+the merge result would look very similar to the set of changes
+based on old-and-grotty.  Actually, that would even fast forward
+to the version you made into a phony "merge" out of the
+cherry-picked result.
+
+But that is at least consistent with the statement you made when
+you created that commit.  Staying behind at old-and-grotty
+suited _your_ branch'es purpose better than being based on
+'latest'.  And a person who is merging _your_ branch into
+some-change-foo, by choosing to merge that branch into the
+latter, is choosing to share your branch'es purpose, so it is
+natural a lot of the "good things" that happened up to B is
+rewound by that merge.
+
+So I think as long as you and your users understand what is
+going on, I do not see a problem at either the mechanical level
+or the philosophical level.  But I am sure it would confuse a
+lot of people, so please do not come back complaining that you
+ended up getting your users heads explode ;-).
+
+
