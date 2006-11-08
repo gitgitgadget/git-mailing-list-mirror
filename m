@@ -1,80 +1,61 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Daniel Drake <ddrake@brontes3d.com>
-Subject: git-svnimport breakage as of git-1.4.4
-Date: Thu, 07 Dec 2006 10:26:33 -0500
-Message-ID: <1165505193.26874.13.camel@systems03.lan.brontes3d.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH/RFC] gitweb: Default to $hash_base or HEAD for $hash in "commit" and "commitdiff" views
+Date: Wed, 08 Nov 2006 14:21:38 -0800
+Message-ID: <7vvelpr34d.fsf@assigned-by-dhcp.cox.net>
+References: <200611082311.35161.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 7 Dec 2006 15:26:52 +0000 (UTC)
-Cc: sashak@voltaire.com
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 8 Nov 2006 22:23:02 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Mailer: Evolution 2.8.2.1 
-X-Virus-Scanned: OK
+In-Reply-To: <200611082311.35161.jnareb@gmail.com> (Jakub Narebski's message
+	of "Wed, 8 Nov 2006 23:11:34 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33591>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsL8x-00075R-2q for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 16:26:39 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31163>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GhvoO-00013q-Og for gcvg-git@gmane.org; Wed, 08 Nov
+ 2006 23:22:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937984AbWLGP0g (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 10:26:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937985AbWLGP0g
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 10:26:36 -0500
-Received: from smtp152.iad.emailsrvr.com ([207.97.245.152]:49834 "EHLO
- smtp152.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S937984AbWLGP0f (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec
- 2006 10:26:35 -0500
-Received: from [10.20.253.243] (host34.155.212.242.conversent.net
- [155.212.242.34]) (Authenticated sender: ddrake@brontes3d.com) by
- relay5.relay.iad.emailsrvr.com (SMTP Server) with ESMTP id A9C316459E6; Thu, 
- 7 Dec 2006 10:26:33 -0500 (EST)
-To: git@vger.kernel.org
+ S1161463AbWKHWVm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
+ 17:21:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161747AbWKHWVl
+ (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 17:21:41 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:27804 "EHLO
+ fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1161463AbWKHWVk
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 17:21:40 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061108222139.VUPU18207.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Wed, 8
+ Nov 2006 17:21:39 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id kNMk1V00G1kojtg0000000; Wed, 08 Nov 2006
+ 17:21:44 -0500
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Jakub Narebski <jnareb@gmail.com> writes:
 
-git-svnimport broken between git-1.4.3.5 and git-1.4.4
+> Set $hash parameter to $hash_base || "HEAD" if it is not set (if it is
+> not true to be more exact). This allows [hand-edited] URLs with 'action'
+> "commit" or "commitdiff" but without 'hash' parameter.
+>
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+> ---
+> RFC because I want to ask if we should default to HEAD if hash is not
+> provided for commit and commitdiff views, or should we error out with
+> more reasonable error message.
 
-I have found that commit 83936a29e275bc0c04f60d3333e4951a9e16b1fc is the
-cause of this.
-
-I am using git-svnimport to work with a repo with this layout:
-
-https://server/repo/trunk
-https://server/repo/tags/x.y.z
-https://server/repo/branches/somebranch
-
-Starting a fresh import:
-
-# git-svnimport -v -i -C repo -r https://server repo
-
-Fetching from 1 to 10707 ...
-Tree ID 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-Committed change 1:/ 2004-12-22 22:53:27)
-Committing initial tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-Commit ID 2614c05ac4c5f24eb89cea056a7d46c909084d8c
-Writing to refs/heads/origin
-DONE: 1 origin 2614c05ac4c5f24eb89cea056a7d46c909084d8c
-RA layer request failed: PROPFIND request failed on '/trunk/.cvsignore':
-PROPFIND of '/trunk/.cvsignore': 405 Method Not Allowed (https://server)
-at /usr/bin/git-svnimport line 358
-
-
-According to the server logs, git is requesting /trunk/.cvsignore rather
-than /repo/trunk/.cvsignore
-
-I'm happy to test patches and whatnot but don't have time to investigate
-further right now.
-
-Thanks!
--- 
-Daniel Drake
-Brontes Technologies, A 3M Company
+Probably the latter; the user might be hand-crafting a URL
+(maybe learned a commit object name from mailing list and
+cutting and pasting) and mispasted the long hexadecimal string.
+Silently giving HEAD may leave the user confused than "oops, we
+do not see that commit object".
