@@ -1,101 +1,84 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
-Subject: Re: git-show --stat on first commit
-Date: Tue, 21 Nov 2006 18:16:34 +0100
-Message-ID: <slrnem6d3i.7bn.Peter.B.Baumann@xp.machine.xx>
-References: <200611211341.48862.andyparkins@gmail.com> <8aa486160611210609h1c2d229ekf0b5e8aeb4f21f11@mail.gmail.com> <slrnem694k.4lm.Peter.B.Baumann@xp.machine.xx> <ejv8pc$cig$1@sea.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH/RFC] gitweb: Default to $hash_base or HEAD for $hash in "commit" and "commitdiff" views
+Date: Wed, 8 Nov 2006 23:35:27 +0100
+Message-ID: <200611082335.28296.jnareb@gmail.com>
+References: <200611082311.35161.jnareb@gmail.com> <7vvelpr34d.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Tue, 21 Nov 2006 17:18:58 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 8 Nov 2006 22:35:01 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 41
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: mason.hofmann.stw.uni-erlangen.de
-User-Agent: slrn/0.9.8.0 (Linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=BolJB12zz+mPgx2CfUIc92zMQAPGQaCTNeGHDWOlkqH/XU4QJvfk5EVZvT7aqgK1lKRiq+jisNjo5LaAi2zLvsngSmjtcmg1xUvS0pOydQ0esH3ietiQgUBi2PZSBrsQshqzmL5aTSVGnFoo2zlSuPfA1/SHWoM2KXjqiLvvY2A=
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vvelpr34d.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31165>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmZGU-0001DO-Rk for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 18:18:35 +0100
+ esmtp (Exim 4.43) id 1Ghw0K-0003xv-QC for gcvg-git@gmane.org; Wed, 08 Nov
+ 2006 23:34:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966535AbWKURSb convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006 12:18:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966798AbWKURSb
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 12:18:31 -0500
-Received: from main.gmane.org ([80.91.229.2]:45490 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S966535AbWKURSa (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 12:18:30 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GmZFM-0000yV-44 for git@vger.kernel.org; Tue, 21 Nov 2006 18:17:24 +0100
-Received: from mason.hofmann.stw.uni-erlangen.de ([131.188.24.36]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Tue, 21 Nov 2006 18:17:24 +0100
-Received: from Peter.B.Baumann by mason.hofmann.stw.uni-erlangen.de with
- local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Tue, 21 Nov 2006 18:17:24 +0100
-To: git@vger.kernel.org
+ S1423815AbWKHWem (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
+ 17:34:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423816AbWKHWel
+ (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 17:34:41 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:10975 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1423815AbWKHWek
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 17:34:40 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so47866ugc for
+ <git@vger.kernel.org>; Wed, 08 Nov 2006 14:34:39 -0800 (PST)
+Received: by 10.67.91.6 with SMTP id t6mr258961ugl.1163025279345; Wed, 08 Nov
+ 2006 14:34:39 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id p32sm7636618ugc.2006.11.08.14.34.38; Wed, 08 Nov
+ 2006 14:34:39 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-21, Jakub Narebski <jnareb@gmail.com> wrote:
-> Peter Baumann wrote:
->
->> On 2006-11-21, Santi B=E9jar <sbejar@gmail.com> wrote:
->>> On 11/21/06, Andy Parkins <andyparkins@gmail.com> wrote:
->>>> Hello,
->>>>
->>>> I'm sure this one will be known about already.  git-show --stat on=
- the the
->>>> first commit doesn't show anything.  I assume it's because git-dif=
-f-tree has
->>>> nothing to diff against (although shouldn't that be an everything-=
-new diff?).
->>>>
->>>> Given the above; does anyone have a suggestion for what I could us=
-e as a
->>>> replacement?  Even just a list of the new files would be useful.
->
-> You can always use git-ls-tree
->
->>> $ git show --stat --root
->>>
->>> In general the initial commit diff (or stat) is hidden, but perhaps=
- it
->>> make sense to show it in "git show", you asked fo this specifically=
-=2E
->>=20
->> Why not make --root the default? I also stumbled over this behaviour=
- and
->> even asked on this list.
->>=20
->> In my opinion this will help new users which are supprised that they
->> can't get the diff of the inital commit (which is totaly non-intuiti=
-v behavior).
->>=20
->> And one less "wart" to clean, which another thread is all about. :-)
->
-> Because for projects imported into git first commit diff is huge,
-> and not very interesting. By the way, git show by default doesn't sho=
-w
-> diff for merges (you need --cc for that), nor rename detection (you n=
-eed
-> -M for that).
->
-> But you can always set default diff-tree options, including --root, -=
--cc
-> and -M in the show.difftree configuration variable (either in repo co=
-nfig,
-> or in user config). It is IMHO better solution than changing defaults=
-=2E
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> Set $hash parameter to $hash_base || "HEAD" if it is not set (if it is
+>> not true to be more exact). This allows [hand-edited] URLs with 'action'
+>> "commit" or "commitdiff" but without 'hash' parameter.
+>>
+>> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+>> ---
+>> RFC because I want to ask if we should default to HEAD if hash is not
+>> provided for commit and commitdiff views, or should we error out with
+>> more reasonable error message.
+> 
+> Probably the latter; the user might be hand-crafting a URL
+> (maybe learned a commit object name from mailing list and
+> cutting and pasting) and mispasted the long hexadecimal string.
+> Silently giving HEAD may leave the user confused than "oops, we
+> do not see that commit object".
+ 
+No, if there is 'h' (hash) parameter provided, then gitweb tries
+to use this. HEAD is used _only_ if nether hash, nor hash_base
+are provided, i.e. for URL like below
 
-Ah. I wasn't aware of this. Thank for this nice tip.
+  URL?p=project.git;a=commit
 
-Peter
+i.e. without neither 'h' nor 'hb'.
+
+
+But if it is (it being defaulting to HEAD, _like git_) wrong solution,
+still it would be better to show 'commit not provided' error instead of
+current 'bad commit' error.
+-- 
+Jakub Narebski
