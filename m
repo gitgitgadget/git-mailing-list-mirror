@@ -1,95 +1,89 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Cleaning up git user-interface warts
-Date: Tue, 14 Nov 2006 20:48:09 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0611142007010.2591@xanadu.home>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
- <87hcx1u934.wl%cworth@cworth.org>
- <Pine.LNX.4.64.0611141518590.2591@xanadu.home>
- <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
- <Pine.LNX.4.64.0611141633430.2591@xanadu.home>
- <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/2] gitweb: New improved formatting of chunk header in diff
+Date: Wed, 8 Nov 2006 22:55:03 +0100
+Message-ID: <200611082255.03617.jnareb@gmail.com>
+References: <200611081147.52952.jnareb@gmail.com> <200611082158.43652.jnareb@gmail.com> <7vzmb1r4yu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Wed, 15 Nov 2006 01:48:52 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 8 Nov 2006 21:54:24 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=OMRCESPvIMlvdDH53YhOOGNn1VsrBcVEUIK5jWsvFZVchfU1uXHBuq2IYkk37Lg66r03zJooXY/ql+TNn/ZoHvo15GaISyXmc4EcVH0fOKFKrMTuPzM1iyZ13pNnjGwiLouNWs3in2AgAScf2bGBLFTJiawAN3OACM+u2rI6LDg=
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vzmb1r4yu.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31161>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gk9t2-0006Gb-56 for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 02:48:27 +0100
+ esmtp (Exim 4.43) id 1GhvNG-0003hE-Ag for gcvg-git@gmane.org; Wed, 08 Nov
+ 2006 22:54:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966620AbWKOBsM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
- 20:48:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966622AbWKOBsM
- (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 20:48:12 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:56802 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S966620AbWKOBsK (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 20:48:10 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J8R00BSR1094E40@VL-MO-MR003.ip.videotron.ca> for git@vger.kernel.org; Tue,
- 14 Nov 2006 20:48:10 -0500 (EST)
+ S1754606AbWKHVyS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
+ 16:54:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754612AbWKHVyS
+ (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 16:54:18 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:32265 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1754606AbWKHVyR
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 16:54:17 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so38206ugc for
+ <git@vger.kernel.org>; Wed, 08 Nov 2006 13:54:15 -0800 (PST)
+Received: by 10.66.232.11 with SMTP id e11mr194765ugh.1163022855151; Wed, 08
+ Nov 2006 13:54:15 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id l33sm1260263ugc.2006.11.08.13.54.13; Wed, 08 Nov
+ 2006 13:54:13 -0800 (PST)
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Tue, 14 Nov 2006, Junio C Hamano wrote:
-
-> Nicolas Pitre <nico@cam.org> writes:
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
 > 
-> > On Tue, 14 Nov 2006, Jakub Narebski wrote:
-> >
-> >> The git interface refactoring should be I think the cause for git 2.0.0
-> >> release...
-> >
-> > Good idea indeed.
+>> O.K. This one introduced new feature, and wasn't needed for earlier 
+>> accepted patch (output empty patches) to have sense. And it is rc1 
+>> phase...
 > 
-> We need to avoid user confusion, so making a command that used
-> to do one thing to suddenly do something completely different is
-> a no-no.  However, I do not think it needs to wait for 2.0.0.
-> We can start with a separate namespace (or even a separate
-> "Improved git UI project") and introduce the "improved UI set"
-> in 1.5.0 timeframe.
+> I personally do not mind minor gitweb 'feature' updates in -rc
+> cycle, just like I am planning to see if there are gitk updates
+> I haven't pulled from Paulus (I think there is at least one
+> patch from last month or so), unless the changes do not break it
+> so badly.
 
-Dunno.  I feel this is a bit overboard.  Actually the naming problem is 
-rather localized to one command, namely git-pull.  In my opinion going 
-with yet another namespace which would rather add to the confusion not 
-clear it.
+I'll resend corrected patch then...
+ 
+>> By the way, where I can find proper specifiction of unified diff format? 
+>> Do I understand correctly that bot from and to ranges can be without 
+>> number of lines part if it simplifies to 0?
+> 
+> When Linus did apply.c and I did diff.c, we primarily worked off
+> of sources to GNU patch.
+> 
+> There is a POSIX draft proposal now.
+> 
+> http://www.opengroup.org/austin/mailarchives/ag-review/msg02077.html
+> 
+> See also updates about the proposal.
+> 
+> http://thread.gmane.org/gmane.comp.version-control.git/29331/focus=29389
 
-The best way to avoid user confusion is to remove the source of the 
-confusion not let it live.  In other words I think we should _fix_ 
-git-pull instead of replacing it.  People are already confused about it 
-so simply fixing this command will have a net confusion reduction.  Yet 
-we're not talking about "suddenly doing something completely different" 
-either.  If git-pull doesn't merge automatically anymore it is easy to 
-tell people to use git-merge after a pull.
+Thanks a lot.
 
-"You pull the remote changes with 'git-pull upstream,, then you can 
-merge them in your current branch with 'git-merge upstream'."
+Personally I think that we should push for git extended headers to be
+(as an option) in POSIX for unifed diff... well, with the exception
+of index and similarity lines. ;-)
 
-Isn't it much simpler to understand (and to teach) that way?
-
-Also I don't think using git-upload and git-download is much better.  
-This adds yet more commands that do almost the same as existing ones but 
-with a different name which is yet not necessarily fully adequate.  I 
-for example would think that "download" is more like git-clone than 
-git-fetch or git-pull.
-
-Let's face it: HG got it right with pull and push and newbies have much 
-less difficulty grokking it.  We screwed it by not using the most 
-intuitive semantic of a pull and locking the word "pull" away is not the 
-better solution given all considerations. Why just not admit it and 
-avoid being different than HG just for the sake of it?
-
-
+-- 
+Jakub Narebski
