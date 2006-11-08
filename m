@@ -1,127 +1,67 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: win2k/cygwin cannot handle even moderately sized packs
-Date: Mon, 13 Nov 2006 18:34:39 +0100
-Message-ID: <81b0412b0611130934u67f4da98rd39412b07f2169c0@mail.gmail.com>
-References: <81b0412b0611070302h50541cd5mf0758afe0d6befda@mail.gmail.com>
-	 <Pine.LNX.4.63.0611131333000.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Did anyone have trouble learning the idea of local vs. remote branches?
+Date: Wed, 08 Nov 2006 06:19:15 +0100
+Message-ID: <vpqbqnisegc.fsf@ecrins.imag.fr>
+References: <20061107172450.GA26591@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 13 Nov 2006 17:35:22 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 8 Nov 2006 05:19:53 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=NA77P2MfkqhHLdM9OL1CVJgK4SDFTR9kxJQ2rpgJmfW5aTgsA1XZdZbEu7lt63G3aTbjUqwRUKrfjq40+vdK8TS4u1xEuw5LvaJnWtog0yJiNv5G9b62i3IzGKzvIfs1SjF7EwqT4NOQ0kEJXrslty0ZCnkjW+olXOXTpUpw6qw=
-In-Reply-To: <Pine.LNX.4.63.0611131333000.13772@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+Mail-Followup-To: git@vger.kernel.org
+In-Reply-To: <20061107172450.GA26591@spearce.org> (Shawn Pearce's message of "Tue\, 7 Nov 2006 12\:24\:50 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.6 (imag.imag.fr [129.88.30.1]); Wed, 08 Nov 2006 06:19:15 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31116>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gjfho-00048y-EW for gcvg-git@gmane.org; Mon, 13 Nov
- 2006 18:34:48 +0100
+ esmtp (Exim 4.43) id 1Ghfqh-0001Ij-BJ for gcvg-git@gmane.org; Wed, 08 Nov
+ 2006 06:19:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755276AbWKMReo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006
- 12:34:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755252AbWKMReo
- (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 12:34:44 -0500
-Received: from wr-out-0506.google.com ([64.233.184.231]:35302 "EHLO
- wr-out-0506.google.com") by vger.kernel.org with ESMTP id S1755276AbWKMRen
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 12:34:43 -0500
-Received: by wr-out-0506.google.com with SMTP id i30so65131wra for
- <git@vger.kernel.org>; Mon, 13 Nov 2006 09:34:42 -0800 (PST)
-Received: by 10.78.127.6 with SMTP id z6mr802242huc.1163439279723; Mon, 13
- Nov 2006 09:34:39 -0800 (PST)
-Received: by 10.78.135.19 with HTTP; Mon, 13 Nov 2006 09:34:39 -0800 (PST)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+ S1754288AbWKHFTj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
+ 00:19:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754290AbWKHFTj
+ (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 00:19:39 -0500
+Received: from imag.imag.fr ([129.88.30.1]:43913 "EHLO imag.imag.fr") by
+ vger.kernel.org with ESMTP id S1754288AbWKHFTj (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 00:19:39 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52]) by
+ imag.imag.fr (8.13.6/8.13.6) with ESMTP id kA85JFcx018329
+ (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO) for
+ <git@vger.kernel.org>; Wed, 8 Nov 2006 06:19:15 +0100 (CET)
+Received: from ecrins.imag.fr ([129.88.43.124]) by mail-veri.imag.fr with
+ esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.50) id 1GhfqF-00077I-DW for
+ git@vger.kernel.org; Wed, 08 Nov 2006 06:19:15 +0100
+Received: from moy by ecrins.imag.fr with local (Exim 4.50) id
+ 1GhfqF-0002Tj-Af for git@vger.kernel.org; Wed, 08 Nov 2006 06:19:15 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-> This looks to me as if you have NO_MMAP=1 set in your Makefile (which I
-> also do automatically when compiling on cygwin).
+Shawn Pearce <spearce@spearce.org> writes:
 
-Kind of. I use mmap (from cygwin) in specially selected places.
-I remember posting the patches once.
+> Today I was talking with someone that I collaborate with through
+> Git and they still seemed to not get the idea that all branches
+> in their repository are local, and that at least a 'git fetch'
+> is needed to update the local tracking branches to the version
+> in the central repository that we collaborate through.  And this
+> isn't the first time we've had such discussions.
 
-> The old problem: Windows does not have fork.
+To me, the biggest difficulty was to understand the vocubulary. I
+started with cogito, and looked for branching features in cg-branch-*.
+The /features/ themselves seem nice, but the names of commands are
+confusing to me. I'd expect something called cg-branch-add to create a
+new branch, while it just tells cogito where to find one. And the git
+Vs cogito increased the confusion.
 
-As if it have anything non-fubar at all...
-
-> <digression> And before somebody starts cygwin bashing: don't. It is not
-> cygwin's problem, it is Windows'.
-
-I didn't bash cygwin. I just pity the whole effort (and myself, atm).
-
-> And I think that a mmap() of 332MB would not fail.
-
-It does not in isolated environment. It just fails in my particular context.
-And before anyone suggests: yes, CreateFileMapping, and VirtualAlloc were
-tried. They do return errors suggesting the same reason (ENOMEM).
-
-> Long time ago (to be precise, July 18th), Linus suggested (in Message-Id:
-> <Pine.LNX.4.64.0607180837260.3386@evo.osdl.org>) to find out which mmap()
-> calls are _not_ used before a fork(), and not emulate them by malloc().
->
-> I never came around to do that, but maybe others do?
-
-I'm trying to find some time to make Shawn's sliding window work.
-It looks promising (patches, not the time).
-
-
-On 11/13/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Tue, 7 Nov 2006, Alex Riesen wrote:
->
-> > For me, it fails even on 332Mb pack:
-> >
-> > $ git reset --hard 61bb7fcb
-> > fatal: packfile .git/objects/pack/pack-ad37...pack cannot be mapped.
-> >
-> > Instrumenting the code reveals that it fails on 348876870 bytes.
-> > Strangely enough, a cygwin program which just reads that pack
-> > many times without freeing the mem goes up to 1395507480 (1330Mb).
-> >
-> > If I replace the malloc (cygwin) with native VirtualAlloc(MEM_COMMIT)
-> > it reports that "Not enough storage is available to process this command",
-> > which is just ENOMEM, I think.
->
-> This looks to me as if you have NO_MMAP=1 set in your Makefile (which I
-> also do automatically when compiling on cygwin).
->
-> The old problem: Windows does not have fork.
->
-> <digression> And before somebody starts cygwin bashing: don't. It is not
-> cygwin's problem, it is Windows'. The cygwin people worked long and hard
-> on something truly useful, and it helps me _every_ time I have to work on
-> a Windows platform (which _is_ utter crap). Some problems of Windows are
-> so unhideable though, that even cygwin cannot work around them.
-> </digression>
->
-> Cygwin provides a mmap(), which works remarkably well even with the
-> emulated fork(), but one thing is not possible: since mmap()ed files
-> have to be _reopened_ after a fork(), and git uses the
-> open-temp-file-then-delete-it-but-continue-to-use-it paradigm quite often,
-> we work around it by setting NO_MMAP=1. Again, this is _not_ Cygwin's
-> fault!
->
-> And I think that a mmap() of 332MB would not fail.
->
-> Long time ago (to be precise, July 18th), Linus suggested (in Message-Id:
-> <Pine.LNX.4.64.0607180837260.3386@evo.osdl.org>) to find out which mmap()
-> calls are _not_ used before a fork(), and not emulate them by malloc().
->
-> I never came around to do that, but maybe others do?
->
-> Ciao,
-> Dscho
->
+-- 
