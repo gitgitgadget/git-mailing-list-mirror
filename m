@@ -1,90 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Fri, 1 Dec 2006 12:46:07 +0100
-Message-ID: <20061201114607.GN18810@admingilde.org>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200612011029.28059.andyparkins@gmail.com> <20061201104256.GQ12463MdfPADPa@greensroom.kotnet.org> <200612011102.17079.andyparkins@gmail.com>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH] Add a MIME-Version header to e-mails
+Date: Wed, 8 Nov 2006 10:12:43 +0000
+Message-ID: <b0943d9e0611080212q35dae8d0w2642ed1d0189f8fe@mail.gmail.com>
+References: <eile19$p7r$1@sea.gmane.org>
+	 <20061106074532.10376.60478.stgit@localhost>
+	 <b0943d9e0611070153s2a52f65k6ed4643e60a144b3@mail.gmail.com>
+	 <b0943d9e0611071109w584f4f7fv3ba1b7dbd9413717@mail.gmail.com>
+	 <20061108084038.GA3164@diana.vm.bytemark.co.uk>
+	 <b0943d9e0611080141y3751039v37b0289147237e4f@mail.gmail.com>
+	 <20061108100103.GA18117@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="/t6ASE28jIy1gGy9"
-NNTP-Posting-Date: Fri, 1 Dec 2006 11:46:40 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Wed, 8 Nov 2006 10:13:01 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=dyaSP/YzO5PCoUyaP0KyCJRxLrhrAyCprR5s9Eu/Y911tBFII2TpbVrgP3vsXRrmUBNC/FyKGpmWGoD02LWYv6F+vuoFX+0coprK9nZgz2bdVpNYcGIo+0FOH6oDvqVJNbcH0Pdu53pScLfJASkW9TUjdhBjgWemlBIVsChae0A=
+In-Reply-To: <20061108100103.GA18117@diana.vm.bytemark.co.uk>
 Content-Disposition: inline
-In-Reply-To: <200612011102.17079.andyparkins@gmail.com>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31133>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq6qR-0004bZ-TE for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 12:46:20 +0100
+ esmtp (Exim 4.43) id 1GhkQK-0003bu-Hz for gcvg-git@gmane.org; Wed, 08 Nov
+ 2006 11:12:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936471AbWLALqK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 06:46:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936472AbWLALqJ
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 06:46:09 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:57804 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S936471AbWLALqI (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 06:46:08 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1Gq6qF-00058Z-Ei; Fri, 01 Dec 2006 12:46:07 +0100
-To: Andy Parkins <andyparkins@gmail.com>
+ S964973AbWKHKMp convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006 05:12:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964857AbWKHKMp
+ (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 05:12:45 -0500
+Received: from py-out-1112.google.com ([64.233.166.178]:11085 "EHLO
+ py-out-1112.google.com") by vger.kernel.org with ESMTP id S932367AbWKHKMo
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006
+ 05:12:44 -0500
+Received: by py-out-1112.google.com with SMTP id a73so1469915pye for
+ <git@vger.kernel.org>; Wed, 08 Nov 2006 02:12:43 -0800 (PST)
+Received: by 10.35.39.13 with SMTP id r13mr15088402pyj.1162980763790; Wed, 08
+ Nov 2006 02:12:43 -0800 (PST)
+Received: by 10.35.77.5 with HTTP; Wed, 8 Nov 2006 02:12:43 -0800 (PST)
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
 Sender: git-owner@vger.kernel.org
 
+On 08/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 2006-11-08 09:41:33 +0000, Catalin Marinas wrote:
+> > It would be great if you can run a test script. I've been thinking
+> > more of an "import" test that also checks both the "export" and "ma=
+il"
+> > commands.
+>
+> I didn't originally plan to thest the actual e-mail sending, but now
+> that I think of it, a simple script listening on a random port,
+> pretending to be an SMTP daemon, should be quite simple to set up.
 
---/t6ASE28jIy1gGy9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-hoi :)
-
-On Fri, Dec 01, 2006 at 11:02:15AM +0000, Andy Parkins wrote:
-> On Friday 2006 December 01 10:42, Sven Verdoolaege wrote:
->=20
-> > He showed it to you in the example.  The "submodule object" is the COMM=
-IT
-> > of the submodule itself.
->=20
-> That's no different from mine.
-
-Well, there simply is no proxy object inbetween.
-
-> Is that commit in the submodule or the supermodule?
-
-Well, logically that commit belongs to the submodule and is referenced
-by the tree in the supermodule.
-Phyisically it is stored in the projects object database which is
-shared between the supermodule and all submodules (at least in my
-implementation).
-
-> I also want to know how we tell the difference between a
-> commit-in-supermodule and a
-> commit-in-supermodule-which-is-actually-in-submodule.
-
-There is no difference.
+I'm not sure it's worth the hassle. You could just generate an mbox
+file with "mail" and import it with "import --mbox" (it will hopefully
+be ready this week). Problems with SMTP would be noticed quickly
+anyway.
 
 --=20
-Martin Waitz
-
---/t6ASE28jIy1gGy9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFcBX/j/Eaxd/oD7IRAvjnAJ0bg7Sy47d82P9MI5PM3ch4uvp8JACfTP4b
-T8IBure9Pq3xoukDAG62cqQ=
-=gzlc
------END PGP SIGNATURE-----
-
