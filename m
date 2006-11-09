@@ -1,57 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: git and "dumb protocols"
-Date: Thu, 2 Nov 2006 13:21:25 +0100
-Message-ID: <20061102122125.GM20017@pasky.or.cz>
-References: <vpqu01i16g8.fsf@ecrins.imag.fr> <20061102104848.GH20017@pasky.or.cz> <vpq4ptixdfj.fsf@ecrins.imag.fr>
+From: Umesh Deshpande <umesh.deshpande@calsoftinc.com>
+Subject: Command for reverting all patches below particular commit
+Date: Thu, 09 Nov 2006 15:39:07 +0530
+Message-ID: <4552FE43.7020804@calsoftinc.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 2 Nov 2006 12:22:19 +0000 (UTC)
+Content-Type: text/plain;
+	charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 9 Nov 2006 10:08:08 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <vpq4ptixdfj.fsf@ecrins.imag.fr>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+User-Agent: Thunderbird 1.5.0.8 (X11/20061025)
+X-imss-version: 2.044
+X-imss-result: Passed
+X-imss-approveListMatch: *@calsoftinc.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31191>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfbZb-0007ra-7o for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 13:21:32 +0100
+ esmtp (Exim 4.43) id 1Gi6pC-00009P-EV for gcvg-git@gmane.org; Thu, 09 Nov
+ 2006 11:07:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752169AbWKBMV1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
- 07:21:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752179AbWKBMV1
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 07:21:27 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:50073 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1752169AbWKBMV1 (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 07:21:27 -0500
-Received: (qmail 18569 invoked by uid 2001); 2 Nov 2006 13:21:25 +0100
+ S1753998AbWKIKHr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 9 Nov 2006
+ 05:07:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754781AbWKIKHq
+ (ORCPT <rfc822;git-outgoing>); Thu, 9 Nov 2006 05:07:46 -0500
+Received: from [203.199.144.195] ([203.199.144.195]:2189 "EHLO
+ mail.calsofthq.com") by vger.kernel.org with ESMTP id S1753998AbWKIKHp (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 9 Nov 2006 05:07:45 -0500
+Received: from imss.calsofthq.com (imss.calsofthq.com [172.16.0.44]) by
+ mail.calsofthq.com (8.13.6/8.13.6) with ESMTP id kA9A7dEE024783 for
+ <git@vger.kernel.org>; Thu, 9 Nov 2006 15:37:43 +0530
+Received: from imss.calsofthq.com (localhost.localdomain [127.0.0.1]) by
+ localhost.calsofthq.com (Postfix) with ESMTP id D4125179C9F for
+ <git@vger.kernel.org>; Thu,  9 Nov 2006 15:37:39 +0530 (IST)
+Received: from mail.calsofthq.com (mail.calsofthq.com [172.16.0.7])by 
+ imss.calsofthq.com (Postfix) with ESMTP id BE58E179C9Efor 
+ <git@vger.kernel.org>; Thu,  9 Nov 2006 15:37:39 +0530 (IST)
+Received: from [172.16.3.248] ([172.16.3.248])(authenticated bits=0)by 
+ mail.calsofthq.com (8.13.6/8.13.6) with ESMTP id 
+ kA9A7YY5024765(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 
+ verify=NO)for <git@vger.kernel.org>; Thu, 9 Nov 2006 15:37:39 +0530
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Dear diary, on Thu, Nov 02, 2006 at 01:04:16PM CET, I got a letter
-where Matthieu Moy <Matthieu.Moy@imag.fr> said that...
-> Petr Baudis <pasky@suse.cz> writes:
-> >   I think a patch that would add support for pushing over sftp or some
-> > other dumb protocol would be welcome. One problem is with proper locking
-> > of ref updates (not sure how well would sftp cope with that), another is
-> > that you will need to do git-update-server-info's job on the server
-> > side.
-> 
-> It should be possible (but not implemented AAUI) also to generate the
-> additional info of git-update-server-info on the client, isn't it?
+Hi,
+I want to revert a particular commit, but because of dependency issues I 
+am not able to do so. The revert operation fails.
+I want to revert all the commits below the specified commit so that I 
+will be able to remove that particular commit.
+Is there any command to do this?
 
-Yes, that's what git-http-push does.
+Thanks
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+Regards
