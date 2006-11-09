@@ -1,137 +1,134 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Slight visual improvements to commitdiff view
-Date: Thu, 26 Oct 2006 18:13:11 +0200
-Message-ID: <200610261813.12567.jnareb@gmail.com>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: git-svn can lose changes silently
+Date: Wed, 08 Nov 2006 16:34:46 -0800
+Message-ID: <455277A6.2000404@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 26 Oct 2006 16:12:54 +0000 (UTC)
+NNTP-Posting-Date: Thu, 9 Nov 2006 00:35:09 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=rCvFM6PAuBLi8EYERSlxlPV8qnRHolNdqomGfL2DBOHlTGORdL0rvzl8uvmzBbxf/9BDdd8Hh4E06W/jzWvZbYpaOoDgjRFIhhE+5NjGwEh8s0pusJomA9lhpBa91kEJCc5yfPTDMLWtftJ0BaJWo/eBzvE0ZH3RDp5fLTVjroc=
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+  s=200606; d=midwinter.com;
+  b=gkorAR+Z0H0GGmbjfnkrJYVQjrqEseXanYr/z1cpS0PMGNyO9yqBv3+CVQScnQlk  ;
+User-Agent: Mail/News 1.5.0.2 (Macintosh/20060324)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31171>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd7qR-0006hP-2K for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 18:12:39 +0200
+ esmtp (Exim 4.43) id 1Ghxsl-0001Cz-Si for gcvg-git@gmane.org; Thu, 09 Nov
+ 2006 01:35:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423597AbWJZQMg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 12:12:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423595AbWJZQMf
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 12:12:35 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:61982 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1161421AbWJZQMf
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 12:12:35 -0400
-Received: by ug-out-1314.google.com with SMTP id 32so411874ugm for
- <git@vger.kernel.org>; Thu, 26 Oct 2006 09:12:33 -0700 (PDT)
-Received: by 10.67.103.7 with SMTP id f7mr3107313ugm; Thu, 26 Oct 2006
- 09:12:33 -0700 (PDT)
-Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110]) by
- mx.google.com with ESMTP id 30sm798943ugf.2006.10.26.09.12.32; Thu, 26 Oct
- 2006 09:12:33 -0700 (PDT)
+ S965757AbWKIAe7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
+ 19:34:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965767AbWKIAe7
+ (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 19:34:59 -0500
+Received: from tater.midwinter.com ([216.32.86.90]:15752 "HELO
+ midwinter.com") by vger.kernel.org with SMTP id S965757AbWKIAe6 (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 19:34:58 -0500
+Received: (qmail 4126 invoked from network); 9 Nov 2006 00:34:58 -0000
+Received: from localhost (HELO ?127.0.0.1?) (koreth@127.0.0.1) by localhost
+ with SMTP; 9 Nov 2006 00:34:57 -0000
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/gitweb.css  |   14 +++++++++++++-
- gitweb/gitweb.perl |   15 +++++++++------
- 2 files changed, 22 insertions(+), 7 deletions(-)
+git-svn is happy to overwrite changes in the svn repository with no 
+warnings. Didn't seem to be known behavior when I mentioned it in #git, 
+so here's an example, starting completely from scratch to make it easier 
+to reproduce. I'm using git-svn 1.4.3 and svn 1.2.3 on OS X.
 
-diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-index 0eda982..cb2c627 100644
---- a/gitweb/gitweb.css
-+++ b/gitweb/gitweb.css
-@@ -114,7 +114,7 @@ div.log_link {
- 	width: 136px;
- }
- 
--div.list_head {
-+div.diff_tree_head {
- 	padding: 6px 8px 4px;
- 	border: solid #d9d8d1;
- 	border-width: 1px 0px 0px;
-@@ -128,6 +128,18 @@ div.author_date {
- 	font-style: italic;
- }
- 
-+div.commitdiff_log {
-+	padding: 8px;
-+	border: solid #d9d8d1;
-+	border-width: 0px 0px 1px 0px;
-+}
-+
-+div.patchset {
-+	padding-top: 8px;
-+	border: solid #d9d8d1;
-+	border-width: 1px 0px 0px 0px;
-+}
-+
- a.list {
- 	text-decoration: none;
- 	color: #000000;
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 0d2ea72..a33cae1 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1844,11 +1844,11 @@ sub git_print_tree_entry {
- sub git_difftree_body {
- 	my ($difftree, $hash, $parent) = @_;
- 
--	print "<div class=\"list_head\">\n";
- 	if ($#{$difftree} > 10) {
-+		print "<div class=\"list_head\">\n";
- 		print(($#{$difftree} + 1) . " files changed:\n");
-+		print "</div>\n";
- 	}
--	print "</div>\n";
- 
- 	print "<table class=\"diff_tree\">\n";
- 	my $alternate = 1;
-@@ -2055,7 +2055,8 @@ sub git_patchset_body {
- 
- 			# for now, no extended header, hence we skip empty patches
- 			# companion to	next LINE if $in_header;
--			if ($diffinfo->{'from_id'} eq $diffinfo->{'to_id'}) { # no change
-+			if ($diffinfo->{'from_id'} eq $diffinfo->{'to_id'}) {
-+				# no change, empty patch
- 				$in_header = 1;
- 				next LINE;
- 			}
-@@ -3486,13 +3487,15 @@ sub git_commitdiff {
- 		git_print_page_nav('commitdiff','', $hash,$co{'tree'},$hash, 
-$formats_nav);
- 		git_print_header_div('commit', esc_html($co{'title'}) . $ref, $hash);
- 		git_print_authorship(\%co);
--		print "<div class=\"page_body\">\n";
-+
- 		if (@{$co{'comment'}} > 1) {
--			print "<div class=\"log\">\n";
-+			print "<div class=\"commitdiff_log\">\n";
- 			git_print_log($co{'comment'}, -final_empty_line=> 1, -remove_title 
-=> 1);
--			print "</div>\n"; # class="log"
-+			print "</div>\n"; # class="commitdiff_log"
- 		}
- 
-+		print "<div class=\"page_body\">\n";
-+
- 	} elsif ($format eq 'plain') {
- 		my $refs = git_get_references("tags");
- 		my $tagname = git_get_rev_name_tags($hash);
--- 
-1.4.3.3
+First I create a new svn repository and stick a test file there:
+
+% mkdir /tmp/svntest
+% cd /tmp/svntest
+% svnadmin create svn-repo
+% svn co file:///tmp/svntest/svn-repo /tmp/svntest/svn-client
+Checked out revision 0.
+% cd /tmp/svntest/svn-client
+% mkdir -p project/trunk
+% echo "initial contents" > project/trunk/testfile
+% svn add project/trunk/testfile
+svn: 'project/trunk' is not a working copy
+% svn add project
+A         project
+A         project/trunk
+A         project/trunk/testfile
+% svn commit -m "initial commit"
+Adding         project
+Adding         project/trunk
+Adding         project/trunk/testfile
+Transmitting file data .
+Committed revision 1.
+
+Now I clone that svn repository using git-svn and pull in the contents 
+of the svn repo:
+
+% cd /tmp/svntest
+% git-svn init file:///tmp/svntest/svn-repo/project/trunk git-repo 
+% cd git-repo
+% git-svn fetch
+        A       project/trunk/testfile
+Committing initial tree 9ca0a5a8cb5ee41744aaf17f859e945f2ebaa7d4
+r1 = 63c70a5e17ffb095a31e96b1a56612f1f8423202
+
+Now I create a development branch and commit a change to the test file:
+
+% git-checkout -b devel
+% echo "a second line from the git side" >> testfile
+% git-commit -a -m "git-side commit"
+
+Now I go make a change on the svn side and commit it.
+
+% cd /tmp/svntest/svn-client/project/trunk
+% echo "a second line from the svn side" >> testfile
+% svn commit -m "a second svn commit"
+Sending        trunk/testfile
+Transmitting file data .
+Committed revision 2.
+
+At this point the svn repository has the testfile with two lines: 
+"initial contents" and "a second line from the svn side". Now, back on 
+the git side, I commit my git-side change to svn (here's where the bug 
+happens):
+
+% cd /tmp/svntest/git-repo
+% git-svn dcommit                     
+diff-tree 679c0db253781216b9b72b51f2dfffec5711f1a3~1 
+679c0db253781216b9b72b51f2dfffec5711f1a3
+        M       testfile
+Committed 3
+        M       project/trunk/testfile
+r2 = 7d7923588ffb41eb756959d71623581df9318603
+        M       project/trunk/testfile
+r3 = 25a5fefe01389260274bb2617bc36a2cce18f15d
+No changes between current HEAD and refs/remotes/git-svn
+Hard resetting to the latest refs/remotes/git-svn
+
+Finally, I go back to the svn side and update from the repo:
+
+% cd /tmp/svntest/svn-client
+% svn up
+U    project/trunk/testfile
+Updated to revision 3.
+% cat project/trunk/testfile
+initial contents
+a second line from the git side
+
+The change I checked in from the svn side has vanished without a trace, 
+no warning messages or anything.
+
+It is probably not a feature that you can lose changes without knowing 
+about it! Even if I'd run git-svn fetch before that commit, it still 
+wouldn't help if the svn version of the file changed between the time I 
+ran fetch and the time I ran dcommit, totally possible with a busy svn 
+repository.
+
+Opinions? Suggestions on fixing it? Do other people agree this is a bug?
+
