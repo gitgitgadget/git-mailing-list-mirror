@@ -1,65 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix bad usage of mkpath in builtin-branch.sh
-Date: Tue, 24 Oct 2006 21:00:14 -0700
-Message-ID: <7vac3lf3jl.fsf@assigned-by-dhcp.cox.net>
-References: <1161655176461-git-send-email-hjemli@gmail.com>
-	<7vlkn6qkh2.fsf@assigned-by-dhcp.cox.net>
-	<20061024113806.GB20017@pasky.or.cz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: protect blob and diff output lines from controls.
+Date: Thu, 9 Nov 2006 10:24:34 +0100
+Message-ID: <200611091024.35019.jnareb@gmail.com>
+References: <7vpsbxqzre.fsf@assigned-by-dhcp.cox.net> <200611090104.32247.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 25 Oct 2006 04:00:31 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 9 Nov 2006 09:24:02 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061024113806.GB20017@pasky.or.cz> (Petr Baudis's message of
-	"Tue, 24 Oct 2006 13:38:06 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=PiCxnjePZIEsgvDItdlwhan1Nf1xuPHU17XL45lhU+6if8afTIcnteD4ExtD91M1XpJy+TbwgsWiFwYWUIKa5GczIPgiTcS2jMcxNoBkvPIfOPwF2L+3C+ai3ORkbU+yQDlsE1OwkF0pKHariUaSCQJrFey9nyTaQxmXs/dsxOQ=
+User-Agent: KMail/1.9.3
+In-Reply-To: <200611090104.32247.jnareb@gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31184>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcZwD-0004C3-71 for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 06:00:22 +0200
+ esmtp (Exim 4.43) id 1Gi68U-00018v-EG for gcvg-git@gmane.org; Thu, 09 Nov
+ 2006 10:23:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422913AbWJYEAR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 00:00:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161339AbWJYEAR
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 00:00:17 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:18099 "EHLO
- fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1161338AbWJYEAP
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 00:00:15 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao05.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061025040015.SPIX12909.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>; Wed, 25
- Oct 2006 00:00:15 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id eTzx1V06t1kojtg0000000 Tue, 24 Oct 2006
- 23:59:58 -0400
-To: Petr Baudis <pasky@suse.cz>
+ S1754800AbWKIJXr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 9 Nov 2006
+ 04:23:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754803AbWKIJXr
+ (ORCPT <rfc822;git-outgoing>); Thu, 9 Nov 2006 04:23:47 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:52012 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1754800AbWKIJXq
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Nov 2006 04:23:46 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so161321ugc for
+ <git@vger.kernel.org>; Thu, 09 Nov 2006 01:23:44 -0800 (PST)
+Received: by 10.67.22.2 with SMTP id z2mr1003883ugi.1163064224684; Thu, 09
+ Nov 2006 01:23:44 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id u6sm572522uge.2006.11.09.01.23.43; Thu, 09 Nov
+ 2006 01:23:44 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Petr Baudis <pasky@suse.cz> writes:
+Jakub Narebski wrote:
+> I'm not sure what quoting to choose for esc_attr, but there we could
+> use even --no-control-chars quoting (replacing any control character
+> by '?');  but perhaps in some cases like git_print_page_path
+> subroutine CEC is better.
 
-> Dear diary, on Tue, Oct 24, 2006 at 08:46:49AM CEST, I got a letter
-> where Junio C Hamano <junkio@cox.net> said that...
->> Lars Hjemli <hjemli@gmail.com> writes:
->> 
->> > diff --git a/builtin-branch.c b/builtin-branch.c
->> > index ffc2db0..f86bf68 100755
->> 
->> I've already fixed up this perm-mode breakage (and other
->> breakages, possibly) so when I am done with these patches
->> tonight please resync with me.
->
-> I have made my fair share of inadverent mode changes as well (I don't
-> even know how that *happenned*), and I don't seem to be alone; since
-> this is something you are doing only rarely anyway, perhaps we should
-> try to make mode changes more visible?
+I'm rambling. esc_attr is special case, because CGI does escapeHTML
+(and I hope also to_utf8) for us. Using <span class="cntrl">...</span>
+has also no sense. So there should be separate esc_attr_path subroutine
+I think.
 
-Well we already do and that's how I noticed.
+Even if we decide that esc_html and esc_path should give identical
+output (the difference that _might_ be here is that in esc_html we
+don't need to escape whitespace control characters valid in HTML,
+like tab (HT, TAB) or newline (LF); on the other hand thanks to
+line-by-line processing we should never get newline in "blob", and
+thanks to untabify we should never get tab in "blob") I think it would
+be prudent to have esc_path, even as thin wrapper just caling esc_html.
+
+We might decide to use different style for control characters in
+different views, but that I think can be done using pure CSS.
+-- 
+Jakub Narebski
