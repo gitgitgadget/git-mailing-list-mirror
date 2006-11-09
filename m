@@ -1,126 +1,121 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: What's in git.git (stable)
-Date: Thu, 14 Dec 2006 15:46:17 -0800
-Message-ID: <7vk60uyrau.fsf@assigned-by-dhcp.cox.net>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net>
-	<200612140959.19209.andyparkins@gmail.com>
-	<7vmz5q18cn.fsf@assigned-by-dhcp.cox.net>
-	<200612142255.33564.andyparkins@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: protect blob and diff output lines from controls.
+Date: Thu, 9 Nov 2006 01:46:25 +0100
+Message-ID: <200611090146.25306.jnareb@gmail.com>
+References: <7vpsbxqzre.fsf@assigned-by-dhcp.cox.net> <200611090104.32247.jnareb@gmail.com> <7v1wodqxux.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 14 Dec 2006 23:46:37 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 9 Nov 2006 00:45:47 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200612142255.33564.andyparkins@gmail.com> (Andy Parkins's
-	message of "Thu, 14 Dec 2006 22:55:32 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=saRbvTeSiXdL5XztvB9DvggWHSt1eUqH+y2uxig4CgQGFHmkD0C+M6iVxORLyLCml5ocaYq86QCoUXEjr8epUUIwVex6pqPp5mQSPaxqiiw6lWWxp0UAsR7ODxAwbG0U08pCoKzQUVW11iyDN6f4G9JaUO/fx4aeo7s4VN8IYnQ=
+User-Agent: KMail/1.9.3
+In-Reply-To: <7v1wodqxux.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34442>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gv0HO-0003Zl-Cd for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 00:46:22 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31172>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Ghy34-0002zz-7z for gcvg-git@gmane.org; Thu, 09 Nov
+ 2006 01:45:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751996AbWLNXqT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 18:46:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751999AbWLNXqT
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 18:46:19 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:51067 "EHLO
- fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751996AbWLNXqS (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 18:46:18 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061214234617.WZWD15640.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Thu, 14
- Dec 2006 18:46:17 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id ynmV1V0051kojtg0000000; Thu, 14 Dec 2006
- 18:46:29 -0500
-To: Andy Parkins <andyparkins@gmail.com>
+ S1422810AbWKIApi (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
+ 19:45:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423960AbWKIApi
+ (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 19:45:38 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:44374 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1422810AbWKIAph
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 19:45:37 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so75692ugc for
+ <git@vger.kernel.org>; Wed, 08 Nov 2006 16:45:36 -0800 (PST)
+Received: by 10.66.243.4 with SMTP id q4mr431503ugh.1163033135822; Wed, 08
+ Nov 2006 16:45:35 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id b23sm90878ugd.2006.11.08.16.45.35; Wed, 08 Nov
+ 2006 16:45:35 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> writes:
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> 1. First, esc_path should _not_ use subroutine which does it's own 
+>> contol characters escaping. That was also a mistake I made in my patch.
+>> Perhaps we should have some quot_html or to_html subroutine which does 
+>> _only_ to_utf8 (decode from Encode module), escapeHTML and optionally 
+>> s/ /&nbsp;/g conversion.
+> 
+> I hated that original arrangement, 
 
-> On Thursday 2006, December 14 21:22, Junio C Hamano wrote:
->
->> This is interesting.  You said "commit -b", were pointed out
->> that you were talking about "checkout -b", and just after saying
->> "yup, that is right, I was", you again say "commit -b".
->
-> There truly is something wrong with me.
+What did you hate, again?
 
-I did not mean it that way.  I only took it as a sign that maybe
-"first create and switch to a branch and then work and commit
-there, in separate steps", which is how git encourages things to
-be done, does not match people's mental model so well.
+>                                    but I do not see anything 
+> obviously wrong in the output with the patch you are responding
+> to.  Except that git_blame2 is missing a chomp() on "my $data"
+> after finishing the metainfo loop, that is.
 
-> I'm not sure about your "commit -b"; is it wise to have /another/ way of 
-> making a branch?  I mean - I'm clearly confused enough, have a heart :-)
+The original (mine) code for esc_path uses esc_html, which did it's
+own partial (very partial) special characters esaping, namely
+\014 (\f) => ^L, \033 (\e) => ^[. So if pathname had form feed character,
+it would be replaced by ^L, not '\f'.
 
-I said "commit -b <newbranch>" and deliberately avoided saying
-"commit -b <anybranch>", because I did not want to open another
-can of worms while we are discussing so many good things
-already, and my head can hold only a handful topics at once.
+You have added quot_cec to esc_html subroutine directly. I don't know
+what is your version of esc_html after the changes you made, but
+this makes escaping part (quot) in esc_path never invoked. 
 
-But people on the list (and #git channel) sometimes wished an
-easy way to help the following workflow.
+>> 2. In my opinion CS is better than CEC for quoting/escaping control 
+>> characters in the "bulk" output, namely "blob" output and "text 
+>> diff" (patchset body) output. CEC is better for pathnames (which must 
+>> fit in one line), and perhaps other one-liners; perhaps not.
+> 
+> I am more for code reuse and consistency.  If "^L" is more
+> readable then we should consistently use it for both contents
+> and pathnames.  
 
- * I am in the middle of working on a new feature.  As a good
-   git user, I am on a topic branch dedicated for that purpose.
+Well, the pathname has the limit that it must be in single line
+after quoting. The "blob" output is multipage. IMHO CEC like \n, \f,
+\t are better in pathnames because this is what ls uses, while CS
+for "blob" output is better because editors (including one true
+editor being GNU Emacs ;-) uses CS like ^L (there is no end-of-line
+as we split on LF and chomp; there is no tab character because line
+is untabified first). But that is my opinion.
 
- * While working on it, I find an obvious bug that I would not
-   want to fix on the branch (the topic branch I am currently on
-   is not about fixing that bug).
+I think that conrol characters in filenames (in esc_path) should
+be encompassed with <span class="cntrl">...</span> and styled.
+I'm not sure if in "blob" view they should be styled. For sure
+there should be no <span>...</span> for escaped attributed (future
+esc_attr). Common to_html/quot_html would give us code reuse (as gives
+quot_cec), if not consistent.
 
- * But I fix it in the working tree anyway, because otherwise I
-   would forget.  It happens to be in an isolated file that my
-   current topic does not need to modify (say, I was looking at
-   a function in that file that my new feature needs to call and
-   I wanted to study its calling convention. And I found a typo in
-   the comment near the function).
+>                One of my tests were a symlink that points at a 
+> funny filename ;-).
 
- * The fix does not belong to the current topic, but can go to
-   the 'master' branch straight.  It's a fix in the comment that
-   cannot possibly break things, and I can/will test it later
-   anyway.
+This should be IMHO solved rather by better "tree" view support
+for symlinks, 'symlink' -> 'target' like in ls -l output.
 
- * So with the existing set of tools, I would go there, commit
-   and then come back:
+>> BTW. what had happened with to_qtext post?
+> 
+> Sorry, I don't recall.
 
-	$ git checkout [-m] master
-        $ git commit -m 'fix typo in that-file' that-file
-        $ git checkout [-m] topic
+There was quite a bit of discussion about name of _suggested_
+filename in blob_plain, blobdiff_plain view, namely the 
+  -content_disposition => 'inline; filename="' ...
+HTTP header. The result (probably lost in the noise) was to
+add to_qtext subroutine for that.
 
-   But it might be faster to say:
-
-   	$ git commit -b master -m 'fix typo in that-file' that-file
-
-   to make a commit on the other branch and come back
-   immediately afterwards.
-
- * In the same situation, when the 'master' is closed for some
-   administrative reason (e.g. "deep freeze before a release and
-   strict bugfixes and nothing else are allowed"), I would create
-   a new 'typofix' branch and do the same.  I can rebase it
-   later on 'master' when it reopens.
-
-	$ git commit -b typofix -m 'fix typo in that-file' that-file
-
-	... much later when master reopens ...
-        $ git rebase --onto master topic typofix
-
-It's just a possible typesaver, but I am likely not using it
-myself (my fingers are already trained to do the three command
-sequence dance).
-
-I do agree that it adds one more way to do the same thing and
-would make the documentation noisier, potentially adding more to
-the confusion.  So let's not go there.
-
+Time to go to sleep...
+-- 
+Jakub Narebski
