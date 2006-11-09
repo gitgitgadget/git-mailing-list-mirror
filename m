@@ -1,62 +1,86 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
-Date: Thu, 30 Nov 2006 22:50:23 +0700
-Message-ID: <fcaeb9bf0611300750t4adb4c97ibd65bc5b254e7efa@mail.gmail.com>
-References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home>
-	 <7vodqse90q.fsf@assigned-by-dhcp.cox.net>
-	 <87ac2cwha4.wl%cworth@cworth.org>
-	 <7vy7pwcsgp.fsf@assigned-by-dhcp.cox.net>
-	 <878xhwwdyj.wl%cworth@cworth.org>
-	 <7vk61gcnzl.fsf@assigned-by-dhcp.cox.net>
-	 <7vd5786opj.fsf@assigned-by-dhcp.cox.net> <ekmkoe$a52$1@sea.gmane.org>
-	 <ekmlf4$ask$3@sea.gmane.org> <m2odqpm0d6.fsf@ziti.fhcrc.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: protect blob and diff output lines from controls.
+Date: Thu, 9 Nov 2006 01:04:31 +0100
+Message-ID: <200611090104.32247.jnareb@gmail.com>
+References: <7vpsbxqzre.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 30 Nov 2006 15:50:42 +0000 (UTC)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 9 Nov 2006 00:04:02 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=EiZl/rpooqVeTvxAfQftiHgojmjvIqEjRrJkSC2mTZrXUX317sfuOK52uE/LEuHThRW4UYVKEfv9c0KaSPW/PiEvgaE7IOSAQ7ecJwF3/N9O/xsG3EEgtc66uaFQtTQ2F+VK6anoWIFDVS3lTAZkxNc+OH4emq+6hSmUsctVG8w=
-In-Reply-To: <m2odqpm0d6.fsf@ziti.fhcrc.org>
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=NBV4hWsN366fVIw1Fh1uyJyDm0o2K5KaPxohHcCy2EUOlyY3xfDK9otfRVZTdxA32IV0oU1PUBQD1JNg+/RySq2jM0HdrF58+Hl3cmlvC/Lb6wq4/R6SSVtYjq17NNcdZIZkOKM9Titng397KW7R5DlER+V/t6dI10iXoZ4IeNk=
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vpsbxqzre.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31168>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpoBB-0008Sr-Fj for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 16:50:29 +0100
+ esmtp (Exim 4.43) id 1GhxOV-0004Wj-7R for gcvg-git@gmane.org; Thu, 09 Nov
+ 2006 01:03:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030609AbWK3Pu0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 10:50:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030608AbWK3Pu0
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 10:50:26 -0500
-Received: from wr-out-0506.google.com ([64.233.184.238]:20241 "EHLO
- wr-out-0506.google.com") by vger.kernel.org with ESMTP id S1030609AbWK3PuZ
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 10:50:25 -0500
-Received: by wr-out-0506.google.com with SMTP id i7so1017404wra for
- <git@vger.kernel.org>; Thu, 30 Nov 2006 07:50:24 -0800 (PST)
-Received: by 10.78.185.7 with SMTP id i7mr3651947huf.1164901823885; Thu, 30
- Nov 2006 07:50:23 -0800 (PST)
-Received: by 10.78.118.16 with HTTP; Thu, 30 Nov 2006 07:50:23 -0800 (PST)
-To: git@vger.kernel.org
+ S1161771AbWKIADo convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006 19:03:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161772AbWKIADo
+ (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 19:03:44 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:58515 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1161771AbWKIADo
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 19:03:44 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so67593ugc for
+ <git@vger.kernel.org>; Wed, 08 Nov 2006 16:03:42 -0800 (PST)
+Received: by 10.67.26.7 with SMTP id d7mr355156ugj.1163030622615; Wed, 08 Nov
+ 2006 16:03:42 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id p32sm34902ugc.2006.11.08.16.03.42; Wed, 08 Nov
+ 2006 16:03:42 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On 11/30/06, Seth Falcon <sethfalcon@gmail.com> wrote:
->
-> For those using emacsclient, I don't think ^C will work.  Is there
-> another way to undu an ammend commit?  If not, is there any sense in
-> detecting a magic comment to abort the ammend commit?
+Junio C Hamano wrote:
+> This reuses the quot_cec to protect blob and text diff output
+> from leaking control characters.
+>=20
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+> ---
+> =A0* requesting extra sets of eyeballs.
 
-Uncomment to abort commit would be more intuitive.
+This changes the "blob" and "text diff" output somewhat, as earlier it=20
+used Control key Sequence (CS) representation for some non-whitespace=20
+control characters (not "\t' not '\n'), namely replacing form feed (FF)=
+=20
+('\f', '\014') with ^L and escape (ESC) ('\e', '\033') with ^[.
 
--- 
+And (what is not said in the commit message) it additionally esc_html=20
+some title elements (the subroutine should be I think named esc_attr).
+
+The problems are:
+1. First, esc_path should _not_ use subroutine which does it's own=20
+contol characters escaping. That was also a mistake I made in my patch.
+Perhaps we should have some quot_html or to_html subroutine which does=20
+_only_ to_utf8 (decode from Encode module), escapeHTML and optionally=20
+s/ /&nbsp;/g conversion.
+
+2. In my opinion CS is better than CEC for quoting/escaping control=20
+characters in the "bulk" output, namely "blob" output and "text=20
+diff" (patchset body) output. CEC is better for pathnames (which must=20
+fit in one line), and perhaps other one-liners; perhaps not. I'm not=20
+sure what quoting to choose for esc_attr, but there we could use even=20
+--no-control-chars quoting (replacing any control character by '?');=20
+but perhaps in some cases like git_print_page_path subroutine CEC is=20
+better.
+
+BTW. what had happened with to_qtext post?
+--=20
+Jakub Narebski
