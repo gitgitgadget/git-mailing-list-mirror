@@ -1,68 +1,63 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 18:07:22 -0500
-Message-ID: <BAYC1-PASMTP0196D3AFDB259DEF356AF8AEEA0@CEZ.ICE>
-References: <87k61yt1x2.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>
-	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
-	<200611151858.51833.andyparkins@gmail.com>
-	<Pine.LNX.4.64.0611151111250.3349@woody.osdl.org>
-	<f2b55d220611151139v66fba16ax97ce6b9966b33ce7@mail.gmail.com>
-	<Pine.LNX.4.64.0611151203450.3349@woody.osdl.org>
-	<Pine.LNX.4.64.0611151516360.2591@xanadu.home>
-	<Pine.LNX.4.64.0611151226590.3349@woody.osdl.org>
-	<87velgs9hx.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0611151339500.3349@woody.osdl.org>
-	<87psbos4pb.wl%cworth@cworth.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Command for reverting all patches below particular commit
+Date: Thu, 09 Nov 2006 11:27:28 +0100
+Organization: At home
+Message-ID: <eiuvop$1gt$1@sea.gmane.org>
+References: <4552FE43.7020804@calsoftinc.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 15 Nov 2006 23:07:32 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, Nicolas Pitre <nico@cam.org>,
-	"Michael K. Edwards" <medwards.linux@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Thu, 9 Nov 2006 10:27:32 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Original-Message-Id: <20061115180722.83ff8990.seanlkml@sympatico.ca>
-In-Reply-To: <87psbos4pb.wl%cworth@cworth.org>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 15 Nov 2006 23:07:23.0984 (UTC) FILETIME=[CF8DAD00:01C7090A]
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 13
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31192>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkTqq-0004u4-Cs for gcvg-git@gmane.org; Thu, 16 Nov
- 2006 00:07:28 +0100
+ esmtp (Exim 4.43) id 1Gi77k-0003dj-2J for gcvg-git@gmane.org; Thu, 09 Nov
+ 2006 11:27:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1162030AbWKOXHZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 18:07:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162032AbWKOXHZ
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 18:07:25 -0500
-Received: from bayc1-pasmtp01.bayc1.hotmail.com ([65.54.191.161]:2587 "EHLO
- bayc1-pasmtp01.bayc1.hotmail.com") by vger.kernel.org with ESMTP id
- S1162030AbWKOXHY (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006
- 18:07:24 -0500
-Received: from linux1.attic.local ([65.93.43.81]) by
- bayc1-pasmtp01.bayc1.hotmail.com over TLS secured channel with Microsoft
- SMTPSVC(6.0.3790.1830); Wed, 15 Nov 2006 15:07:23 -0800
-Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
- esmtp (Exim 4.43) id 1GkSuf-00054o-Ht; Wed, 15 Nov 2006 17:07:21 -0500
-To: Carl Worth <cworth@cworth.org>
+ S1754795AbWKIK1E (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 9 Nov 2006
+ 05:27:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754796AbWKIK1E
+ (ORCPT <rfc822;git-outgoing>); Thu, 9 Nov 2006 05:27:04 -0500
+Received: from main.gmane.org ([80.91.229.2]:397 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1754795AbWKIK1B (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 9 Nov 2006 05:27:01 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gi77I-0003Zm-T1 for git@vger.kernel.org; Thu, 09 Nov 2006 11:26:41 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Thu, 09 Nov 2006 11:26:40 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 09 Nov 2006
+ 11:26:40 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Wed, 15 Nov 2006 14:52:32 -0800
-Carl Worth <cworth@cworth.org> wrote:
+Umesh Deshpande wrote:
 
-> The real fix is to stop glossing over git-merge and just give it a
-> usable syntax.
+> Hi,
+> I want to revert a particular commit, but because of dependency issues I 
+> am not able to do so. The revert operation fails.
 
-Agreed 100%   There's just no good reason to hide the user level
-merge command inside of pull.
+Cannot you resolve conflicts during revert, and commit resolved result
+as revert of a commit?
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
