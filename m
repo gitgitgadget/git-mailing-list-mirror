@@ -4,78 +4,81 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Allow building GIT in a different directory from the
- source directory
-Date: Wed, 13 Dec 2006 10:28:03 +0100
-Message-ID: <457FC7A3.60206@op5.se>
-References: <eljo2u$pnq$2@sea.gmane.org> <7vbqm9xz8z.fsf@assigned-by-dhcp.cox.net> <457E979F.9060307@xs4all.nl> <Pine.LNX.4.63.0612121951000.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: protect blob and diff output lines from controls.
+Date: Thu, 09 Nov 2006 01:55:27 -0800
+Message-ID: <7vlkmlkkq8.fsf@assigned-by-dhcp.cox.net>
+References: <7vpsbxqzre.fsf@assigned-by-dhcp.cox.net>
+	<200611090104.32247.jnareb@gmail.com>
+	<200611091024.35019.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 13 Dec 2006 09:28:22 +0000 (UTC)
-Cc: Han-Wen Nienhuys <hanwen@xs4all.nl>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 9 Nov 2006 09:55:34 +0000 (UTC)
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
+	Luben Tuikov <ltuikov@yahoo.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 454 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Dec 2006 04:28:11 EST
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <Pine.LNX.4.63.0612121951000.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+In-Reply-To: <200611091024.35019.jnareb@gmail.com> (Jakub Narebski's message
+	of "Thu, 9 Nov 2006 10:24:34 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34191>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuQPP-0005iP-BV for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 10:28:15 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31188>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gi6dA-0006YF-Mq for gcvg-git@gmane.org; Thu, 09 Nov
+ 2006 10:55:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932635AbWLMJ2M (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 04:28:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932637AbWLMJ2M
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 04:28:12 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:41661 "EHLO
- smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S932635AbWLMJ2L (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
- 04:28:11 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id 7787A6BCBF; Wed, 13 Dec 2006 10:28:09 +0100 (CET)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1754770AbWKIJz3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 9 Nov 2006
+ 04:55:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754814AbWKIJz3
+ (ORCPT <rfc822;git-outgoing>); Thu, 9 Nov 2006 04:55:29 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:64713 "EHLO
+ fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1754770AbWKIJz2
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Nov 2006 04:55:28 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061109095527.WLAT5575.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Thu, 9
+ Nov 2006 04:55:27 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id kZvY1V00K1kojtg0000000; Thu, 09 Nov 2006
+ 04:55:33 -0500
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Tue, 12 Dec 2006, Han-Wen Nienhuys wrote:
-> 
->> I still don't understand the problem with autoconf; there are already 
->> plenty of baroque shell scripts in GIT.  I hate writing m4 macros as 
->> well, but that's not a problem for GIT users (ie. people who compile 
->> GIT).
-> 
-> That, together with the complexity of GIT_EXEC_DIR and path mangling 
-> problems, makes me take every opportunity to suggest we should build in 
-> most if not all of Git into the "git wrapper".
-> 
-> Granted, without completion scripts, the "git-" convention was nice.
-> 
-> Granted, with bash, Perl and even Python, you can rapidly prototype your 
-> thoughts (even if I often miss the power of C there).
-> 
+Jakub Narebski <jnareb@gmail.com> writes:
 
-We could still allow that by simply not removing the "run this external 
-program" code from the git wrapper even if we make all default commands 
-built-ins. Pluggable git, just as it is today, and when something turns 
-out to be useful, feature-complete and stable enough "someone" will 
-hopefully hop in to make it a built-in.
+> Jakub Narebski wrote:
+>> I'm not sure what quoting to choose for esc_attr, but there we could
+>> use even --no-control-chars quoting (replacing any control character
+>> by '?');  but perhaps in some cases like git_print_page_path
+>> subroutine CEC is better.
 
-> But in the end, I'd say it makes lots of sense to have everything in one 
-> executable.
-> 
+To be honest, I do not have strong preference between the
+escaping style.  If the gitweb cabal feel it is more natural to
+see "^L" in blobs and "\f" in path, I will very happily accept
+such a patch.
 
-Yup. Not least for portability issues. The lack of a native windows 
-client has already made us lose at least one major "customer", and afaiu 
-it was *only* the lack of a native windows client that caused this, so 
-obviously it's a big issue for big cross-platform projects.
+> I'm rambling. esc_attr is special case, because CGI does escapeHTML
+> (and I hope also to_utf8) for us. Using <span class="cntrl">...</span>
+> has also no sense. So there should be separate esc_attr_path subroutine
+> I think.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
+Yes.  It is unfortunate that there needs different types of
+quoting.  I think the first step would be to stop calling
+esc_html in esc_path.  I think it was a mistake, and I did not
+correct it when I started touching it.
+
+Somehow I ended up spending sizeable part of my git day this
+week on fixing up blob/blame/tag/commit message view regarding
+this "make controls visible and safe" issues on the 'master'
+branch, but I have been consciously staying out of gitweb/ part
+of the system, primarily because there are many other people who
+are more interested and qualified in it than myself.
+
+I'll step aside and try not to get in the way.  There is another
+thing I noticed while testing it with an artifitial test that I
+haven't fixed, but I think you already know about it (when the
+commitdiff is completely empty except mode changes, we end up
+with unbalanced div).  My test's tip can be found at
+'gitweb-test-funny-char' branch temporarily in the git.git
+repository.
