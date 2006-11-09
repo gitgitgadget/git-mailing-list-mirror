@@ -1,94 +1,84 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Allow building GIT in a different directory from the source directory
-Date: Fri, 08 Dec 2006 18:44:03 +0100
-Organization: At home
-Message-ID: <elc84p$4cs$1@sea.gmane.org>
-References: <elc6j2$vej$1@sea.gmane.org>
+Subject: Re: [PATCH] gitweb: protect blob and diff output lines from controls.
+Date: Thu, 9 Nov 2006 10:34:41 +0100
+Message-ID: <200611091034.42190.jnareb@gmail.com>
+References: <7vpsbxqzre.fsf@assigned-by-dhcp.cox.net> <200611090146.25306.jnareb@gmail.com> <7vwt65pgqs.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-2
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Fri, 8 Dec 2006 17:42:12 +0000 (UTC)
+NNTP-Posting-Date: Thu, 9 Nov 2006 09:34:01 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 41
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=n2T+iFRsgP7gTZjQ7XRMzUWUhNYaIkNX4gwG7mSda9KDv201la2T6H96a+u+v+olADDXhVDtYv3tYeXltN5Vtgmq0bC803aAMNNGEMmdae7UxggN9j/Jp+rUpx6BiLGBdE53Znfx7Gi9DqC3tyP/UUEGZouMN5YWd4JGLpSbK9k=
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vwt65pgqs.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33713>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gsjjd-0002MT-FX for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 18:42:09 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31185>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gi6II-0002uq-Ct for gcvg-git@gmane.org; Thu, 09 Nov
+ 2006 10:33:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1426051AbWLHRmG convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006 12:42:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760782AbWLHRmG
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 12:42:06 -0500
-Received: from main.gmane.org ([80.91.229.2]:60110 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1758219AbWLHRmD
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 12:42:03 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GsjjR-0005Jw-Dt for git@vger.kernel.org; Fri, 08 Dec 2006 18:41:57 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 08 Dec 2006 18:41:57 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 08 Dec 2006
- 18:41:57 +0100
-To: git@vger.kernel.org
+ S1754812AbWKIJdy convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 9 Nov 2006 04:33:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754813AbWKIJdy
+ (ORCPT <rfc822;git-outgoing>); Thu, 9 Nov 2006 04:33:54 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:54873 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1754812AbWKIJdx
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Nov 2006 04:33:53 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so163362ugc for
+ <git@vger.kernel.org>; Thu, 09 Nov 2006 01:33:52 -0800 (PST)
+Received: by 10.67.100.17 with SMTP id c17mr1010667ugm.1163064830152; Thu, 09
+ Nov 2006 01:33:50 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id w40sm555899ugc.2006.11.09.01.33.49; Thu, 09 Nov
+ 2006 01:33:50 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Han-Wen Nienhuys wrote:
+Dnia czwartek 9. listopada 2006 02:10, Junio C Hamano napisa=B3:
+> Jakub Narebski <jnareb@gmail.com> writes:
 
-> From 105d331aee95c0cf3610ac0d2fd4aa7688bd5211 Mon Sep 17 00:00:00 200=
-1
-
-This line is not needed.
-
-> From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-> Date: Fri, 8 Dec 2006 18:07:56 +0100
+>> Well, the pathname has the limit that it must be in single line
+>> after quoting. The "blob" output is multipage.
 >=20
-> GIT can now be built in a separate builddirectory. This is done as
-> follows:
->=20
-> =A0 mkdir build
-> =A0 cd build
-> =A0 $my_git_dir/configure
-> =A0 make
+> I honestly have _no_ idea what distincition you are seeing
+> here.  Both blob and diff output are processed one line at a
+> time and its result would be on a single line too.
 
-Perhaps we should add this to INSTALL file, or to comments in either
-Makefile, or configure.ac?
+I was thinking about _conceptual_ difference, not technical.
+(Perhaps I should make it more clear.)=20
 
-> In this case, configure creates an empty directory tree based on the
-> source directory, and wraps Makefiles from source directory in the
-> build directory. =A0The rest of the functionality is delivered with t=
-he
-> VPATH feature of Make.
->=20
-> To make this work the Makefile should not mention ./ explicitly in
-> rules, but rather use $< and $^ to automatically look in the source
-> dir too.
->=20
-> perl/Makefile and perl/Makefile.PL need special massaging because per=
-l
-> is not VPATH aware.
->
-> Signed-off-by: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Pathname is item (or part of item in the case of page_path)
+which is contained (and must be contained) in single line.
+It is also expected (although if we follow this expectation
+is up to us) that the pathname would quote special characters
+similarly to how shell/operating system quotes pathnames
+(e.g. in ls output).
 
-Very nicely written commit message. Good work.
+"Blob" output on the other hand ("blob" view and patch part of
+"blobdiff" and "commitdiff" views) is [a part of] larger, multiline
+whole. One could also expect that special characters would be
+quoted like editor quotes special characters. (Of course question
+is: which editor?)
 
+This of course is complicate by single line output like subject
+or authorship, or signoff, which is not pathname.
+
+
+All this discussion shows that gitweb quoting is more complicated
+that I thought.
 --=20
 Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
